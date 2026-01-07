@@ -45,7 +45,7 @@ namespace Content.Shared.Maps
         public ProtoId<ContentTileDefinition>? BaseTurf { get; private set; }
 
         /// <summary>
-        /// On what tiles this tile can be placed.
+        /// On what tiles this tile can be placed on. BaseTurf is already included.
         /// </summary>
         [DataField]
         public List<ProtoId<ContentTileDefinition>> BaseWhitelist { get; private set; } = new();

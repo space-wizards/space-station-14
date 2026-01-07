@@ -7,6 +7,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Maps;
 
+/// <summary>
+/// This system handles transferring <see cref="TileHistoryComponent"/> data when a grid is split.
+/// </summary>
 public sealed class TileGridSplitSystem : EntitySystem
 {
     [Dependency] private readonly SharedMapSystem _maps = default!;
@@ -18,6 +21,9 @@ public sealed class TileGridSplitSystem : EntitySystem
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
     }
 
+    /// <summary>
+    /// Transfer tile history from the old grid to the new grids.
+    /// </summary>
     private void OnGridSplit(ref GridSplitEvent ev)
     {
         if (!TryComp<TileHistoryComponent>(ev.Grid, out var oldHistory))
@@ -27,26 +33,31 @@ public sealed class TileGridSplitSystem : EntitySystem
 
         foreach (var gridUid in ev.NewGrids)
         {
+            // ensure the new grid has a history component and get its grid component
             var newHistory = EnsureComp<TileHistoryComponent>(gridUid);
             var newGrid = Comp<MapGridComponent>(gridUid);
 
             foreach (var tile in _maps.GetAllTiles(gridUid, newGrid))
             {
+                // calculate where this tile was on the old grid
                 var oldIndices = _maps.LocalToTile(ev.Grid, oldGrid, new EntityCoordinates(gridUid, new Vector2(tile.GridIndices.X + 0.5f, tile.GridIndices.Y + 0.5f)));
 
                 var chunkIndices = SharedMapSystem.GetChunkIndices(oldIndices, TileSystem.ChunkSize);
                 if (oldHistory.ChunkHistory.TryGetValue(chunkIndices, out var oldChunk) &&
                     oldChunk.History.TryGetValue(oldIndices, out var history))
                 {
+                    // now we move the history from the old grid to the new grid
                     var newChunkIndices = SharedMapSystem.GetChunkIndices(tile.GridIndices, TileSystem.ChunkSize);
                     if (!newHistory.ChunkHistory.TryGetValue(newChunkIndices, out var newChunk))
                     {
                         newChunk = new TileHistoryChunk();
                         newHistory.ChunkHistory[newChunkIndices] = newChunk;
                     }
+
                     newChunk.History[tile.GridIndices] = new List<ProtoId<ContentTileDefinition>>(history);
                     newChunk.LastModified = _timing.CurTick;
 
+                    // clean up the old history
                     oldChunk.History.Remove(oldIndices);
                     if (oldChunk.History.Count == 0)
                         oldHistory.ChunkHistory.Remove(chunkIndices);

@@ -511,6 +511,7 @@ public sealed partial class ExplosionSystem
 
         var history = CompOrNull<TileHistoryComponent>(tileRef.GridUid);
 
+        // break the tile into its underlying parts
         int tileBreakages = 0;
         while (maxTileBreak > tileBreakages && _robustRandom.Prob(type.TileBreakChance(effectiveIntensity)))
         {
@@ -519,10 +520,12 @@ public sealed partial class ExplosionSystem
 
             ContentTileDefinition? newDef = null;
 
+            // if we have tile history, we revert the tile to its previous state
             var chunkIndices = SharedMapSystem.GetChunkIndices(tileRef.GridIndices, TileSystem.ChunkSize);
             if (history != null && history.ChunkHistory.TryGetValue(chunkIndices, out var chunk) &&
                 chunk.History.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
             {
+                // last entry in the stack
                 var newId = stack[^1];
                 stack.RemoveAt(stack.Count - 1);
                 if (stack.Count == 0)
@@ -534,6 +537,7 @@ public sealed partial class ExplosionSystem
             }
             else if (tileDef.BaseTurf.HasValue)
             {
+                // otherwise, we just use the base turf
                 newDef = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf.Value];
             }
 
