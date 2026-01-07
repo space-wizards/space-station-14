@@ -32,8 +32,6 @@ public sealed partial class SharedExecutionSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -46,13 +44,14 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
     }
 
-    private void OnItemToggleExecution(Entity<ItemToggleExecutionComponent> entity, ref ItemToggledEvent args)
+    private void OnItemToggleExecution(Entity<ItemToggleExecutionComponent> entityWithToggle, ref ItemToggledEvent args)
     {
-        if (!TryComp<ExecutionComponent>(entity.Owner, out var executionComponent))
+        Entity<ExecutionComponent?> entityWithExecution = entityWithToggle.Owner;
+        if (!Resolve(entityWithExecution.Owner, ref entityWithExecution.Comp))
             return;
 
-        executionComponent.Enabled = args.Activated;
-        Dirty(entity.Owner, executionComponent);
+        entityWithExecution.Comp.Enabled = args.Activated;
+        DirtyField(entityWithExecution, nameof(ExecutionComponent.Enabled));
     }
 
     private void OnGetInteractionsVerbs(Entity<ExecutionComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
@@ -174,6 +173,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         if (!TryComp<DamageableComponent>(args.Target.Value, out var damageable))
             return;
 
+        // this method doesn't round-remove, it just multiplies the input damage specifier to be enough to kill the target
         _suicide.ApplyLethalDamage((args.Target.Value, damageable), ev.Damage);
 
         var internalMessage = entity.Comp.CompleteInternalMeleeExecutionMessage;

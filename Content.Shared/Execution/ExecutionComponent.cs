@@ -6,7 +6,7 @@ namespace Content.Shared.Execution;
 /// <summary>
 /// Added to entities that can be used to execute another target.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class ExecutionComponent : Component
 {
     /// <summary>
