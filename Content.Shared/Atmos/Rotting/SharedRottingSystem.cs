@@ -159,11 +159,10 @@ public abstract class SharedRottingSystem : EntitySystem
         {
             RemCompDeferred(uid, rotting);
             perishable.RotAccumulator = total;
+            DirtyField(uid, perishable, nameof(PerishableComponent.RotAccumulator));
         }
         else
             rotting.TotalRotTime = total - perishable.RotAfter;
-
-        DirtyField(uid, perishable, nameof(PerishableComponent.RotAccumulator));
     }
 
     /// <summary>
