@@ -1,0 +1,27 @@
+<!--
+SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+-->
+
+<ui:RadialMenu xmlns="https://spacestation14.io"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                BackButtonStyleClass="RadialMenuBackButton"
+                CloseButtonStyleClass="RadialMenuCloseButton"
+                VerticalExpand="True"
+                HorizontalExpand="True"
+                MinSize="450 450">
+
+    <!-- Main -->
+    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" ReserveSpaceForHiddenChildren="False">
+    </ui:RadialContainer>
+
+</ui:RadialMenu>

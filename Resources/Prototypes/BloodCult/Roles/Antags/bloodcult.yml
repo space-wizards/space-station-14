@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later or MIT
+
+#- type: antag
+#  id: HeadRev
+#  name: roles-antag-rev-head-name
+#  antagonist: true
+#  setPreference: true
+#  objective: roles-antag-rev-head-objective
+#  guides: [ Revolutionaries ]
+
+- type: antag
+  id: BloodCultist
+  name: roles-antag-cult-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-cult-objective
+  guides: [ BloodCult ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 36000 # 10h
+
+- type: startingGear
+  id: BloodCultistGear
+  storage:
+    back:
+    - SheetRunedGlass10
+#    - ClothingEyesGlassesSunglasses
+#    - EncryptionKeySyndie # Goobstation
+#    - RevsFastDrawImplanter # Goobstation

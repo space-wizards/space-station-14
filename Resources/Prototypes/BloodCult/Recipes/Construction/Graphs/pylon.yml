@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- type: constructionGraph
+  id: CultPylon
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: pylon
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: RunedSteel
+              amount: 4
+              doAfter: 2
+
+    - node: pylon
+      entity: CultPylon

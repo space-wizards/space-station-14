@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+
+- type: soundCollection
+  id: BloodCultRitualMusic
+  files:
+    - /Audio/_Funkystation/Ambience/Antag/tear_of_veil.ogg

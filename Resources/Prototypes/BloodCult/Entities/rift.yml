@@ -1,0 +1,63 @@
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+
+- type: entity
+  id: BloodCultRift
+  name: reality rift
+  description: The veil tears open, bleeding profane essence into reality. The air around it feels thick with malevolence.
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Overdoors
+    sprite: Structures/Specific/Anomalies/liquid_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+      color: "#8B0000"  # Dark blood red
+      shader: unshaded
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      color: "#8B0000"
+      shader: unshaded
+      visible: false
+  - type: AnimationPlayer
+  - type: Appearance
+  - type: PointLight
+    radius: 6.0
+    energy: 4.5
+    color: "#8B0000"
+    castShadows: false
+  - type: AmbientSound
+    range: 8
+    volume: -3
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 1000
+        hard: false
+        layer:
+        - MidImpassable
+  - type: BloodCultRift
+    pulseInterval: 30.0
+    bloodPerPulse: 50.0
+  - type: Clickable
+  - type: TriggerOnActivate
+  - type: SolutionContainerManager
+    solutions:
+      sanguine_pool:
+        maxVol: 1500
+  - type: PuddleCreateAnomaly
+    solution: sanguine_pool
+  - type: RefillableSolution
+    solution: sanguine_pool
+

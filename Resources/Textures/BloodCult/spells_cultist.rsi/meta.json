@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites taken from Paradise Station",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "summon_dagger"
+        },
+		{
+            "name": "stun"
+        },
+		{
+			"name": "stun_selected"
+		},
+		{
+			"name": "study_veil"
+		},
+		{
+			"name": "commune"
+		},
+		{
+			"name": "spell_select"
+		},
+		{
+			"name": "twisted_construction"
+		}
+    ]
+}

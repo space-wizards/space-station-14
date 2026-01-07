@@ -1,0 +1,260 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 mkanke-real <mikekanke@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+
+# Blood Cult Runes
+- type: entity
+  id: BaseBloodCultRune
+  name: "rune"
+  description: It looks to have been smeared in blood...
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: BloodCultRune
+    - type: Clickable
+    - type: TriggerOnActivate
+    - type: CleanableRune
+    - type: Reactive
+      reactions:
+      - reagents: [ Water, SpaceCleaner ]
+        methods: [ Touch ]
+        effects:
+        - !type:DeleteEntityEffect
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        vapor:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          hard: false
+          mask:
+          - MobMask
+          - ItemMask
+          layer:
+          - ItemMask
+    - type: Sprite
+      sprite: Structures/BloodCult/bloodrune.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: barrier
+          color: '#FF00FF'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: BarrierRune
+  name: "barrier rune"
+  components:
+    - type: BarrierOnTrigger  # SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
+    - type: Sprite
+      #sprite: Structures/Magic/Cult/trap.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: barrier
+          color: '#FF3300CC'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: BarrierRune_drawing
+  name: "barrier rune"
+  components:
+  - type: Sprite
+    sprite: Structures/BloodCult/bloodrune.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: barrier_drawing
+      color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 15
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: BloodBoilRune
+  name: "blood boil rune"
+  components:
+    - type: Sprite
+      #sprite: Structures/Magic/Cult/trap.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: bloodboil
+          color: '#FF3300CC'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: EmpoweringRune
+  name: "empowering rune"
+  components:
+    - type: EmpowerOnStand
+    - type: Sprite
+      #sprite: Structures/Magic/Cult/trap.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: empowering
+          color: '#FF3300CC'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: EmpoweringRune_drawing
+  name: "empowering rune"
+  components:
+  - type: Sprite
+    sprite: Structures/BloodCult/bloodrune.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: empowering_drawing
+      color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 15
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: OfferingRune
+  name: "conversion rune"
+  components:
+    - type: OfferOnTrigger
+    - type: Sprite
+      #sprite: Structures/Magic/Cult/trap.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: offering
+          color: '#FF3300CC'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: FinalRiftRune
+  name: "final rift rune"
+  components:
+  - type: OfferOnTrigger
+  - type: FinalSummoningRune
+  - type: Sprite
+    sprite: Structures/BloodCult/runerift.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: rune_rift
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: OfferingRune_drawing
+  name: "conversion rune"
+  components:
+  - type: Sprite
+    sprite: Structures/BloodCult/bloodrune.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: offering_drawing
+      color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 15
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: ReviveRune
+  name: "revive rune"
+  description: A blood-soaked rune that brings the dead back to life by draining the invoker's blood.
+  components:
+    - type: ReviveCultistOnTrigger
+    - type: Sprite
+      #sprite: Structures/Magic/Cult/trap.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: revive
+          color: '#FF3300CC'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: ReviveRune_drawing
+  name: "revive rune"
+  description: A blood-soaked rune that brings the dead back to life by draining the invoker's blood.
+  components:
+  - type: Sprite
+    sprite: Structures/BloodCult/bloodrune.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: revive_drawing
+      color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 15
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: SpiritRealmRune
+  name: "rune of the spirit realm"
+  components:
+    - type: Sprite
+      #sprite: Structures/Magic/Cult/trap.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: spiritrealm
+          color: '#FF3300CC'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: SummoningRune
+  name: "summoning rune"
+  components:
+    - type: SummonOnTrigger
+    - type: TriggerOnActivate
+    - type: Sprite
+      #sprite: Structures/Magic/Cult/trap.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: summoning
+          color: '#FF3300CC'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: SummoningRune_drawing
+  name: "summoning rune"
+  components:
+  - type: Sprite
+    sprite: Structures/BloodCult/bloodrune.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: summoning_drawing
+      color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 15
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: TeleportRune
+  name: "teleport rune"
+  components:
+    - type: Sprite
+      #sprite: Structures/Magic/Cult/trap.rsi
+      drawdepth: HighFloorObjects
+      layers:
+        - state: teleport
+          color: '#FF3300CC'
+
+- type: entity
+  parent: BaseBloodCultRune
+  id: TearVeilRune
+  name: tear veil rune
+  components:
+  - type: TearVeil
+  - type: Sprite
+    sprite: Structures/BloodCult/narsierune.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: narsierune
+      color: '#FF4400FF'
+
+- type: entity
+  parent: TearVeilRune
+  id: TearVeilRune_drawing
+  suffix: Spawn
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    layers:
+    - state: narsierune_drawing
+  # spawn animation lasts 45 seconds
+  - type: TimedDespawn
+    lifetime: 45

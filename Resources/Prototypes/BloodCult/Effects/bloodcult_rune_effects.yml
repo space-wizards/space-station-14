@@ -1,0 +1,83 @@
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+- type: entity
+  id: FxBloodCultRuneBarrier
+  name: barrier rune
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: Structures/BloodCult/bloodrune.rsi
+    layers:
+      - map: ["enum.EffectLayers.Unshaded"]
+        state: barrier_drawing
+        shader: unshaded
+        color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: entity
+  id: FxBloodCultRuneEmpowering
+  name: empowering rune
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: Structures/BloodCult/bloodrune.rsi
+    layers:
+      - map: ["enum.EffectLayers.Unshaded"]
+        state: empowering_drawing
+        shader: unshaded
+        color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: entity
+  id: FxBloodCultRuneOffering
+  name: conversion rune
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: Structures/BloodCult/bloodrune.rsi
+    layers:
+      - map: ["enum.EffectLayers.Unshaded"]
+        state: offering_drawing
+        shader: unshaded
+        color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: entity
+  id: FxBloodCultRuneRevive
+  name: revive rune
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: Structures/BloodCult/bloodrune.rsi
+    layers:
+      - map: ["enum.EffectLayers.Unshaded"]
+        state: revive_drawing
+        shader: unshaded
+        color: '#FF3300CC'
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: entity
+  id: FxBloodCultRuneTearVeil
+  name: tear veil rune
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: Structures/BloodCult/narsierune.rsi
+    layers:
+      - map: ["enum.EffectLayers.Unshaded"]
+        state: narsierune_drawing
+        shader: unshaded
+        color: '#FF4400FF'
+  - type: TimedDespawn
+    lifetime: 60
+

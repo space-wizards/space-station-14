@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Sigma Draconis for Funkystation",
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "rune_rift",
+        "delays": [
+            [
+                0.25,0.25,0.25,0.25,0.25,0.25
+            ]
+        ]
+    }
+  ]
+}

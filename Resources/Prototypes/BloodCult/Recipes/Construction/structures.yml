@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later or MIT
+
+# Manual crafting recipe removed - pylons can only be created via the Summoning Rune
+# - type: construction
+#   name: cult pylon
+#   id: CultPylon
+#   graph: CultPylon
+#   startNode: start
+#   targetNode: pylon
+#   category: construction-category-structures
+#   description: A floating crystal that slowly heals those faithful to Nar'Sie.
+#   icon:
+#     sprite: /Textures/_Funkystation/Structures/BloodCult/pylon.rsi
+#     state: crystal
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canRotate: false
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked

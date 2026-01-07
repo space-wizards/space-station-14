@@ -1,0 +1,44 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDS-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+
+- type: cultAbility
+  id: StudyVeil
+  doAfterLength: 0
+  actionPrototypes:
+  - ActionCultistStudyVeil
+
+- type: cultAbility
+  id: Commune
+  doAfterLength: 0
+  actionPrototypes:
+  - ActionCultistCommune
+
+- type: cultAbility
+  id: SpellsSelect
+  doAfterLength: 0
+  actionPrototypes:
+  - ActionCultistSpellsSelect
+
+- type: cultAbility
+  id: SummonDagger
+  doAfterLength: 5
+  actionPrototypes:
+  - ActionCultistSummonDagger
+
+- type: cultAbility
+  id: SanguineDream
+  healthDrain: 10
+  doAfterLength: 5
+  actionPrototypes:
+  - ActionCultistSanguineDream
+
+- type: cultAbility
+  id: CultTwistedConstruction
+  healthDrain: 10
+  doAfterLength: 5
+  actionPrototypes:
+  - ActionCultistTwistedConstruction

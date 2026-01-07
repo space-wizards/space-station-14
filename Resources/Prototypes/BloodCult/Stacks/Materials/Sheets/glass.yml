@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later or MIT
+
+- type: stack
+  id: RunedGlass
+  name: runed glass
+  icon: { sprite: /Textures/BloodCult/Sheets/glass.rsi, state: runedglass }
+  spawn: SheetRunedGlass1
+  maxCount: 30
+

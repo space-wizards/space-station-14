@@ -1,0 +1,193 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDS-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+
+# actions
+- type: entity
+  id: ActionCultistStudyVeil
+  name: Study Veil
+  description: Examine the state of the veil, and the strength of your cult.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: study_veil
+    event: !type:EventCultistStudyVeil {}
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: study_veil
+  - type: CultistSpell
+    abilityId: StudyVeil
+    charges: 1
+    infinite: True
+    healthCost: 0
+    rechargeTime: 0
+
+- type: entity
+  id: ActionCultistCommune
+  name: Commune
+  description: Send a message to your fellow cultists. Beware - the uninitiated can see you whispering the incantation.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: commune
+    event: !type:BloodCultCommuneEvent {}
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: commune
+  - type: CultistSpell
+    abilityId: Commune
+    charges: 1
+    infinite: True
+    healthCost: 0
+    rechargeTime: 0
+
+- type: entity
+  id: ActionCultistSpellsSelect
+  name: Prepare Spell
+  description: Prepare a blood spell by carving it into your body. Up to 1 spell may be prepared without standing on an empowering rune.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: spell_select
+    event: !type:BloodCultSpellsEvent {}
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: spell_select
+  - type: CultistSpell
+    abilityId: SpellsSelect
+    charges: 1
+    infinite: True
+    healthCost: 0
+    rechargeTime: 0
+
+- type: entity
+  id: ActionCultistSummonDagger
+  name: Summon Dagger
+  description: Use Nar'Sie's blessing to shape a ritual dagger out of your body. As long as your heart continues to beat, She will allow you to make more.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: BloodCult/spells_cultist.rsi
+    state: summon_dagger
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: summon_dagger
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: summon_dagger
+    event: !type:EventCultistSummonDagger {}
+  - type: CultistSpell
+    abilityId: SummonDagger
+    charges: 1
+    infinite: False
+    healthCost: 0
+    rechargeTime: 0
+
+- type: entity
+  id: ActionCultistSanguineDream
+  name: Sanguine Dream
+  description: A sinister spell that plunges a target into a nightmare-filled sleep. EMPs Cyborgs. Those with mindshields will be briefly stunned instead of being put to sleep.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: BloodCult/spells_cultist.rsi
+    state: stun
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: stun
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: False
+    interactOnMiss: False
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: stun
+    iconOn:
+      sprite: BloodCult/spells_cultist.rsi
+      state: stun_selected
+    event: !type:EventCultistSanguineDream {}
+    #useDelay: 60  TIME DELAY BETWEEN ACTION USES
+    #deselectOnMiss: False
+    #targetingIndicator: True  # apparently defaults to using what is held in hand?
+    #entityIcon: <an "EntityUid?">  # overrides the icon
+    #sound: a SoundSpecifier. Should probably be used instead of castSound down below.
+    #iconOn:  # The sprite when selected. USE THIS.
+  - type: CultistSpell
+    abilityId: SanguineDream
+    charges: 1
+    infinite: False
+    healthCost: 0
+    rechargeTime: 0
+    invocation: Fuu ma'jin!
+    castSound: !type:SoundPathSpecifier
+        path: /Audio/Magic/blink.ogg
+
+- type: entity
+  id: ActionCultistTwistedConstruction
+  name: Twisted Construction
+  description: A sinister spell used to convert steel or glass into runed steel or runed glass.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: BloodCult/spells_cultist.rsi
+    state: twisted_construction
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: twisted_construction
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Stack
+      - Construction
+    canTargetSelf: False
+    interactOnMiss: False
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: twisted_construction
+    iconOn:
+      sprite: BloodCult/spells_cultist.rsi
+      state: twisted_construction
+    event: !type:EventCultistTwistedConstruction {}
+    #useDelay: 60  TIME DELAY BETWEEN ACTION USES
+    #deselectOnMiss: False
+    #targetingIndicator: True  # apparently defaults to using what is held in hand?
+    #entityIcon: <an "EntityUid?">  # overrides the icon
+    #sound: a SoundSpecifier. Should probably be used instead of castSound down below.
+    #iconOn:  # The sprite when selected. USE THIS.
+  - type: CultistSpell
+    abilityId: CultTwistedConstruction
+    charges: 1
+    infinite: False
+    healthCost: 0
+    rechargeTime: 0
+    invocation: Ethra p'ni dedol!
+    castSound: !type:SoundPathSpecifier
+        path: /Audio/Magic/blink.ogg

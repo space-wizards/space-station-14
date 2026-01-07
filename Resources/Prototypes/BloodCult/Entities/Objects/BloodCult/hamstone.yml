@@ -1,0 +1,41 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+- type: entity
+  id: CultHamstone
+  parent: [ BaseItem, BaseBloodCultContraband ]
+  name: hamstone
+  description: "Crystalized blood of Nar'Sie, containing the brain and soul of a damned hamster."
+  components:
+  - type: Sprite
+    sprite: BloodCult/Objects/hamstone.rsi
+    state: hamstone
+  - type: Input
+    context: "ghost"
+  - type: SoulStone
+  - type: Clickable
+  - type: MindContainer
+  - type: Speech
+  - type: Emoting
+  - type: Item
+    size: Small
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

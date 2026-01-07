@@ -1,0 +1,20 @@
+<!--
+SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+-->
+
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc 'cult-commune-window'}"
+               MinSize="5 30">
+    <BoxContainer Orientation="Vertical" Margin="5">
+        <Label Text="{Loc 'cult-commune-info'}" />
+        <BoxContainer Orientation="Horizontal" Margin="5">
+            <LineEdit Name="CommuneMessage" HorizontalExpand="True" />
+            <Button Name="CommuneMessageSend" Text="{Loc 'cult-commune-send'}" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

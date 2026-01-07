@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+
+- type: damageContainer
+  id: BloodCultConstruct
+  supportedGroups:
+    - Brute
+    - Burn
+    - Toxin
+    - Airloss
+    # Constructs are made of runed steel and have no blood, so they cannot take Bloodloss damage
+

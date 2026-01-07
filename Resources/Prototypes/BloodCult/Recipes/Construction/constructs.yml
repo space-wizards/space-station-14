@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later or MIT
+
+# Manual crafting recipe removed - juggernaut shells can only be created via the Summoning Rune
+# - type: construction
+#   name: cult juggernaut shell
+#   id: CultJuggernautShell
+#   graph: CultJuggernautShell
+#   startNode: start
+#   targetNode: juggernautShell
+#   category: construction-category-structures
+#   description: A large, inert monstrosity made from runed steel.
+#   icon:
+#     sprite: BloodCult/Mobs/constructs.rsi
+#     state: juggernaut
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canRotate: false
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked

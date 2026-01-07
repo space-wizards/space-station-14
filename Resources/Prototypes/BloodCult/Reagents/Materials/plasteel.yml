@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+- type: material
+  id: RunedPlasteel
+  stackEntity: SheetRunedPlasteel1
+  name: runed plasteel
+  icon: { sprite: BloodCult/Sheets/plasteel.rsi, state: runedplasteel }
+  price: 0.0

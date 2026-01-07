@@ -1,0 +1,171 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- type: entity
+  id: CultBaseStructure
+  parent: BaseBloodCultContraband
+  suffix: Base
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: CultAnchorable
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 110
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Appearance
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 2
+                max: 4
+
+- type: entity
+  id: CultPylon
+  parent: CultBaseStructure
+  name: pylon
+  suffix: Cult
+  description: A floating crystal that slowly heals those faithful to Nar'Sie.
+  components:
+  - type: CultHealingSource
+  - type: Construction
+    graph: CultPylon
+    node: pylon
+  - type: Sprite
+    sprite: Structures/BloodCult/pylon.rsi
+    noRot: true
+    snapCardinals: true
+    layers:
+      - state: pylon-on
+        map: ["anchored"]
+  - type: GenericVisualizer
+    visuals:
+      enum.CultStructureVisuals.Anchored:
+        anchored:
+          True: { state: pylon-on }
+          False: { state: pylon-off }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.125,-0.125,0.125,0.125"
+        density: 110
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: GlassBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetGlass1:
+                min: 2
+                max: 4
+
+- type: entity
+  id: CultForge
+  parent: CultBaseStructure
+  name: Forge
+  suffix: Cult
+  description: A forge used in crafting unholy weapons,to be used by the armies of Nar'Sie.
+  components:
+  - type: Sprite
+    sprite: Structures/BloodCult/forge.rsi
+    noRot: true
+    snapCardinals: true
+    layers:
+      - state: magma
+        map: ["anchored"]
+  - type: GenericVisualizer
+    visuals:
+      enum.CultStructureVisuals.Anchored:
+        anchored:
+          True: { state: magma }
+          False: { state: inactive }
+
+- type: entity
+  id: CultArchives
+  parent: CultBaseStructure
+  name: Archives
+  suffix: Cult
+  description: A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl.
+  components:
+  - type: Sprite
+    sprite: Structures/BloodCult/archives.rsi
+    noRot: true
+    snapCardinals: true
+    layers:
+      - state: books
+        map: ["anchored"]
+  - type: GenericVisualizer
+    visuals:
+      enum.CultStructureVisuals.Anchored:
+        anchored:
+          True: { state: books }
+          False: { state: inactive }
+
+- type: entity
+  id: CultAltar
+  parent: CultBaseStructure
+  name: Altar
+  suffix: Cult
+  description: A bloodstained altar dedicated to Nar'Sie.
+  components:
+  - type: Sprite
+    sprite: Structures/BloodCult/altar.rsi
+    noRot: true
+    snapCardinals: true
+    layers:
+      - state: bloody
+        map: ["anchored"]
+  - type: GenericVisualizer
+    visuals:
+      enum.CultStructureVisuals.Anchored:
+        anchored:
+          True: { state: bloody }
+          False: { state: inactive }

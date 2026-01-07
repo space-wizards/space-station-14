@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-4.0",
+  "copyright": "Sprites created by Tea(d.d.tea on Discord, @teasq.bsky.social), using vectorassembly's funkystation sheets as a base",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "runedglass"
+    },
+    {
+      "name": "runedglass_2"
+    },
+    {
+      "name": "runedglass_3"
+    },
+    {
+      "name": "runedglass-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "runedglass-inhand-right",
+      "directions": 4
+    }
+  ]
+}

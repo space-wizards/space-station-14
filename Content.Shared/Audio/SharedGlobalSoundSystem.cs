@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 namespace Content.Shared.Audio;
@@ -43,7 +43,8 @@ public sealed class GameGlobalSoundEvent : GlobalSoundEvent
 
 public enum StationEventMusicType : byte
 {
-    Nuke
+    Nuke,
+    BloodCult
 }
 
 /// <summary>

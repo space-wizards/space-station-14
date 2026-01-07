@@ -1,0 +1,271 @@
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 TheSecondLord <88201625+TheSecondLord@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 V <97265903+formlessnameless@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+
+- type: entity
+  name: juggernaut shell
+  id: CultJuggernautShell
+  parent: BaseBloodCultContraband
+  description: A large, inert monstrosity made from runed steel. Can be completed by dragging a dead body onto it or using a filled soulstone on it.
+  components:
+  - type: BloodCultConstructShell
+  - type: Construction
+    graph: CultJuggernautShell
+    node: juggernautShell
+  - type: Sprite
+    sprite: BloodCult/Mobs/constructs.rsi
+    state: juggernaut
+    noRot: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 110
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Clickable
+  - type: InteractionOutline
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetRunedSteel1:
+                min: 2
+                max: 4
+
+- type: entity
+  id: MobBloodCultJuggernaut
+  name: Juggernaut
+  description: Strong, slow, and has lots of health. Solves most problems by punching them. Immune to weak attacks.
+  parent: [ SimpleSpaceMobBase, BaseBloodCultContraband ]
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Hands
+      showInHands: false
+    - type: ComplexInteraction
+    - type: ZombieImmune
+    - type: Damageable
+      damageContainer: BloodCultConstruct
+      damageModifierSet: CultJuggernaut
+    - type: IgnoreSlowOnDamage
+    - type: BloodCultConstruct
+    - type: Reactive
+      groups:
+        Flammable: [ Touch ]
+        Extinguish: [ Touch ]
+    - type: MindContainer
+    - type: Juggernaut
+    - type: JuggernautBodyContainer
+      containerId: juggernaut_body_container
+    - type: ContainerContainer
+      containers:
+        juggernaut_body_container: !type:ContainerSlot
+        juggernaut_soulstone_container: !type:ContainerSlot
+    - type: Physics
+    - type: InputMover
+    - type: MobMover
+    - type: Speech
+    - type: Emoting
+    - type: ReplacementAccent
+      accent: juggernaut
+    - type: CombatMode
+    - type: Puller
+      needsHands: false
+    - type: Pullable
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
+    - type: NpcFactionMember
+      factions:
+        - BloodCultist
+    - type: MobState
+      allowedStates:
+        - Alive
+        - Critical
+        - Dead
+    - type: StatusEffects
+      allowed:
+        - KnockedDown
+        - SlowedDown
+        # Stun is intentionally excluded - juggernauts have nothing to stun
+        # Electrocution is intentionally excluded - juggernauts are immune to electrical shocks
+    - type: MobStateActions
+      actions:
+        Critical: []  # Juggernauts should not have critical state actions (suicide, last words)
+    - type: MeleeWeapon
+      hidden: true
+      canWideSwing: true
+      altDisarm: false
+      soundHit:
+        path: /Audio/Effects/wood_destroy2.ogg
+      angle: 60
+      animation: WeaponArcSmash
+      wideAnimation: WeaponArcSmash
+      damage:
+        types:
+          Blunt: 15
+          Structural: 50
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: juggernaut
+          BaseUnshaded: nautdamage
+        Critical:
+          Base: juggernaut
+        Dead:
+          Base: juggernaut_dead
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 200
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        180: Critical
+        280: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.0
+      baseSprintSpeed: 2.5
+    - type: Sprite
+      sprite: BloodCult/Mobs/constructs.rsi
+      drawdepth: Mobs
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: juggernaut
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: nautdamage
+          shader: unshaded
+    - type: IntrinsicUI
+      uis:
+        enum.BloodCultistCommuneUIKey.Key:
+          toggleAction: null
+    - type: UserInterface
+      interfaces:
+        enum.BloodCultistCommuneUIKey.Key:
+          type: BloodCultCommuneBoundUserInterface
+          requireInputValidation: false
+    - type: GuideHelp
+      guides:
+      - Blob
+    - type: Body
+      prototype: null
+      # No prototype - juggernauts have no organs or limbs, like borgs
+
+- type: entity
+  id: MobBloodCultShade
+  name: Shade
+  description: A soul made solid, enslaved to the will of the blood cult.
+  parent: [ SimpleSpaceMobBase, BaseBloodCultContraband ]
+  #categories: [ HideSpawnMenu ]
+  components:
+    #- type: Hands
+    - type: ZombieImmune
+    - type: Damageable
+      damageContainer: BloodCultConstruct
+      damageModifierSet: CultShade
+    - type: BloodCultConstruct
+    - type: Bloodstream
+      bloodMaxVolume: 0
+      bloodReagent: Blood
+      maxBleedAmount: 0
+    - type: MindContainer
+    - type: Shade
+    - type: Physics
+    - type: InputMover
+    - type: MobMover
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: CombatMode
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
+    - type: NpcFactionMember
+      factions:
+        - BloodCultist
+    - type: MobState
+      allowedStates:
+        - Alive
+        - Dead
+    - type: MeleeWeapon
+      hidden: true
+      canWideSwing: true
+      altDisarm: false
+      soundHit:
+        path: /Audio/Effects/guardian_warn.ogg
+      angle: 60
+      animation: WeaponArcSmash
+      wideAnimation: WeaponArcSmash
+      damage:
+        types:
+          Blunt: 8
+          Structural: 8
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: shade
+        Dead:
+          Base: juggernaut_dead
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 50
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        100: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 3.5
+      baseSprintSpeed: 4
+    - type: Sprite
+      sprite: BloodCult/Mobs/constructs.rsi
+      drawdepth: Mobs
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: shade
+    - type: GuideHelp
+      guides:
+      - Blob

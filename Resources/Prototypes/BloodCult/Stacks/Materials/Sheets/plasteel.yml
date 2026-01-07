@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+- type: stack
+  id: RunedPlasteel
+  name: runed plasteel
+  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: plasteel }
+  spawn: SheetRunedPlasteel1
+  maxCount: 30
