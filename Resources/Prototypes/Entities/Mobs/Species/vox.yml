@@ -51,7 +51,7 @@
             min: 3
             max: 5
       - !type:BurnBodyBehavior
-        description: bodyburnvox-text-others
+        description: bodyburn-vox-text-others
       - !type:PlaySoundBehavior
         sound:
           collection: MeatLaserImpact
