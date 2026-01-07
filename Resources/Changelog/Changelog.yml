@@ -3892,3 +3892,10 @@
   id: 9355
   time: '2026-01-06T10:41:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42200
+- author: 0-Anon
+  changes:
+  - message: Guaranteed a bottle of Crazy Glue and Crazy Lube in the toy box.
+    type: Tweak
+  id: 9356
+  time: '2026-01-07T01:32:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42146
