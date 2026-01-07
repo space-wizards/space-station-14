@@ -61,7 +61,7 @@
     buckleDoafterTime: 5
   - type: IgniteOnBuckle
     fireStacks: 0.5
-    maxFireStacks: 3.5
+    maxFireStacks: 2.5
   - type: Construction
     graph: StakeBonfire
     node: stakeBonfire
