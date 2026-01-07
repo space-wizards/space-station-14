@@ -24,7 +24,6 @@
       Female: UnisexVox
       Unsexed: UnisexVox
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeatChicken
       amount: 5

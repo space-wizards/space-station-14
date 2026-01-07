@@ -163,8 +163,8 @@
         Base: alive
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatTomato
       amount: 2
   - type: Destructible

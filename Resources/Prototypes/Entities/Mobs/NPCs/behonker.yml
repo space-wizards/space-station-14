@@ -93,12 +93,11 @@
       groups:
         - id: Medicine
         - id: Poison
-    - type: Butcherable
-      spawned:
-        - id: MaterialBananium1
-          amount: 2
-        - id: WeaponBehonkerLaser
-          amount: 1
+    - type: Sliceable
+      slices:
+      - id: MaterialBananium1
+        amount: 2
+      - id: WeaponBehonkerLaser
     - type: MeleeWeapon
       soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -124,14 +123,14 @@
   id: MobBehonkerElectrical
   suffix: "Pyro"
   components:
-    - type: PyroclasticAnomaly
-    - type: TempAffectingAnomaly
-      tempChangePerSecond: 25
-      hotspotExposeTemperature: 1000
-    - type: GasProducerAnomaly
-      releasedGas: 3
-      releaseOnMaxSeverity: true
-      spawnRadius: 0
+  - type: PyroclasticAnomaly
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: 25
+    hotspotExposeTemperature: 1000
+  - type: GasProducerAnomaly
+    releasedGas: 3
+    releaseOnMaxSeverity: true
+    spawnRadius: 0
 
 - type: entity
   name: behonker

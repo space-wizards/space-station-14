@@ -25,6 +25,8 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Content.Shared.Tools.Systems;
+using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Kitchen;
 
@@ -46,6 +48,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {
@@ -89,7 +92,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnInsertAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out var butcherable) && butcherable.Type == ButcheringType.Spike)
+        if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out _))
             return;
 
         args.Cancel();
@@ -146,7 +149,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         args.Handled = true;
 
-        if (!TryComp<SharpComponent>(args.Used, out var sharp))
+        if (!TryComp<ToolComponent>(args.Used, out var tool) || !_toolSystem.HasQuality(args.Used, ent.Comp.RequiredToolQuality, tool))
         {
             _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
                     ("target", Identity.Entity(victim.Value, EntityManager))),
@@ -165,7 +168,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             args.User,
             PopupType.MediumCaution);
 
-        var delay = TimeSpan.FromSeconds(sharp.ButcherDelayModifier * butcherable.ButcherDelay);
+        var delay = TimeSpan.FromSeconds(tool.SpeedModifier * butcherable.ButcherDelay);
 
         if (_mobStateSystem.IsAlive(victim.Value))
             delay += ent.Comp.ButcherDelayAlive;

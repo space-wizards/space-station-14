@@ -342,9 +342,10 @@
       - dough
   - type: Sprite
     state: dough
-  - type: SliceableFood
-    count: 3
-    slice: FoodDoughSlice
+  - type: Sliceable
+    slices:
+    - id: FoodDoughSlice
+      amount: 3
   - type: Construction
     graph: Pizza
     node: start
@@ -414,9 +415,10 @@
       - dough
   - type: Sprite
     state: cornmealdough
-  - type: SliceableFood
-    count: 3
-    slice: FoodDoughCornmealSlice
+  - type: Sliceable
+    slices:
+    - id: FoodDoughCornmealSlice
+      amount: 3
 
 - type: entity
   parent: FoodBakingBase
@@ -450,9 +452,10 @@
       - dough
   - type: Sprite
     state: tortilladough
-  - type: SliceableFood
-    count: 3
-    slice: FoodDoughTortillaSlice
+  - type: Sliceable
+    slices:
+    - id: FoodDoughTortillaSlice
+      amount: 3
 
 - type: entity
   parent: FoodBakingBase
@@ -507,9 +510,10 @@
     - cotton
   - type: Sprite
     state: cotton-dough
-  - type: SliceableFood
-    count: 3
-    slice: FoodDoughCottonSlice
+  - type: Sliceable
+    slices:
+    - id: FoodDoughCottonSlice
+      amount: 3
   - type: Construction
     graph: CottonPizza
     node: start
@@ -631,9 +635,10 @@
   - type: Construction
     graph: Pizza
     node: flat
-  - type: SliceableFood
-    count: 3
-    slice: FoodCroissantRaw
+  - type: Sliceable
+    slices:
+    - id: FoodCroissantRaw
+      amount: 3
 
 - type: entity
   parent: FoodBakingBase
@@ -650,9 +655,10 @@
   - type: Construction
     graph: CottonPizza
     node: flat
-  - type: SliceableFood
-    count: 3
-    slice: FoodCroissantRawCotton
+  - type: Sliceable
+    slices:
+    - id: FoodCroissantRawCotton
+      amount: 3
 
 - type: entity
   parent: FoodBakingBase
@@ -722,9 +728,10 @@
         reagents:
         - ReagentId: Butter
           Quantity: 15
-  - type: SliceableFood
-    count: 3
-    slice: FoodButterSlice
+  - type: Sliceable
+    slices:
+    - id: FoodButterSlice
+      amount: 3
 
 - type: entity
   parent: FoodBakingBase
@@ -781,9 +788,10 @@
       - cheesy
   - type: Sprite
     state: cheesewheel
-  - type: SliceableFood
-    count: 4
-    slice: FoodCheeseSlice
+  - type: Sliceable
+    slices:
+    - id: FoodCheeseSlice
+      amount: 4
 
 - type: entity
   parent: FoodBakingBase
@@ -835,9 +843,10 @@
       - creamy
   - type: Sprite
     state: chevrelog
-  - type: SliceableFood
-    count: 3
-    slice: FoodChevreSlice
+  - type: Sliceable
+    slices:
+    - id: FoodChevreSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -897,9 +906,10 @@
           Quantity: 9
         - ReagentId: Nutriment
           Quantity: 6
-  - type: SliceableFood
-    count: 3
-    slice: FoodTofuSlice
+  - type: Sliceable
+    slices:
+    - id: FoodTofuSlice
+      amount: 3
 
 - type: entity
   parent: FoodBakingBase

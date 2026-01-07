@@ -26,6 +26,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Components;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -213,9 +214,9 @@ namespace Content.Server.Medical.BiomassReclaimer
                 component.BloodReagents = solution.Clone();
                 component.BloodReagents.ScaleSolution(50 / component.BloodReagents.Volume);
             }
-            if (TryComp<ButcherableComponent>(toProcess, out var butcherableComponent))
+            if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
             {
-                component.SpawnedEntities = butcherableComponent.SpawnedEntities;
+                component.SpawnedEntities = refinable.RefineResult;
             }
 
             var expectedYield = physics.FixturesMass * component.YieldPerUnitMass;

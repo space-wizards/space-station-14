@@ -24,7 +24,6 @@
     - SpiderCraft
     - AnomalyHost
   - type: Butcherable
-    butcheringType: Spike
     spawned:
       - id: FoodMeatSpider
         amount: 5

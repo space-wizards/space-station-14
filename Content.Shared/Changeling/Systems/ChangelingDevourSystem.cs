@@ -12,9 +12,9 @@ using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Tools.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -256,16 +256,16 @@ public sealed class ChangelingDevourSystem : EntitySystem
             _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target.Value);
 
             if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)
-                && TryComp<ButcherableComponent>(item, out var butcherable))
-                RipClothing(target.Value, (item.Value, butcherable));
+                && TryComp<ToolRefinableComponent>(item, out var butcherableCloth))
+                RipClothing(target.Value, (item.Value, butcherableCloth));
         }
 
         Dirty(ent);
     }
 
-    private void RipClothing(EntityUid victim, Entity<ButcherableComponent> item)
+    private void RipClothing(EntityUid victim, Entity<ToolRefinableComponent> item)
     {
-        var spawnEntities = EntitySpawnCollection.GetSpawns(item.Comp.SpawnedEntities, _robustRandom);
+        var spawnEntities = EntitySpawnCollection.GetSpawns(item.Comp.RefineResult, _robustRandom);
 
         foreach (var proto in spawnEntities)
         {

@@ -28,7 +28,6 @@
   - type: TypingIndicator
     proto: moth
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 5

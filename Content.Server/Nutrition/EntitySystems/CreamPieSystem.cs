@@ -1,19 +1,19 @@
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Sliceable;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Systems;
-using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -33,8 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<CreamPieComponent, SliceFoodEvent>(OnSlice);
-
+            SubscribeLocalEvent<CreamPieComponent, BeforeToolRefineFinishedEvent>(OnSlice);
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
@@ -62,7 +61,7 @@ namespace Content.Server.Nutrition.EntitySystems
         // However, the refactor to IngestionSystem caused the event to not be reached,
         // because eating is blocked if an item is inside the food.
 
-        private void OnSlice(Entity<CreamPieComponent> entity, ref SliceFoodEvent args)
+        private void OnSlice(Entity<CreamPieComponent> entity, ref BeforeToolRefineFinishedEvent args)
         {
             ActivatePayload(entity);
         }
