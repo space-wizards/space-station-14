@@ -2,7 +2,7 @@
   parent: MarkerBase
   id: RandomFoodBreakfast
   name: random food spawner
-  suffix: Meal
+  suffix: Breakfast
   placement:
     mode: AlignTileAny
   components:
