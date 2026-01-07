@@ -2,6 +2,7 @@ using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.Botany.Systems;
+using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -19,7 +20,6 @@ public sealed class BotanySampleTakerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
     [Dependency] private readonly PlantSystem _plant = default!;
-    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -74,6 +74,6 @@ public sealed class BotanySampleTakerSystem : EntitySystem
         _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-take-sample-message", ("seedName", displayName)), args.User);
 
         if (rand.Prob(args.Sample.Comp.SampleProbability))
-            _plantTraits.AddTrait(ent.Owner, new TraitSampled());
+            EnsureComp<PlantTraitSampledComponent>(ent.Owner);
     }
 }

@@ -44,7 +44,6 @@
     packetPrototype: WheatSeeds
     productPrototypes: [ WheatBushel ]
     mutationPrototypes: [ MeatWheatPlants ]
-  - type: PlantTraits
   - type: Plant
     lifespan: 25
     maturation: 6
@@ -597,15 +596,13 @@
     yield: 5
     potency: 1
     growthStages: 3
-  - type: PlantTraits
-    traits:
-    - !type:TraitLigneous
   - type: BasicGrowth
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: AtmosphericGrowth
     lowHeatTolerance: 278 # 5°C
     highHeatTolerance: 298 # 25°C
+  - type: PlantTraitLigneous
 
 - type: entity
   parent: BasePlant
@@ -626,15 +623,13 @@
     yield: 3
     potency: 1
     growthStages: 3
-  - type: PlantTraits
-    traits:
-    - !type:TraitLigneous
   - type: BasicGrowth
     waterConsumption: 0.6
     nutrientConsumption: 0.8
   - type: AtmosphericGrowth
     lowHeatTolerance: 278 # 5°C
     highHeatTolerance: 298 # 25°C
+  - type: PlantTraitLigneous
 
 - type: entity
   parent: BasePlant

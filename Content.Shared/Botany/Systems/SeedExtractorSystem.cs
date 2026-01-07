@@ -1,5 +1,6 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Items.Components;
+using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
@@ -13,7 +14,6 @@ public sealed class SeedExtractorSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
 
@@ -39,8 +39,7 @@ public sealed class SeedExtractorSystem : EntitySystem
         if (produce.PlantData != null)
             snapshot = produce.PlantData;
 
-        if (_botany.TryGetPlantComponent<PlantTraitsComponent>(snapshot, produce.PlantProtoId, out var traits) &&
-            _plantTraits.TryGetTrait<TraitSeedless>(traits, out _))
+        if (_botany.TryGetPlantComponent<PlantTraitSeedlessComponent>(snapshot, produce.PlantProtoId, out _))
         {
             _popup.PopupPredictedCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User,

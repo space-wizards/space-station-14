@@ -28,16 +28,16 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class PlantMutateConsumeGases : EntityEffectBase<PlantMutateConsumeGases>
+public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutateExudeGases>
 {
     /// <summary>
-    /// The minimum amount of gas to exude.
+    /// The minimum amount of gas to consume.
     /// </summary>
     [DataField]
     public float MinValue = 0.01f;
 
     /// <summary>
-    /// The maximum amount of gas to exude.
+    /// The maximum amount of gas to consume.
     /// </summary>
     [DataField]
     public float MaxValue = 0.5f;
@@ -45,7 +45,7 @@ public sealed partial class PlantMutateConsumeGases : EntityEffectBase<PlantMuta
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        return Loc.GetString("entity-effect-guidebook-plant-mutate-consume-gasses",
+        return Loc.GetString("entity-effect-guidebook-plant-mutate-exude-gasses",
                 ("chance", Probability),
                 ("minValue", MinValue),
                 ("maxValue", MaxValue));
@@ -69,16 +69,16 @@ public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEf
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutateExudeGases>
+public sealed partial class PlantMutateConsumeGases : EntityEffectBase<PlantMutateConsumeGases>
 {
     /// <summary>
-    /// The minimum amount of gas to consume.
+    /// The minimum amount of gas to exude.
     /// </summary>
     [DataField]
     public float MinValue = 0.01f;
 
     /// <summary>
-    /// The maximum amount of gas to consume.
+    /// The maximum amount of gas to exude.
     /// </summary>
     [DataField]
     public float MaxValue = 0.5f;
@@ -86,7 +86,7 @@ public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutate
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        return Loc.GetString("entity-effect-guidebook-plant-mutate-exude-gasses",
+        return Loc.GetString("entity-effect-guidebook-plant-mutate-consume-gasses",
                 ("chance", Probability),
                 ("minValue", MinValue),
                 ("maxValue", MaxValue));

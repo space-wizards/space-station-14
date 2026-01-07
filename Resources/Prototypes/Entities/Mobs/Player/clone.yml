@@ -155,6 +155,11 @@
   - ConsumeExudeGasGrowth
   - WeedPestGrowth
   - PlantToxins
+  # traits
+  - PlantTraitKudzu
+  - PlantTraitLigneous
+  - PlantTraitScream
+  - PlantTraitUnviable
 
 # for plant lifecycle clones
 - type: cloningSettings
@@ -162,3 +167,6 @@
   parent: PlantClone
   components:
   - PlantHolder
+  # traits
+  - PlantTraitSampled
+  - PlantTraitSeedless

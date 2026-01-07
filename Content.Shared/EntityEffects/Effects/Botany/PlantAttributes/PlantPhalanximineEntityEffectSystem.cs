@@ -1,5 +1,6 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
+using Content.Shared.Botany.Traits.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
@@ -11,14 +12,13 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantPhalanximine>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantTraitsSystem _plantTrait = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantPhalanximine> args)
     {
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        _plantTrait.DelTrait(entity.Owner, new TraitUnviable());
+        RemCompDeferred<PlantTraitUnviableComponent>(entity.Owner);
     }
 }
 

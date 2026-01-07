@@ -13,8 +13,9 @@ public sealed partial class PlantComponent : Component
 {
     /// <summary>
     /// The mutation effects that have been applied to this plant.
+    /// Server-only: mutations are applied as effects which are synced separately.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public List<RandomPlantMutation> Mutations = [];
 
     /// <summary>

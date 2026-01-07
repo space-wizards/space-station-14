@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
+using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Examine;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
@@ -85,15 +85,11 @@ public sealed class PlantSystem : EntitySystem
                             : "plant-holder-component-plant-unhealthy-adjective"))));
             }
 
-            if (TryComp<PlantTraitsComponent>(ent.Owner, out var traits))
+            foreach (var trait in EntityManager.GetComponents<PlantTraitsComponent>(ent.Owner))
             {
-                var traitList = traits.Traits;
-                foreach (var trait in traitList)
+                foreach (var markup in trait.GetTraitStateMarkup())
                 {
-                    foreach (var markup in trait.GetTraitStateMarkup())
-                    {
-                        args.PushMarkup(markup);
-                    }
+                    args.PushMarkup(markup);
                 }
             }
         }

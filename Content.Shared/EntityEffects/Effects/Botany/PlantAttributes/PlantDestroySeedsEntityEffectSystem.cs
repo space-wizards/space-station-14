@@ -1,5 +1,6 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
+using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 
@@ -13,7 +14,6 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantDestroySeeds> args)
     {
@@ -25,7 +25,7 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
             entity,
             PopupType.SmallCaution
         );
-        _plantTraits.AddTrait(entity.Owner, new TraitSeedless());
+        EnsureComp<PlantTraitSeedlessComponent>(entity.Owner);
     }
 }
 

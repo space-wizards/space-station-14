@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random;
@@ -21,10 +22,10 @@ public sealed class MutationSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly PlantSystem _plant = default!;
-    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
     [Dependency] private readonly PlantTraySystem _plantTray = default!;
     [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     public override void Initialize()
     {
@@ -50,8 +51,6 @@ public sealed class MutationSystem : EntitySystem
                 // Stat adjustments do not persist by being an attached effect, they just change the stat.
                 if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
                     ent.Comp.Mutations.Add(mutation);
-
-                DirtyField(ent, nameof(ent.Comp.Mutations));
             }
         }
     }
@@ -100,7 +99,7 @@ public sealed class MutationSystem : EntitySystem
             && pollenProtoId != MetaData(targetPlant).EntityPrototype?.ID
             && Random(0.7f))
         {
-            _plantTraits.AddTrait(targetPlant, new TraitSeedless());
+            EnsureComp<PlantTraitSeedlessComponent>(targetPlant);
         }
     }
 
@@ -195,15 +194,19 @@ public sealed class MutationSystem : EntitySystem
     }
 
     [PublicAPI]
-    public void CrossTrait(ref Entity<PlantTraitsComponent> val, List<PlantTrait> other)
+    public void CrossTrait(EntityUid val, ComponentRegistry pollenData)
     {
-        foreach (var trait in other.ToArray())
+        foreach (var (componentName, _) in pollenData)
         {
-            if (val.Comp.Traits.Any(t => t.GetType() == trait.GetType()))
+            var newComponent = _componentFactory.GetComponent(componentName);
+            if (newComponent is not PlantTraitsComponent)
+                continue;
+
+            if (HasComp(val, newComponent.GetType()))
                 continue;
 
             if (Random(0.5f))
-                _plantTraits.AddTrait(val.AsNullable(), trait);
+                AddComp(val, newComponent);
         }
     }
 

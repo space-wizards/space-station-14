@@ -206,22 +206,22 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeTraits
-        trait: !type:TraitSeedless
+        trait: PlantTraitSeedless
     - name: Lignification
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeTraits
-        trait: !type:TraitLigneous
+        trait: PlantTraitLigneous
     - name: Kudzufication
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeTraits
-        trait: !type:TraitKudzu
+        trait: PlantTraitKudzu
     - name: ChangeScreaming
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeTraits
-        trait: !type:TraitScream
+        trait: PlantTraitScream
     - name: ChangeChemicals
       baseOdds: 0.072
       persists: false

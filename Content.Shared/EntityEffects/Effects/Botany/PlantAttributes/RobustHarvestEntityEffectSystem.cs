@@ -1,7 +1,8 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
-using Robust.Shared.Random;
+using Content.Shared.Botany.Traits.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
@@ -15,7 +16,6 @@ public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
     [Dependency] private readonly PlantSystem _plant = default!;
-    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<RobustHarvest> args)
     {
@@ -32,7 +32,7 @@ public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem
             _plant.AdjustPotency(entity.AsNullable(), potency - plant.Potency);
 
             if (plant.Potency > args.Effect.PotencySeedlessThreshold)
-                _plantTraits.AddTrait(entity.Owner, new TraitSeedless());
+                EnsureComp<PlantTraitSeedlessComponent>(entity.Owner);
         }
         else if (plant.Yield > 1 && _random.Prob(0.1f))
         {
