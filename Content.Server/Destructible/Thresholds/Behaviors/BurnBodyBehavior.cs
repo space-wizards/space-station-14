@@ -12,7 +12,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class BurnBodyBehavior : IThresholdBehavior
 {
     /// <summary>
-    ///     Text displayed upon destruction
+    ///     The red text displayed upon destruction
     /// </summary>
     [DataField("description", required: true)]
     public LocId Description { get; set; }
