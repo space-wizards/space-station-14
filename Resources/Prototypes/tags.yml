@@ -864,7 +864,7 @@
   id: Lime # CargoBounty: BountyLime
 
 - type: Tag
-  id: Log # ConstructionGraph: Bonfire, StakeBonfire
+  id: Log # ConstructionGraph: Bonfire, BonfireStake
 
 ## M ##
 

@@ -46,7 +46,7 @@
 
 - type: entity
   parent: BaseBonfire
-  id: StakeBonfire
+  id: BonfireStake
   name: bonfire with stake
   description: A sinister bonfire with a stake for... ceremonial purposes. Best not to ask.
   components:
@@ -63,8 +63,8 @@
     fireStacks: 0.5
     maxFireStacks: 2.5
   - type: Construction
-    graph: StakeBonfire
-    node: stakeBonfire
+    graph: Bonfire
+    node: bonfireStake
 
 - type: entity
   parent: BaseBonfire

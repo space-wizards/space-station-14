@@ -1343,10 +1343,10 @@
   - !type:TileNotBlocked
 
 - type: construction
-  id: StakeBonfire
-  graph: StakeBonfire
+  id: BonfireStake
+  graph: Bonfire
   startNode: start
-  targetNode: stakeBonfire
+  targetNode: bonfireStake
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
