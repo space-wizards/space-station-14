@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ScholarNZL
-  changes:
-  - message: Added IC visibility of "animal organs", e.g "animal lungs" etc, to facilitate
-      recipe creation.
-    type: Tweak
-  id: 8854
-  time: '2025-08-15T04:21:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39228
 - author: FlipBrooke
   changes:
   - message: Banana peels and their variants can now be worn as headgear
@@ -3898,3 +3890,10 @@
   id: 9357
   time: '2026-01-07T06:05:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42271
+- author: Samuka
+  changes:
+  - message: The xenoborg camera monitor now shows the names of each xenoborg.
+    type: Tweak
+  id: 9358
+  time: '2026-01-07T16:38:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42205
