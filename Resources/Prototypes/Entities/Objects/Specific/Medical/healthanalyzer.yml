@@ -7,9 +7,9 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
     layers:
-      - state: icon
-      - state: analyzer
-        shader: unshaded
+    - state: icon
+    - state: analyzer
+      shader: unshaded
   - type: Item
     heldPrefix: analyzer
     storedRotation: -90
