@@ -21,7 +21,7 @@
       baseOdds: 0.109
       persists: false
       effect: !type:PlantChangeTraits
-        trait: !type:TraitUnviable
+        trait: PlantTraitUnviable
     - name: ChangeWaterConsumption
       baseOdds: 0.018
       persists: false
