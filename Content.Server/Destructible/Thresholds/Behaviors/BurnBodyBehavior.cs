@@ -12,7 +12,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class BurnBodyBehavior : IThresholdBehavior
 {
     /// <summary>
-    ///     The red text displayed upon destruction
+    ///     The popup displayed upon destruction.
     /// </summary>
     [DataField]
     public LocId PopupMessage = "bodyburn-text-others";
