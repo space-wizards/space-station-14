@@ -83,6 +83,7 @@
     - type: Kudzu
       growthTickChance: 0.3
       spreadChance: 0.4
+      blockVisionAtLevel: 3
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
