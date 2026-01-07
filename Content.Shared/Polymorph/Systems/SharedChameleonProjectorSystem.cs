@@ -118,7 +118,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
             return;
 
         // We don't toggle here as this is only called when we subscribe to being toggled off.
-        TryReveal(ent.Comp.Disguised.Value, false);
+        TryReveal(ent.Comp.Disguised.Value);
     }
 
     private void OnGetVerbs(Entity<ChameleonProjectorComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
@@ -225,8 +225,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
             return;
 
         // reveal first to allow quick switching
-        // We should've already toggled the projector inside TryDiguise.
-        TryReveal(user, false);
+        if (ent.Comp.Disguised != null)
+            ClearDisguise(ent, ent.Comp.Disguised.Value);
 
         // add actions for controlling transform aspects
         _actions.AddAction(user, ref proj.NoRotActionEntity, proj.NoRotAction, container: ent);
@@ -236,7 +236,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
         var disguise = SpawnAttachedTo(proj.DisguiseProto, user.ToCoordinates());
 
-        var disguised = AddComp<ChameleonDisguisedComponent>(user);
+        var disguised = EnsureComp<ChameleonDisguisedComponent>(user);
         disguised.Disguise = disguise;
         Dirty(user, disguised);
 
@@ -261,26 +261,43 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// <summary>
     /// Removes the disguise, if the user is disguised.
     /// </summary>
-    public bool TryReveal(Entity<ChameleonDisguisedComponent?> ent, bool toggle = true)
+    public bool TryReveal(Entity<ChameleonDisguisedComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (TryComp<ChameleonDisguiseComponent>(ent.Comp.Disguise, out var disguise)
-            && TryComp<ChameleonProjectorComponent>(disguise.Projector, out var proj))
-        {
-            proj.Disguised = null;
-            if (toggle)
-                _toggle.TryDeactivate(disguise.Projector);
-        }
+        if (!TryComp<ChameleonDisguiseComponent>(ent.Comp.Disguise, out var disguise)
+            || !TryComp<ChameleonProjectorComponent>(disguise.Projector, out var proj))
+            return false;
 
-        var xform = Transform(ent);
-        xform.NoLocalRotation = false;
-        _xform.Unanchor(ent, xform);
+        ClearDisguise((disguise.Projector, proj), ent);
+        _toggle.TryDeactivate(disguise.Projector);
 
-        Del(ent.Comp.Disguise);
+        proj.Disguised = null;
+
         RemComp<ChameleonDisguisedComponent>(ent);
         return true;
+    }
+
+    /// <summary>
+    /// Clears the disguise for the projector, allowing the user to immediately disguise again.
+    /// </summary>
+    /// <param name="ent">The entity for which to clear the disguise</param>
+    /// <param name="disguised">The disguised entity.</param>
+    private void ClearDisguise(Entity<ChameleonProjectorComponent> ent, Entity<ChameleonDisguisedComponent?> disguised)
+    {
+        if (!Resolve(disguised, ref disguised.Comp, false))
+            return;
+
+        if (ent.Comp.Disguised == null)
+            return;
+
+        var xform = Transform(ent.Comp.Disguised.Value);
+        xform.NoLocalRotation = false;
+        _xform.Unanchor(disguised, xform);
+
+        ent.Comp.Disguised = null;
+        Del(disguised.Comp.Disguise);
     }
 
     /// <summary>

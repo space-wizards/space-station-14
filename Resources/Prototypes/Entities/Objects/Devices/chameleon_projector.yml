@@ -1,6 +1,6 @@
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
-  id: ChameleonProjector
+  id: ChameleonProjectorNoBattery
   name: chameleon projector
   description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
   components:
@@ -10,10 +10,38 @@
     - state: icon
     - state: powered
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-      visible: false
     - state: decharging
       map: [ "enum.PowerDeviceVisualLayers.Charging" ]
       visible: false
+  - type: ChameleonProjector
+    whitelist:
+      components:
+      - Anchorable
+      - Item
+      tags:
+      - Bot # for funny bot moments
+    blacklist:
+      components: # TODO: This blacklist should be cut down by a lot once Chameleon Projector code is less buggy. See #40510
+      - ChameleonDisguise # no becoming kleiner
+      - Door # no faking doors
+      - MindContainer # no
+      - Pda # PDAs currently make you invisible /!\
+      - SubFloorHide # no hiding under the floor
+      tags:
+      - Catwalk # Catwalks make you invisible
+      - Wall # Walls make you invisible
+      - Window # Windows make you invisible
+    disguiseProto: ChameleonDisguise
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
+  parent: ChameleonProjectorNoBattery
+  id: ChameleonProjector
+  name: chameleon projector
+  description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
+  suffix: Battery
+  components:
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -44,43 +72,6 @@
   - type: ItemToggle
     onActivate: false
     onUse: false
-  - type: ChameleonProjector
-    whitelist:
-      components:
-      - Anchorable
-      - Item
-      tags:
-      - Bot # for funny bot moments
-    blacklist:
-      components: # TODO: This blacklist should be cut down by a lot once Chameleon Projector code is less buggy. See #40510
-      - ChameleonDisguise # no becoming kleiner
-      - Door # no faking doors
-      - MindContainer # no
-      - Pda # PDAs currently make you invisible /!\
-      - SubFloorHide # no hiding under the floor
-      tags:
-      - Catwalk # Catwalks make you invisible
-      - Wall # Walls make you invisible
-      - Window # Windows make you invisible
-    disguiseProto: ChameleonDisguise
-  - type: StaticPrice
-    price: 5000
-
-- type: entity
-  parent: ChameleonProjector
-  id: ChameleonProjectorRecharging
-  name: chameleon projector
-  description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
-  suffix: AutoRecharge
-  components:
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMicroreactor
-        disableEject: true
-  - type: PowerCellDraw
-    drawRate: 16 # We offset the charge rate of the microreactor. This is basically same as 4.
 
 - type: entity
   categories: [ HideSpawnMenu ]
