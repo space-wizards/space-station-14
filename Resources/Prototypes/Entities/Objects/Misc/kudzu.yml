@@ -105,6 +105,8 @@
     - type: Tag
       tags:
       - Ruminant
+    - type: Occluder
+      enabled: false
 
 - type: entity
   id: WeakKudzu
