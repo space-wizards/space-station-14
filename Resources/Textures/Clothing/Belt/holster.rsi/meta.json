@@ -35,6 +35,12 @@
       "name": "icon_radio"
     },
     {
+      "name": "icon_stunbaton"
+    },
+    {
+      "name": "icon_truncheon"
+    },
+    {
       "name": "equipped-BELT",
       "directions": 4
     },
