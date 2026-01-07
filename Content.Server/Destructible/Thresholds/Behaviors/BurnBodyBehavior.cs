@@ -14,8 +14,8 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
     /// <summary>
     ///     The red text displayed upon destruction
     /// </summary>
-    [DataField("description", required: true)]
-    public LocId Description { get; set; } = "bodyburn-text-others";
+    [DataField("popupMessage", required: true)]
+    public LocId PopupMessage { get; set; } = "bodyburn-text-others";
 
     public void Execute(EntityUid bodyId, DestructibleSystem system, EntityUid? cause = null)
     {
@@ -32,7 +32,7 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
         }
 
         var bodyIdentity = Identity.Entity(bodyId, system.EntityManager);
-        sharedPopupSystem.PopupCoordinates(Loc.GetString(Description, ("name", bodyIdentity)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
+        sharedPopupSystem.PopupCoordinates(Loc.GetString(PopupMessage, ("name", bodyIdentity)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
 
         system.EntityManager.QueueDeleteEntity(bodyId);
     }
