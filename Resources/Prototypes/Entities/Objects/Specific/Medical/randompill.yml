@@ -90,7 +90,7 @@
       reagents:
       - Lexorin
       - Lead
-    - quantity: 20
+    - quantity: 15
       weight: .1 # just so it doesn't happen every round
       reagents:
       - CorgiJuice
