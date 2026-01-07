@@ -1,21 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Maps;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Tiles;
 
 public sealed class TileStackRecursionTest
 {
-    //This is a magic value setting the hard limit on how much tiles can be stacked on top of each other.
-    //Having it too high can result in "doomstacking" tiles - this messes with efficiency of explosions, deconstruction of tiles, and probably also results in memory problems.
-    private const int MaxTileHistoryLength = 5;
-
     [Test]
     public async Task TestBaseTurfRecursion()
     {
         await using var pair = await PoolManager.GetServerClient();
         var protoMan = pair.Server.ResolveDependency<IPrototypeManager>();
+        var cfg = pair.Server.ResolveDependency<IConfigurationManager>();
+        var maxTileHistoryLength = cfg.GetCVar(CCVars.TileStackLimit);
         Assert.That(protoMan.TryGetInstances<ContentTileDefinition>(out var tiles));
         Assert.That(tiles, Is.Not.EqualTo(null));
         //store the distance from the root node to the given tile node
@@ -39,11 +39,11 @@ public sealed class TileStackRecursionTest
             edges.AddRange(ctdef.BaseWhitelist.Select(possibleTurf =>
                 (possibleTurf, new ProtoId<ContentTileDefinition>(ctdef.ID))));
         }
-        Bfs(nodes, edges);
+        Bfs(nodes, edges, maxTileHistoryLength);
         await pair.CleanReturnAsync();
     }
 
-    private void Bfs(List<(ProtoId<ContentTileDefinition>, int)> nodes, List<(ProtoId<ContentTileDefinition>, ProtoId<ContentTileDefinition>)> edges)
+    private void Bfs(List<(ProtoId<ContentTileDefinition>, int)> nodes, List<(ProtoId<ContentTileDefinition>, ProtoId<ContentTileDefinition>)> edges, int depthLimit)
     {
         var root = nodes[0];
         var queue = new Queue<(ProtoId<ContentTileDefinition>, int)>();
@@ -58,7 +58,7 @@ public sealed class TileStackRecursionTest
             {
                 var adjNode = node;
                 adjNode.Item2 = u.Item2 + 1;
-                Assert.That(adjNode.Item2, Is.LessThanOrEqualTo(MaxTileHistoryLength)); //we can doomstack tiles on top of each other. Bad!
+                Assert.That(adjNode.Item2, Is.LessThanOrEqualTo(depthLimit)); //we can doomstack tiles on top of each other. Bad!
                 queue.Enqueue(adjNode);
             }
         }

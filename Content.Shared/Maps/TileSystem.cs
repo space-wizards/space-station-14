@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
+using Content.Shared.Tiles;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -19,6 +20,7 @@ namespace Content.Shared.Maps;
 /// </summary>
 public sealed class TileSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
@@ -29,11 +31,16 @@ public sealed class TileSystem : EntitySystem
 
     public const int ChunkSize = 16;
 
+    private int _tileStackLimit;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<GridInitializeEvent>(OnGridStartup);
         SubscribeLocalEvent<TileHistoryComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<TileHistoryComponent, FloorTileAttemptEvent>(OnFloorTileAttempt);
+
+        _cfg.OnValueChanged(CCVars.TileStackLimit, t => _tileStackLimit = t, true);
     }
 
     private void OnGetState(EntityUid uid, TileHistoryComponent component, ref ComponentGetState args)
@@ -197,6 +204,10 @@ public sealed class TileSystem : EntitySystem
                 chunk.History[key] = stack;
             }
 
+            //Prevent the doomstack
+            if (stack.Count >= _tileStackLimit && _tileStackLimit != 0)
+                return false;
+
             //Push current tile to the stack, if not empty
             if (!tileref.Tile.IsEmpty)
             {
@@ -290,5 +301,16 @@ public sealed class TileSystem : EntitySystem
         _maps.SetTile(gridUid, mapGrid, indices, new Tile(previousDef.TileId));
 
         return true;
+    }
+
+    private void OnFloorTileAttempt(Entity<TileHistoryComponent> ent, ref FloorTileAttemptEvent args)
+    {
+        if (_tileStackLimit == 0)
+            return;
+        var chunkIndices = SharedMapSystem.GetChunkIndices(args.GridIndices, ChunkSize);
+        if (!ent.Comp.ChunkHistory.TryGetValue(chunkIndices, out var chunk) ||
+            !chunk.History.TryGetValue(args.GridIndices, out var stack))
+            return;
+        args.Cancelled = stack.Count >= _tileStackLimit; // greater or equals because the attempt itself counts as a tile we're trying to place
     }
 }

@@ -33,12 +33,12 @@ public sealed class TileHistoryState : ComponentState
 public sealed class TileHistoryDeltaState : ComponentState, IComponentDeltaState<TileHistoryState>
 {
     public Dictionary<Vector2i, TileHistoryChunk> ChunkHistory;
-    public HashSet<Vector2i> AllChunks;
+    public HashSet<Vector2i> AllHistoryChunks;
 
-    public TileHistoryDeltaState(Dictionary<Vector2i, TileHistoryChunk> chunkHistory, HashSet<Vector2i> allChunks)
+    public TileHistoryDeltaState(Dictionary<Vector2i, TileHistoryChunk> chunkHistory, HashSet<Vector2i> allHistoryChunks)
     {
         ChunkHistory = chunkHistory;
-        AllChunks = allChunks;
+        AllHistoryChunks = allHistoryChunks;
     }
 
     public void ApplyToFullState(TileHistoryState state)
@@ -46,7 +46,7 @@ public sealed class TileHistoryDeltaState : ComponentState, IComponentDeltaState
         var toRemove = new List<Vector2i>();
         foreach (var key in state.ChunkHistory.Keys)
         {
-            if (!AllChunks.Contains(key))
+            if (!AllHistoryChunks.Contains(key))
                 toRemove.Add(key);
         }
 
@@ -72,7 +72,7 @@ public sealed class TileHistoryDeltaState : ComponentState, IComponentDeltaState
 
         foreach (var (indices, chunk) in state.ChunkHistory)
         {
-            if (AllChunks.Contains(indices))
+            if (AllHistoryChunks.Contains(indices))
                 chunks.TryAdd(indices, new TileHistoryChunk(chunk));
         }
 

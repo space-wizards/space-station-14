@@ -184,7 +184,7 @@ public sealed class FloorTileSystem : EntitySystem
             return true;
 
         // Check whitelist match
-        if (tileDef.BaseWhitelist.Any() && tileDef.BaseWhitelist.Contains(currentTurfId))
+        if (tileDef.BaseWhitelist.Count > 0 && tileDef.BaseWhitelist.Contains(currentTurfId))
             return true;
 
         return false;
