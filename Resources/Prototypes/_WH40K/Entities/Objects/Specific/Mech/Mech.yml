@@ -1,0 +1,45 @@
+- type: entity
+  id: MechSentinel
+  parent: BaseMech
+  suffix: WH40K
+  name: Часовой
+  description: placeholder.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: _WH40K/Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base", "enum.DamageStateVisualLayers.Base", "movement"]
+      state: sentinel
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: sentinel
+    openState: sentinel-open
+    brokenState: sentinel-broken
+    mechToPilotDamageMultiplier: 0.75
+    pilotWhitelist:
+      components:
+        - HumanoidAppearance
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: sentinel-moving
+    noMovementLayers:
+      movement:
+        state: sentinel
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
+
+- type: entity
+  id: MechSentinelBattery
+  parent: MechSentinel
+  suffix: Battery, WH40K
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
