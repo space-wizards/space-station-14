@@ -1,19 +1,14 @@
 using Content.Shared.Actions;
-using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
-using Content.Shared.Examine;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
+using Content.Shared.Examine;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -23,7 +18,6 @@ namespace Content.Shared.Ninja.Systems;
 public sealed class DashAbilitySystem : EntitySystem
 {
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
@@ -59,9 +53,6 @@ public sealed class DashAbilitySystem : EntitySystem
     /// </summary>
     private void OnDash(Entity<DashAbilityComponent> ent, ref DashEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         var (uid, comp) = ent;
         var user = args.Performer;
         if (!CheckDash(uid, user))
