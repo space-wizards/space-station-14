@@ -6,13 +6,13 @@ namespace Content.Shared.Research.Components;
 /// <summary>
 /// Component for stealing technologies from a R&D server, when gloves are enabled.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedResearchStealerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ResearchStealerSystem))]
 public sealed partial class ResearchStealerComponent : Component
 {
     /// <summary>
     /// Time taken to steal research from a server
     /// </summary>
-    [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(20);
 
     /// <summary>

@@ -7,33 +7,33 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Research.Components;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedResearchSystem), typeof(SharedLatheSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(ResearchSystem), typeof(SharedLatheSystem)), AutoGenerateComponentState]
 public sealed partial class TechnologyDatabaseComponent : Component
 {
     /// <summary>
     /// A main discipline that locks out other discipline technology past a certain tier.
     /// </summary>
     [AutoNetworkedField]
-    [DataField("mainDiscipline", customTypeSerializer: typeof(PrototypeIdSerializer<TechDisciplinePrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<TechDisciplinePrototype>))]
     public string? MainDiscipline;
 
     [AutoNetworkedField]
-    [DataField("currentTechnologyCards")]
-    public List<string> CurrentTechnologyCards = new();
+    [DataField]
+    public List<string> CurrentTechnologyCards = [];
 
     /// <summary>
     /// Which research disciplines are able to be unlocked
     /// </summary>
     [AutoNetworkedField]
     [DataField]
-    public List<ProtoId<TechDisciplinePrototype>> SupportedDisciplines = new();
+    public List<ProtoId<TechDisciplinePrototype>> SupportedDisciplines = [];
 
     /// <summary>
     /// The ids of all the technologies which have been unlocked.
     /// </summary>
     [AutoNetworkedField]
     [DataField]
-    public List<ProtoId<TechnologyPrototype>> UnlockedTechnologies = new();
+    public List<ProtoId<TechnologyPrototype>> UnlockedTechnologies = [];
 
     /// <summary>
     /// The ids of all the lathe recipes which have been unlocked.
@@ -42,7 +42,7 @@ public sealed partial class TechnologyDatabaseComponent : Component
     /// todo: if you unlock all the recipes in a tech, it doesn't count as unlocking the tech. sadge
     [AutoNetworkedField]
     [DataField]
-    public List<ProtoId<LatheRecipePrototype>> UnlockedRecipes = new();
+    public List<ProtoId<LatheRecipePrototype>> UnlockedRecipes = [];
 }
 
 /// <summary>

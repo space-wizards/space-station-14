@@ -19,7 +19,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedResearchSystem _research = default!;
+    [Dependency] private readonly ResearchSystem _research = default!;
     [Dependency] private readonly SharedLatheSystem _lathe = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
@@ -66,14 +66,14 @@ public sealed class TechnologyDiskSystem : EntitySystem
         if (args.Handled || !args.CanReach || args.Target is not { } target)
             return;
 
-        if (!HasComp<ResearchServerComponent>(target) || !TryComp<TechnologyDatabaseComponent>(target, out var database))
+        if (!HasComp<ResearchServerComponent>(target) || !HasComp<TechnologyDatabaseComponent>(target))
             return;
 
         if (ent.Comp.Recipes != null)
         {
             foreach (var recipe in ent.Comp.Recipes)
             {
-                _research.AddLatheRecipe(target, recipe, database);
+                _research.AddLatheRecipe(target, recipe);
             }
         }
         _popup.PopupClient(Loc.GetString("tech-disk-inserted"), target, args.User);
