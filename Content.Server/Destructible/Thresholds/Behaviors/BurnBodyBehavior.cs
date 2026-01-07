@@ -11,6 +11,11 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class BurnBodyBehavior : IThresholdBehavior
 {
+    /// <summary>
+    ///     Text displayed upon destruction
+    /// </summary>
+    [DataField("description", required: true)]
+    public LocId Description { get; set; }
 
     public void Execute(EntityUid bodyId, DestructibleSystem system, EntityUid? cause = null)
     {
@@ -27,7 +32,7 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
         }
 
         var bodyIdentity = Identity.Entity(bodyId, system.EntityManager);
-        sharedPopupSystem.PopupCoordinates(Loc.GetString("bodyburn-text-others", ("name", bodyIdentity)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
+        sharedPopupSystem.PopupCoordinates(Loc.GetString(Description, ("name", bodyIdentity)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
 
         system.EntityManager.QueueDeleteEntity(bodyId);
     }
