@@ -15,7 +15,7 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
     ///     The red text displayed upon destruction
     /// </summary>
     [DataField]
-    public LocId PopupMessage { get; set; } = "bodyburn-text-others";
+    public LocId PopupMessage = "bodyburn-text-others";
 
     public void Execute(EntityUid bodyId, DestructibleSystem system, EntityUid? cause = null)
     {
