@@ -13,6 +13,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
@@ -40,25 +41,34 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         base.Initialize();
         InitialiseMelee();
 
+        SubscribeLocalEvent<ItemToggleExecutionComponent, ItemToggledEvent>(OnItemToggleExecution);
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
         SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
     }
 
-    private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
+    private void OnItemToggleExecution(Entity<ItemToggleExecutionComponent> entity, ref ItemToggledEvent args)
+    {
+        if (!TryComp<ExecutionComponent>(entity.Owner, out var executionComponent))
+            return;
+
+        executionComponent.Enabled = args.Activated;
+        Dirty(entity.Owner, entity.Comp);
+    }
+
+    private void OnGetInteractionsVerbs(Entity<ExecutionComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (args.Hands == null || args.Using == null || !args.CanAccess || !args.CanInteract)
             return;
 
         var attacker = args.User;
-        var weapon = args.Using.Value;
         var victim = args.Target;
 
-        if (!CanBeExecuted(victim, attacker))
+        if (!CanBeExecuted(victim, attacker, entity))
             return;
 
         UtilityVerb verb = new()
         {
-            Act = () => TryStartExecutionDoAfter(weapon, victim, attacker, comp),
+            Act = () => TryStartExecutionDoAfter(entity, victim, attacker),
             Impact = LogImpact.High,
             Text = Loc.GetString("execution-verb-name"),
             Message = Loc.GetString("execution-verb-message"),
@@ -67,22 +77,22 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void TryStartExecutionDoAfter(EntityUid weapon, EntityUid victim, EntityUid attacker, ExecutionComponent comp)
+    private void TryStartExecutionDoAfter(Entity<ExecutionComponent> weapon, EntityUid victim, EntityUid attacker)
     {
-        if (!CanBeExecuted(victim, attacker))
+        if (!CanBeExecuted(victim, attacker, weapon))
             return;
 
-        var internalMessage = comp.InternalMeleeExecutionMessage;
-        var externalMessage = comp.ExternalMeleeExecutionMessage;
+        var internalMessage = weapon.Comp.InternalMeleeExecutionMessage;
+        var externalMessage = weapon.Comp.ExternalMeleeExecutionMessage;
         if (attacker == victim)
         {
-            internalMessage = comp.InternalSelfExecutionMessage;
-            externalMessage = comp.ExternalSelfExecutionMessage;
+            internalMessage = weapon.Comp.InternalSelfExecutionMessage;
+            externalMessage = weapon.Comp.ExternalSelfExecutionMessage;
         }
         ShowPopups(internalMessage, externalMessage, attacker, victim, weapon);
 
         var doAfter =
-            new DoAfterArgs(EntityManager, attacker, comp.DoAfterDuration, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
+            new DoAfterArgs(EntityManager, attacker, weapon.Comp.DoAfterDuration, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
             {
                 BreakOnMove = true,
                 BreakOnDamage = true,
@@ -111,8 +121,12 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         );
     }
 
-    public bool CanBeExecuted(EntityUid victim, EntityUid attacker)
+    public bool CanBeExecuted(EntityUid victim, EntityUid attacker, Entity<ExecutionComponent> weapon)
     {
+        // Can't execute something if the component says No!
+        if (!weapon.Comp.Enabled)
+            return false;
+
         // No point executing someone if they can't take damage
         if (!HasComp<DamageableComponent>(victim))
             return false;
@@ -142,7 +156,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
             return;
 
-        if (!CanBeExecuted(args.Target.Value, args.User))
+        if (!CanBeExecuted(args.Target.Value, args.User, entity))
             return;
 
         var ev = new BeforeExecutionEvent();

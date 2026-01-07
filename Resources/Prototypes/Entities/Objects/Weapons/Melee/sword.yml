@@ -2,7 +2,7 @@
 
 #BaseSword
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, SlashExecution]
   id: BaseSword
   abstract: true
   components:

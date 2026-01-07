@@ -1,6 +1,6 @@
 - type: entity
   name: broken bottle
-  parent: [BaseItem, SharpExecution]
+  parent: [BaseItem, SlashExecution]
   id: BrokenBottle
   description: In Space Glasgow this is called a conversation starter.
   components:

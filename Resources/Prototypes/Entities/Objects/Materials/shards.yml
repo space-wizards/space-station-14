@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseItem, SharpExecution]
+  parent: [BaseItem, SlashExecution]
   id: ShardBase
   description: It's a shard of some unknown material.
   components:

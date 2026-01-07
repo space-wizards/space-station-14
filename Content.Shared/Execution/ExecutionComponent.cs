@@ -10,6 +10,13 @@ namespace Content.Shared.Execution;
 public sealed partial class ExecutionComponent : Component
 {
     /// <summary>
+    /// Can this entity actually execute right now?
+    /// A retracted esword cannot be used to execute someone, for example.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
+
+    /// <summary>
     /// How long the execution duration lasts.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -19,47 +26,47 @@ public sealed partial class ExecutionComponent : Component
     /// Shown to the person performing the melee execution (attacker) upon starting a melee execution.
     /// </summary>
     [DataField]
-    public LocId InternalMeleeExecutionMessage = "execution-popup-melee-initial-internal";
+    public LocId InternalMeleeExecutionMessage;
 
     /// <summary>
     /// Shown to bystanders and the victim of a melee execution when a melee execution is started.
     /// </summary>
     [DataField]
-    public LocId ExternalMeleeExecutionMessage = "execution-popup-melee-initial-external";
+    public LocId ExternalMeleeExecutionMessage;
 
     /// <summary>
     /// Shown to the attacker upon completion of a melee execution.
     /// </summary>
     [DataField]
-    public LocId CompleteInternalMeleeExecutionMessage = "execution-popup-melee-complete-internal";
+    public LocId CompleteInternalMeleeExecutionMessage;
 
     /// <summary>
     /// Shown to bystanders and the victim of a melee execution when a melee execution is completed.
     /// </summary>
     [DataField]
-    public LocId CompleteExternalMeleeExecutionMessage = "execution-popup-melee-complete-external";
+    public LocId CompleteExternalMeleeExecutionMessage;
 
     /// <summary>
     /// Shown to the person performing the self execution when starting one.
     /// </summary>
     [DataField]
-    public LocId InternalSelfExecutionMessage = "execution-popup-melee-self-initial-internal";
+    public LocId InternalSelfExecutionMessage;
 
     /// <summary>
     /// Shown to bystanders near a self execution when one is started.
     /// </summary>
     [DataField]
-    public LocId ExternalSelfExecutionMessage = "execution-popup-melee-self-initial-external";
+    public LocId ExternalSelfExecutionMessage;
 
     /// <summary>
     /// Shown to the person performing a self execution upon completion of a do-after or on use of /suicide with a weapon that has the Execution component.
     /// </summary>
     [DataField]
-    public LocId CompleteInternalSelfExecutionMessage = "execution-popup-melee-self-complete-internal";
+    public LocId CompleteInternalSelfExecutionMessage;
 
     /// <summary>
     /// Shown to bystanders when a self execution is completed or a suicide via execution weapon happens nearby.
     /// </summary>
     [DataField]
-    public LocId CompleteExternalSelfExecutionMessage = "execution-popup-melee-self-complete-external";
+    public LocId CompleteExternalSelfExecutionMessage;
 }

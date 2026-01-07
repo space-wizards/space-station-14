@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, SharpExecution]
+  parent: [BaseItem, SlashExecution]
   id: BaseKnife
   abstract: true
   components:

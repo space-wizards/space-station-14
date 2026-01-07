@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseItem, SharpExecution]
+  parent: [BaseItem, SlashExecution]
   id: ShardCrystalBase
   name: crystal shard
   description:  A small piece of crystal.

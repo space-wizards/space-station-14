@@ -1,13 +1,27 @@
 - type: entity
-  id: SharpExecution
+  id: SlashExecution
   abstract: true
   components:
   - type: Execution
-    internalMeleeExecutionMessage: execution-popup-melee-initial-internal
-    externalMeleeExecutionMessage: execution-popup-melee-initial-external
-    completeInternalMeleeExecutionMessage: execution-popup-melee-complete-internal
-    completeExternalMeleeExecutionMessage: execution-popup-melee-complete-external
-    internalSelfExecutionMessage: execution-popup-melee-self-initial-internal
-    externalSelfExecutionMessage: execution-popup-melee-self-initial-external
-    completeInternalSelfExecutionMessage: execution-popup-melee-self-complete-internal
-    completeExternalSelfExecutionMessage: execution-popup-melee-self-complete-external
+    internalMeleeExecutionMessage: execution-popup-melee-slash-initial-internal
+    externalMeleeExecutionMessage: execution-popup-melee-slash-initial-external
+    completeInternalMeleeExecutionMessage: execution-popup-melee-slash-complete-internal
+    completeExternalMeleeExecutionMessage: execution-popup-melee-slash-complete-external
+    internalSelfExecutionMessage: execution-popup-melee-slash-self-initial-internal
+    externalSelfExecutionMessage: execution-popup-melee-slash-self-initial-external
+    completeInternalSelfExecutionMessage: execution-popup-melee-slash-self-complete-internal
+    completeExternalSelfExecutionMessage: execution-popup-melee-slash-self-complete-external
+
+- type: entity
+  id: PierceExecution
+  abstract: true
+  components:
+  - type: Execution
+    internalMeleeExecutionMessage: execution-popup-melee-pierce-initial-internal
+    externalMeleeExecutionMessage: execution-popup-melee-pierce-initial-external
+    completeInternalMeleeExecutionMessage: execution-popup-melee-pierce-complete-internal
+    completeExternalMeleeExecutionMessage: execution-popup-melee-pierce-complete-external
+    internalSelfExecutionMessage: execution-popup-melee-pierce-self-initial-internal
+    externalSelfExecutionMessage: execution-popup-melee-pierce-self-initial-external
+    completeInternalSelfExecutionMessage: execution-popup-melee-pierce-self-complete-internal
+    completeExternalSelfExecutionMessage: execution-popup-melee-pierce-self-complete-external
