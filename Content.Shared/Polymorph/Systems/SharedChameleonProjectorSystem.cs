@@ -274,8 +274,6 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         ClearDisguise((disguise.Projector, proj), ent);
         _toggle.TryDeactivate(disguise.Projector);
 
-        proj.Disguised = null;
-
         RemComp<ChameleonDisguisedComponent>(ent);
         return true;
     }
