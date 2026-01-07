@@ -90,6 +90,10 @@
       reagents:
       - Lexorin
       - Lead
+    - quantity: 20
+      weight: .1 # just so it doesn't happen every round
+      reagents:
+      - CorgiJuice
 
 - type: entity
   name: strange pill

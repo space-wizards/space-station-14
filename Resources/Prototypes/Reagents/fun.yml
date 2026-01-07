@@ -404,13 +404,12 @@
   color: "#ed9715"
   metabolisms:
     Poison:
-      metabolismRate: 0.2
+      metabolismRate: 0.5
       effects:
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
-          min: 15
         damage:
           types:
             Cellular: 0.5
@@ -419,14 +418,14 @@
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
-          min: 50
+          min: 15
       - !type:AdjustReagent
         reagent: CorgiJuice
-        amount: -20
+        amount: -5 # 10 Genetic damage after transformation
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
-          min: 50
+          min: 15
 
 - type: reagent
   id: Felinase
