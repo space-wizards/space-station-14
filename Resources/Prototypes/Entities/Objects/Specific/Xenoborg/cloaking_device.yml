@@ -28,6 +28,9 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellSmallNuclear
         disableEject: true
+        whitelist:
+          tags:
+          - PowerCell
         swap: false
 
 - type: entity
