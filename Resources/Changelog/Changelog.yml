@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: CaramelOrdnance
-  changes:
-  - message: Lye reagent
-    type: Add
-  - message: Recipes for all soap bars
-    type: Add
-  id: 8857
-  time: '2025-08-16T06:59:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39303
 - author: youtissoum
   changes:
   - message: The usage delay of the bananium horn is now 3 seconds.
@@ -3893,3 +3884,10 @@
   id: 9360
   time: '2026-01-07T22:03:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42184
+- author: kontakt
+  changes:
+  - message: The Ninja's spider clan charge must now be planted on a wall or window.
+    type: Tweak
+  id: 9361
+  time: '2026-01-07T22:19:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41208
