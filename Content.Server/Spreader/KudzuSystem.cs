@@ -102,10 +102,10 @@ public sealed class KudzuSystem : EntitySystem
         if (!component.BlockVisionAtLevel.HasValue)
             return;
 
-        var shouldBlock = component.GrowthLevel >= component.BlockVisionAtLevel.Value;
-
         if (!TryComp<OccluderComponent>(uid, out var occluder))
             return;
+
+        var shouldBlock = component.GrowthLevel >= component.BlockVisionAtLevel.Value;
 
         _occluder.SetEnabled(uid, shouldBlock, occluder);
     }
