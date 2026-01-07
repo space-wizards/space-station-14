@@ -26,15 +26,15 @@ public sealed class SharedSuicideSystem : EntitySystem
         if (!TryComp<MobThresholdsComponent>(target, out var mobThresholds))
             return;
 
+        // Removing structural because it causes issues against entities that cannot take structural damage,
+        // then getting the total to use in calculations for spreading out damage.
+        appliedDamageSpecifier.DamageDict.Remove("Structural");
+
         // Mob thresholds are sorted from alive -> crit -> dead,
         // grabbing the last key will give us how much damage is needed to kill a target from zero
         // The exact lethal damage amount is adjusted based on their current damage taken
         var lethalAmountOfDamage = mobThresholds.Thresholds.Keys.Last() - target.Comp.TotalDamage;
         var totalDamage = appliedDamageSpecifier.GetTotal();
-
-        // Removing structural because it causes issues against entities that cannot take structural damage,
-        // then getting the total to use in calculations for spreading out damage.
-        appliedDamageSpecifier.DamageDict.Remove("Structural");
 
         // Split the total amount of damage needed to kill the target by every damage type in the DamageSpecifier
         foreach (var (key, value) in appliedDamageSpecifier.DamageDict)
