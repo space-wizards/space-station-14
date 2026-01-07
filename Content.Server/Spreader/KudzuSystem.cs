@@ -157,15 +157,18 @@ public sealed class KudzuSystem : EntitySystem
 
             kudzu.GrowthLevel += 1;
 
+            if (kudzu.GrowthLevel >= 3)
+            {
+                // why cache when you can simply cease to be? Also saves a bit of memory/time.
+                RemCompDeferred(uid, grow);
+            }
+
             if (appearanceQuery.TryGetComponent(uid, out var appearance))
             {
                 _appearance.SetData(uid, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel, appearance);
             }
 
             UpdateOcclusion(uid, kudzu);
-
-            if (kudzu.GrowthLevel >= 3)
-                RemCompDeferred(uid, grow);
         }
     }
 }
