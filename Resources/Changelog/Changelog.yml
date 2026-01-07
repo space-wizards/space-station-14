@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: rumaks-xyz, SlamBamActionman
-  changes:
-  - message: Advanced Brute chemicals, Insuzine, Ultravasculine and Sigynate have
-      had changes to their healing, metabolism rates and behaviors.
-    type: Tweak
-  - message: Bicardine and Advanced Brute Chemicals once again create Razorium when
-      mixed.
-    type: Tweak
-  id: 8853
-  time: '2025-08-14T17:32:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39472
 - author: ScholarNZL
   changes:
   - message: Added IC visibility of "animal organs", e.g "animal lungs" etc, to facilitate
@@ -3899,3 +3888,13 @@
   id: 9356
   time: '2026-01-07T01:32:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42146
+- author: ScarKy0
+  changes:
+  - message: The Chameleon Projector now requires a battery to operate. It spawns
+      with a medium powercell, giving it a starting battery life of 3 minutes.
+    type: Add
+  - message: Lowered the price of the Chameleon Projector to 3TC.
+    type: Tweak
+  id: 9357
+  time: '2026-01-07T06:05:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42271
