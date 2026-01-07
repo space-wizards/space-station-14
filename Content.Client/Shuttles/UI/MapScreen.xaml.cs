@@ -153,7 +153,7 @@ public sealed partial class MapScreen : BoxContainer
                 break;
         }
 
-        if (IsFTLBlocked())
+        if (IsPingBlocked())
         {
             MapRebuildButton.Disabled = true;
             ClearMapObjects();
@@ -408,9 +408,24 @@ public sealed partial class MapScreen : BoxContainer
         }
     }
 
+    /// <summary>
+    /// Returns true if we shouldn't be able to select the Scan for Objects button.
+    /// </summary>
+    private bool IsPingBlocked()
+    {
+        switch (_state)
+        {
+            case FTLState.Available:
+            case FTLState.Cooldown:
+                return false;
+            default:
+                return true;
+        }
+    }
+
     private void OnMapObjectPress(IMapObject mapObject)
     {
-        if (IsFTLBlocked())
+        if (IsPingBlocked())
             return;
 
         var coordinates = _shuttles.GetMapCoordinates(mapObject);
@@ -506,7 +521,7 @@ public sealed partial class MapScreen : BoxContainer
             BumpMapDequeue();
         }
 
-        if (!IsFTLBlocked() && _nextPing < curTime)
+        if (!IsPingBlocked() && _nextPing < curTime)
         {
             MapRebuildButton.Disabled = false;
         }
