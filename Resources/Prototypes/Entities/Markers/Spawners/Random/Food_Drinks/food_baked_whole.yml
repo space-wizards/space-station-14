@@ -1,65 +1,68 @@
 - type: entity
+  parent: MarkerBase
   id: RandomFoodBakedWhole
   name: random baked food spawner
   suffix: Whole
-  parent: MarkerBase
   placement:
     mode: AlignTileAny
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Food/Baked/pie.rsi
-        state: plain
-  - type: RandomSpawner
-  #small item
-    prototypes:
-      - FoodBreadVolcanic
-      - FoodBreadPlain
-      - FoodBreadMeat
-      - FoodBreadCorn
-      - FoodBreadSausage
-      - FoodBreadBanana
-      - FoodBreadTofu
-      - FoodBreadCreamcheese
-      - FoodBreadBaguette
-      - FoodCakeBlueberry
-      - FoodCakePlain
-      - FoodCakeCheese
-      - FoodCakeCarrot
-      - FoodCakeOrange
-      - FoodCakeLime
-      - FoodCakeLemon
-      - FoodCakeChocolate
-      - FoodCakeApple
-      - FoodCakeSlime
-      - FoodCakePumpkin
-      - FoodCakeChristmas
-      - FoodCakeBirthday
-      - FoodCakeVanilla
-      - FoodCakeBerryDelight
-      - FoodCakeCotton
-      - FoodPieApple
-      - FoodPieBaklava
-      - FoodPieBananaCream
-      - FoodPieClafoutis
-      - FoodPieCherry
-      - FoodPieMeat
-      - FoodPieFrosty
-      - FoodBakedBrownieBatch
-    chance: 0.8
+    - state: red
+    - sprite: Objects/Consumable/Food/Baked/pie.rsi
+      state: plain
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector #small item
+        weight: 0.95
+        prob: 0.8
+        children:
+        - id: FoodBreadVolcanic
+        - id: FoodBreadPlain
+        - id: FoodBreadMeat
+        - id: FoodBreadCorn
+        - id: FoodBreadSausage
+        - id: FoodBreadBanana
+        - id: FoodBreadTofu
+        - id: FoodBreadCreamcheese
+        - id: FoodBreadBaguette
+        - id: FoodCakeBlueberry
+        - id: FoodCakePlain
+        - id: FoodCakeCheese
+        - id: FoodCakeCarrot
+        - id: FoodCakeOrange
+        - id: FoodCakeLime
+        - id: FoodCakeLemon
+        - id: FoodCakeChocolate
+        - id: FoodCakeApple
+        - id: FoodCakeSlime
+        - id: FoodCakePumpkin
+        - id: FoodCakeChristmas
+        - id: FoodCakeBirthday
+        - id: FoodCakeVanilla
+        - id: FoodCakeBerryDelight
+        - id: FoodCakeCotton
+        - id: FoodPieApple
+        - id: FoodPieBaklava
+        - id: FoodPieBananaCream
+        - id: FoodPieClafoutis
+        - id: FoodPieCherry
+        - id: FoodPieMeat
+        - id: FoodPieFrosty
+        - id: FoodBakedBrownieBatch
+      - !type:GroupSelector #rare
+        weight: 0.05
+        children:
+        - id: FoodBreadMeatSpider
+        - id: FoodBreadMimana
+        - id: FoodCakeBrain
+        - id: FoodCakeClown
+        - id: FoodCakeSpaceman
+        - id: FoodPieXeno
+        - id: FoodPieAmanita
+        - id: FoodPiePlump
+        - id: FoodBreadMeatXeno
+        - id: FoodPieXeno
+        - id: FoodBakedCannabisBrownieBatch
     offset: 0.0
-    #rare
-    rarePrototypes:
-      - FoodBreadMeatSpider
-      - FoodBreadMimana
-      - FoodCakeBrain
-      - FoodCakeClown
-      - FoodCakeSpaceman
-      - FoodPieXeno
-      - FoodPieAmanita
-      - FoodPiePlump
-      - FoodBreadMeatXeno
-      - FoodPieXeno
-      - FoodBakedCannabisBrownieBatch
-    rareChance: 0.05
