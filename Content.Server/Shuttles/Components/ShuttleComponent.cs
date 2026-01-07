@@ -72,14 +72,14 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// if true, the value in FTLCooldownOverrideTimer will be used instead of the default FTLCooldown CCVar.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [DataField]
         public bool FTLCooldownOverrideEnable = false;
         
         /// <summary>
         /// Optional override for the FTL cooldown for this shuttle.
         /// If FTLCooldownOverride is true, this value will be used instead of the default FTLCooldown CCVar.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [DataField]
         public float FTLCooldownOverrideTimer = 10f;
     }
 }
