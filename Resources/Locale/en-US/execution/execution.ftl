@@ -20,10 +20,10 @@ execution-popup-melee-slash-self-complete-external = { CAPITALIZE(THE($attacker)
 # Pierce
 execution-popup-melee-pierce-initial-internal = You ready {THE($weapon)} against {THE($victim)}'s chest.
 execution-popup-melee-pierce-initial-external = { CAPITALIZE(THE($attacker)) } readies {POSS-ADJ($attacker)} {$weapon} against the chest of {THE($victim)}.
-execution-popup-melee-pierce-complete-internal = You drive ${THE(weapon)} into {POSS-ADJ(victim)} chest!
-execution-popup-melee-pierce-complete-external = { CAPITALIZE(THE($attacker)) } drives the ${THE(weapon)} into the chest of {$victim}!
+execution-popup-melee-pierce-complete-internal = You drive {THE($weapon)} into {POSS-ADJ($victim)} chest!
+execution-popup-melee-pierce-complete-external = { CAPITALIZE(THE($attacker)) } drives the {THE($weapon)} into the chest of {$victim}!
 
 execution-popup-melee-pierce-self-initial-internal = You ready {THE($weapon)} against your own chest.
 execution-popup-melee-pierce-self-initial-external = { CAPITALIZE(THE($attacker)) } readies {POSS-ADJ($attacker)} {$weapon} against their own chest.
-execution-popup-melee-pierce-self-complete-internal = You drive the ${THE(weapon)} into your own chest!
-execution-popup-melee-pierce-self-complete-external = { CAPITALIZE(THE($attacker)) } drives ${POSS-ADJ($attacker)} {$weapon} into their own chest!
+execution-popup-melee-pierce-self-complete-internal = You drive the {THE($weapon)} into your own chest!
+execution-popup-melee-pierce-self-complete-external = { CAPITALIZE(THE($attacker)) } drives {POSS-ADJ($attacker)} {$weapon} into their own chest!
