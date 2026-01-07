@@ -266,7 +266,7 @@
   - type: ProximityDetector
     range: 12
     components:
-    - type: Spectral # reacts to AI eye, intentional
+    - type: Spectral # ghosts, jaunts, reventants
   - type: Beeper
     isMuted: true
     minBeepInterval: 0.25

@@ -15,7 +15,7 @@
       boardPrototype: Crowbar
   - type: Tag
     tags:
-      - TabletopBoard
+    - TabletopBoard
 
 - type: entity
   abstract: true

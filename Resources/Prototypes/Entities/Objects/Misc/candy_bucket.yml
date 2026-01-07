@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: CandyBucket
-  name: "candy bucket"
+  name: candy bucket
   description: A festive bucket for all your treats.
   components:
   - type: Sprite
