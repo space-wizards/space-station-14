@@ -52,7 +52,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
             return;
 
         executionComponent.Enabled = args.Activated;
-        Dirty(entity.Owner, entity.Comp);
+        Dirty(entity.Owner, executionComponent);
     }
 
     private void OnGetInteractionsVerbs(Entity<ExecutionComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
