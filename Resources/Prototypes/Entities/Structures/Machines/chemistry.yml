@@ -1,0 +1,36 @@
+- type: entity
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  id: MachineThermobath
+  name: thermobath
+  description: A precision-controlled oil bath capable of both heating and cooling beakers.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/hotplate.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - state: icon
+  - type: Thermobath
+  - type: Thermoregulator
+    heatingPower: 600
+    coolingPower: 200
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ActivatableUI
+    key: enum.ThermobathUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThermobathUiKey.Key:
+        type: ThermobathBoundUserInterface
+  - type: Machine
+    board: ThermobathMachineCircuitboard
+  - type: Appearance
