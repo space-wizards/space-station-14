@@ -41,7 +41,9 @@ public sealed class DrunkOverlay : Overlay
     private const float BoozePowerScale = 8f;
 
     private float _visualScale = 0;
-    private float _visualPowerScale = 0.35f;
+    private float _timeScale;
+    private float _phase1 = 1.0f;
+    private float _phase2 = 0.5f;
 
     public DrunkOverlay()
     {
@@ -52,7 +54,9 @@ public sealed class DrunkOverlay : Overlay
 
     private void OnReducedMotionChanged(bool reducedMotion)
     {
-        _visualPowerScale = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.35f : 1.0f;
+        _timeScale = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.0f : 1.0f;
+        _phase1 = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.0f : 1.0f;
+        _phase2 = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.01f : 0.0f;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -94,7 +98,10 @@ public sealed class DrunkOverlay : Overlay
         var handle = args.WorldHandle;
 
         _drunkShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _drunkShader.SetParameter("boozePower", _visualScale * _visualPowerScale);
+        _drunkShader.SetParameter("boozePower", _visualScale);
+        _drunkShader.SetParameter("timeScale", _timeScale);
+        _drunkShader.SetParameter("phase1", _phase1);
+        _drunkShader.SetParameter("phase2", _phase2);
         handle.UseShader(_drunkShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
