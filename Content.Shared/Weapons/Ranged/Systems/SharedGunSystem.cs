@@ -201,9 +201,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (weaponEvent.Handled
             && weaponEvent.Weapon.HasValue
-            && TryComp(weaponEvent.Weapon.Value, out GunComponent? gunComp))
+            && TryComp(weaponEvent.Weapon.Value, out GunComponent? gunEventComp))
         {
-            gun = (weaponEvent.Weapon.Value, gunComp);
+            gun = (weaponEvent.Weapon.Value, gunEventComp);
             return true;
         }
 
