@@ -189,3 +189,15 @@
           rolls: 2
         - id: ClothingMaskSterile
           amount: 2
+
+- type: entity
+  parent: CrateMedical
+  id: CrateImplantExtractors
+  name: implant extractor crate
+  description: Crate filled with 3 implant extractors.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: Implanter
+        amount: 3
