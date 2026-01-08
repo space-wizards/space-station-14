@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Content.Shared.Research.Systems;
 
-public abstract partial class ResearchSystem : EntitySystem
+public sealed partial class ResearchSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;

@@ -29,8 +29,8 @@ namespace Content.Shared.Research.Disk
                 return;
 
             _research.ModifyServerPoints(args.Target.Value, ent.Comp.Points);
-            _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", ent.Comp.Points)), args.Target.Value, args.User);
-            QueueDel(ent);
+            _popupSystem.PopupClient(Loc.GetString("research-disk-inserted", ("points", ent.Comp.Points)), args.Target.Value, args.User);
+            PredictedQueueDel(ent);
             args.Handled = true;
         }
 

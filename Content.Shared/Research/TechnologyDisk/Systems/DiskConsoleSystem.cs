@@ -36,7 +36,7 @@ public sealed class DiskConsoleSystem : EntitySystem
                 continue;
 
             RemComp(uid, printing);
-            Spawn(console.DiskPrototype, xform.Coordinates);
+            PredictedSpawnAttachedTo(console.DiskPrototype, xform.Coordinates);
         }
     }
 
@@ -55,7 +55,7 @@ public sealed class DiskConsoleSystem : EntitySystem
             return;
 
         _research.ModifyServerPoints(server.Value.AsNullable(), -ent.Comp.PricePerDisk);
-        _audio.PlayPvs(ent.Comp.PrintSound, ent);
+        _audio.PlayPredicted(ent.Comp.PrintSound, ent, ent);
 
         var printing = EnsureComp<DiskConsolePrintingComponent>(ent);
         printing.FinishTime = _timing.CurTime + ent.Comp.PrintDuration;

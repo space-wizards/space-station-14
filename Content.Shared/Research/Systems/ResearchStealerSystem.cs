@@ -68,13 +68,13 @@ public sealed class ResearchStealerSystem : EntitySystem
             return;
 
         var ev = new ResearchStolenEvent(ent, target, []);
-        var count = _random.Next(ent.Comp.MinToSteal, ent.Comp.MaxToSteal + 1);
+        var count = _random.Next(ent.Comp.MinToSteal, ent.Comp.MaxToSteal + 1); // TODO move to RandomPredicted
         for (var i = 0; i < count; i++)
         {
             if (database.UnlockedTechnologies.Count == 0)
                 break;
 
-            var toRemove = _random.Pick(database.UnlockedTechnologies);
+            var toRemove = _random.Pick(database.UnlockedTechnologies); // TODO move to RandomPredicted
             if (_research.TryRemoveTechnology((target, database), toRemove))
                 ev.Techs.Add(toRemove);
         }

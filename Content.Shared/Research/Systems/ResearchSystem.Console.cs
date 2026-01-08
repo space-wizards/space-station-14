@@ -36,7 +36,7 @@ public partial class ResearchSystem
 
         if (TryComp<AccessReaderComponent>(ent, out var access) && !_accessReader.IsAllowed(act, ent, access))
         {
-            _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), act);
+            _popup.PopupClient(Loc.GetString("research-console-no-access-popup"), act);
             return;
         }
 
