@@ -25,6 +25,7 @@
         type: HealthAnalyzerBoundUserInterface
   - type: ItemToggle
     onUse: false
+    onActivate: false
   - type: HealthAnalyzer
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
@@ -45,14 +46,13 @@
 
 - type: entity
   id: HandheldHealthAnalyzer
-  parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
+  parent: [ HandheldHealthAnalyzerUnpowered, BaseHandheldComputer]
   suffix: ""
   components:
   - type: BatteryVisuals
   - type: PowerCellDraw
     drawRate: 1.2 #Calculated for 5 minutes on a small cell
-  - type: ToggleCellDraw
-  - type: ActivatableUIRequiresPowerCell
+    useRate: 0
 
 - type: entity
   id: HandheldHealthAnalyzerEmpty
