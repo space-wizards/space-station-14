@@ -201,7 +201,7 @@
 
 - type: entity
   parent: PinpointerMothership
-  id: PinpointerMothership
+  id: PinpointerMothershipRepaired
   name: repaired core pinpointer
   suffix: Mothership, Repaired
   description: A handheld tracking device that leads to the direction of the Mothership core. This one has seem better days.
