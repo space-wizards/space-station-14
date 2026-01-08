@@ -26,47 +26,47 @@ public sealed partial class ExecutionComponent : Component
     /// Shown to the person performing the melee execution (attacker) upon starting a melee execution.
     /// </summary>
     [DataField]
-    public LocId InternalMeleeExecutionMessage;
+    public LocId InternalMeleeExecutionMessage = string.Empty;
 
     /// <summary>
     /// Shown to bystanders and the victim of a melee execution when a melee execution is started.
     /// </summary>
     [DataField]
-    public LocId ExternalMeleeExecutionMessage;
+    public LocId ExternalMeleeExecutionMessage = string.Empty;
 
     /// <summary>
     /// Shown to the attacker upon completion of a melee execution.
     /// </summary>
     [DataField]
-    public LocId CompleteInternalMeleeExecutionMessage;
+    public LocId CompleteInternalMeleeExecutionMessage = string.Empty;
 
     /// <summary>
     /// Shown to bystanders and the victim of a melee execution when a melee execution is completed.
     /// </summary>
     [DataField]
-    public LocId CompleteExternalMeleeExecutionMessage;
+    public LocId CompleteExternalMeleeExecutionMessage = string.Empty;
 
     /// <summary>
     /// Shown to the person performing the self execution when starting one.
     /// </summary>
     [DataField]
-    public LocId InternalSelfExecutionMessage;
+    public LocId InternalSelfExecutionMessage = string.Empty;
 
     /// <summary>
     /// Shown to bystanders near a self execution when one is started.
     /// </summary>
     [DataField]
-    public LocId ExternalSelfExecutionMessage;
+    public LocId ExternalSelfExecutionMessage = string.Empty;
 
     /// <summary>
     /// Shown to the person performing a self execution upon completion of a do-after or on use of /suicide with a weapon that has the Execution component.
     /// </summary>
     [DataField]
-    public LocId CompleteInternalSelfExecutionMessage;
+    public LocId CompleteInternalSelfExecutionMessage = string.Empty;
 
     /// <summary>
     /// Shown to bystanders when a self execution is completed or a suicide via execution weapon happens nearby.
     /// </summary>
     [DataField]
-    public LocId CompleteExternalSelfExecutionMessage;
+    public LocId CompleteExternalSelfExecutionMessage = string.Empty;
 }
