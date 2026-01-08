@@ -349,6 +349,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-research-server
+  - type: Tag
+    tags:
+    - NinjaBombingTargetBlocker
 
 - type: entity
   parent: DefaultStationBeaconScience
