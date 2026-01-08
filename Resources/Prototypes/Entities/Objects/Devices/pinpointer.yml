@@ -173,7 +173,7 @@
   components:
   - type: Sprite
     layers:
-    - state: pinpointer-station
+    - state: pinpointer-xenoborg
       map: ["enum.PinpointerLayers.Base"]
     - state: pinonnull
       map: ["enum.PinpointerLayers.Screen"]
@@ -194,7 +194,7 @@
         color: "#3a3a3a"
       - state: inhand-right-top
   - type: Icon
-    state: pinpointer-station
+    state: pinpointer-xenoborg
   - type: Pinpointer
     component: MothershipCore
     targetName: the Mothership
