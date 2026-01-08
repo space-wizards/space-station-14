@@ -27,3 +27,25 @@ execution-popup-melee-pierce-self-initial-internal = You ready {THE($weapon)} ag
 execution-popup-melee-pierce-self-initial-external = { CAPITALIZE(THE($attacker)) } readies {POSS-ADJ($attacker)} {$weapon} against their own chest.
 execution-popup-melee-pierce-self-complete-internal = You drive the {THE($weapon)} into your own chest!
 execution-popup-melee-pierce-self-complete-external = { CAPITALIZE(THE($attacker)) } drives {POSS-ADJ($attacker)} {$weapon} into their own chest!
+
+# Laser Gun
+execution-popup-gun-laser-initial-internal = You place the barrel of {THE($weapon)} against the side of {THE($victim)}'s head.
+execution-popup-gun-laser-initial-external = { CAPITALIZE(THE($attacker)) } places the barrel of {THE($weapon)} against the side of {THE($victim)}'s head.
+execution-popup-gun-laser-complete-internal = You melt the insides of {THE($victim)}'s head!
+execution-popup-gun-laser-complete-external = { CAPITALIZE(THE($attacker)) } melts the insides of {THE($victim)}'s head!
+
+execution-popup-gun-laser-self-initial-internal = You place the barrel of {THE($weapon)} against the side of your head.
+execution-popup-gun-laser-self-initial-external = { CAPITALIZE(THE($attacker)) } places the barrel of {THE($weapon)} against the side of their head.
+execution-popup-gun-laser-self-complete-internal = You melt the insides of your head!
+execution-popup-gun-laser-self-complete-external = { CAPITALIZE(THE($attacker)) } melts the insides of {POSS-ADJ($attacker)} head!
+
+# Ballistic Gun
+execution-popup-gun-ballistic-initial-internal = You place the barrel of {THE($weapon)} against the side of {THE($victim)}'s head.
+execution-popup-gun-ballistic-initial-external = { CAPITALIZE(THE($attacker)) } places the barrel of {THE($weapon)} against the side of {THE($victim)}'s head.
+execution-popup-gun-ballistic-complete-internal = You shoot {THE($victim)} in the head!
+execution-popup-gun-ballistic-complete-external = { CAPITALIZE(THE($attacker)) } shoots {THE($victim)} in the head!
+
+execution-popup-gun-ballistic-self-initial-internal = You place the barrel of {THE($weapon)} against the side of your head.
+execution-popup-gun-ballistic-self-initial-external = { CAPITALIZE(THE($attacker)) } places the barrel of {THE($weapon)} against the side of their head.
+execution-popup-gun-ballistic-self-complete-internal = You shoot yourself in the head!
+execution-popup-gun-ballistic-self-complete-external = { CAPITALIZE(THE($attacker)) } shoots {REFLEXIVE($attacker)} in the head!

@@ -38,6 +38,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
     {
         base.Initialize();
         InitialiseMelee();
+        InitialiseGun();
 
         SubscribeLocalEvent<ItemToggleExecutionComponent, ItemToggledEvent>(OnItemToggleExecution);
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
@@ -158,7 +159,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         if (!CanBeExecuted(args.Target.Value, args.User, entity))
             return;
 
-        var ev = new BeforeExecutionEvent();
+        var ev = new BeforeExecutionEvent(args.User, args.Target.Value);
         RaiseLocalEvent(entity.Owner, ref ev);
 
         if (!ev.Handled)
@@ -205,4 +206,10 @@ public sealed partial class ExecutionDoAfterEvent : SimpleDoAfterEvent
 /// Used for firing an empty revolver.
 /// </param>
 [ByRefEvent]
-public record struct BeforeExecutionEvent(bool Handled = false, SoundSpecifier? Sound = null, DamageSpecifier? Damage = null);
+public record struct BeforeExecutionEvent(
+    EntityUid Attacker,
+    EntityUid Victim,
+    bool Handled = false,
+    SoundSpecifier? Sound = null,
+    DamageSpecifier? Damage = null
+);
