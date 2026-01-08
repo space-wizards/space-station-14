@@ -7,6 +7,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Components;
 
+
+/// <summary>
+/// Component that represents a handheld expendable light which can be activated and eventually dies over time.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 public sealed partial class ExpendableLightComponent : Component
