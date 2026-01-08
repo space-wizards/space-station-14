@@ -28,7 +28,7 @@ public partial class ResearchSystem
     {
         var act = args.Actor;
 
-        if (_power.IsPowered(ent.Owner))
+        if (!_power.IsPowered(ent.Owner))
             return;
 
         if (!_proto.TryIndex<TechnologyPrototype>(args.Id, out var technologyPrototype))
