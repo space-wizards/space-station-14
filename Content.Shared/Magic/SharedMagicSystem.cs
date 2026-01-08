@@ -284,7 +284,7 @@ public abstract class SharedMagicSystem : EntitySystem
         var ent = Spawn(ev.Prototype, fromMap);
         var direction = _transform.ToMapCoordinates(toCoords).Position -
                          fromMap.Position;
-        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
+        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer, 25f);
     }
     // End Projectile Spells
     #endregion
@@ -461,7 +461,7 @@ public abstract class SharedMagicSystem : EntitySystem
             return;
 
         if (TryComp<BasicEntityAmmoProviderComponent>(wand, out var basicAmmoComp) && basicAmmoComp.Count != null)
-            _gunSystem.UpdateBasicEntityAmmoCount(wand.Value, basicAmmoComp.Count.Value + ev.Charge, basicAmmoComp);
+            _gunSystem.UpdateBasicEntityAmmoCount((wand.Value, basicAmmoComp), basicAmmoComp.Count.Value + ev.Charge);
         else if (TryComp<LimitedChargesComponent>(wand, out var charges))
             _charges.AddCharges((wand.Value, charges), ev.Charge);
     }

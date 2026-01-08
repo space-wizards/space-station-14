@@ -11,6 +11,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: DemolitionCharge
@@ -26,6 +27,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: MicroBomb
@@ -42,6 +44,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: Radioactive
@@ -83,6 +86,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: PowerSink
@@ -99,6 +103,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: HardBomb
@@ -115,6 +120,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: FireBomb
@@ -127,3 +133,4 @@
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
   fireStacks: 2
+  temperature: 1500

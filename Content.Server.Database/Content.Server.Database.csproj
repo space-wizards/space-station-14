@@ -1,15 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
-    <TargetFramework>$(TargetFramework)</TargetFramework>
-    <LangVersion>12</LangVersion>
-    <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Server.Database\</OutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <Nullable>enable</Nullable>
     <NoWarn>RA0003</NoWarn>
   </PropertyGroup>
+
+  <Import Project="../MSBuild/Content.props" />
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
