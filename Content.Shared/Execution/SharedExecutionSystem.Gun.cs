@@ -28,6 +28,7 @@ public sealed partial class SharedExecutionSystem
         // take ammo will handle expending the ammo for us
         var ev = new TakeAmmoEvent(1, [], fromCoordinates, args.Attacker);
         RaiseLocalEvent(weapon.Owner, ev);
+        _gun.UpdateAmmoCount(weapon.Owner);
 
         // did we get an IShootable from the gun?
         DebugTools.Assert(ev.Ammo.Count >= 0);
