@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.SmartFridge;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SmartFridgeSystem))]
+[Access(typeof(SharedSmartFridgeSystem))]
 public sealed partial class SmartFridgeComponent : Component
 {
     /// <summary>
@@ -46,7 +46,7 @@ public sealed partial class SmartFridgeComponent : Component
     /// A mapping of smart fridge entries to the actual contained contents
     /// </summary>
     [DataField, AutoNetworkedField]
-    [Access(typeof(SmartFridgeSystem), Other = AccessPermissions.ReadExecute)]
+    [Access(typeof(SharedSmartFridgeSystem), Other = AccessPermissions.ReadExecute)]
     public Dictionary<SmartFridgeEntry, HashSet<NetEntity>> ContainedEntries = new();
 
     /// <summary>

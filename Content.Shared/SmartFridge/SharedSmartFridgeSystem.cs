@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.SmartFridge;
 
-public sealed class SmartFridgeSystem : EntitySystem
+public abstract class SharedSmartFridgeSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -31,6 +31,7 @@ public sealed class SmartFridgeSystem : EntitySystem
         SubscribeLocalEvent<SmartFridgeComponent, InteractUsingEvent>(OnInteractUsing, after: [typeof(AnchorableSystem)]);
         SubscribeLocalEvent<SmartFridgeComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
         SubscribeLocalEvent<SmartFridgeComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
+        SubscribeLocalEvent<SmartFridgeComponent, AfterAutoHandleStateEvent>((ent, ref _) => UpdateUI(ent));
 
         SubscribeLocalEvent<SmartFridgeComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerb);
         SubscribeLocalEvent<SmartFridgeComponent, GetDumpableVerbEvent>(OnGetDumpableVerb);
@@ -92,6 +93,7 @@ public sealed class SmartFridgeSystem : EntitySystem
             entries.Add(GetNetEntity(args.Entity));
 
         Dirty(ent);
+        UpdateUI(ent);
     }
 
     private void OnItemRemoved(Entity<SmartFridgeComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -104,6 +106,7 @@ public sealed class SmartFridgeSystem : EntitySystem
         }
 
         Dirty(ent);
+        UpdateUI(ent);
     }
 
     private bool Allowed(Entity<SmartFridgeComponent> machine, EntityUid user)
@@ -139,6 +142,7 @@ public sealed class SmartFridgeSystem : EntitySystem
             _audio.PlayPredicted(ent.Comp.SoundVend, ent, args.Actor);
             contained.Remove(item);
             Dirty(ent);
+            UpdateUI(ent);
             return;
         }
 
@@ -181,5 +185,10 @@ public sealed class SmartFridgeSystem : EntitySystem
         args.PlaySound = true;
 
         DoInsert(ent, args.User, args.DumpQueue, false);
+    }
+
+    protected virtual void UpdateUI(Entity<SmartFridgeComponent> ent)
+    {
+
     }
 }
