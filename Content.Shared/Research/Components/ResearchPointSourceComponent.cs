@@ -11,7 +11,7 @@ public sealed partial class ResearchPointSourceComponent : Component
     /// <summary>
     ///     Points accumulated per second.
     /// </summary>
-    [DataField]
+    [DataField("pointspersecond")]
     public int PointsPerSecond;
 
     /// <summary>
