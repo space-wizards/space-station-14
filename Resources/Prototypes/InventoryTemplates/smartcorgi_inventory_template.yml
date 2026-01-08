@@ -56,7 +56,19 @@
     whitelist:
       tags:
       - PetWearable
-  - name: head # i'm not evil they can atleast have a hat
+  - name: back
+    slotTexture: back
+    fullTextureName: template_small
+    slotFlags: BACK
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 3,0
+    strippingWindowPos: 0,5
+    displayName: Back
+    whitelist:
+      tags:
+      - CorgiWearable
+  - name: head
     slotTexture: head
     slotFlags: HEAD
     uiWindowPos: 1,3

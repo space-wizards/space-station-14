@@ -413,6 +413,14 @@
         damage:
           types:
             Cellular: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: CorgiJuice
+          min: 20
+        damage:
+          types:
+            Cellular: 20 # not enough to be *too* effective as an odd poison
       - !type:Polymorph
         prototype: SmartCorgiMorph
         conditions:
@@ -421,7 +429,14 @@
           min: 20
       - !type:AdjustReagent
         reagent: CorgiJuice
-        amount: -10 # 10 Genetic damage after transformation
+        amount: -20
+        conditions:
+        - !type:ReagentCondition
+          reagent: CorgiJuice
+          min: 20
+      - !type:AdjustReagent
+        reagent: Caninase
+        amount: 10
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
