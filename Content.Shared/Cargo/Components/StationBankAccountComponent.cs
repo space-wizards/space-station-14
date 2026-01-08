@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

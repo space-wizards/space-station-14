@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
