@@ -7,30 +7,9 @@
     edges:
     - to: bonfire
       steps:
-      - tag: Log
-        name: construction-graph-tag-log
-        icon:
-          sprite: Objects/Specific/Hydroponics/towercap.rsi
-          state: produce
-        doAfter: 1
-      - tag: Log
-        name: construction-graph-tag-log
-        icon:
-          sprite: Objects/Specific/Hydroponics/towercap.rsi
-          state: produce
-        doAfter: 1
-      - tag: Log
-        name: construction-graph-tag-log
-        icon:
-          sprite: Objects/Specific/Hydroponics/towercap.rsi
-          state: produce
-        doAfter: 1
-      - tag: Log
-        name: construction-graph-tag-log
-        icon:
-          sprite: Objects/Specific/Hydroponics/towercap.rsi
-          state: produce
-        doAfter: 1
+      - material: WoodPlank
+        amount: 10
+        doAfter: 4
 
   - node: bonfire
     entity: Bonfire
@@ -38,8 +17,8 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: Log
-        amount: 4
+        prototype: MaterialWoodPlank1
+        amount: 8
       - !type:DeleteEntity { }
       steps:
       - tool: Prying
