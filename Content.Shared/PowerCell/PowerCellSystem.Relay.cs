@@ -16,8 +16,8 @@ public sealed partial class PowerCellSystem
         SubscribeLocalEvent<PowerCellSlotComponent, ChangeChargeEvent>(RelayToCell);
 
         SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(RelayToCellSlot); // Prevent the ninja from EMPing its own battery
-        SubscribeLocalEvent<PowerCellComponent, PredictedBatteryChargeChangedEvent>(RelayToCellSlot);
-        SubscribeLocalEvent<PowerCellComponent, PredictedBatteryStateChangedEvent>(RelayToCellSlot); // For shutting down devices if the battery is empty
+        SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(RelayToCellSlot);
+        SubscribeLocalEvent<PowerCellComponent, BatteryStateChangedEvent>(RelayToCellSlot); // For shutting down devices if the battery is empty
         SubscribeLocalEvent<PowerCellComponent, RefreshChargeRateEvent>(RelayToCellSlot); // Allow devices to charge/drain inserted batteries
     }
 
