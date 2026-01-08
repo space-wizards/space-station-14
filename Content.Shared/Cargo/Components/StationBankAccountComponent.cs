@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -65,7 +66,7 @@ public readonly record struct BankBalanceUpdatedEvent(EntityUid Station, Diction
 /// Contains the data for each CargoAccountPrototype.
 /// </summary>
 [DataDefinition, NetSerializable, Serializable]
-public partial record CargoAccountData
+public sealed partial class CargoAccountData : IRobustCloneable<CargoAccountData>
 {
     /// <summary>
     ///     The money held by the cargo account.
@@ -83,5 +84,17 @@ public partial record CargoAccountData
     {
         Balance = balance;
         RevenueDistribution = revenueDistribution;
+    }
+
+    public CargoAccountData(CargoAccountData data) : this(
+        data.Balance,
+        data.RevenueDistribution
+        )
+    {
+    }
+
+    public CargoAccountData Clone()
+    {
+        return new CargoAccountData(this);
     }
 }

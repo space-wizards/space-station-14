@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using JetBrains.Annotations;
@@ -30,13 +31,20 @@ public abstract class SharedCargoSystem : EntitySystem
     /// The primary account receives the majority percentage listed on the bank account, with the remaining
     /// funds distributed to all accounts based on <see cref="StationBankAccountComponent.Accounts"/>
     /// </summary>
-    public Dictionary<ProtoId<CargoAccountPrototype>, double> CreateAccountDistribution(Entity<StationBankAccountComponent> stationBank)
+    /// <remarks>
+    /// includePrimaryAccount should only be false when you don't want to factor in the primary cut, and only want to get the revenue distribution in <see cref="StationBankAccountComponent.Accounts"/>.
+    /// </remarks>
+    public Dictionary<ProtoId<CargoAccountPrototype>, double> CreateAccountDistribution(Entity<StationBankAccountComponent> stationBank, bool includePrimaryAccount = true)
     {
-        var distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
+        var distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double> { };
+        var remaining = 1.0;
+
+        if(includePrimaryAccount)
         {
-            { stationBank.Comp.PrimaryAccount, stationBank.Comp.PrimaryCut }
-        };
-        var remaining = 1.0 - stationBank.Comp.PrimaryCut;
+            distribution.GetOrNew(stationBank.Comp.PrimaryAccount);
+            distribution[stationBank.Comp.PrimaryAccount] = stationBank.Comp.PrimaryCut;
+            remaining -= stationBank.Comp.PrimaryCut;
+        }
 
         foreach (var (account, data) in stationBank.Comp.Accounts)
         {
@@ -53,7 +61,7 @@ public abstract class SharedCargoSystem : EntitySystem
     /// <param name="accountPrototypeId">Bank account prototype ID to get info for.</param>
     /// <param name="accountData">The account data.</param>
     /// <returns>Whether or not the bank account exists.</returns>
-    public bool TryGetAccount(Entity<StationBankAccountComponent?> station, ProtoId<CargoAccountPrototype> accountPrototypeId, out CargoAccountData? accountData)
+    public bool TryGetAccount(Entity<StationBankAccountComponent?> station, ProtoId<CargoAccountPrototype> accountPrototypeId, [NotNullWhen(true)] out CargoAccountData? accountData)
     {
         accountData = null;
 
@@ -77,9 +85,6 @@ public abstract class SharedCargoSystem : EntitySystem
         balance = 0;
 
         if (!TryGetAccount(station, accountPrototypeId, out var accountData))
-            return false;
-
-        if (accountData == null)
             return false;
 
         balance = accountData.Balance;

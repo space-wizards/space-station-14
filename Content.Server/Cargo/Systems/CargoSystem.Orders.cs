@@ -133,8 +133,8 @@ namespace Content.Server.Cargo.Systems
 
                 var balanceToAdd = (int) Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
 
-                var distribution = CreateAccountDistribution((uid, bank));
-                UpdateBankAccount((uid, bank), balanceToAdd, distribution);
+                var revenueDistribution = CreateAccountDistribution((uid, bank), false);
+                UpdateBankAccount((uid, bank), balanceToAdd, revenueDistribution);
             }
         }
 
