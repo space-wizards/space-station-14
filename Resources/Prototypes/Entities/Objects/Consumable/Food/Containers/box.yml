@@ -654,13 +654,14 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: FoodBakedGrilledCheeseCotton
+        - id: FoodBakedGrilledCheeseSandwichCotton
         - id: DrinkColaBottleFull
         - !type:NestedSelector
           tableId: HappyHonkToySafeEntityTable
         - id: FoodBakedCroissantCotton
         - id: FoodCakeCottonSlice
         - id: FoodBakedChevreChaudCotton
+        - id: FoodPizzaCottonSlice
 
 - type: entity
   parent: BoxCardboard
