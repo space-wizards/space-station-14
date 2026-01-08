@@ -219,7 +219,7 @@
   parent: PinpointerMothership
   id: PinpointerMothershipRepaired
   name: repaired core pinpointer
-  description: A handheld tracking device that leads to the direction of the Mothership core. This one has seem better days.
+  description: A handheld tracking device that leads to the direction of the Mothership core. This one has seen better days.
   components:
   - type: Sprite
     layers:
