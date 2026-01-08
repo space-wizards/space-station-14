@@ -38,6 +38,15 @@
     uiWindowPos: 2,1
     strippingWindowPos: 2,4
     displayName: ID
+  - name: belt
+    slotTexture: belt
+    fullTextureName: template_small
+    slotFlags: BELT
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 3,1
+    strippingWindowPos: 1,5
+    displayName: Belt
   - name: eyes
     slotTexture: glasses
     slotFlags: EYES
