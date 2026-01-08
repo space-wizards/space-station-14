@@ -198,3 +198,17 @@
   - type: Pinpointer
     component: MothershipCore
     targetName: the Mothership
+
+- type: entity
+  parent: PinpointerMothership
+  id: PinpointerMothership
+  name: repaired core pinpointer
+  suffix: Mothership, Repaired
+  description: A handheld tracking device that leads to the direction of the Mothership core. This one has seem better days.
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-xenoborg-repaired
+      map: ["enum.PinpointerLayers.Base"]
+  - type: Icon
+    state: pinpointer-xenoborg-repaired
