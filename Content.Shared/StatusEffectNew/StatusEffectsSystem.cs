@@ -14,6 +14,7 @@ namespace Content.Shared.StatusEffectNew;
 /// </summary>
 public sealed partial class StatusEffectsSystem : EntitySystem
 {
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -21,6 +22,8 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
     private EntityQuery<StatusEffectContainerComponent> _containerQuery;
     private EntityQuery<StatusEffectComponent> _effectQuery;
+
+    public static HashSet<string> StatusEffectPrototypes = [];
 
     public override void Initialize()
     {
@@ -35,8 +38,12 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
         SubscribeLocalEvent<RejuvenateRemovedStatusEffectComponent, StatusEffectRelayedEvent<RejuvenateEvent>>(OnRejuvenate);
 
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
         _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
         _effectQuery = GetEntityQuery<StatusEffectComponent>();
+
+        ReloadStatusEffectsCache();
     }
 
     public override void Update(float frameTime)
@@ -46,20 +53,37 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         var query = EntityQueryEnumerator<StatusEffectComponent>();
         while (query.MoveNext(out var ent, out var effect))
         {
+            TryApplyStatusEffect((ent, effect));
+
             if (effect.EndEffectTime is null)
                 continue;
 
-            if (!(_timing.CurTime >= effect.EndEffectTime))
+            if (_timing.CurTime < effect.EndEffectTime)
                 continue;
 
             if (effect.AppliedTo is null)
                 continue;
 
-            var meta = MetaData(ent);
-            if (meta.EntityPrototype is null)
-                continue;
+            PredictedQueueDel(ent);
+        }
+    }
 
-            TryRemoveStatusEffect(effect.AppliedTo.Value, meta.EntityPrototype);
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (!args.WasModified<EntityPrototype>())
+            return;
+
+        ReloadStatusEffectsCache();
+    }
+
+    private void ReloadStatusEffectsCache()
+    {
+        StatusEffectPrototypes.Clear();
+
+        foreach (var ent in _proto.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (ent.TryGetComponent<StatusEffectComponent>(out _, _factory))
+                StatusEffectPrototypes.Add(ent.ID);
         }
     }
 
@@ -83,18 +107,15 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (args.Container.ID != StatusEffectContainerComponent.ContainerId)
             return;
 
-        if (!TryComp<StatusEffectComponent>(args.Entity, out var statusComp))
+        if (!_effectQuery.TryComp(args.Entity, out var statusComp))
             return;
 
         // Make sure AppliedTo is set correctly so events can rely on it
         if (statusComp.AppliedTo != ent)
         {
             statusComp.AppliedTo = ent;
-            Dirty(args.Entity, statusComp);
+            DirtyField(args.Entity, statusComp, nameof(StatusEffectComponent.AppliedTo));
         }
-
-        var ev = new StatusEffectAppliedEvent(ent);
-        RaiseLocalEvent(args.Entity, ref ev);
     }
 
     private void OnEntityRemoved(Entity<StatusEffectContainerComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -102,7 +123,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (args.Container.ID != StatusEffectContainerComponent.ContainerId)
             return;
 
-        if (!TryComp<StatusEffectComponent>(args.Entity, out var statusComp))
+        if (!_effectQuery.TryComp(args.Entity, out var statusComp))
             return;
 
         var ev = new StatusEffectRemovedEvent(ent);
@@ -125,9 +146,29 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         PredictedQueueDel(ent.Owner);
     }
 
+    /// <summary>
+    /// Applies the status effect, i.e. starts it after it has been added. Ensures delayed start times trigger when they should.
+    /// </summary>
+    /// <param name="statusEffectEnt">The status effect entity.</param>
+    /// <returns>Returns true if the effect is applied.</returns>
+    private bool TryApplyStatusEffect(Entity<StatusEffectComponent> statusEffectEnt)
+    {
+        if (statusEffectEnt.Comp.Applied ||
+            statusEffectEnt.Comp.AppliedTo == null ||
+            _timing.CurTime < statusEffectEnt.Comp.StartEffectTime)
+            return false;
+
+        var ev = new StatusEffectAppliedEvent(statusEffectEnt.Comp.AppliedTo.Value);
+        RaiseLocalEvent(statusEffectEnt, ref ev);
+
+        statusEffectEnt.Comp.Applied = true;
+
+        return true;
+    }
+
     public bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
-        if (!_proto.TryIndex(effectProto, out var effectProtoData))
+        if (!_proto.Resolve(effectProto, out var effectProtoData))
             return false;
 
         if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp, Factory))
@@ -152,12 +193,14 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="delay">The delay of the effect. Leave null and the effect will be immediate.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if we couldn't create one.</param>
     private bool TryAddStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
-        TimeSpan? duration = null
+        TimeSpan? duration = null,
+        TimeSpan? delay = null
     )
     {
         statusEffect = null;
@@ -181,7 +224,13 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             return false;
 
         statusEffect = effect;
-        SetStatusEffectEndTime((effect.Value, effectComp), _timing.CurTime + duration);
+
+        var endTime = delay == null ? _timing.CurTime + duration : _timing.CurTime + delay + duration;
+        SetStatusEffectEndTime((effect.Value, effectComp), endTime);
+        var startTime = delay == null ? TimeSpan.Zero : _timing.CurTime + delay.Value;
+        SetStatusEffectStartTime(effect.Value, startTime);
+
+        TryApplyStatusEffect((statusEffect.Value, effectComp));
 
         return true;
     }
@@ -206,6 +255,28 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         }
 
         SetStatusEffectEndTime(effect, newEndTime);
+    }
+
+    private void UpdateStatusEffectDelay(Entity<StatusEffectComponent?> effect, TimeSpan? delay)
+    {
+        if (!_effectQuery.Resolve(effect, ref effect.Comp))
+            return;
+
+        // It's already started!
+        if (_timing.CurTime >= effect.Comp.StartEffectTime)
+            return;
+
+        var newStartTime = TimeSpan.Zero;
+
+        if (delay is not null)
+        {
+            // Don't update time to a smaller timespan...
+            newStartTime = _timing.CurTime + delay.Value;
+            if (effect.Comp.StartEffectTime < newStartTime)
+                return;
+        }
+
+        SetStatusEffectStartTime(effect, newStartTime);
     }
 
     private void AddStatusEffectTime(Entity<StatusEffectComponent?> effect, TimeSpan delta)
@@ -237,7 +308,26 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         var ev = new StatusEffectEndTimeUpdatedEvent(appliedTo, endTime);
         RaiseLocalEvent(ent, ref ev);
 
-        Dirty(ent);
+        DirtyField(ent, ent.Comp, nameof(StatusEffectComponent.EndEffectTime));
+    }
+
+    private void SetStatusEffectStartTime(Entity<StatusEffectComponent?> ent, TimeSpan startTime)
+    {
+        if (!_effectQuery.Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.StartEffectTime == startTime)
+            return;
+
+        ent.Comp.StartEffectTime = startTime;
+
+        if (ent.Comp.AppliedTo is not { } appliedTo)
+            return; // Not much we can do!
+
+        var ev = new StatusEffectStartTimeUpdatedEvent(appliedTo, startTime);
+        RaiseLocalEvent(ent, ref ev);
+
+        DirtyField(ent, ent.Comp, nameof(StatusEffectComponent.StartEffectTime));
     }
 }
 
@@ -266,3 +356,11 @@ public record struct BeforeStatusEffectAddedEvent(EntProtoId Effect, bool Cancel
 /// <param name="EndTime">The new end time of the status effect, included for convenience.</param>
 [ByRefEvent]
 public record struct StatusEffectEndTimeUpdatedEvent(EntityUid Target, TimeSpan? EndTime);
+
+/// <summary>
+/// Raised on an effect entity when its <see cref="StatusEffectComponent.StartEffectTime"/> is updated in any way.
+/// </summary>
+/// <param name="Target">The entity the effect is attached to.</param>
+/// <param name="StartTime">The new start time of the status effect, included for convenience.</param>
+[ByRefEvent]
+public record struct StatusEffectStartTimeUpdatedEvent(EntityUid Target, TimeSpan? StartTime);
