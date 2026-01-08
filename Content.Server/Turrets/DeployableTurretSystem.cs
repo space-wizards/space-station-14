@@ -84,7 +84,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
             args.Data.TryGetValue(command, out int? armamentState))
         {
             if (TryComp<BatteryWeaponFireModesComponent>(ent, out var batteryWeaponFireModes))
-                _fireModes.TrySetFireMode(ent, batteryWeaponFireModes, armamentState.Value);
+                _fireModes.TrySetFireMode((ent, batteryWeaponFireModes), armamentState.Value);
 
             TrySetState(ent, armamentState.Value >= 0);
             return;
