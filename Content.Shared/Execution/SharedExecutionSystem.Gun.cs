@@ -17,6 +17,12 @@ public sealed partial class SharedExecutionSystem
     private void InitialiseGun()
     {
         SubscribeLocalEvent<GunComponent, BeforeExecutionEvent>(OnBeforeExecutionGun);
+        SubscribeLocalEvent<ForbidExecutionInstakillComponent, AttemptExecutionInstakillEvent>(OnAttemptInstakill);
+    }
+
+    private void OnAttemptInstakill(Entity<ForbidExecutionInstakillComponent> entity, ref AttemptExecutionInstakillEvent args)
+    {
+        args.Cancelled = true;
     }
 
     private void OnBeforeExecutionGun(Entity<GunComponent> weapon, ref BeforeExecutionEvent args)
@@ -28,16 +34,16 @@ public sealed partial class SharedExecutionSystem
 
         var fromCoordinates = Transform(args.Attacker).Coordinates;
         // take ammo will handle expending the ammo for us
-        var ev = new TakeAmmoEvent(1, [], fromCoordinates, args.Attacker);
-        RaiseLocalEvent(weapon.Owner, ev);
+        var ammoEv = new TakeAmmoEvent(1, [], fromCoordinates, args.Attacker);
+        RaiseLocalEvent(weapon.Owner, ammoEv);
         _gun.UpdateAmmoCount(weapon.Owner);
 
         // did we get an IShootable from the gun?
-        DebugTools.Assert(ev.Ammo.Count >= 0);
-        if (ev.Ammo.Count == 0)
+        DebugTools.Assert(ammoEv.Ammo.Count >= 0);
+        if (ammoEv.Ammo.Count == 0)
             return;
-        DebugTools.Assert(ev.Ammo.Count == 1);
-        var (shootEntity, shootable) = ev.Ammo[0];
+        DebugTools.Assert(ammoEv.Ammo.Count == 1);
+        var (shootEntity, shootable) = ammoEv.Ammo[0];
 
         // rather not nice pattern matching on IShootable
         // but that's just how the gun system is
@@ -46,10 +52,18 @@ public sealed partial class SharedExecutionSystem
         if (shootable is CartridgeAmmoComponent cartridge)
         {
             var bullet = Spawn(cartridge.Prototype);
+
             TryComp<ProjectileComponent>(bullet, out var projectile);
             var projectileDamage = projectile?.Damage;
+
             if (HasComp<StaminaDamageOnCollideComponent>(bullet))
                 args.Stamcrit = true;
+
+            var instakillEv = new AttemptExecutionInstakillEvent();
+            RaiseLocalEvent(bullet, ref instakillEv);
+            if (instakillEv.Cancelled)
+                args.Instakill = false;
+
             Del(bullet);
 
             if (shootEntity is null || projectileDamage is null)
@@ -69,6 +83,11 @@ public sealed partial class SharedExecutionSystem
             if (HasComp<StaminaDamageOnCollideComponent>(shootEntity))
                 args.Stamcrit = true;
 
+            var instakillEv = new AttemptExecutionInstakillEvent();
+            RaiseLocalEvent(shootEntity.Value, ref instakillEv);
+            if (instakillEv.Cancelled)
+                args.Instakill = false;
+
             args.Damage = projectile.Damage;
             args.Sound = weapon.Comp.SoundGunshot;
             // don't forget to delete the projectile
@@ -84,3 +103,6 @@ public sealed partial class SharedExecutionSystem
         }
     }
 }
+
+[ByRefEvent]
+public record struct AttemptExecutionInstakillEvent(bool Cancelled = false);

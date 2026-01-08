@@ -30,6 +30,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private readonly DamageableSystem _damage = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -206,6 +207,14 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         if (!TryComp<DamageableComponent>(args.Target.Value, out var damageable))
             return;
 
+        // if we don't instakill (like practice round) just damage a bit and return early
+        // no point showing the scary popups if they aren't going to die
+        if (!ev.Instakill)
+        {
+            _damage.ChangeDamage(args.Target.Value, ev.Damage);
+            return;
+        }
+
         // this method does all the magic
         // it doesn't round-remove, it just multiplies the input damage specifier to be enough to kill the target
         _suicide.ApplyLethalDamage((args.Target.Value, damageable), ev.Damage);
@@ -240,5 +249,6 @@ public record struct BeforeExecutionEvent(
     bool Handled = false,
     SoundSpecifier? Sound = null,
     DamageSpecifier? Damage = null,
-    bool Stamcrit = false
+    bool Stamcrit = false,
+    bool Instakill = true
 );
