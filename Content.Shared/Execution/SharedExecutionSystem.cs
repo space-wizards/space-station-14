@@ -2,6 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -28,6 +29,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -185,10 +187,20 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         if (!ev.Handled)
             return;
 
+        args.Handled = true;
+
+        // if there is a harmless gun (like hos energy magnum set to disabler) it will play sound but do no damage
         if (ev.Sound is not null)
             _audio.PlayPredicted(ev.Sound, args.Target.Value, args.User);
 
         if (ev.Damage is null)
+            return;
+
+        // if it does stam damage then do a 100 stamina damage
+        if (ev.Stamcrit)
+            _stamina.TakeStaminaDamage(args.Target.Value, 100);
+
+        if (ev.Damage.GetTotal() == 0)
             return;
 
         if (!TryComp<DamageableComponent>(args.Target.Value, out var damageable))
@@ -206,8 +218,6 @@ public sealed partial class SharedExecutionSystem : EntitySystem
             externalMessage = entity.Comp.CompleteExternalSelfExecutionMessage;
         }
         ShowPopups(internalMessage, externalMessage, args.User, args.Target.Value, entity.Owner);
-
-        args.Handled = true;
     }
 }
 
@@ -229,5 +239,6 @@ public record struct BeforeExecutionEvent(
     EntityUid Victim,
     bool Handled = false,
     SoundSpecifier? Sound = null,
-    DamageSpecifier? Damage = null
+    DamageSpecifier? Damage = null,
+    bool Stamcrit = false
 );

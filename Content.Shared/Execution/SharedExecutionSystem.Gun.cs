@@ -1,3 +1,5 @@
+using Content.Shared.Damage.Components;
+using Content.Shared.Magic.Events;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged;
@@ -40,16 +42,39 @@ public sealed partial class SharedExecutionSystem
         // rather not nice pattern matching on IShootable
         // but that's just how the gun system is
 
+        // we are a cartridge that shoots a projectile
         if (shootable is CartridgeAmmoComponent cartridge)
         {
             var bullet = Spawn(cartridge.Prototype);
-            if (!TryComp<ProjectileComponent>(bullet, out var projectile) || shootEntity is null)
-                return;
-            args.Damage = projectile.Damage;
-            args.Sound = weapon.Comp.SoundGunshot;
+            TryComp<ProjectileComponent>(bullet, out var projectile);
+            var projectileDamage = projectile?.Damage;
+            if (HasComp<StaminaDamageOnCollideComponent>(bullet))
+                args.Stamcrit = true;
             Del(bullet);
+
+            if (shootEntity is null || projectileDamage is null)
+                return;
+
+            args.Damage = projectileDamage;
+            args.Sound = weapon.Comp.SoundGunshot;
+            // don't forget to set the cartridge as spent
             _gun.SetCartridgeSpent(shootEntity.Value, cartridge, true);
         }
+        // we are an actual projectile
+        else if (shootable is AmmoComponent)
+        {
+            if (!TryComp<ProjectileComponent>(shootEntity, out var projectile))
+                return;
+
+            if (HasComp<StaminaDamageOnCollideComponent>(shootEntity))
+                args.Stamcrit = true;
+
+            args.Damage = projectile.Damage;
+            args.Sound = weapon.Comp.SoundGunshot;
+            // don't forget to delete the projectile
+            Del(shootEntity);
+        }
+        // we are a hitscan
         else if (shootable is HitscanAmmoComponent)
         {
             if (!TryComp<HitscanBasicDamageComponent>(shootEntity, out var hitscanBasicDamage))
