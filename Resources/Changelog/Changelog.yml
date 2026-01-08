@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: youtissoum
-  changes:
-  - message: The usage delay of the bananium horn is now 3 seconds.
-    type: Tweak
-  id: 8858
-  time: '2025-08-16T23:04:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39674
 - author: august-sun
   changes:
   - message: Pacifists can now use the practice disabler, practice laser rifle, disabler,
@@ -3891,3 +3884,10 @@
   id: 9361
   time: '2026-01-07T22:19:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41208
+- author: Princess-Cheeseballs
+  changes:
+  - message: Audio will now play properly when toggling internals.
+    type: Fix
+  id: 9362
+  time: '2026-01-08T11:03:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42304
