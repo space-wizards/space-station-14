@@ -163,6 +163,9 @@
             "name": "pinpointer-xenoborg-piece"
         },
         {
+            "name": "pinpointer-xenoborg-repaired"
+        },
+        {
             "name": "inhand-left-base",
             "directions": 4
         },
