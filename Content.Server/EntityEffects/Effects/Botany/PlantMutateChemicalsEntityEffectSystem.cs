@@ -33,8 +33,9 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
         }
         else
         {
-            seedChemQuantity.Min = FixedPoint2.Epsilon;
-            seedChemQuantity.Max = FixedPoint2.Zero + amount;
+            //Set the minimum to a fifth of the quantity to give some level of bad luck protection
+            seedChemQuantity.Min = FixedPoint2.Clamp(pick.Quantity / 5f, FixedPoint2.Epsilon, 1f);
+            seedChemQuantity.Max = seedChemQuantity.Min + amount;
             seedChemQuantity.Inherent = false;
         }
         var potencyDivisor = 100f / seedChemQuantity.Max;
