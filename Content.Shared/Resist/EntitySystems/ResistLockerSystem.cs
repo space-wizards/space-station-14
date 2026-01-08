@@ -57,10 +57,13 @@ public sealed class ResistLockerSystem : EntitySystem
             NeedHand = false, // No hands 'cause we be kickin'.
         };
 
+        // Make sure the do after is able to start.
+        if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
+            return;
+
         ent.Comp.IsResisting = true;
-        _popup.PopupClient(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
-        _doAfter.TryStartDoAfter(doAfterEventArgs);
         Dirty(ent);
+        _popup.PopupClient(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
     }
 
     private void OnDoAfter(Entity<ResistLockerComponent> ent, ref ResistLockerDoAfterEvent args)
@@ -68,8 +71,8 @@ public sealed class ResistLockerSystem : EntitySystem
         if (args.Cancelled)
         {
             ent.Comp.IsResisting = false;
-            _popup.PopupClient(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
             Dirty(ent);
+            _popup.PopupClient(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
             return;
         }
 
@@ -77,7 +80,6 @@ public sealed class ResistLockerSystem : EntitySystem
             return;
 
         ent.Comp.IsResisting = false;
-
         Dirty(ent);
 
         if (HasComp<EntityStorageComponent>(ent.Owner))
