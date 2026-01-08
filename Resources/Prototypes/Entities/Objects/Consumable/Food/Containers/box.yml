@@ -1,4 +1,4 @@
-﻿# Donut
+# Donut
 
 # There is a newer, better version of the donutbox from tgstation included in the
 # donut.rsi. The reason it isn't implemented is it requires a StackVisuals offsetting
@@ -643,6 +643,25 @@
           tableId: HappyHonkToySafeEntityTable
         - id: FoodMealFriesCheesy
         - id: FoodPieAppleSlice
+
+- type: entity
+  id: FoodMealHappyHonkCotton
+  parent: HappyHonk
+  name: Happy Honk Cotton Meal
+  description: A gluttonous selection of Happy Honk's fiber-rich treats for mothkin customers. Each box comes with a drink, a special toy, and a steep price tag.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: FoodBakedGrilledCheeseCotton
+        - id: DrinkColaBottleFull
+        - !type:NestedSelector
+          tableId: HappyHonkToySafeEntityTable
+        - id: FoodBakedCroissantCotton
+        - id: FoodCakeCottonSlice
+        - id: FoodBakedChevreChaudCotton
+        - id: FoodPizzaCottonSlice
 
 - type: entity
   parent: BoxCardboard
