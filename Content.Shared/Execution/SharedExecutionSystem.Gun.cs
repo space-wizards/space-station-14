@@ -27,6 +27,9 @@ public sealed partial class SharedExecutionSystem
 
     private void OnBeforeExecutionGun(Entity<GunComponent> weapon, ref BeforeExecutionEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Sound = weapon.Comp.SoundEmpty;
         args.Handled = true;
 
@@ -36,71 +39,65 @@ public sealed partial class SharedExecutionSystem
         // take ammo will handle expending the ammo for us
         var ammoEv = new TakeAmmoEvent(1, [], fromCoordinates, args.Attacker);
         RaiseLocalEvent(weapon.Owner, ammoEv);
-        _gun.UpdateAmmoCount(weapon.Owner);
 
         // did we get an IShootable from the gun?
         DebugTools.Assert(ammoEv.Ammo.Count >= 0);
         if (ammoEv.Ammo.Count == 0)
             return;
         DebugTools.Assert(ammoEv.Ammo.Count == 1);
+
+        // if we have an ammo we will shoot so set the sound now
+        args.Sound = weapon.Comp.SoundGunshot;
+        _gun.UpdateAmmoCount(weapon.Owner);
+
         var (shootEntity, shootable) = ammoEv.Ammo[0];
+        if (shootEntity is null)
+            return;
 
         // rather not nice pattern matching on IShootable
         // but that's just how the gun system is
-
-        // we are a cartridge that shoots a projectile
         if (shootable is CartridgeAmmoComponent cartridge)
         {
-            var bullet = Spawn(cartridge.Prototype);
-
-            TryComp<ProjectileComponent>(bullet, out var projectile);
-            var projectileDamage = projectile?.Damage;
-
-            if (HasComp<StaminaDamageOnCollideComponent>(bullet))
-                args.Stamcrit = true;
-
-            var instakillEv = new AttemptExecutionInstakillEvent();
-            RaiseLocalEvent(bullet, ref instakillEv);
-            if (instakillEv.Cancelled)
-                args.Instakill = false;
-
-            Del(bullet);
-
-            if (shootEntity is null || projectileDamage is null)
-                return;
-
-            args.Damage = projectileDamage;
-            args.Sound = weapon.Comp.SoundGunshot;
-            // don't forget to set the cartridge as spent
-            _gun.SetCartridgeSpent(shootEntity.Value, cartridge, true);
+            HandleCartridge(shootEntity.Value, cartridge, ref args);
         }
-        // we are an actual projectile
         else if (shootable is AmmoComponent)
         {
-            if (!TryComp<ProjectileComponent>(shootEntity, out var projectile))
-                return;
-
-            if (HasComp<StaminaDamageOnCollideComponent>(shootEntity))
-                args.Stamcrit = true;
-
-            var instakillEv = new AttemptExecutionInstakillEvent();
-            RaiseLocalEvent(shootEntity.Value, ref instakillEv);
-            if (instakillEv.Cancelled)
-                args.Instakill = false;
-
-            args.Damage = projectile.Damage;
-            args.Sound = weapon.Comp.SoundGunshot;
-            // don't forget to delete the projectile
-            Del(shootEntity);
+            HandleProjectile(shootEntity.Value, ref args);
         }
-        // we are a hitscan
         else if (shootable is HitscanAmmoComponent)
         {
-            if (!TryComp<HitscanBasicDamageComponent>(shootEntity, out var hitscanBasicDamage))
-                return;
-            args.Damage = hitscanBasicDamage.Damage;
-            args.Sound = weapon.Comp.SoundGunshot;
+            HandleHitscan(shootEntity.Value, ref args);
         }
+    }
+
+    private void HandleProjectile(EntityUid entity, ref BeforeExecutionEvent args)
+    {
+        if (TryComp<ProjectileComponent>(entity, out var projectile))
+            args.Damage = projectile.Damage;
+        if (HasComp<StaminaDamageOnCollideComponent>(entity))
+            args.Stamcrit = true;
+
+        var instakillEv = new AttemptExecutionInstakillEvent();
+        RaiseLocalEvent(entity, ref instakillEv);
+        if (instakillEv.Cancelled)
+            args.Instakill = false;
+
+        // we don't actually want to shoot anything - don't forget to clean up
+        Del(entity);
+    }
+
+    private void HandleCartridge(EntityUid entity, CartridgeAmmoComponent cartridge, ref BeforeExecutionEvent args)
+    {
+        var bullet = Spawn(cartridge.Prototype);
+        HandleProjectile(bullet, ref args);
+        _gun.SetCartridgeSpent(entity, cartridge, true);
+    }
+
+    private void HandleHitscan(EntityUid entity, ref BeforeExecutionEvent args)
+    {
+        if (!TryComp<HitscanBasicDamageComponent>(entity, out var hitscanBasicDamage))
+            return;
+        args.Damage = hitscanBasicDamage.Damage;
     }
 }
 
