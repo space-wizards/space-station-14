@@ -101,6 +101,9 @@ public sealed partial class ExpendableLightComponent : Component
     [Access(typeof(ExpendableLightSystem))]
     public EntityUid? PlayingStream;
 
+    /// <summary>
+    ///     Status of light, whether or not it is emitting light.
+    /// </summary>
     [ViewVariables]
     public bool Activated => CurrentState is ExpendableLightState.Lit or ExpendableLightState.Fading;
 
