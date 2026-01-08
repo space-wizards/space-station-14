@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   id: SprayBottleBase
-  parent: BaseItem
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkVisualsFill ]
   components:
   - type: Edible
     edible: Drink
