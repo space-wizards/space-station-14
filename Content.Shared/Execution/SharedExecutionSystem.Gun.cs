@@ -42,11 +42,12 @@ public sealed partial class SharedExecutionSystem
         if (shootable is CartridgeAmmoComponent cartridge)
         {
             var bullet = Spawn(cartridge.Prototype);
-            if (!TryComp<ProjectileComponent>(bullet, out var projectile))
+            if (!TryComp<ProjectileComponent>(bullet, out var projectile) || shootEntity is null)
                 return;
             args.Damage = projectile.Damage;
             args.Sound = weapon.Comp.SoundGunshot;
             Del(bullet);
+            _gun.SetCartridgeSpent(shootEntity.Value, cartridge, true);
         }
         else if (shootable is HitscanAmmoComponent)
         {
