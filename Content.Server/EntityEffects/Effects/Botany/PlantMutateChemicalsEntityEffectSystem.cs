@@ -24,7 +24,7 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
 
         // Add a random amount of a random chemical to this set of chemicals
         var (chemicalId, quantity) = randomChems.Pick(_random);
-        var amount = FixedPoint2.Max(_random.NextFloat(0.1f, 1f) * quantity, FixedPoint2.Epsilon);
+        var amount = FixedPoint2.Max(_random.NextFloat(0f, 1f) * quantity, FixedPoint2.Epsilon);
         var seedChemQuantity = new SeedChemQuantity();
         if (chemicals.ContainsKey(chemicalId))
         {
