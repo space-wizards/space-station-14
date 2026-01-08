@@ -11,7 +11,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.BloodCult.Prototypes;
 
-[Prototype("cultAbility")]
+[Prototype]
 public sealed partial class CultAbilityPrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;

@@ -679,7 +679,7 @@ public sealed class SummonOnTriggerSystem : EntitySystem
 			int toRemove = Math.Min(remainingToConsume, availableInStack);
 
 			// Remove the amount from this stack
-			_stackSystem.SetCount(stackUid, availableInStack - toRemove, stackComp);
+			_stackSystem.SetCount((stackUid, stackComp), availableInStack - toRemove);
 			remainingToConsume -= toRemove;
 
 			// StackSystem.SetCount will automatically delete the stack if count reaches 0

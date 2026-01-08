@@ -28,6 +28,7 @@ using Robust.Shared.Random;
 using Content.Shared.Speech;
 using Content.Shared.Emoting;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.NPC.Components;
 using Content.Server.GameTicking.Rules;
@@ -62,7 +63,7 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 	{
 		EntityUid? communeAction = null;
 		ActionComponent? actionComp = null;
-		if (_actions.AddAction(juggernaut, ref communeAction, out actionComp, "ActionCultistCommune") && communeAction != null && actionComp != null)
+		if (_actions.AddAction(juggernaut, ref communeAction, out actionComp, (ProtoId<EntityPrototype>)"ActionCultistCommune") && communeAction != null && actionComp != null)
 		{
 			// Ensure the event is raised on the juggernaut so it can be handled
 			// Note: RaiseOnUser property might not exist in current API, check if needed

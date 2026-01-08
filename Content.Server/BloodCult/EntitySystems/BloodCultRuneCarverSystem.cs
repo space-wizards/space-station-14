@@ -68,8 +68,6 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 	{
 		base.Initialize();
 
-		SubscribeLocalEvent<BloodCultRuneCarverComponent, MapInitEvent>(OnMapInit);
-
 		SubscribeLocalEvent<BloodCultRuneCarverComponent, AfterInteractEvent>(OnTryDrawRune);
 		SubscribeLocalEvent<DamageableComponent, DrawRuneDoAfterEvent>(OnRuneDoAfter);
 		SubscribeLocalEvent<BloodCultRuneCarverComponent, UseInHandEvent>(OnUseInHand, before: new[] { typeof(ActivatableUISystem) });
@@ -82,11 +80,6 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 		SubscribeLocalEvent<BloodCultRuneCarverComponent, GotEquippedHandEvent>(OnEquipped);
 
 		_runeQuery = GetEntityQuery<BloodCultRuneComponent>();
-	}
-
-	private void OnMapInit(EntityUid uid, BloodCultRuneCarverComponent component, MapInitEvent args)
-	{
-
 	}
 
 	#region UserInterface

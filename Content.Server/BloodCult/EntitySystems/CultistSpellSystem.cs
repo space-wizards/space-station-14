@@ -434,8 +434,8 @@ public sealed partial class CultistSpellSystem : EntitySystem
 		{
 			// Inject sleep chemicals (Nocturine + Chloral Hydrate)
 			var sleepSolution = new Solution();
-			sleepSolution.AddReagent("Nocturine", FixedPoint2.New(15));  // 15u Nocturine
-			sleepSolution.AddReagent("EdgeEssentia", FixedPoint2.New(5));  // 5u Edge Essentia
+			sleepSolution.AddReagent((ProtoId<ReagentPrototype>)"Nocturine", FixedPoint2.New(15));  // 15u Nocturine
+			sleepSolution.AddReagent((ProtoId<ReagentPrototype>)"EdgeEssentia", FixedPoint2.New(5));  // 5u Edge Essentia
 			
 			if (_solutionContainer.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out _))
 			{

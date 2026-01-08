@@ -65,7 +65,7 @@ public sealed partial class BleedUnholyBloodEntityEffectSystem : EntityEffectSys
     {
         bloodReagent = default!;
 
-        if (!TryComp<MetaDataComponent>(uid, out var meta) || meta.EntityPrototype == null)
+        if (!TryComp(uid, out MetaDataComponent? meta) || meta.EntityPrototype == null)
             return false;
 
         var componentFactory = EntityManager.ComponentFactory;
