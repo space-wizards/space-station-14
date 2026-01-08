@@ -1,8 +1,8 @@
-using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Research;
 using Content.Shared.Research.Components;
+using Content.Shared.Research.Systems;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
@@ -47,13 +47,16 @@ public sealed class DiskConsoleSystem : EntitySystem
         if (HasComp<DiskConsolePrintingComponent>(uid))
             return;
 
-        if (!_research.TryGetClientServer(uid, out var server, out var serverComp))
+        if (!TryComp<ResearchClientComponent>(uid, out var client))
             return;
 
-        if (serverComp.Points < component.PricePerDisk)
+        if (!_research.TryGetClientServer((uid, client), out var server))
             return;
 
-        _research.ModifyServerPoints(server.Value, -component.PricePerDisk, serverComp);
+        if (server.Value.Comp.Points < component.PricePerDisk)
+            return;
+
+        _research.ModifyServerPoints(server.Value.AsNullable(), -component.PricePerDisk);
         _audio.PlayPvs(component.PrintSound, uid);
 
         var printing = EnsureComp<DiskConsolePrintingComponent>(uid);
@@ -81,10 +84,13 @@ public sealed class DiskConsoleSystem : EntitySystem
         if (!Resolve(uid, ref component, false))
             return;
 
+        if (!TryComp<ResearchClientComponent>(uid, out var client))
+            return;
+
         var totalPoints = 0;
-        if (_research.TryGetClientServer(uid, out _, out var server))
+        if (_research.TryGetClientServer((uid, client), out var server))
         {
-            totalPoints = server.Points;
+            totalPoints = server.Value.Comp.Points;
         }
 
         var canPrint = !(TryComp<DiskConsolePrintingComponent>(uid, out var printing) && printing.FinishTime >= _timing.CurTime) &&

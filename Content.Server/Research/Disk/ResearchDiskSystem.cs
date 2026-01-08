@@ -2,8 +2,8 @@ using System.Linq;
 using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Content.Shared.Research.Prototypes;
-using Content.Server.Research.Systems;
 using Content.Shared.Research.Components;
+using Content.Shared.Research.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research.Disk
@@ -25,10 +25,10 @@ namespace Content.Server.Research.Disk
             if (!args.CanReach)
                 return;
 
-            if (!TryComp<ResearchServerComponent>(args.Target, out var server))
+            if (!HasComp<ResearchServerComponent>(args.Target))
                 return;
 
-            _research.ModifyServerPoints(args.Target.Value, component.Points, server);
+            _research.ModifyServerPoints(args.Target.Value, component.Points);
             _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, args.User);
             QueueDel(uid);
             args.Handled = true;
