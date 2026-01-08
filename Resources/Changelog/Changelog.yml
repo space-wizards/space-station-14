@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: Pacifists can now use the practice disabler, practice laser rifle, disabler,
-      and disabler SMG.
-    type: Tweak
-  id: 8859
-  time: '2025-08-17T19:25:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37164
-- author: Velcroboy
-  changes:
-  - message: Changed hamster crates are now able to be placed on top of tables.
-    type: Tweak
-  id: 8860
-  time: '2025-08-17T19:30:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37953
 - author: psykana
   changes:
   - message: Ninja now spawns breathing from his gas tank instead of jetpack
@@ -3891,3 +3876,17 @@
   id: 9362
   time: '2026-01-08T11:03:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42304
+- author: aada
+  changes:
+  - message: The handheld health analyzer no longer requires a battery.
+    type: Tweak
+  id: 9363
+  time: '2026-01-08T19:38:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42292
+- author: perryprog
+  changes:
+  - message: The go go hat can now only retrieve and store items when worn.
+    type: Fix
+  id: 9364
+  time: '2026-01-08T19:38:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39189
