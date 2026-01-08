@@ -1541,3 +1541,38 @@
           reagent: Warfarin
           min: 15
         amount: 0.25
+
+- type: reagent
+  id: Ignisol
+  name: reagent-name-ignisol
+  group: Medicine
+  desc: reagent-desc-ignisol
+  physicalDesc: reagent-physical-desc-oily
+  flavor: spicy
+  color: "#FF4500"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: -3
+            Heat: 0.5
+      - !type:AdjustTemperature
+        amount: 4000
+      - !type:PopupMessage
+        type: Local
+        visualType: SmallCaution
+        messages: [ "ignis-inside-effect-light" ]
+        probability: 0.1
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:Ignite
+      - !type:Flammable
+        multiplier: 0.5
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 1.5
