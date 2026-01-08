@@ -19,6 +19,9 @@
           !type:DamageTrigger
           damage: 50
         behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
   - type: AmbientSound
