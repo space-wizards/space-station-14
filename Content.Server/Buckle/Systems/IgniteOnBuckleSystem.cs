@@ -16,26 +16,38 @@ public sealed class IgniteOnBuckleSystem : EntitySystem
 
         SubscribeLocalEvent<IgniteOnBuckleComponent, StrappedEvent>(OnStrapped);
         SubscribeLocalEvent<IgniteOnBuckleComponent, UnstrappedEvent>(OnUnstrapped);
+
+        SubscribeLocalEvent<ActiveIgniteOnBuckleComponent, MapInitEvent>(ActiveOnInit);
     }
 
     private void OnStrapped(Entity<IgniteOnBuckleComponent> ent, ref StrappedEvent args)
     {
-        EnsureComp<IgniteOnBuckleBurningComponent>(ent);
-        ent.Comp.NextIgniteTime = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.IgniteTime);
+        // We cache the values here to the other component.
+        // This is done so we have to do less lookups
+        var comp = EnsureComp<ActiveIgniteOnBuckleComponent>(args.Buckle);
+        comp.FireStacks = ent.Comp.FireStacks;
+        comp.MaxFireStacks = ent.Comp.MaxFireStacks;
+        comp.IgniteTime = ent.Comp.IgniteTime;
+    }
+
+    private void ActiveOnInit(Entity<ActiveIgniteOnBuckleComponent> ent, ref MapInitEvent args)
+    {
+        // Handle this via a separate MapInit so the component can be added by itself if need be.
+        ent.Comp.NextIgniteTime = _timing.CurTime + ent.Comp.NextIgniteTime;
         Dirty(ent);
     }
 
     private void OnUnstrapped(Entity<IgniteOnBuckleComponent> ent, ref UnstrappedEvent args)
     {
-        RemComp<IgniteOnBuckleBurningComponent>(ent);
+        RemCompDeferred<ActiveIgniteOnBuckleComponent>(args.Buckle);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<IgniteOnBuckleBurningComponent, IgniteOnBuckleComponent, StrapComponent>();
-        while (query.MoveNext(out var uid, out _, out var igniteComponent, out var strapComponent))
+        var query = EntityQueryEnumerator<ActiveIgniteOnBuckleComponent, FlammableComponent>();
+        while (query.MoveNext(out var uid, out var igniteComponent, out var flammableComponent))
         {
             if (_timing.CurTime < igniteComponent.NextIgniteTime)
                 continue;
@@ -43,22 +55,10 @@ public sealed class IgniteOnBuckleSystem : EntitySystem
             igniteComponent.NextIgniteTime += TimeSpan.FromSeconds(igniteComponent.IgniteTime);
             Dirty(uid, igniteComponent);
 
-            if (strapComponent.BuckledEntities.Count == 0)
-            {
-                RemComp<IgniteOnBuckleBurningComponent>(uid);
+            if (igniteComponent.MaxFireStacks.HasValue && flammableComponent.FireStacks >= igniteComponent.MaxFireStacks)
                 continue;
-            }
 
-            foreach (var buckledEntity in strapComponent.BuckledEntities)
-            {
-                if (!TryComp<FlammableComponent>(buckledEntity, out var flammable))
-                    continue;
-
-                if (igniteComponent.MaxFireStacks.HasValue && flammable.FireStacks >= igniteComponent.MaxFireStacks)
-                    continue;
-
-                _flammable.AdjustFireStacks(buckledEntity, igniteComponent.FireStacks, flammable, ignite: true);
-            }
+            _flammable.AdjustFireStacks(uid, igniteComponent.FireStacks, flammableComponent, ignite: true);
         }
     }
 }

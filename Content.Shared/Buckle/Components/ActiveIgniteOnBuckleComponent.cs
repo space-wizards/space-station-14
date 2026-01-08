@@ -4,11 +4,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Buckle.Components;
 
 /// <summary>
-/// Component that makes an entity ignite entities that are buckled to it.
+/// Component for entities that are currently being ignited by <see cref="IgniteOnBuckleComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class IgniteOnBuckleComponent : Component
+[AutoGenerateComponentPause, AutoGenerateComponentState]
+public sealed partial class ActiveIgniteOnBuckleComponent : Component
 {
+    // We cache data in this component and apply it to those who get buckled to have to do less lookups.
+
     /// <summary>
     /// How many fire stacks to add per cycle.
     /// </summary>
@@ -28,4 +31,11 @@ public sealed partial class IgniteOnBuckleComponent : Component
     /// </summary>
     [DataField]
     public float? MaxFireStacks = 2.5f;
+
+    /// <summary>
+    /// Next time that fire stacks will be applied.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField, AutoNetworkedField]
+    public TimeSpan NextIgniteTime = TimeSpan.Zero;
 }
