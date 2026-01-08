@@ -446,6 +446,39 @@
     Bruizine: 2
 
 - type: reaction
+  id: BicarLacerinol # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Lacerinol:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BicarPuncturase # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Puncturase:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BicarBruizine # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Bruizine:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
   id: BruizineLacerinol # mixing any two brute medications will make Razorium
   impact: Medium
   reactants:
@@ -536,6 +569,19 @@
       amount: 1
   products:
     Opporozidone: 3
+
+- type: reaction
+  id: Arcryox
+  minTemp: 370
+  reactants:
+    Lithium:
+      amount: 1
+    Tricordrazine:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+  products:
+    Arcryox: 3
 
 - type: reaction
   id: Necrosol
@@ -629,3 +675,27 @@
       amount: 1
   products:
     Haloperidol: 5
+
+- type: reaction
+  id: Warfarin
+  reactants:
+    SulfuricAcid:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Sodium:
+      amount: 1
+  products:
+    Warfarin: 2
+
+- type: reaction
+  id: Hemorrhinol
+  reactants:
+    Warfarin:
+      amount: 2
+    Razorium:
+      amount: 2
+    Plasma:
+      amount: 1
+  products:
+    Hemorrhinol: 2

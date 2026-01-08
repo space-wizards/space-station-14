@@ -300,7 +300,6 @@
     maxCharge: 600
     startingCharge: 600
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 2
   - type: Item
     size: Normal
@@ -505,8 +504,6 @@
     modifiers:
       coefficients:
         Blunt: 0.9
-  - type: StaminaResistance
-    damageCoefficient: 0.90
   - type: Construction
     graph: cardArmour
     node: cardarmour

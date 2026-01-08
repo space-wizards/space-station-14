@@ -18,6 +18,7 @@
     whitelist:
       components:
       - Item
+      - ParcelWrapOverride
     blacklist:
       components:
       - NukeDisk # Don't try to hide the disk.
@@ -29,31 +30,34 @@
     maxCharges: 30
 
 - type: entity
-  parent: BaseItem
-  id: WrappedParcel
-  categories: [ HideSpawnMenu ]
+  parent: ParcelWrap
+  id: ParcelWrapAdmeme
+  name: bluespace wrap
+  suffix: Admeme
+  description: Paper used contain items for transport. This one seems to be able to store an unusual amount of space within it.
+  components:
+  - type: ParcelWrap
+    whitelist: null
+    blacklist: null
+    canSelfUnwrap: false # admins held me at gunpoint until I added this bool
+
+- type: entity
+  abstract: true
+  parent: BasePaperLabelable # We use this instead of BasePaperLabelableVisualized because WrappedParcel needs its own GenericVisualizer component for the parcel itself, and WrappedParcelHumanoid currently doesn't have label sprites at all
+  id: BaseWrappedParcel
   name: wrapped parcel
   description: Something wrapped up in paper. I wonder what's inside...
   components:
+  - type: Physics
+    bodyType: Dynamic
+  - type: GravityAffected
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
   - type: ContainerContainer
     containers:
       contents: !type:ContainerSlot
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.WrappedParcelVisuals.Size:
-        enum.WrappedParcelVisuals.Layer:
-          "Tiny": { state: "parcel-tiny" }
-          "Small": { state: "parcel-small" }
-          "Medium": { state: "parcel-medium" }
-          "Large": { state: "parcel-medium" }
-          "Huge": { state: "parcel-large" }
-          "Ginormous": { state: "parcel-large" }
-  - type: Sprite
-    sprite: Objects/Misc/ParcelWrap/wrapped_parcel.rsi
-    layers:
-    - state: parcel-medium
-      map: [ "enum.WrappedParcelVisuals.Layer" ]
+      paper_label: !type:ContainerSlot
   - type: WrappedParcel
     unwrapDelay: 0.5
     unwrapSound:
@@ -65,6 +69,17 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 8
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+          params:
+            volume: -4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTypeTrigger
         damageType: Slash
@@ -80,6 +95,66 @@
   - type: Tag
     tags:
     - Recyclable # Parcel entity is recyclable, and when it's destroyed, it'll drop its contents.
+
+- type: entity
+  parent: [ BaseItem, BaseWrappedParcel ]
+  id: WrappedParcel
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.WrappedParcelVisuals.Size:
+        enum.WrappedParcelVisuals.Layer:
+          "Tiny": { state: "parcel-tiny" }
+          "Small": { state: "parcel-small" }
+          "Medium": { state: "parcel-medium" }
+          "Large": { state: "parcel-medium" }
+          "Huge": { state: "parcel-large" }
+          "Ginormous": { state: "parcel-large" }
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+  - type: Sprite
+    sprite: Objects/Misc/ParcelWrap/wrapped_parcel.rsi
+    layers:
+    - state: parcel-medium
+      map: [ "enum.WrappedParcelVisuals.Layer" ]
+    - state: paper
+      visible: false
+      sprite: Objects/Misc/ParcelWrap/paper_labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
+
+- type: entity
+  parent: BaseWrappedParcel
+  id: WrappedParcelHumanoid
+  description: Something wrapped up in paper. It's suspiciously human-shaped.
+  components:
+  - type: Physics
+    fixedRotation: false
+  - type: Sprite
+    sprite: Objects/Misc/ParcelWrap/wrapped_parcel.rsi
+    state: human
+    noRot: true
+    drawdepth: Mobs
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
 
 - type: entity
   parent: BaseItem

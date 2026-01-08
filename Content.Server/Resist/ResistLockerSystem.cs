@@ -1,11 +1,11 @@
 using Content.Server.Popups;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Resist;
+using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.ActionBlocker;
@@ -57,9 +57,12 @@ public sealed class ResistLockerSystem : EntitySystem
             NeedHand = false, //No hands 'cause we be kickin'
         };
 
+        // Make sure the do after is able to start
+        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
+            return;
+
         resistLockerComponent.IsResisting = true;
         _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
-        _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
     }
 
     private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)

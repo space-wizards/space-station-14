@@ -3,14 +3,13 @@
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodBreakfastBase
-  abstract: true
   description: A full breakfast, rise and shine!
   components:
   - type: Item
-    storedRotation: -90
-  - type: Food
+    size: Normal
   - type: Sprite
     sprite: Objects/Consumable/Food/breakfast.rsi
   - type: SolutionContainerManager
@@ -26,9 +25,9 @@
 # Breakfasts
 
 - type: entity
-  name: full american breakfast
   parent: FoodBreakfastBase
   id: FoodBreakfastAmerican
+  name: full american breakfast
   description: A huge plate of protein and carbs, more likely to put you back in bed than get you out of it. Oh, what fresh hell is this?
   components:
   - type: FlavorProfile
@@ -38,9 +37,9 @@
     state: fullamerican
 
 - type: entity
-  name: full english breakfast
   parent: FoodBreakfastBase
   id: FoodBreakfastEnglish
+  name: full english breakfast
   description: A huge plate of protein and carbs, more likely to put you back in bed than get you out of it. Don't mention the war!
   components:
   - type: FlavorProfile
