@@ -10,25 +10,25 @@
         name: construction-graph-tag-core-pinpointer-piece
         icon:
           sprite: Objects/Devices/pinpointer.rsi
-          state: pinpointer-xenoborg-piece
+          state: pinpointer-xenoborg-piece-1
         doAfter: 4
       - tag: MothershipPinpointerPiece
         name: construction-graph-tag-core-pinpointer-piece
         icon:
           sprite: Objects/Devices/pinpointer.rsi
-          state: pinpointer-xenoborg-piece
+          state: pinpointer-xenoborg-piece-2
         doAfter: 4
       - tag: MothershipPinpointerPiece
         name: construction-graph-tag-core-pinpointer-piece
         icon:
           sprite: Objects/Devices/pinpointer.rsi
-          state: pinpointer-xenoborg-piece
+          state: pinpointer-xenoborg-piece-3
         doAfter: 4
       - tag: MothershipPinpointerPiece
         name: construction-graph-tag-core-pinpointer-piece
         icon:
           sprite: Objects/Devices/pinpointer.rsi
-          state: pinpointer-xenoborg-piece
+          state: pinpointer-xenoborg-piece-4
         doAfter: 4
   - node: repairedPinpointer
     entity: PinpointerMothershipRepaired

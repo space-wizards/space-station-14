@@ -206,7 +206,16 @@
   components:
   - type: Sprite
     sprite: Objects/Devices/pinpointer.rsi
-    state: pinpointer-xenoborg-piece
+    layers:
+    - state: pinpointer-xenoborg-piece-1
+      map: [ "base" ]
+  - type: RandomSprite
+    available:
+    - base:
+        pinpointer-xenoborg-piece-1: ""
+        pinpointer-xenoborg-piece-2: ""
+        pinpointer-xenoborg-piece-3: ""
+        pinpointer-xenoborg-piece-4: ""
   - type: Item
   - type: Tag
     tags:
