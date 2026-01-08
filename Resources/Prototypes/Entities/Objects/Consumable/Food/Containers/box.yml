@@ -661,7 +661,6 @@
         - id: FoodBakedCroissantCotton
         - id: FoodCakeCottonSlice
         - id: FoodBakedChevreChaudCotton
-        - id: FoodPizzaCottonSlice
 
 - type: entity
   parent: BoxCardboard
