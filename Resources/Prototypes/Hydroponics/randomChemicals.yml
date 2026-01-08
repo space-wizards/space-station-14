@@ -130,8 +130,9 @@
     reagents:
     - Nocturine
     - MuteToxin
+    - Lead
   - quantity: 0.1
-    weight: 5
+    weight: 5 # 99.9% chance of appearing at least once with 60u of vestine with an average of 6.5 occurances.
     reagents:
     - Vestine
   - quantity: 1.0 # High quantity but on average only 1 per chemical kit
