@@ -85,14 +85,15 @@ public sealed partial class MeleeWeaponSystem
         _sprite.SetRotation((animationUid, sprite), baseVec.ToWorldAngle());
 
         var xform = _xformQuery.GetComponent(animationUid);
+        TrackUserComponent track;
 
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
                 if (!prepare.DisableTracking)
                 {
-                track = EnsureComp<TrackUserComponent>(animationUid);
-                track.User = user;
+                    track = EnsureComp<TrackUserComponent>(animationUid);
+                    track.User = user;
                 }
                 _animation.Play(animationUid, GetSlashAnimation((animationUid, sprite), angle, spriteRotation, length, offset), SlashAnimationKey);
                 if (arcComponent.Fadeout)
