@@ -394,10 +394,7 @@ public partial class SharedGunSystem
                 if (cartridge.Spent)
                     continue;
 
-                // Mark cartridge as spent and if it's caseless delete from the chamber slot.
-                SetCartridgeSpent(ammoEnt.Value, cartridge, true);
-                var spawned = Spawn(cartridge.Prototype, args.Coordinates);
-                args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
+                args.Ammo.Add((ammoEnt, cartridge));
 
                 if (cartridge.DeleteOnSpawn)
                 {
