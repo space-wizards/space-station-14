@@ -7,14 +7,12 @@
     containers:
       storagebase: !type:AllSelector
         children:
-              - id: Crowbar
+      - id: Crowbar
       - id: Wrench
       - id: Screwdriver
       - id: Wirecutter
       - id: Welder
       - id: NetworkConfigurator
-      - id: trayScanner
-
 
 - type: entity
   id: ClothingBeltUtilityEngineering
@@ -31,6 +29,7 @@
         - id: Wirecutter
         - id: Welder
         - id: Multitool
+        - id: trayScanner
 
 - type: entity
   id: ClothingBeltChiefEngineerFilled
