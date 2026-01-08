@@ -138,7 +138,6 @@
   - quantity: 1.0 # High quantity but on average only 1 per chemical kit
     weight: 1
     reagents:
+    - Tazinide
     - Stimulants
     - Lexorin
-    - Tazinide
-
