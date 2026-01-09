@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Construction;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -18,7 +17,6 @@ using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Wires;
@@ -30,12 +28,9 @@ public abstract class SharedWiresSystem : EntitySystem
 {
     [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedConstructionSystem _construction = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
@@ -114,7 +109,8 @@ public abstract class SharedWiresSystem : EntitySystem
             return;
         }
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low,
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
             $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(ent):target}'s {(ent.Comp.Open ? "open" : "closed")} maintenance panel at {Transform(ent).Coordinates:targetlocation}");
         args.Handled = true;
     }
@@ -152,7 +148,7 @@ public abstract class SharedWiresSystem : EntitySystem
     protected void UpdateAppearance(Entity<WiresPanelComponent> ent)
     {
         if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
-            _appearance.SetData(ent.Owner, WiresVisuals.MaintenancePanelState, ent.Comp.Open && ent.Comp.Visible, appearance);
+            _appearance.SetData(ent.Owner, WiresVisuals.MaintenancePanelState, ent.Comp is { Open: true, Visible: true }, appearance);
     }
 
     public bool TogglePanel(Entity<WiresPanelComponent> ent, bool open, EntityUid? user = null)
@@ -226,6 +222,7 @@ public abstract class SharedWiresSystem : EntitySystem
     /// <summary>
     ///     Tries to cancel an active wire action via the given key that it's stored in.
     /// </summary>
+    /// <param name="owner">The entity that the action is stored in.</param>
     /// <param name="key">The key used to cancel the action.</param>
     public bool TryCancelWireAction(EntityUid owner, object key)
     {
@@ -242,9 +239,10 @@ public abstract class SharedWiresSystem : EntitySystem
     /// <summary>
     ///     Starts a timed action for this entity. Actions are keyed so callers can cancel or prevent duplicates.
     /// </summary>
-    /// <param name="delay">How long this takes to finish</param>
-    /// <param name="key">The key used to cancel the action</param>
-    /// <param name="onFinish">The event that is sent out when the wire is finished <see cref="TimedWireEvent" /></param>
+    /// <param name="owner">The entity that the action is stored in.</param>
+    /// <param name="delay">How long this takes to finish.</param>
+    /// <param name="key">The key used to cancel the action.</param>
+    /// <param name="onFinish">The event that is sent out when the wire is finished <see cref="TimedWireEvent" />.</param>
     public void StartWireAction(EntityUid owner, float delay, object key, TimedWireEvent onFinish)
     {
         if (!HasComp<WiresComponent>(owner))
@@ -265,8 +263,8 @@ public abstract class SharedWiresSystem : EntitySystem
 
         var endTime = _timing.CurTime + TimeSpan.FromSeconds(delay);
 
-        actions.Add(key, new ActiveWireAction
-        (
+        actions.Add(key,
+            new ActiveWireAction (
             key,
             endTime,
             onFinish
@@ -459,8 +457,7 @@ public abstract class SharedWiresSystem : EntitySystem
         var clientList = new List<ClientWire>();
         foreach (var entry in ent.Comp.WiresList)
         {
-            clientList.Add(new ClientWire(entry.Id, entry.IsCut, entry.Color,
-                entry.Letter));
+            clientList.Add(new ClientWire(entry.Id, entry.IsCut, entry.Color, entry.Letter));
 
             var statusData = entry.Action?.GetStatusLightData(entry);
             if (statusData != null && entry.Action?.StatusKey != null)
@@ -478,7 +475,9 @@ public abstract class SharedWiresSystem : EntitySystem
 
         statuses.Sort((a, b) => a.position.CompareTo(b.position));
 
-        _uiSystem.SetUiState((ent.Owner, ui), WiresUiKey.Key, new WiresBoundUserInterfaceState(
+        _uiSystem.SetUiState((ent.Owner, ui),
+            WiresUiKey.Key,
+            new WiresBoundUserInterfaceState(
             [.. clientList],
             statuses.Select(p => new StatusEntry(p.key, p.value)).ToArray(),
             Loc.GetString(ent.Comp.BoardName),
@@ -700,7 +699,7 @@ public abstract class SharedWiresSystem : EntitySystem
                 wire.Action?.Pulse(user, wire);
 
                 UpdateUserInterface(ent.Owner);
-                _audio.PlayPredicted(ent.Comp.PulseSound, ent.Owner, ent.Owner);
+                _audio.PlayPvs(ent.Comp.PulseSound, ent.Owner);
                 break;
         }
 
@@ -712,7 +711,10 @@ public abstract class SharedWiresSystem : EntitySystem
     /// <summary>
     ///     Tries to get the stateful data stored in this entity's <see cref="WiresComponent"/>.
     /// </summary>
+    /// <param name="uid">The entity to get the data from.</param>
     /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
+    /// <param name="data">The data to store using the given identifier.</param>
+    /// <param name="wires">The wires component to get the data from.</param>
     public bool TryGetData<T>(EntityUid uid, object identifier, [NotNullWhen(true)] out T? data, WiresComponent? wires = null)
     {
         data = default;
@@ -721,12 +723,10 @@ public abstract class SharedWiresSystem : EntitySystem
 
         wires.StateData.TryGetValue(identifier, out var result);
 
-        if (result is not T)
-        {
+        if (result is not T value)
             return false;
-        }
 
-        data = (T)result;
+        data = value;
 
         return true;
     }
@@ -734,6 +734,7 @@ public abstract class SharedWiresSystem : EntitySystem
     /// <summary>
     ///     Sets data in the entity's WiresComponent state dictionary by key.
     /// </summary>
+    /// <param name="ent">The entity.</param>
     /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
     /// <param name="data">The data to store using the given identifier.</param>
     public void SetData(Entity<WiresComponent?> ent, object identifier, object data)
@@ -767,6 +768,7 @@ public abstract class SharedWiresSystem : EntitySystem
     /// <summary>
     ///     Removes data from this entity stored in the given key from the entity's <see cref="WiresComponent"/>.
     /// </summary>
+    /// <param name="ent">The entity.</param>
     /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
     public void RemoveData(Entity<WiresComponent?> ent, object identifier)
     {
