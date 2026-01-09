@@ -68,18 +68,12 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [DataField]
         public float DampingModifier;
-        
-        /// <summary>
-        /// if true, the value in FTLCooldownOverrideTimer will be used instead of the default FTLCooldown CCVar.
-        /// </summary>
-        [DataField]
-        public bool FTLCooldownOverrideEnable = false;
-        
+
         /// <summary>
         /// Optional override for the FTL cooldown for this shuttle.
-        /// If FTLCooldownOverride is true, this value will be used instead of the default FTLCooldown CCVar.
+        /// If not null, then the value will be used instead of the default FTLCooldown CCVar.
         /// </summary>
         [DataField]
-        public float FTLCooldownOverrideTimer = 10f;
+        public TimeSpan? FTLCooldownOverride = null;
     }
 }
