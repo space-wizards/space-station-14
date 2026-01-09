@@ -17,9 +17,7 @@ public sealed class StationMapBoundUserInterface : BoundUserInterface
         base.Open();
         EntityUid? gridUid = null;
 
-        EntMan.TryGetComponent<StationMapComponent>(Owner, out var comp);
-
-        if (comp != null && comp.TargetGrid != null)
+        if (EntMan.TryGetComponent<StationMapComponent>(Owner, out var comp) && comp.TargetGrid != null)
         {
             gridUid = comp.TargetGrid;
         }
