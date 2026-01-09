@@ -929,7 +929,14 @@
     hands:
     - item: HandLabeler
     - item: Syringe
-    - item: BorgDropper
+      hand:
+        emptyLabel: borg-slot-small-containers-empty
+        emptyRepresentative: Syringe
+        whitelist:
+          tags:
+          - Dropper
+          - Syringe
+    - item: PillCanister
       hand:
         emptyLabel: borg-slot-small-containers-empty
         emptyRepresentative: PillCanister
