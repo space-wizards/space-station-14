@@ -13,6 +13,7 @@
   recipes:
   # engi xenoborg
   - XenoborgModuleDoorControlRecipe
+  - XenoborgModuleLawOverriderRecipe
   # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
   # scout xenoborg
