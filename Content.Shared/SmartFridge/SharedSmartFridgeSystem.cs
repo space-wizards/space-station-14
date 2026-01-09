@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.SmartFridge;
 
-public sealed class SmartFridgeSystem : EntitySystem
+public abstract class SharedSmartFridgeSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -29,7 +29,9 @@ public sealed class SmartFridgeSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SmartFridgeComponent, InteractUsingEvent>(OnInteractUsing, after: [typeof(AnchorableSystem)]);
+        SubscribeLocalEvent<SmartFridgeComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
         SubscribeLocalEvent<SmartFridgeComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
+        SubscribeLocalEvent<SmartFridgeComponent, AfterAutoHandleStateEvent>((ent, ref _) => UpdateUI(ent));
 
         SubscribeLocalEvent<SmartFridgeComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerb);
         SubscribeLocalEvent<SmartFridgeComponent, GetDumpableVerbEvent>(OnGetDumpableVerb);
@@ -58,16 +60,6 @@ public sealed class SmartFridgeSystem : EntitySystem
             anyInserted = true;
 
             _container.Insert(used, container);
-            var key = new SmartFridgeEntry(Identity.Name(used, EntityManager));
-            if (!ent.Comp.Entries.Contains(key))
-                ent.Comp.Entries.Add(key);
-
-            ent.Comp.ContainedEntries.TryAdd(key, new());
-            var entries = ent.Comp.ContainedEntries[key];
-            if (!entries.Contains(GetNetEntity(used)))
-                entries.Add(GetNetEntity(used));
-
-            Dirty(ent);
         }
 
         if (anyInserted && playSound)
@@ -86,6 +78,24 @@ public sealed class SmartFridgeSystem : EntitySystem
         args.Handled = DoInsert(ent, args.User, [args.Used], true);
     }
 
+    private void OnItemInserted(Entity<SmartFridgeComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        if (args.Container.ID != ent.Comp.Container || _timing.ApplyingState)
+            return;
+
+        var key = new SmartFridgeEntry(Identity.Name(args.Entity, EntityManager));
+        if (!ent.Comp.Entries.Contains(key))
+            ent.Comp.Entries.Add(key);
+
+        ent.Comp.ContainedEntries.TryAdd(key, new());
+        var entries = ent.Comp.ContainedEntries[key];
+        if (!entries.Contains(GetNetEntity(args.Entity)))
+            entries.Add(GetNetEntity(args.Entity));
+
+        Dirty(ent);
+        UpdateUI(ent);
+    }
+
     private void OnItemRemoved(Entity<SmartFridgeComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         var key = new SmartFridgeEntry(Identity.Name(args.Entity, EntityManager));
@@ -96,6 +106,7 @@ public sealed class SmartFridgeSystem : EntitySystem
         }
 
         Dirty(ent);
+        UpdateUI(ent);
     }
 
     private bool Allowed(Entity<SmartFridgeComponent> machine, EntityUid user)
@@ -131,6 +142,7 @@ public sealed class SmartFridgeSystem : EntitySystem
             _audio.PlayPredicted(ent.Comp.SoundVend, ent, args.Actor);
             contained.Remove(item);
             Dirty(ent);
+            UpdateUI(ent);
             return;
         }
 
@@ -173,5 +185,10 @@ public sealed class SmartFridgeSystem : EntitySystem
         args.PlaySound = true;
 
         DoInsert(ent, args.User, args.DumpQueue, false);
+    }
+
+    protected virtual void UpdateUI(Entity<SmartFridgeComponent> ent)
+    {
+
     }
 }
