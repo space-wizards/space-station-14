@@ -653,8 +653,8 @@
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
-        children:
-        - id: FoodBakedGrilledCheeseSandwichCotton
+        children: # TODO: replace most of these with cotton burger/fries or similar once someone adds that in order to resemble a normal burger meal
+        - id: FoodBakedGrilledCheeseSandwichCotton 
         - id: DrinkColaBottleFull
         - !type:NestedSelector
           tableId: HappyHonkToySafeEntityTable
