@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Aiming with the Hristov is now working correctly when using the Separated
-      Chat HUD mode.
-    type: Fix
-  - message: Cursor targetting with the Hristov now correctly selects the target underneath
-      the cursor.
-    type: Fix
-  id: 8864
-  time: '2025-08-18T18:22:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35087
 - author: Zokkie
   changes:
   - message: Lone Operative is now assigned the Solo Antagonist role ingame instead
@@ -3893,3 +3882,10 @@
   id: 9367
   time: '2026-01-09T06:58:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42209
+- author: perryprog
+  changes:
+  - message: Added a button to the smart fridge UI to remove empty entries.
+    type: Add
+  id: 9368
+  time: '2026-01-09T15:02:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39195
