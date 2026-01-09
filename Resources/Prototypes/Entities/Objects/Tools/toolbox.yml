@@ -62,6 +62,7 @@
     sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
 
 
+
 - type: entity
   name: electrical toolbox
   parent: ToolboxBase
