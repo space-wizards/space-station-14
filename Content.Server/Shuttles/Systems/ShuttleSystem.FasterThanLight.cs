@@ -544,7 +544,7 @@ public sealed partial class ShuttleSystem
         }
 
         comp.State = FTLState.Cooldown;
-        TimeSpan cooldown = entity.Comp2.FTLCooldownOverride ?? (HasComp<ArrivalsShuttleComponent>(uid)
+        var cooldown = entity.Comp2.FTLCooldownOverride ?? (HasComp<ArrivalsShuttleComponent>(uid)
                 ? ArrivalsFTLCooldown
                 : FTLCooldown);
         comp.StateTime = StartEndTime.FromCurTime(_gameTiming, cooldown);
