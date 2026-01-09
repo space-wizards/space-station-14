@@ -37,6 +37,5 @@ tool-quality-digging-tool-name = Shovel
 tool-quality-brushing-name = Brushing
 tool-quality-brushing-tool-name = Wire Brush
 
-
 tool-quality-undevoting-name = Undevoting
 tool-quality-undevoting-tool-name = Bible
