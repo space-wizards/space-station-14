@@ -855,7 +855,7 @@
     - state: icon-diagnosis
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: HandheldHealthAnalyzer
     - item: ClothingNeckStethoscope
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
@@ -871,7 +871,7 @@
     - state: icon-treatment
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: HandheldHealthAnalyzer
     - item: AdvancedJetInjector
     - item: Gauze
       hand:
@@ -908,7 +908,7 @@
     - state: icon-defib
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: HandheldHealthAnalyzer
     - item: DefibrillatorOneHandedUnpowered
     - item: Crowbar
     - item: BorgFireExtinguisher
@@ -971,7 +971,7 @@
     - state: icon-chem
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: HandheldHealthAnalyzer
     - item: BorgHypo
     - item: Gauze
       hand:
@@ -994,7 +994,6 @@
         whitelist:
           components:
           - Healing
-    - item: DefibrillatorOneHandedUnpowered
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-chem-module }
 
@@ -1646,7 +1645,7 @@
     - state: icon-xenoborg-projector
   - type: ItemBorgModule
     hands:
-    - item: ChameleonProjector
+    - item: ChameleonProjectorNoBattery
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-projector-module }
 

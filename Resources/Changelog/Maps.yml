@@ -963,4 +963,28 @@
   id: 117
   time: '2025-12-24T00:43:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42028
+- author: EchoOfNothing
+  changes:
+  - message: On Plasma, added a second APC to telecommunications, so the APC is no
+      longer overloaded at the start of the round.
+    type: Fix
+  id: 118
+  time: '2025-12-29T04:05:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42144
+- author: Spessmann
+  changes:
+  - message: On Snowball, a docking port has been added south of security.
+    type: Add
+  - message: On Snowball, replaced recharging items with their regular variants.
+    type: Fix
+  id: 119
+  time: '2026-01-02T00:05:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42124
+- author: F1restar4
+  changes:
+  - message: On Fland, added a missing LV cable to atmos' right side APC
+    type: Fix
+  id: 120
+  time: '2026-01-09T00:03:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42314
 Order: 2

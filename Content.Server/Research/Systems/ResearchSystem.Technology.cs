@@ -165,10 +165,10 @@ public sealed partial class ResearchSystem
         if (args.Server != null)
             return;
         component.MainDiscipline = null;
-        component.CurrentTechnologyCards = new();
-        component.SupportedDisciplines = new();
-        component.UnlockedTechnologies = new();
-        component.UnlockedRecipes = new();
+        component.CurrentTechnologyCards = new List<string>();
+        component.SupportedDisciplines = new List<ProtoId<TechDisciplinePrototype>>();
+        component.UnlockedTechnologies = new List<ProtoId<TechnologyPrototype>>();
+        component.UnlockedRecipes = new List<ProtoId<LatheRecipePrototype>>();
         Dirty(uid, component);
     }
 }

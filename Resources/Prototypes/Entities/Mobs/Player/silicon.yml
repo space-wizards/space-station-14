@@ -610,20 +610,21 @@
     - type: GhostTakeoverAvailable
 
 - type: entity
-  name: syndicate invasion borg spawner
-  id: PlayerBorgSyndicateInvasionGhostRoleSpawner
   parent: MarkerBase
+  id: PlayerBorgSyndicateInvasionGhostRoleSpawner
+  name: syndicate invasion borg spawner
   components:
   - type: Sprite
     layers:
       - state: red
       - sprite: Structures/Decoration/banner.rsi
         state: banner_syndicate
-  - type: RandomSpawner
-    prototypes:
-    - PlayerBorgSyndicateAssaultGhostRole
-    - PlayerBorgSyndicateAssaultGhostRole # Saboteurs are kinda like cyborg medics, we want less.
-    - PlayerBorgSyndicateSaboteurGhostRole
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: PlayerBorgSyndicateAssaultGhostRole
+      - id: PlayerBorgSyndicateSaboteurGhostRole
+        weight: 0.5 # Saboteurs are kinda like cyborg medics, we want less.
 
 - type: entity
   parent: EngineeringBorgChassisDerelict
