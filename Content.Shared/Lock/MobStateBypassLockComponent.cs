@@ -5,6 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Lock;
 
+/// <summary>
+/// This component lets the lock on this entity be pried open when the entity is in critical or dead state.
+/// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(MobStateBypassLockSystem))]
 public sealed partial class MobStateBypassLockComponent : Component
 {

@@ -67,8 +67,13 @@ public sealed class MobStateBypassLockSystem : EntitySystem
     private void OnGetVerb(Entity<MobStateBypassLockComponent> target, ref GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Using == null
-            || !_tool.HasQuality(args.Using.Value, target.Comp.BypassingTool)
             || !TryComp<MobStateComponent>(target, out var mobState))
+            return;
+
+        var rightTool = _tool.HasQuality(args.Using.Value, target.Comp.BypassingTool);
+
+        // Always show the tooltip on critical borgs, but show it only on alive ones with the right tool.
+        if (!rightTool && target.Comp.RequiredMobState > mobState.CurrentState)
             return;
 
         var user = args.User;
@@ -81,7 +86,7 @@ public sealed class MobStateBypassLockSystem : EntitySystem
 
         toggleVerb.Text = toggleVerb.Message = Loc.GetString("bypass-lock-verb");
 
-        if (mobState.CurrentState < target.Comp.RequiredMobState)
+        if (target.Comp.RequiredMobState > mobState.CurrentState && rightTool)
         {
             toggleVerb.Disabled = true;
             toggleVerb.Message = Loc.GetString("bypass-lock-disabled-healthy");
@@ -91,6 +96,11 @@ public sealed class MobStateBypassLockSystem : EntitySystem
             toggleVerb.Disabled = true;
             toggleVerb.Message = Loc.GetString("bypass-lock-disabled-already-open");
         }
+        else if (!rightTool)
+        {
+            toggleVerb.Disabled = true;
+            toggleVerb.Message = Loc.GetString("bypass-lock-disabled-wrong-tool", ("quality", target.Comp.BypassingTool.ToString().ToLower()));
+        }
 
         toggleVerb.Act = () => TryStartDoAfter(target, user, item);
 
@@ -98,5 +108,9 @@ public sealed class MobStateBypassLockSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// This event gets raised on the entity with the <see cref="MobStateBypassLockComponent"/> after someone finished
+/// a doafter prying open the lock.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class BypassLockDoAfterEvent : SimpleDoAfterEvent;
