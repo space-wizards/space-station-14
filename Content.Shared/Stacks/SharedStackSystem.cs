@@ -30,7 +30,6 @@ public abstract partial class SharedStackSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     // TODO: These should be in the prototype.
     public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
@@ -162,6 +161,9 @@ public abstract partial class SharedStackSystem : EntitySystem
             return;
         }
 
+        // If we've made it this far, we should refresh the solution when this item is eaten provided it's not the last one in the stack!
+        args.Refresh = eaten.Comp.Count > 1;
+
         /*
         Edible stacked items is near completely evil so we must choose one of the following:
         - Option 1: Eat the entire solution each bite and reduce the stack by 1.
@@ -178,18 +180,7 @@ public abstract partial class SharedStackSystem : EntitySystem
 
     private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
     {
-        if (!TryUse(eaten.AsNullable(), 1))
-            return;
-
-        // We haven't eaten the whole stack yet or are unable to eat it completely.
-        if (eaten.Comp.Count > 0)
-        {
-            args.Refresh = true;
-            return;
-        }
-
-        // Here to tell the food system to do destroy stuff.
-        args.Destroy = true;
+        ReduceCount(eaten.AsNullable(), 1);
     }
 
     private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
