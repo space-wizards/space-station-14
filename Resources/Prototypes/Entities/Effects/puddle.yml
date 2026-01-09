@@ -206,7 +206,7 @@
     delay: 3
     transferAmount: 1
     solution: puddle
-    utensil: None
+    utensil: Spoon
   - type: ExaminableSolution
     solution: puddle
     locVolume: "examinable-solution-on-examine-volume-puddle"
