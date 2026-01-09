@@ -45,10 +45,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SingularityComponent, ComponentStartup>(OnSingularityStartup);
-        SubscribeLocalEvent<AppearanceComponent, SingularityLevelChangedEvent>(UpdateAppearance);
-        SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
-        SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBody);
-        SubscribeLocalEvent<EventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotInsertedIntoContainerMessage>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
@@ -121,8 +117,31 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singularity">The state of the singularity which's level has changed.</param>
     public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
+
+        if (TryComp<EventHorizonComponent>(uid, out var eventHorizon))
+        {
+            _horizons.SetRadius(uid, EventHorizonRadius(singularity), false, eventHorizon);
+            _horizons.SetCanBreachContainment(uid, CanBreachContainment(singularity), false, eventHorizon);
+            _horizons.UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+        }
+
+        if (TryComp<PhysicsComponent>(uid, out var body))
+        {
+            if (singularity.Level <= 1 && oldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
+                _physics.SetLinearVelocity(uid, Vector2.Zero, body: body); // No idea how stopping the singularities movement keeps it from getting stuck though.
+        }
+
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        {
+            _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, singularity.Level, appearance);
+        }
+
+        if (TryComp<RadiationSourceComponent>(uid, out var radiationSource))
+        {
+            UpdateRadiation(uid, singularity, radiationSource);
+        }
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
         if (singularity.Level <= 0)
@@ -274,21 +293,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         UpdateSingularityLevel(uid, comp);
     }
 
-    // TODO: Figure out which systems should have control of which coupling.
-    /// <summary>
-    /// Syncs the radius of an event horizon associated with a singularity that just changed levels.
-    /// </summary>
-    /// <param name="uid">The entity that the event horizon and singularity are attached to.</param>
-    /// <param name="comp">The event horizon associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateEventHorizon(EntityUid uid, EventHorizonComponent comp, SingularityLevelChangedEvent args)
-    {
-        var singulo = args.Singularity;
-        _horizons.SetRadius(uid, EventHorizonRadius(singulo), false, comp);
-        _horizons.SetCanBreachContainment(uid, CanBreachContainment(singulo), false, comp);
-        _horizons.UpdateEventHorizonFixture(uid, eventHorizon: comp);
-    }
-
     /// <summary>
     /// Updates the distortion shader associated with a singularity when the singuarity changes levels.
     /// </summary>
@@ -344,40 +348,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         var factor = DistortionContainerScaling - 1;
         comp.FalloffPower = absFalloffPower > 1 ? comp.FalloffPower * MathF.Pow(absFalloffPower, factor) : comp.FalloffPower;
         comp.Intensity = absIntensity > 1 ? comp.Intensity * MathF.Pow(absIntensity, factor) : comp.Intensity;
-    }
-
-    /// <summary>
-    /// Updates the state of the physics body associated with a singularity when the singualrity changes levels.
-    /// </summary>
-    /// <param name="uid">The entity that the physics body and singularity are attached to.</param>
-    /// <param name="comp">The physics body associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateBody(EntityUid uid, PhysicsComponent comp, SingularityLevelChangedEvent args)
-    {
-        if (args.NewValue <= 1 && args.OldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
-            _physics.SetLinearVelocity(uid, Vector2.Zero, body: comp); // No idea how stopping the singularities movement keeps it from getting stuck though.
-    }
-
-    /// <summary>
-    /// Updates the appearance of a singularity when the singularities level changes.
-    /// </summary>
-    /// <param name="uid">The entity that the singularity is attached to.</param>
-    /// <param name="comp">The appearance associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateAppearance(EntityUid uid, AppearanceComponent comp, SingularityLevelChangedEvent args)
-    {
-        _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, args.NewValue, comp);
-    }
-
-    /// <summary>
-    /// Updates the amount of radiation a singularity emits when the singularities level changes.
-    /// </summary>
-    /// <param name="uid">The entity that the singularity is attached to.</param>
-    /// <param name="comp">The radiation source associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateRadiation(EntityUid uid, RadiationSourceComponent comp, SingularityLevelChangedEvent args)
-    {
-        UpdateRadiation(uid, args.Singularity, comp);
     }
 
 #endregion EventHandlers

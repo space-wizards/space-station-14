@@ -51,7 +51,7 @@ public record struct GetAccessTagsEvent(HashSet<ProtoId<AccessLevelPrototype>> T
 {
     public void AddGroup(ProtoId<AccessGroupPrototype> group)
     {
-        if (!PrototypeManager.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+        if (!PrototypeManager.Resolve<AccessGroupPrototype>(group, out var groupPrototype))
             return;
 
         Tags.UnionWith(groupPrototype.Tags);

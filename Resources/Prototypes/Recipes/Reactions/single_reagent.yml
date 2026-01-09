@@ -22,6 +22,8 @@
 
 - type: reaction
   id: SapBoiling
+  requiredMixerCategories:
+  - Stir # prevents cooking diona from inside out, TODO: make it react only X units per second; make bloodstream an open thermal system
   impact: Low
   minTemp: 377
   reactants:

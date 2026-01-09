@@ -1,13 +1,17 @@
+using System.Linq;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Shared.Chat;
 
 public sealed class SharedSuicideSystem : EntitySystem
 {
+    private static readonly ProtoId<DamageTypePrototype> FallbackDamageType = "Blunt";
+
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -38,7 +42,7 @@ public sealed class SharedSuicideSystem : EntitySystem
             appliedDamageSpecifier.DamageDict[key] = Math.Ceiling((double) (value * lethalAmountOfDamage / totalDamage));
         }
 
-        _damageableSystem.TryChangeDamage(target, appliedDamageSpecifier, true, origin: target);
+        _damageableSystem.ChangeDamage(target.AsNullable(), appliedDamageSpecifier, true, origin: target);
     }
 
     /// <summary>
@@ -57,11 +61,11 @@ public sealed class SharedSuicideSystem : EntitySystem
         // We don't want structural damage for the same reasons listed above
         if (!_prototypeManager.TryIndex(damageType, out var damagePrototype) || damagePrototype.ID == "Structural")
         {
-            Log.Error($"{nameof(SharedSuicideSystem)} could not find the damage type prototype associated with {damageType}. Falling back to Blunt");
-            damagePrototype = _prototypeManager.Index<DamageTypePrototype>("Blunt");
+            Log.Error($"{nameof(SharedSuicideSystem)} could not find the damage type prototype associated with {damageType}. Falling back to {FallbackDamageType}");
+            damagePrototype = _prototypeManager.Index(FallbackDamageType);
         }
 
         var damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
-        _damageableSystem.TryChangeDamage(target, damage, true, origin: target);
+        _damageableSystem.ChangeDamage(target.AsNullable(), damage, true, origin: target);
     }
 }

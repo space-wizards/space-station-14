@@ -178,7 +178,6 @@
     entity: MobLizard
     forced: true
     transferName: true
-    transferHumanoidAppearance: true
     inventory: None
     revertOnDeath: true
     revertOnCrit: true
@@ -190,7 +189,6 @@
     entity: MobLuminousPerson
     forced: true
     transferName: true
-    transferHumanoidAppearance: true
     inventory: None
     revertOnDeath: true
     revertOnCrit: true

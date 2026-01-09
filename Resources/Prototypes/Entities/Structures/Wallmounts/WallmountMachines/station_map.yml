@@ -1,0 +1,122 @@
+- type: entity
+  parent: BaseWallmountMetallic
+  id: StationMapBroken
+  name: station map
+  description: A virtual map of the surrounding station.
+  suffix: Wall broken
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/station_map.rsi
+      drawdepth: WallMountedItems
+      layers:
+        - state: station_map_broken
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseWallmountMachine
+  id: StationMap
+  name: station map
+  description: A virtual map of the surrounding station.
+  suffix: Wall
+  components:
+    - type: WallMount
+      arc: 360
+    - type: Appearance
+    - type: StationMap
+    - type: Sprite
+      sprite: Structures/Machines/station_map.rsi
+      layers:
+      - state: station_map0
+      - state: unshaded
+        shader: unshaded
+    - type: Icon
+      sprite: Structures/Machines/station_map.rsi
+      state: station_map0
+    - type: ContainerFill
+      containers:
+        board: [ StationMapCircuitboard ]
+    - type: ContainerContainer
+      containers:
+        board: !type:Container
+    - type: ApcPowerReceiver
+      powerLoad: 200
+    - type: Construction
+      graph: StationMap
+      node: station_map
+    - type: ActivatableUIRequiresPower
+    - type: ActivatableUI
+      key: enum.StationMapUiKey.Key
+    - type: Destructible
+      thresholds:
+      - trigger: # Excess damage, don't spawn entities
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            StationMapBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: UserInterface
+      interfaces:
+        enum.StationMapUiKey.Key:
+          type: StationMapBoundUserInterface
+    - type: EmitSoundOnUIOpen
+      sound:
+        collection: Keyboard
+        params:
+          volume: -1
+          variation: 0.10
+          pitch: 1.10  # low pitch keyboard sounds feel kinda weird
+      blacklist:
+        tags:
+        - NoConsoleSound
+
+- type: entity
+  parent: BaseWallmountMetallic
+  id: StationMapAssembly
+  name: station map assembly
+  description: A station map assembly.
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    sprite: Structures/Machines/station_map.rsi
+    layers:
+    - state: station_map_frame1
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: station_map_frame0 }
+          wired: { state: station_map_frame1 }
+          electronics: { state: station_map_frame2 }
+  - type: Construction
+    graph: StationMap
+    node: assembly
