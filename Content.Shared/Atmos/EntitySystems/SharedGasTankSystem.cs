@@ -141,8 +141,9 @@ public abstract class SharedGasTankSystem : EntitySystem
         if (!component.IsConnected)
             return false;
 
-        component.ConnectStream = _audio.Stop(component.ConnectStream);
+        component.DisconnectStream = _audio.Stop(component.DisconnectStream);
         component.ConnectStream = _audio.PlayPredicted(component.ConnectSound, owner, user)?.Entity ?? component.ConnectStream;
+        
         UpdateUserInterface(ent);
         return true;
     }
@@ -210,8 +211,9 @@ public abstract class SharedGasTankSystem : EntitySystem
         if (internalsUid != null && internalsComp != null)
             _internals.DisconnectTank((internalsUid.Value, internalsComp), forced: forced);
 
-        component.DisconnectStream = _audio.Stop(component.DisconnectStream);
+        component.ConnectStream = _audio.Stop(component.ConnectStream);
         component.DisconnectStream = _audio.PlayPredicted(component.DisconnectSound, owner, user)?.Entity ?? component.DisconnectStream;
+
         UpdateUserInterface(ent);
         return true;
     }
