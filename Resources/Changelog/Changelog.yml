@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: beck-thompson, slarticodefast
-  changes:
-  - message: Fixed rebinding keys crashing the client.
-    type: Fix
-  id: 8866
-  time: '2025-08-18T18:58:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39732
 - author: Princess-Cheeseballs
   changes:
   - message: Being a Lightweight drunk no longer extends your bloodloss
@@ -3889,3 +3882,10 @@
   id: 9369
   time: '2026-01-09T18:45:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42320
+- author: Hitlinemoss
+  changes:
+  - message: Cabbage placed on taco shells no longer turns into a carrot.
+    type: Fix
+  id: 9370
+  time: '2026-01-09T23:24:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42326
