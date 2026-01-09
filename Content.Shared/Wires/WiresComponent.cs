@@ -21,7 +21,7 @@ public sealed partial class WiresComponent : Component
     ///     The layout ID of this entity's wires.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public ProtoId<WireLayoutPrototype> LayoutId { get; set; } = default!;
+    public ProtoId<WireLayoutPrototype> LayoutId { get; set; }
 
     /// <summary>
     ///     The serial number of this board. Randomly generated upon start,
@@ -40,7 +40,7 @@ public sealed partial class WiresComponent : Component
     /// <summary>
     ///     The list of wires currently active on this entity.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public List<Wire> WiresList { get; set; } = [];
 
     /// <summary>

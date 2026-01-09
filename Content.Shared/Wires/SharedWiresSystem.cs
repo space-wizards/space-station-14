@@ -15,8 +15,11 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Wires;
@@ -28,6 +31,7 @@ public abstract class SharedWiresSystem : EntitySystem
 {
     [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -339,13 +343,13 @@ public abstract class SharedWiresSystem : EntitySystem
         }
     }
 
-    private sealed class ActiveWireAction(object identifier, TimeSpan endTime, TimedWireEvent onFinish)
+    private sealed class ActiveWireAction(object id, TimeSpan endTime, TimedWireEvent onFinish)
     {
         /// <summary>
         ///     The wire action's ID. This is so that once the action is finished,
         ///     any related data can be removed from the state dictionary.
         /// </summary>
-        public object Id { get; } = identifier;
+        public object Id { get; } = id;
 
         /// <summary>
         ///     When this action should fire.
@@ -381,13 +385,13 @@ public abstract class SharedWiresSystem : EntitySystem
 
         if (!TryComp(player, out HandsComponent? handsComponent))
         {
-            _popup.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), ent.Owner, player);
+            _popup.PopupClient(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), ent.Owner, player);
             return;
         }
 
         if (!_interaction.InRangeUnobstructed(player, ent.Owner))
         {
-            _popup.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), ent.Owner, player);
+            _popup.PopupClient(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), ent.Owner, player);
             return;
         }
 
@@ -451,6 +455,10 @@ public abstract class SharedWiresSystem : EntitySystem
     #region Entity API
     protected void UpdateUserInterface(Entity<WiresComponent?> ent, UserInterfaceComponent? ui = null)
     {
+        // TODO: need to predict WiresBoundUserInterface correctly
+        if (_net.IsClient)
+            return;
+
         if (!Resolve(ent, ref ent.Comp, ref ui, false)) // logging this means that we get a bunch of errors
             return;
 
@@ -554,13 +562,13 @@ public abstract class SharedWiresSystem : EntitySystem
             case WiresAction.Cut:
                 if (!_tool.HasQuality(toolEntity, CuttingQuality, tool))
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     return;
                 }
 
                 if (wire.IsCut)
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-cut-cut-wire"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-cut-cut-wire"), user);
                     return;
                 }
 
@@ -568,13 +576,13 @@ public abstract class SharedWiresSystem : EntitySystem
             case WiresAction.Mend:
                 if (!_tool.HasQuality(toolEntity, CuttingQuality, tool))
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     return;
                 }
 
                 if (!wire.IsCut)
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-mend-uncut-wire"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-mend-uncut-wire"), user);
                     return;
                 }
 
@@ -582,13 +590,13 @@ public abstract class SharedWiresSystem : EntitySystem
             case WiresAction.Pulse:
                 if (!_tool.HasQuality(toolEntity, PulsingQuality, tool))
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), user);
                     return;
                 }
 
                 if (wire.IsCut)
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-pulse-cut-wire"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-pulse-cut-wire"), user);
                     return;
                 }
 
@@ -644,13 +652,13 @@ public abstract class SharedWiresSystem : EntitySystem
             case WiresAction.Cut:
                 if (!_tool.HasQuality(toolEntity, CuttingQuality, tool))
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     break;
                 }
 
                 if (wire.IsCut)
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-cut-cut-wire"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-cut-cut-wire"), user);
                     break;
                 }
 
@@ -665,13 +673,13 @@ public abstract class SharedWiresSystem : EntitySystem
             case WiresAction.Mend:
                 if (!_tool.HasQuality(toolEntity, CuttingQuality, tool))
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     break;
                 }
 
                 if (!wire.IsCut)
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-mend-uncut-wire"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-mend-uncut-wire"), user);
                     break;
                 }
 
@@ -686,20 +694,20 @@ public abstract class SharedWiresSystem : EntitySystem
             case WiresAction.Pulse:
                 if (!_tool.HasQuality(toolEntity, PulsingQuality, tool))
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), user);
                     break;
                 }
 
                 if (wire.IsCut)
                 {
-                    _popup.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-pulse-cut-wire"), user);
+                    _popup.PopupPredictedCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-pulse-cut-wire"), user);
                     break;
                 }
 
                 wire.Action?.Pulse(user, wire);
 
                 UpdateUserInterface(ent.Owner);
-                _audio.PlayPvs(ent.Comp.PulseSound, ent.Owner);
+                _audio.PlayPredicted(ent.Comp.PulseSound, ent.Owner, user);
                 break;
         }
 
@@ -797,11 +805,13 @@ public abstract class SharedWiresSystem : EntitySystem
     #endregion
 }
 
+[Serializable, NetSerializable]
 public sealed class Wire(EntityUid owner, bool isCut, WireColor color, WireLetter letter, int position, IWireAction? action)
 {
     /// <summary>
     /// The entity that registered the wire.
     /// </summary>
+    [field: NonSerialized]
     public EntityUid Owner { get; } = owner;
 
     /// <summary>
@@ -836,6 +846,7 @@ public sealed class Wire(EntityUid owner, bool isCut, WireColor color, WireLette
     /// <summary>
     ///     The action that this wire performs when mended, cut or puled. This also determines the status lights that this wire adds.
     /// </summary>
+    [field: NonSerialized]
     public IWireAction? Action { get; set; } = action;
 }
 

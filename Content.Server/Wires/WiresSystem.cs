@@ -49,24 +49,18 @@ public sealed partial class WiresSystem : SharedWiresSystem
         WireLayout? layout = null;
         List<Wire>? wireSet = null;
         if (!ent.Comp.AlwaysRandomize)
-        {
             TryGetLayout(ent.Comp.LayoutId, out layout);
-        }
 
         List<IWireAction> wireActions = [];
         var dummyWires = 0;
 
         if (!_protoMan.Resolve(ent.Comp.LayoutId, out var layoutPrototype))
-        {
             return;
-        }
 
         dummyWires += layoutPrototype.DummyWires;
 
         if (layoutPrototype.Wires != null)
-        {
             wireActions.AddRange(layoutPrototype.Wires);
-        }
 
         // does the prototype have a parent (and are the wires empty?) if so, we just create
         // a new layout based on that
@@ -91,9 +85,7 @@ public sealed partial class WiresSystem : SharedWiresSystem
         }
 
         if (wireSet == null || wireSet.Count == 0)
-        {
             return;
-        }
 
         ent.Comp.WiresList.AddRange(wireSet);
 
@@ -158,11 +150,10 @@ public sealed partial class WiresSystem : SharedWiresSystem
             }
 
             if (!ent.Comp.AlwaysRandomize && !string.IsNullOrEmpty(ent.Comp.LayoutId))
-            {
                 AddLayout(ent.Comp.LayoutId, new WireLayout(data));
-                Dirty(ent);
-            }
         }
+
+        Dirty(ent);
     }
 
     private void GenerateSerialNumber(Entity<WiresComponent?> ent)
