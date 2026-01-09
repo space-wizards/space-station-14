@@ -57,25 +57,14 @@ public sealed class IgniteOnBuckleSystem : EntitySystem
             igniteComponent.NextIgniteTime += TimeSpan.FromSeconds(igniteComponent.IgniteTime);
             Dirty(uid, igniteComponent);
 
-            // Check if fire stacks have reached maximum
+            if (flammableComponent.FireStacks > igniteComponent.MaxFireStacks)
+                continue;
+
+            var stacks = flammableComponent.FireStacks + igniteComponent.FireStacks;
             if (igniteComponent.MaxFireStacks.HasValue)
-            {
-                var currentStacks = flammableComponent.FireStacks;
-                var maxStacks = igniteComponent.MaxFireStacks.Value;
+                stacks = Math.Min(stacks, igniteComponent.MaxFireStacks.Value);
 
-                if (currentStacks >= maxStacks)
-                    continue;
-
-                // Calculate how much we can add without exceeding the limit
-                var maxToAdd = maxStacks - currentStacks;
-                var toAdd = MathF.Min(igniteComponent.FireStacks, maxToAdd);
-
-                _flammable.AdjustFireStacks(uid, toAdd, flammableComponent, ignite: true);
-            }
-            else
-            {
-                _flammable.AdjustFireStacks(uid, igniteComponent.FireStacks, flammableComponent, ignite: true);
-            }
+            _flammable.SetFireStacks(uid, stacks, flammableComponent, true);
         }
     }
 }
