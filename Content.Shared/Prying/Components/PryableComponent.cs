@@ -24,7 +24,7 @@ public sealed partial class PryableComponent : Component
     /// Default time it takes to pry the entity.
     /// </summary>
     [DataField]
-    public float PryTime = 1.5f;
+    public TimeSpan PryTime = TimeSpan.FromSeconds(1.5f);
 
     /// <summary>
     /// Loc string to use for the added pry verb.
