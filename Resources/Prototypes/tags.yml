@@ -471,25 +471,25 @@
   id: DockEmergency # Used bv EmergencyShuttleSystem for finding a priority FTL destination.
 
 - type: Tag
-  id: DevoterChaos
+  id: DevoterChaos # Represents an entity that can be used to devote an altar to Chaos.
 
 - type: Tag
-  id: DevoterDruid
+  id: DevoterDruid # Represents an entity that can be used to devote an altar to Druidic.
 
 - type: Tag
-  id: DevoterNanotrasen
+  id: DevoterNanotrasen # Represents an entity that can be used to devote an altar to Nanotrasen.
 
 - type: Tag
-  id: DevoterSatana
+  id: DevoterSatana # Represents an entity that can be used to devote an altar to Satana.
 
 - type: Tag
-  id: DevoterSpaceChristian
+  id: DevoterSpaceChristian # Represents an entity that can be used to devote an altar to Space Jesus.
 
 - type: Tag
-  id: DevoterTechnology
+  id: DevoterTechnology # Represents an entity that can be used to devote an altar to Technology.
 
 - type: Tag
-  id: DevoterToolbox
+  id: DevoterToolbox # Represents an entity that can be used to devote an altar to the Holy Toolbox.
 
 - type: Tag
   id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it, but is not necessarily writeable itself. Storage whitelist: MailCart
