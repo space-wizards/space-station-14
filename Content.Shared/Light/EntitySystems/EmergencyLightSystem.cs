@@ -91,7 +91,7 @@ public sealed class EmergencyLightSystem : EntitySystem
         if (!_prototype.Resolve(ev.AlertLevel, out var level))
             return;
 
-        var query = EntityQueryEnumerator<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<EmergencyLightComponent, SharedPointLightComponent, AppearanceComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var light, out var pointLight, out var appearance, out var xform))
         {
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != ev.Station)
