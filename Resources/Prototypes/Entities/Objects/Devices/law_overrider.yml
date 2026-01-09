@@ -42,6 +42,15 @@
 
 - type: entity
   parent: LawOverrider
+  id: LawOverriderXenoborg
+  suffix: Xenoborg
+  components:
+  - type: SiliconLawOverrider
+    worksOnAiCore: true
+    canChangeCorruptedLaws: true
+
+- type: entity
+  parent: LawOverrider
   id: LawOverriderAdmeme
   suffix: Admeme
   components:
