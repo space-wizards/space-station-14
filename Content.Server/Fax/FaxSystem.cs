@@ -15,7 +15,6 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Fax.Components;
 using Content.Shared.Fax.Systems;
-using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
@@ -39,7 +38,6 @@ public sealed class FaxSystem : EntitySystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedGameTicker _gameTicker = default!;
@@ -535,7 +533,7 @@ public sealed class FaxSystem : EntitySystem
             ? deviceNetworkComponent.Address
             : Loc.GetString("device-address-unknown");
 
-            var time = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+            var time = _gameTicker.RoundDuration();
             var timeString = TimeSpan.FromSeconds(Math.Truncate(time.TotalSeconds)).ToString();
 
             content += "\n";
