@@ -1,5 +1,5 @@
 using Content.Server.GameTicking.Rules;
-using Content.Server.PowerCell;
+using Content.Shared.PowerCell;
 using Content.Shared.Pinpointer;
 using Content.Shared.Station;
 using Robust.Server.GameObjects;
