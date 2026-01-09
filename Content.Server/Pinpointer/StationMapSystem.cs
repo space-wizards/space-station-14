@@ -1,9 +1,10 @@
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.Pinpointer;
 using Content.Shared.Station;
 using Robust.Server.GameObjects;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Pinpointer;
 
@@ -13,6 +14,7 @@ public sealed class StationMapSystem : EntitySystem
     [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly SharedStationSystem _station = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -30,14 +32,27 @@ public sealed class StationMapSystem : EntitySystem
 
     private void OnMapInit(Entity<StationMapComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.InitializeWithStation)
+        if (!ent.Comp.InitializeWithStation)
+            return;
+
+        if (TryComp<NukeopsStationMapComponent>(ent, out var nukeMap))
         {
-            var station = _station.GetStationInMap(_xform.GetMapId(ent.Owner)) ?? _station.GetStationsSet().FirstOrNull();
-            if (station != null)
+            foreach (var rule in _gameTicker.GetActiveGameRules())
             {
-                ent.Comp.TargetGrid = _station.GetLargestGrid((station.Value, null));
-                Dirty(ent);
+                if (TryComp<NukeopsRuleComponent>(rule, out var nukeopsRule) && nukeopsRule.TargetStation != null)
+                {
+                    ent.Comp.TargetGrid = _station.GetLargestGrid((nukeopsRule.TargetStation.Value, null));
+                    Dirty(ent);
+                    return;
+                }
             }
+        }
+
+        var station = _station.GetStationInMap(_xform.GetMapId(ent.Owner));
+        if (station != null)
+        {
+            ent.Comp.TargetGrid = _station.GetLargestGrid((station.Value, null));
+            Dirty(ent);
         }
     }
 
@@ -53,6 +68,7 @@ public sealed class StationMapSystem : EntitySystem
             return;
 
         stationMap.TargetGrid = _station.GetLargestGrid((args.TargetStation.Value, null));
+        Dirty(ent);
     }
 
     private void OnStationMapClosed(EntityUid uid, StationMapComponent component, BoundUIClosedEvent args)
