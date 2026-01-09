@@ -102,11 +102,10 @@ public sealed partial class CCVars
 
     /// <summary>
     ///     How much time in seconds that needs to pass before the arrivals shuttle can FTL again.
-    ///     If this is adjusted, ensure that other Arrivals Cvars are adjusted
-    ///     accordingly (like ArrivalsCooldown).
+    ///     If this is adjusted, ensure that shuttle.arrivals_cooldown is longer than this value.
     /// </summary>
     public static readonly CVarDef<float> ArrivalsFTLCooldown =
-        CVarDef.Create("arrivals.cooldown", 10f, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.arrivals_ftl_cooldown", 10f, CVar.SERVERONLY);
 
     /// <summary>
     ///     The maximum <see cref="PhysicsComponent.Mass"/> a grid can have before it becomes unable to FTL.
