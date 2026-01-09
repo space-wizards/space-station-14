@@ -53,7 +53,7 @@
       cardboard:
         reagents:
         - ReagentId: Cellulose
-          Quantity: 6
+          Quantity: 10
   - type: Item
     heldPrefix: cardboard
   - type: FloorTile

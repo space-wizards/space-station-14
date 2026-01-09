@@ -70,6 +70,14 @@
   - type: Tag
     tags:
     - Folder
+  - type: Extractable
+    grindableSolutionName: folder
+  - type: SolutionContainerManager
+    solutions:
+      folder:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 4 #a little more rigid then paper so it yields slightly more
 
 - type: entity
   abstract: true
@@ -267,6 +275,16 @@
     layers:
     - state: folder-centcom
     - state: folder-base
+  - type: Extractable
+    grindableSolutionName: centcommfolder
+  - type: SolutionContainerManager
+    solutions:
+      centcommfolder:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 4
+        - ReagentId: Gold
+          Quantity: 1
 
 - type: entity
   parent: [BoxFolderCentComEmpty, BoxFolderFill]
@@ -337,6 +355,14 @@
     damage:
       types:
         Blunt: 6
+  - type: Extractable
+    grindableSolutionName: clipboard
+  - type: SolutionContainerManager
+    solutions:
+      clipboard:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 5
 
 - type: entity
   parent: [BoxFolderClipboardEmpty, BoxFolderFill]
@@ -406,6 +432,16 @@
       Wood: 50
       Steel: 25
       Cloth: 25
+  - type: Extractable
+    grindableSolutionName: centcommclipboard
+  - type: SolutionContainerManager
+    solutions:
+      centcommclipboard:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 4
+        - ReagentId: Gold
+          Quantity: 1
 
 - type: entity
   parent: [BoxFolderCentComClipboardEmpty, BoxFolderFill]
