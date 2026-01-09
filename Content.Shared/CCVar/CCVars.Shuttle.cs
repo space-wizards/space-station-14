@@ -95,7 +95,7 @@ public sealed partial class CCVars
         CVarDef.Create("shuttle.arrival_time", 5f, CVar.SERVERONLY);
 
     /// <summary>
-    ///     How much time needs to pass before a non-arrivals shuttle can FTL again.
+    ///     How much time in seconds that needs to pass before a non-arrivals shuttle can FTL again.
     /// </summary>
     public static readonly CVarDef<float> FTLCooldown =
         CVarDef.Create("shuttle.cooldown", 60f, CVar.SERVERONLY);
