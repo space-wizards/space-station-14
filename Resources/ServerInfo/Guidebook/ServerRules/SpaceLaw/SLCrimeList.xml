@@ -624,7 +624,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes destruction of station machinery such as ID card computers or telecommunications servers, power devices such as substations, and silicon units.
+        Includes destruction of station machinery such as ID card computers or telecommunications servers,
+		power devices such as substations, and silicon units.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -783,18 +784,18 @@
     </ColorBox>
 	    <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Departmental Destruction
+        Destruction of Vital Infrastructure
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To cause massive damage to an area or major station system.
+        Destruction of equipment or infrastructure that renders a department inoperable or severely degraded.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         This is mostly used for large-scale bombings or the sabotage of major station systems such as power production,
-        atmos, or station AI.
+        the Cargo shuttle, or station AI.
       </Box>
     </ColorBox>
     <ColorBox>
