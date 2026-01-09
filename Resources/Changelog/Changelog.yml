@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: SlamBamActionman
   changes:
-  - message: Stamina resistance has been removed from cardboard armor and gorillas.
-    type: Tweak
-  id: 8863
-  time: '2025-08-18T14:33:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39727
-- author: SlamBamActionman
-  changes:
   - message: Aiming with the Hristov is now working correctly when using the Separated
       Chat HUD mode.
     type: Fix
@@ -3892,3 +3885,11 @@
   id: 9366
   time: '2026-01-09T04:14:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42211
+- author: mikeysaurus
+  changes:
+  - message: All non-arrivals shuttles are defaulted to have a 60 second cooldown
+      before they can FTL again.
+    type: Tweak
+  id: 9367
+  time: '2026-01-09T06:58:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42209
