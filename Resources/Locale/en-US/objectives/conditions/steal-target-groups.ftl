@@ -3,7 +3,6 @@ steal-target-groups-hypospray = hypospray
 steal-target-groups-handheld-crew-monitor = handheld crew monitor
 steal-target-groups-clothing-outer-hardsuit-rd = experimental research hardsuit
 steal-target-groups-hand-teleporter = hand teleporter
-steal-target-groups-law-overrider = law overrider
 steal-target-groups-clothing-shoes-boots-mag-adv = advanced magboots
 steal-target-groups-box-folder-qm-clipboard = requisition digi-board
 steal-target-groups-clothing-hands-knuckledusters-qm = golden knuckledusters

@@ -89,7 +89,6 @@
   - Stealing the [color=#c96dbf]Research Director[/color]'s [bold]experimental hardsuit[/bold], [bold]law overrider[/bold] or [bold]hand teleporter[/bold].
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption=""/>
-    <GuideEntityEmbed Entity="LawOverrider" Caption=""/>
     <GuideEntityEmbed Entity="HandTeleporter" Caption=""/>
   </Box>
   - Stealing the [color=#cb0000]Head of Security[/color]'s [bold]energy magnum[/bold].

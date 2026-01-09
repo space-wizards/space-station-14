@@ -29,13 +29,6 @@
     state: icon
 
 - type: stealTargetGroup
-  id: LawOverrider
-  name: steal-target-groups-law-overrider
-  sprite:
-    sprite: Objects/Devices/law_overrider.rsi
-    state: icon
-
-- type: stealTargetGroup
   id: ClothingShoesBootsMagAdv
   name: steal-target-groups-clothing-shoes-boots-mag-adv
   sprite:

@@ -39,8 +39,6 @@
       law_board: !type:ContainerSlot {}
   - type: SiliconLawOverrider
     overrideTime: 10
-  - type: StealTarget
-    stealGroup: LawOverrider
 
 - type: entity
   parent: LawOverrider

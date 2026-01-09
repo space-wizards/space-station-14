@@ -241,13 +241,6 @@
   - type: StealCondition
     stealGroup: HandTeleporter
 
-- type: entity
-  parent: BaseRDStealObjective
-  id: LawOverriderStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: LawOverrider
-
 ## hos
 
 - type: entity
