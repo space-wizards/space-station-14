@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Jump boots can no longer be used when knocked down.
-    type: Fix
-  id: 8862
-  time: '2025-08-18T12:22:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39710
 - author: SlamBamActionman
   changes:
   - message: Stamina resistance has been removed from cardboard armor and gorillas.
@@ -3890,3 +3883,12 @@
   id: 9365
   time: '2026-01-08T19:52:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41236
+- author: B_Kirill, ScarKy0
+  changes:
+  - message: Added a bonfire with stake that sets the attached entities on fire.
+    type: Add
+  - message: A bonfire and a bonfire with stake can now be constructed.
+    type: Add
+  id: 9366
+  time: '2026-01-09T04:14:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42211
