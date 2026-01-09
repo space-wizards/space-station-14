@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Zokkie
-  changes:
-  - message: Lone Operative is now assigned the Solo Antagonist role ingame instead
-      of the Team Antagonist role.
-    type: Fix
-  id: 8865
-  time: '2025-08-18T18:57:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36521
 - author: beck-thompson, slarticodefast
   changes:
   - message: Fixed rebinding keys crashing the client.
@@ -3889,3 +3881,11 @@
   id: 9368
   time: '2026-01-09T15:02:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39195
+- author: B_Kirill
+  changes:
+  - message: Projectiles like bullets, rockets and fireballs no longer slow down during
+      flight.
+    type: Fix
+  id: 9369
+  time: '2026-01-09T18:45:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42320
