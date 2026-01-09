@@ -25,7 +25,7 @@ public sealed class SmartFridgeBoundUserInterface : BoundUserInterface
 
     public void Refresh()
     {
-        if (_menu is not {} menu || !EntMan.TryGetComponent(Owner, out SmartFridgeComponent? fridge))
+        if (_menu is not { } menu || !EntMan.TryGetComponent(Owner, out SmartFridgeComponent? fridge))
             return;
 
         menu.SetFlavorText(Loc.GetString(fridge.FlavorText));
