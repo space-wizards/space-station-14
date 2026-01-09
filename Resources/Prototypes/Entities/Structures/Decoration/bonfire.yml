@@ -3,6 +3,17 @@
   parent: BaseStructure
   id: BaseBonfire
   components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        mask:
+        - Impassable
+        layer:
+        - Opaque
+        - BulletImpassable
   - type: Sprite
     noRot: true
     sprite: Structures/Decoration/bonfire.rsi
