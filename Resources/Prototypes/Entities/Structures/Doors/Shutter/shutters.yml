@@ -7,6 +7,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
@@ -110,7 +114,7 @@
 
 - type: entity
   id: ShuttersNormal
-  parent: BaseShutterPryable
+  parent: [BaseDeltaPressureGlass, BaseShutterPryable]
   components:
   - type: Occluder
   - type: Construction
@@ -137,7 +141,7 @@
 
 - type: entity
   id: ShuttersRadiation
-  parent: BaseShutterPryable
+  parent: [BaseDeltaPressureGlass, BaseShutterPryable]
   name: radiation shutters
   description: Why did they make these shutters radioactive?
   components:
@@ -175,7 +179,7 @@
 
 - type: entity
   id: ShuttersWindow
-  parent: BaseShutterPryable
+  parent: [BaseDeltaPressureGlass, BaseShutterPryable]
   name: window shutters
   description: The Best (TM) place to see your friends explode!
   components:

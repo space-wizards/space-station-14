@@ -1,5 +1,5 @@
 ﻿- type: gas
-  id: 0
+  id: Oxygen
   name: gases-oxygen
   specificHeat: 20
   heatCapacityRatio: 1.4
@@ -9,7 +9,7 @@
   pricePerMole: 0
 
 - type: gas
-  id: 1
+  id: Nitrogen
   name: gases-nitrogen
   specificHeat: 30
   heatCapacityRatio: 1.4
@@ -19,7 +19,7 @@
   pricePerMole: 0
 
 - type: gas
-  id: 2
+  id: CarbonDioxide
   name: gases-co2
   specificHeat: 30
   heatCapacityRatio: 1.3
@@ -29,7 +29,7 @@
   pricePerMole: 0
 
 - type: gas
-  id: 3
+  id: Plasma
   name: gases-plasma
   specificHeat: 200
   heatCapacityRatio: 1.7
@@ -41,7 +41,7 @@
   pricePerMole: 0
 
 - type: gas
-  id: 4
+  id: Tritium
   name: gases-tritium
   specificHeat: 10
   heatCapacityRatio: 1.3
@@ -53,7 +53,7 @@
   pricePerMole: 2.5
 
 - type: gas
-  id: 5
+  id: WaterVapor
   name: gases-water-vapor
   specificHeat: 40
   heatCapacityRatio: 1.33
@@ -65,7 +65,7 @@
   pricePerMole: 0
 
 - type: gas
-  id: 6
+  id: Ammonia
   name: gases-ammonia
   specificHeat: 20
   heatCapacityRatio: 1.4
@@ -79,7 +79,7 @@
   pricePerMole: 0.15
 
 - type: gas
-  id: 7
+  id: NitrousOxide
   name: gases-n2o
   specificHeat: 40
   heatCapacityRatio: 1.3
@@ -89,7 +89,7 @@
   pricePerMole: 0.1
 
 - type: gas
-  id: 8
+  id: Frezon
   name: gases-frezon
   specificHeat: 600 # Strongest by far
   heatCapacityRatio: 1.33

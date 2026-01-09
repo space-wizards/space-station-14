@@ -6,7 +6,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Command
-      time: 3600 # 1 hour
+      time: 1h
 
 # Flowers
 - type: loadout
@@ -105,6 +105,31 @@
     back:
     - CigarGold
   groupBy: "smokeables"
+
+# Folders
+- type: loadout
+  id: BoxFolderBaseThreePapers
+  storage:
+    back:
+    - BoxFolderBaseThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderPlasticClipboardThreePapers
+  storage:
+    back:
+    - BoxFolderPlasticClipboardThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderClipboardThreePapers
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command
+  storage:
+    back:
+    - BoxFolderClipboardThreePapers
+  groupBy: "folders"
 
 # Pins
 - type: loadout
@@ -233,132 +258,80 @@
     - ClothingNeckGenderfluidPin
   groupBy: "pin"
 
-# Towels
+# Canes
+# The white cane is intentionally not included here. Thats for the blind.
 - type: loadout
-  id: TowelColorWhite
+  id: OffsetCane
+  storage:
+    back:
+    - OffsetCane
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneWood
+  storage:
+    back:
+    - OffsetCaneWood
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneClown
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:OverallPlaytimeRequirement
-      time: 36000 # 10hr
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 3600 # 1hr
   storage:
     back:
-    - TowelColorWhite
-  groupBy: "towels"
+    - OffsetCaneClown
+  groupBy: "canes"
 
 - type: loadout
-  id: TowelColorSilver
+  id: OffsetCaneMime
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:OverallPlaytimeRequirement
-      time: 1800000 # 500hr
+      !type:RoleTimeRequirement
+      role: JobMime
+      time: 3600 # 1hr
   storage:
     back:
-    - TowelColorSilver
-  groupBy: "towels"
+    - OffsetCaneMime
+  groupBy: "canes"
 
 - type: loadout
-  id: TowelColorGold
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:OverallPlaytimeRequirement
-      time: 3600000 # 1000hr
-  storage:
-    back:
-    - TowelColorGold
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorLightBrown
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Cargo
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorLightBrown
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorGreen
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Civilian
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorGreen
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorDarkBlue
+  id: OffsetCaneNT
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:DepartmentTimeRequirement
       department: Command
-      time: 360000 # 100hr
+      time: 18000 # 5hr
   storage:
     back:
-    - TowelColorDarkBlue
-  groupBy: "towels"
+    - OffsetCaneNT
+  groupBy: "canes"
 
 - type: loadout
-  id: TowelColorOrange
+  id: Cane
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 360000 # 100hr
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 3600 # 1hr same as Jamjar.
   storage:
     back:
-    - TowelColorOrange
-  groupBy: "towels"
+    - Cane
+  groupBy: "canes"
 
+# Towels
 - type: loadout
-  id: TowelColorLightBlue
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Medical
-      time: 360000 # 100hr
+  id: TowelColorWhite
   storage:
     back:
-    - TowelColorLightBlue
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorPurple
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Science
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorPurple
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorRed
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Security
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorRed
+    - TowelColorWhite
   groupBy: "towels"
 
 - type: loadout
@@ -368,7 +341,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobPassenger
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorGray
@@ -381,36 +354,49 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobChaplain
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorBlack
   groupBy: "towels"
 
 - type: loadout
-  id: TowelColorDarkGreen
+  id: TowelColorRed
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:RoleTimeRequirement
-      role: JobLibrarian
-      time: 360000 # 100hr
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 100h
   storage:
     back:
-    - TowelColorDarkGreen
+    - TowelColorRed
   groupBy: "towels"
 
 - type: loadout
-  id: TowelColorMaroon
+  id: TowelColorOrange
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:RoleTimeRequirement
-      role: JobLawyer
-      time: 360000 # 100hr
+      !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 100h
   storage:
     back:
-    - TowelColorMaroon
+    - TowelColorOrange
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorLightBrown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 100h
+  storage:
+    back:
+    - TowelColorLightBrown
   groupBy: "towels"
 
 - type: loadout
@@ -420,10 +406,88 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobClown
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorYellow
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorDarkGreen
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 100h
+  storage:
+    back:
+    - TowelColorDarkGreen
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorGreen
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 100h
+  storage:
+    back:
+    - TowelColorGreen
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorLightBlue
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 100h
+  storage:
+    back:
+    - TowelColorLightBlue
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorDarkBlue
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 100h
+  storage:
+    back:
+    - TowelColorDarkBlue
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorPurple
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Science
+      time: 100h
+  storage:
+    back:
+    - TowelColorPurple
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorMaroon
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 100h
+  storage:
+    back:
+    - TowelColorMaroon
   groupBy: "towels"
 
 - type: loadout
@@ -433,8 +497,32 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMime
-      time: 360000 # 100hr
+      time: 100h
   storage:
     back:
     - TowelColorMime
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorSilver
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 500h
+  storage:
+    back:
+    - TowelColorSilver
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorGold
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 1000h
+  storage:
+    back:
+    - TowelColorGold
   groupBy: "towels"

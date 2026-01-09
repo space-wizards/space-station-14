@@ -79,9 +79,9 @@ public record struct GetPryTimeModifierEvent
 {
     public readonly EntityUid User;
     public float PryTimeModifier = 1.0f;
-    public readonly float BaseTime;
+    public readonly TimeSpan BaseTime = TimeSpan.FromSeconds(5);
 
-    public GetPryTimeModifierEvent(EntityUid user, float baseTime)
+    public GetPryTimeModifierEvent(EntityUid user, TimeSpan baseTime)
     {
         User = user;
         BaseTime = baseTime;

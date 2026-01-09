@@ -148,7 +148,7 @@ public sealed class PryingSystem : EntitySystem
         var toolIsUser = tool?.Owner == user;
 
         RaiseLocalEvent(target, ref modEv);
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new PryDoAfterEvent(), target, target, tool?.Owner)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, modEv.BaseTime * modEv.PryTimeModifier / toolModifier, new PryDoAfterEvent(), target, target, tool?.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
