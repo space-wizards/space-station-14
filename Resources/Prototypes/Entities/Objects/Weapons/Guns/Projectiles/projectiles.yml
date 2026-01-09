@@ -93,8 +93,6 @@
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
   - type: TimedDespawn
     lifetime: 10
-  - type: TileFrictionModifier
-    modifier: 0
 
 - type: entity
   id: BaseBulletTrigger # Trigger-on-collide bullets
