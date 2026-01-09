@@ -1,7 +1,10 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Fluids.Components;
 
@@ -13,18 +16,25 @@ namespace Content.Shared.Fluids.Components;
 /// When the drain is full, it can be unclogged using a plunger (i.e. an entity with a Plunger tag attached).
 /// Later this can be refactored into a proper Plunger component if needed.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedDrainSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(DrainSystem))]
 public sealed partial class DrainComponent : Component
 {
     public const string SolutionName = "drainBuffer";
 
     public static readonly ProtoId<TagPrototype> PlungerTag = "Plunger";
 
+    /// <summary>
+    /// The solution that the drain is using.
+    /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? Solution = null;
 
-    [DataField]
-    public float Accumulator = 0f;
+    /// <summary>
+    /// Next time the drain should perform its draining.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
     /// If true, automatically transfers solutions from nearby puddles and drains them. True for floor drains;
@@ -36,7 +46,7 @@ public sealed partial class DrainComponent : Component
     /// <summary>
     /// How many units per second the drain can absorb from the surrounding puddles.
     /// Divided by puddles, so if there are 5 puddles this will take 1/5 from each puddle.
-    /// This will stay fixed to 1 second no matter what DrainFrequency is.
+    /// This will stay fixed to 1 second no matter what DrainInterval is.
     /// </summary>
     [DataField]
     public float UnitsPerSecond = 6f;
@@ -55,11 +65,11 @@ public sealed partial class DrainComponent : Component
     public float Range = 2.5f;
 
     /// <summary>
-    /// How often in seconds the drain checks for puddles around it.
+    /// How often the drain checks for puddles around it.
     /// If the EntityQuery seems a bit unperformant this can be increased.
     /// </summary>
     [DataField]
-    public float DrainFrequency = 1f;
+    public TimeSpan DrainInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// How much time it takes to unclog it with a plunger

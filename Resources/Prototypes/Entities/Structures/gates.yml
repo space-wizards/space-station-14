@@ -291,3 +291,29 @@
     - Output
   - type: Construction
     node: memory_cell
+    
+- type: entity
+  parent: BaseLogicItem
+  id: RandomGate
+  name: random gate
+  description: A logic gate that outputs a random signal when input changes.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: random_gate
+  - type: RandomGate
+  - type: DeviceLinkSink
+    ports:
+    - RandomGateInput
+  - type: DeviceLinkSource
+    ports:
+    - Output
+  - type: UserInterface
+    interfaces:
+      enum.RandomGateUiKey.Key:
+        type: RandomGateBoundUserInterface
+  - type: ActivatableUI
+    key: enum.RandomGateUiKey.Key
+  - type: Construction
+    node: random_gate
