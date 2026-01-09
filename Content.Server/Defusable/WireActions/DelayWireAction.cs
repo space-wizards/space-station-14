@@ -31,6 +31,6 @@ public sealed partial class DelayWireAction : ComponentWireAction<DefusableCompo
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        EntityManager.System<DefusableSystem>().DelayWirePulse((user, comp), wire);
+        EntityManager.System<DefusableSystem>().DelayWirePulse(user, (wire.Owner, comp));
     }
 }

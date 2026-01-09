@@ -53,7 +53,7 @@ public sealed class DefusableSystem : EntitySystem
             Priority = 10,
             Act = () =>
             {
-                TryStartCountdown(ent, user);
+                TryStartCountdown(user, ent);
             }
         });
     }
@@ -119,7 +119,7 @@ public sealed class DefusableSystem : EntitySystem
 
     #region Public
 
-    public void TryStartCountdown(Entity<DefusableComponent> ent, EntityUid user)
+    public void TryStartCountdown(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (!ent.Comp.Usable)
         {
@@ -131,8 +131,8 @@ public sealed class DefusableSystem : EntitySystem
         if (!xform.Anchored)
             _transform.AnchorEntity(ent.Owner, xform);
 
-        SetBolt(ent.Comp, true);
-        SetActivated(ent.Comp, true);
+        SetBolt(ent, true);
+        SetActivated(ent, true);
 
         _popup.PopupPredicted(Loc.GetString("defusable-popup-begun", ("name", ent.Owner)), ent.Owner, user);
         if (TryComp<TimerTriggerComponent>(ent.Owner, out var timerTrigger))
@@ -148,40 +148,40 @@ public sealed class DefusableSystem : EntitySystem
             _wiresSystem.TogglePanel(ent.Owner, wiresPanelComponent, false);
     }
 
-    public void TryDetonateBomb(Entity<DefusableComponent> ent, EntityUid detonator)
+    public void TryDetonateBomb(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (!ent.Comp.Activated)
             return;
 
-        _popup.PopupPredicted(Loc.GetString("defusable-popup-boom", ("name", ent.Owner)), ent.Owner, ent.Owner, PopupType.LargeCaution);
+        _popup.PopupPredicted(Loc.GetString("defusable-popup-boom", ("name", ent.Owner)), ent.Owner, user, PopupType.LargeCaution);
 
         RaiseLocalEvent(ent.Owner, new BombDetonatedEvent(ent.Owner));
 
-        _explosion.TriggerExplosive(ent.Owner, user: detonator);
+        _explosion.TriggerExplosive(ent.Owner, user: user);
         PredictedQueueDel(ent.Owner);
 
         _appearance.SetData(ent.Owner, DefusableVisuals.Active, ent.Comp.Activated);
     }
 
-    public void TryDefuseBomb(Entity<DefusableComponent> ent)
+    public void TryDefuseBomb(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (!ent.Comp.Activated)
             return;
 
-        _popup.PopupPredicted(Loc.GetString("defusable-popup-defuse", ("name", ent.Owner)), ent.Owner, ent.Owner);
-        SetActivated(ent.Comp, false);
+        _popup.PopupPredicted(Loc.GetString("defusable-popup-defuse", ("name", ent.Owner)), ent.Owner, user);
+        SetActivated(ent, false);
 
         var xform = Transform(ent.Owner);
 
         if (ent.Comp.Disposable)
         {
-            SetUsable(ent.Comp, false);
+            SetUsable(ent, false);
             RemComp<ExplodeOnTriggerComponent>(ent.Owner);
             RemComp<TimerTriggerComponent>(ent.Owner);
         }
         RemComp<ActiveTimerTriggerComponent>(ent.Owner);
 
-        _audio.PlayPredicted(ent.Comp.DefusalSound, ent.Owner, ent.Owner);
+        _audio.PlayPredicted(ent.Comp.DefusalSound, ent.Owner, user);
 
         RaiseLocalEvent(ent.Owner, new BombDefusedEvent(ent.Owner));
 
@@ -190,7 +190,6 @@ public sealed class DefusableSystem : EntitySystem
         ent.Comp.ProceedWireCut = false;
         ent.Comp.ProceedWireUsed = false;
         ent.Comp.Bolted = false;
-
         Dirty(ent);
 
         if (xform.Anchored)
@@ -199,56 +198,58 @@ public sealed class DefusableSystem : EntitySystem
         _appearance.SetData(ent.Owner, DefusableVisuals.Active, ent.Comp.Activated);
     }
 
-    public void SetUsable(DefusableComponent component, bool value)
+    public void SetUsable(Entity<DefusableComponent> ent, bool value)
     {
-        component.Usable = value;
+        ent.Comp.Usable = value;
+        Dirty(ent);
     }
 
-    public void SetDisplayTime(DefusableComponent component, bool value)
+    public void SetDisplayTime(Entity<DefusableComponent> ent, bool value)
     {
-        component.DisplayTime = value;
+        ent.Comp.DisplayTime = value;
+        Dirty(ent);
     }
 
     /// <summary>
     /// Sets the Activated value of a component to a value.
     /// </summary>
-    /// <param name="component"></param>
-    /// <param name="value"></param>
     /// <remarks>
     /// Use <see cref="TryDefuseBomb"/> to defuse bomb. This is a setter.
     /// </remarks>
-    public void SetActivated(DefusableComponent component, bool value)
+    public void SetActivated(Entity<DefusableComponent> ent, bool value)
     {
-        component.Activated = value;
+        ent.Comp.Activated = value;
+        Dirty(ent);
     }
 
-    public void SetBolt(DefusableComponent component, bool value)
+    public void SetBolt(Entity<DefusableComponent> ent, bool value)
     {
-        component.Bolted = value;
+        ent.Comp.Bolted = value;
+        Dirty(ent);
     }
 
     #endregion
 
     #region Wires
 
-    public void DelayWirePulse(Entity<DefusableComponent> ent, Wire wire)
+    public void DelayWirePulse(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (ent.Comp is not { Activated: true, DelayWireUsed: false })
             return;
 
-        _trigger.TryDelay(wire.Owner, TimeSpan.FromSeconds(30));
-        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner, ent.Owner);
+        _trigger.TryDelay(ent.Owner, TimeSpan.FromSeconds(30));
+        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-chirp", ("name", ent.Owner)), ent.Owner, user);
         ent.Comp.DelayWireUsed = true;
         Dirty(ent);
     }
 
-    public bool ProceedWireCut(Entity<DefusableComponent> ent, Wire wire)
+    public bool ProceedWireCut(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (ent.Comp is not { Activated: true, ProceedWireCut: false })
             return true;
 
-        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner, ent.Owner);
-        SetDisplayTime(ent.Comp, false);
+        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", ent.Owner)), ent.Owner, user);
+        SetDisplayTime(ent, false);
 
         ent.Comp.ProceedWireCut = true;
         Dirty(ent);
@@ -256,33 +257,33 @@ public sealed class DefusableSystem : EntitySystem
         return true;
     }
 
-    public void ProceedWirePulse(Entity<DefusableComponent> ent, Wire wire)
+    public void ProceedWirePulse(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (ent.Comp is { Activated: true, ProceedWireUsed: false })
         {
             ent.Comp.ProceedWireUsed = true;
             Dirty(ent);
-            _trigger.TryDelay(wire.Owner, TimeSpan.FromSeconds(-15));
+            _trigger.TryDelay(ent.Owner, TimeSpan.FromSeconds(-15));
         }
 
-        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner, ent.Owner);
+        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", ent.Owner)), ent.Owner, ent.Owner);
     }
 
-    public bool ActivateWireCut(Entity<DefusableComponent> ent, Wire wire)
+    public bool ActivateWireCut(EntityUid user, Entity<DefusableComponent> ent)
     {
         // If you cut the wire it just defuses the bomb.
         if (ent.Comp.Activated)
         {
-            TryDefuseBomb((wire.Owner, ent.Comp));
+            TryDefuseBomb(user, ent);
 
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(ent.Owner):user} has defused {ToPrettyString(wire.Owner):entity}!");
+                $"{ToPrettyString(ent.Owner):user} has defused {ToPrettyString(ent.Owner):entity}!");
         }
 
         return true;
     }
 
-    public void ActivateWirePulse(Entity<DefusableComponent> ent, Wire wire)
+    public void ActivateWirePulse(EntityUid user, Entity<DefusableComponent> ent)
     {
         // If the component isn't active, just start the countdown.
         // If it is and it isn't already used then delay it.
@@ -290,69 +291,69 @@ public sealed class DefusableSystem : EntitySystem
         {
             if (!ent.Comp.ActivatedWireUsed)
             {
-                _trigger.TryDelay(wire.Owner, TimeSpan.FromSeconds(30));
-                _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner, ent.Owner);
+                _trigger.TryDelay(ent.Owner, TimeSpan.FromSeconds(30));
+                _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-chirp", ("name", ent.Owner)), ent.Owner, ent.Owner);
                 ent.Comp.ActivatedWireUsed = true;
                 Dirty(ent);
             }
         }
         else
         {
-            TryStartCountdown(ent, wire.Owner);
+            TryStartCountdown(user, ent);
         }
     }
 
-    public bool BoomWireCut(Entity<DefusableComponent> ent, Wire wire)
+    public bool BoomWireCut(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (ent.Comp.Activated)
-            TryDetonateBomb(ent, wire.Owner);
+            TryDetonateBomb(user, ent);
         else
-            SetUsable(ent.Comp, false);
+            SetUsable(ent, false);
 
         return true;
     }
 
-    public bool BoomWireMend(Entity<DefusableComponent> ent)
+    public bool BoomWireMend(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (ent.Comp is { Activated: false, Usable: false })
-            SetUsable(ent.Comp, true);
+            SetUsable(ent, true);
 
         return true;
     }
 
-    public void BoomWirePulse(Entity<DefusableComponent> ent, Wire wire)
+    public void BoomWirePulse(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (ent.Comp.Activated)
-            TryDetonateBomb(ent, wire.Owner);
+            TryDetonateBomb(user, ent);
     }
 
-    public bool BoltWireMend(Entity<DefusableComponent> ent, Wire wire)
+    public bool BoltWireMend(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (!ent.Comp.Activated)
             return true;
 
-        SetBolt(ent.Comp, true);
-        _audio.PlayPredicted(ent.Comp.BoltSound, wire.Owner, ent.Owner);
-        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner, ent.Owner);
+        SetBolt(ent, true);
+        _audio.PlayPredicted(ent.Comp.BoltSound, ent.Owner, user);
+        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", ent.Owner)), ent.Owner, ent.Owner);
 
         return true;
     }
 
-    public bool BoltWireCut(Entity<DefusableComponent> ent, Wire wire)
+    public bool BoltWireCut(EntityUid user, Entity<DefusableComponent> ent)
     {
         if (!ent.Comp.Activated)
             return true;
 
-        SetBolt(ent.Comp, false);
-        _audio.PlayPredicted(ent.Comp.BoltSound, wire.Owner, ent.Owner);
-        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner, ent.Owner);
+        SetBolt(ent, false);
+        _audio.PlayPredicted(ent.Comp.BoltSound, ent.Owner, user);
+        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", ent.Owner)), ent.Owner, ent.Owner);
 
         return true;
     }
 
-    public void BoltWirePulse(Entity<DefusableComponent> ent, Wire wire)
+    public void BoltWirePulse(EntityUid user, Entity<DefusableComponent> ent)
     {
-        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner, ent.Owner);
+        _popup.PopupPredicted(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", ent.Owner)), ent.Owner, ent.Owner);
     }
 
     #endregion

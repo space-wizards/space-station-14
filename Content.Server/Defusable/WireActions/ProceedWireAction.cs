@@ -21,7 +21,7 @@ public sealed partial class ProceedWireAction : ComponentWireAction<DefusableCom
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        return EntityManager.System<DefusableSystem>().ProceedWireCut((user, comp), wire);
+        return EntityManager.System<DefusableSystem>().ProceedWireCut(user, (wire.Owner, comp));
     }
 
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
@@ -31,6 +31,6 @@ public sealed partial class ProceedWireAction : ComponentWireAction<DefusableCom
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        EntityManager.System<DefusableSystem>().ProceedWirePulse((user, comp), wire);
+        EntityManager.System<DefusableSystem>().ProceedWirePulse(user, (wire.Owner, comp));
     }
 }

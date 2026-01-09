@@ -21,16 +21,16 @@ public sealed partial class BoltWireAction : ComponentWireAction<DefusableCompon
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        return EntityManager.System<DefusableSystem>().BoltWireCut((user, comp), wire);
+        return EntityManager.System<DefusableSystem>().BoltWireCut(user, (wire.Owner, comp));
     }
 
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        return EntityManager.System<DefusableSystem>().BoltWireMend((user, comp), wire);
+        return EntityManager.System<DefusableSystem>().BoltWireMend(user, (wire.Owner, comp));
     }
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        EntityManager.System<DefusableSystem>().BoltWirePulse((user, comp), wire);
+        EntityManager.System<DefusableSystem>().BoltWirePulse(user, (wire.Owner, comp));
     }
 }
