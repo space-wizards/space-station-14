@@ -92,7 +92,7 @@ public sealed class DrainSystem : EntitySystem
         {
             _popup.PopupClient(
                 Loc.GetString("drain-component-empty-verb-using-is-empty-message", ("object", container)),
-                user,
+                ent.Owner,
                 user);
             return;
         }
@@ -263,6 +263,8 @@ public sealed class DrainSystem : EntitySystem
         _popup.PopupPredicted(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value, args.User);
     }
 
+    // Prevent a debug assert.
+    // See https://github.com/space-wizards/space-station-14/pull/35314
     private void OnEntRemoved(Entity<DrainComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         // Make sure the removed entity was our contained solution
