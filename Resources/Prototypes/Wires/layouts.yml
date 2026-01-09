@@ -9,6 +9,7 @@
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
+  - !type:DoorEmergencyAccessWireAction
   - !type:AiInteractWireAction
 
 - type: wireLayout
@@ -56,6 +57,7 @@
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
+  - !type:DoorEmergencyAccessWireAction
   - !type:AiInteractWireAction
   dummyWires: 4
 
@@ -140,6 +142,7 @@
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
+  - !type:DoorEmergencyAccessWireAction
 
 - type: wireLayout
   id: Defusable

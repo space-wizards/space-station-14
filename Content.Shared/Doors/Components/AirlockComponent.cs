@@ -24,7 +24,7 @@ public sealed partial class AirlockComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool EmergencyAccess = false;
-	
+
     /// <summary>
     /// Sound to play when the airlock emergency access is turned on.
     /// </summary>
@@ -36,6 +36,12 @@ public sealed partial class AirlockComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier EmergencyOffSound = new SoundPathSpecifier("/Audio/Machines/airlock_emergencyoff.ogg");
+
+    /// <summary>
+    /// True if the emergency access wire is cut, which will force the airlock to always be emergency access as long as it has power.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool EmergencyAccessWireCut;
 
     /// <summary>
     /// Pry modifier for a powered airlock.
