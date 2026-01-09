@@ -12,7 +12,7 @@ namespace Content.Client.Guidebook.Controls;
 ///     examination, interactions, and captions.
 /// </summary>
 [GenerateTypedNameReferences]
-public sealed partial class FTLTextpart : Label, IDocumentTag
+public sealed partial class FTLTextpart : BoxContainer, IDocumentTag
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
@@ -38,7 +38,11 @@ public sealed partial class FTLTextpart : Label, IDocumentTag
 
         if (_loc.TryGetString(key, out var fluentString))
         {
-            Text = fluentString;
+            var newlab = new RichTextLabel
+            {
+                Text = fluentString
+            };
+            AddChild(newlab);
             control = this;
             return true;
         }
