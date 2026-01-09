@@ -63,8 +63,6 @@
     buckleOffset: "0, 0.5"
     buckleDoafterTime: 5
   - type: IgniteOnBuckle
-    fireStacks: 0.5
-    maxFireStacks: 2.5
   - type: Construction
     graph: Bonfire
     node: bonfireStake
