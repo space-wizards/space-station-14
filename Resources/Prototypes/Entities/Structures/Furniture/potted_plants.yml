@@ -52,9 +52,6 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/plant_rustle.ogg
-  - type: Tag
-    tags:
-      - DevoterDruid
 
 - type: entity
   id: PottedPlant0
