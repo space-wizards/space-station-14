@@ -8,11 +8,10 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Guidebook.Controls;
 
 /// <summary>
-///     Control for embedding an entity into a guidebook/document. This is effectively a sprite-view that supports
-///     examination, interactions, and captions.
+///     Control for embedding text with fluent support into guidebook/document
 /// </summary>
 [GenerateTypedNameReferences]
-public sealed partial class FTLTextpart : BoxContainer, IDocumentTag
+public sealed partial class FTLTextpart : RichTextLabel, IDocumentTag
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
@@ -22,7 +21,6 @@ public sealed partial class FTLTextpart : BoxContainer, IDocumentTag
     public FTLTextpart()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
         _sawmill = _logManager.GetSawmill("guidebook.loc");
         MouseFilter = MouseFilterMode.Stop;
     }
@@ -31,23 +29,19 @@ public sealed partial class FTLTextpart : BoxContainer, IDocumentTag
     {
         if (!args.TryGetValue("Key", out var key))
         {
-            _sawmill.Error("Entity embed tag is missing entity prototype argument");
+            _sawmill.Error("Fluent tag cannot be found");
             control = null;
             return false;
         }
 
         if (_loc.TryGetString(key, out var fluentString))
         {
-            var newlab = new RichTextLabel
-            {
-                Text = fluentString
-            };
-            AddChild(newlab);
+            Text = fluentString;
             control = this;
             return true;
         }
 
-        _sawmill.Error("Entity embed tag is missing entity prototype argument");
+        _sawmill.Error("Fluent key cannot be found");
         control = null;
         return false;
     }
