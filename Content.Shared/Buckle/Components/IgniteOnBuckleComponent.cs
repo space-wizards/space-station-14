@@ -13,7 +13,7 @@ public sealed partial class IgniteOnBuckleComponent : Component
     /// How many fire stacks to add per cycle.
     /// </summary>
     [DataField]
-    public float FireStacks = 1f;
+    public float FireStacks = 0.5f;
 
     /// <summary>
     /// How frequently the ignition should be applied, in seconds.
@@ -27,5 +27,5 @@ public sealed partial class IgniteOnBuckleComponent : Component
     /// Null means unlimited.
     /// </summary>
     [DataField]
-    public float? MaxFireStacks = null;
+    public float? MaxFireStacks = 2.5f;
 }
