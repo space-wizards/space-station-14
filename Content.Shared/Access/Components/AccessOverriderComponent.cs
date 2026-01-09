@@ -16,6 +16,12 @@ public sealed partial class AccessOverriderComponent : Component
     public const string PrivilegedIdCardSlotId = "AccessOverrider-privilegedId";
 
     /// <summary>
+    /// If the Access Overrider UI will show info about the privileged ID
+    /// </summary>
+    [DataField]
+    public bool ShowPrivilegedId = true;
+
+    /// <summary>
     /// Actual item slot that the ID card is put into.
     /// </summary>
     [DataField]
@@ -56,4 +62,7 @@ public sealed class SetAccessesMessage(List<ProtoId<AccessLevelPrototype>> acces
 }
 
 [Serializable, NetSerializable]
-public enum AccessOverriderUiKey : byte { Key }
+public enum AccessOverriderUiKey : byte
+{
+    Key,
+}

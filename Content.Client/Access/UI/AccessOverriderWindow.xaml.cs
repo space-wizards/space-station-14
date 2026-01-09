@@ -54,10 +54,13 @@ public sealed partial class AccessOverriderWindow : DefaultWindow
     public void UpdateState(string? idName,
         string? targetLabel,
         bool isAuthed,
+        bool showPrivilegedId,
         IEnumerable<ProtoId<AccessLevelPrototype>> missingAccess,
         List<ProtoId<AccessLevelPrototype>> currentAccess,
         List<ProtoId<AccessLevelPrototype>> possibleAccesses)
     {
+        PrivilegedIdGrid.Visible = showPrivilegedId;
+
         PrivilegedIdLabel.Text = idName;
         PrivilegedIdButton.Text = idName is null
             ? Loc.GetString("access-overrider-window-insert-button")
@@ -72,9 +75,14 @@ public sealed partial class AccessOverriderWindow : DefaultWindow
         // Honestly this isn't great UI, or least not great string
         // formatting. There's probably a visually clearer way to
         // present this.
-        MissingPrivilegesText.Text = missingList == ""
-            ? ""
-            : Loc.GetString("access-overrider-window-missing-privileges", ("privileges", missingList));
+        MissingPrivilegesText.Text = "";
+
+        if (missingList != "")
+        {
+            MissingPrivilegesText.Text = state.ShowPrivilegedIdGrid ?
+                Loc.GetString("access-overrider-window-missing-privileges", ("privileges", missingList)) :
+                Loc.GetString("access-overrider-window-missing-privileges-no-id", ("privileges", missingList));
+        }
 
         foreach (var (accessName, button) in _accessButtons)
         {

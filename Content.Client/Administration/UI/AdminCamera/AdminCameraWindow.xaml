@@ -1,6 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
     Title="{Loc admin-camera-window-title-placeholder}"
     SetSize="425 550"
-    MinSize="200 225"
-    Name="Window">
+    MinSize="200 225">
 </DefaultWindow>

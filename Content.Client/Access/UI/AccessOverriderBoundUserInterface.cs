@@ -100,6 +100,6 @@ public sealed class AccessOverriderBoundUserInterface : BoundUserInterface
             missingAccess = currentAccess.Except(possibleAccess);
         }
 
-        _window.UpdateState(privilegedIdName, targetLabel, isAuthed, missingAccess, currentAccess, possibleAccess);
+        _window.UpdateState(privilegedIdName, targetLabel, isAuthed, comp.ShowPrivilegedId, missingAccess, currentAccess, possibleAccess);
     }
 }
