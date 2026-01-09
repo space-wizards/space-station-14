@@ -1,0 +1,154 @@
+﻿## Abstracts
+- type: injectorMode
+  abstract: true
+  id: BaseInjectMode
+  name: injector-component-inject-mode-name
+  behavior: Inject
+  popupUserAttempt: injector-component-needle-injecting-user
+  popupTargetAttempt: injector-component-needle-injecting-target
+
+- type: injectorMode
+  abstract: true
+  id: BaseDrawMode
+  name: injector-component-draw-mode-name
+  behavior: Draw
+  popupUserAttempt: injector-component-needle-drawing-user
+  popupTargetAttempt: injector-component-needle-drawing-target
+
+- type: injectorMode
+  abstract: true
+  id: BaseDynamicMode
+  name: injector-component-dynamic-mode-name
+  behavior: Dynamic
+  popupUserAttempt: injector-component-needle-injecting-user
+  popupTargetAttempt: injector-component-needle-injecting-target
+
+## Syringes
+- type: injectorMode
+  abstract: true
+  id: BaseSyringeMode
+  transferAmounts:
+  - 5
+  - 10
+  - 15
+
+- type: injectorMode
+  abstract: true
+  id: BaseCryostasisSyringeMode
+  transferAmounts:
+  - 5
+  - 10
+
+- type: injectorMode
+  abstract: true
+  id: BaseBluespaceSyringeMode
+  mobTime: 2.5
+  delayPerVolume: 0.05
+  transferAmounts:
+  - 5
+  - 10
+  - 15
+  - 50
+
+- type: injectorMode
+  parent: [ BaseSyringeMode, BaseInjectMode ]
+  id: SyringeInjectMode
+
+- type: injectorMode
+  parent: [ BaseSyringeMode, BaseDrawMode ]
+  id: SyringeDrawMode
+
+- type: injectorMode
+  parent: [ BaseBluespaceSyringeMode, BaseInjectMode ]
+  id: BluespaceSyringeInjectMode
+
+- type: injectorMode
+  parent: [ BaseBluespaceSyringeMode, BaseDrawMode ]
+  id: BluespaceSyringeDrawMode
+
+- type: injectorMode
+  parent: [ BaseCryostasisSyringeMode, BaseInjectMode ]
+  id: CryostasisSyringeInjectMode
+
+- type: injectorMode
+  parent: [ BaseCryostasisSyringeMode, BaseDrawMode ]
+  id: CryostasisSyringeDrawMode
+
+## Dropper
+- type: injectorMode
+  abstract: true
+  id: BaseDropperMode
+  transferAmounts:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+
+- type: injectorMode
+  parent: [ BaseDropperMode, BaseInjectMode ]
+  id: DropperInjectMode
+
+- type: injectorMode
+  parent: [ BaseDropperMode, BaseDrawMode ]
+  id: DropperDrawMode
+
+## Hyposprays
+- type: injectorMode
+  abstract: true
+  id: BaseHyposprayMode
+  injectSound: /Audio/Items/hypospray.ogg
+  injectPopupTarget: injector-component-feel-prick-message
+  injectOnUse: true
+  delayPerVolume: 0
+  transferAmounts:
+  - 5
+
+- type: injectorMode
+  abstract: true
+  parent: BaseHyposprayMode
+  id: BaseInstantHyposprayMode
+  mobTime: 0
+
+- type: injectorMode
+  parent: [ BaseInstantHyposprayMode, BaseInjectMode ]
+  id: HyposprayInjectMode
+
+- type: injectorMode
+  parent: [ BaseInstantHyposprayMode, BaseDynamicMode ]
+  id: HyposprayDynamicMode
+
+- type: injectorMode
+  parent: HyposprayDynamicMode
+  id: HypopenDynamicMode
+  containerDrawTime: 0.75
+
+- type: injectorMode
+  abstract: true
+  parent: BaseHyposprayMode
+  id: BaseJetInjectorMode
+  injectSound: /Audio/Items/Medical/jet_injector.ogg
+  popupUserAttempt: injector-component-spray-injecting-user
+  popupTargetAttempt: injector-component-spray-injecting-target
+
+- type: injectorMode
+  parent: [ BaseJetInjectorMode, BaseInjectMode ]
+  id: JetInjectorInjectMode
+
+- type: injectorMode
+  parent: [ BaseJetInjectorMode, BaseDynamicMode ]
+  id: JetInjectorDynamicMode
+
+- type: injectorMode
+  abstract: true
+  parent: BaseJetInjectorMode
+  id: BaseAdvancedJetInjectorMode
+  mobTime: 2.5
+
+- type: injectorMode
+  parent: [ BaseAdvancedJetInjectorMode, BaseInjectMode ]
+  id: AdvancedJetInjectorInjectMode
+
+- type: injectorMode
+  parent: [ BaseAdvancedJetInjectorMode, BaseDynamicMode ]
+  id: AdvancedJetInjectorDynamicMode

@@ -4,7 +4,8 @@ using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Changeling.Components;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
@@ -32,7 +33,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly ChangelingIdentitySystem _changelingIdentitySystem = default!;
+    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -92,7 +93,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             if (damage.Damage.DamageDict.TryGetValue(damagePoints.Key, out var val) && val > comp.DevourConsumeDamageCap)
                 return;
         }
-        _damageable.TryChangeDamage(target, comp.DamagePerTick, true, true, damage, user);
+        _damageable.ChangeDamage((target.Value, damage), comp.DamagePerTick, true, true, user);
     }
 
     /// <summary>

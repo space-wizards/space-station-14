@@ -11,6 +11,9 @@ namespace Content.Client.MainMenu.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MainMenuControl : Control
 {
+    public const string StyleIdentifierMainMenu = "mainMenu";
+    public const string StyleIdentifierMainMenuVBox = "mainMenuVBox";
+
     public MainMenuControl(IResourceCache resCache, IConfigurationManager configMan)
     {
         RobustXamlLoader.Load(this);

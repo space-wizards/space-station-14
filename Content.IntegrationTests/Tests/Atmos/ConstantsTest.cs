@@ -38,12 +38,10 @@ public sealed class ConstantsTest
                 Assert.That(Atmospherics.GasAbbreviations, Has.Count.EqualTo(Atmospherics.TotalNumberOfGases),
                      $"GasAbbreviations size is not equal to TotalNumberOfGases.");
 
-                // the ID for each gas has to be a number from 0 to TotalNumberOfGases-1
+                // the ID for each gas has to correspond to a value in the Gas enum (converted to a string)
                 foreach (var gas in gasProtos)
                 {
-                    var validInteger = int.TryParse(gas.ID, out var number);
-                    Assert.That(validInteger, Is.True, $"GasPrototype {gas.ID} has an invalid ID. It has to be an integer between 0 and TotalNumberOfGases - 1.");
-                    Assert.That(number, Is.InRange(0, Atmospherics.TotalNumberOfGases - 1), $"GasPrototype {gas.ID} has an invalid ID. It has to be an integer between 0 and TotalNumberOfGases - 1.");
+                    Assert.That(Enum.TryParse<Gas>(gas.ID, out _), $"GasPrototype {gas.ID} has an invalid ID. It must correspond to a value in the {nameof(Gas)} enum.");
                 }
             });
         });

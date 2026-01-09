@@ -85,9 +85,9 @@ public abstract class SharedGodmodeSystem : EntitySystem
         if (!Resolve(uid, ref godmode, false))
             return;
 
-        if (TryComp<DamageableComponent>(uid, out var damageable) && godmode.OldDamage != null)
+        if (godmode.OldDamage != null)
         {
-            _damageable.SetDamage(uid, damageable, godmode.OldDamage);
+            _damageable.SetDamage(uid, godmode.OldDamage);
         }
 
         RemComp<GodmodeComponent>(uid);
