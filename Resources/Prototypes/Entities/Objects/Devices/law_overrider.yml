@@ -48,6 +48,12 @@
   - type: SiliconLawOverrider
     worksOnAiCore: true
     canChangeCorruptedLaws: true
+  - type: ItemSlots
+    slots:
+      law_board:
+        name: law-overrider-slot-component-slot-name-law-board
+        startingItem: XenoborgCircuitBoard
+        disableEject: true
 
 - type: entity
   parent: LawOverrider
