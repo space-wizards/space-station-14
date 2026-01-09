@@ -48,8 +48,8 @@ public sealed partial class ShuttleSystem
     public float DefaultStartupTime;
     public float DefaultTravelTime;
     public float DefaultArrivalTime;
-    private TimeSpan FTLCooldown;
-    private TimeSpan ArrivalsFTLCooldown;
+    private float FTLCooldown;
+    private float ArrivalsFTLCooldown;
     public float FTLMassLimit;
     private TimeSpan _hyperspaceKnockdownTime = TimeSpan.FromSeconds(5);
 
@@ -544,7 +544,7 @@ public sealed partial class ShuttleSystem
         }
 
         comp.State = FTLState.Cooldown;
-        TimeSpan cooldown = entity.Comp2.FTLCooldownOverride ?? (HasComp<ArrivalsShuttleComponent>(uid)
+        float cooldown = entity.Comp2.FTLCooldownOverride ?? (HasComp<ArrivalsShuttleComponent>(uid)
                 ? ArrivalsFTLCooldown
                 : FTLCooldown);
         comp.StateTime = StartEndTime.FromCurTime(_gameTiming, cooldown);

@@ -74,6 +74,6 @@ namespace Content.Server.Shuttles.Components
         /// If not null, then the value will be used instead of the default FTLCooldown CCVar.
         /// </summary>
         [DataField]
-        public TimeSpan? FTLCooldownOverride = null;
+        public float? FTLCooldownOverride = null;
     }
 }
