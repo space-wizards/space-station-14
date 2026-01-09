@@ -283,44 +283,46 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         /// If Lawset is null there is no corrupted laws and so you can replace all laws
         if (component.Lawset == null)
         {
-            component.Lawset = new SiliconLawset();
-            component.Lawset.Laws = newLaws;
+            component.Lawset = new SiliconLawset
+            {
+                Laws = newLaws
+            };
+
+            NotifyLawsChanged(target, cue);
+            return;
         }
-        else
+        
+        // Laws that are result from old ion laws and the newLaws
+        var updatedLaws = new List<SiliconLaw>();
+
+        // Going through all laws in the old lawset
+        int j = 0;
+        for (int i = 0; i < component.Lawset.Laws.Count; i++)
         {
-            // Laws that are result from old ion laws and the newLaws
-            var updatedLaws = new List<SiliconLaw>();
-
-            // Going through all laws in the old lawset
-            int j = 0;
-            for (int i = 0; i < component.Lawset.Laws.Count; i++)
+            // If a law is soft it is swapped for a new law from newLaws
+            if (component.Lawset.Laws[i].SoftLaw)
             {
-                // If a law is soft it is swapped for a new law from newLaws
-                if (component.Lawset.Laws[i].SoftLaw)
+                /// If the number of newLaws is less than the number of old laws,
+                /// it doesn't add any non-soft law
+                if (j < newLaws.Count)
                 {
-                    /// If the number of newLaws is less than the number of old laws,
-                    /// it doesn't add any non-soft law
-                    if (j < newLaws.Count)
-                    {
-                        updatedLaws.Add(newLaws[j]);
-                        j++;
-                    }
+                    updatedLaws.Add(newLaws[j]);
+                    j++;
                 }
-                // Otherwise it just adds the old ion law to the updatedLaws
-                else
-                    updatedLaws.Add(component.Lawset.Laws[i]);
             }
-
-            /// If the number of newLaws is more than the number of old laws,
-            /// it adds all the last ones at the end.
-            for (; j < newLaws.Count; j++)
-            {
-                updatedLaws.Add(newLaws[j]);
-            }
-
-            component.Lawset.Laws = updatedLaws;
+            // Otherwise it just adds the old ion law to the updatedLaws
+            else
+                updatedLaws.Add(component.Lawset.Laws[i]);
         }
 
+        /// If the number of newLaws is more than the number of old laws,
+        /// it adds all the last ones at the end.
+        for (; j < newLaws.Count; j++)
+        {
+            updatedLaws.Add(newLaws[j]);
+        }
+
+        component.Lawset.Laws = updatedLaws;
         NotifyLawsChanged(target, cue);
     }
 
