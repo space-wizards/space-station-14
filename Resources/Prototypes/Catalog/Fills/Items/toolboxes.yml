@@ -157,3 +157,107 @@
         - id: IngotGold
         - id: DrinkGoldenCup
           prob: 0.05
+
+- type: entity
+  parent: Foolbox
+  id: FoolboxFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: FoolboxTable
+
+- type: entityTable
+  id: FoolboxTable
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector # Offensive clown items
+      children:
+      - !type:NestedSelector
+        tableId: AllToyWeaponsTable
+      - id: EnergySword # ~1/1001
+        weight: 0.001
+    - !type:GroupSelector # Rarer clown tools
+      rolls: 2
+      children:
+      - !type:NestedSelector
+        tableId: AllMiscToysTable
+        weight: 10
+      - !type:NestedSelector
+        tableId: AllCrayonsTable
+        rolls: 1, 3
+        weight: 5
+      - id: BarberScissors
+        weight: 0.75
+      - id: DrinkSpaceLube
+      - id: DrinkSpaceGlue
+      - !type:NestedSelector
+        tableId: RandomBikeHornTable
+        weight: 0.75
+      - !type:NestedSelector
+        tableId: AllFigurinesTable
+        weight: 1.25
+      - id: RubberStampCaptain # ~1/100
+        weight: 0.2
+    - !type:GroupSelector # Common clown consumables
+      rolls: 2
+      children:
+      - !type:NestedSelector
+        tableId: SlipTable
+      - id: TrashBananaPeel
+      - id: FoodBanana
+      - id: FoodPieBananaCream
+        weight: 0.75
+    - !type:GroupSelector # Fun clothing
+      prob: 0.75
+      children:
+      - !type:NestedSelector
+        tableId: ClownOtherJobTable
+        weight: 6
+      - id: SprayFlowerPin
+      - id: ClothingHeadHatMagician
+      - id: ClothingHeadSafari
+      - id: ClothingHeadHatPirate
+      - id: ClothingHeadHatWizardFake
+      - id: ClothingHeadHatCowboyRed
+      - id: ClothingHeadHatBowlerHat
+      - id: ClothingHeadHatWitch
+      - id: ClothingOuterCoatExpensive
+      - id: ClothingOuterGhostSheet
+      - id: ClothingOuterHospitalGown
+      - id: ClothingShoesBling
+        weight: 0.5
+      - id: ClothingOuterCoatSpaceAsshole
+        weight: 0.5
+      - !type:NestedSelector
+        tableId: AllPartyHatsTable
+      - !type:NestedSelector
+        tableId: InsulsTable
+      - !type:GroupSelector # ~1/115
+        weight: 0.175
+        children:
+        - id: ClothingHeadHatCatEars
+        - id: ClothingHeadHatFancyCrown
+        - id: ClothingHeadHatChameleon
+
+- type: entityTable
+  id: ClownOtherJobTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHeadHatBeretCommand # Command
+    - id: ClothingOuterVestHazard # Engineering
+    - id: ClothingOuterCoatLab # Science
+    - id: ClothingMaskClownSecurity # Security
+    - id: ClothingHeadHatCargosoft # Cargo
+    - id: ClothingNeckStethoscope # Medical
+      weight: 0.5
+    - !type:NestedSelector
+      tableId: AllSergicalHatsTable
+      weight: 0.5
+    - id: ClothingUniformJumpsuitBartender # Bartender
+    - id: ClothingHeadHatChef # Chef
+    - id: ClothingHeadBandBotany # Botany
+    - id: ClothingHandsGlovesJanitor # Janitor
+    - id: ClothingUniformJumpsuitReporter # Reporter
+    - id: ClothingOuterWinterMime # Mime
