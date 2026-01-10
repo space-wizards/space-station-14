@@ -120,8 +120,8 @@ public sealed class MoverController : SharedMoverController
         base.SetSprinting(entity, subTick, walking);
 
         if (walking && _cfg.GetCVar(CCVars.ToggleWalk))
-            _alerts.ShowAlert(entity, WalkingAlert, showCooldown: false, autoRemove: false);
+            _alerts.ShowAlert(entity.Owner, WalkingAlert, showCooldown: false, autoRemove: false);
         else
-            _alerts.ClearAlert(entity, WalkingAlert);
+            _alerts.ClearAlert(entity.Owner, WalkingAlert);
     }
 }

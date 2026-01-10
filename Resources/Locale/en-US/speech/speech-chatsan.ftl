@@ -190,5 +190,8 @@ chatsan-replacement-66 = something
 chatsan-word-67 = allg
 chatsan-replacement-67 = all good
 
-chatsan-word-68 = wya
-chatsan-replacement-68 = where you at
+chatsan-word-68 = idk
+chatsan-replacement-68 = i don't know
+
+chatsan-word-69 = wya
+chatsan-replacement-69 = where you at

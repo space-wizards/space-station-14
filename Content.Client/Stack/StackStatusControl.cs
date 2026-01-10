@@ -7,6 +7,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Stack;
 
+/// <summary>
+/// Used by hands in player UI to display the stack count.
+/// </summary>
 public sealed class StackStatusControl : Control
 {
     private readonly StackComponent _parent;
@@ -15,7 +18,7 @@ public sealed class StackStatusControl : Control
     public StackStatusControl(StackComponent parent)
     {
         _parent = parent;
-        _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
+        _label = new RichTextLabel {StyleClasses = {StyleClass.ItemStatus}};
         _label.SetMarkup(Loc.GetString("comp-stack-status", ("count", _parent.Count)));
         AddChild(_label);
     }
