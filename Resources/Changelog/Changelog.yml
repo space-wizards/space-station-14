@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Meat spikes got an overhaul.
-    type: Tweak
-  id: 8869
-  time: '2025-08-19T17:56:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38723
 - author: Princess-Cheeseballs
   changes:
   - message: You can no longer crawl while weightless.
@@ -3888,3 +3881,10 @@
   id: 9372
   time: '2026-01-10T20:09:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42335
+- author: ScarKy0
+  changes:
+  - message: Examining the state of dead entities is now predicted.
+    type: Fix
+  id: 9373
+  time: '2026-01-10T23:16:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42253
