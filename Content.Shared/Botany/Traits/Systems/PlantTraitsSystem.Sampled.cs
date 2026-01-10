@@ -4,9 +4,7 @@ using Content.Shared.Popups;
 
 namespace Content.Shared.Botany.Traits.Systems;
 
-/// <summary>
-/// The plant has been sampled, preventing it from being sampled again.
-/// </summary>
+/// <inheritdoc cref="PlantTraitSampledComponent"/>
 public sealed partial class PlantTraitSampledSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;

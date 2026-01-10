@@ -4,9 +4,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Botany.Traits.Systems;
 
-/// <summary>
-/// Plays a screams when the plant is harvested.
-/// </summary>
+/// <inheritdoc cref="PlantTraitScreamComponent"/>
 public sealed partial class PlantTraitScreamSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;

@@ -4,10 +4,7 @@ using Content.Shared.Botany.Traits.Components;
 
 namespace Content.Shared.Botany.Traits.Systems;
 
-/// <summary>
-/// The plant stops growing and dies quickly.
-/// Adds a bit of challenge to keep mutated plants alive via Unviable's frequency.
-/// </summary>
+/// <inheritdoc cref="PlantTraitUnviableComponent"/>
 public sealed partial class PlantTraitUnviableSystem : EntitySystem
 {
     [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;

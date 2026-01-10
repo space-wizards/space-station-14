@@ -300,7 +300,13 @@ public sealed class PlantSystem : EntitySystem
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))
             return 1;
 
-        return Math.Max(1, (int)(plantHolder.Age * ent.Comp.GrowthStages / ent.Comp.Maturation));
+        int growthStage;
+        if (plantHolder.Age < ent.Comp.Maturation)
+            growthStage = (int)(plantHolder.Age * ent.Comp.GrowthStages / ent.Comp.Maturation);
+        else
+            growthStage = ent.Comp.GrowthStages;
+
+        return Math.Max(1, growthStage);
     }
 
     /// <summary>

@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 /// <summary>
-/// Entity effect that mutates plant to lose health with time.
+/// Entity effect that removes the <see cref="PlantTraitUnviableComponent"/> from a plant.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantPhalanximine>

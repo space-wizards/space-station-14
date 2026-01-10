@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 /// <summary>
-/// Entity effect that removes ability to get seeds from plant using seed maker.
+/// Entity effect that adds the <see cref="PlantTraitSeedlessComponent"/> to a plant.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantDestroySeeds>

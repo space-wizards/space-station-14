@@ -3,6 +3,9 @@ using Robust.Shared.Audio;
 
 namespace Content.Shared.Botany.Traits.Components;
 
+/// <summary>
+/// A plant trait that plays screams when the plant is harvested.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PlantTraitScreamComponent : PlantTraitsComponent
 {

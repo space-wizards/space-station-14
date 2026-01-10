@@ -5,10 +5,7 @@ using Content.Shared.Botany.Traits.Components;
 
 namespace Content.Shared.Botany.Traits.Systems;
 
-/// <summary>
-/// As the plant grows, it increases the <see cref="PlantTrayComponent.WeedLevel"/>.
-/// Once the limit is exceeded, it kills the plant and creates kudzu.
-/// </summary>
+/// <inheritdoc cref="PlantTraitKudzuComponent"/>
 public sealed partial class PlantTraitKudzuSystem : EntitySystem
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;

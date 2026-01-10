@@ -9,6 +9,7 @@ namespace Content.Client.Botany;
 public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsComponent>
 {
     [Dependency] private readonly PlantSystem _plantSystem = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     public override void Initialize()
     {
@@ -21,10 +22,10 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
     {
         base.FrameUpdate(frameTime);
 
-        var query = EntityQueryEnumerator<PlantVisualsComponent, PlantComponent, PlantHolderComponent, SpriteComponent>();
-        while (query.MoveNext(out var uid, out _, out var plant, out var holder, out var sprite))
+        var query = EntityQueryEnumerator<PlantVisualsComponent, PlantComponent, PlantHarvestComponent, SpriteComponent>();
+        while (query.MoveNext(out var uid, out _, out var plant, out var harvest, out var sprite))
         {
-            UpdateSprite((uid, plant), holder, sprite);
+            UpdateSprite((uid, plant), harvest, sprite);
         }
     }
 
@@ -39,18 +40,20 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
         SpriteSystem.LayerSetVisible((uid, sprite), PlantLayers.Plant, false);
     }
 
-    private void UpdateSprite(Entity<PlantComponent> ent, PlantHolderComponent holder, SpriteComponent sprite)
+    private void UpdateSprite(Entity<PlantComponent> ent, PlantHarvestComponent harvest, SpriteComponent sprite)
     {
         string state;
 
-        if (holder.Dead)
+        var dead = _plantHolder.IsDead(ent.Owner);
+        var harvestReady = harvest.ReadyForHarvest;
+        var growthStage = _plantSystem.GetGrowthStageValue(ent.AsNullable());
+
+        if (dead)
             state = "dead";
-        else if (TryComp<PlantHarvestComponent>(ent.Owner, out var harvest) && harvest.ReadyForHarvest)
+        else if (harvestReady)
             state = "harvest";
-        else if (holder.Age < ent.Comp.Maturation)
-            state = $"stage-{Math.Max(1, _plantSystem.GetGrowthStageValue(ent.AsNullable()))}";
         else
-            state = $"stage-{ent.Comp.GrowthStages}";
+            state = $"stage-{growthStage}";
 
         SpriteSystem.LayerSetVisible((ent.Owner, sprite), PlantLayers.Plant, true);
         SpriteSystem.LayerSetRsiState((ent.Owner, sprite), PlantLayers.Plant, state);

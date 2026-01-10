@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 /// <summary>
-/// This effect directly increases the potency of a PlantHolder's plant provided it exists and isn't dead.
+/// This effect directly increases the potency of a plant.
 /// Potency directly correlates to the size of the plant's produce.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>

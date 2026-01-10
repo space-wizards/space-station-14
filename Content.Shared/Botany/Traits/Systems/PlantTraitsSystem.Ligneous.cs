@@ -8,9 +8,7 @@ using Content.Shared.Popups;
 
 namespace Content.Shared.Botany.Traits.Systems;
 
-/// <summary>
-/// The plant becomes ligneous, preventing it from being harvested without special tools
-/// </summary>
+/// <inheritdoc cref="PlantTraitLigneousComponent"/>
 public sealed partial class PlantTraitLigneousSystem : EntitySystem
 {
     [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;

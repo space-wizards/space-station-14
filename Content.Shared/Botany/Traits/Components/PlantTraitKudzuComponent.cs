@@ -1,8 +1,13 @@
+using Content.Shared.Botany.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Botany.Traits.Components;
 
+/// <summary>
+/// A plant trait that increases <see cref="PlantTrayComponent.WeedLevel"/> as the plant grows.
+/// Once the limit is exceeded, it kills the plant and creates kudzu.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PlantTraitKudzuComponent : PlantTraitsComponent
 {

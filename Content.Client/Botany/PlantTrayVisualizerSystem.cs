@@ -20,22 +20,22 @@ public sealed class PlantTrayVisualizerSystem : VisualizerSystem<PlantTrayVisual
         var query = EntityQueryEnumerator<PlantTrayVisualsComponent, PlantTrayComponent, AppearanceComponent>();
         while (query.MoveNext(out var uid, out _, out var tray, out var appearance))
         {
-            UpdateTrayWarnings(uid, tray, appearance);
+            UpdateTrayWarnings((uid, tray), appearance);
         }
     }
 
-    private void UpdateTrayWarnings(EntityUid trayUid, PlantTrayComponent tray, AppearanceComponent appearance)
+    private void UpdateTrayWarnings(Entity<PlantTrayComponent> ent, AppearanceComponent appearance)
     {
-        if (!tray.DrawWarnings)
+        if (!ent.Comp.DrawWarnings)
             return;
 
-        var water = tray.WaterLevel <= tray.MaxWaterLevel * 0.1f;
-        var nutrition = tray.NutritionLevel <= tray.MaxNutritionLevel * 0.1f;
-        var alert = _plantTray.GetWeedThreshold(trayUid);
+        var water = ent.Comp.WaterLevel <= ent.Comp.MaxWaterLevel * 0.1f;
+        var nutrition = ent.Comp.NutritionLevel <= ent.Comp.MaxNutritionLevel * 0.1f;
+        var alert = _plantTray.GetWeedThreshold(ent.Owner);
         var health = false;
         var harvest = false;
 
-        if (_plantTray.TryGetPlant(trayUid, out var plantUid))
+        if (_plantTray.TryGetPlant(ent.AsNullable(), out var plantUid))
         {
             if (TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
             {
@@ -53,10 +53,10 @@ public sealed class PlantTrayVisualizerSystem : VisualizerSystem<PlantTrayVisual
         }
 
         // These are appearance keys consumed by the prototype's <see cref="GenericVisualizer"/>.
-        _appearance.SetData(trayUid, PlantTrayVisuals.HealthLight, health, appearance);
-        _appearance.SetData(trayUid, PlantTrayVisuals.WaterLight, water, appearance);
-        _appearance.SetData(trayUid, PlantTrayVisuals.NutritionLight, nutrition, appearance);
-        _appearance.SetData(trayUid, PlantTrayVisuals.AlertLight, alert, appearance);
-        _appearance.SetData(trayUid, PlantTrayVisuals.HarvestLight, harvest, appearance);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.HealthLight, health, appearance);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.WaterLight, water, appearance);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.NutritionLight, nutrition, appearance);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.AlertLight, alert, appearance);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.HarvestLight, harvest, appearance);
     }
 }
