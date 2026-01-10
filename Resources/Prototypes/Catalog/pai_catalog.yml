@@ -44,23 +44,6 @@
     stock: 1
 
 - type: listing
-  id: PAICrewMonitor
-  name: pai-crew-monitor-name
-  description: pai-crew-monitor-desc
-  productAction: ActionPAICrewMonitor
-  applyToMob: true
-  cost:
-    SiliconMemory: 15
-  categories:
-  - PAIAbilities
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  - !type:BuyerAccessCondition
-    whitelist:
-    - Medical
-
-- type: listing
   id: PAIAtmosphericAlertsMonitor
   name: pai-atmospheric-alerts-monitor-name
   description: pai-atmospheric-alerts-monitor-desc

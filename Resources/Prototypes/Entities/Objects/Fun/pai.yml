@@ -51,10 +51,6 @@
   - type: Input
     context: "human"
   - type: PAI
-  - type: CrewMonitoringConsole
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
@@ -265,22 +261,6 @@
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.StationMapUiKey.Key
-
-- type: entity
-  parent: BaseMentalAction
-  id: ActionPAICrewMonitor
-  name: Open Crew Monitor
-  description: Open your crew monitor interface and help your owner on their job.
-  components:
-  - type: ActionAccessRequirement
-    whitelist:
-    - Medical
-  - type: Action
-    icon: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
-    itemIconStyle: NoItem
-  - type: InstantAction
-    event: !type:OpenUiActionEvent
-      key: enum.CrewMonitoringUIKey.Key
 
 - type: entity
   parent: BaseMentalAction
