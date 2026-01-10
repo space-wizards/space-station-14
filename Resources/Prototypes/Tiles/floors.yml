@@ -1953,6 +1953,8 @@
 # Faux sci tiles
 
 # Grass
+
+#Made all of the astro grass's deconstructTools into prying for consistensy.
 - type: tile
   id: FloorAstroGrass
   name: tiles-astro-grass
@@ -1975,7 +1977,7 @@
     West: /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Cutting ]
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepGrass
   itemDrop: FloorTileItemAstroGrass
@@ -1987,7 +1989,7 @@
   parent: FloorGrass
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Cutting ]
+  deconstructTools: [ Prying ]
   itemDrop: FloorTileItemMowedAstroGrass
 
 - type: tile
@@ -1996,7 +1998,7 @@
   parent: FloorGrassJungle
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Cutting ]
+  deconstructTools: [ Prying ]
   itemDrop: FloorTileItemJungleAstroGrass
 
 - type: tile
@@ -2005,7 +2007,7 @@
   name: tiles-dark-astro-grass
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Cutting ]
+  deconstructTools: [ Prying ]
   itemDrop: FloorTileItemDarkAstroGrass
 
 - type: tile
@@ -2014,7 +2016,7 @@
   name: tiles-light-astro-grass
   baseTurf: Plating
   isSubfloor: false
-  deconstructTools: [ Cutting ]
+  deconstructTools: [ Prying ]
   itemDrop: FloorTileItemLightAstroGrass
 
 # Ice
