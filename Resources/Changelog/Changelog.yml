@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Auto-injector/medipen pop-ups now show the correct identity when injecting
-      someone else.
-    type: Fix
-  id: 8868
-  time: '2025-08-18T20:42:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39735
 - author: Winkarst-cpu
   changes:
   - message: Meat spikes got an overhaul.
@@ -3889,3 +3881,10 @@
   id: 9371
   time: '2026-01-10T17:01:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42208
+- author: BarryNorfolk
+  changes:
+  - message: Network configurators now properly show colours between objects again.
+    type: Fix
+  id: 9372
+  time: '2026-01-10T20:09:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42335
