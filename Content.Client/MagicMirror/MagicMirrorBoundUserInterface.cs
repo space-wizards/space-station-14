@@ -20,6 +20,8 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<MagicMirrorWindow>();
 
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+
         _window.OnHairSelected += tuple => SelectHair(MagicMirrorCategory.Hair, tuple.id, tuple.slot);
         _window.OnHairColorChanged += args => ChangeColor(MagicMirrorCategory.Hair, args.marking, args.slot);
         _window.OnHairSlotAdded += delegate () { AddSlot(MagicMirrorCategory.Hair); };

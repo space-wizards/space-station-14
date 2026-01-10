@@ -26,6 +26,9 @@ public abstract class SharedMagicMirrorSystem : EntitySystem
         if (!args.CanReach || args.Target == null)
             return;
 
+        if (!HasComp<HumanoidAppearanceComponent>(args.Target.Value))
+            return;
+
         UpdateInterface(mirror, args.Target.Value, mirror);
         UISystem.TryOpenUi(mirror.Owner, MagicMirrorUiKey.Key, args.User);
     }
