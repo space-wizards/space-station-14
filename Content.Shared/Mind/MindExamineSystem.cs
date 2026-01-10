@@ -49,6 +49,11 @@ public sealed class MindExamineSystem : EntitySystem
 
     private void OnPlayerAttached(PlayerAttachedEvent args)
     {
+        // We use the broadcasted event because we need to access the body of a ghost if it disconnects.
+        // DeadSSD does not check if a player is attached, but if the session is valid (connected).
+        // To properly track that, we subscribe to the broadcast version of this event
+        // and update the mind status of the original entity accordingly.
+        // Otherwise, if you ghost out and THEN disconnect, it would not update your status as it gets raised on your ghost and not your body.
         if (!_mind.TryGetMind(args.Entity, out _, out var mindComp))
             return;
 
@@ -60,6 +65,7 @@ public sealed class MindExamineSystem : EntitySystem
 
     private void OnPlayerDetached(PlayerDetachedEvent args)
     {
+        // Same reason as in the subscription above.
         if (!_mind.TryGetMind(args.Entity, out _, out var mindComp))
             return;
 
