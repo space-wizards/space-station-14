@@ -152,3 +152,12 @@ construction-graph-tag-spationaut-hardsuit = spationaut hardsuit
 
 # clothing
 construction-graph-tag-backpack = backpack
+
+# devoters
+construction-graph-tag-devoter-nanotrasen = nanotrasen devoter
+construction-graph-tag-devoter-chaos = chaos devoter
+construction-graph-tag-devoter-druid = druid devoter
+construction-graph-tag-devoter-toolbox = toolbox devoter
+construction-graph-tag-devoter-space-christian = space christian devoter
+construction-graph-tag-devoter-satana = satana devoter
+construction-graph-tag-devoter-technology = technology devoter

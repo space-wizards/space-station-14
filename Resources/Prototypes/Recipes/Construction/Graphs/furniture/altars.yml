@@ -29,56 +29,63 @@
 - type: constructionGraph
   id: ConvertibleAltarGraph
   start: undevoted
-  graph: 
+  graph:
   - node: undevoted
     entity: AltarUndevoted
     edges:
     - to: nanotrasen
       steps:
       - tag: DevoterNanotrasen
+        name: construction-graph-tag-devoter-nanotrasen #These won't appear in the construction menu, so in theory these shouldn't be needed, but the linter gets mad if they're missing
         doAfter: 1
         store: devoter-slot
 
     - to: chaos
       steps:
       - tag: DevoterChaos
+        name: construction-graph-tag-devoter-chaos
         doAfter: 1
         store: devoter-slot
 
     - to: druid
       steps:
       - tag: DevoterDruid
+        name: construction-graph-tag-devoter-druid
         doAfter: 1
         store: devoter-slot
 
     - to: toolbox
       steps:
       - tag: DevoterToolbox
+        name: construction-graph-tag-devoter-toolbox
         doAfter: 1
         store: devoter-slot
 
     - to: spaceChristian
       steps:
       - tag: DevoterSpaceChristian
+        name: construction-graph-tag-devoter-space-christian
         doAfter: 1
         store: devoter-slot
 
     - to: satana
       steps:
       - tag: DevoterSatana
+        name: construction-graph-tag-devoter-satana
         doAfter: 1
         store: devoter-slot
 
     - to: technology
       steps:
       - tag: DevoterTechnology
+        name: construction-graph-tag-devoter-technology
         doAfter: 1
         store: devoter-slot
 
   - node: nanotrasen
     entity: AltarNanotrasen
     edges:
-    - to: undevoted 
+    - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
@@ -94,7 +101,7 @@
   - node: chaos
     entity: AltarChaos
     edges:
-    - to: undevoted 
+    - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
@@ -106,11 +113,11 @@
       steps:
       - tool: Undevoting
         doAfter: 1
-        
+
   - node: druid
     entity: AltarDruid
     edges:
-    - to: undevoted 
+    - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
@@ -126,7 +133,7 @@
   - node: toolbox
     entity: AltarToolbox
     edges:
-    - to: undevoted 
+    - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
@@ -142,7 +149,7 @@
   - node: spaceChristian
     entity: AltarSpaceChristian
     edges:
-    - to: undevoted 
+    - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
@@ -158,7 +165,7 @@
   - node: satana
     entity: AltarSatana
     edges:
-    - to: undevoted 
+    - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
@@ -174,7 +181,7 @@
   - node: technology
     entity: AltarTechnology
     edges:
-    - to: undevoted 
+    - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
