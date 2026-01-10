@@ -1,27 +1,20 @@
-﻿using Content.Shared.Mobs;
-using Content.Shared.Tools;
+﻿using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Lock;
+namespace Content.Shared.Lock.BypassLock.Components;
 
 /// <summary>
 /// This component lets the lock on this entity be pried open when the entity is in critical or dead state.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(MobStateBypassLockSystem))]
-public sealed partial class MobStateBypassLockComponent : Component
+[RegisterComponent, NetworkedComponent, Access(typeof(BypassLock.Systems.BypassLockSystem))]
+public sealed partial class BypassLockComponent : Component
 {
     /// <summary>
     /// The tool quality needed to bypass the lock.
     /// </summary>
     [DataField]
     public ProtoId<ToolQualityPrototype> BypassingTool = "Prying";
-
-    /// <summary>
-    /// The mobstate where the ID lock can be bypassed.
-    /// </summary>
-    [DataField]
-    public MobState RequiredMobState = MobState.Critical;
 
     /// <summary>
     /// Amount of time in seconds it takes to bypass

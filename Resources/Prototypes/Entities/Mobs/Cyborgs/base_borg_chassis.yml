@@ -246,7 +246,11 @@
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
-  - type: MobStateBypassLock
+  - type: BypassLock
+  - type: BypassLockRequiresMobState
+    requiredMobState:
+    - Critical
+    - Dead
 
 - type: entity
   abstract: true
