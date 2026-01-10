@@ -1,8 +1,11 @@
 ﻿using Content.Client.Gameplay;
+using Content.Client.Ghost;
+using Content.Client.Options;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
 using Content.Shared.CCVar;
+using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
@@ -19,12 +22,14 @@ namespace Content.Client.UserInterface.Systems.EscapeMenu;
 public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
-    [Dependency] private readonly IUriOpener _uri = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IUriOpener _uri = default!;
     [Dependency] private readonly ChangelogUIController _changelog = default!;
+    [Dependency] private readonly GuidebookUIController _guidebook = default!;
     [Dependency] private readonly InfoUIController _info = default!;
     [Dependency] private readonly OptionsUIController _options = default!;
-    [Dependency] private readonly GuidebookUIController _guidebook = default!;
+
+    [UISystemDependency] private readonly GhostSystem _ghostSystem = default!;
 
     private Options.UI.EscapeMenu? _escapeWindow;
 
@@ -54,6 +59,16 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     private void ActivateButton() => EscapeButton!.SetClickPressed(true);
     private void DeactivateButton() => EscapeButton!.SetClickPressed(false);
 
+    private void UpdateAbandonButton(GhostComponent obj)
+    {
+        UpdateAbandonButton();
+    }
+
+    private void UpdateAbandonButton()
+    {
+        _escapeWindow?.AbandonButton.Disabled = _ghostSystem is { Player.CanReturnToBody: false };
+    }
+
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_escapeWindow == null);
@@ -62,6 +77,23 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
         _escapeWindow.OnClose += DeactivateButton;
         _escapeWindow.OnOpen += ActivateButton;
+
+        _ghostSystem.PlayerAttached += UpdateAbandonButton;
+        _ghostSystem.PlayerDetached += UpdateAbandonButton;
+
+        _escapeWindow.AbandonButton.OnPressed += _ =>
+        {
+            CloseEscapeWindow();
+
+            if (_ghostSystem.IsGhost)
+            {
+                _ghostSystem.ReturnToBody();
+                return;
+            }
+
+            var window = new AbandonCharacter();
+            window.OpenCentered();
+        };
 
         _escapeWindow.ChangelogButton.OnPressed += _ =>
         {
