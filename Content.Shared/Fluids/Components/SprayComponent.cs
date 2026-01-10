@@ -9,7 +9,7 @@ namespace Content.Shared.Fluids.Components;
 [Access(typeof(SharedSpraySystem))]
 public sealed partial class SprayComponent : Component
 {
-    public const string SolutionName = "spray";
+    public const string SolutionName = "drink";
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public FixedPoint2 TransferAmount = 10;

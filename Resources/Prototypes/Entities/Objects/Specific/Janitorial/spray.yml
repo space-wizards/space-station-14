@@ -5,9 +5,7 @@
   components:
   - type: Edible
     edible: Drink
-    solution: spray
-    destroyOnEmpty: false
-    utensil: None
+    solution: drink
     transferAmount: 10
     useSound:
       path: /Audio/Effects/spray3.ogg
@@ -24,14 +22,8 @@
     sprite: Objects/Specific/Janitorial/spray_bottle.rsi
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 100
-  - type: RefillableSolution
-    solution: spray
-  - type: DrainableSolution
-    solution: spray
-  - type: SolutionItemStatus
-    solution: spray
   - type: UseDelay
   - type: Spray
     transferAmount: 10
@@ -39,10 +31,7 @@
     spraySound:
       path: /Audio/Effects/spray2.ogg
   - type: TrashOnSolutionEmpty
-    solution: spray
-  - type: ExaminableSolution
-    solution: spray
-    exactVolume: true
+    solution: drink
 
 - type: entity
   parent: [ SprayBottleBase, DrinkVisualsFill ]
@@ -59,7 +48,7 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: SolutionContainerVisuals
-    solutionName: spray
+    solutionName: drink
     fillBaseName: cleaner-fill-
     inHandsMaxFillLevels: 4
 
@@ -82,7 +71,7 @@
     fillBaseName: cleaner_large-fill-
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 250
   - type: Spray
     transferAmount: 15
@@ -103,7 +92,7 @@
     - Spray
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 100
         reagents:
         - ReagentId: Water
@@ -117,7 +106,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 100
         reagents:
         - ReagentId: SpaceCleaner
@@ -136,7 +125,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 250
         reagents:
         - ReagentId: SpaceCleaner
@@ -153,7 +142,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 200
         reagents:
         - ReagentId: SpaceCleaner
@@ -168,7 +157,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 500
         reagents:
         - ReagentId: SpaceCleaner
