@@ -2869,4 +2869,55 @@
         layer:
         - MobLayer
 
-.
+
+- type: entity
+  name: aloe ignis leaf
+  description: A jagged leaf. It's uncomfortably warm to the touch and smells like ozone and spice.
+  parent: FoodProduceBase
+  id: FoodAloeIgnis
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+    state: produce
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+    heldPrefix: produce
+  - type: Produce
+    seedId: aloeignis
+  - type: Tag
+    tags:
+    - Fruit
+  - type: PotencyVisuals
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - medicinal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        canReact: true
+        reagents:
+        - ReagentId: Ignisol
+          Quantity: 8
+        - ReagentId: Carbon
+          Quantity: 4
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: FoodSequenceElement
+    entries:
+      Taco: AloeIgnis
+      Burger: AloeIgnisBurger

@@ -1260,6 +1260,22 @@
   - sprite: Objects/Specific/Hydroponics/pyrotton.rsi
     state: produce
 
+# Anomaly berries
+
+- type: foodSequenceElement
+  id: AloeIgnis
+  name: food-sequence-content-aloe-ignis
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+    state: produce
+
+- type: foodSequenceElement
+  id: AloeIgnisBurger
+  name: food-sequence-burger-content-aloe-ignis
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+    state: produce
+
 # Throngler Plushie
 
 - type: foodSequenceElement

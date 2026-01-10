@@ -1192,6 +1192,8 @@
   packetPrototype: AloeSeeds
   productPrototypes:
     - FoodAloe
+  mutationPrototypes:
+    - aloeIgnis
   lifespan: 25
   maturation: 10
   production: 3
@@ -2026,3 +2028,30 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: aloeIgnis
+  name: seeds-aloe-ignis-name
+  noun: seeds-noun-seeds
+  displayName: seeds-aloe-ignis-display-name
+  plantRsi: Objects/Specific/Hydroponics/aloe_ignis.rsi
+  packetPrototype: AloeIgnisSeeds
+  productPrototypes:
+  - FoodAloeIgnis
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 5
+  waterConsumption: 0.30
+  nutrientConsumption: 0.40
+  chemicals:
+    Ignisol:
+      Min: 5
+      Max: 15
+      PotencyDivisor: 5
+    Carbon:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
