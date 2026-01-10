@@ -108,7 +108,7 @@ public sealed partial class ResearchSystem
         if (!Resolve(uid, ref component, ref clientComponent, false))
             return;
 
-        
+
         var points = 0;
         var nextRediscover = TimeSpan.MaxValue;
         var rediscoverCost = 0;
@@ -160,6 +160,9 @@ public sealed partial class ResearchSystem
 
     private bool HasAccess(EntityUid uid, EntityUid act)
     {
-        return TryComp<AccessReaderComponent>(uid, out var access) && _accessReader.IsAllowed(act, uid, access);
+        if (!TryComp<AccessReaderComponent>(uid, out var access))
+            return true;
+
+        return _accessReader.IsAllowed(act, uid, access);
     }
 }

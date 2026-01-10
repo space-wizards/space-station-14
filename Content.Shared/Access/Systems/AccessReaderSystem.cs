@@ -344,7 +344,21 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="uid">The entity that is being searched.</param>
     public HashSet<EntityUid> FindPotentialAccessItems(EntityUid uid)
     {
-        FindAccessItemsInventory(uid, out var items);
+        return FindPotentialAccessItems(uid, new HashSet<EntityUid>());
+    }
+
+    /// <summary>
+    /// Finds all the items that could potentially give access to an entity.
+    /// While avoiding a loop, example: when reading access from items that get their access from their parent container.
+    /// </summary>
+    /// <param name="uid">The entity that is being searched.</param>
+    private HashSet<EntityUid> FindPotentialAccessItems(EntityUid uid, HashSet<EntityUid> visited)
+    {
+        var items = new HashSet<EntityUid>();
+        if (!visited.Add(uid))
+            return items;
+
+        FindAccessItemsInventory(uid, out items);
 
         var ev = new GetAdditionalAccessEvent
         {
@@ -354,7 +368,7 @@ public sealed class AccessReaderSystem : EntitySystem
 
         foreach (var item in new ValueList<EntityUid>(items))
         {
-            items.UnionWith(FindPotentialAccessItems(item));
+            items.UnionWith(FindPotentialAccessItems(item, visited));
         }
         items.Add(uid);
         return items;

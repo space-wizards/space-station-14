@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.PAI;
 
@@ -21,6 +22,15 @@ public sealed partial class PAIComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? LastUser;
+
+    /// <summary>
+    /// A List with actions the pAI has purchased in their store.
+    /// Used for keeping the purchased abilities when switching the Mind that is controlling the pAI.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> PurchasedAbilities { get; private set; } = new();
+
+
 
     /// <summary>
     /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.

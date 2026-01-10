@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -12,6 +13,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     public const float SubfloorRevealAlpha = 0.8f;
@@ -29,7 +31,24 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         SubscribeLocalEvent<TrayScannerComponent, GotEquippedEvent>(OnTrayEquipped);
         SubscribeLocalEvent<TrayScannerComponent, GotUnequippedEvent>(OnTrayUnequipped);
 
+        SubscribeLocalEvent<TrayScannerComponent, TrayScannerActionEvent>(OnTrayScannerAction);
         SubscribeLocalEvent<TrayScannerUserComponent, GetVisMaskEvent>(OnUserGetVis);
+    }
+
+    // for entities that have built-in t-ray scanner vision rather than item
+    private void OnTrayScannerAction(EntityUid uid, TrayScannerComponent component, TrayScannerActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        SetScannerEnabled(uid, !component.Enabled, component);
+        _actions.SetToggled((args.Action, null), component.Enabled);
+        args.Handled = true;
+
+        if (component.Enabled)
+            OnEquip(uid);
+        else
+            OnUnequip(uid);
     }
 
     private void OnUserGetVis(Entity<TrayScannerUserComponent> ent, ref GetVisMaskEvent args)
@@ -97,7 +116,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void SetScannerEnabled(EntityUid uid, bool enabled, TrayScannerComponent? scanner = null)
+    public void SetScannerEnabled(EntityUid uid, bool enabled, TrayScannerComponent? scanner = null)
     {
         if (!Resolve(uid, ref scanner) || scanner.Enabled == enabled)
             return;
@@ -116,7 +135,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnTrayScannerGetState(EntityUid uid, TrayScannerComponent scanner, ref ComponentGetState args)
     {
-        args.State = new TrayScannerState(scanner.Enabled, scanner.Range);
+        args.State = new TrayScannerState(scanner.Enabled, scanner.Range, scanner.DisableContained);
     }
 
     private void OnTrayScannerHandleState(EntityUid uid, TrayScannerComponent scanner, ref ComponentHandleState args)
@@ -125,6 +144,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
             return;
 
         scanner.Range = state.Range;
+        scanner.DisableContained = state.DisableContained;
         SetScannerEnabled(uid, state.Enabled, scanner);
     }
 }

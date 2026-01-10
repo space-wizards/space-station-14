@@ -73,8 +73,11 @@ public abstract class SharedIdCardSystem : EntitySystem
             title = ExtractFullTitle(idCard);
         }
 
-        ev.Title = title;
-        ev.Handled = true;
+        if (title != null)
+        {
+            ev.Title = title;
+            ev.Handled = true;
+        }
     }
 
     /// <summary>
