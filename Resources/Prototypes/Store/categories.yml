@@ -94,6 +94,12 @@
   name: store-category-objective
   priority: 11
 
+#nukie delivery
+
+- type: storeCategory
+  id: NukieDelivery
+  name: store-category-nukie-delivery
+
 #revenant
 - type: storeCategory
   id: RevenantAbilities
