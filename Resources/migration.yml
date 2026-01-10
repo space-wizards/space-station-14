@@ -759,3 +759,7 @@ SpawnPointBoxer: null
 FigureSpawner: MechFigurineSpawner50
 ToySpawner: PlushieSpawner50
 SpacemenFigureSpawner: SpacemenFigurineSpawner90
+
+# 2026-01-07
+HandheldHealthAnalyzerUnpowered: HandheldHealthAnalyzer
+HandheldHealthAnalyzerEmpty: HandheldHealthAnalyzer
