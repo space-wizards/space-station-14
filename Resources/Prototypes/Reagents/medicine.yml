@@ -1594,7 +1594,7 @@
   desc: reagent-desc-equiline
   physicalDesc: reagent-physical-desc-shimmering
   flavor: minty
-  color: "#412227"
+  color: "#703B43"
   metabolisms:
     Medicine:
       metabolismRate: 0.1
