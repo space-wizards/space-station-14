@@ -50,8 +50,6 @@ public abstract partial class SharedMindSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MindContainerComponent, ComponentStartup>(OnContainerStartup);
-        SubscribeLocalEvent<MindContainerComponent, ComponentShutdown>(OnContainerShutdown);
         SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide);
 
         SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnVisitingTerminating);
@@ -91,22 +89,6 @@ public abstract partial class SharedMindSystem : EntitySystem
 
         Log.Error($"Encountered a user {component.UserId} that is already assigned to a mind while initializing mind {ToPrettyString(uid)}. Ignoring user field.");
         component.UserId = null;
-    }
-
-    private void OnContainerStartup(Entity<MindContainerComponent> ent, ref ComponentStartup args)
-    {
-        if (!ent.Comp.ShowExamineInfo)
-            return;
-
-        EnsureComp<MindExaminableComponent>(ent);
-    }
-
-    private void OnContainerShutdown(Entity<MindContainerComponent> ent, ref ComponentShutdown args)
-    {
-        if (!ent.Comp.ShowExamineInfo)
-            return;
-
-        RemCompDeferred<MindExaminableComponent>(ent);
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)

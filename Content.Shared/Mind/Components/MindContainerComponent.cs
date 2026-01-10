@@ -23,13 +23,6 @@ public sealed partial class MindContainerComponent : Component
     public bool HasMind => Mind != null;
 
     /// <summary>
-    /// Whether examining should show information about the mind or not.
-    /// Causes the addition and deletion of <see cref="MindExaminableComponent"/> on startup and shutdown.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ShowExamineInfo;
-
-    /// <summary>
     ///     Whether the mind will be put on a ghost after this component is shutdown.
     /// </summary>
     [DataField]
