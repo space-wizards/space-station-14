@@ -1,5 +1,4 @@
-﻿using Content.Client.Beam.Components;
-using Content.Shared.Beam;
+﻿using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
 using Robust.Client.GameObjects;
 
@@ -23,8 +22,6 @@ public sealed class BeamSystem : SharedBeamSystem
 
         if (TryComp<SpriteComponent>(beam, out var sprites))
         {
-            _sprite.SetRotation((beam, sprites), args.UserAngle);
-
             if (args.BodyState != null)
             {
                 _sprite.LayerSetRsiState((beam, sprites), 0, args.BodyState);
