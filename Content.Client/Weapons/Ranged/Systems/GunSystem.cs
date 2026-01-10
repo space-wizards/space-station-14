@@ -90,11 +90,6 @@ public sealed partial class GunSystem : SharedGunSystem
         SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
         SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
 
-        // Targeting data
-        //SubscribeLocalEvent<MobStateComponent, TargetRankEvent>(OnMobStateRank);
-        //SubscribeLocalEvent<RequireProjectileTargetComponent, TargetRankEvent>(OnRequireProjectileTargetRank);
-        //SubscribeLocalEvent<FixturesComponent, TargetRankEvent>(OnFixturesRank);
-
         // Plays animated effects on the client.
         SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
 
@@ -426,7 +421,7 @@ public sealed partial class GunSystem : SharedGunSystem
         var entities = _spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
 
         // Check the entities against whether or not we can click them
-        var foundEntities = new List<(EntityUid, int, uint, float, bool)>(entities.Count);
+        var foundEntities = new List<(EntityUid, bool, bool, int, uint, float, float)>(entities.Count);
 
         foreach (var entity in entities)
         {
@@ -443,18 +438,18 @@ public sealed partial class GunSystem : SharedGunSystem
 
         // Do drawdepth & y-sorting. First index is the top-most sprite (opposite of normal render order).
         foundEntities.Sort(_comparer);
-        var (target, depth, renderOrder, bottom, alive) = foundEntities.FirstOrDefault();
+        var (target, alive, occluded, _, _, _, _) = foundEntities.FirstOrDefault();
 
-        // This can only happen if there's no valid clicked or alive entities, so we just return no target.
-        if (depth == 0 && renderOrder == 0 && bottom == 0 && !alive)
+        // Prevents us from just selecting a random target nearby our cursor. It must either be alive, or our cursor must be on top of it!
+        if (!occluded && !alive)
             return null;
 
         return GetNetEntity(target);
     }
 
-    private (EntityUid, int, uint, float, bool) CheckTarget(Entity<SpriteComponent, TransformComponent> target, IEye eye, MapCoordinates coordinates)
+    private (EntityUid, bool, bool, int, uint, float, float) CheckTarget(Entity<SpriteComponent, TransformComponent> target, IEye eye, MapCoordinates coordinates)
     {
-        _clickable.CheckClick((target.Owner, null, target.Comp1, target.Comp2),
+        var occluded = _clickable.CheckClick((target.Owner, null, target.Comp1, target.Comp2),
             coordinates.Position,
             eye,
             true,
@@ -462,15 +457,35 @@ public sealed partial class GunSystem : SharedGunSystem
             out var renderOrder,
             out var bottom);
 
-        return (target.Owner, drawDepthClicked, renderOrder, bottom, _mobState.IsAlive(target.Owner));
+        var difference = (target.Comp2.Coordinates.Position - coordinates.Position).LengthSquared();
+
+        return (target.Owner, _mobState.IsAlive(target.Owner), occluded, drawDepthClicked, renderOrder, bottom, difference);
     }
 
-    private sealed class GunTargetEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder, float bottom, bool alive)>
+    /// <summary>
+    /// This Comparer takes a list of Entities that we can hit and orders them by which target the player is probably trying to shoot.
+    /// We organize based on these criteria in this order:
+    /// alive means the entity has a MobState and is currently alive. We check it first since they typically shoot back.
+    /// occluded is whether the cursor is above the sprite or just near it.
+    /// depth is the order in which sprites are layered, bigger number means its rendered above others.
+    /// renderOrder is used to indicate if a sprite should be visually more important, typically this value is 0.
+    /// bottom indicates which sprite is visually the lowest on the screen and therefore typically above other sprites.
+    /// distance indicates the distance from the entity's coordinates to our mouse.
+    /// If all of those tie, then we organize by whichever entity has the highest EntityUid.
+    /// </summary>
+    private sealed class GunTargetEntityComparer : IComparer<(EntityUid clicked, bool alive, bool occluded, int depth, uint renderOrder, float bottom, float distance)>
     {
-        public int Compare((EntityUid clicked, int depth, uint renderOrder, float bottom, bool alive) x,
-            (EntityUid clicked, int depth, uint renderOrder, float bottom, bool alive) y)
+        public int Compare((EntityUid clicked, bool alive, bool occluded, int depth, uint renderOrder, float bottom, float distance) x,
+            (EntityUid clicked, bool alive, bool occluded, int depth, uint renderOrder, float bottom, float distance) y)
         {
             var cmp = y.alive.CompareTo(x.alive);
+            if (cmp != 0)
+            {
+                return cmp;
+            }
+
+            cmp = y.occluded.CompareTo(x.occluded);
+
             if (cmp != 0)
             {
                 return cmp;
@@ -490,6 +505,13 @@ public sealed partial class GunSystem : SharedGunSystem
             }
 
             cmp = -y.bottom.CompareTo(x.bottom);
+
+            if (cmp != 0)
+            {
+                return cmp;
+            }
+
+            cmp = -y.distance.CompareTo(x.distance);
 
             if (cmp != 0)
             {
