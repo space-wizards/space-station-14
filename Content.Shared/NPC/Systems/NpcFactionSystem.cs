@@ -115,7 +115,10 @@ public sealed partial class NpcFactionSystem : EntitySystem
             return;
 
         if (dirty)
+        {
             RefreshFactions((ent, ent.Comp));
+            Dirty(ent, ent.Comp);
+        }
     }
 
     /// <summary>
@@ -137,7 +140,10 @@ public sealed partial class NpcFactionSystem : EntitySystem
         }
 
         if (dirty)
+        {
             RefreshFactions((ent, ent.Comp));
+            Dirty(ent, ent.Comp);
+        }
     }
 
     /// <summary>
@@ -158,7 +164,10 @@ public sealed partial class NpcFactionSystem : EntitySystem
             return;
 
         if (dirty)
+        {
             RefreshFactions((ent, ent.Comp));
+            Dirty(ent, ent.Comp);
+        }
     }
 
     /// <summary>
@@ -172,7 +181,10 @@ public sealed partial class NpcFactionSystem : EntitySystem
         ent.Comp.Factions.Clear();
 
         if (dirty)
+        {
             RefreshFactions((ent, ent.Comp));
+            Dirty(ent, ent.Comp);
+        }
     }
 
     public IEnumerable<EntityUid> GetNearbyHostiles(Entity<NpcFactionMemberComponent?, FactionExceptionComponent?> ent, float range)

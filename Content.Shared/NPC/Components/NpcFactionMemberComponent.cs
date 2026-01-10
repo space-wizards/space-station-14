@@ -5,13 +5,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NPC.Components;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(NpcFactionSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(NpcFactionSystem))]
 public sealed partial class NpcFactionMemberComponent : Component
 {
     /// <summary>
     /// Factions this entity is a part of.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public HashSet<ProtoId<NpcFactionPrototype>> Factions = new();
 
     /// <summary>
