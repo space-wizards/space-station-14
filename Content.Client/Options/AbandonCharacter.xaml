@@ -28,8 +28,8 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
                       Visible="False">
-            <Button Name="ConfirmAbandonButton" Text="{Loc 'generic-confirm'}" StyleClasses="OpenRight" />
-            <Button Name="CancelAbandonButton" Text="{Loc 'quick-dialog-ui-cancel'}" StyleClasses="OpenLeft" />
+            <Button Name="ConfirmAbandonButton" Text="{Loc 'generic-confirm'}" StyleClasses="OpenRight" MinWidth="100" />
+            <Button Name="CancelAbandonButton" Text="{Loc 'quick-dialog-ui-cancel'}" StyleClasses="OpenLeft" MinWidth="100" />
         </BoxContainer>
     </BoxContainer>
 </options:AbandonCharacter>
