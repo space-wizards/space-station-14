@@ -11,7 +11,7 @@ namespace Content.Client.Access.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AccessOverriderWindow : DefaultWindow
 {
-    [Dependency] private readonly IPrototypeManager _protoMan= default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
     private readonly Dictionary<string, Button> _accessButtons = new();
 
@@ -79,7 +79,7 @@ public sealed partial class AccessOverriderWindow : DefaultWindow
 
         if (missingList != "")
         {
-            MissingPrivilegesText.Text = state.ShowPrivilegedIdGrid ?
+            MissingPrivilegesText.Text = showPrivilegedId ?
                 Loc.GetString("access-overrider-window-missing-privileges", ("privileges", missingList)) :
                 Loc.GetString("access-overrider-window-missing-privileges-no-id", ("privileges", missingList));
         }

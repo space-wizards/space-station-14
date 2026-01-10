@@ -72,6 +72,8 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
         DirtyUI(ent);
     }
 
+    protected virtual void DirtyUI(EntityUid uid) { }
+
     private void OnGetVerbs(Entity<AccessOverriderComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
     {
         var user = args.User;
@@ -133,23 +135,20 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
 
     private void OnClose(Entity<AccessOverriderComponent> ent, ref BoundUIClosedEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || !args.UiKey.Equals(AccessOverriderUiKey.Key))
-            return;
-
         ent.Comp.TargetAccessReaderId = null;
         Dirty(ent);
     }
 
     private void OnSetAccessesMessage(Entity<AccessOverriderComponent> ent, ref SetAccessesMessage args)
     {
-        if (ent.Comp.TargetAccessReaderId is not { } readerId
+        if (ent.Comp.TargetAccessReaderId is not { } targetAccessReaderId
             || ent.Comp.PrivilegedIdSlot.Item is not { } idCard)
             return;
 
         if (!PrivilegedIdIsAuthorized(ent.AsNullable()))
             return;
 
-        if (!_interactionSystem.InRangeUnobstructed(args.Actor, readerId))
+        if (!_interactionSystem.InRangeUnobstructed(args.Actor, targetAccessReaderId))
         {
             _popupSystem.PopupClient(Loc.GetString("access-overrider-out-of-range"), args.Actor, args.Actor);
             return;
@@ -161,11 +160,11 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
             return;
         }
 
-        if (!_accessReader.GetMainAccessReader(readerId, out var accessReaderEnt)
+        if (!_accessReader.GetMainAccessReader(targetAccessReaderId, out var accessReaderEnt)
             || accessReaderEnt is not { } mainReader)
             return;
 
-        var oldTags = mainReader.Comp.AccessLists.SelectMany(x => x).ToList();
+        var oldTags = accessReaderEnt.Value.Comp.AccessLists.SelectMany(x => x).ToList();
 
         if (oldTags.SequenceEqual(args.AccessList))
             return;
@@ -195,10 +194,10 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
             + $"{ToPrettyString(mainReader):entity} with the following allowed access level holders: "
             + $"[{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", args.AccessList)}]");
 
-        _accessReader.SetAccesses(mainReader, args.AccessList);
+        _accessReader.TrySetAccesses(mainReader, args.AccessList);
 
         var ev = new OnAccessOverriderAccessUpdatedEvent(args.Actor);
-        RaiseLocalEvent(readerId, ref ev);
+        RaiseLocalEvent(targetAccessReaderId, ref ev);
 
         DirtyUI(ent);
     }
@@ -248,8 +247,6 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
             Dirty(uid, comp);
         }
     }
-
-    protected virtual void DirtyUI(EntityUid uid) { }
 }
 
 /// <summary>

@@ -6,6 +6,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Components;
 
+/// <summary>
+/// Allows this item to be used to configure the access of devices with an <see cref="AccessReaderComponent">.
+/// Also known as the access configurator.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedAccessOverriderSystem))]
 public sealed partial class AccessOverriderComponent : Component
@@ -31,6 +35,9 @@ public sealed partial class AccessOverriderComponent : Component
     /// The uid of the entity the configurator was used on. If null, it was used
     /// in-hand with no target.
     /// </summary>
+    /// <remarks>
+    /// TODO: use WeakEntityReference
+    /// </remarks>
     [DataField, AutoNetworkedField]
     public EntityUid? TargetAccessReaderId;
 
