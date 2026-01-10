@@ -18,9 +18,9 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
                       HorizontalExpand="True">
-            <Button Name="SuicideButton" Text="{Loc 'sandbox-window-toggle-suicide-button'}" Access="Public" />
-            <controls:VSpacer Spacing="50" />
-            <Button Name="GhostButton" Text="{Loc 'sandbox-window-ghost-button'}" Access="Public" />
+            <Button Name="SuicideButton" Text="{Loc 'sandbox-window-toggle-suicide-button'}" Access="Public" MinWidth="100" />
+            <controls:VSpacer Spacing="100" />
+            <Button Name="GhostButton" Text="{Loc 'sandbox-window-ghost-button'}" Access="Public" MinWidth="100" />
         </BoxContainer>
         <BoxContainer Name="AbandonConfirmContainer"
                       Orientation="Horizontal"
