@@ -90,9 +90,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  - !type:BuyerAccessCondition
-    whitelist:
-    - Engineering
 
 - type: listing
   id: PAICargoBounty

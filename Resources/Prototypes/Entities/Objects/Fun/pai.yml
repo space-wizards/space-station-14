@@ -304,9 +304,6 @@
   name: Activate T-Ray Scanner
   description: Activate your t-ray scanner and help your owner do their job.
   components:
-  - type: ActionAccessRequirement
-    whitelist:
-    - Engineering
   - type: Action
     useDelay: 1
     icon: { sprite: Objects/Tools/t-ray.rsi, state: tray-off }
