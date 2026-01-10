@@ -78,6 +78,7 @@ food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
 food-sequence-content-anomaly-berry = anomaly berry
 food-sequence-content-aloe-ignis = aloe ignis
+food-sequence-content-dragon-tail = dragon tail
 
 # BURGERS
 
@@ -122,6 +123,7 @@ food-sequence-burger-content-anomaly-berry = anom
 food-sequence-burger-content-extradimensional-orange = 3d
 food-sequence-burger-content-world-pea = peace
 food-sequence-burger-content-aloe-ignis = aloe ignis
+food-sequence-burger-content-dragon-tail = dragon tail
 
 # COTTON BURGERS
 

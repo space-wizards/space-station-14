@@ -1552,7 +1552,6 @@
   color: "#FF4500"
   metabolisms:
     Medicine:
-      metabolismRate: 0.5
       effects:
       - !type:HealthChange
         damage:
@@ -1587,3 +1586,34 @@
           min: 10
         - !type:TemperatureCondition
           max: 346.15
+
+- type: reagent
+  id: Equiline
+  name: reagent-name-equiline
+  group: Medicine
+  desc: reagent-desc-equiline
+  physicalDesc: reagent-physical-desc-shimmering
+  flavor: minty
+  color: "#412227"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Burn: -1
+      - !type:AdjustTemperature
+        amount: 2000
+        conditions:
+        - !type:TemperatureCondition
+          max: 310.15
+      - !type:AdjustTemperature
+        amount: -2000
+        conditions:
+        - !type:TemperatureCondition
+          min: 310.15
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "equiline-effect-feeling-balanced" ]
+        probability: 0.1

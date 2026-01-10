@@ -2038,6 +2038,8 @@
   packetPrototype: AloeIgnisSeeds
   productPrototypes:
   - FoodAloeIgnis
+  mutationPrototypes:
+  - dragonTail
   lifespan: 25
   maturation: 10
   production: 3
@@ -2055,3 +2057,28 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+
+- type: seed
+  id: dragonTail
+  name: seeds-dragontail-name
+  noun: seeds-noun-seeds
+  displayName: seeds-dragontail-display-name
+  plantRsi: Objects/Specific/Hydroponics/dragon_tail.rsi
+  packetPrototype: DragonTailSeeds
+  productPrototypes:
+  - FoodDragonTail
+  lifespan: 35
+  maturation: 10
+  production: 4
+  yield: 3
+  potency: 10
+  growthStages: 5
+  chemicals:
+    Equiline:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 5
+    Nutriment:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 10

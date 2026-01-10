@@ -1263,17 +1263,17 @@
 # Anomaly berries
 
 - type: foodSequenceElement
-  id: AloeIgnis
-  name: food-sequence-content-aloe-ignis
+  id: DragonTail
+  name: food-sequence-content-dragon-tail
   sprites:
-  - sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+  - sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
     state: produce
 
 - type: foodSequenceElement
-  id: AloeIgnisBurger
-  name: food-sequence-burger-content-aloe-ignis
+  id: DragonTailBurger
+  name: food-sequence-burger-content-dragon-tail
   sprites:
-  - sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+  - sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
     state: produce
 
 # Throngler Plushie

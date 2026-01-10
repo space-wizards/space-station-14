@@ -146,3 +146,5 @@ seeds-bloonion-name = bloonion
 seeds-bloonion-display-name = bloonion bulbs
 seeds-aloe-ignis-name = aloe ignis
 seeds-aloe-ignis-display-name = aloe ignis
+seeds-dragontail-name = dragon's tail
+seeds-dragontail-display-name = dragon's tail
