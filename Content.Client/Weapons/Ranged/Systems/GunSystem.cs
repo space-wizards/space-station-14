@@ -1,14 +1,13 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.Animations;
-using Content.Client.Gameplay;
+using Content.Client.Clickable;
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged;
@@ -16,13 +15,14 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Animations;
+using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.State;
 using Robust.Shared.Animations;
 using Robust.Shared.Audio;
+using Robust.Shared.Graphics;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -42,15 +42,16 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IStateManager _state = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
-    [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly ClickableSystem _clickable = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteTreeSystem _spriteTree = default!;
 
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
+    private GunTargetEntityComparer _comparer = default!;
 
     public bool SpreadOverlay
     {
@@ -90,15 +91,17 @@ public sealed partial class GunSystem : SharedGunSystem
         SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
 
         // Targeting data
-        SubscribeLocalEvent<MobStateComponent, TargetRankEvent>(OnMobStateRank);
-        SubscribeLocalEvent<RequireProjectileTargetComponent, TargetRankEvent>(OnRequireProjectileTargetRank);
-        SubscribeLocalEvent<FixturesComponent, TargetRankEvent>(OnFixturesRank);
+        //SubscribeLocalEvent<MobStateComponent, TargetRankEvent>(OnMobStateRank);
+        //SubscribeLocalEvent<RequireProjectileTargetComponent, TargetRankEvent>(OnRequireProjectileTargetRank);
+        //SubscribeLocalEvent<FixturesComponent, TargetRankEvent>(OnFixturesRank);
 
         // Plays animated effects on the client.
         SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
 
         InitializeMagazineVisuals();
         InitializeSpentAmmo();
+
+        _comparer = new GunTargetEntityComparer();
     }
 
 
@@ -207,15 +210,9 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
+        var target = GetBestTarget(_eyeManager.CurrentEye, mousePos);
+
         var coordinates = TransformSystem.ToCoordinates(entity, mousePos);
-
-        NetEntity? target = null;
-        if (_state.CurrentState is GameplayStateBase screen)
-        {
-            var targets = screen.GetClickableEntities(mousePos);
-            target = GetBestTarget(targets);
-        }
-
 
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
@@ -422,62 +419,91 @@ public sealed partial class GunSystem : SharedGunSystem
         _animPlayer.Play((gunUid, uidPlayer), animTwo, "muzzle-flash-light");
     }
 
-    // TODO: Maybe make this public API and move it somewhere else so melee can use it? Not currently an issue for melee though since it can target anything...
-    private NetEntity? GetBestTarget(IEnumerable<EntityUid> targets)
+    /// <remarks>We use our own sorting algorithm separate from the default for smarter configurability.</remarks>
+    private NetEntity? GetBestTarget(IEye eye, MapCoordinates coordinates)
     {
-        var topPriority = 0;
-        EntityUid? bestTarget = null;
-        foreach (var target in targets)
-        {
-            // Yeah, every single number is a magic number, but they need to specific per component.
-            // These numbers are always going to be subjective.
-            var ev = new TargetRankEvent(1);
-            RaiseLocalEvent(target, ref ev);
+        // Find all the entities intersecting our click
+        var entities = _spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
 
-            // We check purely for being greater than topPriority to prioritize targets earlier in the list.
-            if (ev.Priority <= topPriority)
+        // Check the entities against whether or not we can click them
+        var foundEntities = new List<(EntityUid, int, uint, float, bool)>(entities.Count);
+
+        foreach (var entity in entities)
+        {
+            // Don't add the target if we can't shoot the target!
+            if (!CheckFixtures(entity.Uid))
                 continue;
 
-            topPriority = ev.Priority;
-            bestTarget = target;
+            var entry = CheckTarget((entity.Uid, entity.Component, entity.Transform), eye, coordinates);
+            foundEntities.Add(entry);
         }
 
-        return GetNetEntity(bestTarget);
+        if (foundEntities.Count == 0)
+            return null;
+
+        // Do drawdepth & y-sorting. First index is the top-most sprite (opposite of normal render order).
+        foundEntities.Sort(_comparer);
+        var (target, depth, renderOrder, bottom, alive) = foundEntities.FirstOrDefault();
+
+        // This can only happen if there's no valid clicked or alive entities, so we just return no target.
+        if (depth == 0 && renderOrder == 0 && bottom == 0 && !alive)
+            return null;
+
+        return GetNetEntity(target);
     }
 
-    private void OnMobStateRank(Entity<MobStateComponent> entity, ref TargetRankEvent args)
+    private (EntityUid, int, uint, float, bool) CheckTarget(Entity<SpriteComponent, TransformComponent> target, IEye eye, MapCoordinates coordinates)
     {
-        if (args.Priority == 0)
-            return;
+        _clickable.CheckClick((target.Owner, null, target.Comp1, target.Comp2),
+            coordinates.Position,
+            eye,
+            true,
+            out var drawDepthClicked,
+            out var renderOrder,
+            out var bottom);
 
-        switch (entity.Comp.CurrentState)
+        return (target.Owner, drawDepthClicked, renderOrder, bottom, _mobState.IsAlive(target.Owner));
+    }
+
+    private sealed class GunTargetEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder, float bottom, bool alive)>
+    {
+        public int Compare((EntityUid clicked, int depth, uint renderOrder, float bottom, bool alive) x,
+            (EntityUid clicked, int depth, uint renderOrder, float bottom, bool alive) y)
         {
-            case (MobState.Alive):
-                args.Priority *= 4;
-                break;
-            case (MobState.Critical):
-                args.Priority *= 2;
-                break;
+            var cmp = y.alive.CompareTo(x.alive);
+            if (cmp != 0)
+            {
+                return cmp;
+            }
+
+            cmp = y.depth.CompareTo(x.depth);
+            if (cmp != 0)
+            {
+                return cmp;
+            }
+
+            cmp = y.renderOrder.CompareTo(x.renderOrder);
+
+            if (cmp != 0)
+            {
+                return cmp;
+            }
+
+            cmp = -y.bottom.CompareTo(x.bottom);
+
+            if (cmp != 0)
+            {
+                return cmp;
+            }
+
+            return y.clicked.CompareTo(x.clicked);
         }
-
     }
 
-    private void OnRequireProjectileTargetRank(Entity<RequireProjectileTargetComponent> entity, ref TargetRankEvent args)
+    private bool CheckFixtures(Entity<FixturesComponent?> entity)
     {
-        if (args.Priority == 0)
-            return;
-
-        if (!entity.Comp.Active)
-            return;
-
-        // Double priority if we need to specifically target this one.
-        args.Priority *= 2;
-    }
-
-    private void OnFixturesRank(Entity<FixturesComponent> entity, ref TargetRankEvent args)
-    {
-        if (args.Priority == 0)
-            return;
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
 
         foreach (var fix in entity.Comp.Fixtures)
         {
@@ -485,19 +511,12 @@ public sealed partial class GunSystem : SharedGunSystem
                 continue;
 
             // Only need to check if we're hitting one fixture
-            return;
+            return true;
         }
 
         // If we cannot collide then we absolutely do not want to target it!
-        args.Priority = 0;
+        return false;
     }
 
-    // TODO: Move RangedDamageSoundComponent to shared so this can be predicted.
     public override void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound) { }
-
-    /// <summary>
-    /// Raised on an entity that is being hovered over by the client's mouse to get an appropriate "Rank" for being targeted.
-    /// </summary>
-    [ByRefEvent]
-    public record struct TargetRankEvent(int Priority);
 }
