@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Being a Lightweight drunk no longer extends your bloodloss
-    type: Fix
-  id: 8867
-  time: '2025-08-18T20:26:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38678
 - author: SlamBamActionman
   changes:
   - message: Auto-injector/medipen pop-ups now show the correct identity when injecting
@@ -3889,3 +3882,10 @@
   id: 9370
   time: '2026-01-09T23:24:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42326
+- author: Solid_Syn, BeckT
+  changes:
+  - message: Clowns now have the ability to toggle the wig on their mask!
+    type: Tweak
+  id: 9371
+  time: '2026-01-10T17:01:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42208
