@@ -1549,7 +1549,7 @@
   desc: reagent-desc-ignisol
   physicalDesc: reagent-physical-desc-oily
   flavor: spicy
-  color: "#FF4500"
+  color: "#F9863F"
   metabolisms:
     Medicine:
       effects:
