@@ -26,8 +26,8 @@ public enum MindState : byte
 {
     None, // No text
     Dead, // Player is dead but still connected
-    Catatonic, // Entity was never controlled by a player
+    Catatonic, // Entity is alive but has no mind attached to it.
     SSD, // Player disconnected while alive
     DeadSSD, // Player died and disconnected
-    Irrecoverable // Entity is permanently dead with no player ever attached
+    Irrecoverable // Entity is dead and has no mind attached
 }

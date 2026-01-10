@@ -95,10 +95,10 @@ public sealed class MindExamineSystem : EntitySystem
         var hasActiveSession = hasUserId != null && _player.ValidSessionId(hasUserId.Value);
 
         // Scenarios:
-        // 1. Dead + No User ID: Entity is permanently dead with no player ever attached
+        // 1. Dead + No User ID: Entity is dead and has no mind attached
         // 2. Dead + Has User ID + No Session: Player died and disconnected
         // 3. Dead + Has Session: Player is dead but still connected
-        // 4. Alive + No User ID: Entity was never controlled by a player
+        // 4. Alive + No User ID: Entity is alive but has no mind attached to it
         // 5. Alive + No Session: Player disconnected while alive (SSD)
 
         if (dead && hasUserId == null)
