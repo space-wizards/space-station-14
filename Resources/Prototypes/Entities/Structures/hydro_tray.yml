@@ -45,27 +45,27 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PlantHolderVisuals.HealthLight:
+      enum.PlantTrayVisuals.HealthLight:
         health_alert:
           True: { visible: true }
           False: { visible: false }
-      enum.PlantHolderVisuals.WaterLight:
+      enum.PlantTrayVisuals.WaterLight:
         water_alert:
           True: { visible: true }
           False: { visible: false }
-      enum.PlantHolderVisuals.NutritionLight:
+      enum.PlantTrayVisuals.NutritionLight:
         nutri_alert:
           True: { visible: true }
           False: { visible: false }
-      enum.PlantHolderVisuals.AlertLight:
+      enum.PlantTrayVisuals.AlertLight:
         undefined_alert:
           True: { visible: true }
           False: { visible: false }
-      enum.PlantHolderVisuals.HarvestLight:
+      enum.PlantTrayVisuals.HarvestLight:
         harvest_alert:
           True: { visible: true }
           False: { visible: false }
-  - type: PlantHolder
+  - type: PlantTray
     drawWarnings: true
     wateringSound:
       path: /Audio/Effects/Fluids/slosh.ogg
@@ -103,8 +103,6 @@
   id: HydroponicsTrayEmpty
   suffix: Empty
   components:
-  - type: PlantHolder
+  - type: PlantTray
     waterLevel: 0
     nutritionLevel: 0
-    # for the lights to update immediately
-    updateSpriteAfterUpdate: true
