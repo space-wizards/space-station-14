@@ -171,6 +171,7 @@
         hard: false
         layer:
         - FullTileLayer
+        - DoorPassable
       collision:
         shape:
           !type:PhysShapeAabb

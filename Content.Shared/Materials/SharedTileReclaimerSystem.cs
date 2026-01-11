@@ -74,6 +74,7 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
             {
                 foreach (var entityOnTile in _lookup.GetLocalEntitiesIntersecting(tile))
                 {
+                    _physics.SetCanCollide(entityOnTile, true);
                     _physics.ApplyLinearImpulse(entityOnTile, _physics.GetLinearVelocity(grid.Owner, Transform(entityOnTile).LocalPosition));
                 }
 
