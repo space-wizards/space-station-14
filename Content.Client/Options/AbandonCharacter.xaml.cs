@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Options;
 
 [GenerateTypedNameReferences]
-public sealed partial class AbandonCharacter : FancyWindow
+public sealed partial class AbandonCharacterWindow : FancyWindow
 {
     public AbandonCharacter()
     {
