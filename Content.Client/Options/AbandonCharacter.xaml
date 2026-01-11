@@ -1,5 +1,6 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 Title="{Loc 'abandon-character-window-title'}"
                 Resizable="False"
                 MinWidth="550">
@@ -16,18 +17,21 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
                       HorizontalExpand="True">
-            <Button Name="SuicideButton" Text="{Loc 'sandbox-window-toggle-suicide-button'}" Access="Public" MinWidth="100" StyleClasses="ButtonSquare" />
-            <controls:VSpacer Spacing="100" />
-            <Button Name="GhostButton" Text="{Loc 'sandbox-window-ghost-button'}" Access="Public" MinWidth="100" StyleClasses="ButtonSquare" />
-        </BoxContainer>
-        <BoxContainer Name="AbandonConfirmContainer"
-                      Orientation="Horizontal"
-                      Margin="10"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Bottom"
-                      Visible="False">
-            <Button Name="ConfirmAbandonButton" Text="{Loc 'generic-confirm'}" StyleClasses="OpenRight" MinWidth="100" />
-            <Button Name="CancelAbandonButton" Text="{Loc 'quick-dialog-ui-cancel'}" StyleClasses="OpenLeft" MinWidth="100" />
+            <cc:CommandButton Name="SuicideButton"
+                              Command="suicide"
+                              Text="{Loc 'sandbox-window-toggle-suicide-button'}"
+                              Access="Public"
+                              StyleClasses="OpenRight"
+                              SetWidth="100" />
+            <controls:VSpacer Spacing="2" />
+            <cc:CommandButton Name="GhostButton"
+                              Command="ghost"
+                              Text="{Loc 'sandbox-window-ghost-button'}"
+                              Access="Public"
+                              StyleClasses="ButtonSquare"
+                              SetWidth="100" />
+            <controls:VSpacer Spacing="2" />
+            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" StyleClasses="OpenLeft" SetWidth="100" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
