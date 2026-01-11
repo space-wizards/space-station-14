@@ -24,7 +24,7 @@ lowp float noise = zRandom(UV + sin(TIME/10.0)).x * noise_amount;
 
 // One approach I tried for noise that seems to work out nicely.
 // You can increase the intensity of the noise by scaling the third parameter of mix, too.
-color.rgb += mix(color.rgb, color.rgb*noise, noise)*4.0;
+color.rgb += mix(color.rgb, color.rgb*noise, noise) * 4.0;
 
 COLOR = color;
 }
