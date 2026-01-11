@@ -205,9 +205,13 @@ public abstract partial class SharedStationAiSystem
             Act = () =>
             {
                 if (isOpen)
+                {
                     _uiSystem.CloseUi(ent.Owner, AiUi.Key, user);
+                }
                 else
+                {
                     _uiSystem.OpenUi(ent.Owner, AiUi.Key, user);
+                }
             }
         };
         args.Verbs.Add(verb);
