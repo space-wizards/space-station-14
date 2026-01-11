@@ -9,7 +9,6 @@ public sealed partial class AbandonCharacter : FancyWindow
 {
     public AbandonCharacter()
     {
-        IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
         SuicideButton.OnPressed += _ => Close();
