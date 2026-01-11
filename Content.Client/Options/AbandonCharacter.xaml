@@ -23,14 +23,14 @@
                               Access="Public"
                               StyleClasses="OpenRight"
                               SetWidth="100" />
-            <controls:VSpacer Spacing="2" />
+            <controls:VSpacer Spacing="5" />
             <cc:CommandButton Name="GhostButton"
                               Command="ghost"
                               Text="{Loc 'sandbox-window-ghost-button'}"
                               Access="Public"
                               StyleClasses="ButtonSquare"
                               SetWidth="100" />
-            <controls:VSpacer Spacing="2" />
+            <controls:VSpacer Spacing="5" />
             <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" StyleClasses="OpenLeft" SetWidth="100" />
         </BoxContainer>
     </BoxContainer>
