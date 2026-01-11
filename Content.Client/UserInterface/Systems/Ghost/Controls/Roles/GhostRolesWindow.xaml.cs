@@ -68,7 +68,6 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             {
                 var buttonHeading = new CollapsibleHeading(Loc.GetString("ghost-roles-window-available-button", ("rolesCount", rolesCount)));
 
-                buttonHeading.AddStyleClass(ContainerButton.StyleClassButton);
                 buttonHeading.Label.HorizontalAlignment = HAlignment.Center;
                 buttonHeading.Label.HorizontalExpand = true;
                 buttonHeading.Margin = new Thickness(8, 0, 8, 2);

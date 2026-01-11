@@ -18,7 +18,7 @@ namespace Content.Client.Lobby.UI;
 /// Holds character data on the side of the setup GUI.
 /// </summary>
 [GenerateTypedNameReferences]
-public sealed partial class CharacterPickerButton : ContainerButton
+public sealed partial class CharacterPickerButton : PushButton
 {
     private IEntityManager _entManager;
 
@@ -38,7 +38,6 @@ public sealed partial class CharacterPickerButton : ContainerButton
     {
         RobustXamlLoader.Load(this);
         _entManager = entityManager;
-        AddStyleClass(StyleClassButton);
         ToggleMode = true;
         Group = group;
         var description = profile.Name;
