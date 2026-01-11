@@ -35,6 +35,25 @@
         - id: EmergencyRollerBedSpawnFolded
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicateMedicalBundle
+  id: ClothingBackpackDuffelSyndicateFilledMedicine
+  name: syndicate medicine duffel bag
+  description: A large duffel bag containing essential medicinal reagents.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: JugBicaridine
+        - id: JugPuncturase
+        - id: JugDermaline
+        - id: JugDylovene
+        - id: JugHyronalin
+        - id: JugSaline
+        - id: JugDexalinPlus
+        - id: JugTranexamicAcid
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bulldog bundle
