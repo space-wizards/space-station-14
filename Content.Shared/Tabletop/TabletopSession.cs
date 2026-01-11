@@ -24,4 +24,3 @@ public sealed class TabletopSession(MapId tabletopMap, Vector2 position)
     /// </summary>
     public readonly HashSet<EntityUid> Entities = [];
 }
-

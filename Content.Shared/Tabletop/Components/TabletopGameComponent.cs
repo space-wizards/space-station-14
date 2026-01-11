@@ -6,7 +6,8 @@ namespace Content.Shared.Tabletop.Components;
 /// <summary>
 /// A component that makes an object playable as a tabletop game.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedTabletopSystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedTabletopSystem))]
 public sealed partial class TabletopGameComponent : Component
 {
     /// <summary>

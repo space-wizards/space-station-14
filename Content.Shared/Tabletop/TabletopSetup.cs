@@ -17,4 +17,3 @@ public abstract partial class TabletopSetup
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string BoardPrototype = default!;
 }
-

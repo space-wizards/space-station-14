@@ -75,12 +75,12 @@ public sealed partial class TabletopSystem
         // Set the entity as an absolute GAMER.
         EnsureComp<TabletopGamerComponent>(attachedEntity).Tabletop = uid;
 
-        // Create a camera for the gamer to use
+        // Create a camera for the gamer to use.
         var camera = CreateCamera(tabletop, player);
 
         session.Players[player] = new TabletopSessionPlayerData { Camera = camera };
 
-        // Tell the gamer to open a viewport for the tabletop game
+        // Tell the gamer to open a viewport for the tabletop game.
         RaiseNetworkEvent(new TabletopPlayEvent(GetNetEntity(uid), GetNetEntity(camera), Loc.GetString(tabletop.BoardName), tabletop.Size), player.Channel);
     }
 

@@ -11,4 +11,3 @@ public sealed partial class TabletopEmptySetup : TabletopSetup
         session.Entities.Add(board);
     }
 }
-
