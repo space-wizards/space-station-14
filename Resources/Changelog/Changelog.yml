@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Buffed the Librarian cane sword's damage and price to be more competitive.
-      Damage 15 -> 17 slash, TC cost 5 -> 3
-    type: Tweak
-  id: 8871
-  time: '2025-08-19T20:31:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39586
 - author: Princess-Cheeseballs
   changes:
   - message: Speed boots no longer affect crawling speed.
@@ -3891,3 +3883,10 @@
   id: 9374
   time: '2026-01-11T04:19:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42330
+- author: SlamBamActionman
+  changes:
+  - message: Added an admin log for whenever a player connects/disconnects.
+    type: Add
+  id: 9375
+  time: '2026-01-11T21:46:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42363
