@@ -1,9 +1,10 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                xmlns:system="clr-namespace:System;assembly=System.Runtime"
                 Title="{Loc 'abandon-character-window-title'}"
                 Resizable="False"
-                MinWidth="550">
+                SetWidth="700">
     <BoxContainer Orientation="Vertical" Margin="10">
         <Label Name="Description"
                Text="{Loc 'abandon-character-warning'}"
@@ -20,18 +21,23 @@
             <cc:CommandButton Name="SuicideButton"
                               Command="suicide"
                               Text="{Loc 'sandbox-window-toggle-suicide-button'}"
-                              Access="Public"
                               StyleClasses="OpenRight"
+                              Access="Public"
                               SetWidth="100" />
             <controls:VSpacer Spacing="5" />
             <cc:CommandButton Name="GhostButton"
                               Command="ghost"
                               Text="{Loc 'sandbox-window-ghost-button'}"
-                              Access="Public"
                               StyleClasses="ButtonSquare"
+                              Access="Public"
                               SetWidth="100" />
             <controls:VSpacer Spacing="5" />
-            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" StyleClasses="OpenLeft" SetWidth="100" />
+            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" SetWidth="100" >
+                <Button.StyleClasses>
+                    <system:String>OpenLeft</system:String>
+                    <system:String>negative</system:String>
+                </Button.StyleClasses>
+            </Button>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
