@@ -84,13 +84,6 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.AbandonButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
-
-            if (_ghostSystem.IsGhost)
-            {
-                _ghostSystem.ReturnToBody();
-                return;
-            }
-
             var window = new AbandonCharacter();
             window.OpenCentered();
         };
