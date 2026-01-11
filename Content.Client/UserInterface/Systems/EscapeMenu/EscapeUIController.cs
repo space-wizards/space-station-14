@@ -66,7 +66,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
     private void UpdateAbandonButton()
     {
-        _escapeWindow?.AbandonButton.Disabled = _ghostSystem is { Player.CanReturnToBody: false };
+        _escapeWindow?.AbandonButton.Disabled = _ghostSystem.IsGhost;
     }
 
     public void OnStateEntered(GameplayState state)
