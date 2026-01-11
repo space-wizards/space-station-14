@@ -5,13 +5,11 @@ using Content.Server.Database;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -65,14 +63,12 @@ public sealed partial class TestPair
     /// <param name="jobPriorities">Job priorities to initialize the players with</param>
     /// <param name="count">How many players to add</param>
     /// <returns>Enumerable of sessions for the new players</returns>
-    [PublicAPI]
-    public Task<IEnumerable<ICommonSession>> AddDummyPlayers(Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities, int count=1)
+        public Task<IEnumerable<ICommonSession>> AddDummyPlayers(Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities, int count=1)
     {
         return AddDummyPlayers(jobPriorities, jobPriorities.Keys, count);
     }
 
-    [PublicAPI]
-    public async Task<IEnumerable<ICommonSession>> AddDummyPlayers(
+        public async Task<IEnumerable<ICommonSession>> AddDummyPlayers(
         Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities,
         IEnumerable<ProtoId<JobPrototype>> jobPreferences,
         int count=1)
