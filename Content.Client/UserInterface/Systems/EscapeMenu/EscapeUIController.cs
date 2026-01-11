@@ -60,16 +60,6 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     private void ActivateButton() => EscapeButton!.SetClickPressed(true);
     private void DeactivateButton() => EscapeButton!.SetClickPressed(false);
 
-    private void UpdateAbandonButton(GhostComponent obj)
-    {
-        UpdateAbandonButton();
-    }
-
-    private void UpdateAbandonButton()
-    {
-        _escapeWindow?.AbandonButton.Disabled = _ghostSystem.IsGhost;
-    }
-
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_escapeWindow == null);
@@ -79,8 +69,8 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.OnClose += DeactivateButton;
         _escapeWindow.OnOpen += ActivateButton;
 
-        _ghostSystem.PlayerAttached += UpdateAbandonButton;
-        _ghostSystem.PlayerDetached += UpdateAbandonButton;
+        _ghostSystem.PlayerAttached += _ => _escapeWindow.AbandonButton.Disabled = _ghostSystem.IsGhost;
+        _ghostSystem.PlayerDetached += () => _escapeWindow.AbandonButton.Disabled = _ghostSystem.IsGhost;
 
         _escapeWindow.AbandonButton.OnPressed += _ =>
         {
