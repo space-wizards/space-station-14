@@ -1,43 +1,27 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-                xmlns:system="clr-namespace:System;assembly=System.Runtime"
                 Title="{Loc 'abandon-character-window-title'}"
                 Resizable="False"
                 SetWidth="700">
-    <BoxContainer Orientation="Vertical" Margin="10">
-        <Label Name="Description"
-               Text="{Loc 'abandon-character-warning'}"
-               Access="Public"
-               Margin="10"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Top"/>
-        <BoxContainer Name="AbandonMethodContainer"
-                      Orientation="Horizontal"
-                      Margin="10"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Bottom"
-                      HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="10" >
+        <Label Name="Description" Text="{Loc 'abandon-character-warning'}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <BoxContainer Margin="5" >
             <cc:CommandButton Name="SuicideButton"
                               Command="suicide"
                               Text="{Loc 'sandbox-window-toggle-suicide-button'}"
                               StyleClasses="OpenRight"
                               Access="Public"
                               SetWidth="100" />
-            <controls:VSpacer Spacing="5" />
+            <controls:VSpacer Spacing="2" />
             <cc:CommandButton Name="GhostButton"
                               Command="ghost"
                               Text="{Loc 'sandbox-window-ghost-button'}"
-                              StyleClasses="ButtonSquare"
+                              StyleClasses="OpenLeft"
                               Access="Public"
                               SetWidth="100" />
-            <controls:VSpacer Spacing="5" />
-            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" SetWidth="100" >
-                <Button.StyleClasses>
-                    <system:String>OpenLeft</system:String>
-                    <system:String>negative</system:String>
-                </Button.StyleClasses>
-            </Button>
+            <Control HorizontalExpand="True"/>
+            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" SetWidth="100" StyleClasses="negative" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
