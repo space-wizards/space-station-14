@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: You can no longer crawl while weightless.
-    type: Fix
-  id: 8870
-  time: '2025-08-19T19:18:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39099
 - author: Nox38
   changes:
   - message: Buffed the Librarian cane sword's damage and price to be more competitive.
@@ -3888,3 +3881,13 @@
   id: 9373
   time: '2026-01-10T23:16:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42253
+- author: ScarKy0
+  changes:
+  - message: Janitor Cyborg's modules now feature a wirebrush.
+    type: Tweak
+  - message: The spray in the advanced cleaning module now self refills with space
+      cleaner, but has been halved in volume.
+    type: Tweak
+  id: 9374
+  time: '2026-01-11T04:19:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42330
