@@ -1,11 +1,10 @@
-using Robust.Client.GameObjects;
 using Content.Shared.Speech.Components;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Weapons.Melee.UI;
 
 /// <summary>
-/// Initializes a <see cref="MeleeSpeechWindow"/> and updates it when new server messages are received.
+/// Initializes a <see cref="MeleeSpeechWindow"/> and updates it according to the component's current data.
 /// </summary>
 public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
 {
@@ -22,32 +21,20 @@ public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<MeleeSpeechWindow>();
         _window.OnBattlecryEntered += OnBattlecryChanged;
+
+        Update();
     }
 
     private void OnBattlecryChanged(string newBattlecry)
     {
-        SendMessage(new MeleeSpeechBattlecryChangedMessage(newBattlecry));
+        SendPredictedMessage(new MeleeSpeechBattlecryChangedMessage(newBattlecry));
     }
 
-    /// <summary>
-    /// Update the UI state based on server-sent info
-    /// </summary>
-    /// <param name="state"></param>
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
-        if (_window == null || state is not MeleeSpeechBoundUserInterfaceState cast)
-            return;
+        base.Update();
 
-        _window.SetCurrentBattlecry(cast.CurrentBattlecry);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _window?.Dispose();
+        if (EntMan.TryGetComponent<MeleeSpeechComponent>(Owner, out var meleeSpeechComp))
+            _window?.SetCurrentBattlecry(meleeSpeechComp.Battlecry);
     }
 }
