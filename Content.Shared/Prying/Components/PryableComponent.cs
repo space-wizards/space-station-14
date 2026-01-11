@@ -12,6 +12,7 @@ namespace Content.Shared.Prying.Components;
 /// to create behavior that isn't just "open thing".
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(PryingSystem))]
 public sealed partial class PryableComponent : Component
 {
     /// <summary>
