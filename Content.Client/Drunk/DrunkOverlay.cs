@@ -1,5 +1,6 @@
 using Content.Shared.Drunk;
 using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -26,6 +27,15 @@ public sealed class DrunkOverlay : Overlay
 
     private const float VisualThreshold = 10.0f;
     private const float PowerDivisor = 250.0f;
+    /// <remarks>
+    /// This is a magic number based on my person preference of how quickly the bloodloss effect should kick in.
+    /// It is entirely arbitrary, and you should change it if it sucks.
+    /// Honestly should be refactored to be based on amount of blood lost but that's out of scope for what I'm doing atm.
+    /// Also caps all booze visual effects to a max intensity of 100 seconds or 100 booze power.
+    /// </remarks>
+    private const float MaxBoozePower = 100f;
+
+    private const float BoozePowerScale = 8f;
 
     private float _visualScale = 0;
 
@@ -43,19 +53,15 @@ public sealed class DrunkOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_entityManager.HasComponent<DrunkComponent>(playerEntity)
-            || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
+        var statusSys = _sysMan.GetEntitySystem<Shared.StatusEffectNew.StatusEffectsSystem>();
+        if (!statusSys.TryGetMaxTime<DrunkStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
-        var statusSys = _sysMan.GetEntitySystem<StatusEffectsSystem>();
-        if (!statusSys.TryGetTime(playerEntity.Value, SharedDrunkSystem.DrunkKey, out var time, status))
-            return;
+        var time = status.Item2;
 
-        var curTime = _timing.CurTime;
-        var timeLeft = (float) (time.Value.Item2 - curTime).TotalSeconds;
+        var power = time == null ? MaxBoozePower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxBoozePower);
 
-
-        CurrentBoozePower += 8f * (0.5f*timeLeft - CurrentBoozePower) * args.DeltaSeconds / (timeLeft+1);
+        CurrentBoozePower += BoozePowerScale * (power - CurrentBoozePower) * args.DeltaSeconds / (power+1);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)

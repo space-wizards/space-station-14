@@ -17,10 +17,10 @@ public partial class SharedInteractionSystem
     private void InitializeBlocking()
     {
         SubscribeLocalEvent<BlockMovementComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-        SubscribeLocalEvent<BlockMovementComponent, UseAttemptEvent>(CancelEvent);
+        SubscribeLocalEvent<BlockMovementComponent, UseAttemptEvent>(CancelUseEvent);
         SubscribeLocalEvent<BlockMovementComponent, InteractionAttemptEvent>(CancelInteractEvent);
-        SubscribeLocalEvent<BlockMovementComponent, DropAttemptEvent>(CancelEvent);
-        SubscribeLocalEvent<BlockMovementComponent, PickupAttemptEvent>(CancelEvent);
+        SubscribeLocalEvent<BlockMovementComponent, DropAttemptEvent>(CancellableInteractEvent);
+        SubscribeLocalEvent<BlockMovementComponent, PickupAttemptEvent>(CancellableInteractEvent);
         SubscribeLocalEvent<BlockMovementComponent, ChangeDirectionAttemptEvent>(CancelEvent);
 
         SubscribeLocalEvent<BlockMovementComponent, ComponentStartup>(OnBlockingStartup);
@@ -33,6 +33,12 @@ public partial class SharedInteractionSystem
             args.Cancelled = true;
     }
 
+    private void CancelUseEvent(Entity<BlockMovementComponent> ent, ref UseAttemptEvent args)
+    {
+        if (ent.Comp.BlockUse)
+            args.Cancel();
+    }
+
     private void OnMoveAttempt(EntityUid uid, BlockMovementComponent component, UpdateCanMoveEvent args)
     {
         // If we're relaying then don't cancel.
@@ -40,6 +46,12 @@ public partial class SharedInteractionSystem
             return;
 
         args.Cancel(); // no more scurrying around
+    }
+
+    private void CancellableInteractEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
+    {
+        if (component.BlockInteraction)
+            args.Cancel();
     }
 
     private void CancelEvent(EntityUid uid, BlockMovementComponent component, CancellableEntityEventArgs args)
