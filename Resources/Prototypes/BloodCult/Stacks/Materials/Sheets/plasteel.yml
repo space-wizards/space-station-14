@@ -5,6 +5,6 @@
 - type: stack
   id: RunedPlasteel
   name: runed plasteel
-  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: plasteel }
+  icon: { sprite: /Textures/BloodCult/Sheets/plasteel.rsi, state: runedplasteel }
   spawn: SheetRunedPlasteel1
   maxCount: 30

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/115340490365e480b80adc06da54ee52aa99f653",
+    "copyright": "Taken from paradise station at https://github.com/ParadiseSS13/Paradise/commit/60c00ce0d501f22d3a10bbead88ca63c9147e50e",
     "size": {
         "x": 32,
         "y": 32
@@ -9,15 +9,6 @@
     "states": [
         {
             "name": "icon"
-        },
-        {
-            "name": "curved"
-        },
-        {
-            "name": "serrated"
-        },
-        {
-            "name": "straight"
         },
         {
             "name": "inhand-left",

@@ -103,6 +103,11 @@
       - map: [ "enum.HumanoidVisualLayers.Hair" ] # Do these need to be here? (arachnid hair arachnid hair)
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
       - map: [ "ears" ]
+      - map: [ "culteyes" ]
+        sprite: "Mobs/Customization/bloodcult/culteyes.rsi"
+        state: "arachnid"
+        shader: unshaded
+        visible: false
       - map: [ "eyes" ]
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
       - map: [ "mask" ]

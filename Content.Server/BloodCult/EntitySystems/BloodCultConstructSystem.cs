@@ -54,6 +54,7 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 	[Dependency] private readonly SharedTransformSystem _transform = default!;
 	[Dependency] private readonly NpcFactionSystem _npcFaction = default!;
 	[Dependency] private readonly SharedActionsSystem _actions = default!;
+	[Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 	[Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
 
 	/// <summary>
@@ -61,14 +62,22 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 	/// </summary>
 	private void GrantCommuneAction(EntityUid juggernaut)
 	{
-		EntityUid? communeAction = null;
-		ActionComponent? actionComp = null;
-		if (_actions.AddAction(juggernaut, ref communeAction, out actionComp, (ProtoId<EntityPrototype>)"ActionCultistCommune") && communeAction != null && actionComp != null)
+		// Add action to the mind's action container if available, otherwise to the entity
+		if (_mind.TryGetMind(juggernaut, out var mindId, out _))
 		{
-			// Ensure the event is raised on the juggernaut so it can be handled
-			// Note: RaiseOnUser property might not exist in current API, check if needed
-			// actionComp.RaiseOnUser = true;
-			Dirty(communeAction.Value, actionComp);
+			_actionContainer.AddAction(mindId, "ActionCultistCommune");
+		}
+		else
+		{
+			EntityUid? communeAction = null;
+			ActionComponent? actionComp = null;
+			if (_actions.AddAction(juggernaut, ref communeAction, out actionComp, (ProtoId<EntityPrototype>)"ActionCultistCommune") && communeAction != null && actionComp != null)
+			{
+				// Ensure the event is raised on the juggernaut so it can be handled
+				// Note: RaiseOnUser property might not exist in current API, check if needed
+				// actionComp.RaiseOnUser = true;
+				Dirty(communeAction.Value, actionComp);
+			}
 		}
 	}
 

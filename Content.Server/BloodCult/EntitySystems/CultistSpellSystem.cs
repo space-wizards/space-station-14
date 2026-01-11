@@ -51,6 +51,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Mind.Components;
 using Content.Server.Stack;
+using Content.Server.Mind;
 
 
 namespace Content.Server.BloodCult.EntitySystems;
@@ -64,6 +65,8 @@ public sealed partial class CultistSpellSystem : EntitySystem
 	[Dependency] private readonly IRobustRandom _random = default!;
 	[Dependency] private readonly IPrototypeManager _proto = default!;
 	[Dependency] private readonly SharedActionsSystem _action = default!;
+	[Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+	[Dependency] private readonly MindSystem _mind = default!;
 	[Dependency] private readonly DamageableSystem _damageableSystem = default!;
 	[Dependency] private readonly PopupSystem _popup = default!;
 	[Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -206,8 +209,17 @@ public sealed partial class CultistSpellSystem : EntitySystem
 		}
 		else
 		{
-			foreach (var act in data.ActionPrototypes)
-				_action.AddAction(uid, act);
+			// Add actions to the mind's action container if available, otherwise to the entity
+			if (_mind.TryGetMind(uid, out var mindId, out _))
+			{
+				foreach (var act in data.ActionPrototypes)
+					_actionContainer.AddAction(mindId, act);
+			}
+			else
+			{
+				foreach (var act in data.ActionPrototypes)
+					_action.AddAction(uid, act);
+			}
 			if (recordKnownSpell)
 				comp.KnownSpells.Add(data);
 		}
@@ -230,9 +242,20 @@ public sealed partial class CultistSpellSystem : EntitySystem
 
         if (!args.Cancelled)
 		{
-			foreach (var act in args.CultAbility.ActionPrototypes)
+			// Add actions to the mind's action container if available, otherwise to the entity
+			if (_mind.TryGetMind(args.CarverUid, out var mindId, out _))
 			{
-				_action.AddAction(args.CarverUid, act);
+				foreach (var act in args.CultAbility.ActionPrototypes)
+				{
+					_actionContainer.AddAction(mindId, act);
+				}
+			}
+			else
+			{
+				foreach (var act in args.CultAbility.ActionPrototypes)
+				{
+					_action.AddAction(args.CarverUid, act);
+				}
 			}
 			if (args.RecordKnownSpell)
 				ent.Comp.KnownSpells.Add(args.CultAbility);

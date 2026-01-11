@@ -31,16 +31,16 @@ using Content.Shared.Hands;
 //using Content.Shared.Transform;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Popups;
 using Content.Server.Popups;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Shared.Body.Components;
 using Content.Shared.BloodCult;
 using Content.Shared.BloodCult.Components;
-using Content.Shared.Body.Components;
 using Content.Shared.UserInterface;
 
 namespace Content.Server.BloodCult.EntitySystems;
@@ -68,6 +68,8 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 	{
 		base.Initialize();
 
+		SubscribeLocalEvent<BloodCultRuneCarverComponent, MapInitEvent>(OnMapInit);
+
 		SubscribeLocalEvent<BloodCultRuneCarverComponent, AfterInteractEvent>(OnTryDrawRune);
 		SubscribeLocalEvent<DamageableComponent, DrawRuneDoAfterEvent>(OnRuneDoAfter);
 		SubscribeLocalEvent<BloodCultRuneCarverComponent, UseInHandEvent>(OnUseInHand, before: new[] { typeof(ActivatableUISystem) });
@@ -80,6 +82,11 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 		SubscribeLocalEvent<BloodCultRuneCarverComponent, GotEquippedHandEvent>(OnEquipped);
 
 		_runeQuery = GetEntityQuery<BloodCultRuneComponent>();
+	}
+
+	private void OnMapInit(EntityUid uid, BloodCultRuneCarverComponent component, MapInitEvent args)
+	{
+
 	}
 
 	#region UserInterface
@@ -439,7 +446,8 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 			// Add bleeding effect
 			if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
 			{
-				_bloodstream.TryModifyBleedAmount((ent, bloodstream), ev.BleedOnCarve / 10f);
+				var bloodstreamEnt = new Entity<BloodstreamComponent?>(ent.Owner, bloodstream);
+				_bloodstream.TryModifyBleedAmount(bloodstreamEnt, ev.BleedOnCarve / 10f);
 			}
 		}
 		else if (ent.Comp.Damage.DamageDict.ContainsKey(IonDamageType.Id))
@@ -462,10 +470,8 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 			{
 				var runeTransform = Transform(rune);
 				_transform.AnchorEntity((rune, runeTransform), ((EntityUid)gridUid, grid), targetTile.GridIndices);
-				if (TryComp<DamageableComponent>(ent, out var damageableForCarve))
-				{
-					_damageableSystem.TryChangeDamage((ent, damageableForCarve), appliedDamageSpecifier, true, origin: ent);
-				}
+				var damageableEnt = new Entity<DamageableComponent?>(ent.Owner, ent.Comp);
+				_damageableSystem.TryChangeDamage(damageableEnt, appliedDamageSpecifier, true, origin: ent.Owner);
 				_audioSystem.PlayPvs(ev.CarveSound, ent);
 				
 				// Clear the selected rune so the UI opens automatically on next click

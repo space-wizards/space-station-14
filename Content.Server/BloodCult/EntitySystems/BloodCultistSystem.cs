@@ -25,33 +25,30 @@ public sealed class BloodCultistSystem : SharedBloodCultistSystem
 	#region CommuneUI
 	private void OpenCommuneUI(BloodCultCommuneEvent ev)
 	{
-		var communeEntity = ev.Action.Comp.Container;
-
-		// Check if communeEntity is valid
-		if (communeEntity == null)
-			return;
+		// Use ev.Performer (the player entity) instead of Container (the mind entity)
+		// since BloodCultistComponent is on the player entity, not the mind
 
 		// Allow both blood cultists and juggernauts to use commune
 		// Check both separately to ensure variables are assigned
-		bool isCultist = TryComp<BloodCultistComponent>(communeEntity, out var cultistComp);
-		bool isJuggernaut = TryComp<JuggernautComponent>(communeEntity, out var juggernautComp);
+		bool isCultist = TryComp<BloodCultistComponent>(ev.Performer, out var cultistComp);
+		bool isJuggernaut = TryComp<JuggernautComponent>(ev.Performer, out var juggernautComp);
 		
 		if (!isCultist && !isJuggernaut)
 			return;
 
-		if (!_uiSystem.HasUi(communeEntity.Value, BloodCultistCommuneUIKey.Key))
+		if (!_uiSystem.HasUi(ev.Performer, BloodCultistCommuneUIKey.Key))
 			return;
 
-		if (_uiSystem.IsUiOpen(communeEntity.Value, BloodCultistCommuneUIKey.Key))
+		if (_uiSystem.IsUiOpen(ev.Performer, BloodCultistCommuneUIKey.Key))
 			return;
 
-		if (_uiSystem.TryOpenUi(communeEntity.Value, BloodCultistCommuneUIKey.Key, ev.Performer))
+		if (_uiSystem.TryOpenUi(ev.Performer, BloodCultistCommuneUIKey.Key, ev.Performer))
 		{
 			if (isCultist && cultistComp != null)
-				UpdateCommuneUI((communeEntity.Value, cultistComp));
+				UpdateCommuneUI((ev.Performer, cultistComp));
 			else if (isJuggernaut && juggernautComp != null)
 				// Juggernauts use the same UI but with empty state (no stored message)
-				_uiSystem.SetUiState(communeEntity.Value, BloodCultistCommuneUIKey.Key, new BloodCultCommuneBuiState(""));
+				_uiSystem.SetUiState(ev.Performer, BloodCultistCommuneUIKey.Key, new BloodCultCommuneBuiState(""));
 		}
 
 		ev.Handled = true;
@@ -67,16 +64,16 @@ public sealed class BloodCultistSystem : SharedBloodCultistSystem
 	#region SpellsUI
 	private void OpenSpellsUI(BloodCultSpellsEvent ev)
 	{
-		var spellsEntity = ev.Action.Comp.Container;
-
-		if (!TryComp<BloodCultistComponent>(spellsEntity, out var cultistComp))
+		// Use ev.Performer (the player entity) instead of Container (the mind entity)
+		// since BloodCultistComponent is on the player entity, not the mind
+		if (!TryComp<BloodCultistComponent>(ev.Performer, out var cultistComp))
 			return;
 
-		if (!_uiSystem.HasUi(spellsEntity.Value, SpellsUiKey.Key))
+		if (!_uiSystem.HasUi(ev.Performer, SpellsUiKey.Key))
 			return;
 
-		_uiSystem.OpenUi(spellsEntity.Value, SpellsUiKey.Key, ev.Performer);
-		UpdateSpellsUI((spellsEntity.Value, cultistComp));
+		_uiSystem.OpenUi(ev.Performer, SpellsUiKey.Key, ev.Performer);
+		UpdateSpellsUI((ev.Performer, cultistComp));
 	}
 
 	private void UpdateSpellsUI(Entity<BloodCultistComponent> entity)

@@ -20,6 +20,7 @@ using Content.Server.GameTicking;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Antag;
+using Content.Shared.Antag;
 using Content.Server.Mind;
 using Content.Server.Station.Systems;
 using Content.Server.GameTicking.Rules.Components;
@@ -40,6 +41,7 @@ using Content.Server.Administration.Systems;
 using Content.Shared.Administration.Systems;
 using Content.Server.Popups;
 using Content.Shared.Popups;
+using Content.Server.Clothing.Systems;
 using Content.Shared.Body.Systems;
 using Robust.Shared.Random;
 using Robust.Server.GameObjects;
@@ -76,6 +78,12 @@ using Content.Shared.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.Emoting;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
+using Content.Shared.UserInterface;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameTicking.Rules;
@@ -86,6 +94,11 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 {
 	private const string JuggernautAccentPrototypeId = "juggernaut";
+	
+	private const string ActionCommune = "ActionCultistCommune";
+	private const string ActionStudyVeil = "ActionCultistStudyVeil";
+	private const string ActionSpellsSelect = "ActionCultistSpellsSelect";
+	private const string ActionSummonDagger = "ActionCultistSummonDagger";
 	
 	private enum BloodStage
 	{
@@ -159,7 +172,6 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 	[Dependency] private readonly MindSystem _mind = default!;
 	[Dependency] private readonly RoleSystem _role = default!;
 	[Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
-	[Dependency] private readonly CultistSpellSystem _cultistSpell = default!;
 	[Dependency] private readonly PopupSystem _popupSystem = default!;
 	[Dependency] private readonly IRobustRandom _random = default!;
 	[Dependency] private readonly IGameTiming _timing = default!;
@@ -181,7 +193,9 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 	[Dependency] private readonly SleepingSystem _sleeping = default!;
 	[Dependency] private readonly IPrototypeManager _proto = default!;
 	[Dependency] private readonly SharedActionsSystem _action = default!;
+	[Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 	[Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+	[Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
 	public readonly string CultComponentId = "BloodCultist";
 
@@ -301,23 +315,101 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
     }
 
 	/// <summary>
+	/// Checks if an action container already contains an action with the specified prototype ID.
+	/// </summary>
+	private bool HasActionWithPrototype(ActionsContainerComponent container, string prototypeId)
+	{
+		foreach (var actionId in container.Container.ContainedEntities)
+		{
+			if (MetaData(actionId).EntityPrototype?.ID == prototypeId)
+				return true;
+		}
+		return false;
+	}
+
+	/// <summary>
+	/// Checks if an actions component already contains an action with the specified prototype ID.
+	/// </summary>
+	private bool HasActionWithPrototype(ActionsComponent actions, string prototypeId)
+	{
+		foreach (var actionId in actions.Actions)
+		{
+			if (MetaData(actionId).EntityPrototype?.ID == prototypeId)
+				return true;
+		}
+		return false;
+	}
+
+	/// <summary>
     /// Supplies new cultists with what they need.
     /// </summary>
     /// <returns>true if cultist was successfully added.</returns>
-    private bool MakeCultist(EntityUid traitor, BloodCultRuleComponent component)
+
+	private bool MakeCultist(EntityUid traitor, BloodCultRuleComponent component)
     {
         if (_TryAssignCultMind(traitor))
 		{
+		// add cultist starting abilities - directly add actions to ensure they show up on action bar
+		// Follow the pattern used by StoreSystem: add to mind container if available, otherwise to entity
+		// Check if actions already exist to avoid duplicates
+		if (_mind.TryGetMind(traitor, out var mindId, out _))
+		{
+			// Check if actions already exist in the mind's action container
+			if (TryComp<ActionsContainerComponent>(mindId, out var mindContainer))
+			{
+				if (!HasActionWithPrototype(mindContainer, ActionCommune))
+					_actionContainer.AddAction(mindId, ActionCommune);
+				if (!HasActionWithPrototype(mindContainer, ActionStudyVeil))
+					_actionContainer.AddAction(mindId, ActionStudyVeil);
+				if (!HasActionWithPrototype(mindContainer, ActionSpellsSelect))
+					_actionContainer.AddAction(mindId, ActionSpellsSelect);
+				if (!HasActionWithPrototype(mindContainer, ActionSummonDagger))
+					_actionContainer.AddAction(mindId, ActionSummonDagger);
+			}
+			else
+			{
+				// No container yet, safe to add
+				_actionContainer.AddAction(mindId, ActionCommune);
+				_actionContainer.AddAction(mindId, ActionStudyVeil);
+				_actionContainer.AddAction(mindId, ActionSpellsSelect);
+				_actionContainer.AddAction(mindId, ActionSummonDagger);
+			}
+		}
+		else
+		{
+			// Fallback: add directly to entity if mind isn't available
+			// Check if actions already exist on the entity
+			if (TryComp<ActionsComponent>(traitor, out var entityActions))
+			{
+				if (!HasActionWithPrototype(entityActions, ActionCommune))
+					_action.AddAction(traitor, ActionCommune);
+				if (!HasActionWithPrototype(entityActions, ActionStudyVeil))
+					_action.AddAction(traitor, ActionStudyVeil);
+				if (!HasActionWithPrototype(entityActions, ActionSpellsSelect))
+					_action.AddAction(traitor, ActionSpellsSelect);
+				if (!HasActionWithPrototype(entityActions, ActionSummonDagger))
+					_action.AddAction(traitor, ActionSummonDagger);
+			}
+			else
+			{
+				// No actions component yet, safe to add
+				_action.AddAction(traitor, ActionCommune);
+				_action.AddAction(traitor, ActionStudyVeil);
+				_action.AddAction(traitor, ActionSpellsSelect);
+				_action.AddAction(traitor, ActionSummonDagger);
+			}
+		}
+
+			// Ensure blood cultist can see antag icons (required for status icon visibility)
+			EnsureComp<ShowAntagIconsComponent>(traitor);
+
+			// Register UI components for Commune and Prepare Spell actions
+			var userInterfaceComp = EnsureComp<UserInterfaceComponent>(traitor);
+			_uiSystem.SetUi((traitor, userInterfaceComp), BloodCultistCommuneUIKey.Key, new InterfaceData("BloodCultCommuneBoundUserInterface"));
+			_uiSystem.SetUi((traitor, userInterfaceComp), SpellsUiKey.Key, new InterfaceData("SpellsBoundUserInterface"));
+
 			if (TryComp<BloodCultistComponent>(traitor, out var cultist))
 			{
-				// add cultist starting abilities
-				_cultistSpell.AddSpell(traitor, cultist, (ProtoId<CultAbilityPrototype>) "Commune", recordKnownSpell:false);
-				_cultistSpell.AddSpell(traitor, cultist, (ProtoId<CultAbilityPrototype>) "StudyVeil", recordKnownSpell:false);
-				_cultistSpell.AddSpell(traitor, cultist, (ProtoId<CultAbilityPrototype>) "SpellsSelect", recordKnownSpell:false);
-				
-				// Give them the Summon Dagger spell pre-prepared (bypasses DoAfter requirement)
-				_action.AddAction(traitor, (ProtoId<EntityPrototype>)"ActionCultistSummonDagger");
-
 				// propogate the selected Nar'Sie summon location
 				// Enable Tear Veil rune if stage 2 (HasRisen) or later has been reached
 				cultist.ShowTearVeilRune = component.HasRisen || component.VeilWeakened;

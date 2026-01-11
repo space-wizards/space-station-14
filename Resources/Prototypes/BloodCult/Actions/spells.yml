@@ -19,12 +19,13 @@
   description: Examine the state of the veil, and the strength of your cult.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
-    checkCanInteract: false
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: BloodCult/spells_cultist.rsi
       state: study_veil
+  - type: InstantAction
+    checkCanInteract: false
     event: !type:EventCultistStudyVeil {}
   - type: Sprite
     sprite: BloodCult/spells_cultist.rsi
@@ -42,12 +43,13 @@
   description: Send a message to your fellow cultists. Beware - the uninitiated can see you whispering the incantation.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
-    checkCanInteract: false
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: BloodCult/spells_cultist.rsi
       state: commune
+  - type: InstantAction
+    checkCanInteract: false
     event: !type:BloodCultCommuneEvent {}
   - type: Sprite
     sprite: BloodCult/spells_cultist.rsi
@@ -65,12 +67,13 @@
   description: Prepare a blood spell by carving it into your body. Up to 1 spell may be prepared without standing on an empowering rune.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
-    checkCanInteract: false
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: BloodCult/spells_cultist.rsi
       state: spell_select
+  - type: InstantAction
+    checkCanInteract: false
     event: !type:BloodCultSpellsEvent {}
   - type: Sprite
     sprite: BloodCult/spells_cultist.rsi
@@ -94,11 +97,12 @@
   - type: Sprite
     sprite: BloodCult/spells_cultist.rsi
     state: summon_dagger
-  - type: InstantAction
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: BloodCult/spells_cultist.rsi
       state: summon_dagger
+  - type: InstantAction
     event: !type:EventCultistSummonDagger {}
   - type: CultistSpell
     abilityId: SummonDagger
@@ -113,18 +117,7 @@
   description: A sinister spell that plunges a target into a nightmare-filled sleep. EMPs Cyborgs. Those with mindshields will be briefly stunned instead of being put to sleep.
   categories: [ HideSpawnMenu ]
   components:
-  - type: Icon
-    sprite: BloodCult/spells_cultist.rsi
-    state: stun
-  - type: Sprite
-    sprite: BloodCult/spells_cultist.rsi
-    state: stun
-  - type: EntityTargetAction
-    whitelist:
-      components:
-      - Body
-    canTargetSelf: False
-    interactOnMiss: False
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: BloodCult/spells_cultist.rsi
@@ -132,20 +125,29 @@
     iconOn:
       sprite: BloodCult/spells_cultist.rsi
       state: stun_selected
+  - type: Icon
+    sprite: BloodCult/spells_cultist.rsi
+    state: stun
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: stun
+  - type: TargetAction
+    targetingIndicator: true
+    interactOnMiss: false
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
     event: !type:EventCultistSanguineDream {}
-    #useDelay: 60  TIME DELAY BETWEEN ACTION USES
-    #deselectOnMiss: False
-    #targetingIndicator: True  # apparently defaults to using what is held in hand?
-    #entityIcon: <an "EntityUid?">  # overrides the icon
-    #sound: a SoundSpecifier. Should probably be used instead of castSound down below.
-    #iconOn:  # The sprite when selected. USE THIS.
   - type: CultistSpell
     abilityId: SanguineDream
     charges: 1
     infinite: False
     healthCost: 0
     rechargeTime: 0
-    invocation: Fuu ma'jin!
+    invocation: B'ad'd d'ea's!
     castSound: !type:SoundPathSpecifier
         path: /Audio/Magic/blink.ogg
 
@@ -155,19 +157,7 @@
   description: A sinister spell used to convert steel or glass into runed steel or runed glass.
   categories: [ HideSpawnMenu ]
   components:
-  - type: Icon
-    sprite: BloodCult/spells_cultist.rsi
-    state: twisted_construction
-  - type: Sprite
-    sprite: BloodCult/spells_cultist.rsi
-    state: twisted_construction
-  - type: EntityTargetAction
-    whitelist:
-      components:
-      - Stack
-      - Construction
-    canTargetSelf: False
-    interactOnMiss: False
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: BloodCult/spells_cultist.rsi
@@ -175,13 +165,23 @@
     iconOn:
       sprite: BloodCult/spells_cultist.rsi
       state: twisted_construction
+  - type: Icon
+    sprite: BloodCult/spells_cultist.rsi
+    state: twisted_construction
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: twisted_construction
+  - type: TargetAction
+    targetingIndicator: true
+    interactOnMiss: false
+    checkCanAccess: false
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Stack
+    canTargetSelf: false
+    interactOnMiss: false
     event: !type:EventCultistTwistedConstruction {}
-    #useDelay: 60  TIME DELAY BETWEEN ACTION USES
-    #deselectOnMiss: False
-    #targetingIndicator: True  # apparently defaults to using what is held in hand?
-    #entityIcon: <an "EntityUid?">  # overrides the icon
-    #sound: a SoundSpecifier. Should probably be used instead of castSound down below.
-    #iconOn:  # The sprite when selected. USE THIS.
   - type: CultistSpell
     abilityId: CultTwistedConstruction
     charges: 1

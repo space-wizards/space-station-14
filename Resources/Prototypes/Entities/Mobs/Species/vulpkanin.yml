@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   save: false
   parent: [BaseMobSpeciesOrganic]
@@ -86,6 +86,11 @@
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
+    - map: [ "culteyes" ]
+      sprite: "Mobs/Customization/bloodcult/culteyes.rsi"
+      state: "human"
+      shader: unshaded
+      visible: false
     - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "belt" ]

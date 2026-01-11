@@ -1,0 +1,51 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created for Funky Station",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "arachnid",
+      "directions": 4
+    },
+	{
+      "name": "diona",
+      "directions": 4
+    },
+	{
+      "name": "gingerbread",
+      "directions": 4
+    },
+	{
+      "name": "human",
+      "directions": 4
+    },
+	{
+      "name": "moth",
+      "directions": 4
+    },
+	{
+      "name": "reptillian",
+      "directions": 4
+    },
+	{
+      "name": "skeleton",
+      "directions": 4
+    },
+	{
+      "name": "slime",
+      "directions": 4
+    },
+	{
+      "name": "vox",
+      "directions": 4
+    },
+	{
+      "name": "thaven",
+      "directions": 4
+    }
+  ]
+}

@@ -35,3 +35,8 @@
 - type: contrabandSeverity
   id: Magical
   examineText: contraband-examine-text-Magical
+
+# This is blood cult contraband and is highly illegal to own IC.
+- type: contrabandSeverity
+  id: BloodCult
+  examineText: contraband-examine-text-BloodCult

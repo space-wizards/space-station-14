@@ -10,6 +10,7 @@ admin-verb-make-paradox-clone = Create a Paradox Clone ghost role of the target.
 admin-verb-make-wizard = Make the target into a Wizard.
 admin-verb-make-space-ninja = Make the target into a Space Ninja.
 admin-verb-make-changeling = Make the target into a Changeling.
+admin-verb-make-bloodcult = Make the target into a Blood Cultist.
 
 
 admin-verb-text-make-traitor = Make Traitor
@@ -23,5 +24,6 @@ admin-verb-text-make-paradox-clone = Create Paradox Clone
 admin-verb-text-make-wizard = Make Wizard
 admin-verb-text-make-space-ninja = Make Ninja
 admin-verb-text-make-changeling = Make Changeling (WIP)
+admin-verb-text-make-bloodcult = Make Blood Cultist
 
 admin-overlay-antag-classic = ANTAG

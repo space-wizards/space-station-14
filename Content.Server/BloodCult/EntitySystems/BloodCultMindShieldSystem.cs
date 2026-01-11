@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Mind;
 using Content.Server.Popups;
@@ -36,6 +37,7 @@ public sealed class BloodCultMindShieldSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedStunSystem _sharedStun = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
 
@@ -91,12 +93,28 @@ public sealed class BloodCultMindShieldSystem : EntitySystem
 
     public void StripCultistAbilities(EntityUid uid, bool removeVisuals = true)
     {
+        // Remove actions from the entity's action component
         foreach (var actionId in _actions.GetActions(uid))
         {
             if (!TryComp<CultistSpellComponent>(actionId, out _))
                 continue;
 
 			_actions.RemoveAction((uid, null), (actionId, null));
+        }
+
+        // Also remove actions from the mind's action container if available
+        if (_mindSystem.TryGetMind(uid, out var mindId, out _))
+        {
+            if (TryComp<ActionsContainerComponent>(mindId, out var containerComp))
+            {
+                foreach (var actionId in containerComp.Container.ContainedEntities.ToArray())
+                {
+                    if (!TryComp<CultistSpellComponent>(actionId, out _))
+                        continue;
+
+                    _actionContainer.RemoveAction((actionId, null));
+                }
+            }
         }
 
         if (!removeVisuals)

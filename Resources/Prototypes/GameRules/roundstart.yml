@@ -588,6 +588,3 @@
       - type: BloodCultist
       mindRoles:
       - MindRoleCultist
-  - type: Tag
-    tags:
-      - RoundstartAntag
