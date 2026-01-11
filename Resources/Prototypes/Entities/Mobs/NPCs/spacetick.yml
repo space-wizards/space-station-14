@@ -41,9 +41,19 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      15: Dead
+      5: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 30
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
   - type: Stamina
-    critThreshold: 15
+    baseCritThreshold: 15
+    animationThreshold: 5
   - type: MovementAlwaysTouching
   - type: DamageStateVisuals
     states:
@@ -56,7 +66,10 @@
     - id: FoodMeatXeno
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 50
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:

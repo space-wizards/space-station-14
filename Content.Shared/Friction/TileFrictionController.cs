@@ -1,7 +1,9 @@
 using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
@@ -14,6 +16,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Friction
 {
@@ -26,10 +29,13 @@ namespace Content.Shared.Friction
         [Dependency] private readonly SharedMapSystem _map = default!;
 
         private EntityQuery<TileFrictionModifierComponent> _frictionQuery;
-        private EntityQuery<TransformComponent> _xformQuery;
         private EntityQuery<PullerComponent> _pullerQuery;
         private EntityQuery<PullableComponent> _pullableQuery;
         private EntityQuery<MapGridComponent> _gridQuery;
+
+        // For debug purposes only
+        private EntityQuery<InputMoverComponent> _moverQuery;
+        private EntityQuery<BlockMovementComponent> _blockMoverQuery;
 
         private float _frictionModifier;
         private float _minDamping;
@@ -45,19 +51,21 @@ namespace Content.Shared.Friction
             Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
             Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
             _frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
-            _xformQuery = GetEntityQuery<TransformComponent>();
             _pullerQuery = GetEntityQuery<PullerComponent>();
             _pullableQuery = GetEntityQuery<PullableComponent>();
             _gridQuery = GetEntityQuery<MapGridComponent>();
+            _moverQuery = GetEntityQuery<InputMoverComponent>();
+            _blockMoverQuery = GetEntityQuery<BlockMovementComponent>();
         }
 
-        public override void UpdateBeforeMapSolve(bool prediction, PhysicsMapComponent mapComponent, float frameTime)
+        public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
-            base.UpdateBeforeMapSolve(prediction, mapComponent, frameTime);
+            base.UpdateBeforeSolve(prediction, frameTime);
 
-            foreach (var body in mapComponent.AwakeBodies)
+            foreach (var ent in PhysicsSystem.AwakeBodies)
             {
-                var uid = body.Owner;
+                var uid = ent.Owner;
+                var body = ent.Comp1;
 
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 // We may want to instead only apply friction to dynamic entities and not mobs ever.
@@ -67,17 +75,12 @@ namespace Content.Shared.Friction
                 if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f))
                     continue;
 
-                if (!_xformQuery.TryGetComponent(uid, out var xform))
-                {
-                    Log.Error($"Unable to get transform for {ToPrettyString(uid)} in tilefrictioncontroller");
-                    continue;
-                }
-
+                var xform = ent.Comp2;
                 float friction;
 
                 // If we're not touching the ground, don't use tileFriction.
                 // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-                if (body.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(uid, body, xform) || !xform.Coordinates.IsValid(EntityManager))
+                if (body.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(uid) || !xform.Coordinates.IsValid(EntityManager))
                     friction = xform.GridUid == null || !_gridQuery.HasComp(xform.GridUid) ? _offGridDamping : _airDamping;
                 else
                     friction = _frictionModifier * GetTileFriction(uid, body, xform);
@@ -111,15 +114,27 @@ namespace Content.Shared.Friction
                 PhysicsSystem.SetAngularDamping(uid, body, friction);
 
                 if (body.BodyType != BodyType.KinematicController)
+                {
+                    /*
+                     * Extra catch for input movers that may be temporarily unable to move for whatever reason.
+                     * Block movement shouldn't be added and removed frivolously so it should be reliable to use this
+                     * as a check for brains and such which have input mover purely for ghosting behavior.
+                     */
+                    DebugTools.Assert(!_moverQuery.HasComp(uid) || _blockMoverQuery.HasComp(uid),
+                        $"Input mover: {ToPrettyString(uid)} in TileFrictionController is not the correct BodyType, BodyType found: {body.BodyType}, expected: KinematicController.");
                     continue;
+                }
 
                 // Physics engine doesn't apply damping to Kinematic Controllers so we have to do it here.
                 // BEWARE YE TRAVELLER:
                 // You may think you can just pass the body.LinearVelocity to the Friction function and edit it there!
                 // But doing so is unpredicted! And you will doom yourself to 1000 years of rubber banding!
                 var velocity = body.LinearVelocity;
+                var angVelocity = body.AngularVelocity;
                 _mover.Friction(0f, frameTime, friction, ref velocity);
+                _mover.Friction(0f, frameTime, friction, ref angVelocity);
                 PhysicsSystem.SetLinearVelocity(uid, velocity, body: body);
+                PhysicsSystem.SetAngularVelocity(uid, angVelocity, body: body);
             }
         }
 

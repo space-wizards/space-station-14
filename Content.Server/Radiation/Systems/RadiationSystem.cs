@@ -14,6 +14,7 @@ public sealed partial class RadiationSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
 
     private EntityQuery<RadiationBlockingContainerComponent> _blockerQuery;
     private EntityQuery<RadiationGridResistanceComponent> _resistanceQuery;
@@ -48,9 +49,9 @@ public sealed partial class RadiationSystem : EntitySystem
         _accumulator = 0f;
     }
 
-    public void IrradiateEntity(EntityUid uid, float radsPerSecond, float time)
+    public void IrradiateEntity(EntityUid uid, float radsPerSecond, float time, EntityUid? origin = null)
     {
-        var msg = new OnIrradiatedEvent(time, radsPerSecond, uid);
+        var msg = new OnIrradiatedEvent(time, radsPerSecond, origin);
         RaiseLocalEvent(uid, msg);
     }
 
