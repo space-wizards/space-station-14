@@ -2870,10 +2870,10 @@
         - MobLayer
 
 - type: entity
-  name: aloe ignis leaf
-  description: A jagged leaf. It's uncomfortably warm to the touch and smells like ozone and spice.
   parent: FoodProduceBase
   id: FoodAloeIgnis
+  name: aloe ignis leaf
+  description: A jagged leaf. It's uncomfortably warm to the touch and smells like ozone and spice.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
@@ -2922,10 +2922,10 @@
       Burger: AloeIgnisBurger
 
 - type: entity
-  name: dragon's tail fruit
-  description: A long, spiraling fruit that glows with a soft emerald light. It feels perfectly temperate.
   parent: FoodProduceBase
   id: FoodDragonTail
+  name: dragon's tail fruit
+  description: A long, spiraling fruit that glows with a soft emerald light. It feels perfectly temperate.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
