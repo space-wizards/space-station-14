@@ -26,7 +26,7 @@ public sealed class HitscanBasicEffectsSystem : EntitySystem
 
         if (ent.Comp.HitColor != null && args.DamageDealt.GetTotal() != 0)
         {
-            _color.RaiseEffect("HitDamageEffect",
+            _color.RaiseEffect(SharedColorFlashEffectSystem.HitDamageEffect,
                 new List<EntityUid> { args.Target },
                 Filter.Pvs(args.Target, entityManager: EntityManager),
                 ent.Comp.HitColor.Value);
