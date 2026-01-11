@@ -2037,9 +2037,9 @@
   plantRsi: Objects/Specific/Hydroponics/aloe_ignis.rsi
   packetPrototype: AloeIgnisSeeds
   productPrototypes:
-    - FoodAloeIgnis
+  - FoodAloeIgnis
   mutationPrototypes:
-    - dragonTail
+  - dragonTail
   lifespan: 25
   maturation: 10
   production: 3
@@ -2066,7 +2066,7 @@
   plantRsi: Objects/Specific/Hydroponics/dragon_tail.rsi
   packetPrototype: DragonTailSeeds
   productPrototypes:
-    - FoodDragonTail
+  - FoodDragonTail
   lifespan: 35
   maturation: 10
   production: 4
