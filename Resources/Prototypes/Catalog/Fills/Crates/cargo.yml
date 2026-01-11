@@ -1,416 +1,247 @@
 - type: entity
-  id: CrateCargoLuxuryHardsuit
   parent: CratePirate
+  id: CrateCargoLuxuryHardsuit
   name: luxury mining hardsuit crate
   description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
   components:
-  - type: StorageFill
-    contents:
-    - id: ClothingOuterHardsuitLuxury
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: ClothingOuterHardsuitLuxury
 
 - type: entity
-  id: CrateCargoParcelWrap
   parent: CrateGenericSteel
+  id: CrateCargoParcelWrap
   name: parcel wrap crate
   description: All your parcel wrapping needs in one crate, containing three rolls of parcel wrap.
   components:
-  - type: StorageFill
-    contents:
-    - id: ParcelWrap
-      amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: ParcelWrap
+        amount: 3
 
 - type: entity
+  parent: CratePrivateSecure
   id: CrateCargoGambling
   name: the grand lottery $$$
   description: A box containing treasure beyond your greatest imaginations!
-  parent: CratePrivateSecure
   components:
-  #never make a storage fill this large
-  - type: StorageFill
-    contents:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LotteryCashEntityTable
+        - !type:NestedSelector
+          tableId: LotteryJunkEntityTable
+        - !type:NestedSelector
+          tableId: LotteryCanistersEntityTable
+        - !type:NestedSelector
+          tableId: LotteryWeaponsEntityTable
+        - !type:NestedSelector
+          tableId: LotteryClothingEntityTable
+        - !type:NestedSelector
+          tableId: LotterySwagEntityTable
+        - !type:NestedSelector
+          tableId: LotteryPlushiesEntityTable
+        - !type:NestedSelector
+          tableId: LotteryUsefulEntityTable
+        - !type:NestedSelector
+          tableId: LotteryNotUsefulEntityTable
+
+- type: entityTable
+  id: LotteryCashEntityTable
+  table: !type:GroupSelector
+    children:
     - id: SpaceCash1000000
-      prob: 0.001
-      orGroup: Money
+      weight: 0.01
     - id: SpaceCash10000
-      prob: 0.01
-      orGroup: Money
+      weight: 0.1
     - id: SpaceCash5000
-      prob: 0.1
-      orGroup: Money
     - id: SpaceCash2500
-      prob: 0.4
-      orGroup: Money
+      weight: 4
     - id: SpaceCash500
-      prob: 0.3
-      orGroup: Money
+      weight: 3
     - id: SpaceCash100
-      prob: 0.1
-      orGroup: Money
     - id: SpaceCash10
-      prob: 0.05
-      orGroup: Money
+      weight: 0.5
     - id: SpaceCash
-      prob: 0.01
-      orGroup: Money
-    #junk
+      weight: 0.1
+
+- type: entityTable
+  id: LotteryJunkEntityTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: AllBananaPeelsTable
+      weight: 4
     - id: CigaretteSpent
-      prob: 0.1
-      orGroup: Junk
     - id: FoodBowlBigTrash
-      prob: 0.1
-      orGroup: Junk
     - id: FoodFrozenPopsicleTrash
-      prob: 0.1
-      orGroup: Junk
     - id: FoodCornTrash
-      prob: 0.1
-      orGroup: Junk
-    - id: TrashBananaPeel
-      prob: 0.1
-      orGroup: Junk
-    - id: TrashBananaPeelExplosive
-      prob: 0.001
-      orGroup: Junk
     - id: FoodTinBeansTrash
-      prob: 0.1
-      orGroup: Junk
-    - id: TrashBakedBananaPeel
-      prob: 0.1
-      orGroup: Junk
-    - id: TrashMimanaPeel
-      prob: 0.1
-      orGroup: Junk
-    - id: TrashBananiumPeel
-      prob: 0.1
-      orGroup: Junk
-    #canisters
+
+- type: entityTable
+  id: LotteryCanistersEntityTable
+  table: !type:GroupSelector
+    children:
     - id: AirCanister
-      prob: 0.001
-      orGroup: Canister
     - id: AmmoniaCanister
-      prob: 0.001
-      orGroup: Canister
     - id: CarbonDioxideCanister
-      prob: 0.001
-      orGroup: Canister
     - id: FrezonCanister
-      prob: 0.001
-      orGroup: Canister
     - id: NitrogenCanister
-      prob: 0.001
-      orGroup: Canister
     - id: NitrousOxideCanister
-      prob: 0.001
-      orGroup: Canister
     - id: OxygenCanister
-      prob: 0.001
-      orGroup: Canister
     - id: PlasmaCanister
-      prob: 0.001
-      orGroup: Canister
     - id: TritiumCanister
-      prob: 0.001
-      orGroup: Canister
     - id: WaterVaporCanister
-      prob: 0.001
-      orGroup: Canister
-    #weapons
+
+- type: entityTable
+  id: LotteryWeaponsEntityTable
+  table: !type:GroupSelector
+    children:
     - id: WeaponPulseCarbine
-      prob: 0.0001
-      orGroup: Weapons
+      weight: 0.01
     - id: WeaponRifleAk
-      prob: 0.0001
-      orGroup: Weapons
+      weight: 0.01
     - id: WeaponLauncherPirateCannon
-      prob: 0.001
-      orGroup: Weapons
+      weight: 0.1
     - id: WeaponPistolCHIMP
-      prob: 0.001
-      orGroup: Weapons
+      weight: 0.1
     - id: WeaponSniperMosin
-      prob: 0.01
-      orGroup: Weapons
     - id: WeaponMakeshiftLaser
-      prob: 0.001
-      orGroup: Weapons
+      weight: 0.1
     - id: Sledgehammer
-      prob: 0.001
-      orGroup: Weapons
+      weight: 0.1
     - id: WeaponMeleeToolboxRobust
-      prob: 0.01
-      orGroup: Weapons
     - id: ThrowingStar
-      prob: 0.01
-      orGroup: Weapons
     - id: WeaponLaserGun
-      prob: 0.001
-      orGroup: Weapons
+      weight: 0.1
     - id: WeaponShotgunHandmade
-      prob: 0.01
-      orGroup: Weapons
     - id: WeaponFlareGun
-      prob: 0.01
-      orGroup: Weapons
     - id: Bola
-      prob: 0.01
-      orGroup: Weapons
-    - id: ToySword
-      prob: 0.01
-      orGroup: Weapons
     - id: Shovel
-      prob: 0.01
-      orGroup: Weapons
-    - id: WeaponWaterPistol
-      prob: 0.01
-      orGroup: Weapons
-    - id: WeaponWaterBlaster
-      prob: 0.01
-      orGroup: Weapons
     - id: WeaponTurretXeno
-      prob: 0.01
-      orGroup: Weapons
-    - id: WeaponRifleFoam
-      prob: 0.03
-      orGroup: Weapons
-    #clothing
+    - !type:NestedSelector
+      tableId: AllToyWeaponsTable
+
+- type: entityTable
+  id: LotteryClothingEntityTable
+  table: !type:GroupSelector
+    children:
     - id: ClothingUniformJumpsuitFamilyGuy
-      prob: 0.05
-      orGroup: Clothes
+      weight: 5
     - id: ClothingOuterHardsuitCBURN
-      prob: 0.001
-      orGroup: Clothes
+      weight: 0.1
     - id: ClothingOuterHardsuitSanta
-      prob: 0.001
-      orGroup: Clothes
+      weight: 0.1
     - id: ClothingBackpackERTClown
-      prob: 0.001
-      orGroup: Clothes
+      weight: 0.1
     - id: ClothingNeckCloakAdmin
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingOuterFlannelBlue
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingHeadHelmetBone
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingOuterSuitCarp
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingHeadHatCatEars
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingHeadHatDogEars
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingOuterArmorReflective
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingUniformJumpskirtSyndieFormalDress
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingNeckCloakNanotrasen
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingUniformJumpsuitNanotrasen
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingShoesSnakeskinBoots
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingOuterCoatSpaceAsshole
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingUniformJumpsuitHawaiYellow
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingHeadSafari
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingMaskGasMerc
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingHeadHatCardborg
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingUnderSocksCoder
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingUniformJumpskirtOfLife
-      prob: 0.01
-      orGroup: Clothes
-    #swag
+
+- type: entityTable
+  id: LotterySwagEntityTable
+  table: !type:GroupSelector
+    children:
     - id: ClothingNeckBling
-      prob: 0.01
-      orGroup: Swag
     - id: ClothingShoesBling
-      prob: 0.01
-      orGroup: Swag
     - id: IngotGold1
-      prob: 0.01
-      orGroup: Swag
     - id: IngotGold
-      prob: 0.001
-      orGroup: Swag
+      weight: 0.1
     - id: GoldOre1
-      prob: 0.01
-      orGroup: Swag
     - id: GoldOre
-      prob: 0.001
-      orGroup: Swag
+      weight: 0.1
     - id: DrinkGoldenCup
-      prob: 0.01
-      orGroup: Swag
     - id: ToolboxGoldFilled
-      prob: 0.001
-      orGroup: Swag
+      weight: 0.1
     - id: ClothingEyesGlassesGar
-      prob: 0.01
-      orGroup: Swag
     - id: ClothingEyesGlassesGarGiga
-      prob: 0.01
-      orGroup: Swag
     - id: ClothingEyesGlassesGarOrange
-      prob: 0.01
-      orGroup: Swag
     - id: ClothingHeadHatChameleon
-      prob: 0.01
-      orGroup: Swag
     - id: ClothingBeltChampion
-      prob: 0.01
-      orGroup: Swag
-    #plushies
+
+- type: entityTable
+  id: LotteryPlushiesEntityTable
+  table: !type:GroupSelector
+    children:
     - id: PlushieRGBee
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieGhost
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieHampter
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieGhostRevenant
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushiePenguin
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieHuman
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieLizard
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieRouny
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieLamp
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieSharkBlue
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieMoth
-      prob: 0.01
-      orGroup: Plushies
+    - id: PlushieVulp
     - id: PlushieArachind
-      prob: 0.01
-      orGroup: Plushies
+    - id: PlushieLizardJobMultiweh # the exceedingly rare multiweh!
     - id: PlushieThrongler #hehe
-      prob: 0.0005
-      orGroup: Plushies
-    #useful
+      weight: 0.05
+
+- type: entityTable
+  id: LotteryUsefulEntityTable
+  table: !type:GroupSelector
+    children:
     - id: AmeJar
-      prob: 0.01
-      orGroup: Useful
     - id: Omnitool
-      prob: 0.001
-      orGroup: Useful
+      weight: 0.1
     - id: SoapOmega
-      prob: 0.001
-      orGroup: Useful
+      weight: 0.1
     - id: ClothingEyesGlassesMeson
-      prob: 0.01
-      orGroup: Useful
     - id: MechVim
-      prob: 0.01
-      orGroup: Useful
     - id: Chainsaw
-      prob: 0.001
-      orGroup: Useful
+      weight: 0.1
     - id: Crowbar
-      prob: 0.01
-      orGroup: Useful
     - id: WelderIndustrial
-      prob: 0.01
-      orGroup: Useful
     - id: HydroponicsToolHatchet
-      prob: 0.01
-      orGroup: Useful
     - id: ToyAmongPequeno
-      prob: 0.01
-      orGroup: Useful
     - id: Lamp
-      prob: 0.01
-      orGroup: Useful
     - id: FloraTreeLarge
-      prob: 0.01
-      orGroup: Useful
     - id: LightTree #Funny mobs maybe
-      prob: 0.01
-      orGroup: Useful
-    #notuseful
+
+- type: entityTable
+  id: LotteryNotUsefulEntityTable
+  table: !type:GroupSelector
+    children:
     - id: LidSalami
-      prob: 0.01
-      orGroup: NotUseful
     - id: MobHamsterHamlet
-      prob: 0.01
-      orGroup: NotUseful
     - id: MobLaserRaptor
-      prob: 0.01
-      orGroup: NotUseful
     - id: DrinkNothing
-      prob: 0.01
-      orGroup: NotUseful
     - id: FoodOatmeal
-      prob: 0.01
-      orGroup: NotUseful
     - id: FoodDonutChaos
-      prob: 0.01
-      orGroup: NotUseful
     - id: RagItem
-      prob: 0.01
-      orGroup: NotUseful
     - id: ClothingHandsGlovesColorYellowBudget
-      prob: 0.01
-      orGroup: NotUseful
     - id: CartridgeCap
-      prob: 0.01
-      orGroup: NotUseful
     - id: EncryptionKeyCommon
-      prob: 0.01
-      orGroup: NotUseful
     - id: CableHVStack1
-      prob: 0.01
-      orGroup: NotUseful
     - id: DrinkMugBlue
-      prob: 0.01
-      orGroup: NotUseful
     - id: CablecuffsBroken
-      prob: 0.01
-      orGroup: NotUseful
     - id: FoodPlateTin
-      prob: 0.01
-      orGroup: NotUseful
     - id: WeakKudzu
-      prob: 0.01
-      orGroup: NotUseful
     - id: MagazineFoamBox
-      prob: 0.001
-      orGroup: NotUseful
+      weight: 0.1
     - id: BoxDonkSoftBox
-      prob: 0.008
-      orGroup: NotUseful
+      weight: 0.8
     - id: GrenadeFoamDart
-      prob: 0.001
-      orGroup: NotUseful
+      weight: 0.1

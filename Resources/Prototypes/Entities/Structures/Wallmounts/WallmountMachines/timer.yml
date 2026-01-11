@@ -1,0 +1,118 @@
+- type: entity
+  parent: BaseWallmountMachine
+  id: SignalTimer
+  name: signal timer
+  description: It's a timer for sending timed signals to things.
+  components:
+  - type: StationAiWhitelist
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/switch.rsi
+    state: on
+  - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: Rotatable
+  - type: SignalTimer
+    canEditLabel: false
+  - type: DeviceLinkSource
+    ports:
+      - Start
+      - Timer
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
+  - type: ActivatableUI
+    key: enum.SignalTimerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SignalTimerUiKey.Key:
+        type: SignalTimerBoundUserInterface
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: ActivatableUIRequiresPower
+  - type: Construction
+    graph: Timer
+    node: signal
+    containers:
+    - board
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: ContainerFill
+    containers:
+      board: [ SignalTimerElectronics ]
+
+- type: entity
+  id: ScreenTimer
+  parent: SignalTimer
+  name: screen timer
+  description: It's a timer for sending timed signals to things, with a built-in screen.
+  components:
+  - type: SignalTimer
+    canEditLabel: true
+  - type: TextScreenVisuals
+    color: FloralWhite
+    textOffset: 0,6
+    timerOffset: 0,6
+    # textLength: 5 This field does not exist. Bug?
+    rows: 1
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
+    noRot: true
+  - type: Construction
+    graph: Timer
+    node: screen
+    containers:
+    - board
+  - type: ContainerFill
+    containers:
+      board: [ ScreenTimerElectronics ]
+
+- type: entity
+  id: BrigTimer
+  parent: ScreenTimer
+  name: brig timer
+  description: It's a timer for brig cells.
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Construction
+    graph: Timer
+    node: brig
+    containers:
+    - board
+  - type: ContainerFill
+    containers:
+      board: [ BrigTimerElectronics ]
+
+# Construction Frame
+
+- type: entity
+  id: TimerFrame
+  name: timer frame
+  description: A construction frame for a timer.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
+  - type: Construction
+    graph: Timer
+    node: frame
+  - type: WallMount
+    arc: 360
