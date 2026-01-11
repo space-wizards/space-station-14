@@ -42,4 +42,10 @@ public sealed partial class TileReclaimerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? Sound;
+
+    /// <summary>
+    /// The fixture that starts reclaiming when intersecting with a grid.
+    /// </summary>
+    [DataField]
+    public string FixtureId = "tileReclaimer";
 }
