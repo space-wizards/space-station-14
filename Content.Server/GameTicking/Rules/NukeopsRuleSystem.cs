@@ -556,15 +556,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 /// Raised when a station has been assigned as a target for the NukeOps rule.
 /// </summary>
 [ByRefEvent]
-public readonly struct NukeopsTargetStationSelectedEvent
+public readonly struct NukeopsTargetStationSelectedEvent(EntityUid ruleEntity, EntityUid? targetStation)
 {
-    public readonly EntityUid RuleEntity;
+    /// <summary>
+    /// The entity containing the NukeOps gamerule.
+    /// </summary>
+    public readonly EntityUid RuleEntity = ruleEntity;
 
-    public readonly EntityUid? TargetStation;
-
-    public NukeopsTargetStationSelectedEvent(EntityUid ruleEntity, EntityUid? targetStation)
-    {
-        RuleEntity = ruleEntity;
-        TargetStation = targetStation;
-    }
+    /// <summary>
+    /// The target station, if it exists.
+    /// </summary>
+    public readonly EntityUid? TargetStation = targetStation;
 }
