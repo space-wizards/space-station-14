@@ -26,7 +26,7 @@ public sealed partial class AbandonCharacter : FancyWindow
         AbandonConfirmContainer.Visible = true;
         AbandonMethodContainer.Visible = false;
 
-        Description.Text = Loc.GetString("ban-panel-confirm");
+        Description.Text = Loc.GetString("abandon-character-are-you-sure");
         CancelAbandonButton.OnPressed += _ => Close();
         ConfirmAbandonButton.OnPressed += _ =>
         {
