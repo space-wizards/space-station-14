@@ -661,12 +661,15 @@
         maxVol: 10
   - type: RefillableSolution
     solution: hypospray
+    refillTime: 1.25
+    maxRefill: 5
   - type: ExaminableSolution
     solution: hypospray
     heldOnly: true # Allow examination only when held in hand.
     exactVolume: true
   - type: Hypospray
     onlyAffectsMobs: false
+    drawTime: 1.25
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
