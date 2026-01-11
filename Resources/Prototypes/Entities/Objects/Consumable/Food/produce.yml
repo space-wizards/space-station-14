@@ -2869,7 +2869,6 @@
         layer:
         - MobLayer
 
-
 - type: entity
   name: aloe ignis leaf
   description: A jagged leaf. It's uncomfortably warm to the touch and smells like ozone and spice.
@@ -2884,7 +2883,7 @@
     sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
     heldPrefix: produce
   - type: Produce
-    seedId: aloeignis
+    seedId: aloeIgnis
   - type: Tag
     tags:
     - Fruit
@@ -2936,7 +2935,7 @@
     sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
     heldPrefix: produce
   - type: Produce
-    seedId: dragontail
+    seedId: dragonTail
   - type: FlavorProfile
     flavors:
     - minty
