@@ -6,14 +6,15 @@ using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
-using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Trigger.Systems;
@@ -26,7 +27,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Destructible
 {
     [UsedImplicitly]
-    public sealed class DestructibleSystem : SharedDestructibleSystem
+    public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
         [Dependency] public readonly IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
@@ -42,24 +43,24 @@ namespace Content.Server.Destructible
         [Dependency] public readonly PuddleSystem PuddleSystem = default!;
         [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] public readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] public readonly IAdminLogManager AdminLogger = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(Execute);
+            SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(OnDamageChanged);
         }
 
         /// <summary>
-        ///     Check if any thresholds were reached. if they were, execute them.
+        /// Check if any thresholds were reached. if they were, execute them.
         /// </summary>
-        public void Execute(EntityUid uid, DestructibleComponent component, DamageChangedEvent args)
+        private void OnDamageChanged(EntityUid uid, DestructibleComponent component, DamageChangedEvent args)
         {
             component.IsBroken = false;
 
             foreach (var threshold in component.Thresholds)
             {
-                if (threshold.Reached(args.Damageable, this))
+                if (Triggered(threshold, (uid, args.Damageable)))
                 {
                     RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
 
@@ -82,18 +83,18 @@ namespace Content.Server.Destructible
 
                     if (args.Origin != null)
                     {
-                        _adminLogger.Add(LogType.Damaged,
+                        AdminLogger.Add(LogType.Damaged,
                             logImpact,
                             $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
                     else
                     {
-                        _adminLogger.Add(LogType.Damaged,
+                        AdminLogger.Add(LogType.Damaged,
                             logImpact,
                             $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
 
-                    threshold.Execute(uid, this, EntityManager, args.Origin);
+                    Execute(threshold, uid, args.Origin);
                 }
 
                 if (threshold.OldTriggered)
@@ -105,6 +106,61 @@ namespace Content.Server.Destructible
                 // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.
                 if (EntityManager.IsQueuedForDeletion(uid) || Deleted(uid))
                     return;
+            }
+        }
+
+        /// <summary>
+        /// Check if the given threshold should trigger.
+        /// </summary>
+        public bool Triggered(DamageThreshold threshold, Entity<Shared.Damage.Components.DamageableComponent> owner)
+        {
+            if (threshold.Trigger == null)
+                return false;
+
+            if (threshold.Triggered && threshold.TriggersOnce)
+                return false;
+
+            if (threshold.OldTriggered)
+            {
+                threshold.OldTriggered = threshold.Trigger.Reached(owner, this);
+                return false;
+            }
+
+            if (!threshold.Trigger.Reached(owner, this))
+                return false;
+
+            threshold.OldTriggered = true;
+            return true;
+        }
+
+        /// <summary>
+        /// Check if the conditions for the given threshold are currently true.
+        /// </summary>
+        public bool Reached(DamageThreshold threshold, Entity<Shared.Damage.Components.DamageableComponent> owner)
+        {
+            if (threshold.Trigger == null)
+                return false;
+
+            return threshold.Trigger.Reached(owner, this);
+        }
+
+        /// <summary>
+        /// Triggers this threshold.
+        /// </summary>
+        /// <param name="owner">The entity that owns this threshold.</param>
+        /// <param name="cause">The entity that caused this threshold to trigger.</param>
+        public void Execute(DamageThreshold threshold, EntityUid owner, EntityUid? cause = null)
+        {
+            threshold.Triggered = true;
+
+            foreach (var behavior in threshold.Behaviors)
+            {
+                // The owner has been deleted. We stop execution of behaviors here.
+                if (!Exists(owner))
+                    return;
+
+                // TODO: Replace with EntityEffects.
+                behavior.Execute(owner, this, cause);
             }
         }
 
@@ -145,7 +201,7 @@ namespace Content.Server.Destructible
                     if (behavior is DoActsBehavior actBehavior &&
                         actBehavior.HasAct(ThresholdActs.Destruction | ThresholdActs.Breakage))
                     {
-                        damageNeeded = Math.Min(damageNeeded.Float(), trigger.Damage);
+                        damageNeeded = FixedPoint2.Min(damageNeeded, trigger.Damage);
                     }
                 }
             }

@@ -1,0 +1,387 @@
+- type: entity
+  abstract: true
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable ]
+  id: DrinkBottlePlasticBaseFull
+  suffix: Full
+  components:
+  - type: Item
+    size: Normal
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkBottle # Needed to fit in the soda dispenser, needs a better name
+
+- type: entity
+  abstract: true
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkBottlePlasticSmallBaseFull
+  components:
+  - type: Item
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
+  - type: FitsInDispenser
+    solution: drink
+
+# Empty
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: CustomDrinkJug
+  name: beverage jug
+  description: A jug for storing custom made drinks.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+
+# Small Plastic Bottles
+
+- type: entity
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmallBaseFull]
+  id: DrinkWaterBottleFull
+  name: water bottle
+  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+  - type: Label
+    currentLabel: reagent-name-water
+
+# Large Plastic Bottles
+
+- type: entity
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  id: DrinkColaBottleFull
+  name: Space Cola bottle
+  description: Cola. In spaaace!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Cola
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-cola
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/colabottle.rsi
+
+- type: entity
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  id: DrinkSpaceMountainWindBottleFull
+  name: Space Solar Wind bottle
+  description: Blows right through you like a solar wind.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SpaceMountainWind
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-space-mountain-wind
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
+
+- type: entity
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  id: DrinkSpaceUpBottleFull
+  name: Space-Up bottle
+  description: Tastes like a hull breach in your mouth.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SpaceUp
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-space-up
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
+
+- type: entity
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  id: DrinkSodaWaterBottleFull
+  name: soda water bottle
+  description: Like water, but angry!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: SodaWater
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/sodawater-bottle.rsi
+  - type: Label
+    currentLabel: reagent-name-soda-water
+
+- type: entity
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
+  id: DrinkTonicWaterBottleFull
+  name: tonic water bottle
+  description: Like soda water, but angrier maybe? Often sweeter.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: TonicWater
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tonic-bottle.rsi
+  - type: Label
+    currentLabel: reagent-name-tonic-water
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkEnergyDrinkJug
+  name: Red Bool jug
+  description: A jug of Red Bool, with enough caffeine to kill a whole station.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: EnergyDrink
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-energy-drink
+  # TODO new sprite
+
+# Xtra large
+# TODO these have too much volume
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkSugarJug
+  name: sugar jug
+  suffix: For Drinks, Full
+  description: Some people put this in their coffee...
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-sugar
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkLemonLimeJug
+  name: Smite jug
+  description: A dual citrus sensation.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: LemonLime
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-lemon-lime
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkMeadJug
+  name: mead jug
+  description: Storing mead in a plastic jug should be a crime.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: Mead
+          Quantity: 150
+  - type: Label
+    currentLabel: reagent-name-mead
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkIceJug
+  name: ice jug
+  description: Stubborn water. Pretty cool.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Ice
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-ice
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkCoconutWaterJug
+  name: coconut water jug
+  description: It's on the inside of the coconut that counts.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: CoconutWater
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-coconut-water
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkCoffeeJug
+  name: coffee jug
+  description: Wake up juice, of the heated kind.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Coffee
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-coffee
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkTeaJug
+  name: tea jug
+  description: The drink of choice for the Bri'ish and hipsters.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Tea
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-tea
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkGreenTeaJug
+  name: green tea jug
+  description: It's like tea... but green! great for settling the stomach.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: GreenTea
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-green-tea
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkIcedTeaJug
+  name: iced tea jug
+  description: For when the regular tea is too hot for you. Boohoo.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: IcedTea
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-iced-tea
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkDrGibbJug
+  name: Dr. Gibb jug
+  description: 42 different flavours... in a jug!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: DrGibb
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-dr-gibb
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkRootBeerJug
+  name: root beer jug
+  description: This drink makes Australians giggle.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: RootBeer
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-root-beer
+  # TODO new sprite
+
+- type: entity
+  parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkWaterMelonJuiceJug
+  name: watermelon juice jug
+  description: May include leftover seeds.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: JuiceWatermelon
+          Quantity: 300
+  - type: Label
+    currentLabel: reagent-name-juice-watermelon
+  # TODO new sprite
