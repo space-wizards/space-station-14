@@ -1,20 +1,18 @@
-﻿<options:AbandonCharacter xmlns="https://spacestation14.io"
-                xmlns:options="clr-namespace:Content.Client.Options"
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 Title="{Loc 'abandon-character-window-title'}"
                 Resizable="False"
                 MinWidth="550">
-    <BoxContainer Orientation="Vertical" Margin="8">
+    <BoxContainer Orientation="Vertical" Margin="10">
         <Label Name="Description"
                Text="{Loc 'abandon-character-warning'}"
                Access="Public"
                Margin="10"
                HorizontalAlignment="Center"
-               VerticalAlignment="Top"
-               VerticalExpand="True" />
+               VerticalAlignment="Top"/>
         <BoxContainer Name="AbandonMethodContainer"
                       Orientation="Horizontal"
-                      Margin="5"
+                      Margin="10"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
                       HorizontalExpand="True">
@@ -24,7 +22,7 @@
         </BoxContainer>
         <BoxContainer Name="AbandonConfirmContainer"
                       Orientation="Horizontal"
-                      Margin="5"
+                      Margin="10"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
                       Visible="False">
@@ -32,4 +30,4 @@
             <Button Name="CancelAbandonButton" Text="{Loc 'quick-dialog-ui-cancel'}" StyleClasses="OpenLeft" MinWidth="100" />
         </BoxContainer>
     </BoxContainer>
-</options:AbandonCharacter>
+</controls:FancyWindow>
