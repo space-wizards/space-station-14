@@ -6,22 +6,23 @@
                 SetWidth="700">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="10" >
         <Label Name="Description" Text="{Loc 'abandon-character-warning'}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <BoxContainer Margin="5" >
-            <cc:CommandButton Name="SuicideButton"
-                              Command="suicide"
-                              Text="{Loc 'sandbox-window-toggle-suicide-button'}"
-                              StyleClasses="OpenRight"
-                              Access="Public"
-                              SetWidth="100" />
-            <controls:VSpacer Spacing="2" />
-            <cc:CommandButton Name="GhostButton"
-                              Command="ghost"
-                              Text="{Loc 'sandbox-window-ghost-button'}"
-                              StyleClasses="OpenLeft"
-                              Access="Public"
-                              SetWidth="100" />
-            <Control HorizontalExpand="True"/>
-            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" SetWidth="100" StyleClasses="negative" />
-        </BoxContainer>
+        <Control HorizontalExpand="True" HorizontalAlignment="Stretch">
+            <BoxContainer Margin="5" HorizontalAlignment="Center" Align="Center" >
+                <cc:CommandButton Name="SuicideButton"
+                                  Command="suicide"
+                                  Text="{Loc 'sandbox-window-toggle-suicide-button'}"
+                                  StyleClasses="OpenRight"
+                                  Access="Public"
+                                  SetWidth="100" />
+                <controls:VSpacer Spacing="2" />
+                <cc:CommandButton Name="GhostButton"
+                                  Command="ghost"
+                                  Text="{Loc 'sandbox-window-ghost-button'}"
+                                  StyleClasses="OpenLeft"
+                                  Access="Public"
+                                  SetWidth="100" />
+            </BoxContainer>
+            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" SetWidth="100" StyleClasses="negative" Margin="5" HorizontalAlignment="Right"/>
+        </Control>
     </BoxContainer>
 </controls:FancyWindow>
