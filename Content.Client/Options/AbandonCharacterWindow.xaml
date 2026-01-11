@@ -1,6 +1,7 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                xmlns:system="clr-namespace:System;assembly=System.Runtime"
                 Title="{Loc 'abandon-character-window-title'}"
                 Resizable="False"
                 SetWidth="700">
@@ -11,18 +12,26 @@
                 <cc:CommandButton Name="SuicideButton"
                                   Command="suicide"
                                   Text="{Loc 'sandbox-window-toggle-suicide-button'}"
-                                  StyleClasses="OpenRight"
                                   Access="Public"
-                                  SetWidth="100" />
+                                  SetWidth="100" >
+                    <cc:CommandButton.StyleClasses>
+                        <system:String>OpenRight</system:String>
+                        <system:String>negative</system:String>
+                    </cc:CommandButton.StyleClasses>
+                </cc:CommandButton>
                 <controls:VSpacer Spacing="2" />
                 <cc:CommandButton Name="GhostButton"
                                   Command="ghost"
                                   Text="{Loc 'sandbox-window-ghost-button'}"
-                                  StyleClasses="OpenLeft"
                                   Access="Public"
-                                  SetWidth="100" />
+                                  SetWidth="100" >
+                    <cc:CommandButton.StyleClasses>
+                        <system:String>OpenLeft</system:String>
+                        <system:String>negative</system:String>
+                    </cc:CommandButton.StyleClasses>
+                </cc:CommandButton>
             </BoxContainer>
-            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" SetWidth="100" StyleClasses="negative" Margin="5" HorizontalAlignment="Right"/>
+            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" SetWidth="100" Margin="5" HorizontalAlignment="Right"/>
         </Control>
     </BoxContainer>
 </controls:FancyWindow>
