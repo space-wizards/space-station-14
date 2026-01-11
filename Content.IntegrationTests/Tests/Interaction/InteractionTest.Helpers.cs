@@ -478,11 +478,11 @@ public abstract partial class InteractionTest
         var wasInCombatMode = IsInCombatMode();
         await SetCombatMode(true);
 
-        Assert.That(SGun.TryGetGun(SPlayer, out var gunUid, out var gunComp), "Player was not holding a gun!");
+        Assert.That(SGun.TryGetGun(SPlayer, out var gun), "Player was not holding a gun!");
 
         await Server.WaitAssertion(() =>
         {
-            var success = SGun.AttemptShoot(SPlayer, gunUid, gunComp!, actualTarget);
+            var success = SGun.AttemptShoot(SPlayer, gun, actualTarget);
             if (assert)
                 Assert.That(success, "Gun failed to shoot.");
         });
@@ -517,11 +517,11 @@ public abstract partial class InteractionTest
         var wasInCombatMode = IsInCombatMode();
         await SetCombatMode(true);
 
-        Assert.That(SGun.TryGetGun(SPlayer, out var gunUid, out var gunComp), "Player was not holding a gun!");
+        Assert.That(SGun.TryGetGun(SPlayer, out var gun), "Player was not holding a gun!");
 
         await Server.WaitAssertion(() =>
         {
-            var success = SGun.AttemptShoot(SPlayer, gunUid, gunComp!, Position(actualTarget!.Value), ToServer(actualTarget));
+            var success = SGun.AttemptShoot(SPlayer, gun, Position(actualTarget!.Value), ToServer(actualTarget));
             if (assert)
                 Assert.That(success, "Gun failed to shoot.");
         });
@@ -839,7 +839,7 @@ public abstract partial class InteractionTest
     /// <param name="uid">The entity at which the events were directed</param>
     /// <param name="count">How many new events are expected</param>
     /// <param name="predicate">A predicate that can be used to filter the recorded events</param>
-    protected void AssertEvent<TEvent>(EntityUid? uid = null, int count = 1, Func<TEvent,bool>? predicate = null)
+    protected void AssertEvent<TEvent>(EntityUid? uid = null, int count = 1, Func<TEvent, bool>? predicate = null)
         where TEvent : notnull
     {
         Assert.That(GetEvents(uid, predicate).Count, Is.EqualTo(count));
@@ -872,7 +872,7 @@ public abstract partial class InteractionTest
         where TEvent : notnull
     {
         if (_listenerCache.TryGetValue(typeof(TEvent), out var listener))
-            return (TestListenerSystem<TEvent>) listener;
+            return (TestListenerSystem<TEvent>)listener;
 
         var type = Server.Resolve<IReflectionManager>().GetAllChildren<TestListenerSystem<TEvent>>().Single();
         if (!SEntMan.EntitySysManager.TryGetEntitySystem(type, out var systemObj))

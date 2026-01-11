@@ -104,6 +104,14 @@
       path: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
 
 - type: entity
+  parent: [WeaponLauncherHydra]
+  id: WeaponLauncherHydraLethal
+  suffix: frag
+  components:
+  - type: RevolverAmmoProvider
+    proto: GrenadeFrag
+
+- type: entity
   name: RPG-7
   parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket
@@ -425,9 +433,6 @@
   description: It fires large meteors.
   components:
   - type: BallisticAmmoProvider
-    whitelist: # Redundant
-      tags:
-        - CartridgeRocket
     proto: MeteorMedium
 
 - type: entity
@@ -438,7 +443,4 @@
   description: It fires slow immovable rods.
   components:
   - type: BallisticAmmoProvider
-    whitelist: # Redundant
-      tags:
-        - CartridgeRocket
     proto: ImmovableRodSlow

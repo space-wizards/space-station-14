@@ -19,6 +19,7 @@ Don't forget containers to serve them in!
 <Box>
 <GuideEntityEmbed Entity="DrinkGlass" Caption="Glass"/>
 <GuideEntityEmbed Entity="DrinkGlassCoupeShaped"/>
+<GuideEntityEmbed Entity="DrinkShotGlass"/>
 <GuideEntityEmbed Entity="DrinkShaker"/>
 <GuideEntityEmbed Entity="DrinkJigger"/>
 </Box>
