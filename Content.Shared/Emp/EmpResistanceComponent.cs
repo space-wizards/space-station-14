@@ -14,5 +14,5 @@ public sealed partial class EmpResistanceComponent : Component
     ///     The proportion of the EMP effect that is resisted. 1.00 indicates full immunity while 0.00 indicates no resistance.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public FixedPoint2 Resistance;
+    public FixedPoint2 Resistance = FixedPoint2.Zero;
 }

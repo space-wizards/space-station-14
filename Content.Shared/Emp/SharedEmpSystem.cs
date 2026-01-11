@@ -6,6 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Emp;
 
@@ -158,7 +159,7 @@ public abstract class SharedEmpSystem : EntitySystem
 
     private void OnResistEmpAttempt(Entity<EmpResistanceComponent> ent, ref EmpAttemptEvent args)
     {
-        if (ent.Comp.Resistance == 1.00)
+        if (ent.Comp.Resistance >= 1)
             args.Cancelled = true;
     }
 
@@ -166,7 +167,10 @@ public abstract class SharedEmpSystem : EntitySystem
     {
         var empStrengthMultiplier = 1 - ent.Comp.Resistance;
 
-        args.Duration *= (double) empStrengthMultiplier;
+        if (empStrengthMultiplier <= 0)
+            return;
+
+        args.Duration *= (float) empStrengthMultiplier;
         args.EnergyConsumption *= (float) empStrengthMultiplier;
     }
 }
