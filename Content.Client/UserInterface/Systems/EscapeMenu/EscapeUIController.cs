@@ -32,6 +32,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     [UISystemDependency] private readonly GhostSystem _ghostSystem = default!;
 
     private Options.UI.EscapeMenu? _escapeWindow;
+    private AbandonCharacter? _abandonWindow;
 
     private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
 
@@ -84,8 +85,9 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.AbandonButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
-            var window = new AbandonCharacter();
-            window.OpenCentered();
+            if (_abandonWindow is not { IsOpen: true })
+                _abandonWindow = UIManager.CreateWindow<AbandonCharacter>();
+            _abandonWindow?.OpenCentered();
         };
 
         _escapeWindow.ChangelogButton.OnPressed += _ =>
