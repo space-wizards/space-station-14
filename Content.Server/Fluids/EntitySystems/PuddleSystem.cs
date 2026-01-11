@@ -446,7 +446,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         _color.RaiseEffect("HitFluid",
             targets,
-            Filter.Pvs(uid, entityManager: EntityManager),
+            Filter.Pvs(entity, entityManager: EntityManager),
             solution.GetColor(_prototypeManager));
 
         return TrySpillAt(coordinates, spilled, out puddleUid, sound);
