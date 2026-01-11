@@ -49,9 +49,7 @@ public sealed class SpraySystem : EntitySystem
         SubscribeLocalEvent<SprayComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<SprayComponent, UserActivateInWorldEvent>(OnActivateInWorld);
 
-        // CVar exists only on the server.
-        if (!_net.IsClient)
-            Subs.CVar(_cfg, CCVars.GridImpulseMultiplier, UpdateGridMassMultiplier, true);
+        Subs.CVar(_cfg, CCVars.GridImpulseMultiplier, value => _gridImpulseMultiplier = value, true);
     }
 
     private void SprayLiquid(SprayLiquidEvent ev)
@@ -102,11 +100,6 @@ public sealed class SpraySystem : EntitySystem
         var targetMapPos = _transform.GetMapCoordinates(GetEntityQuery<TransformComponent>().GetComponent(args.Target));
 
         Spray(entity, targetMapPos, args.User);
-    }
-
-    private void UpdateGridMassMultiplier(float value)
-    {
-        _gridImpulseMultiplier = value;
     }
 
     private void OnAfterInteract(Entity<SprayComponent> entity, ref AfterInteractEvent args)
