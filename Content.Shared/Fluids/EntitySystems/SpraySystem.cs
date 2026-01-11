@@ -24,7 +24,6 @@ namespace Content.Shared.Fluids.EntitySystems;
 
 public sealed class SpraySystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -173,9 +172,7 @@ public sealed class SpraySystem : EntitySystem
         var diffLength = diffPos.Length();
 
         if (diffLength > entity.Comp.SprayDistance)
-        {
             diffLength = entity.Comp.SprayDistance;
-        }
 
         var diffAngle = diffNorm.ToAngle();
 
@@ -186,77 +183,73 @@ public sealed class SpraySystem : EntitySystem
         var amount = Math.Max(Math.Min((solution.Volume / entity.Comp.TransferAmount).Int(), entity.Comp.VaporAmount), 1);
         var spread = entity.Comp.VaporSpread / amount;
 
-        // To avoid incorrect rotation predictions.
-        if (!_net.IsClient)
+        for (var i = 0; i < amount; i++)
         {
-            for (var i = 0; i < amount; i++)
+            var rotation = new Angle(diffAngle + Angle.FromDegrees(spread * i) -
+                                    Angle.FromDegrees(spread * (amount - 1) / 2));
+
+            // Calculate the destination for the vapor cloud. Limit to the maximum spray distance.
+            var target = sprayerMapPos
+                .Offset((diffNorm + rotation.ToVec()).Normalized() * diffLength + quarter);
+
+            var distance = (target.Position - sprayerMapPos.Position).Length();
+            if (distance > entity.Comp.SprayDistance)
+                target = sprayerMapPos.Offset(diffNorm * entity.Comp.SprayDistance);
+
+            var adjustedSolutionAmount = entity.Comp.TransferAmount / entity.Comp.VaporAmount;
+            var newSolution = _solutionContainer.SplitSolution(soln.Value, adjustedSolutionAmount);
+
+            if (newSolution.Volume <= FixedPoint2.Zero)
+                break;
+
+            // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
+            var vaporPos = sprayerMapPos.Offset(distance < 1 ? quarter : threeQuarters);
+            var vapor = EntityManager.PredictedSpawn(entity.Comp.SprayedPrototype, vaporPos);
+            var vaporXform = xformQuery.GetComponent(vapor);
+
+            _transform.SetWorldRotation(vaporXform, rotation);
+
+            if (TryComp(vapor, out AppearanceComponent? appearance))
             {
-                var rotation = new Angle(diffAngle + Angle.FromDegrees(spread * i) -
-                                        Angle.FromDegrees(spread * (amount - 1) / 2));
+                _appearance.SetData(vapor, VaporVisuals.Color, solution.GetColor(_proto).WithAlpha(1f), appearance);
+                _appearance.SetData(vapor, VaporVisuals.State, true, appearance);
+            }
 
-                // Calculate the destination for the vapor cloud. Limit to the maximum spray distance.
-                var target = sprayerMapPos
-                    .Offset((diffNorm + rotation.ToVec()).Normalized() * diffLength + quarter);
+            // Add the solution to the vapor and actually send the thing.
+            var vaporComponent = Comp<VaporComponent>(vapor);
+            var ent = (vapor, vaporComponent);
+            _vapor.TryAddSolution(ent, newSolution);
 
-                var distance = (target.Position - sprayerMapPos.Position).Length();
-                if (distance > entity.Comp.SprayDistance)
-                    target = sprayerMapPos.Offset(diffNorm * entity.Comp.SprayDistance);
+            // Impulse direction is defined in world-coordinates, not local coordinates.
+            var impulseDirection = rotation.ToVec();
+            var time = diffLength / entity.Comp.SprayVelocity;
 
-                var adjustedSolutionAmount = entity.Comp.TransferAmount / entity.Comp.VaporAmount;
-                var newSolution = _solutionContainer.SplitSolution(soln.Value, adjustedSolutionAmount);
+            _vapor.Start(ent, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
 
-                if (newSolution.Volume <= FixedPoint2.Zero)
-                    break;
+            var thingGettingPushed = entity.Owner;
+            if (_container.TryGetOuterContainer(entity, sprayerXform, out var container))
+                thingGettingPushed = container.Owner;
 
-                // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
-                var vaporPos = sprayerMapPos.Offset(distance < 1 ? quarter : threeQuarters);
-                var vapor = Spawn(entity.Comp.SprayedPrototype, vaporPos);
-                var vaporXform = xformQuery.GetComponent(vapor);
-
-                _transform.SetWorldRotation(vaporXform, rotation);
-
-                if (TryComp(vapor, out AppearanceComponent? appearance))
+            if (TryComp<PhysicsComponent>(thingGettingPushed, out var body))
+            {
+                if (_gravity.IsWeightless(thingGettingPushed))
                 {
-                    _appearance.SetData(vapor, VaporVisuals.Color, solution.GetColor(_proto).WithAlpha(1f), appearance);
-                    _appearance.SetData(vapor, VaporVisuals.State, true, appearance);
+                    // push back the player.
+                    _physics.ApplyLinearImpulse(thingGettingPushed, -impulseDirection * entity.Comp.PushbackAmount, body: body);
                 }
-
-                // Add the solution to the vapor and actually send the thing.
-                var vaporComponent = Comp<VaporComponent>(vapor);
-                var ent = (vapor, vaporComponent);
-                _vapor.TryAddSolution(ent, newSolution);
-
-                // impulse direction is defined in world-coordinates, not local coordinates.
-                // TODO: The vector must be the same for the server and client for accurate prediction.
-                var impulseDirection = rotation.ToVec();
-                var time = diffLength / entity.Comp.SprayVelocity;
-
-                _vapor.Start(ent, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
-
-                var thingGettingPushed = entity.Owner;
-                if (_container.TryGetOuterContainer(entity, sprayerXform, out var container))
-                    thingGettingPushed = container.Owner;
-
-                if (TryComp<PhysicsComponent>(thingGettingPushed, out var body))
+                else
                 {
-                    if (_gravity.IsWeightless(thingGettingPushed))
+                    // push back the grid the player is standing on.
+                    var userTransform = Transform(thingGettingPushed);
+                    if (userTransform.GridUid == userTransform.ParentUid)
                     {
-                        // push back the player.
-                        _physics.ApplyLinearImpulse(thingGettingPushed, -impulseDirection * entity.Comp.PushbackAmount, body: body);
-                    }
-                    else
-                    {
-                        // push back the grid the player is standing on.
-                        var userTransform = Transform(thingGettingPushed);
-                        if (userTransform.GridUid == userTransform.ParentUid)
-                        {
-                            // apply both linear and angular momentum depending on the player position.
-                            // multiply by a cvar because grid mass is currently extremely small compared to all other masses.
-                            _physics.ApplyLinearImpulse(userTransform.GridUid.Value, -impulseDirection * _gridImpulseMultiplier * entity.Comp.PushbackAmount, userTransform.LocalPosition);
-                        }
+                        // apply both linear and angular momentum depending on the player position.
+                        // multiply by a cvar because grid mass is currently extremely small compared to all other masses.
+                        _physics.ApplyLinearImpulse(userTransform.GridUid.Value, -impulseDirection * _gridImpulseMultiplier * entity.Comp.PushbackAmount, userTransform.LocalPosition);
                     }
                 }
             }
+
         }
 
         _audio.PlayPredicted(entity.Comp.SpraySound, entity, entity, entity.Comp.SpraySound.Params.WithVariation(0.125f));

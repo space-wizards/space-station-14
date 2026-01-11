@@ -44,7 +44,7 @@ internal sealed class VaporSystem : EntitySystem
             _reactive.DoEntityReaction(args.OtherEntity, solution, ReactionMethod.Touch);
         }
 
-        // Check for collision with a impassable object (e.g. wall) and stop
+        // Check for collision with a impassable object (e.g. wall) and stop.
         if ((args.OtherFixture.CollisionLayer & (int)CollisionGroup.Impassable) != 0 && args.OtherFixture.Hard)
         {
             PredictedQueueDel(entity);
@@ -63,9 +63,7 @@ internal sealed class VaporSystem : EntitySystem
         var despawn = EnsureComp<TimedDespawnComponent>(vapor);
         despawn.Lifetime = aliveTime;
 
-        Dirty(vapor);
-
-        // Set Move
+        // Set Move.
         if (TryComp(vapor, out PhysicsComponent? physics))
         {
             _physics.SetLinearDamping(vapor, physics, 0f);
@@ -77,6 +75,8 @@ internal sealed class VaporSystem : EntitySystem
             var time = distance / physics.LinearVelocity.Length();
             despawn.Lifetime = MathF.Min(aliveTime, time);
         }
+
+        Dirty(vapor);
     }
 
     internal bool TryAddSolution(Entity<VaporComponent> vapor, Solution solution)
@@ -100,15 +100,15 @@ internal sealed class VaporSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // Enumerate over all VaporComponents
+        // Enumerate over all <see cref="VaporComponent"/>s.
         var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var vaporComp, out var container, out var xform))
         {
-            // Return early if we're not active
+            // Return early if we're not active.
             if (!vaporComp.Active)
                 continue;
 
-            // Get the current location of the vapor entity first
+            // Get the current location of the vapor entity first.
             if (TryComp(xform.GridUid, out MapGridComponent? gridComp))
             {
                 var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
@@ -118,29 +118,29 @@ internal sealed class VaporSystem : EntitySystem
                 if (vaporComp.PreviousTileRef != null && tile == vaporComp.PreviousTileRef)
                     continue;
 
-                // Enumerate over all the reagents in the vapor entity solution
+                // Enumerate over all the reagents in the vapor entity solution.
                 foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
                 {
-                    // Iterate over the reagents in the solution
-                    // Reason: Each reagent in our solution may have a unique TileReaction
-                    // In this instance, we check individually for each reagent's TileReaction
+                    // Iterate over the reagents in the solution.
+                    // Reason: Each reagent in our solution may have a unique TileReaction.
+                    // In this instance, we check individually for each reagent's TileReaction.
                     // This is not doing chemical reactions!
                     var contents = soln.Comp.Solution;
                     foreach (var reagentQuantity in contents.Contents.ToArray())
                     {
-                        // Check if the reagent is empty
+                        // Check if the reagent is empty.
                         if (reagentQuantity.Quantity == FixedPoint2.Zero)
                             continue;
 
                         var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
 
                         // Limit the reaction amount to a minimum value to ensure no floating point funnies.
-                        // Ex: A solution with a low percentage transfer amount will slowly approach 0.01... and never get deleted
+                        // Ex: A solution with a low percentage transfer amount will slowly approach 0.01... and never get deleted.
                         var clampedAmount = Math.Max(
                             (float)reagentQuantity.Quantity * vaporComp.TransferAmountPercentage,
                             vaporComp.MinimumTransferAmount);
 
-                        // Preform the reagent's TileReaction
+                        // Preform the reagent's TileReaction.
                         var reaction =
                             reagent.ReactionTile(tile,
                                 clampedAmount,
@@ -153,13 +153,13 @@ internal sealed class VaporSystem : EntitySystem
                         _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
                     }
 
-                    // Delete the vapor entity if it has no contents
+                    // Delete the vapor entity if it has no contents.
                     if (contents.Volume == 0)
                         PredictedQueueDel(uid);
 
                 }
 
-                // Set the previous tile reference to the current tile
+                // Set the previous tile reference to the current tile.
                 vaporComp.PreviousTileRef = tile;
             }
         }
