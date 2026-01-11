@@ -32,9 +32,14 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
     {
         base.UpdateInternal(component);
 
-        DamageContainers = component.Components
-            .SelectMany(x => x.DamageContainers.Select(proto => proto.Id))
-            .ToHashSet();
+        DamageContainers.Clear();
+        foreach (var comp in component.Components)
+        {
+            foreach (var damageContainerId in comp.DamageContainers)
+            {
+                DamageContainers.Add(damageContainerId);
+            }
+        }
     }
 
     protected override void DeactivateInternal()
