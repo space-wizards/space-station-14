@@ -5,7 +5,6 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
 using Content.Shared.CCVar;
-using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
