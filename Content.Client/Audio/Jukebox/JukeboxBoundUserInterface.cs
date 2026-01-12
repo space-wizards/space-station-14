@@ -56,7 +56,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (_menu == null || !EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox))
             return;
 
-        _menu.SetAudioStream(EntMan.Resolve(jukebox.AudioStream));
+        _menu.SetAudioStream(EntMan.TryGetEntity(jukebox.AudioStream, out var ent) ? ent : null);
 
         if (_protoManager.Resolve(jukebox.SelectedSongId, out var songProto))
         {
@@ -90,7 +90,8 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         // Using ping gets us close enough that it SHOULD, MOST OF THE TIME, fall within the 0.1 second tolerance
         // that's still on engine so our playback position never gets corrected.
         if (EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox) &&
-            EntMan.TryGetComponent(EntMan.Resolve(jukebox.AudioStream), out AudioComponent? audioComp))
+            EntMan.TryGetEntity(jukebox.AudioStream, out var audioEnt) &&
+            EntMan.TryGetComponent(audioEnt, out AudioComponent? audioComp))
         {
             audioComp.PlaybackPosition = time;
         }

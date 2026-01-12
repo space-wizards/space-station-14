@@ -13,7 +13,7 @@ public sealed partial class JukeboxComponent : Component
     public ProtoId<JukeboxPrototype>? SelectedSongId;
 
     [DataField, AutoNetworkedField]
-    public WeakEntityReference? AudioStream;
+    public WeakEntityReference AudioStream;
 
     /// <summary>
     /// RSI state for the jukebox being on.

@@ -11,6 +11,6 @@ public abstract class SharedJukeboxSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
-        return entity.Comp.AudioStream is { } audio && Audio.IsPlaying(Resolve(audio));
+        return Audio.IsPlaying(TryGetEntity(entity.Comp.AudioStream, out var audio) ? audio : null);
     }
 }
