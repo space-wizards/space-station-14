@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Speed boots no longer affect crawling speed.
-    type: Remove
-  - message: Moon boots don't work unless you're standing
-    type: Tweak
-  id: 8872
-  time: '2025-08-20T11:08:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39648
 - author: Kowlin
   changes:
   - message: Fixed Syndicate tricky grenades not playing sounds on explosion.
@@ -3890,3 +3881,10 @@
   id: 9375
   time: '2026-01-11T21:46:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42363
+- author: Velken
+  changes:
+  - message: Fixed description for "help osay" command
+    type: Fix
+  id: 9376
+  time: '2026-01-12T03:04:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42368
