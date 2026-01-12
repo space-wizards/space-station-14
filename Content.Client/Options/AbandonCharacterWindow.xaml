@@ -4,25 +4,28 @@
                 xmlns:system="clr-namespace:System;assembly=System.Runtime"
                 Title="{Loc 'abandon-character-window-title'}"
                 Resizable="False" >
-    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="12 6 12 6">
-        <Label Name="Description" Text="{Loc 'abandon-character-warning'}" VerticalAlignment="Top"/>
-        <Control HorizontalExpand="True" HorizontalAlignment="Stretch">
-            <BoxContainer Margin="5" HorizontalAlignment="Center" Align="Center" >
-                <cc:CommandButton Name="SuicideButton" Command="suicide" Text="{Loc 'sandbox-window-toggle-suicide-button'}" >
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="24 12 24 12" >
+        <Label Name="Description" Text="{Loc 'abandon-character-warning'}" VerticalAlignment="Top" Margin="10" />
+        <BoxContainer VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" Margin="10" >
+            <!-- Dummy control to take up space, allowing for
+                following controls to be aligned to the center and right of window -->
+            <Control HorizontalExpand="True" />
+            <BoxContainer HorizontalExpand="True" >
+                <cc:CommandButton Name="SuicideButton" HorizontalExpand="True" Command="suicide" Text="{Loc 'sandbox-window-toggle-suicide-button'}" >
                     <cc:CommandButton.StyleClasses>
                         <system:String>OpenRight</system:String>
                         <system:String>negative</system:String>
                     </cc:CommandButton.StyleClasses>
                 </cc:CommandButton>
                 <controls:VSpacer Spacing="2" />
-                <cc:CommandButton Name="GhostButton" Command="ghost" Text="{Loc 'sandbox-window-ghost-button'}" >
+                <cc:CommandButton Name="GhostButton" HorizontalExpand="True" Command="ghost" Text="{Loc 'sandbox-window-ghost-button'}" >
                     <cc:CommandButton.StyleClasses>
                         <system:String>OpenLeft</system:String>
                         <system:String>negative</system:String>
                     </cc:CommandButton.StyleClasses>
                 </cc:CommandButton>
             </BoxContainer>
-            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" Margin="5" HorizontalExpand="True" HorizontalAlignment="Right"/>
-        </Control>
+            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}" HorizontalExpand="True" HorizontalAlignment="Right" />
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
