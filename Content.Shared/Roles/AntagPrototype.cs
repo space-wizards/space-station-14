@@ -56,4 +56,12 @@ public sealed partial class AntagPrototype : IPrototype
     /// </summary>
     [DataField]
     public List<ProtoId<GuideEntryPrototype>>? Guides;
+
+    /// <summary>
+    /// If this is not null, this antag will be allowed to be displayed on the character customization screen if that
+    /// character has no jobs selected.
+    /// This set of starting gear will be applied to the dummy entity.
+    /// </summary>
+    [DataField]
+    public ProtoId<StartingGearPrototype>? PreviewStartingGear;
 }

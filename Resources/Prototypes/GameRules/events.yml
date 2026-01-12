@@ -241,6 +241,7 @@
     - spawnerPrototype: SpawnPointGhostSpaceNinja
       min: 1
       max: 1
+      prefRoles: [ SpaceNinja ]
       pickPlayer: false
       startingGear: SpaceNinjaGear
       roleLoadout:
@@ -578,6 +579,7 @@
     - spawnerPrototype: SpawnPointLoneNukeOperative
       min: 1
       max: 1
+      prefRoles: [ Nukeops ]
       pickPlayer: false
       startingGear: SyndicateLoneOperativeGearFull
       roleLoadout:

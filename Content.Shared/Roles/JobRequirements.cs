@@ -17,7 +17,7 @@ public static class JobRequirements
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public static bool TryRequirementsMet(
         JobPrototype job,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason,
         IEntityManager entManager,
         IPrototypeManager protoManager,
@@ -37,7 +37,7 @@ public static class JobRequirements
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public static bool TryRequirementsMet(
         HashSet<JobRequirement>? requirements,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason,
         IEntityManager entManager,
         IPrototypeManager protoManager,
@@ -55,6 +55,21 @@ public static class JobRequirements
 
         return true;
     }
+
+    public static bool TryRequirementsMet(
+        ProtoId<JobPrototype> job,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
+        [NotNullWhen(false)] out FormattedMessage? reason,
+        IEntityManager entManager,
+        IPrototypeManager protoManager,
+        HumanoidCharacterProfile? profile)
+    {
+        if (protoManager.TryIndex(job, out var jobProto))
+            return TryRequirementsMet(jobProto, playTimes, out reason, entManager, protoManager, profile);
+
+        reason = FormattedMessage.FromUnformatted("Failed to get job prototype");
+        return false;
+    }
 }
 
 /// <summary>
@@ -71,6 +86,6 @@ public abstract partial class JobRequirement
         IEntityManager entManager,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason);
 }

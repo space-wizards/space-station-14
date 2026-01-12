@@ -21,14 +21,15 @@ public sealed class AntagMultipleRoleSpawnerSystem : EntitySystem
 
     private void OnSelectEntity(Entity<AntagMultipleRoleSpawnerComponent> ent, ref AntagSelectEntityEvent args)
     {
+        var antagRoles = args.Def.PrefRoles;
         // If its more than one the logic breaks
-        if (args.AntagRoles.Count != 1)
+        if (antagRoles.Count != 1)
         {
-            _sawmill.Fatal($"Antag multiple role spawner had more than one antag ({args.AntagRoles.Count})");
+            _sawmill.Fatal($"Antag multiple role spawner had more than one antag ({antagRoles.Count})");
             return;
         }
 
-        var role = args.AntagRoles[0];
+        var role = antagRoles[0];
 
         var entProtos = ent.Comp.AntagRoleToPrototypes[role];
 

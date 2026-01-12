@@ -9,6 +9,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -72,6 +73,33 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         var root = yamlStream.Documents[0].RootNode;
         var export = _serManager.Read<HumanoidProfileExport>(root.ToDataNode(), notNullableOverride: true);
+
+        switch (export.Version)
+        {
+            // Converting version 1 profile to version 2
+            // In Version 1, characters had job priorities -- so each job had priorities ranging from Never to High.
+            // A dictionary represented these priorities, the keys being the job ID, and the value being the priority.
+            // If a job was not represented in the dictionary, it was assumed to be Never.
+            // In Version 2, job priorities are now a job "preference", each job is just "yes" or "no".
+            // These preferences are represented as a hash set of jobs selected as "yes"
+            // Jobs not represented in the hash set are assumed to be "no".
+            case 1:
+                // Pull out the old job priorities dictionary
+                var jobPriorities = root["profile"]["_jobPriorities"] as YamlMappingNode ?? new YamlMappingNode();
+                var jobPreferences = new HashSet<ProtoId<JobPrototype>>();
+                foreach (var (job, prio) in jobPriorities)
+                {
+                    if (!_proto.TryIndex<JobPrototype>(job.AsString(), out var jobProto))
+                        continue;
+                    // If a job isn't set to "never", we add it to the hash set as an enabled job preference
+                    if (prio.AsEnum<JobPriority>() != JobPriority.Never)
+                        jobPreferences.Add(jobProto);
+                }
+
+                // Tack on the new job preferences and proceed normally.
+                export.Profile = export.Profile.WithJobPreferences(jobPreferences);
+                break;
+        }
 
         /*
          * Add custom handling here for forks / version numbers if you care.
@@ -393,6 +421,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
         }
 
+        SaveBaseProfile((uid, humanoid), profile);
+
         SetSpecies(uid, profile.Species, false, humanoid);
         SetSex(uid, profile.Sex, false, humanoid);
         humanoid.EyeColor = profile.Appearance.EyeColor;
@@ -462,6 +492,30 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Age = profile.Age;
 
         Dirty(uid, humanoid);
+    }
+
+    /// <summary>
+    /// Save the humanoid profile used to create this entity
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="profile"></param>
+    private void SaveBaseProfile(Entity<HumanoidAppearanceComponent?> ent, HumanoidCharacterProfile profile)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.BaseProfile = profile.Clone();
+    }
+
+    /// <summary>
+    /// Retrieve the humanoid profile used to create this entity, or null if no profile was used to spawn this entity.
+    /// </summary>
+    public HumanoidCharacterProfile? GetBaseProfile(Entity<HumanoidAppearanceComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        return ent.Comp.BaseProfile;
     }
 
     /// <summary>
