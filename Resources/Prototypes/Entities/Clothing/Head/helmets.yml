@@ -229,6 +229,21 @@
     layers:
       Hair: HEAD
 
+#Non-decorative Knight Helmet
+- type: entity
+  parent: ClothingHeadHelmetTemplar
+  id: ClothingHeadHelmetTemplarReal
+  description: Functional helmet fashioned to resemble the knights of old.
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85
+        Shock: 1.2
+
 #Thunderdome Helmet
 - type: entity
   parent: ClothingHeadHelmetBase

@@ -1,0 +1,41 @@
+# Recipes
+
+- type: latheRecipe
+  id: Claymore
+  result: Claymore
+  completetime: 6
+  materials:
+    Steel: 800
+
+- type: latheRecipe
+  id: Cutlass
+  result: Cutlass
+  completetime: 4
+  materials:
+    Steel: 600
+
+- type: latheRecipe
+  id: BowImprovised
+  result: BowImprovised
+  completetime: 4
+  materials:
+    Wood: 500
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingHeadHelmetTemplarReal
+  result: ClothingHeadHelmetTemplarReal
+  completetime: 4
+  materials:
+    Steel: 800
+
+- type: latheRecipe #Slightly cheaper than making them by hand
+  id: ArrowImprovised
+  result: ArrowImprovised
+  completetime: 1
+  materials:
+    Steel: 50
+    Glass: 50
+    Cloth: 50
+
+

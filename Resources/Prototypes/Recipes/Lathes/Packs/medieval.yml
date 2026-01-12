@@ -1,0 +1,10 @@
+## Static
+
+- type: latheRecipePack
+  id: Medieval
+  recipes:
+  - Claymore
+  - Cutlass
+  - BowImprovised
+  - ClothingHeadHelmetTemplarReal
+  - ArrowImprovised

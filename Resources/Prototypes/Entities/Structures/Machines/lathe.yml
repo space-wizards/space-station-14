@@ -469,6 +469,9 @@
     - SurgeryStatic
     dynamicPacks:
     - Chemistry
+  - type: EmagLatheRecipes
+    emagStaticPacks: #Because Med + Evil
+    - Medieval
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget
