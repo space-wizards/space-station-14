@@ -15,7 +15,6 @@
   - type: GravityAffected
   - type: Physics
     bodyType: Dynamic
-    linearDamping: 0
   - type: TileFrictionModifier
     modifier: 0
   - type: PointLight
@@ -41,16 +40,16 @@
       - GhostOnlyWarp
 
 - type: entity
+  parent: ImmovableRod
   id: ImmovableRodDespawn
   suffix: Despawn
-  parent: ImmovableRod
   components:
   - type: TimedDespawn
     lifetime: 30.0
 
 - type: entity
-  id: ImmovableRodSlow
   parent: ImmovableRodDespawn
+  id: ImmovableRodSlow
   suffix: Slow
   components:
   - type: ImmovableRod
