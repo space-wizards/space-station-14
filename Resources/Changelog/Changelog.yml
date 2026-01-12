@@ -1,50 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Being a Lightweight drunk no longer extends your bloodloss
-    type: Fix
-  id: 8867
-  time: '2025-08-18T20:26:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38678
-- author: SlamBamActionman
-  changes:
-  - message: Auto-injector/medipen pop-ups now show the correct identity when injecting
-      someone else.
-    type: Fix
-  id: 8868
-  time: '2025-08-18T20:42:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39735
-- author: Winkarst-cpu
-  changes:
-  - message: Meat spikes got an overhaul.
-    type: Tweak
-  id: 8869
-  time: '2025-08-19T17:56:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38723
-- author: Princess-Cheeseballs
-  changes:
-  - message: You can no longer crawl while weightless.
-    type: Fix
-  id: 8870
-  time: '2025-08-19T19:18:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39099
-- author: Nox38
-  changes:
-  - message: Buffed the Librarian cane sword's damage and price to be more competitive.
-      Damage 15 -> 17 slash, TC cost 5 -> 3
-    type: Tweak
-  id: 8871
-  time: '2025-08-19T20:31:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39586
-- author: Princess-Cheeseballs
-  changes:
-  - message: Speed boots no longer affect crawling speed.
-    type: Remove
-  - message: Moon boots don't work unless you're standing
-    type: Tweak
-  id: 8872
-  time: '2025-08-20T11:08:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39648
 - author: Kowlin
   changes:
   - message: Fixed Syndicate tricky grenades not playing sounds on explosion.
@@ -3889,3 +3843,48 @@
   id: 9370
   time: '2026-01-09T23:24:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42326
+- author: Solid_Syn, BeckT
+  changes:
+  - message: Clowns now have the ability to toggle the wig on their mask!
+    type: Tweak
+  id: 9371
+  time: '2026-01-10T17:01:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42208
+- author: BarryNorfolk
+  changes:
+  - message: Network configurators now properly show colours between objects again.
+    type: Fix
+  id: 9372
+  time: '2026-01-10T20:09:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42335
+- author: ScarKy0
+  changes:
+  - message: Examining the state of dead entities is now predicted.
+    type: Fix
+  id: 9373
+  time: '2026-01-10T23:16:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42253
+- author: ScarKy0
+  changes:
+  - message: Janitor Cyborg's modules now feature a wirebrush.
+    type: Tweak
+  - message: The spray in the advanced cleaning module now self refills with space
+      cleaner, but has been halved in volume.
+    type: Tweak
+  id: 9374
+  time: '2026-01-11T04:19:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42330
+- author: SlamBamActionman
+  changes:
+  - message: Added an admin log for whenever a player connects/disconnects.
+    type: Add
+  id: 9375
+  time: '2026-01-11T21:46:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42363
+- author: Velken
+  changes:
+  - message: Fixed description for "help osay" command
+    type: Fix
+  id: 9376
+  time: '2026-01-12T03:04:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42368
