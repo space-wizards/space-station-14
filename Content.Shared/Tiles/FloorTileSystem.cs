@@ -205,8 +205,6 @@ public sealed class FloorTileSystem : EntitySystem
         _audio.PlayPredicted(placeSound, location, user);
     }
 
-
-
     public bool CanPlaceTile(EntityUid gridUid, MapGridComponent component, Vector2i gridIndices, [NotNullWhen(false)] out string? reason)
     {
         var ev = new FloorTileAttemptEvent(gridIndices);
