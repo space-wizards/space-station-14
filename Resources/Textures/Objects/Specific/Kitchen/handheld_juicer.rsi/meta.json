@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-4.0",
-    "copyright": "Created by TheShuEd (Github), edited into a juicer by ScarKy0(GitHub)",
+    "copyright": "Created by TheShuEd (Github), edited into a juicer and inhands by ScarKy0(GitHub)",
     "states": [
         {
             "name": "full"
@@ -33,6 +33,22 @@
         },
         {
             "name": "makeshift_base"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "makeshift-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "makeshift-inhand-left",
+            "directions": 4
         }
     ]
 }

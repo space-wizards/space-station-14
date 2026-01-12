@@ -76,6 +76,12 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: makeshift-inhand-left
+      right:
+      - state: makeshift-inhand-right
   - type: HandheldGrinder
     doAfterDuration: 6
   - type: Construction
@@ -116,6 +122,12 @@
       state: fill-1
       visible: false
     - state: cap
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: makeshift-inhand-left
+      right:
+      - state: makeshift-inhand-right
   - type: HandheldGrinder
     doAfterDuration: 6
   - type: Construction
@@ -135,6 +147,11 @@
     - state: makeshift_base
   - type: Item
     size: Normal
+    inhandVisuals:
+      left:
+      - state: makeshift-inhand-left
+      right:
+      - state: makeshift-inhand-right
   - type: Construction
     graph: MakeshiftMortarAndPestle
     node: incompleteMortarAndPestle
@@ -151,6 +168,11 @@
     - state: makeshift_base
   - type: Item
     size: Normal
+    inhandVisuals:
+      left:
+      - state: makeshift-inhand-left
+      right:
+      - state: makeshift-inhand-right
   - type: Construction
     graph: MakeshiftJuicer
     node: incompleteJuicer
