@@ -161,7 +161,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             ent.Comp.AudioStream = GetWeakReference(Audio.Stop(audioStream));
 
             if (string.IsNullOrEmpty(ent.Comp.SelectedSongId) ||
-                !_protoManager.TryIndex(ent.Comp.SelectedSongId, out var jukeboxProto))
+                !_protoManager.Resolve(ent.Comp.SelectedSongId, out var jukeboxProto))
             {
                 return false;
             }

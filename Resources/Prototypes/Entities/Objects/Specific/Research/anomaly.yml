@@ -6,7 +6,26 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi
-    state: icon
+    layers:
+      - state: icon
+        map: ["enum.AnomalyScannerVisualLayers.Base"]
+      - map: ["enum.AnomalyScannerVisualLayers.Screen"]
+        visible: false
+        shader: unshaded
+      - state: severity_mask
+        map: ["enum.AnomalyScannerVisualLayers.SeverityMask"]
+        visible: false
+        shader: unshaded
+      - map: ["enum.AnomalyScannerVisualLayers.Stability"]
+        visible: false
+        shader: unshaded
+      - visible: false
+        map: ["enum.AnomalyScannerVisualLayers.Pulse"]
+        shader: unshaded
+      - state: supercritical
+        map: ["enum.AnomalyScannerVisualLayers.Supercritical"]
+        shader: unshaded
+        visible: false
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
     requireActiveHand: false
@@ -15,7 +34,35 @@
     interfaces:
       enum.AnomalyScannerUiKey.Key:
         type: AnomalyScannerBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnomalyScannerVisuals.HasAnomaly:
+        enum.AnomalyScannerVisualLayers.Screen:
+          True: { visible: true }
+          False: { visible: false }
+        enum.AnomalyScannerVisualLayers.SeverityMask:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AnomalyScannerVisuals.AnomalyStability:
+        enum.AnomalyScannerVisualLayers.Stability:
+          Stable: { visible: false }
+          Decaying: { visible: true, state: decaying }
+          Growing: { visible: true, state: growing }
+      enum.AnomalyScannerVisuals.AnomalyNextPulse:
+        enum.AnomalyScannerVisualLayers.Pulse:
+          0: { visible: false }
+          1: { visible: true, state: timer_1 }
+          2: { visible: true, state: timer_2 }
+          3: { visible: true, state: timer_3 }
+          4: { visible: true, state: timer_4 }
+          5: { visible: true, state: timer_5 }
+      enum.AnomalyScannerVisuals.AnomalyIsSupercritical:
+        enum.AnomalyScannerVisualLayers.Supercritical:
+          True: { visible: true }
+          False: { visible: false }
   - type: AnomalyScanner
+  - type: AnomalyScannerScreen
   - type: GuideHelp
     guides:
     - ScannersAndVessels
@@ -67,7 +114,7 @@
   components:
   - type: PowerCellDraw
     drawRate: 1
-    useRate: 0
+    useCharge: 0
   - type: ToggleCellDraw
 
 - type: entity
@@ -102,7 +149,7 @@
   components:
   - type: PowerCellDraw
     drawRate: 1
-    useRate: 0
+    useCharge: 0
   - type: ToggleCellDraw
 
 - type: entity
@@ -141,7 +188,7 @@
       path: "/Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg"
   - type: CorePoweredThrower
   - type: MeleeThrowOnHit
-    unanchorOnHit: true
+    unanchorOnHit: Unanchorable
   - type: ItemSlots
     slots:
       core_slot:
