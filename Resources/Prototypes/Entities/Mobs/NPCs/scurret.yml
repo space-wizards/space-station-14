@@ -157,7 +157,7 @@
   parent: MobBaseScurret
   id: MobScurret
   name: scurret
-  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of the "loyal workforce" of Arnolds's Pizza.
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of the "loyal workforce" of Arnold's Pizza.
   components:
   # The have a rich culture
   - type: RandomMetadata
@@ -205,4 +205,4 @@
 - type: entity
   parent: [ MobScurret, MobBaseEmotionalSupportScurret ]
   id: MobEmotionalSupportScurret
-  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of the "loyal workforce" of Arnolds's Pizza. This one is here as a temp.
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of the "loyal workforce" of Arnold's Pizza. This one is here as a temp.

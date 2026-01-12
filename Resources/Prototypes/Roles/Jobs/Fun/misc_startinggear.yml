@@ -114,6 +114,7 @@
   id: EmotionalSupportScurretGear
   equipment:
     id: ScurretPDA
+    ears: ClothingHeadsetGrey
 
 # DeathMatch Gear
 
