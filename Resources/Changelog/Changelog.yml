@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TrixxedHeart
-  changes:
-  - message: Added the Impaired Mobility disability trait which reduces movement speed
-      unless using a mobility aid such as a cane and increases stand-up time.
-    type: Add
-  id: 8874
-  time: '2025-08-21T00:43:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39398
 - author: TheFlyingSentry
   changes:
   - message: 'Added a new trait: Hemophilia!'
@@ -3891,3 +3883,10 @@
   id: 9377
   time: '2026-01-12T21:10:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42123
+- author: chaisftw
+  changes:
+  - message: Spray bottles now have fill level sprites.
+    type: Add
+  id: 9378
+  time: '2026-01-12T22:14:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42155
