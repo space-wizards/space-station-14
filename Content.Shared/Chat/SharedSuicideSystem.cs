@@ -81,7 +81,7 @@ public abstract class SharedSuicideSystem : EntitySystem
     {
         _mindSystem.GetMind(uid, out var mind);
 
-        return mind is not { PreventSuicide: true } && !_mobStateSystem.IsDead(uid) && !HasComp<AdminFrozenComponent>(uid) &&
+        return mind is { PreventSuicide: false, PreventGhosting: false } && !_mobStateSystem.IsDead(uid) && !HasComp<AdminFrozenComponent>(uid) &&
                TryComp<TagComponent>(uid, out var tag) && !_tagSystem.HasTag(tag, CannotSuicideTag);
     }
 }

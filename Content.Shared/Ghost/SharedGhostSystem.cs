@@ -107,7 +107,7 @@ namespace Content.Shared.Ghost
         public bool CanGhost(EntityUid uid)
         {
             _mindSystem.GetMind(uid, out var mind);
-            return mind is not { PreventGhosting: true } && !HasComp<AdminFrozenComponent>(uid);
+            return mind is { PreventSuicide: false, PreventGhosting: false } && !HasComp<AdminFrozenComponent>(uid);
         }
     }
 
