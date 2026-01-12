@@ -148,7 +148,7 @@
 - type: entity
   parent: MegaSprayBottle
   id: BorgMegaSprayBottle
-  name: adv. internal spray jet
+  name: advanced internal spray jet
   suffix: Filled
   description: An upgraded version of the integrated spray bottle, installed directly into a custodial cyborg. Capable of creating space cleaner from moisture in the air.
   components:
