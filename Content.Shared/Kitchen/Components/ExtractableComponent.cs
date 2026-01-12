@@ -20,6 +20,6 @@ public sealed partial class ExtractableComponent : Component
     /// <summary>
     /// The reagents to transfer into the beaker when the grinder is set to grind mode.
     /// </summary>
-    [DataField("grindableSolutionName")]
+    [DataField]
     public string? GrindableSolutionName;
 };

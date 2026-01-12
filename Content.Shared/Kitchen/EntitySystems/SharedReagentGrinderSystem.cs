@@ -235,9 +235,12 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     /// </summary>
     private void FinishGrinding(Entity<ReagentGrinderComponent> ent)
     {
-        ent.Comp.AudioStream = _audioSystem.Stop(ent.Comp.AudioStream);
-        var program = ent.Comp.Program;
+        if (ent.Comp.Program is not { } program)
+            return; // Already finished.
+
         ent.Comp.Program = null;
+
+        ent.Comp.AudioStream = _audioSystem.Stop(ent.Comp.AudioStream);
         ent.Comp.EndTime = null;
         Dirty(ent);
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);
@@ -248,7 +251,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
         foreach (var item in ent.Comp.InputContainer.ContainedEntities.ToList())
         {
-            var solution = GetGrinderSolution(item, active.Program);
+            var solution = GetGrinderSolution(item, program);
 
             if (solution is null)
                 continue;
@@ -271,7 +274,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
                 scaledSolution.ScaleSolution(fitsCount);
                 solution = scaledSolution;
 
-                _stackSystem.SetCount(item, stack.Count - fitsCount); // Setting to 0 will QueueDel
+                _stackSystem.SetCount((item, stack), stack.Count - fitsCount); // Setting to 0 will QueueDel
             }
             else
             {
@@ -300,7 +303,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         switch (program)
         {
             case GrinderProgram.Grind:
-                if (_solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolution, out _, out var solution))
+                if (_solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolutionName, out _, out var solution))
                 {
                     return solution;
                 }
@@ -322,10 +325,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (ent.Comp.GrindableSolution == null)
+        if (ent.Comp.GrindableSolutionName == null)
             return false;
 
-        return _solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolution, out _, out _);
+        return _solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolutionName, out _, out _);
     }
 
     /// <summary>
