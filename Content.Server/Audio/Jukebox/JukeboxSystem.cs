@@ -99,7 +99,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnComponentShutdown(Entity<JukeboxComponent> ent, ref ComponentShutdown args)
     {
-        ent.Comp.AudioStream = (WeakEntityReference)Audio.Stop(TryGetEntity(ent.Comp.AudioStream, out var audioEnt) ? audioEnt : null);
+        Audio.Stop(TryGetEntity(ent.Comp.AudioStream, out var audioEnt) ? audioEnt : null);
+        ent.Comp.AudioStream = new WeakEntityReference();
     }
 
     private void DirectSetVisualState(EntityUid uid, JukeboxVisualState state)
@@ -136,7 +137,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             ent.Comp.SelectedSongId = track;
             DirectSetVisualState(ent, JukeboxVisualState.Select);
             ent.Comp.Selecting = true;
-            ent.Comp.AudioStream = (WeakEntityReference)Audio.Stop(audioStream);
+            ent.Comp.AudioStream = new WeakEntityReference();
+            Audio.Stop(audioStream);
         }
 
         Dirty(ent);
@@ -166,7 +168,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 return false;
             }
 
-            ent.Comp.AudioStream = (WeakEntityReference)Audio.PlayPvs(jukeboxProto.Path, ent, AudioParams.Default.WithMaxDistance(10f))?.Entity;
+            ent.Comp.AudioStream = (WeakEntityReference)(Audio.PlayPvs(jukeboxProto.Path, ent, AudioParams.Default.WithMaxDistance(10f))?.Entity ?? EntityUid.Invalid);
             Dirty(ent);
         }
         return true;
