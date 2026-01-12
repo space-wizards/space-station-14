@@ -216,6 +216,9 @@ public sealed class TileSystem : EntitySystem
                 history.ChunkHistory[chunkIndices] = chunk;
             }
 
+            chunk.LastModified = _timing.CurTick;
+            Dirty(grid, history);
+
             //Create stack if needed
             if (!chunk.History.TryGetValue(key, out var stack))
             {
@@ -226,9 +229,6 @@ public sealed class TileSystem : EntitySystem
             //Prevent the doomstack
             if (stack.Count >= _tileStackLimit && _tileStackLimit != 0)
                 return false;
-
-            chunk.LastModified = _timing.CurTick;
-            Dirty(grid, history);
 
             //Push current tile to the stack, if not empty
             if (!tileref.Tile.IsEmpty)
