@@ -565,6 +565,24 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(nyanify);
 
+            var barkifyName = Loc.GetString("admin-smite-barkify-name").ToLowerInvariant();
+            Verb barkify = new()
+            {
+                Text = barkifyName,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/dogears.rsi"), "icon"),
+                Act = () =>
+                {
+                    var ears = Spawn("ClothingHeadHatDogEars", Transform(args.Target).Coordinates);
+                    EnsureComp<UnremoveableComponent>(ears);
+                    _inventorySystem.TryUnequip(args.Target, "head", true, true, false, inventory);
+                    _inventorySystem.TryEquip(args.Target, ears, "head", true, true, false, inventory);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", barkifyName, Loc.GetString("admin-smite-barkify-description"))
+            };
+            args.Verbs.Add(barkify);
+
             var killSignName = Loc.GetString("admin-smite-kill-sign-name").ToLowerInvariant();
             Verb killSign = new()
             {

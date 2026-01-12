@@ -255,7 +255,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatDogEars
   name: doggy ears
-  description: Only for good boys.
+  description: WOOF!!
   categories: [ DoNotMap ]
   components:
   - type: Sprite
