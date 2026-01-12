@@ -38,15 +38,37 @@ public sealed class TileSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<GridInitializeEvent>(OnGridStartup);
         SubscribeLocalEvent<TileHistoryComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<TileHistoryComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<TileHistoryComponent, FloorTileAttemptEvent>(OnFloorTileAttempt);
 
         _cfg.OnValueChanged(CCVars.TileStackLimit, t => _tileStackLimit = t, true);
     }
 
+    private void OnHandleState(EntityUid uid, TileHistoryComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not TileHistoryState state && args.Current is not TileHistoryDeltaState)
+            return;
+
+        if (args.Current is TileHistoryState fullState)
+        {
+            component.ChunkHistory.Clear();
+            foreach (var (key, value) in fullState.ChunkHistory)
+            {
+                component.ChunkHistory[key] = new TileHistoryChunk(value);
+            }
+
+            return;
+        }
+
+        if (args.Current is TileHistoryDeltaState deltaState)
+        {
+            deltaState.ApplyToComponent(component);
+        }
+    }
+
     private void OnGetState(EntityUid uid, TileHistoryComponent component, ref ComponentGetState args)
     {
-        // Should this be a full component state or a delta-state?
-        if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
+        if (args.FromTick <= component.ForceTick)
         {
             var fullHistory = new Dictionary<Vector2i, TileHistoryChunk>(component.ChunkHistory.Count);
             foreach (var (key, value) in component.ChunkHistory)
@@ -194,9 +216,6 @@ public sealed class TileSystem : EntitySystem
                 history.ChunkHistory[chunkIndices] = chunk;
             }
 
-            chunk.LastModified = _timing.CurTick;
-            Dirty(grid, history);
-
             //Create stack if needed
             if (!chunk.History.TryGetValue(key, out var stack))
             {
@@ -207,6 +226,9 @@ public sealed class TileSystem : EntitySystem
             //Prevent the doomstack
             if (stack.Count >= _tileStackLimit && _tileStackLimit != 0)
                 return false;
+
+            chunk.LastModified = _timing.CurTick;
+            Dirty(grid, history);
 
             //Push current tile to the stack, if not empty
             if (!tileref.Tile.IsEmpty)

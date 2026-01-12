@@ -61,6 +61,26 @@ public sealed class TileHistoryDeltaState : ComponentState, IComponentDeltaState
         }
     }
 
+    public void ApplyToComponent(TileHistoryComponent component)
+    {
+        var toRemove = new List<Vector2i>();
+        foreach (var key in component.ChunkHistory.Keys)
+        {
+            if (!AllHistoryChunks.Contains(key))
+                toRemove.Add(key);
+        }
+
+        foreach (var key in toRemove)
+        {
+            component.ChunkHistory.Remove(key);
+        }
+
+        foreach (var (indices, chunk) in ChunkHistory)
+        {
+            component.ChunkHistory[indices] = new TileHistoryChunk(chunk);
+        }
+    }
+
     public TileHistoryState CreateNewFullState(TileHistoryState state)
     {
         var chunks = new Dictionary<Vector2i, TileHistoryChunk>(state.ChunkHistory.Count);
