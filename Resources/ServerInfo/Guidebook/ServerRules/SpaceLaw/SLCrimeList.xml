@@ -625,7 +625,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Includes destruction of station machinery such as ID card computers or telecommunications servers,
-		power devices such as substations, and non-hostile silicon units.
+        power devices such as substations, and non-hostile silicon units.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -782,7 +782,7 @@
         4-02
       </Box>
     </ColorBox>
-	    <ColorBox>
+    <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Destruction of Vital Infrastructure
       </Box>
