@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TheFlyingSentry
-  changes:
-  - message: 'Added a new trait: Hemophilia!'
-    type: Add
-  id: 8875
-  time: '2025-08-21T01:02:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38224
-- author: DinnerCalzone
-  changes:
-  - message: Fixed more grenades not playing sounds on explosion.
-    type: Fix
-  id: 8876
-  time: '2025-08-22T10:04:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39815
 - author: Alkheemist
   changes:
   - message: Added stencil lettering decals to the spraypainter.
@@ -3890,3 +3876,19 @@
   id: 9378
   time: '2026-01-12T22:14:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42155
+- author: PicklOH
+  changes:
+  - message: Changed the destruction category of Space Law to be more accurate and
+      include Silicons.
+    type: Tweak
+  id: 9379
+  time: '2026-01-12T22:30:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42317
+- author: Quantum-cross
+  changes:
+  - message: Now you can be a late join antagonist even if you're arriving via the
+      arrivals shuttle!
+    type: Tweak
+  id: 9380
+  time: '2026-01-12T22:30:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39837
