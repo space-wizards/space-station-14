@@ -1,9 +1,11 @@
-namespace Content.Server.Forensics;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Forensics.Components;
 
 /// <summary>
 /// This component is for items that can clean up forensic evidence
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class CleansForensicsComponent : Component
 {
     /// <summary>
