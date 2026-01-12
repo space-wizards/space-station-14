@@ -48,7 +48,6 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: SolutionContainerVisuals
-    solutionName: drink
     fillBaseName: cleaner-fill-
     inHandsMaxFillLevels: 4
 
