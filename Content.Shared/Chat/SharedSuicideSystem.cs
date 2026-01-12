@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Tag;
@@ -19,6 +20,7 @@ public abstract class SharedSuicideSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     /// <summary>
@@ -77,7 +79,9 @@ public abstract class SharedSuicideSystem : EntitySystem
 
     public bool CanSuicide(EntityUid uid)
     {
-        return !_mobStateSystem.IsDead(uid) && HasComp<AdminFrozenComponent>(uid) &&
-               TryComp<TagComponent>(uid, out var tag) && _tagSystem.HasTag(tag, CannotSuicideTag);
+        _mindSystem.GetMind(uid, out var mind);
+
+        return mind is not { PreventSuicide: true } && !_mobStateSystem.IsDead(uid) && !HasComp<AdminFrozenComponent>(uid) &&
+               TryComp<TagComponent>(uid, out var tag) && !_tagSystem.HasTag(tag, CannotSuicideTag);
     }
 }
