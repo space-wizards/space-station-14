@@ -475,7 +475,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-holy-water
+    currentLabel: reagent-name-holywater
   - type: SolutionContainerManager
     solutions:
       drink:
