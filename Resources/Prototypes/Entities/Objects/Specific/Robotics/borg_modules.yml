@@ -1528,7 +1528,7 @@
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleLawOverrider
   name: law overrider xenoborg module
-  description: Module that allows Xenoborgs to override the laws of other silicons
+  description: Module that allows Xenoborgs to override the laws of other silicons.
   components:
   - type: Sprite
     layers:
