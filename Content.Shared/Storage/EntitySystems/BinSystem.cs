@@ -10,6 +10,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -23,6 +24,7 @@ public sealed class BinSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -70,7 +72,10 @@ public sealed class BinSystem : EntitySystem
         if (args.Container.ID != ent.Comp.ContainerId)
             return;
 
-        ent.Comp.Items.Add(args.Entity);
+        if (ent.Comp.Shuffle)
+            ent.Comp.Items.Insert(_random.Next(ent.Comp.Items.Count), args.Entity);
+        else
+            ent.Comp.Items.Add(args.Entity);
     }
 
     private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)

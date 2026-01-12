@@ -56,4 +56,11 @@ public sealed partial class BinComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int MaxItems = 20;
+
+    /// <summary>
+    /// Whether this bin is shuffled.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Shuffle;
+
 }
