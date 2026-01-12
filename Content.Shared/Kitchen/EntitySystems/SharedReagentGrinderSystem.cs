@@ -209,10 +209,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         SoundSpecifier? sound;
         switch (program)
         {
-            case GrinderProgram.Grind when ent.Comp.InputContainer.ContainedEntities.All(CanGrind):
+            case GrinderProgram.Grind when ent.Comp.InputContainer.ContainedEntities.All(x => CanGrind(x)):
                 sound = ent.Comp.GrindSound;
                 break;
-            case GrinderProgram.Juice when ent.Comp.InputContainer.ContainedEntities.All(CanJuice):
+            case GrinderProgram.Juice when ent.Comp.InputContainer.ContainedEntities.All(x => CanJuice(x)):
                 sound = ent.Comp.JuiceSound;
                 break;
             default:
@@ -248,12 +248,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
         foreach (var item in ent.Comp.InputContainer.ContainedEntities.ToList())
         {
-            var solution = program switch
-            {
-                GrinderProgram.Grind => GetGrindSolution(item),
-                GrinderProgram.Juice => CompOrNull<ExtractableComponent>(item)?.JuiceSolution,
-                _ => null,
-            };
+            var solution = GetGrinderSolution(item, active.Program);
 
             if (solution is null)
                 continue;
@@ -291,27 +286,58 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         UpdateUi(ent);
     }
 
-    private Solution? GetGrindSolution(EntityUid uid)
+    /// <summary>
+    /// Gets the solutions from an entity using the specified Grinder program.
+    /// </summary>
+    /// <param name="ent">The entity which we check for solutions.</param>
+    /// <param name="program">The grinder program.</param>
+    /// <returns>The solution received, or null if none.</returns>
+    public Solution? GetGrinderSolution(Entity<ExtractableComponent?> ent, GrinderProgram program)
     {
-        if (TryComp<ExtractableComponent>(uid, out var extractable)
-            && extractable.GrindableSolutionName is not null
-            && _solutionContainersSystem.TryGetSolution(uid, extractable.GrindableSolutionName, out _, out var solution))
-        {
-            return solution;
-        }
-        else
+        if (!Resolve(ent, ref ent.Comp, false))
             return null;
+
+        switch (program)
+        {
+            case GrinderProgram.Grind:
+                if (_solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolution, out _, out var solution))
+                {
+                    return solution;
+                }
+                break;
+            case GrinderProgram.Juice:
+                return ent.Comp.JuiceSolution;
+        }
+
+        return null;
     }
 
-    public bool CanGrind(EntityUid uid)
+    /// <summary>
+    /// Checks whether the entity can be ground using a ReagentGrinder.
+    /// </summary>
+    /// <param name="ent">The entity to check.</param>
+    /// <returns>True if it can be ground, otherwise false.</returns>
+    public bool CanGrind(Entity<ExtractableComponent?> ent)
     {
-        var solutionName = CompOrNull<ExtractableComponent>(uid)?.GrindableSolutionName;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
 
-        return solutionName is not null && _solutionContainersSystem.TryGetSolution(uid, solutionName, out _, out _);
+        if (ent.Comp.GrindableSolution == null)
+            return false;
+
+        return _solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolution, out _, out _);
     }
 
-    public bool CanJuice(EntityUid uid)
+    /// <summary>
+    /// Checks whether the entity can be juiced using a ReagentGrinder.
+    /// </summary>
+    /// <param name="ent">The entity to check.</param>
+    /// <returns>True if it can be juiced, otherwise false.</returns>
+    public bool CanJuice(Entity<ExtractableComponent?> ent)
     {
-        return CompOrNull<ExtractableComponent>(uid)?.JuiceSolution is not null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.JuiceSolution is not null;
     }
 }

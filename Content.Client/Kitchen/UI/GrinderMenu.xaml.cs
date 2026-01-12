@@ -73,8 +73,8 @@ public sealed partial class GrinderMenu : FancyWindow
         var beaker = _slots.GetItemOrNull(_owner, ReagentGrinderComponent.BeakerSlotId);
         var powered = _power.IsPowered(_owner);
         var hasInput = grinderComp.InputContainer.ContainedEntities.Any();
-        var canGrind = hasInput && grinderComp.InputContainer.ContainedEntities.All(_grinder.CanGrind);
-        var canJuice = hasInput && grinderComp.InputContainer.ContainedEntities.All(_grinder.CanJuice);
+        var canGrind = hasInput && grinderComp.InputContainer.ContainedEntities.All(x => _grinder.CanGrind(x));
+        var canJuice = hasInput && grinderComp.InputContainer.ContainedEntities.All(x => _grinder.CanJuice(x));
 
         BeakerContentBox.EjectButton.Disabled = active || !beaker.HasValue;
         ChamberContentBox.EjectButton.Disabled = active || !hasInput;
