@@ -5,13 +5,13 @@
         "y": 32
     },
     "license": "CC-BY-SA-4.0",
-    "copyright": "Created by TheShuEd (Github) | Small tweaks to liq states, makeshift by ScarKy0 (Github)",
+    "copyright": "Created by TheShuEd (Github) | Small tweaks to fill states, makeshift and inhands by ScarKy0 (Github)",
     "states": [
         {
-            "name": "full"
+            "name": "icon"
         },
         {
-            "name": "makeshift_full"
+            "name": "makeshift_icon"
         },
         {
             "name": "fill-1"

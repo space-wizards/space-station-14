@@ -1,15 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -99,23 +94,25 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         if (!_solution.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out var outputSolutionEnt, out var solution))
             return;
 
+        _solution.TryMixAndOverflow(outputSolutionEnt.Value, obtainedSolution, solution.MaxVolume, out var overflow);
+
+        if (overflow != null)
+            _puddle.TrySpillAt(ent, overflow, out _);
+
         if (TryComp<StackComponent>(item, out var stack))
-        {
-            _solution.TryMixAndOverflow(outputSolutionEnt.Value, obtainedSolution, solution.MaxVolume, out var overflow);
-            if (overflow != null)
-                _puddle.TrySpillAt(ent, overflow, out _);
             _stackSystem.ReduceCount((item, stack), 1);
-        }
         else
-        {
-            _solution.TryMixAndOverflow(outputSolutionEnt.Value, obtainedSolution, solution.MaxVolume, out var overflow);
-            if (overflow != null)
-                _puddle.TrySpillAt(ent, overflow, out _);
             _destructibleSystem.DestroyEntity(item);
-        }
     }
 
-    private bool CanGrinderBeUsed(Entity<HandheldGrinderComponent> ent, EntityUid item, [NotNullWhen(false)] out string? reason)
+    /// <summary>
+    /// Checks whether the respective handheld grinder can currently be used.
+    /// </summary>
+    /// <param name="ent">The grinder entity.</param>
+    /// <param name="item">The item it is being used on.</param>
+    /// <param name="reason">Reason the grinder cannot be used. Null if the function returns true.</param>
+    /// <returns>True if the grinder can be used, otherwise false.</returns>
+    public bool CanGrinderBeUsed(Entity<HandheldGrinderComponent> ent, EntityUid item, [NotNullWhen(false)] out string? reason)
     {
         reason = null;
         if (ent.Comp.Program == GrinderProgram.Grind && !_reagentGrinder.CanGrind(item))
@@ -134,5 +131,9 @@ internal sealed class HandheldGrinderSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// DoAfter used to indicate the handheld grinder is in use.
+/// After it ends, the GrinderProgram from <see cref="HandheldGrinderComponent"/> is used on the contents.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class HandheldGrinderDoAfterEvent : SimpleDoAfterEvent;

@@ -5,11 +5,16 @@ namespace Content.Shared.Kitchen.Components;
 
 /// <summary>
 /// Indicates this entity is a handheld grinder.
-/// Using an entity that can be ground or juiced on this allows to extract the solution
+/// Handheld grinders can be used with entities with <see cref="ExtractableComponent"/> to extract their solutions.
+/// Requires <see cref="ItemSlotsComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class HandheldGrinderComponent : Component
 {
+    /// <summary>
+    /// The length of the doAfter.
+    /// After it ends, the respective GrinderProgram is used on the contents.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(4f);
 

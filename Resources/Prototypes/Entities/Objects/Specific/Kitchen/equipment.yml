@@ -58,7 +58,7 @@
   - type: Sprite
     sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
     layers:
-    - state: full
+    - state: icon
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
@@ -72,7 +72,7 @@
   - type: Sprite
     sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
     layers:
-    - state: makeshift_full
+    - state: makeshift_icon
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
@@ -143,8 +143,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
-    layers:
-    - state: makeshift_base
+    state: makeshift_base
   - type: Item
     size: Normal
     inhandVisuals:
@@ -164,8 +163,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Kitchen/handheld_juicer.rsi
-    layers:
-    - state: makeshift_base
+    state: makeshift_base
   - type: Item
     size: Normal
     inhandVisuals:

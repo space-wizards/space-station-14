@@ -8,10 +8,10 @@
     "copyright": "Created by TheShuEd (Github), edited into a juicer and inhands by ScarKy0(GitHub)",
     "states": [
         {
-            "name": "full"
+            "name": "icon"
         },
         {
-            "name": "makeshift_full"
+            "name": "makeshift_icon"
         },
         {
             "name": "fill-1"
