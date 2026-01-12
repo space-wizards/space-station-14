@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kowlin
-  changes:
-  - message: Fixed Syndicate tricky grenades not playing sounds on explosion.
-    type: Fix
-  id: 8873
-  time: '2025-08-20T23:34:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39792
 - author: TrixxedHeart
   changes:
   - message: Added the Impaired Mobility disability trait which reduces movement speed
@@ -3888,3 +3881,13 @@
   id: 9376
   time: '2026-01-12T03:04:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42368
+- author: Princess-Cheeseballs
+  changes:
+  - message: Borg hypo was moved to its own module
+    type: Tweak
+  - message: Roundstart chem module has been improved to be more like the advanced
+      chem module
+    type: Tweak
+  id: 9377
+  time: '2026-01-12T21:10:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42123
