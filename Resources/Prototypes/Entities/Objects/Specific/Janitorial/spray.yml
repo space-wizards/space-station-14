@@ -26,6 +26,7 @@
         maxVol: 100
   - type: UseDelay
   - type: Spray
+    solution: drink
     transferAmount: 10
     sprayVelocity: 2
     spraySound:

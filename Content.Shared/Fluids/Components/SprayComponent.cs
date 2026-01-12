@@ -10,7 +10,7 @@ namespace Content.Shared.Fluids.Components;
 public sealed partial class SprayComponent : Component
 {
     [DataField]
-    public string Solution = "drink";
+    public string Solution = "spray";
 
     [DataField]
     public FixedPoint2 TransferAmount = 10;
