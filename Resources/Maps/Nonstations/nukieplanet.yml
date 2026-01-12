@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 01/10/2026 10:58:20
-  entityCount: 2547
+  time: 01/12/2026 09:57:30
+  entityCount: 2553
 maps:
 - 1295
 grids:
@@ -10943,6 +10943,33 @@ entities:
     - type: Transform
       pos: 11.5,-6.5
       parent: 104
+- proto: HandheldStationMapNukeops
+  entities:
+  - uid: 1703
+    components:
+    - type: Transform
+      pos: 2.4973226,-3.3453965
+      parent: 104
+  - uid: 1895
+    components:
+    - type: Transform
+      pos: 2.4973226,-3.3453965
+      parent: 104
+  - uid: 2292
+    components:
+    - type: Transform
+      pos: 2.4973226,-3.3453965
+      parent: 104
+  - uid: 2309
+    components:
+    - type: Transform
+      pos: 2.4973226,-3.3453965
+      parent: 104
+  - uid: 2310
+    components:
+    - type: Transform
+      pos: 2.4973226,-3.3453965
+      parent: 104
 - proto: HandLabeler
   entities:
   - uid: 1826
@@ -11204,15 +11231,15 @@ entities:
       parent: 104
 - proto: NukeOpsLootSpawner
   entities:
-  - uid: 1703
-    components:
-    - type: Transform
-      pos: 2.5,-3.5
-      parent: 104
   - uid: 1704
     components:
     - type: Transform
       pos: 0.5,-6.5
+      parent: 104
+  - uid: 1894
+    components:
+    - type: Transform
+      pos: 0.5,0.5
       parent: 104
 - proto: NukeOpsMedkitBruteSpawner
   entities:
@@ -13663,6 +13690,11 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-2.5
+      parent: 104
+  - uid: 1739
+    components:
+    - type: Transform
+      pos: 0.5,0.5
       parent: 104
 - proto: TargetClown
   entities:
