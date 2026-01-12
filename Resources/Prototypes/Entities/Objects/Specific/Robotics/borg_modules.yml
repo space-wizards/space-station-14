@@ -865,7 +865,7 @@
 - type: entity
   id: BorgModuleTopicals
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: topicals cyborg module
+  name: first aid cyborg module
   components:
   - type: Sprite
     layers:
@@ -874,6 +874,7 @@
   - type: ItemBorgModule
     hands:
     - item: HandheldHealthAnalyzer
+    - item: AdvancedJetInjector
     - item: Gauze
       hand:
         emptyLabel: borg-slot-topicals-empty
@@ -892,13 +893,6 @@
       hand:
         emptyLabel: borg-slot-topicals-empty
         emptyRepresentative: Ointment
-        whitelist:
-          components:
-          - Healing
-    - item: Bloodpack
-      hand:
-        emptyLabel: borg-slot-topicals-empty
-        emptyRepresentative: Bloodpack
         whitelist:
           components:
           - Healing
@@ -921,7 +915,6 @@
     - item: Crowbar
     - item: BorgFireExtinguisher
     - item: BorgHandheldGPSBasic
-    - item: HandLabeler
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
@@ -933,79 +926,83 @@
   - type: Sprite
     layers:
     - state: medical
-    - state: icon-chem
+    - state: icon-chemist
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzer
+    - item: HandLabeler
     - item: Syringe
-    - item: BorgDropper
-    - item: BaseChemistryEmptyVial
+      hand:
+        emptyLabel: borg-slot-injector-dropper-empty
+        emptyRepresentative: Syringe
+        whitelist:
+          tags:
+          - Dropper
+          - Syringe
+    - item: PillCanister
       hand:
         emptyLabel: borg-slot-small-containers-empty
-        emptyRepresentative: BaseChemistryEmptyVial
+        emptyRepresentative: PillCanister
+        whitelist:
+          tags:
+          - PillCanister
+          - Bottle
+          - Pill
+    - item: Beaker
+      hand:
+        emptyLabel: borg-slot-chemical-containers-empty
+        emptyRepresentative: Beaker
         whitelist:
           components:
           - FitsInDispenser
-    - item: BaseChemistryEmptyVial
+          tags:
+          - ChemDispensable
+    - item: Beaker
       hand:
-        emptyLabel: borg-slot-small-containers-empty
-        emptyRepresentative: BaseChemistryEmptyVial
+        emptyLabel: borg-slot-chemical-containers-empty
+        emptyRepresentative: Beaker
         whitelist:
           components:
           - FitsInDispenser
-    - item: BaseChemistryEmptyVial
-      hand:
-        emptyLabel: borg-slot-small-containers-empty
-        emptyRepresentative: BaseChemistryEmptyVial
-        whitelist:
-          components:
-          - FitsInDispenser
+          tags:
+          - ChemDispensable
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: chem-module }
 
 - type: entity
-  id: BorgModuleAdvancedChemical
+  id: BorgModuleAdvancedTopical
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: advanced chemical cyborg module
+  name: advanced first aid cyborg module
   description: Advanced medical module containing the cyborg adaptation of the highly coveted hypospray. Now your cyborgs can inject crew-harmers with chloral hydrate even faster!
   components:
   - type: Sprite
     layers:
     - state: medical
-    - state: icon-chemist
+    - state: icon-chem
   - type: ItemBorgModule
     hands:
     - item: HandheldHealthAnalyzer
     - item: BorgHypo
-    - item: Syringe
-    - item: BorgDropper
-    - item: Beaker
+    - item: Gauze
       hand:
-        emptyLabel: borg-slot-chemical-containers-empty
-        emptyRepresentative: Beaker
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Gauze
         whitelist:
           components:
-          - FitsInDispenser
-          tags:
-          - ChemDispensable
-    - item: Beaker
+          - Healing
+    - item: Brutepack
       hand:
-        emptyLabel: borg-slot-chemical-containers-empty
-        emptyRepresentative: Beaker
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Brutepack
         whitelist:
           components:
-          - FitsInDispenser
-          tags:
-          - ChemDispensable
-    - item: Beaker
+          - Healing
+    - item: Ointment
       hand:
-        emptyLabel: borg-slot-chemical-containers-empty
-        emptyRepresentative: Beaker
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Ointment
         whitelist:
           components:
-          - FitsInDispenser
-          tags:
-          - ChemDispensable
+          - Healing
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-chem-module }
 
