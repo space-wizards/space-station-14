@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -22,7 +23,7 @@ public sealed partial class HandheldGrinderComponent : Component
     /// The sound to play when the doAfter starts.
     /// </summary>
     [DataField]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Culinary/mortar_grinding.ogg");
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Culinary/mortar_grinding.ogg", AudioParams.Default.WithLoop(true));
 
     /// <summary>
     /// The grinder program to use.
@@ -42,6 +43,12 @@ public sealed partial class HandheldGrinderComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string ItemSlotName = "grinderInput";
+
+    /// <summary>
+    /// Cached solution from the grinder.
+    /// </summary>
+    [ViewVariables]
+    public Entity<SolutionComponent>? GrinderSolution;
 
     // Used to cancel the sound.
     public EntityUid? AudioStream;

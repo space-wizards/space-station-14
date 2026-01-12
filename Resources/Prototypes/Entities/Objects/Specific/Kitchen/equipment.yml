@@ -106,6 +106,8 @@
   - type: HandheldGrinder
     sound: !type:SoundPathSpecifier
       path: /Audio/Items/Culinary/juicer_juicing.ogg # Pasta mixing sound. Close enough.
+      params:
+        loop: true
     program: Juice
 
 - type: entity

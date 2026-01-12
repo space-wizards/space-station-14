@@ -9,6 +9,7 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -31,8 +32,20 @@ internal sealed class HandheldGrinderSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<HandheldGrinderComponent, EntRemovedFromContainerMessage>(OnGrinderRemoved);
         SubscribeLocalEvent<HandheldGrinderComponent, UseInHandEvent>(OnInteractUsing);
         SubscribeLocalEvent<HandheldGrinderComponent, HandheldGrinderDoAfterEvent>(OnHandheldDoAfter);
+    }
+
+    // prevent the infamous UdderSystem debug assert, see https://github.com/space-wizards/space-station-14/pull/35314
+    // TODO: find a better solution than copy pasting this into every shared system that caches solution entities
+    private void OnGrinderRemoved(Entity<HandheldGrinderComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        // Make sure the removed entity was our contained solution and set it to null
+        if (args.Entity != entity.Comp.GrinderSolution?.Owner)
+            return;
+
+        entity.Comp.GrinderSolution = null;
     }
 
     private void OnInteractUsing(Entity<HandheldGrinderComponent> ent, ref UseInHandEvent args)
@@ -54,7 +67,7 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         if (_reagentGrinder.GetGrinderSolution(item, ent.Comp.Program) is null)
             return;
 
-        if (!_solution.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out _))
+        if (!_solution.ResolveSolution(ent.Owner, ent.Comp.SolutionName, ref ent.Comp.GrinderSolution))
             return;
 
         if (_net.IsServer) // Cannot cancel predicted audio.
@@ -91,10 +104,10 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         if (_reagentGrinder.GetGrinderSolution(item, ent.Comp.Program) is not { } obtainedSolution)
             return;
 
-        if (!_solution.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out var outputSolutionEnt, out var solution))
+        if (!_solution.ResolveSolution(ent.Owner, ent.Comp.SolutionName, ref ent.Comp.GrinderSolution, out var solution))
             return;
 
-        _solution.TryMixAndOverflow(outputSolutionEnt.Value, obtainedSolution, solution.MaxVolume, out var overflow);
+        _solution.TryMixAndOverflow(ent.Comp.GrinderSolution.Value, obtainedSolution, solution.MaxVolume, out var overflow);
 
         if (overflow != null)
             _puddle.TrySpillAt(ent, overflow, out _);
