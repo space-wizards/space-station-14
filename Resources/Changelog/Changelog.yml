@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: JimmyToor
-  changes:
-  - message: Fixed only being able to vape with a blocked mouth.
-    type: Fix
-  id: 8879
-  time: '2025-08-22T22:26:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39834
 - author: _miket, RedBookcase
   changes:
   - message: Added new Derelict Cyborg ghost roles, including the Derelict Engineer,
@@ -3899,3 +3892,14 @@
   id: 9382
   time: '2026-01-13T07:57:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42383
+- author: SlamBamActionman
+  changes:
+  - message: Added the Corpsman Medicine Bundle, a duffelbag of basic healing reagents.
+      It is available after 20 minutes for free via the new Syndicate Delivery Console
+      on the Nukie planet.
+    type: Add
+  - message: Added new handheld maps on the Nukie planet that shows the target station.
+    type: Add
+  id: 9383
+  time: '2026-01-13T08:12:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42337
