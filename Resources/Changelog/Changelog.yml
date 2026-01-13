@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: whatston3
-  changes:
-  - message: Lathes now batch items into jobs, which can be moved around in priority
-      or deleted.
-    type: Add
-  id: 8882
-  time: '2025-08-24T15:02:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38624
 - author: Princess-Cheeseballs
   changes:
   - message: Topicals now correctly scale their self heal time with the damage you
@@ -3902,3 +3894,11 @@
   id: 9385
   time: '2026-01-13T13:44:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42334
+- author: Velken, Murphyneko
+  changes:
+  - message: Station tiles and floors can now be placed on planets, asteroids and
+      different platings.
+    type: Tweak
+  id: 9386
+  time: '2026-01-13T14:05:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38898
