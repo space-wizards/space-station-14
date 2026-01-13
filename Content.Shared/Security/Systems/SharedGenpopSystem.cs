@@ -59,7 +59,7 @@ public abstract class SharedGenpopSystem : EntitySystem
         // Instead, we just fill in the spot temporarily til the checks pass.
         ent.Comp.LinkedId = EntityUid.Invalid;
 
-        _lock.Lock(ent.Owner, null);
+        _lock.Lock(ent.Owner, args.Actor);
         _entityStorage.CloseStorage(ent);
 
         CreateId(ent, args.Name, args.Sentence, args.Crime);
