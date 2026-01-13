@@ -1,4 +1,4 @@
-﻿# Be careful with these as they get removed on shutdown too!
+# Be careful with these as they get removed on shutdown too!
 - type: entity
   id: AiHeld
   description: Components added / removed from an entity that gets inserted into an AI core.
@@ -840,6 +840,151 @@
   - type: GhostRole
     name: ghost-role-information-derelict-syndicate-assault-cyborg-name
     description: ghost-role-information-derelict-syndicate-assault-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: XenoborgEngiDerelict
+  id: PlayerXenoborgEngiDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleDerelict
+      - BorgModuleAdvancedTool
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+      - XenoborgModuleAccessBreaker
+      - XenoborgModuleFireExtinguisher
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  parent: PlayerXenoborgEngiDerelict
+  id: PlayerXenoborgEngiDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-engineering-xenoborg-name
+    description: ghost-role-information-derelict-engineering-xenoborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: XenoborgHeavyDerelict
+  id: PlayerXenoborgHeavyDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleDerelict
+      - XenoborgModuleTool
+      - XenoborgModuleLaser
+      - XenoborgModuleJammer
+      - XenoborgModuleFireExtinguisher
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  parent: PlayerXenoborgHeavyDerelict
+  id: PlayerXenoborgHeavyDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-heavy-xenoborg-name
+    description: ghost-role-information-derelict-heavy-xenoborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: XenoborgScoutDerelict
+  id: PlayerXenoborgScoutDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleDerelict
+      - XenoborgModuleTool
+      - XenoborgModuleSword
+      - XenoborgModuleDerelictSpaceMovement
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  parent: PlayerXenoborgScoutDerelict
+  id: PlayerXenoborgScoutDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-scout-xenoborg-name
+    description: ghost-role-information-derelict-scout-xenoborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: XenoborgStealthDerelict
+  id: PlayerXenoborgStealthDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleDerelict
+      - XenoborgModuleTool
+      - XenoborgModuleHypo
+      - XenoborgModuleChameleonProjector
+      - XenoborgModuleCloakDevice
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  parent: PlayerXenoborgStealthDerelict
+  id: PlayerXenoborgStealthDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-stealth-xenoborg-name
+    description: ghost-role-information-derelict-stealth-xenoborg-description
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default

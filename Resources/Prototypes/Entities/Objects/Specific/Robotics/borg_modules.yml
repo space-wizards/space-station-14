@@ -1454,6 +1454,31 @@
 
 - type: entity
   parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleDerelict
+  name: derelict xenoborg module
+  description: Essential items for the derelict Xenoborg. Once showed the way to the mothership, but now points elsewhere.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_generic
+    - state: icon-xenoborg-basic
+  - type: ItemBorgModule  
+    hands:
+    - item: SyndicateJawsOfLife # Derelict xenoborgs don't have all access like regular derelicts do, so they get this. To make their life a little better, they get the faster version.
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - item: XenoborgMaterialBag
+    - item: PinpointerStation
+    - item: HandheldGPSBasic
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleTool
   name: tool xenoborg module
   description: Simple tools for most Xenoborgs.
@@ -1586,6 +1611,27 @@
     - item: HandheldGPSBasic
     - item: HandHeldMassScannerBorg
     - item: PinpointerMothership
+    - item: HandheldStationMapUnpowered
+    - item: WeaponGrapplingGun
+    - item: JetpackXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-space-movement-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleDerelictSpaceMovement
+  name: space movement derelict xenoborg module
+  description: Module that helps a lost and lonely Xenoborg move better in space.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_scout
+    - state: icon-xenoborg-space-movement
+  - type: ItemBorgModule
+    hands:
+    - item: HandheldGPSBasic
+    - item: HandHeldMassScannerBorg
+    - item: PinpointerStation
     - item: HandheldStationMapUnpowered
     - item: WeaponGrapplingGun
     - item: JetpackXenoborg
