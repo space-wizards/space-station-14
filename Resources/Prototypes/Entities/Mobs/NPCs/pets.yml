@@ -1,10 +1,18 @@
 # Bounds Guide
 #1D2L3U4R
 
+# This prototype is used as a parent by unique named pets (e.g Pun Pun, Ian, Hamlet)
 - type: entity
-  name: Ian
+  abstract: true
+  id: BaseUniquePet
+  components:
+  - type: NameIdentifier
+    group: null  # Strips the name identifier from the pet's ingame name
+
+- type: entity
   parent: MobCorgi
-  id: MobCorgiIan
+  id: [ MobCorgiIan, BaseUniquePet ]
+  name: Ian
   description: Favorite pet corgi.
   components:
   - type: Sprite
@@ -52,9 +60,9 @@
     stealGroup: AnimalIan
 
 - type: entity
-  name: Old Ian
   parent: MobCorgiIan
   id: MobCorgiIanOld
+  name: Old Ian
   description: Still the favorite pet corgi. Love his wheels.
   components:
   - type: Sprite
@@ -77,9 +85,9 @@
     - id: MaterialHideCorgi
 
 - type: entity
-  name: Lisa
   parent: MobCorgiIan
   id: MobCorgiLisa
+  name: Lisa
   description: Ian's favorite corgi.
   components:
   - type: Sprite
@@ -114,9 +122,9 @@
             state: corgi_eyes_displacement
 
 - type: entity
-  name: real mouse
   parent: MobCorgiIan
   id: MobCorgiMouse
+  name: real mouse
   description: It's 100% a real hungry mouse.
   components:
   - type: Sprite
@@ -137,9 +145,9 @@
       gender: female
 
 - type: entity
-  name: Puppy Ian
   parent: MobCorgiPuppy
   id: MobCorgiIanPup
+  name: Puppy Ian
   description: Favourite puppy corgi. Awww.
   components:
   - type: Grammar
@@ -155,9 +163,9 @@
     stealGroup: AnimalIan
 
 - type: entity
-  name: Runtime
-  parent: MobCat
+  parent: [ MobCat, BaseUniquePet ]
   id: MobCatRuntime
+  name: Runtime
   description: Professional mouse hunter. Escape artist.
   components:
   - type: NpcFactionMember
@@ -178,9 +186,9 @@
     stealGroup: AnimalNamedCat
 
 - type: entity
-  name: Exception
+  parent: [ MobCatCalico, BaseUniquePet ]
   id: MobCatException
-  parent: MobCatCalico
+  name: Exception
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
   - type: NpcFactionMember
@@ -198,9 +206,9 @@
     stealGroup: AnimalNamedCat
 
 - type: entity
-  name: Floppa
+  parent: [ MobCatCaracal, BaseUniquePet ]
   id: MobCatFloppa
-  parent: MobCatCaracal
+  name: Floppa
   description: He out here.
   components:
   - type: Fixtures
@@ -225,9 +233,9 @@
     stealGroup: AnimalNamedCat
 
 - type: entity
-  name: Bandito
-  parent: MobFerret
+  parent: [ MobFerret, BaseUniquePet ]
   id: MobBandito
+  name: Bandito
   description: Just a silly little guy!
   components:
   - type: Grammar
@@ -240,9 +248,9 @@
     - VimPilot
 
 - type: entity
-  name: Bingus
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [ SimpleMobBase, BaseUniquePet, StripableInventoryBase ]
   id: MobBingus
+  name: Bingus
   description: Bingus my beloved...
   components:
   - type: Sprite
@@ -297,9 +305,9 @@
     stealGroup: AnimalNamedCat
 
 - type: entity
-  name: McGriff
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [ SimpleMobBase, BaseUniquePet, StripableInventoryBase ]
   id: MobMcGriff
+  name: McGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
   - type: Sprite
@@ -373,9 +381,9 @@
   - type: MessyDrinker
 
 - type: entity
-  name: Paperwork
-  parent: MobSloth
+  parent: [ MobSloth, BaseUniquePet ]
   id: MobPaperwork
+  name: Paperwork
   description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
   components:
   - type: Sprite
@@ -407,9 +415,9 @@
       gender: male
 
 - type: entity
-  name: Walter
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [ SimpleMobBase, BaseUniquePet, StripableInventoryBase ]
   id: MobWalter
+  name: Walter
   description: He likes chems and treats. Walter.
   components:
   - type: Sprite
@@ -470,9 +478,9 @@
   - type: MessyDrinker
 
 - type: entity
-  name: Morty
-  parent: MobPossum
+  parent: [ MobPossum, BaseUniquePet ]
   id: MobPossumMorty
+  name: Morty
   description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
   components:
   - type: InteractionPopup
@@ -494,9 +502,9 @@
     stealGroup: AnimalMorty
 
 - type: entity
-  name: Morty
   parent: MobPossumMorty
   id: MobPossumMortyOld
+  name: Morty
   suffix: Old sprite
   components:
   - type: Sprite
@@ -513,9 +521,9 @@
         Base: possum_dead_old
 
 - type: entity
-  name: Poppy # the Safety Possum
   parent: MobPossumMorty
   id: MobPossumPoppy
+  name: Poppy # the Safety Possum
   description: It's an opossum, a small scavenging marsupial. It's wearing appropriate personal protective equipment.
   components:
   - type: Grammar
@@ -536,9 +544,9 @@
         Base: poppy_dead
 
 - type: entity
-  name: Morticia
-  parent: MobRaccoon
+  parent: [ MobRaccoon, BaseUniquePet ]
   id: MobRaccoonMorticia
+  name: Morticia
   description: A powerful creature of the night. Her eyeshadow is always on point.
   components:
   - type: InteractionPopup
@@ -558,9 +566,9 @@
     - VimPilot
 
 - type: entity
-  name: Alexander
-  parent: MobPig
+  parent: [ MobPig, BaseUniquePet ]
   id: MobAlexander
+  name: Alexander
   description: Chef's finest colleague.
   components:
   - type: InteractionPopup
@@ -580,9 +588,9 @@
     - VimPilot
 
 - type: entity
-  name: Renault
-  parent: MobFox
+  parent: [ MobFox, BaseUniquePet ]
   id: MobFoxRenault
+  name: Renault
   description: The captain's trustworthy fox.
   components:
   - type: InteractionPopup
@@ -610,9 +618,9 @@
     stealGroup: AnimalRenault
 
 - type: entity
-  name: Hamlet
-  parent: MobHamster
+  parent: [ MobHamster, BaseUniquePet ]
   id: MobHamsterHamlet
+  name: Hamlet
   description: A grumpy, cute and fluffy hamster.
   components:
   - type: Sprite
@@ -679,9 +687,9 @@
     predicted: true
 
 - type: entity
-  name: Shiva
-  parent: MobGiantSpider
+  parent: [ MobGiantSpider, BaseUniquePet ]
   id: MobSpiderShiva
+  name: Shiva
   description: The first defender of the station.
   components:
   - type: InteractionPopup
@@ -746,9 +754,9 @@
     stealGroup: AnimalShiva
 
 - type: entity
-  name: Willow
-  parent: MobKangaroo
+  parent: [ MobKangaroo, BaseUniquePet ]
   id: MobKangarooWillow
+  name: Willow
   description: Willow the boxing kangaroo.
   components:
   - type: InteractionPopup
@@ -777,9 +785,9 @@
     prototypes: [ BoxingKangarooGear ]
 
 - type: entity
-  name: Smile
   id: MobSlimesPet
-  parent: [MobAdultSlimes, StripableInventoryBase]
+  parent: [ MobAdultSlimes, BaseUniquePet, StripableInventoryBase ]
+  name: Smile
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
@@ -858,9 +866,9 @@
       gender: female
 
 - type: entity
-  name: Pun Pun
-  parent: MobMonkey
+  parent: [ MobMonkey, BaseUniquePet ]
   id: MobMonkeyPunpun
+  name: Pun Pun
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
   - type: GhostRole
@@ -891,14 +899,11 @@
     attributes:
       proper: true
       gender: male
-  # Strips the name identifier from him, so he's just "Pun Pun" rather than "Pun Pun (MK-123)"
-  - type: NameIdentifier
-    group: null
 
 - type: entity
-  name: Tropico
-  parent: MobCrab
+  parent: [ MobCrab, BaseUniquePet ]
   id: MobCrabAtmos
+  name: Tropico
   description: The noble and stalwart defender of Atmosia. Viva!
   components:
 #  - type: GhostRole
@@ -923,10 +928,10 @@
     stealGroup: AnimalTropico
 
 - type: entity
-  name: Polly the parrot
-  parent: MobParrotBase
+  parent: [ MobParrotBase, BaseUniquePet ]
   id: MobPollyParrot
-  description: An expert in quantum cracker theory
+  name: Polly the parrot
+  description: An expert in quantum cracker theory.
   components:
   - type: Vocalizer
     maxVocalizeInterval: 240 # polly is chattier
