@@ -45,10 +45,6 @@ namespace Content.Server.Atmos.Components
         [DataField("rotateAirBlocked")]
         public bool RotateAirBlocked { get; set; } = true;
 
-        // TODO ATMOS remove this? What is this even for??
-        [DataField("fixAirBlockedDirectionInitialize")]
-        public bool FixAirBlockedDirectionInitialize { get; set; } = true;
-
         /// <summary>
         /// If true, then the tile that this entity is on will have no air at all if all directions are blocked.
         /// </summary>
