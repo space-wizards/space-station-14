@@ -16,6 +16,7 @@ public sealed class StorageSystem : SharedStorageSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     private Dictionary<EntityUid, ItemStorageLocation> _oldStoredItems = new();
 
@@ -140,6 +141,12 @@ public sealed class StorageSystem : SharedStorageSystem
         var finalPos = Vector2.Transform(finalMapPos, TransformSystem.GetInvWorldMatrix(initialCoords.EntityId));
 
         _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
+    }
+
+    public void ShakeStorageAnimation(Entity<StorageComponent> ent)
+    {
+        var xform = Transform(ent);
+        _xform.SetLocalRotation(ent);
     }
 
     /// <summary>
