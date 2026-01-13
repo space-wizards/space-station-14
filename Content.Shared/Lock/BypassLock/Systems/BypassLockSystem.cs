@@ -30,6 +30,9 @@ public sealed partial class BypassLockSystem : EntitySystem
 
     private void OnInteractUsing(Entity<BypassLockComponent> target, ref InteractUsingEvent args)
     {
+        if (target.Owner == args.User)
+            return;
+        
         if (!_tool.HasQuality(args.Used, target.Comp.BypassingTool)
             || !_lock.IsLocked(target.Owner))
             return;
