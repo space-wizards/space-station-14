@@ -102,7 +102,7 @@
       - map: [ "gloves" ]
       - map: [ "shoes" ]
       - map: [ "ears" ]
-      - map: [ "culteyes" ]
+      - map: [ "culteyes" ] #bloodcult eyes
         sprite: "Mobs/Customization/bloodcult/culteyes.rsi"
         state: "moth"
         shader: unshaded

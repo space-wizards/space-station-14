@@ -26,6 +26,7 @@ using Content.Server.Station.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.NPC.Prototypes;
+using Content.Shared.NPC.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Map;
@@ -316,6 +317,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 	/// <summary>
 	/// Checks if an action container already contains an action with the specified prototype ID.
+	/// Used to make sure it doesn't double-add  blood cult abilities
 	/// </summary>
 	private bool HasActionWithPrototype(ActionsContainerComponent container, string prototypeId)
 	{
@@ -329,6 +331,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 	/// <summary>
 	/// Checks if an actions component already contains an action with the specified prototype ID.
+	/// Used to make sure it doesn't double-add  blood cult abilities
 	/// </summary>
 	private bool HasActionWithPrototype(ActionsComponent actions, string prototypeId)
 	{
@@ -347,58 +350,42 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 	private bool MakeCultist(EntityUid traitor, BloodCultRuleComponent component)
     {
+		// Don't add actions to juggernauts at this stage, they get them via GrantCommuneAction
+		if (HasComp<JuggernautComponent>(traitor))
+			return false;
+		
+		// Don't add actions to shades - they are servants, not full cultists
+		if (HasComp<ShadeComponent>(traitor))
+			return false;
+
         if (_TryAssignCultMind(traitor))
 		{
-		// add cultist starting abilities - directly add actions to ensure they show up on action bar
-		// Follow the pattern used by StoreSystem: add to mind container if available, otherwise to entity
-		// Check if actions already exist to avoid duplicates
-		if (_mind.TryGetMind(traitor, out var mindId, out _))
-		{
-			// Check if actions already exist in the mind's action container
-			if (TryComp<ActionsContainerComponent>(mindId, out var mindContainer))
+			// add cultist starting abilities
+			if (_mind.TryGetMind(traitor, out var mindId, out _))
 			{
-				if (!HasActionWithPrototype(mindContainer, ActionCommune))
+				// Check if actions already exist in the mind's action container
+				if (TryComp<ActionsContainerComponent>(mindId, out var mindContainer))
+				{
+					if (!HasActionWithPrototype(mindContainer, ActionCommune))
+						_actionContainer.AddAction(mindId, ActionCommune);
+					if (!HasActionWithPrototype(mindContainer, ActionStudyVeil))
+						_actionContainer.AddAction(mindId, ActionStudyVeil);
+					if (!HasActionWithPrototype(mindContainer, ActionSpellsSelect))
+						_actionContainer.AddAction(mindId, ActionSpellsSelect);
+					if (!HasActionWithPrototype(mindContainer, ActionSummonDagger))
+						_actionContainer.AddAction(mindId, ActionSummonDagger);
+				}
+				else
+				{
+					// No container yet, ensure it exists and add actions
+					EnsureComp<ActionsContainerComponent>(mindId);
 					_actionContainer.AddAction(mindId, ActionCommune);
-				if (!HasActionWithPrototype(mindContainer, ActionStudyVeil))
 					_actionContainer.AddAction(mindId, ActionStudyVeil);
-				if (!HasActionWithPrototype(mindContainer, ActionSpellsSelect))
 					_actionContainer.AddAction(mindId, ActionSpellsSelect);
-				if (!HasActionWithPrototype(mindContainer, ActionSummonDagger))
 					_actionContainer.AddAction(mindId, ActionSummonDagger);
+				}
 			}
-			else
-			{
-				// No container yet, safe to add
-				_actionContainer.AddAction(mindId, ActionCommune);
-				_actionContainer.AddAction(mindId, ActionStudyVeil);
-				_actionContainer.AddAction(mindId, ActionSpellsSelect);
-				_actionContainer.AddAction(mindId, ActionSummonDagger);
-			}
-		}
-		else
-		{
-			// Fallback: add directly to entity if mind isn't available
-			// Check if actions already exist on the entity
-			if (TryComp<ActionsComponent>(traitor, out var entityActions))
-			{
-				if (!HasActionWithPrototype(entityActions, ActionCommune))
-					_action.AddAction(traitor, ActionCommune);
-				if (!HasActionWithPrototype(entityActions, ActionStudyVeil))
-					_action.AddAction(traitor, ActionStudyVeil);
-				if (!HasActionWithPrototype(entityActions, ActionSpellsSelect))
-					_action.AddAction(traitor, ActionSpellsSelect);
-				if (!HasActionWithPrototype(entityActions, ActionSummonDagger))
-					_action.AddAction(traitor, ActionSummonDagger);
-			}
-			else
-			{
-				// No actions component yet, safe to add
-				_action.AddAction(traitor, ActionCommune);
-				_action.AddAction(traitor, ActionStudyVeil);
-				_action.AddAction(traitor, ActionSpellsSelect);
-				_action.AddAction(traitor, ActionSummonDagger);
-			}
-		}
+			
 
 			// Ensure blood cultist can see antag icons (required for status icon visibility)
 			EnsureComp<ShowAntagIconsComponent>(traitor);
@@ -925,6 +912,11 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			_body.GibBody(uid, true);
 			var soulstone = Spawn(soulstonePrototype, coordinates);
 			_mind.TransferTo((EntityUid)mindId, soulstone, mind:mindComp);
+			
+			// Ensure soulstone is aligned with blood cult faction (not crew)
+			var soulstoneFactionComp = EnsureComp<NpcFactionMemberComponent>(soulstone);
+			_npcFaction.ClearFactions((soulstone, soulstoneFactionComp), false);
+			_npcFaction.AddFaction((soulstone, soulstoneFactionComp), BloodCultistFactionId);
 			
 			// Preserve speech component and speech restrictions (ReplacementAccentComponent) from Hamlet if applicable
 			if (isHamlet && victimSpeech != null)

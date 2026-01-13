@@ -60,6 +60,7 @@ using Content.Shared.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.Emoting;
 using Content.Shared.NPC.Systems;
+using Content.Shared.NPC.Components;
 
 namespace Content.Server.BloodCult.EntitySystems
 {
@@ -628,6 +629,11 @@ namespace Content.Server.BloodCult.EntitySystems
 		var soulstone = Spawn(soulstonePrototype, coordinates);
 		_mind.TransferTo(mindId.Value, soulstone, mind: mindComp);
 
+		// Ensure soulstone is aligned with blood cult faction (not crew)
+		var soulstoneFactionComp = EnsureComp<NpcFactionMemberComponent>(soulstone);
+		_npcFaction.ClearFactions((soulstone, soulstoneFactionComp), false);
+		_npcFaction.AddFaction((soulstone, soulstoneFactionComp), BloodCultRuleSystem.BloodCultistFactionId);
+
 		// Preserve speech component and speech restrictions (ReplacementAccentComponent) from Hamlet if applicable
 		if (isHamlet && victimSpeech != null)
 		{
@@ -680,7 +686,10 @@ namespace Content.Server.BloodCult.EntitySystems
 					Dirty(shade, shadeCultist);
 				}
 
-				_npcFaction.AddFaction(shade, BloodCultRuleSystem.BloodCultistFactionId);
+				// Ensure shade is aligned with blood cult faction (not crew)
+				var shadeFactionComp = EnsureComp<NpcFactionMemberComponent>(shade);
+				_npcFaction.ClearFactions((shade, shadeFactionComp), false);
+				_npcFaction.AddFaction((shade, shadeFactionComp), BloodCultRuleSystem.BloodCultistFactionId);
 
 				if (TryComp<ShadeComponent>(shade, out var shadeComp))
 					shadeComp.SourceSoulstone = soulstone;

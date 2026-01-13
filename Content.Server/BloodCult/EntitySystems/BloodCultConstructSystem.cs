@@ -65,6 +65,8 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 		// Add action to the mind's action container if available, otherwise to the entity
 		if (_mind.TryGetMind(juggernaut, out var mindId, out _))
 		{
+			// Ensure actions container exists before adding action
+			EnsureComp<ActionsContainerComponent>(mindId);
 			_actionContainer.AddAction(mindId, "ActionCultistCommune");
 		}
 		else
@@ -170,6 +172,9 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 			_transform.Unanchor(juggernaut, juggernautTransform);
 		}
 		
+		// Transfer mind from soulstone to juggernaut first (before container insertion to avoid client-side entity warning)
+		_mind.TransferTo((EntityUid)mindId, juggernaut, mind:mindComp);
+		
 		// Store the soulstone in the juggernaut's container. It'll be ejected if the juggernaut is crit
 		if (_container.TryGetContainer(juggernaut, "juggernaut_soulstone_container", out var soulstoneContainer))
 		{
@@ -182,9 +187,6 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 			juggComp.SourceSoulstone = soulstone;
 			juggComp.IsInactive = false;
 		}
-		
-		// Transfer mind from soulstone to juggernaut
-		_mind.TransferTo((EntityUid)mindId, juggernaut, mind:mindComp);
 		
 		// Preserve speech component from soulstone only if it's a Hamlet soulstone
 		if (TryComp<SoulStoneComponent>(soulstone, out var soulstoneComp) && 
@@ -199,11 +201,9 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 		
 		// Ensure juggernaut is in the BloodCultist faction (remove any crew alignment)
 		// Use ClearFactions and AddFaction to ensure proper faction alignment after mind transfer
-		if (TryComp<NpcFactionMemberComponent>(juggernaut, out var npcFaction))
-		{
-			_npcFaction.ClearFactions((juggernaut, npcFaction), false);
-		}
-		_npcFaction.AddFaction(juggernaut, BloodCultRuleSystem.BloodCultistFactionId);
+		var npcFactionComp = EnsureComp<NpcFactionMemberComponent>(juggernaut);
+		_npcFaction.ClearFactions((juggernaut, npcFactionComp), false);
+		_npcFaction.AddFaction((juggernaut, npcFactionComp), BloodCultRuleSystem.BloodCultistFactionId);
 		
 		// Grant Commune ability to juggernaut
 		GrantCommuneAction(juggernaut);
@@ -227,6 +227,9 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 			return;
 		}
 
+		// Transfer mind from soulstone to juggernaut first (before container insertion to avoid client-side entity warning)
+		_mind.TransferTo((EntityUid)mindId, juggernaut, mind: mindComp);
+		
 		// Store the soulstone in the juggernaut's container
 		if (_container.TryGetContainer(juggernaut, "juggernaut_soulstone_container", out var soulstoneContainer))
 		{
@@ -241,9 +244,6 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 		GrantCommuneAction(juggernaut);
 
 		// DON'T heal the juggernaut - it stays in critical state until healed with blood
-
-		// Transfer mind from soulstone to juggernaut
-		_mind.TransferTo((EntityUid)mindId, juggernaut, mind: mindComp);
 		
 		// Preserve speech component from soulstone (e.g., Hamlet's squeak sounds)
 		if (TryComp<SpeechComponent>(soulstone, out var soulstoneSpeech))
@@ -256,11 +256,9 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 		
 		// Ensure juggernaut is in the BloodCultist faction (remove any crew alignment)
 		// Use ClearFactions and AddFaction to ensure proper faction alignment after mind transfer
-		if (TryComp<NpcFactionMemberComponent>(juggernaut, out var npcFaction))
-		{
-			_npcFaction.ClearFactions((juggernaut, npcFaction), false);
-		}
-		_npcFaction.AddFaction(juggernaut, BloodCultRuleSystem.BloodCultistFactionId);
+		var npcFactionComp = EnsureComp<NpcFactionMemberComponent>(juggernaut);
+		_npcFaction.ClearFactions((juggernaut, npcFactionComp), false);
+		_npcFaction.AddFaction((juggernaut, npcFactionComp), BloodCultRuleSystem.BloodCultistFactionId);
 
 		// Play transformation audio
 		var coordinates = Transform(juggernaut).Coordinates;
@@ -343,11 +341,9 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 		
 		// Ensure juggernaut is in the BloodCultist faction (remove any crew alignment)
 		// Use ClearFactions and AddFaction to ensure proper faction alignment after mind transfer
-		if (TryComp<NpcFactionMemberComponent>(juggernaut, out var npcFaction))
-		{
-			_npcFaction.ClearFactions((juggernaut, npcFaction), false);
-		}
-		_npcFaction.AddFaction(juggernaut, BloodCultRuleSystem.BloodCultistFactionId);
+		var npcFactionComp = EnsureComp<NpcFactionMemberComponent>(juggernaut);
+		_npcFaction.ClearFactions((juggernaut, npcFactionComp), false);
+		_npcFaction.AddFaction((juggernaut, npcFactionComp), BloodCultRuleSystem.BloodCultistFactionId);
 		
 		// Grant Commune ability to juggernaut
 		GrantCommuneAction(juggernaut);
@@ -530,11 +526,9 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 		_mind.TransferTo((EntityUid)mindId, juggernaut, mind: mindComp);
 		
 		// Ensure juggernaut is in the BloodCultist faction (remove any crew alignment)
-		if (TryComp<NpcFactionMemberComponent>(juggernaut, out var npcFaction))
-		{
-			_npcFaction.ClearFactions((juggernaut, npcFaction), false);
-		}
-		_npcFaction.AddFaction(juggernaut, BloodCultRuleSystem.BloodCultistFactionId);
+		var npcFactionComp = EnsureComp<NpcFactionMemberComponent>(juggernaut);
+		_npcFaction.ClearFactions((juggernaut, npcFactionComp), false);
+		_npcFaction.AddFaction((juggernaut, npcFactionComp), BloodCultRuleSystem.BloodCultistFactionId);
 
 		// Play transformation audio
 		var coordinates = Transform(juggernaut).Coordinates;
