@@ -14,7 +14,6 @@ public sealed partial class HotPotatoComponent : Component
     /// <summary>
     /// If set to true entity can be removed by hitting entities if they have hands
     /// </summary>
-    [DataField("canTransfer"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool CanTransfer = true;
 }

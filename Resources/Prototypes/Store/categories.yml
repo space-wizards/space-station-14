@@ -89,6 +89,12 @@
   name: store-category-pointless
   priority: 10
 
+#nukie delivery
+
+- type: storeCategory
+  id: NukieDelivery
+  name: store-category-nukie-delivery
+
 #revenant
 - type: storeCategory
   id: RevenantAbilities
@@ -97,6 +103,12 @@
 #pai
 - type: storeCategory
   id: PAIAbilities
+  name: store-category-abilities
+
+#changeling
+#todo: add actual categories when changeling design/abilities are fleshed out
+- type: storeCategory
+  id: ChangelingAbilities
   name: store-category-abilities
 
 - type: storeCategory

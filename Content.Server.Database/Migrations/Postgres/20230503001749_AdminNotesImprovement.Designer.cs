@@ -17,7 +17,6 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20230503001749_AdminNotesImprovement")]
     partial class AdminNotesImprovement
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1767,6 +1766,5 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

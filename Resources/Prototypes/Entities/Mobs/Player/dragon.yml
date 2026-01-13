@@ -7,7 +7,10 @@
   abstract: true
   components:
   - type: Bloodstream
-    bloodMaxVolume: 650
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 650
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
@@ -100,15 +103,14 @@
       types: {}
   - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
     allowed:
-    - SlowedDown
-    - Stutter
     - Electrocution
     - TemporaryBlindness
     - Pacified
     - RadiationProtection
     - Adrenaline
   - type: Temperature
-    heatDamageThreshold: 800
+  - type: TemperatureDamage
+    heatDamageThreshold: 2400
   - type: Metabolizer
     solutionOnBody: false
     updateInterval: 0.25
@@ -154,6 +156,7 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
   - type: Puller
     needsHands: false
   - type: RandomMetadata

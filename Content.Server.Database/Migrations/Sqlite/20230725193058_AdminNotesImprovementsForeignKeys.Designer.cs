@@ -14,7 +14,6 @@ namespace Content.Server.Database.Migrations.Sqlite
     [Migration("20230725193058_AdminNotesImprovementsForeignKeys")]
     partial class AdminNotesImprovementsForeignKeys
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1695,6 +1694,5 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

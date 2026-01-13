@@ -9,10 +9,6 @@
   alert: Stun
 
 - type: statusEffect
-  id: KnockedDown
-  alert: Stun
-
-- type: statusEffect
   id: SlowedDown
 
 - type: statusEffect
@@ -53,9 +49,6 @@
 
 - type: statusEffect
   id: RatvarianLanguage #Praise him
-
-- type: statusEffect
-  id: StaminaModifier
 
 - type: statusEffect
   id: Flashed

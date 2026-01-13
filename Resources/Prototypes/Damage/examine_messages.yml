@@ -3,3 +3,15 @@
   values:
     prefix: comp-window-damaged-
     count: 6
+
+- type: localizedDataset
+  id: ShieldMessages
+  values:
+    prefix: comp-shield-damaged-
+    count: 6
+
+- type: localizedDataset
+  id: EnergyShieldMessages
+  values:
+    prefix: comp-eshield-damaged-
+    count: 4

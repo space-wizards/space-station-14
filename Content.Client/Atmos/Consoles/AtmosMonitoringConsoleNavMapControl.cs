@@ -162,10 +162,10 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         {
             var list = new List<AtmosMonitoringConsoleLine>();
 
-            foreach (var ((netId, layer, hexColor), atmosPipeData) in chunk.AtmosPipeData)
+            foreach (var ((netId, layer, pipeColor), atmosPipeData) in chunk.AtmosPipeData)
             {
                 // Determine the correct coloration for the pipe
-                var color = Color.FromHex(hexColor) * _basePipeNetColor;
+                var color = pipeColor * _basePipeNetColor;
 
                 if (FocusNetId != null && FocusNetId != netId)
                     color *= _unfocusedPipeNetColor;
