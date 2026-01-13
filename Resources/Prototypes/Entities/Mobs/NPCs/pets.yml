@@ -891,6 +891,9 @@
     attributes:
       proper: true
       gender: male
+  # Strips the name identifier from him, so he's just "Pun Pun" rather than "Pun Pun (MK-123)"
+  - type: NameIdentifier
+    group: null
 
 - type: entity
   name: Tropico
