@@ -10,8 +10,8 @@
     group: null  # Strips the name identifier from the pet's ingame name
 
 - type: entity
-  parent: MobCorgi
-  id: [ MobCorgiIan, BaseUniquePet ]
+  parent: [ MobCorgi, BaseUniquePet ]
+  id: MobCorgiIan
   name: Ian
   description: Favorite pet corgi.
   components:
