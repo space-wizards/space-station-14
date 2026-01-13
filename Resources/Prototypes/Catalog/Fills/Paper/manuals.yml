@@ -52,5 +52,5 @@
     content: book-text-scurret-employment-contract
     stampState: paper_stamp-trader
     stampedBy:
-      - stampedColor: '#000000'
-        stampedName: Arnold's Pizza
+    - stampedColor: '#000000'
+      stampedName: Arnold's Pizza
