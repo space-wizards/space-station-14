@@ -57,8 +57,7 @@ public sealed class ForceAttackSystem : EntitySystem
             }
 
             // Find a target in range that isn't critical or dead
-            var hostiles = _faction.GetNearbyHostiles((uid, factionComp), weapon.Range);
-            if (!hostiles
+            if (!_faction.GetNearbyHostiles((uid, factionComp), weapon.Range)
                     .Where((potTarget) => !_mob.IsIncapacitated(potTarget))
                     .TryFirstOrNull(out var target))
             {
