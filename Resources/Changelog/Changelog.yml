@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Topicals now correctly scale their self heal time with the damage you
-      have taken.
-    type: Fix
-  id: 8883
-  time: '2025-08-25T18:05:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39883
 - author: ToastEnjoyer
   changes:
   - message: Pacifists can no longer use the laser rifle
@@ -3902,3 +3894,12 @@
   id: 9386
   time: '2026-01-13T14:05:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38898
+- author: ScarKy0
+  changes:
+  - message: The throwing knives bundle now comes with 8 knives instead of 4.
+    type: Tweak
+  - message: Throwing knives now take half the time (1.5s) to unembed from a target.
+    type: Tweak
+  id: 9387
+  time: '2026-01-13T17:04:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42391
