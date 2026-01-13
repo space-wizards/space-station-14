@@ -1,4 +1,5 @@
-﻿using Content.Shared.Mobs;
+﻿using Content.Shared.Lock.BypassLock.Systems;
+using Content.Shared.Mobs;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Lock.BypassLock.Components;
@@ -6,12 +7,12 @@ namespace Content.Shared.Lock.BypassLock.Components;
 /// <summary>
 /// This component lets the lock on this entity be pried open when the entity is in critical or dead state.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(Systems.BypassLockSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(BypassLockSystem))]
 public sealed partial class BypassLockRequiresMobStateComponent : Component
 {
     /// <summary>
-    /// The mobstate where the ID lock can be bypassed.
+    /// The mobstate where the lock can be bypassed.
     /// </summary>
     [DataField]
-    public List<MobState> RequiredMobState = [];
+    public HashSet<MobState> RequiredMobState = [];
 }

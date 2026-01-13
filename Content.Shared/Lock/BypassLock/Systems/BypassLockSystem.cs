@@ -34,7 +34,7 @@ public sealed partial class BypassLockSystem : EntitySystem
             || !_lock.IsLocked(target.Owner))
             return;
 
-        var ev = new ForceOpenLockAttemptEvent(true);
+        var ev = new ForceOpenLockAttemptEvent(args.User);
         RaiseLocalEvent(target.Owner, ref ev);
 
         if (!ev.CanForceOpen)
@@ -104,7 +104,7 @@ public sealed partial class BypassLockSystem : EntitySystem
 }
 
 /// <summary>
-/// This event gets raised on the entity with the <see cref="Components.BypassLockRequiresMobStateComponent"/> after someone finished
+/// This event gets raised on the entity with the <see cref="BypassLockRequiresMobStateComponent"/> after someone finished
 /// a doafter forcing the lock open.
 /// </summary>
 [Serializable, NetSerializable]
@@ -113,9 +113,10 @@ public sealed partial class ForceOpenLockDoAfterEvent : SimpleDoAfterEvent;
 /// <summary>
 /// This gets raised on the target whose lock is attempted to be forced open.
 /// </summary>
+/// <param name="User">Entity attempting to open this.</param>
 /// <param name="CanForceOpen">Whether the lock can be forced open.</param>
 [ByRefEvent]
-public record struct ForceOpenLockAttemptEvent(bool CanForceOpen);
+public record struct ForceOpenLockAttemptEvent(EntityUid User, bool CanForceOpen = true);
 
 /// <summary>
 /// This gets raised on the target that is being right-clicked to check for verb requirements.
