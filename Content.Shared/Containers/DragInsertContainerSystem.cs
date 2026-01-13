@@ -1,9 +1,11 @@
+using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
@@ -17,6 +19,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
 
     public override void Initialize()
     {
@@ -93,6 +96,9 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
         if (!_actionBlocker.CanInteract(user, ent))
             return;
 
+        if (!_access.IsAllowed(user, uid))
+            return;
+
         // Eject verb
         if (container.ContainedEntities.Count > 0)
         {
@@ -107,22 +113,31 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
 
             if (emptyableCount > 0)
             {
-                AlternativeVerb verb = new()
+                // Loop through every entity inside the container
+                foreach (var containedEnt in container.ContainedEntities)
                 {
-                    Act = () =>
+                    var entToEject = containedEnt;
+
+                    AlternativeVerb verb = new()
                     {
-                        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} emptied container {ToPrettyString(ent)}");
-                        var ents = _container.EmptyContainer(container);
-                        foreach (var contained in ents)
+                        Act = () =>
                         {
-                            _climb.ForciblySetClimbing(contained, ent);
-                        }
-                    },
-                    Category = VerbCategory.Eject,
-                    Text = Loc.GetString("container-verb-text-empty"),
-                    Priority = 1 // Promote to top to make ejecting the ALT-click action
-                };
-                args.Verbs.Add(verb);
+                            // Attempt to remove the specific item from the container
+                            if (_container.Remove(entToEject, container))
+                            {
+                                _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} ejected {ToPrettyString(entToEject)} from {ToPrettyString(ent)}");
+
+                                // Apply the climbing logic to the specific item ejected
+                                _climb.ForciblySetClimbing(entToEject, ent);
+                            }
+                        },
+                        Category = VerbCategory.Eject,
+                        Text = Identity.Name(entToEject, EntityManager),
+                        Priority = 1
+                    };
+
+                    args.Verbs.Add(verb);
+                }
             }
         }
 
