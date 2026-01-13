@@ -153,6 +153,7 @@ public sealed partial class TriggerSystem
             Trigger(uid, null, comp.KeyOut);
         }
     }
+
     private void UpdateTimer()
     {
         var curTime = _timing.CurTime;

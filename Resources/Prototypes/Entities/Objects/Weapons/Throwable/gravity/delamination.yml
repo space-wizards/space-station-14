@@ -95,6 +95,7 @@
     layers:
     - state: icon
       color: "#ffaa44"
+
 - type: entity
   parent: BasePullingDelamination
   id: SinguloDelamination
@@ -109,6 +110,7 @@
     layers:
     - state: icon
       color: "#b444ff"
+
 - type: entity
   parent: BaseDelamination
   id: WhiteholeDelamination

@@ -89,6 +89,7 @@ public sealed partial class TriggerSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
+
         var isactive = HasComp<ActiveTimerTriggerComponent>(ent);
         if (isactive)
             return false; // already activated
