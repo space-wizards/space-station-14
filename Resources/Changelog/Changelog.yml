@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Made moths less susceptible to flames and heat. (4x Fire Damage -> 2x
-      Fire damage) (1.3x heat -> 1.2x heat).
-    type: Tweak
-  id: 8878
-  time: '2025-08-22T22:08:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39672
 - author: JimmyToor
   changes:
   - message: Fixed only being able to vape with a blocked mouth.
@@ -3898,3 +3890,12 @@
   id: 9381
   time: '2026-01-13T07:42:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42302
+- author: ScarKy0
+  changes:
+  - message: Hyperzine Injector cost has been lowered to 2TC from 4TC.
+    type: Tweak
+  - message: Hyperzine Microinjector Kit cost has been lowered to 5TC from 12TC.
+    type: Tweak
+  id: 9382
+  time: '2026-01-13T07:57:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42383
