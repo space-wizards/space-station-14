@@ -68,7 +68,7 @@ public sealed class TileSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, TileHistoryComponent component, ref ComponentGetState args)
     {
-        if (args.FromTick <= component.ForceTick)
+        if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
         {
             var fullHistory = new Dictionary<Vector2i, TileHistoryChunk>(component.ChunkHistory.Count);
             foreach (var (key, value) in component.ChunkHistory)
