@@ -19,6 +19,9 @@ reagent-desc-ammonia-blood = Nothing else in the entire galaxy smells quite so a
 reagent-name-zombie-blood = zombie blood
 reagent-desc-zombie-blood = Would not advise eating. Can be used to create an inoculation against the infection.
 
+reagent-name-unholy-blood = unholy blood
+reagent-desc-unholy-blood = A cursed substance that pulses with dark energy. Those touched by the cult bleed this profane fluid.
+
 reagent-name-ichor = ichor
 reagent-desc-ichor = An extremely potent regenerative chemical, perfected by space fauna evolution. Produced in the dragon's digestive system, it is seen as an exotic commodity due to the gargantuan effort of hunting for it.
 

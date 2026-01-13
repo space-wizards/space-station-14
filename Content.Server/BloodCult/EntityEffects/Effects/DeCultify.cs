@@ -6,35 +6,15 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
 
-using System.Text.Json.Serialization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.BloodCult;
 using Content.Shared.BloodCult.Components;
 using Content.Shared.Damage.Systems;
 
 namespace Content.Server.BloodCult.EntityEffects.Effects;
-
-/// <summary>
-/// Decultifies a Blood Cultist by increasing their DeCultification value.
-/// </summary>
-public sealed partial class DeCultify : EntityEffectBase<DeCultify>
-{
-	/// <summary>
-	/// Decultification to apply every cycle.
-	/// </summary>
-	[DataField(required: true)]
-	[JsonPropertyName("amount")]
-	public float Amount = default!;
-
-	public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-	{
-		return "In large quantities, can free a person's mind from servitude to an eldritch entity.";
-	}
-}
 
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class DeCultifyEntityEffectSystem : EntityEffectSystem<BloodCultistComponent, DeCultify>

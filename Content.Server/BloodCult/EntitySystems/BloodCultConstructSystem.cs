@@ -27,6 +27,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Content.Shared.Speech;
 using Content.Shared.Emoting;
+using Content.Server.Speech.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Systems;
@@ -188,7 +189,7 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 			juggComp.IsInactive = false;
 		}
 		
-		// Preserve speech component from soulstone only if it's a Hamlet soulstone
+		// Preserve speech component from soulstone only if it's a Hamlet soulstone (for squeak sounds)
 		if (TryComp<SoulStoneComponent>(soulstone, out var soulstoneComp) && 
 		    soulstoneComp.OriginalEntityPrototype == "MobHamsterHamlet" &&
 		    TryComp<SpeechComponent>(soulstone, out var soulstoneSpeech))
@@ -198,6 +199,10 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 				RemComp<SpeechComponent>(juggernaut);
 			CopyComp(soulstone, juggernaut, soulstoneSpeech);
 		}
+		
+		// Ensure juggernaut has the correct accent (juggernaut voice masking for text replacement)
+		// This can coexist with SpeechComponent - SpeechComponent handles sounds, ReplacementAccentComponent handles text
+		EnsureComp<ReplacementAccentComponent>(juggernaut).Accent = "juggernaut";
 		
 		// Ensure juggernaut is in the BloodCultist faction (remove any crew alignment)
 		// Use ClearFactions and AddFaction to ensure proper faction alignment after mind transfer
@@ -245,14 +250,20 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 
 		// DON'T heal the juggernaut - it stays in critical state until healed with blood
 		
-		// Preserve speech component from soulstone (e.g., Hamlet's squeak sounds)
-		if (TryComp<SpeechComponent>(soulstone, out var soulstoneSpeech))
+		// Preserve speech component from soulstone only if it's a Hamlet soulstone (for squeak sounds)
+		if (TryComp<SoulStoneComponent>(soulstone, out var soulstoneComp) && 
+		    soulstoneComp.OriginalEntityPrototype == "MobHamsterHamlet" &&
+		    TryComp<SpeechComponent>(soulstone, out var soulstoneSpeech))
 		{
 			// Remove existing speech component if present, then copy from soulstone
 			if (HasComp<SpeechComponent>(juggernaut))
 				RemComp<SpeechComponent>(juggernaut);
 			CopyComp(soulstone, juggernaut, soulstoneSpeech);
 		}
+		
+		// Ensure juggernaut has the correct accent (juggernaut voice masking for text replacement)
+		// This can coexist with SpeechComponent - SpeechComponent handles sounds, ReplacementAccentComponent handles text
+		EnsureComp<ReplacementAccentComponent>(juggernaut).Accent = "juggernaut";
 		
 		// Ensure juggernaut is in the BloodCultist faction (remove any crew alignment)
 		// Use ClearFactions and AddFaction to ensure proper faction alignment after mind transfer

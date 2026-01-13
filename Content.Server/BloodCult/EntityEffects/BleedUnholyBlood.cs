@@ -1,12 +1,13 @@
 // SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
 //
-// SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+// SPDX-License-Identifier: MIT
 
 using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chemistry.Reagent;
@@ -14,16 +15,6 @@ using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.BloodCult.EntityEffects;
-
-/// <summary>
-/// Makes an entity bleed Unholy Blood instead of their normal blood type while they metabolize Edge Essentia.
-/// Changes what blood they bleed out, not their internal blood.
-/// </summary>
-public sealed partial class BleedUnholyBlood : EntityEffectBase<BleedUnholyBlood>
-{
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-bleed-unholy-blood", ("chance", Probability));
-}
 
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class BleedUnholyBloodEntityEffectSystem : EntityEffectSystem<BloodstreamComponent, BleedUnholyBlood>

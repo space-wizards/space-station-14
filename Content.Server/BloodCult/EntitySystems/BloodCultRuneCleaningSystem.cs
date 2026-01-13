@@ -48,8 +48,7 @@ public sealed class BloodCultRuneCleaningSystem : EntitySystem
 	{
 
 		// Check if mop has a solution
-		if (!TryComp<AbsorbentComponent>(mop, out var absorbent) ||
-		    !_solutionContainer.TryGetSolution(mop, absorbent.SolutionName, out var absorberSoln))
+		if (!_solutionContainer.TryGetSolution(mop, component.SolutionName, out var absorberSoln))
 			return false;
 
 		// Check if mop is on cooldown

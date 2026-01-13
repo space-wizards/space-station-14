@@ -11,6 +11,7 @@ using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.BloodCult;
 
 namespace Content.Shared.Fluids;
 
@@ -95,6 +96,14 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         // Use the non-optional form of IsDelayed to safe the TryComp in Mop
         if (TryComp<UseDelayComponent>(absorbEnt, out var useDelay)
             && _useDelay.IsDelayed((absorbEnt.Owner, useDelay)))
+            return;
+
+        // This section only for BloodCult runes
+        // Check if target is a cleanable rune first (handled by BloodCultRuneCleaningSystem)
+        // This allows mops to clean runes before processing puddles/refillables
+        var ev = new AbsorbentMopTargetEvent(user, target, absorbEnt.Owner, absorbEnt.Comp);
+        RaiseLocalEvent(target, ref ev);
+        if (ev.Handled)
             return;
 
         // Try to slurp up the puddle.
