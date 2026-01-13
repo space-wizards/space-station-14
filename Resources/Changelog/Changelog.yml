@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: You can now select no lock when locking syndicate items
-    type: Tweak
-  id: 8887
-  time: '2025-08-26T14:18:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39532
 - author: slarticodefast
   changes:
   - message: Removed the dynamic game mode from player votes.
@@ -3910,3 +3903,12 @@
   id: 9390
   time: '2026-01-13T22:21:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42319
+- author: SapphicOverload
+  changes:
+  - message: Fixed tritium fires consuming either 18 times more oxygen and making
+      10 times more water vapor than intended or consuming no oxygen at all, depending
+      on whether there is more or less oxygen than tritium respectively.
+    type: Fix
+  id: 9391
+  time: '2026-01-13T22:35:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41870
