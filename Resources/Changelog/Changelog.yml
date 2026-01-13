@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: GR1231
-  changes:
-  - message: hats on Smile the slime should be correctly displaced
-    type: Fix
-  id: 8885
-  time: '2025-08-26T00:48:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39824
 - author: perryprog
   changes:
   - message: Items and borgs can no longer become stuck in mechs.
@@ -3903,3 +3896,14 @@
   id: 9388
   time: '2026-01-13T17:18:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42393
+- author: ScarKy0
+  changes:
+  - message: Vipers now start with a high capacity magazine.
+    type: Tweak
+  - message: The uplink now has a high capacity magazine instead of the regular one.
+    type: Tweak
+  - message: High capacity magazines now hold 1 less bullet (15 total).
+    type: Tweak
+  id: 9389
+  time: '2026-01-13T18:30:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42392
