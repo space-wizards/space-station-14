@@ -65,7 +65,6 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             Dirty(uid, component);
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
             visuals.Sprite = component.RopeSprite;
-            visuals.OffsetA = new Vector2(0f, 0.5f);
             visuals.Target = uid;
             Dirty(shotUid.Value, visuals);
         }
@@ -229,10 +228,10 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             return;
 
         var jointComp = EnsureComp<JointComponent>(uid);
-        var joint = _joints.CreateDistanceJoint(uid, args.Weapon.Value, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
+        var joint = _joints.CreateDistanceJoint(uid, args.Weapon.Value, id: GrapplingJoint);
         joint.MaxLength = joint.Length + 0.2f;
         joint.Stiffness = 1f;
-        joint.MinLength = 0.35f;
+        joint.MinLength = 1f; // Length of a tile to prevent pulling yourself into / through walls
         // Setting velocity directly for mob movement fucks this so need to make them aware of it.
         // joint.Breakpoint = 4000f;
         Dirty(uid, jointComp);

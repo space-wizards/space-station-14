@@ -26,6 +26,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
         // This can for example happen when the user is cuffed and being pulled.
         _pulling.TryStopPull(target);
 
+
         // Check if the user is pulling anything, and drop it if so.
         if (TryComp<PullerComponent>(target, out var puller))
             _pulling.TryStopPull(puller.Pulling);
