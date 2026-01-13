@@ -32,7 +32,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Bed.Cryostorage;
 
 /// <inheritdoc/>
-public sealed partial class CryostorageSystem : SharedCryostorageSystem
+public sealed class CryostorageSystem : SharedCryostorageSystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -365,6 +365,3 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         }
     }
 
-    [GeneratedRegex(@"\d+$")]
-    private static partial Regex MyRegex();
-}
