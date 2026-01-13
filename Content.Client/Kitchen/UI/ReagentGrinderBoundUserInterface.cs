@@ -5,14 +5,10 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Kitchen.UI;
 
-public sealed class ReagentGrinderBoundUserInterface : BoundUserInterface
+public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private GrinderMenu? _menu;
-
-    public ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

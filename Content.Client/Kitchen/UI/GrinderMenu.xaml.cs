@@ -69,7 +69,7 @@ public sealed partial class GrinderMenu : FancyWindow
         if (!_entityManager.TryGetComponent<ReagentGrinderComponent>(_owner, out var grinderComp))
             return;
 
-        var active = grinderComp.EndTime != null;
+        var active = _grinder.IsActive((_owner, grinderComp));
         var beaker = _slots.GetItemOrNull(_owner, ReagentGrinderComponent.BeakerSlotId);
         var powered = _power.IsPowered(_owner);
         var hasInput = grinderComp.InputContainer.ContainedEntities.Any();
@@ -78,8 +78,8 @@ public sealed partial class GrinderMenu : FancyWindow
 
         BeakerContentBox.EjectButton.Disabled = active || !beaker.HasValue;
         ChamberContentBox.EjectButton.Disabled = active || !hasInput;
-        GrindButton.Disabled = active || !canGrind || !powered;
-        JuiceButton.Disabled = active || !canJuice || !powered;
+        GrindButton.Disabled = active || !canGrind || !powered || !beaker.HasValue;
+        JuiceButton.Disabled = active || !canJuice || !powered || !beaker.HasValue;
         GrindButton.Modulate = grinderComp.Program == GrinderProgram.Grind ? Color.Green : Color.White;
         JuiceButton.Modulate = grinderComp.Program == GrinderProgram.Juice ? Color.Green : Color.White;
 
@@ -119,7 +119,7 @@ public sealed partial class GrinderMenu : FancyWindow
             foreach (var (reagent, quantity) in reagents)
             {
                 var reagentName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto)
-                    ? Loc.GetString($"{quantity} {proto.LocalizedName}")
+                    ? $"{quantity} {proto.LocalizedName}"
                     : "???";
                 BeakerContentBox.BoxContents.AddItem(reagentName);
             }

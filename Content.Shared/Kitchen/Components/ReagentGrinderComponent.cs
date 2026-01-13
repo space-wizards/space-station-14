@@ -17,7 +17,7 @@ namespace Content.Shared.Kitchen.Components;
 public sealed partial class ReagentGrinderComponent : Component
 {
     /// <summary>
-    /// The container slot id for the beaker
+    /// The container slot id for the beaker.
     /// </summary>
     public const string BeakerSlotId = "beakerSlot";
 
@@ -46,7 +46,7 @@ public sealed partial class ReagentGrinderComponent : Component
     public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5);
 
     /// <summary>
-    /// Multiplier for WorkTimer, that pitches the audio accordingly.
+    /// Multiplier for WorkTime, that pitches the audio accordingly.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float WorkTimeMultiplier = 1.0f;
@@ -89,14 +89,16 @@ public sealed partial class ReagentGrinderComponent : Component
     public TimeSpan? EndTime;
 
     /// <summary>
-    /// The currently active program.
+    /// The currently active program (if the grinder is working).
     /// </summary>
     [DataField, AutoNetworkedField]
     public GrinderProgram? Program;
 }
 
 /// <summary>
-/// Marker component for active reagent grinders.
+/// Marker component for active reagent grinders used to improve the EntityQueryEnumerator performance in the update loop.
+/// If you want to check if the grinder is currently active use <see cref="SharedReagentGrinderSystem.IsActive"/> instead,
+/// because this component is being removed deferred, i.e. in the following game tick.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ActiveReagentGrinderComponent : Component;
