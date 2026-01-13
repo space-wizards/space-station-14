@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.CombatMode;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
@@ -23,6 +24,7 @@ public sealed class ForceAttackSystem : EntitySystem
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly SharedCombatModeSystem _mode = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly MobStateSystem _mob = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -54,9 +56,11 @@ public sealed class ForceAttackSystem : EntitySystem
                 continue;
             }
 
-            // Find a target in range
+            // Find a target in range that isn't critical or dead
             var hostiles = _faction.GetNearbyHostiles((uid, factionComp), weapon.Range);
-            if (!hostiles.TryFirstOrNull(out var target))
+            if (!hostiles
+                    .Where((potTarget) => !_mob.IsIncapacitated(potTarget))
+                    .TryFirstOrNull(out var target))
             {
                 forceComp.InRange = false;
                 continue;
