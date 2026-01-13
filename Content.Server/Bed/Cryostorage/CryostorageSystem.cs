@@ -13,6 +13,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
@@ -310,6 +311,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         foreach (var contained in ent.Comp.StoredPlayers)
         {
+            if (HasComp<AttachedClothingComponent>(contained))
+                continue;
             data.Add(GetContainedData(contained));
         }
 
@@ -325,12 +328,13 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         var enumerator = _inventory.GetSlotEnumerator(uid);
         while (enumerator.NextItem(out var item, out var slotDef))
         {
+
             data.ItemSlots.Add((slotDef.Name, slotDef.DisplayName, Name(item)));
         }
 
         foreach (var hand in _hands.EnumerateHands(uid))
         {
-            if (!_hands.TryGetHeldItem(uid, hand, out var heldEntity))
+            if (!_hands.TryGetHeldItem(uid, hand, out var heldEntity, false))
                 continue;
 
             data.HeldItems.Add(hand, Name(heldEntity.Value));
@@ -364,4 +368,4 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             HandleEnterCryostorage((uid, containedComp), id);
         }
     }
-
+}

@@ -397,7 +397,7 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     /// Gets the item currently held in the entity's specified hand. Returns false if no hands are present or there is no item.
     /// </summary>
-    public bool TryGetHeldItem(Entity<HandsComponent?> ent, string? handId, [NotNullWhen(true)] out EntityUid? held)
+    public bool TryGetHeldItem(Entity<HandsComponent?> ent, string? handId, [NotNullWhen(true)] out EntityUid? held, bool showVirtualItem = true)
     {
         held = null;
         if (!Resolve(ent, ref ent.Comp, false))
@@ -410,7 +410,11 @@ public abstract partial class SharedHandsSystem
         if (!ContainerSystem.TryGetContainer(ent, handId, out var container))
             return false;
 
-        held = container.ContainedEntities.FirstOrNull();
+        var potentialHeld = container.ContainedEntities.FirstOrNull();
+
+        if (!showVirtualItem && TryComp(potentialHeld, out VirtualItemComponent? @virtual))
+            return false;
+        held = potentialHeld;
         return held != null;
     }
 
