@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: Items and borgs can no longer become stuck in mechs.
-    type: Fix
-  id: 8886
-  time: '2025-08-26T10:29:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37942
 - author: beck-thompson
   changes:
   - message: You can now select no lock when locking syndicate items
@@ -3907,3 +3900,13 @@
   id: 9389
   time: '2026-01-13T18:30:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42392
+- author: SirWarock
+  changes:
+  - message: Cyborg Chassis can now be pried open when the cyborg is in critical state!
+    type: Add
+  - message: Cyborg Chassis' maintenance panel now needs to be opened with a screwdriver
+      again.
+    type: Tweak
+  id: 9390
+  time: '2026-01-13T22:21:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42319
