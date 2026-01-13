@@ -37,7 +37,7 @@ public sealed class DeployFoldableSystem : EntitySystem
     private void OnDragDropDragged(Entity<DeployFoldableComponent> ent, ref DragDropDraggedEvent args)
     {
         if (!TryComp<FoldableComponent>(ent, out var foldable)
-            || !_foldable.TrySetFolded(ent, foldable, true))
+            || !_foldable.TrySetFolded(ent, foldable, true, args.User))
             return;
 
         _hands.PickupOrDrop(args.User, ent.Owner);
@@ -59,6 +59,10 @@ public sealed class DeployFoldableSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
+        // Don't do anything unless you clicked on the floor.
+        if (args.Target.HasValue)
+            return;
+
         if (!TryComp<FoldableComponent>(ent, out var foldable))
             return;
 
@@ -70,10 +74,10 @@ public sealed class DeployFoldableSystem : EntitySystem
         }
 
         if (!TryComp(args.User, out HandsComponent? hands)
-            || !_hands.TryDrop(args.User, args.Used, targetDropLocation: args.ClickLocation, handsComp: hands))
+            || !_hands.TryDrop((args.User, hands), args.Used, targetDropLocation: args.ClickLocation))
             return;
 
-        if (!_foldable.TrySetFolded(ent, foldable, false))
+        if (!_foldable.TrySetFolded(ent, foldable, false, args.User))
         {
             _hands.TryPickup(args.User, args.Used, handsComp: hands);
             return;

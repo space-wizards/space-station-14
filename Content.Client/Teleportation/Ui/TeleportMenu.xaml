@@ -1,0 +1,10 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io" Title = "{Loc 'teleportation-scroll-window-title'}" MinSize="450 450" SetSize="450 450">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
+        <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True" Margin="0 4" />
+        <ScrollContainer Name="TeleportScroll" VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+            <BoxContainer Name="TeleportButtonContainer" Orientation="Vertical" VerticalExpand="True" SeparationOverride="5">
+                <!-- Teleport buttons get added here by code -->
+            </BoxContainer>
+        </ScrollContainer>
+    </BoxContainer>
+</DefaultWindow>

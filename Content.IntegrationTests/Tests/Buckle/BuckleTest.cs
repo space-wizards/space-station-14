@@ -31,6 +31,8 @@ namespace Content.IntegrationTests.Tests.Buckle
   - type: Hands
   - type: ComplexInteraction
   - type: InputMover
+  - type: Physics
+    bodyType: KinematicController
   - type: Body
     prototype: Human
   - type: StandingState
@@ -293,9 +295,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.That(buckle.Buckled);
 
                 // With items in all hands
-                foreach (var hand in hands.Hands.Values)
+                foreach (var hand in hands.Hands.Keys)
                 {
-                    Assert.That(hand.HeldEntity, Is.Not.Null);
+                    Assert.That(handsSys.GetHeldItem((human, hands), hand), Is.Not.Null);
                 }
 
                 var bodySystem = entityManager.System<BodySystem>();
@@ -315,10 +317,10 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Still buckled
                 Assert.That(buckle.Buckled);
 
-                // Now with no item in any hand
-                foreach (var hand in hands.Hands.Values)
+                // Still with items in hand
+                foreach (var hand in hands.Hands.Keys)
                 {
-                    Assert.That(hand.HeldEntity, Is.Null);
+                    Assert.That(handsSys.GetHeldItem((human, hands), hand), Is.Not.Null);
                 }
 
                 buckleSystem.Unbuckle(human, human);

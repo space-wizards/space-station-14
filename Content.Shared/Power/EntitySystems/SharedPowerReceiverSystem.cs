@@ -4,13 +4,16 @@ using Content.Shared.Database;
 using Content.Shared.Power.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Power.EntitySystems;
 
 public abstract class SharedPowerReceiverSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPowerNetSystem _net = default!;
 
     public abstract bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component);
 
@@ -44,6 +47,15 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         // it'll save a lot of confusion if 'always powered' means 'always powered'
         if (!receiver.NeedsPower)
         {
+            var powered = _net.IsPoweredCalculate(receiver);
+
+            // Server won't raise it here as it can raise the load event later with NeedsPower?
+            // This is mostly here for clientside predictions.
+            if (receiver.Powered != powered)
+            {
+                RaisePower((uid, receiver));
+            }
+
             SetPowerDisabled(uid, false, receiver);
             return true;
         }
@@ -59,6 +71,19 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
                 AudioParams.Default.WithVolume(-2f));
         }
 
+        if (_netMan.IsClient && receiver.PowerDisabled)
+        {
+            var powered = _net.IsPoweredCalculate(receiver);
+
+            // Server won't raise it here as it can raise the load event later with NeedsPower?
+            // This is mostly here for clientside predictions.
+            if (receiver.Powered != powered)
+            {
+                receiver.Powered = powered;
+                RaisePower((uid, receiver));
+            }
+        }
+
         return !receiver.PowerDisabled; // i.e. PowerEnabled
     }
 
@@ -67,8 +92,19 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         // NOOP on server because client has 0 idea of load so we can't raise it properly in shared.
     }
 
-	/// <summary>
-	/// Checks if entity is APC-powered device, and if it have power.
+    /// <summary>
+    /// Sets the power load of this power receiver.
+    /// </summary>
+    public void SetLoad(Entity<SharedApcPowerReceiverComponent?> entity, float load)
+    {
+        if (!ResolveApc(entity.Owner, ref entity.Comp))
+            return;
+
+        entity.Comp.Load = load;
+    }
+
+    /// <summary>
+    /// Checks if entity is APC-powered device, and if it have power.
     /// </summary>
     public bool IsPowered(Entity<SharedApcPowerReceiverComponent?> entity)
     {

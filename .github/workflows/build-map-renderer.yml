@@ -36,13 +36,13 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4.1.0
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
 
       - name: Install dependencies
         run: dotnet restore
 
       - name: Build Project
-        run: dotnet build Content.MapRenderer --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
+        run: dotnet build Content.MapRenderer --configuration Release --no-restore /m
 
       - name: Run Map Renderer
         run: dotnet run --project Content.MapRenderer Dev

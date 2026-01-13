@@ -1,0 +1,107 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRoboticsRecipe
+  categories:
+  - Robotics
+  completetime: 3
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseRoboticsRecipe
+  id: BaseBorgLimbRecipe
+  completetime: 2
+  materials:
+    Steel: 250
+    Glass: 100
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRoboticsPartRecipe
+  categories:
+  - Parts
+  completetime: 2
+
+## Recipes
+
+# Parts
+- type: latheRecipe
+  parent: BaseRoboticsPartRecipe
+  id: ProximitySensor
+  result: ProximitySensor
+  materials:
+    Steel: 200
+    Glass: 300
+
+- type: latheRecipe
+  parent: BaseRoboticsPartRecipe
+  id: SciFlash
+  result: SciFlash
+  materials:
+    Glass: 100
+    Plastic: 200
+    Steel: 100
+
+# Cyborg body
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: CyborgEndoskeleton
+  result: CyborgEndoskeleton
+  materials:
+    Steel: 1500
+
+- type: latheRecipe
+  parent: BaseBorgLimbRecipe
+  id: LeftArmBorg
+  result: LeftArmBorg
+
+- type: latheRecipe
+  parent: BaseBorgLimbRecipe
+  id: RightArmBorg
+  result: RightArmBorg
+
+- type: latheRecipe
+  parent: BaseBorgLimbRecipe
+  id: LeftLegBorg
+  result: LeftLegBorg
+
+- type: latheRecipe
+  parent: BaseBorgLimbRecipe
+  id: RightLegBorg
+  result: RightLegBorg
+
+- type: latheRecipe
+  parent: BaseBorgLimbRecipe
+  id: LightHeadBorg
+  result: LightHeadBorg
+
+- type: latheRecipe
+  parent: BaseBorgLimbRecipe
+  id: TorsoBorg
+  result: TorsoBorg
+
+# Brains
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: MMI
+  result: MMI
+  icon:
+    sprite: Objects/Specific/Robotics/mmi.rsi
+    state: mmi_off
+  materials:
+    Steel: 1000
+    Glass: 200
+    Plastic: 500
+    Gold: 200
+
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: PositronicBrain
+  result: PositronicBrain
+  materials:
+    Steel: 500
+    Plastic: 500
+    Gold: 100
+    Silver: 100
+    Plasma: 1000

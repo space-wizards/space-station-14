@@ -14,6 +14,10 @@
     maxItemSize: Normal
     grid:
     - 0,0,6,3
+    storageOpenSound: /Audio/Items/toolbox_open.ogg
+    storageCloseSound: /Audio/Items/toolbox_close.ogg
+    storageInsertSound: /Audio/Items/toolbox_insert.ogg
+    storageRemoveSound: /Audio/Items/toolbox_remove.ogg
   - type: Item
     size: Ginormous
   - type: MeleeWeapon
@@ -143,3 +147,37 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+
+- type: entity
+  name: foolbox
+  parent: ToolboxBase
+  id: Foolbox
+  description: A toolbox for fools, stocked with clowning equipment.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/foolbox.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/foolbox.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 2
+    soundHit: &SoundRubberHammer
+      collection: RubberHammer
+      params:
+        variation: 0.03
+        volume: 3
+  - type: EmitSoundOnLand
+    sound: *SoundRubberHammer
+  - type: Storage
+    storageOpenSound: &SoundHorn
+      collection: BikeHorn
+      params:
+        variation: 0.125
+    storageCloseSound: *SoundHorn
+    storageInsertSound: &SoundSqueak
+      collection: FootstepClown
+      params:
+        variation: 0.125
+    storageRemoveSound: *SoundSqueak

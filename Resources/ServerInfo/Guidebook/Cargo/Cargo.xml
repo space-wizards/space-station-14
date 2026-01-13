@@ -73,7 +73,7 @@
   Orders are delivered to the station via the orbiting [color=cyan]Trade Station[/color] and are transported to the main station by the [color=cyan]Cargo Shuttle[color]. The shuttle does not fly itself, so it must either be piloted in the shuttle or remotely.
 
   <Box>
-    <GuideEntityEmbed Entity="ComputerCargoShuttle"/>
+    <GuideEntityEmbed Entity="ComputerShuttleCargo"/>
   </Box>
 
   To fly the shuttle, you must first find the [color=cyan]Cargo Shuttle Console[/color]. One is inside the Cargo Bay, and the other is inside the Cargo Shuttle.

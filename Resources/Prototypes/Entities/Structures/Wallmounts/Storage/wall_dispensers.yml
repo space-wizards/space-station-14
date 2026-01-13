@@ -1,0 +1,103 @@
+- type: entity
+  parent: BaseWallmountMetallic
+  id: BaseDispenser
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/walldispenser.rsi
+  - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 5
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Piercing
+        damage: 5
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpillBehavior
+        solution: tank
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+  - type: ExaminableSolution
+    solution: tank
+
+- type: entity
+  parent: BaseDispenser
+  id: CleanerDispenser
+  name: space cleaner dispenser
+  description: Wallmount Space Cleaner dispenser.
+  components:
+  - type: Sprite
+    layers:
+    - state: cleanerdispenser
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 5000
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 5000
+
+- type: entity
+  parent: BaseDispenser
+  id: FuelDispenser
+  name: fuel dispenser
+  description: Wallmount Fuel dispenser.
+  components:
+  - type: Sprite
+    layers:
+    - state: fueldispenser
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 1000
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 1000
+  - type: ReagentTank
+    tankType: Fuel
+  - type: DamageOnToolInteract
+    tools: Welding
+    weldingDamage:
+      types:
+        Heat: 20
+  - type: PacifismDangerousAttack
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50

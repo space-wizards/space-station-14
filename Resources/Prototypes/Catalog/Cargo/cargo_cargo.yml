@@ -17,3 +17,33 @@
   cost: 15000
   category: cargoproduct-category-name-cargo
   group: market
+
+- type: cargoProduct
+  id: CargoParcelWrap
+  icon:
+    sprite: Objects/Misc/ParcelWrap/parcel_wrap.rsi
+    state: brown
+  product: CrateCargoParcelWrap
+  cost: 750
+  category: cargoproduct-category-name-cargo
+  group: market
+
+- type: cargoProduct
+  id: CargoCrusherDagger
+  icon:
+    sprite: Objects/Weapons/Melee/crusher_dagger.rsi
+    state: icon
+  product: CrateCrusherDagger
+  cost: 2500
+  category: cargoproduct-category-name-cargo
+  group: market
+
+- type: cargoProduct
+  id: CargoMailCart
+  icon:
+      sprite: Objects/Specific/Cargo/mailcart.rsi
+      state: icon
+  product: MailCart
+  cost: 300
+  category: cargoproduct-category-name-cargo
+  group: market

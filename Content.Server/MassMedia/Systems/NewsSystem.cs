@@ -1,24 +1,33 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
-using Content.Server.CartridgeLoader;
 using Content.Server.CartridgeLoader.Cartridges;
+using Content.Server.CartridgeLoader;
 using Content.Server.Chat.Managers;
+using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Server.MassMedia.Components;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.CartridgeLoader;
+using Content.Shared.CCVar;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
+using Content.Shared.IdentityManagement;
 using Content.Shared.MassMedia.Components;
 using Content.Shared.MassMedia.Systems;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Server;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.IdentityManagement;
+using Robust.Shared.Configuration;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -34,10 +43,35 @@ public sealed class NewsSystem : SharedNewsSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly DiscordWebhook _discord = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IBaseServer _baseServer = default!;
+
+    private WebhookIdentifier? _webhookId = null;
+    private Color _webhookEmbedColor;
+    private bool _webhookSendDuringRound;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        // Discord hook
+        _cfg.OnValueChanged(CCVars.DiscordNewsWebhook,
+            value =>
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                    _discord.GetWebhook(value, data => _webhookId = data.ToIdentifier());
+            }, true);
+
+        _cfg.OnValueChanged(CCVars.DiscordNewsWebhookEmbedColor, value =>
+            {
+                _webhookEmbedColor = Color.LawnGreen;
+                if (Color.TryParse(value, out var color))
+                    _webhookEmbedColor = color;
+            }, true);
+
+        _cfg.OnValueChanged(CCVars.DiscordNewsWebhookSendDuringRound, value => _webhookSendDuringRound = value, true);
+        SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEndMessageEvent);
 
         // News writer
         SubscribeLocalEvent<NewsWriterComponent, MapInitEvent>(OnMapInit);
@@ -99,7 +133,7 @@ public sealed class NewsSystem : SharedNewsSystem
             _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
                 $"{ToPrettyString(msg.Actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
-                );
+            );
 
             articles.RemoveAt(msg.ArticleNum);
             _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
@@ -130,9 +164,6 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!ent.Comp.PublishEnabled)
             return;
 
-        if (!TryGetArticles(ent, out var articles))
-            return;
-
         if (!CanUse(msg.Actor, ent.Owner))
             return;
 
@@ -146,39 +177,80 @@ public sealed class NewsSystem : SharedNewsSystem
         var title = msg.Title.Trim();
         var content = msg.Content.Trim();
 
-        var article = new NewsArticle
+        if (TryAddNews(ent, title, content, out var article, authorName, msg.Actor))
+        {
+            _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+
+            _chatManager.SendAdminAnnouncement(Loc.GetString("news-publish-admin-announcement",
+                                                             ("actor", msg.Actor),
+                                                             ("title", article.Value.Title),
+                                                             ("author", article.Value.Author ?? Loc.GetString("news-read-ui-no-author"))
+            ));
+        }
+    }
+
+    /// <summary>
+    /// Set the alert level based on the station's entity ID.
+    /// </summary>
+    /// <param name="uid">Entity on the station to which news will be added.</param>
+    /// <param name="title">Title of the news article.</param>
+    /// <param name="content">Content of the news article.</param>
+    /// <param name="author">Author of the news article.</param>
+    /// <param name="actor">Entity which caused the news article to publish. Used for admin logs.</param>
+    public bool TryAddNews(EntityUid uid, string title, string content, [NotNullWhen(true)] out NewsArticle? article, string? author = null, EntityUid? actor = null)
+    {
+        if (!TryGetArticles(uid, out var articles))
+        {
+            article = null;
+            return false;
+        }
+
+        article = new NewsArticle
         {
             Title = title.Length <= MaxTitleLength ? title : $"{title[..MaxTitleLength]}...",
             Content = content.Length <= MaxContentLength ? content : $"{content[..MaxContentLength]}...",
-            Author = authorName,
+            Author = author,
             ShareTime = _ticker.RoundDuration()
         };
 
-        _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+        articles.Add(article.Value);
 
-        _adminLogger.Add(
-            LogType.Chat,
-            LogImpact.Medium,
-            $"{ToPrettyString(msg.Actor):actor} created news article {article.Title} by {article.Author}: {article.Content}"
-            );
+        if (actor != null)
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"{ToPrettyString(actor):actor} created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
+        }
+        else
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"Created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
+        }
 
-        _chatManager.SendAdminAnnouncement(Loc.GetString("news-publish-admin-announcement",
-            ("actor", msg.Actor),
-            ("title", article.Title),
-            ("author", article.Author ?? Loc.GetString("news-read-ui-no-author"))
-            ));
-
-        articles.Add(article);
-
-        var args = new NewsArticlePublishedEvent(article);
+        var args = new NewsArticlePublishedEvent(article.Value);
         var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
+
         while (query.MoveNext(out var readerUid, out _))
         {
             RaiseLocalEvent(readerUid, ref args);
         }
 
+        if (_webhookSendDuringRound)
+            AddNewsSendWebhook(article.Value);
+
         UpdateWriterDevices();
+
+        return true;
     }
+
+    private async void AddNewsSendWebhook(NewsArticle article)
+    {
+        await Task.Run(async () => await SendArticleToDiscordWebhook(article));
+    }
+
     #endregion
 
     #region Reader Event Handlers
@@ -324,4 +396,62 @@ public sealed class NewsSystem : SharedNewsSystem
     {
         UpdateWriterUi(ent);
     }
+
+    #region Discord Hook
+
+    private void OnRoundEndMessageEvent(RoundEndMessageEvent ev)
+    {
+        if (_webhookSendDuringRound)
+            return;
+
+        var query = EntityQueryEnumerator<StationNewsComponent>();
+
+        while (query.MoveNext(out _, out var comp))
+        {
+            SendArticlesListToDiscordWebhook(comp.Articles.OrderBy(article => article.ShareTime));
+        }
+    }
+
+    private async void SendArticlesListToDiscordWebhook(IOrderedEnumerable<NewsArticle> articles)
+    {
+        foreach (var article in articles)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(1)); // TODO: proper discord rate limit handling
+            await SendArticleToDiscordWebhook(article);
+        }
+    }
+
+    private async Task SendArticleToDiscordWebhook(NewsArticle article)
+    {
+        if (_webhookId is null)
+            return;
+
+        try
+        {
+            var embed = new WebhookEmbed
+            {
+                Title = article.Title,
+                // There is no need to cut article content. It's MaxContentLength smaller then discord's limit (4096):
+                Description = FormattedMessage.RemoveMarkupPermissive(article.Content),
+                Color = _webhookEmbedColor.ToArgb() & 0xFFFFFF, // HACK: way to get hex without A (transparency)
+                Footer = new WebhookEmbedFooter
+                {
+                    Text = Loc.GetString("news-discord-footer",
+                        ("server", _baseServer.ServerName),
+                        ("round", _ticker.RoundId),
+                        ("author", article.Author ?? Loc.GetString("news-discord-unknown-author")),
+                        ("time", article.ShareTime.ToString(@"hh\:mm\:ss")))
+                }
+            };
+            var payload = new WebhookPayload { Embeds = [embed] };
+            await _discord.CreateMessage(_webhookId.Value, payload);
+            Log.Info("Sent news article to Discord webhook");
+        }
+        catch (Exception e)
+        {
+            Log.Error($"Error while sending discord news article:\n{e}");
+        }
+    }
+
+    #endregion
 }

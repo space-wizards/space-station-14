@@ -28,17 +28,17 @@ namespace Content.Shared.Construction
         [DataField("transform")]
         public IGraphTransform[] TransformLogic = Array.Empty<IGraphTransform>();
 
-        [DataField("entity", customTypeSerializer: typeof(GraphNodeEntitySerializer), serverOnly:true)]
+        [DataField("entity", customTypeSerializer: typeof(GraphNodeEntitySerializer))]
         public IGraphNodeEntity Entity { get; private set; } = new NullNodeEntity();
 
         /// <summary>
-        ///     Ignore requests to change the entity if the entity's current prototype inherits from specified replacement 
+        ///     Ignore requests to change the entity if the entity's current prototype inherits from specified replacement
         /// </summary>
         /// <remarks>
-        ///     When this bool is true and a construction node specifies that the current entity should be replaced with a new entity, if the 
+        ///     When this bool is true and a construction node specifies that the current entity should be replaced with a new entity, if the
         ///     current entity has an entity prototype which inherits from the replacement entity prototype, entity replacement will not occur.
-        ///     E.g., if an entity with the 'AirlockCommand' prototype was to be replaced with a new entity that had the 'Airlock' prototype, 
-        ///     and 'DoNotReplaceInheritingEntities' was true, the entity would not be replaced because 'AirlockCommand' is derived from 'Airlock' 
+        ///     E.g., if an entity with the 'AirlockCommand' prototype was to be replaced with a new entity that had the 'Airlock' prototype,
+        ///     and 'DoNotReplaceInheritingEntities' was true, the entity would not be replaced because 'AirlockCommand' is derived from 'Airlock'
         ///     This will largely be used for construction graphs which have removeable upgrades, such as hacking protections for airlocks,
         ///     so that the upgrades can be removed and you can return to the last primary construction step without replacing the entity
         /// </remarks>
