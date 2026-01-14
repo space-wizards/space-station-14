@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: StormyDragon
-  changes:
-  - message: Modular Grenades with a chemical payload now correctly wait out their
-      delay before activating.
-    type: Tweak
-  id: 8891
-  time: '2025-08-26T22:26:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39905
 - author: ToastEnjoyer
   changes:
   - message: Wizards can no longer teleport to the arrivals terminal
@@ -3915,3 +3907,10 @@
   id: 9394
   time: '2026-01-14T15:03:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38335
+- author: SlamBamActionman
+  changes:
+  - message: Added a target station map inside the LoneOp's Striker shuttle.
+    type: Add
+  id: 9395
+  time: '2026-01-14T20:04:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42376
