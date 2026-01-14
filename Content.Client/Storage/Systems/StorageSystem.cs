@@ -1,10 +1,15 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Animations;
+using Content.Client.Storage.Components;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.Events;
+using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Animations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -16,7 +21,7 @@ public sealed class StorageSystem : SharedStorageSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly AnimationPlayerSystem _animations = default!;
 
     private Dictionary<EntityUid, ItemStorageLocation> _oldStoredItems = new();
 
@@ -28,7 +33,9 @@ public sealed class StorageSystem : SharedStorageSystem
 
         SubscribeLocalEvent<StorageComponent, ComponentHandleState>(OnStorageHandleState);
         SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
+        SubscribeNetworkEvent<StorageAnimationEvent>(HandleStorageAnimation);
         SubscribeAllEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
+        SubscribeLocalEvent<StorageComponent, AnimationCompletedEvent>(ContinueStorageAnimation);
     }
 
     private void OnStorageHandleState(EntityUid uid, StorageComponent component, ref ComponentHandleState args)
@@ -121,6 +128,91 @@ public sealed class StorageSystem : SharedStorageSystem
         PickupAnimation(uid, initialCoordinates, finalCoordinates, initialRotation);
     }
 
+    public override void PlayStorageAnimation(EntityUid uid, EntityUid? user = null)
+    {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        if (!TryComp<AnimationPlayerComponent>(uid, out var animations))
+            return;
+
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
+            return;
+
+        if (_animations.HasRunningAnimation(uid, "storage_animation_0"))
+            return;
+
+        _animations.Play(new Entity<AnimationPlayerComponent>(uid, animations), new Animation
+        {
+            Length = TimeSpan.FromMilliseconds(100),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation + 45, 0.1f)
+                    }
+                },
+            }
+        }, "storage_animation_0");
+    }
+
+    private void ContinueStorageAnimation(Entity<StorageComponent> ent, ref AnimationCompletedEvent msg)
+    {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        var animations = Comp<AnimationPlayerComponent>(msg.Uid);
+
+        if (!TryComp<SpriteComponent>(msg.Uid, out var sprite))
+            return;
+
+        var keyFrame = new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(0), 0);
+        var animationName = "storage_animation_0";
+
+        switch (msg.Key)
+        {
+            case "storage_animation_0":
+                keyFrame = new AnimationTrackProperty.KeyFrame(sprite.Rotation - 45, 0.1f);
+                animationName = "storage_animation_1";
+                break;
+            case "storage_animation_1":
+                keyFrame = new AnimationTrackProperty.KeyFrame(sprite.Rotation - 45, 0.1f);
+                animationName = "storage_animation_2";
+                break;
+            case "storage_animation_2":
+                keyFrame = new AnimationTrackProperty.KeyFrame(sprite.Rotation + 45, 0.1f);
+                animationName = "storage_animation_3";
+                break;
+            case "storage_animation_3":
+                return;
+        }
+
+        _animations.Play(new Entity<AnimationPlayerComponent>(msg.Uid, animations), new Animation
+        {
+            Length = TimeSpan.FromMilliseconds(100),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
+                        keyFrame
+                    }
+                },
+            }
+        }, animationName);
+    }
+
     private void HandlePickupAnimation(PickupAnimationEvent msg)
     {
         PickupAnimation(GetEntity(msg.ItemUid), GetCoordinates(msg.InitialPosition), GetCoordinates(msg.FinalPosition), msg.InitialAngle);
@@ -143,10 +235,12 @@ public sealed class StorageSystem : SharedStorageSystem
         _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
     }
 
-    public void ShakeStorageAnimation(Entity<StorageComponent> ent)
+    public void HandleStorageAnimation(StorageAnimationEvent msg)
     {
-        var xform = Transform(ent);
-        _xform.SetLocalRotation(ent);
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        PlayStorageAnimation(GetEntity(msg.Uid));
     }
 
     /// <summary>
