@@ -1,5 +1,7 @@
 using Content.Server.Administration.Managers;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Players.PlayTimeTracking;
+using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Systems;
@@ -9,6 +11,7 @@ using Content.Shared.PowerCell;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Trigger.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -20,6 +23,7 @@ namespace Content.Server.Silicons.Borgs;
 public sealed partial class BorgSystem : SharedBorgSystem
 {
     [Dependency] private readonly IBanManager _banManager = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
@@ -29,23 +33,40 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
-    public static readonly ProtoId<JobPrototype> BorgJobId = "Borg";
+    private static readonly List<ProtoId<JobPrototype>> BorgJobId = ["Borg"];
+    private bool _borgingRequirementCvar;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
+        _configuration.OnValueChanged(CCVars.BorgingRequirementsCheck, (b) => { _borgingRequirementCvar = b; }, true);
+
         InitializeTransponder();
     }
 
-    public override bool CanPlayerBeBorged(ICommonSession session)
+    public override bool CanPlayerBeBorged(ICommonSession session, out string reason)
     {
-        if (_banManager.GetJobBans(session.UserId)?.Contains(BorgJobId) == true)
+        reason = string.Empty;
+
+        if (_banManager.IsRoleBanned(session, BorgJobId))
+        {
+            reason = Loc.GetString("role-ban");
             return false;
+        }
+
+        //TODO Put the "required role" on each chassis prototype, instead of having a standard hardcoded one
+        // Then we won't need the cvar either.
+        if (_borgingRequirementCvar && !_playTime.IsAllowed(session, BorgJobId, out var message))
+        {
+            reason = message?.ToString() ?? "";
+            return false;
+        }
 
         return true;
     }
