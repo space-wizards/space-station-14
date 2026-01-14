@@ -18,10 +18,12 @@ public sealed class GibbingSystem : EntitySystem
     /// Gibs an entity.
     /// </summary>
     /// <param name="ent">The entity to gib.</param>
+    /// <param name="dropGiblets">Whether or not to drop giblets.</param>
+    /// <param name="user">The user gibbing the entity, if any.</param>
     /// <returns>The set of giblets for this entity, if any.</returns>
-    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true)
+    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
     {
-        _audio.PlayPredicted(GibSound, ent, null);
+        _audio.PlayPredicted(GibSound, ent, user);
 
         var gibbed = new HashSet<EntityUid>();
         var beingGibbed = new BeingGibbedEvent(gibbed);
@@ -40,7 +42,6 @@ public sealed class GibbingSystem : EntitySystem
         RaiseLocalEvent(ent, ref beforeDeletion);
 
         PredictedQueueDel(ent);
-
         return gibbed;
     }
 
