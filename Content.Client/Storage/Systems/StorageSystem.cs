@@ -126,6 +126,7 @@ public sealed class StorageSystem : SharedStorageSystem
         PickupAnimation(uid, initialCoordinates, finalCoordinates, initialRotation);
     }
 
+    /// <inheritdoc/>
     public override void PlayStorageAnimation(EntityUid uid, EntityUid? user = null)
     {
         if (!_timing.IsFirstTimePredicted)
@@ -186,9 +187,6 @@ public sealed class StorageSystem : SharedStorageSystem
 
     public void HandleStorageAnimation(StorageAnimationEvent msg)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         PlayStorageAnimation(GetEntity(msg.Uid));
     }
 
