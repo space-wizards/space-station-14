@@ -14,5 +14,11 @@ public sealed partial class EmpResistanceComponent : Component
     /// The strength of the EMP gets multiplied by this value.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Multiplier = 1f;
+    public float StrengthMultiplier = 1f;
+
+    /// <summary>
+    /// The duration of the EMP gets multiplied by this value.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float DurationMultiplier = 1f;
 }

@@ -111,12 +111,14 @@ public abstract class SharedEmpSystem : EntitySystem
     /// <returns>If the entity was affected by the EMP.</returns>
     public bool DoEmpEffects(EntityUid uid, float energyConsumption, TimeSpan duration, EntityUid? user = null)
     {
-        var multiplier = 1f;
+        var strMultiplier = 1f;
+        var durMultiplier = 1f;
         if (_resistanceQuery.TryComp(uid, out var resistance))
         {
-            multiplier = resistance.Multiplier;
+            strMultiplier = resistance.StrengthMultiplier;
+            durMultiplier = resistance.DurationMultiplier;
         }
-        var ev = new EmpPulseEvent(energyConsumption * multiplier, false, false, duration, user);
+        var ev = new EmpPulseEvent(energyConsumption * strMultiplier, false, false, duration * durMultiplier, user);
         RaiseLocalEvent(uid, ref ev);
 
         // TODO: replace with PredictedSpawn once it works with animated sprites
@@ -166,7 +168,9 @@ public abstract class SharedEmpSystem : EntitySystem
 
     private void OnResistEmpAttempt(Entity<EmpResistanceComponent> ent, ref EmpAttemptEvent args)
     {
-        if (ent.Comp.Multiplier <= 0)
+        // We only cancel if the strength multiplier is 0, because then the effect basically doesn't exist.
+        // Allows us to make things resistant to the duration, but still lose charge to the EMP.
+        if (ent.Comp.StrengthMultiplier <= 0)
             args.Cancelled = true;
     }
 }
