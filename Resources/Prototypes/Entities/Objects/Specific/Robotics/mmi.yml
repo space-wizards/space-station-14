@@ -159,3 +159,51 @@
         enum.SiliconLawsUiKey.Key:
           type: SiliconLawBoundUserInterface
           requireInputValidation: false
+
+- type: entity
+  parent: PositronicBrain
+  id: PositronicBrainXeno
+  suffix: Xeno
+  components:
+  - type: SiliconLawProvider
+    laws: XenoborgLawset
+
+- type: entity
+  parent: MMI
+  id: MMIXeno
+  suffix: Xeno
+  components:
+  - type: SiliconLawProvider
+    laws: XenoborgLawset
+
+- type: entity
+  parent: MMIFilled
+  id: MMIFileldXeno
+  suffix: Xeno
+  components:
+  - type: SiliconLawProvider
+    laws: XenoborgLawset
+
+- type: entity
+  parent: PositronicBrain
+  id: PositronicBrainSyndicate
+  suffix: Syndicate
+  components:
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+
+- type: entity
+  parent: MMI
+  id: MMISyndicate
+  suffix: Syndicate
+  components:
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+
+- type: entity
+  parent: MMIFilled
+  id: MMIFilledSyndicate
+  suffix: Syndicate
+  components:
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
