@@ -32,7 +32,7 @@ public sealed class StartIonStormedSystem : EntitySystem
             _ionStorm.IonStormTarget((ent.Owner, lawBound, target), false);
         }
 
-        var laws = _siliconLaw.GetLaws(ent.Owner, lawBound);
+        var laws = _siliconLaw.GetProviderLaws(ent.Owner);
         _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent.Owner):silicon} spawned with ion stormed laws: {laws.LoggingString()}");
     }
 }

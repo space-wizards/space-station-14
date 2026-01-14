@@ -13,16 +13,10 @@ public sealed partial class SiliconLawProviderComponent : Component
 {
     /// <summary>
     /// The id of the lawset that is being provided.
+    /// Will also be the lawset this entity gets when initialized.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public ProtoId<SiliconLawsetPrototype>? Laws = string.Empty;
-
-    /// <summary>
-    /// Whether the laws for this provider should be fetched using an event on map init.
-    /// Takes priority over <see cref="Laws"/>.
-    /// </summary>
-    [DataField]
-    public bool FetchOnInit = false;
+    [DataField(required: true), AutoNetworkedField]
+    public ProtoId<SiliconLawsetPrototype> Laws = string.Empty;
 
     /// <summary>
     /// Lawset created from the prototype id.
@@ -43,6 +37,12 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Subverted = false;
+
+    /// <summary>
+    /// The list of <see cref="SiliconLawBoundComponent"/> entities who take laws from this provider.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public HashSet<EntityUid> ExternalLawsets = new();
 
     // Prevent cheat clients from seeing the laws of other players.
     public override bool SendOnlyToOwner => true;

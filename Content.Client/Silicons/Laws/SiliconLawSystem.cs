@@ -14,10 +14,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SiliconLawProviderComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
+        SubscribeLocalEvent<SiliconLawBoundComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
     }
 
-    private void AfterAutoHandleState(Entity<SiliconLawProviderComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void AfterAutoHandleState(Entity<SiliconLawBoundComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (_ui.TryGetOpenUi(ent.Owner, SiliconLawsUiKey.Key, out var bui))
         {

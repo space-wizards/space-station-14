@@ -212,6 +212,7 @@
   - type: SiliconLawProvider
     laws: MothershipCoreLawset # custom laws here
     subverted: true
+  - type: SiliconLawBound
   - type: Stripping
   - type: Access
     enabled: true

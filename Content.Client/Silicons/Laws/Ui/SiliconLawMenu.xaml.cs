@@ -24,7 +24,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
 
     public void Update(EntityUid uid)
     {
-        var laws = _lawSystem.GetLaws(uid);
+        var laws = _lawSystem.GetBoundLaws(uid);
 
         laws.Laws.Sort();
 

@@ -30,12 +30,12 @@ public sealed class SiliconLawEui : BaseEui
         return new SiliconLawsEuiState(_laws, _entityManager.GetNetEntity(_target));
     }
 
-    public void UpdateLaws(SiliconLawProviderComponent? lawBoundComponent, EntityUid player)
+    public void UpdateLaws(SiliconLawBoundComponent? lawBoundComponent, EntityUid player)
     {
         if (!IsAllowed())
             return;
 
-        var laws = _siliconLawSystem.GetLaws(player, lawBoundComponent);
+        var laws = _siliconLawSystem.GetBoundLaws((player, lawBoundComponent));
         _laws = laws.Laws;
         _target = player;
         StateDirty();
@@ -53,7 +53,7 @@ public sealed class SiliconLawEui : BaseEui
 
         var player = _entityManager.GetEntity(message.Target);
         if (_entityManager.TryGetComponent<SiliconLawProviderComponent>(player, out var playerProviderComp))
-            _siliconLawSystem.SetLaws(message.Laws, player, playerProviderComp.LawUploadSound);
+            _siliconLawSystem.SetProviderLaws(player, message.Laws, playerProviderComp.LawUploadSound);
     }
 
     private bool IsAllowed()

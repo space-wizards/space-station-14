@@ -80,8 +80,7 @@
     - ActionViewLaws
   - type: EmagSiliconLaw
     stunTime: 5
-  - type: SiliconLawProvider
-    laws: Crewsimov
+  - type: SiliconLawBound
   - type: Inventory
     templateId: borg
   - type: Hands

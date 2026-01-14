@@ -349,7 +349,7 @@ namespace Content.Server.Administration.Systems
 
                 // This logic is needed to be able to modify the AI's laws through its core and eye.
                 EntityUid? target = null;
-                SiliconLawProviderComponent? lawBoundComponent = null;
+                SiliconLawBoundComponent? lawBoundComponent = null;
 
                 if (TryComp(args.Target, out lawBoundComponent))
                 {

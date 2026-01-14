@@ -49,7 +49,7 @@ public sealed class IonStormSystem : EntitySystem
         if (!_robustRandom.Prob(target.Chance))
             return;
 
-        var laws = _siliconLaw.GetLaws(ent, lawBound);
+        var laws = _siliconLaw.GetProviderLaws(ent.Owner);
         if (laws.Laws.Count == 0)
             return;
 

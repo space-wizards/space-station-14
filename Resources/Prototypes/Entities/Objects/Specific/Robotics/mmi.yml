@@ -52,6 +52,17 @@
     whitelist:
       components:
       - SecretStash
+  - type: SiliconLawProvider
+    laws: Crewsimov
+  - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
 
 - type: entity
   parent: MMI
@@ -137,3 +148,14 @@
       whitelist:
         components:
         - SecretStash
+    - type: SiliconLawProvider
+      laws: Crewsimov
+    - type: SiliconLawBound
+    - type: ActionGrant
+      actions:
+      - ActionViewLaws
+    - type: UserInterface
+      interfaces:
+        enum.SiliconLawsUiKey.Key:
+          type: SiliconLawBoundUserInterface
+          requireInputValidation: false

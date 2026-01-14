@@ -415,6 +415,7 @@
     visible: false
   - type: SiliconLawProvider
     laws: Crewsimov
+  - type: SiliconLawBound
   - type: ActionGrant
     actions:
     - ActionViewLaws

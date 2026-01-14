@@ -83,7 +83,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         while (query.MoveNext(out var update))
         {
-            SetLaws(lawset.Laws, update, provider.LawUploadSound);
+            SetProviderLaws(update, lawset.Laws, provider.LawUploadSound);
         }
     }
 }
@@ -108,7 +108,7 @@ public sealed class LawsCommand : ToolshedCommand
     {
         _law ??= GetSys<SiliconLawSystem>();
 
-        foreach (var law in _law.GetLaws(lawbound).Laws)
+        foreach (var law in _law.GetBoundLaws(lawbound).Laws)
         {
             yield return $"law {law.LawIdentifierOverride ?? law.Order.ToString()}: {Loc.GetString(law.LawString)}";
         }

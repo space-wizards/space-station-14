@@ -22,6 +22,8 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.Laws;
+using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
 using Content.Shared.Wires;
@@ -64,6 +66,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] private readonly SharedHandheldLightSystem _handheldLight = default!;
     [Dependency] private readonly SharedAccessSystem _access = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedSiliconLawSystem _siliconLaws = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -177,6 +180,18 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             _mind.TransferTo(mindId, chassis.Owner, mind: mind);
         }
+
+        // If the chassis is a provider, we link it to itself and ignore the laws of the brain.
+        // Otherwise, we link the chassis to the brain and get it's laws.
+        // We do this for cases like xenoborgs or syndieborgs, so we don't grant a free "convert to this lawset" if crew gets a chassis of them.
+        if (HasComp<SiliconLawProviderComponent>(chassis))
+        {
+            _siliconLaws.LinkToProvider(chassis.Owner, chassis.Owner);
+        }
+        else
+        {
+            _siliconLaws.LinkToProvider(chassis.Owner, args.Entity);
+        }
     }
 
     protected virtual void OnRemoved(Entity<BorgChassisComponent> chassis, ref EntRemovedFromContainerMessage args)
@@ -189,6 +204,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(chassis.Owner, out var mindId, out var mind))
         {
+            _siliconLaws.UnlinkFromProvider(chassis.Owner);
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
     }
