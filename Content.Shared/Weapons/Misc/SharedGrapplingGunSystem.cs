@@ -9,9 +9,11 @@ using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -19,9 +21,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Misc;
 
-public abstract class SharedGrapplingGunSystem : EntitySystem
+public abstract class SharedGrapplingGunSystem : VirtualController
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -29,6 +32,8 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public const string GrapplingJoint = "grappling";
 
@@ -115,20 +120,37 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Ungrapples the grappling hook, destroying the hook and severing the joint
+    /// </summary>
+    /// <param name="grapple">Entity for the grappling gun</param>
+    /// <param name="isBreak">Whether to play the sound for the rope breaking</param>
+    /// <param name="user">The user responsible for the ungrapple. Optional</param>
+    public void Ungrapple(Entity<GrapplingGunComponent> grapple, bool isBreak, EntityUid? user = null)
+    {
+        if (!Timing.IsFirstTimePredicted || grapple.Comp.Projectile is not { } projectile)
+            return;
+
+        if(isBreak)
+            _audio.PlayPredicted(grapple.Comp.BreakSound, grapple.Owner, user);
+
+        _appearance.SetData(grapple.Owner, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
+
+        if (_netManager.IsServer)
+            QueueDel(projectile);
+
+        grapple.Comp.Projectile = null;
+        SetReeling(grapple.Owner, grapple.Comp, false, user);
+        _gun.ChangeBasicEntityAmmoCount(grapple.Owner, 1);
+    }
+
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
         if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex || component.Projectile is not { } projectile)
             return;
 
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
-        _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
-
-        if (_netManager.IsServer)
-            QueueDel(projectile);
-
-        component.Projectile = null;
-        SetReeling(uid, component, false, args.User);
-        _gun.ChangeBasicEntityAmmoCount(uid, 1);
+        Ungrapple((uid, component), false, args.User);
 
         args.Handled = true;
     }
@@ -155,9 +177,9 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    public override void Update(float frameTime)
+    public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
-        base.Update(frameTime);
+        base.UpdateBeforeSolve(prediction, frameTime);
 
         var query = EntityQueryEnumerator<GrapplingGunComponent>();
 
@@ -182,24 +204,49 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 continue;
             }
 
-            // TODO: This should be on engine.
-            distance.MaxLength = MathF.Max(distance.MinLength, distance.MaxLength - grappling.ReelRate * frameTime);
-            distance.Length = MathF.Min(distance.MaxLength, distance.Length);
-
-            _physics.WakeBody(joint.BodyAUid);
-            _physics.WakeBody(joint.BodyBUid);
-
-            if (jointComp.Relay != null)
+            // If the joint breaks, it gets disabled
+            if (distance.Enabled == false)
             {
-                _physics.WakeBody(jointComp.Relay.Value);
+                Ungrapple((uid, grappling), true);
+                continue;
             }
 
-            Dirty(uid, jointComp);
 
-            if (distance.MaxLength.Equals(distance.MinLength))
+            // TODO: Contracting DistanceJoints should be in engine
+            var bodyAWorldPos = _transform.GetWorldPosition(joint.BodyAUid);
+            var bodyBWorldPos = _transform.GetWorldPosition(joint.BodyBUid);
+
+            // Setting the joint's distance directly will lead to jank. The joint itself will take care of it.
+            var ropeLength = (bodyAWorldPos - bodyBWorldPos).Length();
+
+            if (distance.MaxLength >= ropeLength + grappling.RopeMargin)
+            {
+                distance.MaxLength = MathF.Max(distance.MinLength + grappling.RopeMargin, distance.MaxLength - grappling.ReelRate * frameTime);
+                ropeLength = MathF.Min(distance.MaxLength, ropeLength);
+            }
+
+            if (ropeLength <= distance.MinLength + (grappling.RopeMargin * 1.1f))
             {
                 SetReeling(uid, grappling, false, null);
             }
+            else if (ropeLength >= distance.MaxLength - grappling.RopeMargin)
+            {
+                var targetDirection = (bodyAWorldPos - bodyBWorldPos).Normalized();
+
+                var grapplerUidA = _container.TryGetOuterContainer(joint.BodyAUid, Transform(joint.BodyAUid), out var containerA) ? containerA.Owner : joint.BodyAUid;
+                var grapplerBodyA = Comp<PhysicsComponent>(grapplerUidA);
+
+                var massFactorA = MathF.Min(grapplerBodyA.InvMass * grappling.ReelMassCoefficient, 1f);
+                _physics.ApplyLinearImpulse(grapplerUidA, targetDirection * grappling.ReelForce * massFactorA * frameTime * -1, body: grapplerBodyA);
+
+                var grapplerUidB = _container.TryGetOuterContainer(joint.BodyBUid, Transform(joint.BodyBUid), out var containerB) ? containerB.Owner : joint.BodyBUid;
+                var grapplerBodyB = Comp<PhysicsComponent>(grapplerUidB);
+
+                var massFactorB = MathF.Min(grapplerBodyB.InvMass * grappling.ReelMassCoefficient, 1f);
+                _physics.ApplyLinearImpulse(grapplerUidB, targetDirection * grappling.ReelForce * massFactorB * frameTime, body: grapplerBodyB);
+            }
+
+            Dirty(uid, jointComp);
         }
     }
 
@@ -224,16 +271,16 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || !args.Weapon.HasValue)
+        if (!Timing.IsFirstTimePredicted || !args.Weapon.HasValue || !_entities.TryGetComponent<GrapplingGunComponent>(args.Weapon, out var grapple))
             return;
 
         var jointComp = EnsureComp<JointComponent>(uid);
         var joint = _joints.CreateDistanceJoint(uid, args.Weapon.Value, id: GrapplingJoint);
-        joint.MaxLength = joint.Length + 0.2f;
-        joint.Stiffness = 1f;
-        joint.MinLength = 1f; // Length of a tile to prevent pulling yourself into / through walls
-        // Setting velocity directly for mob movement fucks this so need to make them aware of it.
-        // joint.Breakpoint = 4000f;
+        joint.MaxLength = joint.Length + grapple.RopeMargin;
+        joint.Stiffness = grapple.RopeStiffness;
+        joint.MinLength = grapple.RopeMinLength; // Length of a tile to prevent pulling yourself into / through walls
+        joint.Breakpoint = grapple.RopeBreakPoint;
+        _joints.SetRelay(uid, args.Embedded, jointComp);
         Dirty(uid, jointComp);
     }
 
