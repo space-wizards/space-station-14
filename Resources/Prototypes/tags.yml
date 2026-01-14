@@ -978,6 +978,9 @@
   id: MothershipModule # Cyborg module category for evil xenoborg core
 
 - type: Tag
+  id: MothershipPinpointerPiece # ConstructionGraph: RepairMothershipPinpointer
+
+- type: Tag
   id: Mouse # CargoBounty: BountyMouse
 
 - type: Tag

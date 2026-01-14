@@ -1,57 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Locked chameleon storage items can now still be used as storage even
-      when locked.
-    type: Fix
-  id: 8890
-  time: '2025-08-26T21:50:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39784
-- author: StormyDragon
-  changes:
-  - message: Modular Grenades with a chemical payload now correctly wait out their
-      delay before activating.
-    type: Tweak
-  id: 8891
-  time: '2025-08-26T22:26:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39905
-- author: ToastEnjoyer
-  changes:
-  - message: Wizards can no longer teleport to the arrivals terminal
-    type: Fix
-  id: 8892
-  time: '2025-08-26T23:43:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39901
-- author: Hitlinemoss
-  changes:
-  - message: Clipboards can now be printed by autolathes.
-    type: Add
-  - message: Plastic clipboards have been added for aspiring paperwork enthusiasts.
-      They can be printed by autolathes or dispensed from the Head of Personnel's
-      PTech machine.
-    type: Add
-  - message: Bureaucracy crates no longer have their folders/clipboards contain paper.
-      The amount of paper in the crate itself has been increased to compensate.
-    type: Tweak
-  - message: Filing cabinets can now contain green folders.
-    type: Fix
-  - message: Roles that spawn with a clipboard always have that clipboard contain
-      exactly three sheets of paper, rather than a random quantity.
-    type: Fix
-  - message: CentComm Officials now spawn with a proper CentComm clipboard instead
-      of a generic black folder.
-    type: Tweak
-  id: 8893
-  time: '2025-08-27T07:07:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37705
-- author: slarticodefast
-  changes:
-  - message: Syndicate stealth items now have a selection of tool locks you can choose
-      from to hide their activation from others.
-    type: Add
-  id: 8894
-  time: '2025-08-27T14:45:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39900
 - author: chromiumboy
   changes:
   - message: Many station structures and fixtures, such as walls and airlocks, can
@@ -3916,3 +3863,44 @@
   id: 9393
   time: '2026-01-14T05:21:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42407
+- author: skrybl
+  changes:
+  - message: Changed the sprite for the janitorial maid uniform.
+    type: Tweak
+  id: 9394
+  time: '2026-01-14T15:03:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38335
+- author: SlamBamActionman
+  changes:
+  - message: Added a target station map inside the LoneOp's Striker shuttle.
+    type: Add
+  id: 9395
+  time: '2026-01-14T20:04:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42376
+- author: Samuka
+  changes:
+  - message: Xenoborgs no longer drop core pinpointers.
+    type: Remove
+  - message: Xenoborgs now drop core pinpointer pieces. With 4 you can craft a repaired
+      core pinpointer!
+    type: Add
+  id: 9396
+  time: '2026-01-14T20:36:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42295
+- author: korczoczek
+  changes:
+  - message: Lathes will now return materials when a recipe gets cancelled
+    type: Fix
+  - message: Lathes will no longer void materials if unpowered in the middle of producing
+      a recipe
+    type: Fix
+  id: 9397
+  time: '2026-01-14T21:26:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42416
+- author: TheFlyingSentry
+  changes:
+  - message: Containment units no longer contribute to light pollution
+    type: Fix
+  id: 9398
+  time: '2026-01-14T21:40:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42289
