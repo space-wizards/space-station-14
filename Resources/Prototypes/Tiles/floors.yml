@@ -1721,7 +1721,6 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemDesertAstroSand
-  weather: false
 
 - type: tile
   id: FloorAstroIronsand
@@ -1731,7 +1730,6 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroIronsand
-  weather: false
 
 - type: tile
   id: FloorAstroIronsandBorderless
@@ -1741,7 +1739,6 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroIronsandBorderless
-  weather: false
 
 - type: tile
   id: FloorWoodLarge

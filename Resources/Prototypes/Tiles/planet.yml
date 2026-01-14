@@ -5,7 +5,6 @@
   isSubfloor: true
   footstepSounds:
     collection: FootstepAsteroid
-  weather: true
   indestructible: true
 
 - type: tile
