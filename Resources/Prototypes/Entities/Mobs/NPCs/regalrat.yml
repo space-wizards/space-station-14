@@ -127,6 +127,7 @@
     - MinorAntagonists
   - type: Grammar
     attributes:
+      proper: true # Makes the rat king's ingame name count as a proper noun
       gender: male
   - type: Sharp
 

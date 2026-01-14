@@ -6,8 +6,11 @@
   abstract: true
   id: BaseUniquePet
   components:
+  - type: Grammar
+    attributes:
+      proper: true # Makes the pet's ingame name count as a proper noun
   - type: NameIdentifier
-    group: null  # Strips the numeric identifier from the pet's ingame name
+    group: null # Strips the numeric identifier from the pet's ingame name
 
 - type: entity
   parent: [ BaseUniquePet, MobCorgi ]
