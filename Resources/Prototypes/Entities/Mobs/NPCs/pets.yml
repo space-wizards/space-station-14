@@ -7,7 +7,7 @@
   id: BaseUniquePet
   components:
   - type: NameIdentifier
-    group: null  # Strips the name identifier from the pet's ingame name
+    group: null  # Strips the numeric identifier from the pet's ingame name
 
 - type: entity
   parent: [ BaseUniquePet, MobCorgi ]
