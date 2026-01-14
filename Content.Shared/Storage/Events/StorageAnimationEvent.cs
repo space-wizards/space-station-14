@@ -1,18 +1,15 @@
-using Content.Shared.Hands.Components;
-using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage.Events;
 
 /// <summary>
-/// Plays a clientside pickup animation by copying the specified entity.
+/// Plays a clientside animation by entity sprite scale modification.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class StorageAnimationEvent(NetEntity uid) : EntityEventArgs
 {
     /// <summary>
-    /// Entity to be copied for the clientside animation.
+    /// Entity that will be used for the animation.
     /// </summary>
     public readonly NetEntity Uid = uid;
 }

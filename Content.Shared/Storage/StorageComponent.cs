@@ -169,6 +169,9 @@ namespace Content.Shared.Storage
         [DataField]
         public bool ShowVerb = true;
 
+        /// <summary>
+        /// When true, plays animation after entity insertion in storage.
+        /// </summary>
         [DataField]
         public bool Animation = false;
     }
