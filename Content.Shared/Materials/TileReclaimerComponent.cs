@@ -13,13 +13,13 @@ namespace Content.Shared.Materials;
 public sealed partial class TileReclaimerComponent : Component
 {
     /// <summary>
-    /// A whitelist for what grid entities can be affected by this reclaimer
+    /// A whitelist for what grid entities can be affected by this reclaimer.
     /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
-    /// A whitelist for what grid entities can be affected by this reclaimer
+    /// A whitelist for what grid entities can be affected by this reclaimer.
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
@@ -29,6 +29,19 @@ public sealed partial class TileReclaimerComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan RecycleDelay = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// The bounding box in local coordinates for where it will check for grids to reclaim.
+    /// </summary>
+    [DataField]
+    public Box2 RecyclingBox = new(-0.5f, 0.5f, 0.5f, 1.5f);
+
+    /// <summary>
+    /// How strong impulse the reclaimer should apply to a grid after it has destroyed one of it tiles.
+    /// This helps guide the grid further into the reclaimer.
+    /// </summary>
+    [DataField]
+    public float SlurpStrength = 1f;
 
     /// <summary>
     /// Next time a recycling attempt can be made.
@@ -42,10 +55,4 @@ public sealed partial class TileReclaimerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? Sound;
-
-    /// <summary>
-    /// The fixture that starts reclaiming when intersecting with a grid.
-    /// </summary>
-    [DataField]
-    public string FixtureId = "tileReclaimer";
 }

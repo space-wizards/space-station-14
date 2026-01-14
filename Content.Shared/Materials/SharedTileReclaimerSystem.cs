@@ -1,10 +1,7 @@
-﻿using System.Numerics;
-using Content.Shared.Maps;
-using Content.Shared.Whitelist;
+﻿using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
@@ -22,7 +19,6 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FixtureSystem _fixture = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
 
@@ -51,45 +47,28 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
         if (reclaimerGrid == null)
             return;
 
-        var fixture = _fixture.GetFixtureOrNull(ent, ent.Comp1.FixtureId);
-
-        if (fixture == null)
-            return;
-
-        var shape = fixture.Shape;
-
-        // SLAM-TODO: Replace with system functions + box property + offset in component
-        var targetPoint = ent.Comp2.WorldPosition + ent.Comp2.WorldRotation.ToWorldVec();
         var mapPos = _transform.GetMapCoordinates(ent);
 
-        var box = Box2.CenteredAround(targetPoint, new Vector2(1, 1));
         var grids = new List<Entity<MapGridComponent>>();
 
-        if (!(shape is PhysShapeAabb box2))
-            return;
+        var entMatrix = _transform.GetWorldMatrix(ent.Owner);
+        var box = entMatrix.TransformBox(ent.Comp1.RecyclingBox);
 
-        _mapManager.FindGridsIntersecting(mapPos.MapId, _transform.GetWorldMatrix(ent), ref grids);
+        _mapManager.FindGridsIntersecting(mapPos.MapId, box, ref grids);
 
         var shredded = false;
-
-        Logger.Debug(grids.Count.ToString());
 
         foreach (var grid in grids)
         {
             if (grid == reclaimerGrid)
                 continue;
 
-            // SLAM-TODO: This is probably wrong way to do it
-            IEnumerable<TileRef> tiles = default!;
-
-            tiles = _mapSystem.GetLocalTilesIntersecting(grid.Owner, grid.Comp, box2.LocalBounds);
-
             // SLAM-TODO: This will be checking for wreck grids
             //if (_whitelistSystem.IsWhitelistFail(ent.Comp1.Whitelist, grid) ||
             //    _whitelistSystem.IsWhitelistPass(ent.Comp1.Blacklist, grid))
             //    continue;
 
-            foreach (var tile in tiles)
+            foreach (var tile in _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, box))
             {
                 foreach (var entityOnTile in _lookup.GetLocalEntitiesIntersecting(tile))
                 {
@@ -104,7 +83,7 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
 
                 // We suck in the grid slurrrrp
                 // SLAM-TODO: Should be set via component, AND also impulses cause stacking speed so that should be tempered
-                _physics.ApplyLinearImpulse(grid, -ent.Comp2.WorldRotation.ToWorldVec(), tile.GridIndices);
+                _physics.ApplyLinearImpulse(grid, ent.Comp1.SlurpStrength * _transform.GetWorldRotation(ent.Comp2).ToWorldVec(), tile.GridIndices);
             }
         }
 

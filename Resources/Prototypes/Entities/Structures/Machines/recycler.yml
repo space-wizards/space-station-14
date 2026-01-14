@@ -127,10 +127,9 @@
     sprite: Structures/Machines/shredder.rsi
     layers:
     - state: base
-    offset: 0, -0.5
-    rotation: 180
+    offset: 0, 0.5
   - type: Conveyor
-    angle: -90 # Conveyor goes sideways
+    angle: 90 # Conveyor goes sideways
   - type: DeviceLinkSink # SLAM-TODO: This needs to not be unlinkable and should be done via the magnet
     ports:
     - Reverse
@@ -162,21 +161,17 @@
       path: /Audio/Effects/saw.ogg # SLAM-TODO: Needs more CRONCH
       params:
         volume: -3
+    recyclingBox: "-0.35, 0.5, 0.35, 0.75"
   - type: Fixtures
     fixtures:
-      tileReclaimer:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-1.5,0.5,-0.5"
-        hard: false
       brrt:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-1.5,0.5,0.5"
+          bounds: "-0.5, -0.15, 0.5, 1.5"
         hard: false
         layer:
         - FullTileLayer
-        - DoorPassable
+        - DoorPassable # SLAM-TODO: Put this here to hit floor objects like carpets etc, probably wrong way to go about it
       collision:
         shape:
           !type:PhysShapeAabb
