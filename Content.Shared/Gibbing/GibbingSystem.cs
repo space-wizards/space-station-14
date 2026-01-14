@@ -26,9 +26,10 @@ public sealed class GibbingSystem : EntitySystem
     /// <param name="ent">The entity to gib.</param>
     /// <param name="dropGiblets">Whether or not to drop giblets.</param>
     /// <param name="gibletLaunchImpulse">The force applied to launched giblets.</param>
+    /// <param name="scatterGiblets">Whether to instantly scatter giblets around the entity.</param>
     /// <param name="user">The user gibbing the entity, if any.</param>
     /// <returns>The set of giblets for this entity, if any.</returns>
-    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, float gibletLaunchImpulse = 8, EntityUid? user = null)
+    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, float gibletLaunchImpulse = 5, bool scatterGiblets = false, EntityUid? user = null)
     {
         // user is unused because of prediction woes, eventually it'll be used for audio
 
@@ -53,7 +54,7 @@ public sealed class GibbingSystem : EntitySystem
                 _transform.DropNextTo(giblet, ent);
             }
 
-            _throwing.TryThrowManyRandom(gibbed, maxThrowImpulseModifier: gibletLaunchImpulse);
+            _throwing.TryThrowManyRandom(gibbed, maxThrowImpulseModifier: gibletLaunchImpulse, scatterItems: scatterGiblets);
         }
 
         var beforeDeletion = new GibbedBeforeDeletionEvent(gibbed);
