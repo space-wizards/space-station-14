@@ -170,7 +170,7 @@ namespace Content.Shared.Storage
         public bool ShowVerb = true;
 
         [DataField]
-        public StorageAnimationType Animation = StorageAnimationType.None;
+        public bool Animation = false;
     }
 
     [Serializable, NetSerializable]

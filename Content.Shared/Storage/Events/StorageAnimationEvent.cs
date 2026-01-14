@@ -9,12 +9,10 @@ namespace Content.Shared.Storage.Events;
 /// Plays a clientside pickup animation by copying the specified entity.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class StorageAnimationEvent(NetEntity uid, StorageAnimationType animType) : EntityEventArgs
+public sealed class StorageAnimationEvent(NetEntity uid) : EntityEventArgs
 {
     /// <summary>
     /// Entity to be copied for the clientside animation.
     /// </summary>
     public readonly NetEntity Uid = uid;
-
-    public StorageAnimationType AnimType = animType;
 }
