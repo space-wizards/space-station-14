@@ -1,0 +1,26 @@
+using Content.Shared.Hands.EntitySystems;
+
+namespace Content.Shared.BodyNew;
+
+public sealed class HandOrganSystem : EntitySystem
+{
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<HandOrganComponent, OrganGotInsertedEvent>(OnGotInserted);
+        SubscribeLocalEvent<HandOrganComponent, OrganGotRemovedEvent>(OnGotRemoved);
+    }
+
+    private void OnGotInserted(Entity<HandOrganComponent> ent, ref OrganGotInsertedEvent args)
+    {
+        _hands.AddHand(args.Target, ent.Comp.HandID, ent.Comp.Data);
+    }
+
+    private void OnGotRemoved(Entity<HandOrganComponent> ent, ref OrganGotRemovedEvent args)
+    {
+        _hands.RemoveHand(args.Target, ent.Comp.HandID);
+    }
+}

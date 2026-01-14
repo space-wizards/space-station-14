@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
+using Content.Shared.BodyNew;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;

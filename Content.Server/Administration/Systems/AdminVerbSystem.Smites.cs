@@ -21,7 +21,6 @@ using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Systems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
@@ -70,7 +69,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly CreamPieSystem _creamPieSystem = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorageSystem = default!;
@@ -305,128 +303,6 @@ public sealed partial class AdminVerbSystem
                 Message = string.Join(": ", bloodRemovalName, Loc.GetString("admin-smite-remove-blood-description"))
             };
             args.Verbs.Add(bloodRemoval);
-        }
-
-        // bobby...
-        if (TryComp<BodyComponent>(args.Target, out var body))
-        {
-            var vomitOrgansName = Loc.GetString("admin-smite-vomit-organs-name").ToLowerInvariant();
-            Verb vomitOrgans = new()
-            {
-                Text = vomitOrgansName,
-                Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new("/Textures/Fluids/vomit_toxin.rsi"), "vomit_toxin-1"),
-                Act = () =>
-                {
-                    _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
-                    var organs = _bodySystem.GetBodyOrganEntityComps<TransformComponent>((args.Target, body));
-                    var baseXform = Transform(args.Target);
-                    foreach (var organ in organs)
-                    {
-                        if (HasComp<BrainComponent>(organ.Owner) || HasComp<EyeComponent>(organ.Owner))
-                            continue;
-
-                        _transformSystem.PlaceNextTo((organ.Owner, organ.Comp1), (args.Target, baseXform));
-                    }
-
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target,
-                        args.Target, PopupType.LargeCaution);
-                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-vomit-organs-others", ("name", args.Target)), baseXform.Coordinates,
-                        Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
-                },
-                Impact = LogImpact.Extreme,
-                Message = string.Join(": ", vomitOrgansName, Loc.GetString("admin-smite-vomit-organs-description"))
-            };
-            args.Verbs.Add(vomitOrgans);
-
-            var handsRemovalName = Loc.GetString("admin-smite-remove-hands-name").ToLowerInvariant();
-            Verb handsRemoval = new()
-            {
-                Text = handsRemovalName,
-                Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/remove-hands.png")),
-                Act = () =>
-                {
-                    var baseXform = Transform(args.Target);
-                    foreach (var part in _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Hand))
-                    {
-                        _transformSystem.AttachToGridOrMap(part.Id);
-                    }
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
-                        args.Target, PopupType.LargeCaution);
-                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-other", ("name", args.Target)), baseXform.Coordinates,
-                        Filter.PvsExcept(args.Target), true, PopupType.Medium);
-                },
-                Impact = LogImpact.Extreme,
-                Message = string.Join(": ", handsRemovalName, Loc.GetString("admin-smite-remove-hands-description"))
-            };
-            args.Verbs.Add(handsRemoval);
-
-            var handRemovalName = Loc.GetString("admin-smite-remove-hand-name").ToLowerInvariant();
-            Verb handRemoval = new()
-            {
-                Text = handRemovalName,
-                Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/remove-hand.png")),
-                Act = () =>
-                {
-                    var baseXform = Transform(args.Target);
-                    foreach (var part in _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Hand, body))
-                    {
-                        _transformSystem.AttachToGridOrMap(part.Id);
-                        break;
-                    }
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
-                        args.Target, PopupType.LargeCaution);
-                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-other", ("name", args.Target)), baseXform.Coordinates,
-                        Filter.PvsExcept(args.Target), true, PopupType.Medium);
-                },
-                Impact = LogImpact.Extreme,
-                Message = string.Join(": ", handRemovalName, Loc.GetString("admin-smite-remove-hand-description"))
-            };
-            args.Verbs.Add(handRemoval);
-
-            var stomachRemovalName = Loc.GetString("admin-smite-stomach-removal-name").ToLowerInvariant();
-            Verb stomachRemoval = new()
-            {
-                Text = stomachRemovalName,
-                Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
-                Act = () =>
-                {
-                    foreach (var entity in _bodySystem.GetBodyOrganEntityComps<StomachComponent>((args.Target, body)))
-                    {
-                        QueueDel(entity.Owner);
-                    }
-
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-stomach-removal-self"), args.Target,
-                        args.Target, PopupType.LargeCaution);
-                },
-                Impact = LogImpact.Extreme,
-                Message = string.Join(": ", stomachRemovalName, Loc.GetString("admin-smite-stomach-removal-description"))
-            };
-            args.Verbs.Add(stomachRemoval);
-
-            var lungRemovalName = Loc.GetString("admin-smite-lung-removal-name").ToLowerInvariant();
-            Verb lungRemoval = new()
-            {
-                Text = lungRemovalName,
-                Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Species/Human/organs.rsi"), "lung-r"),
-                Act = () =>
-                {
-                    foreach (var entity in _bodySystem.GetBodyOrganEntityComps<LungComponent>((args.Target, body)))
-                    {
-                        QueueDel(entity.Owner);
-                    }
-
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-lung-removal-self"), args.Target,
-                        args.Target, PopupType.LargeCaution);
-                },
-                Impact = LogImpact.Extreme,
-                Message = string.Join(": ", lungRemovalName, Loc.GetString("admin-smite-lung-removal-description"))
-            };
-            args.Verbs.Add(lungRemoval);
         }
 
         if (TryComp<PhysicsComponent>(args.Target, out var physics))

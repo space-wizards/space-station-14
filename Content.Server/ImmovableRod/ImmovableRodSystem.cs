@@ -1,8 +1,7 @@
-using Content.Server.Body.Systems;
 using Content.Server.Destructible;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
-using Content.Shared.Body.Components;
+using Content.Shared.BodyNew;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Gibbing;
