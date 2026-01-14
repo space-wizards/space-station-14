@@ -7,8 +7,6 @@
     <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="24 12 24 12" >
         <Label Name="Description" Text="{Loc 'abandon-character-warning'}" VerticalAlignment="Top" Margin="10" />
         <BoxContainer VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" Margin="10" >
-            <!-- Dummy control to take up space, allowing for
-                following controls to be aligned to the center and right of window -->
             <Control HorizontalExpand="True" />
             <BoxContainer HorizontalExpand="True" >
                 <cc:CommandButton Name="SuicideButton" HorizontalExpand="True" Command="suicide" Text="{Loc 'sandbox-window-toggle-suicide-button'}" >
