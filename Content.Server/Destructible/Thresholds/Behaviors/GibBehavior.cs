@@ -8,11 +8,13 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     [DataDefinition]
     public sealed partial class GibBehavior : IThresholdBehavior
     {
+        [DataField("recursive")] private bool _recursive = true;
+
         public LogImpact Impact => LogImpact.Extreme;
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            system.Gibbing.Gib(owner);
+            system.Gibbing.Gib(owner, _recursive);
         }
     }
 }

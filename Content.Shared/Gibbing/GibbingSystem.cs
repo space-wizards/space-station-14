@@ -19,7 +19,7 @@ public sealed class GibbingSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity to gib.</param>
     /// <returns>The set of giblets for this entity, if any.</returns>
-    public HashSet<EntityUid> Gib(EntityUid ent)
+    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true)
     {
         _audio.PlayPredicted(GibSound, ent, null);
 
@@ -27,10 +27,13 @@ public sealed class GibbingSystem : EntitySystem
         var beingGibbed = new BeingGibbedEvent(gibbed);
         RaiseLocalEvent(ent, ref beingGibbed);
 
-        foreach (var giblet in gibbed)
+        if (dropGiblets)
         {
-            _transform.DropNextTo(giblet, ent);
-            FlingDroppedEntity(giblet);
+            foreach (var giblet in gibbed)
+            {
+                _transform.DropNextTo(giblet, ent);
+                FlingDroppedEntity(giblet);
+            }
         }
 
         var beforeDeletion = new GibbedBeforeDeletionEvent(gibbed);
