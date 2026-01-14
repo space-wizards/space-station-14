@@ -1,13 +1,3 @@
-# For mantles
-- type: loadoutEffectGroup
-  id: MasterCMO
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobChiefMedicalOfficer
-      time: 20h
-
 # Jumpsuit
 - type: loadout
   id: ChiefMedicalOfficerJumpsuit
@@ -52,12 +42,7 @@
     neck: ClothingNeckMantleCMO
   effects:
   - !type:GroupLoadoutEffect
-    proto: MasterCMO
-
-- type: startingGear
-  id: ChiefMedicalOfficerMantle
-  equipment:
-    neck: ClothingNeckMantleCMO
+    proto: CMOJourneymanTimer
 
 # Outer clothing
 - type: loadout
