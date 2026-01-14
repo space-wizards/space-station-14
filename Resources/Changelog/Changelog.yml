@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Engiborg can no longer pickup AI lawboards
-    type: Fix
-  id: 8889
-  time: '2025-08-26T20:59:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39730
 - author: beck-thompson
   changes:
   - message: Locked chameleon storage items can now still be used as storage even
@@ -3915,3 +3908,11 @@
   id: 9392
   time: '2026-01-13T23:41:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42400
+- author: ArtisticRoomba
+  changes:
+  - message: The tritiumfire reaction now properly limits the amount of tritium burned
+      by the limiting gas in the mix instead of limiting by which gas is in excess.
+    type: Fix
+  id: 9393
+  time: '2026-01-14T05:21:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42407
