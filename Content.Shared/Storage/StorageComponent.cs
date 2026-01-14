@@ -170,7 +170,7 @@ namespace Content.Shared.Storage
         public bool ShowVerb = true;
 
         [DataField]
-        public bool Animation = false;
+        public StorageAnimationType Animation = StorageAnimationType.None;
     }
 
     [Serializable, NetSerializable]
@@ -310,5 +310,13 @@ namespace Content.Shared.Storage
     {
         Horizontal,
         Vertical
+    }
+
+    [Serializable, NetSerializable]
+    public enum StorageAnimationType : byte
+    {
+        None,
+        Shake,
+        Bouncy
     }
 }

@@ -1209,8 +1209,8 @@ public abstract class SharedStorageSystem : EntitySystem
             if (canPlaySound)
                 Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, _audioParams);
 
-            if (storageComp.Animation)
-                PlayStorageAnimation(uid, user);
+            if (storageComp.Animation != StorageAnimationType.None)
+                PlayStorageAnimation(uid, storageComp.Animation, user);
 
             return true;
         }
@@ -1242,8 +1242,8 @@ public abstract class SharedStorageSystem : EntitySystem
         if (canPlaySound)
             Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, _audioParams);
 
-        if (storageComp.Animation)
-            PlayStorageAnimation(uid, user);
+        if (storageComp.Animation != StorageAnimationType.None)
+            PlayStorageAnimation(uid, storageComp.Animation, user);
 
         return true;
     }
@@ -1931,7 +1931,7 @@ public abstract class SharedStorageSystem : EntitySystem
     public abstract void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates,
         EntityCoordinates finalCoordinates, Angle initialRotation, EntityUid? user = null);
 
-    public abstract void PlayStorageAnimation(EntityUid uid, EntityUid? user = null);
+    public abstract void PlayStorageAnimation(EntityUid uid, StorageAnimationType animType, EntityUid? user = null);
 
     private bool ValidateInput(
         EntitySessionEventArgs args,

@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Animations;
-using Content.Client.Storage.Components;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -35,7 +34,7 @@ public sealed class StorageSystem : SharedStorageSystem
         SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
         SubscribeNetworkEvent<StorageAnimationEvent>(HandleStorageAnimation);
         SubscribeAllEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
-        SubscribeLocalEvent<StorageComponent, AnimationCompletedEvent>(ContinueStorageAnimation);
+        SubscribeLocalEvent<StorageComponent, AnimationCompletedEvent>(ContinueStorageShakeAnimation);
     }
 
     private void OnStorageHandleState(EntityUid uid, StorageComponent component, ref ComponentHandleState args)
@@ -128,7 +127,7 @@ public sealed class StorageSystem : SharedStorageSystem
         PickupAnimation(uid, initialCoordinates, finalCoordinates, initialRotation);
     }
 
-    public override void PlayStorageAnimation(EntityUid uid, EntityUid? user = null)
+    public override void PlayStorageAnimation(EntityUid uid, StorageAnimationType animType, EntityUid? user = null)
     {
         if (!_timing.IsFirstTimePredicted)
             return;
@@ -139,32 +138,62 @@ public sealed class StorageSystem : SharedStorageSystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        if (_animations.HasRunningAnimation(uid, "storage_animation_0"))
-            return;
-
-        _animations.Play(new Entity<AnimationPlayerComponent>(uid, animations), new Animation
+        if (animType == StorageAnimationType.Shake && !_animations.HasRunningAnimation(uid, "storage_animation_shake_0"))
         {
-            Length = TimeSpan.FromMilliseconds(100),
-            AnimationTracks =
+            _animations.Play(new Entity<AnimationPlayerComponent>(uid, animations), new Animation
             {
-                new AnimationTrackComponentProperty
+                Length = TimeSpan.FromMilliseconds(100),
+                AnimationTracks =
                 {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Rotation),
-                    InterpolationMode = AnimationInterpolationMode.Linear,
-                    KeyFrames =
+                    new AnimationTrackComponentProperty
                     {
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation + 45, 0.1f)
-                    }
-                },
-            }
-        }, "storage_animation_0");
+                        ComponentType = typeof(SpriteComponent),
+                        Property = nameof(SpriteComponent.Rotation),
+                        InterpolationMode = AnimationInterpolationMode.Linear,
+                        KeyFrames =
+                        {
+                            new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
+                            new AnimationTrackProperty.KeyFrame(sprite.Rotation + 45, 0.1f)
+                        }
+                    },
+                }
+            }, "storage_animation_shake_0");
+        }
+
+        else if (!_animations.HasRunningAnimation(uid, "storage_animation_bounce"))
+        {
+            _animations.Play(new Entity<AnimationPlayerComponent>(uid, animations), new Animation
+            {
+                Length = TimeSpan.FromMilliseconds(300),
+                AnimationTracks =
+                {
+                    new AnimationTrackComponentProperty
+                    {
+                        ComponentType = typeof(SpriteComponent),
+                        Property = nameof(SpriteComponent.Scale),
+                        InterpolationMode = AnimationInterpolationMode.Linear,
+                        KeyFrames =
+                        {
+                            new AnimationTrackProperty.KeyFrame(sprite.Scale, 0),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(1.5f, 0.75f), 0.1f),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(1, 1), 0.2f),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(1, 1), 0.3f),
+                        }
+                    },
+                }
+            }, "storage_animation_bounce");
+        }
     }
 
-    private void ContinueStorageAnimation(Entity<StorageComponent> ent, ref AnimationCompletedEvent msg)
+    /// <summary>
+    /// Animation frames go mad when you attempt to do more cool logic so this splitted to the separated animations
+    /// </summary>
+    private void ContinueStorageShakeAnimation(Entity<StorageComponent> ent, ref AnimationCompletedEvent msg)
     {
         if (!_timing.IsFirstTimePredicted)
+            return;
+
+        if (msg.Key == "storage_animation_bounce")
             return;
 
         var animations = Comp<AnimationPlayerComponent>(msg.Uid);
@@ -173,23 +202,23 @@ public sealed class StorageSystem : SharedStorageSystem
             return;
 
         var keyFrame = new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(0), 0);
-        var animationName = "storage_animation_0";
+        var animationName = "storage_animation_shake_0";
 
         switch (msg.Key)
         {
-            case "storage_animation_0":
+            case "storage_animation_shake_0":
+                keyFrame = new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0.1f);
+                animationName = "storage_animation_shake_1";
+                break;
+            case "storage_animation_shake_1":
                 keyFrame = new AnimationTrackProperty.KeyFrame(sprite.Rotation - 45, 0.1f);
-                animationName = "storage_animation_1";
+                animationName = "storage_animation_shake_2";
                 break;
-            case "storage_animation_1":
-                keyFrame = new AnimationTrackProperty.KeyFrame(sprite.Rotation - 45, 0.1f);
-                animationName = "storage_animation_2";
+            case "storage_animation_shake_2":
+                keyFrame = new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0.1f);
+                animationName = "storage_animation_shake_3";
                 break;
-            case "storage_animation_2":
-                keyFrame = new AnimationTrackProperty.KeyFrame(sprite.Rotation + 45, 0.1f);
-                animationName = "storage_animation_3";
-                break;
-            case "storage_animation_3":
+            case "storage_animation_shake_3":
                 return;
         }
 
@@ -240,7 +269,7 @@ public sealed class StorageSystem : SharedStorageSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        PlayStorageAnimation(GetEntity(msg.Uid));
+        PlayStorageAnimation(GetEntity(msg.Uid), msg.AnimType);
     }
 
     /// <summary>

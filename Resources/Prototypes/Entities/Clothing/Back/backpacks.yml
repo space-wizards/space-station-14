@@ -16,7 +16,7 @@
   - type: Storage
     grid:
     - 0,0,6,3
-    animation: true
+    animation: shake
     maxItemSize: Huge
   - type: ContainerContainer
     containers:
