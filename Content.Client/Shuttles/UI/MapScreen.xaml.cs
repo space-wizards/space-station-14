@@ -413,14 +413,11 @@ public sealed partial class MapScreen : BoxContainer
     /// </summary>
     private bool IsPingBlocked()
     {
-        switch (_state)
+        return _state switch
         {
-            case FTLState.Available:
-            case FTLState.Cooldown:
-                return false;
-            default:
-                return true;
-        }
+            FTLState.Available or FTLState.Cooldown => false,
+            _ => true,
+        };
     }
 
     private void OnMapObjectPress(IMapObject mapObject)
