@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Shared.Armor;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Gibbing;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -45,6 +46,8 @@ public abstract partial class InventorySystem
         //these events ensure that the client also gets its proper events raised when getting its containerstate updated
         SubscribeLocalEvent<InventoryComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+
+        SubscribeLocalEvent<InventoryComponent, BeingGibbedEvent>(OnBeingGibbed);
 
         SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
     }
@@ -633,6 +636,12 @@ public abstract partial class InventorySystem
             scatterItems);
 
         return unequippedItems;
+    }
+
+    private void OnBeingGibbed(Entity<InventoryComponent> ent, ref BeingGibbedEvent args)
+    {
+        var unequippedInventory = TryUnequipAll(ent.Owner);
+        args.Giblets.UnionWith(unequippedInventory);
     }
 
     public bool TryGetSlotEntity(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? entityUid, InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null)
