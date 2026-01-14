@@ -1,5 +1,7 @@
-using Robust.Shared.Audio;
+using Content.Shared.Damage.Components;
+using Content.Shared.Destructible;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
@@ -8,11 +10,12 @@ namespace Content.Shared.Gibbing;
 
 public sealed class GibbingSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private static readonly SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
 
@@ -25,12 +28,15 @@ public sealed class GibbingSystem : EntitySystem
     /// <returns>The set of giblets for this entity, if any.</returns>
     public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
     {
-        _audio.PlayPredicted(GibSound, ent, user);
-
         // BodySystem handles prediction rather poorly and causes client-sided bugs when we gib on the client
         // This guard can be removed once it is gone and replaced by a prediction-safe system.
         if (!_net.IsServer)
             return new();
+
+        if (!_destructible.DestroyEntity(ent))
+            return new();
+
+        _audio.PlayPredicted(GibSound, ent, user);
 
         var gibbed = new HashSet<EntityUid>();
         var beingGibbed = new BeingGibbedEvent(gibbed);
@@ -48,7 +54,6 @@ public sealed class GibbingSystem : EntitySystem
         var beforeDeletion = new GibbedBeforeDeletionEvent(gibbed);
         RaiseLocalEvent(ent, ref beforeDeletion);
 
-        QueueDel(ent);
         return gibbed;
     }
 
