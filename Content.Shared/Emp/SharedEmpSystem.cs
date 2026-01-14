@@ -129,7 +129,7 @@ public abstract class SharedEmpSystem : EntitySystem
             return ev.Affected;
 
         var disabled = EnsureComp<EmpDisabledComponent>(uid);
-        disabled.DisabledUntil = Timing.CurTime + duration;
+        disabled.DisabledUntil = Timing.CurTime + duration * durMultiplier;
         Dirty(uid, disabled);
 
         return ev.Affected;
