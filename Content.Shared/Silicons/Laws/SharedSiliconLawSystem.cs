@@ -38,12 +38,14 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SiliconLawProviderComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawBoundComponent, MapInitEvent>(OnLawBoundInit);
         SubscribeLocalEvent<SiliconLawBoundComponent, ToggleLawsScreenEvent>(OnToggleLawsScreen);
+        SubscribeLocalEvent<SiliconLawBoundComponent, ComponentShutdown>(OnLawBoundShutdown);
 
+        SubscribeLocalEvent<SiliconLawProviderComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawProviderComponent, IonStormLawsEvent>(OnIonStormLaws);
         SubscribeLocalEvent<SiliconLawProviderComponent, SiliconEmaggedEvent>(OnEmagLawsAdded);
+        SubscribeLocalEvent<SiliconLawProviderComponent, ComponentShutdown>(OnProviderShutdown);
         SubscribeLocalEvent<EmagSiliconLawComponent, GotEmaggedEvent>(OnGotEmagged);
 
         SubscribeLocalEvent<BorgChassisComponent, GetSiliconLawsEvent>(OnChassisGetLaws);
@@ -60,6 +62,20 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
         // Don't dirty here, LawProvider gets dirtied in SyncToLawBound.
         SyncToLawBound(ent.AsNullable());
+    }
+
+    private void OnProviderShutdown(Entity<SiliconLawProviderComponent> ent, ref ComponentShutdown args)
+    {
+        var iterateEntities = ent.Comp.ExternalLawsets;
+        foreach (var lawbound in iterateEntities)
+        {
+            UnlinkFromProvider(lawbound, ent.AsNullable());
+        }
+    }
+
+    private void OnLawBoundShutdown(Entity<SiliconLawBoundComponent> ent, ref ComponentShutdown args)
+    {
+        UnlinkFromProvider(ent.AsNullable());
     }
 
     private void OnLawBoundInit(Entity<SiliconLawBoundComponent> ent, ref MapInitEvent args)
