@@ -155,13 +155,15 @@ public abstract partial class SharedSiliconLawSystem
         return laws;
     }
 
-    public void SetProviderLaws(Entity<SiliconLawProviderComponent?> ent, List<SiliconLaw> newLaws, SoundSpecifier? cue = null)
+    public void SetProviderLaws(Entity<SiliconLawProviderComponent?> ent, List<SiliconLaw> newLaws, bool silent = false, SoundSpecifier? cue = null)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
+        cue ??= ent.Comp.LawUploadSound;
+
         ent.Comp.Lawset.Laws = newLaws;
-        SyncToLawBound(ent);
+        SyncToLawBound(ent, silent ? null : cue);
     }
 
     /// <summary>

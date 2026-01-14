@@ -83,7 +83,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         while (query.MoveNext(out var update))
         {
-            SetProviderLaws(update, lawset.Laws, provider.LawUploadSound);
+            SetProviderLaws(update, lawset.Laws, false, provider.LawUploadSound);
         }
     }
 }

@@ -16,7 +16,7 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// Will also be the lawset this entity gets when initialized.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public ProtoId<SiliconLawsetPrototype> Laws = string.Empty;
+    public ProtoId<SiliconLawsetPrototype> Laws = "Crewsimov";
 
     /// <summary>
     /// Lawset created from the prototype id.
