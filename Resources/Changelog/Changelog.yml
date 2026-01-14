@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Locked chameleon storage items can now still be used as storage even
-      when locked.
-    type: Fix
-  id: 8890
-  time: '2025-08-26T21:50:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39784
 - author: StormyDragon
   changes:
   - message: Modular Grenades with a chemical payload now correctly wait out their
@@ -3916,3 +3908,10 @@
   id: 9393
   time: '2026-01-14T05:21:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42407
+- author: skrybl
+  changes:
+  - message: Changed the sprite for the janitorial maid uniform.
+    type: Tweak
+  id: 9394
+  time: '2026-01-14T15:03:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38335
