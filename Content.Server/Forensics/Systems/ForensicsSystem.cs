@@ -21,6 +21,11 @@ using Robust.Shared.Random;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Hands.Components;
+using System.Linq;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Hitscan.Events;
+using Content.Shared.Weapons.Hitscan.Components;
 
 namespace Content.Server.Forensics
 {
@@ -32,15 +37,25 @@ namespace Content.Server.Forensics
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
+        private const int MaxDamageTraces = 10;
+        private const float MinRangedDamageThreshold = 2f;
+
+        private const string DamageTraceMeleeSelf = "forensic-damage-traces-melee-hands";
+        private const string DamageTraceMeleeUnknown = "forensic-damage-traces-melee-unknown";
+        private const string DamageTraceProjectileUnknown = "forensic-damage-traces-projectile-unknown";
+        private const string DamageTraceHitscanUnknown = "forensic-damage-traces-hitscan-unknown";
+
         public override void Initialize()
         {
             SubscribeLocalEvent<HandsComponent, ContactInteractionEvent>(OnInteract);
             SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit, after: new[] { typeof(BloodstreamSystem) });
             // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(BloodstreamSystem) });
-
+            SubscribeLocalEvent<ForensicsComponent, DamageChangedEvent>(DeleteDamageTracesOnRepair);
             SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ProjectileComponent, ProjectileHitEvent>(OnProjectileHit);
+            SubscribeLocalEvent<HitscanAmmoComponent, HitscanRaycastFiredEvent>(OnHitscanHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
@@ -110,9 +125,94 @@ namespace Content.Server.Forensics
                 {
                     if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
                         component.DNAs.Add(hitEntityComp.DNA);
+
+                    // Checking whether damage traces should be preserved on this entity
+                    if (!HasComp<IgnoresDamageTracesComponent>(hitEntity))
+                    {
+                        var targetComponent = EnsureComp<ForensicsComponent>(hitEntity);
+                        EntityUid meleeDamageSourceUid;
+                        string meleeDamageSourceName;
+                        if (args.Weapon != EntityUid.Invalid && Exists(args.Weapon))
+                        {
+                            meleeDamageSourceUid = args.Weapon; //Get the UID
+                            meleeDamageSourceName = Name(meleeDamageSourceUid); //and convert it into a name
+
+                            if (meleeDamageSourceUid == args.User) //When the UID of the attacker and his weapon are equal, it means the attacker use unarmed attack.
+                            {
+                                meleeDamageSourceName = DamageTraceMeleeSelf;
+                            }
+                        }
+                        else
+                        {
+                            meleeDamageSourceName = DamageTraceMeleeUnknown;
+                        }
+
+                        AddUniqueDamageTrace(targetComponent, meleeDamageSourceName);
+                    }
                 }
             }
         }
+
+        private void OnProjectileHit(Entity<ProjectileComponent> ent, ref ProjectileHitEvent args)
+        {
+            var targetUid = args.Target;
+            var projectileUid = ent.Owner;
+            string projectileName = Name(projectileUid);
+
+            if (args.Damage == null || args.Damage.GetTotal() <= MinRangedDamageThreshold)
+                return;
+
+            if (TryComp<MetaDataComponent>(projectileUid, out var projectileMeta))
+            {
+                projectileName = projectileMeta.EntityName;
+            }
+            else
+            {
+                projectileName = DamageTraceProjectileUnknown;
+            }
+
+            if (HasComp<IgnoresDamageTracesComponent>(targetUid))
+                return;
+
+            var component = EnsureComp<ForensicsComponent>(targetUid);
+
+            AddUniqueDamageTrace(component, projectileName);
+        }
+
+
+        private void OnHitscanHit(Entity<HitscanAmmoComponent> ent, ref HitscanRaycastFiredEvent args)
+        {
+            if (args.Data.HitEntity == null) //miss check
+                return;
+
+            if (!TryComp<HitscanBasicDamageComponent>(ent.Owner, out var damageComponent)) //checking for non-zero damage
+                return;
+
+            if (damageComponent.Damage == null || damageComponent.Damage.GetTotal() <= MinRangedDamageThreshold) //another checking for non-zero damage
+                return;
+
+            var targetUid = args.Data.HitEntity.Value;
+            if (HasComp<IgnoresDamageTracesComponent>(targetUid))
+                return;
+
+            var component = EnsureComp<ForensicsComponent>(targetUid);
+
+            string hitscanName;
+            if (TryComp<MetaDataComponent>(ent.Owner, out var hitscanMeta))
+            {
+                if (!string.IsNullOrWhiteSpace(hitscanMeta.EntityName))
+                {
+                    hitscanName = hitscanMeta.EntityName;
+                }
+                else
+                {
+                    hitscanName = DamageTraceHitscanUnknown;
+                }
+                AddUniqueDamageTrace(component, hitscanName);
+            }
+        }
+
+
 
         private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
         {
@@ -305,6 +405,44 @@ namespace Content.Server.Forensics
 
             if (TryComp<FingerprintComponent>(user, out var fingerprint) && CanAccessFingerprint(user, out _))
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
+        }
+
+        private void DeleteDamageTracesOnRepair(Entity<ForensicsComponent> ent, ref DamageChangedEvent args)
+        {
+            var targetUid = ent.Owner;
+
+            if (HasComp<IgnoresDamageTracesComponent>(targetUid))
+                return;
+            if (!TryComp<ForensicsComponent>(targetUid, out var component))
+                return;
+            if (args.Damageable != null)
+            {
+                if (args.Damageable.TotalDamage <= 0.01f && component.DamageTraces.Count > 0)
+                {
+                    component.DamageTraces.Clear();
+                }
+            }
+        }
+
+        private void AddUniqueDamageTrace(ForensicsComponent forensicsComponent, string traceName)
+        {
+            string localizedTraceName = Loc.GetString(traceName);
+
+            if (forensicsComponent.DamageTraces.Contains(localizedTraceName))
+            {
+                forensicsComponent.DamageTraces.Remove(localizedTraceName);
+            }
+
+            // Set a limit of element via constant
+            if (forensicsComponent.DamageTraces.Count >= MaxDamageTraces)
+            {
+                var oldestTrace = forensicsComponent.DamageTraces.First();
+                forensicsComponent.DamageTraces.Remove(oldestTrace);
+            }
+
+            // Add new trace
+            forensicsComponent.DamageTraces.Add(localizedTraceName);
+
         }
 
         // TODO: Delete this. A lot of systems are manually raising this method event instead of calling the identical <see cref="TransferDna"/> method.
