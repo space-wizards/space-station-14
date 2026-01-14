@@ -397,6 +397,22 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconNinja
+  icon:
+    sprite: *icon-rsi
+    state: Ninja
+  jobName: job-name-ninja
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPirate
+  icon:
+    sprite: *icon-rsi
+    state: Pirate
+  jobName: job-name-pirate
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconPrisoner
   icon:
     sprite: *icon-rsi
@@ -413,6 +429,38 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconSyndicateCommander
+  icon:
+    sprite: *icon-rsi
+    state: SyndicateCommander
+  jobName: job-name-syndicate-commander
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateCorpsman
+  icon:
+    sprite: *icon-rsi
+    state: SyndicateCorpsman
+  jobName: job-name-syndicate-corpsman
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateOperative
+  icon:
+    sprite: *icon-rsi
+    state: SyndicateOperative
+  jobName: job-name-syndicate-operative
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconWizard
+  icon:
+    sprite: *icon-rsi
+    state: Wizard
+  jobName: job-name-wizard
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconZombie # This is a perfectly legitimate profession to pursue
   icon:
     sprite: *icon-rsi
@@ -423,11 +471,75 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconCBURN
+  icon:
+    sprite: *icon-rsi
+    state: CBURN
+  jobName: job-name-cburn
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconDeathSquad
+  icon:
+    sprite: *icon-rsi
+    state: DeathSquad
+  jobName: job-name-deathsquad
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTLeader
+  icon:
+    sprite: *icon-rsi
+    state: ERTLeader
+  jobName: job-name-ertleader
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTChaplain
+  icon:
+    sprite: *icon-rsi
+    state: ERTChaplain
+  jobName: job-name-ertchaplain
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTEngineer
+  icon:
+    sprite: *icon-rsi
+    state: ERTEngineer
+  jobName: job-name-ertengineer
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTSecurity
+  icon:
+    sprite: *icon-rsi
+    state: ERTSecurity
+  jobName: job-name-ertsecurity
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTMedic
+  icon:
+    sprite: *icon-rsi
+    state: ERTMedical
+  jobName: job-name-ertmedic
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTJanitor
+  icon:
+    sprite: *icon-rsi
+    state: ERTJanitor
+  jobName: job-name-ertjanitor
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconNanotrasen
   icon:
     sprite: *icon-rsi
     state: Nanotrasen
-  jobName: job-name-centcomoff
+  jobName: job-name-centcommoff
 
 - type: jobIcon
   parent: JobIcon
