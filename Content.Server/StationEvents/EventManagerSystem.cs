@@ -55,9 +55,6 @@ public sealed class EventManagerSystem : EntitySystem
     /// </summary>
     public void RunRandomEvent(EntityTableSelector limitedEventsTable)
     {
-        // TODO
-        // 1. Call select event function on limitedEventsTable -> get EntityPrototype
-        // 2. AddGameRule that prototype
         var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions.
                                                  // Putting this here only makes any sense in the context of the toolshed commands in BasicStationEventScheduler. Kill me.
 
