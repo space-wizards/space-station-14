@@ -311,12 +311,4 @@ namespace Content.Shared.Storage
         Horizontal,
         Vertical
     }
-
-    [Serializable, NetSerializable]
-    public enum StorageAnimationType : byte
-    {
-        None,
-        Shake,
-        Bouncy
-    }
 }
