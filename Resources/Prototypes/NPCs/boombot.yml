@@ -1,0 +1,97 @@
+- type: htnCompound
+  id: BoombotCompound
+  branches:
+  - tasks:
+      - !type:HTNCompoundTask
+        task: FollowBandTargetCompound
+  - tasks:
+      - !type:HTNCompoundTask
+        task: FindBandTargetCompound
+  - tasks:
+      - !type:HTNCompoundTask
+        task: LeaveBandTargetCompound
+  - tasks:
+      - !type:HTNCompoundTask
+        task: IdleCompound
+
+- type: htnCompound
+  id: FollowBandTargetCompound
+  branches:
+  - preconditions:
+      - !type:IsPlayingMusicPrecondition
+    tasks:
+    # Make sure the music is still playing
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyMusic
+    # Keep following the source of music if there is one
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: false
+        removeKeyOnFinish: false
+        targetKey: TargetCoordinates
+        pathfindKey: TargetPathfind
+        rangeKey: FollowCloseRange
+      preconditions:
+        - !type:KeyExistsPrecondition
+          key: Target
+
+- type: htnCompound
+  id: FindBandTargetCompound
+  branches:
+  - tasks:
+      # Try to locate a new source of music
+      - !type:HTNPrimitiveTask
+        operator: !type:UtilityOperator
+          proto: NearbyMusic
+      # Respond verbally to the new source of music
+      - !type:HTNPrimitiveTask
+        operator: !type:SpeakOperator
+          speech: !type:LocalizedSetSpeakOperatorSpeech
+            lineSet: BoombotStart
+          hidden: true
+      # Change visuals to bobbing up and down
+      - !type:HTNPrimitiveTask
+        operator: !type:ToggleVisualsOperator
+          enabled: true
+      # Start accompanying music
+      - !type:HTNPrimitiveTask
+        operator: !type:JoinBandOperator
+
+- type: htnCompound
+  id: LeaveBandTargetCompound
+  branches:
+  - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+    tasks:
+    # Respond verbally to the music stopping
+    - !type:HTNPrimitiveTask
+      operator: !type:SpeakOperator
+        speech: !type:LocalizedSetSpeakOperatorSpeech
+          lineSet: BoombotStop
+        hidden: true
+    # Change visuals back to normal
+    - !type:HTNPrimitiveTask
+      operator: !type:ToggleVisualsOperator
+        enabled: false
+    # Forget target
+    - !type:HTNPrimitiveTask
+      operator: !type:ForgetKeyOperator
+        key: Target
+    # Stop accompanying music
+    - !type:HTNPrimitiveTask
+      operator: !type:JoinBandOperator
+
+- type: utilityQuery
+  id: NearbyMusic
+  query:
+  - !type:ComponentQuery
+    components:
+      - type: ActiveInstrument
+  considerations:
+  - !type:TargetDistanceCon
+    curve: !type:PresetCurve
+      preset: TargetDistance
+  - !type:PlayingMusicCon
+    curve: !type:BoolCurve

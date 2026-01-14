@@ -180,18 +180,20 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         Dirty(uid, activeInstrument);
     }
 
-    private void OnMidiSetMaster(InstrumentSetMasterEvent msg, EntitySessionEventArgs args)
+    /// <summary>
+    /// Set an instrument's master to another instrument to start playing along as a band member.
+    /// </summary>
+    /// <param name="instrument">The instrument that will join or leave a band.</param>
+    /// <param name="master">The target instrument to follow. If null, leaves all bands.</param>
+    public void SetMaster(Entity<InstrumentComponent?> instrument, EntityUid? master)
     {
-        var uid = GetEntity(msg.Uid);
-        var master = GetEntity(msg.Master);
-
-        if (!HasComp<ActiveInstrumentComponent>(uid))
+        if (!HasComp<ActiveInstrumentComponent>(instrument))
             return;
 
-        if (!TryComp(uid, out InstrumentComponent? instrument))
+        if (!Resolve(instrument, ref instrument.Comp))
             return;
 
-        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+        if (instrument.Comp.Master == master)
             return;
 
         if (master != null)
@@ -202,18 +204,32 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             if (!TryComp<InstrumentComponent>(master, out var masterInstrument) || masterInstrument.Master != null)
                 return;
 
-            instrument.Master = master;
-            instrument.FilteredChannels.SetAll(false);
-            instrument.Playing = true;
-            Dirty(uid, instrument);
+            instrument.Comp.Master = master;
+            instrument.Comp.FilteredChannels.SetAll(false);
+            instrument.Comp.Playing = true;
+            Dirty(instrument, instrument.Comp);
             return;
         }
 
         // Cleanup when disabling master...
-        if (master == null && instrument.Master != null)
+        if (master == null && instrument.Comp.Master != null)
         {
-            Clean(uid, instrument);
+            Clean(instrument, instrument.Comp);
         }
+    }
+
+    private void OnMidiSetMaster(InstrumentSetMasterEvent msg, EntitySessionEventArgs args)
+    {
+        var uid = GetEntity(msg.Uid);
+        var master = GetEntity(msg.Master);
+
+        if (!TryComp(uid, out InstrumentComponent? instrument))
+            return;
+
+        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+            return;
+
+        SetMaster(uid, master);
     }
 
     private void OnMidiSetFilteredChannel(InstrumentSetFilteredChannelEvent msg, EntitySessionEventArgs args)
@@ -240,20 +256,36 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         Dirty(uid, instrument);
     }
 
+    /// <summary>
+    /// Make an instrument stop playing music by removing its active instrument component.
+    /// </summary>
+    /// <param name="uid">The instrument to deactivate.</param>
+    public void DeactivateInstrument(EntityUid uid)
+    {
+         if (HasComp<ActiveInstrumentComponent>(uid))
+            RemComp<ActiveInstrumentComponent>(uid);
+    }
+
+    /// <summary>
+    /// Prepare an instrument to start playing music by ensuring its active instrument component exists.
+    /// </summary>
+    /// <param name="uid">The instrument to prepare.</param>
+    public void PrepareInstrument(EntityUid uid)
+    {
+        EnsureComp<ActiveInstrumentComponent>(uid);
+    }
+
     private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
     {
-        if (HasComp<ActiveInstrumentComponent>(uid)
-            && !_bui.IsUiOpen(uid, args.UiKey))
-        {
-            RemComp<ActiveInstrumentComponent>(uid);
-        }
+        if (!_bui.IsUiOpen(uid, args.UiKey))
+            DeactivateInstrument(uid);
 
         Clean(uid, component);
     }
 
     private void OnBoundUIOpened(EntityUid uid, InstrumentComponent component, BoundUIOpenedEvent args)
     {
-        EnsureComp<ActiveInstrumentComponent>(uid);
+        PrepareInstrument(uid);
         Clean(uid, component);
     }
 

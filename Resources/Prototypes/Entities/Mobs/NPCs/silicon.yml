@@ -497,3 +497,36 @@
     interactSuccessString: hugging-success-generic
     interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobBoomBot
+  name: boombot
+  description: A little bot with a big voice. Seems inadvisably peppy.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/boombot.rsi
+    layers:
+    - state: boombot
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {state: boombot-dancing}
+          False: {state: boombot}
+  - type: Construction
+    graph: BoomBot
+    node: bot
+  - type: HTN
+    rootTask:
+      task: BoombotCompound
+  - type: Anchorable
+  - type: Instrument
+    program: 62
+  - type: InteractionPopup
+    interactSuccessString: petting-success-boombot
+    interactFailureString: petting-failure-boombot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
