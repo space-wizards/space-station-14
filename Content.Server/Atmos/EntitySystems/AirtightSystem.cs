@@ -25,7 +25,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightInit(Entity<AirtightComponent> airtight, ref ComponentInit args)
         {
-            // TODO AIRTIGHT what FixAirBlockedDirectionInitialize even for?
+            // If this entity has unique airtight directions that are affected by rotation,
+            // we need to fix up the current airtight directions based on its rotation.
+            // Otherwise, we can skip all of that logic (stuff adds up when you're initing
+            // a morbillion walls).
             if (!airtight.Comp.FixAirBlockedDirectionInitialize)
             {
                 UpdatePosition(airtight);
