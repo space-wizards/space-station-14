@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
@@ -11,6 +12,7 @@ public sealed class GibbingSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     private static readonly SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
 
@@ -24,6 +26,11 @@ public sealed class GibbingSystem : EntitySystem
     public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
     {
         _audio.PlayPredicted(GibSound, ent, user);
+
+        // BodySystem handles prediction rather poorly and causes client-sided bugs when we gib on the client
+        // This guard can be removed once it is gone and replaced by a prediction-safe system.
+        if (!_net.IsServer)
+            return new();
 
         var gibbed = new HashSet<EntityUid>();
         var beingGibbed = new BeingGibbedEvent(gibbed);
@@ -41,7 +48,7 @@ public sealed class GibbingSystem : EntitySystem
         var beforeDeletion = new GibbedBeforeDeletionEvent(gibbed);
         RaiseLocalEvent(ent, ref beforeDeletion);
 
-        PredictedQueueDel(ent);
+        QueueDel(ent);
         return gibbed;
     }
 
