@@ -4,6 +4,8 @@ using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
@@ -54,55 +56,20 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             damageRequired -= damageableComponent.TotalDamage;
             damageRequired = FixedPoint2.Max(damageRequired, FixedPoint2.Zero);
         }
-        var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, damageable: damageableComponent, origin: component.Shooter);
         var deleted = Deleted(target);
 
-        if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
+        if (_damageableSystem.TryChangeDamage((target, damageableComponent), ev.Damage, out var damage, component.IgnoreResistances, origin: component.Shooter) && Exists(component.Shooter))
         {
-            if (modifiedDamage.AnyPositive() && !deleted)
+            if (!deleted)
             {
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
             _adminLogger.Add(LogType.BulletHit,
                 LogImpact.Medium,
-                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
-        }
+                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
 
-        // If penetration is to be considered, we need to do some checks to see if the projectile should stop.
-        if (modifiedDamage is not null && component.PenetrationThreshold != 0)
-        {
-            // If a damage type is required, stop the bullet if the hit entity doesn't have that type.
-            if (component.PenetrationDamageTypeRequirement != null)
-            {
-                var stopPenetration = false;
-                foreach (var requiredDamageType in component.PenetrationDamageTypeRequirement)
-                {
-                    if (!modifiedDamage.DamageDict.Keys.Contains(requiredDamageType))
-                    {
-                        stopPenetration = true;
-                        break;
-                    }
-                }
-                if (stopPenetration)
-                    component.ProjectileSpent = true;
-            }
-
-            // If the object won't be destroyed, it "tanks" the penetration hit.
-            if (modifiedDamage.GetTotal() < damageRequired)
-            {
-                component.ProjectileSpent = true;
-            }
-
-            if (!component.ProjectileSpent)
-            {
-                component.PenetrationAmount += damageRequired;
-                // The projectile has dealt enough damage to be spent.
-                if (component.PenetrationAmount >= component.PenetrationThreshold)
-                {
-                    component.ProjectileSpent = true;
-                }
-            }
+            component.ProjectileSpent = !TryPenetrate((uid, component), damage, damageRequired);
         }
         else
         {
@@ -111,7 +78,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (!deleted)
         {
-            _guns.PlayImpactSound(target, modifiedDamage, component.SoundHit, component.ForceSound);
+            _guns.PlayImpactSound(target, damage, component.SoundHit, component.ForceSound);
 
             if (!args.OurBody.LinearVelocity.IsLengthZero())
                 _sharedCameraRecoil.KickCamera(target, args.OurBody.LinearVelocity.Normalized());
@@ -124,5 +91,42 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }
+    }
+
+    private bool TryPenetrate(Entity<ProjectileComponent> projectile, DamageSpecifier damage, FixedPoint2 damageRequired)
+    {
+        // If penetration is to be considered, we need to do some checks to see if the projectile should stop.
+        if (projectile.Comp.PenetrationThreshold == 0)
+            return false;
+
+        // If a damage type is required, stop the bullet if the hit entity doesn't have that type.
+        if (projectile.Comp.PenetrationDamageTypeRequirement != null)
+        {
+            foreach (var requiredDamageType in projectile.Comp.PenetrationDamageTypeRequirement)
+            {
+                if (damage.DamageDict.Keys.Contains(requiredDamageType))
+                    continue;
+
+                return false;
+            }
+        }
+
+        // If the object won't be destroyed, it "tanks" the penetration hit.
+        if (damage.GetTotal() < damageRequired)
+        {
+            return false;
+        }
+
+        if (!projectile.Comp.ProjectileSpent)
+        {
+            projectile.Comp.PenetrationAmount += damageRequired;
+            // The projectile has dealt enough damage to be spent.
+            if (projectile.Comp.PenetrationAmount >= projectile.Comp.PenetrationThreshold)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

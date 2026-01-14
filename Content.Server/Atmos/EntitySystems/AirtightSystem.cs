@@ -25,7 +25,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightInit(Entity<AirtightComponent> airtight, ref ComponentInit args)
         {
-            // TODO AIRTIGHT what FixAirBlockedDirectionInitialize even for?
+            // If this entity has unique airtight directions that are affected by rotation,
+            // we need to fix up the current airtight directions based on its rotation.
+            // Otherwise, we can skip all of that logic (stuff adds up when you're initing
+            // a morbillion walls).
             if (!airtight.Comp.FixAirBlockedDirectionInitialize)
             {
                 UpdatePosition(airtight);
@@ -122,8 +125,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void InvalidatePosition(Entity<MapGridComponent?> grid, Vector2i pos)
         {
-            var query = EntityManager.GetEntityQuery<AirtightComponent>();
-            _explosionSystem.UpdateAirtightMap(grid, pos, grid, query);
+            var query = GetEntityQuery<AirtightComponent>();
+            _explosionSystem.UpdateAirtightMap(grid, pos, grid);
             _atmosphereSystem.InvalidateTile(grid.Owner, pos);
         }
 
