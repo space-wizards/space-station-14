@@ -10,7 +10,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.ForceAttack;
+namespace Content.Server.ForceAttack;
 
 /// <summary>
 /// This handles forcing a player-controlled mob to attack nearby enemies.
@@ -32,9 +32,7 @@ public sealed class ForceAttackSystem : EntitySystem
 
     private void OnMeleeAttack(Entity<ForceAttackComponent> ent, ref MeleeAttackEvent args)
     {
-        var curTime = _timing.CurTime;
-        ent.Comp.NextAttack = curTime + ent.Comp.PassiveTime;
-        Dirty(ent);
+        ent.Comp.NextAttack = _timing.CurTime + ent.Comp.PassiveTime;
     }
 
     /// <inheritdoc/>
@@ -52,7 +50,6 @@ public sealed class ForceAttackSystem : EntitySystem
             if (!_melee.TryGetWeapon(uid, out var weaponUid, out var weapon))
             {
                 forceComp.InRange = false;
-                Dirty(uid, forceComp);
                 continue;
             }
 
@@ -62,7 +59,6 @@ public sealed class ForceAttackSystem : EntitySystem
                     .TryFirstOrNull(out var target))
             {
                 forceComp.InRange = false;
-                Dirty(uid, forceComp);
                 continue;
             }
 
@@ -70,7 +66,6 @@ public sealed class ForceAttackSystem : EntitySystem
             {
                 forceComp.InRange = true;
                 forceComp.NextAttack = curTime + forceComp.PassiveTime;
-                Dirty(uid, forceComp);
                 continue;
             }
 
@@ -80,8 +75,9 @@ public sealed class ForceAttackSystem : EntitySystem
             // Force mob to enter combat mode (necessary for AttemptAttack to succeed).
             _mode.SetInCombatMode(uid, true, modeComp);
 
-            if (forceComp.Message.Length != 0)
-                _popup.PopupPredicted(forceComp.Message, uid, uid);
+            var popupMessage = Loc.GetString(forceComp.Message);
+            if (popupMessage.Length != 0)
+                _popup.PopupEntity(popupMessage, uid, uid);
 
             _melee.AttemptLightAttack(uid, weaponUid, weapon, target.Value);
         }
