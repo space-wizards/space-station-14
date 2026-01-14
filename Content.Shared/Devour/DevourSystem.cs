@@ -132,8 +132,6 @@ public sealed class DevourSystem : EntitySystem
         if (ent.Comp.StomachStorageWhitelist == null)
             return;
 
-        // For some reason we have two different systems that should handle gibbing,
-        // and for some another reason GibbingSystem, which should empty all containers, doesn't get involved in this process
         _containerSystem.EmptyContainer(ent.Comp.Stomach);
     }
 }
