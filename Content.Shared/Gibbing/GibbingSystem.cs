@@ -1,4 +1,3 @@
-using Content.Shared.Damage.Components;
 using Content.Shared.Destructible;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
