@@ -55,6 +55,9 @@ public sealed class EventManagerSystem : EntitySystem
     /// </summary>
     public void RunRandomEvent(EntityTableSelector limitedEventsTable)
     {
+        // TODO
+        // 1. Call select event function on limitedEventsTable -> get EntityPrototype
+        // 2. AddGameRule that prototype
         var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions.
                                                  // Putting this here only makes any sense in the context of the toolshed commands in BasicStationEventScheduler. Kill me.
 
@@ -86,7 +89,8 @@ public sealed class EventManagerSystem : EntitySystem
     public bool TryBuildLimitedEvents(
         EntityTableSelector limitedEventsTable,
         Dictionary<EntityPrototype, StationEventComponent> availableEvents,
-        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents
+        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
+        EntityTableContext? limitedEventsTableCtx = null
         )
     {
         limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
@@ -97,7 +101,7 @@ public sealed class EventManagerSystem : EntitySystem
             return false;
         }
 
-        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
+        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable, null, limitedEventsTableCtx);
 
         if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
             return false;

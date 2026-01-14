@@ -5,6 +5,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Administration;
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -133,7 +134,13 @@ namespace Content.Server.StationEvents
                     curTime += TimeSpan.FromSeconds(compMinMax.Next(_random));
 
                     var available = _stationEvent.AvailableEvents(false, playerCount, curTime);
-                    if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, available, out var selectedEvents))
+                    var eventTableOverrideDict = new Dictionary<string, object>()
+                    {
+                        { PlayerCountCondition.PlayerCountContextKey, playerCount },
+                        { RoundDurationCondition.RoundDurationContextKey, curTime }
+                    };
+                    var eventTableCtx = new EntityTableContext(eventTableOverrideDict);
+                    if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, available, out var selectedEvents, eventTableCtx))
                     {
                         continue; // doesnt break because maybe the time is preventing events being available.
                     }
@@ -188,7 +195,13 @@ namespace Content.Server.StationEvents
             var timemins = time * 60;
             var theoryTime = TimeSpan.Zero + TimeSpan.FromSeconds(timemins);
             var available = _stationEvent.AvailableEvents(false, playerCount, theoryTime);
-            if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, available, out var untimedEvents))
+            var eventTableOverrideDict = new Dictionary<string, object>()
+            {
+                { PlayerCountCondition.PlayerCountContextKey, playerCount },
+                { RoundDurationCondition.RoundDurationContextKey, theoryTime }
+            };
+            var eventTableCtx = new EntityTableContext(eventTableOverrideDict);
+            if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, available, out var untimedEvents, eventTableCtx))
                 yield break;
 
             var events = untimedEvents.Where(pair => pair.Value.EarliestStart <= timemins).ToList();
