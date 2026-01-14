@@ -22,9 +22,10 @@ public sealed partial class AtmosphereSystem
             return Atmospherics.SpaceHeatCapacity;
         }
 
-        // stackalloc is banned on client tragically.
-        // in .NET 9/10 the JIT will probably just stackalloc this anyway because it doesn't escape,
-        // especially considering that NumericsHelpers is all inlined.
+        // explicit stackalloc call is banned on client tragically.
+        // the JIT does not stackalloc this during runtime,
+        // though this isnt the hottest code path so it should be fine
+        // the gc can eat a little as a treat
         var tmp = new float[moles.Length];
         NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
         // Adjust heat capacity by speedup, because this is primarily what
