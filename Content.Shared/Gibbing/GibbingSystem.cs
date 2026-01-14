@@ -28,6 +28,8 @@ public sealed class GibbingSystem : EntitySystem
     /// <returns>The set of giblets for this entity, if any.</returns>
     public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
     {
+        // user is unused because of prediction woes, eventually it'll be used for audio
+
         // BodySystem handles prediction rather poorly and causes client-sided bugs when we gib on the client
         // This guard can be removed once it is gone and replaced by a prediction-safe system.
         if (!_net.IsServer)
@@ -36,7 +38,7 @@ public sealed class GibbingSystem : EntitySystem
         if (!_destructible.DestroyEntity(ent))
             return new();
 
-        _audio.PlayPredicted(GibSound, ent, user);
+        _audio.PlayPvs(GibSound, ent);
 
         var gibbed = new HashSet<EntityUid>();
         var beingGibbed = new BeingGibbedEvent(gibbed);
