@@ -122,13 +122,13 @@
     nameFormat: name-format-regal-rat
   - type: NameIdentifier
     group: null  # Strips the numeric identifier from the rat king's name, since they already have randomly-generated names anyway
-  - type: GuideHelp
-    guides:
-    - MinorAntagonists
   - type: Grammar
     attributes:
       proper: true
       gender: male
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
   - type: Sharp
 
 - type: entity
