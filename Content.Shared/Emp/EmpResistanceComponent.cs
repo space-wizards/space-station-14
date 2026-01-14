@@ -11,8 +11,14 @@ namespace Content.Shared.Emp;
 public sealed partial class EmpResistanceComponent : Component
 {
     /// <summary>
-    ///     The proportion of the EMP effect that is resisted. 1.00 indicates full immunity while 0.00 indicates no resistance.
+    /// The strength of the EMP gets multiplied by this value.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public FixedPoint2 Resistance = FixedPoint2.Zero;
+    public float StrengthMultiplier = 1f;
+
+    /// <summary>
+    /// The duration of the EMP gets multiplied by this value.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float DurationMultiplier = 1f;
 }

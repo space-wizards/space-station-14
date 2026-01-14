@@ -315,4 +315,4 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/ninja.rsi
   - type: EmpResistance
-    resistance: 1
+    strengthMultiplier: 0

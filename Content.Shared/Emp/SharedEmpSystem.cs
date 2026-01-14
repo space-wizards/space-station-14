@@ -19,6 +19,7 @@ public abstract class SharedEmpSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private HashSet<EntityUid> _entSet = new();
+    private EntityQuery<EmpResistanceComponent> _resistanceQuery;
 
     public override void Initialize()
     {
@@ -29,7 +30,8 @@ public abstract class SharedEmpSystem : EntitySystem
         SubscribeLocalEvent<EmpDisabledComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<EmpResistanceComponent, EmpAttemptEvent>(OnResistEmpAttempt);
-        SubscribeLocalEvent<EmpResistanceComponent, EmpPulseEvent>(OnResistEmpPulse);
+
+        _resistanceQuery = GetEntityQuery<EmpResistanceComponent>();
     }
 
     public static readonly EntProtoId EmpPulseEffectPrototype = "EffectEmpPulse";
@@ -109,7 +111,14 @@ public abstract class SharedEmpSystem : EntitySystem
     /// <returns>If the entity was affected by the EMP.</returns>
     public bool DoEmpEffects(EntityUid uid, float energyConsumption, TimeSpan duration, EntityUid? user = null)
     {
-        var ev = new EmpPulseEvent(energyConsumption, false, false, duration, user);
+        var strMultiplier = 1f;
+        var durMultiplier = 1f;
+        if (_resistanceQuery.TryComp(uid, out var resistance))
+        {
+            strMultiplier = resistance.StrengthMultiplier;
+            durMultiplier = resistance.DurationMultiplier;
+        }
+        var ev = new EmpPulseEvent(energyConsumption * strMultiplier, false, false, duration * durMultiplier, user);
         RaiseLocalEvent(uid, ref ev);
 
         // TODO: replace with PredictedSpawn once it works with animated sprites
@@ -120,7 +129,7 @@ public abstract class SharedEmpSystem : EntitySystem
             return ev.Affected;
 
         var disabled = EnsureComp<EmpDisabledComponent>(uid);
-        disabled.DisabledUntil = Timing.CurTime + duration;
+        disabled.DisabledUntil = Timing.CurTime + duration * durMultiplier;
         Dirty(uid, disabled);
 
         return ev.Affected;
@@ -159,19 +168,10 @@ public abstract class SharedEmpSystem : EntitySystem
 
     private void OnResistEmpAttempt(Entity<EmpResistanceComponent> ent, ref EmpAttemptEvent args)
     {
-        if (ent.Comp.Resistance >= 1)
+        // We only cancel if the strength multiplier is 0, because then the effect basically doesn't exist.
+        // Allows us to make things resistant to the duration, but still lose charge to the EMP.
+        if (ent.Comp.StrengthMultiplier <= 0)
             args.Cancelled = true;
-    }
-
-    private void OnResistEmpPulse(Entity<EmpResistanceComponent> ent, ref EmpPulseEvent args)
-    {
-        var empStrengthMultiplier = 1 - ent.Comp.Resistance;
-
-        if (empStrengthMultiplier <= 0)
-            return;
-
-        args.Duration *= (float) empStrengthMultiplier;
-        args.EnergyConsumption *= (float) empStrengthMultiplier;
     }
 }
 
