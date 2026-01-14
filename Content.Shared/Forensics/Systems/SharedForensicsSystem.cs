@@ -13,6 +13,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Gibbing;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -34,7 +35,7 @@ public sealed class SharedForensicsSystem : EntitySystem
         // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
         SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(SharedBloodstreamSystem) });
 
-        SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<ForensicsComponent, GibbedBeforeDeletionEvent>(OnBeingGibbed);
         SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
         SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(SharedAbsorbentSystem) });
@@ -80,14 +81,14 @@ public sealed class SharedForensicsSystem : EntitySystem
         }
     }
 
-    private void OnBeingGibbed(EntityUid uid, ForensicsComponent component, BeingGibbedEvent args)
+    private void OnBeingGibbed(Entity<ForensicsComponent> ent, ref GibbedBeforeDeletionEvent args)
     {
         string dna = Loc.GetString("forensics-dna-unknown");
 
-        if (TryComp(uid, out DnaComponent? dnaComp) && dnaComp.DNA != null)
+        if (TryComp(ent, out DnaComponent? dnaComp) && dnaComp.DNA != null)
             dna = dnaComp.DNA;
 
-        foreach (EntityUid part in args.GibbedParts)
+        foreach (var part in args.Giblets)
         {
             var partComp = EnsureComp<ForensicsComponent>(part);
             partComp.DNAs.Add(dna);
