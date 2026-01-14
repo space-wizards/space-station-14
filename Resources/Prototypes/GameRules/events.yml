@@ -235,6 +235,7 @@
     - TerrorObjective
     - MassArrestObjective
     - NinjaSurviveObjective
+    - NinjaKillLimitObjective
   - type: AntagSelection
     agentName: ninja-round-end-agent-name
     definitions:
@@ -262,6 +263,11 @@
         - NamesNinjaTitle
         - NamesNinja
         nameFormat: name-format-ninja
+      - type: GibOnRoundEnd
+        preventGibbingObjectives:
+        - NinjaKillLimitObjective
+        spawnProto: Acidifier
+        deleteItems: true
       mindRoles:
       - MindRoleNinja
   - type: DynamicRuleCost
