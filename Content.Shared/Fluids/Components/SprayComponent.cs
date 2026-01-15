@@ -10,7 +10,8 @@ namespace Content.Shared.Fluids.Components;
 [Access(typeof(SpraySystem))]
 public sealed partial class SprayComponent : Component
 {
-    public const string SolutionName = "spray";
+    [DataField]
+    public string Solution = "spray";
 
     /// <summary>
     /// How much solution is transferred per spray.

@@ -136,7 +136,7 @@ public sealed class SpraySystem : EntitySystem
     /// <param name="user">The user that is using the spraying device.</param>
     private void Spray(Entity<SprayComponent> entity, MapCoordinates mapcoord, EntityUid? user = null)
     {
-        if (!_solutionContainer.TryGetSolution(entity.Owner, SprayComponent.SolutionName, out var soln, out var solution))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var solution))
             return;
 
         var ev = new SprayAttemptEvent(user);
