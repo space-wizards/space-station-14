@@ -1574,17 +1574,6 @@
     FoodBerries: 1 #dark colouring
 
 - type: microwaveMealRecipe
-  id: RecipeCakeSpaceman
-  name: spaceman cake recipe
-  result: FoodCakeSpaceman
-  time: 5
-  group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodSpacemansTrumpet: 2
-    FoodBerries: 1 #dark colouring
-
-- type: microwaveMealRecipe
   id: RecipeOrangeCake
   name: orange cake recipe
   result: FoodCakeOrange
