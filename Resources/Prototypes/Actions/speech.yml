@@ -9,4 +9,5 @@
     priority: -20
     useDelay: 1
   - type: InstantAction
+    icon: { sprite: Interface/Actions/scream.png }
     event: !type:MeleeSpeechConfigureActionEvent
