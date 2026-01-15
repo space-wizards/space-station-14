@@ -10,7 +10,7 @@ public sealed partial class BodyComponent : Component
     public const string ContainerID = "body_organs";
 
     /// <summary>
-    /// The actual container with entities with <see cref="OFMOrganComponent" /> in it
+    /// The actual container with entities with <see cref="OrganComponent" /> in it
     /// </summary>
     [ViewVariables]
     public Container? Organs;
