@@ -182,7 +182,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         }
 
         // If the chassis is a provider, we link it to itself and ignore the laws of the brain.
-        // Otherwise, we link the chassis to the brain and get it's laws.
+        // Otherwise, we link the chassis to the brain and get its laws.
         // We do this for cases like xenoborgs or syndieborgs, so we don't grant a free "convert to this lawset" if crew gets a chassis of them.
         if (HasComp<SiliconLawProviderComponent>(chassis))
         {
@@ -204,9 +204,10 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(chassis.Owner, out var mindId, out var mind))
         {
-            _siliconLaws.UnlinkFromProvider(chassis.Owner);
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
+
+        _siliconLaws.UnlinkFromProvider(chassis.Owner);
     }
 
     private void OnMindAdded(Entity<BorgChassisComponent> chassis, ref MindAddedMessage args)

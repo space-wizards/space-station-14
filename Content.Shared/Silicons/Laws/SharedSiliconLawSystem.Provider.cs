@@ -16,7 +16,6 @@ public abstract partial class SharedSiliconLawSystem
 
         SubscribeLocalEvent<SiliconLawProviderComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawProviderComponent, IonStormLawsEvent>(OnIonStormLaws);
-        SubscribeLocalEvent<SiliconLawProviderComponent, SiliconEmaggedEvent>(OnEmagLawsAdded);
         SubscribeLocalEvent<SiliconLawProviderComponent, ComponentShutdown>(OnProviderShutdown);
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnProviderGetLaws);
@@ -57,28 +56,6 @@ public abstract partial class SharedSiliconLawSystem
             if(_mind.TryGetMind(ent.Owner, out var mindId, out _))
                 EnsureSubvertedSiliconRole(mindId);
         }
-
-        Dirty(ent);
-    }
-
-    private void OnEmagLawsAdded(Entity<SiliconLawProviderComponent> ent, ref SiliconEmaggedEvent args)
-    {
-        // Show the silicon has been subverted.
-        ent.Comp.Subverted = true;
-
-        // Add the first emag law before the others
-        ent.Comp.Lawset.Laws.Insert(0, new SiliconLaw
-        {
-            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(ent.Comp.Lawset.ObeysTo))),
-            Order = 0
-        });
-
-        //Add the secrecy law after the others
-        ent.Comp.Lawset.Laws.Add(new SiliconLaw
-        {
-            LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(ent.Comp.Lawset.ObeysTo))),
-            Order = ent.Comp.Lawset.Laws.Max(law => law.Order) + 1
-        });
 
         Dirty(ent);
     }

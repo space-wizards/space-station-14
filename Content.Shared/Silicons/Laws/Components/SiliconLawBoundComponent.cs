@@ -31,6 +31,13 @@ public sealed partial class SiliconLawBoundComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? LawsetProvider;
 
+    /// <summary>
+    /// Whether this provider is currently subverted.
+    /// Cached from the linked <see cref="SiliconLawProviderComponent"/>
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Subverted = false;
+
     // Prevent cheat clients from seeing the laws of other players.
     public override bool SendOnlyToOwner => true;
 }

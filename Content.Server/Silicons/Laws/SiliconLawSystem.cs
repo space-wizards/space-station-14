@@ -25,11 +25,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SiliconLawProviderComponent, MindAddedMessage>(OnMindAdded);
-        SubscribeLocalEvent<SiliconLawProviderComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<SiliconLawBoundComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<SiliconLawBoundComponent, MindRemovedMessage>(OnMindRemoved);
     }
 
-    private void OnMindAdded(Entity<SiliconLawProviderComponent> ent, ref MindAddedMessage args)
+    private void OnMindAdded(Entity<SiliconLawBoundComponent> ent, ref MindAddedMessage args)
     {
         if (!TryComp<ActorComponent>(ent, out var actor))
             return;
@@ -48,7 +48,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         _chatManager.ChatMessageToOne(ChatChannel.Server, modifedLawMsg, modifiedLawWrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
     }
 
-    private void OnMindRemoved(Entity<SiliconLawProviderComponent> ent, ref MindRemovedMessage args)
+    private void OnMindRemoved(Entity<SiliconLawBoundComponent> ent, ref MindRemovedMessage args)
     {
         if (!ent.Comp.Subverted)
             return;

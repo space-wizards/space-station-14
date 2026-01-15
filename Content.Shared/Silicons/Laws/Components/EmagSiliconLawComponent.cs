@@ -30,6 +30,13 @@ public sealed partial class EmagSiliconLawComponent : Component
     public TimeSpan StunTime = TimeSpan.Zero;
 
     /// <summary>
+    /// Whether this entity being emagged should affect its provider.
+    /// If false, it will turn the entity into a provider for itself.
+    /// </summary>
+    [DataField]
+    public bool AffectProvider = false;
+
+    /// <summary>
     /// The sound that plays for the borg player
     /// to let them know they've been emagged
     /// </summary>

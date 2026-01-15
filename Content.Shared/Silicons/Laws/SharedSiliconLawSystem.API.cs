@@ -49,7 +49,7 @@ public abstract partial class SharedSiliconLawSystem
             RaiseLocalEvent(station, ref ev);
             if (ev.Handled)
             {
-                LinkToProvider(ent, ev.LinkedEntity ?? ent);
+                LinkToProvider(ent, ev.LinkedEntity ?? station);
                 return;
             }
         }
@@ -59,7 +59,7 @@ public abstract partial class SharedSiliconLawSystem
             RaiseLocalEvent(grid, ref ev);
             if (ev.Handled)
             {
-                LinkToProvider(ent, ev.LinkedEntity ?? ent);
+                LinkToProvider(ent, ev.LinkedEntity ?? grid);
                 return;
             }
         }
@@ -95,43 +95,6 @@ public abstract partial class SharedSiliconLawSystem
             return new SiliconLawset();
 
         return ent.Comp.Lawset;
-    }
-
-    private void OnGotEmagged(Entity<EmagSiliconLawComponent> ent, ref GotEmaggedEvent args)
-    {
-        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
-            return;
-
-        if (_emag.CheckFlag(ent, EmagType.Interaction))
-            return;
-
-        // prevent self-emagging
-        if (ent.Owner == args.UserUid)
-        {
-            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-self"), ent, args.UserUid);
-            return;
-        }
-
-        if (ent.Comp.RequireOpenPanel &&
-            TryComp<WiresPanelComponent>(ent, out var panel) &&
-            !panel.Open)
-        {
-            _popup.PopupClient(Loc.GetString("law-emag-require-panel"), ent, args.UserUid);
-            return;
-        }
-
-        var ev = new SiliconEmaggedEvent(args.UserUid);
-        RaiseLocalEvent(ent, ref ev);
-
-        ent.Comp.OwnerName = Name(args.UserUid);
-
-        NotifyLawsChanged(ent, ent.Comp.EmaggedSound);
-        if(_mind.TryGetMind(ent, out var mindId, out _))
-            EnsureSubvertedSiliconRole(mindId);
-
-        _stunSystem.TryUpdateParalyzeDuration(ent, ent.Comp.StunTime);
-
-        args.Handled = true;
     }
 
     /// <summary>
@@ -178,20 +141,23 @@ public abstract partial class SharedSiliconLawSystem
             return;
 
         ent.Comp.Lawset = provider.Lawset.Clone();
+        ent.Comp.Subverted = provider.Subverted;
         Dirty(ent);
     }
 
     public void LinkToProvider(Entity<SiliconLawBoundComponent?> lawboundEnt,
         Entity<SiliconLawProviderComponent?> providerEnt)
     {
-        if (!Resolve(providerEnt, ref providerEnt.Comp))
+        if (!Resolve(providerEnt, ref providerEnt.Comp, false))
             return;
 
-        if (!Resolve(lawboundEnt, ref lawboundEnt.Comp))
+        if (!Resolve(lawboundEnt, ref lawboundEnt.Comp, false))
             return;
 
-        lawboundEnt.Comp.LawsetProvider = providerEnt;
+        UnlinkFromProvider(lawboundEnt);
+
         providerEnt.Comp.ExternalLawsets.Add(lawboundEnt.Owner);
+        lawboundEnt.Comp.LawsetProvider = providerEnt;
         UpdateLaws(lawboundEnt);
         Dirty(providerEnt);
     }
@@ -199,29 +165,32 @@ public abstract partial class SharedSiliconLawSystem
     public void UnlinkFromProvider(Entity<SiliconLawBoundComponent?> lawboundEnt,
         Entity<SiliconLawProviderComponent?> providerEnt)
     {
-        if (!Resolve(providerEnt, ref providerEnt.Comp))
+        if (!Resolve(providerEnt, ref providerEnt.Comp, false))
             return;
 
-        if (!Resolve(lawboundEnt, ref lawboundEnt.Comp))
+        if (!Resolve(lawboundEnt, ref lawboundEnt.Comp, false))
             return;
 
+        providerEnt.Comp.ExternalLawsets.Remove(lawboundEnt.Owner);
         lawboundEnt.Comp.LawsetProvider = null;
-        providerEnt.Comp.ExternalLawsets.Remove(lawboundEnt);
         Dirty(lawboundEnt);
         Dirty(providerEnt);
     }
 
     public void UnlinkFromProvider(Entity<SiliconLawBoundComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, false))
             return;
 
         if (TryComp<SiliconLawProviderComponent>(ent.Comp.LawsetProvider, out var provider))
         {
             provider.ExternalLawsets.Remove(ent);
-            ent.Comp.LawsetProvider = null;
-            Dirty(ent);
+            Dirty(ent.Comp.LawsetProvider.Value, provider);
         }
+
+        ent.Comp.LawsetProvider = null;
+
+        Dirty(ent);
     }
 
     private void SyncToLawBound(Entity<SiliconLawProviderComponent?> ent, SoundSpecifier? cue = null)
@@ -240,9 +209,8 @@ public abstract partial class SharedSiliconLawSystem
                 continue;
             }
 
-            lawboundComp.Lawset = ent.Comp.Lawset.Clone();
             lawboundComp.LawsetProvider = ent.Owner;
-            Dirty(lawboundEnt, lawboundComp);
+            UpdateLaws((lawboundEnt, lawboundComp));
             NotifyLawsChanged(lawboundEnt, cue);
         }
 

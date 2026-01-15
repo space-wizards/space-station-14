@@ -12,5 +12,6 @@ silicon-law-ui-placeholder = Type here to change law text...
 silicon-law-ui-modify-provider-tooltip =
     Whether to modify the provider.
     If false, will turn this entity into it's own law provider.
+    Note that borgs without a brain use the station as the provider.
 
 silicon-laws-updated = Updated laws

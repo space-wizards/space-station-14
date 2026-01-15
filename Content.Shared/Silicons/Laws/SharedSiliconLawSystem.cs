@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
@@ -7,6 +8,7 @@ using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Station;
 using Content.Shared.Stunnable;
+using Content.Shared.Wires;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -67,6 +69,71 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         _userInterface.TryToggleUi(ent.Owner, SiliconLawsUiKey.Key, actor.PlayerSession);
     }
 
+    private void OnGotEmagged(Entity<EmagSiliconLawComponent> ent, ref GotEmaggedEvent args)
+    {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction)
+            || _emag.CheckFlag(ent, EmagType.Interaction))
+            return;
+
+        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawboundComp))
+            return;
+
+        // prevent self-emagging
+        if (ent.Owner == args.UserUid)
+        {
+            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-self"), ent, args.UserUid);
+            return;
+        }
+
+        if (ent.Comp.RequireOpenPanel &&
+            TryComp<WiresPanelComponent>(ent, out var panel) &&
+            !panel.Open)
+        {
+            _popup.PopupClient(Loc.GetString("law-emag-require-panel"), ent, args.UserUid);
+            return;
+        }
+
+        List<SiliconLaw> lawsToSwap = lawboundComp.Lawset.Laws;
+
+        // Add the first emag law before the others
+        lawsToSwap.Insert(0, new SiliconLaw
+        {
+            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.UserUid)), ("title", Loc.GetString(lawboundComp.Lawset.ObeysTo))),
+            Order = 0
+        });
+
+        //Add the secrecy law after the others
+        lawsToSwap.Add(new SiliconLaw
+        {
+            LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(lawboundComp.Lawset.ObeysTo))),
+            Order = lawboundComp.Lawset.Laws.Max(law => law.Order) + 1
+        });
+
+        if (ent.Comp.AffectProvider && TryComp<SiliconLawProviderComponent>(lawboundComp.LawsetProvider, out var lawProvider))
+        {
+            lawProvider.Subverted = true;
+            SetProviderLaws((lawboundComp.LawsetProvider.Value, lawProvider), lawsToSwap, true);
+            Dirty(lawboundComp.LawsetProvider.Value, lawProvider);
+        }
+        else
+        {
+            EnsureComp<SiliconLawProviderComponent>(ent, out var ensuredProvider);
+            ensuredProvider.Subverted = true;
+            SetProviderLaws((ent.Owner, ensuredProvider), lawsToSwap, true);
+            LinkToProvider((ent, lawboundComp), (ent, ensuredProvider)); ;
+        }
+
+        ent.Comp.OwnerName = Name(args.UserUid);
+
+        NotifyLawsChanged(ent, ent.Comp.EmaggedSound);
+        if(_mind.TryGetMind(ent, out var mindId, out _))
+            EnsureSubvertedSiliconRole(mindId);
+
+        _stunSystem.TryUpdateParalyzeDuration(ent, ent.Comp.StunTime);
+
+        args.Handled = true;
+    }
+
     private void OnChassisGetLaws(Entity<BorgChassisComponent> ent, ref GetSiliconLawsEvent args)
     {
         // Chassis specific laws take priority over brain laws.
@@ -87,9 +154,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     }
     #endregion Events
 }
-
-[ByRefEvent]
-public record struct SiliconEmaggedEvent(EntityUid user);
 
 /// <summary>
 /// An event used to get the laws of silicons roundstart, linking them to potential LawProviders.
