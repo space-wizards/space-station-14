@@ -76,6 +76,13 @@ public sealed partial class RevenantSystem
             return;
         }
 
+        if (HasComp<ItemComponent>(target))
+        {
+            _throwing.TryThrow(target, _random.NextAngle().ToVec());
+            args.Handled = true;
+            return;
+        }
+
         if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidAppearanceComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
