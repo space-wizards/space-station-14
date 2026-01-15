@@ -22,6 +22,8 @@
   - FloorPlanetGrass
   - FloorSnow
   - FloorDirt
+  - PlatingRCD
+  - FloorHullReinforced
 
 - type: tile
   id: FloorSteel
@@ -1606,17 +1608,6 @@
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteel #probably should not be normally obtainable, but the game shits itself and dies when you try to put null here
-
-- type: tile
-  id: FloorHullReinforced
-  parent: BaseStationTile
-  name: tiles-hull-reinforced
-  sprite: /Textures/Tiles/hull_reinforced.png
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemSteel
-  heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
-  indestructible: true
 
 - type: tile
   id: FloorReinforcedHardened
