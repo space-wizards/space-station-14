@@ -617,7 +617,7 @@ public abstract partial class InventorySystem
     /// items.</param>
     /// <param name="forceUnequip"> Whether to force unequipping the items no matter what.</param>
     /// <returns> All successfully unequipped items.</returns>
-    public HashSet<EntityUid> TryUnequipAllAndScatter(Entity<InventoryComponent?, HandsComponent?> ent,
+    public HashSet<EntityUid> TryUnequipAllAndThrow(Entity<InventoryComponent?, HandsComponent?> ent,
         bool scatterItems = false,
         bool throwItems = false,
         float maxThrowImpulseModifier = 1.0f,
