@@ -306,10 +306,8 @@ namespace Content.Server.Voting.Managers
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 if (ticker.CanUpdateMap())
                 {
-                    if (_gameMapManager.TrySelectMapIfEligible(picked.ID))
-                    {
-                        ticker.UpdateInfoText();
-                    }
+                    _gameMapManager.SelectMap(picked.ID);
+                    ticker.UpdateInfoText();
                 }
                 else
                 {
