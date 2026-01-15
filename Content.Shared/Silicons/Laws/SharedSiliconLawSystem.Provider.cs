@@ -12,8 +12,6 @@ public abstract partial class SharedSiliconLawSystem
 {
     public void InitializeProvider()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<SiliconLawProviderComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawProviderComponent, IonStormLawsEvent>(OnIonStormLaws);
         SubscribeLocalEvent<SiliconLawProviderComponent, ComponentShutdown>(OnProviderShutdown);
