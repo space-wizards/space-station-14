@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage.Events;
@@ -6,10 +7,15 @@ namespace Content.Shared.Storage.Events;
 /// Plays a clientside animation by entity sprite scale modification.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class StorageAnimationEvent(NetEntity uid) : EntityEventArgs
+public sealed class StorageAnimationEvent(NetEntity uid, Vector2 scale) : EntityEventArgs
 {
     /// <summary>
     /// Entity that will be used for the animation.
     /// </summary>
     public readonly NetEntity Uid = uid;
+
+    /// <summary>
+    /// Entity that will be used for the animation.
+    /// </summary>
+    public readonly Vector2 Scale = scale;
 }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Item;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tag;
@@ -169,11 +170,16 @@ namespace Content.Shared.Storage
         [DataField]
         public bool ShowVerb = true;
 
+        #region Animation
         /// <summary>
         /// When true, plays animation after entity insertion in storage.
         /// </summary>
         [DataField]
         public bool Animation = false;
+
+        [DataField]
+        public Vector2 AnimationScale = new(1.25f, 0.75f);
+        #endregion
     }
 
     [Serializable, NetSerializable]

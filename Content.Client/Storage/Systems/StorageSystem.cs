@@ -127,10 +127,10 @@ public sealed class StorageSystem : SharedStorageSystem
     }
 
     /// <inheritdoc/>
-    public override void PlayStorageAnimation(EntityUid uid, EntityUid? user = null)
+    public override void PlayStorageAnimation(EntityUid uid, Vector2 scale, EntityUid? user = null)
     {
         if (!_timing.IsFirstTimePredicted || // Checks that this doesn't plays twice because of prediction.
-            !TryComp<AnimationPlayerComponent>(uid, out var animations) || // Gets Animation player component.
+            !EnsureComp<AnimationPlayerComponent>(uid, out var animations) || // Gets Animation player component.
             !TryComp<SpriteComponent>(uid, out var sprite) || // Gets sprite component.
             _animations.HasRunningAnimation(uid, "storage_animation_bounce")) // Checks that animation doesn'y plays twice (that can cause very big problems).
             return;
@@ -148,9 +148,9 @@ public sealed class StorageSystem : SharedStorageSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(sprite.Scale, 0), // Start frame with start scale.
-                        new AnimationTrackProperty.KeyFrame(new Vector2(1.25f, 0.75f), 0.1f), // Here we decraise thickness and increaise height of sprite.
-                        new AnimationTrackProperty.KeyFrame(new Vector2(1, 1), 0.2f), // Here we return start scale, but because of some sheningans its cursed (like a 1.23132131 height) so...
-                        new AnimationTrackProperty.KeyFrame(new Vector2(1, 1), 0.3f), // ... Here is another frame were we return size.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale * scale, 0.1f), // Here we decraise thickness and increaise height of sprite.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.2f), // Here we return start scale, but because of some sheningans its cursed (like a 1.23132131 height) so...
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.3f), // ... Here is another frame were we return size.
                     }
                 },
             }
@@ -181,7 +181,7 @@ public sealed class StorageSystem : SharedStorageSystem
 
     public void HandleStorageAnimation(StorageAnimationEvent msg)
     {
-        PlayStorageAnimation(GetEntity(msg.Uid));
+        PlayStorageAnimation(GetEntity(msg.Uid), msg.Scale);
     }
 
     /// <summary>

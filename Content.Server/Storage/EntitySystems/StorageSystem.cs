@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Explosion;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
@@ -34,9 +35,9 @@ public sealed partial class StorageSystem : SharedStorageSystem
     }
 
     /// <inheritdoc/>
-    public override void PlayStorageAnimation(EntityUid uid, EntityUid? user = null)
+    public override void PlayStorageAnimation(EntityUid uid, Vector2 scale, EntityUid? user = null)
     {
         var filter = Filter.Pvs(uid).RemoveWhereAttachedEntity(e => e == user);
-        RaiseNetworkEvent(new StorageAnimationEvent(GetNetEntity(uid)), filter);
+        RaiseNetworkEvent(new StorageAnimationEvent(GetNetEntity(uid), scale), filter);
     }
 }
