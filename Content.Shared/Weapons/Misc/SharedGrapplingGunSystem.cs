@@ -161,6 +161,14 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
     private void SetReeling(EntityUid uid, GrapplingGunComponent component, bool value, EntityUid? user)
     {
+        if (TryComp<JointComponent>(uid, out var jointComp) &&
+            jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) &&
+            joint is DistanceJoint distance)
+        {
+            if (distance.MaxLength <= distance.MinLength + (component.RopeMargin * 1.1f))
+                value = false;
+        }
+
         if (component.Reeling == value)
             return;
 
@@ -190,17 +198,28 @@ public abstract class SharedGrapplingGunSystem : VirtualController
         while (query.MoveNext(out var uid, out var grappling, out var jointComp))
         {
             if (!jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
-                joint is not DistanceJoint distance)
+                joint is not DistanceJoint distance ||
+                !_entities.TryGetComponent<JointComponent>(joint.BodyAUid, out var hookJointComp))
             {
                 if (_netManager.IsServer) // Client might not receive the joint due to PVS culling, so lets not spam them with 23895739 mispredicted ungrapples
                     Ungrapple((uid, grappling), true);
                 continue;
             }
 
-            var bodyAWorldPos = _transform.GetWorldPosition(joint.BodyAUid);
-            var bodyBWorldPos = _transform.GetWorldPosition(joint.BodyBUid);
+            // If the joint breaks, it gets disabled
+            if (distance.Enabled == false)
+            {
+                Ungrapple((uid, grappling), true);
+                continue;
+            }
 
-            // Setting the joint's distance directly will lead to jank. The joint itself will take care of it once the solver runs.
+            var physicalGrapple = jointComp.Relay.HasValue ? jointComp.Relay.Value : joint.BodyBUid;
+            var physicalHook = hookJointComp.Relay.HasValue ? hookJointComp.Relay.Value : joint.BodyAUid;
+
+            var bodyAWorldPos = _transform.GetWorldPosition(physicalHook);
+            var bodyBWorldPos = _transform.GetWorldPosition(physicalGrapple);
+
+            // The solver does not handle setting the rope's length, but we still need to work with a copy of it to prevent jank.
             var ropeLength = (bodyAWorldPos - bodyBWorldPos).Length();
 
             // Rope should just break, instantly, if the user is teleported past its max length
@@ -221,12 +240,6 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                 continue;
             }
 
-            // If the joint breaks, it gets disabled
-            if (distance.Enabled == false)
-            {
-                Ungrapple((uid, grappling), true);
-                continue;
-            }
 
             // TODO: Contracting DistanceJoints should be in engine
             if (distance.MaxLength >= ropeLength + grappling.RopeMargin)
@@ -234,6 +247,8 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                 distance.MaxLength = MathF.Max(distance.MinLength + grappling.RopeMargin, distance.MaxLength - grappling.ReelRate * frameTime);
                 distance.MaxLength = MathF.Max(ropeLength + grappling.RopeMargin, distance.MaxLength);
                 ropeLength = MathF.Min(distance.MaxLength, ropeLength);
+
+                distance.Length = ropeLength;
             }
 
             if (ropeLength <= distance.MinLength + (grappling.RopeMargin * 1.1f))
@@ -244,13 +259,13 @@ public abstract class SharedGrapplingGunSystem : VirtualController
             {
                 var targetDirection = (bodyAWorldPos - bodyBWorldPos).Normalized();
 
-                var grapplerUidA = _container.TryGetOuterContainer(joint.BodyAUid, Transform(joint.BodyAUid), out var containerA) ? containerA.Owner : joint.BodyAUid;
+                var grapplerUidA = _container.TryGetOuterContainer(physicalHook, Transform(physicalHook), out var containerA) ? containerA.Owner : physicalHook;
                 var grapplerBodyA = Comp<PhysicsComponent>(grapplerUidA);
 
                 var massFactorA = MathF.Min(grapplerBodyA.InvMass * grappling.ReelMassCoefficient, 1f);
                 _physics.ApplyLinearImpulse(grapplerUidA, targetDirection * grappling.ReelForce * massFactorA * frameTime * -1, body: grapplerBodyA);
 
-                var grapplerUidB = _container.TryGetOuterContainer(joint.BodyBUid, Transform(joint.BodyBUid), out var containerB) ? containerB.Owner : joint.BodyBUid;
+                var grapplerUidB = _container.TryGetOuterContainer(physicalGrapple, Transform(physicalGrapple), out var containerB) ? containerB.Owner : physicalGrapple;
                 var grapplerBodyB = Comp<PhysicsComponent>(grapplerUidB);
 
                 var massFactorB = MathF.Min(grapplerBodyB.InvMass * grappling.ReelMassCoefficient, 1f);
@@ -293,14 +308,17 @@ public abstract class SharedGrapplingGunSystem : VirtualController
             return;
         }
 
-        var jointComp = EnsureComp<JointComponent>(uid);
         var joint = _joints.CreateDistanceJoint(uid, args.Weapon.Value, id: GrapplingJoint);
         joint.MaxLength = joint.Length + grapple.RopeMargin;
         joint.Stiffness = grapple.RopeStiffness;
         joint.MinLength = grapple.RopeMinLength; // Length of a tile to prevent pulling yourself into / through walls
         joint.Breakpoint = grapple.RopeBreakPoint;
-        _joints.SetRelay(uid, args.Embedded, jointComp);
-        Dirty(uid, jointComp);
+
+        var jointCompHook = _entities.GetComponent<JointComponent>(uid); // we use get here because if the component doesn't exist then something has fucked up bigtime
+        var jointCompGrapple = _entities.GetComponent<JointComponent>(args.Weapon.Value);
+
+        _joints.SetRelay(uid, args.Embedded, jointCompHook);
+        _joints.RefreshRelay(args.Weapon.Value, jointCompGrapple);
     }
 
     [Serializable, NetSerializable]
