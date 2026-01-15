@@ -14,7 +14,6 @@
       stomach:
         maxVol: 80
 
-
 - type: entity
   id: BaseMobRuminant
   abstract: true

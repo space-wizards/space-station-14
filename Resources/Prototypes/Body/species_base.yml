@@ -1,15 +1,13 @@
 - type: entity
-  id: BaseSpeciesMob
+  abstract: true
   parent:
   - BaseMob
-
   - MobCombat
   - MobDamageable
   - MobPolymorphable
   - StripableInventoryBase
-
   - BaseSpeciesAppearance
-  abstract: true
+  id: BaseSpeciesMob
   save: false
   components:
   - type: DamageVisuals
@@ -163,15 +161,14 @@
     - AnomalyHost
 
 - type: entity
+  abstract: true
   parent:
   - MobBloodstream
   - MobRespirator
   - MobAtmosStandard
   - MobFlammable
-
   - BaseSpeciesMob
   id: BaseSpeciesMobOrganic
-  abstract: true
   save: false
   components:
   - type: Hunger

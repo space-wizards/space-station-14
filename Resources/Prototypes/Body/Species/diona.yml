@@ -232,12 +232,12 @@
     maxReagents: 6
     removeEmpty: true
     groups:
-      - id: Food
-      - id: Drink
-      - id: Medicine
-      - id: Poison
-      - id: Narcotic
-      - id: Alcohol
+    - id: Food
+    - id: Drink
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+    - id: Alcohol
 
 - type: entity
   parent: OrganDionaBrain
