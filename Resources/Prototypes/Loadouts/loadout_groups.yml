@@ -152,8 +152,8 @@
 - type: loadoutGroup
   id: CaptainOuterClothing
   name: loadout-group-captain-outerclothing
+  minLimit: 0
   loadouts:
-  - CaptainOuterClothing
   - CaptainWintercoat
 
 - type: loadoutGroup

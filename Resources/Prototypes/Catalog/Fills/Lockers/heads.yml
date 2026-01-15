@@ -29,8 +29,6 @@
   table: !type:AllSelector
     children:
     - id: CaptainIDCard
-    - id: CigarGoldCase
-      prob: 0.25
     - id: ClothingBeltSheathFilled
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
@@ -39,8 +37,6 @@
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
-    - id: PlushieNuke
-      prob: 0.1
     - id: RubberStampCaptain
     - id: SpaceCash1000
     - id: WeaponDisabler
@@ -118,18 +114,12 @@
     - id: BoxHoPStamps
     - id: BoxID
     - id: BoxPDA
-    - id: CigarGoldCase
-      prob: 0.25
-      # Fuck the HoP they don't deserve fucking cigars.
-      # Yes they do fuck you.
-    - id: ClothingBackpackIan
-      prob: 0.5
     - id: ClothingHeadsetCommand
+    - id: ClothingEyesHudCommand
     - id: ClothingNeckGoldmedal
     - id: DoorRemoteService
     - id: HoPIDCard
     - id: WeaponDisabler
-    - id: ClothingEyesHudCommand
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -366,11 +356,12 @@
   id: LockerFillVault
   table: !type:AllSelector
     children:
-    - id: WeaponRevolverDeckard
-    - id: JetpackBlue
-    - id: SpaceCash1000
     - id: BeachBall
     - id: BikeHorn
+    - id: CigarGoldCase
+    - id: JetpackBlue
+    - id: SpaceCash1000
+    - id: WeaponRevolverDeckard
 
 - type: entity
   id: LockerFreezerVaultFilled
