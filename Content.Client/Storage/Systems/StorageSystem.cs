@@ -148,6 +148,7 @@ public sealed class StorageSystem : SharedStorageSystem
                     KeyFrames =
                     {
                         // I suppose InQuad is the most fine solution here, its not really fast/slow or too much chaotic, but adds some noise.
+                        // Biggest part of easing don't really different because animation is pretty short so I don't see really big issues with usage of just quad.
                         new AnimationTrackProperty.KeyFrame(sprite.Scale, 0, Easings.InQuad), // Start frame with start scale.
                         new AnimationTrackProperty.KeyFrame(sprite.Scale * scale, 0.1f, Easings.InQuad), // Here we decraise thickness and increaise height of sprite.
                         new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.2f, Easings.InQuad), // Here we return start scale, but because of some sheningans its cursed (like a 1.23132131 height) so there is two additional keyframes.
