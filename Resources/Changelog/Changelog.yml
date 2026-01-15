@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PavlockBlaine03
-  changes:
-  - message: Fixed bug where items would not drop if a dispenser was deconstructed.
-    type: Fix
-  id: 8896
-  time: '2025-08-27T21:06:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39676
 - author: Winkarst-cpu
   changes:
   - message: Living beings are now vomiting from being irradiated. Also, irradiated
@@ -3903,3 +3896,11 @@
   id: 9399
   time: '2026-01-15T02:46:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42390
+- author: ArtisticRoomba
+  changes:
+  - message: The TEG now produces 75% more power. This is to counteract tritium fires
+      no longer producing 10x the amount of heat they used to output, due to a bug.
+    type: Tweak
+  id: 9400
+  time: '2026-01-15T05:40:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42421
