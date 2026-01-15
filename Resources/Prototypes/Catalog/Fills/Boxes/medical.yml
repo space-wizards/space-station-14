@@ -127,9 +127,9 @@
     containers:
       storagebase: !type:AllSelector
         children:
-          - id: ChemistryEmptyVial
-            amount: 3
-          - id: ChemistryEmptyVialSmall
+        - id: ChemistryEmptyVial
+          amount: 3
+        - id: ChemistryEmptyVialSmall
         rolls: 2 # group the small vials on the right column
   - type: Sprite
     layers:
