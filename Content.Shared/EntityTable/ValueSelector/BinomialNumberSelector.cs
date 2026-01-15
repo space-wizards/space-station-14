@@ -41,13 +41,7 @@ public sealed partial class BinomialNumberSelector : NumberSelector
         if (Chance >= 1f)
             return 1;
 
-        var prob = 1f;
-        for (var i = 0; i < Trials; i++)
-        {
-            prob *= 1 - Chance;
-        }
-
-        return 1 - prob;
+        return 1 - MathF.Pow(1 - chance, Trials);
     }
 
     public override float Average()
