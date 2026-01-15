@@ -52,7 +52,7 @@
     reactionTypes:
     - Centrifuge
     mixerType: Handheld
-    mixMessage: null
+    mixMessage: handheld-centrifuge-success
     timeToMix: 10
     mixingSound: !type:SoundPathSpecifier
       path: /Audio/Items/Medical/paper_centrifuge.ogg
