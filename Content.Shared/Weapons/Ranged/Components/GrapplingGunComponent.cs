@@ -38,7 +38,14 @@ public sealed partial class GrapplingGunComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float RopeMinLength = 1f;
-    
+
+    /// <summary>
+    /// Maximum length the grapple can actually be.
+    /// If this is too large, then the rope gets culled out of PVS, causing issues
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float RopeMaxLength = 10f;
+
     /// <summary>
     /// Stiffness of the rope, in N/m
     /// </summary>

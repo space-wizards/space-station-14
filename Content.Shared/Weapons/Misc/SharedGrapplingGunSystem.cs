@@ -190,9 +190,10 @@ public abstract class SharedGrapplingGunSystem : VirtualController
         while (query.MoveNext(out var uid, out var grappling, out var jointComp))
         {
             if (!jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
-                joint is not DistanceJoint distance || distance.MaxLength >= float.MaxValue)
+                joint is not DistanceJoint distance)
             {
-                SetReeling(uid, grappling, false, null);
+                if (_netManager.IsServer) // Client might not receive the joint due to PVS culling, so lets not spam them with 23895739 mispredicted ungrapples
+                    Ungrapple((uid, grappling), true);
                 continue;
             }
 
@@ -283,6 +284,14 @@ public abstract class SharedGrapplingGunSystem : VirtualController
     {
         if (!Timing.IsFirstTimePredicted || !args.Weapon.HasValue || !_entities.TryGetComponent<GrapplingGunComponent>(args.Weapon, out var grapple))
             return;
+
+        var grapplePos = _transform.GetWorldPosition(args.Weapon.Value);
+        var hookPos = _transform.GetWorldPosition(uid);
+        if ((grapplePos - hookPos).Length() >= grapple.RopeMaxLength)
+        {
+            Ungrapple((args.Weapon.Value, grapple), true);
+            return;
+        }
 
         var jointComp = EnsureComp<JointComponent>(uid);
         var joint = _joints.CreateDistanceJoint(uid, args.Weapon.Value, id: GrapplingJoint);
