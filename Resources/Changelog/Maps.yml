@@ -980,4 +980,18 @@
   id: 119
   time: '2026-01-02T00:05:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42124
+- author: F1restar4
+  changes:
+  - message: On Fland, added a missing LV cable to atmos' right side APC
+    type: Fix
+  id: 120
+  time: '2026-01-09T00:03:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42314
+- author: Kowlin
+  changes:
+  - message: On Reach station, replaced a door remote with its non-admin variant.
+    type: Tweak
+  id: 121
+  time: '2026-01-14T20:19:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42385
 Order: 2
