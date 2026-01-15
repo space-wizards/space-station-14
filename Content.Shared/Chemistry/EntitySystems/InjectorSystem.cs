@@ -96,7 +96,8 @@ public sealed partial class InjectorSystem : EntitySystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        args.Handled |= TryUseInjector(injector, args.Args.User, args.Args.Target.Value);
+        args.Handled = true;
+        TryUseInjector(injector, args.Args.User, args.Args.Target.Value);
     }
 
     private void OnAttack(Entity<InjectorComponent> injector, ref MeleeHitEvent args)
@@ -463,29 +464,40 @@ public sealed partial class InjectorSystem : EntitySystem
         if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
             return false;
 
-        var selfEv = new SelfBeforeInjectEvent(user, injector, target);
-        RaiseLocalEvent(user, selfEv);
+        var selfBeforeInjectEvent = new SelfBeforeInjectEvent(user, injector, target);
+        RaiseLocalEvent(user, selfBeforeInjectEvent);
 
-        if (selfEv.Cancelled)
+        if (selfBeforeInjectEvent.Cancelled)
         {
-            // Clowns will now also fumble Syringes.
-            if (selfEv.OverrideMessage != null)
-                _popup.PopupPredicted(selfEv.OverrideMessage, user, user);
-            return true;
+            if (selfBeforeInjectEvent.OverrideMessage != null)
+                _popup.PopupPredicted(selfBeforeInjectEvent.OverrideMessage, user, user);
+            return false;
         }
 
-        target = selfEv.TargetGettingInjected;
-
-        var ev = new TargetBeforeInjectEvent(user, injector, target);
-        RaiseLocalEvent(target, ref ev);
-
-        // Jugsuit blocking Hyposprays when
-        if (ev.Cancelled)
+        // Check if SelfBeforeInjectEvent changed the target.
+        // This is pretty scuffed but I couldn't think of a better solution. Maybe
+        // make TryInject public and just have subscribers of SelfBeforeInject
+        // cancel the event and call a new TryInject?
+        if (target != selfBeforeInjectEvent.TargetGettingInjected)
         {
-            var userMessage = Loc.GetString("injector-component-blocked-user");
-            var otherMessage = Loc.GetString("injector-component-blocked-other", ("target", target), ("user", user));
-            _popup.PopupPredicted(userMessage, otherMessage, target, user, PopupType.SmallCaution);
-            return true;
+            // target and targetSolution are coupled here so we have to redetermine targetSolution.
+            Entity<SolutionComponent>? solution = null;
+            if (_solutionContainer.TryGetInjectableSolution(selfBeforeInjectEvent.TargetGettingInjected, out solution, out _)) { }
+            else if (_solutionContainer.TryGetRefillableSolution(selfBeforeInjectEvent.TargetGettingInjected, out solution, out _)) { }
+            else
+                return false;
+            target = selfBeforeInjectEvent.TargetGettingInjected;
+            targetSolution = (Entity<SolutionComponent>)solution;
+        }
+
+        var targetBeforeInjectEvent = new TargetBeforeInjectEvent(user, injector, target);
+        RaiseLocalEvent(target, ref targetBeforeInjectEvent);
+
+        if (targetBeforeInjectEvent.Cancelled)
+        {
+            if(targetBeforeInjectEvent.OverrideMessage != null || targetBeforeInjectEvent.OverrideTargetMessage != null)
+                _popup.PopupPredicted(targetBeforeInjectEvent.OverrideMessage, targetBeforeInjectEvent.OverrideTargetMessage, target, user, PopupType.SmallCaution);
+            return false;
         }
 
         // Get transfer amount. It may be smaller than _transferAmount if not enough room
@@ -519,22 +531,21 @@ public sealed partial class InjectorSystem : EntitySystem
 
         LocId msgSuccess = target == user ? "injector-component-inject-success-message-self" : "injector-component-inject-success-message";
 
-        if (selfEv.OverrideMessage != null)
-            msgSuccess = selfEv.OverrideMessage;
-        else if (ev.OverrideMessage != null)
-            msgSuccess = ev.OverrideMessage;
+        if (selfBeforeInjectEvent.OverrideMessage != null)
+            msgSuccess = selfBeforeInjectEvent.OverrideMessage;
+        else if (targetBeforeInjectEvent.OverrideMessage != null)
+            msgSuccess = targetBeforeInjectEvent.OverrideMessage;
 
         _popup.PopupClient(Loc.GetString(msgSuccess, ("amount", removedSolution.Volume), ("target", Identity.Entity(target, EntityManager))), target, user);
 
         // it is IMPERATIVE that when an injector is instant, that it has a pop-up.
         if (activeMode.InjectPopupTarget != null && target != user)
-            _popup.PopupClient(Loc.GetString(activeMode.InjectPopupTarget), target, target);
+            _popup.PopupEntity(Loc.GetString(activeMode.InjectPopupTarget), target, target);
 
         // Some injectors like hyposprays have sound, some like syringes have not.
         if (activeMode.InjectSound != null)
             _audio.PlayPredicted(activeMode.InjectSound, injector, user);
 
-        // Log what happened.
         _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(injector):using}");
 
         AfterInject(injector, user, target);

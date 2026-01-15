@@ -39,5 +39,13 @@ public sealed class SelfBeforeInjectEvent(EntityUid user, EntityUid usedInjector
 ///     The event is triggered on the target itself and all its clothing.
 /// </summary>
 [ByRefEvent]
-public sealed class TargetBeforeInjectEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
-    : BeforeInjectTargetEvent(user, usedInjector, target, overrideMessage);
+public sealed class TargetBeforeInjectEvent(
+    EntityUid user,
+    EntityUid usedInjector,
+    EntityUid target,
+    string? overrideMessage = null,
+    string? overrideTargetMessage = null)
+    : BeforeInjectTargetEvent(user, usedInjector, target, overrideMessage)
+{
+    public string? OverrideTargetMessage = overrideTargetMessage;
+}
