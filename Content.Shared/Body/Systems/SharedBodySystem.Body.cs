@@ -24,7 +24,6 @@ public partial class SharedBodySystem
      */
 
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private const float GibletLaunchImpulse = 8;
     private const float GibletLaunchImpulseVariance = 3;
