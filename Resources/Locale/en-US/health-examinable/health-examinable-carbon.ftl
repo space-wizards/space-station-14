@@ -35,6 +35,7 @@ health-examinable-carbon-Heat-4 = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } b
 health-examinable-carbon-Heat-5 = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } body is extensively covered in fourth-degree burns.[/color]
 health-examinable-carbon-Heat-6 = [color=crimson]{ CAPITALIZE(POSS-ADJ($target)) } body is completely burnt to a crisp![/color]
 
+health-examinable-carbon-Shock-0 = [color=lightgoldenrodyellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } slight charring on { POSS-ADJ($target) } skin.[/color]
 health-examinable-carbon-Shock-1 = [color=lightgoldenrodyellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } mild charring on { POSS-ADJ($target) } skin.[/color]
 health-examinable-carbon-Shock-2 = [color=lightgoldenrodyellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } charring across { POSS-ADJ($target) } body.[/color]
 health-examinable-carbon-Shock-3 = [color=lightgoldenrodyellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } serious charring across { POSS-ADJ($target) } body.[/color]
