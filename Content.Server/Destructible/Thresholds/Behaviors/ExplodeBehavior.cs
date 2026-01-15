@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
@@ -11,11 +10,11 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// </summary>
 [UsedImplicitly]
 [DataDefinition]
-public sealed partial class ExplodeBehavior : IThresholdBehavior
+public sealed partial class ExplodeBehavior : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly SharedExplosionSystem _explosionSystem = default!;
 
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, EntityUid? cause = null)
     {
         _explosionSystem.TriggerExplosive(owner, user: cause);
     }

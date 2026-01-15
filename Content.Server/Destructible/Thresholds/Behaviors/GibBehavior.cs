@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using Content.Shared.Database;
-using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Gibbing;
 
@@ -8,7 +7,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed partial class GibBehavior : IThresholdBehavior
+public sealed partial class GibBehavior : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly GibbingSystem _gibbing = default!;
 
@@ -20,7 +19,7 @@ public sealed partial class GibBehavior : IThresholdBehavior
 
     public LogImpact Impact => LogImpact.Extreme;
 
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, EntityUid? cause = null)
     {
         _gibbing.Gib(owner, Recursive);
     }

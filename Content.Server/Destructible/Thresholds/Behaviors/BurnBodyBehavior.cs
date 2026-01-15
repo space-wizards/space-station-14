@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
@@ -10,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed partial class BurnBodyBehavior : IThresholdBehavior
+public sealed partial class BurnBodyBehavior : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -22,9 +21,9 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
     [DataField]
     public LocId PopupMessage = "bodyburn-text-others";
 
-    public void Execute(EntityUid bodyId, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid bodyId, EntityUid? cause = null)
     {
-        if (system.EntityManager.HasComponent<InventoryComponent>(bodyId))
+        if (HasComp<InventoryComponent>(bodyId))
         {
             foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
             {
@@ -32,9 +31,9 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
             }
         }
 
-        var bodyIdentity = Identity.Entity(bodyId, system.EntityManager);
+        var bodyIdentity = Identity.Entity(bodyId, EntityManager);
         _popup.PopupCoordinates(Loc.GetString(PopupMessage, ("name", bodyIdentity)), _transform.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
 
-        system.EntityManager.QueueDeleteEntity(bodyId);
+        QueueDel(bodyId);
     }
 }

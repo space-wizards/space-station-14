@@ -1,5 +1,4 @@
 using Content.Server.VendingMachines;
-using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.VendingMachines;
 
@@ -10,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// </summary>
 [Serializable]
 [DataDefinition]
-public sealed partial class EjectVendorItems : IThresholdBehavior
+public sealed partial class EjectVendorItems : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly VendingMachineSystem _vendingMachine = default!;
 
@@ -27,9 +26,9 @@ public sealed partial class EjectVendorItems : IThresholdBehavior
     [DataField]
     public int Max = 3;
 
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, EntityUid? cause = null)
     {
-        if (!system.EntityManager.TryGetComponent<VendingMachineComponent>(owner, out var vendingcomp))
+        if (!TryComp<VendingMachineComponent>(owner, out var vendingcomp))
             return;
 
         var inventory = _vendingMachine.GetAvailableInventory(owner, vendingcomp);

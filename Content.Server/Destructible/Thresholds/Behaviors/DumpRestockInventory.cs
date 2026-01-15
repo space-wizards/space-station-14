@@ -1,4 +1,3 @@
-using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -15,7 +14,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// </summary>
 [Serializable]
 [DataDefinition]
-public sealed partial class DumpRestockInventory : IThresholdBehavior
+public sealed partial class DumpRestockInventory : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -32,10 +31,9 @@ public sealed partial class DumpRestockInventory : IThresholdBehavior
     [DataField]
     public float Offset { get; set; } = 0.5f;
 
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, EntityUid? cause = null)
     {
-        if (!system.EntityManager.TryGetComponent<VendingMachineRestockComponent>(owner, out var packagecomp) ||
-            !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        if (!TryComp<VendingMachineRestockComponent>(owner, out var packagecomp))
             return;
 
         var randomInventory = _random.Pick(packagecomp.CanRestock);
@@ -47,20 +45,21 @@ public sealed partial class DumpRestockInventory : IThresholdBehavior
         {
             var toSpawn = (int)Math.Round(count * Percent);
 
-            if (toSpawn == 0) continue;
+            if (toSpawn == 0)
+                continue;
 
-            if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, _prototypeManager, system.EntityManager.ComponentFactory))
+            if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, _prototypeManager, EntityManager.ComponentFactory))
             {
-                var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(_random.NextVector2(-Offset, Offset)));
+                var spawned = Spawn(entityId, Transform(owner).Coordinates.Offset(_random.NextVector2(-Offset, Offset)));
                 _stack.SetCount((spawned, null), toSpawn);
-                system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = _random.NextAngle();
+                Transform(spawned).LocalRotation = _random.NextAngle();
             }
             else
             {
                 for (var i = 0; i < toSpawn; i++)
                 {
-                    var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(_random.NextVector2(-Offset, Offset)));
-                    system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = _random.NextAngle();
+                    var spawned = Spawn(entityId, Transform(owner).Coordinates.Offset(_random.NextVector2(-Offset, Offset)));
+                    Transform(spawned).LocalRotation = _random.NextAngle();
                 }
             }
         }

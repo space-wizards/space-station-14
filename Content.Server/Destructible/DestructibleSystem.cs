@@ -9,7 +9,6 @@ using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.FixedPoint;
-using Content.Shared.Gibbing;
 using Content.Shared.Humanoid;
 
 namespace Content.Server.Destructible
@@ -18,7 +17,6 @@ namespace Content.Server.Destructible
     public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedDestructibleSystem _sharedDestructible = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         public override void Initialize()
@@ -136,9 +134,9 @@ namespace Content.Server.Destructible
                     return;
 
                 // TODO: Replace with EntityEffects.
-                behavior.Execute(owner, _sharedDestructible, cause);
                 var deps = _entitySystemManager.DependencyCollection;
                 deps.InjectDependencies(behavior);
+                behavior.Execute(owner, cause);
             }
         }
 

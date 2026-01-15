@@ -5,7 +5,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 [Serializable]
 [DataDefinition]
-public sealed partial class DoActsBehavior : IThresholdBehavior
+public sealed partial class DoActsBehavior : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly DestructibleSystem _destructible = default!;
 
@@ -20,7 +20,7 @@ public sealed partial class DoActsBehavior : IThresholdBehavior
         return (Acts & act) != 0;
     }
 
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, EntityUid? cause = null)
     {
         if (HasAct(ThresholdActs.Breakage))
             _destructible.BreakEntity(owner);

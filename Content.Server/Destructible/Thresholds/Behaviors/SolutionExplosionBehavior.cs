@@ -1,7 +1,6 @@
 using JetBrains.Annotations;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
@@ -13,7 +12,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// </summary>
 [UsedImplicitly]
 [DataDefinition]
-public sealed partial class SolutionExplosionBehavior : IThresholdBehavior
+public sealed partial class SolutionExplosionBehavior : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedExplosionSystem _explosion = default!;
@@ -22,10 +21,10 @@ public sealed partial class SolutionExplosionBehavior : IThresholdBehavior
     [DataField(required: true)]
     public string Solution = default!;
 
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, EntityUid? cause = null)
     {
         if (_solutionContainer.TryGetSolution(owner, Solution, out _, out var explodingSolution)
-            && system.EntityManager.TryGetComponent(owner, out ExplosiveComponent? explosiveComponent))
+            && TryComp(owner, out ExplosiveComponent? explosiveComponent))
         {
             // Don't explode if there's no solution
             if (explodingSolution.Volume == 0)
@@ -38,7 +37,7 @@ public sealed partial class SolutionExplosionBehavior : IThresholdBehavior
 
             // Spill the solution out into the world
             // Spill before exploding in anticipation of a future where the explosion can light the solution on fire.
-            var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
+            var coordinates = Transform(owner).Coordinates;
             _puddle.TrySpillAt(coordinates, explodingSolution, out _);
 
             // Explode

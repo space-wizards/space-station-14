@@ -1,4 +1,3 @@
-using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -7,7 +6,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 [Serializable]
 [DataDefinition]
-public sealed partial class PlaySoundBehavior : IThresholdBehavior
+public sealed partial class PlaySoundBehavior : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -17,9 +16,9 @@ public sealed partial class PlaySoundBehavior : IThresholdBehavior
     [DataField(required: true)]
     public SoundSpecifier Sound { get; set; } = default!;
 
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, EntityUid? cause = null)
     {
-        var pos = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
+        var pos = EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
         _audio.PlayPvs(Sound, pos);
     }
 }
