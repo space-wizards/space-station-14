@@ -289,13 +289,6 @@ public sealed class ThrowingSystem : EntitySystem
             var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(item).Id);
             var rand = new System.Random(seed);
 
-            if (scatterItems)
-            {
-                var positionDifference = new Angle(rand.NextFloat() * MathF.Tau);
-                _transform.SetWorldPosition(item,
-                    _transform.GetWorldPosition(item) + positionDifference.ToVec() * rand.NextFloat());
-            }
-
             if (maxThrowImpulse == 0.0f)
             {
                 continue;
@@ -316,6 +309,13 @@ public sealed class ThrowingSystem : EntitySystem
             var throwSpeed = _random.NextFloat(_throwSpeedRange.Item1, _throwSpeedRange.Item2) * maxThrowImpulse;
             var airTimeVariance = _random.NextFloat(_throwVariationRange.Item1, _throwVariationRange.Item2);
             TryThrow(item, currentDir * throwSpeed, throwSpeed * airTimeVariance);
+
+            if (!scatterItems)
+                continue;
+
+            var positionDifference = new Angle(rand.NextFloat() * MathF.Tau);
+            _transform.SetWorldPosition(item,
+                _transform.GetWorldPosition(item) + positionDifference.ToVec() * rand.NextFloat(0, 0.5f));
         }
     }
 }
