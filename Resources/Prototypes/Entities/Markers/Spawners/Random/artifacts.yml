@@ -19,8 +19,8 @@
   components:
   - type: EntityTableSpawner
     table: !type:NestedSelector
-    tableId: RandomArtifactTable
-    prob: 0.2
+      tableId: RandomArtifactTable
+      prob: 0.2
 
 - type: entityTable
   id: RandomArtifactTable
