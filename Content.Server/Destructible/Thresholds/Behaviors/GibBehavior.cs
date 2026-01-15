@@ -1,20 +1,28 @@
-using Content.Shared.Body.Components;
-using Content.Shared.Database;
 using JetBrains.Annotations;
+using Content.Shared.Database;
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Behaviors;
+using Content.Shared.Gibbing;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors;
+
+[UsedImplicitly]
+[DataDefinition]
+public sealed partial class GibBehavior : IThresholdBehavior
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public sealed partial class GibBehavior : IThresholdBehavior
+    [Dependency] private readonly GibbingSystem _gibbing = default!;
+
+    /// <summary>
+    /// Whether to gib recursively.
+    /// </summary>
+    [DataField]
+    public bool Recursive = true;
+
+    public LogImpact Impact => LogImpact.Extreme;
+
+    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
     {
-        [DataField("recursive")] private bool _recursive = true;
-
-        public LogImpact Impact => LogImpact.Extreme;
-
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
-        {
-            system.Gibbing.Gib(owner, _recursive);
-        }
+        _gibbing.Gib(owner, Recursive);
     }
 }
+

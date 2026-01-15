@@ -1,49 +1,24 @@
+using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Construction;
-using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.Fluids.EntitySystems;
-using Content.Server.Stack;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing;
 using Content.Shared.Humanoid;
-using Content.Shared.Trigger.Systems;
-using JetBrains.Annotations;
-using Robust.Server.Audio;
-using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Destructible
 {
     [UsedImplicitly]
     public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
-        [Dependency] public readonly IRobustRandom Random = default!;
-        public new IEntityManager EntityManager => base.EntityManager;
-
-        [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
-        [Dependency] public readonly AudioSystem AudioSystem = default!;
-        [Dependency] public readonly GibbingSystem Gibbing = default!;
-        [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
-        [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
-        [Dependency] public readonly StackSystem StackSystem = default!;
-        [Dependency] public readonly TriggerSystem TriggerSystem = default!;
-        [Dependency] public readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
-        [Dependency] public readonly PuddleSystem PuddleSystem = default!;
-        [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
-        [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] public readonly IAdminLogManager AdminLogger = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedDestructibleSystem _sharedDestructible = default!;
 
         public override void Initialize()
         {
@@ -83,13 +58,13 @@ namespace Content.Server.Destructible
 
                     if (args.Origin != null)
                     {
-                        AdminLogger.Add(LogType.Damaged,
+                        _adminLogger.Add(LogType.Damaged,
                             logImpact,
                             $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
                     else
                     {
-                        AdminLogger.Add(LogType.Damaged,
+                        _adminLogger.Add(LogType.Damaged,
                             logImpact,
                             $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
@@ -160,7 +135,7 @@ namespace Content.Server.Destructible
                     return;
 
                 // TODO: Replace with EntityEffects.
-                behavior.Execute(owner, this, cause);
+                behavior.Execute(owner, _sharedDestructible, cause);
             }
         }
 
@@ -206,23 +181,6 @@ namespace Content.Server.Destructible
                 }
             }
             return damageNeeded;
-        }
-    }
-
-    // Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.
-    /// <summary>
-    ///     Event raised when a <see cref="DamageThreshold"/> is reached.
-    /// </summary>
-    public sealed class DamageThresholdReached : EntityEventArgs
-    {
-        public readonly DestructibleComponent Parent;
-
-        public readonly DamageThreshold Threshold;
-
-        public DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
-        {
-            Parent = parent;
-            Threshold = threshold;
         }
     }
 }

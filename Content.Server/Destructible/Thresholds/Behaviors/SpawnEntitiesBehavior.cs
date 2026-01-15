@@ -1,95 +1,99 @@
 using System.Numerics;
 using Content.Server.Forensics;
-using Content.Server.Stack;
+using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors;
+
+[Serializable]
+[DataDefinition]
+public sealed partial class SpawnEntitiesBehavior : IThresholdBehavior
 {
-    [Serializable]
-    [DataDefinition]
-    public sealed partial class SpawnEntitiesBehavior : IThresholdBehavior
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
+
+    /// <summary>
+    ///     Entities spawned on reaching this threshold, from a min to a max.
+    /// </summary>
+    [DataField]
+    public Dictionary<EntProtoId, MinMax> Spawn = new();
+
+    [DataField]
+    public float Offset { get; set; } = 0.5f;
+
+    [DataField("transferForensics")]
+    public bool DoTransferForensics;
+
+    [DataField]
+    public bool SpawnInContainer;
+
+    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
     {
-        /// <summary>
-        ///     Entities spawned on reaching this threshold, from a min to a max.
-        /// </summary>
-        [DataField]
-        public Dictionary<EntProtoId, MinMax> Spawn = new();
+        var position = _transformSystem.GetMapCoordinates(owner);
+        var getRandomVector = () => new Vector2(_random.NextFloat(-Offset, Offset), _random.NextFloat(-Offset, Offset));
 
-        [DataField("offset")]
-        public float Offset { get; set; } = 0.5f;
-
-        [DataField("transferForensics")]
-        public bool DoTransferForensics;
-
-        [DataField]
-        public bool SpawnInContainer;
-
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        var executions = 1;
+        if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
         {
-            var tSys = system.EntityManager.System<TransformSystem>();
-            var position = tSys.GetMapCoordinates(owner);
+            executions = stack.Count;
+        }
 
-            var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
-
-            var executions = 1;
-            if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
+        foreach (var (entityId, minMax) in Spawn)
+        {
+            for (var execution = 0; execution < executions; execution++)
             {
-                executions = stack.Count;
-            }
+                var count = minMax.Min >= minMax.Max
+                    ? minMax.Min
+                    : _random.Next(minMax.Min, minMax.Max + 1);
 
-            foreach (var (entityId, minMax) in Spawn)
-            {
-                for (var execution = 0; execution < executions; execution++)
+                if (count == 0)
+                    continue;
+
+                if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, _prototypeManager, system.EntityManager.ComponentFactory))
                 {
-                    var count = minMax.Min >= minMax.Max
-                        ? minMax.Min
-                        : system.Random.Next(minMax.Min, minMax.Max + 1);
+                    var spawned = SpawnInContainer
+                        ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
+                        : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                    _stack.SetCount((spawned, null), count);
 
-                    if (count == 0)
-                        continue;
-
-                    if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
+                    TransferForensics(spawned, system, owner);
+                }
+                else
+                {
+                    for (var i = 0; i < count; i++)
                     {
                         var spawned = SpawnInContainer
                             ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
                             : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-                        system.StackSystem.SetCount((spawned, null), count);
 
                         TransferForensics(spawned, system, owner);
-                    }
-                    else
-                    {
-                        for (var i = 0; i < count; i++)
-                        {
-                            var spawned = SpawnInContainer
-                                ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-
-                            TransferForensics(spawned, system, owner);
-                        }
                     }
                 }
             }
         }
+    }
 
-        public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
-        {
-            if (!DoTransferForensics ||
-                !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
-                return;
+    public void TransferForensics(EntityUid spawned, SharedDestructibleSystem system, EntityUid owner)
+    {
+        if (!DoTransferForensics ||
+            !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
+            return;
 
-            var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
-            comp.DNAs = forensicsComponent.DNAs;
+        var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
+        comp.DNAs = forensicsComponent.DNAs;
 
-            if (!system.Random.Prob(0.4f))
-                return;
-            comp.Fingerprints = forensicsComponent.Fingerprints;
-            comp.Fibers = forensicsComponent.Fibers;
-        }
+        if (!_random.Prob(0.4f))
+            return;
+
+        comp.Fingerprints = forensicsComponent.Fingerprints;
+        comp.Fibers = forensicsComponent.Fibers;
     }
 }
