@@ -306,8 +306,15 @@ namespace Content.Server.Voting.Managers
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 if (ticker.CanUpdateMap())
                 {
-                    _gameMapManager.SelectMap(picked.ID);
-                    ticker.UpdateInfoText();
+                    if (_gameMapManager.CheckMapExists(picked.ID))
+                    {
+                        _gameMapManager.SelectMap(picked.ID);
+                        ticker.UpdateInfoText();
+                    }
+                    else
+                    {
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-invalid", ("winner", maps[picked])));
+                    }
                 }
                 else
                 {
