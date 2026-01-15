@@ -130,7 +130,7 @@ public sealed class StorageSystem : SharedStorageSystem
     public override void PlayStorageAnimation(EntityUid uid, Vector2 scale, EntityUid? user = null)
     {
         if (!_timing.IsFirstTimePredicted || // Checks that this doesn't plays twice because of prediction.
-            !EnsureComp<AnimationPlayerComponent>(uid, out var animations) || // Gets Animation player component.
+            !TryComp<AnimationPlayerComponent>(uid, out var animations) || // Gets Animation player component.
             !TryComp<SpriteComponent>(uid, out var sprite) || // Gets sprite component.
             _animations.HasRunningAnimation(uid, "storage_animation_bounce")) // Checks that animation doesn'y plays twice (that can cause very big problems).
             return;
