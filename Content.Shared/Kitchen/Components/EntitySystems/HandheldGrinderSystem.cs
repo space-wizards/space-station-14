@@ -1,10 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Fluids;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -20,7 +19,6 @@ internal sealed class HandheldGrinderSystem : EntitySystem
     [Dependency] private readonly SharedReagentGrinderSystem _reagentGrinder = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedStackSystem _stackSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -33,7 +31,7 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<HandheldGrinderComponent, EntRemovedFromContainerMessage>(OnGrinderRemoved);
-        SubscribeLocalEvent<HandheldGrinderComponent, UseInHandEvent>(OnInteractUsing);
+        SubscribeLocalEvent<HandheldGrinderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<HandheldGrinderComponent, HandheldGrinderDoAfterEvent>(OnHandheldDoAfter);
     }
 
@@ -48,15 +46,14 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         entity.Comp.GrinderSolution = null;
     }
 
-    private void OnInteractUsing(Entity<HandheldGrinderComponent> ent, ref UseInHandEvent args)
+    private void OnInteractUsing(Entity<HandheldGrinderComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
-        if (_slots.GetItemOrNull(ent, ent.Comp.ItemSlotName) is not { } item)
-            return;
-
         args.Handled = true;
+
+        var item = args.Used;
 
         if (!CanGrinderBeUsed(ent, item, out var reason))
         {
@@ -73,7 +70,7 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         if (_net.IsServer) // Cannot cancel predicted audio.
             ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.Sound, ent)?.Entity;
 
-        var doAfter = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterDuration, new HandheldGrinderDoAfterEvent(), ent, ent, ent)
+        var doAfter = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterDuration, new HandheldGrinderDoAfterEvent(), ent, ent, item)
         {
             NeedHand = true,
             BreakOnDamage = true,
@@ -92,7 +89,7 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (_slots.GetItemOrNull(ent, ent.Comp.ItemSlotName) is not { } item)
+        if (args.Used is not { } item)
             return;
 
         if (!CanGrinderBeUsed(ent, item, out var reason))

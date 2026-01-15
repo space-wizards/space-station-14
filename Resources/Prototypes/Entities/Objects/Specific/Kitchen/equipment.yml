@@ -7,17 +7,6 @@
     solutions:
       grinderOutput:
         maxVol: 20
-  - type: ContainerContainer
-    containers:
-      grinderInput: !type:ContainerSlot
-  - type: ItemSlots
-    slots:
-      grinderInput:
-        insertSound: /Audio/Items/bottle_close1.ogg
-        ejectSound: /Audio/Items/bottle_close1.ogg
-        whitelist:
-          components:
-          - Extractable
   - type: SolutionTransfer
   - type: DrawableSolution
     solution: grinderOutput

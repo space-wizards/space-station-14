@@ -6,8 +6,7 @@ namespace Content.Shared.Kitchen.Components;
 
 /// <summary>
 /// Indicates this entity is a handheld grinder.
-/// Handheld grinders can be used with entities with <see cref="ExtractableComponent"/> to extract their solutions.
-/// Requires <see cref="ItemSlotsComponent"/>
+/// Entities with <see cref="ExtractableComponent"/> can be used on handheld grinders to extract their solutions.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class HandheldGrinderComponent : Component
@@ -37,12 +36,6 @@ public sealed partial class HandheldGrinderComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string SolutionName = "grinderOutput";
-
-    /// <summary>
-    /// The item slot into which the input items will go.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string ItemSlotName = "grinderInput";
 
     /// <summary>
     /// Cached solution from the grinder.
