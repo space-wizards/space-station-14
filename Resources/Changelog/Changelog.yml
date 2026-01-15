@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Many station structures and fixtures, such as walls and airlocks, can
-      now be re-anchored to the floor if they happen to be dislodged by an explosion
-      or other shenanigans
-    type: Tweak
-  id: 8895
-  time: '2025-08-27T15:04:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39542
 - author: PavlockBlaine03
   changes:
   - message: Fixed bug where items would not drop if a dispenser was deconstructed.
@@ -3904,3 +3895,11 @@
   id: 9398
   time: '2026-01-14T21:40:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42289
+- author: TriviaSolari
+  changes:
+  - message: Entities that are airtight on all sides (such as full-tile walls, airlocks,
+      and windows) now skip rotational checks for airtightness when initialized.
+    type: Tweak
+  id: 9399
+  time: '2026-01-15T02:46:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42390
