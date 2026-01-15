@@ -15,7 +15,13 @@ public sealed class HealthExaminableSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<HealthExaminableComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HealthExaminableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+    }
+
+    private void OnComponentInit(Entity<HealthExaminableComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.Thresholds.Sort();
     }
 
     private void OnGetExamineVerbs(EntityUid uid, HealthExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -55,26 +61,23 @@ public sealed class HealthExaminableSystem : EntitySystem
             if (dmg == FixedPoint2.Zero)
                 continue;
 
-            FixedPoint2 closest = FixedPoint2.Zero;
-
-            string chosenLocStr = string.Empty;
-            foreach (var threshold in component.Thresholds)
+            var index = -1;
+            for (var i = 0; i < component.Thresholds.Length; i++)
             {
-                var str = $"health-examinable-{component.LocPrefix}-{type}-{threshold}";
-                var tempLocStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", ("target", Identity.Entity(uid, EntityManager)));
-
-                // i.e., this string doesn't exist, because theres nothing for that threshold
-                if (tempLocStr == str)
-                    continue;
-
-                if (dmg > threshold && threshold > closest)
-                {
-                    chosenLocStr = tempLocStr;
-                    closest = threshold;
-                }
+                if (component.Thresholds[i] <= dmg)
+                    index = i;
+                else
+                    break;
             }
 
-            if (closest == FixedPoint2.Zero)
+            if (index < 0)
+                continue;
+
+            var locStr = $"health-examinable-{component.LocPrefix}-{type}-{index}";
+            var chosenLocStr = Loc.GetString(locStr, ("target", Identity.Entity(uid, EntityManager)));
+
+            // i.e., this string doesn't exist, because theres nothing for that threshold
+            if (locStr == chosenLocStr)
                 continue;
 
             if (!first)
