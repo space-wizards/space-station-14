@@ -432,12 +432,11 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnSetMidiMinVolume(InstrumentSetMidiMinVolumeEvent ev)
     {
-        TryComp<InstrumentComponent>(GetEntity(ev.Uid), out var localComp);
-        if (localComp != null)
-        {
-            localComp.MinVolume = ev.MinVolume;
-            UpdateRenderer(GetEntity(ev.Uid), localComp);
-        }
+        if (!TryComp(GetEntity(ev.Uid), out InstrumentComponent? instrument))
+            return;
+
+        instrument.MinVolume = ev.MinVolume;
+        UpdateRenderer(GetEntity(ev.Uid), instrument);
     }
 
     public override void Update(float frameTime)
