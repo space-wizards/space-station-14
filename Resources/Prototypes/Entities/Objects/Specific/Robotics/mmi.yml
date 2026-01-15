@@ -1,8 +1,9 @@
 - type: entity
   parent: BaseItem
-  id: MMI
+  id: MMINotIonStormable
   name: man-machine interface
   description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
@@ -66,8 +67,9 @@
 
 - type: entity
   parent: MMI
-  id: MMIFilled
+  id: MMIFilledNotIonStormable
   suffix: Filled
+  abstract: true
   components:
   - type: MMI
     brainSlot:
@@ -79,9 +81,10 @@
 
 - type: entity
   parent: BaseItem
-  id: PositronicBrain
+  id: PositronicBrainNotIonStormable
   name: positronic brain
   description: An artificial brain capable of spontaneous neural activity.
+  abstract: true
   components:
     - type: Sprite
       sprite: Objects/Specific/Robotics/mmi.rsi
@@ -161,7 +164,25 @@
           requireInputValidation: false
 
 - type: entity
-  parent: PositronicBrain
+  parent: PositronicBrainNotIonStormable
+  id: PositronicBrain
+  components:
+  - type: IonStormTarget
+
+- type: entity
+  parent: MMINotIonStormable
+  id: MMI
+  components:
+  - type: IonStormTarget
+
+- type: entity
+  parent: MMIFilledNotIonStormable
+  id: MMIFilled
+  components:
+  - type: IonStormTarget
+
+- type: entity
+  parent: PositronicBrainNotIonStormable
   id: PositronicBrainXeno
   suffix: Xeno
   components:
@@ -169,7 +190,7 @@
     laws: XenoborgLawset
 
 - type: entity
-  parent: MMI
+  parent: MMINotIonStormable
   id: MMIXeno
   suffix: Xeno
   components:
@@ -177,7 +198,7 @@
     laws: XenoborgLawset
 
 - type: entity
-  parent: MMIFilled
+  parent: MMIFilledNotIonStormable
   id: MMIFileldXeno
   suffix: Xeno
   components:
@@ -185,7 +206,7 @@
     laws: XenoborgLawset
 
 - type: entity
-  parent: PositronicBrain
+  parent: PositronicBrainNotIonStormable
   id: PositronicBrainSyndicate
   suffix: Syndicate
   components:
@@ -193,7 +214,7 @@
     laws: SyndicateStatic
 
 - type: entity
-  parent: MMI
+  parent: MMINotIonStormable
   id: MMISyndicate
   suffix: Syndicate
   components:
@@ -201,7 +222,7 @@
     laws: SyndicateStatic
 
 - type: entity
-  parent: MMIFilled
+  parent: MMIFilledNotIonStormable
   id: MMIFilledSyndicate
   suffix: Syndicate
   components:

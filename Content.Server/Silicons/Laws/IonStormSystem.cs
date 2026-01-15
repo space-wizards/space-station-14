@@ -46,6 +46,7 @@ public sealed class IonStormSystem : EntitySystem
     {
         var lawBound = ent.Comp1;
         var target = ent.Comp2;
+
         if (!_robustRandom.Prob(target.Chance))
             return;
 
@@ -136,7 +137,7 @@ public sealed class IonStormSystem : EntitySystem
             _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
 
         // laws unique to this silicon, dont use station laws anymore
-        EnsureComp<SiliconLawProviderComponent>(ent);
+        _siliconLaw.SetProviderLaws(ent.Owner, laws.Laws);
         var ev = new IonStormLawsEvent(laws);
         RaiseLocalEvent(ent, ref ev);
     }
