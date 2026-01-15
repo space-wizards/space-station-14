@@ -110,7 +110,6 @@ public abstract class SharedPortalSystem : EntitySystem
         }
 
         // also break grapple joints
-        //var grappleJoint = _joints.GetJoint(subject, SharedGrapplingGunSystem.GrapplingJoint);
         _joints.RemoveJoint(subject, SharedGrapplingGunSystem.GrapplingJoint);
 
         // if they came from another portal, just return and wait for them to exit the portal
