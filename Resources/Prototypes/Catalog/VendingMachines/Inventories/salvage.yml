@@ -1,6 +1,7 @@
 - type: vendingMachineInventory
   id: SalvageEquipmentInventory
   startingInventory:
+    # Essential equipment
     FireExtinguisher: 2
     OreBag: 2
     Pickaxe: 2
@@ -8,7 +9,9 @@
     SurvivalKnife: 2
     WeaponGrapplingGun: 2
     WeaponProtoKineticAccelerator: 2
+    # Expendable equipment
     Flare: 8
+    # Optional equipment
     FlashlightLantern: 2
     HandheldGPSBasic: 2
   contrabandInventory:
