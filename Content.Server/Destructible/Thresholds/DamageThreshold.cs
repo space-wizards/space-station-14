@@ -1,19 +1,16 @@
-using Content.Shared.Destructible.Thresholds.Behaviors;
+using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Destructible.Thresholds.Triggers;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared.Destructible.Thresholds;
+namespace Content.Server.Destructible.Thresholds;
 
 [DataDefinition]
-[Serializable, NetSerializable]
 public sealed partial class DamageThreshold
 {
     /// <summary>
     /// Whether or not this threshold was triggered in the previous call to
     /// <see cref="Reached"/>.
     /// </summary>
-    [ViewVariables]
-    public bool OldTriggered;
+    [ViewVariables] public bool OldTriggered;
 
     /// <summary>
     /// Whether or not this threshold has already been triggered.
@@ -42,5 +39,5 @@ public sealed partial class DamageThreshold
     /// TODO: Replace with EntityEffects.
     /// </summary>
     [DataField]
-    public List<IThresholdBehavior> Behaviors = [];
+    public List<IThresholdBehavior> Behaviors = new();
 }

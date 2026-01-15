@@ -1,11 +1,7 @@
-using Content.Shared.Destructible.Thresholds;
-
 namespace Content.Shared.Destructible;
 
 public abstract class SharedDestructibleSystem : EntitySystem
 {
-    public new IEntityManager EntityManager => base.EntityManager;
-
     /// <summary>
     /// Force entity to be destroyed and deleted.
     /// </summary>
@@ -30,18 +26,6 @@ public abstract class SharedDestructibleSystem : EntitySystem
     {
         var eventArgs = new BreakageEventArgs();
         RaiseLocalEvent(owner, eventArgs);
-    }
-
-    // Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.
-    /// <summary>
-    ///     Event raised when a <see cref="DamageThreshold"/> is reached.
-    /// </summary>
-    public sealed class DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
-        : EntityEventArgs
-    {
-        public readonly DestructibleComponent Parent = parent;
-
-        public readonly DamageThreshold Threshold = threshold;
     }
 }
 

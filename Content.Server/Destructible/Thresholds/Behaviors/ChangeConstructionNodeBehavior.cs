@@ -1,24 +1,20 @@
-﻿using Content.Server.Construction;
-using Content.Server.Construction.Components;
-using Content.Shared.Destructible;
-using Content.Shared.Destructible.Thresholds.Behaviors;
+﻿using Content.Server.Construction.Components;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors;
-
-[Serializable]
-[DataDefinition]
-public sealed partial class ChangeConstructionNodeBehavior : IThresholdBehavior
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
-    [Dependency] private readonly ConstructionSystem _construction = default!;
-
-    [DataField]
-    public string Node { get; private set; } = string.Empty;
-
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    [Serializable]
+    [DataDefinition]
+    public sealed partial class ChangeConstructionNodeBehavior : IThresholdBehavior
     {
-        if (string.IsNullOrEmpty(Node) || !system.EntityManager.TryGetComponent(owner, out ConstructionComponent? construction))
-            return;
+        [DataField("node")]
+        public string Node { get; private set; } = string.Empty;
 
-        _construction.ChangeNode(owner, null, Node, true, construction);
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        {
+            if (string.IsNullOrEmpty(Node) || !system.EntityManager.TryGetComponent(owner, out ConstructionComponent? construction))
+                return;
+
+            system.ConstructionSystem.ChangeNode(owner, null, Node, true, construction);
+        }
     }
 }

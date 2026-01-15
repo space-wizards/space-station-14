@@ -1,25 +1,23 @@
-using Content.Shared.Destructible;
-using Content.Shared.Destructible.Thresholds.Behaviors;
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors;
-
-[Serializable]
-[DataDefinition]
-public sealed partial class PlaySoundBehavior : IThresholdBehavior
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-
-    /// <summary>
-    ///     Sound played upon destruction.
-    /// </summary>
-    [DataField(required: true)]
-    public SoundSpecifier Sound { get; set; } = default!;
-
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    [Serializable]
+    [DataDefinition]
+    public sealed partial class PlaySoundBehavior : IThresholdBehavior
     {
-        var pos = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
-        _audio.PlayPvs(Sound, pos);
+        /// <summary>
+        ///     Sound played upon destruction.
+        /// </summary>
+        [DataField("sound", required: true)] public SoundSpecifier Sound { get; set; } = default!;
+
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        {
+            var pos = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
+            system.EntityManager.System<SharedAudioSystem>().PlayPvs(Sound, pos);
+        }
     }
 }

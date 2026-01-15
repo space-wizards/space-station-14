@@ -1,34 +1,32 @@
-using Content.Shared.Destructible;
-using Content.Shared.Destructible.Thresholds.Behaviors;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors;
-
-
-/// <summary>
-///     Drop all items from specified containers
-/// </summary>
-[DataDefinition]
-public sealed partial class EmptyContainersBehaviour : IThresholdBehavior
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
-
-    [DataField]
-    public List<string> Containers = new();
-
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    /// <summary>
+    ///     Drop all items from specified containers
+    /// </summary>
+    [DataDefinition]
+    public sealed partial class EmptyContainersBehaviour : IThresholdBehavior
     {
-        if (!system.EntityManager.TryGetComponent<ContainerManagerComponent>(owner, out var containerManager))
-            return;
+        [DataField("containers")]
+        public List<string> Containers = new();
 
-        foreach (var containerId in Containers)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            if (!_container.TryGetContainer(owner, containerId, out var container, containerManager))
-                continue;
+            if (!system.EntityManager.TryGetComponent<ContainerManagerComponent>(owner, out var containerManager))
+                return;
 
-            _container.EmptyContainer(container, true);
+            var containerSys = system.EntityManager.System<ContainerSystem>();
+
+
+            foreach (var containerId in Containers)
+            {
+                if (!containerSys.TryGetContainer(owner, containerId, out var container, containerManager))
+                    continue;
+
+                containerSys.EmptyContainer(container, true);
+            }
         }
     }
 }
-

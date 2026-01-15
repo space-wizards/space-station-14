@@ -1,8 +1,6 @@
-using JetBrains.Annotations;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Destructible;
-using Content.Shared.Destructible.Thresholds.Behaviors;
+using JetBrains.Annotations;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
@@ -10,9 +8,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class SpillBehavior : IThresholdBehavior
 {
-    [Dependency] private readonly PuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-
     /// <summary>
     /// Optional fallback solution name if SpillableComponent is not present.
     /// </summary>
@@ -28,14 +23,16 @@ public sealed partial class SpillBehavior : IThresholdBehavior
     /// <param name="owner">Entity whose solution will be spilled</param>
     /// <param name="system">System calling this behavior</param>
     /// <param name="cause">Optional entity that caused this behavior to trigger</param>
-    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
+        var puddleSystem = system.EntityManager.System<PuddleSystem>();
+        var solutionContainer = system.EntityManager.System<SharedSolutionContainerSystem>();
         var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 
         // Spill the solution that was drained/split
-        if (_solutionContainer.TryGetSolution(owner, Solution, out _, out var solution))
-            _puddle.TrySplashSpillAt(owner, coordinates, solution, out _, false, cause);
+        if (solutionContainer.TryGetSolution(owner, Solution, out _, out var solution))
+            puddleSystem.TrySplashSpillAt(owner, coordinates, solution, out _, false, cause);
         else
-            _puddle.TrySplashSpillAt(owner, coordinates, out _, out _, false, cause);
+            puddleSystem.TrySplashSpillAt(owner, coordinates, out _, out _, false, cause);
     }
 }
