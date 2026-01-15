@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: 'Scurrets can wear a few items on their backs: pet bags, mail bags and
-      spears'
-    type: Add
-  - message: Corgis can now wear mail bags.
-    type: Add
-  id: 8902
-  time: '2025-08-30T14:42:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38774
 - author: Kowlin
   changes:
   - message: Derelict cyborgs can no longer duplicate their ghost role.
@@ -3904,3 +3894,12 @@
   id: 9405
   time: '2026-01-15T18:42:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38231
+- author: aada
+  changes:
+  - message: New tiny and cute vials that hold 10 units.
+    type: Add
+  - message: Vials can now be closed to avoid spilling.
+    type: Tweak
+  id: 9406
+  time: '2026-01-15T19:00:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36132
