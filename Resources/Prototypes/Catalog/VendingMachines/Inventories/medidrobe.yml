@@ -7,6 +7,7 @@
     # Optional Clothing
     ClothingHeadHatBeretMedic: 2
     ClothingHeadNurseHat: 2
+    ClothingHeadHatParamedicsoft: 1
     ClothingHeadHatSurgcapGreen: 2
     ClothingHeadHatSurgcapBlue: 2
     ClothingHeadHatSurgcapPurple: 2
@@ -20,10 +21,15 @@
     UniformScrubsColorGreen: 2
     UniformScrubsColorBlue: 2
     UniformScrubsColorPurple: 2
+    ClothingUniformJumpsuitParamedic: 1
+    ClothingUniformJumpskirtParamedic: 1
     ClothingOuterCoatLab: 2
     ClothingOuterWinterMed: 2
+    ClothingOuterCoatParamedicWB: 1
+    ClothingOuterWinterPara: 1
     ClothingHandsGlovesLatex: 2
     ClothingHandsGlovesNitrile: 2
+    ClothingShoesColorBlue: 2
     ClothingShoesColorWhite: 2
     ClothingShoesBootsWinterMed: 2
   contrabandInventory:

@@ -45,7 +45,13 @@
     Brutepack: 4
     Ointment: 4
     Bloodpack: 4
-      # Reagent refills should be gotten from Chemistry, or if necessary by restocking the belts
+    ChemistryBottleSaline: 2
+    ChemistryBottleBicaridine: 2
+    ChemistryBottleDexalin: 2
+    ChemistryBottleDylovene: 2
+    ChemistryBottleHyronalin: 2
+    ChemistryBottleKelotane: 2
+    ChemistryBottleEpinephrine: 2
     # Optional / Situational Gear
     BoxBottle: 2
     Defibrillator: 2 # Easily shared between several people

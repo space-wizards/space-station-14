@@ -76,6 +76,7 @@
   table: !type:AllSelector
     children:
     - id: ClothingEyesGlassesChemical
+    - id: ChemBag
     - id: Dropper
     - id: BarSpoon # Should be replaced by a stirring tool with medical theming, like a glass rod
     - id: PlasmaChemistryVial
@@ -107,9 +108,11 @@
   id: LockerFillParamedic
   table: !type:AllSelector
     children:
+    - id: ClothingEyesHudMedical
     - id: ClothingOuterHardsuitVoidParamed
     - id: ClothingBeltMedicalEMTFilled
     - id: JetInjector
+    - id: HandheldHealthAnalyzer
     - id: BoxBodyBag
     - !type:GroupSelector
       children:
