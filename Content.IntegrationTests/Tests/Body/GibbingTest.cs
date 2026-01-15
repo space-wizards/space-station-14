@@ -54,5 +54,7 @@ public sealed class GibletTest
                 Assert.That(entityManager.HasComponent<GibbableOrganComponent>(giblet), Is.True);
             }
         });
+
+        await pair.CleanReturnAsync();
     }
 }

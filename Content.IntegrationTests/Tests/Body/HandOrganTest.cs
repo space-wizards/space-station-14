@@ -81,5 +81,7 @@ public sealed class HandOrganTest
                 Assert.That(hands.Count, Is.EqualTo(expectedCount));
             }
         });
+
+        await pair.CleanReturnAsync();
     }
 }
