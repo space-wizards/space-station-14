@@ -51,9 +51,11 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+  - type: HandheldGrinder
+    finishedPopup: handheld-grinder-grinded
 
 - type: entity
-  parent: BaseHandheldGrinder
+  parent: MortarAndPestle
   id: MortarAndPestleMakeshift
   name: makeshift mortar and pestle
   description: Used for grinding small amounts of objects. Inferior version made out of wood.
@@ -93,6 +95,7 @@
       visible: false
     - state: cap
   - type: HandheldGrinder
+    finishedPopup: handheld-grinder-juiced
     sound: !type:SoundPathSpecifier
       path: /Audio/Items/Culinary/juicer_juicing.ogg # Pasta mixing sound. Close enough.
       params:

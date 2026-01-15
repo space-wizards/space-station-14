@@ -113,6 +113,8 @@ internal sealed class HandheldGrinderSystem : EntitySystem
             _stackSystem.ReduceCount((item, stack), 1);
         else
             _destructibleSystem.DestroyEntity(item);
+
+        _popup.PopupClient(Loc.GetString(ent.Comp.FinishedPopup, ("item", item)), ent, args.User);
     }
 
     /// <summary>

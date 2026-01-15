@@ -19,6 +19,12 @@ public sealed partial class HandheldGrinderComponent : Component
     public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(4f);
 
     /// <summary>
+    /// Popup to use after the current item is done processing.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId FinishedPopup = "handheld-grinder-default";
+
+    /// <summary>
     /// The sound to play when the doAfter starts.
     /// </summary>
     [DataField]
