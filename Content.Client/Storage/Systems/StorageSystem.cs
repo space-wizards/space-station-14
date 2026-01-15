@@ -132,12 +132,12 @@ public sealed class StorageSystem : SharedStorageSystem
         if (!_timing.IsFirstTimePredicted || // Checks that this doesn't plays twice because of prediction.
             !TryComp<AnimationPlayerComponent>(uid, out var animations) || // Gets Animation player component.
             !TryComp<SpriteComponent>(uid, out var sprite) || // Gets sprite component.
-            _animations.HasRunningAnimation(uid, "storage_animation_bounce")) // Checks that animation doesn'y plays twice (that can cause very big problems).
+            _animations.HasRunningAnimation(uid, "storage_animation_bounce")) // Checks that animation doesn't plays twice (that can cause very big problems).
             return;
 
         _animations.Play(new Entity<AnimationPlayerComponent>(uid, animations), new Animation
         {
-            Length = TimeSpan.FromMilliseconds(300),
+            Length = TimeSpan.FromMilliseconds(400),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty
@@ -147,10 +147,12 @@ public sealed class StorageSystem : SharedStorageSystem
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0), // Start frame with start scale.
-                        new AnimationTrackProperty.KeyFrame(sprite.Scale * scale, 0.1f), // Here we decraise thickness and increaise height of sprite.
-                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.2f), // Here we return start scale, but because of some sheningans its cursed (like a 1.23132131 height) so...
-                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.3f), // ... Here is another frame were we return size.
+                        // I suppose InQuad is the most fine solution here, its not really fast/slow or too much chaotic, but adds some noise.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0, Easings.InQuad), // Start frame with start scale.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale * scale, 0.1f, Easings.InQuad), // Here we decraise thickness and increaise height of sprite.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.2f, Easings.InQuad), // Here we return start scale, but because of some sheningans its cursed (like a 1.23132131 height) so there is two additional keyframes.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.3f, Easings.InQuad),
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.4f, Easings.InQuad),
                     }
                 },
             }
