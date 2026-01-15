@@ -1,8 +1,8 @@
 ﻿[game]
 # Straight in-game baby
-lobbyenabled = false
+lobbyenabled = true
 # Dev map for faster loading & convenience
-map = "Dev"
+map = "Reach"
 role_timers = false
 admin_job_tracking = true
 role_loadout_timers = false
@@ -42,6 +42,6 @@ see_own_notes = true
 new_player_threshold = 120
 
 [ic]
-random_characters = true
+random_characters = false
 random_species_weights = ""
 ssd_sleep_time = 3600
