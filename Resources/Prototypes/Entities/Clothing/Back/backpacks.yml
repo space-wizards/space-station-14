@@ -1,5 +1,5 @@
 - type: entity
-  parent: [Clothing, ContentsExplosionResistanceBase]
+  parent: Clothing
   id: ClothingBackpack
   name: backpack
   description: You wear this on your back and put items into it.
@@ -28,8 +28,6 @@
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -215,8 +213,6 @@
   - type: Storage
     grid:
     - 0,0,8,3
-  - type: ExplosionResistance
-    damageCoefficient: 0.1
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -291,8 +287,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/syndicate.rsi
-  - type: ExplosionResistance
-    damageCoefficient: 0.1
   - type: Storage
     grid:
     - 0,0,7,3

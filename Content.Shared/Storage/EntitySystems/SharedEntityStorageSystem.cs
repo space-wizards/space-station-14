@@ -3,7 +3,6 @@ using System.Numerics;
 using Content.Shared.Destructible;
 using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
-using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
@@ -60,7 +59,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         SubscribeLocalEvent<EntityStorageComponent, FoldAttemptEvent>(OnFoldAttempt);
 
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
-        SubscribeLocalEvent<EntityStorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, EntGotRemovedFromContainerMessage>(OnRemoved);
     }
@@ -153,11 +151,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             Popup.PopupEntity(msg, args.User, args.User);
             args.Cancel();
         }
-    }
-
-    private void OnExploded(Entity<EntityStorageComponent> ent, ref BeforeExplodeEvent args)
-    {
-        args.Contents.AddRange(ent.Comp.Contents.ContainedEntities);
     }
 
     private void OnRemoved(EntityUid uid, InsideEntityStorageComponent component, EntGotRemovedFromContainerMessage args)

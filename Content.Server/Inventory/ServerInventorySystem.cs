@@ -1,4 +1,3 @@
-using Content.Shared.Explosion;
 using Content.Shared.Inventory;
 
 namespace Content.Server.Inventory
@@ -8,19 +7,6 @@ namespace Content.Server.Inventory
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<InventoryComponent, BeforeExplodeEvent>(OnExploded);
-        }
-
-        private void OnExploded(Entity<InventoryComponent> ent, ref BeforeExplodeEvent args)
-        {
-            // explode each item in their inventory too
-            var slots = new InventorySlotEnumerator(ent);
-            while (slots.MoveNext(out var slot))
-            {
-                if (slot.ContainedEntity != null)
-                    args.Contents.Add(slot.ContainedEntity.Value);
-            }
         }
 
         public void TransferEntityInventories(Entity<InventoryComponent?> source, Entity<InventoryComponent?> target)

@@ -1,4 +1,3 @@
-using Content.Shared.Explosion;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -15,13 +14,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
-    }
-
-    private void OnExploded(Entity<StorageComponent> ent, ref BeforeExplodeEvent args)
-    {
-        args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
     }
 
     /// <inheritdoc />
