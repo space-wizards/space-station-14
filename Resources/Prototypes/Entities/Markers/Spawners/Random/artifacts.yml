@@ -1,4 +1,12 @@
-﻿- type: entity
+﻿- type: entityTable
+  id: RandomArtifactTable
+  table: !type:GroupSelector
+    children:
+    - id: ComplexXenoArtifact
+      weight: 2
+    - id: ComplexXenoArtifactItem
+
+- type: entity
   parent: MarkerBase
   id: RandomArtifactSpawner
   name: random artifact spawner
@@ -21,11 +29,3 @@
     table: !type:NestedSelector
       tableId: RandomArtifactTable
       prob: 0.2
-
-- type: entityTable
-  id: RandomArtifactTable
-  table: !type:GroupSelector
-    children:
-    - id: ComplexXenoArtifact
-    - id: ComplexXenoArtifact
-    - id: ComplexXenoArtifactItem
