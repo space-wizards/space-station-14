@@ -8,25 +8,34 @@
       department: Command
       time: 1h
 
-# Flowers
+# Accessories
 - type: loadout
   id: FlowerWreath
   storage:
     back:
     - ClothingHeadHatFlowerWreath
+  groupBy: "accessory"
 
 - type: loadout
   id: Hairflower
   storage:
     back:
     - ClothingHeadHatHairflower
+  groupBy: "accessory"
 
-# Headphones
 - type: loadout
   id: Headphones
   storage:
     back:
     - ClothingMultipleHeadphones
+  groupBy: "accessory"
+
+- type: loadout
+  id: Wristwatch
+  storage:
+    back:
+    - Wristwatch
+  groupBy: "accessory"
 
 # Plushies
 - type: loadout
