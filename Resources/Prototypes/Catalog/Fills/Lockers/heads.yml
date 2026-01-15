@@ -28,18 +28,20 @@
   id: LockerFillCaptainNoLaser
   table: !type:AllSelector
     children:
+    # Standard command items
+    - id: BoxCaptainCircuitboards
+    - id: ClothingHeadsetAltCommand
+    - id: DoorRemoteCustom
+    - id: RubberStampCaptain
+    # Specialized captain items
     - id: CaptainIDCard
     - id: ClothingBeltSheathFilled
-    - id: ClothingHeadsetAltCommand
+    - id: ClothingEyesGlassesCommand
     - id: ClothingOuterArmorCaptainCarapace
-    - id: BoxCaptainCircuitboards
-    - id: DoorRemoteCustom
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
-    - id: RubberStampCaptain
     - id: WeaponDisabler
-    - id: ClothingEyesGlassesCommand
     - id: HeadSkeleton # A skull to accompany your skeleton crew
       conditions:
       - !type:PlayerCountCondition
@@ -105,18 +107,20 @@
   id: LockerFillHeadOfPersonnel
   table: !type:AllSelector
     children:
-    - id: AccessConfigurator
-    - id: BoxEncryptionKeyPassenger
+    # Standard command items
     - id: BoxEncryptionKeyService
-    - id: BoxHeadset
     - id: BoxHoPCircuitboards
     - id: BoxHoPStamps
+    - id: ClothingHeadsetCommand
+    - id: DoorRemoteService
+    # Specialized HoP items
+    - id: AccessConfigurator
+    - id: BoxEncryptionKeyPassenger
+    - id: BoxHeadset
     - id: BoxID
     - id: BoxPDA
-    - id: ClothingHeadsetCommand
     - id: ClothingEyesHudCommand
     - id: ClothingNeckGoldmedal
-    - id: DoorRemoteService
     - id: HoPIDCard
     - id: WeaponDisabler
 
