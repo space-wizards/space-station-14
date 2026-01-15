@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Alert;
+using Content.Shared.Silicons.Laws;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -15,7 +16,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// for borg logic.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedBorgSystem))]
+[Access(typeof(SharedBorgSystem), typeof(SharedSiliconLawSystem))]
 public sealed partial class BorgChassisComponent : Component
 {
     /// <summary>
