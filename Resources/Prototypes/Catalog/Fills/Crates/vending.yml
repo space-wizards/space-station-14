@@ -109,16 +109,16 @@
       entity_storage:
         id: VendingMachineRestockMedical
 
-- type: entity
-  parent: CrateMedicalSecure
-  id: CrateVendingMachineRestockChemVendFilled
-  name: ChemVend restock crate
-  description: Contains a restock box for the ChemVend.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage:
-        id: VendingMachineRestockChemVend
+#- type: entity
+#  parent: CrateMedicalSecure
+#  id: CrateVendingMachineRestockChemVendFilled
+#  name: ChemVend restock crate
+#  description: Contains a restock box for the ChemVend.
+#  components:
+#  - type: EntityTableContainerFill
+#    containers:
+#      entity_storage:
+#        id: VendingMachineRestockChemVend
 
 - type: entity
   parent: CrateHydroSecure

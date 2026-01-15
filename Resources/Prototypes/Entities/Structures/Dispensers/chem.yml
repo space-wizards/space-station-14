@@ -63,12 +63,15 @@
         - id: JugCarbon
         - id: JugChlorine
         - id: JugCopper
+        - id: JugDylovene
         - id: JugEthanol
         - id: JugFluorine
         - id: JugSugar
         - id: JugHydrogen
+        - id: JugInaprovaline
         - id: JugIodine
         - id: JugIron
+        - id: JugKelotane
         - id: JugLithium
         - id: JugMercury
         - id: JugNitrogen

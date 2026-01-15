@@ -2214,14 +2214,43 @@
     - state: dispenser
     - state: dispensereng
 
+#- type: entity
+#  parent: VendingMachine
+#  id: VendingMachineChemicals
+#  name: ChemVend
+#  description: Probably not the coffee machine.
+#  components:
+#  - type: VendingMachine
+#    pack: ChemVendInventory
+#    offState: off
+#    brokenState: broken
+#    normalState: normal
+#    denyState: deny
+#    ejectDelay: 2
+#  - type: Sprite
+#    sprite: Structures/Machines/VendingMachines/chemvend.rsi
+#    layers:
+#    - state: "off"
+#      map: ["enum.VendingMachineVisualLayers.Base"]
+#    - state: "off"
+#      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+#    - state: panel
+#      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+#  - type: AccessReader
+#    access: [["Chemistry"]]
+#  - type: GuideHelp
+#    guides:
+#    - Chemicals
+#    - Chemist
+
 - type: entity
   parent: VendingMachine
-  id: VendingMachineChemicals
-  name: ChemVend
-  description: Probably not the coffee machine.
+  id: VendingMachineChemicalsSyndicate
+  name: SyndieJuice
+  description: Not made with freshly squeezed syndies I hope.
   components:
   - type: VendingMachine
-    pack: ChemVendInventory
+    pack: ChemVendInventorySyndicate
     offState: off
     brokenState: broken
     normalState: normal
@@ -2237,27 +2266,11 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Chemistry"]]
+    access: [["SyndicateAgent"]]
   - type: GuideHelp
     guides:
     - Chemicals
     - Chemist
-
-- type: entity
-  parent: VendingMachineChemicals
-  id: VendingMachineChemicalsSyndicate
-  name: SyndieJuice
-  description: Not made with freshly squeezed syndies I hope.
-  components:
-  - type: VendingMachine
-    pack: ChemVendInventorySyndicate
-    offState: off
-    brokenState: broken
-    normalState: normal
-    denyState: deny
-    ejectDelay: 2
-  - type: AccessReader
-    access: [["SyndicateAgent"]]
 
 # wallmount
 - type: entity
