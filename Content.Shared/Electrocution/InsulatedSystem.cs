@@ -1,3 +1,4 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 
@@ -17,6 +18,9 @@ namespace Content.Shared.Electrocution
 
         private void OnDetailedExamine(EntityUid ent, InsulatedComponent component, ref GetVerbsEvent<ExamineVerb> args)
         {
+            if (!HasComp<ClothingComponent>(ent))
+                return;
+
             var iconTexture = "/Textures/Interface/VerbIcons/zap.svg.192dpi.png";
 
             _examine.AddHoverExamineVerb(args,
