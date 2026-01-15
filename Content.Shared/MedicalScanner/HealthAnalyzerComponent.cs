@@ -1,7 +1,9 @@
+using Content.Shared.Medical.Cryogenics;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Medical.Components;
+namespace Content.Shared.MedicalScanner;
 
 /// <summary>
 /// After scanning, retrieves the target Uid to use with its related UI.
@@ -9,12 +11,12 @@ namespace Content.Server.Medical.Components;
 /// <remarks>
 /// Requires <c>ItemToggleComponent</c>.
 /// </remarks>
-[RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(HealthAnalyzerSystem), typeof(CryoPodSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(), AutoGenerateComponentPause]
+[Access(typeof(SharedHealthAnalyzerSystem), typeof(SharedCryoPodSystem))]
 public sealed partial class HealthAnalyzerComponent : Component
 {
     /// <summary>
-    /// When should the next update be sent for the patient
+    /// When the next update is sent for the analyzer
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
@@ -35,8 +37,14 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// <summary>
     /// Which entity has been scanned, for continuous updates
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ScannedEntity;
+
+    /// <summary>
+    /// Which entity is using the scanner, for continuous updates
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? ScannerUser;
 
     /// <summary>
     /// The maximum range in tiles at which the analyzer can receive continuous updates, a value of null will be infinite range

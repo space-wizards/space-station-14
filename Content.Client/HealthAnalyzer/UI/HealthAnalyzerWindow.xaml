@@ -2,7 +2,9 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     MaxHeight="525"
-    MinWidth="300">
+    MinWidth="300"
+    Visible="False"
+    Name="Window">
     <ScrollContainer
         Margin="5 5 5 5"
         ReturnMeasure="True"
