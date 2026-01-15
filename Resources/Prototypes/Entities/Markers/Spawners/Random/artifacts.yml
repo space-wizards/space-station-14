@@ -17,7 +17,8 @@
   name: random artifact spawner [20]
   parent: RandomArtifactSpawner
   components:
-  - type: !type:NestedSelector
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
     tableId: RandomArtifactTable
     prob: 0.2
 
