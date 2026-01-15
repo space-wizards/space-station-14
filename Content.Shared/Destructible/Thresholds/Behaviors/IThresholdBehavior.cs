@@ -11,9 +11,9 @@ public interface IThresholdBehavior
     /// </summary>
     /// <param name="owner">The entity that owns this behavior.</param>
     /// <param name="system">
-    ///     An instance of <see cref="DestructibleBehaviorSystem"/> to pull dependencies
+    ///     An instance of <see cref="SharedDestructibleSystem"/> to pull dependencies
     ///     and other systems from.
     /// </param>
     /// <param name="cause">The entity that caused this behavior.</param>
-    void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null);
+    void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null);
 }

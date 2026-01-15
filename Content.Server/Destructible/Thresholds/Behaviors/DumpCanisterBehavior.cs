@@ -2,15 +2,16 @@ using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors;
+
+[Serializable]
+[DataDefinition]
+public sealed partial class DumpCanisterBehavior : IThresholdBehavior
 {
-    [Serializable]
-    [DataDefinition]
-    public sealed partial class DumpCanisterBehavior : IThresholdBehavior
+    [Dependency] private readonly GasCanisterSystem _gasCanister = default!;
+
+    public void Execute(EntityUid owner, SharedDestructibleSystem system, EntityUid? cause = null)
     {
-        public void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null)
-        {
-            system.EntityManager.EntitySysManager.GetEntitySystem<GasCanisterSystem>().PurgeContents(owner);
-        }
+        _gasCanister.PurgeContents(owner);
     }
 }

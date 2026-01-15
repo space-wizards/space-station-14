@@ -18,7 +18,7 @@ namespace Content.Server.Destructible
     public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DestructibleBehaviorSystem _destructibleBehavior = default!;
+        [Dependency] private readonly SharedDestructibleSystem _sharedDestructible = default!;
 
         public override void Initialize()
         {
@@ -135,7 +135,7 @@ namespace Content.Server.Destructible
                     return;
 
                 // TODO: Replace with EntityEffects.
-                behavior.Execute(owner, _destructibleBehavior, cause);
+                behavior.Execute(owner, _sharedDestructible, cause);
             }
         }
 
