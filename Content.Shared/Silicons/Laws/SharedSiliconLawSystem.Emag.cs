@@ -27,7 +27,9 @@ public abstract partial class SharedSiliconLawSystem
             return;
 
         // If we want to affect the provider, and the chassis has no brain inserted, nothing to modify.
-        if (emagLawcomp.AffectProvider || !HasComp<SiliconLawProviderComponent>(ent.Comp.BrainContainer.ContainedEntity))
+        if (emagLawcomp.AffectProvider
+            && lawboundComp.LawsetProvider != ent
+            && !HasComp<SiliconLawProviderComponent>(ent.Comp.BrainContainer.ContainedEntity))
         {
             _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-chassis-no-provider"), ent, args.UserUid);
             return;

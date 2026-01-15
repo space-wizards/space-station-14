@@ -146,6 +146,13 @@ public sealed partial class BorgChassisComponent : Component
     /// </summary>
     [DataField]
     public bool CanOpenSelfUi;
+
+    /// <summary>
+    /// Whether this chassis provides laws to itself.
+    /// Only affects a warning inside of the UI.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool SelfProvider;
 }
 
 [Serializable, NetSerializable]
