@@ -1,4 +1,5 @@
 using Content.Shared.Body.Events;
+using Content.Shared.Gibbing;
 using Content.Shared.Medical;
 
 namespace Content.Shared.BodyNew;
@@ -9,6 +10,7 @@ public sealed partial class BodySystem
     {
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, TryVomitEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, BeingGibbedEvent>(RefRelayBodyEvent);
     }
 
     private void RefRelayBodyEvent<T>(EntityUid uid, BodyComponent component, ref T args) where T : struct

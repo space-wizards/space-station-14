@@ -130,6 +130,7 @@
   name: brain
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Brain
   - type: Sprite
@@ -155,6 +156,7 @@
   name: eyes
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Eyes
   - type: Sprite
@@ -168,6 +170,7 @@
   name: tongue
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Tongue
   - type: Sprite
@@ -180,6 +183,7 @@
   name: appendix
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Appendix
   - type: Sprite
@@ -192,6 +196,7 @@
   name: ears
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Ears
   - type: Sprite
@@ -204,6 +209,7 @@
   name: lungs
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Lungs
   - type: Lung
@@ -233,6 +239,7 @@
   name: heart
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Heart
   - type: Sprite
@@ -251,6 +258,7 @@
   name: stomach
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Stomach
   - type: Stomach
@@ -275,6 +283,7 @@
   name: liver
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Liver
   - type: Sprite
@@ -293,6 +302,7 @@
   name: kidneys
   abstract: true
   components:
+  - type: GibbableOrgan
   - type: Organ
     category: Kidneys
   - type: Sprite
