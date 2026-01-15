@@ -221,7 +221,7 @@ public sealed partial class ExplosionSystem
         lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
         lookup.StaticSundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
-        if (processCause && cause is not null)
+        if (processCause && cause is not null && LifeStage(cause.Value) < EntityLifeStage.Terminating)
             ProcessEntity(cause.Value, epicenter, damage, throwForce, id, Transform(cause.Value), fireStacks, cause);
 
         // process those entities
@@ -330,7 +330,7 @@ public sealed partial class ExplosionSystem
         lookup.Comp.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
         lookup.Comp.StaticSundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
-        if (processCause && cause is not null)
+        if (processCause && cause is not null && LifeStage(cause.Value) < EntityLifeStage.Terminating)
             ProcessEntity(cause.Value, epicenter, damage, throwForce, id, Transform(cause.Value), fireStacks, cause);
 
         foreach (var (uid, xform) in state.Item1)
