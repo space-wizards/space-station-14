@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: The forensic scanner no longer leaks fingerprints or glove prints onto
-      the scanning object if you use the right-click scan verb.
-    type: Fix
-  id: 8901
-  time: '2025-08-30T14:00:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39964
 - author: FairlySadPanda
   changes:
   - message: 'Scurrets can wear a few items on their backs: pet bags, mail bags and
@@ -3904,3 +3896,11 @@
   id: 9404
   time: '2026-01-15T18:08:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41850
+- author: Orsoniks
+  changes:
+  - message: Health examine colours now reflect the medicines used to heal that type
+      of damage.
+    type: Tweak
+  id: 9405
+  time: '2026-01-15T18:42:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38231
