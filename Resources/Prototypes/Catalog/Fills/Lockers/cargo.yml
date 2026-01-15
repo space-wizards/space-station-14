@@ -11,7 +11,7 @@
   id: LockerFillSalvageSpecialist
   table: !type:AllSelector
     children:
-    - id: ClothingBeltUtilityFilled
+    - id: ClothingBeltUtilitySalvage
     - id: FireExtinguisher
     - id: OreBag
     - id: Pickaxe
