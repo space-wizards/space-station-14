@@ -15,7 +15,7 @@ public sealed class StorageAnimationEvent(NetEntity uid, Vector2 scale) : Entity
     public readonly NetEntity Uid = uid;
 
     /// <summary>
-    /// Entity that will be used for the animation.
+    /// Scale coefficient that will be changed by sprite scale to get animation.
     /// </summary>
     public readonly Vector2 Scale = scale;
 }

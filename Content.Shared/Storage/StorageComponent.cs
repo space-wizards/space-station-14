@@ -177,6 +177,9 @@ namespace Content.Shared.Storage
         [DataField]
         public bool Animation = false;
 
+        /// <summary>
+        /// Scale coefficient that will be changed by sprite scale to get animation if <see cref="Animation"/> is true.
+        /// </summary>
         [DataField]
         public Vector2 AnimationScale = new(1.25f, 0.75f);
         #endregion
