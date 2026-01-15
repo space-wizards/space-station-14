@@ -138,13 +138,12 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
         _appearance.SetData(grapple.Owner, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
 
-        _joints.RemoveJoint(grapple.Owner, GrapplingJoint);
-
         if (_netManager.IsServer)
             QueueDel(projectile);
 
-        grapple.Comp.Projectile = null;
         SetReeling(grapple.Owner, grapple.Comp, false, user);
+        grapple.Comp.Projectile = null;
+        Dirty(grapple.Owner, grapple.Comp); // SetReeling() isn't guaranteed to dirty the component
         _gun.ChangeBasicEntityAmmoCount(grapple.Owner, 1);
     }
 

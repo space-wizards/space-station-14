@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Weapons.Ranged.Components;
 
 // I have tried to make this as generic as possible but "delete joint on cycle / right-click reels in" is very specific behavior.
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class GrapplingGunComponent : Component
 {
     /// <summary>
@@ -58,33 +58,49 @@ public sealed partial class GrapplingGunComponent : Component
     [DataField, AutoNetworkedField]
     public float RopeBreakPoint = 50000f;
 
-    [DataField("jointId"), AutoNetworkedField]
-    public string Joint = string.Empty;
-
+    /// <summary>
+    /// Entity UID of the grapple's hook
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Projectile;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("reeling"), AutoNetworkedField]
+    /// <summary>
+    /// Whether or not the grappling gun is currently reeling in
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public bool Reeling;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("reelSound"), AutoNetworkedField]
+    /// <summary>
+    /// Looping sound used while the grappling gun is reeling
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? ReelSound = new SoundPathSpecifier("/Audio/Weapons/reel.ogg")
     {
         Params = AudioParams.Default.WithLoop(true)
     };
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("cycleSound"), AutoNetworkedField]
+    /// <summary>
+    /// Sound that plays when the user cycles the grappling gun by using it in their hand
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? CycleSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/kinetic_reload.ogg");
 
     /// <summary>
     /// Sound that plays when the rope breaks due to physics
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("breakSound"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? BreakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
 
+    /// <summary>
+    /// Sprite specifier for the rope, used to visualize the joint
+    /// </summary>
     [DataField, ViewVariables]
     public SpriteSpecifier RopeSprite =
         new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
 
+    /// <summary>
+    /// Entity UID for the audio stream, which plays <see cref="ReelSound"/>.
+    /// </summary>
+    [DataField, ViewVariables]
     public EntityUid? Stream;
 }
