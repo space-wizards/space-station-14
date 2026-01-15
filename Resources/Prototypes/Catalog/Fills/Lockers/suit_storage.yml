@@ -272,7 +272,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: FillSalvageSpecialistHardsuitSpatio
+        tableId:
   - type: AccessReader
     access: [["Salvage"]]
 
