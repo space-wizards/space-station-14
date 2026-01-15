@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -80,6 +81,7 @@ public abstract partial class SharedSolutionContainerSystem
         SubscribeLocalEvent<ContainedSolutionComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<ContainedSolutionComponent, SolutionOverflowEvent>(OnSolutionOverflow);
         SubscribeLocalEvent<ContainedSolutionComponent, ReactionAttemptEvent>(RelaySolutionRefEvent);
+        SubscribeLocalEvent<ContainedSolutionComponent, BeforeExplodeEvent>(OnBeforeExplode);
     }
 
     #region Event Handlers
@@ -106,6 +108,11 @@ public abstract partial class SharedSolutionContainerSystem
 
         RaiseLocalEvent(entity.Comp.Container, ref relayEv);
         args.Handled = relayEv.Handled;
+    }
+
+    private void OnBeforeExplode(Entity<ContainedSolutionComponent> ent, ref BeforeExplodeEvent args)
+    {
+        args.Contents.Add(ent.Comp.Container);
     }
 
     #region Relay Event Handlers

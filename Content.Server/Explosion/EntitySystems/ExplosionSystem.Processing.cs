@@ -204,7 +204,8 @@ public sealed partial class ExplosionSystem
         float? fireStacks,
         float? temperature,
         float currentIntensity,
-        EntityUid? cause)
+        EntityUid? cause,
+        bool processCause)
     {
         var size = grid.Comp.TileSize;
         var gridBox = new Box2(tile * size, (tile + 1) * size);
@@ -219,6 +220,9 @@ public sealed partial class ExplosionSystem
         lookup.StaticTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
         lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
         lookup.StaticSundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+
+        if (processCause && cause is not null)
+            ProcessEntity(cause.Value, epicenter, damage, throwForce, id, Transform(cause.Value), fireStacks, cause);
 
         // process those entities
         foreach (var (uid, xform) in list)
@@ -312,7 +316,8 @@ public sealed partial class ExplosionSystem
         HashSet<EntityUid> processed,
         string id,
         float? fireStacks,
-        EntityUid? cause)
+        EntityUid? cause,
+        bool processCause)
     {
         var gridBox = Box2.FromDimensions(tile * DefaultTileSize, new Vector2(DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
@@ -324,6 +329,9 @@ public sealed partial class ExplosionSystem
         lookup.Comp.StaticTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
         lookup.Comp.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
         lookup.Comp.StaticSundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+
+        if (processCause && cause is not null)
+            ProcessEntity(cause.Value, epicenter, damage, throwForce, id, Transform(cause.Value), fireStacks, cause);
 
         foreach (var (uid, xform) in state.Item1)
         {
@@ -652,6 +660,7 @@ sealed class Explosion
     private float _currentThrowForce;
     private List<Vector2i>.Enumerator _currentEnumerator;
     private int _currentDataIndex;
+    private bool _causeExploded;
 
     /// <summary>
     ///     The set of tiles that need to be updated when the explosion has finished processing. Used to avoid having
@@ -887,7 +896,8 @@ sealed class Explosion
                     ExplosionType.FireStacks,
                     ExplosionType.Temperature,
                     _currentIntensity,
-                    Cause);
+                    Cause,
+                    !_causeExploded);
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
@@ -906,12 +916,17 @@ sealed class Explosion
                     ProcessedEntities,
                     ExplosionType.ID,
                     ExplosionType.FireStacks,
-                    Cause);
+                    Cause,
+                    !_causeExploded);
             }
 
             if (!MoveNext())
                 break;
         }
+
+        // Entities causing explosions may not always be surfaced onto the tile
+        if (!_causeExploded)
+            _causeExploded = true;
 
         // Update damaged/broken tiles on the grid.
         SetTiles();
