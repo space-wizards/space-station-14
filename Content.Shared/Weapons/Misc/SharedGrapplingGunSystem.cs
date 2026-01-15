@@ -39,7 +39,6 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
     public override void Initialize()
     {
-        base.Initialize();
         SubscribeLocalEvent<GrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
         SubscribeLocalEvent<GrapplingProjectileComponent, JointRemovedEvent>(OnGrappleJointRemoved);
         SubscribeLocalEvent<CanWeightlessMoveEvent>(OnWeightlessMove);
@@ -49,6 +48,9 @@ public abstract class SharedGrapplingGunSystem : VirtualController
         SubscribeLocalEvent<GrapplingGunComponent, GunShotEvent>(OnGrapplingShot);
         SubscribeLocalEvent<GrapplingGunComponent, ActivateInWorldEvent>(OnGunActivate);
         SubscribeLocalEvent<GrapplingGunComponent, HandDeselectedEvent>(OnGrapplingDeselected);
+
+        UpdatesBefore.Add(typeof(SharedJointSystem)); // We want to run before joints are solved
+        base.Initialize();
     }
 
     private void OnGrappleJointRemoved(EntityUid uid, GrapplingProjectileComponent component, JointRemovedEvent args)
@@ -136,6 +138,8 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
         _appearance.SetData(grapple.Owner, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
 
+        _joints.RemoveJoint(grapple.Owner, GrapplingJoint);
+
         if (_netManager.IsServer)
             QueueDel(projectile);
 
@@ -146,7 +150,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex || component.Projectile is not { } projectile)
+        if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex)
             return;
 
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
@@ -181,10 +185,30 @@ public abstract class SharedGrapplingGunSystem : VirtualController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        var query = EntityQueryEnumerator<GrapplingGunComponent>();
+        var query = EntityQueryEnumerator<GrapplingGunComponent, JointComponent>();
 
-        while (query.MoveNext(out var uid, out var grappling))
+        while (query.MoveNext(out var uid, out var grappling, out var jointComp))
         {
+            if (!jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
+                joint is not DistanceJoint distance || distance.MaxLength >= float.MaxValue)
+            {
+                SetReeling(uid, grappling, false, null);
+                continue;
+            }
+
+            var bodyAWorldPos = _transform.GetWorldPosition(joint.BodyAUid);
+            var bodyBWorldPos = _transform.GetWorldPosition(joint.BodyBUid);
+
+            // Setting the joint's distance directly will lead to jank. The joint itself will take care of it once the solver runs.
+            var ropeLength = (bodyAWorldPos - bodyBWorldPos).Length();
+
+            // Rope should just break, instantly, if the user is teleported past its max length
+            if (ropeLength >= distance.MaxLength + grappling.RopeMargin)
+            {
+                Ungrapple((uid, grappling), true);
+                continue;
+            }
+
             if (!grappling.Reeling)
             {
                 if (Timing.IsFirstTimePredicted)
@@ -196,14 +220,6 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                 continue;
             }
 
-            if (!TryComp<JointComponent>(uid, out var jointComp) ||
-                !jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
-                joint is not DistanceJoint distance)
-            {
-                SetReeling(uid, grappling, false, null);
-                continue;
-            }
-
             // If the joint breaks, it gets disabled
             if (distance.Enabled == false)
             {
@@ -211,17 +227,11 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                 continue;
             }
 
-
             // TODO: Contracting DistanceJoints should be in engine
-            var bodyAWorldPos = _transform.GetWorldPosition(joint.BodyAUid);
-            var bodyBWorldPos = _transform.GetWorldPosition(joint.BodyBUid);
-
-            // Setting the joint's distance directly will lead to jank. The joint itself will take care of it.
-            var ropeLength = (bodyAWorldPos - bodyBWorldPos).Length();
-
             if (distance.MaxLength >= ropeLength + grappling.RopeMargin)
             {
                 distance.MaxLength = MathF.Max(distance.MinLength + grappling.RopeMargin, distance.MaxLength - grappling.ReelRate * frameTime);
+                distance.MaxLength = MathF.Max(ropeLength + grappling.RopeMargin, distance.MaxLength);
                 ropeLength = MathF.Min(distance.MaxLength, ropeLength);
             }
 

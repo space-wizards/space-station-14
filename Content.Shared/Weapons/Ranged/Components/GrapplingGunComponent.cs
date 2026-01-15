@@ -42,6 +42,7 @@ public sealed partial class GrapplingGunComponent : Component
     /// <summary>
     /// Stiffness of the rope, in N/m
     /// </summary>
+    [DataField, AutoNetworkedField]
     public float RopeStiffness = 1f;
 
     /// <summary>
