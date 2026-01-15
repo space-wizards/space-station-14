@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AndrewFenriz
-  changes:
-  - message: when assembling mech, parts now cannot be removed with a crowbar
-    type: Remove
-  id: 8905
-  time: '2025-08-31T12:54:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39027
 - author: quasr-9
   changes:
   - message: Moths can now properly remove knives and other items from military boots.
@@ -3906,3 +3899,11 @@
   id: 9408
   time: '2026-01-15T20:39:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42432
+- author: B_Kirill
+  changes:
+  - message: Added camera map. Cutting MAP wire hides camera from map while keeping
+      it accessible in camera list.
+    type: Add
+  id: 9409
+  time: '2026-01-15T21:37:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39684
