@@ -21,6 +21,10 @@ public sealed class HandOrganSystem : EntitySystem
 
     private void OnGotRemoved(Entity<HandOrganComponent> ent, ref OrganGotRemovedEvent args)
     {
+        // prevent a recursive double-delete bug
+        if (LifeStage(args.Target) >= EntityLifeStage.Terminating)
+            return;
+
         _hands.RemoveHand(args.Target, ent.Comp.HandID);
     }
 }

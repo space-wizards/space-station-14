@@ -10,6 +10,7 @@
 
   - BaseSpeciesAppearance
   abstract: true
+  save: false
   components:
   - type: DamageVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
@@ -171,7 +172,10 @@
   - BaseSpeciesMob
   id: BaseSpeciesMobOrganic
   abstract: true
+  save: false
   components:
+  - type: Hunger
+  - type: Thirst
   - type: Barotrauma
     damage:
       types:
