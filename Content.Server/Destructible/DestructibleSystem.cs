@@ -19,6 +19,7 @@ namespace Content.Server.Destructible
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedDestructibleSystem _sharedDestructible = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         public override void Initialize()
         {
@@ -136,6 +137,8 @@ namespace Content.Server.Destructible
 
                 // TODO: Replace with EntityEffects.
                 behavior.Execute(owner, _sharedDestructible, cause);
+                var deps = _entitySystemManager.DependencyCollection;
+                deps.InjectDependencies(behavior);
             }
         }
 
