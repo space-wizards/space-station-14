@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Fixed audio mispredict when quick inserting.
-    type: Fix
-  id: 8898
-  time: '2025-08-28T16:54:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39930
 - author: Hitlinemoss
   changes:
   - message: Descriptions for cardboard weapons have been adjusted.
@@ -3903,3 +3896,11 @@
   id: 9401
   time: '2026-01-15T16:46:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42298
+- author: Samuka
+  changes:
+  - message: The heavy xenoborg can now slowly move in space like the scout and stealth
+      xenoborgs.
+    type: Tweak
+  id: 9402
+  time: '2026-01-15T17:10:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42415
