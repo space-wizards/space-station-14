@@ -78,6 +78,7 @@
     - id: ClothingEyesGlassesChemical
     - id: ChemBag
     - id: Dropper
+    - id: HandLabeler
     - id: BarSpoon # Should be replaced by a stirring tool with medical theming, like a glass rod
     - id: PlasmaChemistryVial
     - !type:AllSelector # The wonderful world of chemical storage
