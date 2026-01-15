@@ -19,7 +19,7 @@ public sealed partial class ReactionMixerComponent : Component
     /// The popup message when successfully mixing a solution.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId? MixMessage = "default-mixing-success";
+    public LocId MixMessage = "default-mixing-success";
 
     /// <summary>
     /// The sound to play when mixing.
