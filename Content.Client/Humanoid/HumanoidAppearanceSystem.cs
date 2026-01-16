@@ -364,7 +364,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out _, false))
             {
-                var layer = _sprite.AddLayer((entity.Owner, sprite), markingSprite, targetLayer + j + 1);
+                var layer = _sprite.AddLayer((entity.Owner, sprite), markingSprite, targetLayer + j + 1, targetLayer);
                 _sprite.LayerMapSet((entity.Owner, sprite), layerId, layer);
                 _sprite.LayerSetSprite((entity.Owner, sprite), layerId, rsi);
             }
