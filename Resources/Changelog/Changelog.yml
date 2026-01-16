@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: M4rchy-S
-  changes:
-  - message: dead mobs will no longer vomit from radiation damage
-    type: Fix
-  id: 8909
-  time: '2025-09-02T00:07:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40020
 - author: SolidSyn
   changes:
   - message: Detectives noir-tech glasses are now contraband, but now include a noir
@@ -3913,3 +3906,11 @@
   id: 9412
   time: '2026-01-16T02:09:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42446
+- author: neomoth
+  changes:
+  - message: Fix zombie resistance, instead of making you more likely to be infected,
+      it now properly makes you less likely to be infected.
+    type: Fix
+  id: 9413
+  time: '2026-01-16T08:40:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42451
