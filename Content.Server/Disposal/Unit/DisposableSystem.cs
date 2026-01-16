@@ -53,7 +53,7 @@ namespace Content.Server.Disposal.Unit
 
         private void CanInsert(Entity<DisposalHolderComponent> ent, ref ContainerIsInsertingAttemptEvent args)
         {
-            if (!HasComp<ItemComponent>(args.EntityUid) && !HasComp<Shared.Body.BodyComponent>(args.EntityUid))
+            if (!HasComp<ItemComponent>(args.EntityUid) && !HasComp<BodyComponent>(args.EntityUid))
                 args.Cancel();
         }
 

@@ -7,42 +7,42 @@ public sealed partial class BodySystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
-    private EntityQuery<Body.BodyComponent> _bodyQuery;
+    private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<OrganComponent> _organQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<Body.BodyComponent, ComponentInit>(OnBodyInit);
-        SubscribeLocalEvent<Body.BodyComponent, ComponentShutdown>(OnBodyShutdown);
+        SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
+        SubscribeLocalEvent<BodyComponent, ComponentShutdown>(OnBodyShutdown);
 
-        SubscribeLocalEvent<Body.BodyComponent, CanDragEvent>(OnCanDrag);
+        SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnCanDrag);
 
-        SubscribeLocalEvent<Body.BodyComponent, EntInsertedIntoContainerMessage>(OnBodyEntInserted);
-        SubscribeLocalEvent<Body.BodyComponent, EntRemovedFromContainerMessage>(OnBodyEntRemoved);
+        SubscribeLocalEvent<BodyComponent, EntInsertedIntoContainerMessage>(OnBodyEntInserted);
+        SubscribeLocalEvent<BodyComponent, EntRemovedFromContainerMessage>(OnBodyEntRemoved);
 
-        _bodyQuery = GetEntityQuery<Body.BodyComponent>();
+        _bodyQuery = GetEntityQuery<BodyComponent>();
         _organQuery = GetEntityQuery<OrganComponent>();
 
         InitializeRelay();
     }
 
-    private void OnBodyInit(Entity<Body.BodyComponent> ent, ref ComponentInit args)
+    private void OnBodyInit(Entity<BodyComponent> ent, ref ComponentInit args)
     {
         ent.Comp.Organs =
-            _container.EnsureContainer<Container>(ent, Body.BodyComponent.ContainerID);
+            _container.EnsureContainer<Container>(ent, BodyComponent.ContainerID);
     }
 
-    private void OnBodyShutdown(Entity<Body.BodyComponent> ent, ref ComponentShutdown args)
+    private void OnBodyShutdown(Entity<BodyComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.Organs is { } organs)
             _container.ShutdownContainer(organs);
     }
 
-    private void OnBodyEntInserted(Entity<Body.BodyComponent> ent, ref EntInsertedIntoContainerMessage args)
+    private void OnBodyEntInserted(Entity<BodyComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != Body.BodyComponent.ContainerID)
+        if (args.Container.ID != BodyComponent.ContainerID)
             return;
 
         if (!_organQuery.TryComp(args.Entity, out var organ))
@@ -61,9 +61,9 @@ public sealed partial class BodySystem : EntitySystem
         }
     }
 
-    private void OnBodyEntRemoved(Entity<Body.BodyComponent> ent, ref EntRemovedFromContainerMessage args)
+    private void OnBodyEntRemoved(Entity<BodyComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != Body.BodyComponent.ContainerID)
+        if (args.Container.ID != BodyComponent.ContainerID)
             return;
 
         if (!_organQuery.TryComp(args.Entity, out var organ))
@@ -82,7 +82,7 @@ public sealed partial class BodySystem : EntitySystem
         Dirty(args.Entity, organ);
     }
 
-    private void OnCanDrag(Entity<Body.BodyComponent> ent, ref CanDragEvent args)
+    private void OnCanDrag(Entity<BodyComponent> ent, ref CanDragEvent args)
     {
         args.Handled = true;
     }

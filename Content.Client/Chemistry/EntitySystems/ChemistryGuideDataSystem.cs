@@ -93,7 +93,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
                 continue;
 
             //these bloat the hell out of blood/fat
-            if (entProto.HasComponent<Shared.Body.OrganComponent>())
+            if (entProto.HasComponent<OrganComponent>())
                 continue;
 
             //these feel obvious...

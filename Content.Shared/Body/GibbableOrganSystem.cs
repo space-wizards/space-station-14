@@ -8,10 +8,10 @@ public sealed class GibbableOrganSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<Body.GibbableOrganComponent, BodyRelayedEvent<BeingGibbedEvent>>(OnBeingGibbed);
+        SubscribeLocalEvent<GibbableOrganComponent, BodyRelayedEvent<BeingGibbedEvent>>(OnBeingGibbed);
     }
 
-    private void OnBeingGibbed(Entity<Body.GibbableOrganComponent> ent, ref BodyRelayedEvent<BeingGibbedEvent> args)
+    private void OnBeingGibbed(Entity<GibbableOrganComponent> ent, ref BodyRelayedEvent<BeingGibbedEvent> args)
     {
         args.Args.Giblets.Add(ent);
     }
