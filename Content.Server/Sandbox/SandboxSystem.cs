@@ -159,6 +159,7 @@ namespace Content.Server.Sandbox
             {
                 IsSandboxEnabled = false;
                 _entitySpawnHistories.Clear();
+                _lastRateLimitHits.Clear();
             }
         }
 
