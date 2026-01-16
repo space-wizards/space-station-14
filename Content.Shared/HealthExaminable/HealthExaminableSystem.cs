@@ -55,17 +55,16 @@ public sealed class HealthExaminableSystem : EntitySystem
             if (dmg == FixedPoint2.Zero)
                 continue;
 
-            FixedPoint2 closest = FixedPoint2.Zero;
+            var closest = FixedPoint2.Zero;
 
-            string chosenLocStr = string.Empty;
+            var chosenLocStr = string.Empty;
             foreach (var threshold in component.Thresholds)
             {
-                var str = $"health-examinable-{component.LocPrefix}-{type}-{threshold}";
-                var tempLocStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", ("target", Identity.Entity(uid, EntityManager)));
-
-                // i.e., this string doesn't exist, because theres nothing for that threshold
-                if (tempLocStr == str)
+                if (!Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", out var tempLocStr, ("target", Identity.Entity(uid, EntityManager))))
+                {
+                    // i.e., this string doesn't exist, because theres nothing for that threshold
                     continue;
+                }
 
                 if (dmg > threshold && threshold > closest)
                 {
