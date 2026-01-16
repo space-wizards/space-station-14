@@ -1,0 +1,5 @@
+﻿- type: waypointer
+  id: StationAnchorWaypointer
+  rsiPath: Markers/waypointer.rsi
+  waypointerStates: 5
+  color: Orange

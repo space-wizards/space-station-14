@@ -211,6 +211,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -233,6 +235,8 @@
   - type: PointLight
     radius: 7
     energy: 3
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -294,6 +298,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -345,6 +351,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -399,6 +407,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #Captain's Hardsuit
 - type: entity
@@ -418,6 +428,8 @@
     tags:
     - CorgiWearable
     - WhitelistChameleon
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -555,6 +567,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -574,6 +588,8 @@
   - type: PointLight
     radius: 7
     energy: 3
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -846,6 +862,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #ERT Chaplain Hardsuit
 - type: entity
@@ -860,6 +878,8 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertchaplain.rsi
   - type: PointLight
     color: "#ffffff"
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #ERT Engineer Hardsuit
 - type: entity
@@ -883,6 +903,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #ERT Medical Hardsuit
 - type: entity
@@ -897,6 +919,8 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #ERT Security Hardsuit
 - type: entity
@@ -918,6 +942,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #ERT Janitor Hardsuit
 - type: entity
@@ -932,6 +958,8 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #CBURN Hardsuit
 - type: entity
@@ -1008,6 +1036,8 @@
         Heat: 0.80
         Radiation: 0.80
         Caustic: 0.95
+  - type: ShowWaypointer
+    waypointerProtoId: StationAnchorWaypointer
 
 #MISC. HARDSUITS
 #Clown Hardsuit
