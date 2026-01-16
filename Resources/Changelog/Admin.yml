@@ -1597,5 +1597,13 @@ Entries:
   id: 194
   time: '2026-01-13T01:02:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42370
+- author: Velken
+  changes:
+  - message: new Admin version of the Anomaly Scanner, that shows the hidden particle
+      types.
+    type: Add
+  id: 195
+  time: '2026-01-16T22:24:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42443
 Name: Admin
 Order: 3
