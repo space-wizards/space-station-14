@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/faf6db214927874c19b8fa8585d26b5d40de1acc, derelict generic sprites modified by GoldenCan(GitHub), xenoborg sprites, created and modified by Samuka-C (github), Derelict Engineer, Janitor, Miner, Medical, and Assault Borg sprites by _miket on Discord, minor resprite of the service borg by Kittygyat (github), red cross on Syndi Medical Borg changed to blue to avoid Geneva issues by CDWimmer (GitHub)",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/faf6db214927874c19b8fa8585d26b5d40de1acc, derelict generic sprites modified by GoldenCan(GitHub), xenoborg sprites, created and modified by Samuka-C (github), Derelict Engineer, Janitor, Miner, Medical, and Assault Borg sprites by _miket on Discord, minor resprite of the service borg by Kittygyat (github).",
     "states": [
         {
             "name": "clown",
