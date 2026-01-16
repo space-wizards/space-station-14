@@ -79,6 +79,7 @@
       - map: [ "enum.HumanoidVisualLayers.Head" ]
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+      - map: [ "enum.HumanoidVisualLayers.Eyelids" ]
       - map: [ "enum.HumanoidVisualLayers.RArm" ]
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
@@ -121,6 +122,8 @@
   - type: Inventory
     templateId: arachnid
     speciesId: arachnid
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Arachnid/eyelids.rsi
 
 
 - type: entity
