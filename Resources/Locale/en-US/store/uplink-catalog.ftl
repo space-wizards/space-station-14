@@ -92,7 +92,7 @@ uplink-shrapnel-grenade-desc = Launches a spray of sharp fragments dealing great
 
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
-uplink-pistol-magazine-desc = Pistol magazine with 10 cartridges. Compatible with the Viper.
+uplink-pistol-magazine-desc = Pistol magazine with 15 cartridges. Compatible with the Viper.
 
 uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
 uplink-pistol-magazine-c20r-desc = SMG magazine with 30 cartridges. Compatible with C-20r.
@@ -244,7 +244,7 @@ uplink-chemistry-kit-name = Chemical Synthesis Kit
 uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
 
 uplink-knives-kit-name = Throwing Knives Kit
-uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims. Capable of ignoring armor entirely when thrown.
+uplink-knives-kit-desc = A set of 8 syndicate branded throwing knives, perfect for embedding into the body of your victims. Capable of ignoring armor entirely when thrown.
 
 uplink-meds-bundle-name = Interdyne Medical Bundle
 uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
@@ -480,7 +480,7 @@ uplink-barber-scissors-name = Barber Scissors
 uplink-barber-scissors-desc = A good tool to give your fellow agent a nice haircut, unless you want to give it to yourself.
 
 uplink-backpack-syndicate-name = Syndicate backpack
-uplink-backpack-syndicate-desc = A lightweight explosion-proof backpack for holding various traitor goods
+uplink-backpack-syndicate-desc = A lightweight explosion-proof backpack for holding various traitor goods.
 
 uplink-cameraBug-name = Camera bug
 uplink-cameraBug-desc = A portable device that allows you to view the station's cameras.
