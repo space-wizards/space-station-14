@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: quasr-9
-  changes:
-  - message: Moths can now properly remove knives and other items from military boots.
-    type: Fix
-  id: 8906
-  time: '2025-09-01T15:07:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40049
 - author: slarticodefast
   changes:
   - message: Dropper and mini-syringe transfer amounts can now be set to more options.
@@ -3907,3 +3900,16 @@
   id: 9409
   time: '2026-01-15T21:37:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39684
+- author: ScarKy0
+  changes:
+  - message: Added Makeshift and Regular Mortar&Pestle! It can be found in the nutrimax
+      and dinnerware vendors or crafted. It works slower and can only process 1 item
+      at a time.
+    type: Add
+  - message: Added Makeshift and Regular Handheld Juicer! It can be found in the nutrimax
+      and dinnerware vendors or crafted. It works slower and can only process 1 item
+      at a time.
+    type: Add
+  id: 9410
+  time: '2026-01-16T00:35:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42019
