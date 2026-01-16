@@ -18,6 +18,7 @@
         variation: 0.03
         volume: 3
     onActivate: true
+    verb: interaction-popup-verb-ring
   - type: EmitSoundOnUse
     sound:
       collection: DeskBell

@@ -170,6 +170,7 @@
     interactSuccessString: hugging-success-generic
     interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
+    verb: interaction-popup-verb-hug
   - type: CanHostGuardian
   - type: NpcFactionMember
     factions:
