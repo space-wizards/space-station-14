@@ -195,4 +195,11 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminAllowMultiServerPlay =
         CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
+
+    public static readonly CVarDef<string> AbandonCharacterWindowMessage =
+        CVarDef.Create("admin.abandon_character_window_message",
+            "Revival or cloning will not bring you back to your body if you abandon your character!\n" +
+            "In some circumstances, abandoning your character constitutes a breach of the rules.\n" +
+            "You should use cryo if your intention is to leave the round.",
+            CVar.REPLICATED | CVar.SERVER);
 }
