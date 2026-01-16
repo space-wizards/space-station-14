@@ -85,7 +85,7 @@
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
-  result: HandheldHealthAnalyzerEmpty
+  result: HandheldHealthAnalyzer
   categories:
   - Tools
   completetime: 4
