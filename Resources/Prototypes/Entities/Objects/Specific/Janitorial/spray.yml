@@ -1,15 +1,11 @@
 - type: entity
-  name: spray bottle
-  id: SprayBottle
-  parent: BaseItem
-  suffix: Empty
-  description: A spray bottle with an unscrewable top.
+  abstract: true
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase ]
+  id: SprayBottleBase
   components:
   - type: Edible
     edible: Drink
-    solution: spray
-    destroyOnEmpty: false
-    utensil: None
+    solution: drink
     transferAmount: 10
     useSound:
       path: /Audio/Effects/spray3.ogg
@@ -20,47 +16,62 @@
     - Spray
     - Trash
   - type: Sprite
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    sprite: Objects/Specific/Janitorial/spray_bottle.rsi
     state: cleaner
   - type: Item
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    sprite: Objects/Specific/Janitorial/spray_bottle.rsi
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 100
-  - type: RefillableSolution
-    solution: spray
-  - type: DrainableSolution
-    solution: spray
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-  - type: SolutionItemStatus
-    solution: spray
   - type: UseDelay
   - type: Spray
+    solution: drink
     transferAmount: 10
     sprayVelocity: 2
     spraySound:
       path: /Audio/Effects/spray2.ogg
   - type: TrashOnSolutionEmpty
-    solution: spray
-  - type: ExaminableSolution
-    solution: spray
-    exactVolume: true
+    solution: drink
 
 - type: entity
-  name: mega spray bottle
-  id: MegaSprayBottle
+  parent: [ SprayBottleBase, DrinkVisualsFill ]
+  id: SprayBottle
+  name: spray bottle
+  suffix: Empty
+  description: A spray bottle with an unscrewable top.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/spray_bottle.rsi
+    layers:
+    - state: cleaner
+    - state: cleaner-fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    fillBaseName: cleaner-fill-
+    inHandsMaxFillLevels: 4
+
+- type: entity
   parent: SprayBottle
+  id: MegaSprayBottle
+  name: mega spray bottle
   suffix: Empty
   description: A huge spray bottle, capable of unrivaled janitorial power.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
-    state: cleaner_large
+    sprite: Objects/Specific/Janitorial/spray_bottle.rsi
+    layers:
+    - state: cleaner_large
+    - state: cleaner_large-fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 7
+    fillBaseName: cleaner_large-fill-
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 250
   - type: Spray
     transferAmount: 15
@@ -71,39 +82,56 @@
       path: /Audio/Effects/spray2.ogg
 
 - type: entity
-  name: spray bottle
-  id: SprayBottleWater
-  suffix: Filled
   parent: SprayBottle
+  id: SprayBottleWater
+  name: spray bottle
+  suffix: Filled
   components:
   - type: Tag
     tags:
     - Spray
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 100
         reagents:
         - ReagentId: Water
           Quantity: 100
 
 - type: entity
-  name: space cleaner
-  description: BLAM!-brand non-foaming space cleaner!
-  id: SprayBottleSpaceCleaner
   parent: SprayBottle
-  suffix: ""
+  id: SprayBottleSpaceCleaner
+  suffix: Space Cleaner
+  description: BLAM!-brand non-foaming space cleaner!
   components:
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 100
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 100
+  - type: Label
+    currentLabel: space cleaner
   - type: Tag
     tags:
       - Spray
+
+- type: entity
+  parent: MegaSprayBottle
+  id: MegaSprayBottleSpaceCleaner
+  suffix: Space Cleaner
+  description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 250
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 250
+  - type: Label
+    currentLabel: space cleaner
 
 - type: entity
   parent: SprayBottle
@@ -114,7 +142,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      spray:
+      drink:
         maxVol: 200
         reagents:
         - ReagentId: SpaceCleaner
@@ -125,21 +153,29 @@
   id: BorgMegaSprayBottle
   name: adv. internal spray jet
   suffix: Filled
-  description: An upgraded version of the integrated spray bottle, installed directly into a custodial cyborg. Typically filled with space cleaner for dealing with those nasty spills.
+  description: An upgraded version of the integrated spray bottle, installed directly into a custodial cyborg. This one is capable of creating space cleaner from moisture in the air.
   components:
   - type: SolutionContainerManager
     solutions:
-      spray:
-        maxVol: 500
+      drink:
+        maxVol: 250
         reagents:
         - ReagentId: SpaceCleaner
-          Quantity: 500
+          Quantity: 250
+  - type: SolutionTransfer
+    canSend: false # No giving away infinite space cleaner!
+  - type: SolutionRegeneration
+    solution: drink
+    generated:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 1
 
 # Vapor
 - type: entity
   id: Vapor
-  name: "vapor"
   categories: [ HideSpawnMenu ]
+  name: "vapor"
   components:
   - type: SolutionContainerManager
     solutions:
@@ -173,8 +209,8 @@
   - type: VaporVisuals
 
 - type: entity
-  id: BigVapor
   parent: Vapor
+  id: BigVapor
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -194,3 +230,17 @@
         mask:
         - FullTileMask
         - Opaque
+
+- type: entity
+  parent: Vapor
+  id: FlowerVapor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/extinguisherSpray.rsi
+    layers:
+    - state: extinguish
+      map: [ "enum.VaporVisualLayers.Base" ]
+  - type: VaporVisuals
+    animationTime: 0.8
+    animationState: extinguish
