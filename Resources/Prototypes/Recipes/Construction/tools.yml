@@ -45,3 +45,25 @@
   targetNode: random_gate
   category: construction-category-tools
   objectType: Item
+
+- type: construction
+  id: MakeshiftMortarAndPestle
+  graph: MakeshiftMortarAndPestle
+  startNode: start
+  targetNode: mortarAndPestle
+  category: construction-category-tools
+  objectType: Item
+
+- type: construction
+  id: MakeshiftJuicer
+  graph: MakeshiftJuicer
+  startNode: start
+  targetNode: juicer
+
+- type: construction
+  id: MakeshiftCentrifuge
+  graph: MakeshiftCentrifuge
+  startNode: start
+  targetNode: makeshiftCentrifuge
+  category: construction-category-tools
+  objectType: Item

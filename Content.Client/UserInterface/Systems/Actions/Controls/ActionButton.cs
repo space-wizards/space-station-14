@@ -198,8 +198,8 @@ public sealed class ActionButton : Control, IEntityControl
         if (!_entities.TryGetComponent(Action, out MetaDataComponent? metadata))
             return null;
 
-        var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
-        var desc = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
+        var name = FormattedMessage.FromMarkupPermissive(metadata.EntityName);
+        var desc = FormattedMessage.FromMarkupPermissive(metadata.EntityDescription);
 
         if (_player.LocalEntity is null)
             return null;

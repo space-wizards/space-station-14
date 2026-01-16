@@ -202,4 +202,10 @@ public sealed partial class CCVars
             "In some circumstances, abandoning your character constitutes a breach of the rules.\n" +
             "You should use cryo if your intention is to leave the round.",
             CVar.REPLICATED | CVar.SERVER);
+  
+    /// <summary>
+    /// Whether admins should gain role playtime even when playing while not de-adminned.
+    /// </summary>
+    public static readonly CVarDef<bool> GameAdminJobTracking =
+        CVarDef.Create("game.admin_job_tracking", false, CVar.SERVERONLY);
 }
