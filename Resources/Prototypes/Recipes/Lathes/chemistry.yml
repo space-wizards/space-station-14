@@ -113,6 +113,8 @@
 - type: latheRecipe
   id: ChemistryEmptyVial
   result: ChemistryEmptyVial
+  categories:
+  - Containers
   completetime: 2
   materials:
     Glass: 100
@@ -121,6 +123,8 @@
 - type: latheRecipe
   id: ChemistryEmptyVialSmall
   result: ChemistryEmptyVialSmall
+  categories:
+  - Containers
   completetime: 2
   materials:
     Glass: 50
