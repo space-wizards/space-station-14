@@ -30,7 +30,6 @@ public sealed class LegsParalyzedSystem : EntitySystem
     private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
     {
         _standingSystem.Stand(uid);
-        // _bodySystem.UpdateMovementSpeed(uid);
     }
 
     private void OnBuckled(EntityUid uid, LegsParalyzedComponent component, ref BuckledEvent args)
