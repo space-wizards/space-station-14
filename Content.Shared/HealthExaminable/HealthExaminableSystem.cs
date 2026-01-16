@@ -65,7 +65,10 @@ public sealed class HealthExaminableSystem : EntitySystem
             for (var i = 0; i < component.Thresholds.Length; i++)
             {
                 if (component.Thresholds[i] <= dmg)
-                    Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{i}", out chosenLocStr, ("target", Identity.Entity(uid, EntityManager)));
+                {
+                    if (Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{i}", out var locStr, ("target", Identity.Entity(uid, EntityManager))))
+                        chosenLocStr = locStr;
+                }
                 else
                     break;
             }
