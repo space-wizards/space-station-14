@@ -10,15 +10,13 @@ namespace Content.Client.Instruments.UI
     public sealed class InstrumentBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IMidiManager _midiManager = default!;
+        [Dependency] private readonly InstrumentSystem _instruments = default!;
 
         [ViewVariables] private InstrumentMenu? _instrumentMenu;
-        public readonly InstrumentSystem Instruments;
 
         public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             IoCManager.InjectDependencies(this);
-
-            Instruments = EntMan.System<InstrumentSystem>();
         }
 
         protected override void Open()
@@ -66,7 +64,7 @@ namespace Content.Client.Instruments.UI
 
         private void OnSetBandMasterRequest(EntityUid ent)
         {
-            Instruments.SetMaster(Owner, ent);
+            _instruments.SetMaster(Owner, ent);
         }
 
         private void OnRefreshBandsRequest()

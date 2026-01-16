@@ -13,6 +13,7 @@ public sealed partial class ChannelsMenu : DefaultWindow
 {
     [Dependency] private readonly IEntityManager _entityManager = null!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private readonly InstrumentSystem _instruments = default!;
 
     private readonly InstrumentBoundUserInterface _owner;
 
@@ -33,7 +34,7 @@ public sealed partial class ChannelsMenu : DefaultWindow
     {
         base.EnteredTree();
 
-        _owner.Instruments.OnChannelsUpdated += UpdateChannelList;
+        _instruments.OnChannelsUpdated += UpdateChannelList;
     }
 
     private void OnDisplayTrackNamesPressed(BaseButton.ButtonEventArgs obj)
@@ -51,17 +52,17 @@ public sealed partial class ChannelsMenu : DefaultWindow
     {
         base.ExitedTree();
 
-        _owner.Instruments.OnChannelsUpdated -= UpdateChannelList;
+        _instruments.OnChannelsUpdated -= UpdateChannelList;
     }
 
     private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
     {
-        _owner.Instruments.SetFilteredChannel(_owner.Owner, (int)ChannelList[args.ItemIndex].Metadata!, false);
+        _instruments.SetFilteredChannel(_owner.Owner, (int)ChannelList[args.ItemIndex].Metadata!, false);
     }
 
     private void OnItemDeselected(ItemList.ItemListDeselectedEventArgs args)
     {
-        _owner.Instruments.SetFilteredChannel(_owner.Owner, (int)ChannelList[args.ItemIndex].Metadata!, true);
+        _instruments.SetFilteredChannel(_owner.Owner, (int)ChannelList[args.ItemIndex].Metadata!, true);
     }
 
     private void OnAllPressed(BaseButton.ButtonEventArgs obj)
