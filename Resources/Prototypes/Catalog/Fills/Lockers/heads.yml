@@ -117,6 +117,7 @@
     # Specialized HoP items
     - id: AccessConfigurator
     - id: BoxEncryptionKeyPassenger
+    - id: BoxFolderClipboardThreePapers
     - id: BoxHeadset
     - id: BoxID
     - id: BoxPDA
