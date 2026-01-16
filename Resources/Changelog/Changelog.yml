@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Dropper and mini-syringe transfer amounts can now be set to more options.
-    type: Tweak
-  id: 8907
-  time: '2025-09-01T15:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39976
 - author: IProduceWidgets
   changes:
   - message: there are now civilian versions of nanomed vendors.
@@ -3913,3 +3906,11 @@
   id: 9410
   time: '2026-01-16T00:35:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42019
+- author: EmoGarbage404
+  changes:
+  - message: Fixed flatpackers ignoring material costs for certain machine board requirements
+      and being able to print unlatheable items for flatpacks.
+    type: Fix
+  id: 9411
+  time: '2026-01-16T00:52:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42445
