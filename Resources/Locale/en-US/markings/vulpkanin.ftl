@@ -95,29 +95,28 @@ marking-VulpVulpine = Vulpkanin Nose
 
 # Tails
 
-marking-VulpTailFennec-fennec = Fennec tail (Base)
-marking-VulpTailFennec-fennec-tip = Fennec tail (Tip)
+marking-VulpTailFennec-fennec_front = Fennec tail (Base)
+marking-VulpTailFennec-fennec-tip_front = Fennec tail (Tip)
 marking-VulpTailFennec = Vulpkanin Fennec
 
-marking-VulpTailFluffy-fluffy = Fluffy tail (Base)
-marking-VulpTailFluffy-fluffy-tip = Fluffy tail (Tip)
+marking-VulpTailFluffy-fluffy_front = Fluffy tail (Base)
+marking-VulpTailFluffy-fluffy-tip_front = Fluffy tail (Tip)
 marking-VulpTailFluffy = Vulpkanin Fluffy
 
-marking-VulpTailHusky-husky = Husky tail (Base)
-marking-VulpTailHusky-husky-inner = Husky tail (Inner)
-marking-VulpTailHusky-husky-outer = Husky tail (Outer)
+marking-VulpTailHusky-husky-inner_front = Husky tail (Inner)
+marking-VulpTailHusky-husky-outer_front = Husky tail (Outer)
 marking-VulpTailHusky = Vulpkanin Husky
 
-marking-VulpTailLong-long = Long tail (Base)
-marking-VulpTailLong-long-tip = Long tail (Tip)
+marking-VulpTailLong-long_front = Long tail (Base)
+marking-VulpTailLong-long-tip_front = Long tail (Tip)
 marking-VulpTailLong = Vulpkanin Long
 
-marking-VulpTailVulp-vulp = Vulpkanin tail (Base)
-marking-VulpTailVulp-vulp-tip = Vulpkanin tail (Tip)
+marking-VulpTailVulp-vulp_front = Vulpkanin tail (Base)
+marking-VulpTailVulp-vulp-tip_front = Vulpkanin tail (Tip)
 marking-VulpTailVulp = Vulpkanin
 
-marking-VulpTailVulpFade-vulp = Vulpkanin tail (Base)
-marking-VulpTailVulpFade-vulp-fade = Vulpkanin tail (Fade)
+marking-VulpTailVulpFade-vulp_front = Vulpkanin tail (Base)
+marking-VulpTailVulpFade-vulp-fade_front = Vulpkanin tail (Fade)
 marking-VulpTailVulpFade = Vulpkanin (Fade)
 
 

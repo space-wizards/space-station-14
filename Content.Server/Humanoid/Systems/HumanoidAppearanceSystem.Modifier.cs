@@ -29,7 +29,7 @@ public sealed partial class HumanoidAppearanceSystem
         {
             Text = "Modify markings",
             Category = VerbCategory.Tricks,
-            Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth_behind"),
             Act = () =>
             {
                 _uiSystem.OpenUi(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
