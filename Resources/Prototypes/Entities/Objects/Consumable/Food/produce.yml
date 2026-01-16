@@ -1623,7 +1623,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Bicaridine
+        - ReagentId: TranexamicAcid
           Quantity: 20
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lily.rsi
