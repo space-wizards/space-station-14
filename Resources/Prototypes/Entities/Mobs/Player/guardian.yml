@@ -102,6 +102,9 @@
       interfaces:
         enum.MeleeSpeechUiKey.Key:
           type: MeleeSpeechBoundUserInterface
+          icon:
+            sprite: Interface/Actions/battlecry.rsi
+            state: icon
     - type: Actions
     - type: Guardian
     - type: InteractionPopup

@@ -8,5 +8,8 @@
     itemIconStyle: BigItem
     priority: -20
     useDelay: 1
+    icon:
+      sprite: Interface/Actions/battlecry.rsi
+      state: icon
   - type: InstantAction
     event: !type:MeleeSpeechConfigureActionEvent
