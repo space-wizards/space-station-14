@@ -347,6 +347,10 @@
   - type: Stack
     stackType: AloeCream
     count: 10
+  - type: Item
+    storedSprite:
+      state: cream-storage
+      sprite: Objects/Specific/Hydroponics/aloe.rsi
 
 - type: entity
   parent: BaseHealingItem

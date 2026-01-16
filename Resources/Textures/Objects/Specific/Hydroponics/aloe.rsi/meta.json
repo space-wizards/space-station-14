@@ -38,6 +38,9 @@
             "name": "cream"
         },
         {
+            "name": "cream-storage"
+        },
+        {
             "name": "produce-inhand-left",
             "directions": 4
         },
