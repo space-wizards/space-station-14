@@ -79,7 +79,7 @@
   - type: AnomalyScanner
     ignoreSecret: true
   - type: Sprite
-    color: green
+    sprite: Objects/Specific/Research/adminanomalyscanner.rsi
 
 - type: entity
   id: AnomalyLocatorUnpowered
