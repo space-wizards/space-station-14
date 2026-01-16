@@ -133,13 +133,15 @@
   components:
   - type: Physics
     bodyType: KinematicController
+    bodyStatus: InAir
     sleepingAllowed: false
+  - type: CanMoveInAir
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/gateway.rsi
     color: SkyBlue
     layers:
-    - state: portal
+    - state: wandering-portal
   - type: PointLight
     color: SkyBlue
     radius: 5
@@ -164,7 +166,7 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.45
+          radius: 0.37
         mask:
         - Impassable
         layer:
@@ -172,6 +174,7 @@
   - type: Portal
     arrivalSound: /Audio/Items/hiss.ogg
     departureSound: /Audio/Items/hiss.ogg
+    ignoreStationaryObjects: true
   - type: ChaoticJump
     jumpMinInterval: 15
     jumpMaxInterval: 30
@@ -190,7 +193,7 @@
       MinimumIdleTime: !type:Single
         0
       MaximumIdleTime: !type:Single
-        5
+        7
 
 - type: entity
   id: TemporaryWanderingPortal

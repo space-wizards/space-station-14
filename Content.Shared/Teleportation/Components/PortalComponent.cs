@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Components;
@@ -53,4 +53,10 @@ public sealed partial class PortalComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public bool RandomTeleport = true;
+
+    /// <summary>
+    /// Should only mobs and moving entities be sent through the portal on contact?
+    /// </summary>
+    [DataField("ignoreStationaryObjects"), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    public bool IgnoreStationaryObjects = false;
 }

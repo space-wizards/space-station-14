@@ -2,6 +2,7 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Storage;
+using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Shared.Map;
 using System;
@@ -45,7 +46,10 @@ public sealed class WanderingPortalsRule : StationEventSystem<WanderingPortalsRu
         RobustRandom.Shuffle(validLocations);
         for (var i = 0; i < portalAmount && i < validLocations.Count; i++)
         {
-            portals.Add(Spawn(component.PortalPrototype, validLocations.ElementAt(i)));
+            var portal = Spawn(component.PortalPrototype, validLocations.ElementAt(i));
+            portals.Add(portal);
+            if (TryComp<PortalComponent>(portal, out var teleportal))
+                teleportal.IgnoreStationaryObjects = component.IgnoreStationaryObjects;
         }
 
         RobustRandom.Shuffle(portals);

@@ -24,4 +24,9 @@ public sealed partial class WanderingPortalsRuleComponent : Component
     /// </summary>
     [DataField]
     public int MaxPortals = 10;
+
+    /// Should the wandering portals be able to pick up stationary objects? If disabled, a lotta lockers are gonna get displaced.
+    /// </summary>
+    [DataField]
+    public bool IgnoreStationaryObjects = true;
 }
