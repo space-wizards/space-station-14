@@ -160,15 +160,6 @@
     replacementTiles:
     - FloorMetalFoam
   - type: SpawnOnDespawn
-    prototype: FoamedAluminiumMetalSpawner
-
-- type: entity
-  id: FoamedAluminiumMetalSpawner
-  name: aluminium metal foam
-  categories: [ HideSpawnMenu ]
-  parent: MetalFoam
-  components:
-  - type: GridEdgeSpawn # Technically double redundant logic, but here in case replacementTiles doesn't fill a space gap.
     prototype: FoamedAluminiumMetal
 
 - type: entity
