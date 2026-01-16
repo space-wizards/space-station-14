@@ -32,6 +32,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.ColorShiftUiKey.Key:
+        type: ColorShiftBoundUserInterface
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
@@ -111,6 +113,7 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
+  - type: ColorShifter
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
