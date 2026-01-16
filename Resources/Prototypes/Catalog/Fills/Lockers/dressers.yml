@@ -13,7 +13,6 @@
         - id: ClothingUniformJumpskirtCaptain
         - id: ClothingOuterWinterCap
         - id: ClothingNeckCloakCap
-        - id: ClothingHandsGlovesCaptain
         - id: ClothingShoesBootsLaceup
 
 - type: entity
@@ -63,7 +62,6 @@
         - id: ClothingUniformJumpskirtHoP
         - id: ClothingOuterWinterHoP
         - id: ClothingNeckCloakHop
-        - id: ClothingHandsGlovesHop
         - id: ClothingShoesColorBrown
 
 - type: entity

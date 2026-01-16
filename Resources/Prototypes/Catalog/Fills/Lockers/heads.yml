@@ -38,6 +38,7 @@
     - id: ClothingBeltSheathFilled
     - id: ClothingEyesGlassesCommand
     - id: ClothingOuterArmorCaptainCarapace
+    - id: ClothingHandsGlovesCaptain
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
@@ -121,6 +122,7 @@
     - id: BoxPDA
     - id: ClothingEyesHudCommand
     - id: ClothingNeckGoldmedal
+    - id: ClothingHandsGlovesHop
     - id: HoPIDCard
     - id: WeaponDisabler
 
