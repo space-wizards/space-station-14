@@ -117,6 +117,7 @@
   components:
   - type: Metabolizer
     metabolizerTypes: [ Arachnid ]
+    updateInterval: 1.5
 
 - type: entity
   parent: OrganArachnid
