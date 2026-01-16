@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
-using Content.Shared.BodyNew;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -235,7 +234,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.CanDrop = HasComp<BodyComponent>(args.Dragged);
+        args.CanDrop = HasComp<Body.BodyComponent>(args.Dragged);
         args.Handled = true;
     }
 

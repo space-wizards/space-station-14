@@ -1,4 +1,4 @@
-using Content.Shared.BodyNew;
+using Content.Shared.Body;
 using Content.Shared.Gibbing;
 using Robust.Shared.GameObjects;
 
@@ -51,7 +51,7 @@ public sealed class GibletTest
 
             foreach (var giblet in giblets)
             {
-                Assert.That(entityManager.HasComponent<GibbableOrganComponent>(giblet), Is.True);
+                Assert.That(entityManager.HasComponent<Shared.Body.GibbableOrganComponent>(giblet), Is.True);
             }
         });
 

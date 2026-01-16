@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.BodyNew;
+using Content.Shared.Body;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -62,7 +62,7 @@ public sealed class HandOrganTest
 
             Assert.That(hands.Count, Is.EqualTo(2));
 
-            var handsContainer = container.GetContainer(body, BodyComponent.ContainerID);
+            var handsContainer = container.GetContainer(body, Shared.Body.BodyComponent.ContainerID);
 
             var expectedCount = 2;
             var contained = handsContainer.ContainedEntities.ToList();
@@ -77,7 +77,7 @@ public sealed class HandOrganTest
             foreach (var proto in protos)
             {
                 expectedCount++;
-                entityManager.SpawnInContainerOrDrop(proto, body, BodyComponent.ContainerID);
+                entityManager.SpawnInContainerOrDrop(proto, body, Shared.Body.BodyComponent.ContainerID);
                 Assert.That(hands.Count, Is.EqualTo(expectedCount));
             }
         });

@@ -1,7 +1,7 @@
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.BodyNew;
+namespace Content.Shared.Body;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(HandOrganSystem))]

@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
-using Content.Shared.BodyNew;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
@@ -212,7 +211,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         return component.Powered &&
                component.Enabled &&
                !component.Broken &&
-               HasComp<BodyComponent>(victim) &&
+               HasComp<Body.BodyComponent>(victim) &&
                _emag.CheckFlag(uid, EmagType.Interaction);
     }
 

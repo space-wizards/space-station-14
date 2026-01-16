@@ -1,7 +1,7 @@
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.BodyNew;
+namespace Content.Shared.Body;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(BodySystem))]

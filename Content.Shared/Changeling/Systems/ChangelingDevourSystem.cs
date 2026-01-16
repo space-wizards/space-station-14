@@ -3,7 +3,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
-using Content.Shared.BodyNew;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -249,7 +248,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             PopupType.LargeCaution);
 
         if (_mobState.IsDead(target.Value)
-            && TryComp<BodyComponent>(target, out var body)
+            && TryComp<Body.BodyComponent>(target, out var body)
             && HasComp<HumanoidAppearanceComponent>(target)
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {

@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.BodyNew;
+namespace Content.Shared.Body;
 
 /// <summary>
 /// Marker prototype that defines well-known types of organs, e.g. "kidneys" or "left arm".

@@ -3,7 +3,7 @@ using Content.Shared.Species.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Zombies;
 using Content.Server.Zombies;
-using Content.Shared.BodyNew;
+using Content.Shared.Body;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Species.Systems;

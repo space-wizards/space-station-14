@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Body.Components;
-using Content.Shared.BodyNew;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;

@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.BodyNew;
+namespace Content.Shared.Body;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(GibbableOrganSystem))]

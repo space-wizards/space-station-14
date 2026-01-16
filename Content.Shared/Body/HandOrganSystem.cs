@@ -1,6 +1,6 @@
 using Content.Shared.Hands.EntitySystems;
 
-namespace Content.Shared.BodyNew;
+namespace Content.Shared.Body;
 
 public sealed class HandOrganSystem : EntitySystem
 {
@@ -10,16 +10,16 @@ public sealed class HandOrganSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HandOrganComponent, OrganGotInsertedEvent>(OnGotInserted);
-        SubscribeLocalEvent<HandOrganComponent, OrganGotRemovedEvent>(OnGotRemoved);
+        SubscribeLocalEvent<Body.HandOrganComponent, OrganGotInsertedEvent>(OnGotInserted);
+        SubscribeLocalEvent<Body.HandOrganComponent, OrganGotRemovedEvent>(OnGotRemoved);
     }
 
-    private void OnGotInserted(Entity<HandOrganComponent> ent, ref OrganGotInsertedEvent args)
+    private void OnGotInserted(Entity<Body.HandOrganComponent> ent, ref OrganGotInsertedEvent args)
     {
         _hands.AddHand(args.Target, ent.Comp.HandID, ent.Comp.Data);
     }
 
-    private void OnGotRemoved(Entity<HandOrganComponent> ent, ref OrganGotRemovedEvent args)
+    private void OnGotRemoved(Entity<Body.HandOrganComponent> ent, ref OrganGotRemovedEvent args)
     {
         // prevent a recursive double-delete bug
         if (LifeStage(args.Target) >= EntityLifeStage.Terminating)

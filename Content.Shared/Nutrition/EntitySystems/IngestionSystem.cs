@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
-using Content.Shared.BodyNew;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -57,7 +56,7 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     // Body Component Dependencies
-    [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private readonly Body.BodySystem _body = default!;
     [Dependency] private readonly ReactiveSystem _reaction = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
 
@@ -78,8 +77,8 @@ public sealed partial class IngestionSystem : EntitySystem
         SubscribeLocalEvent<EdibleComponent, FullyEatenEvent>(OnFullyEaten);
 
         // Body Component eating handler
-        SubscribeLocalEvent<BodyComponent, AttemptIngestEvent>(OnTryIngest);
-        SubscribeLocalEvent<BodyComponent, EatingDoAfterEvent>(OnEatingDoAfter);
+        SubscribeLocalEvent<Body.BodyComponent, AttemptIngestEvent>(OnTryIngest);
+        SubscribeLocalEvent<Body.BodyComponent, EatingDoAfterEvent>(OnEatingDoAfter);
 
         // Verbs
         SubscribeLocalEvent<EdibleComponent, GetVerbsEvent<AlternativeVerb>>(AddEdibleVerbs);
@@ -241,7 +240,7 @@ public sealed partial class IngestionSystem : EntitySystem
         return false;
     }
 
-    private void OnTryIngest(Entity<BodyComponent> entity, ref AttemptIngestEvent args)
+    private void OnTryIngest(Entity<Body.BodyComponent> entity, ref AttemptIngestEvent args)
     {
         var food = args.Ingested;
         var forceFed = args.User != entity.Owner;
@@ -295,7 +294,7 @@ public sealed partial class IngestionSystem : EntitySystem
         }
     }
 
-    private void OnEatingDoAfter(Entity<BodyComponent> entity, ref EatingDoAfterEvent args)
+    private void OnEatingDoAfter(Entity<Body.BodyComponent> entity, ref EatingDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || entity.Comp.Deleted || args.Target == null)
             return;

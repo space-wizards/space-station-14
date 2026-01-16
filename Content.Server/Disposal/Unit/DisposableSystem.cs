@@ -1,6 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
-using Content.Shared.BodyNew;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Item;
@@ -54,7 +53,7 @@ namespace Content.Server.Disposal.Unit
 
         private void CanInsert(Entity<DisposalHolderComponent> ent, ref ContainerIsInsertingAttemptEvent args)
         {
-            if (!HasComp<ItemComponent>(args.EntityUid) && !HasComp<BodyComponent>(args.EntityUid))
+            if (!HasComp<ItemComponent>(args.EntityUid) && !HasComp<Shared.Body.BodyComponent>(args.EntityUid))
                 args.Cancel();
         }
 
