@@ -1,0 +1,55 @@
+# White steel tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhite
+  name: stack-white-tile
+  spawn: FloorTileItemWhite
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteOffset
+  name: stack-offset-white-steel-tile
+  spawn: FloorTileItemWhiteOffset
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteDiagonalMini
+  name: stack-white-steel-diagonal-mini-tile
+  spawn: FloorTileItemWhiteDiagonalMini
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteDiagonal
+  name: stack-white-steel-diagonal-tile
+  spawn: FloorTileItemWhiteDiagonal
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteHerringbone
+  name: stack-white-steel-herringbone
+  spawn: FloorTileItemWhiteHerringbone
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteMini
+  name: stack-white-steel-mini-tile
+  spawn: FloorTileItemWhiteMini
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteMono
+  name: stack-white-steel-mono-tile
+  spawn: FloorTileItemWhiteMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhitePavement
+  name: stack-white-steel-pavement
+  spawn: FloorTileItemWhitePavement
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhitePavementVertical
+  name: stack-white-steel-vertical-pavement
+  spawn: FloorTileItemWhitePavementVertical

@@ -1,6 +1,6 @@
 using Content.Server.Administration.Managers;
-using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
@@ -78,7 +78,7 @@ namespace Content.Server.Sandbox.Commands
                 if (!EntityManager.TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent))
                     continue;
 
-                _pipeColorSystem.SetColor((x.Owner, atmosPipeColorComponent), color);
+                _pipeColorSystem.SetColor(x.Owner, atmosPipeColorComponent, color);
             }
         }
     }

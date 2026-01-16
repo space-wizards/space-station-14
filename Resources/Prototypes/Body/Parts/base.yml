@@ -9,7 +9,6 @@
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
-  - type: Gibbable
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -40,9 +39,6 @@
     vital: true
   - type: Input
     context: "ghost"
-  - type: Tag
-    tags:
-      - Head
 
 - type: entity
   id: BaseLeftArm

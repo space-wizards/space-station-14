@@ -3,11 +3,8 @@ using Content.Client.Gameplay;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Content.Shared.Random;
 using Content.Shared.Random.Rules;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
@@ -25,6 +22,7 @@ public sealed partial class ContentAudioSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -61,7 +59,7 @@ public sealed partial class ContentAudioSystem
     private void InitializeAmbientMusic()
     {
         Subs.CVar(_configManager, CCVars.AmbientMusicVolume, AmbienceCVarChanged, true);
-        _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
+        _sawmill = _logManager.GetSawmill("audio.ambience");
 
         // Reset audio
         _nextAudio = TimeSpan.MaxValue;

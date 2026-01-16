@@ -1,0 +1,35 @@
+- type: chatNotification
+  id: IntellicardDownload
+  message: ai-consciousness-download-warning
+  color: Red
+  sound: /Audio/Misc/notice2.ogg
+  nextDelay: 8
+
+- type: chatNotification
+  id: TurretIsAttacking
+  message: station-ai-turret-component-is-attacking-warning
+  color: Orange
+  sound: /Audio/Misc/notice2.ogg
+  nextDelay: 14
+  notifyBySource: true
+
+- type: chatNotification
+  id: AiWireSnipped
+  message: ai-wire-snipped
+  color: Pink
+  nextDelay: 12
+  notifyBySource: true
+
+- type: chatNotification
+  id: AiLosingPower
+  message: station-ai-core-losing-power
+  sound: /Audio/Misc/notice2.ogg
+  color: Orange
+  nextDelay: 30
+  
+- type: chatNotification
+  id: AiCriticalPower
+  message: station-ai-core-critical-power
+  sound: /Audio/Effects/alert.ogg
+  color: Red
+  nextDelay: 120
