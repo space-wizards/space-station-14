@@ -78,6 +78,8 @@
   components:
   - type: AnomalyScanner
     ignoreSecret: true
+  - type: Sprite
+    color: green
 
 - type: entity
   id: AnomalyLocatorUnpowered
