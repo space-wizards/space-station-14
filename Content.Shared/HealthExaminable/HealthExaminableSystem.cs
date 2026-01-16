@@ -61,20 +61,17 @@ public sealed class HealthExaminableSystem : EntitySystem
             if (dmg == FixedPoint2.Zero)
                 continue;
 
-            var index = -1;
+            var chosenLocStr = string.Empty;
             for (var i = 0; i < component.Thresholds.Length; i++)
             {
                 if (component.Thresholds[i] <= dmg)
-                    index = i;
+                    Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{i}", out chosenLocStr, ("target", Identity.Entity(uid, EntityManager)));
                 else
                     break;
             }
 
-            if (index < 0)
-                continue;
-
-            // i.e., this string doesn't exist, because theres nothing for that threshold
-            if (!Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{index}", out var chosenLocStr, ("target", Identity.Entity(uid, EntityManager))))
+            // No threshold string was found
+            if (string.IsNullOrEmpty(chosenLocStr))
                 continue;
 
             if (!first)
