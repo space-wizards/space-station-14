@@ -49,19 +49,31 @@ namespace Content.Client.Instruments.UI
 
         private void SetupSources(params InstrumentMidiSourceBase[] modes)
         {
-            ButtonGroup group = new ButtonGroup();
-            Button? firstButton = null;
-            foreach (var mode in modes)
+            var group = new ButtonGroup();
+            for (var i = 0; i < modes.Length; i++)
             {
+                var mode = modes[i];
                 var button = new Button();
-                if (firstButton == null)
-                    firstButton = button;
                 button.Text = mode.ButtonName;
                 button.Group = group;
                 button.OnPressed += (o) => { SwitchMode(mode); };
                 MidiSourceButtonsBoxContainer.Children.Add(button);
+
+                // Set nicer style classes depending on button position.
+                if (i == 0)
+                {
+                    button.Pressed = true;
+                    button.StyleClasses.Add("OpenLeft");
+                }
+                else if (i == modes.Length - 1)
+                {
+                    button.StyleClasses.Add("OpenRight");
+                }
+                else
+                {
+                    button.StyleClasses.Add("OpenBoth");
+                }
             }
-            firstButton!.Pressed = true;
         }
 
         private void SwitchMode(InstrumentMidiSourceBase mode)
