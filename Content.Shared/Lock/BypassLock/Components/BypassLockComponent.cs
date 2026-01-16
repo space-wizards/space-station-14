@@ -21,5 +21,11 @@ public sealed partial class BypassLockComponent : Component
     /// Amount of time in seconds it takes to bypass
     /// </summary>
     [DataField]
-    public TimeSpan BypassDelay = TimeSpan.FromSeconds(5f);
+    public TimeSpan BypassDelay = TimeSpan.FromSeconds(4f);
+
+    /// <summary>
+    /// Whether the wirepanel should be opened as well, if one exists.
+    /// </summary>
+    [DataField]
+    public bool OpenWiresPanel = false;
 }
