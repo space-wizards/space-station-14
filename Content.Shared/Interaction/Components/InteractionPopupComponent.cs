@@ -74,6 +74,12 @@ public sealed partial class InteractionPopupComponent : Component
     [DataField("soundPerceivedByOthers")]
     public bool SoundPerceivedByOthers = true;
 
+    /// <summary>
+    /// Does the user need hands to perform this interaction?
+    /// </summary>
+    [DataField]
+    public bool NeedsHands = true;
+
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastInteractTime;
 
