@@ -10,6 +10,7 @@ using Content.Server.Cloning.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -57,7 +58,7 @@ namespace Content.Server.Medical
             if (!Resolve(uid, ref component))
                 return false;
 
-            return HasComp<Shared.Body.BodyComponent>(target);
+            return HasComp<BodyComponent>(target);
         }
 
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
@@ -226,7 +227,7 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity != null)
                 return;
 
-            if (!HasComp<Shared.Body.BodyComponent>(to_insert))
+            if (!HasComp<BodyComponent>(to_insert))
                 return;
 
             _containerSystem.Insert(to_insert, scannerComponent.BodyContainer);

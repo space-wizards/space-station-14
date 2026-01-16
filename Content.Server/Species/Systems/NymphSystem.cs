@@ -1,9 +1,8 @@
 using Content.Server.Mind;
-using Content.Shared.Species.Components;
-using Content.Shared.Body.Events;
-using Content.Shared.Zombies;
 using Content.Server.Zombies;
 using Content.Shared.Body;
+using Content.Shared.Species.Components;
+using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Species.Systems;

@@ -34,7 +34,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
     [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    private EntityQuery<Shared.Body.OrganComponent> _organQuery;
+    private EntityQuery<OrganComponent> _organQuery;
     private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
     private static readonly ProtoId<MetabolismGroupPrototype> Gas = "Gas";
 
@@ -42,7 +42,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
     {
         base.Initialize();
 
-        _organQuery = GetEntityQuery<Shared.Body.OrganComponent>();
+        _organQuery = GetEntityQuery<OrganComponent>();
         _solutionQuery = GetEntityQuery<SolutionContainerManagerComponent>();
 
         SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
@@ -95,7 +95,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
         }
     }
 
-    private void TryMetabolize(Entity<MetabolizerComponent, Shared.Body.OrganComponent?, SolutionContainerManagerComponent?> ent)
+    private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent)
     {
         _organQuery.Resolve(ent, ref ent.Comp2, logMissing: false);
 
