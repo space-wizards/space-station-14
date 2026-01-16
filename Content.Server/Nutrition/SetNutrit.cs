@@ -84,7 +84,7 @@ public sealed class SetNutrit : LocalizedEntityCommands
             }
             default:
             {
-                shell.WriteError($"invalid nutrition system ${systemString}");
+                shell.WriteError(Loc.GetString("cmd-setnutrit-invalid-nutrition-system", ("systemString", systemString)));
                 return;
             }
         }
@@ -97,7 +97,7 @@ public sealed class SetNutrit : LocalizedEntityCommands
             case 1:
             {
                 string[] kinds = { "hunger", "thirst" };
-                return CompletionResult.FromHintOptions(kinds, "nutrition system");
+                return CompletionResult.FromHintOptions(kinds, Loc.GetString("cmd-setnutrit-hint-nutrition-system"));
             }
             case 2:
             {

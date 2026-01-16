@@ -12,7 +12,6 @@ namespace Content.Server.Mind.Commands;
 public sealed class RenameCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
@@ -33,7 +32,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!TryParseUid(args[0], shell, _entManager, out var entityUid))
+        if (!TryParseUid(args[0], shell, EntityManager, out var entityUid))
             return;
 
         _metaSystem.SetEntityName(entityUid.Value, name);
@@ -42,7 +41,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
     private bool TryParseUid(string str, IConsoleShell shell,
         IEntityManager entMan, [NotNullWhen(true)] out EntityUid? entityUid)
     {
-        if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
+        if (NetEntity.TryParse(str, out var entityUidNet) && EntityManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
             return true;
 
         if (_playerManager.TryGetSessionByUsername(str, out var session) && session.AttachedEntity.HasValue)

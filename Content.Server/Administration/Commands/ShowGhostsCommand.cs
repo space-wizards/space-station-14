@@ -6,15 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class ShowGhostsCommand : IConsoleCommand
+    public sealed class ShowGhostsCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public string Command => "showghosts";
-        public string Description => "makes all of the currently present ghosts visible. Cannot be reversed.";
-        public string Help => "showghosts <visible>";
+        public override string Command => "showghosts";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {

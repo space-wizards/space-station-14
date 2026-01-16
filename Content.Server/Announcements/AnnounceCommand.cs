@@ -16,8 +16,6 @@ public sealed class AnnounceCommand : LocalizedEntityCommands
     [Dependency] private readonly IResourceManager _res = default!;
 
     public override string Command => "announce";
-    public override string Description => Loc.GetString("cmd-announce-desc");
-    public override string Help => Loc.GetString("cmd-announce-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

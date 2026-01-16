@@ -70,8 +70,11 @@ anomaly-generator-charges = {$charges ->
 }
 anomaly-generator-announcement = An anomaly has been generated!
 
-anomaly-command-pulse = Pulses a target anomaly
-anomaly-command-supercritical = Makes a target anomaly go supercritical
+cmd-pulseanomaly-desc = Pulses a target anomaly.
+cmd-pulseanomaly-help = Usage: {$command} <uid>
+
+cmd-supercriticalanomaly-desc = Makes a target anomaly go supercritical.
+cmd-supercriticalanomaly-help = Usage: {$command} <uid>
 
 # Flavor text on the footer
 anomaly-generator-flavor-left = Anomaly may spawn inside the operator.

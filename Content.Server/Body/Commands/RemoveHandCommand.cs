@@ -10,48 +10,48 @@ using Robust.Shared.Random;
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class RemoveHandCommand : IConsoleCommand
+    public sealed class RemoveHandCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
-        public string Command => "removehand";
-        public string Description => "Removes a hand from your entity.";
-        public string Help => $"Usage: {Command}";
+        public override string Command => "removehand";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine("Only a player can run this command.");
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
             if (player.AttachedEntity == null)
             {
-                shell.WriteLine("You have no entity.");
+                shell.WriteLine(Loc.GetString("shell-must-be-attached-to-entity"));
                 return;
             }
 
-            if (!_entManager.TryGetComponent(player.AttachedEntity, out BodyComponent? body))
+            if (!EntityManager.TryGetComponent(player.AttachedEntity, out BodyComponent? body))
             {
-                var text = $"You have no body{(_random.Prob(0.2f) ? " and you must scream." : ".")}";
+                var text = Loc.GetString(
+                    "cmd-removehand-no-body",
+                    ("random", _random.Prob(0.2f) ? Loc.GetString("cmd-removehand-no-body-must-scream") : "."));
 
                 shell.WriteLine(text);
                 return;
             }
 
-            var bodySystem = _entManager.System<BodySystem>();
-            var hand = bodySystem.GetBodyChildrenOfType(player.AttachedEntity.Value, BodyPartType.Hand, body).FirstOrDefault();
+            var hand = _bodySystem.GetBodyChildrenOfType(player.AttachedEntity.Value, BodyPartType.Hand, body).FirstOrDefault();
 
             if (hand == default)
             {
-                shell.WriteLine("You have no hands.");
+                shell.WriteLine(Loc.GetString("cmd-removehand-no-hands"));
             }
             else
             {
-                _entManager.System<SharedTransformSystem>().AttachToGridOrMap(hand.Id);
+                _transformSystem.AttachToGridOrMap(hand.Id);
             }
         }
     }

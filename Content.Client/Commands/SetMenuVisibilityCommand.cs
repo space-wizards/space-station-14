@@ -12,8 +12,6 @@ internal sealed class SetMenuVisibilityCommand : LocalizedCommands
 
     public override string Command => "menuvis";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (!TryParseArguments(shell, args, out var visibility))
@@ -45,7 +43,7 @@ internal sealed class SetMenuVisibilityCommand : LocalizedCommands
                     visibility |= MenuVisibility.All;
                     break;
                 default:
-                    shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error", ("arg", arg)));
+                    shell.WriteError(Loc.GetString("cmd-menuvis-error", ("arg", arg)));
                     return false;
             }
         }

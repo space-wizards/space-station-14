@@ -21,7 +21,7 @@ public sealed class AddActionCommand : LocalizedEntityCommands
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString(Loc.GetString("cmd-addaction-invalid-args")));
+            shell.WriteError(Loc.GetString("cmd-addaction-invalid-args"));
             return;
         }
 

@@ -31,7 +31,7 @@ namespace Content.Server.Power
 
             if (!float.TryParse(args[1], out var percent))
             {
-                shell.WriteLine(Loc.GetString($"cmd-setbatterypercent-not-valid-percent", ("arg", args[1])));
+                shell.WriteLine(Loc.GetString("cmd-setbatterypercent-not-valid-percent", ("arg", args[1])));
                 return;
             }
 
@@ -39,7 +39,7 @@ namespace Content.Server.Power
                 _batterySystem.SetCharge((id.Value, battery), battery.MaxCharge * percent / 100);
             else
             {
-                shell.WriteLine(Loc.GetString($"cmd-setbatterypercent-battery-not-found", ("id", id)));
+                shell.WriteLine(Loc.GetString("cmd-setbatterypercent-battery-not-found", ("id", id)));
                 return;
             }
             // Don't acknowledge b/c people WILL forall this

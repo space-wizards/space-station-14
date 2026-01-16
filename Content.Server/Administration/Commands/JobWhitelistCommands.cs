@@ -47,7 +47,7 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
             var isWhitelisted = await _db.IsJobWhitelisted(guid, job);
             if (isWhitelisted)
             {
-                shell.WriteLine(Loc.GetString("cmd-jobwhitelistadd-already-whitelisted",
+                shell.WriteLine(Loc.GetString("cmd-jobwhitelist-already-whitelisted",
                     ("player", player),
                     ("jobId", job.Id),
                     ("jobName", jobPrototype.LocalizedName)));
@@ -55,7 +55,7 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
             }
 
             _jobWhitelist.AddWhitelist(guid, job);
-            shell.WriteLine(Loc.GetString("cmd-jobwhitelistadd-added",
+            shell.WriteLine(Loc.GetString("cmd-jobwhitelist-added",
                 ("player", player),
                 ("jobId", job.Id),
                 ("jobName", jobPrototype.LocalizedName)));
@@ -98,7 +98,7 @@ public sealed class GetJobWhitelistCommand : LocalizedCommands
     {
         if (args.Length == 0)
         {
-            shell.WriteError("This command needs at least one argument.");
+            shell.WriteError(Loc.GetString("cmd-jobwhitelistget-invalid-args"));
             shell.WriteLine(Help);
             return;
         }

@@ -24,6 +24,6 @@ public sealed class GridDraggingCommand : LocalizedEntityCommands
         }
 
         _grid.Toggle(shell.Player);
-        shell.WriteLine(Loc.GetString($"cmd-griddrag-status", ("status", _grid.IsEnabled(shell.Player))));
+        shell.WriteLine(Loc.GetString("cmd-griddrag-status", ("status", _grid.IsEnabled(shell.Player))));
     }
 }

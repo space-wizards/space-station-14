@@ -36,7 +36,7 @@ namespace Content.Server.Afk
             {
                 return CompletionResult.FromHintOptions(
                     CompletionHelper.SessionNames(players: _players),
-                    "<playerName>");
+                    Loc.GetString("cmd-isafk-hint-1"));
             }
 
             return CompletionResult.Empty;

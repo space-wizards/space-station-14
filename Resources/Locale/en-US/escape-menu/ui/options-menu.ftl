@@ -353,7 +353,7 @@ ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will
 
 ## Toggle window console command
 cmd-options-desc = Opens options menu, optionally with a specific tab selected.
-cmd-options-help = Usage: options [tab]
+cmd-options-help = Usage: {$command} [tab]
 
 ## Accessibility menu
 

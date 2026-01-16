@@ -12,8 +12,6 @@ internal sealed class AtvRangeCommand : LocalizedCommands
 
     public override string Command => "atvrange";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
@@ -23,17 +21,17 @@ internal sealed class AtvRangeCommand : LocalizedCommands
         }
         if (!float.TryParse(args[0], out var xStart))
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-start"));
+            shell.WriteError(Loc.GetString("cmd-atvrange-error-start"));
             return;
         }
         if (!float.TryParse(args[1], out var xEnd))
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-end"));
+            shell.WriteError(Loc.GetString("cmd-atvrange-error-end"));
             return;
         }
         if (xStart == xEnd)
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-zero"));
+            shell.WriteError(Loc.GetString("cmd-atvrange-error-zero"));
             return;
         }
         var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();
@@ -49,8 +47,6 @@ internal sealed class AtvModeCommand : LocalizedCommands
 
     public override string Command => "atvmode";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 1)
@@ -60,7 +56,7 @@ internal sealed class AtvModeCommand : LocalizedCommands
         }
         if (!Enum.TryParse<AtmosDebugOverlayMode>(args[0], out var xMode))
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-invalid"));
+            shell.WriteError(Loc.GetString("cmd-atvmode-error-invalid"));
             return;
         }
         int xSpecificGas = 0;
@@ -70,12 +66,12 @@ internal sealed class AtvModeCommand : LocalizedCommands
         {
             if (args.Length != 2)
             {
-                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-target-gas"));
+                shell.WriteError(Loc.GetString("cmd-atvmode-error-target-gas"));
                 return;
             }
             if (!AtmosCommandUtils.TryParseGasID(args[1], out xSpecificGas))
             {
-                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-out-of-range"));
+                shell.WriteError(Loc.GetString("cmd-atvmode-error-out-of-range"));
                 return;
             }
         }
@@ -83,7 +79,7 @@ internal sealed class AtvModeCommand : LocalizedCommands
         {
             if (args.Length != 1)
             {
-                shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-error-info"));
+                shell.WriteLine(Loc.GetString("cmd-atvmode-error-info"));
                 return;
             }
             if (xMode == AtmosDebugOverlayMode.Temperature)
@@ -108,8 +104,6 @@ internal sealed class AtvCBMCommand : LocalizedCommands
 
     public override string Command => "atvcbm";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -119,7 +113,7 @@ internal sealed class AtvCBMCommand : LocalizedCommands
         }
         if (!bool.TryParse(args[0], out var xFlag))
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error"));
+            shell.WriteError(Loc.GetString("cmd-atvcbm-error"));
             return;
         }
         var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();

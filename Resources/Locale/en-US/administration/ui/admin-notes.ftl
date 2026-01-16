@@ -83,9 +83,10 @@ admin-notes-new-message = You've received an admin message from {$admin}: {$mess
 admin-notes-fallback-admin-name = [System]
 
 # Admin remarks
-admin-remarks-command-description = Opens the admin remarks page
-admin-remarks-command-error = Admin remarks have been disabled
-admin-remarks-title = Admin remarks
+cmd-adminremarks-desc = Opens the admin remarks page.
+cmd-adminremarks-help = Usage: {$command}
+
+cmd-adminremarks-error = Admin remarks have been disabled
 
 # Misc
 system-user = [System]

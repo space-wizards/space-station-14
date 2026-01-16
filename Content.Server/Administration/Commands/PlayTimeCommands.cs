@@ -7,16 +7,14 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeAddOverallCommand : IConsoleCommand
+public sealed class PlayTimeAddOverallCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
-    public string Command => "playtime_addoverall";
-    public string Description => Loc.GetString("cmd-playtime_addoverall-desc");
-    public string Help => Loc.GetString("cmd-playtime_addoverall-help", ("command", Command));
+    public override string Command => "playtime_addoverall";
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
@@ -45,7 +43,7 @@ public sealed class PlayTimeAddOverallCommand : IConsoleCommand
             ("time", overall)));
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
             return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(),
@@ -59,16 +57,14 @@ public sealed class PlayTimeAddOverallCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeAddRoleCommand : IConsoleCommand
+public sealed class PlayTimeAddRoleCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
-    public string Command => "playtime_addrole";
-    public string Description => Loc.GetString("cmd-playtime_addrole-desc");
-    public string Help => Loc.GetString("cmd-playtime_addrole-help", ("command", Command));
+    public override string Command => "playtime_addrole";
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 3)
         {
@@ -94,13 +90,14 @@ public sealed class PlayTimeAddRoleCommand : IConsoleCommand
 
         _playTimeTracking.AddTimeToTracker(player, role, TimeSpan.FromMinutes(minutes));
         var time = _playTimeTracking.GetPlayTimeForTracker(player, role);
-        shell.WriteLine(Loc.GetString("cmd-playtime_addrole-succeed",
+        shell.WriteLine(Loc.GetString(
+            "cmd-playtime_addrole-succeed",
             ("username", userName),
             ("role", role),
             ("time", time)));
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
@@ -124,16 +121,14 @@ public sealed class PlayTimeAddRoleCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeGetOverallCommand : IConsoleCommand
+public sealed class PlayTimeGetOverallCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
-    public string Command => "playtime_getoverall";
-    public string Description => Loc.GetString("cmd-playtime_getoverall-desc");
-    public string Help => Loc.GetString("cmd-playtime_getoverall-help", ("command", Command));
+    public override string Command => "playtime_getoverall";
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -155,7 +150,7 @@ public sealed class PlayTimeGetOverallCommand : IConsoleCommand
             ("time", value)));
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
@@ -169,16 +164,14 @@ public sealed class PlayTimeGetOverallCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeGetRoleCommand : IConsoleCommand
+public sealed class PlayTimeGetRoleCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
-    public string Command => "playtime_getrole";
-    public string Description => Loc.GetString("cmd-playtime_getrole-desc");
-    public string Help => Loc.GetString("cmd-playtime_getrole-help", ("command", Command));
+    public override string Command => "playtime_getrole";
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length is not (1 or 2))
         {
@@ -224,7 +217,7 @@ public sealed class PlayTimeGetRoleCommand : IConsoleCommand
         }
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
@@ -248,16 +241,14 @@ public sealed class PlayTimeGetRoleCommand : IConsoleCommand
 /// Saves the timers for a particular player immediately
 /// </summary>
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeSaveCommand : IConsoleCommand
+public sealed class PlayTimeSaveCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
-    public string Command => "playtime_save";
-    public string Description => Loc.GetString("cmd-playtime_save-desc");
-    public string Help => Loc.GetString("cmd-playtime_save-help", ("command", Command));
+    public override string Command => "playtime_save";
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -276,7 +267,7 @@ public sealed class PlayTimeSaveCommand : IConsoleCommand
         shell.WriteLine(Loc.GetString("cmd-playtime_save-succeed", ("username", name)));
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
@@ -290,16 +281,14 @@ public sealed class PlayTimeSaveCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class PlayTimeFlushCommand : IConsoleCommand
+public sealed class PlayTimeFlushCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
-    public string Command => "playtime_flush";
-    public string Description => Loc.GetString("cmd-playtime_flush-desc");
-    public string Help => Loc.GetString("cmd-playtime_flush-help", ("command", Command));
+    public override string Command => "playtime_flush";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length is not (0 or 1))
         {
@@ -323,7 +312,7 @@ public sealed class PlayTimeFlushCommand : IConsoleCommand
         _playTimeTracking.FlushTracker(pSession);
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {

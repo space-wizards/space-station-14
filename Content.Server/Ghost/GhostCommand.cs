@@ -8,51 +8,49 @@ using Content.Server.GameTicking;
 namespace Content.Server.Ghost
 {
     [AnyCommand]
-    public sealed class GhostCommand : IConsoleCommand
+    public sealed class GhostCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly GhostSystem _ghostSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-        public string Command => "ghost";
-        public string Description => Loc.GetString("ghost-command-description");
-        public string Help => Loc.GetString("ghost-command-help-text");
+        public override string Command => "ghost";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString("ghost-command-no-session"));
+                shell.WriteLine(Loc.GetString("cmd-ghost-no-session"));
                 return;
             }
 
-            var gameTicker = _entities.System<GameTicker>();
-            if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
+            if (!_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
                 playerStatus is not PlayerGameStatus.JoinedGame)
             {
-                shell.WriteLine(Loc.GetString("ghost-command-error-lobby"));
+                shell.WriteLine(Loc.GetString("cmd-ghost-error-lobby"));
                 return;
             }
 
             if (player.AttachedEntity is { Valid: true } frozen &&
-                _entities.HasComponent<AdminFrozenComponent>(frozen))
+                EntityManager.HasComponent<AdminFrozenComponent>(frozen))
             {
-                var deniedMessage = Loc.GetString("ghost-command-denied");
+                var deniedMessage = Loc.GetString("cmd-ghost-denied");
                 shell.WriteLine(deniedMessage);
-                _entities.System<PopupSystem>()
-                    .PopupEntity(deniedMessage, frozen, frozen);
+                _popupSystem.PopupEntity(deniedMessage, frozen, frozen);
                 return;
             }
 
-            var minds = _entities.System<SharedMindSystem>();
-            if (!minds.TryGetMind(player, out var mindId, out var mind))
+            if (!_mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
-                mindId = minds.CreateMind(player.UserId);
-                mind = _entities.GetComponent<MindComponent>(mindId);
+                mindId = _mindSystem.CreateMind(player.UserId);
+                mind = EntityManager.GetComponent<MindComponent>(mindId);
             }
 
-            if (!_entities.System<GhostSystem>().OnGhostAttempt(mindId, true, true, mind: mind))
+            if (!_ghostSystem.OnGhostAttempt(mindId, true, true, mind: mind))
             {
-                shell.WriteLine(Loc.GetString("ghost-command-denied"));
+                shell.WriteLine(Loc.GetString("cmd-ghost-denied"));
             }
         }
     }

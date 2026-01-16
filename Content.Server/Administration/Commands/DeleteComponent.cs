@@ -22,7 +22,7 @@ namespace Content.Server.Administration.Commands
 
                     if (!_compFactory.TryGetRegistration(name, out var registration))
                     {
-                        shell.WriteLine(Loc.GetString($"cmd-deletecomponent-no-component-exists", ("name", name)));
+                        shell.WriteLine(Loc.GetString("cmd-deletecomponent-no-component-exists", ("name", name)));
                         break;
                     }
 
@@ -37,7 +37,7 @@ namespace Content.Server.Administration.Commands
                         i++;
                     }
 
-                    shell.WriteLine(Loc.GetString($"cmd-deletecomponent-success", ("count", i), ("name", name)));
+                    shell.WriteLine(Loc.GetString("cmd-deletecomponent-success", ("count", i), ("name", name)));
 
                     break;
             }

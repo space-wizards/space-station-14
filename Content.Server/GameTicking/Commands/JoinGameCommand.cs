@@ -11,28 +11,20 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Commands
 {
     [AnyCommand]
-    sealed class JoinGameCommand : IConsoleCommand
+    sealed class JoinGameCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly StationJobsSystem _stationJobs = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
 
-        private readonly ISawmill _sawmill;
+        private ISawmill? _sawmill;
 
-        public string Command => "joingame";
-        public string Description => "";
-        public string Help => "";
+        public override string Command => "joingame";
 
-        public JoinGameCommand()
-        {
-            IoCManager.InjectDependencies(this);
-
-            _sawmill = _logManager.GetSawmill("security");
-        }
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
@@ -47,22 +39,21 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = _entManager.System<GameTicker>();
-            var stationJobs = _entManager.System<StationJobsSystem>();
-
-            if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
+            if (_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
+                status == PlayerGameStatus.JoinedGame)
             {
+                _sawmill ??= _logManager.GetSawmill("security");
                 _sawmill.Info($"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
-                shell.WriteError($"{player.Name} is not in the lobby. This incident will be reported.");
+                shell.WriteError(Loc.GetString("cmd-joingame-not-in-lobby", ("player", player.Name)));
                 return;
             }
 
-            if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
+            if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             {
-                shell.WriteLine("Round has not started.");
+                shell.WriteLine(Loc.GetString("shell-can-only-run-while-round-is-active"));
                 return;
             }
-            else if (ticker.RunLevel == GameRunLevel.InRound)
+            else if (_gameTicker.RunLevel == GameRunLevel.InRound)
             {
                 string id = args[0];
 
@@ -71,11 +62,12 @@ namespace Content.Server.GameTicking.Commands
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
                 }
 
-                var station = _entManager.GetEntity(new NetEntity(sid));
+                var station = EntityManager.GetEntity(new NetEntity(sid));
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
-                if(stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
+                if (_stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {
-                    shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
+                    shell.WriteLine(Loc.GetString("cmd-joingame-no-available-slots",
+                        ("job", jobPrototype.LocalizedName)));
                     return;
                 }
 
@@ -84,11 +76,11 @@ namespace Content.Server.GameTicking.Commands
                     _adminManager.DeAdmin(player);
                 }
 
-                ticker.MakeJoinGame(player, station, id);
+                _gameTicker.MakeJoinGame(player, station, id);
                 return;
             }
 
-            ticker.MakeJoinGame(player, EntityUid.Invalid);
+            _gameTicker.MakeJoinGame(player, EntityUid.Invalid);
         }
     }
 }

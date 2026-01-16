@@ -11,11 +11,11 @@ public sealed partial class AnomalySystem
 
     public void InitializeCommands()
     {
-        _consoleHost.RegisterCommand("pulseanomaly", Loc.GetString("anomaly-command-pulse"), "pulseanomaly <uid>",
+        _consoleHost.RegisterCommand("pulseanomaly", Loc.GetString("cmd-pulseanomaly-desc"), Loc.GetString("cmd-pulseanomaly-help"),
             PulseAnomalyCommand,
             GetAnomalyCompletion);
 
-        _consoleHost.RegisterCommand("supercriticalanomaly", Loc.GetString("anomaly-command-supercritical"), "supercriticalanomaly <uid>",
+        _consoleHost.RegisterCommand("supercriticalanomaly", Loc.GetString("cmd-supercriticalanomaly-desc"), Loc.GetString("cmd-supercriticalanomaly-help"),
             SupercriticalAnomalyCommand,
             GetAnomalyCompletion);
     }
@@ -24,7 +24,7 @@ public sealed partial class AnomalySystem
     private void PulseAnomalyCommand(IConsoleShell shell, string argstr, string[] args)
     {
         if (args.Length != 1)
-            shell.WriteError("Argument length must be 1");
+            shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
 
         if (!NetEntity.TryParse(args[0], out var uidNet) || !TryGetEntity(uidNet, out var uid))
             return;
@@ -39,7 +39,7 @@ public sealed partial class AnomalySystem
     private void SupercriticalAnomalyCommand(IConsoleShell shell, string argstr, string[] args)
     {
         if (args.Length != 1)
-            shell.WriteError("Argument length must be 1");
+            shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
 
         if (!NetEntity.TryParse(args[0], out var uidNet) || !TryGetEntity(uidNet, out var uid))
             return;

@@ -1,2 +1,2 @@
-control-mob-command-description = Transfers user mind to the specified entity.
-control-mob-command-help-text = Usage: controlmob <mobUid>.
+cmd-control-mob-desc = Transfers user mind to the specified entity.
+cmd-control-mob-help = Usage: {$command} <mobUid>

@@ -7,17 +7,15 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class TileReplaceCommand : IConsoleCommand
+public sealed class TileReplaceCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     // ReSharper disable once StringLiteralTypo
-    public string Command => "tilereplace";
-    public string Description => "Replaces one tile with another.";
-    public string Help => $"Usage: {Command} [<gridId>] <src> <dst>";
+    public override string Command => "tilereplace";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
         EntityUid? gridId;
@@ -29,19 +27,19 @@ public sealed class TileReplaceCommand : IConsoleCommand
             case 2:
                 if (player?.AttachedEntity is not { Valid: true } playerEntity)
                 {
-                    shell.WriteError("Only a player can run this command without a grid ID.");
+                    shell.WriteError(Loc.GetString("cmd-tilereplace-only-player"));
                     return;
                 }
 
-                gridId = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
+                gridId = EntityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                 tileIdA = args[0];
                 tileIdB = args[1];
                 break;
             case 3:
                 if (!NetEntity.TryParse(args[0], out var idNet) ||
-                    !_entManager.TryGetEntity(idNet, out var id))
+                    !EntityManager.TryGetEntity(idNet, out var id))
                 {
-                    shell.WriteError($"{args[0]} is not a valid entity.");
+                    shell.WriteError(Loc.GetString("cmd-tilereplace-invalid-entity", ("entity", args[0])));
                     return;
                 }
 
@@ -57,32 +55,30 @@ public sealed class TileReplaceCommand : IConsoleCommand
         var tileA = _tileDef[tileIdA];
         var tileB = _tileDef[tileIdB];
 
-        if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
+        if (!EntityManager.TryGetComponent(gridId, out MapGridComponent? grid))
         {
-            shell.WriteError($"No grid exists with id {gridId}");
+            shell.WriteError(Loc.GetString("cmd-tilereplace-no-grid", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
 
-        if (!_entManager.EntityExists(gridId))
+        if (!EntityManager.EntityExists(gridId))
         {
-            shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
+            shell.WriteError(Loc.GetString("cmd-tilereplace-grid-no-entity", ("gridId", (gridId?.ToString() ?? string.Empty))));
             return;
         }
-
-        var mapSystem = _entManager.System<SharedMapSystem>();
 
         var changed = 0;
-        foreach (var tile in mapSystem.GetAllTiles(gridId.Value, grid))
+        foreach (var tile in _mapSystem.GetAllTiles(gridId.Value, grid))
         {
             var tileContent = tile.Tile;
             if (tileContent.TypeId == tileA.TileId)
             {
-                mapSystem.SetTile(gridId.Value, grid, tile.GridIndices, new Tile(tileB.TileId));
+                _mapSystem.SetTile(gridId.Value, grid, tile.GridIndices, new Tile(tileB.TileId));
                 changed++;
             }
         }
 
-        shell.WriteLine($"Changed {changed} tiles.");
+        shell.WriteLine(Loc.GetString("cmd-tilereplace-changed", ("changed", changed)));
     }
 }
 

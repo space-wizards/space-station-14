@@ -12,6 +12,6 @@ public sealed class ShowEmergencyShuttleCommand : LocalizedEntityCommands
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _shuttle.EnableShuttlePosition ^= true;
-        shell.WriteLine(Loc.GetString($"cmd-showemergencyshuttle-status", ("status", _shuttle.EnableShuttlePosition)));
+        shell.WriteLine(Loc.GetString("cmd-showemergencyshuttle-status", ("status", _shuttle.EnableShuttlePosition)));
     }
 }

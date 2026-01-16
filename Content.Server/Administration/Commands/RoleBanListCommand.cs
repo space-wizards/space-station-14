@@ -10,7 +10,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class RoleBanListCommand : IConsoleCommand
+public sealed class RoleBanListCommand : LocalizedCommands
 {
     [Dependency] private readonly IServerDbManager _dbManager = default!;
 
@@ -18,22 +18,21 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
     [Dependency] private readonly IPlayerLocator _locator = default!;
 
-    public string Command => "rolebanlist";
-    public string Description => Loc.GetString("cmd-rolebanlist-desc");
-    public string Help => Loc.GetString("cmd-rolebanlist-help");
+    public override string Command => "rolebanlist";
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1 && args.Length != 2)
         {
-            shell.WriteLine($"Invalid amount of args. {Help}");
+            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
+            shell.WriteLine(Help);
             return;
         }
 
         var includeUnbanned = true;
         if (args.Length == 2 && !bool.TryParse(args[1], out includeUnbanned))
         {
-            shell.WriteLine($"Argument two ({args[1]}) is not a boolean.");
+            shell.WriteLine(Loc.GetString("cmd-rolebanlist-arg2-not-bool", ("arg", args[1])));
             return;
         }
 
@@ -41,7 +40,7 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
         if (data == null)
         {
-            shell.WriteError("Unable to find a player with that name or id.");
+            shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
             return;
         }
 
@@ -52,13 +51,16 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
             if (bans.Count == 0)
             {
-                shell.WriteLine("That user has no bans in their record.");
+                shell.WriteLine(Loc.GetString("cmd-rolebanlist-no-bans", ("user", data.Username)));
                 return;
             }
 
             foreach (var ban in bans)
             {
-                var msg = $"ID: {ban.Id}: Role: {ban.Role} Reason: {ban.Reason}";
+                var id = ban.Id ?? 0;
+                var role = ban.Role ?? string.Empty;
+                var reason = ban.Reason ?? string.Empty;
+                var msg = Loc.GetString("cmd-rolebanlist-ban", ("id", id), ("role", role), ("reason", reason));
                 shell.WriteLine(msg);
             }
             return;
@@ -70,7 +72,7 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         return args.Length switch
         {

@@ -6,15 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class RemoveEntityStorageCommand : IConsoleCommand
+    public sealed class RemoveEntityStorageCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "rmstorage";
-        public string Description => "Removes a given entity from it's containing storage, if any.";
-        public string Help => "Usage: rmstorage <uid>";
+        public override string Command => "rmstorage";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
@@ -42,7 +40,7 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                shell.WriteError("Could not remove from storage.");
+                shell.WriteError(Loc.GetString("cmd-rmstorage-error-remove"));
             }
         }
     }

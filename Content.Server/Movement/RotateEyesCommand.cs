@@ -38,6 +38,6 @@ public sealed class RotateEyesCommand : LocalizedEntityCommands
             count++;
         }
 
-        shell.WriteLine(Loc.GetString("cmd-rotateeyes-command-count", ("count", count)));
+        shell.WriteLine(Loc.GetString("cmd-rotateeyes-count", ("count", count)));
     }
 }
