@@ -88,6 +88,7 @@
   - type: MovementSpeedModifier # slower
     baseWalkSpeed : 1.2
     baseSprintSpeed : 2.2
+  - type: MovementAlwaysTouching # it flies in space by pure will power
   - type: FlashImmunity
   - type: MobThresholds # tankier
     thresholds:
