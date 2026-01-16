@@ -214,7 +214,6 @@
     category: Lungs
   - type: Lung
   - type: Metabolizer
-    updateInterval: 1.5
     removeEmpty: true
     solutionOnBody: false
     solution: "Lung"
