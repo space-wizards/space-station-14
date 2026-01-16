@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: there are now civilian versions of nanomed vendors.
-    type: Add
-  - message: nanomed inventories have been increased some.
-    type: Tweak
-  id: 8908
-  time: '2025-09-01T23:39:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39718
 - author: M4rchy-S
   changes:
   - message: dead mobs will no longer vomit from radiation damage
@@ -3914,3 +3905,11 @@
   id: 9411
   time: '2026-01-16T00:52:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42445
+- author: sowelipililimute
+  changes:
+  - message: Using a core pinpointer piece on another piece no longer causes you to
+      start an unintended construction recipe.
+    type: Fix
+  id: 9412
+  time: '2026-01-16T02:09:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42446
