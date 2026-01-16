@@ -73,11 +73,8 @@ public sealed class HealthExaminableSystem : EntitySystem
             if (index < 0)
                 continue;
 
-            var locStr = $"health-examinable-{component.LocPrefix}-{type}-{index}";
-            var chosenLocStr = Loc.GetString(locStr, ("target", Identity.Entity(uid, EntityManager)));
-
             // i.e., this string doesn't exist, because theres nothing for that threshold
-            if (locStr == chosenLocStr)
+            if (!Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{index}", out var chosenLocStr, ("target", Identity.Entity(uid, EntityManager))))
                 continue;
 
             if (!first)
