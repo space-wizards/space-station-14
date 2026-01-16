@@ -196,6 +196,10 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> AdminAllowMultiServerPlay =
         CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
 
+    /// <summary>
+    /// Sets the message displayed in the 'abandon character' window. Useful for informing
+    /// players of any rules that may be broken by continuing.
+    /// </summary>
     public static readonly CVarDef<string> AbandonCharacterWindowMessage =
         CVarDef.Create("admin.abandon_character_window_message",
             "Revival or cloning will not bring you back to your body if you abandon your character!\n" +
