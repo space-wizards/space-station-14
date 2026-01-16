@@ -10,13 +10,16 @@ namespace Content.Client.Instruments.UI
     public sealed class InstrumentBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IMidiManager _midiManager = default!;
-        [Dependency] private readonly InstrumentSystem _instruments = default!;
+
+        private readonly InstrumentSystem _instruments;
 
         [ViewVariables] private InstrumentMenu? _instrumentMenu;
 
         public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             IoCManager.InjectDependencies(this);
+
+            _instruments = EntMan.System<InstrumentSystem>();
         }
 
         protected override void Open()
