@@ -6,6 +6,8 @@
     -->
     <PackageVersion Remove="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageVersion Remove="Microsoft.EntityFrameworkCore.Design" />
+
+    <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
     <PackageVersion Include="ImGui.NET" Version="1.87.3" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">

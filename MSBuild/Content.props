@@ -8,5 +8,14 @@
     <LangVersion Condition="'$(LangVersion)' == ''">14</LangVersion>
     <IsPackable Condition="'$(IsPackable)' == ''">false</IsPackable>
     <Nullable Condition="'$(Nullable)' == ''">enable</Nullable>
+    <StyleCopSettingsFile Condition="'$(StyleCopSettingsFile)' == ''">$(MSBuildThisFileDirectory)..\stylecop.json</StyleCopSettingsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+<!--  Disable some StyleCop rules that aren't applicable.-->
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);SA1309;SA1101;SA1503;SA1633;SA1401;SA1402;SA1133;SA1516;SA1623;SA1130</NoWarn>
   </PropertyGroup>
 </Project>
