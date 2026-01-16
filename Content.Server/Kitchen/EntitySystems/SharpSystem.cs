@@ -1,13 +1,12 @@
-﻿using Content.Server.Body.Systems;
-using Content.Server.Kitchen.Components;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Components;
+﻿using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Gibbing;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -24,7 +23,7 @@ namespace Content.Server.Kitchen.EntitySystems;
 
 public sealed class SharpSystem : EntitySystem
 {
-    [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly GibbingSystem _gibbing = default!;
     [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -102,19 +101,25 @@ public sealed class SharpSystem : EntitySystem
 
         component.Butchering.Remove(args.Args.Target.Value);
 
-        if (_containerSystem.IsEntityInContainer(args.Args.Target.Value))
-        {
-            args.Handled = true;
-            return;
-        }
-
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
         var coords = _transform.GetMapCoordinates(args.Args.Target.Value);
         EntityUid popupEnt = default!;
-        foreach (var proto in spawnEntities)
+
+        if (_containerSystem.TryGetContainingContainer(args.Args.Target.Value, out var container))
         {
-            // distribute the spawned items randomly in a small radius around the origin
-            popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
+            foreach (var proto in spawnEntities)
+            {
+                // distribute the spawned items randomly in a small radius around the origin
+                popupEnt = SpawnInContainerOrDrop(proto, container.Owner, container.ID);
+            }
+        }
+        else
+        {
+            foreach (var proto in spawnEntities)
+            {
+                // distribute the spawned items randomly in a small radius around the origin
+                popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
+            }
         }
 
         // only show a big popup when butchering living things.
@@ -128,7 +133,7 @@ public sealed class SharpSystem : EntitySystem
             args.Args.User,
             popupType);
 
-        _bodySystem.GibBody(args.Args.Target.Value); // does nothing if ent can't be gibbed
+        _gibbing.Gib(args.Args.Target.Value); // does nothing if ent can't be gibbed
         _destructibleSystem.DestroyEntity(args.Args.Target.Value);
 
         args.Handled = true;

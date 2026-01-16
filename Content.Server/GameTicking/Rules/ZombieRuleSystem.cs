@@ -13,6 +13,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Zombies;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -105,6 +106,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 ("name", meta.EntityName),
                 ("username", username)));
         }
+        args.AddLine("");
     }
 
     /// <summary>
