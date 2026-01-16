@@ -62,7 +62,7 @@ public sealed class HealthExaminableSystem : EntitySystem
             {
                 if (!Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", out var tempLocStr, ("target", Identity.Entity(uid, EntityManager))))
                 {
-                    // i.e., this string doesn't exist, because theres nothing for that threshold
+                    // i.e., this string doesn't exist, because there's nothing for that threshold
                     continue;
                 }
 
