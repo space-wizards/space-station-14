@@ -41,7 +41,7 @@ public sealed partial class ParcelWrappingSystem
         if (!args.CanAccess || !args.CanComplexInteract)
             return;
 
-        if (entity.Comp.Contents.Contains(args.User))
+        if (!entity.Comp.CanSelfUnwrap && entity.Comp.Contents.Contains(args.User))
             return;
 
         // "Capture" the values from `args` because C# doesn't like doing the capturing for `ref` values.
