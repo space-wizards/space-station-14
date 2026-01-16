@@ -93,7 +93,7 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (_netMan.IsClient && !predict)
             return;
 
-        if (component.NeedsHands && _handsSystem.GetHandCount(uid) == 0)
+        if (component.NeedsHands && _handsSystem.GetHandCount(user) == 0)
             return;
 
         if (_random.Prob(component.SuccessChance))
