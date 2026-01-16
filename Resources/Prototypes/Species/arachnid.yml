@@ -13,6 +13,7 @@
   lastNames: NamesArachnidLast
   sexes:
   - Unsexed
+  cocoonScale: 1.1, 1.0
 
 - type: speciesBaseSprites
   id: MobArachnidSprites

@@ -8,6 +8,7 @@
   markingLimits: MobHumanMarkingLimits
   maleFirstNames: NamesSkeletonFirst
   femaleFirstNames: NamesSkeletonFirst
+  cocoonScale: 1.0, 1.0
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
 

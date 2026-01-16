@@ -7,3 +7,4 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
+  cocoonScale: 1.0, 0.8
