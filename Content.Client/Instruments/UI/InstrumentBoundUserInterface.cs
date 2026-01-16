@@ -9,24 +9,16 @@ namespace Content.Client.Instruments.UI
 {
     public sealed class InstrumentBoundUserInterface : BoundUserInterface
     {
-        [Dependency] public readonly IMidiManager MidiManager = default!;
-        [Dependency] public readonly IFileDialogManager FileDialogManager = default!;
-        [Dependency] public readonly ILocalizationManager Loc = default!;
+        [Dependency] private readonly IMidiManager _midiManager = default!;
 
         [ViewVariables] private InstrumentMenu? _instrumentMenu;
         public readonly InstrumentSystem Instruments;
-        public readonly ActionBlockerSystem ActionBlocker;
-        public readonly SharedInteractionSystem Interactions;
-
-        public IEntityManager Entities => EntMan;
 
         public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             IoCManager.InjectDependencies(this);
 
-            Instruments = Entities.System<InstrumentSystem>();
-            ActionBlocker = Entities.System<ActionBlockerSystem>();
-            Interactions = Entities.System<SharedInteractionSystem>();
+            Instruments = EntMan.System<InstrumentSystem>();
         }
 
         protected override void Open()
@@ -39,13 +31,13 @@ namespace Content.Client.Instruments.UI
             _instrumentMenu.RefreshBandsRequest += OnRefreshBandsRequest;
             _instrumentMenu.SetBandMasterRequest += OnSetBandMasterRequest;
 
-            _instrumentMenu.SetMIDIAvailability(MidiManager.IsAvailable);
+            _instrumentMenu.SetMidiAvailability(_midiManager.IsAvailable);
 
-            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            {
-                _instrumentMenu.SetInstrument((Owner, instrument));
-                instrument.OnMidiPlaybackEnded += OnMidiPlaybackEnded;
-            }
+            if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+                return;
+
+            _instrumentMenu.SetInstrument((Owner, instrument));
+            instrument.OnMidiPlaybackEnded += OnMidiPlaybackEnded;
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

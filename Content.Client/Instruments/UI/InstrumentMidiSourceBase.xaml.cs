@@ -18,7 +18,7 @@ public abstract partial class InstrumentMidiSourceBase : BoxContainer
 
     public virtual string ButtonName { get; } = Loc.GetString("instruments-component-menu-unknown-midi-source-button");
 
-    public InstrumentMidiSourceBase()
+    protected InstrumentMidiSourceBase()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);

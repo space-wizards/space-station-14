@@ -7,13 +7,11 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class BandMidiSource : InstrumentMidiSourceBase
 {
-    public EntityUid? Master;
-
     public event Action? RefreshBandRequest;
     public event Action<EntityUid>? JoinBandRequest;
     public override string ButtonName => Loc.GetString("instruments-component-menu-band-midi-source-button");
 
-    public BandMidiSource() : base()
+    public BandMidiSource()
     {
         RobustXamlLoader.Load(this);
         BandList.OnItemSelected += OnBandItemSelected;
@@ -27,22 +25,21 @@ public sealed partial class BandMidiSource : InstrumentMidiSourceBase
 
     private void OnBandItemSelected(ItemList.ItemListSelectedEventArgs args)
     {
-        if (PlayCheck())
-        {
-            EntityUid instrumentEntity = (EntityUid)args.ItemList[args.ItemIndex].Metadata!;
-            JoinBandRequest?.Invoke(instrumentEntity);
-        }
+        if (!PlayCheck())
+            return;
+
+        var instrumentEntity = (EntityUid)args.ItemList[args.ItemIndex].Metadata!;
+        JoinBandRequest?.Invoke(instrumentEntity);
     }
 
     public void Populate((NetEntity, string)[] nearby, IEntityManager entManager)
     {
         BandList.Clear();
 
-        foreach (var (nent, name) in nearby)
+        foreach (var (netEnt, name) in nearby)
         {
-            var uid = entManager.GetEntity(nent);
-            var item = BandList.AddItem(name, null, true, uid);
-            item.Selected = Master == uid;
+            var uid = entManager.GetEntity(netEnt);
+            BandList.AddItem(name, null, true, uid);
         }
     }
 }

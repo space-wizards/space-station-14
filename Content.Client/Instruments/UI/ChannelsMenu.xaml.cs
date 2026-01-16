@@ -12,10 +12,11 @@ namespace Content.Client.Instruments.UI;
 public sealed partial class ChannelsMenu : DefaultWindow
 {
     [Dependency] private readonly IEntityManager _entityManager = null!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
 
     private readonly InstrumentBoundUserInterface _owner;
 
-    public ChannelsMenu(InstrumentBoundUserInterface owner) : base()
+    public ChannelsMenu(InstrumentBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -102,15 +103,15 @@ public sealed partial class ChannelsMenu : DefaultWindow
         return _entityManager.GetComponent<ActiveInstrumentComponent>(instrument.Owner);
     }
 
-    public void Populate()
+    private void Populate()
     {
         ChannelList.Clear();
         var instrument = _entityManager.GetComponent<InstrumentComponent>(_owner.Owner);
         var activeInstrument = ResolveActiveInstrument(instrument);
 
-        for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
+        for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
-            var label = _owner.Loc.GetString("instrument-component-channel-name",
+            var label = _loc.GetString("instrument-component-channel-name",
                 ("number", i));
             if (activeInstrument != null
                 && activeInstrument.Tracks.TryGetValue(i, out var resolvedMidiChannel)

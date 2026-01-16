@@ -9,7 +9,7 @@ namespace Content.Client.Instruments.UI
     public sealed partial class InstrumentMenu : FancyWindow
     {
         private InstrumentMidiSourceBase? _currentMode;
-        public EntityUid Entity;
+        private EntityUid _entity;
 
         public event Action<EntityUid>? SetBandMasterRequest;
         public event Action? RefreshBandsRequest;
@@ -83,23 +83,23 @@ namespace Content.Client.Instruments.UI
                 _currentMode.Visible = false;
             }
             _currentMode = mode;
-            _currentMode.Entity = Entity;
+            _currentMode.Entity = _entity;
             _currentMode.Visible = true;
         }
 
-        public void SetMIDIAvailability(bool available)
+        public void SetMidiAvailability(bool available)
         {
             UnavailableOverlay.Visible = !available;
         }
 
         public void SetInstrument(Entity<InstrumentComponent> entity)
         {
-            Entity = entity;
+            _entity = entity;
             var component = entity.Comp;
             InstrumentSpriteView.SetEntity(entity);
             if (_currentMode != null)
             {
-                _currentMode.Entity = Entity;
+                _currentMode.Entity = _entity;
             }
         }
 

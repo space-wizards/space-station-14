@@ -23,8 +23,9 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     [Dependency] private readonly IFileDialogManager _dialogs = default!;
     [Dependency] private readonly IResourceManager _resManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-    private bool _isMidiFileDialogueWindowOpen = false;
+    private bool _isMidiFileDialogueWindowOpen;
     private DialogWindow? _reasonDialog;
 
     private bool IsShuffle => ShuffleButton.Pressed;
@@ -33,7 +34,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private readonly string _noTrackSelectedText = Loc.GetString("instruments-component-menu-files-no-track-selected");
 
-    public FileMidiSource() : base()
+    public FileMidiSource()
     {
         RobustXamlLoader.Load(this);
         CurrentTrackLabel.Text = _noTrackSelectedText;
@@ -83,30 +84,11 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             PlaybackSlider.MaxValue = instrument.PlayerTotalTick;
             PlaybackSlider.SetValueWithoutEvent(instrument.PlayerTick);
             // TODO: SequencerTimeScale does not return the actual ticks/seconds, find solution.
-            TimeSpan totalTime = TimeSpan.FromSeconds(Math.Ceiling(instrument.PlayerTotalTick / instrument.Renderer!.SequencerTimeScale));
-            TimeSpan currentTime = TimeSpan.FromSeconds(Math.Ceiling(instrument.PlayerTick / instrument.Renderer!.SequencerTimeScale));
-            if (totalTime.Hours < 1)
-            {
-                TimeLabel.Text = String.Format(
-                    "{0:D2}:{1:D2}/{2:D2}:{3:D2}",
-                    currentTime.Minutes,
-                    currentTime.Seconds,
-                    totalTime.Minutes,
-                    totalTime.Seconds
-                );
-            }
-            else
-            {
-                TimeLabel.Text = String.Format(
-                    "{0:D2}:{1:D2}:{2:D2}/{3:D2}:{4:D2}:{5:D2}",
-                    currentTime.Hours,
-                    currentTime.Minutes,
-                    currentTime.Seconds,
-                    totalTime.Hours,
-                    totalTime.Minutes,
-                    totalTime.Seconds
-                );
-            }
+            var totalTime = TimeSpan.FromSeconds(Math.Ceiling(instrument.PlayerTotalTick / instrument.Renderer!.SequencerTimeScale));
+            var currentTime = TimeSpan.FromSeconds(Math.Ceiling(instrument.PlayerTick / instrument.Renderer!.SequencerTimeScale));
+            TimeLabel.Text = totalTime.Hours < 1
+                ? $"{currentTime.Minutes:D2}:{currentTime.Seconds:D2}/{totalTime.Minutes:D2}:{totalTime.Seconds:D2}"
+                : $"{currentTime.Hours:D2}:{currentTime.Minutes:D2}:{currentTime.Seconds:D2}/{totalTime.Hours:D2}:{totalTime.Minutes:D2}:{totalTime.Seconds:D2}";
         }
     }
 
@@ -143,12 +125,12 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         if (originalName == null)
             return;
 
-        var field = "name";
+        const string field = "name";
+        const string placeholder = "";
         var title = Loc.GetString("instruments-component-menu-files-rename-dialog-title");
-        var placeholder = "";
         var prompt = Loc.GetString("instruments-component-menu-files-rename-dialog-prompt");
         var entry = new QuickDialogEntry(field, QuickDialogEntryType.ShortText, prompt, placeholder);
-        var entries = new List<QuickDialogEntry>() { entry };
+        var entries = new List<QuickDialogEntry> { entry };
         _reasonDialog = new DialogWindow(title, entries);
 
         _reasonDialog.OnConfirmed += responses =>
@@ -157,7 +139,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             if (newName.Length < 1)
                 return;
             if (!newName.EndsWith(".midi") && !newName.EndsWith(".mid"))
-                newName = newName + ".midi";
+                newName += ".midi";
             RenameMidi(originalName, newName);
             item.Text = newName;
         };
@@ -167,11 +149,11 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private void OnRemoveButtonPressed(ButtonEventArgs obj)
     {
-        if (TrackList.GetSelected().TryFirstOrDefault(out var item) && item.Text != null && item.Text.Length > 0)
-        {
-            DeleteMidi(item.Text);
-            TrackList.Remove(item);
-        }
+        if (!TrackList.GetSelected().TryFirstOrDefault(out var item) || item.Text is not { Length: > 0 })
+            return;
+
+        DeleteMidi(item.Text);
+        TrackList.Remove(item);
     }
 
     private void OnLoopButtonToggled(ButtonToggledEventArgs obj)
@@ -188,9 +170,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private void OnPlayButtonToggled(ButtonToggledEventArgs obj)
     {
-        if (!EntManager.TryGetComponent<InstrumentComponent>(Entity, out var instrument))
-            return;
-
         if (PlayButton.Pressed)
         {
             if (TrackList.GetSelected().TryFirstOrDefault(out var track))
@@ -216,34 +195,36 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private async void OnAddButtonPressed(ButtonEventArgs obj)
     {
-        if (_isMidiFileDialogueWindowOpen)
-            return;
-
-        var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
-
-        // TODO: Once the file dialogue manager can handle focusing or closing windows, improve this logic to close
-        // or focus the previously-opened window.
-        _isMidiFileDialogueWindowOpen = true;
-
-        await using var file = await _dialogs.OpenFile(filters, FileAccess.Read);
-
-        _isMidiFileDialogueWindowOpen = false;
-
-        // did the instrument menu get closed while waiting for the user to select a file?
-        if (Disposed)
-            return;
-
-        if (file == null)
-            return;
-
-        if (!EntManager.TryGetComponent<InstrumentComponent>(Entity, out var instrument))
+        try
         {
-            return;
-        }
+            if (_isMidiFileDialogueWindowOpen)
+                return;
 
-        string fileName = DateTime.Now.Ticks.ToString();
-        StoreMidi(file.CopyToArray(), fileName + ".midi");
-        TrackList.AddItem(fileName, null, true, file.CopyToArray());
+            var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
+
+            // TODO: Once the file dialogue manager can handle focusing or closing windows, improve this logic to close
+            // or focus the previously-opened window.
+            _isMidiFileDialogueWindowOpen = true;
+
+            await using var file = await _dialogs.OpenFile(filters, FileAccess.Read);
+
+            _isMidiFileDialogueWindowOpen = false;
+
+            // did the instrument menu get closed while waiting for the user to select a file?
+            if (Disposed)
+                return;
+
+            if (file == null)
+                return;
+
+            var fileName = DateTime.Now.Ticks.ToString();
+            StoreMidi(file.CopyToArray(), fileName + ".midi");
+            TrackList.AddItem(fileName, null, true, file.CopyToArray());
+        }
+        catch
+        {
+            _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
+        }
     }
 
     private void StopPlaying()
@@ -269,7 +250,8 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
         ResetTrackIndicators();
 
-        Timer.Spawn(1000, () =>
+        Timer.Spawn(1000,
+            () =>
         {
             if (!IsPlaying)
                 return;
@@ -285,23 +267,23 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     private void LoadUserMidis()
     {
         TrackList.Clear();
-        if (_resManager.UserData.IsDir(UserMidiDirectory))
+        if (!_resManager.UserData.IsDir(UserMidiDirectory))
+            return;
+
+        foreach (var path in _resManager.UserData.DirectoryEntries(UserMidiDirectory))
         {
-            foreach (var path in _resManager.UserData.DirectoryEntries(UserMidiDirectory))
+            try
             {
-                try
-                {
-                    ResPath filePath = new ResPath(UserMidiDirectory + path);
-                    if (filePath.Extension.Equals("midi") || filePath.Extension.Equals("mid"))
-                    {
-                        byte[] data = _resManager.UserData.ReadAllBytes(filePath);
-                        TrackList.AddItem(filePath.Filename, null, true, data);
-                    }
-                }
-                catch
-                {
+                var filePath = new ResPath(UserMidiDirectory + path);
+                if (!filePath.Extension.Equals("midi") && !filePath.Extension.Equals("mid"))
                     continue;
-                }
+
+                var data = _resManager.UserData.ReadAllBytes(filePath);
+                TrackList.AddItem(filePath.Filename, null, true, data);
+            }
+            catch
+            {
+                // ignored
             }
         }
     }
@@ -310,12 +292,12 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     {
         try
         {
-            ResPath path = new ResPath(UserMidiDirectory + name).Clean();
+            var path = new ResPath(UserMidiDirectory + name).Clean();
             _resManager.UserData.Delete(path);
         }
         catch
         {
-            return;
+            // ignored
         }
     }
 
@@ -324,15 +306,15 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         try
         {
             EnsureMidiDirectoryExists();
-            ResPath oldPath = new ResPath(UserMidiDirectory + oldName);
-            ResPath newPath = new ResPath(UserMidiDirectory + newName);
+            var oldPath = new ResPath(UserMidiDirectory + oldName);
+            var newPath = new ResPath(UserMidiDirectory + newName);
             oldPath = oldPath.Clean();
             newPath = newPath.Clean();
             _resManager.UserData.Rename(oldPath, newPath);
         }
         catch
         {
-            return;
+            _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
         }
     }
 
@@ -345,23 +327,21 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         }
         catch
         {
-            return;
+            _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
         }
     }
 
     private void EnsureMidiDirectoryExists()
     {
         if (!_resManager.UserData.Exists(UserMidiDirectory))
-        {
             _resManager.UserData.CreateDir(UserMidiDirectory);
-        }
     }
 
     private void ResetTrackIndicators()
     {
         PlaybackSlider.MaxValue = 1;
         PlaybackSlider.SetValueWithoutEvent(0);
-        TimeLabel.Text = $"--.--/--.--";
+        TimeLabel.Text = "--.--/--.--";
     }
 
     public void PlayNextTrack()
@@ -380,7 +360,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         }
         else
         {
-            int idx = TrackList.IndexOf(item);
+            var idx = TrackList.IndexOf(item);
             if (idx != -1 && idx + 1 < TrackList.Count)
             {
                 TrackList[idx + 1].Selected = true;

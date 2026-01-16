@@ -16,16 +16,17 @@ public sealed partial class InputMidiSource : InstrumentMidiSourceBase
     protected override void VisibilityChanged(bool newVisible)
     {
         base.VisibilityChanged(newVisible);
-        if (EntManager.TryGetComponent(Entity, out InstrumentComponent? instrument))
+
+        if (!EntManager.TryGetComponent(Entity, out InstrumentComponent? instrument))
+            return;
+
+        if (newVisible)
         {
-            if (newVisible)
-            {
-                EntManager.System<InstrumentSystem>().OpenInput(Entity, instrument);
-            }
-            else
-            {
-                EntManager.System<InstrumentSystem>().CloseInput(Entity, false, instrument);
-            }
+            EntManager.System<InstrumentSystem>().OpenInput(Entity, instrument);
+        }
+        else
+        {
+            EntManager.System<InstrumentSystem>().CloseInput(Entity, false, instrument);
         }
     }
 }
