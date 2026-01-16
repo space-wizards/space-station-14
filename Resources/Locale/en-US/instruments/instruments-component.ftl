@@ -24,6 +24,7 @@ instruments-component-menu-files-rename-button = Rename
 instruments-component-menu-files-rename-dialog-title = Rename file
 instruments-component-menu-files-rename-dialog-prompt = New name
 instruments-component-menu-files-list-label = Files
+instruments-component-menu-files-filter = Filter...
 instruments-component-menu-files-error = Operation failed due to an unexpected error.
 instruments-component-menu-input-notice-label = Connect a MIDI device to your PC
                                                 to play music.

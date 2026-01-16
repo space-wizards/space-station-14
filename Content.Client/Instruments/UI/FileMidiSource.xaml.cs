@@ -27,6 +27,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private bool _isMidiFileDialogueWindowOpen;
     private DialogWindow? _reasonDialog;
+    private readonly Dictionary<string, byte[]> _loadedTracks = new();
 
     private bool IsShuffle => ShuffleButton.Pressed;
     private bool IsPlaying => PlayButton.Pressed;
@@ -38,6 +39,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     {
         RobustXamlLoader.Load(this);
         CurrentTrackLabel.Text = _noTrackSelectedText;
+        FilterBar.OnTextChanged += OnFilterBarTextChanged;
         AddButton.OnPressed += OnAddButtonPressed;
         TrackList.OnItemSelected += OnTrackListItemSelected;
         PlayButton.OnToggled += OnPlayButtonToggled;
@@ -53,7 +55,8 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         base.VisibilityChanged(newVisible);
         if (newVisible)
         {
-            LoadUserMidis();
+            LoadStoredUserMidis();
+            FilterTrackList("");
         }
         else
         {
@@ -193,6 +196,11 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         }
     }
 
+    private void OnFilterBarTextChanged(LineEdit.LineEditEventArgs obj)
+    {
+        FilterTrackList(obj.Text);
+    }
+
     private async void OnAddButtonPressed(ButtonEventArgs obj)
     {
         try
@@ -264,9 +272,22 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         });
     }
 
-    private void LoadUserMidis()
+    private void FilterTrackList(string filter)
     {
+        var filterString = filter.Trim().ToLowerInvariant();
         TrackList.Clear();
+
+        foreach (var kv in _loadedTracks)
+        {
+            var trackName = kv.Key.Trim().ToLowerInvariant();
+            if(trackName.Contains(filterString))
+                TrackList.AddItem(kv.Key, null, true, kv.Value);
+        }
+    }
+
+    private void LoadStoredUserMidis()
+    {
+        _loadedTracks.Clear();
         if (!_resManager.UserData.IsDir(UserMidiDirectory))
             return;
 
@@ -279,7 +300,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
                     continue;
 
                 var data = _resManager.UserData.ReadAllBytes(filePath);
-                TrackList.AddItem(filePath.Filename, null, true, data);
+                _loadedTracks.Add(filePath.Filename, data);
             }
             catch
             {
@@ -320,15 +341,10 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private void StoreMidi(byte[] data, string name)
     {
-        try
-        {
-            EnsureMidiDirectoryExists();
-            _resManager.UserData.WriteAllBytes(new ResPath(UserMidiDirectory + name + ".midi"), data);
-        }
-        catch
-        {
-            _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
-        }
+        EnsureMidiDirectoryExists();
+        var filename = name + ".midi";
+        _resManager.UserData.WriteAllBytes(new ResPath(UserMidiDirectory + filename), data);
+        _loadedTracks.Add(filename, data);
     }
 
     private void EnsureMidiDirectoryExists()
