@@ -11,6 +11,13 @@
   parent: OrganAnimalStomach
   suffix: "rat"
   components:
+  - type: Stomach
+    digestionDelay: 5
+  - type: Metabolizer
+    updateInterval: 0.25
+    metabolizerTypes: [ Rat ]
+    groups:
+    - id: Food
   - type: SolutionContainerManager
     solutions:
       stomach:
