@@ -1,25 +1,71 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:viewport="clr-namespace:Content.Client.Viewport"
+               xmlns:local="clr-namespace:Content.Client.SurveillanceCamera.UI"
                Title="{Loc 'surveillance-camera-monitor-ui-window'}">
-    <BoxContainer Orientation="Horizontal">
-        <BoxContainer Orientation="Vertical" MinWidth="350" VerticalExpand="True">
-            <!-- lazy -->
-            <OptionButton Name="SubnetSelector" />
-            <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
-            <ScrollContainer VerticalExpand="True">
-                <ItemList Name="SubnetList" />
-            </ScrollContainer>
-            <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
-            <Button Name="CameraDisconnectButton" Text="{Loc 'surveillance-camera-monitor-ui-disconnect'}" />
-            <Label Name="CameraStatus" />
+    <BoxContainer>
+        <!-- Panel with tabs -->
+        <BoxContainer Orientation="Vertical" MinWidth="350">
+            <TabContainer Name="ViewModeTabs" VerticalExpand="True">
+                <!-- Camera list tab -->
+                <BoxContainer Name="{Loc 'surveillance-camera-monitor-ui-tab-list'}" Orientation="Vertical">
+                    <OptionButton Name="SubnetSelector"/>
+                    <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}"/>
+                    <ScrollContainer VerticalExpand="True">
+                        <ItemList Name="SubnetList"/>
+                    </ScrollContainer>
+                    <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}"/>
+                </BoxContainer>
+
+                <!-- Map view tab -->
+                <BoxContainer Name="{Loc 'surveillance-camera-monitor-ui-tab-map'}" Orientation="Vertical" VerticalExpand="True">
+                    <local:SurveillanceCameraNavMapControl Name="CameraMap"
+                                                           VerticalExpand="True"
+                                                           HorizontalExpand="True"
+                                                           MinSize="350 350"/>
+
+                    <!-- Map legend -->
+                    <BoxContainer Name="LegendContainer" Margin="0 10">
+                        <TextureRect Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
+                                     Modulate="#FF00FF"
+                                     SetSize="20 20"
+                                     Margin="10 0 5 0"/>
+                        <Label Text="{Loc 'surveillance-camera-monitor-ui-legend-active'}"/>
+
+                        <TextureRect Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
+                                     SetSize="20 20"
+                                     Modulate="#fbff19ff"
+                                     Margin="10 0 5 0"/>
+                        <Label Text="{Loc 'surveillance-camera-monitor-ui-legend-selected'}"/>
+
+                        <TextureRect Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_circle.png"
+                                     SetSize="20 20"
+                                     Modulate="#a09f9fff"
+                                     Margin="10 0 5 0"/>
+                        <Label Text="{Loc 'surveillance-camera-monitor-ui-legend-inactive'}"/>
+
+                        <TextureRect Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_square.png"
+                                     SetSize="20 20"
+                                     Modulate="#fa1f1fff"
+                                     Margin="10 0 5 0"/>
+                        <Label Text="{Loc 'surveillance-camera-monitor-ui-legend-invalid'}"/>
+                    </BoxContainer>
+                    <Button Name="SubnetRefreshButtonMap" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}"/>
+                </BoxContainer>
+            </TabContainer>
+            <Button Name="CameraDisconnectButton" Text="{Loc 'surveillance-camera-monitor-ui-disconnect'}"/>
         </BoxContainer>
-        <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
-            <viewport:ScalingViewport Name="CameraView"
-                                      VerticalExpand="True"
-                                      HorizontalExpand="True"
-                                      MinSize="500 500"
-                                      MouseFilter="Ignore" />
-            <TextureRect VerticalExpand="True" HorizontalExpand="True" MinSize="500 500" Name="CameraViewBackground" />
-        </Control>
+
+        <!-- Right panel with camera view -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <Label Name="CameraStatus"/>
+            <Control VerticalExpand="True" Margin="5" Name="CameraViewBox">
+                <viewport:ScalingViewport Name="CameraView" MinSize="500 500" MouseFilter="Ignore"/>
+                <TextureRect MinSize="500 500" Name="CameraViewBackground" />
+            </Control>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
