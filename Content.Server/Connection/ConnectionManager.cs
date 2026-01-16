@@ -207,7 +207,7 @@ namespace Content.Server.Connection
          * TODO: Jesus H Christ what is this utter mess of a function
          * TODO: Break this apart into is constituent steps.
          */
-        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ShouldDeny(
+        private async Task<(ConnectionDenyReason, string, List<BanDef>? bansHit)?> ShouldDeny(
             NetConnectingArgs e)
         {
             // Check if banned.
@@ -228,7 +228,7 @@ namespace Content.Server.Connection
                 return (ConnectionDenyReason.NoHwid, Loc.GetString("hwid-required"), null);
             }
 
-            var bans = await _db.GetServerBansAsync(addr, userId, hwId, modernHwid, includeUnbanned: false);
+            var bans = await _db.GetBansAsync(addr, userId, hwId, modernHwid, includeUnbanned: false);
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];

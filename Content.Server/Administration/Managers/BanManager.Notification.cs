@@ -48,7 +48,7 @@ public sealed partial class BanManager
         }
 
         _sawmill.Verbose($"Processing ban notification for ban {data.BanId}");
-        var ban = await _db.GetServerBanAsync(data.BanId);
+        var ban = await _db.GetBanAsync(data.BanId);
         if (ban == null)
         {
             _sawmill.Warning($"Ban in notification ({data.BanId}) didn't exist?");

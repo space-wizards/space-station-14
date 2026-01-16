@@ -28,7 +28,7 @@ public interface IBanManager
     /// <summary>
     /// Gets a list of prefixed prototype IDs with the player's role bans.
     /// </summary>
-    public HashSet<string>? GetRoleBans(NetUserId playerUserId);
+    public HashSet<BanRoleDef>? GetRoleBans(NetUserId playerUserId);
 
     /// <summary>
     /// Checks if the player is currently banned from any of the listed roles.
