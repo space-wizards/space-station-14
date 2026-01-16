@@ -54,6 +54,12 @@
     hideLayersOnEquip:
     - Hair
     - Snout
+    femaleMarkingsDisplacement:
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
@@ -69,6 +75,13 @@
   components:
   - type: ScaleVisuals
     scale: 1, 0.8
+  - type: HumanoidAppearance
+    femaleMarkingsDisplacement:
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

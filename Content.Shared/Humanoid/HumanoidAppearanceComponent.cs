@@ -106,6 +106,12 @@ public sealed partial class HumanoidAppearanceComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<HumanoidVisualLayers, DisplacementData> MarkingsDisplacement = new();
+
+    /// <summary>
+    ///     The displacement maps that will be applied to specific layers of the female humanoid only.
+    /// </summary>
+    [DataField]
+    public Dictionary<HumanoidVisualLayers, DisplacementData> FemaleMarkingsDisplacement = new();
 }
 
 [DataDefinition]
