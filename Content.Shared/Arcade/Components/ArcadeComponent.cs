@@ -1,0 +1,13 @@
+using Content.Shared.Arcade.Systems;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Arcade.Components;
+
+/// <summary>
+///
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedArcadeSystem))]
+public sealed partial class ArcadeComponent : Component
+{
+
+}
