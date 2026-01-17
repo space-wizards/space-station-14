@@ -1,0 +1,55 @@
+- type: entity
+  id: OrganAnimalMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+
+- type: entity
+  parent: OrganBase
+  id: OrganAnimal
+  abstract: true
+  suffix: Animal
+
+- type: entity
+  parent: OrganAnimal
+  id: OrganAnimalInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganAnimalInternal, OrganAnimalMetabolizer ]
+  id: OrganAnimalLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganAnimalInternal, OrganAnimalMetabolizer ]
+  id: OrganAnimalHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganAnimalInternal, OrganAnimalMetabolizer ]
+  id: OrganAnimalStomach
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganAnimalInternal, OrganAnimalMetabolizer ]
+  id: OrganAnimalLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganAnimalInternal, OrganAnimalMetabolizer ]
+  id: OrganAnimalKidneys
+
+- type: entity
+  id: BaseMobAnimal
+  abstract: true
+  components:
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganAnimalLungs
+        - id: OrganAnimalHeart
+        - id: OrganAnimalStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalKidneys

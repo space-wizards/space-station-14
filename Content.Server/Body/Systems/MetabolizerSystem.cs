@@ -1,6 +1,7 @@
+using System.Linq;
 using Content.Server.Body.Components;
+using Content.Shared.Body;
 using Content.Shared.Body.Events;
-using Content.Shared.Body.Organ;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
@@ -14,7 +15,6 @@ using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -47,7 +47,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
         SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
         SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        SubscribeLocalEvent<MetabolizerComponent, BodyRelayedEvent<ApplyMetabolicMultiplierEvent>>(OnApplyMetabolicMultiplier);
     }
 
     private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
@@ -67,9 +67,9 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
         }
     }
 
-    private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref ApplyMetabolicMultiplierEvent args)
+    private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref BodyRelayedEvent<ApplyMetabolicMultiplierEvent> args)
     {
-        ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
+        ent.Comp.UpdateIntervalMultiplier = args.Args.Multiplier;
     }
 
     public override void Update(float frameTime)
@@ -133,15 +133,27 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
             return;
         }
 
+        // Copy the solution do not edit the original solution list
+        var list = solution.Contents.ToList();
+
+        // Collecting blood reagent for filtering
+        var ev = new MetabolismExclusionEvent();
+        RaiseLocalEvent(solutionEntityUid.Value, ref ev);
+
         // randomize the reagent list so we don't have any weird quirks
         // like alphabetical order or insertion order mattering for processing
-        var list = solution.Contents.ToArray();
         _random.Shuffle(list);
+
+        bool isDead = _mobStateSystem.IsDead(solutionEntityUid.Value);
 
         int reagents = 0;
         foreach (var (reagent, quantity) in list)
         {
             if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
+                continue;
+
+            // Skip blood reagents
+            if (ev.Reagents.Contains(reagent))
                 continue;
 
             var mostToRemove = FixedPoint2.Zero;
@@ -185,11 +197,8 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 // if it's possible for them to be dead, and they are,
                 // then we shouldn't process any effects, but should probably
                 // still remove reagents
-                if (TryComp<MobStateComponent>(solutionEntityUid.Value, out var state))
-                {
-                    if (!proto.WorksOnTheDead && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
-                        continue;
-                }
+                if (isDead && !proto.WorksOnTheDead)
+                    continue;
 
                 var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
 
@@ -197,6 +206,9 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 foreach (var effect in entry.Effects)
                 {
                     if (scale < effect.MinScale)
+                        continue;
+
+                    if (effect.Probability < 1.0f && !_random.Prob(effect.Probability))
                         continue;
 
                     // See if conditions apply

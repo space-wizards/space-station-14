@@ -37,3 +37,8 @@
   id: MachineInsert
   files:
   - /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+
+- type: soundCollection
+  id: TriggerActivate
+  files:
+  - /Audio/Weapons/click.ogg

@@ -15,8 +15,17 @@ name-format-nukie-generic = {$part0} {$part1}
 name-format-nukie-agent = Corpsman {$part0}
 name-format-nukie-commander = Commander {$part0}
 name-format-nukie-operator = Operator {$part0}
-# "<title> <name>"
+
 name-format-ert = {$part0} {$part1}
+name-format-ert-leader = Sergeant {$part0}
+name-format-ert-specialist = Specialist {$part0}
+name-format-ert-pointman = Pointman {$part0}
+name-format-ert-officer = Officer {$part0}
+name-format-ert-rifle = Rifleman {$part0}
+name-format-ert-grenade = Grenadier {$part0}
+name-format-ert-vanguard = Vanguard {$part0}
+name-format-ert-doctor = Doctor {$part0}
+name-format-ert-corpsman = Corpsman {$part0}
 
 # "<appearance> <type>"
 name-format-book = {$part0} {$part1}

@@ -17,9 +17,6 @@
     inHandsMaxFillLevels: 1
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
 
 - type: entity
   parent: [DrinkBaseMaterialMetal, DrinkBase]
@@ -90,10 +87,11 @@
       tags:
       - Cola
     hideStackVisualsWhenClosed: false
-  - type: StorageFill
-    contents:
-    - id: DrinkColaCan
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: DrinkColaCan
+        amount: 6
   - type: ItemCounter
     count:
       tags: [Cola]
@@ -133,7 +131,7 @@
       Steel: 50
   - type: Shakeable
   - type: ReactionMixer
-    mixOnInteract: false
+    mixerType: None
     reactionTypes:
     - Shake
 
@@ -208,9 +206,6 @@
     solution: drink
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
 
 - type: entity
   parent: DrinkShakeBase
