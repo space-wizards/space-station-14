@@ -74,8 +74,8 @@
     - type: TimedDespawn
       lifetime: 0.5
 
-#The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
-#Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.
+# Tuned to be a general bomb that deals equipment damage without explicitly gibbing, however it will still gladly instakill anyone that mishandles it.
+# One of the few syndie bombs that should punch holes in space.
 - type: entity
   name: syndicate minibomb
   description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
@@ -93,7 +93,7 @@
     - timer
   - type: Explosive
     explosionType: Minibomb
-    totalIntensity: 200
+    totalIntensity: 100
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60
   - type: Appearance
