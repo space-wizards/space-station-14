@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Sentience Event can no longer target Corgis, Smile or Mothroaches
-    type: Tweak
-  id: 8911
-  time: '2025-09-03T12:00:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39810
 - author: TiniestShark
   changes:
   - message: Reptilians now have Mask/Helmet displacements. Snoots are no longer smushed.
@@ -3916,3 +3909,15 @@
   id: 9414
   time: '2026-01-16T17:19:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42448
+- author: Kowlin
+  changes:
+  - message: All intern jobs now lock out after 10 hours, up from 5 hours.
+    type: Tweak
+  - message: Security Officer now requires 4 hours of Security Cadet, up from 2.5
+      hours.
+    type: Tweak
+  - message: Head of Security now requires 3 hours of Warden, up from 1 hour.
+    type: Tweak
+  id: 9415
+  time: '2026-01-17T20:24:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42372
