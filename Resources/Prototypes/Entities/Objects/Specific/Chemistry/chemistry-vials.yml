@@ -1,0 +1,177 @@
+- type: entity
+  abstract: true
+  parent: [ DrinkBaseMaterialGlass, DrinkBase, DrinkBaseOpenable, DrinkBaseEmptyTrash, DrinkVisualsAll ]
+  id: BaseChemistryVial
+  components:
+  - type: Item
+    size: Tiny
+  - type: Openable
+    sound:
+      collection: bottleCloseSounds # using closed here for the quieter sound
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: FitsInDispenser
+    solution: drink
+  - type: ExaminableSolution
+    exactVolume: true # It's a chemistry tool
+  - type: Tag
+    tags:
+    - Trash
+    - CentrifugeCompatible # unique feature of vials
+
+## Entities
+
+- type: entity
+  parent: BaseChemistryVial
+  id: ChemistryEmptyVial
+  name: vial
+  description: A small vial.
+  components:
+  - type: Item
+    sprite: Objects/Specific/Chemistry/vial.rsi
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/vial.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    inHandsMaxFillLevels: 4
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionTransfer
+    maxTransferAmount: 30
+  - type: StaticPrice
+    price: 100
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageTrigger100
+        !type:DamageTrigger
+        damage: 100
+      behaviors: &OverkillBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 15 # stronger than base
+      behaviors:
+      - &SoundGlassBreak !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass: # less glass than base
+            min: 0
+            max: 1
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseChemistryVial
+  id: ChemistryEmptyVialSmall
+  name: mini vial
+  description: A smaller vial.
+  components:
+  - type: Item
+    sprite: Objects/Specific/Chemistry/vial_mini.rsi
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/vial_mini.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    inHandsMaxFillLevels: 4
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 10
+  - type: SolutionTransfer
+    maxTransferAmount: 10
+  - type: StaticPrice
+    price: 50
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 10
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 5 # smaller so weaker
+      behaviors: # remove glass shard spawn
+      - *SoundGlassBreak
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+## Reagent filled
+
+- type: entity
+  parent: ChemistryEmptyVial
+  id: VestineChemistryVial
+  suffix: vestine
+  components:
+  - type: Label
+    currentLabel: reagent-name-vestine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Vestine
+          Quantity: 30
+  - type: Tag
+    tags: &TagVial # Remove trash tag when we have a filled solution
+    - CentrifugeCompatible
+
+- type: entity
+  parent: ChemistryEmptyVialSmall
+  id: RadiumChemistryVial
+  suffix: radium
+  components:
+  - type: Label
+    currentLabel: reagent-name-radium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 10
+        reagents:
+          - ReagentId: Radium
+            Quantity: 5
+  - type: Tag
+    tags: *TagVial
+
+- type: entity
+  parent: ChemistryEmptyVialSmall
+  id: ChlorineChemistryVial
+  suffix: chlorine
+  components:
+  - type: Label
+    currentLabel: reagent-name-chlorine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 10
+        reagents:
+          - ReagentId: Chlorine
+            Quantity: 5
+  - type: Tag
+    tags: *TagVial
+
+- type: entity
+  parent: ChemistryEmptyVialSmall
+  id: PlasmaChemistryVial
+  suffix: plasma
+  components:
+  - type: Label
+    currentLabel: reagent-name-plasma
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 10
+        reagents:
+          - ReagentId: Plasma
+            Quantity: 10
+  - type: Tag
+    tags: *TagVial
