@@ -57,13 +57,6 @@
         32:
           sprite: Mobs/Species/Vox/displacement.rsi
           state: hand_r
-  - type: Wagging
-
-- type: entity
-  parent: BaseSpeciesDummy
-  id: MobVoxDummy
-  categories: [ HideSpawnMenu ]
-  components:
   - type: EntityTableContainerFill
     containers:
       body_organs: !type:AllSelector
@@ -121,6 +114,7 @@
       Unsexed: UnisexVox
   - type: Butcherable
     butcheringType: Spike
+  - type: Wagging
     spawned:
     - id: FoodMeatChicken
       amount: 5
