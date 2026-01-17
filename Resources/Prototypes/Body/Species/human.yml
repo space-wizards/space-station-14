@@ -1,4 +1,5 @@
 - type: markingsGroup
+  parent: Undergarments
   id: Human
   limits:
     enum.HumanoidVisualLayers.Hair:

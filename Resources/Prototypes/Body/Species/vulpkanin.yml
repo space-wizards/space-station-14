@@ -1,4 +1,5 @@
 - type: markingsGroup
+  parent: Undergarments
   id: Vulpkanin
   limits:
     enum.HumanoidVisualLayers.Hair:
@@ -50,6 +51,14 @@
     enum.HumanoidVisualLayers.RFoot:
       limit: 1
       required: false
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktopVulpkanin ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      undergarmentBottom: [ UndergarmentBottomBoxersVulpkanin ]
 
 - type: entity
   parent: BaseSpeciesAppearance

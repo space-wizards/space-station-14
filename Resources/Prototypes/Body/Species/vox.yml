@@ -1,4 +1,5 @@
 - type: markingsGroup
+  parent: Undergarments
   id: Vox
   limits:
     enum.HumanoidVisualLayers.Hair:
@@ -56,6 +57,14 @@
       limit: 1
       required: true
       default: [ VoxTail ]
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktopVox ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      undergarmentBottom: [ UndergarmentBottomBoxersVox ]
 
 - type: entity
   parent: BaseSpeciesAppearance

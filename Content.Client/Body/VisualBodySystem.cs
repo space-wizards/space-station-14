@@ -1,16 +1,22 @@
+using System.Linq;
 using Content.Shared.Body;
+using Content.Shared.CCVar;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Body;
 
 public sealed class VisualBodySystem : SharedVisualBodySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly MarkingManager _marking = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -25,6 +31,22 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
         SubscribeLocalEvent<VisualOrganMarkingsComponent, AfterAutoHandleStateEvent>(OnMarkingsState);
 
         SubscribeLocalEvent<VisualOrganMarkingsComponent, BodyRelayedEvent<HumanoidLayerVisibilityChangedEvent>>(OnMarkingsChangedVisibility);
+
+        Subs.CVar(_cfg, CCVars.AccessibilityClientCensorNudity, OnCensorshipChanged, true);
+        Subs.CVar(_cfg, CCVars.AccessibilityServerCensorNudity, OnCensorshipChanged, true);
+    }
+
+    private void OnCensorshipChanged(bool value)
+    {
+        var query = AllEntityQuery<OrganComponent, VisualOrganMarkingsComponent>();
+        while (query.MoveNext(out var ent, out var organComp, out var markingsComp))
+        {
+            if (organComp.Body is not { } body)
+                continue;
+
+            RemoveMarkings((ent, markingsComp), body);
+            ApplyMarkings((ent, markingsComp), body);
+        }
     }
 
     private void OnOrganGotInserted(Entity<VisualOrganComponent> ent, ref OrganGotInsertedEvent args)
@@ -111,44 +133,75 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
         ApplyVisual(ent, body);
     }
 
-    private void ApplyMarkings(Entity<VisualOrganMarkingsComponent> ent, EntityUid target)
+    private IEnumerable<Marking> AllMarkings(Entity<VisualOrganMarkingsComponent> ent)
     {
-        var applied = new List<Marking>();
         foreach (var markings in ent.Comp.Markings.Values)
         {
             foreach (var marking in markings)
             {
-                if (!_marking.TryGetMarking(marking, out var proto))
+                yield return marking;
+            }
+        }
+
+        var censorNudity = _cfg.GetCVar(CCVars.AccessibilityClientCensorNudity) || _cfg.GetCVar(CCVars.AccessibilityServerCensorNudity);
+        if (!censorNudity)
+            yield break;
+
+        var group = _prototype.Index(ent.Comp.MarkingData.Group);
+        foreach (var layer in ent.Comp.MarkingData.Layers)
+        {
+            if (!group.Limits.TryGetValue(layer, out var layerLimits))
+                continue;
+
+            if (layerLimits.NudityDefault.Count < 1)
+                continue;
+
+            var markings = ent.Comp.Markings.GetValueOrDefault(layer) ?? [];
+            if (markings.Any(marking => _marking.TryGetMarking(marking, out var proto) && proto.BodyPart == layer))
+                continue;
+
+            foreach (var marking in layerLimits.NudityDefault)
+            {
+                yield return new(marking, 1);
+            }
+        }
+    }
+
+    private void ApplyMarkings(Entity<VisualOrganMarkingsComponent> ent, EntityUid target)
+    {
+        var applied = new List<Marking>();
+        foreach (var marking in AllMarkings(ent))
+        {
+            if (!_marking.TryGetMarking(marking, out var proto))
+                continue;
+
+            if (!_sprite.LayerMapTryGet(target, proto.BodyPart, out var index, true))
+                continue;
+
+            for (var i = 0; i < proto.Sprites.Count; i++)
+            {
+                var sprite = proto.Sprites[i];
+
+                DebugTools.Assert(sprite is SpriteSpecifier.Rsi);
+                if (sprite is not SpriteSpecifier.Rsi rsi)
                     continue;
 
-                if (!_sprite.LayerMapTryGet(target, proto.BodyPart, out var index, true))
-                    continue;
+                var layerID = $"{proto.ID}-{rsi.RsiState}";
 
-                for (var i = 0; i < proto.Sprites.Count; i++)
+                if (!_sprite.LayerMapTryGet(target, layerID, out _, false))
                 {
-                    var sprite = proto.Sprites[i];
-
-                    DebugTools.Assert(sprite is SpriteSpecifier.Rsi);
-                    if (sprite is not SpriteSpecifier.Rsi rsi)
-                        continue;
-
-                    var layerID = $"{proto.ID}-{rsi.RsiState}";
-
-                    if (!_sprite.LayerMapTryGet(target, layerID, out _, false))
-                    {
-                        var layer = _sprite.AddLayer(target, sprite, index + i + 1);
-                        _sprite.LayerMapSet(target, layerID, layer);
-                        _sprite.LayerSetSprite(target, layerID, rsi);
-                    }
-
-                    if (marking.MarkingColors is not null && i < marking.MarkingColors.Count)
-                        _sprite.LayerSetColor(target, layerID, marking.MarkingColors[i]);
-                    else
-                        _sprite.LayerSetColor(target, layerID, Color.White);
+                    var layer = _sprite.AddLayer(target, sprite, index + i + 1);
+                    _sprite.LayerMapSet(target, layerID, layer);
+                    _sprite.LayerSetSprite(target, layerID, rsi);
                 }
 
-                applied.Add(marking);
+                if (marking.MarkingColors is not null && i < marking.MarkingColors.Count)
+                    _sprite.LayerSetColor(target, layerID, marking.MarkingColors[i]);
+                else
+                    _sprite.LayerSetColor(target, layerID, Color.White);
             }
+
+            applied.Add(marking);
         }
         ent.Comp.AppliedMarkings = applied;
     }

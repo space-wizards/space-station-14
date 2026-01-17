@@ -1,4 +1,5 @@
 - type: markingsGroup
+  parent: Undergarments
   id: Diona
   onlyGroupWhitelisted: true
   limits:

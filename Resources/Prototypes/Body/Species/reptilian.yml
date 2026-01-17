@@ -1,4 +1,5 @@
 - type: markingsGroup
+  parent: Undergarments
   id: Reptilian
   onlyGroupWhitelisted: true
   limits:

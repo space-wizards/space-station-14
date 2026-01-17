@@ -1,4 +1,5 @@
 - type: markingsGroup
+  parent: Undergarments
   id: Moth
   onlyGroupWhitelisted: true
   limits:

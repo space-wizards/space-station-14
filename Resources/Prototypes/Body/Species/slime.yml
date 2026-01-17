@@ -1,4 +1,5 @@
 - type: markingsGroup
+  parent: Undergarments
   id: Slime
   limits:
     enum.HumanoidVisualLayers.Hair:

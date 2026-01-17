@@ -30,6 +30,7 @@ public sealed partial class MarkingsGroupPrototype : IPrototype, IInheritingProt
     public bool OnlyGroupWhitelisted = false;
 
     [DataField]
+    [AlwaysPushInheritance]
     public Dictionary<Enum, MarkingsLimits> Limits = new();
 }
 
@@ -60,4 +61,10 @@ public sealed partial class MarkingsLimits
     /// </summary>
     [DataField]
     public List<ProtoId<MarkingPrototype>> Default = new();
+
+    /// <summary>
+    /// Nudity markings for this layer that will be ensured if it is being enforced.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<MarkingPrototype>> NudityDefault = new();
 }
