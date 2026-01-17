@@ -1,3 +1,56 @@
+- type: markingsGroup
+  id: Vulpkanin
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      onlyGroupWhitelisted: true
+      required: false
+    enum.HumanoidVisualLayers.Head:
+      limit: 3
+      required: false
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ VulpEar ]
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+      default: [ VulpSnout ]
+    enum.HumanoidVisualLayers.SnoutCover:
+      limit: 3
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ VulpTailVulp ]
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceVulpkanin
@@ -27,7 +80,7 @@
         - id: OrganVulpkaninStomach
         - id: OrganVulpkaninLiver
         - id: OrganVulpkaninKidneys
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Vulpkanin
     undergarmentTop: UndergarmentTopTanktopVulpkanin
     undergarmentBottom: UndergarmentBottomBoxersVulpkanin
@@ -176,6 +229,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Vulpkanin/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Vulpkanin/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Vulpkanin
 
 - type: entity
   parent: [ OrganBaseTorso, OrganVulpkaninExternal ]
@@ -222,7 +281,7 @@
   id: OrganVulpkaninBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganVulpkaninInternal ]
+  parent: [ OrganBaseEyes, OrganVulpkaninInternal, OrganVulpkaninExternal ]
   id: OrganVulpkaninEyes
 
 - type: entity

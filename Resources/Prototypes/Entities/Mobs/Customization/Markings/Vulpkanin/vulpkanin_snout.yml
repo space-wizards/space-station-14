@@ -4,7 +4,7 @@
   id: VulpSnout
   bodyPart: Snout
   markingCategory: Snout
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: snout
@@ -13,7 +13,7 @@
   id: VulpSnoutNose
   bodyPart: Snout
   markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: snout-nose
@@ -22,7 +22,7 @@
   id: VulpSnoutVulpine
   bodyPart: Snout
   markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: vulpine
@@ -31,7 +31,7 @@
   id: VulpSnoutVulpineLines
   bodyPart: Snout
   markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: vulpine-lines
@@ -40,7 +40,7 @@
   id: VulpSnoutBlaze
   bodyPart: Snout
   markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: blaze
@@ -49,7 +49,7 @@
   id: VulpSnoutMask
   bodyPart: Snout
   markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: mask
@@ -58,7 +58,7 @@
   id: VulpSnoutTop
   bodyPart: Snout
   markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: snout-top
@@ -67,7 +67,7 @@
   id: VulpSnoutPatch
   bodyPart: Snout
   markingCategory: SnoutCover
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: patch

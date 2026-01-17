@@ -3,8 +3,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   forcedColoring: true
-  followSkinColor: true
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human, Dwarf]
   sprites:
   - sprite: Mobs/Customization/ears.rsi
     state: long_ears_standard
@@ -14,8 +13,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   forcedColoring: true
-  followSkinColor: true
-  speciesRestriction: [Human]
+  groupWhitelist: [Human]
   sprites:
   - sprite: Mobs/Customization/ears.rsi
     state: long_ears_wide
@@ -25,8 +23,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   forcedColoring: true
-  followSkinColor: true
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human, Dwarf]
   sprites:
   - sprite: Mobs/Customization/ears.rsi
     state: long_ears_small
@@ -36,8 +33,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   forcedColoring: true
-  followSkinColor: true
-  speciesRestriction: [Human]
+  groupWhitelist: [Human]
   sprites:
   - sprite: Mobs/Customization/ears.rsi
     state: long_ears_upwards
@@ -47,8 +43,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   forcedColoring: true
-  followSkinColor: true
-  speciesRestriction: [Human]
+  groupWhitelist: [Human]
   sprites:
   - sprite: Mobs/Customization/ears.rsi
     state: long_ears_tall
@@ -58,8 +53,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   forcedColoring: true
-  followSkinColor: true
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human, Dwarf]
   sprites:
   - sprite: Mobs/Customization/ears.rsi
     state: long_ears_thin

@@ -1,3 +1,40 @@
+- type: markingsGroup
+  id: Slime
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceSlimePerson
@@ -26,7 +63,7 @@
         - id: OrganSlimePersonFootRight
         - id: OrganSlimePersonCore
         - id: OrganSlimePersonLungs
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: SlimePerson
 
 - type: entity
@@ -159,6 +196,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Slime/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Slime/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Slime
 
 - type: entity
   parent: [ OrganBaseTorso, OrganSlimePersonExternal ]

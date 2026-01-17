@@ -78,7 +78,7 @@ namespace Content.Server.Destructible
                     }));
 
                     // If it doesn't have a humanoid component, it's probably not particularly notable?
-                    if (logImpact > LogImpact.Medium && !HasComp<HumanoidAppearanceComponent>(uid))
+                    if (logImpact > LogImpact.Medium && !HasComp<HumanoidProfileComponent>(uid))
                         logImpact = LogImpact.Medium;
 
                     if (args.Origin != null)

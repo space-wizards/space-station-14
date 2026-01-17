@@ -2,7 +2,7 @@
   id: GauzeLefteyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  groupWhitelist: [Dwarf, Human, Arachnid]
   coloring:
     default:
       type:
@@ -16,7 +16,7 @@
   id: GauzeLefteyePad
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -30,7 +30,7 @@
   id: GauzeRighteyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  groupWhitelist: [Dwarf, Human, Arachnid]
   coloring:
     default:
       type:
@@ -44,7 +44,7 @@
   id: GauzeRighteyePad
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -58,7 +58,7 @@
   id: GauzeBlindfold
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  groupWhitelist: [Dwarf, Human, Arachnid]
   coloring:
     default:
       type:
@@ -72,7 +72,7 @@
   id: GauzeShoulder
   bodyPart: Chest
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -86,7 +86,7 @@
   id: GauzeStomach
   bodyPart: Chest
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -100,7 +100,7 @@
   id: GauzeUpperArmRight
   bodyPart: RArm
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -112,9 +112,9 @@
 
 - type: marking
   id: GauzeLowerArmRight
-  bodyPart: RArm, RHand
+  bodyPart: RHand
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -126,9 +126,9 @@
 
 - type: marking
   id: GauzeLeftArm
-  bodyPart: LArm, LHand
+  bodyPart: LArm
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -142,7 +142,7 @@
   id: GauzeLowerLegLeft
   bodyPart: LFoot
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  groupWhitelist: [Dwarf, Human, Arachnid]
   coloring:
     default:
       type:
@@ -156,7 +156,7 @@
   id: GauzeUpperLegLeft
   bodyPart: LLeg
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -170,7 +170,7 @@
   id: GauzeUpperLegRight
   bodyPart: RLeg
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -184,7 +184,7 @@
   id: GauzeLowerLegRight
   bodyPart: RFoot
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Arachnid]
+  groupWhitelist: [Dwarf, Human, Arachnid]
   coloring:
     default:
       type:
@@ -198,7 +198,7 @@
   id: GauzeBoxerWrapRight
   bodyPart: RHand
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -212,7 +212,7 @@
   id: GauzeBoxerWrapLeft
   bodyPart: LHand
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
     default:
       type:
@@ -226,7 +226,7 @@
   id: GauzeHead
   bodyPart: Head
   markingCategory: Overlay
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Moth]
+  groupWhitelist: [Dwarf, Human, Reptilian, Arachnid, Moth]
   coloring:
     default:
       type:
@@ -241,7 +241,7 @@
   id: GauzeLizardLefteyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Reptilian]
+  groupWhitelist: [Reptilian]
   coloring:
     default:
       type:
@@ -255,7 +255,7 @@
   id: GauzeLizardRighteyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Reptilian]
+  groupWhitelist: [Reptilian]
   coloring:
     default:
       type:
@@ -269,7 +269,7 @@
   id: GauzeLizardFootRight
   bodyPart: RFoot
   markingCategory: Overlay
-  speciesRestriction: [Reptilian]
+  groupWhitelist: [Reptilian]
   coloring:
     default:
       type:
@@ -283,7 +283,7 @@
   id: GauzeLizardFootLeft
   bodyPart: LFoot
   markingCategory: Overlay
-  speciesRestriction: [Reptilian]
+  groupWhitelist: [Reptilian]
   coloring:
     default:
       type:
@@ -297,7 +297,7 @@
   id: GauzeLizardBlindfold
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Reptilian]
+  groupWhitelist: [Reptilian]
   coloring:
     default:
       type:
@@ -312,7 +312,7 @@
   id: GauzeMothBlindfold
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -326,7 +326,7 @@
   id: GauzeMothShoulder
   bodyPart: Chest
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -340,7 +340,7 @@
   id: GauzeMothStomach
   bodyPart: Chest
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -354,7 +354,7 @@
   id: GauzeMothLeftEyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -368,7 +368,7 @@
   id: GauzeMothLeftEyePad
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -382,7 +382,7 @@
   id: GauzeMothRightEyePatch
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -396,7 +396,7 @@
   id: GauzeMothRightEyePad
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -410,7 +410,7 @@
   id: GauzeMothUpperArmRight
   bodyPart: RArm
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -424,7 +424,7 @@
   id: GauzeMothUpperArmLeft
   bodyPart: LArm
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -438,7 +438,7 @@
   id: GauzeMothUpperLegRight
   bodyPart: RLeg
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -452,7 +452,7 @@
   id: GauzeMothUpperLegLeft
   bodyPart: LLeg
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -466,7 +466,7 @@
   id: GauzeMothLowerLegRight
   bodyPart: RFoot
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -480,7 +480,7 @@
   id: GauzeMothLowerLegLeft
   bodyPart: LFoot
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:

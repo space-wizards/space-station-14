@@ -34,7 +34,7 @@
         - id: OrganDwarfStomach
         - id: OrganDwarfLiver
         - id: OrganHumanKidneys
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Dwarf
   - type: ScaleVisuals
     scale: 1, 0.8

@@ -2,17 +2,11 @@
                xmlns:humanoid="clr-namespace:Content.Client.Humanoid">
     <ScrollContainer MinHeight="500" MinWidth="700">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-            <humanoid:MarkingPicker Name="MarkingPickerWidget" />
             <BoxContainer>
-                <CheckBox Name="MarkingForced" Text="{Loc humanoid-marking-modifier-force}" Pressed="True" />
-                <CheckBox Name="MarkingIgnoreSpecies" Text="{Loc humanoid-marking-modifier-ignore-species}" Pressed="True" />
+                <CheckBox Name="RespectLimits" Text="{Loc humanoid-marking-modifier-respect-limits}" Pressed="True" Access="Public" />
+                <CheckBox Name="RespectGroupSex" Text="{Loc humanoid-marking-modifier-respect-group-sex}" Pressed="True" Access="Public" />
             </BoxContainer>
-            <Collapsible HorizontalExpand="True">
-                <CollapsibleHeading Title="{Loc humanoid-marking-modifier-base-layers}" />
-                <CollapsibleBody HorizontalExpand="True">
-                    <BoxContainer Name="BaseLayersContainer" Orientation="Vertical" HorizontalExpand="True" />
-                </CollapsibleBody>
-            </Collapsible>
+            <humanoid:MarkingPicker Name="MarkingPickerWidget" Access="Public" />
         </BoxContainer>
     </ScrollContainer>
 </DefaultWindow>

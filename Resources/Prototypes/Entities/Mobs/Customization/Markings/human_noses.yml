@@ -2,9 +2,8 @@
   id: HumanNoseSchnozz
   bodyPart: Snout
   markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human, Dwarf]
   sprites:
   - sprite: Mobs/Customization/human_noses.rsi
     state: schnozz
@@ -13,9 +12,8 @@
   id: HumanNoseNubby
   bodyPart: Snout
   markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human, Dwarf]
   sprites:
   - sprite: Mobs/Customization/human_noses.rsi
     state: nubby
@@ -24,9 +22,8 @@
   id: HumanNoseDroop
   bodyPart: Snout
   markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human, Dwarf]
   sprites:
   - sprite: Mobs/Customization/human_noses.rsi
     state: droop
@@ -35,9 +32,8 @@
   id: HumanNoseBlob
   bodyPart: Snout
   markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human, Dwarf]
   sprites:
   - sprite: Mobs/Customization/human_noses.rsi
     state: blob
@@ -46,9 +42,8 @@
   id: HumanNoseUppie
   bodyPart: Snout
   markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human, Dwarf]
   sprites:
   - sprite: Mobs/Customization/human_noses.rsi
     state: uppie

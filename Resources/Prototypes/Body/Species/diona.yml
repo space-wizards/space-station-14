@@ -1,3 +1,36 @@
+- type: markingsGroup
+  id: Diona
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Head:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Overlay:
+      limit: 1
+      required: true
+      default: [ DionaVineOverlay ]
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceDiona
@@ -29,7 +62,7 @@
         - id: OrganDionaEyes
         - id: OrganDionaLungsNymphing
         - id: OrganDionaStomachNymphing
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Diona
 
 - type: entity
@@ -167,6 +200,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Diona/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Diona/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Diona
 
 - type: entity
   parent: [ OrganBaseTorso, OrganDionaExternal ]
@@ -213,8 +252,13 @@
   id: OrganDionaBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganDionaInternal ]
+  parent: [ OrganBaseEyes, OrganDionaInternal, OrganDionaExternal ]
   id: OrganDionaEyes
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Customization/eyes.rsi
+      state: diona
 
 - type: entity
   parent: [ OrganBaseLungs, OrganDionaInternal, OrganDionaMetabolizer ]

@@ -46,10 +46,6 @@ namespace Content.IntegrationTests.Tests.Preferences
                 Species = "Human",
                 Age = 21,
                 Appearance = new(
-                    "Afro",
-                    Color.Aqua,
-                    "Shaved",
-                    Color.Aquamarine,
                     Color.Azure,
                     Color.Beige,
                     new ())

@@ -1,3 +1,37 @@
+- type: markingsGroup
+  id: Arachnid
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ ArachnidAppendagesDefault ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: true
+      default: [ ArachnidCheliceraeDownwards ]
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceArachnid
@@ -30,7 +64,7 @@
         - id: OrganArachnidStomach
         - id: OrganArachnidLiver
         - id: OrganArachnidKidneys
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Arachnid
 
 - type: entity
@@ -133,6 +167,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Arachnid/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Arachnid
 
 - type: entity
   parent: [ OrganBaseTorso, OrganArachnidExternal ]
@@ -179,7 +219,7 @@
   id: OrganArachnidBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganArachnidInternal ]
+  parent: [ OrganBaseEyes, OrganArachnidInternal, OrganArachnidExternal ]
   id: OrganArachnidEyes
 
 - type: entity

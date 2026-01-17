@@ -34,7 +34,7 @@
         - id: OrganHumanStomach
         - id: OrganHumanLiver
         - id: OrganHumanKidneys
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Gingerbread
 
 - type: entity
@@ -92,6 +92,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: None
 
 - type: entity
   parent: [ OrganBaseTorso, OrganGingerbreadExternal ]

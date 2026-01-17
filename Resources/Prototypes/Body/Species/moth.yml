@@ -1,3 +1,52 @@
+- type: markingsGroup
+  id: Moth
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ MothWingsDefault ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ MothAntennasDefault ]
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceMoth
@@ -81,7 +130,7 @@
         - id: OrganMothStomach
         - id: OrganMothLiver
         - id: OrganMothKidneys
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Moth
 
 - type: entity
@@ -172,6 +221,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Moth/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Moth/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Moth
 
 - type: entity
   parent: [ OrganBaseTorso, OrganMothExternal ]
@@ -218,7 +273,7 @@
   id: OrganMothBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganMothInternal ]
+  parent: [ OrganBaseEyes, OrganMothInternal, OrganMothExternal ]
   id: OrganMothEyes
 
 - type: entity

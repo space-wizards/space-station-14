@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -793,12 +793,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("eye_color");
 
                     b.Property<string>("FacialHairColor")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("facial_hair_color");
 
                     b.Property<string>("FacialHairName")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("facial_hair_name");
 
@@ -813,12 +811,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("gender");
 
                     b.Property<string>("HairColor")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("hair_color");
 
                     b.Property<string>("HairName")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("hair_name");
 

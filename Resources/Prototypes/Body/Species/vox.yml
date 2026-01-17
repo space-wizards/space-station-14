@@ -1,3 +1,62 @@
+- type: markingsGroup
+  id: Vox
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Head:
+      limit: 4
+      required: true
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+      default: [ VoxBeak ]
+    enum.HumanoidVisualLayers.SnoutCover:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: true
+      default: [ VoxLArmScales ]
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: true
+      default: [ VoxRArmScales ]
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: true
+      default: [ VoxLHandScales ]
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: true
+      default: [ VoxRHandScales ]
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: true
+      default: [ VoxLLegScales ]
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: true
+      default: [ VoxRLegScales ]
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: true
+      default: [ VoxLFootScales ]
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: true
+      default: [ VoxRFootScales ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ VoxTail ]
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceVox
@@ -81,7 +140,7 @@
         - id: OrganVoxStomach
         - id: OrganVoxLiver
         - id: OrganVoxKidneys
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Vox
     undergarmentTop: UndergarmentTopTanktopVox
     undergarmentBottom: UndergarmentBottomBoxersVox
@@ -217,6 +276,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Vox/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Vox/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Vox
 
 - type: entity
   parent: [ OrganBaseTorso, OrganVoxExternal ]
@@ -224,6 +289,9 @@
   components:
   - type: Sprite
     state: torso
+  - type: VisualOrgan
+    data:
+      state: torso
 
 - type: entity
   parent: [ OrganBaseHead, OrganVoxExternal ]
@@ -231,6 +299,9 @@
   components:
   - type: Sprite
     state: head
+  - type: VisualOrgan
+    data:
+      state: head
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganVoxExternal ]
@@ -269,7 +340,7 @@
   id: OrganVoxBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganVoxInternal ]
+  parent: [ OrganBaseEyes, OrganVoxInternal, OrganVoxExternal ]
   id: OrganVoxEyes
 
 - type: entity

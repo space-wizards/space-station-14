@@ -1,3 +1,44 @@
+- type: markingsGroup
+  id: Skeleton
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceSkeletonPerson
@@ -24,7 +65,7 @@
         - id: OrganSkeletonPersonLegRight
         - id: OrganSkeletonPersonFootLeft
         - id: OrganSkeletonPersonFootRight
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Skeleton
 
 - type: entity
@@ -157,6 +198,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Skeleton/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Skeleton/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Skeleton
 
 - type: entity
   parent: [ OrganBaseTorso, OrganSkeletonPersonExternal ]
