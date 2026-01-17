@@ -37,6 +37,7 @@ using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
@@ -78,6 +79,7 @@ public sealed partial class ZombieSystem
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
+    private static readonly HashSet<HumanoidVisualLayers> AdditionalZombieLayers = [HumanoidVisualLayers.Tail, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.Snout];
 
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
@@ -197,13 +199,31 @@ public sealed partial class ZombieSystem
             _visualBody.GatherMarkingsData((target, body), null, out var profiles, out _, out var markings);
 
             zombiecomp.BeforeZombifiedProfiles = profiles;
-            zombiecomp.BeforeZombifiedMarkings = markings;
+            zombiecomp.BeforeZombifiedMarkings = markings.ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value.ToDictionary(
+                    it => it.Key,
+                    it => it.Value.Select(marking => new Marking(marking)).ToList()));;
 
             var zombifiedProfiles = profiles.ToDictionary(pair => pair.Key,
                 pair => pair.Value with { EyeColor = zombiecomp.EyeColor, SkinColor = zombiecomp.SkinColor });
             _visualBody.ApplyProfiles(target, zombifiedProfiles);
 
-            // TODO Tail HeadSide HeadTop Snout
+            foreach (var markingSet in markings.Values)
+            {
+                foreach (var (layer, layerMarkings) in markingSet)
+                {
+                    if (!AdditionalZombieLayers.Contains(layer))
+                        continue;
+
+                    foreach (var marking in layerMarkings)
+                    {
+                        marking.SetColor(zombiecomp.SkinColor);
+                    }
+                }
+            }
+
+            _visualBody.ApplyMarkings(target, markings);
         }
 
         //We have specific stuff for humanoid zombies because they matter more
