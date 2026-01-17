@@ -277,18 +277,23 @@
     sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
-  parent: OrganVox
-  id: OrganVoxExternal
+  id: OrganVoxVisual
   abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Species/Vox/parts.rsi
   - type: VisualOrgan
     data:
       sprite: Mobs/Species/Vox/parts.rsi
   - type: VisualOrganMarkings
     markingData:
       group: Vox
+
+- type: entity
+  parent: [ OrganVox, OrganVoxVisual ]
+  id: OrganVoxExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/parts.rsi
 
 - type: entity
   parent: [ OrganBaseTorso, OrganVoxExternal ]
@@ -347,7 +352,7 @@
   id: OrganVoxBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganVoxInternal, OrganVoxExternal ]
+  parent: [ OrganVoxVisual, OrganBaseEyes, OrganVoxInternal ]
   id: OrganVoxEyes
 
 - type: entity

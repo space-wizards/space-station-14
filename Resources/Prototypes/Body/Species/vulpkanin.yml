@@ -230,18 +230,23 @@
     sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
-  parent: OrganVulpkanin
-  id: OrganVulpkaninExternal
+  id: OrganVulpkaninVisual
   abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Species/Vulpkanin/parts.rsi
   - type: VisualOrgan
     data:
       sprite: Mobs/Species/Vulpkanin/parts.rsi
   - type: VisualOrganMarkings
     markingData:
       group: Vulpkanin
+
+- type: entity
+  parent: [ OrganVulpkanin, OrganVulpkaninVisual ]
+  id: OrganVulpkaninExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
 
 - type: entity
   parent: [ OrganBaseTorso, OrganVulpkaninExternal ]
@@ -288,7 +293,7 @@
   id: OrganVulpkaninBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganVulpkaninInternal, OrganVulpkaninExternal ]
+  parent: [ OrganVulpkaninVisual, OrganBaseEyes, OrganVulpkaninInternal ]
   id: OrganVulpkaninEyes
 
 - type: entity

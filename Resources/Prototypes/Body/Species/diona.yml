@@ -193,18 +193,23 @@
     sprite: Mobs/Species/Diona/organs.rsi
 
 - type: entity
-  parent: OrganDiona
-  id: OrganDionaExternal
+  id: OrganDionaVisual
   abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Species/Diona/parts.rsi
   - type: VisualOrgan
     data:
       sprite: Mobs/Species/Diona/parts.rsi
   - type: VisualOrganMarkings
     markingData:
       group: Diona
+
+- type: entity
+  parent: [ OrganDiona, OrganDionaVisual ]
+  id: OrganDionaExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Diona/parts.rsi
 
 - type: entity
   parent: [ OrganBaseTorso, OrganDionaExternal ]
@@ -251,7 +256,7 @@
   id: OrganDionaBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganDionaInternal, OrganDionaExternal ]
+  parent: [ OrganDionaVisual, OrganBaseEyes, OrganDionaInternal ]
   id: OrganDionaEyes
   components:
   - type: VisualOrgan

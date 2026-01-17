@@ -214,18 +214,23 @@
     sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
-  parent: OrganMoth
-  id: OrganMothExternal
+  id: OrganMothVisual
   abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Species/Moth/parts.rsi
   - type: VisualOrgan
     data:
       sprite: Mobs/Species/Moth/parts.rsi
   - type: VisualOrganMarkings
     markingData:
       group: Moth
+
+- type: entity
+  parent: [ OrganMoth, OrganMothVisual ]
+  id: OrganMothExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Moth/parts.rsi
 
 - type: entity
   parent: [ OrganBaseTorso, OrganMothExternal ]
@@ -272,7 +277,7 @@
   id: OrganMothBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganMothInternal, OrganMothExternal ]
+  parent: [ OrganMothVisual, OrganBaseEyes, OrganMothInternal ]
   id: OrganMothEyes
 
 - type: entity

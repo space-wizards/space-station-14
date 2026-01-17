@@ -160,18 +160,23 @@
     sprite: Mobs/Species/Arachnid/organs.rsi
 
 - type: entity
-  parent: OrganArachnid
-  id: OrganArachnidExternal
+  id: OrganArachnidVisual
   abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Species/Arachnid/parts.rsi
   - type: VisualOrgan
     data:
       sprite: Mobs/Species/Arachnid/parts.rsi
   - type: VisualOrganMarkings
     markingData:
       group: Arachnid
+
+- type: entity
+  parent: [ OrganArachnid, OrganArachnidVisual ]
+  id: OrganArachnidExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Arachnid/parts.rsi
 
 - type: entity
   parent: [ OrganBaseTorso, OrganArachnidExternal ]
@@ -218,7 +223,7 @@
   id: OrganArachnidBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganArachnidInternal, OrganArachnidExternal ]
+  parent: [ OrganArachnidVisual, OrganBaseEyes, OrganArachnidInternal ]
   id: OrganArachnidEyes
 
 - type: entity
