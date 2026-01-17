@@ -1,6 +1,6 @@
 hijack-beacon-announcement-sender = Automated Trade Station
-hijack-beacon-announcement-activated = Attention! Breach of NanoTrasen firewall detected! Estimated {$time} seconds until firewall breach! This incident has been reported.
-hijack-beacon-announcement-deactivated = Firewall breach failed. Firewall integrity restored to 100%. This incident has been reported.
+hijack-beacon-announcement-activated = Attention! Breach of Nanotrasen firewall detected! Estimated {$time} seconds until firewall breach!
+hijack-beacon-announcement-deactivated = Firewall breach failed. Firewall integrity partially restored. Have a nice day!
 hijack-beacon-announcement-success = Successfully disengaged Automated Trade Station firewall. Your trade station warranty is now void. This incident has been reported.
 
 hijack-beacon-examine-await-activate = The beacon is [color=green]ready to activate[/color].

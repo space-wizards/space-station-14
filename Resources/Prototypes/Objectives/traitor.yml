@@ -358,7 +358,7 @@
   parent: BaseTraitorObjective
   id: HijackTradeStationObjective
   name: Hijack the Automated Trade Station.
-  description: Your uplink has been authorized one hijack beacon. Activate it on the Automated Trade Station and defend it whilst it hijacks the trade station.
+  description: Your uplink has been authorized one hijack beacon. Deploy it on the Automated Trade Station and defend it whilst it hijacks the trade station.
   components:
   - type: Objective
     difficulty: 3
