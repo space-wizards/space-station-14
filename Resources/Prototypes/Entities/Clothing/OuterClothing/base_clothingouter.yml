@@ -26,7 +26,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseMedium
   id: ClothingOuterStorageBase
   components:
   - type: Storage
@@ -203,3 +203,5 @@
   components:
   - type: Item
     size: Huge
+    shape:
+    - 0,0,2,3
