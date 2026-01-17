@@ -78,9 +78,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponSubMachineGunC20r
+      storagebase:
+        id: WeaponSubMachineGunC20r
 
 - type: entity
   id: BriefcaseWeaponBulldogFilled
@@ -89,9 +88,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponShotgunBulldog
+      storagebase:
+        id: WeaponShotgunBulldog
 
 - type: entity
   id: BriefcaseWeaponDMRFilled
@@ -100,9 +98,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponRifleEstoc
+      storagebase:
+        id: WeaponRifleEstoc
 
 - type: entity
   id: BriefcaseWeaponChinaLakeFilled
