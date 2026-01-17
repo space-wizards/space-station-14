@@ -46,11 +46,14 @@ namespace Content.Client.Forensics
         {
             base.Update();
 
-            if (_window == null || !EntMan.TryGetComponent(Owner, out ForensicScannerComponent? scanner))
+            if (_window == null)
+                return;
+
+            if (!EntMan.TryGetComponent(Owner, out ForensicScannerComponent? scanner))
                 return;
 
             _printCooldown = scanner.PrintCooldown;
-            _window?.Update(Owner);
+            _window.Update(scanner);
         }
     }
 }
