@@ -78,6 +78,9 @@ public sealed partial class SharedSpaceVillainArcadeSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
+        if (ent.Comp.InvinciblePlayer)
+            return;
+
         ent.Comp.PlayerHP = (byte)Math.Clamp(ent.Comp.PlayerHP - value, byte.MinValue, ent.Comp.Overflow ? byte.MaxValue : ent.Comp.PlayerMaxHP);
         DirtyField(ent, nameof(SpaceVillainArcadeComponent.PlayerHP));
     }
@@ -124,6 +127,9 @@ public sealed partial class SharedSpaceVillainArcadeSystem : EntitySystem
     public void TakePlayerMP(Entity<SpaceVillainArcadeComponent?> ent, byte value)
     {
         if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.InvinciblePlayer)
             return;
 
         ent.Comp.PlayerMP = (byte)Math.Clamp(ent.Comp.PlayerMP - value, byte.MinValue, ent.Comp.Overflow ? byte.MaxValue : ent.Comp.PlayerMaxMP);
@@ -174,6 +180,9 @@ public sealed partial class SharedSpaceVillainArcadeSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
+        if (ent.Comp.InvincibleVillain)
+            return;
+
         ent.Comp.VillainHP = (byte)Math.Clamp(ent.Comp.VillainHP - value, byte.MinValue, ent.Comp.Overflow ? byte.MaxValue : ent.Comp.VillainMaxHP);
         DirtyField(ent, nameof(SpaceVillainArcadeComponent.VillainHP));
     }
@@ -220,6 +229,9 @@ public sealed partial class SharedSpaceVillainArcadeSystem : EntitySystem
     public void TakeVillainMP(Entity<SpaceVillainArcadeComponent?> ent, byte value)
     {
         if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.InvincibleVillain)
             return;
 
         ent.Comp.VillainMP = (byte)Math.Clamp(ent.Comp.VillainMP - value, byte.MinValue, ent.Comp.Overflow ? byte.MaxValue : ent.Comp.VillainMaxMP);
