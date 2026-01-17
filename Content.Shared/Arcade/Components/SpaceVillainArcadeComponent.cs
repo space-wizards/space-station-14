@@ -30,6 +30,21 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
+    public bool Overflow;
+
+    /// <summary>
+    ///
+    /// </summary>
+    public bool InvinciblePlayer;
+
+    /// <summary>
+    ///
+    /// </summary>
+    public bool InvincibleVillain;
+
+    /// <summary>
+    ///
+    /// </summary>
     [DataField, AutoNetworkedField]
     public byte PlayerHP;
 
