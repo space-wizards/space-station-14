@@ -215,6 +215,14 @@ public abstract class SharedGrapplingGunSystem : VirtualController
             var physicalGrapple = jointComp.Relay.HasValue ? jointComp.Relay.Value : joint.BodyBUid;
             var physicalHook = hookJointComp.Relay.HasValue ? hookJointComp.Relay.Value : joint.BodyAUid;
 
+            // HACK: preventing both ends of the grappling hook from sleeping if neither are on the same grid, so that grid movement works as expected
+            if (_transform.GetGrid(physicalHook) != _transform.GetGrid(physicalGrapple))
+            {
+                _physics.WakeBody(physicalHook);
+                _physics.WakeBody(physicalGrapple);
+            }
+            // END OF HACK
+
             var bodyAWorldPos = _transform.GetWorldPosition(physicalHook);
             var bodyBWorldPos = _transform.GetWorldPosition(physicalGrapple);
 
