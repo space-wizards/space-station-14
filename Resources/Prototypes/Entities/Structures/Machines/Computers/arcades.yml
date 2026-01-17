@@ -161,12 +161,12 @@
     layoutId: Arcade
     boardName: wires-board-name-arcade
   - type: ActivatableUI
-    key: enum.SpaceVillainArcadeUiKey.Key
+    key: enum.ArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      enum.SpaceVillainArcadeUiKey.Key:
+      enum.ArcadeUiKey.Key:
         type: SpaceVillainArcadeBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
@@ -208,12 +208,12 @@
       visible: false
   - type: BlockGameArcade
   - type: ActivatableUI
-    key: enum.BlockGameArcadeUiKey.Key
+    key: enum.ArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      enum.BlockGameArcadeUiKey.Key:
+      enum.ArcadeUiKey.Key:
         type: BlockGameBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
