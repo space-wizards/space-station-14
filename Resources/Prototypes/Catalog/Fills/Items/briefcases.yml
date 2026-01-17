@@ -40,15 +40,12 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: ClothingEyesGlassesSunglasses
+        - id: ClothingOuterCoatJensen
+        - id: ClothingUniformJumpsuitTacticool
         - id: SpaceCash30000
         - id: EncryptionKeySyndie
         - id: RubberStampTrader
         - id: PhoneInstrumentSyndicate
-        - id: ClothingUniformJumpsuitTacticool
-        - id: ClothingOuterCoatJensen
-        - id: ClothingHandsGlovesCombat
-        - id: ClothingMaskNeckGaiter
         - id: SyndieHandyFlag
 
 - type: entity
@@ -60,7 +57,7 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        - id: ClothingOuterCoatJensen
         - id: ClothingEyesGlassesSunglasses
         - id: SpaceCash20000
-        - id: ClothingOuterCoatJensen
         - id: ClothingHandsGlovesColorBlack

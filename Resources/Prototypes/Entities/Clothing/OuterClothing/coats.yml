@@ -113,6 +113,19 @@
     clothingPrototype: ClothingHeadHatHoodChaplainHood
 
 - type: entity
+  parent: ClothingOuterCoatJensen
+  id: ClothingOuterCoatJensenSyndie
+  suffix: Syndie
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingEyesGlassesSunglasses
+        - id: ClothingHandsGlovesCombat
+        - id: ClothingMaskNeckGaiter
+
+- type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatTrench
   name: trench coat
