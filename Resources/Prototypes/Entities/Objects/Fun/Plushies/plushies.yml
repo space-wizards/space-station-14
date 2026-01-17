@@ -992,7 +992,7 @@
   parent: BasePlushie
   id: PlushieVox
   name: vox plushie
-  description: SKREEEEEEEEEEEE!
+  description: An adorable stuffed toy that resembles a vox. Breath mask accessory sold separately.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/vox.rsi
