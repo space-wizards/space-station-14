@@ -24,3 +24,18 @@
   id: ArcadeLose
   files:
     - /Audio/Effects/Arcade/gameover.ogg
+
+- type: soundCollection
+  id: SpaceVillainAttack
+  files:
+    - /Audio/Effects/Arcade/player_attack.ogg
+
+- type: soundCollection
+  id: SpaceVillainHeal
+  files:
+    - /Audio/Effects/Arcade/player_heal.ogg
+
+- type: soundCollection
+  id: SpaceVillainCharge
+  files:
+    - /Audio/Effects/Arcade/player_charge.ogg

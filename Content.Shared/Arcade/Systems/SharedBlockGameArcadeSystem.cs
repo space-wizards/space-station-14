@@ -14,6 +14,10 @@ public sealed partial class SharedBlockGameArcadeSystem : EntitySystem
 
     #endregion
 
+    #region BUI
+
+    #endregion
+
     #region API
 
     #endregion

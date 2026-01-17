@@ -1,5 +1,6 @@
 using Content.Shared.Arcade.Components;
 using Content.Shared.Arcade.Events;
+using Content.Shared.Arcade.Messages;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Arcade.Systems;
@@ -17,11 +18,8 @@ public sealed partial class SharedArcadeSystem : EntitySystem
 
         SubscribeLocalEvent<ArcadeComponent, ArcadeChangedStateEvent>(OnArcadeChangedState);
 
-        Subs.BuiEvents<ArcadeComponent>(ArcadeUiKey.Key, subs =>
-        {
-            subs.Event<BoundUIOpenedEvent>(OnBUIOpened);
-            subs.Event<BoundUIClosedEvent>(OnBUIClosed);
-        });
+        // BUI messages
+        SubscribeLocalEvent<ArcadeComponent, ArcadeNewGameMessage>(OnArcadeNewGame);
     }
 
     #region Events
@@ -42,19 +40,13 @@ public sealed partial class SharedArcadeSystem : EntitySystem
         }
     }
 
-    private void OnBUIOpened(Entity<ArcadeComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        if (ent.Comp.Player.HasValue)
-            return;
+    #endregion
 
-        ent.Comp.Player = args.Actor;
-        DirtyField(ent.AsNullable(), nameof(ArcadeComponent.Player));
-    }
+    #region BUI
 
-    private void OnBUIClosed(Entity<ArcadeComponent> ent, ref BoundUIClosedEvent args)
+    private void OnArcadeNewGame(Entity<ArcadeComponent> ent, ref ArcadeNewGameMessage args)
     {
-        ent.Comp.Player = null;
-        DirtyField(ent.AsNullable(), nameof(ArcadeComponent.Player));
+        TryChangeGameState(ent.AsNullable(), args.Actor, ArcadeGameState.Game);
     }
 
     #endregion
@@ -64,21 +56,26 @@ public sealed partial class SharedArcadeSystem : EntitySystem
     /// <summary>
     ///
     /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="gameState"></param>
-    /// <returns></returns>
-    public bool TryChangeGameState(Entity<ArcadeComponent?> ent, ArcadeGameState gameState)
+    public bool TryFinishGame(Entity<ArcadeComponent?> ent, EntityUid? player)
+    {
+        return TryChangeGameState(ent, player, ArcadeGameState.Win) || TryChangeGameState(ent, player, ArcadeGameState.Lose);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public bool TryChangeGameState(Entity<ArcadeComponent?> ent, EntityUid? player, ArcadeGameState gameState)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        var checkEv = new ArcadeChangeStateAttempt(ent.Comp.Player, ent.Comp.State, gameState);
+        var checkEv = new ArcadeChangeStateAttempt(player, ent.Comp.State, gameState);
         RaiseLocalEvent(ent, ref checkEv);
 
         if (checkEv.Cancelled)
             return false;
 
-        var ev = new ArcadeChangedStateEvent(ent.Comp.Player, ent.Comp.State, gameState);
+        var ev = new ArcadeChangedStateEvent(player, ent.Comp.State, gameState);
         RaiseLocalEvent(ent, ref ev);
 
         ent.Comp.State = gameState;

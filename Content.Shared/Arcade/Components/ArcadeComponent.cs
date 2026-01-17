@@ -31,12 +31,6 @@ public sealed partial class ArcadeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? Player;
-
-    /// <summary>
-    ///
-    /// </summary>
-    [DataField, AutoNetworkedField]
     public ArcadeGameState State = ArcadeGameState.Idle;
 
     /// <summary>
