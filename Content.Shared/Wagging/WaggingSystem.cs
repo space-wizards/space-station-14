@@ -31,7 +31,7 @@ public sealed class WaggingSystem : EntitySystem
     private void OnWaggingMapInit(Entity<WaggingComponent> ent, ref MapInitEvent args)
     {
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action, ent);
-        DirtyField(ent, ent.Comp, nameof(WaggingComponent.ActionEntity));
+        DirtyField(ent.AsNullable(), nameof(WaggingComponent.ActionEntity));
     }
 
     private void OnWaggingShutdown(Entity<WaggingComponent> ent, ref ComponentShutdown args)
