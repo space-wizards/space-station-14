@@ -290,9 +290,9 @@
   productEntity: SyndieMiniBomb
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 2
-  cost:
     Telecrystal: 3
+  cost:
+    Telecrystal: 4
   categories:
     - UplinkExplosives
 
