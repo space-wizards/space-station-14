@@ -1,0 +1,98 @@
+- type: entity
+  parent: AppearanceHuman
+  id: AppearanceDwarf
+  name: dwarf appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganHumanTorso
+        - id: OrganHumanHead
+        - id: OrganHumanArmLeft
+        - id: OrganHumanArmRight
+        - id: OrganHumanHandRight
+        - id: OrganHumanHandLeft
+        - id: OrganHumanLegLeft
+        - id: OrganHumanLegRight
+        - id: OrganHumanFootLeft
+        - id: OrganHumanFootRight
+        - id: OrganHumanBrain
+        - id: OrganHumanEyes
+        - id: OrganHumanTongue
+        - id: OrganHumanAppendix
+        - id: OrganHumanEars
+        - id: OrganHumanLungs
+        - id: OrganDwarfHeart
+        - id: OrganDwarfStomach
+        - id: OrganDwarfLiver
+        - id: OrganHumanKidneys
+  - type: HumanoidAppearance
+    species: Dwarf
+  - type: ScaleVisuals
+    scale: 1, 0.8
+
+- type: entity
+  parent:
+  - AppearanceDwarf
+  - MobHuman
+  id: MobDwarf
+  name: Urist McHands The Dwarf
+  components:
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        # they r smaller
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Vocal
+    sounds:
+      Male: UnisexDwarf
+      Female: FemaleDwarf
+      Unsexed: UnisexDwarf
+  - type: ReplacementAccent
+    accent: dwarf
+  - type: Speech
+    speechSounds: Bass
+
+- type: entity
+  parent: OrganBase
+  id: OrganDwarf
+  abstract: true
+  suffix: Dwarf
+
+- type: entity
+  id: OrganDwarfMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Dwarf ]
+
+- type: entity
+  parent: [ OrganDwarfMetabolizer, OrganHumanStomach ]
+  id: OrganDwarfStomach
+  components:
+  - type: Metabolizer
+    maxReagents: 5
+
+- type: entity
+  parent: [ OrganDwarfMetabolizer, OrganHumanLiver ]
+  id: OrganDwarfLiver
+
+- type: entity
+  parent: [ OrganDwarfMetabolizer, OrganHumanHeart ]
+  id: OrganDwarfHeart
