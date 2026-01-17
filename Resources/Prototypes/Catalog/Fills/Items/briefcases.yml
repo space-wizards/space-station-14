@@ -40,13 +40,12 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: ClothingOuterCoatJensen
+        - id: ClothingOuterCoatJensenSyndie
         - id: ClothingUniformJumpsuitTacticool
         - id: SpaceCash30000
         - id: EncryptionKeySyndie
-        - id: RubberStampTrader
         - id: PhoneInstrumentSyndicate
-        - id: SyndieHandyFlag
+        - id: RubberStampTrader
 
 - type: entity
   id: BriefcaseThiefBribingBundleFilled
