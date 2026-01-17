@@ -292,7 +292,7 @@
   discountDownTo:
     Telecrystal: 3
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
     - UplinkExplosives
 
