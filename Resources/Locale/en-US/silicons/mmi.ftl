@@ -1,1 +1,1 @@
-error-incompatible-mmi = This object is incompatible with the man-machine interface!
+error-incompatible-mmi = This {$inserted} is incompatible with {THE($container)}!
