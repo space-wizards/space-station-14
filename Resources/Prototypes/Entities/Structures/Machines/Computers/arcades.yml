@@ -208,12 +208,12 @@
       visible: false
   - type: BlockGameArcade
   - type: ActivatableUI
-    key: enum.BlockGameUiKey.Key
+    key: enum.BlockGameArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      enum.BlockGameUiKey.Key:
+      enum.BlockGameArcadeUiKey.Key:
         type: BlockGameBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
