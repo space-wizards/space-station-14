@@ -100,9 +100,6 @@
   wires:
   - !type:PowerWireAction
   - !type:SpeechWireAction
-  - !type:ArcadeOverflowWireAction
-  - !type:ArcadePlayerInvincibleWireAction
-  - !type:ArcadeEnemyInvincibleWireAction
   - !type:AiInteractWireAction
 
 - type: wireLayout
