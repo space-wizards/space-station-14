@@ -51,7 +51,7 @@ public sealed class WaggingSystem : EntitySystem
 
     private void OnMobStateChanged(Entity<WaggingComponent> ent, ref MobStateChangedEvent args)
     {
-        TrySetWagging((ent, ent.Comp), false);
+        TrySetWagging(ent.AsNullable(), false);
     }
 
     private void OnCloning(Entity<WaggingComponent> ent, ref CloningEvent args)
