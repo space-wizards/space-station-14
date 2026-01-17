@@ -30,16 +30,19 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
+    [DataField, AutoNetworkedField]
     public bool Overflow;
 
     /// <summary>
     ///
     /// </summary>
+    [DataField, AutoNetworkedField]
     public bool InvinciblePlayer;
 
     /// <summary>
     ///
     /// </summary>
+    [DataField, AutoNetworkedField]
     public bool InvincibleVillain;
 
     /// <summary>
@@ -52,7 +55,7 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public byte PlayerMaxHP;
+    public byte PlayerMaxHP = 30;
 
     /// <summary>
     ///
@@ -64,7 +67,7 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public byte PlayerMaxMP;
+    public byte PlayerMaxMP = 10;
 
     /// <summary>
     ///
@@ -76,7 +79,7 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public byte VillainMaxHP;
+    public byte VillainMaxHP = 45;
 
     /// <summary>
     ///
@@ -88,7 +91,7 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public byte VillainMaxMP;
+    public byte VillainMaxMP = 20;
 
     /// <summary>
     ///

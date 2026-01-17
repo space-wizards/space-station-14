@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Arcade;
+namespace Content.Shared.Arcade;
 
 [Serializable, NetSerializable]
 public enum SpaceVillainWireStatus

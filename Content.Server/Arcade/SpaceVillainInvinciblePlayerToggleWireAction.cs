@@ -1,9 +1,10 @@
 using Content.Server.Wires;
+using Content.Shared.Arcade;
 using Content.Shared.Arcade.Components;
 using Content.Shared.Arcade.Systems;
 using Content.Shared.Wires;
 
-namespace Content.Server.Arcade.WireActions;
+namespace Content.Server.Arcade;
 
 public sealed partial class SpaceVillainInvinciblePlayerToggleWireAction : ComponentWireAction<SpaceVillainArcadeComponent>
 {
