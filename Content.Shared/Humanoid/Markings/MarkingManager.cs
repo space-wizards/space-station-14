@@ -55,64 +55,6 @@ public sealed class MarkingManager
     }
 
     /// <summary>
-    ///     Markings by layer and group.
-    /// </summary>
-    /// <remarks>
-    ///     This is done per layer, as enumerating over every single marking by group isn't useful.
-    ///     Please make a pull request if you find a use case for that behavior.
-    /// </remarks>
-    /// <returns></returns>
-    public IReadOnlyDictionary<string, MarkingPrototype> MarkingsByLayerAndGroup(HumanoidVisualLayers layer,
-        ProtoId<MarkingsGroupPrototype> group)
-    {
-        var groupProto = _prototype.Index(group);
-        var res = new Dictionary<string, MarkingPrototype>();
-        var whitelisted = groupProto.Limits.GetValueOrDefault(layer)?.OnlyGroupWhitelisted ?? groupProto.OnlyGroupWhitelisted;
-
-        foreach (var (key, marking) in MarkingsByLayer(layer))
-        {
-            if (whitelisted && marking.GroupWhitelist == null)
-            {
-                continue;
-            }
-
-            if (marking.GroupWhitelist != null && !marking.GroupWhitelist.Contains(group))
-            {
-                continue;
-            }
-            res.Add(key, marking);
-        }
-
-        return res;
-    }
-
-    /// <summary>
-    ///     Markings by category and sex.
-    /// </summary>
-    /// <remarks>
-    ///     This is done per category, as enumerating over every single marking by group isn't useful.
-    ///     Please make a pull request if you find a use case for that behavior.
-    /// </remarks>
-    /// <returns></returns>
-    public IReadOnlyDictionary<string, MarkingPrototype> MarkingsByLayerAndSex(HumanoidVisualLayers layer,
-        Sex sex)
-    {
-        var res = new Dictionary<string, MarkingPrototype>();
-
-        foreach (var (key, marking) in MarkingsByLayer(layer))
-        {
-            if (marking.SexRestriction != null && marking.SexRestriction != sex)
-            {
-                continue;
-            }
-
-            res.Add(key, marking);
-        }
-
-        return res;
-    }
-
-    /// <summary>
     ///     Markings by category, species and sex.
     /// </summary>
     /// <remarks>
@@ -154,27 +96,6 @@ public sealed class MarkingManager
     public bool TryGetMarking(Marking marking, [NotNullWhen(true)] out MarkingPrototype? markingResult)
     {
         return _markings.TryGetValue(marking.MarkingId, out markingResult);
-    }
-
-    /// <summary>
-    ///     Check if a marking is valid according to the category, species, and current data this marking has.
-    /// </summary>
-    /// <returns></returns>
-    public bool IsValidMarking(Marking marking, HumanoidVisualLayers layer, ProtoId<MarkingsGroupPrototype> group, Sex sex)
-    {
-        if (!TryGetMarking(marking, out var proto))
-        {
-            return false;
-        }
-
-        if (proto.BodyPart != layer ||
-            proto.GroupWhitelist != null && !proto.GroupWhitelist.Contains(group) ||
-            proto.SexRestriction != null && proto.SexRestriction != sex)
-        {
-            return false;
-        }
-
-        return marking.MarkingColors.Count == proto.Sprites.Count;
     }
 
     private void OnPrototypeReload(PrototypesReloadedEventArgs args)
