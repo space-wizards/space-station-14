@@ -37,7 +37,7 @@ public sealed class WaggingSystem : EntitySystem
     private void OnWaggingShutdown(Entity<WaggingComponent> ent, ref ComponentShutdown args)
     {
         _actions.RemoveAction(ent.Comp.ActionEntity);
-        DirtyField(ent, ent.Comp, nameof(WaggingComponent.ActionEntity));
+        DirtyField(ent.AsNullable(), nameof(WaggingComponent.ActionEntity));
     }
 
     private void OnWaggingToggle(Entity<WaggingComponent> ent, ref ToggleActionEvent args)
