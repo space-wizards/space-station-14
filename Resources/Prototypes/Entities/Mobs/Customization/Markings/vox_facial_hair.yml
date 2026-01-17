@@ -1,7 +1,6 @@
 - type: marking
   id: VoxFacialHairBeard
   bodyPart: FacialHair
-  markingCategory: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
@@ -11,7 +10,6 @@
 - type: marking
   id: VoxFacialHairColonel
   bodyPart: FacialHair
-  markingCategory: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
@@ -21,7 +19,6 @@
 - type: marking
   id: VoxFacialHairFu
   bodyPart: FacialHair
-  markingCategory: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
@@ -31,7 +28,6 @@
 - type: marking
   id: VoxFacialHairMane
   bodyPart: FacialHair
-  markingCategory: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
@@ -41,7 +37,6 @@
 - type: marking
   id: VoxFacialHairManeSmall
   bodyPart: FacialHair
-  markingCategory: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
@@ -51,7 +46,6 @@
 - type: marking
   id: VoxFacialHairNeck
   bodyPart: FacialHair
-  markingCategory: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
@@ -61,7 +55,6 @@
 - type: marking
   id: VoxFacialHairTufts
   bodyPart: FacialHair
-  markingCategory: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:

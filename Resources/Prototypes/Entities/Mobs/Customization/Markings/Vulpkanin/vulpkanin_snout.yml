@@ -3,7 +3,6 @@
 - type: marking
   id: VulpSnout
   bodyPart: Snout
-  markingCategory: Snout
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
@@ -12,7 +11,6 @@
 - type: marking
   id: VulpSnoutNose
   bodyPart: Snout
-  markingCategory: SnoutCover
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
@@ -21,7 +19,6 @@
 - type: marking
   id: VulpSnoutVulpine
   bodyPart: Snout
-  markingCategory: SnoutCover
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
@@ -30,7 +27,6 @@
 - type: marking
   id: VulpSnoutVulpineLines
   bodyPart: Snout
-  markingCategory: SnoutCover
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
@@ -39,7 +35,6 @@
 - type: marking
   id: VulpSnoutBlaze
   bodyPart: Snout
-  markingCategory: SnoutCover
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
@@ -48,7 +43,6 @@
 - type: marking
   id: VulpSnoutMask
   bodyPart: Snout
-  markingCategory: SnoutCover
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
@@ -57,7 +51,6 @@
 - type: marking
   id: VulpSnoutTop
   bodyPart: Snout
-  markingCategory: SnoutCover
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
@@ -66,7 +59,6 @@
 - type: marking
   id: VulpSnoutPatch
   bodyPart: Snout
-  markingCategory: SnoutCover
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi

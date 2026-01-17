@@ -2,7 +2,6 @@
 - type: marking
   id: VulpTailFennec
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
@@ -13,7 +12,6 @@
 - type: marking
   id: VulpTailFluffy
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
@@ -24,7 +22,6 @@
 - type: marking
   id: VulpTailHusky
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
@@ -37,7 +34,6 @@
 - type: marking
   id: VulpTailLong
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
@@ -48,7 +44,6 @@
 - type: marking
   id: VulpTailVulp
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
@@ -59,7 +54,6 @@
 - type: marking
   id: VulpTailVulpFade
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi

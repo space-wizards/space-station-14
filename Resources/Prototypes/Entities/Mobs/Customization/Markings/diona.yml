@@ -1,7 +1,6 @@
 - type: marking
   id: DionaThornsHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -15,7 +14,6 @@
 - type: marking
   id: DionaThornsBody
   bodyPart: Chest
-  markingCategory: Chest
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -29,7 +27,6 @@
 - type: marking
   id: DionaFlowersHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -43,7 +40,6 @@
 - type: marking
   id: DionaFlowersBody
   bodyPart: Chest
-  markingCategory: Chest
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -57,7 +53,6 @@
 - type: marking
   id: DionaLeafCover
   bodyPart: Chest
-  markingCategory: Chest
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -70,7 +65,6 @@
 - type: marking
   id: DionaBloomHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -84,7 +78,6 @@
 - type: marking
   id: DionaBracketHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -98,7 +91,6 @@
 - type: marking
   id: DionaBrushHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -111,7 +103,6 @@
 - type: marking
   id: DionaCornflowerHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -125,7 +116,6 @@
 - type: marking
   id: DionaFicusHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -139,7 +129,6 @@
 - type: marking
   id: DionaGarlandHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -153,7 +142,6 @@
 - type: marking
   id: DionaKingHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -167,7 +155,6 @@
 - type: marking
   id: DionaLaurelHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -181,7 +168,6 @@
 - type: marking
   id: DionaLeafyHeadTop
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -195,7 +181,6 @@
 - type: marking
   id: DionaLotusHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -209,7 +194,6 @@
 - type: marking
   id: DionaMeadowHeadTop
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -223,7 +207,6 @@
 - type: marking
   id: DionaOakHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -237,7 +220,6 @@
 - type: marking
   id: DionaPalmHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -251,7 +233,6 @@
 - type: marking
   id: DionaRootHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -265,7 +246,6 @@
 - type: marking
   id: DionaRoseHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -279,7 +259,6 @@
 - type: marking
   id: DionaRoseyHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -293,7 +272,6 @@
 - type: marking
   id: DionaShrubHeadTop
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -307,7 +285,6 @@
 - type: marking
   id: DionaSpinnerHeadSide
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -321,7 +298,6 @@
 - type: marking
   id: DionaSproutHeadSide
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -335,7 +311,6 @@
 - type: marking
   id: DionaVineHeadTop
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -349,7 +324,6 @@
 - type: marking
   id: DionaVinelHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -363,7 +337,6 @@
 - type: marking
   id: DionaVinesHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -377,7 +350,6 @@
 - type: marking
   id: DionaWildflowerHead
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [Diona]
   coloring:
     default:
@@ -391,7 +363,6 @@
 - type: marking
   id: DionaVineOverlay
   bodyPart: Overlay
-  markingCategory: Overlay
   groupWhitelist: [Diona]
   coloring:
     default:

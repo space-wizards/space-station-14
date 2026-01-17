@@ -53,16 +53,16 @@
             state: jumpsuit-female
   - type: InitialBody
     organs:
-      Torso: OrganSkeletonTorso
-      Head: OrganSkeletonHead
-      ArmLeft: OrganSkeletonArmLeft
-      ArmRight: OrganSkeletonArmRight
-      HandRight: OrganSkeletonHandRight
-      HandLeft: OrganSkeletonHandLeft
-      LegLeft: OrganSkeletonLegLeft
-      LegRight: OrganSkeletonLegRight
-      FootLeft: OrganSkeletonFootLeft
-      FootRight: OrganSkeletonFootRight
+      Torso: OrganSkeletonPersonTorso
+      Head: OrganSkeletonPersonHead
+      ArmLeft: OrganSkeletonPersonArmLeft
+      ArmRight: OrganSkeletonPersonArmRight
+      HandRight: OrganSkeletonPersonHandRight
+      HandLeft: OrganSkeletonPersonHandLeft
+      LegLeft: OrganSkeletonPersonLegLeft
+      LegRight: OrganSkeletonPersonLegRight
+      FootLeft: OrganSkeletonPersonFootLeft
+      FootRight: OrganSkeletonPersonFootRight
   - type: HumanoidProfile
     species: Skeleton
 

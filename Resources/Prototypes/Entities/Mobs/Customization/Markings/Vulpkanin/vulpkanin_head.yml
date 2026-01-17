@@ -2,7 +2,6 @@
 - type: marking
   id: VulpHeadBlaze
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
@@ -11,7 +10,6 @@
 - type: marking
   id: VulpHeadMask
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
@@ -20,7 +18,6 @@
 - type: marking
   id: VulpPatch
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
@@ -29,7 +26,6 @@
 - type: marking
   id: VulpSlash
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
@@ -38,7 +34,6 @@
 - type: marking
   id: VulpStripes1
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
@@ -47,7 +42,6 @@
 - type: marking
   id: VulpStripes2
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
@@ -56,7 +50,6 @@
 - type: marking
   id: VulpVulpine
   bodyPart: Head
-  markingCategory: Head
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi

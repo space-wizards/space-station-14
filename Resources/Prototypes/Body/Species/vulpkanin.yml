@@ -58,7 +58,7 @@
     enum.HumanoidVisualLayers.UndergarmentBottom:
       limit: 1
       required: false
-      undergarmentBottom: [ UndergarmentBottomBoxersVulpkanin ]
+      nudityDefault: [ UndergarmentBottomBoxersVulpkanin ]
 
 - type: entity
   parent: BaseSpeciesAppearance
@@ -89,21 +89,6 @@
       Kidneys: OrganVulpkaninKidneys
   - type: HumanoidProfile
     species: Vulpkanin
-    undergarmentTop: UndergarmentTopTanktopVulpkanin
-    undergarmentBottom: UndergarmentBottomBoxersVulpkanin
-    hideLayersOnEquip:
-    - Snout
-    - SnoutCover
-    - HeadTop
-    - HeadSide
-    - FacialHair
-    - Hair
-    markingsDisplacement:
-      Hair:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: hair
   - type: Inventory
     speciesId: vulpkanin
     displacements:

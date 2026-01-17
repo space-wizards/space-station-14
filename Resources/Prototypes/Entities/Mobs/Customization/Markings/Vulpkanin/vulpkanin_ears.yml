@@ -3,7 +3,6 @@
 - type: marking
   id: VulpEar
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -14,7 +13,6 @@
 - type: marking
   id: VulpEarSharp
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -27,7 +25,6 @@
 - type: marking
   id: VulpEarFade
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -40,7 +37,6 @@
 - type: marking
   id: VulpEarJackal
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -51,7 +47,6 @@
 - type: marking
   id: VulpEarTerrier
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -62,7 +57,6 @@
 - type: marking
   id: VulpEarFennec
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -73,7 +67,6 @@
 - type: marking
   id: VulpEarFox
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -84,7 +77,6 @@
 - type: marking
   id: VulpEarOtie
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -95,7 +87,6 @@
 - type: marking
   id: VulpEarShock
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
@@ -106,7 +97,6 @@
 - type: marking
   id: VulpEarCoyote
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi

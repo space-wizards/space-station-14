@@ -2,7 +2,6 @@
 - type: marking
   id: VulpBellyCrest
   bodyPart: Chest
-  markingCategory: Chest
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
@@ -11,7 +10,6 @@
 - type: marking
   id: VulpBellyFull
   bodyPart: Chest
-  markingCategory: Chest
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
@@ -20,7 +18,6 @@
 - type: marking
   id: VulpBellyFox
   bodyPart: Chest
-  markingCategory: Chest
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi

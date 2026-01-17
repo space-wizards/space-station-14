@@ -3,8 +3,6 @@
   name: species-name-vox
   roundStart: true
   prototype: MobVox
-  sprites: MobVoxSprites
-  markingLimits: MobVoxMarkingLimits
   dollPrototype: AppearanceVox
   skinColoration: VoxFeathers
   defaultSkinTone: "#6c741d"

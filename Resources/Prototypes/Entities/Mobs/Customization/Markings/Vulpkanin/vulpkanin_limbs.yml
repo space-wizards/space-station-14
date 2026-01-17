@@ -1,7 +1,6 @@
 - type: marking
   id: VulpClawsHandLeft
   bodyPart: LHand
-  markingCategory: Arms
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
@@ -15,7 +14,6 @@
 - type: marking
   id: VulpClawsHandRight
   bodyPart: RHand
-  markingCategory: Arms
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
@@ -29,7 +27,6 @@
 - type: marking
   id: VulpClawsFootLeft
   bodyPart: LFoot
-  markingCategory: Legs
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
@@ -43,7 +40,6 @@
 - type: marking
   id: VulpClawsFootRight
   bodyPart: RFoot
-  markingCategory: Legs
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
@@ -59,7 +55,6 @@
 ## Left Side
 - type: marking
   id: VulpPointsCrestLegLeft
-  markingCategory: Legs
   bodyPart: LLeg
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -73,7 +68,6 @@
 
 - type: marking
   id: VulpPointsCrestArmLeft
-  markingCategory: Arms
   bodyPart: LArm
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -87,7 +81,6 @@
 
 - type: marking
   id: VulpPointsCrestFootLeft
-  markingCategory: Legs
   bodyPart: LFoot
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -101,7 +94,6 @@
 
 - type: marking
   id: VulpPointsCrestHandLeft
-  markingCategory: Arms
   bodyPart: LHand
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -117,7 +109,6 @@
 
 - type: marking
   id: VulpPointsCrestLegRight
-  markingCategory: Legs
   bodyPart: RLeg
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -131,7 +122,6 @@
 
 - type: marking
   id: VulpPointsCrestArmRight
-  markingCategory: Arms
   bodyPart: RArm
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -145,7 +135,6 @@
 
 - type: marking
   id: VulpPointsCrestFootRight
-  markingCategory: Legs
   bodyPart: RFoot
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -159,7 +148,6 @@
 
 - type: marking
   id: VulpPointsCrestHandRight
-  markingCategory: Arms
   bodyPart: RHand
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -177,7 +165,6 @@
 
 - type: marking
   id: VulpPointsFadeLegLeft
-  markingCategory: Legs
   bodyPart: LLeg
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -191,7 +178,6 @@
 
 - type: marking
   id: VulpPointsFadeArmLeft
-  markingCategory: Arms
   bodyPart: LArm
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -205,7 +191,6 @@
 
 - type: marking
   id: VulpPointsFadeFootLeft
-  markingCategory: Legs
   bodyPart: LFoot
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -219,7 +204,6 @@
 
 - type: marking
   id: VulpPointsFadeHandLeft
-  markingCategory: Arms
   bodyPart: LHand
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -235,7 +219,6 @@
 
 - type: marking
   id: VulpPointsFadeLegRight
-  markingCategory: Legs
   bodyPart: RLeg
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -249,7 +232,6 @@
 
 - type: marking
   id: VulpPointsFadeArmRight
-  markingCategory: Arms
   bodyPart: RArm
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -263,7 +245,6 @@
 
 - type: marking
   id: VulpPointsFadeFootRight
-  markingCategory: Legs
   bodyPart: RFoot
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -277,7 +258,6 @@
 
 - type: marking
   id: VulpPointsFadeHandRight
-  markingCategory: Arms
   bodyPart: RHand
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -295,7 +275,6 @@
 
 - type: marking
   id: VulpPointsSharpLegLeft
-  markingCategory: Legs
   bodyPart: LLeg
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -309,7 +288,6 @@
 
 - type: marking
   id: VulpPointsSharpArmLeft
-  markingCategory: Arms
   bodyPart: LArm
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -323,7 +301,6 @@
 
 - type: marking
   id: VulpPointsSharpLongArmLeft
-  markingCategory: Arms
   bodyPart: LArm
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -337,7 +314,6 @@
 
 - type: marking
   id: VulpPointsSharpFootLeft
-  markingCategory: Legs
   bodyPart: LFoot
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -351,7 +327,6 @@
 
 - type: marking
   id: VulpPointsSharpHandLeft
-  markingCategory: Arms
   bodyPart: LHand
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -367,7 +342,6 @@
 
 - type: marking
   id: VulpPointsSharpLegRight
-  markingCategory: Legs
   bodyPart: RLeg
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -381,7 +355,6 @@
 
 - type: marking
   id: VulpPointsSharpArmRight
-  markingCategory: Arms
   bodyPart: RArm
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -395,7 +368,6 @@
 
 - type: marking
   id: VulpPointsSharpLongArmRight
-  markingCategory: Arms
   bodyPart: RArm
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -409,7 +381,6 @@
 
 - type: marking
   id: VulpPointsSharpFootRight
-  markingCategory: Legs
   bodyPart: RFoot
   groupWhitelist: [ Vulpkanin ]
   sprites:
@@ -423,7 +394,6 @@
 
 - type: marking
   id: VulpPointsSharpHandRight
-  markingCategory: Arms
   bodyPart: RHand
   groupWhitelist: [ Vulpkanin ]
   sprites:
