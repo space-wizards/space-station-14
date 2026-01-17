@@ -6,7 +6,7 @@ namespace Content.Shared.Arcade.Components;
 /// <summary>
 ///
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedArcadeSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedArcadeRewardsSystem))]
 public sealed partial class ArcadeRewardsComponent : Component
 {
 

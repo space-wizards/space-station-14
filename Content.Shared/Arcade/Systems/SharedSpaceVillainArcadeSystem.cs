@@ -9,4 +9,12 @@ public sealed partial class SharedSpaceVillainArcadeSystem : EntitySystem
     {
         base.Initialize();
     }
+
+    #region Events
+
+    #endregion
+
+    #region API
+
+    #endregion
 }

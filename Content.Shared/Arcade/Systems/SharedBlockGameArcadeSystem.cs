@@ -9,4 +9,12 @@ public sealed partial class SharedBlockGameArcadeSystem : EntitySystem
     {
         base.Initialize();
     }
+
+    #region Events
+
+    #endregion
+
+    #region API
+
+    #endregion
 }

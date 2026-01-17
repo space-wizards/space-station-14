@@ -1,5 +1,6 @@
 using Content.Shared.Arcade.Components;
 using Content.Shared.Arcade.Events;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Arcade.Systems;
 
@@ -8,9 +9,13 @@ namespace Content.Shared.Arcade.Systems;
 /// </summary>
 public sealed partial class SharedArcadeSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<ArcadeComponent, ArcadeChangedStateEvent>(OnArcadeChangedState);
 
         Subs.BuiEvents<ArcadeComponent>(ArcadeUiKey.Key, subs =>
         {
@@ -20,6 +25,22 @@ public sealed partial class SharedArcadeSystem : EntitySystem
     }
 
     #region Events
+
+    private void OnArcadeChangedState(Entity<ArcadeComponent> ent, ref ArcadeChangedStateEvent args)
+    {
+        switch (args.NewState)
+        {
+            case ArcadeGameState.Game:
+                _audio.PlayPredicted(ent.Comp.NewGameSound, ent, args.Player);
+                break;
+            case ArcadeGameState.Win:
+                _audio.PlayPredicted(ent.Comp.WinSound, ent, args.Player);
+                break;
+            case ArcadeGameState.Lose:
+                _audio.PlayPredicted(ent.Comp.LoseSound, ent, args.Player);
+                break;
+        }
+    }
 
     private void OnBUIOpened(Entity<ArcadeComponent> ent, ref BoundUIOpenedEvent args)
     {
@@ -61,7 +82,7 @@ public sealed partial class SharedArcadeSystem : EntitySystem
         RaiseLocalEvent(ent, ref ev);
 
         ent.Comp.State = gameState;
-        DirtyField(ent.AsNullable(), nameof(ArcadeComponent.State));
+        DirtyField(ent, nameof(ArcadeComponent.State));
 
         return true;
     }
