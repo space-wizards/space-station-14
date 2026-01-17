@@ -781,7 +781,7 @@ namespace Content.Shared.Preferences
             IoCManager.Resolve(ref serialization);
             IoCManager.Resolve(ref configuration);
 
-            var export = new HumanoidProfileExport()
+            var export = new HumanoidProfileExportV2()
             {
                 ForkId = configuration.GetCVar(CVars.BuildForkId),
                 Profile = this,
@@ -801,13 +801,22 @@ namespace Content.Shared.Preferences
             yamlStream.Load(reader);
 
             var root = yamlStream.Documents[0].RootNode;
-            var export = serialization.Read<HumanoidProfileExport>(root.ToDataNode(), notNullableOverride: true);
+            HumanoidCharacterProfile profile;
+            if (root["version"].Equals(new YamlScalarNode("1")))
+            {
+                var export = serialization.Read<HumanoidProfileExportV1>(root.ToDataNode(), notNullableOverride: true);
+                profile = export.ToV2().Profile;
+            }
+            else if (root["version"].Equals(new YamlScalarNode("2")))
+            {
+                var export = serialization.Read<HumanoidProfileExportV2>(root.ToDataNode(), notNullableOverride: true);
+                profile = export.Profile;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Unknown version {root["version"]}");
+            }
 
-            /*
-             * Add custom handling here for forks / version numbers if you care.
-             */
-
-            var profile = export.Profile;
             var collection = IoCManager.Instance;
             profile.EnsureValid(session, collection!);
             return profile;
