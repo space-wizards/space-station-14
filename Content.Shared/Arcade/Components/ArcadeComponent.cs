@@ -7,7 +7,18 @@ namespace Content.Shared.Arcade.Components;
 ///
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedArcadeSystem))]
+[AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class ArcadeComponent : Component
 {
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? Player;
 
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ArcadeGameState State = ArcadeGameState.None;
 }
