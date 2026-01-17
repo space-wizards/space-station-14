@@ -67,6 +67,10 @@
   name: space villain arcade
   parent: ArcadeBase
   components:
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-arcade
+    layoutId: Arcade
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
     layers:
@@ -125,7 +129,7 @@
   - type: UserInterface
     interfaces:
       enum.ArcadeUiKey.Key:
-        type: BlockGameBoundUserInterface
+        type: BlockGameArcadeBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer

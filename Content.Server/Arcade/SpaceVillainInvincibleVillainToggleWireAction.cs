@@ -9,12 +9,12 @@ namespace Content.Server.Arcade;
 public sealed partial class SpaceVillainInvincibleVillainToggleWireAction : ComponentWireAction<SpaceVillainArcadeComponent>
 {
     public override string Name { get; set; } = "wire-name-space-villain-invincible-villain";
-    public override Color Color { get; set; } = Color.Yellow;
+    public override Color Color { get; set; } = Color.PaleVioletRed;
     public override object StatusKey { get; } = SpaceVillainWireStatus.InvincibleVillain;
 
     public override StatusLightState? GetLightState(Wire wire, SpaceVillainArcadeComponent component)
     {
-        return component.InvincibleVillain ? StatusLightState.On : StatusLightState.BlinkingSlow;
+        return component.InvincibleVillain ? StatusLightState.BlinkingFast : StatusLightState.Off;
     }
 
     public override bool Cut(EntityUid user, Wire wire, SpaceVillainArcadeComponent component)

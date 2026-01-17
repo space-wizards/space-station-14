@@ -97,9 +97,13 @@
 
 - type: wireLayout
   id: Arcade
+  dummyWires: 4
   wires:
   - !type:PowerWireAction
   - !type:SpeechWireAction
+  - !type:SpaceVillainInvinciblePlayerToggleWireAction
+  - !type:SpaceVillainInvincibleVillainToggleWireAction
+  - !type:SpaceVillainOverflowToggleWireAction
   - !type:AiInteractWireAction
 
 - type: wireLayout
