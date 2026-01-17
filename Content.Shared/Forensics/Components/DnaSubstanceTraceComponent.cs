@@ -4,8 +4,7 @@ namespace Content.Shared.Forensics.Components;
 
 /// <summary>
 /// This component stops the entity from leaving finger prints,
-/// usually so fibres can be left instead.
+/// usually so fibers can be left instead.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class DnaSubstanceTraceComponent : Component
-{ }
+public sealed partial class DnaSubstanceTraceComponent : Component;
