@@ -999,9 +999,7 @@
     state: icon
   - type: EmitSoundOnUse
     sound: &PlushieVoxSound
-      path: /Audio/Voice/Vox/shriek1.ogg
-      params:
-        volume: -5
+      path: /Audio/Voice/Vox/vox_chitter.ogg
   - type: EmitSoundOnLand
     sound: *PlushieVoxSound
   - type: EmitSoundOnActivate
