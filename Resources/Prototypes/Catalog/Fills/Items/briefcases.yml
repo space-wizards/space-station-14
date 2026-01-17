@@ -44,8 +44,9 @@
         - id: ClothingUniformJumpsuitTacticool
         - id: SpaceCash30000
         - id: EncryptionKeySyndie
-        - id: PhoneInstrumentSyndicate
         - id: RubberStampTrader
+        - id: PhoneInstrumentSyndicate
+        - id: SyndieHandyFlag
 
 - type: entity
   id: BriefcaseThiefBribingBundleFilled
