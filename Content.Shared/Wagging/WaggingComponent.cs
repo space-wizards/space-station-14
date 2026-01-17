@@ -1,30 +1,35 @@
-﻿using Content.Shared.Chat.Prototypes;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Wagging;
 
 /// <summary>
 /// An emoting wag for markings.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(WaggingSystem)), AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class WaggingComponent : Component
 {
-    [DataField]
+    /// <summary>
+    /// The action prototype for wagging.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public EntProtoId Action = "ActionToggleWagging";
 
-    [DataField]
+    /// <summary>
+    /// The action entity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>
     /// Suffix to add to get the animated marking.
     /// </summary>
+    [DataField, AutoNetworkedField]
     public string Suffix = "Animated";
 
     /// <summary>
     /// Is the entity currently wagging.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Wagging = false;
 }

@@ -378,6 +378,38 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Sets the marking ID of the humanoid in a category at an index in the category's list.
+    /// </summary>
+    /// <param name="uid">Humanoid mob's UID</param>
+    /// <param name="category">Category of the marking</param>
+    /// <param name="index">Index of the marking</param>
+    /// <param name="markingId">The marking ID to use</param>
+    /// <param name="sync">Whether to immediately synchronize this to the humanoid mob, or not.</param>
+    /// <param name="humanoid">Humanoid component of the entity</param>
+    public void SetMarkingId(EntityUid uid, MarkingCategories category, int index, string markingId, bool sync = true, HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (index < 0
+            || !_markingManager.MarkingsByCategory(category).TryGetValue(markingId, out var markingPrototype)
+            || !Resolve(uid, ref humanoid)
+            || !humanoid.MarkingSet.TryGetCategory(category, out var markings)
+            || index >= markings.Count)
+        {
+            return;
+        }
+
+        var marking = markingPrototype.AsMarking();
+        for (var i = 0; i < marking.MarkingColors.Count && i < markings[index].MarkingColors.Count; i++)
+        {
+            marking.SetColor(i, markings[index].MarkingColors[i]);
+        }
+
+        humanoid.MarkingSet.Replace(category, index, marking);
+
+        if (sync)
+            Dirty(uid, humanoid);
+    }
+
+    /// <summary>
     ///     Loads a humanoid character profile directly onto this humanoid mob.
     /// </summary>
     /// <param name="uid">The mob's entity UID.</param>
