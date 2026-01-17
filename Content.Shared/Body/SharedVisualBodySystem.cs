@@ -25,7 +25,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         InitializeModifiers();
     }
 
-    private List<Marking> ResolveMarkings(List<Marking> markings, Color? skinColor, Color? eyeColor)
+    private List<Marking> ResolveMarkings(List<Marking> markings, Color? skinColor, Color? eyeColor, Dictionary<Enum, MarkingsAppearance> appearances)
     {
         var ret = new List<Marking>();
         var forcedColors = new List<(Marking, MarkingPrototype)>();
@@ -35,7 +35,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
             if (!_marking.TryGetMarking(marking, out var proto))
                 continue;
 
-            if (!proto.ForcedColoring)
+            if (!proto.ForcedColoring && appearances.GetValueOrDefault(proto.BodyPart)?.MatchSkin != true)
                 ret.Add(marking);
             else
                 forcedColors.Add((marking, proto));
@@ -53,6 +53,10 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
             {
                 Forced = marking.Forced,
             };
+            if (appearances.GetValueOrDefault(prototype.BodyPart) is { MatchSkin: true } appearance && skinColor is { } color)
+            {
+                markingWithColor.SetColor(color.WithAlpha(appearance.LayerAlpha));
+            }
             ret.Add(markingWithColor);
         }
 
@@ -141,6 +145,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         if (!args.Args.Markings.TryGetValue(category, out var markingSet))
             return;
 
+        var groupProto = _prototype.Index(ent.Comp.MarkingData.Group);
         var organMarkings = ent.Comp.Markings.ShallowClone();
 
         foreach (var layer in ent.Comp.MarkingData.Layers)
@@ -164,7 +169,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         var profile = Comp<VisualOrganComponent>(ent).Profile;
         var resolved = organMarkings.ToDictionary(
             kvp => kvp.Key,
-            kvp => ResolveMarkings(kvp.Value, profile.SkinColor, profile.EyeColor));
+            kvp => ResolveMarkings(kvp.Value, profile.SkinColor, profile.EyeColor, groupProto.Appearances));
 
         SetOrganMarkings(ent, resolved);
     }

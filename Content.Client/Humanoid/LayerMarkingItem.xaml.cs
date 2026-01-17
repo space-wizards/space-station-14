@@ -85,7 +85,7 @@ public sealed partial class LayerMarkingItem : BoxContainer
     {
         var selected = _markingsModel.IsMarkingSelected(_organ, _layer, _markingPrototype.ID);
         SelectButton.Pressed = selected;
-        ColorsButton.Visible = selected;
+        ColorsButton.Visible = selected && _markingsModel.IsMarkingColorCustomizable(_organ, _layer, _markingPrototype.ID);
 
         if (!selected)
         {

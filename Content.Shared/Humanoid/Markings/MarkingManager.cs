@@ -368,26 +368,4 @@ public sealed class MarkingManager
 
         return true;
     }
-
-    public bool MustMatchSkin(string species, HumanoidVisualLayers layer, out float alpha, IPrototypeManager? prototypeManager = null)
-    {
-        alpha = 1;
-        return true;
-        /*IoCManager.Resolve(ref prototypeManager);
-        var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
-        if (
-            !prototypeManager.Resolve(speciesProto.SpriteSet, out var baseSprites) ||
-            !baseSprites.Sprites.TryGetValue(layer, out var spriteName) ||
-            !prototypeManager.Resolve(spriteName, out HumanoidSpeciesSpriteLayer? sprite) ||
-            sprite == null ||
-            !sprite.MarkingsMatchSkin
-        )
-        {
-            alpha = 1f;
-            return false;
-        }
-
-        alpha = sprite.LayerAlpha;
-        return true;*/
-    }
 }

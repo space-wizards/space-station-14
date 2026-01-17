@@ -32,6 +32,10 @@ public sealed partial class MarkingsGroupPrototype : IPrototype, IInheritingProt
     [DataField]
     [AlwaysPushInheritance]
     public Dictionary<Enum, MarkingsLimits> Limits = new();
+
+    [DataField]
+    [AlwaysPushInheritance]
+    public Dictionary<Enum, MarkingsAppearance> Appearances = new();
 }
 
 [DataDefinition]
@@ -67,4 +71,21 @@ public sealed partial class MarkingsLimits
     /// </summary>
     [DataField]
     public List<ProtoId<MarkingPrototype>> NudityDefault = new();
+}
+
+[DataDefinition]
+[Serializable, NetSerializable]
+public sealed partial class MarkingsAppearance
+{
+    /// <summary>
+    /// The transparency that markings have.
+    /// </summary>
+    [DataField]
+    public float LayerAlpha = 1f;
+
+    /// <summary>
+    /// Whether markings should be forced to match the skin color.
+    /// </summary>
+    [DataField]
+    public bool MatchSkin;
 }

@@ -138,6 +138,28 @@ public sealed class MarkingsViewModel
         return TryGetMarking(organ, layer, markingId) is not null;
     }
 
+    public bool IsMarkingColorCustomizable(ProtoId<OrganCategoryPrototype> organ,
+        HumanoidVisualLayers layer,
+        ProtoId<MarkingPrototype> markingId)
+    {
+        if (!_prototype.TryIndex(markingId, out var markingProto))
+            return false;
+
+        if (markingProto.ForcedColoring)
+            return false;
+
+        if (!_organData.TryGetValue(organ, out var organData))
+            return false;
+
+        if (!_prototype.TryIndex(organData.Group, out var groupProto))
+            return false;
+
+        if (!groupProto.Appearances.TryGetValue(layer, out var appearance))
+            return true;
+
+        return !appearance.MatchSkin;
+    }
+
     public Marking? TryGetMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)

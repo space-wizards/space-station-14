@@ -35,6 +35,13 @@
     enum.HumanoidVisualLayers.RFoot:
       limit: 1
       required: false
+  appearances:
+    enum.HumanoidVisualLayers.Hair:
+      layerAlpha: 0.72
+      matchSkin: true
+    enum.HumanoidVisualLayers.FacialHair:
+      layerAlpha: 0.72
+      matchSkin: true
 
 - type: entity
   parent: BaseSpeciesAppearance
