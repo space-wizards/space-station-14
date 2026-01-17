@@ -1,4 +1,5 @@
-﻿using Content.Shared.Whitelist;
+﻿using Content.Shared.Maps;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -35,6 +36,12 @@ public sealed partial class TileReclaimerComponent : Component
     /// </summary>
     [DataField]
     public Box2 RecyclingBox = new(-0.5f, 0.5f, 0.5f, 1.5f);
+
+    /// <summary>
+    /// Multiplier for the material being extracted from the tile, as defined in the tile's <see cref="ContentTileDefinition.MaterialComposition"/>
+    /// </summary>
+    [DataField]
+    public float Efficiency = 1f;
 
     /// <summary>
     /// How strong impulse the reclaimer should apply to a grid after it has destroyed one of it tiles.

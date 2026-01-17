@@ -244,4 +244,27 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 
         return allSpawned;
     }
+
+    public void SpawnMaterialFromStorage(Entity<MaterialStorageComponent?> ent, EntityCoordinates coordinates, bool mergeContacts)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        foreach (var (storedMaterial, storedAmount) in ent.Comp.Storage)
+        {
+            var stacks = SpawnMultipleFromMaterial(storedAmount,
+                storedMaterial,
+                coordinates,
+                out var materialOverflow);
+            var amountConsumed = storedAmount - materialOverflow;
+            TryChangeMaterialAmount(ent, storedMaterial, -amountConsumed, ent.Comp);
+            if (mergeContacts)
+            {
+                foreach (var stack in stacks)
+                {
+                    _stackSystem.TryMergeToContacts(stack);
+                }
+            }
+        }
+    }
 }

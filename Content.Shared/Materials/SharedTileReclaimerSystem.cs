@@ -1,4 +1,6 @@
-﻿using Content.Shared.Whitelist;
+﻿using Content.Shared.Maps;
+using Content.Shared.Stacks;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -8,7 +10,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Materials;
 
 // SLAM-TODO: Note to self; deleting grid tiles sometimes causes a flashing effect not seen in other similar systems. Figure out why.
-public sealed class SharedTileReclaimerSystem : EntitySystem
+public abstract class SharedTileReclaimerSystem : EntitySystem
 {
 
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -19,6 +21,7 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
 
@@ -70,6 +73,10 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
 
             foreach (var tile in _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, box))
             {
+                var tileDef = _turf.GetContentTileDefinition(tile);
+                if (tileDef.Indestructible)
+                    continue;
+
                 foreach (var entityOnTile in _lookup.GetLocalEntitiesIntersecting(tile))
                 {
                     _physics.SetCanCollide(entityOnTile, true);
@@ -78,7 +85,7 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
 
                 var mapGrid = Comp<MapGridComponent>(tile.GridUid);
                 _mapSystem.SetTile(tile.GridUid, mapGrid, tile.GridIndices, Tile.Empty);
-                Spawn("SheetSteel1", mapPos); // SLAM-TODO: Replace with proper spawn value
+                SpawnMaterialsFromComposition(ent, tileDef, ent.Comp1.Efficiency, null, ent.Comp2);
                 shredded = true;
 
                 // We suck in the grid slurrrrp
@@ -93,5 +100,14 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
         ent.Comp1.NextRecycle = _timing.CurTime + ent.Comp1.RecycleDelay;
 
         _audio.PlayPredicted(ent.Comp1.Sound, ent, null);
+    }
+
+    protected virtual void SpawnMaterialsFromComposition(EntityUid reclaimer,
+        ContentTileDefinition tileDefinition,
+        float efficiency,
+        MaterialStorageComponent? storage = null,
+        TransformComponent? xform = null)
+    {
+        // Handled on the server because that's where MaterialStorageSystem is.
     }
 }

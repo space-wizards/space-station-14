@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Light.Components;
+using Content.Shared.Materials;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
@@ -8,6 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Maps
@@ -121,6 +123,12 @@ namespace Content.Shared.Maps
         /// Is this tile immune to RCD deconstruct.
         /// </summary>
         [DataField("indestructible")] public bool Indestructible = false;
+
+        /// <summary>
+        /// If this tile is reclaimed, what materials would come out of it?
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
+        public Dictionary<string, int> MaterialComposition = new();
 
         public void AssignTileId(ushort id)
         {

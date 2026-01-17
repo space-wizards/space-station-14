@@ -227,19 +227,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             _materialStorage.TryChangeMaterialAmount(reclaimer, material, outputAmount, storage);
         }
 
-        foreach (var (storedMaterial, storedAmount) in storage.Storage)
-        {
-            var stacks = _materialStorage.SpawnMultipleFromMaterial(storedAmount,
-                storedMaterial,
-                xform.Coordinates,
-                out var materialOverflow);
-            var amountConsumed = storedAmount - materialOverflow;
-            _materialStorage.TryChangeMaterialAmount(reclaimer, storedMaterial, -amountConsumed, storage);
-            foreach (var stack in stacks)
-            {
-                _stack.TryMergeToContacts(stack);
-            }
-        }
+        _materialStorage.SpawnMaterialFromStorage((reclaimer, storage), xform.Coordinates, true);
     }
 
     private void SpawnChemicalsFromComposition(EntityUid reclaimer,
