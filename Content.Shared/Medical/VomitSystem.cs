@@ -1,3 +1,4 @@
+using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
@@ -28,7 +29,6 @@ public sealed class VomitSystem : EntitySystem
     [Dependency] private readonly ThirstSystem _thirst = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedForensicsSystem _forensics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
@@ -38,7 +38,7 @@ public sealed class VomitSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BodyComponent, TryVomitEvent>(TryBodyVomitSolution);
+        SubscribeLocalEvent<StomachComponent, BodyRelayedEvent<TryVomitEvent>>(TryVomitSolution);
     }
 
     private const float ChemMultiplier = 0.1f;
@@ -50,24 +50,12 @@ public sealed class VomitSystem : EntitySystem
     private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier(VomitCollection,
         AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
 
-    private void TryBodyVomitSolution(Entity<BodyComponent> ent, ref TryVomitEvent args)
+    private void TryVomitSolution(Entity<StomachComponent> ent, ref BodyRelayedEvent<TryVomitEvent> args)
     {
-        if (args.Handled)
-            return;
+        if (_solutionContainer.ResolveSolution(ent.Owner, StomachSystem.DefaultSolutionName, ref ent.Comp.Solution, out var sol))
+            _solutionContainer.TryTransferSolution(ent.Comp.Solution.Value, args.Args.Sol, sol.AvailableVolume);
 
-        // Main requirement: You have a stomach
-        var stomachList = _body.GetBodyOrganEntityComps<StomachComponent>((ent, null));
-        if (stomachList.Count == 0)
-            return;
-
-        // Empty the stomach out into it
-        foreach (var stomach in stomachList)
-        {
-            if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.Solution, out var sol))
-                _solutionContainer.TryTransferSolution(stomach.Comp1.Solution.Value, args.Sol, sol.AvailableVolume);
-        }
-
-        args.Handled = true;
+        args.Args = args.Args with { Handled = true };
     }
 
     /// <summary>
