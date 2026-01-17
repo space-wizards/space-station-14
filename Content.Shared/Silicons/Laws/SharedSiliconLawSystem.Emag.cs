@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Silicons.Borgs.Components;
@@ -13,7 +14,8 @@ public abstract partial class SharedSiliconLawSystem
 {
     public void InitializeEmag()
     {
-        SubscribeLocalEvent<BorgChassisComponent, GotEmaggedEvent>(OnChassisEmagged); // Inability to emag brain directly is intentional.
+        SubscribeLocalEvent<BorgChassisComponent, GotEmaggedEvent>(OnChassisEmagged);
+        SubscribeLocalEvent<BorgBrainComponent, GotEmaggedEvent>(OnBrainEmagged);
     }
 
     private void OnChassisEmagged(Entity<BorgChassisComponent> ent, ref GotEmaggedEvent args)
@@ -22,58 +24,95 @@ public abstract partial class SharedSiliconLawSystem
             || _emag.CheckFlag(ent, EmagType.Interaction))
             return;
 
-        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawboundComp)
-            || !TryComp<EmagSiliconLawComponent>(ent, out var emagLawcomp))
+        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawboundComp))
             return;
 
-        // If we want to affect the provider, and the chassis has no brain inserted, nothing to modify.
-        if (emagLawcomp.AffectProvider
-            && lawboundComp.LawsetProvider != ent
-            && !HasComp<SiliconLawProviderComponent>(ent.Comp.BrainContainer.ContainedEntity))
+        if (!CanBeEmagged(ent, args.UserUid, out var reason, out var emagLawcomp))
         {
-            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-chassis-no-provider"), ent, args.UserUid);
+            _popup.PopupClient(reason, ent, args.UserUid);
             return;
         }
 
-        // prevent self-emagging
-        if (ent.Owner == args.UserUid)
+        if (ent.Comp.BrainContainer.ContainedEntity is not { } brain || !TryComp<SiliconLawProviderComponent>(brain, out var brainProvider))
         {
-            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-self"), ent, args.UserUid);
-            return;
-        }
-
-        if (emagLawcomp.RequireOpenPanel &&
-            TryComp<WiresPanelComponent>(ent, out var panel) &&
-            !panel.Open)
-        {
-            _popup.PopupClient(Loc.GetString("law-emag-require-panel"), ent, args.UserUid);
+            _popup.PopupClient(Loc.GetString("law-emag-cannot-not-brainless"), ent, args.UserUid);
             return;
         }
 
         var newLaws = GetEmaggedLaws(lawboundComp.Lawset.Laws, args.UserUid, lawboundComp.Lawset.ObeysTo);
 
-        if (emagLawcomp.AffectProvider && TryComp<SiliconLawProviderComponent>(lawboundComp.LawsetProvider, out var lawProvider))
-        {
-            lawProvider.Subverted = true;
-            SetProviderLaws((lawboundComp.LawsetProvider.Value, lawProvider), newLaws, cue: emagLawcomp.EmaggedSound);
-            Dirty(lawboundComp.LawsetProvider.Value, lawProvider);
-        }
-        else
-        {
-            EnsureComp<SiliconLawProviderComponent>(ent, out var ensuredProvider);
-            ensuredProvider.Subverted = true;
-            SetProviderLaws((ent.Owner, ensuredProvider), newLaws, cue: emagLawcomp.EmaggedSound);
-            LinkToProvider((ent, lawboundComp), (ent, ensuredProvider));
-        }
+        brainProvider.Subverted = true;
+        SetProviderLaws((brain, brainProvider), newLaws, cue: emagLawcomp.EmaggedSound);
+        Dirty(brain, brainProvider);
 
         emagLawcomp.OwnerName = Name(args.UserUid);
 
-        if(_mind.TryGetMind(ent, out var mindId, out _))
+        if (_mind.TryGetMind(ent, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
         _stunSystem.TryUpdateParalyzeDuration(ent, emagLawcomp.StunTime);
 
         args.Handled = true;
+    }
+
+    private void OnBrainEmagged(Entity<BorgBrainComponent> ent, ref GotEmaggedEvent args)
+    {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction)
+            || _emag.CheckFlag(ent, EmagType.Interaction))
+            return;
+
+        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawboundComp)
+            || !TryComp<SiliconLawProviderComponent>(ent, out var brainProvider))
+            return;
+
+        if (!CanBeEmagged(ent, args.UserUid, out var reason, out var emagLawcomp))
+        {
+            _popup.PopupClient(reason, ent, args.UserUid);
+            return;
+        }
+
+        var newLaws = GetEmaggedLaws(lawboundComp.Lawset.Laws, args.UserUid, lawboundComp.Lawset.ObeysTo);
+
+        brainProvider.Subverted = true;
+        SetProviderLaws((ent, brainProvider), newLaws, cue: emagLawcomp.EmaggedSound);
+        Dirty(ent, brainProvider);
+
+        emagLawcomp.OwnerName = Name(args.UserUid);
+
+        if (_mind.TryGetMind(ent, out var mindId, out _))
+            EnsureSubvertedSiliconRole(mindId);
+
+        args.Handled = true;
+    }
+
+    private bool CanBeEmagged(EntityUid entity, EntityUid user, [NotNullWhen(false)] out string? reason, [NotNullWhen(true)] out EmagSiliconLawComponent? emagComp)
+    {
+        reason = null;
+        emagComp = null;
+        if (!TryComp<EmagSiliconLawComponent>(entity, out var emagLawcomp))
+        {
+            reason =  Loc.GetString("law-emag-cannot-not-emaggable", ("entity", entity));
+            return false;
+        }
+
+        // prevent self-emagging
+        if (entity == user)
+        {
+            reason = Loc.GetString("law-emag-cannot-emag-self");
+            return false;
+        }
+
+        if (emagLawcomp.RequireOpenPanel &&
+            TryComp<WiresPanelComponent>(entity, out var panel) &&
+            !panel.Open)
+        {
+            reason = Loc.GetString("law-emag-require-panel");
+            return false;
+        }
+
+        emagComp = emagLawcomp;
+
+        return true;
     }
 
     public List<SiliconLaw> GetEmaggedLaws(List<SiliconLaw> laws, EntityUid user, string obeysTo)

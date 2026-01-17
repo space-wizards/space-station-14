@@ -162,6 +162,7 @@
         enum.SiliconLawsUiKey.Key:
           type: SiliconLawBoundUserInterface
           requireInputValidation: false
+    - type: EmagSiliconLaw
 
 - type: entity
   parent: PositronicBrainNotIonStormable

@@ -407,7 +407,7 @@
 # The actual brain inside the core
 - type: entity
   id: StationAiBrain
-  parent: PositronicBrain
+  parent: PositronicBrainNotIonStormable # One day
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Sprite
