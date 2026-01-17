@@ -66,7 +66,7 @@ public sealed class TransformableContainerSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<TransformableContainerComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        if (_prototypeManager.TryIndex(entity.Comp.CurrentReagent, out var currentReagent))
+        if (_prototypeManager.Resolve(entity.Comp.CurrentReagent, out var currentReagent))
         {
             args.AddModifier("transformable-container-component-glass", priority: -1, ("reagent", currentReagent.LocalizedName));
         }
