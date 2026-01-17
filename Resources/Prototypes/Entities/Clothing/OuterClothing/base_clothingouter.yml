@@ -210,8 +210,3 @@
     size: Large
     shape:
     - 0,0,2,3
-
-- type: entity
-  abstract: true
-  parent: [ ClothingOuterBaseMedium, ClothingOuterStorageBase ]
-  id: ClothingOuterStorageBaseMedium

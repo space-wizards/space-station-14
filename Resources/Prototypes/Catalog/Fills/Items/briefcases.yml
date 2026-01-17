@@ -42,11 +42,13 @@
         children:
         - id: ClothingOuterCoatJensenSyndie
         - id: ClothingUniformJumpsuitTacticool
+        - id: ClothingEyesGlassesSunglasses
         - id: SpaceCash30000
         - id: EncryptionKeySyndie
         - id: RubberStampTrader
         - id: PhoneInstrumentSyndicate
-        - id: SyndieHandyFlag
+        - id: ClothingHandsGlovesCombat
+        - id: ClothingMaskNeckGaiter
 
 - type: entity
   id: BriefcaseThiefBribingBundleFilled
