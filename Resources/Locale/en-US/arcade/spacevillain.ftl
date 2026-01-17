@@ -1,6 +1,3 @@
-﻿spacevillain-menu-title = Space Villain
-spacevillain-menu-label-player = Player
-spacevillain-menu-button-attack = ATTACK
-spacevillain-menu-button-heal = HEAL
-spacevillain-menu-button-recharge = RECHARGE
-spacevillain-menu-button-new-game = New Game
+﻿space-villain-menu-title = NT Space Villain
+space-villain-footer-flavor-left = Fight or die!
+space-villain-footer-flavor-right = v2.0

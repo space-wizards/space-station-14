@@ -2,7 +2,7 @@
   id: BlockGameAds
   values:
     prefix: advertisement-block-game-
-    count: 13
+    count: 12
 
 - type: localizedDataset
   id: SpaceVillainAds

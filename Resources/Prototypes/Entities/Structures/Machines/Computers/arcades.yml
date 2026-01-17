@@ -64,7 +64,7 @@
 
 - type: entity
   id: SpaceVillainArcade
-  name: space villain arcade
+  name: NT space villain arcade
   parent: ArcadeBase
   components:
   - type: WiresPanel
