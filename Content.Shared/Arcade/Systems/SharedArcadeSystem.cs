@@ -27,13 +27,13 @@ public sealed partial class SharedArcadeSystem : EntitySystem
             return;
 
         ent.Comp.Player = args.Actor;
-        DirtyField(ent, ent.Comp, nameof(ArcadeComponent.Player));
+        DirtyField(ent.AsNullable(), nameof(ArcadeComponent.Player));
     }
 
     private void OnBUIClosed(Entity<ArcadeComponent> ent, ref BoundUIClosedEvent args)
     {
         ent.Comp.Player = null;
-        DirtyField(ent, ent.Comp, nameof(ArcadeComponent.Player));
+        DirtyField(ent.AsNullable(), nameof(ArcadeComponent.Player));
     }
 
     #endregion
@@ -61,7 +61,7 @@ public sealed partial class SharedArcadeSystem : EntitySystem
         RaiseLocalEvent(ent, ref ev);
 
         ent.Comp.State = gameState;
-        DirtyField(ent, ent.Comp, nameof(ArcadeComponent.State));
+        DirtyField(ent.AsNullable(), nameof(ArcadeComponent.State));
 
         return true;
     }
