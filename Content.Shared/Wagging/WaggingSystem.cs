@@ -45,7 +45,7 @@ public sealed class WaggingSystem : EntitySystem
         if (args.Handled)
             return;
 
-        TrySetWagging((ent, ent.Comp), !ent.Comp.Wagging);
+        TrySetWagging(ent.AsNullable(), !ent.Comp.Wagging);
         args.Handled = true;
     }
 
