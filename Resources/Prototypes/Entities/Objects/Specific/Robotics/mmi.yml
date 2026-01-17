@@ -17,9 +17,13 @@
   - type: MMI
     brainSlot:
       name: positronic-brain-slot-component-slot-name-brain
+      whitelistFailPopup: error-incompatible-mmi
       whitelist:
         components:
         - Brain
+      blacklist:
+        components:
+        - MMIIncompatible
   - type: BorgBrain
   - type: BlockMovement
   - type: Examiner
