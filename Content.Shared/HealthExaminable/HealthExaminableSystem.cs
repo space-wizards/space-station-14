@@ -64,13 +64,11 @@ public sealed class HealthExaminableSystem : EntitySystem
             var chosenLocStr = string.Empty;
             for (var i = 0; i < component.Thresholds.Length; i++)
             {
-                if (component.Thresholds[i] <= dmg)
-                {
-                    if (Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{i}", out var locStr, ("target", Identity.Entity(uid, EntityManager))))
-                        chosenLocStr = locStr;
-                }
-                else
+                if (component.Thresholds[i] > dmg)
                     break;
+
+                if (Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{i}", out var locStr, ("target", Identity.Entity(uid, EntityManager))))
+                    chosenLocStr = locStr;
             }
 
             // No threshold string was found
