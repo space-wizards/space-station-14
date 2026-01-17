@@ -100,7 +100,7 @@ public sealed partial class GrapplingGunComponent : Component
     /// <summary>
     /// Sprite specifier for the rope, used to visualize the joint
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField, AutoNetworkedField]
     public SpriteSpecifier RopeSprite =
         new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
 

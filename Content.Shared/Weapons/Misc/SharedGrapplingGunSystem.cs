@@ -163,7 +163,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
             jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) &&
             joint is DistanceJoint distance)
         {
-            if (distance.MaxLength <= distance.MinLength + (component.RopeMargin * 1.1f))
+            if (distance.MaxLength <= distance.MinLength + component.RopeFullyReeledMargin)
                 value = false;
         }
 
@@ -172,21 +172,17 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
         if (value)
         {
-            if (Timing.IsFirstTimePredicted)
+            if (!component.Stream.HasValue) // If it's already playing, then playing it again will cause the sound become eternally stuck playing
                 component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity;
         }
-        else
+        else if (!value && component.Stream.HasValue && Timing.IsFirstTimePredicted)
         {
-            if (Timing.IsFirstTimePredicted)
-            {
-                component.Stream = _audio.Stop(component.Stream);
-            }
+            component.Stream = _audio.Stop(component.Stream);
         }
 
         component.Reeling = value;
 
         DirtyField(uid, component, nameof(GrapplingGunComponent.Reeling));
-        DirtyField(uid, component, nameof(GrapplingGunComponent.Stream));
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -239,12 +235,9 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
             if (!grappling.Reeling)
             {
-                if (Timing.IsFirstTimePredicted)
-                {
-                    // Just in case.
+                // Just in case.
+                if (grappling.Stream.HasValue && Timing.IsFirstTimePredicted)
                     grappling.Stream = _audio.Stop(grappling.Stream);
-                    DirtyField(uid, grappling, nameof(GrapplingGunComponent.Stream));
-                }
 
                 continue;
             }
