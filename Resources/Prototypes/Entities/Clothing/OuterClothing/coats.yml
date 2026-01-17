@@ -10,11 +10,6 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: [ ClothingOuterStorageBase, ClothingOuterArmorBase ]
-  id: ClothingOuterStorageArmorBase
-  abstract: true
-
-- type: entity
   parent: [ ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSecurityContraband ]
   id: ClothingOuterCoatDetective
   name: detective trenchcoat
@@ -67,7 +62,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterStorageArmorBase
+  parent: [ ClothingOuterStorageBase, ClothingOuterArmorBase ]
   id: ClothingOuterArmorHoS
   components:
   - type: Armor
@@ -81,7 +76,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterStorageArmorBase
+  parent: [ ClothingOuterStorageBase, ClothingOuterArmorBase ]
   id: ClothingOuterArmorWarden
   components:
   - type: Armor
@@ -94,7 +89,7 @@
         Caustic: 0.9
 
 - type: entity
-  parent: [BaseSecurityCommandContraband, ClothingOuterStorageArmorBase]
+  parent: [BaseSecurityCommandContraband, ClothingOuterArmorHoS]
   id: ClothingOuterCoatHoSTrench
   name: head of security's armored trenchcoat
   description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
