@@ -69,7 +69,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
             //todo: this doesn't actually support multigrapple
             // At least show the visuals.
             component.Projectile = shotUid.Value;
-            Dirty(uid, component);
+            DirtyField(uid, component, nameof(GrapplingGunComponent.Projectile));
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
             visuals.Sprite = component.RopeSprite;
             visuals.Target = uid;
@@ -78,7 +78,6 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
         TryComp<AppearanceComponent>(uid, out var appearance);
         _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, false, appearance);
-        Dirty(uid, component);
     }
 
     private void OnGrapplingDeselected(EntityUid uid, GrapplingGunComponent component, HandDeselectedEvent args)
@@ -143,7 +142,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
         SetReeling(grapple.Owner, grapple.Comp, false, user);
         grapple.Comp.Projectile = null;
-        Dirty(grapple.Owner, grapple.Comp); // SetReeling() isn't guaranteed to dirty the component
+        DirtyField(grapple.Owner, grapple.Comp, nameof(GrapplingGunComponent.Projectile));
         _gun.ChangeBasicEntityAmmoCount(grapple.Owner, 1);
     }
 
@@ -185,7 +184,9 @@ public abstract class SharedGrapplingGunSystem : VirtualController
         }
 
         component.Reeling = value;
-        Dirty(uid, component);
+
+        DirtyField(uid, component, nameof(GrapplingGunComponent.Reeling));
+        DirtyField(uid, component, nameof(GrapplingGunComponent.Stream));
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -242,6 +243,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                 {
                     // Just in case.
                     grappling.Stream = _audio.Stop(grappling.Stream);
+                    DirtyField(uid, grappling, nameof(GrapplingGunComponent.Stream));
                 }
 
                 continue;
@@ -258,7 +260,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                 distance.Length = ropeLength;
             }
 
-            if (ropeLength <= distance.MinLength + (grappling.RopeMargin * 1.1f))
+            if (ropeLength <= distance.MinLength + grappling.RopeFullyReeledMargin)
             {
                 SetReeling(uid, grappling, false, null);
             }

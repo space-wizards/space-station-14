@@ -32,6 +32,12 @@ public sealed partial class GrapplingGunComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float RopeMargin = 0.2f;
+
+    /// <summary>
+    /// Margin from the min length for the rope to be considered fully reeled-in, preventing it from being reeled in further
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float RopeFullyReeledMargin = 0.22f;
     
     /// <summary>
     /// Minimum length for the grappling hook's rope
