@@ -1,110 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Living beings are now vomiting from being irradiated. Also, irradiated
-      players will see a popup about tasting something metallic.
-    type: Add
-  id: 8897
-  time: '2025-08-27T21:56:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39805
-- author: aada
-  changes:
-  - message: Fixed audio mispredict when quick inserting.
-    type: Fix
-  id: 8898
-  time: '2025-08-28T16:54:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39930
-- author: Hitlinemoss
-  changes:
-  - message: Descriptions for cardboard weapons have been adjusted.
-    type: Tweak
-  id: 8899
-  time: '2025-08-28T17:14:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39927
-- author: FungiFellow
-  changes:
-  - message: Sentience Event no longer targets Zombified creatures
-    type: Fix
-  id: 8900
-  time: '2025-08-29T11:48:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39950
-- author: Dutch-VanDerLinde
-  changes:
-  - message: The forensic scanner no longer leaks fingerprints or glove prints onto
-      the scanning object if you use the right-click scan verb.
-    type: Fix
-  id: 8901
-  time: '2025-08-30T14:00:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39964
-- author: FairlySadPanda
-  changes:
-  - message: 'Scurrets can wear a few items on their backs: pet bags, mail bags and
-      spears'
-    type: Add
-  - message: Corgis can now wear mail bags.
-    type: Add
-  id: 8902
-  time: '2025-08-30T14:42:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38774
-- author: Kowlin
-  changes:
-  - message: Derelict cyborgs can no longer duplicate their ghost role.
-    type: Fix
-  id: 8903
-  time: '2025-08-30T17:17:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39992
-- author: aada
-  changes:
-  - message: Clown bags are squeakier.
-    type: Add
-  id: 8904
-  time: '2025-08-30T18:10:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39931
-- author: AndrewFenriz
-  changes:
-  - message: when assembling mech, parts now cannot be removed with a crowbar
-    type: Remove
-  id: 8905
-  time: '2025-08-31T12:54:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39027
-- author: quasr-9
-  changes:
-  - message: Moths can now properly remove knives and other items from military boots.
-    type: Fix
-  id: 8906
-  time: '2025-09-01T15:07:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40049
-- author: slarticodefast
-  changes:
-  - message: Dropper and mini-syringe transfer amounts can now be set to more options.
-    type: Tweak
-  id: 8907
-  time: '2025-09-01T15:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39976
-- author: IProduceWidgets
-  changes:
-  - message: there are now civilian versions of nanomed vendors.
-    type: Add
-  - message: nanomed inventories have been increased some.
-    type: Tweak
-  id: 8908
-  time: '2025-09-01T23:39:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39718
-- author: M4rchy-S
-  changes:
-  - message: dead mobs will no longer vomit from radiation damage
-    type: Fix
-  id: 8909
-  time: '2025-09-02T00:07:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40020
-- author: SolidSyn
-  changes:
-  - message: Detectives noir-tech glasses are now contraband, but now include a noir
-      secHUD!
-    type: Tweak
-  id: 8910
-  time: '2025-09-02T13:32:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39859
 - author: FungiFellow
   changes:
   - message: Sentience Event can no longer target Corgis, Smile or Mothroaches
@@ -3904,3 +3798,121 @@
   id: 9400
   time: '2026-01-15T05:40:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42421
+- author: kontakt
+  changes:
+  - message: Cancer mice are now significantly more radioactive.
+    type: Tweak
+  id: 9401
+  time: '2026-01-15T16:46:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42298
+- author: Samuka
+  changes:
+  - message: The heavy xenoborg can now slowly move in space like the scout and stealth
+      xenoborgs.
+    type: Tweak
+  id: 9402
+  time: '2026-01-15T17:10:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42415
+- author: rumaks-xyz
+  changes:
+  - message: Chemical reactions no longer occur inside pills
+    type: Tweak
+  id: 9403
+  time: '2026-01-15T18:08:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41457
+- author: Fruitsalad
+  changes:
+  - message: Added a new user interface for cryo pods
+    type: Add
+  id: 9404
+  time: '2026-01-15T18:08:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41850
+- author: Orsoniks
+  changes:
+  - message: Health examine colours now reflect the medicines used to heal that type
+      of damage.
+    type: Tweak
+  id: 9405
+  time: '2026-01-15T18:42:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38231
+- author: aada
+  changes:
+  - message: New tiny and cute vials that hold 10 units.
+    type: Add
+  - message: Vials can now be closed to avoid spilling.
+    type: Tweak
+  id: 9406
+  time: '2026-01-15T19:00:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36132
+- author: ScarKy0
+  changes:
+  - message: Added the Paper Centrifuge! A craftable, makeshift centrifudge primarly
+      usable in maintenance chemistry.
+    type: Add
+  id: 9407
+  time: '2026-01-15T20:01:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42040
+- author: Velken
+  changes:
+  - message: RCD can no longer spam lights in the same spot.
+    type: Fix
+  - message: RCD can no longer be used to destroy indestructible tiles.
+    type: Fix
+  id: 9408
+  time: '2026-01-15T20:39:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42432
+- author: B_Kirill
+  changes:
+  - message: Added camera map. Cutting MAP wire hides camera from map while keeping
+      it accessible in camera list.
+    type: Add
+  id: 9409
+  time: '2026-01-15T21:37:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39684
+- author: ScarKy0
+  changes:
+  - message: Added Makeshift and Regular Mortar&Pestle! It can be found in the nutrimax
+      and dinnerware vendors or crafted. It works slower and can only process 1 item
+      at a time.
+    type: Add
+  - message: Added Makeshift and Regular Handheld Juicer! It can be found in the nutrimax
+      and dinnerware vendors or crafted. It works slower and can only process 1 item
+      at a time.
+    type: Add
+  id: 9410
+  time: '2026-01-16T00:35:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42019
+- author: EmoGarbage404
+  changes:
+  - message: Fixed flatpackers ignoring material costs for certain machine board requirements
+      and being able to print unlatheable items for flatpacks.
+    type: Fix
+  id: 9411
+  time: '2026-01-16T00:52:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42445
+- author: sowelipililimute
+  changes:
+  - message: Using a core pinpointer piece on another piece no longer causes you to
+      start an unintended construction recipe.
+    type: Fix
+  id: 9412
+  time: '2026-01-16T02:09:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42446
+- author: neomoth
+  changes:
+  - message: Fix zombie resistance, instead of making you more likely to be infected,
+      it now properly makes you less likely to be infected.
+    type: Fix
+  id: 9413
+  time: '2026-01-16T08:40:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42451
+- author: Samuka
+  changes:
+  - message: The mothership now starts with more materials so there is less need to
+      salvage for them.
+    type: Tweak
+  - message: Xenoborgs guidebook entry got updated in regards to preparation and tactics.
+    type: Tweak
+  id: 9414
+  time: '2026-01-16T17:19:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42448

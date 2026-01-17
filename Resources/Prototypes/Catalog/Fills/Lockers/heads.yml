@@ -43,7 +43,7 @@
     - id: NukeDisk
     - id: PinpointerNuclear
     - id: WeaponDisabler
-    - id: HeadSkeleton # A skull to accompany your skeleton crew
+    - id: OrganSkeletonPersonHead # A skull to accompany your skeleton crew
       conditions:
       - !type:PlayerCountCondition
         max: 15

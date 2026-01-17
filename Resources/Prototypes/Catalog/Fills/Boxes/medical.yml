@@ -122,12 +122,15 @@
   components:
   - type: Storage
     grid:
-    - 0,0,2,1
+    - 0,0,3,1
   - type: EntityTableContainerFill
     containers:
-      storagebase:
-        id: BaseChemistryEmptyVial
-        amount: 6
+      storagebase: !type:AllSelector
+        children:
+        - id: ChemistryEmptyVial
+          amount: 3
+        - id: ChemistryEmptyVialSmall
+        rolls: 2 # group the small vials on the right column
   - type: Sprite
     layers:
       - state: box

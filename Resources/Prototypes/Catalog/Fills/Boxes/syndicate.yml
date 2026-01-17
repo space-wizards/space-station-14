@@ -33,7 +33,7 @@
         - id: SyringeStimulants
         - id: VestineChemistryVial
           amount: 2
-        - id: BaseChemistryEmptyVial
+        - id: ChemistryEmptyVial
 
 - type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]
