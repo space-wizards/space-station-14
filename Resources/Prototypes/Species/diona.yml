@@ -6,7 +6,7 @@
   sprites: MobDionaSprites
   defaultSkinTone: "#cdb369"
   markingLimits: MobDionaMarkingLimits
-  dollPrototype: MobDionaDummy
+  dollPrototype: AppearanceDiona
   skinColoration: Hues
   maleFirstNames: NamesDionaFirst
   femaleFirstNames: NamesDionaFirst
