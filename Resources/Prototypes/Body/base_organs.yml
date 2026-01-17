@@ -1,0 +1,322 @@
+- type: entity
+  id: OrganBase
+  name: organ
+  abstract: true
+  parent: BaseItem
+  components:
+  - type: Organ
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseTorso
+  name: torso
+  abstract: true
+  components:
+  - type: Organ
+    category: Torso
+  - type: Sprite
+    state: torso_m
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseHead
+  name: head
+  abstract: true
+  components:
+  - type: Organ
+    category: Head
+  - type: Sprite
+    state: head_m
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseArmLeft
+  name: left arm
+  abstract: true
+  components:
+  - type: Organ
+    category: ArmLeft
+  - type: Sprite
+    state: l_arm
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseArmRight
+  name: right arm
+  abstract: true
+  components:
+  - type: Organ
+    category: ArmRight
+  - type: Sprite
+    state: r_arm
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseHandLeft
+  name: left hand
+  abstract: true
+  components:
+  - type: Organ
+    category: HandLeft
+  - type: HandOrgan
+    handID: left
+    data:
+      location: Left
+  - type: Sprite
+    state: l_hand
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseHandRight
+  name: right hand
+  abstract: true
+  components:
+  - type: Organ
+    category: HandRight
+  - type: HandOrgan
+    handID: right
+    data:
+      location: Right
+  - type: Sprite
+    state: r_hand
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseLegLeft
+  name: left leg
+  abstract: true
+  components:
+  - type: Organ
+    category: LegLeft
+  - type: Sprite
+    state: l_leg
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseLegRight
+  name: right leg
+  abstract: true
+  components:
+  - type: Organ
+    category: LegRight
+  - type: Sprite
+    state: r_leg
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseFootLeft
+  name: left foot
+  abstract: true
+  components:
+  - type: Organ
+    category: FootLeft
+  - type: Sprite
+    state: l_foot
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseFootRight
+  name: right foot
+  abstract: true
+  components:
+  - type: Organ
+    category: FootRight
+  - type: Sprite
+    state: r_foot
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseBrain
+  name: brain
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Brain
+  - type: Sprite
+    layers:
+    - state: brain
+  - type: Item
+    heldPrefix: brain
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseEyes
+  name: eyes
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Eyes
+  - type: Sprite
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseTongue
+  name: tongue
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Tongue
+  - type: Sprite
+    layers:
+    - state: tongue
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseAppendix
+  name: appendix
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Appendix
+  - type: Sprite
+    layers:
+    - state: appendix
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseEars
+  name: ears
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Ears
+  - type: Sprite
+    layers:
+    - state: ears
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseLungs
+  name: lungs
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Lungs
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 100.0
+        canReact: false
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
+  - type: Item
+    heldPrefix: lungs
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseHeart
+  name: heart
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Heart
+  - type: Sprite
+    layers:
+    - state: heart-on
+  - type: Metabolizer
+    maxReagents: 2
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseStomach
+  name: stomach
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Stomach
+  - type: Stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+  - type: Metabolizer
+    maxReagents: 3
+    groups:
+    - id: Food
+    - id: Drink
+  - type: Sprite
+    layers:
+    - state: stomach
+  - type: Item
+    heldPrefix: stomach
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseLiver
+  name: liver
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Liver
+  - type: Sprite
+    layers:
+    - state: liver
+  - type: Item
+    heldPrefix: liver
+  - type: Metabolizer
+    maxReagents: 1
+    groups:
+    - id: Alcohol
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseKidneys
+  name: kidneys
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Kidneys
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: Item
+    heldPrefix: kidneys
+  - type: Metabolizer
+    maxReagents: 5
+    removeEmpty: true
+
+- type: entity
+  id: OrganSpriteHumanInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi

@@ -1,0 +1,162 @@
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceHuman
+  name: human appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganHumanTorso
+        - id: OrganHumanHead
+        - id: OrganHumanArmLeft
+        - id: OrganHumanArmRight
+        - id: OrganHumanHandRight
+        - id: OrganHumanHandLeft
+        - id: OrganHumanLegLeft
+        - id: OrganHumanLegRight
+        - id: OrganHumanFootLeft
+        - id: OrganHumanFootRight
+        - id: OrganHumanBrain
+        - id: OrganHumanEyes
+        - id: OrganHumanTongue
+        - id: OrganHumanAppendix
+        - id: OrganHumanEars
+        - id: OrganHumanLungs
+        - id: OrganHumanHeart
+        - id: OrganHumanStomach
+        - id: OrganHumanLiver
+        - id: OrganHumanKidneys
+  - type: HumanoidAppearance
+    species: Human
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+
+- type: entity
+  parent:
+  - AppearanceHuman
+  - BaseSpeciesMobOrganic
+  id: MobHuman
+  name: Urist McHands
+  components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+
+- type: entity
+  parent: OrganBase
+  id: OrganHuman
+  abstract: true
+  suffix: human
+
+- type: entity
+  id: OrganHumanMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Human ]
+
+- type: entity
+  parent: OrganHuman
+  id: OrganHumanInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  parent: OrganHuman
+  id: OrganHumanExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/parts.rsi
+
+- type: entity
+  parent: [ OrganBaseTorso, OrganHumanExternal ]
+  id: OrganHumanTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganHumanExternal ]
+  id: OrganHumanHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganHumanExternal ]
+  id: OrganHumanArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganHumanExternal ]
+  id: OrganHumanArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganHumanExternal ]
+  id: OrganHumanHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganHumanExternal ]
+  id: OrganHumanHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganHumanExternal ]
+  id: OrganHumanLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganHumanExternal ]
+  id: OrganHumanLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganHumanExternal ]
+  id: OrganHumanFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganHumanExternal ]
+  id: OrganHumanFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganHumanInternal ]
+  id: OrganHumanBrain
+
+- type: entity
+  parent: [ OrganBaseEyes, OrganHumanInternal ]
+  id: OrganHumanEyes
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganHumanInternal ]
+  id: OrganHumanTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganHumanInternal ]
+  id: OrganHumanAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganHumanInternal ]
+  id: OrganHumanEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanStomach
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanKidneys
