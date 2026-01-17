@@ -44,24 +44,22 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganDionaTorso
-        - id: OrganDionaHead
-        - id: OrganDionaArmLeft
-        - id: OrganDionaArmRight
-        - id: OrganDionaHandRight
-        - id: OrganDionaHandLeft
-        - id: OrganDionaLegLeft
-        - id: OrganDionaLegRight
-        - id: OrganDionaFootLeft
-        - id: OrganDionaFootRight
-        - id: OrganDionaBrainNymphing
-        - id: OrganDionaEyes
-        - id: OrganDionaLungsNymphing
-        - id: OrganDionaStomachNymphing
+  - type: InitialBody
+    organs:
+      Torso: OrganDionaTorso
+      Head: OrganDionaHead
+      ArmLeft: OrganDionaArmLeft
+      ArmRight: OrganDionaArmRight
+      HandRight: OrganDionaHandRight
+      HandLeft: OrganDionaHandLeft
+      LegLeft: OrganDionaLegLeft
+      LegRight: OrganDionaLegRight
+      FootLeft: OrganDionaFootLeft
+      FootRight: OrganDionaFootRight
+      Brain: OrganDionaBrainNymphing
+      Eyes: OrganDionaEyes
+      Lungs: OrganDionaLungsNymphing
+      Stomach: OrganDionaStomachNymphing
   - type: HumanoidProfile
     species: Diona
 

@@ -128,15 +128,16 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         if (proto.TryIndex(species, out var speciesProto))
         {
             var strategy = proto.Index(speciesProto.SkinColoration).Strategy;
+            var organs = markingManager.GetOrgans(species);
             skinColor = strategy.EnsureVerified(skinColor);
 
             foreach (var (organ, markings) in appearance.Markings)
             {
-                if (!speciesProto.Organs.ContainsKey(organ))
+                if (!organs.ContainsKey(organ))
                     validatedMarkings.Remove(organ);
             }
 
-            foreach (var (organ, organProtoID) in speciesProto.Organs)
+            foreach (var (organ, organProtoID) in organs)
             {
                 if (!markingManager.TryGetMarkingData(organProtoID, out var organData))
                 {
@@ -166,7 +167,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         if (maybeOther is not HumanoidCharacterAppearance other) return false;
         if (!EyeColor.Equals(other.EyeColor)) return false;
         if (!SkinColor.Equals(other.SkinColor)) return false;
-        if (!Markings.SequenceEqual(other.Markings)) return false;
+        if (!MarkingManager.MarkingsAreEqual(Markings, other.Markings)) return false;
         return true;
     }
 
@@ -176,7 +177,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         if (ReferenceEquals(this, other)) return true;
         return EyeColor.Equals(other.EyeColor) &&
                SkinColor.Equals(other.SkinColor) &&
-               Markings.SequenceEqual(other.Markings);
+               MarkingManager.MarkingsAreEqual(Markings, other.Markings);
     }
 
     public override bool Equals(object? obj)

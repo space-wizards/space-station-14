@@ -317,6 +317,7 @@ namespace Content.Client.Lobby.UI
             TabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-markings-tab"));
 
             _markingsModel.MarkingsChanged += (_, _) => OnMarkingChange();
+            _markingsModel.MarkingsReset += OnMarkingChange;
 
             #endregion Markings
 
@@ -1085,6 +1086,7 @@ namespace Content.Client.Lobby.UI
             Profile = Profile?.WithSpecies(newSpecies);
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
             _markingsModel.OrganData = _markingManager.GetMarkingData(newSpecies);
+            _markingsModel.ValidateMarkings();
             // In case there's job restrictions for the species
             RefreshJobs();
             // In case there's species restrictions for loadouts

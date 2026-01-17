@@ -13,24 +13,3 @@
   naming: First
   sexes:
   - Unsexed
-  organs:
-    Torso: OrganVoxTorso
-    Head: OrganVoxHead
-    ArmLeft: OrganVoxArmLeft
-    ArmRight: OrganVoxArmRight
-    HandRight: OrganVoxHandRight
-    HandLeft: OrganVoxHandLeft
-    LegLeft: OrganVoxLegLeft
-    LegRight: OrganVoxLegRight
-    FootLeft: OrganVoxFootLeft
-    FootRight: OrganVoxFootRight
-    Brain: OrganVoxBrain
-    Eyes: OrganVoxEyes
-    Tongue: OrganVoxTongue
-    Appendix: OrganVoxAppendix
-    Ears: OrganVoxEars
-    Lungs: OrganVoxLungs
-    Heart: OrganVoxHeart
-    Stomach: OrganVoxStomach
-    Liver: OrganVoxLiver
-    Kidneys: OrganVoxKidneys

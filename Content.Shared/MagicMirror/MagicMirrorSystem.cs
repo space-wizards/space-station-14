@@ -125,7 +125,6 @@ public sealed class MagicMirrorSystem : EntitySystem
             }
         }
 
-        // TODO validation
         _visualBody.ApplyMarkings(args.Target.Value, args.Markings);
     }
 

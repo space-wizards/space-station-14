@@ -49,12 +49,6 @@ public sealed partial class SpeciesPrototype : IPrototype
     public int DefaultHumanSkinTone { get; private set; } = 20;
 
     /// <summary>
-    /// Organs that spawn into the species (TODO do not merge with)
-    /// </summary>
-    [DataField]
-    public Dictionary<ProtoId<OrganCategoryPrototype>, EntProtoId<OrganComponent>> Organs = default!;
-
-    /// <summary>
     ///     Humanoid species variant used by this entity.
     /// </summary>
     [DataField(required: true)]

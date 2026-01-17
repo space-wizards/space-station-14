@@ -116,30 +116,28 @@
         32:
           sprite: Mobs/Species/Vox/displacement.rsi
           state: hand_r
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganVoxTorso
-        - id: OrganVoxHead
-        - id: OrganVoxArmLeft
-        - id: OrganVoxArmRight
-        - id: OrganVoxHandRight
-        - id: OrganVoxHandLeft
-        - id: OrganVoxLegLeft
-        - id: OrganVoxLegRight
-        - id: OrganVoxFootLeft
-        - id: OrganVoxFootRight
-        - id: OrganVoxBrain
-        - id: OrganVoxEyes
-        - id: OrganVoxTongue
-        - id: OrganVoxAppendix
-        - id: OrganVoxEars
-        - id: OrganVoxLungs
-        - id: OrganVoxHeart
-        - id: OrganVoxStomach
-        - id: OrganVoxLiver
-        - id: OrganVoxKidneys
+  - type: InitialBody
+    organs:
+      Torso: OrganVoxTorso
+      Head: OrganVoxHead
+      ArmLeft: OrganVoxArmLeft
+      ArmRight: OrganVoxArmRight
+      HandRight: OrganVoxHandRight
+      HandLeft: OrganVoxHandLeft
+      LegLeft: OrganVoxLegLeft
+      LegRight: OrganVoxLegRight
+      FootLeft: OrganVoxFootLeft
+      FootRight: OrganVoxFootRight
+      Brain: OrganVoxBrain
+      Eyes: OrganVoxEyes
+      Tongue: OrganVoxTongue
+      Appendix: OrganVoxAppendix
+      Ears: OrganVoxEars
+      Lungs: OrganVoxLungs
+      Heart: OrganVoxHeart
+      Stomach: OrganVoxStomach
+      Liver: OrganVoxLiver
+      Kidneys: OrganVoxKidneys
   - type: HumanoidProfile
     species: Vox
     undergarmentTop: UndergarmentTopTanktopVox

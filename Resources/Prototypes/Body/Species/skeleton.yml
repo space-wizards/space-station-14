@@ -51,20 +51,18 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganSkeletonPersonTorso
-        - id: OrganSkeletonPersonHead
-        - id: OrganSkeletonPersonArmLeft
-        - id: OrganSkeletonPersonArmRight
-        - id: OrganSkeletonPersonHandRight
-        - id: OrganSkeletonPersonHandLeft
-        - id: OrganSkeletonPersonLegLeft
-        - id: OrganSkeletonPersonLegRight
-        - id: OrganSkeletonPersonFootLeft
-        - id: OrganSkeletonPersonFootRight
+  - type: InitialBody
+    organs:
+      Torso: OrganSkeletonTorso
+      Head: OrganSkeletonHead
+      ArmLeft: OrganSkeletonArmLeft
+      ArmRight: OrganSkeletonArmRight
+      HandRight: OrganSkeletonHandRight
+      HandLeft: OrganSkeletonHandLeft
+      LegLeft: OrganSkeletonLegLeft
+      LegRight: OrganSkeletonLegRight
+      FootLeft: OrganSkeletonFootLeft
+      FootRight: OrganSkeletonFootRight
   - type: HumanoidProfile
     species: Skeleton
 

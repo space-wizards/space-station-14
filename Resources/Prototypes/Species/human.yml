@@ -5,24 +5,3 @@
   prototype: MobHuman
   dollPrototype: AppearanceHuman
   skinColoration: HumanToned
-  organs:
-    Torso: OrganHumanTorso
-    Head: OrganHumanHead
-    ArmLeft: OrganHumanArmLeft
-    ArmRight: OrganHumanArmRight
-    HandRight: OrganHumanHandRight
-    HandLeft: OrganHumanHandLeft
-    LegLeft: OrganHumanLegLeft
-    LegRight: OrganHumanLegRight
-    FootLeft: OrganHumanFootLeft
-    FootRight: OrganHumanFootRight
-    Brain: OrganHumanBrain
-    Eyes: OrganHumanEyes
-    Tongue: OrganHumanTongue
-    Appendix: OrganHumanAppendix
-    Ears: OrganHumanEars
-    Lungs: OrganHumanLungs
-    Heart: OrganHumanHeart
-    Stomach: OrganHumanStomach
-    Liver: OrganHumanLiver
-    Kidneys: OrganHumanKidneys

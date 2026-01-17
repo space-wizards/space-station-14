@@ -6,16 +6,3 @@
   defaultSkinTone: "#b8b8b8"
   dollPrototype: AppearanceSlimePerson
   skinColoration: Hues
-  organs:
-    Torso: OrganSlimePersonTorso
-    Head: OrganSlimePersonHead
-    ArmLeft: OrganSlimePersonArmLeft
-    ArmRight: OrganSlimePersonArmRight
-    HandRight: OrganSlimePersonHandRight
-    HandLeft: OrganSlimePersonHandLeft
-    LegLeft: OrganSlimePersonLegLeft
-    LegRight: OrganSlimePersonLegRight
-    FootLeft: OrganSlimePersonFootLeft
-    FootRight: OrganSlimePersonFootRight
-    Brain: OrganSlimePersonCore
-    Lungs: OrganSlimePersonLungs

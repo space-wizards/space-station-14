@@ -10,18 +10,3 @@
   femaleFirstNames: NamesDionaFirst
   lastNames: NamesDionaLast
   naming: TheFirstofLast
-  organs:
-    Torso: OrganDionaTorso
-    Head: OrganDionaHead
-    ArmLeft: OrganDionaArmLeft
-    ArmRight: OrganDionaArmRight
-    HandRight: OrganDionaHandRight
-    HandLeft: OrganDionaHandLeft
-    LegLeft: OrganDionaLegLeft
-    LegRight: OrganDionaLegRight
-    FootLeft: OrganDionaFootLeft
-    FootRight: OrganDionaFootRight
-    Brain: OrganDionaBrainNymphing
-    Eyes: OrganDionaEyes
-    Lungs: OrganDionaLungsNymphing
-    Stomach: OrganDionaStomachNymphing

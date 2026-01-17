@@ -9,24 +9,3 @@
   maleFirstNames: names_vulpkanin_male
   femaleFirstNames: names_vulpkanin_female
   lastNames: names_vulpkanin_last
-  organs:
-    Torso: OrganVulpkaninTorso
-    Head: OrganVulpkaninHead
-    ArmLeft: OrganVulpkaninArmLeft
-    ArmRight: OrganVulpkaninArmRight
-    HandRight: OrganVulpkaninHandRight
-    HandLeft: OrganVulpkaninHandLeft
-    LegLeft: OrganVulpkaninLegLeft
-    LegRight: OrganVulpkaninLegRight
-    FootLeft: OrganVulpkaninFootLeft
-    FootRight: OrganVulpkaninFootRight
-    Brain: OrganVulpkaninBrain
-    Eyes: OrganVulpkaninEyes
-    Tongue: OrganVulpkaninTongue
-    Appendix: OrganVulpkaninAppendix
-    Ears: OrganVulpkaninEars
-    Lungs: OrganVulpkaninLungs
-    Heart: OrganVulpkaninHeart
-    Stomach: OrganVulpkaninStomach
-    Liver: OrganVulpkaninLiver
-    Kidneys: OrganVulpkaninKidneys

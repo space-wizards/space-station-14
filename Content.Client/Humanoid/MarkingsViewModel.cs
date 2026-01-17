@@ -258,4 +258,27 @@ public sealed class MarkingsViewModel
         marking.SetColor(colorIndex, color);
         MarkingsChanged?.Invoke(organ, layer);
     }
+
+    public void ValidateMarkings()
+    {
+        foreach (var (organ, organData) in _organData)
+        {
+            if (!_organProfileData.TryGetValue(organ, out var organProfileData))
+            {
+                _markings.Remove(organ);
+                continue;
+            }
+
+            var actualMarkings = _markings.GetValueOrDefault(organ)?.ShallowClone() ?? [];
+
+            _marking.EnsureValidColors(actualMarkings);
+            _marking.EnsureValidGroupAndSex(actualMarkings, organData.Group, organProfileData.Sex);
+            _marking.EnsureValidLayers(actualMarkings, organData.Layers);
+            _marking.EnsureValidLimits(actualMarkings, organData.Group, organData.Layers, organProfileData.SkinColor, organProfileData.EyeColor);
+
+            _markings[organ] = actualMarkings;
+        }
+
+        MarkingsReset?.Invoke();
+    }
 }

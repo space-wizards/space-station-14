@@ -40,30 +40,28 @@
   - type: Inventory
     templateId: arachnid
     speciesId: arachnid
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganArachnidTorso
-        - id: OrganArachnidHead
-        - id: OrganArachnidArmLeft
-        - id: OrganArachnidArmRight
-        - id: OrganArachnidHandRight
-        - id: OrganArachnidHandLeft
-        - id: OrganArachnidLegLeft
-        - id: OrganArachnidLegRight
-        - id: OrganArachnidFootLeft
-        - id: OrganArachnidFootRight
-        - id: OrganArachnidBrain
-        - id: OrganArachnidEyes
-        - id: OrganArachnidTongue
-        - id: OrganArachnidAppendix
-        - id: OrganArachnidEars
-        - id: OrganArachnidLungs
-        - id: OrganArachnidHeart
-        - id: OrganArachnidStomach
-        - id: OrganArachnidLiver
-        - id: OrganArachnidKidneys
+  - type: InitialBody
+    organs:
+      Torso: OrganArachnidTorso
+      Head: OrganArachnidHead
+      ArmLeft: OrganArachnidArmLeft
+      ArmRight: OrganArachnidArmRight
+      HandRight: OrganArachnidHandRight
+      HandLeft: OrganArachnidHandLeft
+      LegLeft: OrganArachnidLegLeft
+      LegRight: OrganArachnidLegRight
+      FootLeft: OrganArachnidFootLeft
+      FootRight: OrganArachnidFootRight
+      Brain: OrganArachnidBrain
+      Eyes: OrganArachnidEyes
+      Tongue: OrganArachnidTongue
+      Appendix: OrganArachnidAppendix
+      Ears: OrganArachnidEars
+      Lungs: OrganArachnidLungs
+      Heart: OrganArachnidHeart
+      Stomach: OrganArachnidStomach
+      Liver: OrganArachnidLiver
+      Kidneys: OrganArachnidKidneys
   - type: HumanoidProfile
     species: Arachnid
 

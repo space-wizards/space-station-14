@@ -47,22 +47,20 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganSlimePersonTorso
-        - id: OrganSlimePersonHead
-        - id: OrganSlimePersonArmLeft
-        - id: OrganSlimePersonArmRight
-        - id: OrganSlimePersonHandRight
-        - id: OrganSlimePersonHandLeft
-        - id: OrganSlimePersonLegLeft
-        - id: OrganSlimePersonLegRight
-        - id: OrganSlimePersonFootLeft
-        - id: OrganSlimePersonFootRight
-        - id: OrganSlimePersonCore
-        - id: OrganSlimePersonLungs
+  - type: InitialBody
+    organs:
+      Torso: OrganSlimePersonTorso
+      Head: OrganSlimePersonHead
+      ArmLeft: OrganSlimePersonArmLeft
+      ArmRight: OrganSlimePersonArmRight
+      HandRight: OrganSlimePersonHandRight
+      HandLeft: OrganSlimePersonHandLeft
+      LegLeft: OrganSlimePersonLegLeft
+      LegRight: OrganSlimePersonLegRight
+      FootLeft: OrganSlimePersonFootLeft
+      FootRight: OrganSlimePersonFootRight
+      Brain: OrganSlimePersonCore
+      Lungs: OrganSlimePersonLungs
   - type: HumanoidProfile
     species: SlimePerson
 

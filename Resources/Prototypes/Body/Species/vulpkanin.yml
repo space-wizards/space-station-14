@@ -56,30 +56,28 @@
   id: AppearanceVulpkanin
   name: vulpkanin appearance
   components:
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganVulpkaninTorso
-        - id: OrganVulpkaninHead
-        - id: OrganVulpkaninArmLeft
-        - id: OrganVulpkaninArmRight
-        - id: OrganVulpkaninHandRight
-        - id: OrganVulpkaninHandLeft
-        - id: OrganVulpkaninLegLeft
-        - id: OrganVulpkaninLegRight
-        - id: OrganVulpkaninFootLeft
-        - id: OrganVulpkaninFootRight
-        - id: OrganVulpkaninBrain
-        - id: OrganVulpkaninEyes
-        - id: OrganVulpkaninTongue
-        - id: OrganVulpkaninAppendix
-        - id: OrganVulpkaninEars
-        - id: OrganVulpkaninLungs
-        - id: OrganVulpkaninHeart
-        - id: OrganVulpkaninStomach
-        - id: OrganVulpkaninLiver
-        - id: OrganVulpkaninKidneys
+  - type: InitialBody
+    organs:
+      Torso: OrganVulpkaninTorso
+      Head: OrganVulpkaninHead
+      ArmLeft: OrganVulpkaninArmLeft
+      ArmRight: OrganVulpkaninArmRight
+      HandRight: OrganVulpkaninHandRight
+      HandLeft: OrganVulpkaninHandLeft
+      LegLeft: OrganVulpkaninLegLeft
+      LegRight: OrganVulpkaninLegRight
+      FootLeft: OrganVulpkaninFootLeft
+      FootRight: OrganVulpkaninFootRight
+      Brain: OrganVulpkaninBrain
+      Eyes: OrganVulpkaninEyes
+      Tongue: OrganVulpkaninTongue
+      Appendix: OrganVulpkaninAppendix
+      Ears: OrganVulpkaninEars
+      Lungs: OrganVulpkaninLungs
+      Heart: OrganVulpkaninHeart
+      Stomach: OrganVulpkaninStomach
+      Liver: OrganVulpkaninLiver
+      Kidneys: OrganVulpkaninKidneys
   - type: HumanoidProfile
     species: Vulpkanin
     undergarmentTop: UndergarmentTopTanktopVulpkanin

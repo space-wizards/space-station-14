@@ -9,24 +9,3 @@
   maleFirstNames: NamesMothFirstMale
   femaleFirstNames: NamesMothFirstFemale
   lastNames: NamesMothLast
-  organs:
-    Torso: OrganMothTorso
-    Head: OrganMothHead
-    ArmLeft: OrganMothArmLeft
-    ArmRight: OrganMothArmRight
-    HandRight: OrganMothHandRight
-    HandLeft: OrganMothHandLeft
-    LegLeft: OrganMothLegLeft
-    LegRight: OrganMothLegRight
-    FootLeft: OrganMothFootLeft
-    FootRight: OrganMothFootRight
-    Brain: OrganMothBrain
-    Eyes: OrganMothEyes
-    Tongue: OrganMothTongue
-    Appendix: OrganMothAppendix
-    Ears: OrganMothEars
-    Lungs: OrganMothLungs
-    Heart: OrganMothHeart
-    Stomach: OrganMothStomach
-    Liver: OrganMothLiver
-    Kidneys: OrganMothKidneys

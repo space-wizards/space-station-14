@@ -84,30 +84,28 @@
           32:
             sprite: Mobs/Species/Reptilian/displacement.rsi
             state: mask
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganReptilianTorso
-        - id: OrganReptilianHead
-        - id: OrganReptilianArmLeft
-        - id: OrganReptilianArmRight
-        - id: OrganReptilianHandRight
-        - id: OrganReptilianHandLeft
-        - id: OrganReptilianLegLeft
-        - id: OrganReptilianLegRight
-        - id: OrganReptilianFootLeft
-        - id: OrganReptilianFootRight
-        - id: OrganReptilianBrain
-        - id: OrganReptilianEyes
-        - id: OrganReptilianTongue
-        - id: OrganReptilianAppendix
-        - id: OrganReptilianEars
-        - id: OrganReptilianLungs
-        - id: OrganReptilianHeart
-        - id: OrganReptilianStomach
-        - id: OrganReptilianLiver
-        - id: OrganReptilianKidneys
+  - type: InitialBody
+    organs:
+      Torso: OrganReptilianTorso
+      Head: OrganReptilianHead
+      ArmLeft: OrganReptilianArmLeft
+      ArmRight: OrganReptilianArmRight
+      HandRight: OrganReptilianHandRight
+      HandLeft: OrganReptilianHandLeft
+      LegLeft: OrganReptilianLegLeft
+      LegRight: OrganReptilianLegRight
+      FootLeft: OrganReptilianFootLeft
+      FootRight: OrganReptilianFootRight
+      Brain: OrganReptilianBrain
+      Eyes: OrganReptilianEyes
+      Tongue: OrganReptilianTongue
+      Appendix: OrganReptilianAppendix
+      Ears: OrganReptilianEars
+      Lungs: OrganReptilianLungs
+      Heart: OrganReptilianHeart
+      Stomach: OrganReptilianStomach
+      Liver: OrganReptilianLiver
+      Kidneys: OrganReptilianKidneys
   - type: HumanoidProfile
     species: Reptilian
 

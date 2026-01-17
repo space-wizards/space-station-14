@@ -5,24 +5,3 @@
   prototype: MobDwarf
   dollPrototype: AppearanceDwarf
   skinColoration: HumanToned
-  organs:
-    Torso: OrganHumanTorso
-    Head: OrganHumanHead
-    ArmLeft: OrganHumanArmLeft
-    ArmRight: OrganHumanArmRight
-    HandRight: OrganHumanHandRight
-    HandLeft: OrganHumanHandLeft
-    LegLeft: OrganHumanLegLeft
-    LegRight: OrganHumanLegRight
-    FootLeft: OrganHumanFootLeft
-    FootRight: OrganHumanFootRight
-    Brain: OrganHumanBrain
-    Eyes: OrganHumanEyes
-    Tongue: OrganHumanTongue
-    Appendix: OrganHumanAppendix
-    Ears: OrganHumanEars
-    Lungs: OrganHumanLungs
-    Heart: OrganDwarfHeart
-    Stomach: OrganDwarfStomach
-    Liver: OrganDwarfLiver
-    Kidneys: OrganHumanKidneys

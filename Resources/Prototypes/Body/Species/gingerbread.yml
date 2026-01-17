@@ -10,30 +10,28 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganGingerbreadTorso
-        - id: OrganGingerbreadHead
-        - id: OrganGingerbreadArmLeft
-        - id: OrganGingerbreadArmRight
-        - id: OrganGingerbreadHandRight
-        - id: OrganGingerbreadHandLeft
-        - id: OrganGingerbreadLegLeft
-        - id: OrganGingerbreadLegRight
-        - id: OrganGingerbreadFootLeft
-        - id: OrganGingerbreadFootRight
-        - id: OrganHumanBrain
-        - id: OrganHumanEyes
-        - id: OrganHumanTongue
-        - id: OrganHumanAppendix
-        - id: OrganHumanEars
-        - id: OrganHumanLungs
-        - id: OrganHumanHeart
-        - id: OrganHumanStomach
-        - id: OrganHumanLiver
-        - id: OrganHumanKidneys
+  - type: InitialBody
+    organs:
+      Torso: OrganGingerbreadTorso
+      Head: OrganGingerbreadHead
+      ArmLeft: OrganGingerbreadArmLeft
+      ArmRight: OrganGingerbreadArmRight
+      HandRight: OrganGingerbreadHandRight
+      HandLeft: OrganGingerbreadHandLeft
+      LegLeft: OrganGingerbreadLegLeft
+      LegRight: OrganGingerbreadLegRight
+      FootLeft: OrganGingerbreadFootLeft
+      FootRight: OrganGingerbreadFootRight
+      Brain: OrganGingerbreadBrain
+      Eyes: OrganGingerbreadEyes
+      Tongue: OrganGingerbreadTongue
+      Appendix: OrganGingerbreadAppendix
+      Ears: OrganGingerbreadEars
+      Lungs: OrganGingerbreadLungs
+      Heart: OrganGingerbreadHeart
+      Stomach: OrganGingerbreadStomach
+      Liver: OrganGingerbreadLiver
+      Kidneys: OrganGingerbreadKidneys
   - type: HumanoidProfile
     species: Gingerbread
 

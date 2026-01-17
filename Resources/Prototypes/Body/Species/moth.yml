@@ -106,30 +106,28 @@
           32:
             sprite: Mobs/Species/Moth/displacement.rsi
             state: shoes
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganMothTorso
-        - id: OrganMothHead
-        - id: OrganMothArmLeft
-        - id: OrganMothArmRight
-        - id: OrganMothHandRight
-        - id: OrganMothHandLeft
-        - id: OrganMothLegLeft
-        - id: OrganMothLegRight
-        - id: OrganMothFootLeft
-        - id: OrganMothFootRight
-        - id: OrganMothBrain
-        - id: OrganMothEyes
-        - id: OrganMothTongue
-        - id: OrganMothAppendix
-        - id: OrganMothEars
-        - id: OrganMothLungs
-        - id: OrganMothHeart
-        - id: OrganMothStomach
-        - id: OrganMothLiver
-        - id: OrganMothKidneys
+  - type: InitialBody
+    organs:
+      Torso: OrganMothTorso
+      Head: OrganMothHead
+      ArmLeft: OrganMothArmLeft
+      ArmRight: OrganMothArmRight
+      HandRight: OrganMothHandRight
+      HandLeft: OrganMothHandLeft
+      LegLeft: OrganMothLegLeft
+      LegRight: OrganMothLegRight
+      FootLeft: OrganMothFootLeft
+      FootRight: OrganMothFootRight
+      Brain: OrganMothBrain
+      Eyes: OrganMothEyes
+      Tongue: OrganMothTongue
+      Appendix: OrganMothAppendix
+      Ears: OrganMothEars
+      Lungs: OrganMothLungs
+      Heart: OrganMothHeart
+      Stomach: OrganMothStomach
+      Liver: OrganMothLiver
+      Kidneys: OrganMothKidneys
   - type: HumanoidProfile
     species: Moth
 

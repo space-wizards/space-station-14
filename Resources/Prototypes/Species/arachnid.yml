@@ -11,24 +11,3 @@
   lastNames: NamesArachnidLast
   sexes:
   - Unsexed
-  organs:
-    Torso: OrganArachnidTorso
-    Head: OrganArachnidHead
-    ArmLeft: OrganArachnidArmLeft
-    ArmRight: OrganArachnidArmRight
-    HandRight: OrganArachnidHandRight
-    HandLeft: OrganArachnidHandLeft
-    LegLeft: OrganArachnidLegLeft
-    LegRight: OrganArachnidLegRight
-    FootLeft: OrganArachnidFootLeft
-    FootRight: OrganArachnidFootRight
-    Brain: OrganArachnidBrain
-    Eyes: OrganArachnidEyes
-    Tongue: OrganArachnidTongue
-    Appendix: OrganArachnidAppendix
-    Ears: OrganArachnidEars
-    Lungs: OrganArachnidLungs
-    Heart: OrganArachnidHeart
-    Stomach: OrganArachnidStomach
-    Liver: OrganArachnidLiver
-    Kidneys: OrganArachnidKidneys

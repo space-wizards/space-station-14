@@ -327,12 +327,22 @@ public sealed class MarkingManager
         }
     }
 
+    public Dictionary<ProtoId<OrganCategoryPrototype>, EntProtoId<OrganComponent>> GetOrgans(ProtoId<SpeciesPrototype> species)
+    {
+        var speciesPrototype = _prototype.Index(species);
+        var appearancePrototype = _prototype.Index(speciesPrototype.DollPrototype);
+
+        if (!appearancePrototype.TryGetComponent<InitialBodyComponent>(out var initialBody, _component))
+            return new();
+
+        return initialBody.Organs;
+    }
+
     public Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData> GetMarkingData(ProtoId<SpeciesPrototype> species)
     {
         var ret = new Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData>();
-        var speciesPrototype = _prototype.Index(species);
 
-        foreach (var (organ, proto) in speciesPrototype.Organs)
+        foreach (var (organ, proto) in GetOrgans(species))
         {
             if (!TryGetMarkingData(proto, out var organData))
                 continue;
@@ -349,9 +359,8 @@ public sealed class MarkingManager
         Color eyeColor)
     {
         var ret = new Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData>();
-        var speciesPrototype = _prototype.Index(species);
 
-        foreach (var organ in speciesPrototype.Organs.Keys)
+        foreach (var organ in GetOrgans(species).Keys)
         {
             ret[organ] = new()
             {
@@ -404,6 +413,39 @@ public sealed class MarkingManager
         }
 
         return ret;
+    }
+
+    /// <summary>
+    /// Recursively compares two markings dictionaries for equality.
+    /// </summary>
+    /// <param name="a">The first markings dictionary.</param>
+    /// <param name="b">The second markings dictionary.</param>
+    /// <returns>Whether the dictionaries are equivalent.</returns>
+    public static bool MarkingsAreEqual(Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> a,
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> b)
+    {
+        if (a.Count != b.Count)
+            return false;
+
+        foreach (var (organ, aDictionary) in a)
+        {
+            if (!b.TryGetValue(organ, out var bDictionary))
+                return false;
+
+            if (aDictionary.Count != bDictionary.Count)
+                return false;
+
+            foreach (var (layer, aMarkings) in aDictionary)
+            {
+                if (!bDictionary.TryGetValue(layer, out var bMarkings))
+                    return false;
+
+                if (!aMarkings.SequenceEqual(bMarkings))
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     public bool MustMatchSkin(string species, HumanoidVisualLayers layer, out float alpha, IPrototypeManager? prototypeManager = null)

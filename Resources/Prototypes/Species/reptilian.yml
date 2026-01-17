@@ -9,24 +9,3 @@
   maleFirstNames: NamesReptilianMale
   femaleFirstNames: NamesReptilianFemale
   naming: FirstDashFirst
-  organs:
-    Torso: OrganReptilianTorso
-    Head: OrganReptilianHead
-    ArmLeft: OrganReptilianArmLeft
-    ArmRight: OrganReptilianArmRight
-    HandRight: OrganReptilianHandRight
-    HandLeft: OrganReptilianHandLeft
-    LegLeft: OrganReptilianLegLeft
-    LegRight: OrganReptilianLegRight
-    FootLeft: OrganReptilianFootLeft
-    FootRight: OrganReptilianFootRight
-    Brain: OrganReptilianBrain
-    Eyes: OrganReptilianEyes
-    Tongue: OrganReptilianTongue
-    Appendix: OrganReptilianAppendix
-    Ears: OrganReptilianEars
-    Lungs: OrganReptilianLungs
-    Heart: OrganReptilianHeart
-    Stomach: OrganReptilianStomach
-    Liver: OrganReptilianLiver
-    Kidneys: OrganReptilianKidneys

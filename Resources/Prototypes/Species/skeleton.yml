@@ -8,14 +8,3 @@
   femaleFirstNames: NamesSkeletonFirst
   dollPrototype: AppearanceSkeletonPerson
   skinColoration: TintedHues
-  organs:
-    Torso: OrganSkeletonTorso
-    Head: OrganSkeletonHead
-    ArmLeft: OrganSkeletonArmLeft
-    ArmRight: OrganSkeletonArmRight
-    HandRight: OrganSkeletonHandRight
-    HandLeft: OrganSkeletonHandLeft
-    LegLeft: OrganSkeletonLegLeft
-    LegRight: OrganSkeletonLegRight
-    FootLeft: OrganSkeletonFootLeft
-    FootRight: OrganSkeletonFootRight

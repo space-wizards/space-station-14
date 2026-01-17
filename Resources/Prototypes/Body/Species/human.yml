@@ -50,30 +50,28 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganHumanTorso
-        - id: OrganHumanHead
-        - id: OrganHumanArmLeft
-        - id: OrganHumanArmRight
-        - id: OrganHumanHandRight
-        - id: OrganHumanHandLeft
-        - id: OrganHumanLegLeft
-        - id: OrganHumanLegRight
-        - id: OrganHumanFootLeft
-        - id: OrganHumanFootRight
-        - id: OrganHumanBrain
-        - id: OrganHumanEyes
-        - id: OrganHumanTongue
-        - id: OrganHumanAppendix
-        - id: OrganHumanEars
-        - id: OrganHumanLungs
-        - id: OrganHumanHeart
-        - id: OrganHumanStomach
-        - id: OrganHumanLiver
-        - id: OrganHumanKidneys
+  - type: InitialBody
+    organs:
+      Torso: OrganHumanTorso
+      Head: OrganHumanHead
+      ArmLeft: OrganHumanArmLeft
+      ArmRight: OrganHumanArmRight
+      HandRight: OrganHumanHandRight
+      HandLeft: OrganHumanHandLeft
+      LegLeft: OrganHumanLegLeft
+      LegRight: OrganHumanLegRight
+      FootLeft: OrganHumanFootLeft
+      FootRight: OrganHumanFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
   - type: HumanoidProfile
     species: Human
 
