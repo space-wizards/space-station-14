@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieRed
-  name: red-tie
+  name: red tie
   description: A neosilk clip-on red tie.
   components:
   - type: Sprite
@@ -15,6 +15,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - MonkeyWearable
     - WhitelistChameleon
     - ClothMade
     - Recyclable
@@ -33,6 +34,13 @@
     storedSprite:
       state: storage
       sprite: Clothing/Neck/Ties/dettie.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - MonkeyWearable
+    - WhitelistChameleon
+    - ClothMade
+    - Recyclable
 
 - type: entity
   parent: ClothingNeckBase
@@ -53,4 +61,5 @@
     - ClothMade
     - Recyclable
     - HamsterWearable
+    - MonkeyWearable
     - WhitelistChameleon
