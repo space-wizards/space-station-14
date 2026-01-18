@@ -39,7 +39,7 @@ public abstract partial class SharedSiliconLawSystem
         // Emagged borgs are immune to ion storm
         if (!_emag.CheckFlag(ent, EmagType.Interaction))
         {
-            ent.Comp.Lawset = args.Lawset;
+            ent.Comp.Lawset = args.Lawset.Clone();
 
             // gotta tell player to check their laws
             NotifyLawsChanged(ent, ent.Comp.LawUploadSound);

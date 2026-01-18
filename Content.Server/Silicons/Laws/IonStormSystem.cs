@@ -136,8 +136,6 @@ public sealed class IonStormSystem : EntitySystem
         if (adminlog)
             _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
 
-        // laws unique to this silicon, dont use station laws anymore
-        _siliconLaw.SetProviderLaws(ent.Owner, laws.Laws);
         var ev = new IonStormLawsEvent(laws);
         RaiseLocalEvent(ent, ref ev);
     }
