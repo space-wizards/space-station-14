@@ -171,7 +171,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventSuicide)
+        if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventCharacterAbandon)
             args.Handled = true;
     }
 

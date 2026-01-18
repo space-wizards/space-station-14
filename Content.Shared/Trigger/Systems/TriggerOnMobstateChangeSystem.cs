@@ -39,15 +39,14 @@ public sealed partial class TriggerOnMobstateChangeSystem : TriggerOnXSystem
 
     /// <summary>
     /// Checks if the user has any implants that prevent suicide to avoid some cheesy strategies
-    /// Prevents suicide by handling the event without killing the user
-    /// TODO: This doesn't seem to work at the moment as the event is never checked for being handled.
+    /// Prevents suicide by handling the attempt event and thus blocking the suicide.
     /// </summary>
-    private void OnSuicide(EntityUid uid, TriggerOnMobstateChangeComponent component, SuicideEvent args)
+    private void OnSuicide(Entity<TriggerOnMobstateChangeComponent> ent, ref SuicideEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!component.PreventSuicide)
+        if (!ent.Comp.PreventSuicide)
             return;
 
         _popup.PopupClient(Loc.GetString("suicide-prevented"), args.Victim);

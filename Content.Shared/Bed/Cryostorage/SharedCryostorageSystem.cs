@@ -98,7 +98,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
         }
 
         if (Mind.TryGetMind(args.EntityUid, out _, out var mindComp, mindContainer) &&
-            (mindComp.PreventSuicide || mindComp.PreventGhosting))
+            (mindComp.PreventCharacterAbandon))
         {
             args.Cancel();
         }

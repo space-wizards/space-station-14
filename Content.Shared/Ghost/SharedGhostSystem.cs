@@ -184,9 +184,7 @@ namespace Content.Shared.Ghost
     /// A client to server request for their ghost to return to body
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class GhostReturnToBodyRequest : EntityEventArgs
-    {
-    }
+    public sealed class GhostReturnToBodyRequest : EntityEventArgs;
 
     /// <summary>
     /// A server to client update with the available ghost role count
@@ -201,4 +199,6 @@ namespace Content.Shared.Ghost
             AvailableGhostRoles = availableGhostRoleCount;
         }
     }
+
+    public sealed class GhostAttemptEvent : HandledEntityEventArgs;
 }

@@ -21,7 +21,7 @@ public sealed partial class TriggerOnMobstateChangeComponent : BaseTriggerOnXCom
     /// If true, prevents suicide attempts for the trigger to prevent cheese.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool PreventSuicide = false;
+    public bool PreventSuicide;
 
     /// <summary>
     /// If false, the trigger user will be the entity that caused the mobstate to change.

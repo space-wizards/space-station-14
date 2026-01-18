@@ -27,7 +27,7 @@ public sealed class SharedExecutionSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+    [Dependency] private readonly SuicideSystem _suicide = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly SharedExecutionSystem _execution = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
@@ -208,11 +208,7 @@ public sealed class SharedExecutionSystem : EntitySystem
 
         if (attacker == victim)
         {
-            var suicideEvent = new SuicideEvent(victim);
-            RaiseLocalEvent(victim, suicideEvent);
-
-            var suicideGhostEvent = new SuicideGhostEvent(victim);
-            RaiseLocalEvent(victim, suicideGhostEvent);
+            _suicide.AttemptSuicide(victim);
         }
         else
         {

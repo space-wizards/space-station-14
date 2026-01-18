@@ -63,7 +63,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedStackSystem _stack = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+        [Dependency] private readonly SuicideSystem _suicide = default!;
 
         private static readonly EntProtoId MalfunctionSpark = "Spark";
 

@@ -530,7 +530,7 @@ namespace Content.Server.Ghost
             if (handleEv.Handled)
                 return handleEv.Result;
 
-            if (mind.PreventGhosting && !forced)
+            if (mind.PreventCharacterAbandon && !forced)
             {
                 if (_player.TryGetSessionById(mind.UserId, out var session)) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
                 {
