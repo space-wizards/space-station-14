@@ -5,6 +5,8 @@ using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 using NpgsqlTypes;
 
+// ReSharper disable EntityFramework.ModelValidation.UnlimitedStringLength
+
 namespace Content.Server.Database;
 
 //
@@ -46,27 +48,46 @@ internal static class ModelBan
             .HasIndex(bp => new { bp.RoundId, bp.BanId })
             .IsUnique();
 
-        // Following indices have to be made manually by migration:
+        // Following indices have to be made manually by migration, due to limitations in EF Core:
         // https://github.com/dotnet/efcore/issues/11336
         // https://github.com/npgsql/efcore.pg/issues/2567
-        // modelBuilder.Entity<BanAddress>()
-        //     .HasIndex(ba => ba.Address)
-        //     .IncludeProperties(ba => ba.BanId)
-        //     .IsUnique()
-        //     .HasMethod("gist")
-        //     .HasOperators("inet_ops");
         // modelBuilder.Entity<BanAddress>()
         //     .HasIndex(bp => new { bp.Address, bp.BanId })
         //     .IsUnique();
         // modelBuilder.Entity<BanHwid>()
         //     .HasIndex(hwid => new { hwid.HWId.Type, hwid.HWId.Hwid, hwid.Hwid })
         //     .IsUnique();
+        // (postgres only)
+        // modelBuilder.Entity<BanAddress>()
+        //     .HasIndex(ba => ba.Address)
+        //     .IncludeProperties(ba => ba.BanId)
+        //     .IsUnique()
+        //     .HasMethod("gist")
+        //     .HasOperators("inet_ops");
 
         modelBuilder.Entity<Ban>()
             .ToTable(t => t.HasCheckConstraint("NoExemptOnRoleBan", $"type = {(int)BanType.Server} OR exempt_flags = 0"));
     }
 }
 
+/// <summary>
+/// Specifies a ban of some kind.
+/// </summary>
+/// <remarks>
+/// <para>
+/// Bans come in two types: <see cref="BanType.Server"/> and <see cref="BanType.Role"/>,
+/// distinguished with <see cref="Type"/>.
+/// </para>
+/// <para>
+/// Bans have one or more "matching data", these being <see cref="BanAddress"/>, <see cref="BanPlayer"/>,
+/// and <see cref="BanHwid"/> entities. If a player's connection info matches any of these,
+/// the ban's effects will apply to that player.
+/// </para>
+/// <para>
+/// Bans can be set to expire after a certain point in time, or be permanent. They can also be removed manually
+/// ("unbanned") by an admin, which is stored as an <see cref="Unban"/> entity existing for this ban.
+/// </para>
+/// </remarks>
 public sealed class Ban
 {
     public int Id { get; set; }
@@ -148,6 +169,9 @@ public sealed class Ban
     public List<BanRole>? Roles { get; set; }
 }
 
+/// <summary>
+/// Base type for entities that specify ban matching data.
+/// </summary>
 public interface IBanSelector
 {
     int BanId { get; }
@@ -178,6 +202,9 @@ public sealed class BanRound
     public Round? Round { get; set; }
 }
 
+/// <summary>
+/// Specifies a player that a <see cref="T:Database.Ban"/> matches.
+/// </summary>
 public sealed class BanPlayer : IBanSelector
 {
     public int Id { get; set; }
@@ -196,10 +223,16 @@ public sealed class BanPlayer : IBanSelector
     public Ban? Ban { get; set; }
 }
 
+/// <summary>
+/// Specifies an IP address range that a <see cref="T:Database.Ban"/> matches.
+/// </summary>
 public sealed class BanAddress : IBanSelector
 {
     public int Id { get; set; }
 
+    /// <summary>
+    /// The address range being matched.
+    /// </summary>
     public required NpgsqlInet Address { get; set; }
 
     /// <summary>
@@ -211,10 +244,16 @@ public sealed class BanAddress : IBanSelector
     public Ban? Ban { get; set; }
 }
 
+/// <summary>
+/// Specifies a HWID that a <see cref="T:Database.Ban"/> matches.
+/// </summary>
 public sealed class BanHwid : IBanSelector
 {
     public int Id { get; set; }
 
+    /// <summary>
+    /// The HWID being matched.
+    /// </summary>
     public required TypedHwid HWId { get; set; }
 
     /// <summary>
@@ -230,8 +269,9 @@ public sealed class BanHwid : IBanSelector
 /// A single role banned among a greater role ban record.
 /// </summary>
 /// <remarks>
-/// <see cref="Ban"/>s of type role should have one or more <see cref="BanRole"/>s
+/// <see cref="Ban"/>s of type <see cref="BanType.Role"/> should have one or more <see cref="BanRole"/>s
 /// to store which roles are actually banned.
+/// It is invalid for <see cref="BanType.Server"/> bans to have <see cref="BanRole"/> entities.
 /// </remarks>
 public sealed class BanRole
 {
