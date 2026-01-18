@@ -24,11 +24,18 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
         var boxPositive = new StyleBoxFlat { BackgroundColor = sheet.PositivePalette.Background };
         var boxNegative = new StyleBoxFlat { BackgroundColor = sheet.NegativePalette.Background };
         var boxHighlight = new StyleBoxFlat { BackgroundColor = sheet.HighlightPalette.Background };
+        var boxDropTarget = new StyleBoxFlat
+        {
+            BackgroundColor = sheet.ButtonPalette.BackgroundDark.WithAlpha(0.5f),
+            BorderColor = sheet.ButtonPalette.Base,
+            BorderThickness = new(2)
+        };
 
         return
         [
             E<PanelContainer>().Class(StyleClass.PanelLight).Panel(boxLight),
             E<PanelContainer>().Class(StyleClass.PanelDark).Panel(boxDark),
+            E<PanelContainer>().Class(StyleClass.PanelDropTarget).Panel(boxDropTarget),
 
             E<PanelContainer>().Class(StyleClass.Positive).Panel(boxPositive),
             E<PanelContainer>().Class(StyleClass.Negative).Panel(boxNegative),

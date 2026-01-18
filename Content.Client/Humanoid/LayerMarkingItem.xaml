@@ -1,10 +1,11 @@
 <BoxContainer xmlns="https://spacestation14.io"
         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
         Orientation="Vertical"
-        HorizontalExpand="True">
+        HorizontalExpand="True"
+        MouseFilter="Pass">
 
     <BoxContainer Orientation="Horizontal" SeparationOverride="4">
-        <PanelContainer SetSize="64 64" HorizontalAlignment="Right">
+        <PanelContainer SetSize="64 64" HorizontalAlignment="Right" MouseFilter="Ignore">
             <PanelContainer.PanelOverride>
                 <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
             </PanelContainer.PanelOverride>

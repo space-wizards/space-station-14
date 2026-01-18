@@ -227,6 +227,18 @@ public sealed class MarkingsViewModel
         return false;
     }
 
+    public List<Marking>? SelectedMarkings(ProtoId<OrganCategoryPrototype> organ,
+        HumanoidVisualLayers layer)
+    {
+        if (!_markings.TryGetValue(organ, out var organMarkings))
+            return null;
+
+        if (!organMarkings.TryGetValue(layer, out var layerMarkings))
+            return null;
+
+        return layerMarkings;
+    }
+
     public bool TryDeselectMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
@@ -338,4 +350,42 @@ public sealed class MarkingsViewModel
 
         selected = layerMarkings.Count;
     }
+
+    public void ChangeMarkingOrder(ProtoId<OrganCategoryPrototype> organ,
+        HumanoidVisualLayers layer,
+        ProtoId<MarkingPrototype> markingId,
+        CandidatePosition position,
+        int positionIndex
+    )
+    {
+        if (!_markings.TryGetValue(organ, out var organMarkings))
+            return;
+
+        if (!organMarkings.TryGetValue(layer, out var layerMarkings))
+            return;
+
+        var currentIndex = layerMarkings.FindIndex(marking => marking.MarkingId == markingId);
+        var currentMarking = layerMarkings[currentIndex];
+
+        if (position == CandidatePosition.Before)
+        {
+            layerMarkings.RemoveAt(currentIndex);
+            var insertionIndex = currentIndex < positionIndex ? positionIndex - 1 : positionIndex;
+            layerMarkings.Insert(insertionIndex, currentMarking);
+        }
+        else if (position == CandidatePosition.After)
+        {
+            layerMarkings.RemoveAt(currentIndex);
+            var insertionIndex = currentIndex > positionIndex ? positionIndex + 1 : positionIndex;
+            layerMarkings.Insert(insertionIndex, currentMarking);
+        }
+
+        MarkingsChanged?.Invoke(organ, layer);
+    }
+}
+
+public enum CandidatePosition
+{
+    Before,
+    After,
 }

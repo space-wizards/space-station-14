@@ -23,12 +23,13 @@ public sealed partial class LayerMarkingPicker : BoxContainer
     public LayerMarkingPicker(MarkingsViewModel markingsModel, ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer, IReadOnlyDictionary<string, MarkingPrototype> allMarkings)
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
 
         _markingsModel = markingsModel;
         _allMarkings = allMarkings;
         _organ = organ;
         _layer = layer;
+
+        OrderingItems.AddChild(new LayerMarkingOrderer(markingsModel, organ, layer, allMarkings));
 
         UpdateMarkings();
 
@@ -41,6 +42,8 @@ public sealed partial class LayerMarkingPicker : BoxContainer
         };
 
         UpdateCount();
+
+        ReorderButton.OnPressed += ReorderButtonPressed;
     }
 
     protected override void EnteredTree()
@@ -71,7 +74,7 @@ public sealed partial class LayerMarkingPicker : BoxContainer
     {
         foreach (var marking in _allMarkings.Values)
         {
-            var item = new LayerMarkingItem(_markingsModel, _organ, _layer, marking);
+            var item = new LayerMarkingItem(_markingsModel, _organ, _layer, marking, true);
             Items.AddChild(item);
         }
         _searchable = Items.GetSearchableControls();
@@ -81,5 +84,21 @@ public sealed partial class LayerMarkingPicker : BoxContainer
     {
         _markingsModel.GetMarkingCounts(_organ, _layer, out var isRequired, out var count, out var selected);
         MarkingsStatus.Text = Loc.GetString("markings-limits", ("required", isRequired), ("count", count), ("selectable", count - selected));
+    }
+
+    private void ReorderButtonPressed(BaseButton.ButtonEventArgs args)
+    {
+        if (ReorderButton.Pressed)
+        {
+            SelectionItems.Visible = false;
+            SearchBar.Visible = false;
+            OrderingItems.Visible = true;
+        }
+        else
+        {
+            SelectionItems.Visible = true;
+            SearchBar.Visible = true;
+            OrderingItems.Visible = false;
+        }
     }
 }
