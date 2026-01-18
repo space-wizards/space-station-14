@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Content.Shared.Arcade.Components;
 using Content.Shared.Arcade.Events;
 using Content.Shared.Arcade.Messages;
@@ -20,9 +21,13 @@ public sealed partial class SharedArcadeSystem : EntitySystem
 
         // BUI messages
         SubscribeLocalEvent<ArcadeComponent, ArcadeNewGameMessage>(OnArcadeNewGame);
-    }
 
-    #region Events
+        Subs.BuiEvents<ArcadeComponent>(ArcadeUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(OnBUIOpened);
+            subs.Event<BoundUIClosedEvent>(OnBUIClosed);
+        });
+    }
 
     private void OnArcadeChangedState(Entity<ArcadeComponent> ent, ref ArcadeChangedStateEvent args)
     {
@@ -40,18 +45,23 @@ public sealed partial class SharedArcadeSystem : EntitySystem
         }
     }
 
-    #endregion
-
-    #region BUI
-
     private void OnArcadeNewGame(Entity<ArcadeComponent> ent, ref ArcadeNewGameMessage args)
     {
         TryChangeGameState(ent.AsNullable(), args.Actor, ArcadeGameState.Game);
     }
 
-    #endregion
+    private void OnBUIOpened(Entity<ArcadeComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        EnsureComp<ArcadePlayerComponent>(ent, out var comp);
 
-    #region API
+        comp.Arcade = ent;
+        Dirty(ent);
+    }
+
+    private void OnBUIClosed(Entity<ArcadeComponent> ent, ref BoundUIClosedEvent args)
+    {
+        RemComp<ArcadePlayerComponent>(ent);
+    }
 
     /// <summary>
     ///
@@ -94,6 +104,4 @@ public sealed partial class SharedArcadeSystem : EntitySystem
 
         return ent.Comp.State;
     }
-
-    #endregion
 }

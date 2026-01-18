@@ -15,13 +15,13 @@ public sealed partial class BlockGameArcadeComponent : Component
     ///
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan NextPhysicsUpdate = TimeSpan.Zero;
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
     ///
     /// </summary>
     [DataField]
-    public TimeSpan PhysicsCooldown = TimeSpan.FromSeconds(1);
+    public TimeSpan UpdateCooldown = TimeSpan.FromSeconds(1);
 
     /// <summary>
     ///
@@ -34,6 +34,12 @@ public sealed partial class BlockGameArcadeComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan SpawnCooldown = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField]
+    public BlockGameMoveDirection MoveDirection = BlockGameMoveDirection.None;
 
     /// <summary>
     ///

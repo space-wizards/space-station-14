@@ -24,8 +24,6 @@ public sealed partial class SharedArcadeRewardsSystem : EntitySystem
         SubscribeLocalEvent<ArcadeRewardsComponent, ArcadeChangedStateEvent>(OnArcadeChangedState);
     }
 
-    #region Events
-
     private void OnMapInit(Entity<ArcadeRewardsComponent> ent, ref MapInitEvent args)
     {
         // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
@@ -39,23 +37,8 @@ public sealed partial class SharedArcadeRewardsSystem : EntitySystem
         if (args.NewState != ArcadeGameState.Win)
             return;
 
-        TrySpawnReward(ent.AsNullable());
-    }
-
-    #endregion
-
-    #region API
-
-    /// <summary>
-    ///
-    /// </summary>
-    public bool TrySpawnReward(Entity<ArcadeRewardsComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
         if (ent.Comp.Amount == 0)
-            return false;
+            return;
 
         // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
         var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
@@ -63,10 +46,6 @@ public sealed partial class SharedArcadeRewardsSystem : EntitySystem
         PredictedSpawnAtPosition(_entityTable.GetSpawns(ent.Comp.Rewards, rand).First().Id, Transform(ent).Coordinates);
 
         ent.Comp.Amount--;
-        DirtyField(ent, nameof(ArcadeRewardsComponent.Amount));
-
-        return true;
+        DirtyField(ent.AsNullable(), nameof(ArcadeRewardsComponent.Amount));
     }
-
-    #endregion
 }
