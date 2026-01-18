@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: TiniestShark
   changes:
-  - message: Reptilians now have Mask/Helmet displacements. Snoots are no longer smushed.
-    type: Add
-  id: 8912
-  time: '2025-09-03T16:45:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39351
-- author: TiniestShark
-  changes:
   - message: Added unique tail sprites to Hard/Softsuits for reptilians! (Wagging
       animation not supported)
     type: Add
@@ -3921,3 +3914,10 @@
   id: 9415
   time: '2026-01-17T20:24:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42372
+- author: sowelipililimute
+  changes:
+  - message: Vox can eat trash again.
+    type: Fix
+  id: 9416
+  time: '2026-01-18T20:44:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42503
