@@ -636,7 +636,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainIonStormed
       borg_module:
       - BorgModuleTool
       - BorgModuleFireExtinguisher
@@ -674,7 +674,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+        - PositronicBrainIonStormed
       borg_module:
         - BorgModuleTool
         - BorgModuleFireExtinguisher
@@ -709,7 +709,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainIonStormed
       borg_module:
       - BorgModuleTool
       - BorgModuleFireExtinguisher
@@ -746,7 +746,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainIonStormed
       borg_module:
       - BorgModuleTool
       - BorgModuleFireExtinguisher
@@ -784,7 +784,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainIonStormed
       borg_module:
       - BorgModuleTool #No fire extinguisher, traversal is better
       - BorgModuleMining
@@ -821,7 +821,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrainSyndicate
+      - PositronicBrainSyndicateIonStormed
       borg_module:
       - BorgModuleOperative
       - BorgModuleC20r

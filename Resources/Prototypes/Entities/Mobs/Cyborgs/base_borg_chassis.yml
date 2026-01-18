@@ -378,10 +378,6 @@
     - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
     access: [["Command"], ["Research"]]
-  - type: StartIonStormed
-    ionStormAmount: 3
-  - type: IonStormTarget
-    chance: 1
   - type: ShowJobIcons
   - type: ShowCrewIcons
 
@@ -392,7 +388,7 @@
   components:
   - type: SiliconLawProvider
     laws: SyndicateStatic #Non-subverted version so they can still be changed
-  - type: StartIonStormed
+  - type: StartIonStormed #The chassis and the brain will have different ion storm laws, this is intended, since it can be the provider too
     ionStormAmount: 3
   - type: IonStormTarget
     chance: 1

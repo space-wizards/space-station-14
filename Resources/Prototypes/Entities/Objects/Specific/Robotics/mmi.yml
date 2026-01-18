@@ -164,6 +164,7 @@
           requireInputValidation: false
     - type: EmagSiliconLaw
 
+# Ion Storm Target
 - type: entity
   parent: PositronicBrainNotIonStormable
   id: PositronicBrain
@@ -182,6 +183,48 @@
   components:
   - type: IonStormTarget
 
+# Derelict brains
+- type: entity
+  parent: PositronicBrain
+  id: PositronicBrainIonStormed
+  suffix: IonStormed
+  components:
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+
+- type: entity
+  parent: MMI
+  id: MMIIonStormed
+  suffix: IonStormed
+  components:
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+
+- type: entity
+  parent: MMIFilled
+  id: MMIFilledIonStormed
+  suffix: IonStormed
+  components:
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+
+- type: entity
+  parent: PositronicBrainSyndicate
+  id: PositronicBrainSyndicateIonStormed
+  suffix: "Syndicate , IonStormed"
+  components:
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+
+# Xenoborg brains
 - type: entity
   parent: PositronicBrainNotIonStormable
   id: PositronicBrainXeno
@@ -206,6 +249,7 @@
   - type: SiliconLawProvider
     laws: XenoborgLawset
 
+# Syndicate brains
 - type: entity
   parent: PositronicBrainNotIonStormable
   id: PositronicBrainSyndicate
