@@ -29,6 +29,7 @@
   - type: Tag
     tags:
     - ClothMade #idk man its on the parent
+    - MonkeyWearable
     - WhitelistChameleon
     - GenderPin
 
