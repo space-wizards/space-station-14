@@ -43,7 +43,7 @@
       state: storage
       sprite: Clothing/Neck/Ties/dettie.rsi
   components:
-  - type: Tag # We need to remove HamsterWearable because this currently lacks a sprite for it
+  - type: Tag
     tags:
     - ClothMade
     - Recyclable
