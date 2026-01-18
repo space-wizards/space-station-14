@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Guidebook.Controls;
 using Content.Shared.Body;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -12,7 +13,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Humanoid;
 
 [GenerateTypedNameReferences]
-public sealed partial class LayerMarkingItem : BoxContainer
+public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
 {
     [Dependency] private readonly IEntityManager _entity = default!;
 
@@ -43,9 +44,19 @@ public sealed partial class LayerMarkingItem : BoxContainer
         SelectButton.OnPressed += _ =>
         {
             if (_markingsModel.IsMarkingSelected(_organ, _layer, _markingPrototype.ID))
-                _markingsModel.TryDeselectMarking(_organ, _layer, _markingPrototype.ID);
+            {
+                if (!_markingsModel.TryDeselectMarking(_organ, _layer, _markingPrototype.ID))
+                {
+                    SelectButton.Pressed = true;
+                }
+            }
             else
-                _markingsModel.TrySelectMarking(_organ, _layer, _markingPrototype.ID);
+            {
+                if (!_markingsModel.TrySelectMarking(_organ, _layer, _markingPrototype.ID))
+                {
+                    SelectButton.Pressed = false;
+                }
+            }
         };
 
         ColorsButton.OnPressed += ColorsButtonPressed;
@@ -148,5 +159,15 @@ public sealed partial class LayerMarkingItem : BoxContainer
                 _markingsModel.TrySetMarkingColor(_organ, _layer, _markingPrototype.ID, colorIndex, selector.Color);
             };
         }
+    }
+
+    public bool CheckMatchesSearch(string query)
+    {
+        return Loc.GetString($"marking-{_markingPrototype.ID}").Contains(query, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public void SetHiddenState(bool state, string query)
+    {
+        Visible = CheckMatchesSearch(query) ? state : !state;
     }
 }

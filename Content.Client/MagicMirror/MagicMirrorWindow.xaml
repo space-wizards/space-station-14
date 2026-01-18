@@ -2,7 +2,5 @@
                xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
                Title="{Loc 'magic-mirror-window-title'}"
                MinSize="700 500">
-   <ScrollContainer>
-        <humanoid:MarkingPicker Name="MarkingsPicker" Access="Public" />
-   </ScrollContainer>
+   <humanoid:MarkingPicker Name="MarkingsPicker" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
 </DefaultWindow>

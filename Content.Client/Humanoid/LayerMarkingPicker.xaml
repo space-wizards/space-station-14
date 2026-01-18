@@ -1,3 +1,10 @@
-<Control xmlns="https://spacestation14.io">
-    <GridContainer Name="Items" Columns="2" Margin="4" />
-</Control>
+<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical">
+    <LineEdit Name="SearchBar" PlaceHolder="{Loc 'markings-search'}" HorizontalExpand="True" />
+    <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+        <GridContainer Name="Items" Columns="2" Margin="4" />
+    </ScrollContainer>
+    <BoxContainer HorizontalExpand="True" Margin="4">
+        <Label Name="MarkingsStatus" HorizontalExpand="True" />
+        <Button Name="ReorderButton" Text="{Loc 'markings-reorder'}" />
+    </BoxContainer>
+</BoxContainer>

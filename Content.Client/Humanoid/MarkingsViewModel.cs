@@ -173,24 +173,24 @@ public sealed class MarkingsViewModel
         return markings.FirstOrDefault(it => it.MarkingId == markingId);
     }
 
-    public void TrySelectMarking(ProtoId<OrganCategoryPrototype> organ,
+    public bool TrySelectMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
         if (!_prototype.TryIndex(markingId, out var markingProto))
-            return;
+            return false;
 
         if (!_organData.TryGetValue(organ, out var organData) || !_organProfileData.TryGetValue(organ, out var profileData))
-            return;
+            return false;
 
         if (!organData.Layers.Contains(layer))
-            return;
+            return false;
 
         if (!_prototype.TryIndex(organData.Group, out var groupPrototype))
-            return;
+            return false;
 
         if (EnforceGroupAndSexRestrictions && !_marking.CanBeApplied(organData.Group, profileData.Sex, markingProto))
-            return;
+            return false;
 
         _markings[organ] = _markings.GetValueOrDefault(organ) ?? [];
         var organMarkings = _markings[organ];
@@ -206,7 +206,7 @@ public sealed class MarkingsViewModel
         {
             layerMarkings.Add(newMarking);
             MarkingsChanged?.Invoke(organ, layer);
-            return;
+            return true;
         }
 
         if (limits.Limit == 1 && layerMarkings.Count == 1)
@@ -214,28 +214,31 @@ public sealed class MarkingsViewModel
             layerMarkings.Clear();
             layerMarkings.Add(newMarking);
             MarkingsChanged?.Invoke(organ, layer);
-            return;
+            return true;
         }
 
         if (layerMarkings.Count < limits.Limit)
         {
             layerMarkings.Add(newMarking);
             MarkingsChanged?.Invoke(organ, layer);
+            return true;
         }
+
+        return false;
     }
 
-    public void TryDeselectMarking(ProtoId<OrganCategoryPrototype> organ,
+    public bool TryDeselectMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
         if (!_organData.TryGetValue(organ, out var organData))
-            return;
+            return false;
 
         if (!organData.Layers.Contains(layer))
-            return;
+            return false;
 
         if (!_prototype.TryIndex(organData.Group, out var groupPrototype))
-            return;
+            return false;
 
         var limits = groupPrototype.Limits.GetValueOrDefault(layer);
 
@@ -246,20 +249,22 @@ public sealed class MarkingsViewModel
 
         var count = layerMarkings.Count(marking => marking.MarkingId == markingId);
         if (count == 0)
-            return;
+            return false;
 
         if (limits is null || !EnforceLimits)
         {
             layerMarkings.RemoveAll(marking => marking.MarkingId == markingId);
             MarkingsChanged?.Invoke(organ, layer);
-            return;
+            return true;
         }
 
         if (limits.Required && (layerMarkings.Count - count) <= 0)
-            return;
+            return false;
 
         layerMarkings.RemoveAll(marking => marking.MarkingId == markingId);
         MarkingsChanged?.Invoke(organ, layer);
+
+        return true;
     }
 
     public void TrySetMarkingColor(ProtoId<OrganCategoryPrototype> organ,
@@ -302,5 +307,35 @@ public sealed class MarkingsViewModel
         }
 
         MarkingsReset?.Invoke();
+    }
+
+    public void GetMarkingCounts(ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer, out bool isRequired, out int count, out int selected)
+    {
+        isRequired = false;
+        count = 0;
+        selected = 0;
+
+        if (!_organData.TryGetValue(organ, out var organData))
+            return;
+
+        if (!organData.Layers.Contains(layer))
+            return;
+
+        if (!_prototype.TryIndex(organData.Group, out var groupPrototype))
+            return;
+
+        if (!groupPrototype.Limits.TryGetValue(layer, out var limits))
+            return;
+
+        isRequired = limits.Required;
+        count = limits.Limit;
+
+        if (!_markings.TryGetValue(organ, out var organMarkings))
+            return;
+
+        if (!organMarkings.TryGetValue(layer, out var layerMarkings))
+            return;
+
+        selected = layerMarkings.Count;
     }
 }
