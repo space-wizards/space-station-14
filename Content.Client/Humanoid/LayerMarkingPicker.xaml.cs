@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.Guidebook.Controls;
 using Content.Shared.Body;
@@ -29,7 +30,7 @@ public sealed partial class LayerMarkingPicker : BoxContainer
         _organ = organ;
         _layer = layer;
 
-        OrderingItems.AddChild(new LayerMarkingOrderer(markingsModel, organ, layer, allMarkings));
+        OrderingItems.AddChild(new LayerMarkingOrderer(markingsModel, organ, layer));
 
         UpdateMarkings();
 
@@ -72,7 +73,7 @@ public sealed partial class LayerMarkingPicker : BoxContainer
 
     private void UpdateMarkings()
     {
-        foreach (var marking in _allMarkings.Values)
+        foreach (var marking in _allMarkings.Values.OrderBy(marking => Loc.GetString($"marking-{marking.ID}")))
         {
             var item = new LayerMarkingItem(_markingsModel, _organ, _layer, marking, true);
             Items.AddChild(item);

@@ -32,15 +32,14 @@ namespace Content.Server.Database
     {
         private readonly ISawmill _opsLog;
         public event Action<DatabaseNotification>? OnNotificationReceived;
-        [Robust.Shared.IoC.Dependency] private readonly ISerializationManager _serialization = default!;
-        [Robust.Shared.IoC.Dependency] private readonly MarkingManager _markings = default!;
-        [Robust.Shared.IoC.Dependency] private readonly ITaskManager _task = default!;
+        private readonly ITaskManager _task;
+        private readonly ISerializationManager _serialization;
 
         /// <param name="opsLog">Sawmill to trace log database operations to.</param>
-        public ServerDbBase(ISawmill opsLog)
+        public ServerDbBase(ISawmill opsLog, ITaskManager taskManager, ISerializationManager serialization)
         {
-            IoCManager.InjectDependencies(this);
-
+            _task = taskManager;
+            _serialization = serialization;
             _opsLog = opsLog;
         }
 
@@ -224,6 +223,7 @@ namespace Content.Server.Database
 
         private async Task<HumanoidCharacterProfile> ConvertProfiles(Profile profile)
         {
+
             var jobs = profile.Jobs.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
             var antags = profile.Antags.Select(a => new ProtoId<AntagPrototype>(a.AntagName));
             var traits = profile.Traits.Select(t => new ProtoId<TraitPrototype>(t.TraitName));
@@ -269,9 +269,11 @@ namespace Content.Server.Database
                 var completion = new TaskCompletionSource();
                 _task.RunOnMainThread(() =>
                 {
+                    var markings = IoCManager.Resolve<MarkingManager>();
+
                     try
                     {
-                        _markings.ConvertMarkings(markingsList, profile.Species);
+                        markings.ConvertMarkings(markingsList, profile.Species);
                         completion.SetResult();
                     }
                     catch (Exception ex)

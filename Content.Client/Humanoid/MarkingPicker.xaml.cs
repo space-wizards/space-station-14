@@ -57,7 +57,7 @@ public sealed partial class MarkingPicker : Control
                 continue;
 
             OrganTabs.AddChild(control);
-            OrganTabs.SetTabTitle(i, organ.Id);
+            OrganTabs.SetTabTitle(i, Loc.GetString($"markings-organ-{organ.Id}"));
             i++;
         }
 

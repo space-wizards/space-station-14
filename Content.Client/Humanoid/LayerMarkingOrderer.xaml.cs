@@ -17,7 +17,6 @@ namespace Content.Client.Humanoid;
 [GenerateTypedNameReferences]
 public sealed partial class LayerMarkingOrderer : BoxContainer
 {
-    private readonly IReadOnlyDictionary<string, MarkingPrototype> _allMarkings;
     private readonly ProtoId<OrganCategoryPrototype> _organ;
     private readonly HumanoidVisualLayers _layer;
     private readonly MarkingsViewModel _markingsModel;
@@ -25,12 +24,14 @@ public sealed partial class LayerMarkingOrderer : BoxContainer
     private readonly List<LayerDragDropBeacon> _beacons = new();
     private LayerDragDropBeacon? _dragTarget;
 
-    public LayerMarkingOrderer(MarkingsViewModel markingsModel, ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer, IReadOnlyDictionary<string, MarkingPrototype> allMarkings)
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+
+    public LayerMarkingOrderer(MarkingsViewModel markingsModel, ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer)
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         _markingsModel = markingsModel;
-        _allMarkings = allMarkings;
         _organ = organ;
         _layer = layer;
         _dragDropHelper = new(OnBeginDrag, OnContinueDrag, OnEndDrag);
@@ -77,7 +78,7 @@ public sealed partial class LayerMarkingOrderer : BoxContainer
             var container = new LayerMarkingItemContainer();
             container.Margin = new(4);
 
-            var item = new LayerMarkingItem(_markingsModel, _organ, _layer, _allMarkings[marking.MarkingId], false);
+            var item = new LayerMarkingItem(_markingsModel, _organ, _layer, _prototype.Index<MarkingPrototype>(marking.MarkingId), false);
             item.DefaultCursorShape = CursorShape.Hand;
             item.Pressed += (args, control) => OnItemPressed(args, control, container);
             item.Unpressed += OnItemUnpressed;

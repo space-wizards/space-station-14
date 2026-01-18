@@ -16,10 +16,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Prometheus;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
@@ -409,6 +411,8 @@ namespace Content.Server.Database
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
+        [Dependency] private readonly ITaskManager _task = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;
@@ -440,11 +444,11 @@ namespace Content.Server.Database
             {
                 case "sqlite":
                     SetupSqlite(out var contextFunc, out var inMemory);
-                    _db = new ServerDbSqlite(contextFunc, inMemory, _cfg, _synchronous, opsLog);
+                    _db = new ServerDbSqlite(contextFunc, inMemory, _cfg, _synchronous, opsLog, _task, _serialization);
                     break;
                 case "postgres":
                     var (pgOptions, conString) = CreatePostgresOptions();
-                    _db = new ServerDbPostgres(pgOptions, conString, _cfg, opsLog, notifyLog);
+                    _db = new ServerDbPostgres(pgOptions, conString, _cfg, opsLog, notifyLog, _task, _serialization);
                     break;
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");
