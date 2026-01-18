@@ -243,7 +243,7 @@
 
 - type: entity
   parent: MMIFilledNotIonStormable
-  id: MMIFileldXeno
+  id: MMIFilledXeno
   suffix: Xeno
   components:
   - type: SiliconLawProvider
