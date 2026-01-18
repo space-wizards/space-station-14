@@ -20,6 +20,7 @@ public sealed partial class LayerMarkingPicker : BoxContainer
     private readonly HumanoidVisualLayers _layer;
     private readonly MarkingsViewModel _markingsModel;
     private List<ISearchableControl> _searchable = new();
+    private const int _columnWidth = 500;
 
     public LayerMarkingPicker(MarkingsViewModel markingsModel, ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer, IReadOnlyDictionary<string, MarkingPrototype> allMarkings)
     {
@@ -101,5 +102,12 @@ public sealed partial class LayerMarkingPicker : BoxContainer
             SearchBar.Visible = true;
             OrderingItems.Visible = false;
         }
+    }
+
+    protected override void Resized()
+    {
+        base.Resized();
+
+        Items.Columns = (int)(Width / _columnWidth);
     }
 }
