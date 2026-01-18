@@ -204,9 +204,9 @@ public sealed partial class CCVars
         CVarDef.Create("admin.abandon_character_window_message",
             "Revival or cloning will not bring you back to your body if you abandon your character!\n" +
             "In some circumstances, abandoning your character constitutes a breach of the rules.\n" +
-            "You should use cryo if your intention is to leave the round.",
+            "You should enter cryogenic storage if your intention is to leave the round.",
             CVar.REPLICATED | CVar.SERVER);
-  
+
     /// <summary>
     /// Whether admins should gain role playtime even when playing while not de-adminned.
     /// </summary>
