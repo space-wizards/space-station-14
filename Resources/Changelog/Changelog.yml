@@ -3647,14 +3647,6 @@
   id: 9385
   time: '2026-01-13T13:44:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42334
-- author: Velken, Murphyneko
-  changes:
-  - message: Station tiles and floors can now be placed on planets, asteroids and
-      different platings.
-    type: Tweak
-  id: 9386
-  time: '2026-01-13T14:05:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38898
 - author: ScarKy0
   changes:
   - message: The throwing knives bundle now comes with 8 knives instead of 4.
@@ -3760,14 +3752,6 @@
   id: 9398
   time: '2026-01-14T21:40:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42289
-- author: TriviaSolari
-  changes:
-  - message: Entities that are airtight on all sides (such as full-tile walls, airlocks,
-      and windows) now skip rotational checks for airtightness when initialized.
-    type: Tweak
-  id: 9399
-  time: '2026-01-15T02:46:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42390
 - author: ArtisticRoomba
   changes:
   - message: The TEG now produces 75% more power. This is to counteract tritium fires
@@ -3830,15 +3814,6 @@
   id: 9407
   time: '2026-01-15T20:01:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42040
-- author: Velken
-  changes:
-  - message: RCD can no longer spam lights in the same spot.
-    type: Fix
-  - message: RCD can no longer be used to destroy indestructible tiles.
-    type: Fix
-  id: 9408
-  time: '2026-01-15T20:39:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42432
 - author: B_Kirill
   changes:
   - message: Added camera map. Cutting MAP wire hides camera from map while keeping
