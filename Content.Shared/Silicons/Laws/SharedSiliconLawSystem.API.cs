@@ -1,3 +1,4 @@
+using Content.Shared.Database;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Audio;
@@ -5,17 +6,22 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Laws;
 
-/// <summary>
-/// This handles getting and displaying the laws for silicons.
-/// </summary>
 public abstract partial class SharedSiliconLawSystem
 {
+    /// <summary>
+    /// Gives the mind the subverted silicon mindrole.
+    /// </summary>
+    /// <param name="mindId">The ID of the mind.</param>
     protected void EnsureSubvertedSiliconRole(EntityUid mindId)
     {
         if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon", silent: true);
     }
 
+    /// <summary>
+    /// Removes the subverted silicon role from a mind.
+    /// </summary>
+    /// <param name="mindId">The ID of the mind.</param>
     protected void RemoveSubvertedSiliconRole(EntityUid mindId)
     {
         if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
@@ -25,7 +31,7 @@ public abstract partial class SharedSiliconLawSystem
     /// <summary>
     /// Refreshes the laws of target entity and tries to link their <see cref="SiliconLawBoundComponent"/> to a <see cref="SiliconLawProviderComponent"/>
     /// </summary>
-    /// <param name="ent"></param>
+    /// <param name="ent">The entity to fetch the lawset for.</param>
     public void FetchLawset(Entity<SiliconLawBoundComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -33,6 +39,7 @@ public abstract partial class SharedSiliconLawSystem
 
         var ev = new GetSiliconLawsEvent(ent);
 
+        // First, we check if our own entity can supply the lawset.
         RaiseLocalEvent(ent, ref ev);
         if (ev.Handled)
         {
@@ -42,6 +49,7 @@ public abstract partial class SharedSiliconLawSystem
 
         var xform = Transform(ent);
 
+        // If our entity cannot supply the lawset, we see if the station can.
         if (_station.GetOwningStation(ent, xform) is { } station)
         {
             RaiseLocalEvent(station, ref ev);
@@ -52,6 +60,7 @@ public abstract partial class SharedSiliconLawSystem
             }
         }
 
+        // If the station cannot, we check the grid.
         if (xform.GridUid is { } grid)
         {
             RaiseLocalEvent(grid, ref ev);
@@ -62,6 +71,7 @@ public abstract partial class SharedSiliconLawSystem
             }
         }
 
+        // If all else fails, we broadcast in hopes of finding a lawset.
         RaiseLocalEvent(ref ev);
         if (ev.Handled)
         {
@@ -116,6 +126,14 @@ public abstract partial class SharedSiliconLawSystem
         return laws;
     }
 
+    /// <summary>
+    /// Sets the laws of a law provider to a new list.
+    /// Updates the laws of all linked LawBound entities.
+    /// </summary>
+    /// <param name="ent">The law provider.</param>
+    /// <param name="newLaws">List of new laws.</param>
+    /// <param name="silent">Whether to play a notification for all linked LawBounds.</param>
+    /// <param name="cue">The sound the notification should be. If null, uses the default sound.</param>
     public void SetProviderLaws(Entity<SiliconLawProviderComponent?> ent, List<SiliconLaw> newLaws, bool silent = false, SoundSpecifier? cue = null)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -124,6 +142,7 @@ public abstract partial class SharedSiliconLawSystem
         cue ??= ent.Comp.LawUploadSound;
 
         ent.Comp.Lawset.Laws = newLaws;
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"The silicon laws of the provider {ent} have been set to {ent.Comp.Lawset.LoggingString()}.");
         SyncToLawBound(ent, silent ? null : cue);
     }
 
@@ -140,10 +159,17 @@ public abstract partial class SharedSiliconLawSystem
             return;
 
         ent.Comp.Lawset = provider.Lawset.Clone();
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"The silicon laws of {ent} have been updated to {ent.Comp.Lawset.LoggingString()}");
         ent.Comp.Subverted = provider.Subverted;
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Links a lawbound entity to a new law provider.
+    /// Updates laws based on the new provider.
+    /// </summary>
+    /// <param name="lawboundEnt">The lawbound entity.</param>
+    /// <param name="providerEnt">The provider to link it to.</param>
     public void LinkToProvider(Entity<SiliconLawBoundComponent?> lawboundEnt,
         Entity<SiliconLawProviderComponent?> providerEnt)
     {
@@ -164,6 +190,12 @@ public abstract partial class SharedSiliconLawSystem
         Dirty(providerEnt);
     }
 
+    /// <summary>
+    /// Unlinks a lawbound entity from the provided law provider.
+    /// Leaves the laws as they were before unlinking.
+    /// </summary>
+    /// <param name="lawboundEnt">The lawbound entity.</param>
+    /// <param name="providerEnt">The provider to unlink from.</param>
     public void UnlinkFromProvider(Entity<SiliconLawBoundComponent?> lawboundEnt,
         Entity<SiliconLawProviderComponent?> providerEnt)
     {
@@ -185,11 +217,17 @@ public abstract partial class SharedSiliconLawSystem
         Dirty(providerEnt);
     }
 
+    /// <summary>
+    /// Unlinks the lawbound entity from itss provider.
+    /// Leaves the laws as they were before unlinking.
+    /// </summary>
+    /// <param name="ent">The lawbound entity.</param>
     public void UnlinkFromProvider(Entity<SiliconLawBoundComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
+        // If our provider is valid, clear the references in it as well.
         if (TryComp<SiliconLawProviderComponent>(ent.Comp.LawsetProvider, out var provider))
         {
             provider.ExternalLawsets.Remove(ent);
@@ -201,6 +239,11 @@ public abstract partial class SharedSiliconLawSystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Synchronizes the laws of the law provider to all the entities bound to it.
+    /// </summary>
+    /// <param name="ent">The law provider.</param>
+    /// <param name="cue">The notification sound to play to lawbound entities. If null, no sound is used.</param>
     private void SyncToLawBound(Entity<SiliconLawProviderComponent?> ent, SoundSpecifier? cue = null)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -225,6 +268,11 @@ public abstract partial class SharedSiliconLawSystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Notifies the provided entity its laws have been updated.
+    /// </summary>
+    /// <param name="uid">The entity to notify.</param>
+    /// <param name="cue">The sound to play. Will play no sound if null.</param>
     public virtual void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
     {
 

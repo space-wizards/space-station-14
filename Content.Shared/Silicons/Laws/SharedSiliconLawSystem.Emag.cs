@@ -7,9 +7,6 @@ using Content.Shared.Wires;
 
 namespace Content.Shared.Silicons.Laws;
 
-/// <summary>
-/// This handles getting and displaying the laws for silicons.
-/// </summary>
 public abstract partial class SharedSiliconLawSystem
 {
     public void InitializeEmag()
@@ -20,10 +17,12 @@ public abstract partial class SharedSiliconLawSystem
 
     private void OnChassisEmagged(Entity<BorgChassisComponent> ent, ref GotEmaggedEvent args)
     {
+        // Is it the correct emag type?
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction)
             || _emag.CheckFlag(ent, EmagType.Interaction))
             return;
 
+        // We must be a lawbound to get emagged.
         if (!TryComp<SiliconLawBoundComponent>(ent, out var lawboundComp))
             return;
 
@@ -33,6 +32,7 @@ public abstract partial class SharedSiliconLawSystem
             return;
         }
 
+        // Laws are on the brain, so we must have a brain to emag.
         if (ent.Comp.BrainEntity is not { } brain || !TryComp<SiliconLawProviderComponent>(brain, out var brainProvider))
         {
             _popup.PopupClient(Loc.GetString("law-emag-cannot-brainless"), ent, args.UserUid);
@@ -85,6 +85,14 @@ public abstract partial class SharedSiliconLawSystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Basic checks for if a lawbound entity can be emagged.
+    /// </summary>
+    /// <param name="entity">The entity.</param>
+    /// <param name="user">The person doing the emagging.</param>
+    /// <param name="reason">The reason the emagging cannot be performed.</param>
+    /// <param name="emagComp">The EmagSiliconLawComponent, for convenience.</param>
+    /// <returns>True if the silicon can be emagged, false otherwise.</returns>
     private bool CanBeEmagged(EntityUid entity, EntityUid user, [NotNullWhen(false)] out string? reason, [NotNullWhen(true)] out EmagSiliconLawComponent? emagComp)
     {
         reason = null;
@@ -115,6 +123,9 @@ public abstract partial class SharedSiliconLawSystem
         return true;
     }
 
+    /// <summary>
+    /// Constructs the emagged laws based on the provided SiliconLaw list.
+    /// </summary>
     public List<SiliconLaw> GetEmaggedLaws(List<SiliconLaw> laws, EntityUid user, string obeysTo)
     {
         var lawsToSwap = laws;

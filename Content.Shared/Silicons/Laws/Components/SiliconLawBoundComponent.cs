@@ -20,7 +20,7 @@ public sealed partial class SiliconLawBoundComponent : Component
 
     /// <summary>
     /// Lawset created from the prototype id.
-    /// Cached when getting laws and modified during an ion storm event and when emagged.
+    /// Cached from the linked <see cref="SiliconLawProviderComponent"/> for the sake of prediction.
     /// </summary>
     [DataField, AutoNetworkedField]
     public SiliconLawset Lawset = new ();
@@ -33,7 +33,7 @@ public sealed partial class SiliconLawBoundComponent : Component
 
     /// <summary>
     /// Whether this provider is currently subverted.
-    /// Cached from the linked <see cref="SiliconLawProviderComponent"/>
+    /// Cached from the linked <see cref="SiliconLawProviderComponent"/> for the sake of prediction.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Subverted = false;

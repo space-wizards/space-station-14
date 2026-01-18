@@ -1,13 +1,9 @@
-using System.Linq;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.Laws.Components;
 
 namespace Content.Shared.Silicons.Laws;
 
-/// <summary>
-/// This handles getting and displaying the laws for silicons.
-/// </summary>
 public abstract partial class SharedSiliconLawSystem
 {
     public void InitializeProvider()
