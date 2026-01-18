@@ -842,10 +842,12 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnName("eye_color");
 
                     b.Property<string>("FacialHairColor")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("facial_hair_color");
 
                     b.Property<string>("FacialHairName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("facial_hair_name");
 
@@ -860,16 +862,22 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnName("gender");
 
                     b.Property<string>("HairColor")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("hair_color");
 
                     b.Property<string>("HairName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("hair_name");
 
                     b.Property<JsonDocument>("Markings")
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
+
+                    b.Property<JsonDocument>("OrganMarkings")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("organ_markings");
 
                     b.Property<int>("PreferenceId")
                         .HasColumnType("integer")

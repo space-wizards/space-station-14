@@ -242,7 +242,15 @@ namespace Content.Server.Database
             var markings =
                 new Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>();
 
-            if (profile.Markings is { } profileMarkings && TryDeserialize<List<string>>(profileMarkings) is { } markingsRaw)
+            if (profile.OrganMarkings?.RootElement is { } element)
+            {
+                var data = element.ToDataNode();
+                markings = _serialization
+                    .Read<Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>>(
+                        data,
+                        notNullableOverride: true);
+            }
+            else if (profile.Markings is { } profileMarkings && TryDeserialize<List<string>>(profileMarkings) is { } markingsRaw)
             {
                 List<Marking> markingsList = new();
 
@@ -255,25 +263,20 @@ namespace Content.Server.Database
                     markingsList.Add(parsed);
                 }
 
-                if (profile.FacialHairName is { } facialHairName && profile.FacialHairColor is { } facialHairColor)
-                {
-                    if (Marking.ParseFromDbString($"{facialHairName}@{facialHairColor}") is { } marking)
-                        markingsList.Add(marking);
-                }
-                else if (profile.HairName is { } hairName && profile.HairColor is { } hairColor)
-                {
-                    if (Marking.ParseFromDbString($"{hairName}@{hairColor}") is { } marking)
-                        markingsList.Add(marking);
-                }
+                if (Marking.ParseFromDbString($"{profile.HairName}@{profile.HairColor}") is { } facialMarking)
+                    markingsList.Add(facialMarking);
+
+                if (Marking.ParseFromDbString($"{profile.HairName}@{profile.HairColor}") is { } hairMarking)
+                    markingsList.Add(hairMarking);
 
                 var completion = new TaskCompletionSource();
                 _task.RunOnMainThread(() =>
                 {
-                    var markings = IoCManager.Resolve<MarkingManager>();
+                    var markingManager = IoCManager.Resolve<MarkingManager>();
 
                     try
                     {
-                        markings.ConvertMarkings(markingsList, profile.Species);
+                        markingManager.ConvertMarkings(markingsList, profile.Species);
                         completion.SetResult();
                     }
                     catch (Exception ex)
@@ -282,14 +285,6 @@ namespace Content.Server.Database
                     }
                 });
                 await completion.Task;
-            }
-            else if (profile.Markings?.RootElement is { } element)
-            {
-                var data = element.ToDataNode();
-                markings = _serialization
-                    .Read<Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>>(
-                        data,
-                        notNullableOverride: true);
             }
 
             var loadouts = new Dictionary<string, RoleLoadout>();
@@ -353,7 +348,25 @@ namespace Content.Server.Database
             profile.EyeColor = appearance.EyeColor.ToHex();
             profile.SkinColor = appearance.SkinColor.ToHex();
             profile.SpawnPriority = (int) humanoid.SpawnPriority;
-            profile.Markings = JsonSerializer.SerializeToDocument(dataNode.ToJsonNode());
+            profile.OrganMarkings = JsonSerializer.SerializeToDocument(dataNode.ToJsonNode());
+
+            // support for downgrades - at some point this should be removed
+            var legacyMarkings = appearance.Markings
+                .SelectMany(organ => organ.Value.Values)
+                .SelectMany(i => i)
+                .Select(marking => marking.ToString())
+                .ToList();
+            var flattenedMarkings = appearance.Markings.SelectMany(it => it.Value)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var hairMarking = flattenedMarkings.FirstOrNull(kvp => kvp.Key == HumanoidVisualLayers.Hair)?.Value.FirstOrDefault();
+            var facialHairMarking = flattenedMarkings.FirstOrNull(kvp => kvp.Key == HumanoidVisualLayers.FacialHair)?.Value.FirstOrDefault();
+            profile.Markings =
+                JsonSerializer.SerializeToDocument(legacyMarkings.Select(marking => marking.ToString()).ToList());
+            profile.HairName = hairMarking?.MarkingId ?? HairStyles.DefaultHairStyle;
+            profile.FacialHairName = facialHairMarking?.MarkingId ?? HairStyles.DefaultFacialHairStyle;
+            profile.HairColor = (hairMarking?.MarkingColors[0] ?? Color.Black).ToHex();
+            profile.FacialHairColor = (facialHairMarking?.MarkingColors[0] ?? Color.Black).ToHex();
+
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 

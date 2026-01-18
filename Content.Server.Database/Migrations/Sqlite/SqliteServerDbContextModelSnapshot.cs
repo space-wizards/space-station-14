@@ -793,10 +793,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("eye_color");
 
                     b.Property<string>("FacialHairColor")
+                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("facial_hair_color");
 
                     b.Property<string>("FacialHairName")
+                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("facial_hair_name");
 
@@ -811,16 +813,22 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("gender");
 
                     b.Property<string>("HairColor")
+                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("hair_color");
 
                     b.Property<string>("HairName")
+                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("hair_name");
 
                     b.Property<byte[]>("Markings")
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
+
+                    b.Property<byte[]>("OrganMarkings")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("organ_markings");
 
                     b.Property<int>("PreferenceId")
                         .HasColumnType("INTEGER")
