@@ -67,13 +67,13 @@ public abstract partial class SharedVisualBodySystem
 
             if (TryComp<VisualOrganComponent>(organ, out var visualOrgan))
             {
-                profiles.Add(category, visualOrgan.Profile);
+                profiles.TryAdd(category, visualOrgan.Profile);
             }
 
             if (TryComp<VisualOrganMarkingsComponent>(organ, out var visualOrganMarkings))
             {
-                markings.Add(category, visualOrganMarkings.MarkingData);
-                applied.Add(category, visualOrganMarkings.Markings);
+                markings.TryAdd(category, visualOrganMarkings.MarkingData);
+                applied.TryAdd(category, visualOrganMarkings.Markings);
             }
         }
     }

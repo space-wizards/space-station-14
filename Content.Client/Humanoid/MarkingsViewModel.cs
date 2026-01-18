@@ -120,11 +120,14 @@ public sealed class MarkingsViewModel
                 return;
 
             _organData = value;
+            _previousColors.Clear();
             OrganDataChanged?.Invoke();
         }
     }
 
     public event Action? OrganDataChanged;
+
+    private Dictionary<ProtoId<MarkingPrototype>, List<Color>> _previousColors = new();
 
     public MarkingsViewModel()
     {
@@ -197,7 +200,8 @@ public sealed class MarkingsViewModel
         organMarkings[layer] = organMarkings.GetValueOrDefault(layer) ?? [];
         var layerMarkings = organMarkings[layer];
 
-        var colors = MarkingColoring.GetMarkingLayerColors(markingProto, profileData.SkinColor, profileData.EyeColor, layerMarkings);
+        var colors = _previousColors.GetValueOrDefault(markingId) ??
+                     MarkingColoring.GetMarkingLayerColors(markingProto, profileData.SkinColor, profileData.EyeColor, layerMarkings);
         var newMarking = new Marking(markingId, colors);
         newMarking.Forced = AnyEnforcementsLifted;
 
@@ -263,16 +267,13 @@ public sealed class MarkingsViewModel
         if (count == 0)
             return false;
 
-        if (limits is null || !EnforceLimits)
-        {
-            layerMarkings.RemoveAll(marking => marking.MarkingId == markingId);
-            MarkingsChanged?.Invoke(organ, layer);
-            return true;
-        }
-
-        if (limits.Required && (layerMarkings.Count - count) <= 0)
+        if (EnforceLimits && limits is not null && limits.Required && (layerMarkings.Count - count) <= 0)
             return false;
 
+        if (layerMarkings.Find(marking => marking.MarkingId == markingId) is { } removingMarking)
+        {
+            _previousColors[removingMarking.MarkingId] = removingMarking.MarkingColors.ToList();
+        }
         layerMarkings.RemoveAll(marking => marking.MarkingId == markingId);
         MarkingsChanged?.Invoke(organ, layer);
 
