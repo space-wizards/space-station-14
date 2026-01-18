@@ -84,5 +84,16 @@ public sealed partial class SharedArcadeSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    public ArcadeGameState GetGameState(Entity<ArcadeComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return ArcadeGameState.Invalid;
+
+        return ent.Comp.State;
+    }
+
     #endregion
 }

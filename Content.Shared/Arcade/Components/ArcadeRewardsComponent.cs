@@ -26,12 +26,12 @@ public sealed partial class ArcadeRewardsComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public byte MaxAmount;
 
     /// <summary>
     ///
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public byte MinAmount;
 }

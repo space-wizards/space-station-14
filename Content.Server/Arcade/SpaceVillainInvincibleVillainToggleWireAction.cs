@@ -10,7 +10,7 @@ public sealed partial class SpaceVillainInvincibleVillainToggleWireAction : Comp
 {
     public override string Name { get; set; } = "wire-name-space-villain-invincible-villain";
     public override Color Color { get; set; } = Color.PaleVioletRed;
-    public override object StatusKey { get; } = SpaceVillainWireStatus.InvincibleVillain;
+    public override object StatusKey { get; } = SpaceVillainArcadeWireStatus.InvincibleVillain;
 
     public override StatusLightState? GetLightState(Wire wire, SpaceVillainArcadeComponent component)
     {
