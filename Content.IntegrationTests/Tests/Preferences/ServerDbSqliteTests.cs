@@ -52,24 +52,13 @@ namespace Content.IntegrationTests.Tests.Preferences
             };
         }
 
-        private static ServerDbSqlite GetDb(RobustIntegrationTest.ServerIntegrationInstance server)
-        {
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-            var opsLog = server.ResolveDependency<ILogManager>().GetSawmill("db.ops");
-            var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
-            var conn = new SqliteConnection("Data Source=:memory:");
-            conn.Open();
-            builder.UseSqlite(conn);
-            return new ServerDbSqlite(() => builder.Options, true, cfg, true, opsLog);
-        }
-
         [Test]
         public async Task TestUserDoesNotExist()
         {
             var pair = await PoolManager.GetServerClient();
-            var db = GetDb(pair.Server);
+            var db = pair.Server.ResolveDependency<IServerDbManager>();
             // Database should be empty so a new GUID should do it.
-            Assert.That(await db.GetPlayerPreferencesAsync(NewUserId()), Is.Null);
+            Assert.That(await db.GetPlayerPreferencesAsync(NewUserId(), new(false)), Is.Null);
 
             await pair.CleanReturnAsync();
         }
@@ -78,12 +67,12 @@ namespace Content.IntegrationTests.Tests.Preferences
         public async Task TestInitPrefs()
         {
             var pair = await PoolManager.GetServerClient();
-            var db = GetDb(pair.Server);
+            var db = pair.Server.ResolveDependency<IServerDbManager>();
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
             const int slot = 0;
             var originalProfile = CharlieCharlieson();
-            await db.InitPrefsAsync(username, originalProfile);
-            var prefs = await db.GetPlayerPreferencesAsync(username);
+            await db.InitPrefsAsync(username, originalProfile, new(false));
+            var prefs = await db.GetPlayerPreferencesAsync(username, new(false));
             Assert.That(prefs.Characters.Single(p => p.Key == slot).Value.MemberwiseEquals(originalProfile));
             await pair.CleanReturnAsync();
         }
@@ -93,13 +82,13 @@ namespace Content.IntegrationTests.Tests.Preferences
         {
             var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var db = GetDb(server);
+            var db = server.ResolveDependency<IServerDbManager>();
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
-            await db.InitPrefsAsync(username, new HumanoidCharacterProfile());
+            await db.InitPrefsAsync(username, new HumanoidCharacterProfile(), new(false));
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
             await db.SaveSelectedCharacterIndexAsync(username, 1);
             await db.SaveCharacterSlotAsync(username, null, 1);
-            var prefs = await db.GetPlayerPreferencesAsync(username);
+            var prefs = await db.GetPlayerPreferencesAsync(username, new(false));
             Assert.That(!prefs.Characters.Any(p => p.Key != 0));
             await pair.CleanReturnAsync();
         }
@@ -109,7 +98,7 @@ namespace Content.IntegrationTests.Tests.Preferences
         {
             var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var db = GetDb(server);
+            var db = server.ResolveDependency<IServerDbManager>();
             Assert.That(async () => await db.HasPendingModelChanges(), Is.False,
                 "The database has pending model changes. Add a new migration to apply them. See https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations");
             await pair.CleanReturnAsync();

@@ -31,6 +31,8 @@ namespace Content.Server.Database
 
         void Shutdown();
 
+        Task<bool> HasPendingModelChanges();
+
         #region Preferences
         Task<PlayerPreferences> InitPrefsAsync(
             NetUserId userId,
@@ -1080,6 +1082,11 @@ namespace Content.Server.Database
                     handler(notification);
                 }
             }
+        }
+
+        public Task<bool> HasPendingModelChanges()
+        {
+            return RunDbCommand(() => _db.HasPendingModelChanges());
         }
 
         // Wrapper functions to run DB commands from the thread pool.
