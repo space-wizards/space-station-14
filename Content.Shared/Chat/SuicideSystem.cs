@@ -46,7 +46,7 @@ public sealed class SuicideSystem : EntitySystem
     /// </summary>
     public bool CanSuicide(EntityUid victim)
     {
-        var suicideAttempt = new SuicideAttemptEvent(victim);
+        var suicideAttempt = new SuicideAttemptEvent();
         RaiseLocalEvent(victim, suicideAttempt);
 
         return !suicideAttempt.Handled && !_tagSystem.HasTag(victim, CannotSuicideTag);

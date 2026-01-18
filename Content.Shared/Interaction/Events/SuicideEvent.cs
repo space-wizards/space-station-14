@@ -23,7 +23,4 @@ public sealed class SuicideByEnvironmentEvent(EntityUid victim) : HandledEntityE
 /// Raised prior to a suicide. Any systems looking to block suicide should handle this event.
 /// This event should NOT be used to perform an action on a suicide!
 /// </summary>
-public sealed class SuicideAttemptEvent(EntityUid victim) : HandledEntityEventArgs
-{
-    public EntityUid Victim { get; } = victim;
-}
+public sealed class SuicideAttemptEvent : HandledEntityEventArgs;
