@@ -156,7 +156,7 @@ namespace Content.Server.Database
                 query = query.Where(b => (b.ExemptFlags & exempt) == 0);
             }
 
-            return await query.ToListAsync();
+            return await query.AsSplitQuery().ToListAsync();
         }
 
         public override async Task<BanDef> AddBanAsync(BanDef ban)

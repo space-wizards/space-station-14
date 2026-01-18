@@ -1533,6 +1533,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             // You can't group queries, as player will not always exist. When it doesn't, the
             // whole query returns nothing
             var bans = await BanRecordQuery(db.DbContext)
+                .AsSplitQuery()
                 .Where(ban => ban.Players!.Any(bp => bp.UserId == user) && !ban.Hidden)
                 .ToArrayAsync();
 
