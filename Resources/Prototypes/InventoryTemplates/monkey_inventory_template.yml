@@ -66,5 +66,4 @@
     displayName: Neck
     whitelist:
       tags:
-        - Medal
         - MonkeyWearable
