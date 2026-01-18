@@ -1,5 +1,7 @@
-﻿using Content.Shared.Maps;
-using Content.Shared.Stacks;
+﻿using Content.Shared.Conveyor;
+using Content.Shared.Maps;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -14,6 +16,7 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
 {
 
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -23,14 +26,10 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
-    private EntityQuery<MapGridComponent> _gridQuery;
-
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _gridQuery = GetEntityQuery<MapGridComponent>();
     }
 
     public override void Update(float frameTime)
@@ -45,6 +44,9 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
 
     private void Update(Entity<TileReclaimerComponent, TransformComponent> ent)
     {
+        if (!TryComp<ConveyorComponent>(ent, out var conveyor) || conveyor.State == ConveyorState.Off)
+            return; // SLAM-TODO: The recycler is hardcoded to rely on the conveyor component for its powered state. That should be fixed into a more general solution, but for the sake of prototyping I'm not doing that now.
+
         var reclaimerGrid = _transform.GetGrid((ent, ent));
 
         if (reclaimerGrid == null)

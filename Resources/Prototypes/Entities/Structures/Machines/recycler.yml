@@ -126,8 +126,12 @@
     drawdepth: Doors
     sprite: Structures/Machines/shredder.rsi
     layers:
-    - state: base
+    - state: shredder0
+      map: ["enum.RecyclerVisualLayers.Main"]
     offset: 0, 0.5
+  - type: Appearance
+  - type: RecyclerVisuals
+    baseKey: shredder
   - type: Conveyor
     angle: 90 # Conveyor goes sideways
   - type: DeviceLinkSink # SLAM-TODO: This needs to not be unlinkable and should be done via the magnet
@@ -139,7 +143,7 @@
     insertOnInteract: false
   - type: CollideMaterialReclaimer
   - type: MaterialReclaimer
-    enabled: true
+    enabled: false
     scaleProcessSpeed: false
     minimumProcessDuration: 0
     # whitelist: # SLAM-TODO: Ya you gotta figure out this whole thing
@@ -158,7 +162,7 @@
     cutOffSound: false
   - type: TileReclaimer
     sound:
-      path: /Audio/Effects/saw.ogg # SLAM-TODO: Needs more CRONCH
+      path: /Audio/Effects/grind.ogg # SLAM-TODO: Needs more CRONCH
       params:
         volume: -3
     recyclingBox: "-0.35, 0.5, 0.35, 0.75"
@@ -194,6 +198,24 @@
         - MidImpassable
         - LowImpassable
         hard: False
+  - type: AmbientSound
+    enabled: false
+    volume: -8
+    range: 5
+    sound:
+      # TODO: https://freesound.org/people/derjuli/sounds/448133/ CC-NC-
+      path: /Audio/Ambience/Objects/circular_saw.ogg
   - type: Transform
     anchored: true
     noRot: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak

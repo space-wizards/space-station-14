@@ -8,7 +8,21 @@
   },
   "states": [
     {
-      "name": "base"
+      "name": "shredder0"
+    },
+    {
+      "name": "shredder1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "shredder2"
     }
   ]
 }
