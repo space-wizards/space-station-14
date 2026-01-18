@@ -1,8 +1,8 @@
-using System.Runtime.CompilerServices;
 using Content.Shared.Arcade.Components;
 using Content.Shared.Arcade.Events;
 using Content.Shared.Arcade.Messages;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Arcade.Systems;
 
@@ -11,6 +11,7 @@ namespace Content.Shared.Arcade.Systems;
 /// </summary>
 public sealed partial class SharedArcadeSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
@@ -52,15 +53,21 @@ public sealed partial class SharedArcadeSystem : EntitySystem
 
     private void OnBUIOpened(Entity<ArcadeComponent> ent, ref BoundUIOpenedEvent args)
     {
-        EnsureComp<ArcadePlayerComponent>(ent, out var comp);
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        EnsureComp<ArcadePlayerComponent>(args.Actor, out var comp);
 
         comp.Arcade = ent;
-        Dirty(ent);
+        Dirty(args.Actor, comp);
     }
 
     private void OnBUIClosed(Entity<ArcadeComponent> ent, ref BoundUIClosedEvent args)
     {
-        RemComp<ArcadePlayerComponent>(ent);
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        RemComp<ArcadePlayerComponent>(args.Actor);
     }
 
     /// <summary>

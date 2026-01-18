@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Arcade.Components;
+using Content.Shared.Arcade.Events;
 using Content.Shared.Input;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Arcade.Systems;
@@ -20,48 +23,61 @@ public sealed partial class SharedBlockGameArcadeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BlockGameArcadeComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<BlockGameArcadeComponent, ArcadeChangedStateEvent>(OnArcadeChangedState);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ArcadeLeft, InputCmdHandler.FromDelegate(OnMoveLeft))
-            .Bind(ContentKeyFunctions.ArcadeRight, InputCmdHandler.FromDelegate(OnMoveRight))
+            .Bind(ContentKeyFunctions.ArcadeUp, InputCmdHandler.FromDelegate(OnMoveUp))
+            .Bind(ContentKeyFunctions.ArcadeDown, InputCmdHandler.FromDelegate(OnMoveDown))
+            .Bind(ContentKeyFunctions.ArcadeRotate, InputCmdHandler.FromDelegate(OnMoveRotate))
+            .Bind(ContentKeyFunctions.ArcadeDrop, InputCmdHandler.FromDelegate(OnMoveDrop))
             .Register<SharedBlockGameArcadeSystem>();
     }
 
-    private void OnMapInit(Entity<BlockGameArcadeComponent> ent, ref MapInitEvent args)
+    private void OnArcadeChangedState(Entity<BlockGameArcadeComponent> ent, ref ArcadeChangedStateEvent args)
     {
-        ent.Comp.Cells = new BlockGameArcadeCell[ent.Comp.Size.X * ent.Comp.Size.Y];
+        if (args.NewState != ArcadeGameState.Game)
+            return;
+
+        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateCooldown;
+
+        ent.Comp.Cells = new BlockGameArcadeCell[(ent.Comp.Size.X + ent.Comp.BufferWidth) * ent.Comp.Size.Y];
         Array.Fill(ent.Comp.Cells, BlockGameArcadeCell.Empty);
+
+        // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
+        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        var rand = new System.Random(seed);
+        RandomHelpers.Shuffle(rand, ent.Comp.PiecesBag);
+
+        DirtyFields(ent.AsNullable(), null, nameof(BlockGameArcadeComponent.NextUpdate), nameof(BlockGameArcadeComponent.Cells), nameof(BlockGameArcadeComponent.PiecesBag));
     }
 
     private void OnMoveLeft(ICommonSession? session)
     {
-        if (session?.AttachedEntity is not { Valid: true } player)
-            return;
-
-        if (!_ui.IsUiOpen(player, ArcadeUiKey.Key))
-            return;
-
-        if (!TryComp<ArcadePlayerComponent>(player, out var comp))
-            return;
-
-        if (comp.Arcade is not { Valid: true } arcade)
-            return;
-
-        if (!TryComp<BlockGameArcadeComponent>(arcade, out var blockGame))
-            return;
-
-        if (blockGame.MoveDirection != BlockGameMoveDirection.None)
-            return;
-
-        if (_arcade.GetGameState(arcade) != ArcadeGameState.Game)
-            return;
-
-        blockGame.MoveDirection = BlockGameMoveDirection.Left;
-        DirtyField(arcade, blockGame, nameof(BlockGameArcadeComponent.MoveDirection));
+        ProcessMoveKeyBind(session, BlockGameArcadeMove.Left);
     }
 
-    private void OnMoveRight(ICommonSession? session)
+    private void OnMoveUp(ICommonSession? session)
+    {
+        ProcessMoveKeyBind(session, BlockGameArcadeMove.Up);
+    }
+
+    private void OnMoveDown(ICommonSession? session)
+    {
+        ProcessMoveKeyBind(session, BlockGameArcadeMove.Down);
+    }
+
+    private void OnMoveRotate(ICommonSession? session)
+    {
+        ProcessMoveKeyBind(session, BlockGameArcadeMove.Rotate);
+    }
+
+    private void OnMoveDrop(ICommonSession? session)
+    {
+        ProcessMoveKeyBind(session, BlockGameArcadeMove.Drop);
+    }
+
+    private void ProcessMoveKeyBind(ICommonSession? session, BlockGameArcadeMove direction)
     {
         if (session?.AttachedEntity is not { Valid: true } player)
             return;
@@ -78,76 +94,140 @@ public sealed partial class SharedBlockGameArcadeSystem : EntitySystem
         if (!TryComp<BlockGameArcadeComponent>(arcade, out var blockGame))
             return;
 
-        if (blockGame.MoveDirection != BlockGameMoveDirection.None)
+        if (blockGame.MoveDirection != BlockGameArcadeMove.None)
             return;
 
         if (_arcade.GetGameState(arcade) != ArcadeGameState.Game)
             return;
 
-        blockGame.MoveDirection = BlockGameMoveDirection.Right;
+        blockGame.MoveDirection = direction;
         DirtyField(arcade, blockGame, nameof(BlockGameArcadeComponent.MoveDirection));
     }
-
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<BlockGameArcadeComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        var query = EntityQueryEnumerator<BlockGameArcadeComponent, ArcadeComponent>();
+        while (query.MoveNext(out var uid, out var blockGame, out var arcade))
         {
-            if (_arcade.GetGameState(uid) != ArcadeGameState.Game)
+            if (_arcade.GetGameState((uid, arcade)) != ArcadeGameState.Game)
                 continue;
 
-            if (comp.NextUpdate > curTime)
+            if (blockGame.NextUpdate > curTime)
                 continue;
 
-            comp.NextUpdate += comp.UpdateCooldown;
-            DirtyField(uid, comp, nameof(BlockGameArcadeComponent.NextUpdate));
+            blockGame.NextUpdate += blockGame.UpdateCooldown;
+            DirtyField(uid, blockGame, nameof(BlockGameArcadeComponent.NextUpdate));
 
-            var width = comp.Size.X;
-            for (var i = comp.Cells.Length - 1; i >= 0; i--)
-            {
-                var cell = comp.Cells[i];
-                if (cell == BlockGameArcadeCell.Empty || cell == BlockGameArcadeCell.Player)
-                    continue;
+            if (TryMoveRowLeft((uid, blockGame), 1))
+                continue;
 
-                var x = i / width;
-                var newY = i % width - 1;
-                if (newY > 0 && x == comp.PlayerPosition.X && newY == comp.PlayerPosition.Y)
-                    _arcade.TryChangeGameState(uid, EntityUid.Invalid, ArcadeGameState.Lose);
-
-                comp.Cells[i] = BlockGameArcadeCell.Empty;
-            }
-
-            if (comp.NextSpawn <= curTime)
-            {
-                // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
-                var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(uid).Id);
-                var rand = new System.Random(seed);
-                var pos = width * (uint)rand.NextInt64(0, width);
-                if (comp.Cells[pos] != BlockGameArcadeCell.Empty)
-                    comp.Cells[pos] = (BlockGameArcadeCell)(Enum.GetValues<BlockGameArcadeCell>().GetValue(rand.Next((int)BlockGameArcadeCell.Bonus, (int)BlockGameArcadeCell.Brown)) ?? BlockGameArcadeCell.Empty);
-
-                comp.NextSpawn += comp.SpawnCooldown;
-                DirtyField(uid, comp, nameof(BlockGameArcadeComponent.NextSpawn));
-            }
-
-            if (comp.MoveDirection != BlockGameMoveDirection.None)
-            {
-                var pos = width * comp.PlayerPosition.X;
-                if (comp.Cells[pos] == BlockGameArcadeCell.Player)
-                {
-                    comp.Cells[pos] = BlockGameArcadeCell.Empty;
-                    comp.Cells[width * comp.PlayerPosition.X + (comp.MoveDirection == BlockGameMoveDirection.Left ? -1 : 1)] = BlockGameArcadeCell.Player;
-                }
-
-                comp.MoveDirection = BlockGameMoveDirection.None;
-                DirtyField(uid, comp, nameof(BlockGameArcadeComponent.MoveDirection));
-            }
-
-            DirtyField(uid, comp, nameof(BlockGameArcadeComponent.Cells));
+            if (TrySpawnNextPiece((uid, blockGame)))
+                continue;
         }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private bool TryCoordinatesToCell(Entity<BlockGameArcadeComponent?> ent, int x, int y, [NotNullWhen(true)] out int? cell)
+    {
+        cell = null;
+
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (x < 0 || x > ent.Comp.Size.X)
+            return false;
+
+        if (y < 0 || y > ent.Comp.Size.Y)
+            return false;
+
+        cell = ent.Comp.Size.X * y + x;
+
+        return true;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private bool TryCellToCoordinates(Entity<BlockGameArcadeComponent?> ent, int cell, [NotNullWhen(true)] out int? x, [NotNullWhen(true)] out int? y)
+    {
+        x = y = null;
+
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (cell < 0 || cell > ent.Comp.Size.X * ent.Comp.Size.Y)
+            return false;
+
+        x = cell % ent.Comp.Size.X;
+        y = cell / ent.Comp.Size.X;
+
+        return true;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private bool CanRowMoveLeft(Entity<BlockGameArcadeComponent?> ent, int x)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        // We are checking against left row
+        var leftRow = x - 1;
+        for (var y = 0; y < ent.Comp.Size.Y; y++)
+        {
+            if (!TryCoordinatesToCell(ent, leftRow, y, out var cell))
+                return false;
+
+            if (ent.Comp.Cells[cell.Value] != BlockGameArcadeCell.Empty)
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private bool TryMoveRowLeft(Entity<BlockGameArcadeComponent?> ent, int x)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        // Check if we can move before actually moving
+        if (!CanRowMoveLeft(ent, x))
+            return false;
+
+        var leftRow = x - 1;
+        for (var y = 0; y < ent.Comp.Size.Y; y++)
+        {
+            if (!TryCoordinatesToCell(ent, x, y, out var cell))
+                return false;
+
+            if (!TryCoordinatesToCell(ent, leftRow, y, out var leftCell))
+                return false;
+
+            ent.Comp.Cells[leftCell.Value] = ent.Comp.Cells[cell.Value];
+        }
+
+        DirtyField(ent, nameof(BlockGameArcadeComponent.Cells));
+
+        return true;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private bool TrySpawnNextPiece(Entity<BlockGameArcadeComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        return true;
     }
 }

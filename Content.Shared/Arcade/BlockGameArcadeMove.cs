@@ -3,7 +3,7 @@ namespace Content.Shared.Arcade;
 /// <summary>
 ///
 /// </summary>
-public enum BlockGameMoveDirection : byte
+public enum BlockGameArcadeMove : byte
 {
     /// <summary>
     ///
@@ -18,5 +18,20 @@ public enum BlockGameMoveDirection : byte
     /// <summary>
     ///
     /// </summary>
-    Right,
+    Up,
+
+    /// <summary>
+    ///
+    /// </summary>
+    Down,
+
+    /// <summary>
+    ///
+    /// </summary>
+    Rotate,
+
+    /// <summary>
+    ///
+    /// </summary>
+    Drop,
 }

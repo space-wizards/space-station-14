@@ -61,6 +61,7 @@
     maxVocalizeInterval: 4m
     hideChat: true
   - type: StationAiWhitelist
+  - type: Arcade
 
 - type: entity
   id: SpaceVillainArcade
@@ -126,6 +127,20 @@
       state: panel
       visible: false
   - type: BlockGameArcade
+    piecesBag: [
+      BlockGamePieceF,
+      BlockGamePieceI,
+      BlockGamePieceL,
+      BlockGamePieceN,
+      BlockGamePieceP,
+      BlockGamePieceT,
+      BlockGamePieceU,
+      BlockGamePieceV,
+      BlockGamePieceW,
+      BlockGamePieceX,
+      BlockGamePieceY,
+      BlockGamePieceZ
+    ]
   - type: UserInterface
     interfaces:
       enum.ArcadeUiKey.Key:

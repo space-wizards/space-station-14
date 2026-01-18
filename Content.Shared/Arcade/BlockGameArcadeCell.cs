@@ -8,22 +8,7 @@ public enum BlockGameArcadeCell : byte
     /// <summary>
     ///
     /// </summary>
-    Invalid,
-
-    /// <summary>
-    ///
-    /// </summary>
     Empty,
-
-    /// <summary>
-    ///
-    /// </summary>
-    Player,
-
-    /// <summary>
-    ///
-    /// </summary>
-    Bonus,
 
     /// <summary>
     ///
