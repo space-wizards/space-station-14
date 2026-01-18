@@ -134,7 +134,6 @@
     transferName: true
     revertOnDeath: true
     inventory: Drop
-    cooldown: 160
 
 - type: polymorph
   id: SmartCorgiMorph
