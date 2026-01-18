@@ -1,4 +1,4 @@
-namespace Content.Shared.Arcade;
+namespace Content.Shared.Arcade.Enums;
 
 /// <summary>
 ///

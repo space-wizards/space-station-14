@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Arcade.Components;
+using Content.Shared.Arcade.Enums;
 using Content.Shared.Arcade.Events;
 using Content.Shared.Input;
 using Content.Shared.Random.Helpers;

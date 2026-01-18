@@ -1,6 +1,6 @@
 using Content.Server.Wires;
-using Content.Shared.Arcade;
 using Content.Shared.Arcade.Components;
+using Content.Shared.Arcade.Enums;
 using Content.Shared.Arcade.Systems;
 using Content.Shared.Wires;
 

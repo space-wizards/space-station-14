@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Arcade.Components;
+using Content.Shared.Arcade.Enums;
 using Content.Shared.Arcade.Events;
 using Content.Shared.EntityTable;
 using Content.Shared.Random.Helpers;

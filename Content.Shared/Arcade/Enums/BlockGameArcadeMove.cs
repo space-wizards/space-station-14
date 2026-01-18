@@ -1,32 +1,37 @@
-namespace Content.Shared.Arcade;
+namespace Content.Shared.Arcade.Enums;
 
 /// <summary>
 ///
 /// </summary>
-public enum ArcadeGameState : byte
+public enum BlockGameArcadeMove : byte
 {
     /// <summary>
     ///
     /// </summary>
-    Invalid,
+    None,
 
     /// <summary>
     ///
     /// </summary>
-    Idle,
+    Left,
 
     /// <summary>
     ///
     /// </summary>
-    Game,
+    Up,
 
     /// <summary>
     ///
     /// </summary>
-    Win,
+    Down,
 
     /// <summary>
     ///
     /// </summary>
-    Lose,
+    Rotate,
+
+    /// <summary>
+    ///
+    /// </summary>
+    Drop,
 }

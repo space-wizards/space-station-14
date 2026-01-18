@@ -1,3 +1,5 @@
+using Content.Shared.Arcade.Enums;
+
 namespace Content.Shared.Arcade.Events;
 
 /// <summary>

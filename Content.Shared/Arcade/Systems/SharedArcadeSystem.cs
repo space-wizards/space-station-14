@@ -1,4 +1,5 @@
 using Content.Shared.Arcade.Components;
+using Content.Shared.Arcade.Enums;
 using Content.Shared.Arcade.Events;
 using Content.Shared.Arcade.Messages;
 using Robust.Shared.Audio.Systems;
