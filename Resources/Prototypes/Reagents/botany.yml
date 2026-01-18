@@ -148,6 +148,8 @@
         reagent: RobustHarvest
         amount: -999 # Metabolism is paused while polymorphed, so this is to avoid the 999u unkillable diona antag
         conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
         - !type:ReagentCondition
           reagent: RobustHarvest
           min: 45
