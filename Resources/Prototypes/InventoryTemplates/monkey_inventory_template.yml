@@ -58,3 +58,13 @@
     whitelist:
       tags:
         - MonkeyWearable
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
+    whitelist:
+      tags:
+        - Medal
+        - MonkeyWearable
