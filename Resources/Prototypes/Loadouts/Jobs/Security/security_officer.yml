@@ -39,26 +39,31 @@
   id: SecurityJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitSec
+  groupBy: "base"
 
 - type: loadout
   id: SecurityJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSec
+  groupBy: "base"
 
 - type: loadout
   id: SecurityJumpsuitGrey
   equipment:
     jumpsuit: ClothingUniformJumpsuitSecGrey
+  groupBy: "grey"
 
 - type: loadout
   id: SecurityJumpskirtGrey
   equipment:
     jumpsuit: ClothingUniformJumpskirtSecGrey
+  groupBy: "grey"
 
 - type: loadout
   id: TrooperUniform
   equipment:
     jumpsuit: ClothingUniformSecurityTrooper
+  groupBy: "trooper"
 
 - type: loadout
   id: SeniorOfficerJumpsuit
@@ -67,6 +72,7 @@
     proto: SeniorOfficer
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorOfficer
+  groupBy: "senior"
 
 - type: loadout
   id: SeniorOfficerJumpskirt
@@ -75,6 +81,7 @@
     proto: SeniorOfficer
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorOfficer
+  groupBy: "senior"
 
 # Back
 - type: loadout
