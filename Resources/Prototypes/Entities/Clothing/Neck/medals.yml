@@ -11,7 +11,6 @@
       - MonkeyWearable
       - WhitelistChameleon
 
-
 - type: entity
   parent: ClothingNeckMedalBase
   id: ClothingNeckBronzeheart
