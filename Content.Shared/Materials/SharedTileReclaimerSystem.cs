@@ -1,7 +1,5 @@
 ﻿using Content.Shared.Conveyor;
 using Content.Shared.Maps;
-using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -16,7 +14,6 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
 {
 
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;

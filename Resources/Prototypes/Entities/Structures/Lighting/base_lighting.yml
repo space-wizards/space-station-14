@@ -16,6 +16,7 @@
         collection: GlassSmash
   - type: Transform
     anchored: true
+  - type: Pullable
   - type: Clickable
   - type: InteractionOutline
   - type: Construction

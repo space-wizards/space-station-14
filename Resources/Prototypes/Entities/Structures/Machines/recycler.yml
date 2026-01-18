@@ -176,6 +176,9 @@
         layer:
         - FullTileLayer
         - DoorPassable # SLAM-TODO: Put this here to hit floor objects like carpets etc, probably wrong way to go about it
+        mask:
+        - FullTileMask # SLAM-TODO: Necessary for grilles??
+        - TabletopMachineLayer # SLAM-TODO: I need to put this here... For lights????
       collision:
         shape:
           !type:PhysShapeAabb
