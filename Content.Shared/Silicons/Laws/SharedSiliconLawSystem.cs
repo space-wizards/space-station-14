@@ -75,10 +75,10 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             args.Laws = chassisProvider.Lawset.Clone();
             args.Handled = true;
         }
-        else if (TryComp<SiliconLawProviderComponent>(ent.Comp.BrainContainer.ContainedEntity, out var brainProvider))
+        else if (TryComp<SiliconLawProviderComponent>(ent.Comp.BrainEntity, out var brainProvider))
         {
             args.Laws = brainProvider.Lawset.Clone();
-            args.LinkedEntity = ent.Comp.BrainContainer.ContainedEntity;
+            args.LinkedEntity = ent.Comp.BrainEntity;
             args.Handled = true;
         }
     }

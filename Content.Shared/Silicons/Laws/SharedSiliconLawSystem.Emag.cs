@@ -33,7 +33,7 @@ public abstract partial class SharedSiliconLawSystem
             return;
         }
 
-        if (ent.Comp.BrainContainer.ContainedEntity is not { } brain || !TryComp<SiliconLawProviderComponent>(brain, out var brainProvider))
+        if (ent.Comp.BrainEntity is not { } brain || !TryComp<SiliconLawProviderComponent>(brain, out var brainProvider))
         {
             _popup.PopupClient(Loc.GetString("law-emag-cannot-brainless"), ent, args.UserUid);
             return;

@@ -24,7 +24,11 @@ public abstract partial class SharedSiliconLawSystem
     {
         ent.Comp.Lawset = GetLawset(ent.Comp.Laws);
 
-        // Don't dirty here, LawProvider gets dirtied in SyncToLawBound.
+        // In case we ourselves are lawbound, link to this provider.
+        // Mostly for debugging convenience.
+        LinkToProvider(ent.Owner, ent.AsNullable());
+
+        // And then we sync the laws.
         SyncToLawBound(ent.AsNullable());
     }
 
@@ -34,12 +38,6 @@ public abstract partial class SharedSiliconLawSystem
         foreach (var lawbound in iterateEntities)
         {
             UnlinkFromProvider(lawbound, ent.AsNullable());
-        }
-
-        if (TryComp<BorgChassisComponent>(ent, out var borgChassis))
-        {
-            borgChassis.SelfProvider = false;
-            Dirty(ent, borgChassis);
         }
     }
 

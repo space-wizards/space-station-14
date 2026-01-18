@@ -154,6 +154,14 @@ public sealed partial class BorgChassisComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool SelfProvider;
+
+    /// <summary>
+    /// Whether this chassis should attempt to resync its laws when a brain is inserted/removed.
+    /// If false, the provider will not be updated.
+    /// Should only be used if you want to prevent the chassis from changing providers for whatever reason.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ResyncLawsWithBrain = true;
 }
 
 [Serializable, NetSerializable]

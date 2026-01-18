@@ -1017,6 +1017,8 @@ public sealed partial class AdminVerbSystem
 
                 EnsureComp<SiliconLawProviderComponent>(args.Target);
                 _siliconLawSystem.SetProviderLaws(args.Target, _siliconLawSystem.GetLawset(_crewsimovLawset).Laws);
+                EnsureComp<SiliconLawBoundComponent>(args.Target);
+                _siliconLawSystem.LinkToProvider(args.Target, args.Target);
                 _actions.AddAction(args.Target, _actionViewLawsProtoId);
 
                 if (_mindSystem.TryGetMind(args.Target, out var mindId, out _))

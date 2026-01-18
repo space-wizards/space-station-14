@@ -8,6 +8,7 @@ namespace Content.Server.Implants;
 public sealed class RadioImplantSystem : EntitySystem
 {
     [Dependency] private readonly SharedRadioSystem _radio = default!;
+
     public override void Initialize()
     {
         base.Initialize();

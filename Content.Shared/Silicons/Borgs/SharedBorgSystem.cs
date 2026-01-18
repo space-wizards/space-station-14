@@ -1,7 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Events;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Gibbing;
@@ -98,6 +97,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<BorgChassisComponent, SiliconLawProviderChanged>(OnLawProviderChanged);
+        SubscribeLocalEvent<BorgChassisComponent, SiliconLawProviderUnlinked>(OnLawProviderUnlinked);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
@@ -182,6 +182,9 @@ public abstract partial class SharedBorgSystem : EntitySystem
             _mind.TransferTo(mindId, chassis.Owner, mind: mind);
         }
 
+        if (!chassis.Comp.ResyncLawsWithBrain)
+            return;
+
         // If the chassis is a provider, we link it to itself and ignore the laws of the brain.
         // Otherwise, we link the chassis to the brain and get its laws.
         // We do this for cases like xenoborgs or syndieborgs, so we don't grant a free "convert to this lawset" if crew gets a chassis of them.
@@ -207,6 +210,9 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
+
+        if (!chassis.Comp.ResyncLawsWithBrain)
+            return;
 
         _siliconLaws.UnlinkFromProvider(chassis.Owner);
     }
@@ -382,6 +388,17 @@ public abstract partial class SharedBorgSystem : EntitySystem
         // If the chassis provides laws to itself, we make this visible on the borg UI.
         // This is not supposed to be a tell for emags, only for cases like xenoborgs and syndieborgs, who have laws on their own body.
         chassis.Comp.SelfProvider = args.NewProvider == chassis.Owner;
+        Dirty(chassis);
+    }
+
+    private void OnLawProviderUnlinked(Entity<BorgChassisComponent> chassis, ref SiliconLawProviderUnlinked args)
+    {
+        if (!HasComp<SiliconLawProviderComponent>(chassis))
+            return;
+
+        // If we have no provider anymore and get unlinked, cannot provide laws to ourselves.
+        chassis.Comp.SelfProvider = false;
+        Dirty(chassis);
     }
 
     public override void Update(float frameTime)

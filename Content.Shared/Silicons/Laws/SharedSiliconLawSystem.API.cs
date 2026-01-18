@@ -1,7 +1,5 @@
-using Content.Shared.Emag.Systems;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Laws.Components;
-using Content.Shared.Wires;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -130,7 +128,8 @@ public abstract partial class SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Set the laws of a silicon entity while notifying the player.
+    /// Refreshes the laws of an entity based on the linked provider.
+    /// Does nothing if no provider is linked.
     /// </summary>
     public void UpdateLaws(Entity<SiliconLawBoundComponent?> ent)
     {
