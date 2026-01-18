@@ -125,7 +125,7 @@ law-emag-require-panel = The panel must be open to use the EMAG.
 law-emag-cannot-emag-self = You cannot use the EMAG on yourself.
 law-emag-cannot-emag-chassis-no-provider = This chassis has no brain inside.
 law-emag-cannot-not-emaggable = {CAPITALIZE($entity)} cannot be emagged.
-law-emag-cannot-not-brainless = {CAPITALIZE($entity)} has no brain inside.
+law-emag-cannot-brainless = {CAPITALIZE($entity)} has no brain inside.
 
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
