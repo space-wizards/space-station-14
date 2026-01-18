@@ -199,6 +199,4 @@ namespace Content.Shared.Ghost
             AvailableGhostRoles = availableGhostRoleCount;
         }
     }
-
-    public sealed class GhostAttemptEvent : HandledEntityEventArgs;
 }
