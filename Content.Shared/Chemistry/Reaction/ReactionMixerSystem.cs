@@ -36,6 +36,8 @@ public sealed partial class ReactionMixerSystem : EntitySystem
 
         if (ent.Comp.MixerType != ReactionMixerType.Handheld)
             return;
+        
+        ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
 
         args.Handled = true;
 

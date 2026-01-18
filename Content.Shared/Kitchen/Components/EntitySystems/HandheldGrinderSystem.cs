@@ -51,6 +51,8 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         if (args.Handled)
             return;
 
+        ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
+
         args.Handled = true;
 
         var item = args.Used;
