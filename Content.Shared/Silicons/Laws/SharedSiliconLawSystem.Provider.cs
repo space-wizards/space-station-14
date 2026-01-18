@@ -20,12 +20,9 @@ public abstract partial class SharedSiliconLawSystem
     {
         ent.Comp.Lawset = GetLawset(ent.Comp.Laws);
 
-        // In case we ourselves are lawbound, link to this provider.
-        // Mostly for debugging convenience.
+        // In case we ourselves are lawbound, link to this ourselves.
+        // Also caches our laws.
         LinkToProvider(ent.Owner, ent.AsNullable());
-
-        // And then we sync the laws.
-        SyncToLawBound(ent.AsNullable());
     }
 
     private void OnProviderShutdown(Entity<SiliconLawProviderComponent> ent, ref ComponentShutdown args)

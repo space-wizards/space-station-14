@@ -142,7 +142,7 @@ public abstract partial class SharedSiliconLawSystem
         cue ??= ent.Comp.LawUploadSound;
 
         ent.Comp.Lawset.Laws = newLaws;
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"The silicon laws of the provider {ent} have been set to {ent.Comp.Lawset.LoggingString()}.");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"The provider laws {ent} have been set to {ent.Comp.Lawset.LoggingString() ?? "Empty"}.");
         SyncToLawBound(ent, silent ? null : cue);
     }
 
@@ -158,8 +158,12 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp<SiliconLawProviderComponent>(ent.Comp.LawsetProvider, out var provider))
             return;
 
+        if (ent.Comp.Lawset.Laws != provider.Lawset.Laws)
+        {
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"The silicon laws of {ent} have been updated to {provider.Lawset.LoggingString() ?? "Empty"}");
+        }
+
         ent.Comp.Lawset = provider.Lawset.Clone();
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"The silicon laws of {ent} have been updated to {ent.Comp.Lawset.LoggingString()}");
         ent.Comp.Subverted = provider.Subverted;
         Dirty(ent);
     }

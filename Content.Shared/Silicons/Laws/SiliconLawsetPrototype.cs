@@ -24,8 +24,11 @@ public sealed partial class SiliconLawset : IRobustCloneable<SiliconLawset>
     /// <summary>
     /// A single line used in logging laws.
     /// </summary>
-    public string LoggingString()
+    public string? LoggingString()
     {
+        if (Laws.Count == 0)
+            return null;
+
         var laws = new List<string>(Laws.Count);
         foreach (var law in Laws)
         {
