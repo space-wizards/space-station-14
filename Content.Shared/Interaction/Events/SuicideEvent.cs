@@ -1,4 +1,3 @@
-using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
 
@@ -9,7 +8,6 @@ namespace Content.Shared.Interaction.Events;
 /// </summary>
 public sealed class SuicideEvent(EntityUid victim) : HandledEntityEventArgs
 {
-    public DamageSpecifier? DamageSpecifier;
     public ProtoId<DamageTypePrototype>? DamageType;
     public EntityUid Victim { get; private set; } = victim;
 }

@@ -7,6 +7,7 @@ using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Shared.Actions;
 using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -17,6 +18,7 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
@@ -107,6 +109,16 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
+
+            SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide, before: [typeof(SuicideSystem)]);
+        }
+
+        private void OnSuicide(Entity<MindContainerComponent> ent, ref SuicideEvent args)
+        {
+            if (args.Handled || ent.Comp.Mind == null)
+                return;
+
+            OnGhostAttempt(ent.Comp.Mind.Value, false);
         }
 
         private void OnGhostVis(Entity<GhostComponent> ent, ref GetVisMaskEvent args)

@@ -48,7 +48,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide);
+        SubscribeLocalEvent<MindContainerComponent, SuicideAttemptEvent>(OnSuicideAttempt);
 
         SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnVisitingTerminating);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
@@ -166,12 +166,12 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// Checks to see if the user's mind prevents them from suicide
     /// Handles the suicide event without killing the user if true
     /// </summary>
-    private void OnSuicide(EntityUid uid, MindContainerComponent component, SuicideEvent args)
+    private void OnSuicideAttempt(Entity<MindContainerComponent> ent, ref SuicideAttemptEvent args)
     {
         if (args.Handled)
             return;
 
-        if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventCharacterAbandon)
+        if (TryComp(ent.Comp.Mind, out MindComponent? mind) && mind.PreventCharacterAbandon)
             args.Handled = true;
     }
 
