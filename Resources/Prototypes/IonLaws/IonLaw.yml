@@ -202,6 +202,7 @@
     thing:
     - !type:DatasetFill
       dataset: IonStormConcepts
+      weight: 0.5
     - !type:DatasetFill
       dataset: IonStormActions
 
@@ -289,6 +290,7 @@
     allergy:
     - !type:DatasetFill
       dataset: IonStormConcepts
+      weight: 0.5
     - !type:DatasetFill
       dataset: IonStormAllergies
 
@@ -311,6 +313,7 @@
     subjects:
     - !type:DatasetFill
       dataset: IonStormObjects
+      weight: 0.5
     - !type:DatasetFill
       dataset: IonStormCrew
     - !type:RandomManifestFill
