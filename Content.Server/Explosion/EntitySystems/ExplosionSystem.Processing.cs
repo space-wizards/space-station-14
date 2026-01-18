@@ -506,7 +506,10 @@ public sealed partial class ExplosionSystem
         int maxTileBreak,
         bool canCreateVacuum,
         List<(Vector2i GridIndices, Tile Tile)> damagedTiles,
-        ExplosionPrototype type)
+        ExplosionPrototype type,
+        TileHistoryComponent? history,
+        ref Vector2i? cachedChunkIndex,
+        ref TileHistoryChunk? cachedChunk)
     {
         if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef
             || tileDef.Indestructible)
@@ -516,8 +519,6 @@ public sealed partial class ExplosionSystem
             canCreateVacuum = false;
         else if (tileDef.MapAtmosphere)
             canCreateVacuum = true; // is already a vacuum.
-
-        var history = CompOrNull<TileHistoryComponent>(tileRef.GridUid);
 
         // break the tile into its underlying parts
         int tileBreakages = 0;
@@ -529,21 +530,40 @@ public sealed partial class ExplosionSystem
             ContentTileDefinition? newDef = null;
 
             // if we have tile history, we revert the tile to its previous state
-            var chunkIndices = SharedMapSystem.GetChunkIndices(tileRef.GridIndices, TileSystem.ChunkSize);
-            if (history != null && history.ChunkHistory.TryGetValue(chunkIndices, out var chunk) &&
-                chunk.History.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
+            if (history != null)
             {
-                // last entry in the stack
-                var newId = stack[^1];
-                stack.RemoveAt(stack.Count - 1);
-                if (stack.Count == 0)
-                    chunk.History.Remove(tileRef.GridIndices);
+                var chunkIndices = SharedMapSystem.GetChunkIndices(tileRef.GridIndices, TileSystem.ChunkSize);
 
-                Dirty(tileRef.GridUid, history);
+                if (cachedChunkIndex != chunkIndices)
+                {
+                    cachedChunkIndex = chunkIndices;
+                    history.ChunkHistory.TryGetValue(chunkIndices, out cachedChunk);
+                }
 
-                newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
+                if (cachedChunk != null && cachedChunk.History.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
+                {
+                    // last entry in the stack
+                    var newId = stack[^1];
+                    stack.RemoveAt(stack.Count - 1);
+                    if (stack.Count == 0)
+                    {
+                        cachedChunk.History.Remove(tileRef.GridIndices);
+
+                        if (cachedChunk.History.Count == 0)
+                        {
+                            history.ChunkHistory.Remove(chunkIndices);
+                            cachedChunk = null;
+                        }
+                    }
+
+                    if (cachedChunk != null)
+                        cachedChunk.LastModified = Timing.CurTick;
+
+                    newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
+                }
             }
-            else if (tileDef.BaseTurf.HasValue)
+
+            if (newDef == null && tileDef.BaseTurf.HasValue)
             {
                 // otherwise, we just use the base turf
                 newDef = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf.Value];
@@ -562,6 +582,11 @@ public sealed partial class ExplosionSystem
             return;
 
         damagedTiles.Add((tileRef.GridIndices, new Tile(tileDef.TileId)));
+    }
+
+    public void DirtyHistory(EntityUid uid, TileHistoryComponent history)
+    {
+        Dirty(uid, history);
     }
 }
 
@@ -596,9 +621,18 @@ sealed class Explosion
         ///     The actual grid that this corresponds to. If null, this implies space.
         /// </summary>
         public Entity<MapGridComponent>? MapGrid;
+
+        /// <summary>
+        ///     Tile history component for this grid.
+        /// </summary>
+        public TileHistoryComponent? History;
     }
 
     private readonly List<ExplosionData> _explosionData = new();
+
+    private TileHistoryComponent? _currentHistory;
+    private TileHistoryChunk? _currentChunk;
+    private Vector2i? _currentChunkIndices;
 
     /// <summary>
     ///     The explosion intensity associated with each tile iteration.
@@ -665,6 +699,7 @@ sealed class Explosion
     private readonly EntityQuery<DamageableComponent> _damageQuery;
     private readonly EntityQuery<ProjectileComponent> _projectileQuery;
     private readonly EntityQuery<TagComponent> _tagQuery;
+    private readonly EntityQuery<TileHistoryComponent> _historyQuery;
 
     /// <summary>
     ///     Total area that the explosion covers.
@@ -735,6 +770,7 @@ sealed class Explosion
         _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
         _tagQuery = entMan.GetEntityQuery<TagComponent>();
         _projectileQuery = entMan.GetEntityQuery<ProjectileComponent>();
+        _historyQuery = entMan.GetEntityQuery<TileHistoryComponent>();
 
         if (spaceData != null)
         {
@@ -744,7 +780,8 @@ sealed class Explosion
             {
                 TileLists = spaceData.TileLists,
                 Lookup = (mapUid, entMan.GetComponent<BroadphaseComponent>(mapUid)),
-                MapGrid = null
+                MapGrid = null,
+                History = null
             });
 
             _spaceMatrix = spaceMatrix;
@@ -753,11 +790,13 @@ sealed class Explosion
 
         foreach (var grid in gridData)
         {
+            _historyQuery.TryGetComponent(grid.Grid, out var history);
             _explosionData.Add(new ExplosionData
             {
                 TileLists = grid.TileLists,
                 Lookup = (grid.Grid, entMan.GetComponent<BroadphaseComponent>(grid.Grid)),
                 MapGrid = grid.Grid,
+                History = history
             });
         }
 
@@ -806,6 +845,9 @@ sealed class Explosion
                 _currentEnumerator = tileList.GetEnumerator();
                 _currentLookup = _explosionData[_currentDataIndex].Lookup;
                 _currentGrid = _explosionData[_currentDataIndex].MapGrid;
+                _currentHistory = _explosionData[_currentDataIndex].History;
+                _currentChunkIndices = null;
+                _currentChunk = null;
                 _currentDataIndex++;
 
                 // sanity checks, in case something changed while the explosion was being processed over several ticks.
@@ -891,7 +933,17 @@ sealed class Explosion
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
-                    _system.DamageFloorTile(tileRef, _currentIntensity * _tileBreakScale, _maxTileBreak, _canCreateVacuum, tileUpdateList, ExplosionType);
+                {
+                    _system.DamageFloorTile(tileRef,
+                        _currentIntensity * _tileBreakScale,
+                        _maxTileBreak,
+                        _canCreateVacuum,
+                        tileUpdateList,
+                        ExplosionType,
+                        _currentHistory,
+                        ref _currentChunkIndices,
+                        ref _currentChunk);
+                }
             }
             else
             {
@@ -931,6 +983,10 @@ sealed class Explosion
             if (list.Count > 0 && _entMan.EntityExists(grid.Owner))
             {
                 _mapSystem.SetTiles(grid.Owner, grid, list);
+
+                // Dirty history if it exists
+                if (_historyQuery.TryGetComponent(grid.Owner, out var history))
+                    _system.DirtyHistory(grid.Owner, history);
             }
         }
         _tileUpdateDict.Clear();
