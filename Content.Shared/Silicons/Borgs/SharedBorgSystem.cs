@@ -97,6 +97,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, GetCharacterUnrevivableIcEvent>(OnGetUnrevivableIC);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+        SubscribeLocalEvent<BorgChassisComponent, SiliconLawProviderChanged>(OnLawProviderChanged);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
@@ -374,6 +375,13 @@ public abstract partial class SharedBorgSystem : EntitySystem
     private void OnPowerCellChanged(Entity<BorgChassisComponent> chassis, ref PowerCellChangedEvent args)
     {
         TryActivate(chassis);
+    }
+
+    private void OnLawProviderChanged(Entity<BorgChassisComponent> chassis, ref SiliconLawProviderChanged args)
+    {
+        // If the chassis provides laws to itself, we make this visible on the borg UI.
+        // This is not supposed to be a tell for emags, only for cases like xenoborgs and syndieborgs, who have laws on their own body.
+        chassis.Comp.SelfProvider = args.NewProvider == chassis.Owner;
     }
 
     public override void Update(float frameTime)

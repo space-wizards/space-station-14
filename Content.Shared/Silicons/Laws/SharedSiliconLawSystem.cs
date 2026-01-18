@@ -72,13 +72,11 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         // We want this for things like Syndieborgs or Xenoborgs, who depend on chassis specific laws.
         if (TryComp<SiliconLawProviderComponent>(ent, out var chassisProvider))
         {
-            Log.Debug("Fetched chassis laws.");
             args.Laws = chassisProvider.Lawset.Clone();
             args.Handled = true;
         }
-        else if(TryComp<SiliconLawProviderComponent>(ent.Comp.BrainContainer.ContainedEntity, out var brainProvider))
+        else if (TryComp<SiliconLawProviderComponent>(ent.Comp.BrainContainer.ContainedEntity, out var brainProvider))
         {
-            Log.Debug("Fetched brain laws.");
             args.Laws = brainProvider.Lawset.Clone();
             args.LinkedEntity = ent.Comp.BrainContainer.ContainedEntity;
             args.Handled = true;
@@ -91,7 +89,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 /// An event used to get the laws of silicons roundstart, linking them to potential LawProviders.
 /// </summary>
 /// <param name="Entity">The entity we are gathering the laws for.</param>
-/// <param name="LinkedEntity">The entity to to link to, if null, uses the entity this event was raised on.</param>
+/// <param name="LinkedEntity">The entity to link to, if null, uses the entity this event was raised on.</param>
 [ByRefEvent]
 public record struct GetSiliconLawsEvent(EntityUid Entity, EntityUid? LinkedEntity = null)
 {
@@ -99,6 +97,21 @@ public record struct GetSiliconLawsEvent(EntityUid Entity, EntityUid? LinkedEnti
 
     public bool Handled = false;
 }
+
+/// <summary>
+/// Raised on an entity with <see cref="SiliconLawBoundComponent"/> when their provider is changed.
+/// </summary>
+/// <param name="NewProvider">The new provider whose laws are being taken.</param>
+/// <param name="OldProvider">The old provider, can be null if there wasn't one.</param>
+[ByRefEvent]
+public record struct SiliconLawProviderChanged(EntityUid NewProvider, EntityUid? OldProvider = null);
+
+/// <summary>
+/// Raised on an entity with <see cref="SiliconLawBoundComponent"/> when they are unlinked from a provider.
+/// </summary>
+/// <param name="Provider">The provider the entity has been unlinked from..</param>
+[ByRefEvent]
+public record struct SiliconLawProviderUnlinked(EntityUid Provider);
 
 public sealed partial class ToggleLawsScreenEvent : InstantActionEvent
 {

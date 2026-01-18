@@ -26,12 +26,6 @@ public abstract partial class SharedSiliconLawSystem
 
         // Don't dirty here, LawProvider gets dirtied in SyncToLawBound.
         SyncToLawBound(ent.AsNullable());
-
-        if (TryComp<BorgChassisComponent>(ent, out var borgChassis))
-        {
-            borgChassis.SelfProvider = true;
-            Dirty(ent, borgChassis);
-        }
     }
 
     private void OnProviderShutdown(Entity<SiliconLawProviderComponent> ent, ref ComponentShutdown args)

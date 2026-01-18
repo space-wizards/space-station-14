@@ -156,6 +156,9 @@ public abstract partial class SharedSiliconLawSystem
 
         UnlinkFromProvider(lawboundEnt);
 
+        var ev = new SiliconLawProviderChanged(providerEnt, lawboundEnt.Comp.LawsetProvider);
+        RaiseLocalEvent(lawboundEnt, ref ev);
+
         providerEnt.Comp.ExternalLawsets.Add(lawboundEnt.Owner);
         lawboundEnt.Comp.LawsetProvider = providerEnt;
         UpdateLaws(lawboundEnt);
@@ -170,6 +173,12 @@ public abstract partial class SharedSiliconLawSystem
 
         if (!Resolve(lawboundEnt, ref lawboundEnt.Comp, false))
             return;
+
+        if (lawboundEnt.Comp.LawsetProvider != null)
+        {
+            var ev = new SiliconLawProviderUnlinked(lawboundEnt.Comp.LawsetProvider.Value);
+            RaiseLocalEvent(lawboundEnt, ref ev);
+        }
 
         providerEnt.Comp.ExternalLawsets.Remove(lawboundEnt.Owner);
         lawboundEnt.Comp.LawsetProvider = null;
