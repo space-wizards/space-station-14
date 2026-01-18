@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TrixxedHeart & Flareguy
-  changes:
-  - message: Three new tails for Vox.
-    type: Add
-  id: 8914
-  time: '2025-09-03T18:05:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39083
 - author: MissKay1994
   changes:
   - message: Interns will no longer be hired infinitely
@@ -3920,3 +3913,11 @@
   id: 9417
   time: '2026-01-18T21:25:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42504
+- author: sowelipililimute
+  changes:
+  - message: Vent critters, rat king, etc. now ghost when dead instead of requiring
+      the player to /ghost.
+    type: Fix
+  id: 9418
+  time: '2026-01-18T21:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42506
