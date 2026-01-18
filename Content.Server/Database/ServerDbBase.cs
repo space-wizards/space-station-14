@@ -276,7 +276,7 @@ namespace Content.Server.Database
 
                     try
                     {
-                        markingManager.ConvertMarkings(markingsList, profile.Species);
+                        markings = markingManager.ConvertMarkings(markingsList, profile.Species);
                         completion.SetResult();
                     }
                     catch (Exception ex)
