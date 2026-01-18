@@ -42,7 +42,6 @@
     storedSprite:
       state: storage
       sprite: Clothing/Neck/Ties/dettie.rsi
-  components:
   - type: Tag # We do this to remove HamsterWearable because this currently lacks a sprite for it
     tags:
     - ClothMade
