@@ -1,13 +1,13 @@
-﻿using Content.Server.StationRecords.Systems;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Content.Shared.Dataset;
 using Content.Shared.Station;
 using Content.Shared.StationRecords;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Linq;
-using System.Text;
 
-namespace Content.Server.Silicons.Laws;
+namespace Content.Shared.Silicons.Laws;
 
 /// <summary>
 /// A prototype for a random ion storm law.
@@ -24,6 +24,13 @@ public sealed partial class IonLawPrototype : IPrototype
     /// </summary>
     [DataField("string")]
     public string LawString { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// The weight of this law.
+    /// If 0, it won't be picked.
+    /// </summary>
+    [DataField("weight")]
+    public float Weight { get; private set; } = 1.0f;
 
     /// <summary>
     /// The variables to fill in the localization string.
@@ -46,7 +53,7 @@ public abstract partial class IonLawSelector
     [DataField("weight")]
     public virtual float Weight { get; private set; } = 1.0f;
 
-    public abstract object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager);
+    public abstract object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null);
 
     /// <summary>
     /// Picks a random selector from the list based on their weights.
@@ -82,7 +89,7 @@ public sealed partial class DatasetFill : IonLawSelector
     [DataField("dataset")]
     public ProtoId<DatasetPrototype> Dataset { get; private set; }
 
-    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager)
+    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
     {
         if (!proto.TryIndex(Dataset, out var dataset))
             return null;
@@ -93,24 +100,29 @@ public sealed partial class DatasetFill : IonLawSelector
 
 /// <summary>
 /// Selects a random name from the station's crew manifest.
+/// If it fails to find one, picks an entry from IonStormCrew Dataset Prototype.
 /// </summary>
 [DataDefinition]
 public sealed partial class RandomManifestFill : IonLawSelector
 {
-    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager)
+    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
     {
         var stationSystem = entManager.System<SharedStationSystem>();
-        var stationRecordsSystem = entManager.System<StationRecordsSystem>();
+        var stationRecordsSystem = entManager.System<SharedStationRecordsSystem>();
         var stations = stationSystem.GetStations();
         if (stations.Count == 0)
-            return null;
+        {
+            var dataset = proto.Index<DatasetPrototype>("IonStormCrew");
+            return random.Pick(dataset.Values).ToUpper();
+        }
 
         var station = random.Pick(stations);
-        if (!entManager.TryGetComponent<StationRecordsComponent>(station, out var stationRecords))
-            return null;
-
-        if (!stationRecordsSystem.TryGetRandomRecord<GeneralStationRecord>(new Entity<StationRecordsComponent?>(station, stationRecords), out var record))
-            return null;
+        if (!entManager.TryGetComponent<StationRecordsComponent>(station, out var stationRecords) ||
+            !stationRecordsSystem.TryGetRandomRecord<GeneralStationRecord>(new Entity<StationRecordsComponent?>(station, stationRecords), out var record))
+        {
+            var dataset = proto.Index<DatasetPrototype>("IonStormCrew");
+            return random.Pick(dataset.Values).ToUpper();
+        }
 
         var name = "'" + record.Name.ToUpper() + "'";
 
@@ -136,14 +148,14 @@ public sealed partial class JoinedDatasetFill : IonLawSelector
     [DataField("selectors")]
     public List<IonLawSelector> Selectors { get; private set; } = new();
 
-    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager)
+    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
     {
         var sb = new StringBuilder();
         var first = true;
 
         foreach (var selector in Selectors)
         {
-            var value = selector.Select(random, proto, entManager);
+            var value = selector.Select(random, proto, entManager, seenIds);
             if (value == null)
                 continue;
 
@@ -176,12 +188,12 @@ public sealed partial class TranslateFill : IonLawSelector
     [DataField("args")]
     public Dictionary<string, IonLawSelector> Args { get; private set; } = new();
 
-    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager)
+    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
     {
         var args = new List<(string, object)>();
         foreach (var (key, selector) in Args)
         {
-            var value = selector.Select(random, proto, entManager);
+            var value = selector.Select(random, proto, entManager, seenIds);
             if (value == null)
                 continue;
 
@@ -210,7 +222,7 @@ public sealed partial class ConstantFill : IonLawSelector
     [DataField("boolValue")]
     public bool? BoolValue { get; private set; }
 
-    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager)
+    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
     {
         if (BoolValue.HasValue)
             return BoolValue.Value;

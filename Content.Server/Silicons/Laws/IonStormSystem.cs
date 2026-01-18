@@ -8,6 +8,8 @@ using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Station;
+using Content.Shared.StationRecords;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -132,18 +134,61 @@ public sealed class IonStormSystem : EntitySystem
         if (ionLaws.Count == 0)
             return string.Empty;
 
-        var law = _robustRandom.Pick(ionLaws);
-        var args = new List<(string, object)>();
-        foreach (var (key, selectors) in law.Targets)
-        {
-            var selector = IonLawSelector.Pick(_robustRandom, selectors);
-            var value = selector.Select(_robustRandom, _proto, EntityManager);
-            if (value == null)
-                continue;
+        var totalWeight = ionLaws.Sum(x => x.Weight);
+        if (totalWeight <= 0)
+            return string.Empty;
 
-            args.Add((key, value));
+        while (ionLaws.Count > 0)
+        {
+            var law = PickLaw(ionLaws, totalWeight);
+            ionLaws.Remove(law);
+            totalWeight -= law.Weight;
+
+            var args = new List<(string, object)>();
+            var allTargetsMatched = true;
+            foreach (var (key, selectors) in law.Targets)
+            {
+                var value = SelectTarget(selectors);
+                if (value == null)
+                {
+                    allTargetsMatched = false;
+                    break;
+                }
+
+                args.Add((key, value));
+            }
+
+            if (allTargetsMatched)
+                return Loc.GetString(law.LawString, args.ToArray());
         }
 
-        return Loc.GetString(law.LawString, args.ToArray());
+        return string.Empty;
+    }
+
+    private IonLawPrototype PickLaw(List<IonLawPrototype> laws, float totalWeight)
+    {
+        var r = _robustRandom.NextFloat() * totalWeight;
+        foreach (var law in laws)
+        {
+            r -= law.Weight;
+            if (r <= 0)
+                return law;
+        }
+        return laws.Last();
+    }
+
+    private object? SelectTarget(List<IonLawSelector> selectors)
+    {
+        var shuffledSelectors = selectors.ToList();
+        _robustRandom.Shuffle(shuffledSelectors);
+
+        foreach (var selector in shuffledSelectors)
+        {
+            var value = selector.Select(_robustRandom, _proto, EntityManager, null);
+            if (value != null)
+                return value;
+        }
+
+        return null;
     }
 }

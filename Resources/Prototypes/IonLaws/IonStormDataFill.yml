@@ -1,0 +1,135 @@
+﻿# Common targets shared by ion laws
+- type: IonStormDataFill
+  id: IonStormDataFillJoined
+  targets:
+  - !type:JoinedDatasetFill
+    selectors:
+    - !type:JoinedDatasetFill
+      selectors:
+      - !type:DatasetFill
+        dataset: IonStormNumberBase
+      - !type:DatasetFill
+        dataset: IonStormNumberMod
+    - !type:DatasetFill
+      dataset: IonStormAdjectives
+
+- type: IonStormDataFill
+  id: IonStormDataFillSubjects
+  targets:
+  - !type:DatasetFill
+    dataset: IonStormThreats
+  - !type:DatasetFill
+    dataset: IonStormCrew
+  - !type:DatasetFill
+    dataset: IonStormObjects
+  - !type:RandomManifestFill
+    weight: 0.15
+
+- type: IonStormDataFill
+  id: IonStormDataFillWho
+  targets:
+  - !type:DatasetFill
+    dataset: IonStormCrew
+  - !type:TranslateFill
+    key: ion-storm-crew
+  - !type:RandomManifestFill
+    weight: 0.15
+
+- type: IonStormDataFill
+  id: IonStormDataFillThingObjectsConcepts
+  targets:
+  - !type:DatasetFill
+    dataset: IonStormObjects
+  - !type:DatasetFill
+    dataset: IonStormConcepts
+
+- type: IonStormDataFill
+  id: IonStormDataFillWhoGeneral
+  targets:
+  - !type:TranslateFill
+    key: ion-storm-you
+  - !type:TranslateFill
+    key: ion-storm-the-station
+  - !type:TranslateFill
+    key: ion-storm-the-crew
+  - !type:TranslateFill
+    key: ion-storm-the-job
+    args:
+      job: !type:DatasetFill
+        dataset: IonStormCrew
+  - !type:DatasetFill
+    dataset: IonStormAreas
+  - !type:RandomManifestFill
+    weight: 0.15
+
+- type: IonStormDataFill
+  id: IonStormDataFillPlural
+  targets:
+  - !type:ConstantFill
+    boolValue: true
+  - !type:ConstantFill
+    boolValue: false
+
+- type: IonStormDataFill
+  id: IonStormDataFillPart
+  targets:
+  - !type:TranslateFill
+    key: ion-storm-part
+    args:
+      part: !type:ConstantFill
+        boolValue: true
+  - !type:TranslateFill
+    key: ion-storm-part
+    args:
+      part: !type:ConstantFill
+        boolValue: false
+
+- type: IonStormDataFill
+  id: IonStormDataFillCrewRandom
+  targets:
+  - !type:DatasetFill
+    dataset: IonStormCrew
+  - !type:RandomManifestFill
+    weight: 0.15
+
+- type: IonStormDataFill
+  id: IonStormDataFillHarmProtect
+  targets:
+  - !type:DatasetFill
+    dataset: IonStormConcepts
+  - !type:JoinedDatasetFill
+    selectors:
+    - !type:DatasetFill
+      dataset: IonStormAdjectives
+    - !type:DatasetFill
+      dataset: IonStormThreats
+  - !type:JoinedDatasetFill
+    selectors:
+    - !type:DatasetFill
+      dataset: IonStormAdjectives
+    - !type:DatasetFill
+      dataset: IonStormObjects
+  - !type:TranslateFill
+    key: ion-storm-adjective-things
+    args:
+      adjective: !type:DatasetFill
+        dataset: IonStormAdjectives
+  - !type:DatasetFill
+    dataset: IonStormCrew
+  - !type:TranslateFill
+    key: ion-storm-x-and-y
+    args:
+      x: !type:DatasetFill
+        dataset: IonStormCrew
+      y: !type:DatasetFill
+        dataset: IonStormCrew
+  - !type:RandomManifestFill
+    weight: 0.15
+
+- type: IonStormDataFill
+  id: IonStormDataFillFeelings
+  targets:
+  - !type:DatasetFill
+    dataset: IonStormFeelings
+  - !type:DatasetFill
+    dataset: IonStormFeelingsPlural
