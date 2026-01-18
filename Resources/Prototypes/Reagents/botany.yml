@@ -144,7 +144,7 @@
           - !type:ReagentCondition
             reagent: RobustHarvest
             min: 30
-      - !type:AdjustReagent # This is 5u more than two advanced jet injectors worth.
+      - !type:AdjustReagent
         reagent: RobustHarvest
         amount: -999 # Metabolism is paused while polymorphed, so this is to avoid the 999u unkillable diona antag
         conditions:
@@ -152,7 +152,7 @@
           type: [Plant]
         - !type:ReagentCondition
           reagent: RobustHarvest
-          min: 45
+          min: 45 # This is 5u more than two advanced jet injectors worth. Basically, you can get 40u of RH in your system, someone cuts you down, and you have that much RH to go off with.
 
 - type: reagent
   id: Sedin
