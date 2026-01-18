@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using NpgsqlTypes;
@@ -263,7 +264,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     (address, ban_id);
                 """);
 
-            migrationBuilder.Sql("""
+            migrationBuilder.Sql($"""
                 -- REMOVE:
                 -- TRUNCATE ban RESTART IDENTITY CASCADE;
 
@@ -273,7 +274,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 INSERT INTO
                 	ban	(ban_id, type, playtime_at_note, ban_time, expiration_time, reason, severity, banning_admin, last_edited_by_id, last_edited_at, exempt_flags, auto_delete, hidden)
                 SELECT
-                	server_ban_id, 0, playtime_at_note, ban_time, expiration_time, reason, severity, banning_admin, last_edited_by_id, last_edited_at, exempt_flags, auto_delete, hidden
+                	server_ban_id, {(int)BanType.Server}, playtime_at_note, ban_time, expiration_time, reason, severity, banning_admin, last_edited_by_id, last_edited_at, exempt_flags, auto_delete, hidden
                 FROM
                 	server_ban;
 
@@ -400,7 +401,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 INSERT INTO
                 	ban	(ban_id, type, playtime_at_note, ban_time, expiration_time, reason, severity, banning_admin, last_edited_by_id, last_edited_at, exempt_flags, auto_delete, hidden)
                 SELECT
-                	im.ban_id, 1, playtime_at_note, ban_time, expiration_time, reason, severity, banning_admin, last_edited_by_id, last_edited_at, 0, FALSE, hidden
+                	im.ban_id, {(int)BanType.Role}, playtime_at_note, ban_time, expiration_time, reason, severity, banning_admin, last_edited_by_id, last_edited_at, 0, FALSE, hidden
                 FROM
                 	_role_ban_import_id_map im
                 INNER JOIN _role_ban_import_merge_map mm
@@ -504,6 +505,25 @@ namespace Content.Server.Database.Migrations.Postgres
 
             migrationBuilder.DropTable(
                 name: "server_ban");
+
+            migrationBuilder.Sql($"""
+                CREATE OR REPLACE FUNCTION send_server_ban_notification()
+                    RETURNS trigger AS $$
+                    BEGIN
+                        PERFORM pg_notify(
+                            'ban_notification',
+                            json_build_object('ban_id', NEW.ban_id)::text
+                        );
+                        RETURN NEW;
+                    END;
+                    $$ LANGUAGE plpgsql;
+
+                CREATE TRIGGER notify_on_server_ban_insert
+                    AFTER INSERT ON ban
+                    FOR EACH ROW
+                    WHEN (NEW.type = {(int)BanType.Server})
+                    EXECUTE FUNCTION send_server_ban_notification();
+                """);
         }
 
         /// <inheritdoc />
