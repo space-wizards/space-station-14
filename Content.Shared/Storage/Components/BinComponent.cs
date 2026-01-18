@@ -58,9 +58,8 @@ public sealed partial class BinComponent : Component
     public int MaxItems = 20;
 
     /// <summary>
-    /// Whether this bin is shuffled.
+    /// Whether newly inserted items are put in a random order or not.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Shuffle;
-
 }
