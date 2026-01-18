@@ -190,9 +190,9 @@
     stackType: FloorTileDarkPavementVertical
 
 - type: entity
-  name: dark steel continuous slat tile
   parent: FloorTileItemDark
   id: FloorTileItemDarkSlatsContinuous
+  name: dark steel continuous slat tile
   components:
   - type: Sprite
     state: dark-vertical-slats
@@ -204,9 +204,9 @@
     stackType: FloorTileDarkSlatsContinuous
 
 - type: entity
-  name: dark steel bordered vertical slat tile
   parent: FloorTileItemDark
   id: FloorTileItemDarkVerticalSlatsBordered
+  name: dark steel bordered vertical slat tile
   components:
   - type: Sprite
     state: dark-vertical-slats
@@ -218,9 +218,9 @@
     stackType: FloorTileDarkVerticalSlatsBordered
 
 - type: entity
-  name: dark steel bordered horizontal slat tile
   parent: FloorTileItemDark
   id: FloorTileItemDarkHorizontalSlatsBordered
+  name: dark steel bordered horizontal slat tile
   components:
   - type: Sprite
     state: dark-horizontal-slats
@@ -307,9 +307,9 @@
     stackType: FloorTileSteelDiagonal
 
 - type: entity
-  name: steel continuous slat tile
   parent: FloorTileItemSteel
   id: FloorTileItemSteelSlatsContinuous
+  name: steel continuous slat tile
   components:
   - type: Sprite
     state: steel-vertical-slats
@@ -321,9 +321,9 @@
     stackType: FloorTileSteelSlatsContinuous
 
 - type: entity
-  name: steel vertical bordered slat tile
   parent: FloorTileItemSteel
   id: FloorTileItemSteelVerticalSlatsBordered
+  name: steel vertical bordered slat tile
   components:
   - type: Sprite
     state: steel-vertical-slats
@@ -335,9 +335,9 @@
     stackType: FloorTileSteelVerticalSlatsBordered
 
 - type: entity
-  name: steel horizontal bordered slat tile
   parent: FloorTileItemSteel
   id: FloorTileItemSteelHorizontalSlatsBordered
+  name: steel horizontal bordered slat tile
   components:
   - type: Sprite
     state: steel-horizontal-slats
@@ -550,9 +550,9 @@
     stackType: FloorTileWhitePavementVertical
 
 - type: entity
-  name: white steel vertical bordered slat tile
   parent: FloorTileItemWhite
   id: FloorTileItemWhiteVerticalSlatsBordered
+  name: white steel vertical bordered slat tile
   components:
   - type: Sprite
     state: white-vertical-slats
@@ -564,9 +564,9 @@
     stackType: FloorTileWhiteVerticalSlatsBordered
 
 - type: entity
-  name: white steel continuous slat tile
   parent: FloorTileItemWhite
   id: FloorTileItemWhiteSlatsContinuous
+  name: white steel continuous slat tile
   components:
   - type: Sprite
     state: white-vertical-slats
@@ -578,9 +578,9 @@
     stackType: FloorTileWhiteSlatsContinuous
 
 - type: entity
-  name: white steel horizontal bordered slat tile
   parent: FloorTileItemWhite
   id: FloorTileItemWhiteHorizontalSlatsBordered
+  name: white steel horizontal bordered slat tile
   components:
   - type: Sprite
     state: white-horizontal-slats
