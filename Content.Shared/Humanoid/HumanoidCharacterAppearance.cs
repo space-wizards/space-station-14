@@ -54,7 +54,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         return new(EyeColor, SkinColor, newMarkings);
     }
 
-    public static HumanoidCharacterAppearance DefaultWithSpecies(string species)
+    public static HumanoidCharacterAppearance DefaultWithSpecies(ProtoId<SpeciesPrototype> species, Sex sex)
     {
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
         var speciesPrototype = protoMan.Index<SpeciesPrototype>(species);
@@ -66,11 +66,12 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             _ => skinColoration.ClosestSkinColor(speciesPrototype.DefaultSkinTone),
         };
 
-        return new(
+        var appearance = new HumanoidCharacterAppearance(
             Color.Black,
             skinColor,
             new()
         );
+        return EnsureValid(appearance, species, sex);
     }
 
     private static IReadOnlyList<Color> _realisticEyeColors = new List<Color>

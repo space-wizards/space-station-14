@@ -97,22 +97,27 @@ public abstract partial class SharedVisualBodySystem
         RaiseLocalEvent(ent, ref markingsEvt);
     }
 
-    public void ApplyProfileTo(Entity<VisualBodyComponent?> ent, HumanoidCharacterProfile profile)
+    public void ApplyAppearanceTo(Entity<VisualBodyComponent?> ent, HumanoidCharacterAppearance appearance, Sex sex)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
         var profileEvt = new ApplyOrganProfileDataEvent(new()
             {
-                Sex = profile.Sex,
-                SkinColor = profile.Appearance.SkinColor,
-                EyeColor = profile.Appearance.EyeColor,
+                Sex = sex,
+                SkinColor = appearance.SkinColor,
+                EyeColor = appearance.EyeColor,
             },
             null);
         RaiseLocalEvent(ent, ref profileEvt);
 
-        var markingsEvt = new ApplyOrganMarkingsEvent(profile.Appearance.Markings);
+        var markingsEvt = new ApplyOrganMarkingsEvent(appearance.Markings);
         RaiseLocalEvent(ent, ref markingsEvt);
+    }
+
+    public void ApplyProfileTo(Entity<VisualBodyComponent?> ent, HumanoidCharacterProfile profile)
+    {
+        ApplyAppearanceTo(ent, profile.Appearance, profile.Sex);
     }
 
     public void ApplyProfile(EntityUid ent, OrganProfileData profile)
