@@ -12,7 +12,7 @@
   contrabandInventory:
     PillCanisterRandom: 1
 
-# All access version. Should reflect the stock of a NanoMed, but less powerful
+# All access version. Should reflect the stock of NanoMedInventory, but less powerful
 - type: vendingMachineInventory
   id: NanoMedCivilianWallInventory
   startingInventory:
@@ -45,15 +45,8 @@
     Brutepack: 4
     Ointment: 4
     Bloodpack: 4
-    ChemistryBottleSaline: 2
-    ChemistryBottleBicaridine: 2
-    ChemistryBottleDexalin: 2
-    ChemistryBottleDylovene: 2
-    ChemistryBottleHyronalin: 2
-    ChemistryBottleKelotane: 2
-    ChemistryBottleEpinephrine: 2
     # Optional / Situational Gear
-    BoxBottle: 2
+    BoxBottle: 3
     Defibrillator: 2 # Easily shared between several people
     Syringe: 4
     PillCanisterTricordrazine: 4
@@ -63,7 +56,7 @@
     PillSpaceDrugs: 3
     FoodApple: 1
 
-# All access version. Should reflect the stock of a NanoMedCivilian, but with more stock
+# All access version. Should reflect NanoMedCivilianWallInventory, but with more stock
 - type: vendingMachineInventory
   id: NanoMedCivilianInventory
   startingInventory:
