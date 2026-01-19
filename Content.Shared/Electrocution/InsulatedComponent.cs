@@ -1,7 +1,6 @@
-using Content.Shared.Electrocution;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Insulated
+namespace Content.Shared.Electrocution
 {
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     [Access(typeof(SharedElectrocutionSystem))]

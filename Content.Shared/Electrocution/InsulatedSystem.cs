@@ -2,7 +2,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 
-namespace Content.Shared.Insulated
+namespace Content.Shared.Electrocution
 {
     public sealed class InsulatedSystem : EntitySystem
     {
