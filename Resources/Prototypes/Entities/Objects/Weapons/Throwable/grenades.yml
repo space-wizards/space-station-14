@@ -93,7 +93,7 @@
     - timer
   - type: Explosive
     explosionType: Minibomb
-    totalIntensity: 100
+    totalIntensity: 200
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60
   - type: Appearance
