@@ -508,7 +508,7 @@ public sealed partial class ExplosionSystem
         List<(Vector2i GridIndices, Tile Tile)> damagedTiles,
         ExplosionPrototype type,
         TileHistoryComponent? history,
-        TileHistoryChunk? chunk)
+        ref TileHistoryChunk? chunk)
     {
         if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef
             || tileDef.Indestructible)
@@ -542,10 +542,11 @@ public sealed partial class ExplosionSystem
                     {
                         var chunkIndices = SharedMapSystem.GetChunkIndices(tileRef.GridIndices, TileSystem.ChunkSize);
                         history.ChunkHistory.Remove(chunkIndices);
+                        chunk = null;
                     }
                 }
 
-                if (chunk.History.Count > 0)
+                if (chunk != null && chunk.History.Count > 0)
                     chunk.LastModified = Timing.CurTick;
 
                 newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
@@ -930,7 +931,7 @@ sealed class Explosion
                         tileUpdateList,
                         ExplosionType,
                         _currentHistory,
-                        _currentChunk);
+                        ref _currentChunk);
                 }
             }
             else
