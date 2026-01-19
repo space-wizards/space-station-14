@@ -100,7 +100,7 @@
   components:
   - type: EmitSoundOnTrigger
     sound:
-      path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
+      path: /Audio/Effects/Grenades/Supermatter/supermatter.start.ogg
       params:
         volume: 5
   - type: AmbientSound
@@ -108,7 +108,7 @@
     volume: -5
     range: 14
     sound:
-      path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+      path: /Audio/Effects/Grenades/Supermatter/supermatter.loop.ogg
   - type: GravityWell
     maxRange: 8
     baseRadialAcceleration: 10

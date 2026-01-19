@@ -51,10 +51,13 @@ uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke, perfe
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a 5 second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
-uplink-singularity-grenade-name = Singularity Grenade
+uplink-supermatter-grenade-name = Gravitational (Supermatter) Grenade
+uplink-supermatter-grenade-desc = Grenade with supermatter micro crystal, that is one step from delamination.
+
+uplink-singularity-grenade-name = Gravitational (Singularity) Grenade
 uplink-singularity-grenade-desc = Grenade that simulates the power of a singularity, generates powerful gravity well.
 
-uplink-whitehole-grenade-name = Whitehole Grenade
+uplink-whitehole-grenade-name = Gravitational (Whitehole) Grenade
 uplink-whitehole-grenade-desc = Grenade that repulses everything around for about 10 seconds. Very useful in small rooms and for chasing someone.
 
 uplink-penguin-grenade-name = Grenade Penguin
