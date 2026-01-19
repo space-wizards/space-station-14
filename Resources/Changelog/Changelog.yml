@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Sentience Event can no longer target Corgis, Smile or Mothroaches
-    type: Tweak
-  id: 8911
-  time: '2025-09-03T12:00:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39810
-- author: TiniestShark
-  changes:
-  - message: Reptilians now have Mask/Helmet displacements. Snoots are no longer smushed.
-    type: Add
-  id: 8912
-  time: '2025-09-03T16:45:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39351
-- author: TiniestShark
-  changes:
-  - message: Added unique tail sprites to Hard/Softsuits for reptilians! (Wagging
-      animation not supported)
-    type: Add
-  id: 8913
-  time: '2025-09-03T16:45:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35842
-- author: TrixxedHeart & Flareguy
-  changes:
-  - message: Three new tails for Vox.
-    type: Add
-  id: 8914
-  time: '2025-09-03T18:05:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39083
 - author: MissKay1994
   changes:
   - message: Interns will no longer be hired infinitely
@@ -3669,14 +3640,6 @@
   id: 9385
   time: '2026-01-13T13:44:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42334
-- author: Velken, Murphyneko
-  changes:
-  - message: Station tiles and floors can now be placed on planets, asteroids and
-      different platings.
-    type: Tweak
-  id: 9386
-  time: '2026-01-13T14:05:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38898
 - author: ScarKy0
   changes:
   - message: The throwing knives bundle now comes with 8 knives instead of 4.
@@ -3782,14 +3745,6 @@
   id: 9398
   time: '2026-01-14T21:40:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42289
-- author: TriviaSolari
-  changes:
-  - message: Entities that are airtight on all sides (such as full-tile walls, airlocks,
-      and windows) now skip rotational checks for airtightness when initialized.
-    type: Tweak
-  id: 9399
-  time: '2026-01-15T02:46:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42390
 - author: ArtisticRoomba
   changes:
   - message: The TEG now produces 75% more power. This is to counteract tritium fires
@@ -3852,15 +3807,6 @@
   id: 9407
   time: '2026-01-15T20:01:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42040
-- author: Velken
-  changes:
-  - message: RCD can no longer spam lights in the same spot.
-    type: Fix
-  - message: RCD can no longer be used to destroy indestructible tiles.
-    type: Fix
-  id: 9408
-  time: '2026-01-15T20:39:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42432
 - author: B_Kirill
   changes:
   - message: Added camera map. Cutting MAP wire hides camera from map while keeping
@@ -3916,3 +3862,60 @@
   id: 9414
   time: '2026-01-16T17:19:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42448
+- author: Kowlin
+  changes:
+  - message: All intern jobs now lock out after 10 hours, up from 5 hours.
+    type: Tweak
+  - message: Security Officer now requires 4 hours of Security Cadet, up from 2.5
+      hours.
+    type: Tweak
+  - message: Head of Security now requires 3 hours of Warden, up from 1 hour.
+    type: Tweak
+  id: 9415
+  time: '2026-01-17T20:24:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42372
+- author: sowelipililimute
+  changes:
+  - message: Vox can eat trash again.
+    type: Fix
+  id: 9416
+  time: '2026-01-18T20:44:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42503
+- author: sowelipililimute
+  changes:
+  - message: Gibbing now drops your inventory contents again.
+    type: Fix
+  id: 9417
+  time: '2026-01-18T21:25:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42504
+- author: sowelipililimute
+  changes:
+  - message: Vent critters, rat king, etc. now ghost when dead instead of requiring
+      the player to /ghost.
+    type: Fix
+  id: 9418
+  time: '2026-01-18T21:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42506
+- author: Thinbug0
+  changes:
+  - message: Peek at the future with this new Magic 9 Ball!
+    type: Add
+  id: 9419
+  time: '2026-01-18T23:16:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42189
+- author: aada
+  changes:
+  - message: Items given to the medical department round start have been significantly
+      rebalanced. In particular, players no longer spawn with their tools and must
+      get them from a locker or vending machine.
+    type: Tweak
+  id: 9420
+  time: '2026-01-19T05:21:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42423
+- author: DDeegan
+  changes:
+  - message: Thieving Beacons set their coordinates automatically when unfolded.
+    type: Tweak
+  id: 9421
+  time: '2026-01-19T09:18:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42520
