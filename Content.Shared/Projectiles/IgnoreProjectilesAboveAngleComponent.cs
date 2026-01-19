@@ -26,4 +26,10 @@ public sealed partial class IgnoreProjectilesAboveAngleComponent : Component
     /// </summary>
     [DataField]
     public Angle Angle = Angle.FromDegrees(90);
+
+    /// <summary>
+    /// If the shooter is farther away than this, the projectile will hit anyway.
+    /// </summary>
+    [DataField]
+    public double MaximumDistance = 0.75;
 }
