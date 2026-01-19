@@ -1,0 +1,39 @@
+# Top level timer for master medical players
+- type: loadoutEffectGroup
+  id: MedicalExpertTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChemist
+      time: 6h
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 6h
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 60h
+
+# Mid-level timer for players who have a solid amount of experience
+- type: loadoutEffectGroup
+  id: MedicalJourneymanTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 20h
+
+# Mid-level timer for CMO
+- type: loadoutEffectGroup
+  id: CMOJourneymanTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 20h
