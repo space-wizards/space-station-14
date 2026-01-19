@@ -199,6 +199,37 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Checks if a projectile should pass through an entity with <see cref="IgnoreProjectilesAboveAngleComponent"/>
+    /// </summary>
+    public bool IgnoreAboveAngleCheck(Entity<IgnoreProjectilesAboveAngleComponent> targetUid,
+        EntityUid projectile,
+        EntityUid? shooter)
+    {
+        if (shooter is {} projShooter)
+        {
+            var shooterPosition = _transform.GetWorldPosition(projShooter);
+            var targetEntityPosition = _transform.GetWorldPosition(targetUid);
+
+            if (!(shooterPosition - targetEntityPosition).IsShorterThan((float)targetUid.Comp.MaximumDistance))
+            {
+                return false;
+            }
+        }
+
+        var projectileAngle = _transform.GetWorldRotation(projectile);
+        var targetEntityAngle = _transform.GetWorldRotation(targetUid);
+
+        if (targetUid.Comp.Backwards)
+        {
+            projectileAngle = projectileAngle.Opposite();
+        }
+
+        var angleDifference = projectileAngle - targetEntityAngle;
+
+        return (double.Abs(angleDifference.Reduced().Theta) < targetUid.Comp.Angle.Theta) == targetUid.Comp.Reversed;
+    }
+
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
         if (component.IgnoreShooter && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon))
@@ -207,39 +238,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         }
 
-        if (TryComp(args.OtherEntity, out IgnoreProjectilesAboveAngleComponent? ignoreComp))
+        if (TryComp(args.OtherEntity, out IgnoreProjectilesAboveAngleComponent? ignoreComp)
+            && IgnoreAboveAngleCheck((args.OtherEntity, ignoreComp), uid, component.Shooter))
         {
-            var tooFar = false;
-
-            if (component.Shooter is { } shooter)
-            {
-                var shooterPosition = _transform.GetWorldPosition(shooter);
-                var targetEntityPosition = _transform.GetWorldPosition(args.OtherEntity);
-
-                if (!(shooterPosition - targetEntityPosition).IsShorterThan((float)ignoreComp.MaximumDistance))
-                {
-                    tooFar = true;
-                }
-            }
-
-            if (!tooFar)
-            {
-                var projectileAngle = _transform.GetWorldRotation(uid);
-                var targetEntityAngle = _transform.GetWorldRotation(args.OtherEntity);
-
-                if (ignoreComp.Backwards)
-                {
-                    projectileAngle = projectileAngle.Opposite();
-                }
-
-                var angleDifference = projectileAngle - targetEntityAngle;
-
-                if ((double.Abs(angleDifference.Reduced().Theta) < ignoreComp.Angle.Theta) == ignoreComp.Reversed)
-                {
-                    args.Cancelled = true;
-                    return;
-                }
-            }
+            args.Cancelled = true;
+            return;
         }
 
     }
