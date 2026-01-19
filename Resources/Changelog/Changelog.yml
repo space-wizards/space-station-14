@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MissKay1994
-  changes:
-  - message: Interns will no longer be hired infinitely
-    type: Tweak
-  id: 8915
-  time: '2025-09-03T20:16:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40001
 - author: Hitlinemoss
   changes:
   - message: Added the senior courier PDA for Cargo Technicians with a significant
@@ -3919,3 +3912,18 @@
   id: 9421
   time: '2026-01-19T09:18:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42520
+- author: ArtisticRoomba
+  changes:
+  - message: The flashbang, explosive grenade, electrical disruptor kit, and cluster
+      grenade have been removed from the traitor uplink.
+    type: Remove
+  - message: The grenade penguin has been lowered in price to 4 TC.
+    type: Tweak
+  - message: The syndicate bomb has had its explosive power tweaked. It is now a more
+      concentrated explosion over a smaller area.
+    type: Tweak
+  - message: The EMP Grenade now detonates on impact.
+    type: Tweak
+  id: 9422
+  time: '2026-01-19T22:10:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42477
