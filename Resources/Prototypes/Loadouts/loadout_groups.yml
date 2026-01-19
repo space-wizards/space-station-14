@@ -11,16 +11,20 @@
   - PlushieLizard
   - PlushieSpaceLizard
   - ThreeCandles
-  - Lighter
-  - CigPackGreen
-  - CigPackRed
-  - CigPackBlue
-  - CigPackBlack
-  - CigarCase
-  - CigarGold
-  - BoxFolderBaseThreePapers
-  - BoxFolderPlasticClipboardThreePapers
-  - BoxFolderClipboardThreePapers
+  loadoutGroups:
+  - PridePins
+  - Smokeables
+  - Towels
+  - Canes
+  - Folders
+
+- type: loadoutGroup
+  id: PridePins
+  name: loadout-group-pridepins
+  description: loadout-group-description-pridepins
+  dummyEntity: ClothingNeckLGBTPin
+  minLimit: 0
+  loadouts:
   - ClothingNeckLGBTPin
   - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
@@ -39,12 +43,28 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
-  - OffsetCane
-  - OffsetCaneWood
-  - OffsetCaneClown
-  - OffsetCaneMime
-  - OffsetCaneNT
-  - Cane
+
+- type: loadoutGroup
+  id: Smokeables
+  name: loadout-group-smokeables
+  description: loadout-group-description-smokeables
+  dummyEntity: CigPackRed
+  minLimit: 0
+  loadouts:
+  - CigPackGreen
+  - CigPackRed
+  - CigPackBlue
+  - CigPackBlack
+  - CigarCase
+  - CigarGold
+  - Lighter
+
+- type: loadoutGroup
+  id: Towels
+  name: loadout-group-towels
+  description: loadout-group-description-towels
+  minLimit: 0
+  loadouts:
   - TowelColorWhite
   - TowelColorGray
   - TowelColorBlack
@@ -61,6 +81,30 @@
   - TowelColorMime
   - TowelColorSilver
   - TowelColorGold
+
+- type: loadoutGroup
+  id: Canes
+  name: loadout-group-canes
+  description: loadout-group-description-canes
+  dummyEntity: Cane
+  minLimit: 0
+  loadouts:
+  - OffsetCane
+  - OffsetCaneWood
+  - OffsetCaneClown
+  - OffsetCaneMime
+  - OffsetCaneNT
+  - Cane
+
+- type: loadoutGroup
+  id: Folders
+  name: loadout-group-folders
+  description: loadout-group-description-folders
+  minLimit: 0
+  loadouts:
+  - BoxFolderBaseThreePapers
+  - BoxFolderPlasticClipboardThreePapers
+  - BoxFolderClipboardThreePapers
 
 - type: loadoutGroup
   id: Glasses

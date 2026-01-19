@@ -1,0 +1,23 @@
+<BoxContainer Name="Container" xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         Orientation="Horizontal"
+         HorizontalExpand="True"
+         MouseFilter="Ignore"
+         Margin="0 0 0 5">
+    <ContainerButton Name="ToggleButton" ToggleMode="True" Margin="0 0 5 0" VerticalExpand="False" HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal">
+            <TextureRect Name="DropdownArrow" SetSize="12 12" Stretch="Scale" />
+            <Label Name="Label" Margin="10 0 2 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" Align="End" Margin="10 0">
+            <Label Name="SelectedCountLabel" Access="Public"/>
+        </BoxContainer>
+    </ContainerButton>
+    <PanelContainer SetSize="64 64" HorizontalAlignment="Right">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+        </PanelContainer.PanelOverride>
+        <SpriteView Name="Sprite" Scale="4 4" MouseFilter="Stop"/>
+    </PanelContainer>
+</BoxContainer>

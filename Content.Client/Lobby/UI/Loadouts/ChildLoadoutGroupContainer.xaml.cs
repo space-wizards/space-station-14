@@ -15,7 +15,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 /// Exposes its internal BoxContainer (SubGridContainer) via the <see cref="Grid"/> property for adding children.
 /// </summary>
 [GenerateTypedNameReferences]
-public sealed partial class SubLoadoutContainer : PanelContainer
+public sealed partial class ChildLoadoutGroupContainer : PanelContainer
 {
     public BoxContainer Grid => SubGridContainer;
 }
