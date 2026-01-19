@@ -36,16 +36,11 @@ public sealed partial class ReactionMixerSystem : EntitySystem
 
         if (ent.Comp.MixerType != ReactionMixerType.Handheld)
             return;
-        
-        ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
 
         args.Handled = true;
 
         if (!CanMix(ent.AsNullable(), ent))
             return;
-
-        if (_net.IsServer) // Cannot cancel predicted audio.
-            ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.MixingSound, ent)?.Entity;
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
@@ -62,7 +57,8 @@ public sealed partial class ReactionMixerSystem : EntitySystem
             BreakOnMove = true
         };
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
+        if (_doAfter.TryStartDoAfter(doAfterArgs))
+            ent.Comp.AudioStream = _audio.PlayPredicted(ent.Comp.MixingSound, ent, args.User)?.Entity ?? ent.Comp.AudioStream;
     }
 
     private void OnAfterInteract(Entity<ReactionMixerComponent> ent, ref AfterInteractEvent args)
@@ -73,12 +69,11 @@ public sealed partial class ReactionMixerSystem : EntitySystem
         if (!CanMix(ent.AsNullable(), args.Target.Value))
             return;
 
-        if (_net.IsServer) // Cannot cancel predicted audio.
-            ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.MixingSound, ent)?.Entity;
-
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.TimeToMix, new ReactionMixDoAfterEvent(), ent, args.Target.Value, ent);
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
+        if (_doAfter.TryStartDoAfter(doAfterArgs))
+            ent.Comp.AudioStream = _audio.PlayPredicted(ent.Comp.MixingSound, ent, args.User)?.Entity ?? ent.Comp.AudioStream;
+
         args.Handled = true;
     }
 
