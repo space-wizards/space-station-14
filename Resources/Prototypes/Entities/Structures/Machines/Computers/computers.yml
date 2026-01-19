@@ -1747,6 +1747,9 @@
       state: generic_panel_open
   # - type: Computer
   #   board: SyndicateCommsComputerCircuitboard
+  - type: Anchorable
+    flags:
+    - Anchorable # No taking the console along!
   - type: PointLight
     radius: 1.5
     energy: 1.6

@@ -2027,7 +2027,8 @@
     energy: 5
     netsync: false
   - type: RadiationSource
-    intensity: 0.3
+    intensity: 0.5
+    slope: 0.3
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
