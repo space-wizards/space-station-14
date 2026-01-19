@@ -508,7 +508,7 @@ public sealed partial class ExplosionSystem
         List<(Vector2i GridIndices, Tile Tile)> damagedTiles,
         ExplosionPrototype type,
         TileHistoryComponent? history,
-        ref TileHistoryChunk? chunk)
+        ref (TileHistoryChunk? Chunk, Vector2i Indices)? chunk)
     {
         if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef
             || tileDef.Indestructible)
@@ -529,25 +529,24 @@ public sealed partial class ExplosionSystem
             ContentTileDefinition? newDef = null;
 
             // if we have tile history, we revert the tile to its previous state
-            if (history != null && chunk != null && chunk.History.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
+            if (history != null && chunk != null && chunk.Value.Chunk != null && chunk.Value.Chunk.History.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
             {
                 // last entry in the stack
                 var newId = stack[^1];
-                stack.RemoveAt(stack.Count - 1);
-                if (stack.Count == 0)
+                if (stack.Count == 1)
                 {
-                    chunk.History.Remove(tileRef.GridIndices);
-
-                    if (chunk.History.Count == 0)
+                    chunk.Value.Chunk.History.Remove(tileRef.GridIndices);
+                    if (chunk.Value.Chunk.History.Count == 0)
                     {
-                        var chunkIndices = SharedMapSystem.GetChunkIndices(tileRef.GridIndices, TileSystem.ChunkSize);
-                        history.ChunkHistory.Remove(chunkIndices);
+                        history.ChunkHistory.Remove(chunk.Value.Indices);
                         chunk = null;
                     }
                 }
-
-                if (chunk != null && chunk.History.Count > 0)
-                    chunk.LastModified = Timing.CurTick;
+                else
+                {
+                    stack.RemoveAt(stack.Count - 1);
+                    chunk.Value.Chunk.LastModified = Timing.CurTick;
+                }
 
                 newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
             }
@@ -616,8 +615,7 @@ sealed class Explosion
 
     private Entity<MapGridComponent, TileHistoryComponent?>? _currentGrid;
     private TileHistoryComponent? _currentHistory;
-    private TileHistoryChunk? _currentChunk;
-    private Vector2i? _currentChunkIndices;
+    private (TileHistoryChunk? Chunk, Vector2i Indices)? _currentChunk;
 
     /// <summary>
     ///     The explosion intensity associated with each tile iteration.
@@ -828,7 +826,6 @@ sealed class Explosion
                 _currentLookup = _explosionData[_currentDataIndex].Lookup;
                 _currentGrid = _explosionData[_currentDataIndex].MapGrid;
                 _currentHistory = _currentGrid?.Comp2;
-                _currentChunkIndices = null;
                 _currentChunk = null;
                 _currentDataIndex++;
 
@@ -918,10 +915,10 @@ sealed class Explosion
                 {
                     var tileIndices = _currentEnumerator.Current;
                     var chunkIndices = SharedMapSystem.GetChunkIndices(tileIndices, TileSystem.ChunkSize);
-                    if (_currentChunkIndices != chunkIndices)
+                    if (_currentChunk?.Indices != chunkIndices)
                     {
-                        _currentChunkIndices = chunkIndices;
-                        _currentHistory?.ChunkHistory.TryGetValue(chunkIndices, out _currentChunk);
+                        var chunk = _currentHistory?.ChunkHistory.GetValueOrDefault(chunkIndices);
+                        _currentChunk = (chunk, chunkIndices);
                     }
 
                     _system.DamageFloorTile(tileRef,
