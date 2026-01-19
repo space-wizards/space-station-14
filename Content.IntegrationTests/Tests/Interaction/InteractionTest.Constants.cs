@@ -12,7 +12,6 @@ public abstract partial class InteractionTest
     protected const string FloorItem = "FloorTileItemSteel";
     protected const string Plating = "Plating";
     protected const string Lattice = "Lattice";
-    protected const string PlatingBrass = "PlatingBrass";
 
     // Structures
     protected const string Airlock = "Airlock";
