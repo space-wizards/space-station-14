@@ -204,6 +204,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (component.IgnoreShooter && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon))
         {
             args.Cancelled = true;
+            return;
         }
 
         if (TryComp(args.OtherEntity, out IgnoreProjectilesAboveAngleComponent? ignoreComp))
@@ -236,6 +237,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
                 if ((double.Abs(angleDifference.Theta) < ignoreComp.Angle.Theta) == ignoreComp.Reversed)
                 {
                     args.Cancelled = true;
+                    return;
                 }
             }
         }
