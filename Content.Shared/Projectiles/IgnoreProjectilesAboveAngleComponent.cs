@@ -31,5 +31,5 @@ public sealed partial class IgnoreProjectilesAboveAngleComponent : Component
     /// If the shooter is farther away than this, the projectile will hit anyway.
     /// </summary>
     [DataField]
-    public double MaximumDistance = 0.75;
+    public double MaximumDistance = 0.5;
 }
