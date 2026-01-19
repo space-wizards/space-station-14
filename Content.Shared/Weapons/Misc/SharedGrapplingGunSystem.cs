@@ -172,8 +172,8 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
         if (value)
         {
-            if (!component.Stream.HasValue) // If it's already playing, then playing it again will cause the sound become eternally stuck playing
-                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity;
+            // We null-coalesce here because playing the sound again will cause it to become eternally stuck playing
+            component.Stream ??= _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity;
         }
         else if (!value && component.Stream.HasValue && Timing.IsFirstTimePredicted)
         {
