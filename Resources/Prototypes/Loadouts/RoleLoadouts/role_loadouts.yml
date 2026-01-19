@@ -1,34 +1,4 @@
-# Command
-- type: roleLoadout
-  id: JobCaptain
-  groups:
-  - CaptainHead
-  - CaptainNeck
-  - CaptainJumpsuit
-  - CaptainBackpack
-  - CaptainOuterClothing
-  - Glasses
-  - Survival
-  - Trinkets
-  - CaptainJobTrinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
-  id: JobHeadOfPersonnel
-  groups:
-  - GroupTankHarness
-  - HoPHead
-  - HoPNeck
-  - HoPJumpsuit
-  - HoPBackpack
-  - HoPOuterClothing
-  - Glasses
-  - Survival
-  - Trinkets
-  - HoPJobTrinkets
-  - GroupSpeciesBreathTool
-
-# Silicons
+# Silicon
 - type: roleLoadout
   id: JobBorg
   nameDataset: NamesBorg
