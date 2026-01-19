@@ -234,7 +234,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
                 var angleDifference = projectileAngle - targetEntityAngle;
 
-                if ((double.Abs(angleDifference.Theta) < ignoreComp.Angle.Theta) == ignoreComp.Reversed)
+                if ((double.Abs(angleDifference.Reduced().Theta) < ignoreComp.Angle.Theta) == ignoreComp.Reversed)
                 {
                     args.Cancelled = true;
                     return;
