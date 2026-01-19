@@ -146,19 +146,19 @@
   id: LockerFillChiefEngineerNoHardsuit
   table: !type:AllSelector
     children:
-    - id: AccessConfigurator
+    # Standard command items
+    - id: BoxCECircuitboards
     - id: BoxEncryptionKeyEngineering
-    - id: CigarCase
-      prob: 0.15
+    - id: ClothingHeadsetAltEngineering
+    - id: DoorRemoteEngineering
+    - id: RubberStampCE
+    # Specialized CE items
+    - id: AccessConfigurator
     - id: ClothingBeltChiefEngineerFilled
     - id: ClothingEyesGlassesMeson
     - id: ClothingHandsGlovesColorYellow
-    - id: ClothingHeadsetAltEngineering
-    - id: DoorRemoteEngineering
-    - id: BoxCECircuitboards
     - id: RCD
     - id: RCDAmmo
-    - id: RubberStampCE
     - id: MetalFoamGrenade
 
 # Hardsuit table, used for suit storage as well
