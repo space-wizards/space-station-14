@@ -112,7 +112,7 @@ public sealed class Ban
     /// <summary>
     /// The administrator-stated reason for applying the ban.
     /// </summary>
-    public required string Reason { get; set; }
+    public string Reason { get; set; } = null!;
 
     /// <summary>
     /// The severity of the incident
