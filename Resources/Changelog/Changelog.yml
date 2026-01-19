@@ -3903,3 +3903,12 @@
   id: 9419
   time: '2026-01-18T23:16:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42189
+- author: aada
+  changes:
+  - message: Items given to the medical department round start have been significantly
+      rebalanced. In particular, players no longer spawn with their tools and must
+      get them from a locker or vending machine.
+    type: Tweak
+  id: 9420
+  time: '2026-01-19T05:21:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42423
