@@ -5,6 +5,12 @@
   defaultLinks: [ Toggle, Trigger, Timer ]
 
 - type: sourcePort
+  id: Dropped
+  name: signal-port-name-dropped
+  description: signal-port-description-dropped
+  defaultLinks: [ Toggle, Trigger, Timer ]
+
+- type: sourcePort
   id: On
   name: signal-port-name-on-transmitter
   description: signal-port-description-on-transmitter
