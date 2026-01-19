@@ -14,7 +14,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 
-
 namespace Content.Server.Mind;
 
 public sealed class MindSystem : SharedMindSystem
