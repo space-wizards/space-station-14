@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: ArtisticRoomba
   changes:
-  - message: Added atmospherics delta-pressure structure damage. Objects like windows,
-      thindows, windoors, etc. will have damage done to them depending on the pressure
-      difference across the sides of the object.
-    type: Add
-  id: 8918
-  time: '2025-09-03T23:58:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39238
-- author: ArtisticRoomba
-  changes:
   - message: Inflatable walls and airlocks now actually take Delta-Pressure damage.
     type: Fix
   id: 8919
@@ -3946,3 +3937,18 @@
   id: 9424
   time: '2026-01-19T22:48:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42482
+- author: Princess-Cheeseballs
+  changes:
+  - message: Longarms in the uplink are cheaper but don't come with extra ammo.
+    type: Tweak
+  - message: Syndicate knuckle dusters are now 2 TC
+    type: Tweak
+  - message: Shotgun slugs in the uplink are now 2 TC
+    type: Tweak
+  - message: China Lake's grenades now fly slower in the air
+    type: Tweak
+  - message: Python has been removed from the uplink
+    type: Remove
+  id: 9425
+  time: '2026-01-19T23:06:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42468
