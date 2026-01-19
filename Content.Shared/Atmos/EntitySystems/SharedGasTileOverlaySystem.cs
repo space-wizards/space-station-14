@@ -30,6 +30,7 @@ namespace Content.Shared.Atmos.EntitySystems
 
         [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
         [Dependency] protected readonly IConfigurationManager ConfMan = default!;
+        [Dependency] private readonly SharedAtmosphereSystem _atmosphere = default!;
 
         /// <summary>
         ///     array of the ids of all visible gases.
