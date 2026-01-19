@@ -85,10 +85,12 @@
           collection: GlassBreak
   - type: PlacementReplacement
     key: lights
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
+    placement:
+      mode: SnapgridCenter
+      snap:
+      - Wallmount
+  - type: IgnoreProjectilesAboveAngle
+    backwards: true
 
 - type: entity
   name: light

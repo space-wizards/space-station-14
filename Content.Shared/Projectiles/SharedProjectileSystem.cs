@@ -205,6 +205,24 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         {
             args.Cancelled = true;
         }
+
+        if (TryComp(args.OtherEntity, out IgnoreProjectilesAboveAngleComponent? ignoreComp))
+        {
+            var projectileAngle = _transform.GetWorldRotation(uid);
+            var targetEntityAngle = _transform.GetWorldRotation(args.OtherEntity);
+
+            if (ignoreComp.Backwards)
+            {
+                projectileAngle = projectileAngle.Opposite();
+            }
+
+            var angleDifference = projectileAngle - targetEntityAngle;
+
+            if ((double.Abs(angleDifference.Theta) < ignoreComp.Angle.Theta) == ignoreComp.Reversed)
+            {
+                args.Cancelled = true;
+            }
+        }
     }
 
     public void SetShooter(EntityUid id, ProjectileComponent component, EntityUid shooterId)
