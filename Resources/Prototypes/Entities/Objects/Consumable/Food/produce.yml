@@ -2580,14 +2580,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 55
         reagents:
         - ReagentId: Ammonia
           Quantity: 10
         - ReagentId: Chlorine
           Quantity: 5
+        - ReagentId: Nutriment
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 10
+        - ReagentId: PumpkinFlesh
+          Quantity: 20
   - type: Extractable
     juiceSolution:
       reagents:

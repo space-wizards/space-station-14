@@ -1878,6 +1878,14 @@
       Min: 1
       Max: 5
       PotencyDivisor: 5
+    PumpkinFlesh:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 5
     Vitamin:
       Min: 1
       Max: 10
