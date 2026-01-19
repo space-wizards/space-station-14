@@ -49,7 +49,11 @@
     slots:
     - neck
   - type: ActivatableUI
-    inHandsOnly: false  
+    inHandsOnly: false
+  - type: Tag
+    tags:
+    - WoodwindInstrument
+    - MonkeyWearable
 
 - type: entity
   parent: BaseWoodwindInstrument
