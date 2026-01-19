@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "brain-slime"
+      "name": "brain"
     },
     {
       "name": "brain-inhand-left",
@@ -27,10 +27,10 @@
         "directions": 4
     },
     {
-      "name": "lung-l-slime"
+      "name": "lung-l"
     },
     {
-      "name": "lung-r-slime"
+      "name": "lung-r"
     }
   ]
 }

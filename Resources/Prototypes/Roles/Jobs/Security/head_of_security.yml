@@ -6,7 +6,7 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 1h
+      time: 3h
     - !type:RoleTimeRequirement
       role: JobDetective
       time: 1h # knowing how to use the tools is important
@@ -31,6 +31,8 @@
   - External
   - Detective
   - Cryogenics
+  - GenpopEnter
+  - GenpopLeave
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

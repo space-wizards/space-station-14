@@ -1,0 +1,176 @@
+# When adding new orbs, also add it to id: AllMiscToysTable
+# Spherical objects of incredible* powers
+
+# Do not make this easily obtainable because if more than 6 of them are on the screen
+# at the same time it will break the distortion shader.
+- type: entity
+  parent: BaseItem
+  id: SingularityToy
+  name: singuloth-brand toy
+  description: Mass-produced by a sadistic corporate conglomerate!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toy_singularity.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Fun/toy_singularity.rsi
+    state: icon
+  - type: SingularityDistortion
+    intensity: 25
+    falloffPower: 2.6
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: singu-inhand-left
+        shader: unshaded
+      right:
+      - state: singu-inhand-right
+        shader: unshaded
+
+- type: entity
+  parent: BaseItem
+  id: TeslaToy
+  name: Teddy Tesla
+  description: The favorite toy of the great engineer Nikola Tesla.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    layers:
+    - state: tesla_projectile
+      shader: unshaded
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: tesla-inhand-left
+        shader: unshaded
+      right:
+      - state: tesla-inhand-right
+        shader: unshaded
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#4080FF"
+  - type: Electrified
+    shockDamage: 2
+    shockTime: 0.8
+    requirePower: false
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+      params:
+        variation: 0.65
+        volume: -10
+
+- type: entity
+  parent: [ BaseItem, BaseMagicalContraband ]
+  id: PonderingOrb
+  name: pondering orb
+  description: Ponderous, man... Really ponderous.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pondering_orb.rsi
+    layers:
+    - state: icon
+      shader: unshaded
+  - type: PointLight
+    radius: 2
+    color: "#00CCFF"
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/pondering_orb.rsi
+  - type: TileFrictionModifier
+    modifier: 0.001
+
+# The true orb
+- type: entity
+  parent: PonderingOrb
+  id: PonderingOrbWizard
+  name: pondering orb
+  description: Ponderous, man... Really ponderous. Magically shows the station's camera network.
+  suffix: Wizard
+  components:
+  - type: ActivatableUI
+    requireActiveHand: false
+    inHandsOnly: true
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: SurveillanceCameraMonitor
+
+- type: entity
+  parent: BaseItem
+  id: Magic9Ball
+  name: magic 9 ball
+  description: An endless source of wisdom... Now with a speaker included!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balls/magic9ball.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: TriggerOnActivate
+  - type: TriggerOnSignal
+  - type: UseDelay
+    delay: 5
+  - type: UseDelayOnTrigger
+  - type: UseDelayTriggerCondition
+  - type: SpeakOnTrigger
+    pack: Magic9Ball
+  - type: Speech
+    speechSounds: Pai
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 20
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: SolutionContainerManager
+    solutions:
+      magic9ball:
+        maxVol: 20
+        reagents:
+        - ReagentId: Ethanol
+          Quantity: 20
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: EmitSoundOnLand
+    sound:
+      collection: GlassBreak
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpillBehavior
+        solution: magic9ball
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50

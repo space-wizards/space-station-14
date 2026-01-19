@@ -43,6 +43,7 @@
       - BorgModuleCable
       - XenoborgModuleAccessBreaker
       - XenoborgModuleFireExtinguisher
+  - type: ShowElectrocutionHUD
   - type: ShowHealthBars
     damageContainers:
     - Inorganic
@@ -87,6 +88,7 @@
   - type: MovementSpeedModifier # slower
     baseWalkSpeed : 1.2
     baseSprintSpeed : 2.2
+  - type: MovementAlwaysTouching # it flies in space by pure will power
   - type: FlashImmunity
   - type: MobThresholds # tankier
     thresholds:
@@ -119,7 +121,7 @@
           collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          PinpointerMothership: # drop a pinpointer to the mothership upon being destructed
+          PinpointerMothershipPiece: # drop a piece of core pinpointer upon being destructed (4 pieces to make a core pinpointer)
             min: 1
             max: 1
       - !type:EmptyContainersBehaviour
@@ -129,8 +131,6 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Repairable
-    doAfterDelay: 25 # more HP, more time to heal
   - type: ContainerFill
     containers:
       borg_brain:
