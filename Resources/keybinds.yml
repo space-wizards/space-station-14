@@ -289,6 +289,10 @@ binds:
   type: State
   key: c
   mod1: Alt
+- function: ControlEntity
+  type: State
+  key: N
+  mod1: Alt
 - function: MouseMiddle
   type: State
   key: MouseMiddle
