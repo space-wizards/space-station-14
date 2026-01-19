@@ -2,14 +2,15 @@
   id: EngiDrobeInventory
   startingInventory:
     # Essential engineering clothing
-    ClothingHeadHatWelding: 2
     ClothingEyesHudDiagnostic: 2
     ClothingEyesGlassesMeson: 2
     ClothingHeadsetEngineering: 2
     ClothingHandsGlovesColorYellow: 2
     # Optional engineering clothing
-    ClothingHeadHatHardhatYellow: 1
+    ClothingHeadHatHardhatRed: 1
     ClothingHeadHatHardhatOrange: 1
+    ClothingHeadHatHardhatYellow: 1
+    ClothingHeadHatWelding: 2
     ClothingBackpackDuffelEngineering: 1
     ClothingBackpackSatchelEngineering: 1
     ClothingBackpackEngineering: 1

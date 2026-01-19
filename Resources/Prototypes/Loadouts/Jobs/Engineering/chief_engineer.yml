@@ -31,11 +31,6 @@
 
 # Head
 - type: loadout
-  id: ChiefEngineerHead
-  equipment:
-    head: ClothingHeadHatHardhatWhite
-
-- type: loadout
   id: ChiefEngineerBeret
   startingGear: EngineeringBeret
 
