@@ -190,7 +190,7 @@
   # core ninja suit stuff
   - type: NinjaSuit
   - type: EmpResistance
-    resistance: 1
+    strengthMultiplier: 0
   - type: UseDelay
     delay: 5 # disable time
   - type: PowerCellSlot
