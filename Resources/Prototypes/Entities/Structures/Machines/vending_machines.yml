@@ -2216,12 +2216,12 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineChemicalsSyndicate
-  name: SyndieJuice
-  description: Not made with freshly squeezed syndies I hope.
+  id: VendingMachineChemicals
+  name: ChemVend
+  description: Probably not the coffee machine.
   components:
   - type: VendingMachine
-    pack: ChemVendInventorySyndicate
+    pack: ChemVendInventory
     offState: off
     brokenState: broken
     normalState: normal
@@ -2237,11 +2237,27 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["SyndicateAgent"]]
+    access: [["Chemistry"]]
   - type: GuideHelp
     guides:
     - Chemicals
     - Chemist
+
+- type: entity
+  parent: VendingMachineChemicals
+  id: VendingMachineChemicalsSyndicate
+  name: SyndieJuice
+  description: Not made with freshly squeezed syndies I hope.
+  components:
+  - type: VendingMachine
+    pack: ChemVendInventorySyndicate
+    offState: off
+    brokenState: broken
+    normalState: normal
+    denyState: deny
+    ejectDelay: 2
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
 
 # wallmount
 - type: entity
