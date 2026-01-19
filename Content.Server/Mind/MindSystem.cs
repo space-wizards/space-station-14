@@ -179,12 +179,18 @@ public sealed class MindSystem : SharedMindSystem
 
         if (owned.HasValue)
         {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            _adminLogger.Add(
+                LogType.Mind,
+                LogImpact.Low,
                 $"{session.Name} returned to {ToPrettyString(owned.Value)}");
         }
     }
 
-    public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
+    public override void TransferTo(
+        EntityUid mindId,
+        EntityUid? entity,
+        bool ghostCheckOverride = false,
+        bool createGhost = true,
         MindComponent? mind = null)
     {
         if (mind == null && !Resolve(mindId, ref mind))
