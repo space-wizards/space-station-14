@@ -38,7 +38,7 @@
   id: BriefcaseWeapon
   name: secure weapon case
   suffix: Gun, Empty
-  description: Useful for aspiring mercenaries, whether you're fighting for a company, a nation or anyone else.
+  description: Useful for aspiring mercenaries, whether you're fighting for a company, a nation or anyone else. Or just making a really big omelette.
   components:
   - type: Appearance
   - type: Sprite
