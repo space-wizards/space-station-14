@@ -1,3 +1,4 @@
+using Content.Shared.Insulated;
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
 
