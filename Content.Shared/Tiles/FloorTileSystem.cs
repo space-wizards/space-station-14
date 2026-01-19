@@ -48,7 +48,7 @@ public sealed class FloorTileSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<FloorTileComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<FloorTileComponent, AfterInteractEvent>(OnAfterInteract, after: [typeof(RCDAmmoSystem)]);
     }
 
     private void OnAfterInteract(EntityUid uid, FloorTileComponent component, AfterInteractEvent args)
