@@ -1,9 +1,9 @@
 - type: entity
-  id: AltarBase
+  abstract: true
   parent: BaseStructure
+  id: AltarBase
   name: altar
   description: Altar of the Gods.
-  abstract: true
   components:
   - type: Anchorable
   - type: Transform
@@ -29,16 +29,14 @@
   - type: Clickable
 
 - type: entity
-  id: AltarNanotrasen
+  abstract: true
   parent: AltarBase
-  name: nanotrasen altar
+  id: BaseConvertibleAltar
   components:
-  - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: nanotrasen
-  - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: nanotrasen
+  - type: ContainerContainer
+    containers:
+      devoter-slot: !type:Container
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:
@@ -66,10 +64,50 @@
         acts: [ "Destruction" ]
   - type: StealTarget
     stealGroup: AltarNanotrasen
+  - type: Construction
+    graph: ConvertibleAltarGraph
+    node: undevoted
+    containers:
+    - devoter-slot
+    deconstructionTarget: undevoted
+  - type: ExitContainerOnMove #allow mobs placed in containers used as devoters to escape the altar
+    containerId: devoter-slot
+
 
 - type: entity
+  parent: BaseConvertibleAltar
+  id: AltarUndevoted
+  name: undevoted altar
+  description: An altar which isn't devoted to any god. Altar of atheism?
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: undevoted
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: undevoted
+
+- type: entity
+  parent: BaseConvertibleAltar
+  id: AltarNanotrasen
+  name: nanotrasen altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
+  - type: Construction
+    node: nanotrasen
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterNanotrasen
+
+- type: entity
+  parent: BaseConvertibleAltar
   id: AltarChaos
-  parent: AltarNanotrasen
   name: chaos altar
   components:
   - type: Sprite
@@ -78,10 +116,16 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: chaos
+  - type: Construction
+    node: chaos
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterChaos
 
 - type: entity
+  parent: BaseConvertibleAltar
   id: AltarDruid
-  parent: AltarNanotrasen
   name: druid altar
   components:
   - type: Sprite
@@ -90,10 +134,16 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: druid
+  - type: Construction
+    node: druid
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterDruid
 
 - type: entity
+  parent: BaseConvertibleAltar
   id: AltarToolbox
-  parent: AltarNanotrasen
   name: toolbox altar
   components:
   - type: Sprite
@@ -102,10 +152,16 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: toolbox
+  - type: Construction
+    node: toolbox
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterToolbox
 
 - type: entity
+  parent: BaseConvertibleAltar
   id: AltarSpaceChristian
-  parent: AltarNanotrasen
   name: space-Christian altar
   components:
   - type: Sprite
@@ -121,10 +177,16 @@
     radius: 1.5
     energy: 1
     color: "#fbceb1"
+  - type: Construction
+    node: spaceChristian
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterSpaceChristian
 
 - type: entity
+  parent: BaseConvertibleAltar
   id: AltarSatana
-  parent: AltarNanotrasen
   name: satanic altar
   components:
   - type: Sprite
@@ -140,10 +202,16 @@
     radius: 1.5
     energy: 1
     color: "#ff6347"
+  - type: Construction
+    node: satana
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterSatana
 
 - type: entity
+  parent: BaseConvertibleAltar
   id: AltarTechnology
-  parent: AltarNanotrasen
   name: technology altar
   components:
   - type: Sprite
@@ -159,10 +227,16 @@
     radius: 1.5
     energy: 1
     color: "#e0ffff"
+  - type: Construction
+    node: technology
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterTechnology
 
 - type: entity
-  id: AltarConvertFestival
   parent: AltarBase
+  id: AltarConvertFestival
   name: festival altar
   components:
   - type: Sprite
@@ -203,8 +277,8 @@
     - Wooden
 
 - type: entity
-  id: AltarConvertMaint
   parent: AltarConvertFestival
+  id: AltarConvertMaint
   name: maint altar
   components:
   - type: Sprite
@@ -222,8 +296,8 @@
     color: "#fbceb1"
 
 - type: entity
-  id: AltarConvertBlue
   parent: AltarConvertFestival
+  id: AltarConvertBlue
   name: blue altar
   components:
   - type: Sprite
@@ -241,8 +315,8 @@
     color: "#fbceb1"
 
 - type: entity
-  id: AltarConvertBurden
   parent: AltarConvertFestival
+  id: AltarConvertBurden
   name: burden altar
   components:
   - type: Sprite
@@ -260,8 +334,8 @@
     color: "#fbceb1"
 
 - type: entity
-  id: AltarConvert
   parent: AltarConvertFestival
+  id: AltarConvert
   name: convert altar
   components:
   - type: Sprite
@@ -279,8 +353,8 @@
     color: "#fbceb1"
 
 - type: entity
-  id: AltarConvertOrange
   parent: AltarConvertFestival
+  id: AltarConvertOrange
   name: orange altar
   components:
   - type: Sprite
@@ -298,8 +372,8 @@
     color: "#fbceb1"
 
 - type: entity
-  id: AltarConvertRed
   parent: AltarConvertFestival
+  id: AltarConvertRed
   name: red altar
   components:
   - type: Sprite
@@ -317,8 +391,8 @@
     color: "#fbceb1"
 
 - type: entity
-  id: AltarConvertWhite
   parent: AltarConvertFestival
+  id: AltarConvertWhite
   name: white altar
   components:
   - type: Sprite
@@ -336,8 +410,8 @@
     color: "#fbceb1"
 
 - type: entity
-  id: AltarConvertYellow
   parent: AltarConvertFestival
+  id: AltarConvertYellow
   name: yellow altar
   components:
   - type: Sprite
@@ -355,8 +429,8 @@
     color: "#fbceb1"
 
 - type: entity
-  id: AltarHeaven
   parent: AltarBase
+  id: AltarHeaven
   name: heaven altar
   components:
   - type: Sprite
@@ -396,8 +470,8 @@
     color: "#f08080"
 
 - type: entity
-  id: AltarFangs
   parent: AltarHeaven
+  id: AltarFangs
   name: fanged altar
   components:
   - type: Sprite
@@ -407,8 +481,8 @@
 
 
 - type: entity
-  id: AltarBananium
   parent: AltarBase
+  id: AltarBananium
   name: honkmother altar
   description: A bananium altar dedicated to the honkmother.
   components:

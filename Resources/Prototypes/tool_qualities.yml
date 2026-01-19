@@ -74,3 +74,10 @@
   toolName: tool-quality-brushing-tool-name
   spawn: WireBrush
   icon: { sprite: Objects/Specific/Janitorial/wirebrush.rsi, state: icon }
+
+- type: tool
+  id: Undevoting
+  name: tool-quality-undevoting-name
+  toolName: tool-quality-undevoting-tool-name
+  spawn: Bible
+  icon: { sprite: Objects/Specific/Chapel/bible.rsi, state: icon }
