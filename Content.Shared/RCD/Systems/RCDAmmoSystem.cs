@@ -46,7 +46,7 @@ public sealed class RCDAmmoSystem : EntitySystem
         var current = _sharedCharges.GetCurrentCharges((target, charges));
         var user = args.User;
         args.Handled = true;
-        var count = Math.Min(charges.MaxCharges - current, comp.Charges);
+        var count = Math.Min(charges.MaxCharges - current, comp.Charges * _stack.GetCount(uid));
 
         if (count <= 0)
         {
@@ -62,6 +62,6 @@ public sealed class RCDAmmoSystem : EntitySystem
 
         // prevent having useless ammo with 0 charges
         if (comp.Charges <= 0)
-            QueueDel(uid);
+            PredictedQueueDel(uid);
     }
 }

@@ -80,6 +80,8 @@
   - type: DeleteOnTrigger
   - type: StaticPrice
     price: 0
+  - type: RCDAmmo
+    charges: 1
 
 - type: entity
   parent: ShardBase
