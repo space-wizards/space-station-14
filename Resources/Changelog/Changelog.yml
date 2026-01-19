@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: breeplayx3
-  changes:
-  - message: Berry delight now requires blueberry cake as a precursor
-    type: Tweak
-  id: 8917
-  time: '2025-09-03T21:06:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40085
 - author: ArtisticRoomba
   changes:
   - message: Added atmospherics delta-pressure structure damage. Objects like windows,
@@ -3935,3 +3928,21 @@
   id: 9423
   time: '2026-01-19T22:33:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42484
+- author: Princess-Cheeseballs
+  changes:
+  - message: Web Vests are now 5 TC and Bloodred Hardsuits are now 7 TC.
+    type: Tweak
+  - message: All outer clothes with pockets are now 2x3, all armored outerwear are
+      now 3x4.
+    type: Tweak
+  - message: Chameleon Kit now comes with an Agent ID card for free. Chameleon sunglasses
+      now offer flash protection. Chameleon Vests can now wear oxygen tanks.
+    type: Tweak
+  - message: Several items such as the Carp Hardsuit, Syndicate EVA Suit, Blood-Red
+      Magboots, and Syndicate Jetpack have had their costs reduced.
+    type: Tweak
+  - message: Syndicate Shoulder Holster has been removed.
+    type: Remove
+  id: 9424
+  time: '2026-01-19T22:48:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42482
