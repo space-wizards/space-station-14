@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
+using Content.Shared.Administration.Events;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
@@ -12,6 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+
 
 namespace Content.Server.Mind;
 
@@ -30,6 +32,22 @@ public sealed class MindSystem : SharedMindSystem
 
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
         SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
+
+        SubscribeNetworkEvent<DebugControlEntityEvent>(OnControlEntity);
+    }
+
+    private void OnControlEntity(DebugControlEntityEvent msg, EntitySessionEventArgs args)
+    {
+        var target = GetEntity(msg.Target);
+        var user = args.SenderSession.AttachedEntity;
+
+        if (user is null)
+            return;
+
+        //TODO:ERRANT validation/admincheck
+
+        ControlMob(user.Value, target);
+
     }
 
     private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)

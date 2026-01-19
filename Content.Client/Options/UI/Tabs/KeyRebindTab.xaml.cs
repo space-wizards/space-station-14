@@ -270,6 +270,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.InspectEntity);
             AddButton(ContentKeyFunctions.InspectServerComponent);
             AddButton(ContentKeyFunctions.InspectClientComponent);
+            AddButton(ContentKeyFunctions.ControlEntity);
 
             AddHeader("ui-options-header-text-cursor");
             AddButton(EngineKeyFunctions.TextCursorLeft);
