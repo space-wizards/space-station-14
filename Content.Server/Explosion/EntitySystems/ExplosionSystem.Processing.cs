@@ -17,6 +17,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Numerics;
+using Content.Shared.Damage.Systems;
 using Robust.Shared.Prototypes;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
@@ -684,7 +685,6 @@ sealed class Explosion
     private readonly EntityQuery<DamageableComponent> _damageQuery;
     private readonly EntityQuery<ProjectileComponent> _projectileQuery;
     private readonly EntityQuery<TagComponent> _tagQuery;
-    private readonly EntityQuery<TileHistoryComponent> _historyQuery;
 
     /// <summary>
     ///     Total area that the explosion covers.
@@ -733,7 +733,8 @@ sealed class Explosion
         EntityUid visualEnt,
         EntityUid? cause,
         SharedMapSystem mapSystem,
-        Shared.Damage.Systems.DamageableSystem damageable)
+        DamageableSystem damageable,
+        EntityQuery<TileHistoryComponent> historyQuery)
     {
         VisualEnt = visualEnt;
         Cause = cause;
@@ -755,7 +756,6 @@ sealed class Explosion
         _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
         _tagQuery = entMan.GetEntityQuery<TagComponent>();
         _projectileQuery = entMan.GetEntityQuery<ProjectileComponent>();
-        _historyQuery = entMan.GetEntityQuery<TileHistoryComponent>();
 
         if (spaceData != null)
         {
@@ -774,7 +774,7 @@ sealed class Explosion
 
         foreach (var grid in gridData)
         {
-            _historyQuery.TryGetComponent(grid.Grid, out var history);
+            var history = historyQuery.CompOrNull(grid.Grid);
             _explosionData.Add(new ExplosionData
             {
                 TileLists = grid.TileLists,
