@@ -197,7 +197,7 @@
   - Glasses
   - SurvivalMime
   - Trinkets
-  - MimeJobTrinkets
+ # - MimeJobTrinkets None
 
 - type: roleLoadout
   id: JobMusician
@@ -284,7 +284,6 @@
   - StationEngineerBackpack
   - SurvivalExtended
   - Trinkets
-  - TechnicalAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -429,7 +428,6 @@
   - SecurityBackpack
   - SurvivalSecurity
   - Trinkets
-  - SecurityCadetJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
 # Wildcards
