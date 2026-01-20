@@ -167,6 +167,7 @@ public sealed class Ban
     public List<BanAddress>? Addresses { get; set; }
     public List<BanHwid>? Hwids { get; set; }
     public List<BanRole>? Roles { get; set; }
+    public List<ServerBanHit>? BanHits { get; set; }
 }
 
 /// <summary>
