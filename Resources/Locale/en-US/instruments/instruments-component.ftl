@@ -27,7 +27,7 @@ instruments-component-menu-files-list-label = Files
 instruments-component-menu-files-filter = Filter...
 instruments-component-menu-files-error = Operation failed due to an unexpected error.
 instruments-component-menu-input-notice-label = Connect a MIDI device to your PC
-                                                to play music.
+                                                and play some music.
 instruments-component-band-title-label = Bands
 instruments-component-band-refresh = Refresh
 instruments-component-channels-menu = MIDI Channel Selection
