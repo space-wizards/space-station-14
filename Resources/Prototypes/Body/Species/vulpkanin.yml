@@ -1,49 +1,94 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Vulpkanin
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      onlyGroupWhitelisted: true
+      required: false
+    enum.HumanoidVisualLayers.Head:
+      limit: 3
+      required: false
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ VulpEar ]
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+      default: [ VulpSnout ]
+    enum.HumanoidVisualLayers.SnoutCover:
+      limit: 3
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ VulpTailVulp ]
+    enum.HumanoidVisualLayers.LArm:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktopVulpkanin ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentBottomBoxersVulpkanin ]
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceVulpkanin
   name: vulpkanin appearance
   components:
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganVulpkaninTorso
-        - id: OrganVulpkaninHead
-        - id: OrganVulpkaninArmLeft
-        - id: OrganVulpkaninArmRight
-        - id: OrganVulpkaninHandRight
-        - id: OrganVulpkaninHandLeft
-        - id: OrganVulpkaninLegLeft
-        - id: OrganVulpkaninLegRight
-        - id: OrganVulpkaninFootLeft
-        - id: OrganVulpkaninFootRight
-        - id: OrganVulpkaninBrain
-        - id: OrganVulpkaninEyes
-        - id: OrganVulpkaninTongue
-        - id: OrganVulpkaninAppendix
-        - id: OrganVulpkaninEars
-        - id: OrganVulpkaninLungs
-        - id: OrganVulpkaninHeart
-        - id: OrganVulpkaninStomach
-        - id: OrganVulpkaninLiver
-        - id: OrganVulpkaninKidneys
-  - type: HumanoidAppearance
+  - type: InitialBody
+    organs:
+      Torso: OrganVulpkaninTorso
+      Head: OrganVulpkaninHead
+      ArmLeft: OrganVulpkaninArmLeft
+      ArmRight: OrganVulpkaninArmRight
+      HandRight: OrganVulpkaninHandRight
+      HandLeft: OrganVulpkaninHandLeft
+      LegLeft: OrganVulpkaninLegLeft
+      LegRight: OrganVulpkaninLegRight
+      FootLeft: OrganVulpkaninFootLeft
+      FootRight: OrganVulpkaninFootRight
+      Brain: OrganVulpkaninBrain
+      Eyes: OrganVulpkaninEyes
+      Tongue: OrganVulpkaninTongue
+      Appendix: OrganVulpkaninAppendix
+      Ears: OrganVulpkaninEars
+      Lungs: OrganVulpkaninLungs
+      Heart: OrganVulpkaninHeart
+      Stomach: OrganVulpkaninStomach
+      Liver: OrganVulpkaninLiver
+      Kidneys: OrganVulpkaninKidneys
+  - type: HumanoidProfile
     species: Vulpkanin
-    undergarmentTop: UndergarmentTopTanktopVulpkanin
-    undergarmentBottom: UndergarmentBottomBoxersVulpkanin
-    hideLayersOnEquip:
-    - Snout
-    - SnoutCover
-    - HeadTop
-    - HeadSide
-    - FacialHair
-    - Hair
-    markingsDisplacement:
-      Hair:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: hair
   - type: Inventory
     speciesId: vulpkanin
     displacements:
@@ -170,7 +215,18 @@
     sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
-  parent: OrganVulpkanin
+  id: OrganVulpkaninVisual
+  abstract: true
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Vulpkanin/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Vulpkanin
+
+- type: entity
+  parent: [ OrganVulpkanin, OrganVulpkaninVisual ]
   id: OrganVulpkaninExternal
   abstract: true
   components:
@@ -222,7 +278,7 @@
   id: OrganVulpkaninBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganVulpkaninInternal ]
+  parent: [ OrganVulpkaninVisual, OrganBaseEyes, OrganVulpkaninInternal ]
   id: OrganVulpkaninEyes
 
 - type: entity

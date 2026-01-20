@@ -1,5 +1,6 @@
 using Content.Shared.Body.Events;
 using Content.Shared.Gibbing;
+using Content.Shared.Humanoid;
 using Content.Shared.Medical;
 
 namespace Content.Shared.Body;
@@ -11,6 +12,10 @@ public sealed partial class BodySystem
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, TryVomitEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, BeingGibbedEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, ApplyOrganProfileDataEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, ApplyOrganMarkingsEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, OrganCopyAppearanceEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, HumanoidLayerVisibilityChangedEvent>(RefRelayBodyEvent);
     }
 
     private void RefRelayBodyEvent<T>(EntityUid uid, BodyComponent component, ref T args) where T : struct

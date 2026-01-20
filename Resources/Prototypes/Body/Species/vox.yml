@@ -1,3 +1,71 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Vox
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Head:
+      limit: 4
+      required: true
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+      default: [ VoxBeak ]
+    enum.HumanoidVisualLayers.SnoutCover:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: true
+      default: [ VoxLArmScales ]
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: true
+      default: [ VoxRArmScales ]
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: true
+      default: [ VoxLHandScales ]
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: true
+      default: [ VoxRHandScales ]
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: true
+      default: [ VoxLLegScales ]
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: true
+      default: [ VoxRLegScales ]
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: true
+      default: [ VoxLFootScales ]
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: true
+      default: [ VoxRFootScales ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ VoxTail ]
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktopVox ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentBottomBoxersVox ]
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceVox
@@ -57,40 +125,30 @@
         32:
           sprite: Mobs/Species/Vox/displacement.rsi
           state: hand_r
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganVoxTorso
-        - id: OrganVoxHead
-        - id: OrganVoxArmLeft
-        - id: OrganVoxArmRight
-        - id: OrganVoxHandRight
-        - id: OrganVoxHandLeft
-        - id: OrganVoxLegLeft
-        - id: OrganVoxLegRight
-        - id: OrganVoxFootLeft
-        - id: OrganVoxFootRight
-        - id: OrganVoxBrain
-        - id: OrganVoxEyes
-        - id: OrganVoxTongue
-        - id: OrganVoxAppendix
-        - id: OrganVoxEars
-        - id: OrganVoxLungs
-        - id: OrganVoxHeart
-        - id: OrganVoxStomach
-        - id: OrganVoxLiver
-        - id: OrganVoxKidneys
-  - type: HumanoidAppearance
+  - type: InitialBody
+    organs:
+      Torso: OrganVoxTorso
+      Head: OrganVoxHead
+      ArmLeft: OrganVoxArmLeft
+      ArmRight: OrganVoxArmRight
+      HandRight: OrganVoxHandRight
+      HandLeft: OrganVoxHandLeft
+      LegLeft: OrganVoxLegLeft
+      LegRight: OrganVoxLegRight
+      FootLeft: OrganVoxFootLeft
+      FootRight: OrganVoxFootRight
+      Brain: OrganVoxBrain
+      Eyes: OrganVoxEyes
+      Tongue: OrganVoxTongue
+      Appendix: OrganVoxAppendix
+      Ears: OrganVoxEars
+      Lungs: OrganVoxLungs
+      Heart: OrganVoxHeart
+      Stomach: OrganVoxStomach
+      Liver: OrganVoxLiver
+      Kidneys: OrganVoxKidneys
+  - type: HumanoidProfile
     species: Vox
-    undergarmentTop: UndergarmentTopTanktopVox
-    undergarmentBottom: UndergarmentBottomBoxersVox
-    markingsDisplacement:
-      Hair:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vox/displacement.rsi
-            state: hair
 
 - type: entity
   parent:
@@ -211,7 +269,18 @@
     sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
-  parent: OrganVox
+  id: OrganVoxVisual
+  abstract: true
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Vox/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Vox
+
+- type: entity
+  parent: [ OrganVox, OrganVoxVisual ]
   id: OrganVoxExternal
   abstract: true
   components:
@@ -224,6 +293,9 @@
   components:
   - type: Sprite
     state: torso
+  - type: VisualOrgan
+    data:
+      state: torso
 
 - type: entity
   parent: [ OrganBaseHead, OrganVoxExternal ]
@@ -231,6 +303,9 @@
   components:
   - type: Sprite
     state: head
+  - type: VisualOrgan
+    data:
+      state: head
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganVoxExternal ]
@@ -269,7 +344,7 @@
   id: OrganVoxBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganVoxInternal ]
+  parent: [ OrganVoxVisual, OrganBaseEyes, OrganVoxInternal ]
   id: OrganVoxEyes
 
 - type: entity
