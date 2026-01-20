@@ -239,6 +239,10 @@
 - type: entity
   parent: [ OrganBaseHead, OrganMothExternal ]
   id: OrganMothHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.HeadTop
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganMothExternal ]
