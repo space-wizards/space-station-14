@@ -232,6 +232,9 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
 
     private void OnMarkingsChangedVisibility(Entity<VisualOrganMarkingsComponent> ent, ref BodyRelayedEvent<HumanoidLayerVisibilityChangedEvent> args)
     {
+        if (!ent.Comp.HideableLayers.Contains(args.Args.Layer))
+            return;
+
         foreach (var markings in ent.Comp.Markings.Values)
         {
             foreach (var marking in markings)
@@ -239,7 +242,7 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
                 if (!_marking.TryGetMarking(marking, out var proto))
                     continue;
 
-                if (proto.BodyPart != args.Args.Layer)
+                if (proto.BodyPart != args.Args.Layer && !(ent.Comp.DependentHidingLayers.TryGetValue(args.Args.Layer, out var dependent) && dependent.Contains(proto.BodyPart)))
                     continue;
 
                 foreach (var sprite in proto.Sprites)

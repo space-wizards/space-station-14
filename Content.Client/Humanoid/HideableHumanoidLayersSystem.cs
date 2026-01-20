@@ -26,13 +26,13 @@ public sealed class HideableHumanoidLayersSystem : SharedHideableHumanoidLayersS
         UpdateSprite(ent);
     }
 
-    public override void SetLayerVisibility(
+    public override void SetLayerOcclusion(
         Entity<HideableHumanoidLayersComponent?> ent,
         HumanoidVisualLayers layer,
         bool visible,
         SlotFlags source)
     {
-        base.SetLayerVisibility(ent, layer, visible, source);
+        base.SetLayerOcclusion(ent, layer, visible, source);
 
         if (Resolve(ent, ref ent.Comp))
             UpdateSprite((ent, ent.Comp));

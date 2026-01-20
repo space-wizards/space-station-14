@@ -240,6 +240,17 @@
 - type: entity
   parent: [ OrganBaseHead, OrganVulpkaninExternal ]
   id: OrganVulpkaninHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.HeadTop
+    - enum.HumanoidVisualLayers.HeadSide
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.FacialHair
+    dependentHidingLayers:
+      enum.HumanoidVisualLayers.Snout:
+      - enum.HumanoidVisualLayers.SnoutCover
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganVulpkaninExternal ]

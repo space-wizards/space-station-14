@@ -23,6 +23,18 @@ public sealed partial class VisualOrganMarkingsComponent : Component
     public Dictionary<HumanoidVisualLayers, List<Marking>> Markings = new();
 
     /// <summary>
+    /// Layers that are eligible for hiding based on e.g. clothing
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public HashSet<Enum> HideableLayers = new();
+
+    /// <summary>
+    /// A dictionary of layers to other layers that visually depend on them for hiding, e.g. SnoutCover depends on Snout
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<Enum, HashSet<Enum>> DependentHidingLayers = new();
+
+    /// <summary>
     /// Client only - the last markings applied by this component
     /// </summary>
     [ViewVariables]

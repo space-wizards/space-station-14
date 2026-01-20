@@ -205,10 +205,20 @@
 - type: entity
   parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganReptilianExternal ]
   id: OrganReptilianTorso
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Tail
 
 - type: entity
   parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganReptilianExternal ]
   id: OrganReptilianHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.HeadTop
+    - enum.HumanoidVisualLayers.HeadSide
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganReptilianExternal ]
