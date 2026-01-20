@@ -124,11 +124,11 @@
       group: Human
 
 - type: entity
-  parent: [ OrganBaseTorso, OrganHumanExternal ]
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganHumanExternal ]
   id: OrganHumanTorso
 
 - type: entity
-  parent: [ OrganBaseHead, OrganHumanExternal ]
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganHumanExternal ]
   id: OrganHumanHead
 
 - type: entity

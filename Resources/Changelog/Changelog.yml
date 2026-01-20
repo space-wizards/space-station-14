@@ -1,42 +1,4 @@
 ﻿Entries:
-- author: Quantum-cross
-  changes:
-  - message: The anomaly scanner has received an upgrade, showing some information
-      without opening the UI.
-    type: Add
-  id: 8924
-  time: '2025-09-04T19:11:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37585
-- author: whatston3
-  changes:
-  - message: Lathe UIs are now way smoother when printing mass amounts of fast-printing
-      items.
-    type: Fix
-  id: 8925
-  time: '2025-09-04T19:37:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39886
-- author: Princess-Cheeseballs
-  changes:
-  - message: You can no longer crawl under counters, or tables without space underneath.
-    type: Tweak
-  id: 8926
-  time: '2025-09-04T21:03:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40099
-- author: CawsForConcern
-  changes:
-  - message: Iced Coffee now contains Theobromine
-    type: Fix
-  id: 8927
-  time: '2025-09-04T22:46:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40063
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed Atmospherics Delta-Pressure damage not capping damage beyond a
-      certain pressure for applicable structures.
-    type: Fix
-  id: 8928
-  time: '2025-09-05T07:09:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40125
 - author: ArtisticRoomba
   changes:
   - message: Shutters of all types (regular, windowed, radiation) now take Delta-Pressure
@@ -3904,7 +3866,7 @@
   changes:
   - message: Longarms in the uplink are cheaper but don't come with extra ammo.
     type: Tweak
-  - message: Syndicate knuckle dusters are now 2 TC
+  - message: Syndicate knuckle dusters are now 4 TC
     type: Tweak
   - message: Shotgun slugs in the uplink are now 2 TC
     type: Tweak
@@ -3957,3 +3919,39 @@
   id: 9430
   time: '2026-01-20T12:15:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42544
+- author: insoPL
+  changes:
+  - message: Added icon indicating if the gloves are insulated or not.
+    type: Add
+  id: 9431
+  time: '2026-01-20T16:02:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42444
+- author: sowelipililimute
+  changes:
+  - message: Voice emotes are now correct for your character's sex
+    type: Fix
+  id: 9432
+  time: '2026-01-20T19:29:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42550
+- author: Velken, Murphyneko
+  changes:
+  - message: Station tiles and floors can now be placed on planets, asteroids and
+      different platings.
+    type: Tweak
+  id: 9433
+  time: '2026-01-20T20:51:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42543
+- author: osjarw
+  changes:
+  - message: Now the Medibot has a DoAfter bar, displaying injection progress.
+    type: Add
+  id: 9434
+  time: '2026-01-20T21:07:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32932
+- author: sowelipililimute
+  changes:
+  - message: Species now properly render their sex-specific sprites
+    type: Fix
+  id: 9435
+  time: '2026-01-20T21:24:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42554

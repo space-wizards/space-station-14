@@ -210,7 +210,7 @@
       group: Slime
 
 - type: entity
-  parent: [ OrganBaseTorso, OrganSlimePersonExternal ]
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganSlimePersonExternal ]
   id: OrganSlimePersonTorso
 
 - type: entity

@@ -138,6 +138,12 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
             SetOrganColor(ent, ent.Comp.Profile.EyeColor);
         else
             SetOrganColor(ent, ent.Comp.Profile.SkinColor);
+
+        if (ent.Comp.SexStateOverrides is { } overrides && overrides.TryGetValue(data.Sex, out var state))
+        {
+            ent.Comp.Data.State = state;
+            SetOrganAppearance(ent, ent.Comp.Data);
+        }
     }
 
     private void OnMarkingsOrganApplyMarkings(Entity<VisualOrganMarkingsComponent> ent, ref BodyRelayedEvent<ApplyOrganMarkingsEvent> args)

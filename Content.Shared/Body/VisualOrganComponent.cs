@@ -20,6 +20,12 @@ public sealed partial class VisualOrganComponent : Component
     [DataField(required: true), AutoNetworkedField, AlwaysPushInheritance]
     public PrototypeLayerData Data;
 
+    /// <summary>
+    /// When applying a profile, if the sex is present in this dictionary, overrides the state of the data.
+    /// </summary>
+    [DataField]
+    public Dictionary<Sex, string>? SexStateOverrides;
+
     [DataField, AutoNetworkedField]
     public OrganProfileData Profile = new();
 }
