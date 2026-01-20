@@ -86,22 +86,6 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
-  id: ClothingBackpackDuffelSyndicateFilledChemLaser
-  name: Gorlex Chem-laser bundle
-  description: "Contains a Gorlex chem-laser, bundled with plasma cell and a power cell. Perfect for providing supporting fire."
-  components: 
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponChemLaser
-        - id: PowerCellMedium
-          amount: 1
-        - id: GorlexPlasmaCellFilled
-          amount: 1
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRifle
   name: Estoc DMR bundle
   description: "For medium-range sharpshooting, the Estoc DMR. Bundled with three magazines."

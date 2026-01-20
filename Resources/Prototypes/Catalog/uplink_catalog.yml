@@ -213,13 +213,12 @@
   name: uplink-chemmultilaser-name
   description: uplink-chemmultilaser-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Battery/chem_multilaser.rsi, state: icon }
-  productEntity: WeaponChemMultilaser
+  productEntity: BriefcaseWeaponMultiChemLaserFilled
   discountCategory: veryRareDiscounts
   discountDownTo:
     Telecrystal: 6
   cost:
     Telecrystal: 12
-
   categories:
   - UplinkWeaponry
 
@@ -339,12 +338,12 @@
   name: uplink-chemlaser-bundle-name
   description: uplink-chemlaser-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Battery/chem_laser.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelSyndicateFilledChemLaser
+  productEntity: BriefcaseWeaponChemLaser
   discountCategory: veryRareDiscounts
   discountDownTo:
     Telecrystal: 12
   cost:
-    Telecrystal: 20
+    Telecrystal: 14
   categories:
   - UplinkWeaponry
 
@@ -696,7 +695,7 @@
   description: uplink-plasmacell-ammo-desc
   productEntity: GorlexPlasmaCellFilled
   cost:
-    Telecrystal: 5
+    Telecrystal: 2
   categories:
   - UplinkAmmo
 
