@@ -74,5 +74,7 @@ public sealed class HideablePrototypeValidation
         {
             Assert.That(provided, Does.Contain(key), $"No organ will hide {key} that can be hidden by {string.Join(", ", requirement.Select(it => it.Id))}");
         }
+
+        await pair.CleanReturnAsync();
     }
 }
