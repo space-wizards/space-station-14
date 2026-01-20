@@ -1,0 +1,9 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:cc="clr-namespace:Content.Client.VendingMachines.UI"
+    MinHeight="210">
+    <cc:VendingMachineControl
+        Name="VendingMachine"
+        Access="Public"/>
+</controls:FancyWindow>

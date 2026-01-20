@@ -10,7 +10,7 @@ namespace Content.Client.VendingMachines
     public sealed class VendingMachineBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
-        private VendingMachineMenu? _menu;
+        private VendingMachineWindow? _window;
 
         [ViewVariables]
         private List<VendingMachineInventoryEntry> _cachedInventory = new();
@@ -23,9 +23,9 @@ namespace Content.Client.VendingMachines
         {
             base.Open();
 
-            _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
-            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-            _menu.OnItemSelected += OnItemSelected;
+            _window = this.CreateWindowCenteredLeft<VendingMachineWindow>();
+            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            _window.VendingMachine.OnItemSelected += OnItemSelected;
             Refresh();
         }
 
@@ -36,7 +36,7 @@ namespace Content.Client.VendingMachines
             var system = EntMan.System<VendingMachineSystem>();
             _cachedInventory = system.GetAllInventory(Owner);
 
-            _menu?.Populate(_cachedInventory, enabled);
+            _window?.PopulateVendingMachine(_cachedInventory, enabled);
         }
 
         public void UpdateAmounts()
@@ -45,7 +45,7 @@ namespace Content.Client.VendingMachines
 
             var system = EntMan.System<VendingMachineSystem>();
             _cachedInventory = system.GetAllInventory(Owner);
-            _menu?.UpdateAmounts(_cachedInventory, enabled);
+            _window?.VendingMachine.UpdateAmounts(_cachedInventory, enabled);
         }
 
         private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
@@ -73,12 +73,12 @@ namespace Content.Client.VendingMachines
             if (!disposing)
                 return;
 
-            if (_menu == null)
+            if (_window == null)
                 return;
 
-            _menu.OnItemSelected -= OnItemSelected;
-            _menu.OnClose -= Close;
-            _menu.Dispose();
+            _window.VendingMachine.OnItemSelected -= OnItemSelected;
+            _window.OnClose -= Close;
+            _window.Dispose();
         }
     }
 }
