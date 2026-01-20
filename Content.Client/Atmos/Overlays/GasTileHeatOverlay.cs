@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Client.Atmos.EntitySystems;
@@ -23,40 +23,92 @@ public sealed class GasTileHeatOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
-    // We can't resolve this immediately, because it's an entitysystem, but we will attempt to resolve and cache this
-    // once we begin to draw.
+
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;
 
     private IRenderTexture? _heatTarget;
     private IRenderTexture? _heatBlurTarget;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     private readonly ShaderInstance _shader;
 
     public GasTileHeatOverlay()
     {
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
-
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
-
         _configManager.OnValueChanged(CCVars.ReducedMotion, SetReducedMotion, invokeImmediately: true);
-
     }
 
     private void SetReducedMotion(bool reducedMotion)
     {
+        // These can remain if you want to keep distortion capabilities, 
+        // otherwise they are unused by the simple color shader.
         _shader.SetParameter("strength_scale", reducedMotion ? 0.5f : 1f);
         _shader.SetParameter("speed_scale", reducedMotion ? 0.25f : 1f);
     }
+
+    private Color GetGasColor(float tempK)
+    {
+        float tempC = tempK - 273.15f;
+
+        // 1. Extreme Cold (Below -150C) -> Solid Purple
+        if (tempC < -150f)
+            return Color.FromHex("#330066");
+
+        // 2. Deep Freeze (-150C to -50C) -> Purple to Blue
+        if (tempC < -50f)
+        {
+            // Range size: 100 degrees
+            // t = 0.0 at -150, t = 1.0 at -50
+            float t = (tempC + 150f) / 100f;
+            return Color.InterpolateBetween(Color.FromHex("#330066"), Color.Blue, t);
+        }
+
+        // 3. Freezing to Safe (-50C to 0C) -> Blue to Transparent
+        if (tempC < 0f)
+        {
+            // Range size: 50 degrees
+            // t = 0.0 at -50 (Blue), t = 1.0 at 0 (Transparent)
+            float t = (tempC + 50f) / 50f;
+            return Color.InterpolateBetween(Color.Blue, Color.Transparent, t);
+        }
+
+        // 4. Safe Zone (0C to 50C) -> Fully Transparent
+        if (tempC < 50f)
+        {
+            return Color.Transparent;
+        }
+
+        // 5. Warming Up (50C to 100C) -> Transparent to Yellow
+        if (tempC < 100f)
+        {
+            // Range size: 50 degrees
+            // t = 0.0 at 50, t = 1.0 at 100
+            float t = (tempC - 50f) / 50f;
+            return Color.InterpolateBetween(Color.Transparent, Color.Yellow, t);
+        }
+
+        // 6. Danger Heat (100C to 300C) -> Yellow to Red
+        if (tempC < 300f)
+        {
+            // Range size: 200 degrees
+            // t = 0.0 at 100, t = 1.0 at 300
+            float t = (tempC - 100f) / 200f;
+            return Color.InterpolateBetween(Color.Yellow, Color.Red, t);
+        }
+
+        // 7. Extreme Heat (Over 300C) -> Dark Red
+        return Color.DarkRed;
+    }
+
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (args.MapId == MapId.Nullspace)
             return false;
 
-        // If we haven't resolved this yet, give it a try or bail
         _gasTileOverlay ??= _entManager.System<GasTileOverlaySystem>();
 
         if (_gasTileOverlay == null)
@@ -64,7 +116,7 @@ public sealed class GasTileHeatOverlay : Overlay
 
         var target = args.Viewport.RenderTarget;
 
-        // Probably the resolution of the game window changed, remake the textures.
+        // Resize render targets if window size changes
         if (_heatTarget?.Texture.Size != target.Size)
         {
             _heatTarget?.Dispose();
@@ -73,6 +125,8 @@ public sealed class GasTileHeatOverlay : Overlay
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                 name: nameof(GasTileHeatOverlay));
         }
+
+
         if (_heatBlurTarget?.Texture.Size != target.Size)
         {
             _heatBlurTarget?.Dispose();
@@ -82,51 +136,51 @@ public sealed class GasTileHeatOverlay : Overlay
                 name: $"{nameof(GasTileHeatOverlay)}-blur");
         }
 
+        // --- FIX: COPY VARIABLES LOCALLY FOR LAMBDA USE ---
+        // We cannot use 'args' inside the lambda because it is an 'in' parameter.
+        // We copy the handles and bounds to local variables here.
+        var drawHandle = args.WorldHandle;      // Renamed to drawHandle
+        var worldBounds = args.WorldBounds;
+        var worldAABB = args.WorldAABB;
+        var mapId = args.MapId;
+        var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
+        // --------------------------------------------------
+
         var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
-        args.WorldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
+        // Use unshaded shader for drawing the squares
+        drawHandle.UseShader(_proto.Index(UnshadedShader).Instance());
 
-        var mapId = args.MapId;
-        var worldAABB = args.WorldAABB;
-        var worldBounds = args.WorldBounds;
-        var worldHandle = args.WorldHandle;
-        var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
-
-        // If there is no distortion after checking all visible tiles, we can bail early
         var anyDistortion = false;
 
-        // We're rendering in the context of the heat target texture, which will encode data as to where and how strong
-        // the heat distortion will be
-        args.WorldHandle.RenderInRenderTarget(_heatTarget,
+        // Render the heat tiles into the texture
+        drawHandle.RenderInRenderTarget(_heatTarget,
             () =>
             {
+                // Clear the texture to TRANSPARENT first
+                // FIX: Use local 'drawHandle' and 'worldBounds'
+                drawHandle.DrawRect(worldBounds, Color.Transparent);
+
                 List<Entity<MapGridComponent>> grids = new();
                 _mapManager.FindGridsIntersecting(mapId, worldAABB, ref grids);
+
                 foreach (var grid in grids)
                 {
-                    if (!overlayQuery.TryGetComponent(grid.Owner, out var comp))
-                        continue;
+                    if (!overlayQuery.TryGetComponent(grid.Owner, out var comp)) continue;
 
                     var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
 
-                    if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt))
-                        continue;
+                    if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt)) continue;
 
                     var uvToUi = Matrix3Helpers.CreateScale(_heatTarget.Size.X, -_heatTarget.Size.Y);
                     var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
 
-                    // Because we want the actual distortion to be calculated based on the grid coordinates*, we need
-                    // to pass a matrix transformation to go from the viewport coordinates to grid coordinates.
-                    //   * (why? because otherwise the effect would shimmer like crazy as you moved around, think
-                    //      moving a piece of warped glass above a picture instead of placing the warped glass on the
-                    //      paper and moving them together)
                     _shader.SetParameter("grid_ent_from_viewport_local", uvToGridEnt);
 
-                    // Draw commands (like DrawRect) will be using grid coordinates from here
-                    worldHandle.SetTransform(gridEntToViewportLocal);
+                    // FIX: Use local 'drawHandle'
+                    drawHandle.SetTransform(gridEntToViewportLocal);
 
-                    // We only care about tiles that fit in these bounds
                     var floatBounds = worldToViewportLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
                     var localBounds = new Box2i(
                         (int)MathF.Floor(floatBounds.Left),
@@ -134,50 +188,40 @@ public sealed class GasTileHeatOverlay : Overlay
                         (int)MathF.Ceiling(floatBounds.Right),
                         (int)MathF.Ceiling(floatBounds.Top));
 
-                    // for each tile and its gas --->
                     foreach (var chunk in comp.Chunks.Values)
                     {
                         var enumerator = new GasChunkEnumerator(chunk);
-
                         while (enumerator.MoveNext(out var tileGas))
                         {
-                            // --->
-                            // Check and make sure the tile is within the viewport/screen
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
-                            if (!localBounds.Contains(tilePosition))
-                                continue;
+                            if (!localBounds.Contains(tilePosition)) continue;
 
-                            // Get the distortion strength from the temperature and bail if it's not hot enough
-                            var strength = _gasTileOverlay.GetHeatDistortionStrength(tileGas.Temperature);
-                            if (strength <= 0f)
-                                continue;
+                            //if (tileGas.Temperature <= 2.7f) continue;// || (273.15f < tileGas.Temperature && tileGas.Temperature < 323.15f)
 
                             anyDistortion = true;
-                            // Encode the strength in the red channel, then 1.0 alpha if it's an active tile.
-                            // BlurRenderTarget will then apply a blur around the edge, but we don't want it to bleed
-                            // past the tile.
-                            // So we use this alpha channel to chop the lower alpha values off in the shader to fit a
-                            // fit mask back into the tile.
-                            worldHandle.DrawRect(
+
+                            Color gasColor = GetGasColor(tileGas.Temperature);
+
+                           // tileGas.Opacity
+                            // FIX: Use local 'drawHandle'
+                            drawHandle.DrawRect(
                                 Box2.CenteredAround(tilePosition + new Vector2(0.5f, 0.5f), grid.Comp.TileSizeVector),
-                                new Color(strength,0f, 0f, strength > 0f ? 1.0f : 0f));
+                                gasColor
+                            );
                         }
                     }
                 }
             },
-            // This clears the buffer to all zero first...
             new Color(0, 0, 0, 0));
 
-        // no distortion, no need to render
         if (!anyDistortion)
         {
-            // Return the draw handle to normal settings
-            args.WorldHandle.UseShader(null);
-            args.WorldHandle.SetTransform(Matrix3x2.Identity);
+            // FIX: Use local 'drawHandle'
+            drawHandle.UseShader(null);
+            drawHandle.SetTransform(Matrix3x2.Identity);
             return false;
         }
 
-        // Clear to draw
         return true;
     }
 
@@ -186,16 +230,16 @@ public sealed class GasTileHeatOverlay : Overlay
         if (ScreenTexture is null || _heatTarget is null || _heatBlurTarget is null)
             return;
 
-        // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
-        // distortion shader to keep them in tile bounds.
-        _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);
+        // 1. Blur the blocks to create a smooth gradient
+        _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 5f); // 5f is Blur Radius
 
-        // Set up and render the distortion
+        // 2. Apply the Shader
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         args.WorldHandle.UseShader(_shader);
-        args.WorldHandle.DrawTextureRect(_heatTarget.Texture, args.WorldBounds);
 
-        // Return the draw handle to normal settings
+        // 3. IMPORTANT: Draw the BLURRED target, not the sharp one
+        args.WorldHandle.DrawTextureRect(_heatBlurTarget.Texture, args.WorldBounds);
+
         args.WorldHandle.UseShader(null);
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
