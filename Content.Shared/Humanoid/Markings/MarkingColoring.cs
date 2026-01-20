@@ -89,7 +89,7 @@ public static class MarkingColoring
 public sealed partial class LayerColoringDefinition
 {
     [DataField("type")]
-    public LayerColoringType? Type = new SkinColoring();
+    public LayerColoringType? Type = new ColoringTypes.SkinColoring();
 
     /// <summary>
     ///     Coloring types that will be used if main coloring type will return nil

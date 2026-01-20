@@ -72,20 +72,8 @@ public sealed class MarkingManager
 
         foreach (var (key, marking) in MarkingsByLayer(layer))
         {
-            if (whitelisted && marking.GroupWhitelist == null)
-            {
+            if (!CanBeApplied(groupProto, sex, marking, whitelisted))
                 continue;
-            }
-
-            if (marking.GroupWhitelist != null && !marking.GroupWhitelist.Contains(group))
-            {
-                continue;
-            }
-
-            if (marking.SexRestriction != null && marking.SexRestriction != sex)
-            {
-                continue;
-            }
 
             res.Add(key, marking);
         }
@@ -110,15 +98,20 @@ public sealed class MarkingManager
         var groupProto = _prototype.Index(group);
         var whitelisted = groupProto.Limits.GetValueOrDefault(prototype.BodyPart)?.OnlyGroupWhitelisted ?? groupProto.OnlyGroupWhitelisted;
 
-        if (whitelisted && prototype.GroupWhitelist == null)
-        {
-            return false;
-        }
+        return CanBeApplied(groupProto, sex, prototype, whitelisted);
+    }
 
-        if (prototype.GroupWhitelist != null &&
-            !prototype.GroupWhitelist.Contains(group))
+    private bool CanBeApplied(MarkingsGroupPrototype group, Sex sex, MarkingPrototype prototype, bool whitelisted)
+    {
+        if (prototype.GroupWhitelist == null)
         {
-            return false;
+            if (whitelisted)
+                return false;
+        }
+        else
+        {
+            if (!prototype.GroupWhitelist.Contains(group))
+                return false;
         }
 
         return prototype.SexRestriction == null || prototype.SexRestriction == sex;
@@ -156,17 +149,8 @@ public sealed class MarkingManager
         {
             for (var i = markings.Count - 1; i >= 0; i--)
             {
-                if (!TryGetMarking(markings[i], out var marking))
-                {
+                if (!TryGetMarking(markings[i], out var marking) || !CanBeApplied(group, sex, marking))
                     markings.RemoveAt(i);
-                    continue;
-                }
-
-                if (!CanBeApplied(group, sex, marking))
-                {
-                    markings.RemoveAt(i);
-                    continue;
-                }
             }
         }
     }
@@ -180,17 +164,8 @@ public sealed class MarkingManager
         {
             for (var i = markings.Count - 1; i >= 0; i--)
             {
-                if (!TryGetMarking(markings[i], out var marking))
-                {
+                if (!TryGetMarking(markings[i], out var marking) || !layers.Contains(marking.BodyPart))
                     markings.RemoveAt(i);
-                    continue;
-                }
-
-                if (!layers.Contains(marking.BodyPart))
-                {
-                    markings.RemoveAt(i);
-                    continue;
-                }
             }
         }
     }
@@ -203,7 +178,7 @@ public sealed class MarkingManager
         var groupProto = _prototype.Index(group);
         var counts = new Dictionary<HumanoidVisualLayers, int>();
 
-        foreach (var (layer, markings) in markingSets)
+        foreach (var (_, markings) in markingSets)
         {
             for (var i = markings.Count - 1; i >= 0; i--)
             {

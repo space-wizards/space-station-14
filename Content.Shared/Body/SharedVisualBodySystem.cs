@@ -69,7 +69,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
     protected virtual void SetOrganColor(Entity<VisualOrganComponent> ent, Color color)
     {
         ent.Comp.Data.Color = color;
-        DirtyField(ent.AsNullable(), nameof(VisualOrganComponent.Data));
+        Dirty(ent);
     }
 
     protected virtual void SetOrganAppearance(Entity<VisualOrganComponent> ent, PrototypeLayerData data)

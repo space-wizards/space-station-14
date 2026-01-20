@@ -89,8 +89,7 @@ public abstract partial class SharedVisualBodySystem
             {
                 markings.TryAdd(category, visualOrganMarkings.MarkingData);
                 if (filter is not null)
-                    applied.TryAdd(category,
-                        visualOrganMarkings.Markings.Where(kvp => filter.Contains(kvp.Key)).ToDictionary());
+                    applied.TryAdd(category, visualOrganMarkings.Markings.Where(kvp => filter.Contains(kvp.Key)).ToDictionary());
                 else
                     applied.TryAdd(category, visualOrganMarkings.Markings);
             }
@@ -123,7 +122,8 @@ public abstract partial class SharedVisualBodySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        ApplyProfile(ent, new()
+        ApplyProfile(ent,
+            new()
         {
             Sex = sex,
             SkinColor = appearance.SkinColor,

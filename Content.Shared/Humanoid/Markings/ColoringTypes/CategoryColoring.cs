@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Content.Shared.Humanoid.Markings;
+namespace Content.Shared.Humanoid.Markings.ColoringTypes;
 
 /// <summary>
 ///     Colors marking in color of first defined marking from specified category (in e.x. from Hair category)

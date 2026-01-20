@@ -177,11 +177,8 @@ public sealed class LoadoutSystem : EntitySystem
 
     public HumanoidCharacterProfile GetProfile(EntityUid? uid)
     {
-        if (TryComp(uid, out HumanoidProfileComponent? profile))
-        {
-            return HumanoidCharacterProfile.DefaultWithSpecies(profile.Species, profile.Sex);
-        }
-
-        return HumanoidCharacterProfile.Random();
+        return TryComp<HumanoidProfileComponent>(uid, out var profile)
+            ? HumanoidCharacterProfile.DefaultWithSpecies(profile.Species, profile.Sex)
+            : HumanoidCharacterProfile.Random();
     }
 }

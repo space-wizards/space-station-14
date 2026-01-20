@@ -1,4 +1,4 @@
-namespace Content.Shared.Humanoid.Markings;
+namespace Content.Shared.Humanoid.Markings.ColoringTypes;
 
 /// <summary>
 ///     Colors layer in skin color but much darker.
