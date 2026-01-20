@@ -9,8 +9,6 @@ namespace Content.Shared.Humanoid.Markings
         [IdDataField]
         public string ID { get; private set; } = "uwu";
 
-        public string Name { get; private set; } = default!;
-
         [DataField("bodyPart", required: true)]
         public HumanoidVisualLayers BodyPart { get; private set; } = default!;
 
@@ -45,6 +43,25 @@ namespace Content.Shared.Humanoid.Markings
         public Marking AsMarking()
         {
             return new Marking(ID, Sprites.Count);
+        }
+
+        /// <summary>
+        /// Gets the locale ID of this marking.
+        /// </summary>
+        public LocId GetNameLocale()
+        {
+            return $"marking-{ID}";
+        }
+
+        /// <summary>
+        /// Gets the localized name of this marking.
+        /// </summary>
+        /// <remarks>
+        /// This shows up in the list of markings in the marking picker.
+        /// </remarks>
+        public string GetName()
+        {
+            return Loc.GetString(GetNameLocale());
         }
     }
 }
