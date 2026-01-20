@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Shared.Administration.Events;
@@ -18,6 +19,7 @@ namespace Content.Server.Mind;
 
 public sealed class MindSystem : SharedMindSystem
 {
+    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
@@ -37,16 +39,17 @@ public sealed class MindSystem : SharedMindSystem
 
     private void OnControlEntity(DebugControlEntityEvent msg, EntitySessionEventArgs args)
     {
+        var session = args.SenderSession;
         var target = GetEntity(msg.Target);
-        var user = args.SenderSession.AttachedEntity;
+        var user = session.AttachedEntity;
 
         if (user is null)
             return;
 
-        //TODO:ERRANT validation/admincheck
+        if (!_admin.IsAdmin(session))
+            return;
 
         ControlMob(user.Value, target);
-
     }
 
     private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
