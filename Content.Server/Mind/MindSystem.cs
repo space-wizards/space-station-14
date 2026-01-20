@@ -46,6 +46,11 @@ public sealed class MindSystem : SharedMindSystem
         if (user is null)
             return;
 
+        // This is mainly here to filter out if there was no actual target, aka Entity 0
+        // There are probably more elegant ways to filter this on the client, but doing it here is safer
+        if (!HasComp<MetaDataComponent>(target))
+            return;
+
         if (!_admin.IsAdmin(session))
             return;
 
