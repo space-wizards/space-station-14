@@ -7,6 +7,7 @@
       required: false
     enum.HumanoidVisualLayers.FacialHair:
       limit: 1
+      onlyGroupWhitelisted: true
       required: false
     enum.HumanoidVisualLayers.Head:
       limit: 4
