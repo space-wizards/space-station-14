@@ -75,13 +75,13 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
     protected virtual void SetOrganAppearance(Entity<VisualOrganComponent> ent, PrototypeLayerData data)
     {
         ent.Comp.Data = data;
-        DirtyField(ent.AsNullable(), nameof(VisualOrganComponent.Data));
+        Dirty(ent);
     }
 
     protected virtual void SetOrganMarkings(Entity<VisualOrganMarkingsComponent> ent, Dictionary<HumanoidVisualLayers, List<Marking>> markings)
     {
         ent.Comp.Markings = markings;
-        DirtyField(ent.AsNullable(), nameof(VisualOrganMarkingsComponent.Markings));
+        Dirty(ent);
     }
 
     public void CopyAppearanceFrom(Entity<BodyComponent?> source, Entity<BodyComponent?> target)
