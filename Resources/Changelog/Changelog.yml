@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DDeegan
-  changes:
-  - message: Fixed labels on orders sent to the cargo telepad to show the correct
-      payer.
-    type: Fix
-  id: 8922
-  time: '2025-09-04T11:17:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39975
 - author: VoidMeticulous
   changes:
   - message: Scurret petting rate lowered to once per 2.25 seconds
@@ -3954,3 +3946,10 @@
   id: 9428
   time: '2026-01-20T07:23:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42476
+- author: sowelipililimute
+  changes:
+  - message: Inflatables can now be sourced from emergency lockers.
+    type: Add
+  id: 9429
+  time: '2026-01-20T08:03:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42539
