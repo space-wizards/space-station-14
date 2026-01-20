@@ -640,6 +640,19 @@ namespace Content.Server.Database
             if (player == null)
                 return null;
 
+            return MakePlayerRecord(player.UserId, player);
+        }
+
+        protected PlayerRecord MakePlayerRecord(Guid userId, Player? player)
+        {
+            if (player == null)
+            {
+                // We don't have a record for this player in the database.
+                // This is possible, for example, when banning people that never connected to the server.
+                // Just return fallback data here, I guess.
+                return new PlayerRecord(new NetUserId(userId), default, userId.ToString(), default, null, null);
+            }
+
             return new PlayerRecord(
                 new NetUserId(player.UserId),
                 new DateTimeOffset(NormalizeDatabaseTime(player.FirstSeenTime)),
@@ -1503,26 +1516,28 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         private async Task<BanNoteRecord> MakeBanNoteRecord(ServerDbContext dbContext, Ban ban)
         {
             var playerRecords = await AsyncSelect(ban.Players,
-                async bp => MakePlayerRecord(
+                async bp => MakePlayerRecord(bp.UserId,
                     await dbContext.Player.SingleOrDefaultAsync(p => p.UserId == bp.UserId)));
 
             return new BanNoteRecord(
                 ban.Id,
                 ban.Type,
                 [..ban.Rounds!.Select(br => MakeRoundRecord(br.Round!))],
-                [..playerRecords.Where(pr => pr != null)!],
+                [..playerRecords],
                 ban.PlaytimeAtNote,
                 ban.Reason,
                 ban.Severity,
-                MakePlayerRecord(ban.CreatedBy),
+                MakePlayerRecord(ban.CreatedBy!),
                 NormalizeDatabaseTime(ban.BanTime),
-                MakePlayerRecord(ban.LastEditedBy),
+                MakePlayerRecord(ban.LastEditedBy!),
                 NormalizeDatabaseTime(ban.LastEditedAt),
                 NormalizeDatabaseTime(ban.ExpirationTime),
                 ban.Hidden,
-                MakePlayerRecord(ban.Unban?.UnbanningAdmin == null
+                ban.Unban?.UnbanningAdmin == null
                     ? null
-                    : await dbContext.Player.SingleOrDefaultAsync(p => p.UserId == ban.Unban.UnbanningAdmin.Value)),
+                    : MakePlayerRecord(
+                        ban.Unban.UnbanningAdmin.Value,
+                        await dbContext.Player.SingleOrDefaultAsync(p => p.UserId == ban.Unban.UnbanningAdmin.Value)),
                 NormalizeDatabaseTime(ban.Unban?.UnbanTime),
                 [..ban.Roles!.Select(br => new BanRoleDef(br.RoleType, br.RoleId))]);
         }
