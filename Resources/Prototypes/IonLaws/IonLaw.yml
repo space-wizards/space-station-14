@@ -1,4 +1,23 @@
-﻿# The ion laws themselves
+﻿# To make a new ion law of: "THE CREW IS STINKY"
+# make a string:
+# ion-storm-law-is-stinky = "THE {$who} {$plural ->
+#     [true] ARE
+#     *[false] IS
+# } STINKY"
+#
+# then we create a proto:
+# - type: IonLaw
+#   id: IsStinky
+#   string: ion-storm-law-is-stinky
+#   targets:
+#     who:
+#     - !type:IonStormDataFill
+#       target: IonStormDataFillWho
+#     plural:
+#     - !type:IonStormDataFill
+#       target: IonStormDataFillPlural
+
+# The Ion Laws themselves
 - type: IonLaw
   id: OnStation
   string: ion-storm-law-on-station
@@ -452,3 +471,11 @@
     subjects:
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
+
+- type: IonLaw
+  id: WhoDAGD
+  string: ion-storm-law-who-dagd
+  weight: 0.05
+  targets:
+    who:
+    - !type:RandomManifestFill
