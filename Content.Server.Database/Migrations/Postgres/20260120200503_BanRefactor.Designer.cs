@@ -16,7 +16,7 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20260116111254_BanRefactor")]
+    [Migration("20260120200503_BanRefactor")]
     partial class BanRefactor
     {
         /// <inheritdoc />
@@ -1949,7 +1949,7 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.ServerBanHit", b =>
                 {
                     b.HasOne("Content.Server.Database.Ban", "Ban")
-                        .WithMany()
+                        .WithMany("BanHits")
                         .HasForeignKey("BanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -2028,6 +2028,8 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.Ban", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("BanHits");
 
                     b.Navigation("Hwids");
 
