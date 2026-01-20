@@ -199,52 +199,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Checks if a projectile should pass through an entity with <see cref="IgnoreProjectilesAboveAngleComponent"/>
-    /// </summary>
-    public bool IgnoreAboveAngleCheck(Entity<IgnoreProjectilesAboveAngleComponent> targetUid,
-        EntityUid projectile,
-        EntityUid? shooter)
-    {
-        if (shooter is {} projShooter)
-        {
-            var shooterPosition = _transform.GetWorldPosition(projShooter);
-            var targetEntityPosition = _transform.GetWorldPosition(targetUid);
-
-            if (!(shooterPosition - targetEntityPosition).IsShorterThan((float)targetUid.Comp.MaximumDistance))
-            {
-                return false;
-            }
-        }
-
-        var projectileAngle = _transform.GetWorldRotation(projectile);
-        var targetEntityAngle = _transform.GetWorldRotation(targetUid);
-
-        if (targetUid.Comp.Backwards)
-        {
-            projectileAngle = projectileAngle.Opposite();
-        }
-
-        var angleDifference = projectileAngle - targetEntityAngle;
-
-        return (double.Abs(angleDifference.Reduced().Theta) < targetUid.Comp.Angle.Theta) == targetUid.Comp.Reversed;
-    }
-
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
         if (component.IgnoreShooter && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon))
         {
             args.Cancelled = true;
-            return;
         }
-
-        if (TryComp(args.OtherEntity, out IgnoreProjectilesAboveAngleComponent? ignoreComp)
-            && IgnoreAboveAngleCheck((args.OtherEntity, ignoreComp), uid, component.Shooter))
-        {
-            args.Cancelled = true;
-            return;
-        }
-
     }
 
     public void SetShooter(EntityUid id, ProjectileComponent component, EntityUid shooterId)
