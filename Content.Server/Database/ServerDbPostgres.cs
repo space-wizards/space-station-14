@@ -198,7 +198,10 @@ namespace Content.Server.Database
                 banQuery = banQuery.Where(b => (b.ExemptFlags & exempt) == 0);
             }
 
-            return banQuery.ApplyIncludes(GetBanDefIncludes(type)).AsSplitQuery();
+            return banQuery
+                .Where(b => b.Type == type)
+                .ApplyIncludes(GetBanDefIncludes(type))
+                .AsSplitQuery();
         }
 
         [return: NotNullIfNotNull(nameof(ban))]
