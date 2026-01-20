@@ -1,71 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Sentience Event can no longer target Corgis, Smile or Mothroaches
-    type: Tweak
-  id: 8911
-  time: '2025-09-03T12:00:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39810
-- author: TiniestShark
-  changes:
-  - message: Reptilians now have Mask/Helmet displacements. Snoots are no longer smushed.
-    type: Add
-  id: 8912
-  time: '2025-09-03T16:45:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39351
-- author: TiniestShark
-  changes:
-  - message: Added unique tail sprites to Hard/Softsuits for reptilians! (Wagging
-      animation not supported)
-    type: Add
-  id: 8913
-  time: '2025-09-03T16:45:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35842
-- author: TrixxedHeart & Flareguy
-  changes:
-  - message: Three new tails for Vox.
-    type: Add
-  id: 8914
-  time: '2025-09-03T18:05:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39083
-- author: MissKay1994
-  changes:
-  - message: Interns will no longer be hired infinitely
-    type: Tweak
-  id: 8915
-  time: '2025-09-03T20:16:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40001
-- author: Hitlinemoss
-  changes:
-  - message: Added the senior courier PDA for Cargo Technicians with a significant
-      amount of playtime.
-    type: Add
-  id: 8916
-  time: '2025-09-03T20:22:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37661
-- author: breeplayx3
-  changes:
-  - message: Berry delight now requires blueberry cake as a precursor
-    type: Tweak
-  id: 8917
-  time: '2025-09-03T21:06:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40085
-- author: ArtisticRoomba
-  changes:
-  - message: Added atmospherics delta-pressure structure damage. Objects like windows,
-      thindows, windoors, etc. will have damage done to them depending on the pressure
-      difference across the sides of the object.
-    type: Add
-  id: 8918
-  time: '2025-09-03T23:58:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39238
-- author: ArtisticRoomba
-  changes:
-  - message: Inflatable walls and airlocks now actually take Delta-Pressure damage.
-    type: Fix
-  id: 8919
-  time: '2025-09-04T01:08:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40098
 - author: Quantum-cross
   changes:
   - message: Hot gas now looks hot!
@@ -3669,14 +3602,6 @@
   id: 9385
   time: '2026-01-13T13:44:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42334
-- author: Velken, Murphyneko
-  changes:
-  - message: Station tiles and floors can now be placed on planets, asteroids and
-      different platings.
-    type: Tweak
-  id: 9386
-  time: '2026-01-13T14:05:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38898
 - author: ScarKy0
   changes:
   - message: The throwing knives bundle now comes with 8 knives instead of 4.
@@ -3782,14 +3707,6 @@
   id: 9398
   time: '2026-01-14T21:40:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42289
-- author: TriviaSolari
-  changes:
-  - message: Entities that are airtight on all sides (such as full-tile walls, airlocks,
-      and windows) now skip rotational checks for airtightness when initialized.
-    type: Tweak
-  id: 9399
-  time: '2026-01-15T02:46:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42390
 - author: ArtisticRoomba
   changes:
   - message: The TEG now produces 75% more power. This is to counteract tritium fires
@@ -3852,15 +3769,6 @@
   id: 9407
   time: '2026-01-15T20:01:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42040
-- author: Velken
-  changes:
-  - message: RCD can no longer spam lights in the same spot.
-    type: Fix
-  - message: RCD can no longer be used to destroy indestructible tiles.
-    type: Fix
-  id: 9408
-  time: '2026-01-15T20:39:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42432
 - author: B_Kirill
   changes:
   - message: Added camera map. Cutting MAP wire hides camera from map while keeping
@@ -3916,3 +3824,131 @@
   id: 9414
   time: '2026-01-16T17:19:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42448
+- author: Kowlin
+  changes:
+  - message: All intern jobs now lock out after 10 hours, up from 5 hours.
+    type: Tweak
+  - message: Security Officer now requires 4 hours of Security Cadet, up from 2.5
+      hours.
+    type: Tweak
+  - message: Head of Security now requires 3 hours of Warden, up from 1 hour.
+    type: Tweak
+  id: 9415
+  time: '2026-01-17T20:24:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42372
+- author: sowelipililimute
+  changes:
+  - message: Vox can eat trash again.
+    type: Fix
+  id: 9416
+  time: '2026-01-18T20:44:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42503
+- author: sowelipililimute
+  changes:
+  - message: Gibbing now drops your inventory contents again.
+    type: Fix
+  id: 9417
+  time: '2026-01-18T21:25:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42504
+- author: sowelipililimute
+  changes:
+  - message: Vent critters, rat king, etc. now ghost when dead instead of requiring
+      the player to /ghost.
+    type: Fix
+  id: 9418
+  time: '2026-01-18T21:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42506
+- author: Thinbug0
+  changes:
+  - message: Peek at the future with this new Magic 9 Ball!
+    type: Add
+  id: 9419
+  time: '2026-01-18T23:16:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42189
+- author: aada
+  changes:
+  - message: Items given to the medical department round start have been significantly
+      rebalanced. In particular, players no longer spawn with their tools and must
+      get them from a locker or vending machine.
+    type: Tweak
+  id: 9420
+  time: '2026-01-19T05:21:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42423
+- author: DDeegan
+  changes:
+  - message: Thieving Beacons set their coordinates automatically when unfolded.
+    type: Tweak
+  id: 9421
+  time: '2026-01-19T09:18:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42520
+- author: ArtisticRoomba
+  changes:
+  - message: The flashbang, explosive grenade, electrical disruptor kit, and cluster
+      grenade have been removed from the traitor uplink.
+    type: Remove
+  - message: The grenade penguin has been lowered in price to 4 TC.
+    type: Tweak
+  - message: The syndicate bomb has had its explosive power tweaked. It is now a more
+      concentrated explosion over a smaller area.
+    type: Tweak
+  - message: The EMP Grenade now detonates on impact.
+    type: Tweak
+  id: 9422
+  time: '2026-01-19T22:10:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42477
+- author: Princess-Cheeseballs
+  changes:
+  - message: Tazinide and Licoxide now are less effective at shocking and don't last
+      as long.
+    type: Tweak
+  - message: Nocturine now lasts 9 seconds instead of 6 seconds.
+    type: Tweak
+  - message: Hyperzine overdose can no longer be negated completely with Omnizine.
+    type: Tweak
+  - message: Hypodarts now have an increased chemical capacity of 10u up from 7u
+    type: Tweak
+  - message: Combat Medkit and Combat Medipen have had their prices reduced to 3 TC
+    type: Tweak
+  id: 9423
+  time: '2026-01-19T22:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42484
+- author: Princess-Cheeseballs
+  changes:
+  - message: Web Vests are now 5 TC and Bloodred Hardsuits are now 7 TC.
+    type: Tweak
+  - message: All outer clothes with pockets are now 2x3, all armored outerwear are
+      now 3x4.
+    type: Tweak
+  - message: Chameleon Kit now comes with an Agent ID card for free. Chameleon sunglasses
+      now offer flash protection. Chameleon Vests can now wear oxygen tanks.
+    type: Tweak
+  - message: Several items such as the Carp Hardsuit, Syndicate EVA Suit, Blood-Red
+      Magboots, and Syndicate Jetpack have had their costs reduced.
+    type: Tweak
+  - message: Syndicate Shoulder Holster has been removed.
+    type: Remove
+  id: 9424
+  time: '2026-01-19T22:48:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42482
+- author: Princess-Cheeseballs
+  changes:
+  - message: Longarms in the uplink are cheaper but don't come with extra ammo.
+    type: Tweak
+  - message: Syndicate knuckle dusters are now 2 TC
+    type: Tweak
+  - message: Shotgun slugs in the uplink are now 2 TC
+    type: Tweak
+  - message: China Lake's grenades now fly slower in the air
+    type: Tweak
+  - message: Python has been removed from the uplink
+    type: Remove
+  id: 9425
+  time: '2026-01-19T23:06:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42468
+- author: ahandleman
+  changes:
+  - message: Fixed seeds being unique after sampling.
+    type: Fix
+  id: 9426
+  time: '2026-01-20T01:41:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42527

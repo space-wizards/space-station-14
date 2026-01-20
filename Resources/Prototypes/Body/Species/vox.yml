@@ -295,6 +295,12 @@
 - type: entity
   parent: [ OrganBaseStomach, OrganVoxInternal, OrganVoxMetabolizer ]
   id: OrganVoxStomach
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Trash
+    isSpecialDigestibleExclusive: false
 
 - type: entity
   parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganVoxInternal, OrganVoxMetabolizer ]
