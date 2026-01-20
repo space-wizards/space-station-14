@@ -163,7 +163,7 @@ public sealed class MagicMirrorSystem : EntitySystem
     {
         var user = component.Target ?? args.User;
 
-        if (!HasComp<HumanoidProfileComponent>(user))
+        if (!HasComp<VisualBodyComponent>(user))
             args.Cancel();
     }
 
