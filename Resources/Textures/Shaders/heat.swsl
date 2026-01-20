@@ -1,19 +1,8 @@
-// Remove SCREEN_TEXTURE. We don't need to read the screen, 
-// we just want to draw on top of it.
-
-// zTexture is the blurred heat map we created in C#
-// It contains the Color (RGB) and the Intensity (Alpha)
 
 const highp float overlay_opacity = 0.6;
 
 void fragment() {
-    // 1. Get the color from the C# generated texture
     highp vec4 heat_data = zTexture(UV);
     
-    // 2. Output the color directly
-    // The engine will automatically blend this over the game world
-    // based on the Alpha value.
-    
-    // We multiply the texture's alpha by our global opacity setting
     COLOR = vec4(heat_data.rgb, heat_data.a * overlay_opacity);
 }

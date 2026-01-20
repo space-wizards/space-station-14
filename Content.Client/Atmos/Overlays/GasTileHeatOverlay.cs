@@ -22,7 +22,6 @@ public sealed class GasTileHeatOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;
@@ -42,7 +41,7 @@ public sealed class GasTileHeatOverlay : Overlay
     private Color GetGasColor(float tempK)
     {
         float tempC = tempK - 273.15f;
-        // Optimization: return Transparent for safe temps immediately
+
         if (tempC >= 0f && tempC < 50f) return Color.Transparent;
 
         if (tempC < -150f) return Color.FromHex("#330066");
@@ -62,7 +61,6 @@ public sealed class GasTileHeatOverlay : Overlay
 
         var target = args.Viewport.RenderTarget;
 
-        // --- 1. PREPARE RESOURCES ---
         if (_heatTarget?.Texture.Size != target.Size)
         {
             _heatTarget?.Dispose();
@@ -84,14 +82,9 @@ public sealed class GasTileHeatOverlay : Overlay
 
         bool anyGasDrawn = false;
 
-        // --- 2. RENDER INTO TARGET ---
         drawHandle.RenderInRenderTarget(_heatTarget,
             () =>
             {
-                // Explicitly clear the target with a transparent color
-                // Note: We use the RenderInRenderTarget's clear parameter below, 
-                // but this lambda must also NOT draw garbage.
-
                 List<Entity<MapGridComponent>> grids = new();
                 _mapManager.FindGridsIntersecting(mapId, worldAABB, ref grids);
 
@@ -127,9 +120,7 @@ public sealed class GasTileHeatOverlay : Overlay
 
                             Color gasColor = GetGasColor(tileGas.Temperature);
 
-                            // Skip Transparent colors (Safe Zones)
-                            // This prevents drawing "invisible" squares that might mess up blending
-                            if (gasColor.A <= 0f) continue;
+                            //if (gasColor.A <= 0f) continue;
 
                             anyGasDrawn = true;
 
@@ -141,19 +132,16 @@ public sealed class GasTileHeatOverlay : Overlay
                     }
                 }
             },
-            new Color(0, 0, 0, 0)); // Clear color: Transparent Black
+            new Color(0, 0, 0, 0));
 
         drawHandle.UseShader(null);
         drawHandle.SetTransform(Matrix3x2.Identity);
 
-        // --- 3. RESIDUE FIX ---
-        // If no gas was actually drawn in the loop, DESTROY the texture.
-        // This guarantees the screen is wiped clean.
         if (!anyGasDrawn)
         {
             _heatTarget?.Dispose();
             _heatTarget = null;
-            return false; // Stop here, don't run Draw()
+            return false;
         }
 
         return true;
@@ -161,7 +149,6 @@ public sealed class GasTileHeatOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        // If target is null (because we disposed it in BeforeDraw), do nothing.
         if (_heatTarget is null)
             return;
 
@@ -173,7 +160,7 @@ public sealed class GasTileHeatOverlay : Overlay
 
     protected override void DisposeBehavior()
     {
-        _heatTarget?.Dispose(); // Ensure we clean up
+        _heatTarget?.Dispose();
         _heatTarget = null;
         base.DisposeBehavior();
     }

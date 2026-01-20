@@ -1,6 +1,4 @@
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.Prototypes;
-using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -43,7 +41,7 @@ namespace Content.Shared.Atmos.EntitySystems
 
             // Make sure the heat distortion variables are updated if the CVars change
             // Subs.CVar(ConfMan, CCVars.GasOverlayHeatMinimum, UpdateMinHeat, true);
-            //S//ubs.CVar(ConfMan, CCVars.GasOverlayHeatMaximum, UpdateMaxHeat, true);
+            // Subs.CVar(ConfMan, CCVars.GasOverlayHeatMaximum, UpdateMaxHeat, true);
 
             UpdateMaxHeat(1000f);
             UpdateMinHeat(0f);
@@ -75,8 +73,6 @@ namespace Content.Shared.Atmos.EntitySystems
 
         private void UpdateHeatSlopeAndIntercept()
         {
-            // Make sure to avoid invalid settings (min == max or min > max)
-            // I'm not sure if CVars can have constraints or if CVar subscribers can reject changes.
             var diff = _tempAtMinHeatDistortion < _tempAtMaxHeatDistortion
                 ? _tempAtMaxHeatDistortion - _tempAtMinHeatDistortion
                 : 0.001f;
@@ -132,8 +128,6 @@ namespace Content.Shared.Atmos.EntitySystems
             /// </summary>
             [ViewVariables]
             public readonly float Temperature;
-
-            // TODO change fire color based on temps
 
             public GasOverlayData(byte fireState, byte[] opacity, float temperature)
             {
