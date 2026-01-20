@@ -1,4 +1,5 @@
 using Content.Shared.Atmos.Components;
+using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -40,11 +41,9 @@ namespace Content.Shared.Atmos.EntitySystems
             base.Initialize();
 
             // Make sure the heat distortion variables are updated if the CVars change
-            // Subs.CVar(ConfMan, CCVars.GasOverlayHeatMinimum, UpdateMinHeat, true);
-            // Subs.CVar(ConfMan, CCVars.GasOverlayHeatMaximum, UpdateMaxHeat, true);
+            Subs.CVar(ConfMan, CCVars.GasOverlayHeatMinimum, UpdateMinHeat, true);
+            Subs.CVar(ConfMan, CCVars.GasOverlayHeatMaximum, UpdateMaxHeat, true);
 
-            UpdateMaxHeat(1000f);
-            UpdateMinHeat(0f);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentGetState>(OnGetState);
 
             List<int> visibleGases = new();
