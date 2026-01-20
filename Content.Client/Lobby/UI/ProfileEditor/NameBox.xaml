@@ -1,0 +1,24 @@
+<BoxContainer xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+    Orientation="Vertical">
+    <ui:HighlightedContainer>
+        <BoxContainer Orientation="Vertical">
+            <ui:HighlightedContainer>
+                <BoxContainer Orientation="Vertical">
+                    <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+                        <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
+                        <LineEdit Name="NameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
+                        <Button Name="NameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
+                    </BoxContainer>
+                    <Button Name="RandomizeEverythingButton" HorizontalAlignment="Center"
+                        HorizontalExpand="False" MaxWidth="256"
+                        Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
+                    <RichTextLabel Name="WarningLabel" HorizontalExpand="False"
+                        VerticalExpand="True" MaxWidth="425"
+                        HorizontalAlignment="Left" />
+                </BoxContainer>
+            </ui:HighlightedContainer>
+        </BoxContainer>
+    </ui:HighlightedContainer>
+</BoxContainer>

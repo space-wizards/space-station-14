@@ -1,0 +1,58 @@
+<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Content.Client.Lobby.UI.ProfileEditor"
+    Orientation="Vertical">
+    <ScrollContainer VerticalExpand="True">
+        <BoxContainer Orientation="Vertical">
+            <BoxContainer Margin="10" Orientation="Vertical" HorizontalExpand="True">
+                <!-- Species -->
+                <BoxContainer HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
+                    <Control HorizontalExpand="True"/>
+                    <TextureButton Name="SpeciesInfoButton" Scale="0.3 0.3"
+                                    VerticalAlignment="Center"
+                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
+                    <OptionButton Name="SpeciesButton" HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <!-- Age -->
+                <BoxContainer HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
+                    <Control HorizontalExpand="True"/>
+                    <LineEdit Name="AgeEdit" MinSize="40 0" HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <!-- Sex -->
+                <BoxContainer HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
+                    <Control HorizontalExpand="True"/>
+                    <OptionButton Name="SexButton" HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <!-- Pronouns -->
+                <BoxContainer HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
+                    <Control HorizontalExpand="True"/>
+                    <OptionButton Name="PronounsButton" HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <!-- Show clothing -->
+                <BoxContainer HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-clothing'}" />
+                    <Control HorizontalExpand="True"/>
+                    <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'humanoid-profile-editor-clothing-show'}" HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <!-- Spawn Priority -->
+                <BoxContainer HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-spawn-priority-label'}" />
+                    <Control HorizontalExpand="True"/>
+                    <OptionButton Name="SpawnPriorityButton" HorizontalAlignment="Right" />
+                </BoxContainer>
+            </BoxContainer>
+
+            <ui:AppearanceBodyOptions Name="BodyOptions" />
+        </BoxContainer>
+    </ScrollContainer>
+</BoxContainer>

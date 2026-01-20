@@ -1,0 +1,8 @@
+<BoxContainer xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Orientation="Vertical">
+    <OptionButton Name="PreferenceUnavailableButton" />
+    <ScrollContainer VerticalExpand="True">
+        <BoxContainer Name="JobList" Orientation="Vertical" SeparationOverride="20" />
+    </ScrollContainer>
+</BoxContainer>

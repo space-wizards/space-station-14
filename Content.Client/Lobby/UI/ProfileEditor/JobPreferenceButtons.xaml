@@ -1,0 +1,19 @@
+<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Content.Client.Lobby.UI.Roles"
+    Orientation="Horizontal">
+    <TextureRect
+        Name="JobIcon"
+        TextureScale="2 2"
+        VerticalAlignment="Center" />
+    <ui:RequirementsSelector
+        Name="PrioritySelector"
+        Margin="3 3 3 0" />
+    <Button
+        Name="LoadoutButton"
+        Text="{Loc 'loadout-window'}"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Margin="3 3 3 0" />
+</BoxContainer>

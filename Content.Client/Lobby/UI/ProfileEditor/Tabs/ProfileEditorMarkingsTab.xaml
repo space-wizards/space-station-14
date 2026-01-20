@@ -1,0 +1,9 @@
+<BoxContainer Name="MarkingsTab" xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
+    Orientation="Vertical"
+    Margin="10">
+    <ScrollContainer VerticalExpand="True">
+        <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
+    </ScrollContainer>
+</BoxContainer>
