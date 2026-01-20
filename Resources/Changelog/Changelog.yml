@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: jkwookee
-  changes:
-  - message: QM Golden Knuckledusters can be properly obtained as a Syndicate steal
-      objective
-    type: Fix
-  id: 8921
-  time: '2025-09-04T11:08:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40096
 - author: DDeegan
   changes:
   - message: Fixed labels on orders sent to the cargo telepad to show the correct
@@ -3952,3 +3944,13 @@
   id: 9427
   time: '2026-01-20T05:15:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42536
+- author: sowelipililimute
+  changes:
+  - message: The markings editor has been redesigned to have a better UI.
+    type: Tweak
+  - message: The character export format has changed and characters from newer servers
+      may not work when exported to older servers.
+    type: Tweak
+  id: 9428
+  time: '2026-01-20T07:23:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42476
