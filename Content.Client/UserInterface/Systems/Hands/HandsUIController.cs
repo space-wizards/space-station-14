@@ -122,7 +122,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     {
         DebugTools.Assert(_playerHandsComponent == null);
         HandsGui?.Visible = true;
-
+        HandsGui?.HandContainer.PlayerHandsComponent = handsComp;
         _playerHandsComponent = handsComp;
         foreach (var (name, hand) in handsComp.Comp.Hands)
         {

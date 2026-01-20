@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
+using Content.Shared.Hands.Components;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Hands.Controls;
@@ -9,6 +10,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
 {
     private readonly GridContainer _grid;
     private readonly List<HandButton> _orderedButtons = new();
+    public HandsComponent? PlayerHandsComponent;
 
     public int ColumnLimit { get; set; } = 6;
 
@@ -27,8 +29,12 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
     protected override void AddButton(HandButton newButton)
     {
         _orderedButtons.Add(newButton);
+
         _grid.RemoveAllChildren();
-        foreach (var button in _orderedButtons.OrderBy(it => it.HandLocation))
+        var enumerable = PlayerHandsComponent?.SortedHands is { } sortedHands ?
+            _orderedButtons.OrderBy(it => sortedHands.IndexOf(it.SlotName)) :
+            _orderedButtons.OrderBy(it => it.HandLocation);
+        foreach (var button in enumerable)
         {
             _grid.AddChild(button);
         }
