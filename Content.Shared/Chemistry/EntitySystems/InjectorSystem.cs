@@ -474,21 +474,8 @@ public sealed partial class InjectorSystem : EntitySystem
             return false;
         }
 
-        // Check if SelfBeforeInjectEvent changed the target.
-        // This is pretty scuffed but I couldn't think of a better solution. Maybe
-        // make TryInject public and just have subscribers of SelfBeforeInject
-        // cancel the event and call a new TryInject?
-        if (target != selfBeforeInjectEvent.TargetGettingInjected)
-        {
-            // target and targetSolution are coupled here so we have to redetermine targetSolution.
-            Entity<SolutionComponent>? solution = null;
-            if (_solutionContainer.TryGetInjectableSolution(selfBeforeInjectEvent.TargetGettingInjected, out solution, out _)) { }
-            else if (_solutionContainer.TryGetRefillableSolution(selfBeforeInjectEvent.TargetGettingInjected, out solution, out _)) { }
-            else
-                return false;
-            target = selfBeforeInjectEvent.TargetGettingInjected;
-            targetSolution = (Entity<SolutionComponent>)solution;
-        }
+        target = selfBeforeInjectEvent.TargetGettingInjected;
+        UpdateTargetSolution(target, ref targetSolution);
 
         var targetBeforeInjectEvent = new TargetBeforeInjectEvent(user, injector, target);
         RaiseLocalEvent(target, ref targetBeforeInjectEvent);
@@ -777,4 +764,21 @@ public sealed partial class InjectorSystem : EntitySystem
             _popup.PopupClient(Loc.GetString(errorMessage), user, user);
     }
     #endregion Mode Toggling
+
+    private void UpdateTargetSolution(EntityUid target, ref Entity<SolutionComponent> targetSolution)
+    {
+        if (_solutionContainer.TryGetInjectableSolution(target, out var injectableSolution, out _))
+        {
+            targetSolution = (Entity<SolutionComponent>)injectableSolution;
+            return;
+        }
+
+        if (_solutionContainer.TryGetRefillableSolution(target, out var refillableSolution, out _))
+        {
+            targetSolution = (Entity<SolutionComponent>)refillableSolution;
+            return;
+        }
+
+        Log.Warning($"Failed to update solution component for {target}!");
+    }
 }
