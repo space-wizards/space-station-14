@@ -11,6 +11,8 @@ using Content.Shared.Tools.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Server.PneumaticCannon;
@@ -24,6 +26,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -70,12 +73,13 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         {
             foreach (var gas in tank.Air)
             {
-                if (!component.AllowedGases.Contains(gas.gas) && gas.moles > 0)
-                {
-                    _popup.PopupEntity(Loc.GetString(component.MessageImpureMix), uid, Transform(args.EntityUid).ParentUid);
-                    args.Cancel();
-                    return;
-                }
+                if (component.AllowedGases.Contains(gas.gas) || !(gas.moles > 0)) // ??
+                    continue;
+
+                _popup.PopupEntity(Loc.GetString(component.MessageNotAllowedGas), uid, Transform(args.EntityUid).ParentUid);
+                _audio.PlayPvs(component.NotAllowedGasSound, uid, AudioParams.Default.WithVolume(-3));
+                args.Cancel();
+                return;
             }
         }
 

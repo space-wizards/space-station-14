@@ -2,6 +2,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Atmos;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.PneumaticCannon;
 
@@ -51,14 +52,36 @@ public sealed partial class PneumaticCannonComponent : Component
     [DataField("throwItems"), ViewVariables(VVAccess.ReadWrite)]
     public bool ThrowItems = true;
 
+    /// <summary>
+    /// What gasses are allowed to be used as a propellant. If null all gases are allowed. If there is a single
+    /// mol of gas that is not in the list it will refuse to fire.
+    /// </summary>
     [DataField]
     public HashSet<Gas>? AllowedGases;
 
+    /// <summary>
+    /// Popup that appears when you try to fire and there is not allowed gas <see cref="AllowedGases"/>.
+    /// </summary>
     [DataField]
-    public LocId MessageImpureMix = "tank-eject-invalid-gas";
+    public LocId MessageNotAllowedGas = "tank-eject-invalid-gas";
 
+    /// <summary>
+    /// Popup that appears when there is not enough gas to fire.
+    /// </summary>
     [DataField]
     public LocId MessageInsufficientGas = "tank-eject-insufficient-gas";
+
+    /// <summary>
+    /// Sound to play when the turnstile denies entry
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? NotAllowedGasSound = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg")
+    {
+        Params = new()
+        {
+            Volume = -7,
+        },
+    };
 }
 
 /// <summary>

@@ -1,2 +1,2 @@
-tank-eject-invalid-gas = Incorrect gas type rejected
-tank-eject-insufficient-gas = Low gas, tank ejected
+tank-eject-invalid-gas = Invalid gas detected, rejecting!
+tank-eject-insufficient-gas = Low gas detected, rejecting!
