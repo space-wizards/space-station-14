@@ -784,7 +784,10 @@ RightLegHuman: OrganHumanLegRight
 TorsoSkeleton: OrganSkeletonPersonTorso
 RightArmSkeleton: OrganSkeletonPersonArmRight
 
-# 2025-01-16
+# 2026-01-19
+TowelColorOrange: null
+
+# 2025-01-20
 CrateEmergencyInternals: CrateEmergencyEVA
 CrateEmergencyInternalsLarge: CrateEmergencyEVA
 CrateNitrogenInternals: CrateEmergencyEVA
