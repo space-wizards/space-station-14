@@ -928,6 +928,19 @@
     - Maintenance
     - SyndicateAgent
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - ResearchIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ServiceIconGroup
+    - CivilianIconGroup
+    - EntertainerIconGroup
+    - SiliconIconGroup
+    - BlankIconGroup
+    - ThreatIconGroup
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -1324,9 +1337,23 @@
     tags:
     - DoorBumpOpener
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - ResearchIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ServiceIconGroup
+    - CivilianIconGroup
+    - EntertainerIconGroup
+    - SiliconIconGroup
+    - BlankIconGroup
+    - ThreatIconGroup
+    - AdminIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
-    inHandsOnly: true
+    verbText: agent-id-open-ui-verb
   - type: UserInterface
     interfaces:
       enum.AgentIDCardUiKey.Key:

@@ -1,14 +1,75 @@
-<DefaultWindow xmlns="https://spacestation14.io"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            Title="{Loc agent-id-menu-title}">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
-        <Label Name="CurrentName" Text="{Loc 'agent-id-card-current-name'}" />
-        <LineEdit Name="NameLineEdit" />
-        <Label Name="CurrentJob" Text="{Loc 'agent-id-card-current-job'}" />
-        <LineEdit Name="JobLineEdit" />
-        <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
-        <GridContainer Name="IconGrid" Columns="10">
-            <!-- Job icon buttons are generated in the code -->
-        </GridContainer>
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                    Title="{Loc agent-id-ui-menu-title}"
+                    MinSize="765 398" Resizable="False">
+    <BoxContainer Orientation="Vertical" Margin="12 0" VerticalExpand="False" >
+
+        <!-- Upper area: ID status -->
+        <BoxContainer Margin="0 12 0 4" MinHeight="80" >
+            <PanelContainer StyleClasses="PanelInsetDark" >
+                <TextureRect Name="CurrentJobIcon" Margin="8 0" Stretch="KeepAspectCentered"
+                             VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
+            </PanelContainer>
+            <BoxContainer Margin="12 0" Orientation="Vertical" Align="Center">
+                <Label Name="CurrentName" StyleClasses="LabelHeadingBigger" SetHeight="32" />
+                <Label Name="CurrentJob" StyleClasses="LabelSubHeading" Margin="16 4 0 0" />
+            </BoxContainer>
+        </BoxContainer>
+        <PanelContainer StyleClasses="LowDivider" Margin="0 4" />
+
+        <!-- Center area: Tabs -->
+        <PanelContainer StyleClasses="PanelInsetDark" MinHeight="230" VerticalExpand="True" >
+            <BoxContainer Orientation="Vertical" >
+                <TabContainer Name="AgentTabs" Margin="8 8 8 0" VerticalExpand="True" MinHeight="180" >
+
+                    <!-- Settings tab -->
+                    <ScrollContainer Name="TabSettings" >
+                        <BoxContainer Margin="8" Orientation="Vertical" >
+                            <Label Margin="4 2" Text="{Loc 'agent-id-ui-input-name'}" />
+                            <LineEdit Name="NameLineEdit" SelectAllOnFocus="True" />
+                            <Label Margin="4 2" Text="{Loc 'agent-id-ui-input-job'}" />
+                            <LineEdit Name="JobLineEdit" SelectAllOnFocus="True" />
+                        </BoxContainer>
+                    </ScrollContainer>
+
+                    <!-- Job icon tab -->
+                    <BoxContainer Name="TabJobIcons" Margin="4 8 4 4" Align="Center" >
+                        <BoxContainer Align="Center">
+                            <GridContainer Name="JobGroupGrid" Columns="6" />
+                                    <!-- Group buttons are generated in code -->
+                        </BoxContainer>
+                        <PanelContainer StyleClasses="LowDivider" Margin="4 0" VerticalExpand="True" />
+                        <PanelContainer StyleClasses="PanelInsetDark">
+                            <BoxContainer Margin="4 8 4 4" Align="Center" SetWidth="112">
+                                <GridContainer Name="IconGrid" Columns="3" HorizontalAlignment="Center" />
+                                    <!-- Job icon buttons are generated in code -->
+                            </BoxContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+
+                    <!-- TODO chameleon clothing tab -->
+
+                </TabContainer>
+                <controls:StripeBack Margin="8 -6 8 4" HasBottomEdge="False" > <!-- The negative margin allows the control to be flush with the TabContainer -->
+                    <Label StyleClasses="LabelSubText" Margin="6 2" Text="{Loc 'agent-id-ui-os'}"
+                           VerticalAlignment="Center" />
+                    <Label StyleClasses="LabelSubText" Margin="6 2" Text="{Loc 'agent-id-ui-os-flavor'}"
+                           VerticalAlignment="Center" HorizontalAlignment="Right" />
+                </controls:StripeBack>
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical" >
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Margin="10 2 5 0" VerticalAlignment="Bottom" >
+                <Label Text="{Loc 'agent-id-ui-footer-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'agent-id-ui-footer-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
