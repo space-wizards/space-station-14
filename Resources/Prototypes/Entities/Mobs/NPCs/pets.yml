@@ -929,6 +929,7 @@
     maxVocalizeInterval: 240 # polly is chattier
   - type: RadioVocalizer
     radioAttemptChance: 0.8 # polly wants to share with the world
+  - type: ParrotDbMemory
   - type: Grammar
     attributes:
       proper: true

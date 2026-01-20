@@ -1,0 +1,8 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical">
+    <!-- actual list -->
+    <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+        <BoxContainer Access="Public" Name="MemoryContainer" Orientation="Vertical" VerticalExpand="True">
+        </BoxContainer>
+    </ScrollContainer>
+</BoxContainer>
