@@ -143,13 +143,15 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnActiveGrinderStart(Entity<ActiveReagentGrinderComponent> ent, ref ComponentStartup args)
         {
             _jitter.AddJitter(ent, -10, 100);
-            _powerState.SetWorkingState(ent.Owner, true);
+
+            // Not all grinders need power.
+            _powerState.TrySetWorkingState(ent.Owner, true);
         }
 
         private void OnActiveGrinderRemove(Entity<ActiveReagentGrinderComponent> ent, ref ComponentRemove args)
         {
             RemComp<JitteringComponent>(ent);
-            _powerState.SetWorkingState(ent.Owner, false);
+            _powerState.TrySetWorkingState(ent.Owner, false);
         }
 
         private void OnEntRemoveAttempt(Entity<ReagentGrinderComponent> entity, ref ContainerIsRemovingAttemptEvent args)

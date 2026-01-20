@@ -22,11 +22,13 @@ public sealed class LatheProducingSystem : EntitySystem
 
     private void OnComponentShutdown(Entity<LatheProducingComponent> ent, ref ComponentShutdown args)
     {
-        _powerState.SetWorkingState(ent.Owner, false);
+        // use the Try variant of this here
+        // or else you get trolled by AllComponentsOneToOneDeleteTest
+        _powerState.TrySetWorkingState(ent.Owner, false);
     }
 
     private void OnComponentStartup(Entity<LatheProducingComponent> ent, ref ComponentStartup args)
     {
-        _powerState.SetWorkingState(ent.Owner, true);
+        _powerState.TrySetWorkingState(ent.Owner, true);
     }
 }
