@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: VoidMeticulous
-  changes:
-  - message: Scurret petting rate lowered to once per 2.25 seconds
-    type: Tweak
-  id: 8923
-  time: '2025-09-04T15:41:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40097
 - author: Quantum-cross
   changes:
   - message: The anomaly scanner has received an upgrade, showing some information
@@ -3953,3 +3946,14 @@
   id: 9429
   time: '2026-01-20T08:03:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42539
+- author: B_Kirill
+  changes:
+  - message: Hair styling tools, such as mirrors and scissors, now use their own names
+      as UI window titles.
+    type: Tweak
+  - message: Hair styling tools, such as mirrors and scissors, no longer attempt to
+      open UI on non-humanoids.
+    type: Fix
+  id: 9430
+  time: '2026-01-20T12:15:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42544
