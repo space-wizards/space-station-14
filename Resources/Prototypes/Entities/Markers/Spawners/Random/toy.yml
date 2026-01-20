@@ -90,47 +90,6 @@
       weight: 1
     - id: PlushieLizardInversed
       weight: 0.1 # 1 in >100
-    - !type:GroupSelector # Lizard gets a job table
-      children:
-      - id: PlushieLizardJobAtmospherictechnician
-      - id: PlushieLizardJobBartender
-      - id: PlushieLizardJobBotanist
-      - id: PlushieLizardJobBoxer
-      - id: PlushieLizardJobCaptain
-      - id: PlushieLizardJobCargotechnician
-      - id: PlushieLizardJobChaplain
-      - id: PlushieLizardJobChef
-      - id: PlushieLizardJobChemist
-      - id: PlushieLizardJobChiefengineer
-      - id: PlushieLizardJobChiefmedicalofficer
-      - id: PlushieLizardJobClown # :o)
-      - id: PlushieLizardJobDetective
-      - id: PlushieLizardJobHeadofpersonnel
-      - id: PlushieLizardJobHeadofsecurity
-      - id: PlushieLizardJobJanitor
-      - id: PlushieLizardJobLawyer
-      - id: PlushieLizardJobLibrarian
-      - id: PlushieLizardJobMedicaldoctor
-      - id: PlushieLizardJobMedicalintern
-      - id: PlushieLizardJobMime #
-      - id: PlushieLizardJobMusician
-      - id: PlushieLizardJobParamedic
-      - id: PlushieLizardJobPassenger
-      - id: PlushieLizardJobPsychologist
-      - id: PlushieLizardJobQuartermaster
-      - id: PlushieLizardJobReporter
-      - id: PlushieLizardJobResearchassistant
-      - id: PlushieLizardJobResearchdirector
-      - id: PlushieLizardJobSalvagespecialist
-      - id: PlushieLizardJobScientist
-      - id: PlushieLizardJobSecuritycadet
-      - id: PlushieLizardJobSecurityofficer
-      - id: PlushieLizardJobServiceworker
-      - id: PlushieLizardJobStationengineer
-      - id: PlushieLizardJobTechnicalassistant
-      - id: PlushieLizardJobZookeeper
-      - id: PlushieLizardJobMultiweh
-        weight: 0.5 # 1 in >800
 
 # Figurines representing all your favorite coworkers
 - type: entityTable # size 1x2  # price 75

@@ -49,13 +49,3 @@
   id: BartenderWintercoat
   equipment:
     outerClothing: ClothingOuterWinterBar
-
-# Misc
-- type: loadout
-  id: BartenderGoldenShaker
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorBar
-  storage:
-    back:
-    - DrinkShakerGold

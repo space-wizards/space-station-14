@@ -14,7 +14,7 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - ChiefMedicalOfficerJobTrinkets
+ # - ChiefMedicalOfficerJobTrinkets None
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -31,7 +31,7 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - MedicalDoctorJobTrinkets
+ # - MedicalDoctorJobTrinkets None
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -43,7 +43,6 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - MedicalInternJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -58,7 +57,7 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - ChemistJobTrinkets
+ #  - ChemistJobTrinketsNone
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -74,5 +73,5 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - ParamedicJobTrinkets
+ #  - ParamedicJobTrinkets None
   - GroupSpeciesBreathToolMedical

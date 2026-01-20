@@ -195,7 +195,6 @@
     - id: PlushieMoth
     - id: PlushieVulp
     - id: PlushieArachind
-    - id: PlushieLizardJobMultiweh # the exceedingly rare multiweh!
     - id: PlushieThrongler #hehe
       weight: 0.05
 
