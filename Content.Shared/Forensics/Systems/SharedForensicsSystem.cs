@@ -44,48 +44,49 @@ public sealed class SharedForensicsSystem : EntitySystem
         SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
     }
 
-    private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)
+    private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> puddle, ref SolutionContainerChangedEvent ev)
     {
         var soln = GetSolutionsDNA(ev.Solution);
-        if (soln.Count > 0)
+
+        if (soln.Count <= 0)
+            return;
+
+        var comp = EnsureComp<ForensicsComponent>(puddle.Owner);
+        foreach (var dna in soln)
         {
-            var comp = EnsureComp<ForensicsComponent>(ent.Owner);
-            foreach (string dna in soln)
-            {
-                comp.DNAs.Add(dna);
-            }
-            Dirty(ent, ent.Comp);
+            comp.DNAs.Add(dna);
         }
+        Dirty(puddle);
     }
 
-    private void OnInteract(EntityUid uid, HandsComponent component, ContactInteractionEvent args)
+    private void OnInteract(Entity<HandsComponent> hands, ref ContactInteractionEvent args)
     {
-        ApplyEvidence(uid, args.Other);
+        ApplyEvidence(hands.Owner, args.Other);
     }
 
-    private void OnFingerprintInit(Entity<FingerprintComponent> ent, ref MapInitEvent args)
+    private void OnFingerprintInit(Entity<FingerprintComponent> fingerPrint, ref MapInitEvent args)
     {
-        if (ent.Comp.Fingerprint == null)
-            RandomizeFingerprint((ent.Owner, ent.Comp));
+        if (fingerPrint.Comp.Fingerprint == null)
+            RandomizeFingerprint((fingerPrint.Owner, fingerPrint.Comp));
     }
 
-    private void OnDNAInit(Entity<DnaComponent> ent, ref MapInitEvent args)
+    private void OnDNAInit(Entity<DnaComponent> dna, ref MapInitEvent args)
     {
-        if (ent.Comp.DNA == null)
-            RandomizeDNA((ent.Owner, ent.Comp));
+        if (dna.Comp.DNA == null)
+            RandomizeDNA(dna.AsNullable());
         else
         {
             // If set manually (for example by cloning) we also need to inform the bloodstream of the correct DNA string so it can be updated
-            var ev = new GenerateDnaEvent ( ent.Owner, ent.Comp.DNA );
-            RaiseLocalEvent(ent.Owner, ref ev);
+            var ev = new GenerateDnaEvent { Owner = dna.Owner, DNA = dna.Comp.DNA };
+            RaiseLocalEvent(dna.Owner, ref ev);
         }
     }
 
-    private void OnBeingGibbed(Entity<ForensicsComponent> ent, ref GibbedBeforeDeletionEvent args)
+    private void OnBeingGibbed(Entity<ForensicsComponent> gibbed, ref GibbedBeforeDeletionEvent args)
     {
-        string dna = Loc.GetString("forensics-dna-unknown");
+        var dna = Loc.GetString("forensics-dna-unknown");
 
-        if (TryComp(ent, out DnaComponent? dnaComp) && dnaComp.DNA != null)
+        if (TryComp(gibbed, out DnaComponent? dnaComp) && dnaComp.DNA != null)
             dna = dnaComp.DNA;
 
         foreach (var part in args.Giblets)
@@ -97,19 +98,19 @@ public sealed class SharedForensicsSystem : EntitySystem
         }
     }
 
-    private void OnMeleeHit(EntityUid uid, ForensicsComponent component, MeleeHitEvent args)
+    private void OnMeleeHit(Entity<ForensicsComponent> weapon, ref MeleeHitEvent args)
     {
-        if ((args.BaseDamage.DamageDict.TryGetValue("Blunt", out var bluntDamage) && bluntDamage.Value > 0) ||
-            (args.BaseDamage.DamageDict.TryGetValue("Slash", out var slashDamage) && slashDamage.Value > 0) ||
-            (args.BaseDamage.DamageDict.TryGetValue("Piercing", out var pierceDamage) && pierceDamage.Value > 0))
+        if ((!args.BaseDamage.DamageDict.TryGetValue("Blunt", out var bluntDamage) || bluntDamage.Value <= 0) &&
+            (!args.BaseDamage.DamageDict.TryGetValue("Slash", out var slashDamage) || slashDamage.Value <= 0) &&
+            (!args.BaseDamage.DamageDict.TryGetValue("Piercing", out var pierceDamage) || pierceDamage.Value <= 0))
+            return;
+
+        foreach (var hitEntity in args.HitEntities)
         {
-            foreach (EntityUid hitEntity in args.HitEntities)
-            {
-                if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
-                    component.DNAs.Add(hitEntityComp.DNA);
-            }
+            if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
+                weapon.Comp.DNAs.Add(hitEntityComp.DNA);
         }
-        Dirty(uid, component);
+        Dirty(weapon);
     }
 
     private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
@@ -153,27 +154,28 @@ public sealed class SharedForensicsSystem : EntitySystem
 
     public List<string> GetSolutionsDNA(EntityUid uid)
     {
-        List<string> list = new();
-        if (TryComp<SolutionContainerManagerComponent>(uid, out var comp))
+        List<string> list = [];
+
+        if (!TryComp<SolutionContainerManagerComponent>(uid, out var comp))
+            return list;
+
+        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, comp)))
         {
-            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, comp)))
-            {
-                list.AddRange(GetSolutionsDNA(soln.Comp.Solution));
-            }
+            list.AddRange(GetSolutionsDNA(soln.Comp.Solution));
         }
         return list;
     }
 
     public List<string> GetSolutionsDNA(Solution soln)
     {
-        List<string> list = new();
+        List<string> list = [];
         foreach (var reagent in soln.Contents)
         {
             foreach (var data in reagent.Reagent.EnsureReagentData())
             {
                 if (data is DnaData)
                 {
-                    list.Add(((DnaData)data).DNA);
+                    list.Add(((DnaData) data).DNA);
                 }
             }
         }
@@ -197,14 +199,14 @@ public sealed class SharedForensicsSystem : EntitySystem
         var user = args.User;
         var target = args.Target;
 
-        var verb = new UtilityVerb()
+        var verb = new UtilityVerb
         {
             Act = () => TryStartCleaning(entity, user, target),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/bubbles.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/bubbles.svg.192dpi.png")),
             Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
             Message = Loc.GetString(Loc.GetString("forensics-verb-message")),
             // This is important because if its true using the cleaning device will count as touching the object.
-            DoContactInteraction = false
+            DoContactInteraction = false,
         };
 
         args.Verbs.Add(verb);
@@ -242,19 +244,18 @@ public sealed class SharedForensicsSystem : EntitySystem
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
 
-            _popupSystem.PopupClient(Loc.GetString("forensics-cleaning", ("target", target)), user, user);
+            var userPopupText = Loc.GetString("forensics-cleaning", ("target", target));
+            var othersPopupText = Loc.GetString("forensics-cleaning-others", ("user", user), ("target", target));
+            _popupSystem.PopupPredicted(userPopupText, othersPopupText, user, user);
 
             return true;
         }
-        else
-        {
-            _popupSystem.PopupClient(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
-            return false;
-        }
 
+        _popupSystem.PopupClient(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
+        return false;
     }
 
-    private void OnCleanForensicsDoAfter(EntityUid uid, ForensicsComponent component, CleanForensicsDoAfterEvent args)
+    private void OnCleanForensicsDoAfter(Entity<ForensicsComponent> component, ref CleanForensicsDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
@@ -262,11 +263,11 @@ public sealed class SharedForensicsSystem : EntitySystem
         if (!TryComp<ForensicsComponent>(args.Target, out var targetComp))
             return;
 
-        targetComp.Fibers = new();
-        targetComp.Fingerprints = new();
+        targetComp.Fibers = [];
+        targetComp.Fingerprints = [];
 
         if (targetComp.CanDnaBeCleaned)
-            targetComp.DNAs = new();
+            targetComp.DNAs = [];
 
         // leave behind evidence it was cleaned
         if (TryComp<FiberComponent>(args.Used, out var fiber))
@@ -288,14 +289,14 @@ public sealed class SharedForensicsSystem : EntitySystem
     public string GenerateDNA()
     {
         var letters = new[] { "A", "C", "G", "T" };
-        var dna = string.Empty;
+        var DNA = string.Empty;
 
         for (var i = 0; i < 16; i++)
         {
-            dna += letters[_random.Next(letters.Length)];
+            DNA += letters[_random.Next(letters.Length)];
         }
 
-        return dna;
+        return DNA;
     }
 
     private void ApplyEvidence(EntityUid user, EntityUid target)
@@ -318,25 +319,25 @@ public sealed class SharedForensicsSystem : EntitySystem
 
     #region PublicAPI
 
-    public void RandomizeDNA(Entity<DnaComponent?> ent)
+    public void RandomizeDNA(Entity<DnaComponent?> dnaOwner)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!Resolve(dnaOwner, ref dnaOwner.Comp, false))
             return;
 
-        ent.Comp.DNA = GenerateDNA();
-        Dirty(ent);
+        dnaOwner.Comp.DNA = GenerateDNA();
+        Dirty(dnaOwner);
 
-        var ev = new GenerateDnaEvent( ent.Owner, ent.Comp.DNA );
-        RaiseLocalEvent(ent.Owner, ref ev);
+        var ev = new GenerateDnaEvent { Owner = dnaOwner.Owner, DNA = dnaOwner.Comp.DNA };
+        RaiseLocalEvent(dnaOwner.Owner, ref ev);
     }
 
-    public void RandomizeFingerprint(Entity<FingerprintComponent?> ent)
+    public void RandomizeFingerprint(Entity<FingerprintComponent?> fingerprintOwner)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!Resolve(fingerprintOwner, ref fingerprintOwner.Comp, false))
             return;
 
-        ent.Comp.Fingerprint = GenerateFingerprint();
-        Dirty(ent);
+        fingerprintOwner.Comp.Fingerprint = GenerateFingerprint();
+        Dirty(fingerprintOwner);
     }
 
     /// <summary>
@@ -347,14 +348,14 @@ public sealed class SharedForensicsSystem : EntitySystem
     /// <param name="canDnaBeCleaned">If this DNA be cleaned off of the recipient. e.g. cleaning a knife vs cleaning a puddle of blood</param>
     public void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true)
     {
-        if (TryComp<DnaComponent>(donor, out var donorComp) && donorComp.DNA != null)
-        {
-            EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
-            recipientComp.DNAs.Add(donorComp.DNA);
-            recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
+        if (!TryComp<DnaComponent>(donor, out var donorComp) || donorComp.DNA == null)
+            return;
 
-            Dirty(recipient, recipientComp);
-        }
+        EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
+        recipientComp.DNAs.Add(donorComp.DNA);
+        recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
+
+        Dirty(recipient, recipientComp);
     }
 
     /// <summary>
@@ -373,6 +374,6 @@ public sealed class SharedForensicsSystem : EntitySystem
         blocker = ev.Blocker;
         return !ev.Cancelled;
     }
-
     #endregion
+
 }

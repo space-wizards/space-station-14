@@ -26,31 +26,28 @@ namespace Content.Shared.Forensics.Systems
             SubscribeLocalEvent<ForensicPadComponent, ForensicPadDoAfterEvent>(OnDoAfter);
         }
 
-        private void OnExamined(EntityUid uid, ForensicPadComponent component, ExaminedEvent args)
+        private void OnExamined(Entity<ForensicPadComponent> pad, ref ExaminedEvent args)
         {
             if (!args.IsInDetailsRange)
                 return;
 
-            if (!component.Used)
+            if (!pad.Comp.Used)
             {
                 args.PushMarkup(Loc.GetString("forensic-pad-unused"));
                 return;
             }
 
-            args.PushMarkup(Loc.GetString("forensic-pad-sample", ("sample", component.Sample)));
+            args.PushMarkup(Loc.GetString("forensic-pad-sample", ("sample", pad.Comp.Sample)));
         }
 
-        private void OnAfterInteract(EntityUid uid, ForensicPadComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(Entity<ForensicPadComponent> pad, ref AfterInteractEvent args)
         {
-            if (!args.CanReach || args.Target == null)
-                return;
-
-            if (HasComp<ForensicScannerComponent>(args.Target))
+            if (!args.CanReach || args.Target == null || HasComp<ForensicScannerComponent>(args.Target))
                 return;
 
             args.Handled = true;
 
-            if (component.Used)
+            if (pad.Comp.Used)
             {
                 _popupSystem.PopupClient(Loc.GetString("forensic-pad-already-used"), args.Target.Value, args.User);
                 return;
@@ -58,35 +55,46 @@ namespace Content.Shared.Forensics.Systems
 
             if (!_forensics.CanAccessFingerprint(args.Target.Value, out var blocker))
             {
+                var message = blocker is { } item
+                    ? Loc.GetString("forensic-pad-no-access-due", ("entity", Identity.Entity(item, EntityManager)))
+                    : Loc.GetString("forensic-pad-no-access");
 
-                if (blocker is { } item)
-                    _popupSystem.PopupClient(Loc.GetString("forensic-pad-no-access-due", ("entity", Identity.Entity(item, EntityManager))), args.Target.Value, args.User);
-                else
-                    _popupSystem.PopupClient(Loc.GetString("forensic-pad-no-access"), args.Target.Value, args.User);
-
+                _popupSystem.PopupClient(message, args.Target.Value, args.User);
                 return;
             }
 
             if (TryComp<FingerprintComponent>(args.Target, out var fingerprint) && fingerprint.Fingerprint != null)
             {
+                var skipDelay = true;
                 if (args.User != args.Target)
                 {
-                    _popupSystem.PopupClient(Loc.GetString("forensic-pad-start-scan-user", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, args.User);
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-target", ("user", Identity.Entity(args.User, EntityManager))), args.Target.Value, args.Target.Value);
+                    var userMessage = Loc.GetString("forensic-pad-start-scan-user", ("target", Identity.Entity(args.Target.Value, EntityManager)));
+                    var targetMessage = Loc.GetString("forensic-pad-start-scan-target", ("user", Identity.Entity(args.User, EntityManager)));
+
+                    skipDelay = false;
+                    _popupSystem.PopupClient(userMessage, args.Target.Value, args.User);
+                    _popupSystem.PopupEntity(targetMessage, args.Target.Value, args.Target.Value);
                 }
-                StartScan(uid, args.User, args.Target.Value, component, fingerprint.Fingerprint);
+                StartScan(pad, args.User, args.Target.Value, pad.Comp, fingerprint.Fingerprint, skipDelay);
                 return;
             }
 
             if (TryComp<FiberComponent>(args.Target, out var fiber))
-                StartScan(uid, args.User, args.Target.Value, component, string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+            {
+                var fiberString = string.IsNullOrEmpty(fiber.FiberColor)
+                    ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial))
+                    : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial));
+
+                StartScan(pad, args.User, args.Target.Value, pad.Comp, fiberString, true);
+            }
         }
 
-        private void StartScan(EntityUid used, EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
+        private void StartScan(EntityUid used, EntityUid user, EntityUid target, ForensicPadComponent pad, string sample, bool skipDelay = false)
         {
             var ev = new ForensicPadDoAfterEvent(sample);
+            var delay = skipDelay ? TimeSpan.Zero : pad.ScanDelay;
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, pad.ScanDelay, ev, used, target: target, used: used)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, delay, ev, used, target: target, used: used)
             {
                 NeedHand = true,
                 BreakOnMove = true,
@@ -95,24 +103,22 @@ namespace Content.Shared.Forensics.Systems
             _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
         }
 
-        private void OnDoAfter(EntityUid uid, ForensicPadComponent padComponent, ForensicPadDoAfterEvent args)
+        private void OnDoAfter(Entity<ForensicPadComponent> pad, ref ForensicPadDoAfterEvent args)
         {
             if (args.Handled || args.Cancelled)
-            {
                 return;
-            }
 
             if (args.Args.Target != null)
             {
-                string label = Identity.Name(args.Args.Target.Value, EntityManager);
-                _label.Label(uid, label);
+                var label = Identity.Name(args.Args.Target.Value, EntityManager);
+                _label.Label(pad, label);
             }
 
-            padComponent.Sample = args.Sample;
-            padComponent.Used = true;
+            pad.Comp.Sample = args.Sample;
+            pad.Comp.Used = true;
 
             args.Handled = true;
-            Dirty(uid, padComponent);
+            Dirty(pad);
         }
     }
 }

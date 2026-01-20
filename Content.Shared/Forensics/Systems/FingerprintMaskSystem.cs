@@ -13,12 +13,12 @@ public sealed class FingerprintMaskSystem : EntitySystem
         SubscribeLocalEvent<FingerprintMaskComponent, InventoryRelayedEvent<TryAccessFingerprintEvent>>(OnTryAccessFingerprint);
     }
 
-    private void OnTryAccessFingerprint(EntityUid uid, FingerprintMaskComponent comp, ref InventoryRelayedEvent<TryAccessFingerprintEvent> args)
+    private void OnTryAccessFingerprint(Entity<FingerprintMaskComponent> gloves, ref InventoryRelayedEvent<TryAccessFingerprintEvent> args)
     {
         if (args.Args.Cancelled)
             return;
 
-        args.Args.Blocker = uid;
+        args.Args.Blocker = gloves.Owner;
         args.Args.Cancel();
     }
 }

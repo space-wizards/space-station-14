@@ -11,6 +11,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using Content.Shared.Forensics.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 // todo: remove this stinky LINQy
@@ -59,82 +60,81 @@ namespace Content.Shared.Forensics.Systems
             }
         }
 
-        private void OnDoAfter(EntityUid uid, ForensicScannerComponent component, DoAfterEvent args)
+        private void OnDoAfter(Entity<ForensicScannerComponent> scanner, ref ForensicScannerDoAfterEvent args)
         {
             if (args.Handled || args.Cancelled)
                 return;
 
             if (args.Args.Target != null)
             {
-                if (!TryComp<ForensicsComponent>(args.Args.Target, out var forensics))
+                if (TryComp<ForensicsComponent>(args.Args.Target, out var forensics))
                 {
-                    component.Fingerprints = new();
-                    component.Fibers = new();
-                    component.DNAs = new();
-                    component.Residues = new();
+                    scanner.Comp.Fingerprints = forensics.Fingerprints.ToList();
+                    scanner.Comp.Fibers = forensics.Fibers.ToList();
+                    scanner.Comp.DNAs = forensics.DNAs.ToList();
+                    scanner.Comp.Residues = forensics.Residues.ToList();
                 }
                 else
                 {
-                    component.Fingerprints = forensics.Fingerprints.ToList();
-                    component.Fibers = forensics.Fibers.ToList();
-                    component.DNAs = forensics.DNAs.ToList();
-                    component.Residues = forensics.Residues.ToList();
+                    scanner.Comp.Fingerprints = [];
+                    scanner.Comp.Fibers = [];
+                    scanner.Comp.DNAs = [];
+                    scanner.Comp.Residues = [];
                 }
 
                 if (_tag.HasTag(args.Args.Target.Value, DNASolutionScannableTag))
                 {
-                    component.SolutionDNAs = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
-                } else
-                {
-                    component.SolutionDNAs = new();
+                    scanner.Comp.DNAs.AddRange(_forensicsSystem.GetSolutionsDNA(args.Args.Target.Value));
                 }
 
-                component.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
-                Dirty(uid, component);
+                scanner.Comp.LastScannedName = Identity.Name(args.Args.Target.Value, EntityManager, args.Args.User);
+                Dirty(scanner);
             }
 
-            OpenUserInterface(args.Args.User, (uid, component));
+            OpenUserInterface(args.Args.User, scanner);
         }
 
         /// <remarks>
         /// Hosts logic common between OnUtilityVerb and OnAfterInteract.
         /// </remarks>
-        private void StartScan(EntityUid uid, ForensicScannerComponent component, EntityUid user, EntityUid target)
+        private void StartScan(Entity<ForensicScannerComponent> scanner, EntityUid user, EntityUid target)
         {
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.ScanDelay, new ForensicScannerDoAfterEvent(), uid, target: target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, scanner.Comp.ScanDelay, new ForensicScannerDoAfterEvent(), scanner, target: target, used: scanner)
             {
                 BreakOnMove = true,
-                NeedHand = true
+                NeedHand = true,
             });
         }
 
-        private void OnUtilityVerb(EntityUid uid, ForensicScannerComponent component, GetVerbsEvent<UtilityVerb> args)
+        private void OnUtilityVerb(Entity<ForensicScannerComponent> scanner, ref GetVerbsEvent<UtilityVerb> args)
         {
             if (!args.CanInteract || !args.CanAccess)
                 return;
 
+            var evArgs = args;
+
             var verb = new UtilityVerb()
             {
-                Act = () => StartScan(uid, component, args.User, args.Target),
-                IconEntity = GetNetEntity(uid),
+                Act = () => StartScan(scanner, evArgs.User, evArgs.Target),
+                IconEntity = GetNetEntity(scanner),
                 Text = Loc.GetString("forensic-scanner-verb-text"),
                 Message = Loc.GetString("forensic-scanner-verb-message"),
                 // This is important because if its true using the scanner will count as touching the object.
-                DoContactInteraction = false
+                DoContactInteraction = false,
             };
 
             args.Verbs.Add(verb);
         }
 
-        private void OnAfterInteract(EntityUid uid, ForensicScannerComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(Entity<ForensicScannerComponent> scanner, ref AfterInteractEvent args)
         {
             if (args.Target == null || !args.CanReach)
                 return;
 
-            StartScan(uid, component, args.User, args.Target.Value);
+            StartScan(scanner, args.User, args.Target.Value);
         }
 
-        private void OnAfterInteractUsing(EntityUid uid, ForensicScannerComponent component, AfterInteractUsingEvent args)
+        private void OnAfterInteractUsing(Entity<ForensicScannerComponent> scanner, ref AfterInteractUsingEvent args)
         {
             if (args.Handled || !args.CanReach)
                 return;
@@ -142,28 +142,28 @@ namespace Content.Shared.Forensics.Systems
             if (!TryComp<ForensicPadComponent>(args.Used, out var pad))
                 return;
 
-            foreach (var fiber in component.Fibers)
+            foreach (var fiber in scanner.Comp.Fibers)
             {
-                if (fiber == pad.Sample)
-                {
-                    _audioSystem.PlayPredicted(component.SoundMatch, uid, args.User);
-                    _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
-                    return;
-                }
+                if (fiber != pad.Sample)
+                    continue;
+
+                _audioSystem.PlayPredicted(scanner.Comp.SoundMatch, scanner.Owner, args.User);
+                _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-fiber"), scanner, args.User);
+                return;
             }
 
-            foreach (var fingerprint in component.Fingerprints)
+            foreach (var fingerprint in scanner.Comp.Fingerprints)
             {
-                if (fingerprint == pad.Sample)
-                {
-                    _audioSystem.PlayPredicted(component.SoundMatch, uid, args.User);
-                    _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
-                    return;
-                }
+                if (fingerprint != pad.Sample)
+                    continue;
+
+                _audioSystem.PlayPredicted(scanner.Comp.SoundMatch, scanner.Owner, args.User);
+                _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-fingerprint"), scanner, args.User);
+                return;
             }
 
-            _audioSystem.PlayPredicted(component.SoundNoMatch, uid, args.User);
-            _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-none"), uid, args.User);
+            _audioSystem.PlayPredicted(scanner.Comp.SoundNoMatch, scanner.Owner, args.User);
+            _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-none"), scanner, args.User);
         }
 
         private void OnBeforeActivatableUIOpen(Entity<ForensicScannerComponent> scanner, ref BeforeActivatableUIOpenEvent args)
@@ -173,25 +173,25 @@ namespace Content.Shared.Forensics.Systems
 
         private void OpenUserInterface(EntityUid user, Entity<ForensicScannerComponent> scanner)
         {
+            _uiSystem.OpenUi(scanner.Owner, ForensicScannerUiKey.Key, user, true);
             UpdateUi(scanner);
-            _uiSystem.OpenUi(scanner.Owner, ForensicScannerUiKey.Key, user);
         }
 
-        private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)
+        private void OnPrint(Entity<ForensicScannerComponent> scanner, ref ForensicScannerPrintMessage args)
         {
             var user = args.Actor;
 
-            if (_gameTiming.CurTime < component.PrintReadyAt)
+            if (_gameTiming.CurTime < scanner.Comp.PrintReadyAt)
             {
                 // This shouldn't occur due to the UI guarding against it, but
                 // if it does, tell the user why nothing happened.
-                _popupSystem.PopupClient(Loc.GetString("forensic-scanner-printer-not-ready"), uid, user);
+                _popupSystem.PopupClient(Loc.GetString("forensic-scanner-printer-not-ready"), scanner, user);
                 return;
             }
 
             // Spawn a piece of paper.
-            var printed = PredictedSpawnAtPosition(component.MachineOutput, Transform(uid).Coordinates);
-            _handsSystem.PickupOrDrop(args.Actor, printed, checkActionBlocker: false);
+            var printed = PredictedSpawnAtPosition(scanner.Comp.MachineOutput, Transform(scanner).Coordinates);
+            _handsSystem.PickupOrDrop(user, printed, checkActionBlocker: false);
 
             if (!TryComp<PaperComponent>(printed, out var paperComp))
             {
@@ -199,58 +199,59 @@ namespace Content.Shared.Forensics.Systems
                 return;
             }
 
-            _metaData.SetEntityName(printed, Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName)));
+            _metaData.SetEntityName(printed, Loc.GetString("forensic-scanner-report-title", ("entity", scanner.Comp.LastScannedName)));
 
             var text = new StringBuilder();
 
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in component.Fingerprints)
+            foreach (var fingerprint in scanner.Comp.Fingerprints)
             {
                 text.AppendLine(fingerprint);
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in component.Fibers)
+            foreach (var fiber in scanner.Comp.Fibers)
             {
                 text.AppendLine(fiber);
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in component.DNAs)
+            foreach (var dna in scanner.Comp.DNAs)
             {
                 text.AppendLine(dna);
             }
-            foreach (var dna in component.SolutionDNAs)
+            foreach (var dna in scanner.Comp.SolutionDNAs)
             {
                 Log.Debug(dna);
-                if (component.DNAs.Contains(dna))
+                if (scanner.Comp.DNAs.Contains(dna))
                     continue;
                 text.AppendLine(dna);
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in component.Residues)
+            foreach (var residue in scanner.Comp.Residues)
             {
                 text.AppendLine(residue);
             }
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
-            _audioSystem.PlayPredicted(component.SoundPrint, uid, args.Actor,
+            _audioSystem.PlayPredicted(scanner.Comp.SoundPrint, scanner, user,
                 AudioParams.Default
                 .WithVariation(0.25f)
                 .WithVolume(3f)
                 .WithRolloffFactor(2.8f)
                 .WithMaxDistance(4.5f));
 
-            component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
-            Dirty(uid, component);
+            scanner.Comp.PrintReadyAt = _gameTiming.CurTime + scanner.Comp.PrintCooldown;
+
+            Dirty(scanner);
         }
 
         private void OnClear(Entity<ForensicScannerComponent> scanner, ref ForensicScannerClearMessage args)
         {
-            scanner.Comp.Fingerprints = new();
-            scanner.Comp.Fibers = new();
-            scanner.Comp.DNAs = new();
+            scanner.Comp.Fingerprints = [];
+            scanner.Comp.Fibers = [];
+            scanner.Comp.DNAs = [];
             scanner.Comp.SolutionDNAs = new();
             scanner.Comp.LastScannedName = string.Empty;
 

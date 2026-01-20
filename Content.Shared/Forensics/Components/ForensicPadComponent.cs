@@ -11,12 +11,12 @@ public sealed partial class ForensicPadComponent : Component
     /// <summary>
     /// The amount of time for the pad to be used to take a sample.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public TimeSpan ScanDelay = TimeSpan.FromSeconds(3.0f);
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public bool Used;
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public String Sample = string.Empty;
 }
