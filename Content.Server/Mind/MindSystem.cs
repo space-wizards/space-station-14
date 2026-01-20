@@ -28,6 +28,8 @@ public sealed class MindSystem : SharedMindSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
+    private const AdminFlags DebugControlFlags = AdminFlags.Admin | AdminFlags.Debug | AdminFlags.Fun;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -46,7 +48,7 @@ public sealed class MindSystem : SharedMindSystem
         if (user is null || !target.IsValid())
             return;
 
-        if (!_admin.HasAdminFlag(user.Value, AdminFlags.Debug))
+        if (!_admin.HasAdminFlag(user.Value, DebugControlFlags))
             return;
 
         ControlMob(user.Value, target);
