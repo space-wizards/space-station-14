@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Shutters of all types (regular, windowed, radiation) now take Delta-Pressure
-      damage. Blast doors still don't take Delta-Pressure damage.
-    type: Fix
-  id: 8929
-  time: '2025-09-05T07:47:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40126
 - author: ScarKy0, FairlySadPanda, TiniestShark, MilonPL, beck-thompson
   changes:
   - message: The vulpkanin species can now be selected as a roundstart species.
@@ -3955,3 +3947,11 @@
   id: 9435
   time: '2026-01-20T21:24:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42554
+- author: ScarKy0
+  changes:
+  - message: Audio for mortars, juicers and the paperfuge can no longer be stacked
+      infinitely.
+    type: Fix
+  id: 9436
+  time: '2026-01-20T21:40:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42498
