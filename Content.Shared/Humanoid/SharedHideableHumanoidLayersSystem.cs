@@ -12,7 +12,7 @@ public abstract partial class SharedHideableHumanoidLayersSystem : EntitySystem
     /// <param name="ent">Humanoid entity</param>
     /// <param name="layer">Layer to toggle visibility for</param>
     /// <param name="visible">Whether to hide or show the layer. If more than once piece of clothing is hiding the layer, it may remain hidden.</param>
-    /// <param name="source">Equipment slot that has the clothing that is (or was) hiding the layer.</param>
+    /// <param name="slot">Equipment slot that has the clothing that is (or was) hiding the layer.</param>
     public virtual void SetLayerVisibility(
         Entity<HideableHumanoidLayersComponent?> ent,
         HumanoidVisualLayers layer,
@@ -32,30 +32,27 @@ public abstract partial class SharedHideableHumanoidLayersSystem : EntitySystem
         var dirty = false;
         if (visible)
         {
-            if (ent.Comp.HiddenLayers.TryGetValue(layer, out var oldSlots))
-            {
-                // This layer might be getting hidden by more than one piece of equipped clothing.
-                // remove slot flag from the set of slots hiding this layer, then check if there are any left.
-                ent.Comp.HiddenLayers[layer] = ~slot & oldSlots;
-                if (ent.Comp.HiddenLayers[layer] == SlotFlags.NONE)
-                    ent.Comp.HiddenLayers.Remove(layer);
-
-                dirty |= (oldSlots & slot) != 0;
-            }
-        }
-        else
-        {
             var oldSlots = ent.Comp.HiddenLayers.GetValueOrDefault(layer);
             ent.Comp.HiddenLayers[layer] = slot | oldSlots;
             dirty |= (oldSlots & slot) != slot;
         }
-
-        if (dirty)
+        else if (ent.Comp.HiddenLayers.TryGetValue(layer, out var oldSlots))
         {
-            Dirty(ent);
+            // This layer might be getting hidden by more than one piece of equipped clothing.
+            // remove slot flag from the set of slots hiding this layer, then check if there are any left.
+            ent.Comp.HiddenLayers[layer] = ~slot & oldSlots;
+            if (ent.Comp.HiddenLayers[layer] == SlotFlags.NONE)
+                ent.Comp.HiddenLayers.Remove(layer);
 
-            var evt = new HumanoidLayerVisibilityChangedEvent(layer, visible);
-            RaiseLocalEvent(ent, ref evt);
+            dirty |= (oldSlots & slot) != 0;
         }
+
+        if (!dirty)
+            return;
+
+        Dirty(ent);
+
+        var evt = new HumanoidLayerVisibilityChangedEvent(layer, visible);
+        RaiseLocalEvent(ent, ref evt);
     }
 }

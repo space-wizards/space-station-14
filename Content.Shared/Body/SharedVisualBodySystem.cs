@@ -31,6 +31,8 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         var ret = new List<Marking>();
         var forcedColors = new List<(Marking, MarkingPrototype)>();
 
+        // This method uses two loops since some marking with constrained colors care about the colors of previous markings.
+        // As such we want to ensure we can apply the markings they rely on first.
         foreach (var marking in markings)
         {
             if (!_marking.TryGetMarking(marking, out var proto))
@@ -67,19 +69,19 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
     protected virtual void SetOrganColor(Entity<VisualOrganComponent> ent, Color color)
     {
         ent.Comp.Data.Color = color;
-        Dirty(ent);
+        DirtyField(ent.AsNullable(), nameof(VisualOrganComponent.Data));
     }
 
     protected virtual void SetOrganAppearance(Entity<VisualOrganComponent> ent, PrototypeLayerData data)
     {
         ent.Comp.Data = data;
-        Dirty(ent);
+        DirtyField(ent.AsNullable(), nameof(VisualOrganComponent.Data));
     }
 
     protected virtual void SetOrganMarkings(Entity<VisualOrganMarkingsComponent> ent, Dictionary<HumanoidVisualLayers, List<Marking>> markings)
     {
         ent.Comp.Markings = markings;
-        Dirty(ent);
+        DirtyField(ent.AsNullable(), nameof(VisualOrganMarkingsComponent.Markings));
     }
 
     public void CopyAppearanceFrom(Entity<BodyComponent?> source, Entity<BodyComponent?> target)
@@ -158,7 +160,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
 
             foreach (var marking in markings)
             {
-                if (!_marking.TryGetMarking(marking, out var proto))
+                if (!_marking.TryGetMarking(marking, out _))
                     continue;
 
                 okSet.Add(marking);

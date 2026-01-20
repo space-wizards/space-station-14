@@ -1,7 +1,6 @@
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Humanoid;
 

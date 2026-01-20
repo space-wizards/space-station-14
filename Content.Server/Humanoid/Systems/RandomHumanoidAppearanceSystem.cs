@@ -1,4 +1,4 @@
-using Content.Server.CharacterAppearance.Components;
+using Content.Server.Humanoid.Components;
 using Content.Shared.Body;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -21,10 +21,8 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
     private void OnMapInit(EntityUid uid, RandomHumanoidAppearanceComponent component, MapInitEvent args)
     {
         // If we have an initial profile/base layer set, do not randomize this humanoid.
-        if (!TryComp(uid, out HumanoidProfileComponent? humanoid))
-        {
+        if (!TryComp<HumanoidProfileComponent>(uid, out var humanoid))
             return;
-        }
 
         var profile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
 

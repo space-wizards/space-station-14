@@ -63,7 +63,6 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-
     [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
@@ -198,12 +197,13 @@ public sealed partial class ZombieSystem
         {
             _visualBody.GatherMarkingsData((target, body), null, out var profiles, out _, out var markings);
 
+            // TODO: My kingdom for ZombieSystem just using cloning system
             zombiecomp.BeforeZombifiedProfiles = profiles;
             zombiecomp.BeforeZombifiedMarkings = markings.ToDictionary(
                 kvp => kvp.Key,
                 kvp => kvp.Value.ToDictionary(
                     it => it.Key,
-                    it => it.Value.Select(marking => new Marking(marking)).ToList()));;
+                    it => it.Value.Select(marking => new Marking(marking)).ToList()));
 
             var zombifiedProfiles = profiles.ToDictionary(pair => pair.Key,
                 pair => pair.Value with { EyeColor = zombiecomp.EyeColor, SkinColor = zombiecomp.SkinColor });

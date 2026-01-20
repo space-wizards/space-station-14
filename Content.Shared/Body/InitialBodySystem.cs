@@ -35,6 +35,7 @@ public sealed class InitialBodySystem : EntitySystem
 
         foreach (var proto in ent.Comp.Organs.Values)
         {
+            // TODO: When e#6192 is merged replace this all with TrySpawnInContainer...
             var spawn = Spawn(proto, coords);
 
             if (!_container.Insert(spawn, container, containerXform: xform))

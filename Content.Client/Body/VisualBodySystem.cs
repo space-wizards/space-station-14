@@ -186,19 +186,19 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
                 if (sprite is not SpriteSpecifier.Rsi rsi)
                     continue;
 
-                var layerID = $"{proto.ID}-{rsi.RsiState}";
+                var layerId = $"{proto.ID}-{rsi.RsiState}";
 
-                if (!_sprite.LayerMapTryGet(target, layerID, out _, false))
+                if (!_sprite.LayerMapTryGet(target, layerId, out _, false))
                 {
                     var layer = _sprite.AddLayer(target, sprite, index + i + 1);
-                    _sprite.LayerMapSet(target, layerID, layer);
-                    _sprite.LayerSetSprite(target, layerID, rsi);
+                    _sprite.LayerMapSet(target, layerId, layer);
+                    _sprite.LayerSetSprite(target, layerId, rsi);
                 }
 
                 if (marking.MarkingColors is not null && i < marking.MarkingColors.Count)
-                    _sprite.LayerSetColor(target, layerID, marking.MarkingColors[i]);
+                    _sprite.LayerSetColor(target, layerId, marking.MarkingColors[i]);
                 else
-                    _sprite.LayerSetColor(target, layerID, Color.White);
+                    _sprite.LayerSetColor(target, layerId, Color.White);
             }
 
             applied.Add(marking);
@@ -219,12 +219,12 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
                 if (sprite is not SpriteSpecifier.Rsi rsi)
                     continue;
 
-                var layerID = $"{proto.ID}-{rsi.RsiState}";
+                var layerId = $"{proto.ID}-{rsi.RsiState}";
 
-                if (!_sprite.LayerMapTryGet(target, layerID, out var index, false))
+                if (!_sprite.LayerMapTryGet(target, layerId, out var index, false))
                     continue;
 
-                _sprite.LayerMapRemove(target, layerID);
+                _sprite.LayerMapRemove(target, layerId);
                 _sprite.RemoveLayer(target, index);
             }
         }
@@ -248,9 +248,9 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
                     if (sprite is not SpriteSpecifier.Rsi rsi)
                         continue;
 
-                    var layerID = $"{proto.ID}-{rsi.RsiState}";
+                    var layerId = $"{proto.ID}-{rsi.RsiState}";
 
-                    if (!_sprite.LayerMapTryGet(args.Body.Owner, layerID, out var index, true))
+                    if (!_sprite.LayerMapTryGet(args.Body.Owner, layerId, out var index, true))
                         continue;
 
                     _sprite.LayerSetVisible(args.Body.Owner, index, args.Args.Visible);
