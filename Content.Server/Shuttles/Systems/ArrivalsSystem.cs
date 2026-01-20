@@ -372,6 +372,7 @@ public sealed class ArrivalsSystem : EntitySystem
         var spawnLoc = _random.Pick(possiblePositions);
         ev.SpawnResult = _stationSpawning.SpawnPlayerMob(
             spawnLoc,
+            ev.Name,
             ev.Job,
             ev.HumanoidCharacterProfile,
             ev.Station);

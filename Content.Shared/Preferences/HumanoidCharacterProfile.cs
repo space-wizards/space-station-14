@@ -59,6 +59,12 @@ namespace Content.Shared.Preferences
         [DataField]
         private Dictionary<string, RoleLoadout> _loadouts = new();
 
+        /// <summary>
+        /// The character's default name. A character's name can be overriden by some special roles (e.g. clown, mime,
+        /// AI) which is not reflected here. Therefore, generally speaking, DO NOT USE THIS VALUE FOR GAMEPLAY SYSTEMS
+        /// BECAUSE SPECIAL ROLES WILL GET THE WRONG NAME!!!
+        /// Instead use: Mind's CharacterName (preferred), player's mob's EntityName.
+        /// </summary>
         [DataField]
         public string Name { get; set; } = "John Doe";
 
