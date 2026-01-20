@@ -14,6 +14,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration;
 
 namespace Content.Server.Mind;
 
@@ -39,14 +40,13 @@ public sealed class MindSystem : SharedMindSystem
 
     private void OnControlEntity(DebugControlEntityEvent msg, EntitySessionEventArgs args)
     {
-        var session = args.SenderSession;
+        var user = args.SenderSession.AttachedEntity;
         var target = GetEntity(msg.Target);
-        var user = session.AttachedEntity;
 
         if (user is null || !target.IsValid())
             return;
 
-        if (!_admin.IsAdmin(session))
+        if (!_admin.HasAdminFlag(user.Value, AdminFlags.Debug))
             return;
 
         ControlMob(user.Value, target);
