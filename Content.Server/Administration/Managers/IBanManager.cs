@@ -162,9 +162,15 @@ public abstract class CreateBanInfo
     /// <remarks>
     /// Bans can target multiple addresses at once.
     /// </remarks>
+    /// <param name="address">
+    /// The IP address to add. If null, nothing is done.
+    /// </param>
     /// <returns>The current object, for easy chaining.</returns>
-    public CreateBanInfo AddAddress(IPAddress address)
+    public CreateBanInfo AddAddress(IPAddress? address)
     {
+        if (address == null)
+            return this;
+
         return AddAddressRange(
             address,
             address.AddressFamily == AddressFamily.InterNetwork ? DefaultMaskIpv4 : DefaultMaskIpv6);
@@ -201,6 +207,9 @@ public abstract class CreateBanInfo
     /// <remarks>
     /// Bans can target multiple HWIDs at once.
     /// </remarks>
+    /// <param name="hwId">
+    /// The HWID to add. If null, nothing is done.
+    /// </param>
     /// <returns>The current object, for easy chaining.</returns>
     public CreateBanInfo AddHWId(ImmutableTypedHwid? hwId)
     {

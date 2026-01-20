@@ -73,10 +73,14 @@ public sealed class BanPanelEui : BaseEui
             return;
         }
 
-        var banInfo = new CreateRoleBanInfo(ban.Reason);
+        var isRoleBan = ban.BannedJobs?.Length > 0 || ban.BannedAntags?.Length > 0;
+
+        CreateBanInfo banInfo = isRoleBan ? new CreateRoleBanInfo(ban.Reason) : new CreateServerBanInfo(ban.Reason);
+
         banInfo.WithBanningAdmin(Player.UserId);
         banInfo.WithSeverity(ban.Severity);
-        banInfo.WithMinutes(ban.BanDurationMinutes);
+        if (ban.BanDurationMinutes > 0)
+            banInfo.WithMinutes(ban.BanDurationMinutes);
 
         (IPAddress, int)? addressRange = null;
         if (ban.IpAddress is not null)
@@ -126,48 +130,38 @@ public sealed class BanPanelEui : BaseEui
 
         banInfo.AddHWId(targetHWid);
 
-        if (ban.BannedJobs?.Length > 0 || ban.BannedAntags?.Length > 0)
+        if (isRoleBan)
         {
+            var roleBanInfo = (CreateRoleBanInfo)banInfo;
             foreach (var row in ban.BannedJobs ?? [])
             {
-                banInfo.AddJob(row);
+                roleBanInfo.AddJob(row);
             }
 
             foreach (var row in ban.BannedAntags ?? [])
             {
-                banInfo.AddAntag(row);
+                roleBanInfo.AddAntag(row);
             }
 
-            _banManager.CreateRoleBan(banInfo);
-
-            Close();
-
-            return;
+            _banManager.CreateRoleBan(roleBanInfo);
         }
-
-        if (ban.Erase && targetUid is not null)
+        else
         {
-            try
+            if (ban.Erase && targetUid is not null)
             {
-                if (_entities.TrySystem(out AdminSystem? adminSystem))
-                    adminSystem.Erase(targetUid.Value);
+                try
+                {
+                    if (_entities.TrySystem(out AdminSystem? adminSystem))
+                        adminSystem.Erase(targetUid.Value);
+                }
+                catch (Exception e)
+                {
+                    _sawmill.Error($"Error while erasing banned player:\n{e}");
+                }
             }
-            catch (Exception e)
-            {
-                _sawmill.Error($"Error while erasing banned player:\n{e}");
-            }
-        }
 
-        _banManager.CreateServerBan(
-            targetUid,
-            ban.Target,
-            Player.UserId,
-            addressRange,
-            targetHWid,
-            ban.BanDurationMinutes,
-            ban.Severity,
-            ban.Reason
-        );
+            _banManager.CreateServerBan((CreateServerBanInfo)banInfo);
+        }
 
         Close();
     }
