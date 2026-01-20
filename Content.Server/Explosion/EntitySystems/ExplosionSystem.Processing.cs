@@ -17,6 +17,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Numerics;
+using Robust.Shared.Prototypes;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -510,8 +511,7 @@ public sealed partial class ExplosionSystem
         TileHistoryComponent? history,
         ref (TileHistoryChunk? Chunk, Vector2i Indices)? chunk)
     {
-        if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef
-            || tileDef.Indestructible)
+        if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef || tileDef.Indestructible)
             return;
 
         if (!CanCreateVacuum)
@@ -526,39 +526,10 @@ public sealed partial class ExplosionSystem
             tileBreakages++;
             effectiveIntensity -= type.TileBreakRerollReduction;
 
-            ContentTileDefinition? newDef = null;
-
-            // if we have tile history, we revert the tile to its previous state
-            if (history != null && chunk != null && chunk.Value.Chunk != null && chunk.Value.Chunk.History.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
-            {
-                // last entry in the stack
-                var newId = stack[^1];
-                if (stack.Count == 1)
-                {
-                    chunk.Value.Chunk.History.Remove(tileRef.GridIndices);
-                    if (chunk.Value.Chunk.History.Count == 0)
-                    {
-                        history.ChunkHistory.Remove(chunk.Value.Indices);
-                        chunk = null;
-                    }
-                }
-                else
-                {
-                    stack.RemoveAt(stack.Count - 1);
-                    chunk.Value.Chunk.LastModified = Timing.CurTick;
-                }
-
-                newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
-            }
-
-            if (newDef == null && tileDef.BaseTurf.HasValue)
-            {
-                // otherwise, we just use the base turf
-                newDef = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf.Value];
-            }
-
-            if (newDef == null)
+            if (GetNextTile((tileDef, tileRef.GridIndices), history, ref chunk) is not { } newId)
                 break;
+
+            var newDef = (ContentTileDefinition) _tileDefinitionManager[newId];
 
             if (newDef.MapAtmosphere && !canCreateVacuum)
                 break;
@@ -572,9 +543,42 @@ public sealed partial class ExplosionSystem
         damagedTiles.Add((tileRef.GridIndices, new Tile(tileDef.TileId)));
     }
 
-    public void DirtyHistory(EntityUid uid, TileHistoryComponent history)
+    private ProtoId<ContentTileDefinition>? GetNextTile((ContentTileDefinition tileDef, Vector2i gridIndices) tile,
+        TileHistoryComponent? history,
+        ref (TileHistoryChunk? Chunk, Vector2i Indices)? chunk)
     {
-        Dirty(uid, history);
+        if (chunk?.Chunk == null || !chunk.Value.Chunk.History.TryGetValue(tile.gridIndices, out var stack))
+            return tile.tileDef.BaseTurf; // No tile stack means we return BaseTurf if it exists!
+
+        // last entry in the stack
+        if (stack.Count > 1)
+        {
+            var newId = stack[^1];
+            stack.RemoveAt(stack.Count - 1);
+            chunk.Value.Chunk.LastModified = _timing.CurTick;
+            return newId;
+        }
+
+        chunk.Value.Chunk.History.Remove(tile.gridIndices);
+        if (chunk.Value.Chunk.History.Count == 0)
+        {
+            history?.ChunkHistory.Remove(chunk.Value.Indices);
+            chunk = null;
+        }
+        else
+        {
+            chunk.Value.Chunk.LastModified = _timing.CurTick;
+        }
+
+        return stack[0]; // If the stack is somehow empty, this will throw, but we will have at least removed it from dict first!
+    }
+
+    public void DirtyHistory(EntityUid grid)
+    {
+        if (!_tileHistoryQuery.TryComp(grid, out var history))
+            return;
+
+        Dirty(grid, history);
     }
 }
 
@@ -614,7 +618,6 @@ sealed class Explosion
     private readonly List<ExplosionData> _explosionData = new();
 
     private Entity<MapGridComponent, TileHistoryComponent?>? _currentGrid;
-    private TileHistoryComponent? _currentHistory;
     private (TileHistoryChunk? Chunk, Vector2i Indices)? _currentChunk;
 
     /// <summary>
@@ -825,7 +828,6 @@ sealed class Explosion
                 _currentEnumerator = tileList.GetEnumerator();
                 _currentLookup = _explosionData[_currentDataIndex].Lookup;
                 _currentGrid = _explosionData[_currentDataIndex].MapGrid;
-                _currentHistory = _currentGrid?.Comp2;
                 _currentChunk = null;
                 _currentDataIndex++;
 
@@ -917,7 +919,7 @@ sealed class Explosion
                     var chunkIndices = SharedMapSystem.GetChunkIndices(tileIndices, TileSystem.ChunkSize);
                     if (_currentChunk?.Indices != chunkIndices)
                     {
-                        var chunk = _currentHistory?.ChunkHistory.GetValueOrDefault(chunkIndices);
+                        var chunk = currentGrid.Comp2?.ChunkHistory.GetValueOrDefault(chunkIndices);
                         _currentChunk = (chunk, chunkIndices);
                     }
 
@@ -927,7 +929,7 @@ sealed class Explosion
                         _canCreateVacuum,
                         tileUpdateList,
                         ExplosionType,
-                        _currentHistory,
+                        currentGrid.Comp2,
                         ref _currentChunk);
                 }
             }
@@ -970,9 +972,7 @@ sealed class Explosion
             {
                 _mapSystem.SetTiles(grid.Owner, grid, list);
 
-                // Dirty history if it exists
-                if (_historyQuery.TryGetComponent(grid.Owner, out var history))
-                    _system.DirtyHistory(grid.Owner, history);
+                _system.DirtyHistory(grid.Owner);
             }
         }
         _tileUpdateDict.Clear();
