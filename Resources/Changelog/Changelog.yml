@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0, FairlySadPanda, TiniestShark, MilonPL, beck-thompson
-  changes:
-  - message: The vulpkanin species can now be selected as a roundstart species.
-    type: Add
-  id: 8930
-  time: '2025-09-05T10:43:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37539
 - author: IProduceWidgets
   changes:
   - message: Pride pins can now chameleon to any other pride pin!
@@ -3955,3 +3948,12 @@
   id: 9436
   time: '2026-01-20T21:40:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42498
+- author: Velken
+  changes:
+  - message: RCD can no longer spam lights in the same spot.
+    type: Fix
+  - message: RCD can no longer be used to destroy indestructible tiles.
+    type: Fix
+  id: 9437
+  time: '2026-01-20T22:04:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42556
