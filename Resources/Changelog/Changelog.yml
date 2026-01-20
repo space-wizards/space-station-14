@@ -3896,7 +3896,7 @@
   changes:
   - message: Longarms in the uplink are cheaper but don't come with extra ammo.
     type: Tweak
-  - message: Syndicate knuckle dusters are now 2 TC
+  - message: Syndicate knuckle dusters are now 4 TC
     type: Tweak
   - message: Shotgun slugs in the uplink are now 2 TC
     type: Tweak
