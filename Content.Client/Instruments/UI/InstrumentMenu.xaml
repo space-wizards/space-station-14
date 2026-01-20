@@ -1,7 +1,6 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:ui="clr-namespace:Content.Client.Instruments.UI"
                       SetSize="500,500">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="10" SeparationOverride="10">
         <Collapsible>
@@ -23,9 +22,7 @@
                     <SpriteView Name="InstrumentSpriteView" Stretch="Fill" VerticalExpand="True" />
                 </BoxContainer>
             </BoxContainer>
-            <ui:FileMidiSource Name="FileControl" HorizontalExpand="True" Visible="False" />
-            <ui:InputMidiSource Name="InputControl" HorizontalExpand="True" Visible="False" />
-            <ui:BandMidiSource Name="BandControl" HorizontalExpand="True" Visible="False" />
+            <BoxContainer Name="MidiSourcesContainer" VerticalExpand="True" HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
 

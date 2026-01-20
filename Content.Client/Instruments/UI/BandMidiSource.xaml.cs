@@ -14,8 +14,9 @@ public sealed partial class BandMidiSource : InstrumentMidiSourceBase
     public BandMidiSource()
     {
         RobustXamlLoader.Load(this);
-        BandList.OnItemSelected += OnBandItemSelected;
+
         RefreshButton.OnPressed += OnRefreshPressed;
+        BandList.OnItemSelected += OnBandItemSelected;
     }
 
     private void OnRefreshPressed(BaseButton.ButtonEventArgs _)
@@ -25,21 +26,16 @@ public sealed partial class BandMidiSource : InstrumentMidiSourceBase
 
     private void OnBandItemSelected(ItemList.ItemListSelectedEventArgs args)
     {
-        if (!PlayCheck())
-            return;
-
         var instrumentEntity = (EntityUid)args.ItemList[args.ItemIndex].Metadata!;
         JoinBandRequest?.Invoke(instrumentEntity);
     }
 
-    public void Populate((NetEntity, string)[] nearby, IEntityManager entManager)
+    public void Populate(IEnumerable<(EntityUid, string)> entities)
     {
         BandList.Clear();
-
-        foreach (var (netEnt, name) in nearby)
+        foreach (var tuple in entities)
         {
-            var uid = entManager.GetEntity(netEnt);
-            BandList.AddItem(name, null, true, uid);
+            BandList.AddItem(tuple.Item2, null, true, tuple.Item1);
         }
     }
 }

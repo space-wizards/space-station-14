@@ -9,10 +9,6 @@ namespace Content.Client.Instruments.UI
     public sealed partial class InstrumentMenu : FancyWindow
     {
         private InstrumentMidiSourceBase? _currentMode;
-        private EntityUid _entity;
-
-        public event Action<EntityUid>? SetBandMasterRequest;
-        public event Action? RefreshBandsRequest;
 
         public InstrumentMenu()
         {
@@ -20,11 +16,6 @@ namespace Content.Client.Instruments.UI
 
             ConfigurationCollapsibleHeading.AddStyleClass(ContainerButton.StyleClassButton);
             ConfigurationCollapsibleHeading.Label.Text = Loc.GetString("instruments-component-menu-configuration-collapsible-header");
-            BandControl.JoinBandRequest += OnBandControlJoinBandRequest;
-            BandControl.RefreshBandRequest += OnBandControlRefreshBandRequest;
-
-            SetupSources(FileControl, BandControl, InputControl);
-            SwitchMode(FileControl);
         }
 
         protected override void ExitedTree()
@@ -37,17 +28,7 @@ namespace Content.Client.Instruments.UI
             }
         }
 
-        private void OnBandControlRefreshBandRequest()
-        {
-            RefreshBandsRequest?.Invoke();
-        }
-
-        private void OnBandControlJoinBandRequest(EntityUid ent)
-        {
-            SetBandMasterRequest?.Invoke(ent);
-        }
-
-        private void SetupSources(params InstrumentMidiSourceBase[] modes)
+        public void SetupSources(params InstrumentMidiSourceBase[] modes)
         {
             var group = new ButtonGroup();
             for (var i = 0; i < modes.Length; i++)
@@ -58,6 +39,10 @@ namespace Content.Client.Instruments.UI
                 button.Group = group;
                 button.OnPressed += (o) => { SwitchMode(mode); };
                 MidiSourceButtonsBoxContainer.Children.Add(button);
+                MidiSourcesContainer.Children.Add(mode);
+                mode.VerticalExpand = true;
+                mode.HorizontalExpand = true;
+                mode.Visible = false;
 
                 // Set nicer style classes depending on button position.
                 if (i == 0)
@@ -76,14 +61,13 @@ namespace Content.Client.Instruments.UI
             }
         }
 
-        private void SwitchMode(InstrumentMidiSourceBase mode)
+        public void SwitchMode(InstrumentMidiSourceBase mode)
         {
             if (_currentMode != null)
             {
                 _currentMode.Visible = false;
             }
             _currentMode = mode;
-            _currentMode.Entity = _entity;
             _currentMode.Visible = true;
         }
 
@@ -94,25 +78,7 @@ namespace Content.Client.Instruments.UI
 
         public void SetInstrument(Entity<InstrumentComponent> entity)
         {
-            _entity = entity;
-            var component = entity.Comp;
             InstrumentSpriteView.SetEntity(entity);
-            if (_currentMode != null)
-            {
-                _currentMode.Entity = _entity;
-            }
-        }
-
-        public void NotifyTrackEnded()
-        {
-            if (FileControl.Visible)
-                FileControl.PlayNextTrack();
-        }
-
-        public void PopulateBands((NetEntity, string)[] nearby, IEntityManager entManager)
-        {
-            if (BandControl.Visible)
-                BandControl.Populate(nearby, entManager);
         }
     }
 }

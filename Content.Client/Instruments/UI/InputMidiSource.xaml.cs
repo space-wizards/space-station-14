@@ -6,6 +6,9 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class InputMidiSource : InstrumentMidiSourceBase
 {
+    public event Action? OpenInputRequest;
+    public event Action? CloseInputRequest;
+
     public override string ButtonName => Loc.GetString("instruments-component-menu-input-midi-source-button");
 
     public InputMidiSource()
@@ -17,16 +20,13 @@ public sealed partial class InputMidiSource : InstrumentMidiSourceBase
     {
         base.VisibilityChanged(newVisible);
 
-        if (!EntManager.TryGetComponent(Entity, out InstrumentComponent? instrument))
-            return;
-
         if (newVisible)
         {
-            EntManager.System<InstrumentSystem>().OpenInput(Entity, instrument);
+            OpenInputRequest?.Invoke();
         }
         else
         {
-            EntManager.System<InstrumentSystem>().CloseInput(Entity, false, instrument);
+            CloseInputRequest?.Invoke();
         }
     }
 }
