@@ -14,8 +14,11 @@ namespace Content.Shared.MagicMirror;
 [Access(typeof(MagicMirrorSystem))]
 public sealed partial class MagicMirrorComponent : Component
 {
-    [DataField]
-    public DoAfterId? DoAfter;
+    /// <summary>
+    /// The id for a doAfter our <see cref="Target"/> is doing. Stored as an ushort so it can be networked and one day predicted.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ushort? DoAfter;
 
     /// <summary>
     /// Magic mirror target, used for validating UI messages.

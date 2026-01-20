@@ -26,7 +26,6 @@ public sealed class HumanoidMarkingModifierMarkingSetMessage : BoundUserInterfac
 [Serializable, NetSerializable]
 public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
 {
-    // TODO just use the component state, remove the BUI state altogether.
     public HumanoidMarkingModifierState(
         Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings,
         Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData> organData,

@@ -54,7 +54,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             return;
 
         // Check if the target getting their hair altered has any clothes that hides their hair
-        if (CheckHeadSlotOrClothes(args.Actor, target))
+        if (CheckHeadSlotOrClothes(target))
         {
             _popup.PopupEntity(
                 ent.Comp.Target == args.Actor
@@ -66,8 +66,11 @@ public sealed class MagicMirrorSystem : EntitySystem
             return;
         }
 
-        _doAfter.Cancel(ent.Comp.DoAfter);
-        ent.Comp.DoAfter = null;
+        if (ent.Comp.DoAfter.HasValue)
+        {
+            _doAfter.Cancel(target, ent.Comp.DoAfter.Value);
+            ent.Comp.DoAfter = null;
+        }
 
         var doafterTime = ent.Comp.ModifyTime;
         if (ent.Comp.Target == args.Actor)
@@ -96,7 +99,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Entity(args.Actor, EntityManager))), target, target, PopupType.Medium);
         }
 
-        ent.Comp.DoAfter = doAfterId;
+        ent.Comp.DoAfter = doAfterId?.Index;
         _audio.PlayPredicted(ent.Comp.ChangeHairSound, ent, args.Actor);
     }
 
@@ -214,13 +217,13 @@ public sealed class MagicMirrorSystem : EntitySystem
     /// Helper function that checks if the wearer has anything on their head
     /// Or if they have any clothes that hides their hair
     /// </summary>
-    private bool CheckHeadSlotOrClothes(EntityUid user, EntityUid target)
+    private bool CheckHeadSlotOrClothes(EntityUid target)
     {
         if (!TryComp<InventoryComponent>(target, out var inventoryComp))
             return false;
 
         // any hat whatsoever will block haircutting
-        if (_inventory.TryGetSlotEntity(target, "head", out var hat, inventoryComp))
+        if (_inventory.TryGetSlotEntity(target, "head", out _, inventoryComp))
         {
             return true;
         }
