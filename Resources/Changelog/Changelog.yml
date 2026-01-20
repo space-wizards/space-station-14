@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: whatston3
-  changes:
-  - message: Lathe UIs are now way smoother when printing mass amounts of fast-printing
-      items.
-    type: Fix
-  id: 8925
-  time: '2025-09-04T19:37:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39886
 - author: Princess-Cheeseballs
   changes:
   - message: You can no longer crawl under counters, or tables without space underneath.
@@ -3956,3 +3948,10 @@
   id: 9431
   time: '2026-01-20T16:02:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42444
+- author: sowelipililimute
+  changes:
+  - message: Voice emotes are now correct for your character's sex
+    type: Fix
+  id: 9432
+  time: '2026-01-20T19:29:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42550
