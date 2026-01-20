@@ -73,6 +73,7 @@ namespace Content.Server.Database
             var ban = await db.SqliteDbContext.Ban
                 .ApplyIncludes(GetBanDefIncludes())
                 .Where(p => p.Id == id)
+                .AsSplitQuery()
                 .SingleOrDefaultAsync();
 
             return ConvertBan(ban);

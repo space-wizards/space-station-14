@@ -64,7 +64,8 @@ namespace Content.Server.Database
 
             var query = db.PgDbContext.Ban
                 .ApplyIncludes(GetBanDefIncludes())
-                .Where(p => p.Id == id);
+                .Where(p => p.Id == id)
+                .AsSplitQuery();
 
             var ban = await query.SingleOrDefaultAsync();
 
