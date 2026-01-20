@@ -31,11 +31,11 @@
   - type: Organ
     category: Torso
   - type: Sprite
-    state: torso_m
+    state: torso
   - type: VisualOrgan
     layer: enum.HumanoidVisualLayers.Chest
     data:
-      state: torso_m
+      state: torso
   - type: VisualOrganMarkings
     markingData:
       layers:
@@ -54,11 +54,11 @@
   - type: Organ
     category: Head
   - type: Sprite
-    state: head_m
+    state: head
   - type: VisualOrgan
     layer: enum.HumanoidVisualLayers.Head
     data:
-      state: head_m
+      state: head
   - type: VisualOrganMarkings
     markingData:
       layers:
@@ -435,3 +435,29 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  id: OrganBaseHeadSexed
+  abstract: true
+  components:
+  - type: Sprite
+    state: head_m
+  - type: VisualOrgan
+    data:
+      state: head_m
+    sexStateOverrides:
+      Male: head_m
+      Female: head_f
+
+- type: entity
+  id: OrganBaseTorsoSexed
+  abstract: true
+  components:
+  - type: Sprite
+    state: torso_m
+  - type: VisualOrgan
+    data:
+      state: torso_m
+    sexStateOverrides:
+      Male: torso_m
+      Female: torso_f

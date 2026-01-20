@@ -203,11 +203,11 @@
       group: Reptilian
 
 - type: entity
-  parent: [ OrganBaseTorso, OrganReptilianExternal ]
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganReptilianExternal ]
   id: OrganReptilianTorso
 
 - type: entity
-  parent: [ OrganBaseHead, OrganReptilianExternal ]
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganReptilianExternal ]
   id: OrganReptilianHead
 
 - type: entity
