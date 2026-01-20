@@ -1,8 +1,6 @@
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
 
-namespace Content.Shared.Electrocution;
-
 namespace Content.Shared.Electrocution
 {
     public abstract class SharedElectrocutionSystem : EntitySystem
