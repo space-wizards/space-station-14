@@ -52,7 +52,7 @@ public interface IBanManager
         if (hwid != null)
             info.AddHWId(hwid);
 
-        if (minutes != null)
+        if (minutes > 0)
             info.WithMinutes(minutes.Value);
 
         if (banningAdmin != null)
