@@ -1,20 +1,6 @@
 ﻿Entries:
 - author: IProduceWidgets
   changes:
-  - message: Pride pins can now chameleon to any other pride pin!
-    type: Tweak
-  id: 8931
-  time: '2025-09-05T15:55:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36894
-- author: MidZik
-  changes:
-  - message: Midround wizard player count requirement increased from 10 to 30.
-    type: Tweak
-  id: 8932
-  time: '2025-09-05T16:23:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38424
-- author: IProduceWidgets
-  changes:
   - message: You can drink out of the toilets.
     type: Add
   id: 8933
@@ -3957,3 +3943,18 @@
   id: 9437
   time: '2026-01-20T22:04:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42556
+- author: sowelipililimute
+  changes:
+  - message: Clothing now hides your body when it should, and doesn't show your body
+      when it shouldn't.
+    type: Fix
+  id: 9438
+  time: '2026-01-20T22:39:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42553
+- author: kipdotnet
+  changes:
+  - message: The "Lizard Power" graffiti decal has been replaced.
+    type: Tweak
+  id: 9439
+  time: '2026-01-20T22:39:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42541
