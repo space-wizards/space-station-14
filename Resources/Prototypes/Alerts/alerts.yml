@@ -374,7 +374,7 @@
     centerGlyph: false
     hideLeadingZeroes: false
   - type: Sprite
-    sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    sprite: /Textures/Interface/Alerts/ratking_hunger_counter.rsi
     layers:
     - map: [ "enum.AlertVisualLayers.Base" ]
     - map: [ "1" ]
