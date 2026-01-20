@@ -45,6 +45,7 @@ public static class StyleClass
     public const string LabelMonospaceSubHeading = "ConsoleSubHeading";
 
     public const string BackgroundPanel = "BackgroundPanel"; // replaces `AngleRect`
+    public const string BackgroundPanelDark = "BackgroundPanelDark"; // replaces `Inset`
     public const string BackgroundPanelOpenLeft = "BackgroundPanelOpenLeft"; // replaces `BackgroundOpenLeft`
     public const string BackgroundPanelOpenRight = "BackgroundPanelOpenRight"; // replaces `BackgroundOpenRight`
 
