@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Humanoid;
@@ -87,7 +88,11 @@ public abstract partial class SharedVisualBodySystem
             if (TryComp<VisualOrganMarkingsComponent>(organ, out var visualOrganMarkings))
             {
                 markings.TryAdd(category, visualOrganMarkings.MarkingData);
-                applied.TryAdd(category, visualOrganMarkings.Markings);
+                if (filter is not null)
+                    applied.TryAdd(category,
+                        visualOrganMarkings.Markings.Where(kvp => filter.Contains(kvp.Key)).ToDictionary());
+                else
+                    applied.TryAdd(category, visualOrganMarkings.Markings);
             }
         }
 
@@ -113,19 +118,17 @@ public abstract partial class SharedVisualBodySystem
         RaiseLocalEvent(ent, ref markingsEvt);
     }
 
-    public void ApplyAppearanceTo(Entity<VisualBodyComponent?> ent, HumanoidCharacterAppearance appearance, Sex sex)
+    private void ApplyAppearanceTo(Entity<VisualBodyComponent?> ent, HumanoidCharacterAppearance appearance, Sex sex)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        var profileEvt = new ApplyOrganProfileDataEvent(new()
-            {
-                Sex = sex,
-                SkinColor = appearance.SkinColor,
-                EyeColor = appearance.EyeColor,
-            },
-            null);
-        RaiseLocalEvent(ent, ref profileEvt);
+        ApplyProfile(ent, new()
+        {
+            Sex = sex,
+            SkinColor = appearance.SkinColor,
+            EyeColor = appearance.EyeColor,
+        });
 
         var markingsEvt = new ApplyOrganMarkingsEvent(appearance.Markings);
         RaiseLocalEvent(ent, ref markingsEvt);
