@@ -52,6 +52,16 @@ namespace Content.Client.Forensics
             if (!EntMan.TryGetComponent(Owner, out ForensicScannerComponent? scanner))
                 return;
 
+            // TODO: Fix this, by replacing Timer.Spawn
+            if (scanner.PrintReadyAt > _gameTiming.CurTime)
+            {
+                Timer.Spawn(scanner.PrintReadyAt - _gameTiming.CurTime, () =>
+                {
+                    if (_window != null)
+                        _window.UpdatePrinterState(false);
+                });
+            }
+
             _printCooldown = scanner.PrintCooldown;
             _window.Update(scanner);
         }
