@@ -1033,7 +1033,7 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: ChemicalLaser
     fireCost: 25
   - type: Clothing
@@ -1124,7 +1124,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
       params:
         volume: -2
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: ChemicalMultilaser
     fireCost: 8
   - type: Clothing
