@@ -203,7 +203,7 @@
       group: Reptilian
 
 - type: entity
-  parent: [ OrganBaseTorso, OrganReptilianExternal ]
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganReptilianExternal ]
   id: OrganReptilianTorso
   components:
   - type: VisualOrganMarkings
@@ -211,7 +211,7 @@
     - enum.HumanoidVisualLayers.Tail
 
 - type: entity
-  parent: [ OrganBaseHead, OrganReptilianExternal ]
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganReptilianExternal ]
   id: OrganReptilianHead
   components:
   - type: VisualOrganMarkings

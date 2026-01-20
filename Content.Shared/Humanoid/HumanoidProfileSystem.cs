@@ -30,6 +30,9 @@ public sealed class HumanoidProfileSystem : EntitySystem
         ent.Comp.Sex = profile.Sex;
         Dirty(ent);
 
+        var sexChanged = new SexChangedEvent(ent.Comp.Sex, profile.Sex);
+        RaiseLocalEvent(ent, ref sexChanged);
+
         if (TryComp<GrammarComponent>(ent, out var grammar))
         {
             _grammar.SetGender((ent, grammar), profile.Gender);
