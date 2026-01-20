@@ -2,10 +2,19 @@
   id: EngiVendInventory
   startingInventory:
     # Essential equipment
-    Multitool: 2
+    ClothingBeltUtilityEngineering: 2
+    RCD: 2
+    ToolboxElectricalFilled: 2
     # Expendable equipment
+    MetalFoamGrenade: 3
+    RCDAmmo: 3
+    APCElectronics: 4
+    SubstationMachineCircuitboard: 3
+    SMESMachineCircuitboard: 2
     ClothingHeadHatCone: 4
     BoxInflatable: 2
+    # Optional equipment
+    BaseHandheldStationMap: 3
   contrabandInventory:
     CowToolboxFilled: 1
     DrinkBeerCan: 3
