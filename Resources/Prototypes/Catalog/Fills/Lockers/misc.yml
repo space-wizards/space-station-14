@@ -39,6 +39,13 @@
         - id: ClothingEyesHudSyndicate
 
 - type: entityTable
+  id: FillEmergencyInflatables
+  table: !type:AllSelector
+    children:
+    - id: InflatableWallStack5
+    - id: InflatableDoorStack1
+
+- type: entityTable
   id: FillLockerEmergencyStandard
   table: !type:AllSelector
     children:
@@ -56,6 +63,8 @@
       prob: 0.1
     - id: BoxMRE
       prob: 0.1
+    - !type:NestedSelector
+      tableId: FillEmergencyInflatables
 
 - type: entity
   id: ClosetEmergencyFilledRandom
@@ -92,6 +101,8 @@
       - id: EmergencyNitrogenTankFilled
         weight: 4
       - id: NitrogenTankFilled
+    - !type:NestedSelector
+      tableId: FillEmergencyInflatables
 
 - type: entity
   id: ClosetEmergencyN2FilledRandom

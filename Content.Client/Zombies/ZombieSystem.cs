@@ -1,6 +1,6 @@
 using System.Linq;
+using Content.Shared.Body;
 using Content.Shared.Ghost;
-using Content.Shared.Humanoid;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
@@ -40,7 +40,7 @@ public sealed class ZombieSystem : SharedZombieSystem
 
     private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
     {
-        if (HasComp<HumanoidAppearanceComponent>(uid))
+        if (HasComp<VisualBodyComponent>(uid))
             return;
 
         if (!TryComp<SpriteComponent>(uid, out var sprite))

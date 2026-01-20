@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: Magic9Ball
+  values:
+    prefix: magic-9-ball-
+    count: 16
