@@ -33,6 +33,8 @@
       prob: 0.5
     - id: ClothingOuterCoatBomber
       prob: 0.3
+    - id: PlushieLizardJobPassenger
+      prob: 0.02
 
 - type: entity
   id: WardrobeMixedFilled
