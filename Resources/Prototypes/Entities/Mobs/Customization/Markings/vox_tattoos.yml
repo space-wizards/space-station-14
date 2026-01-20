@@ -162,7 +162,7 @@
   sprites:
   - sprite: Mobs/Customization/vox_tattoos.rsi
     state: eyeshadow_large
-    
+
 - type: marking
   id: VoxTattooEyeliner
   bodyPart: Eyes
@@ -173,7 +173,7 @@
 
 - type: marking
   id: VoxBeakCoverStripe
-  bodyPart: Snout
+  bodyPart: SnoutCover
   coloring:
     default:
       type:
@@ -186,7 +186,7 @@
 
 - type: marking
   id: VoxBeakCoverTip
-  bodyPart: Snout
+  bodyPart: SnoutCover
   coloring:
     default:
       type:
