@@ -45,6 +45,7 @@
     Hair:
       points: 1
       required: false
+      weight: 1
     FacialHair:
       points: 1
       required: false
