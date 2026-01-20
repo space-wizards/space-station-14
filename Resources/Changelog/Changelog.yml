@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Inflatable walls and airlocks now actually take Delta-Pressure damage.
-    type: Fix
-  id: 8919
-  time: '2025-09-04T01:08:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40098
 - author: Quantum-cross
   changes:
   - message: Hot gas now looks hot!
@@ -3952,3 +3945,10 @@
   id: 9425
   time: '2026-01-19T23:06:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42468
+- author: ahandleman
+  changes:
+  - message: Fixed seeds being unique after sampling.
+    type: Fix
+  id: 9426
+  time: '2026-01-20T01:41:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42527
