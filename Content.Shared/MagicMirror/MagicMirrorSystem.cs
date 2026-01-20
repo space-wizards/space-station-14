@@ -142,6 +142,9 @@ public sealed class MagicMirrorSystem : EntitySystem
         if (!args.CanReach || args.Target == null)
             return;
 
+        if (!HasComp<VisualBodyComponent>(args.Target.Value))
+            return;
+
         UpdateInterface(mirror, args.Target.Value);
         _userInterface.TryOpenUi(mirror.Owner, MagicMirrorUiKey.Key, args.User);
     }
