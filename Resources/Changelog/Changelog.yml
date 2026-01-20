@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: ArtisticRoomba
   changes:
-  - message: Fixed Atmospherics Delta-Pressure damage not capping damage beyond a
-      certain pressure for applicable structures.
-    type: Fix
-  id: 8928
-  time: '2025-09-05T07:09:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40125
-- author: ArtisticRoomba
-  changes:
   - message: Shutters of all types (regular, windowed, radiation) now take Delta-Pressure
       damage. Blast doors still don't take Delta-Pressure damage.
     type: Fix
@@ -3956,3 +3948,10 @@
   id: 9434
   time: '2026-01-20T21:07:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32932
+- author: sowelipililimute
+  changes:
+  - message: Species now properly render their sex-specific sprites
+    type: Fix
+  id: 9435
+  time: '2026-01-20T21:24:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42554
