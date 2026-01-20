@@ -21,7 +21,7 @@ public sealed partial class VisualOrganComponent : Component
     public PrototypeLayerData Data;
 
     [DataField, AutoNetworkedField]
-    public OrganProfileData Profile;
+    public OrganProfileData Profile = new();
 }
 
 /// <summary>
@@ -41,12 +41,12 @@ public partial record struct OrganProfileData
     /// The "eye color" of this organ
     /// </summary>
     [DataField]
-    public Color EyeColor;
+    public Color EyeColor = Color.White;
 
     /// <summary>
     /// The "skin color" of this organ
     /// </summary>
     [DataField]
-    public Color SkinColor;
+    public Color SkinColor = Color.White;
 }
 
