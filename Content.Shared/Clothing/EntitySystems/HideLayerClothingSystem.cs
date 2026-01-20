@@ -69,7 +69,7 @@ public sealed class HideLayerClothingSystem : EntitySystem
 
             // Only update this layer if we are currently equipped to the relevant slot.
             if (validSlots.HasFlag(inSlot))
-                _hideableHumanoidLayers.SetLayerVisibility(user, layer, !hideLayers, inSlot);
+                _hideableHumanoidLayers.SetLayerOcclusion(user, layer, hideLayers, inSlot);
         }
 
         // Fallback for obsolete field: assume we want to hide **all** layers, as long as we are equipped to any
@@ -81,7 +81,7 @@ public sealed class HideLayerClothingSystem : EntitySystem
             foreach (var layer in slots)
             {
                 if (hideable.Contains(layer))
-                    _hideableHumanoidLayers.SetLayerVisibility(user, layer, !hideLayers, inSlot);
+                    _hideableHumanoidLayers.SetLayerOcclusion(user, layer, hideLayers, inSlot);
             }
         }
     }
