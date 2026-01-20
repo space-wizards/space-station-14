@@ -62,19 +62,24 @@ public sealed class WaggingSystem : EntitySystem
             TryToggleWagging(ent.AsNullable());
     }
 
-    private bool TryToggleWagging(Entity<WaggingComponent?, VisualBodyComponent?> ent)
+    private bool TryToggleWagging(Entity<WaggingComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        _visualBody.GatherMarkingsData((ent, ent.Comp2),
-            [ent.Comp1.Layer],
-            out _, out _, out var applied);
+        if (!_visualBody.TryGatherMarkingsData(ent.Owner,
+                [ent.Comp.Layer],
+                out _,
+                out _,
+                out var applied))
+        {
+            return false;
+        }
 
-        if (!applied.TryGetValue(ent.Comp1.Organ, out var markingsSet))
+        if (!applied.TryGetValue(ent.Comp.Organ, out var markingsSet))
             return false;
 
-        ent.Comp1.Wagging = !ent.Comp1.Wagging;
+        ent.Comp.Wagging = !ent.Comp.Wagging;
 
         markingsSet = markingsSet.ShallowClone();
         foreach (var (layers, markings) in markingsSet)
@@ -87,15 +92,15 @@ public sealed class WaggingSystem : EntitySystem
                 var currentMarkingId = layerMarkings[i].MarkingId;
                 string newMarkingId;
 
-                if (ent.Comp1.Wagging)
+                if (ent.Comp.Wagging)
                 {
-                    newMarkingId = $"{currentMarkingId}{ent.Comp1.Suffix}";
+                    newMarkingId = $"{currentMarkingId}{ent.Comp.Suffix}";
                 }
                 else
                 {
-                    if (currentMarkingId.EndsWith(ent.Comp1.Suffix))
+                    if (currentMarkingId.EndsWith(ent.Comp.Suffix))
                     {
-                        newMarkingId = currentMarkingId[..^ent.Comp1.Suffix.Length];
+                        newMarkingId = currentMarkingId[..^ent.Comp.Suffix.Length];
                     }
                     else
                     {
@@ -116,7 +121,7 @@ public sealed class WaggingSystem : EntitySystem
 
         _visualBody.ApplyMarkings(ent, new()
         {
-            [ent.Comp1.Organ] = markingsSet
+            [ent.Comp.Organ] = markingsSet
         });
         return true;
     }

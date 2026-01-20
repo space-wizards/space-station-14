@@ -193,10 +193,8 @@ public sealed partial class ZombieSystem
         if (TryComp<BloodstreamComponent>(target, out var stream) && stream.BloodReferenceSolution is { } reagents)
             zombiecomp.BeforeZombifiedBloodReagents = reagents.Clone();
 
-        if (TryComp<VisualBodyComponent>(target, out var body))
+        if (_visualBody.TryGatherMarkingsData(target, null, out var profiles, out _, out var markings))
         {
-            _visualBody.GatherMarkingsData((target, body), null, out var profiles, out _, out var markings);
-
             // TODO: My kingdom for ZombieSystem just using cloning system
             zombiecomp.BeforeZombifiedProfiles = profiles;
             zombiecomp.BeforeZombifiedMarkings = markings.ToDictionary(

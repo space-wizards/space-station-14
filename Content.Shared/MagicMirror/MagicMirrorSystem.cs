@@ -174,11 +174,10 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void UpdateInterface(Entity<MagicMirrorComponent> ent, EntityUid target)
     {
-        if (!TryComp<VisualBodyComponent>(target, out var visualBody))
+        if (!_visualBody.TryGatherMarkingsData(target, ent.Comp.Layers, out var profiles, out var markings, out var applied))
             return;
 
         ent.Comp.Target = target;
-        _visualBody.GatherMarkingsData((target, visualBody), ent.Comp.Layers, out var profiles, out var markings, out var applied);
 
         foreach (var profile in profiles)
         {
