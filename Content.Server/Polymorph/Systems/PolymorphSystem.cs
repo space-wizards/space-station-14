@@ -1,4 +1,5 @@
 using Content.Server.Actions;
+using Content.Server.Destructible;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Polymorph.Components;
@@ -34,6 +35,7 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
@@ -226,8 +228,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         //Transfers all damage from the original to the new one
         if (configuration.TransferDamage &&
             TryComp<DamageableComponent>(child, out var damageParent) &&
-            _mobThreshold.GetScaledDamage(uid, child, out var damage) &&
-            damage != null)
+            _destructible.GetScaledDamage(uid, child, out var damage))
         {
             _damageable.SetDamage((child, damageParent), damage);
         }
@@ -321,8 +322,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         if (component.Configuration.TransferDamage &&
             TryComp<DamageableComponent>(parent, out var damageParent) &&
-            _mobThreshold.GetScaledDamage(uid, parent, out var damage) &&
-            damage != null)
+            _destructible.GetScaledDamage(uid, parent, out var damage))
         {
             _damageable.SetDamage((parent, damageParent), damage);
         }
