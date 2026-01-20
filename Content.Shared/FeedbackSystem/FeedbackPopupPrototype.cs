@@ -10,7 +10,7 @@ public sealed partial class FeedbackPopupPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = null!;
+    public string ID { get; private set; } = null!;
 
     /// <summary>
     /// What server the popup is from, you must edit the ccvar to include this for the popup to appear!
