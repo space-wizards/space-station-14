@@ -98,7 +98,8 @@ public sealed class RoleBanCommand : IConsoleCommand
         var targetHWid = located.LastHWId;
 
         var banInfo = new CreateRoleBanInfo(reason);
-        banInfo.WithMinutes(minutes);
+        if (minutes > 0)
+            banInfo.WithMinutes(minutes);
         banInfo.AddUser(targetUid, located.Username);
         banInfo.WithBanningAdmin(shell.Player?.UserId);
         banInfo.AddHWId(targetHWid);
