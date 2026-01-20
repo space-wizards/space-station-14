@@ -20,6 +20,9 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<MagicMirrorWindow>();
+
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+
         _window.MarkingsPicker.SetModel(_markingsModel);
 
         _markingsModel.MarkingsChanged += (_, _) =>
