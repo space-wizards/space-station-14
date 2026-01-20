@@ -10,7 +10,7 @@ public sealed class IgnoreProjectilesAboveAngleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(OnPreventCollide);
+        SubscribeLocalEvent<IgnoreProjectilesAboveAngleComponent, PreventCollideEvent>(OnPreventCollide);
     }
 
     /// <summary>
@@ -44,10 +44,10 @@ public sealed class IgnoreProjectilesAboveAngleSystem : EntitySystem
         return (double.Abs(angleDifference.Reduced().Theta) < targetUid.Comp.Angle.Theta) == targetUid.Comp.Reversed;
     }
 
-    private void OnPreventCollide(EntityUid uid, ProjectileComponent projectile, ref PreventCollideEvent args)
+    private void OnPreventCollide(Entity<IgnoreProjectilesAboveAngleComponent> uid, ref PreventCollideEvent args)
     {
-        if (TryComp(args.OtherEntity, out IgnoreProjectilesAboveAngleComponent? component) &&
-            IgnoreAboveAngleCheck((args.OtherEntity, component), uid, projectile.Shooter))
+        if (TryComp(args.OtherEntity, out ProjectileComponent? component) &&
+            IgnoreAboveAngleCheck(uid, args.OtherEntity, component.Shooter))
         {
             args.Cancelled = true;
         }
