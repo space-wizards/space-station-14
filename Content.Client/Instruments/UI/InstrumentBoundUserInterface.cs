@@ -107,8 +107,8 @@ namespace Content.Client.Instruments.UI
             _bandSource.RefreshBandRequest -= OnRefreshBandsRequest;
             _bandSource.JoinBandRequest -= OnSetBandMasterRequest;
 
-            _inputSource.OpenInputRequest += OnOpenInputRequest;
-            _inputSource.CloseInputRequest += OnCloseInputRequest;
+            _inputSource.OpenInputRequest -= OnOpenInputRequest;
+            _inputSource.CloseInputRequest -= OnCloseInputRequest;
 
             if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
             {
