@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Quantum-cross
-  changes:
-  - message: The anomaly scanner has received an upgrade, showing some information
-      without opening the UI.
-    type: Add
-  id: 8924
-  time: '2025-09-04T19:11:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37585
 - author: whatston3
   changes:
   - message: Lathe UIs are now way smoother when printing mass amounts of fast-printing
@@ -3957,3 +3949,10 @@
   id: 9430
   time: '2026-01-20T12:15:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42544
+- author: insoPL
+  changes:
+  - message: Added icon indicating if the gloves are insulated or not.
+    type: Add
+  id: 9431
+  time: '2026-01-20T16:02:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42444
