@@ -45,6 +45,10 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
                 .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.Background),
             E()
+                .Class(StyleClass.BackgroundPanelDark)
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(sheet))
+                .Modulate(sheet.SecondaryPalette.BackgroundDark),
+             E()
                 .Class(StyleClass.BackgroundPanelOpenLeft)
                 .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenLeftStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.Background),
