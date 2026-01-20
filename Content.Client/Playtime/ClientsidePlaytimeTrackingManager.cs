@@ -94,7 +94,7 @@ public sealed class ClientsidePlaytimeTrackingManager
             return;
         }
 
-        // At less than 1 minute of time diff, there's not much point, and saving regardless will brick tests
+        // At less than 1 minute of time diff, there's not much point
         // The reason this isn't checking for 0 is because TotalMinutes is fractional, rather than solely whole minutes
         if (timeDiffMinutes < 1)
             return;

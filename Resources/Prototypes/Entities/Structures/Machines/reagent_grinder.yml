@@ -73,6 +73,7 @@
       tags:
       - HighRiskItem #ian meat
     efficiency: 0.9
+    reclaimMaterials: false # Materials have ExtractableComponent, which is whitelisted, so we have to avoid infinite recycling loops
     onlyReclaimDrainable: false
     solutionContainerId: output
   - type: Sprite

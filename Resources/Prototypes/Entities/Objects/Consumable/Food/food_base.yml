@@ -2,14 +2,14 @@
 # Base component for edible food-like items
 #
 - type: entity
+  abstract: true
   parent: BaseItem
   id: EdibleBase
-  abstract: true
   components:
   - type: FlavorProfile
     flavors:
       - food
-  - type: Food
+  - type: Edible
   - type: Sprite
   - type: StaticPrice
     price: 0
@@ -19,9 +19,9 @@
 # that should be cleaned up in space
 #
 - type: entity
+  abstract: true
   parent: EdibleBase
   id: FoodBase
-  abstract: true
   components:
   - type: SpaceGarbage
 
@@ -30,9 +30,9 @@
 # But it might in future also mean drawing with a syringe, so this is a base prototype just in case.
 
 - type: entity
+  abstract: true
   parent: FoodBase
   id: FoodInjectableBase
-  abstract: true
   components:
   - type: InjectableSolution
     solution: food
@@ -42,8 +42,8 @@
 # usable by any food that can be opened
 # handles appearance with states "icon" and "icon-open"
 - type: entity
-  id: FoodOpenableBase
   abstract: true
+  id: FoodOpenableBase
   components:
   - type: Appearance
   - type: Sprite

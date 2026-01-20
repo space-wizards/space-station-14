@@ -58,6 +58,11 @@
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/machines/warning-buzzer.ogg"
 
+- files: ["warning_buzzer_xenoborg.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Toast (Discord)"
+  source: "https://github.com/space-wizards/space-station-14/pull/36935"
+
 - files: ["anomaly_sync_connect.ogg"]
   license: "CC0-1.0"
   copyright: "Created by newagesoup, convert to ogg mono by TheShuEd"

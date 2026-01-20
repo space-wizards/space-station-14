@@ -42,7 +42,7 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         var forceRedrawBase = false;
         if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var prototype, args.Component))
         {
-            if (_prototypeManager.TryIndex(prototype, out var proto))
+            if (_prototypeManager.Resolve(prototype, out var proto))
             {
                 if (proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
                 {

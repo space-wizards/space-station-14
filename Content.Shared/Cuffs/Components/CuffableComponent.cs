@@ -25,12 +25,6 @@ public sealed partial class CuffableComponent : Component
     public int CuffedHandCount => Container.ContainedEntities.Count * 2;
 
     /// <summary>
-    /// The last pair of cuffs that was added to this entity.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
-
-    /// <summary>
     ///     Container of various handcuffs currently applied to the entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]

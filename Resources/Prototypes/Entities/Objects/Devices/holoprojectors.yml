@@ -54,6 +54,27 @@
 
 - type: entity
   parent: Holoprojector
+  id: HoloprojectorClownBorg
+  name: holopeel projector
+  description: A holopeel projector that creates a slippery, hard light banana peel. It recharges, so that the fun never ends!
+  suffix: borg
+  components:
+  - type: HolosignProjector
+    signProto: HoloPeel
+    chargeUse: 240
+  - type: Sprite
+    sprite: Objects/Devices/Holoprojectors/peel.rsi
+    state: icon
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        swap: false
+
+- type: entity
+  parent: Holoprojector
   id: HolofanProjector
   name: holofan projector
   description: Stop suicidal passengers from killing everyone during atmos emergencies.
@@ -89,7 +110,7 @@
   parent: HolofanProjector
   id: HolofanProjectorBorg
   name: integrated holofan
-  description: Stops idiots from causing more crew harm during atmospheric emergencies. Installed directly into an engineering cyborg, it  recharges over time.
+  description: Stops idiots from causing more crew harm during atmospheric emergencies. Installed directly into an engineering cyborg, it recharges over time.
   components:
   - type: ItemSlots
     slots:

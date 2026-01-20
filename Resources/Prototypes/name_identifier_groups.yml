@@ -1,4 +1,4 @@
-﻿# Non-fungible apes, anyone?
+# Non-fungible apes, anyone?
 - type: nameIdentifierGroup
   id: Monkey
   format: name-identifier-format-monkey
@@ -26,6 +26,12 @@
 - type: nameIdentifierGroup
   id: Silicon
   format: name-identifier-format-silicon
+  minValue: 1000
+  maxValue: 9999
+
+- type: nameIdentifierGroup
+  id: Xenoborg
+  format: name-identifier-format-xenoborg
   minValue: 1000
   maxValue: 9999
 

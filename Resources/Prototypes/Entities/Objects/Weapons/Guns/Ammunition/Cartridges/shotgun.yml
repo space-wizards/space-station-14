@@ -1,12 +1,11 @@
 - type: entity
+  abstract: true
+  parent: BaseCartridge
   id: BaseShellShotgun
   name: shell (.50)
-  parent: BaseCartridge
-  abstract: true
   components:
   - type: Tag
     tags:
-    - Cartridge
     - ShellShotgun
   - type: CartridgeAmmo
     soundEject:
@@ -20,13 +19,13 @@
   - type: SpentAmmoVisuals
 
 - type: entity
+  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   id: ShellShotgunBeanbag
   name: shell (.50 beanbag)
-  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
+  description: The standard cartridge used by most modern shotguns. Beanbag ammunition contains a single less-than-lethal projectile that can stun targets.
   components:
   - type: Tag
     tags:
-    - Cartridge
     - ShellShotgun
     - ShellShotgunLight
   - type: Sprite
@@ -39,9 +38,10 @@
     state: "beanbag"
 
 - type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband]
   id: ShellShotgunSlug
   name: shell (.50 slug)
-  parent: [ BaseShellShotgun, BaseSecurityContraband]
+  description: The standard cartridge used by most modern shotguns. Slug ammunition contains a single high-density projectile effective at longer ranges than pellet ammunition.
   components:
   - type: Sprite
     layers:
@@ -53,13 +53,13 @@
     state: "slug"
 
 - type: entity
+  parent: BaseShellShotgun
   id: ShellShotgunFlare
   name: shell (.50 flare)
-  parent: BaseShellShotgun
+  description: The standard cartridge used by most modern shotguns. Flare ammunition contains a single brightly-burning projectile intended for illumination and signalling, rather than combat.
   components:
   - type: Tag
     tags:
-    - Cartridge
     - ShellShotgun
     - ShellShotgunLight
   - type: Sprite
@@ -72,9 +72,10 @@
     state: "flare"
 
 - type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgun
   name: shell (.50 pellet)
-  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: The standard cartridge used by most modern shotguns. Standard kinetic ammunition is common and useful in most situations.
   components:
   - type: Sprite
     layers:
@@ -84,9 +85,10 @@
     proto: PelletShotgunSpread
 
 - type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunIncendiary
   name: shell (.50 incendiary)
-  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: The standard cartridge used by most modern shotguns. Incendiary ammunition contains a self-igniting compound that sets targets ablaze.
   components:
   - type: Sprite
     layers:
@@ -98,9 +100,10 @@
     state: "incendiary"
 
 - type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunPractice
   name: shell (.50 practice)
-  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: The standard cartridge used by most modern shotguns. Practice ammunition fires chalk pellets that sting a little, but otherwise cause no lasting damage.
   components:
   - type: Sprite
     layers:
@@ -112,13 +115,13 @@
     state: "practice"
 
 - type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellTranquilizer
   name: shell (.50 tranquilizer)
-  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: The standard cartridge used by most modern shotguns. Tranquilizer ammunition contains a single ballistic syringe loaded with a strong sedative that harmlessly puts targets to sleep.
   components:
   - type: Tag
     tags:
-    - Cartridge
     - ShellShotgun
     - ShellShotgunLight
   - type: Sprite
@@ -140,14 +143,13 @@
     state: "tranquilizer"
 
 - type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunImprovised
   name: improvised shotgun shell
-  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
-  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: A homemade shotgun shell loaded with chunks of glass shrapnel. Surprisingly effective, but the spread is so wide that you couldn't hit the broad side of a barn.
   components:
   - type: Tag
     tags:
-    - Cartridge
     - ShellShotgun
     - ShellShotgunLight
   - type: Sprite
@@ -163,9 +165,10 @@
     state: "improvised"
 
 - type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunUranium
   name: uranium shotgun shell
-  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: The standard cartridge used by most modern shotguns. Uranium ammunition replaces the lead core of the pellets with fissile material, irradiating targets from the inside.
   components:
     - type: Sprite
       layers:

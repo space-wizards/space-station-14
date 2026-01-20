@@ -29,25 +29,27 @@
     - Status
     lastSignals:
       Status: false
+  - type: Transform
+    anchored: false
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 80
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 40
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-              params:
-                volume: -8
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
 
 - type: entity
   parent: BaseWallmountMetallic
@@ -79,25 +81,27 @@
   - type: DeviceLinkSource
     ports:
       - Pressed
+  - type: Transform
+    anchored: false
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 80
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 40
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-              params:
-                volume: -8
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
 
 - type: entity
   parent: BaseWallmountMetallic
@@ -118,6 +122,8 @@
     transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
   - type: ApcNetworkConnection
   - type: ApcNetSwitch
+  - type: Transform
+    anchored: false
   - type: Construction
     graph: LightSwitchGraph
     node: LightSwitchNode
@@ -125,10 +131,10 @@
 #directional
 
 - type: entity
+  parent: SignalSwitch
   id: SignalSwitchDirectional
   name: signal switch
   suffix: directional
-  parent: SignalSwitch
   components:
   - type: WallMount
     arc: 175
@@ -137,10 +143,10 @@
     node: SignalSwitchDirectionalNode
 
 - type: entity
+  parent: SignalButton
   id: SignalButtonDirectional
   name: signal button
   suffix: directional
-  parent: SignalButton
   components:
   - type: WallMount
     arc: 175
@@ -149,10 +155,10 @@
     node: SignalButtonDirectionalNode
 
 - type: entity
+  parent: ApcNetSwitch
   id: ApcNetSwitchDirectional
   name: apc net switch
   suffix: directional
-  parent: ApcNetSwitch
   components:
   - type: WallMount
     arc: 175
@@ -163,9 +169,9 @@
 # lockable buttons
 
 - type: entity
+  parent: SignalButtonDirectional
   id: LockableButton
   name: lockable button
-  parent: SignalButtonDirectional
   categories: [ HideSpawnMenu ]
   components:
   - type: Appearance
@@ -182,249 +188,249 @@
       shader: unshaded
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCaptain
   suffix: Captain
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Captain"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonHeadOfPersonnel
   suffix: HeadOfPersonnel
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonChiefEngineer
   suffix: ChiefEngineer
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["ChiefEngineer"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonChiefMedicalOfficer
   suffix: ChiefMedicalOfficer
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["ChiefMedicalOfficer"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonHeadOfSecurity
   suffix: HeadOfSecurity
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["HeadOfSecurity"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonResearchDirector
   suffix: ResearchDirector
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["ResearchDirector"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCommand
   suffix: Command
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Command"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCryogenics
   suffix: Cryogenics
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Cryogenics"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonSecurity
   suffix: Security
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Security"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonDetective
   suffix: Detective
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Detective"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonArmory
   suffix: Armory
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Armory"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonBrig
   suffix: Brig
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Brig"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonLawyer
   suffix: Lawyer
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Lawyer"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonEngineering
   suffix: Engineering
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Engineering"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonMedical
   suffix: Medical
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Medical"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonQuartermaster
   suffix: Quartermaster
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Quartermaster"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonSalvage
   suffix: Salvage
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Salvage"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCargo
   suffix: Cargo
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Cargo"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonResearch
   suffix: Research
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Research"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonService
   suffix: Service
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Service"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonMaintenance
   suffix: Maintenance
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Maintenance"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonExternal
   suffix: External
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["External"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonJanitor
   suffix: Janitor
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Janitor"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonTheatre
   suffix: Theatre
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Theatre"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonBar
   suffix: Bar
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Bar"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonChemistry
   suffix: Chemistry
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Chemistry"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonKitchen
   suffix: Kitchen
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Kitchen"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonChapel
   suffix: Chapel
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Chapel"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonHydroponics
   suffix: Hydroponics
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Hydroponics"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonAtmospherics
   suffix: Atmospherics
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
 
 - type: entity
+  parent: LockableButton
   id: LockableButtonCentcomm
   suffix: CentComm
-  parent: LockableButton
   components:
   - type: AccessReader
     access: [["CentralCommand"]]
