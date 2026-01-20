@@ -194,6 +194,16 @@ namespace Content.Client.Lobby.UI
 
             #endregion Sex
 
+            #region Voice
+
+            VoiceButton.OnItemSelected += args =>
+            {
+                VoiceButton.SelectId(args.Id);
+                SetVoice((Sex) args.Id);
+            };
+
+            #endregion
+
             #region Age
 
             AgeEdit.OnTextChanged += args =>
@@ -761,6 +771,7 @@ namespace Content.Client.Lobby.UI
             UpdateNameEdit();
             UpdateFlavorTextEdit();
             UpdateSexControls();
+            UpdateVoiceControls();
             UpdateGenderControls();
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
@@ -1162,23 +1173,34 @@ namespace Content.Client.Lobby.UI
         private void SetSex(Sex newSex)
         {
             Profile = Profile?.WithSex(newSex);
-            // for convenience, default to most common gender when new sex is selected
+            // for convenience, default to most common gender and voice when new sex is selected
             switch (newSex)
             {
                 case Sex.Male:
                     Profile = Profile?.WithGender(Gender.Male);
+                    Profile = Profile?.WithVoice(Sex.Male);
                     break;
                 case Sex.Female:
                     Profile = Profile?.WithGender(Gender.Female);
+                    Profile = Profile?.WithVoice(Sex.Female);
                     break;
                 default:
                     Profile = Profile?.WithGender(Gender.Epicene);
+                    Profile = Profile?.WithVoice(Sex.Unsexed);
                     break;
             }
 
             UpdateGenderControls();
+            UpdateVoiceControls();
             Markings.SetSex(newSex);
             ReloadPreview();
+        }
+
+        private void SetVoice(Sex newVoice)
+        {
+            Profile = Profile?.WithVoice(newVoice);
+            ReloadPreview();
+            IsDirty = true;
         }
 
         private void SetGender(Gender newGender)
@@ -1293,6 +1315,20 @@ namespace Content.Client.Lobby.UI
                 SexButton.SelectId((int) Profile.Sex);
             else
                 SexButton.SelectId((int) sexes[0]);
+        }
+
+        private void UpdateVoiceControls()
+        {
+            if (Profile == null)
+                return;
+
+            VoiceButton.Clear();
+
+            // Add button for each voice
+            foreach (var sex in Enum.GetValues<Sex>())
+                VoiceButton.AddItem(Loc.GetString($"humanoid-profile-editor-sex-{sex.ToString().ToLower()}-text"), (int) sex);
+
+            VoiceButton.SelectId((int) (Profile.PreferredVoice ?? Profile.Sex));
         }
 
         private void UpdateSkinColor()
