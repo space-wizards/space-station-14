@@ -14,26 +14,10 @@
     quickEquip: false
     slots:
     - Belt
-  - type: TriggerOnUse
-  - type: TimerTrigger
-    delay: 3
   - type: Damageable
     damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger: # Start fuse
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TimerStartBehavior
   - type: Appearance
   - type: AnimationPlayer
-  - type: GenericVisualizer
-    visuals:
-      enum.Trigger.TriggerVisuals.VisualState:
-        enum.ConstructionVisuals.Layer:
-          Primed: { state: primed }
-          Unprimed: { state: icon }
   - type: Tag
     tags:
     - HandGrenade
@@ -47,6 +31,46 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+
+- type: entity # Starts fuse after taking 10 damage.
+  parent: GrenadeBase
+  abstract: true
+  id: TimerGrenadeBase
+  components:
+  - type: TriggerOnUse
+  - type: TimerTrigger
+    delay: 3
+  - type: Destructible
+    thresholds:
+    - trigger: # Start fuse
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
+
+- type: entity # Starts fuse after taking 10 damage.
+  parent: GrenadeBase
+  abstract: true
+  id: ImpactGrenadeBase
+  components:
+  - type: TriggerOnLand
+  - type: LandAtCursor
+  - type: Destructible
+    thresholds:
+    - trigger: # immediately explode
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
+      - !type:TriggerBehavior
+        keyOut: timer
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity # Starts fuse after taking 10 damage, instantly detonates/activates after taking 45 damage.
   abstract: true

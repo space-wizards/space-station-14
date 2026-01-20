@@ -1,0 +1,369 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Diona
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Head:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Overlay:
+      limit: 1
+      required: true
+      default: [ DionaVineOverlay ]
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceDiona
+  name: diona appearance
+  components:
+  - type: Inventory
+    templateId: diona
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: InitialBody
+    organs:
+      Torso: OrganDionaTorso
+      Head: OrganDionaHead
+      ArmLeft: OrganDionaArmLeft
+      ArmRight: OrganDionaArmRight
+      HandRight: OrganDionaHandRight
+      HandLeft: OrganDionaHandLeft
+      LegLeft: OrganDionaLegLeft
+      LegRight: OrganDionaLegRight
+      FootLeft: OrganDionaFootLeft
+      FootRight: OrganDionaFootRight
+      Brain: OrganDionaBrainNymphing
+      Eyes: OrganDionaEyes
+      Lungs: OrganDionaLungsNymphing
+      Stomach: OrganDionaStomachNymphing
+  - type: HumanoidProfile
+    species: Diona
+
+- type: entity
+  parent:
+  - AppearanceDiona
+  - BaseSpeciesMobOrganic
+  id: MobDiona
+  name: McUrist Plants
+  components:
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.5
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+  - type: Hunger
+    baseDecayRate: 0.0083
+  - type: Thirst
+    baseDecayRate: 0.0083
+  - type: Damageable
+    damageModifierSet: Diona
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#cd7314"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatPlant
+        amount: 5
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Sap
+        Quantity: 300
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPie
+    - reagents: [ PlantBGone ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: 0.05
+            Slash: 0.05
+            Piercing: 0.075
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "diona-hurt-by-herbicide-popup" ]
+        probability: 0.66
+    - reagents: [ WeedKiller ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.125
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "diona-hurt-by-herbicide-popup" ]
+        probability: 0.66
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 300 #weighs more than humans because wood
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: Speech
+    speechVerb: Plant
+    allowedEmotes: ['Chirp']
+  - type: Vocal
+    sounds:
+      Male: UnisexDiona
+      Female: UnisexDiona
+      Unsexed: UnisexDiona
+  - type: TypingIndicator
+    proto: diona
+  - type: BodyEmotes
+    soundsId: DionaBodyEmotes
+  - type: IgnoreKudzu
+  - type: IgniteOnHeatDamage
+    fireStacks: 1
+    threshold: 12
+  - type: GibAction
+    actionPrototype: DionaGibAction
+    allowedStates:
+    - Dead
+  - type: Rootable
+
+- type: entity
+  parent: OrganBase
+  id: OrganDiona
+  abstract: true
+  suffix: Diona
+
+- type: entity
+  id: OrganDionaMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Plant ]
+
+- type: entity
+  parent: OrganDiona
+  id: OrganDionaInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Diona/organs.rsi
+
+- type: entity
+  id: OrganDionaVisual
+  abstract: true
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Diona/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Diona
+
+- type: entity
+  parent: [ OrganDiona, OrganDionaVisual ]
+  id: OrganDionaExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Diona/parts.rsi
+
+- type: entity
+  parent: [ OrganBaseTorso, OrganDionaExternal ]
+  id: OrganDionaTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganDionaExternal ]
+  id: OrganDionaHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganDionaExternal ]
+  id: OrganDionaArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganDionaExternal ]
+  id: OrganDionaArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganDionaExternal ]
+  id: OrganDionaHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganDionaExternal ]
+  id: OrganDionaHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganDionaExternal ]
+  id: OrganDionaLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganDionaExternal ]
+  id: OrganDionaLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganDionaExternal ]
+  id: OrganDionaFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganDionaExternal ]
+  id: OrganDionaFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganDionaInternal ]
+  id: OrganDionaBrain
+
+- type: entity
+  parent: [ OrganDionaVisual, OrganBaseEyes, OrganDionaInternal ]
+  id: OrganDionaEyes
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Customization/eyes.rsi
+      state: diona
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganDionaInternal, OrganDionaMetabolizer ]
+  id: OrganDionaLungs
+  components:
+  - type: Sprite
+    layers:
+    - state: lungs
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganDionaInternal, OrganDionaMetabolizer ]
+  id: OrganDionaStomach
+  components:
+  - type: Metabolizer
+    maxReagents: 6
+    removeEmpty: true
+    groups:
+    - id: Food
+    - id: Drink
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+    - id: Alcohol
+
+- type: entity
+  parent: OrganDionaBrain
+  suffix: "Diona, Nymphing"
+  id: OrganDionaBrainNymphing
+  components:
+  - type: Nymph
+    entityPrototype: OrganDionaNymphBrain
+
+- type: entity
+  parent: OrganDionaLungs
+  suffix: "Diona, Nymphing"
+  id: OrganDionaLungsNymphing
+  components:
+  - type: Nymph
+    entityPrototype: OrganDionaNymphLungs
+
+- type: entity
+  parent: OrganDionaStomach
+  suffix: "Diona, Nymphing"
+  id: OrganDionaStomachNymphing
+  components:
+  - type: Nymph
+    entityPrototype: OrganDionaNymphStomach
+
+- type: entity
+  parent: MobDionaNymph
+  id: OrganDionaNymphBrain
+  suffix: brain
+  components:
+  - type: IsDeadIC
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganDionaBrain
+        - id: OrganAnimalLungs
+        - id: OrganAnimalStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalHeart
+        - id: OrganAnimalKidneys
+
+- type: entity
+  parent: MobDionaNymph
+  id: OrganDionaNymphStomach
+  suffix: stomach
+  components:
+  - type: IsDeadIC
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganDionaLungs
+        - id: OrganAnimalStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalHeart
+        - id: OrganAnimalKidneys
+
+- type: entity
+  parent: MobDionaNymph
+  id: OrganDionaNymphLungs
+  suffix: lungs
+  components:
+  - type: IsDeadIC
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganAnimalLungs
+        - id: OrganDionaStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalHeart
+        - id: OrganAnimalKidneys
+
+- type: entity
+  parent: MobDiona
+  id: MobDionaReformed
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IsDeadIC
+  - type: RandomHumanoidAppearance
