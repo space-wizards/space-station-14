@@ -44,9 +44,14 @@ public sealed partial class IonStormDataFill : IonLawSelector
             return null;
 
         seenIds ??= new();
-        seenIds.Add(Target);
+        var wasAdded = seenIds.Add(Target);
 
         var selector = IonLawSelector.Pick(random, target.Targets);
-        return selector.Select(random, proto, entManager, seenIds);
+        var result = selector.Select(random, proto, entManager, seenIds);
+
+        if (wasAdded)
+            seenIds.Remove(Target);
+
+        return result;
     }
 }
