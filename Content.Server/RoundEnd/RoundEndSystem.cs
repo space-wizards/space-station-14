@@ -29,7 +29,7 @@ namespace Content.Server.RoundEnd
     /// Handles ending rounds normally and also via requesting it (e.g. via comms console)
     /// If you request a round end then an escape shuttle will be used.
     /// </summary>
-    public sealed class RoundEndSystem : EntitySystem
+    public sealed class RoundEndSystem : SharedRoundEndSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -42,7 +42,6 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly EmergencyShuttleSystem _shuttle = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly SharedRoundEndSystem _sharedRoundEnd = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
 
@@ -51,6 +50,7 @@ namespace Content.Server.RoundEnd
         /// </summary>
         public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(10);
 
+        private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
         public TimeSpan? LastCountdownStart { get; set; } = null;
         public TimeSpan? ExpectedCountdownEnd { get; set; } = null;
@@ -79,7 +79,11 @@ namespace Content.Server.RoundEnd
 
         private void Reset()
         {
-            _sharedRoundEnd.CancelCountdown();
+            if (_countdownTokenSource != null)
+            {
+                _countdownTokenSource.Cancel();
+                _countdownTokenSource = null;
+            }
 
             if (_cooldownTokenSource != null)
             {
@@ -123,10 +127,9 @@ namespace Content.Server.RoundEnd
             return _cooldownTokenSource == null && !CantRecall;
         }
 
-        [Obsolete("This function is deprecated, please use SharedRoundEndSystem.IsRoundEndRequested instead.")]
-        public bool IsRoundEndRequested()
+        public override bool IsRoundEndRequested()
         {
-            return _sharedRoundEnd.IsRoundEndRequested();
+            return _countdownTokenSource != null;
         }
 
         /// <summary>
@@ -172,10 +175,10 @@ namespace Content.Server.RoundEnd
             if (checkCooldown && _cooldownTokenSource != null)
                 return;
 
-            if (_sharedRoundEnd.IsRoundEndRequested())
+            if (_countdownTokenSource != null)
                 return;
 
-            CancellationTokenSource countdownTokenSource = _sharedRoundEnd.GetOrStartCountdown();
+            _countdownTokenSource = new();
             CantRecall = cantRecall;
 
             if (requester != null)
@@ -216,7 +219,7 @@ namespace Content.Server.RoundEnd
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
 
             // TODO full game saves
-            Timer.Spawn(countdownTime, _shuttle.DockEmergencyShuttle, countdownTokenSource.Token);
+            Timer.Spawn(countdownTime, _shuttle.DockEmergencyShuttle, _countdownTokenSource.Token);
 
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
@@ -245,10 +248,11 @@ namespace Content.Server.RoundEnd
             if (!forceRecall && (CantRecall || _cooldownTokenSource != null))
                 return;
 
-            if (!_sharedRoundEnd.IsRoundEndRequested())
+            if (_countdownTokenSource == null)
                 return;
 
-            _sharedRoundEnd.CancelCountdown();
+            _countdownTokenSource.Cancel();
+            _countdownTokenSource = null;
 
             if (requester != null)
             {
@@ -294,8 +298,8 @@ namespace Content.Server.RoundEnd
             ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
             _gameTicker.EndRound();
-            _sharedRoundEnd.CancelCountdown();
-            CancellationTokenSource countdownTokenSource = _sharedRoundEnd.GetOrStartCountdown();
+            _countdownTokenSource?.Cancel();
+            _countdownTokenSource = new();
 
             countdownTime ??= TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.RoundRestartTime));
             int time;
@@ -315,7 +319,7 @@ namespace Content.Server.RoundEnd
                     "round-end-system-round-restart-eta-announcement",
                     ("time", time),
                     ("units", Loc.GetString(unitsLocString))));
-            Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, countdownTokenSource.Token);
+            Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
         /// <summary>

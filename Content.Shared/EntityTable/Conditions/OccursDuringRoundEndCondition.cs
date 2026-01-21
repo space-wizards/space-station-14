@@ -20,7 +20,7 @@ public sealed partial class OccursDuringRoundEndCondition : EntityTableCondition
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
-        _sharedRoundEnd ??= IoCManager.Resolve<SharedRoundEndSystem>();
+        _sharedRoundEnd ??= entMan.System<SharedRoundEndSystem>();
 
         return OccursDuringRoundEnd || !_sharedRoundEnd.IsRoundEndRequested();
     }
