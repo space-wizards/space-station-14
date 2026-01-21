@@ -1,11 +1,13 @@
-using System.Numerics;
+using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Client.Atmos.EntitySystems;
+using Content.Shared.CCVar;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using System.Numerics;
 namespace Content.Client.Atmos.Overlays;
 
 public sealed class GasTileTemperatureOverlay : Overlay
@@ -15,11 +17,12 @@ public sealed class GasTileTemperatureOverlay : Overlay
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;
 
-    private IRenderTexture? _overlayTarget;
+    private IRenderTexture? _temperatureTarget;
 
     private readonly Color[] _colorCache = new Color[256];
 
@@ -30,21 +33,20 @@ public sealed class GasTileTemperatureOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
 
-        for (int i = 0; i <= 255; i++)
+        var tempResolution = _cfgManager.GetCVar(CCVars.GasOverlayTempResolution);
+        var minInput = _cfgManager.GetCVar(CCVars.GasOverlayTempMinimum);
+        var maxInput = _cfgManager.GetCVar(CCVars.GasOverlayTempMaximum);
+
+        float tempDegreeResolution = (maxInput - minInput) / tempResolution;
+
+        for (byte i = 0; i < tempResolution; i++)
         {
-            _colorCache[i] = CalculateColor((byte)i);
+            _colorCache[i] = CalculateColor(i, tempDegreeResolution);
         }
     }
 
-    private static Color CalculateColor(byte byteTemp)
+    private static Color CalculateColor(byte byteTemp, float tempDegreeResolution)
     {
-        const float MinInput = 0f;
-        const float MaxInput = 1000f;
-        const float Resolution = 250f;
-
-        // Temp resolution, calculates how many degrees is one increment in byteTemp
-        const float tempResolution = (MaxInput - MinInput) / Resolution;
-
         // Color Thresholds in Kelvin
         // -150 C
         const float deepFreezeK = 123.15f;
@@ -59,7 +61,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
         // 300 C
         const float superHeatK = 573.15f;
 
-        float tempK = byteTemp * tempResolution;
+        float tempK = byteTemp * tempDegreeResolution;
 
         // Neutral Zone Check (0C to 50C)
         // If between 273.15K and 323.15K, it's transparent.
@@ -128,10 +130,10 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
         var target = args.Viewport.RenderTarget;
 
-        if (_overlayTarget?.Texture.Size != target.Size)
+        if (_temperatureTarget?.Texture.Size != target.Size)
         {
-            _overlayTarget?.Dispose();
-            _overlayTarget = _clyde.CreateRenderTarget(
+            _temperatureTarget?.Dispose();
+            _temperatureTarget = _clyde.CreateRenderTarget(
                 target.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                 name: nameof(GasTileTemperatureOverlay));
@@ -148,7 +150,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
         bool anyGasDrawn = false;
 
-        drawHandle.RenderInRenderTarget(_overlayTarget,
+        drawHandle.RenderInRenderTarget(_temperatureTarget,
             () =>
             {
                 List<Entity<MapGridComponent>> grids = new();
@@ -163,7 +165,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
                     if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt)) continue;
 
-                    var uvToUi = Matrix3Helpers.CreateScale(_overlayTarget.Size.X, -_overlayTarget.Size.Y);
+                    var uvToUi = Matrix3Helpers.CreateScale(_temperatureTarget.Size.X, -_temperatureTarget.Size.Y);
                     var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
 
                     drawHandle.SetTransform(gridEntToViewportLocal);
@@ -203,8 +205,8 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
         if (!anyGasDrawn)
         {
-            _overlayTarget?.Dispose();
-            _overlayTarget = null;
+            _temperatureTarget?.Dispose();
+            _temperatureTarget = null;
             return false;
         }
 
@@ -213,17 +215,17 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (_overlayTarget is null)
+        if (_temperatureTarget is null)
             return;
 
-        args.WorldHandle.DrawTextureRect(_overlayTarget.Texture, args.WorldBounds);
+        args.WorldHandle.DrawTextureRect(_temperatureTarget.Texture, args.WorldBounds);
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
     protected override void DisposeBehavior()
     {
-        _overlayTarget?.Dispose();
-        _overlayTarget = null;
+        _temperatureTarget?.Dispose();
+        _temperatureTarget = null;
         base.DisposeBehavior();
     }
 }

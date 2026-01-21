@@ -152,7 +152,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private void UpdateTickRate(float value) => _updateInterval = value > 0.0f ? 1 / value : float.MaxValue;
-        private void UpdateThresholds(int value) => _thresholds = _tempTempMinimum;
+        private void UpdateThresholds(int value) => _thresholds = value;
         private void UpdateTempResolution(int value) => _tempResolution = MathHelper.Clamp(value, 0, 255);
         private void UpdateTempMinimum(int value) => _tempTempMinimum = value;
         private void UpdateTempMaximum(int value) => _tempTempMaximum = value;
@@ -247,7 +247,7 @@ namespace Content.Server.Atmos.EntitySystems
                      Math.Abs(oldData.ByteTemp - newByteTemp) > 1)
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, temp);
+                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);
             }
 
             if (tile is {Air: not null, NoGridTile: false})
