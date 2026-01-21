@@ -348,8 +348,10 @@
     stackType: AloeCream
     count: 10
   - type: Item
+    storedRotation: 90
+    storedOffset: 4, 0
     storedSprite:
-      state: cream-storage
+      state: cream
       sprite: Objects/Specific/Hydroponics/aloe.rsi
 
 - type: entity
