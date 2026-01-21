@@ -6,9 +6,12 @@
       edges:
         - to: assembly
           steps:
-            - material: Steel
-              amount: 2
-              doAfter: 2.0
+            - tag: CameraAssembly
+              name: construction-graph-component-camera-assembly
+              icon:
+                sprite: Objects/Misc/module.rsi
+                state: cameracase
+              doAfter: 2
 
     - node: assembly
       entity: SurveillanceCameraAssembly
@@ -16,16 +19,16 @@
         - to: wired
           steps:
             - material: Cable
-              amount: 1
+              amount: 2
               doAfter: 1
         - to: start
           completed:
-            - !type:GivePrototype
-              prototype: SheetSteel1
-              amount: 2
+            - !type:SpawnPrototype
+              prototype: CameraAssembly
+              amount: 1
             - !type:DeleteEntity {}
           steps:
-            - tool: Welding
+            - tool: Anchoring
               doAfter: 2
 
     - node: wired
@@ -47,11 +50,10 @@
             - !type:AllWiresCut {}
             - !type:WirePanel {}
           completed:
-            - !type:GivePrototype
-              prototype: SheetSteel1
-              amount: 2
+            - !type:SpawnPrototype
+              prototype: CameraAssembly
+              amount: 1
             - !type:DeleteEntity {}
           steps:
-            - tool: Welding
+            - tool: Anchoring
               doAfter: 2
-

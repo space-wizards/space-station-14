@@ -47,6 +47,7 @@
   - CellRechargerCircuitboard
   - WeaponCapacitorRechargerCircuitboard
   - FreezerElectronics
+  - CameraAssembly
 
 - type: latheRecipePack
   id: EngineeringBoardsStatic

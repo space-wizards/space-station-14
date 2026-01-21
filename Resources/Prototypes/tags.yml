@@ -212,6 +212,9 @@
   id: Cake # CargoBounty blacklist: BountyFruit, BountyVegetable
 
 - type: Tag
+  id: CameraAssembly # ConstructionGraph: SurveillanceCamera
+
+- type: Tag
   id: Candle # Storage whitelist: BoxCandle
 
 - type: Tag

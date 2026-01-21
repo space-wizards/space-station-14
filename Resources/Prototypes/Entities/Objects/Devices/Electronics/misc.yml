@@ -11,3 +11,24 @@
     tags:
       - FreezerElectronics
   - type: DoorElectronics
+
+# Camera Assembly
+- type: entity
+  id: CameraAssembly
+  parent: BaseElectronics
+  name: camera assembly
+  description: Assembly used for making cameras.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: cameracase
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 50
+      chemicalComposition:
+        Silicon: 20
+    - type: StaticPrice
+      price: 34 
+    - type: Tag
+      tags:
+        - CameraAssembly
