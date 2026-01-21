@@ -164,6 +164,7 @@
 
 - type: tile
   id: FloorSteelSlatsContinuous
+  parent: BaseStationTile
   name: tiles-steel-floor-slats-continuous
   sprite: /Textures/Tiles/steel_slats_continuous.png
   variants: 4
@@ -172,17 +173,12 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepFloor
   itemDrop: FloorTileItemSteelSlatsContinuous
-  heatCapacity: 10000
   allowRotationMirror: true
 
 - type: tile
   id: FloorSteelVerticalSlatsBordered
+  parent: BaseStationTile
   name: tiles-steel-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/steel_vertical_slats_bordered.png
   variants: 4
@@ -191,16 +187,11 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepFloor
   itemDrop: FloorTileItemSteelVerticalSlatsBordered
-  heatCapacity: 10000
 
 - type: tile
   id: FloorSteelHorizontalSlatsBordered
+  parent: BaseStationTile
   name: tiles-steel-floor-horizontal-slats-bordered
   sprite: /Textures/Tiles/steel_horizontal_slats_bordered.png
   variants: 4
@@ -209,13 +200,7 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepFloor
   itemDrop: FloorTileItemSteelHorizontalSlatsBordered
-  heatCapacity: 10000
 
 - type: tile
   id: FloorBrassFilled
@@ -297,6 +282,7 @@
 
 - type: tile
   id: FloorWhiteSlatsContinuous
+  parent: BaseStationTile
   name: tiles-white-floor-slats-continuous
   sprite: /Textures/Tiles/white_slats_continuous.png
   variants: 4
@@ -305,17 +291,12 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepTile
   itemDrop: FloorTileItemWhiteSlatsContinuous
-  heatCapacity: 10000
   allowRotationMirror: true
 
 - type: tile
   id: FloorWhiteVerticalSlatsBordered
+  parent: BaseStationTile
   name: tiles-white-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/white_vertical_slats_bordered.png
   variants: 4
@@ -324,16 +305,11 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepTile
   itemDrop: FloorTileItemWhiteVerticalSlatsBordered
-  heatCapacity: 10000
 
 - type: tile
   id: FloorWhiteHorizontalSlatsBordered
+  parent: BaseStationTile
   name: tiles-white-floor-horizontal-slats-bordered
   sprite: /Textures/Tiles/white_horizontal_slats_bordered.png
   variants: 4
@@ -342,13 +318,7 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepTile
   itemDrop: FloorTileItemWhiteHorizontalSlatsBordered
-  heatCapacity: 10000
 
 - type: tile
   id: FloorWhitePavement
@@ -496,6 +466,7 @@
 
 - type: tile
   id: FloorDarkSlatsContinuous
+  parent: BaseStationTile
   name: tiles-dark-floor-slats-continuous
   sprite: /Textures/Tiles/dark_slats_continuous.png
   variants: 4
@@ -504,17 +475,12 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepTile
   itemDrop: FloorTileItemDarkSlatsContinuous
-  heatCapacity: 10000
   allowRotationMirror: true
 
 - type: tile
   id: FloorDarkVerticalSlatsBordered
+  parent: BaseStationTile
   name: tiles-dark-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/dark_vertical_slats_bordered.png
   variants: 4
@@ -523,16 +489,11 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepTile
   itemDrop: FloorTileItemDarkVerticalSlatsBordered
-  heatCapacity: 10000
 
 - type: tile
   id: FloorDarkHorizontalSlatsBordered
+  parent: BaseStationTile
   name: tiles-dark-floor-horizontal-slats-bordered
   sprite: /Textures/Tiles/dark_horizontal_slats_bordered.png
   variants: 4
@@ -541,13 +502,7 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepTile
   itemDrop: FloorTileItemDarkHorizontalSlatsBordered
-  heatCapacity: 10000
 
 - type: tile
   id: FloorDarkPavement
