@@ -1427,13 +1427,6 @@
     damage:
       types:
         Heat: 2
-  - type: StunOnCollide #somewhat mirror to taser stats, meant to be tot 'sidegrade'
-    stunAmount: 0
-    knockdownAmount: 2.5
-    slowdownAmount: 2.5
-    walkSpeedModifier: 0.2
-    sprintSpeedModifier: 0.2
-    drop: false
   - type: SolutionContainerManager
     solutions:
       bolt:

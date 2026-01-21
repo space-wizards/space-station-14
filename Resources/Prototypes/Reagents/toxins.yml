@@ -795,3 +795,7 @@
       metabolismRate: 1
       effects:
       - !type:StaminaDamage
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectKnockdown
+        time: 1.5
+        delay: 2.5

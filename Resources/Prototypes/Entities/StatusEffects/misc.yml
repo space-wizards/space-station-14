@@ -92,3 +92,13 @@
   parent: [ StatusEffectWoozy, StatusEffectSlurred ]
   id: StatusEffectDrunk
   name: drunk
+
+# Used for the hardlight crossbow
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectKnockdown
+  name: knockdown
+  components:
+  - type: KnockdownStatusEffect
+    crawl: true
+    drop: false
