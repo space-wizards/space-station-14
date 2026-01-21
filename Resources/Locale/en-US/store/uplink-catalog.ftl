@@ -2,9 +2,6 @@
 uplink-pistol-viper-name = Viper
 uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
 
-uplink-estoc-bundle-name = Estoc DMR bundle
-uplink-estoc-bundle-desc = A designated marksman rifle, fitted with a mid-range optic for longer-range combat. Bundled with two rifle magazines (.20 rifle).
-
 uplink-revolver-python-name = Python
 uplink-revolver-python-desc = A brutally simple, effective, and loud Syndicate revolver. Comes loaded with armor-piercing rounds. Uses .45 magnum.
 
@@ -36,7 +33,19 @@ uplink-gloves-knuckleduster-name = Syndicate Knuckle Dusters
 uplink-gloves-knuckleduster-desc = A pair of plastitanium knuckle dusters that let you punch hard enough to break the captains jaw into pieces.
 
 uplink-hushpup-name = Hushpup
-uplink-hushpup-desc = A powerful silenced shotgun with a low magazine capacity. Comes with a spare box of buckshot. Uses .50 shotgun ammo.
+uplink-hushpup-desc = A powerful silenced shotgun with a low magazine capacity. Uses .50 shotgun ammo.
+
+uplink-c20r-name = C-20r
+uplink-c20r-desc = Old faithful: The classic C-20r Submachine Gun.
+
+uplink-bulldog-name = Bulldog
+uplink-bulldog-desc = Lean and mean: Contains the popular Bulldog Shotgun.
+
+uplink-estoc-name = Estoc DMR
+uplink-estoc-desc = A designated marksman rifle, fitted with a mid-range optic for longer-range combat.
+
+uplink-grenade-launcher-name = China-Lake
+uplink-grenade-launcher-desc = An old China-Lake grenade launcher bundled with 5 rounds of anti-personnel ammo.
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
@@ -92,7 +101,7 @@ uplink-shrapnel-grenade-desc = Launches a spray of sharp fragments dealing great
 
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
-uplink-pistol-magazine-desc = Pistol magazine with 10 cartridges. Compatible with the Viper.
+uplink-pistol-magazine-desc = Pistol magazine with 15 cartridges. Compatible with the Viper.
 
 uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
 uplink-pistol-magazine-c20r-desc = SMG magazine with 30 cartridges. Compatible with C-20r.
@@ -244,7 +253,7 @@ uplink-chemistry-kit-name = Chemical Synthesis Kit
 uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
 
 uplink-knives-kit-name = Throwing Knives Kit
-uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims. Capable of ignoring armor entirely when thrown.
+uplink-knives-kit-desc = A set of 8 syndicate branded throwing knives, perfect for embedding into the body of your victims. Capable of ignoring armor entirely when thrown.
 
 uplink-meds-bundle-name = Interdyne Medical Bundle
 uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
@@ -258,8 +267,11 @@ uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a Hristov, 
 uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
-uplink-buldog-bundle-name = Bulldog Bundle
-uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g slug drum, and four 12g buckshot drums.
+uplink-bulldog-bundle-name = Bulldog Bundle
+uplink-bulldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g slug drum, and four 12g buckshot drums.
+
+uplink-estoc-bundle-name = Estoc DMR bundle
+uplink-estoc-bundle-desc = A designated marksman rifle, fitted with a mid-range optic for longer-range combat. Bundled with two rifle magazines (.20 rifle).
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability.
@@ -337,7 +349,7 @@ uplink-saw-advanced-desc = A bleeding-edge surgical implement designed to cut th
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
-uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anyone on the station, and more! Comes with a free Agent ID card!
 
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
@@ -480,7 +492,7 @@ uplink-barber-scissors-name = Barber Scissors
 uplink-barber-scissors-desc = A good tool to give your fellow agent a nice haircut, unless you want to give it to yourself.
 
 uplink-backpack-syndicate-name = Syndicate backpack
-uplink-backpack-syndicate-desc = A lightweight explosion-proof backpack for holding various traitor goods
+uplink-backpack-syndicate-desc = A lightweight explosion-proof backpack for holding various traitor goods.
 
 uplink-cameraBug-name = Camera bug
 uplink-cameraBug-desc = A portable device that allows you to view the station's cameras.

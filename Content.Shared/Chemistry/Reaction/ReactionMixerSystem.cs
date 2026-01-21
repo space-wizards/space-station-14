@@ -4,7 +4,10 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Chemistry.Reaction;
 
@@ -13,19 +16,54 @@ public sealed partial class ReactionMixerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ReactionMixerComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ReactionMixerComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)]);
         SubscribeLocalEvent<ReactionMixerComponent, ShakeEvent>(OnShake);
         SubscribeLocalEvent<ReactionMixerComponent, ReactionMixDoAfterEvent>(OnDoAfter);
     }
 
+    private void OnUseInHand(Entity<ReactionMixerComponent> ent, ref UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (ent.Comp.MixerType != ReactionMixerType.Handheld)
+            return;
+
+        args.Handled = true;
+
+        if (!CanMix(ent.AsNullable(), ent))
+            return;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager,
+            args.User,
+            ent.Comp.TimeToMix,
+            new ReactionMixDoAfterEvent(),
+            ent,
+            ent,
+            ent)
+        {
+            NeedHand = true,
+            BreakOnDamage = true,
+            BreakOnDropItem = true,
+            BreakOnHandChange = true,
+            BreakOnMove = true
+        };
+
+        if (_doAfter.TryStartDoAfter(doAfterArgs))
+            ent.Comp.AudioStream = _audio.PlayPredicted(ent.Comp.MixingSound, ent, args.User)?.Entity ?? ent.Comp.AudioStream;
+    }
+
     private void OnAfterInteract(Entity<ReactionMixerComponent> ent, ref AfterInteractEvent args)
     {
-        if (!args.Target.HasValue || !args.CanReach || !ent.Comp.MixOnInteract)
+        if (!args.Target.HasValue || !args.CanReach || ent.Comp.MixerType != ReactionMixerType.Machine)
             return;
 
         if (!CanMix(ent.AsNullable(), args.Target.Value))
@@ -33,12 +71,19 @@ public sealed partial class ReactionMixerSystem : EntitySystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.TimeToMix, new ReactionMixDoAfterEvent(), ent, args.Target.Value, ent);
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
+        if (_doAfter.TryStartDoAfter(doAfterArgs))
+            ent.Comp.AudioStream = _audio.PlayPredicted(ent.Comp.MixingSound, ent, args.User)?.Entity ?? ent.Comp.AudioStream;
+
         args.Handled = true;
     }
 
     private void OnDoAfter(Entity<ReactionMixerComponent> ent, ref ReactionMixDoAfterEvent args)
     {
+        ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
+
+        if (args.Cancelled)
+            return;
+
         if (args.Target == null)
             return;
 
@@ -46,8 +91,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
             return;
 
         _popup.PopupClient(
-            Loc.GetString(
-                ent.Comp.MixMessage,
+            Loc.GetString(ent.Comp.MixMessage,
                 ("mixed", Identity.Entity(args.Target.Value, EntityManager)),
                 ("mixer", Identity.Entity(ent.Owner, EntityManager))),
             args.User,
@@ -69,12 +113,16 @@ public sealed partial class ReactionMixerSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false)) // The used entity needs the component to be able to mix a solution
             return false;
 
+        if (!_solutionContainer.TryGetMixableSolution(target, out _, out var mixableSolution))
+            return false;
+
+        // Can't mix nothing.
+        if (mixableSolution.Volume <= 0)
+            return false;
+
         var mixAttemptEvent = new MixingAttemptEvent(ent);
         RaiseLocalEvent(ent, ref mixAttemptEvent);
         if (mixAttemptEvent.Cancelled)
-            return false;
-
-        if (!_solutionContainer.TryGetMixableSolution(target, out _, out _))
             return false;
 
         return true;

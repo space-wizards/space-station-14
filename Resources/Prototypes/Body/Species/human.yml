@@ -1,0 +1,213 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Human
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceHuman
+  name: human appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: InitialBody
+    organs:
+      Torso: OrganHumanTorso
+      Head: OrganHumanHead
+      ArmLeft: OrganHumanArmLeft
+      ArmRight: OrganHumanArmRight
+      HandRight: OrganHumanHandRight
+      HandLeft: OrganHumanHandLeft
+      LegLeft: OrganHumanLegLeft
+      LegRight: OrganHumanLegRight
+      FootLeft: OrganHumanFootLeft
+      FootRight: OrganHumanFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: Human
+
+- type: entity
+  parent:
+  - AppearanceHuman
+  - BaseSpeciesMobOrganic
+  id: MobHuman
+  name: Urist McHands
+  components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+
+- type: entity
+  parent: OrganBase
+  id: OrganHuman
+  abstract: true
+  suffix: human
+
+- type: entity
+  id: OrganHumanMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Human ]
+
+- type: entity
+  parent: OrganHuman
+  id: OrganHumanInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  parent: OrganHuman
+  id: OrganHumanExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Human/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Human
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganHumanExternal ]
+  id: OrganHumanTorso
+
+- type: entity
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganHumanExternal ]
+  id: OrganHumanHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganHumanExternal ]
+  id: OrganHumanArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganHumanExternal ]
+  id: OrganHumanArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganHumanExternal ]
+  id: OrganHumanHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganHumanExternal ]
+  id: OrganHumanHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganHumanExternal ]
+  id: OrganHumanLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganHumanExternal ]
+  id: OrganHumanLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganHumanExternal ]
+  id: OrganHumanFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganHumanExternal ]
+  id: OrganHumanFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganHumanInternal ]
+  id: OrganHumanBrain
+
+- type: entity
+  parent: [ OrganBaseEyes, OrganHumanInternal, OrganHumanExternal ]
+  id: OrganHumanEyes
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Customization/eyes.rsi
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganHumanInternal ]
+  id: OrganHumanTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganHumanInternal ]
+  id: OrganHumanAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganHumanInternal ]
+  id: OrganHumanEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanStomach
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganHumanInternal, OrganHumanMetabolizer ]
+  id: OrganHumanKidneys
