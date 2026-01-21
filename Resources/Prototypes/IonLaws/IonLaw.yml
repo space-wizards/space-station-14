@@ -6,9 +6,9 @@
 # } STINKY"
 #
 # then we create a proto:
-# - type: IonLaw
+# - type: ionLaw
 #   id: IsStinky
-#   string: ion-storm-law-is-stinky
+#   lawString: ion-storm-law-is-stinky
 #   targets:
 #     who:
 #     - !type:IonStormDataFill
@@ -18,9 +18,9 @@
 #       target: IonStormDataFillPlural
 
 # The Ion Laws themselves
-- type: IonLaw
+- type: ionLaw
   id: OnStation
-  string: ion-storm-law-on-station
+  lawString: ion-storm-law-on-station
   targets:
     joined:
     - !type:IonStormDataFill
@@ -29,9 +29,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
 
-- type: IonLaw
+- type: ionLaw
   id: CallShuttle
-  string: ion-storm-law-call-shuttle
+  lawString: ion-storm-law-call-shuttle
   targets:
     joined:
     - !type:IonStormDataFill
@@ -40,9 +40,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
 
-- type: IonLaw
+- type: ionLaw
   id: CrewAre
-  string: ion-storm-law-crew-are
+  lawString: ion-storm-law-crew-are
   targets:
     who:
     - !type:IonStormDataFill
@@ -56,9 +56,9 @@
     - !type:DatasetFill
       dataset: IonStormThreats
 
-- type: IonLaw
+- type: ionLaw
   id: SubjectsHarmful
-  string: ion-storm-law-subjects-harmful
+  lawString: ion-storm-law-subjects-harmful
   targets:
     adjective:
     - !type:DatasetFill
@@ -67,17 +67,17 @@
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
 
-- type: IonLaw
+- type: ionLaw
   id: MustHarmful
-  string: ion-storm-law-must-harmful
+  lawString: ion-storm-law-must-harmful
   targets:
     must:
     - !type:DatasetFill
       dataset: IonStormMusts
 
-- type: IonLaw
+- type: ionLaw
   id: ThingHarmful
-  string: ion-storm-law-thing-harmful
+  lawString: ion-storm-law-thing-harmful
   targets:
     adjective:
     - !type:DatasetFill
@@ -89,9 +89,9 @@
     - !type:DatasetFill
       dataset: IonStormActions
 
-- type: IonLaw
+- type: ionLaw
   id: JobHarmful
-  string: ion-storm-law-job-harmful
+  lawString: ion-storm-law-job-harmful
   targets:
     adjective:
     - !type:DatasetFill
@@ -101,10 +101,11 @@
       dataset: IonStormCrew
     - !type:RandomManifestFill
       weight: 0.15
+      fallbackDataset: IonStormCrew
 
-- type: IonLaw
+- type: ionLaw
   id: HavingHarmful
-  string: ion-storm-law-having-harmful
+  lawString: ion-storm-law-having-harmful
   targets:
     adjective:
     - !type:DatasetFill
@@ -113,9 +114,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillThingObjectsConcepts
 
-- type: IonLaw
+- type: ionLaw
   id: NotHavingHarmful
-  string: ion-storm-law-not-having-harmful
+  lawString: ion-storm-law-not-having-harmful
   targets:
     adjective:
     - !type:DatasetFill
@@ -124,9 +125,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillThingObjectsConcepts
 
-- type: IonLaw
+- type: ionLaw
   id: Requires
-  string: ion-storm-law-requires
+  lawString: ion-storm-law-requires
   targets:
     who:
     - !type:IonStormDataFill
@@ -140,9 +141,9 @@
     - !type:DatasetFill
       dataset: IonStormRequires
 
-- type: IonLaw
+- type: ionLaw
   id: RequiresSubjects
-  string: ion-storm-law-requires-subjects
+  lawString: ion-storm-law-requires-subjects
   targets:
     who:
     - !type:IonStormDataFill
@@ -157,9 +158,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
 
-- type: IonLaw
+- type: ionLaw
   id: Allergic
-  string: ion-storm-law-allergic
+  lawString: ion-storm-law-allergic
   targets:
     who:
     - !type:IonStormDataFill
@@ -177,9 +178,9 @@
     - !type:DatasetFill
       dataset: IonStormAllergies
 
-- type: IonLaw
+- type: ionLaw
   id: AllergicSubjects
-  string: ion-storm-law-allergic-subjects
+  lawString: ion-storm-law-allergic-subjects
   targets:
     who:
     - !type:IonStormDataFill
@@ -201,10 +202,11 @@
       dataset: IonStormCrew
     - !type:RandomManifestFill
       weight: 0.15
+      fallbackDataset: IonStormCrew
 
-- type: IonLaw
+- type: ionLaw
   id: Feeling
-  string: ion-storm-law-feeling
+  lawString: ion-storm-law-feeling
   targets:
     who:
     - !type:IonStormDataFill
@@ -216,9 +218,9 @@
     - !type:DatasetFill
       dataset: IonStormConcepts
 
-- type: IonLaw
+- type: ionLaw
   id: FeelingSubjects
-  string: ion-storm-law-feeling-subjects
+  lawString: ion-storm-law-feeling-subjects
   targets:
     who:
     - !type:IonStormDataFill
@@ -233,17 +235,17 @@
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
 
-- type: IonLaw
+- type: ionLaw
   id: YouAre
-  string: ion-storm-law-you-are
+  lawString: ion-storm-law-you-are
   targets:
     concept:
     - !type:DatasetFill
       dataset: IonStormConcepts
 
-- type: IonLaw
+- type: ionLaw
   id: YouAreSubjects
-  string: ion-storm-law-you-are-subjects
+  lawString: ion-storm-law-you-are-subjects
   targets:
     joined:
     - !type:IonStormDataFill
@@ -252,25 +254,25 @@
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
 
-- type: IonLaw
+- type: ionLaw
   id: YouMustAlways
-  string: ion-storm-law-you-must-always
+  lawString: ion-storm-law-you-must-always
   targets:
     must:
     - !type:DatasetFill
       dataset: IonStormMusts
 
-- type: IonLaw
+- type: ionLaw
   id: YouMustNever
-  string: ion-storm-law-you-must-never
+  lawString: ion-storm-law-you-must-never
   targets:
     must:
     - !type:DatasetFill
       dataset: IonStormMusts
 
-- type: IonLaw
+- type: ionLaw
   id: Eat
-  string: ion-storm-law-eat
+  lawString: ion-storm-law-eat
   targets:
     who:
     - !type:IonStormDataFill
@@ -285,9 +287,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
 
-- type: IonLaw
+- type: ionLaw
   id: Drink
-  string: ion-storm-law-drink
+  lawString: ion-storm-law-drink
   targets:
     who:
     - !type:IonStormDataFill
@@ -299,9 +301,9 @@
     - !type:DatasetFill
       dataset: IonStormDrinks
 
-- type: IonLaw
+- type: ionLaw
   id: ChangeJob
-  string: ion-storm-law-change-job
+  lawString: ion-storm-law-change-job
   targets:
     who:
     - !type:IonStormDataFill
@@ -318,26 +320,27 @@
       key: ion-storm-heads
     - !type:RandomManifestFill
       weight: 0.15
+      fallbackDataset: IonStormCrew
 
-- type: IonLaw
+- type: ionLaw
   id: HighestRank
-  string: ion-storm-law-highest-rank
+  lawString: ion-storm-law-highest-rank
   targets:
     who:
     - !type:IonStormDataFill
       target: IonStormDataFillCrewRandom
 
-- type: IonLaw
+- type: ionLaw
   id: LowestRank
-  string: ion-storm-law-lowest-rank
+  lawString: ion-storm-law-lowest-rank
   targets:
     who:
     - !type:IonStormDataFill
       target: IonStormDataFillCrewRandom
 
-- type: IonLaw
+- type: ionLaw
   id: CrewMust
-  string: ion-storm-law-crew-must
+  lawString: ion-storm-law-crew-must
   targets:
     who:
     - !type:IonStormDataFill
@@ -346,9 +349,9 @@
     - !type:DatasetFill
       dataset: IonStormMusts
 
-- type: IonLaw
+- type: ionLaw
   id: CrewMustGo
-  string: ion-storm-law-crew-must-go
+  lawString: ion-storm-law-crew-must-go
   targets:
     who:
     - !type:IonStormDataFill
@@ -357,9 +360,9 @@
     - !type:DatasetFill
       dataset: IonStormAreas
 
-- type: IonLaw
+- type: ionLaw
   id: CrewOnly1
-  string: ion-storm-law-crew-only-1
+  lawString: ion-storm-law-crew-only-1
   targets:
     who:
     - !type:IonStormDataFill
@@ -368,9 +371,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillPart
 
-- type: IonLaw
+- type: ionLaw
   id: CrewOnly2
-  string: ion-storm-law-crew-only-2
+  lawString: ion-storm-law-crew-only-2
   targets:
     who:
     - !type:IonStormDataFill
@@ -382,9 +385,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillPart
 
-- type: IonLaw
+- type: ionLaw
   id: CrewOnlySubjects
-  string: ion-storm-law-crew-only-subjects
+  lawString: ion-storm-law-crew-only-subjects
   targets:
     adjective:
     - !type:DatasetFill
@@ -400,9 +403,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillPart
 
-- type: IonLaw
+- type: ionLaw
   id: CrewMustDo
-  string: ion-storm-law-crew-must-do
+  lawString: ion-storm-law-crew-must-do
   targets:
     must:
     - !type:DatasetFill
@@ -411,9 +414,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillPart
 
-- type: IonLaw
+- type: ionLaw
   id: CrewMustHave
-  string: ion-storm-law-crew-must-have
+  lawString: ion-storm-law-crew-must-have
   targets:
     adjective:
     - !type:DatasetFill
@@ -425,9 +428,9 @@
     - !type:IonStormDataFill
       target: IonStormDataFillPart
 
-- type: IonLaw
+- type: ionLaw
   id: CrewMustEat
-  string: ion-storm-law-crew-must-eat
+  lawString: ion-storm-law-crew-must-eat
   targets:
     who:
     - !type:IonStormDataFill
@@ -442,25 +445,25 @@
     - !type:IonStormDataFill
       target: IonStormDataFillPart
 
-- type: IonLaw
+- type: ionLaw
   id: Harm
-  string: ion-storm-law-harm
+  lawString: ion-storm-law-harm
   targets:
     who:
     - !type:IonStormDataFill
       target: IonStormDataFillHarmProtect
 
-- type: IonLaw
+- type: ionLaw
   id: Protect
-  string: ion-storm-law-protect
+  lawString: ion-storm-law-protect
   targets:
     who:
     - !type:IonStormDataFill
       target: IonStormDataFillHarmProtect
 
-- type: IonLaw
+- type: ionLaw
   id: ConceptVerb
-  string: ion-storm-law-concept-verb
+  lawString: ion-storm-law-concept-verb
   targets:
     concept:
     - !type:DatasetFill
@@ -472,10 +475,11 @@
     - !type:IonStormDataFill
       target: IonStormDataFillSubjects
 
-- type: IonLaw
+- type: ionLaw
   id: WhoDAGD
-  string: ion-storm-law-who-dagd
+  lawString: ion-storm-law-who-dagd
   weight: 0.05
   targets:
     who:
     - !type:RandomManifestFill
+      fallbackDataset: IonStormCrew

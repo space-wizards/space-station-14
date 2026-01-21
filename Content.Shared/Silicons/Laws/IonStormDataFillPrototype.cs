@@ -6,7 +6,7 @@ namespace Content.Shared.Silicons.Laws;
 /// <summary>
 /// A prototype for a reusable set of ion storm law targets.
 /// </summary>
-[Prototype("IonStormDataFill")]
+[Prototype]
 public sealed partial class IonStormDataFillPrototype : IPrototype
 {
     /// <inheritdoc/>
@@ -16,7 +16,7 @@ public sealed partial class IonStormDataFillPrototype : IPrototype
     /// <summary>
     /// The list of selectors to pick from.
     /// </summary>
-    [DataField("targets")]
+    [DataField]
     public List<IonLawSelector> Targets { get; private set; } = new();
 }
 
@@ -29,7 +29,7 @@ public sealed partial class IonStormDataFill : IonLawSelector
     /// <summary>
     /// The IonStormDataFill prototype to use.
     /// </summary>
-    [DataField("target")]
+    [DataField]
     public ProtoId<IonStormDataFillPrototype> Target { get; private set; }
 
     public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)

@@ -24,6 +24,7 @@
     dataset: IonStormObjects
   - !type:RandomManifestFill
     weight: 0.15
+    fallbackDataset: IonStormCrew
 
 - type: IonStormDataFill
   id: IonStormDataFillWho
@@ -34,6 +35,7 @@
     key: ion-storm-crew
   - !type:RandomManifestFill
     weight: 0.15
+    fallbackDataset: IonStormCrew
 
 - type: IonStormDataFill
   id: IonStormDataFillThingObjectsConcepts
@@ -61,6 +63,7 @@
     dataset: IonStormAreas
   - !type:RandomManifestFill
     weight: 0.15
+    fallbackDataset: IonStormCrew
 
 - type: IonStormDataFill
   id: IonStormDataFillPlural
@@ -91,6 +94,7 @@
     dataset: IonStormCrew
   - !type:RandomManifestFill
     weight: 0.15
+    fallbackDataset: IonStormCrew
 
 - type: IonStormDataFill
   id: IonStormDataFillHarmProtect
@@ -125,6 +129,7 @@
         dataset: IonStormCrew
   - !type:RandomManifestFill
     weight: 0.15
+    fallbackDataset: IonStormCrew
 
 - type: IonStormDataFill
   id: IonStormDataFillFeelings

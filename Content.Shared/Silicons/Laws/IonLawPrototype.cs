@@ -12,7 +12,7 @@ namespace Content.Shared.Silicons.Laws;
 /// <summary>
 /// A prototype for a random ion storm law.
 /// </summary>
-[Prototype("IonLaw")]
+[Prototype]
 public sealed partial class IonLawPrototype : IPrototype
 {
     /// <inheritdoc/>
@@ -22,22 +22,22 @@ public sealed partial class IonLawPrototype : IPrototype
     /// <summary>
     /// The localization string for the law.
     /// </summary>
-    [DataField("string")]
-    public string LawString { get; private set; } = string.Empty;
+    [DataField]
+    public string LawString = string.Empty;
 
     /// <summary>
     /// The weight of this law.
     /// If 0, it won't be picked.
     /// </summary>
-    [DataField("weight")]
-    public float Weight { get; private set; } = 1.0f;
+    [DataField]
+    public float Weight = 1.0f;
 
     /// <summary>
     /// The variables to fill in the localization string.
     /// The key is the variable name, and the value is a list of selectors to pick from.
     /// </summary>
-    [DataField("targets")]
-    public Dictionary<string, List<IonLawSelector>> Targets { get; private set; } = new();
+    [DataField]
+    public Dictionary<string, List<IonLawSelector>> Targets = new();
 }
 
 /// <summary>
@@ -50,7 +50,7 @@ public abstract partial class IonLawSelector
     /// <summary>
     /// Weight of the option being chosen.
     /// </summary>
-    [DataField("weight")]
+    [DataField]
     public virtual float Weight { get; private set; } = 1.0f;
 
     public abstract object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null);
@@ -80,13 +80,12 @@ public abstract partial class IonLawSelector
 /// <summary>
 /// Selects a random value from a dataset.
 /// </summary>
-[DataDefinition]
 public sealed partial class DatasetFill : IonLawSelector
 {
     /// <summary>
     /// The dataset to pick values from.
     /// </summary>
-    [DataField("dataset")]
+    [DataField]
     public ProtoId<DatasetPrototype> Dataset { get; private set; }
 
     public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
@@ -105,6 +104,12 @@ public sealed partial class DatasetFill : IonLawSelector
 [DataDefinition]
 public sealed partial class RandomManifestFill : IonLawSelector
 {
+    /// <summary>
+    /// The dataset to use if no crew manifest is found. NOT OPTIONAL!
+    /// </summary>
+    [DataField]
+    public ProtoId<DatasetPrototype> FallbackDataset { get; private set; }
+
     public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
     {
         var stationSystem = entManager.System<SharedStationSystem>();
@@ -112,7 +117,7 @@ public sealed partial class RandomManifestFill : IonLawSelector
         var stations = stationSystem.GetStations();
         if (stations.Count == 0)
         {
-            var dataset = proto.Index<DatasetPrototype>("IonStormCrew");
+            var dataset = proto.Index(FallbackDataset);
             return random.Pick(dataset.Values).ToUpper();
         }
 
@@ -120,7 +125,7 @@ public sealed partial class RandomManifestFill : IonLawSelector
         if (!entManager.TryGetComponent<StationRecordsComponent>(station, out var stationRecords) ||
             !stationRecordsSystem.TryGetRandomRecord<GeneralStationRecord>(new Entity<StationRecordsComponent?>(station, stationRecords), out var record))
         {
-            var dataset = proto.Index<DatasetPrototype>("IonStormCrew");
+            var dataset = proto.Index(FallbackDataset);
             return random.Pick(dataset.Values).ToUpper();
         }
 
@@ -139,14 +144,14 @@ public sealed partial class JoinedDatasetFill : IonLawSelector
     /// <summary>
     /// The separator to use between joined values.
     /// </summary>
-    [DataField("separator")]
-    public string Separator { get; private set; } = " ";
+    [DataField]
+    public string Separator = " ";
 
     /// <summary>
     /// The list of selectors to use.
     /// </summary>
-    [DataField("selectors")]
-    public List<IonLawSelector> Selectors { get; private set; } = new();
+    [DataField]
+    public List<IonLawSelector> Selectors = new();
 
     public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
     {
@@ -179,14 +184,14 @@ public sealed partial class TranslateFill : IonLawSelector
     /// <summary>
     /// The localization key.
     /// </summary>
-    [DataField("key")]
-    public string Key { get; private set; } = string.Empty;
+    [DataField]
+    public string Key = string.Empty;
 
     /// <summary>
     /// Arguments for the localization string.
     /// </summary>
-    [DataField("args")]
-    public Dictionary<string, IonLawSelector> Args { get; private set; } = new();
+    [DataField]
+    public Dictionary<string, IonLawSelector> Args = new();
 
     public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
     {
@@ -213,13 +218,13 @@ public sealed partial class ConstantFill : IonLawSelector
     /// <summary>
     /// The string value to return.
     /// </summary>
-    [DataField("value")]
-    public string Value { get; private set; } = string.Empty;
+    [DataField]
+    public string Value = string.Empty;
 
     /// <summary>
     /// The boolean value to return. If set, overrides <see cref="Value"/>.
     /// </summary>
-    [DataField("boolValue")]
+    [DataField]
     public bool? BoolValue { get; private set; }
 
     public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
