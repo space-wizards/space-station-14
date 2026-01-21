@@ -6,6 +6,9 @@ using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Shared.Radio.EntitySystems;
 
+[ByRefEvent]
+public readonly record struct RadioJammerPowerLevelChangedEvent(int OldLevel, int NewLevel);
+
 public abstract class SharedJammerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -40,6 +43,7 @@ public abstract class SharedJammerSystem : EntitySystem
                 Disabled = entity.Comp.SelectedPowerLevel == currIndex,
                 Act = () =>
                 {
+                    var oldLevel = entity.Comp.SelectedPowerLevel;
                     entity.Comp.SelectedPowerLevel = currIndex;
                     Dirty(entity);
 
@@ -48,6 +52,13 @@ public abstract class SharedJammerSystem : EntitySystem
                     _jammer.TrySetRange(entity.Owner, GetCurrentRange(entity));
 
                     Popup.PopupClient(Loc.GetString(setting.Message), user, user);
+
+                    // Raise event so server-side JammerSystem can update fixture
+                    if (oldLevel != currIndex)
+                    {
+                        var ev = new RadioJammerPowerLevelChangedEvent(oldLevel, currIndex);
+                        RaiseLocalEvent(entity, ref ev);
+                    }
                 },
                 Text = Loc.GetString(setting.Name),
             };
