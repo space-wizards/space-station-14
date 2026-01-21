@@ -260,33 +260,6 @@
     - Hardsuit
     - WhitelistChameleon
 
-#Brigmedic Hardsuit
-- type: entity
-  parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
-  id: ClothingOuterHardsuitBrigmedic
-  name: brigmedic hardsuit
-  description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 1000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.7
-  - type: ClothingSpeedModifier
-    walkModifier: 0.65
-    sprintModifier: 0.65
-  - type: HeldSpeedModifier
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
-
 #Warden's Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
