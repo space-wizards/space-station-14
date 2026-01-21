@@ -17,7 +17,7 @@
   id: CameraAssembly
   parent: BaseElectronics
   name: camera assembly
-  description: Assembly used for making cameras.
+  description: A pre-fabricated security camera kit, ready to be assembled and mounted to a surface.
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
