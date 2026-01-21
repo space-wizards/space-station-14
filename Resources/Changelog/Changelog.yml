@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: You can drink out of the toilets.
-    type: Add
-  id: 8933
-  time: '2025-09-05T20:03:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40133
 - author: ArtisticRoomba
   changes:
   - message: Resin windows (exo windows) now inherit Delta-Pressure damage values
@@ -3958,3 +3951,13 @@
   id: 9439
   time: '2026-01-20T22:39:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42541
+- author: ArtisticRoomba
+  changes:
+  - message: Powernet consumers like lathes, computers, blenders, centrifuges, electrolyzers,
+      grinders, holopads, microwaves, etc. now have simple dynamic power consumption
+      behavior. When not in use, they will consume either little or no power, and
+      while in use, they will consume a sane amount of power.
+    type: Add
+  id: 9440
+  time: '2026-01-21T04:21:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41961
