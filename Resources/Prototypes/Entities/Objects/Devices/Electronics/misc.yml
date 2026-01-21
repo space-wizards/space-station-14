@@ -14,21 +14,21 @@
 
 # Camera Assembly
 - type: entity
-  id: CameraAssembly
   parent: BaseElectronics
+  id: CameraAssembly
   name: camera assembly
   description: A pre-fabricated security camera kit, ready to be assembled and mounted to a surface.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: cameracase
-    - type: PhysicalComposition
-      materialComposition:
-        Glass: 50
-      chemicalComposition:
-        Silicon: 20
-    - type: StaticPrice
-      price: 34 
-    - type: Tag
-      tags:
-        - CameraAssembly
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: cameracase
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+    chemicalComposition:
+      Silicon: 20
+  - type: StaticPrice
+    price: 34
+  - type: Tag
+    tags:
+    - CameraAssembly
