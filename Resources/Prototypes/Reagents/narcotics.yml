@@ -34,9 +34,8 @@
       - !type:MovementSpeedModifier
         walkSpeedModifier: 1.20
         sprintSpeedModifier: 1.20
-      - !type:GenericStatusEffect
-        key: StaminaModifier # You are on meth. You keep going.
-        component: StaminaModifier
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDesoxyStamina # You are on meth. You keep going.
         time: 3
       - !type:GenericStatusEffect
         key: Adrenaline
@@ -146,6 +145,9 @@
         walkSpeedModifier: 1.25
         sprintSpeedModifier: 1.25
       - !type:ModifyStatusEffect
+        effectProto: StatusEffectStimulantsStamina # You are on meth. You keep going.
+        time: 3
+      - !type:ModifyStatusEffect
         effectProto: StatusEffectStunned
         time: 3.5
         type: Remove
@@ -167,10 +169,10 @@
         conditions:
         - !type:ReagentCondition
           reagent: Stimulants
-          min: 50
+          min: 45
         damage:
           types:
-            Poison: 1
+            Poison: 3
       # Interactions
       - !type:ModifyStatusEffect
         conditions:
@@ -331,7 +333,7 @@
           reagent: Nocturine
           min: 8
         effectProto: StatusEffectForcedSleeping
-        time: 6
+        time: 9
         delay: 5
 
 - type: reagent

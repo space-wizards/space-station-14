@@ -296,6 +296,11 @@
   clientHandled: true # the power cell battery is read on the client so that we don't have to periodically network the charge
 
 - type: alert
+  parent: BorgBattery
+  id: AiBattery
+  clientHandled: false # the station AI does not have a predicted battery, so we need to send the alert from the server
+
+- type: alert
   id: Internals
   category: Internals
   clickEvent: !type:ToggleInternalsAlertEvent
