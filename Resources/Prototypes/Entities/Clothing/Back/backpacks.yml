@@ -75,15 +75,6 @@
     sprite: Clothing/Back/Backpacks/security.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseSecurityContraband]
-  id: ClothingBackpackBrigmedic
-  name: brigmedic backpack
-  description: It's a very sterile backpack.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Backpacks/brigmedic.rsi
-
-- type: entity
   parent: ClothingBackpack
   id: ClothingBackpackEngineering
   name: engineering backpack
