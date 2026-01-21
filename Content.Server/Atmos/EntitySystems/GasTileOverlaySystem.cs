@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -18,6 +17,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Runtime.CompilerServices;
+using YamlDotNet.Core.Tokens;
 
 // ReSharper disable once RedundantUsingDirective
 
@@ -141,7 +142,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        public byte RoundTemperature(float temperature)
+        public byte TemperatureToByte(float temperature)
         {
             var clampedTemp = Math.Clamp(temperature, _tempTempMinimum, _tempTempMaximum);
 
@@ -151,10 +152,11 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private void UpdateTickRate(float value) => _updateInterval = value > 0.0f ? 1 / value : float.MaxValue;
-        private void UpdateThresholds(int value) => _thresholds = value;
-        private void UpdateTempResolution(int v) => _tempResolution = MathHelper.Clamp(v, 0, 255);
-        private void UpdateTempMinimum(int v) => _tempTempMinimum = v;
-        private void UpdateTempMaximum(int v) => _tempTempMaximum = v;
+        private void UpdateThresholds(int value) => _thresholds = _tempTempMinimum;
+        private void UpdateTempResolution(int value) => _tempResolution = MathHelper.Clamp(value, 0, 255);
+        private void UpdateTempMinimum(int value) => _tempTempMinimum = value;
+        private void UpdateTempMaximum(int value) => _tempTempMaximum = value;
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
@@ -195,7 +197,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var data = new GasOverlayData(0,
                 new byte[VisibleGasId.Length],
-                RoundTemperature(mixture?.Temperature ?? Atmospherics.TCMB));
+                TemperatureToByte(mixture?.Temperature ?? Atmospherics.TCMB));
 
             for (var i = 0; i < VisibleGasId.Length; i++)
             {
@@ -235,14 +237,14 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var changed = false;
-            var temp = RoundTemperature(tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? Atmospherics.TCMB);
+            var newByteTemp = TemperatureToByte(tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? Atmospherics.TCMB);
             if (oldData.Equals(default))
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], temp);
+                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp);
             }
             else if (oldData.FireState != tile.Hotspot.State ||
-                     Math.Abs(oldData.TemperatureQuantization - temp) > 1)
+                     Math.Abs(oldData.ByteTemp - newByteTemp) > 1)
             {
                 changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, temp);

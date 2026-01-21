@@ -183,7 +183,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
                             if (!localBounds.Contains(tilePosition)) continue;
 
-                            Color gasColor = _colorCache[tileGas.TemperatureQuantization];
+                            Color gasColor = _colorCache[tileGas.ByteTemp];
 
                             if (gasColor.A <= 0f) continue;
 

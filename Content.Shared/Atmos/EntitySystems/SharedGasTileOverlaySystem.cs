@@ -64,13 +64,13 @@ namespace Content.Shared.Atmos.EntitySystems
         {
             [ViewVariables] public readonly byte FireState;
             [ViewVariables] public readonly byte[] Opacity;
-            [ViewVariables] public readonly byte TemperatureQuantization; // Temperature data rounded TODO write more in this comment
+            [ViewVariables] public readonly byte ByteTemp;
 
-            public GasOverlayData(byte fireState, byte[] opacity, byte temperatureQuantization)
+            public GasOverlayData(byte fireState, byte[] opacity, byte byteTemp)
             {
                 FireState = fireState;
                 Opacity = opacity;
-                TemperatureQuantization = temperatureQuantization;
+                ByteTemp = byteTemp;
             }
 
             public bool Equals(GasOverlayData other)
@@ -86,7 +86,7 @@ namespace Content.Shared.Atmos.EntitySystems
                     }
                 }
 
-                if (TemperatureQuantization != other.TemperatureQuantization)
+                if (ByteTemp != other.ByteTemp)
                     return false;
 
                 return true;
