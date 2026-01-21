@@ -41,14 +41,17 @@
       0: Alive
       75: Dead
   - type: Stamina
-    critThreshold: 50
+    baseCritThreshold: 50
     animationThreshold: 25
   - type: Butcherable
     spawned:
     - id: FoodMeat
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:
@@ -240,14 +243,17 @@
       0: Alive
       75: Dead
   - type: Stamina
-    critThreshold: 50
+    baseCritThreshold: 50
     animationThreshold: 25
   - type: Butcherable
     spawned:
     - id: FoodMeat
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:

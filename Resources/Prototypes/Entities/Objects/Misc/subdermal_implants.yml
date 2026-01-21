@@ -235,7 +235,7 @@
     implantAction: ActionActivateDnaScramblerImplant
     whitelist:
       components:
-      - HumanoidAppearance # syndies cant turn hamlet into a human
+      - HumanoidProfile # syndies cant turn hamlet into a human
   - type: ItemLayersColor
     color: "#85381e"
   - type: TriggerOnActivateImplant
@@ -261,6 +261,25 @@
     interfaces:
       enum.ChameleonControllerKey.Key:
         type: ChameleonControllerBoundUserInterface
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: VoiceMaskImplant
+  name: voice mask implant
+  description: This implant allows you to change your voice at will.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionChangeVoiceMaskImplant
+  - type: VoiceMask
+    overrideIdentity: true
+  - type: UserInterface
+    interfaces:
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface
+  - type: Tag
+    tags:
+    - SubdermalImplant
 
 #Nuclear Operative/Special Exclusive implants
 
@@ -340,7 +359,6 @@
       tags:
       - SubdermalImplant
       - HideContextMenu
-      - MacroBomb
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -368,7 +386,6 @@
     tags:
     - SubdermalImplant
     - HideContextMenu
-    - DeathAcidifier
 
 - type: entity
   parent: BaseSubdermalImplant

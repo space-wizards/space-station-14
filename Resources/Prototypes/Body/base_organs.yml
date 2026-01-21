@@ -1,0 +1,465 @@
+- type: markingsGroup
+  id: None
+  onlyGroupWhitelisted: true
+
+- type: markingsGroup
+  id: Undergarments
+  limits:
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktop ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentBottomBoxers ]
+
+- type: entity
+  id: OrganBase
+  name: organ
+  abstract: true
+  parent: BaseItem
+  components:
+  - type: Organ
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseTorso
+  name: torso
+  abstract: true
+  components:
+  - type: Organ
+    category: Torso
+  - type: Sprite
+    state: torso
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Chest
+    data:
+      state: torso
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - Chest
+      - Tail
+      - Overlay
+      - UndergarmentTop
+      - UndergarmentBottom
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseHead
+  name: head
+  abstract: true
+  components:
+  - type: Organ
+    category: Head
+  - type: Sprite
+    state: head
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Head
+    data:
+      state: head
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    markingData:
+      layers:
+      - Head
+      - Hair
+      - FacialHair
+      - Snout
+      - SnoutCover
+      - HeadSide
+      - HeadTop
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseArmLeft
+  name: left arm
+  abstract: true
+  components:
+  - type: Organ
+    category: ArmLeft
+  - type: Sprite
+    state: l_arm
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.LArm
+    data:
+      state: l_arm
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - LArm
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseArmRight
+  name: right arm
+  abstract: true
+  components:
+  - type: Organ
+    category: ArmRight
+  - type: Sprite
+    state: r_arm
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.RArm
+    data:
+      state: r_arm
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - RArm
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseHandLeft
+  name: left hand
+  abstract: true
+  components:
+  - type: Organ
+    category: HandLeft
+  - type: HandOrgan
+    handID: left
+    data:
+      location: Left
+  - type: Sprite
+    state: l_hand
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.LHand
+    data:
+      state: l_hand
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - LHand
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseHandRight
+  name: right hand
+  abstract: true
+  components:
+  - type: Organ
+    category: HandRight
+  - type: HandOrgan
+    handID: right
+    data:
+      location: Right
+  - type: Sprite
+    state: r_hand
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.RHand
+    data:
+      state: r_hand
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - RHand
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseLegLeft
+  name: left leg
+  abstract: true
+  components:
+  - type: Organ
+    category: LegLeft
+  - type: Sprite
+    state: l_leg
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.LLeg
+    data:
+      state: l_leg
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - LLeg
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseLegRight
+  name: right leg
+  abstract: true
+  components:
+  - type: Organ
+    category: LegRight
+  - type: Sprite
+    state: r_leg
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.RLeg
+    data:
+      state: r_leg
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - RLeg
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseFootLeft
+  name: left foot
+  abstract: true
+  components:
+  - type: Organ
+    category: FootLeft
+  - type: Sprite
+    state: l_foot
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.LFoot
+    data:
+      state: l_foot
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - LFoot
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseFootRight
+  name: right foot
+  abstract: true
+  components:
+  - type: Organ
+    category: FootRight
+  - type: Sprite
+    state: r_foot
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.RFoot
+    data:
+      state: r_foot
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - RFoot
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseBrain
+  name: brain
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Brain
+  - type: Sprite
+    layers:
+    - state: brain
+  - type: Item
+    heldPrefix: brain
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseEyes
+  name: eyes
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Eyes
+  - type: Sprite
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Eyes
+    data:
+      sprite: Mobs/Customization/eyes.rsi
+      state: eyes
+  - type: VisualOrganMarkings
+    markingData:
+      layers:
+      - Eyes
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseTongue
+  name: tongue
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Tongue
+  - type: Sprite
+    layers:
+    - state: tongue
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseAppendix
+  name: appendix
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Appendix
+  - type: Sprite
+    layers:
+    - state: appendix
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseEars
+  name: ears
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Ears
+  - type: Sprite
+    layers:
+    - state: ears
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseLungs
+  name: lungs
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Lungs
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 100.0
+        canReact: false
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
+  - type: Item
+    heldPrefix: lungs
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseHeart
+  name: heart
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Heart
+  - type: Sprite
+    layers:
+    - state: heart-on
+  - type: Metabolizer
+    maxReagents: 2
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseStomach
+  name: stomach
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Stomach
+  - type: Stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+  - type: Metabolizer
+    maxReagents: 3
+    groups:
+    - id: Food
+    - id: Drink
+  - type: Sprite
+    layers:
+    - state: stomach
+  - type: Item
+    heldPrefix: stomach
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseLiver
+  name: liver
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Liver
+  - type: Sprite
+    layers:
+    - state: liver
+  - type: Item
+    heldPrefix: liver
+  - type: Metabolizer
+    maxReagents: 1
+    groups:
+    - id: Alcohol
+
+- type: entity
+  parent: OrganBase
+  id: OrganBaseKidneys
+  name: kidneys
+  abstract: true
+  components:
+  - type: GibbableOrgan
+  - type: Organ
+    category: Kidneys
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: Item
+    heldPrefix: kidneys
+  - type: Metabolizer
+    maxReagents: 5
+    removeEmpty: true
+
+- type: entity
+  id: OrganSpriteHumanInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  id: OrganBaseHeadSexed
+  abstract: true
+  components:
+  - type: Sprite
+    state: head_m
+  - type: VisualOrgan
+    data:
+      state: head_m
+    sexStateOverrides:
+      Male: head_m
+      Female: head_f
+
+- type: entity
+  id: OrganBaseTorsoSexed
+  abstract: true
+  components:
+  - type: Sprite
+    state: torso_m
+  - type: VisualOrgan
+    data:
+      state: torso_m
+    sexStateOverrides:
+      Male: torso_m
+      Female: torso_f

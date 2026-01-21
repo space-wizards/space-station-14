@@ -7,6 +7,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Stack;
 
+/// <summary>
+/// Used by hands in player UI to display the stack count.
+/// </summary>
 public sealed class StackStatusControl : Control
 {
     private readonly StackComponent _parent;
