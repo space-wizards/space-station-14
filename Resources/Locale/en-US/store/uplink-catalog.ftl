@@ -295,7 +295,7 @@ uplink-starter-kit-desc = Contains 40 telecrystals of basic operative gear. For 
 uplink-toolbox-name = Toolbox
 uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves and a syndicate gas mask as well.
 
-uplink-syndicate-jaws-of-life-name = Jaws Of Life
+uplink-syndicate-jaws-of-life-name = Jaws Of Death
 uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments. Can even open bolted doors!
 
 uplink-duffel-surgery-name = Surgical Duffel Bag
