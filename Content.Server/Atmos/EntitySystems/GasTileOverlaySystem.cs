@@ -61,10 +61,11 @@ namespace Content.Server.Atmos.EntitySystems
         private EntityQuery<GasTileOverlayComponent> _query;
 
         /// <summary>
-        /// How much the distortion strength should change for the temperature of a tile to be dirtied.
-        /// The strength goes from 0.0f to 1.0f, so 0.05f gives it essentially 20 "steps"
+        /// TODO
         /// </summary>
-        private float _heatDistortionStrengthChangeTolerance;
+        private int _tempResolution;
+        private int _tempTempMinimum;
+        private int _tempTempMaximum;
 
         public override void Initialize()
         {
@@ -90,7 +91,9 @@ namespace Content.Server.Atmos.EntitySystems
             Subs.CVar(ConfMan, CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
             Subs.CVar(ConfMan, CCVars.GasOverlayThresholds, UpdateThresholds, true);
             Subs.CVar(ConfMan, CVars.NetPVS, OnPvsToggle, true);
-            Subs.CVar(ConfMan, CCVars.GasOverlayHeatThreshold, UpdateHeatThresholds, true);
+            Subs.CVar(ConfMan, CCVars.GasOverlayTempResolution, UpdateTempResolution, true);
+            Subs.CVar(ConfMan, CCVars.GasOverlayTempMinimum, UpdateTempMinimum, true);
+            Subs.CVar(ConfMan, CCVars.GasOverlayTempMaximum, UpdateTempMaximum, true);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
@@ -138,9 +141,20 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
+        public byte RoundTemperature(float temperature)
+        {
+            var clampedTemp = Math.Clamp(temperature, _tempTempMinimum, _tempTempMaximum);
+
+            int inputSpan = _tempTempMaximum - _tempTempMinimum;
+
+            return (byte)((clampedTemp - _tempTempMinimum) * _tempResolution / inputSpan);
+        }
+
         private void UpdateTickRate(float value) => _updateInterval = value > 0.0f ? 1 / value : float.MaxValue;
         private void UpdateThresholds(int value) => _thresholds = value;
-        private void UpdateHeatThresholds(float v) => _heatDistortionStrengthChangeTolerance = MathHelper.Clamp01(v);
+        private void UpdateTempResolution(int v) => _tempResolution = MathHelper.Clamp(v, 0, 255);
+        private void UpdateTempMinimum(int v) => _tempTempMinimum = v;
+        private void UpdateTempMaximum(int v) => _tempTempMaximum = v;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
@@ -181,7 +195,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var data = new GasOverlayData(0,
                 new byte[VisibleGasId.Length],
-                mixture?.Temperature ?? Atmospherics.TCMB);
+                RoundTemperature(mixture?.Temperature ?? Atmospherics.TCMB));
 
             for (var i = 0; i < VisibleGasId.Length; i++)
             {
@@ -221,14 +235,14 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var changed = false;
-            var temp = tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? Atmospherics.TCMB;
+            var temp = RoundTemperature(tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? Atmospherics.TCMB);
             if (oldData.Equals(default))
             {
                 changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], temp);
             }
             else if (oldData.FireState != tile.Hotspot.State ||
-                     CheckTemperatureTolerance(oldData.Temperature, temp, _heatDistortionStrengthChangeTolerance))
+                     Math.Abs(oldData.TemperatureQuantization - temp) > 1)
             {
                 changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, temp);
@@ -278,49 +292,6 @@ namespace Content.Server.Atmos.EntitySystems
             chunk.LastUpdate = _gameTiming.CurTick;
             return true;
         }
-
-        /// <summary>
-        /// This function determines whether the change in temperature is significant enough to warrant dirtying the tile data.
-        /// </summary>
-        public bool CheckTemperatureTolerance(float tempA, float tempB, float tolerance)
-        {
-            // 1. Basic Tolerance Check
-            // If the temp changed by a large amount (e.g. > tolerance), always update.
-            if (Math.Abs(tempA - tempB) > tolerance)
-                return true;
-
-            // 2. Critical Visual Thresholds (Kelvin)
-            // These match the color breakpoints in your shader/overlay.
-            // If the temperature crosses ANY of these lines, we must update immediately
-            // so the color changes correctly on the client.
-
-            // -150°C (123.15K) : Deep Purple -> Blue start
-            if (CrossesThreshold(tempA, tempB, 123.15f)) return true;
-
-            // -50°C (223.15K) : Blue -> Transparent fade start
-            if (CrossesThreshold(tempA, tempB, 223.15f)) return true;
-
-            // 0°C (273.15K) : Freezing point (Blue/Transparent boundary)
-            if (CrossesThreshold(tempA, tempB, 273.15f)) return true;
-
-            // 50°C (323.15K) : Safe/Heat boundary (Transparent start)
-            if (CrossesThreshold(tempA, tempB, 323.15f)) return true;
-
-            // 100°C (373.15K) : Yellow start
-            if (CrossesThreshold(tempA, tempB, 373.15f)) return true;
-
-            // 300°C (573.15K) : Red/Extreme start
-            if (CrossesThreshold(tempA, tempB, 573.15f)) return true;
-
-            return false;
-        }
-
-        private bool CrossesThreshold(float val1, float val2, float threshold)
-        {
-            return (val1 < threshold && val2 >= threshold) ||
-                   (val1 >= threshold && val2 < threshold);
-        }
-
         private void UpdateOverlayData()
         {
             // TODO parallelize?

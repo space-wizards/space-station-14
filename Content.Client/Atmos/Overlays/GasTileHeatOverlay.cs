@@ -2,9 +2,7 @@ using System.Numerics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Client.Atmos.EntitySystems;
-using Content.Shared.CCVar;
 using Robust.Client.Graphics;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -38,9 +36,10 @@ public sealed class GasTileHeatOverlay : Overlay
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
     }
 
-    private Color GetGasColor(float tempK)
+    private Color GetGasColor(byte tempK)
     {
-        float tempC = tempK - 273.15f;
+        var tempKa= UnroundTemperature(tempK);
+        float tempC = tempKa - 273.15f;
 
         if (tempC >= 0f && tempC < 50f) return Color.Transparent;
 
@@ -50,6 +49,23 @@ public sealed class GasTileHeatOverlay : Overlay
         if (tempC < 100f) return Color.InterpolateBetween(Color.Transparent, Color.Yellow, (tempC - 50f) / 50f);
         if (tempC < 300f) return Color.InterpolateBetween(Color.Yellow, Color.Red, (tempC - 100f) / 200f);
         return Color.DarkRed;
+    }
+
+    public float UnroundTemperature(byte encodedTemp)
+    {
+        int _tempTempMinimum = 0;
+        int _tempTempMaximum = 1000;
+        byte _tempResolution = 250;
+
+        // 1. Calculate the full range (1000 - 0 = 1000)
+        int inputSpan = _tempTempMaximum - _tempTempMinimum;
+
+        // 2. Reverse the math
+        // We multiply the encoded byte by the span ratio.
+        // We cast to (float) to ensure we get decimal precision back.
+        float result = _tempTempMinimum + ((float)encodedTemp * inputSpan / _tempResolution);
+
+        return result;
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -118,7 +134,7 @@ public sealed class GasTileHeatOverlay : Overlay
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
                             if (!localBounds.Contains(tilePosition)) continue;
 
-                            Color gasColor = GetGasColor(tileGas.Temperature);
+                            Color gasColor = GetGasColor(tileGas.TemperatureQuantization);
 
                             //if (gasColor.A <= 0f) continue;
 
