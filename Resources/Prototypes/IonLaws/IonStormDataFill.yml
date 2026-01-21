@@ -1,5 +1,5 @@
 ﻿# Common targets shared by ion laws
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillJoined
   targets:
   - !type:JoinedDatasetFill
@@ -13,7 +13,7 @@
     - !type:DatasetFill
       dataset: IonStormAdjectives
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillSubjects
   targets:
   - !type:DatasetFill
@@ -26,7 +26,7 @@
     weight: 0.15
     fallbackDataset: IonStormCrew
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillWho
   targets:
   - !type:DatasetFill
@@ -37,7 +37,7 @@
     weight: 0.15
     fallbackDataset: IonStormCrew
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillThingObjectsConcepts
   targets:
   - !type:DatasetFill
@@ -45,7 +45,7 @@
   - !type:DatasetFill
     dataset: IonStormConcepts
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillWhoGeneral
   targets:
   - !type:TranslateFill
@@ -65,7 +65,7 @@
     weight: 0.15
     fallbackDataset: IonStormCrew
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillPlural
   targets:
   - !type:ConstantFill
@@ -73,7 +73,7 @@
   - !type:ConstantFill
     boolValue: false
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillPart
   targets:
   - !type:TranslateFill
@@ -87,7 +87,7 @@
       part: !type:ConstantFill
         boolValue: false
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillCrewRandom
   targets:
   - !type:DatasetFill
@@ -96,7 +96,7 @@
     weight: 0.15
     fallbackDataset: IonStormCrew
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillHarmProtect
   targets:
   - !type:DatasetFill
@@ -131,7 +131,7 @@
     weight: 0.15
     fallbackDataset: IonStormCrew
 
-- type: IonStormDataFill
+- type: ionStormDataFill
   id: IonStormDataFillFeelings
   targets:
   - !type:DatasetFill
