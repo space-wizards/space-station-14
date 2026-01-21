@@ -198,8 +198,8 @@
     state: dark-vertical-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorDarkSlatsContinuous
+      - Plating
+      - FloorDarkSlatsContinuous
   - type: Stack
     stackType: FloorTileDarkSlatsContinuous
 
@@ -212,8 +212,8 @@
     state: dark-vertical-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorDarkVerticalSlatsBordered
+      - Plating
+      - FloorDarkVerticalSlatsBordered
   - type: Stack
     stackType: FloorTileDarkVerticalSlatsBordered
 
@@ -226,8 +226,8 @@
     state: dark-horizontal-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorDarkHorizontalSlatsBordered
+      - Plating
+      - FloorDarkHorizontalSlatsBordered
   - type: Stack
     stackType: FloorTileDarkHorizontalSlatsBordered
 
@@ -315,8 +315,8 @@
     state: steel-vertical-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorSteelSlatsContinuous
+      - Plating
+      - FloorSteelSlatsContinuous
   - type: Stack
     stackType: FloorTileSteelSlatsContinuous
 
@@ -329,8 +329,8 @@
     state: steel-vertical-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorSteelVerticalSlatsBordered
+      - Plating
+      - FloorSteelVerticalSlatsBordered
   - type: Stack
     stackType: FloorTileSteelVerticalSlatsBordered
 
@@ -343,8 +343,8 @@
     state: steel-horizontal-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorSteelHorizontalSlatsBordered
+      - Plating
+      - FloorSteelHorizontalSlatsBordered
   - type: Stack
     stackType: FloorTileSteelHorizontalSlatsBordered
 
@@ -558,8 +558,8 @@
     state: white-vertical-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorWhiteVerticalSlatsBordered
+      - Plating
+      - FloorWhiteVerticalSlatsBordered
   - type: Stack
     stackType: FloorTileWhiteVerticalSlatsBordered
 
@@ -572,8 +572,8 @@
     state: white-vertical-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorWhiteSlatsContinuous
+      - Plating
+      - FloorWhiteSlatsContinuous
   - type: Stack
     stackType: FloorTileWhiteSlatsContinuous
 
@@ -586,8 +586,8 @@
     state: white-horizontal-slats
   - type: FloorTile
     outputs:
-    - Plating
-    - FloorWhiteHorizontalSlatsBordered
+      - Plating
+      - FloorWhiteHorizontalSlatsBordered
   - type: Stack
     stackType: FloorTileWhiteHorizontalSlatsBordered
 
