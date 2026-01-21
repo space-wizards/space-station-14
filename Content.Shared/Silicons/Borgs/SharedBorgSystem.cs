@@ -1,7 +1,7 @@
+using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Events;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Gibbing;
@@ -24,8 +24,8 @@ using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
-using Content.Shared.Wires;
 using Content.Shared.Whitelist;
+using Content.Shared.Wires;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
@@ -167,6 +167,11 @@ public abstract partial class SharedBorgSystem : EntitySystem
     // TODO: consider transferring over the ghost role? managing that might suck.
     protected virtual void OnInserted(Entity<BorgChassisComponent> chassis, ref EntInsertedIntoContainerMessage args)
     {
+        if (args.Container == chassis.Comp.ModuleContainer && HasComp<BorgModuleComponent>(args.Entity))
+        {
+            SyncModuleStatesToRequirements(chassis);
+        }
+
         if (_timing.ApplyingState)
             return; // The changes are already networked with the same game state
 
@@ -181,6 +186,11 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     protected virtual void OnRemoved(Entity<BorgChassisComponent> chassis, ref EntRemovedFromContainerMessage args)
     {
+        if (args.Container == chassis.Comp.ModuleContainer && HasComp<BorgModuleComponent>(args.Entity))
+        {
+            SyncModuleStatesToRequirements(chassis);
+        }
+
         if (_timing.ApplyingState)
             return; // The changes are already networked with the same game state
 
@@ -190,6 +200,43 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(chassis.Owner, out var mindId, out var mind))
         {
             _mind.TransferTo(mindId, args.Entity, mind: mind);
+        }
+    }
+
+    private void SyncModuleStatesToRequirements(Entity<BorgChassisComponent> chassis)
+    {
+        var allInstalledModules = new List<Entity<BorgModuleComponent>>();
+        foreach (var moduleEnt in chassis.Comp.ModuleContainer.ContainedEntities)
+        {
+            if (!EntityManager.TryGetComponent(moduleEnt, out BorgModuleComponent? moduleComp))
+                continue;
+
+            allInstalledModules.Add((moduleEnt, moduleComp));
+        }
+
+        var modulesSatisfyingAnyRequirement = new List<Entity<BorgModuleComponent>>();
+        var modulesGroupedByRequirement = new List<List<Entity<BorgModuleComponent>>>();
+        foreach (var borgModuleRequirement in chassis.Comp.ModuleRequirements)
+        {
+            var modulesSatisfyingRequirement = allInstalledModules
+                .Where(it => _whitelist.IsWhitelistPass(borgModuleRequirement, it))
+                .ToList();
+
+            modulesSatisfyingAnyRequirement.AddRange(modulesSatisfyingRequirement);
+            modulesGroupedByRequirement.Add(modulesSatisfyingRequirement);
+        }
+
+        // Any "group" which contains exactly one module means that module is strictly required by a requirement.
+        foreach (var module in modulesGroupedByRequirement.Where(it => it.Count == 1).SelectMany(it => it))
+        {
+            SetBorgModuleRequired(module, true);
+            modulesSatisfyingAnyRequirement.Remove(module);
+        }
+
+        // Any remaining modules which satisfy some requirement, but weren't made strictly required above are optional.
+        foreach (var module in modulesSatisfyingAnyRequirement)
+        {
+            SetBorgModuleRequired(module, false);
         }
     }
 

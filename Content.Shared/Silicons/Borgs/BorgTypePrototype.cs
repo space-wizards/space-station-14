@@ -1,4 +1,4 @@
-﻿using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Borgs.Components;
@@ -76,11 +76,21 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// Borg module types that are always available to borgs of this type.
     /// </summary>
     /// <remarks>
-    /// These modules still work like modules, although they cannot be removed from the borg.
+    /// These modules still work like modules, although they cannot be removed from the borg unless allowed by <see cref="ModuleTypeRequirements"/>.
     /// </remarks>
     /// <seealso cref="BorgModuleComponent.DefaultModule"/>
     [DataField]
     public EntProtoId[] DefaultModules = [];
+
+    /// <summary>
+    /// A list of whitelists which describe what modules this borg type requires. Conceptually, each of these whitelists is a "you need to
+    /// have at least one module which passes me", so, for example, an engineering cyborg will have a whitelist here which passes for tools
+    /// modules because every engineering cyborg should have a tools module. This is implemented as a whitelist to allow different modules
+    /// to fulfill the same requirement, so, forexample, either a standard tool module or an advanced tool module can fulfill a requirement
+    /// for a tools module.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist[] RequiredModules = [];
 
     /// <summary>
     /// Additional components to add to the borg entity when this type is selected.

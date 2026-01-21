@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -82,6 +82,15 @@ public sealed partial class BorgChassisComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? ModuleWhitelist;
+
+    /// <summary>
+    /// Which modules this type of cyborg requires. Default modules are implicitly included.
+    /// Whitelists which match more than one module allow for changing out one module on the list for another one,
+    /// eg. for replacing a "basic" module with its advanced variant.
+    /// </summary>
+    /// <seealso cref="BorgTypePrototype.RequiredModules"/>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist[] ModuleRequirements = [];
 
     /// <summary>
     /// How many modules can be installed in this borg?

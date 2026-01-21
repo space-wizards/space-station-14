@@ -52,6 +52,10 @@
   - BorgModuleRCD
   - BorgModuleCable
 
+  requiredModules:
+  - tags:
+    - CyborgToolModule
+
   radioChannels:
   - Engineering
   - Science
@@ -88,6 +92,10 @@
   - BorgModuleTraversal
   - BorgModuleAppraisal
 
+  requiredModules:
+  - tags:
+    - CyborgMiningModule
+
   radioChannels:
   - Supply
   - Science
@@ -122,6 +130,10 @@
   defaultModules:
   - BorgModuleCleaning
   - BorgModuleCustodial
+
+  requiredModules:
+  - tags:
+    - CyborgCleaningModule
 
   radioChannels:
   - Science
@@ -158,6 +170,10 @@
   - BorgModuleChemical
   - BorgModuleTopicals
   - BorgModuleRescue
+
+  requiredModules:
+  - tags:
+    - CyborgTopicalModule
 
   radioChannels:
   - Science

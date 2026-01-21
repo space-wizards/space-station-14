@@ -100,6 +100,17 @@ public abstract partial class SharedBorgSystem
     }
 
     /// <summary>
+    /// Sets <see cref="BorgChassisComponent.ModuleRequirements"/>.
+    /// </summary>
+    /// <param name="ent">The borg to modify.</param>
+    /// <param name="requirements">The new module requirements.</param>
+    public void SetModuleRequirements(Entity<BorgChassisComponent> ent, EntityWhitelist[] requirements)
+    {
+        ent.Comp.ModuleRequirements = requirements;
+        Dirty(ent);
+    }
+
+    /// <summary>
     /// Sets <see cref="BorgChassisComponent.MaxModules"/>.
     /// </summary>
     /// <param name="ent">The borg to modify.</param>
@@ -192,11 +203,11 @@ public abstract partial class SharedBorgSystem
     }
 
     /// <summary>
-    /// Sets <see cref="BorgModuleComponent.DefaultModule"/>.
+    /// Sets <see cref="BorgModuleComponent.Required"/>.
     /// </summary>
-    public void SetBorgModuleDefault(Entity<BorgModuleComponent> ent, bool newDefault)
+    public void SetBorgModuleRequired(Entity<BorgModuleComponent> ent, bool newRequired)
     {
-        ent.Comp.DefaultModule = newDefault;
+        ent.Comp.Required = newRequired;
         Dirty(ent);
     }
 
@@ -246,10 +257,7 @@ public abstract partial class SharedBorgSystem
     /// <returns>True if the module can be removed.</returns>
     public bool CanRemoveModule(Entity<BorgModuleComponent> module)
     {
-        if (module.Comp.DefaultModule)
-            return false;
-
-        return true;
+        return !module.Comp.Required;
     }
 
     /// <summary>
