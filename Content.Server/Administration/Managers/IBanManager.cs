@@ -127,10 +127,10 @@ public abstract class CreateBanInfo
     [Access(Other = AccessPermissions.Read)]
     public const int DefaultMaskIpv6 = 64;
 
-    internal readonly List<(NetUserId UserId, string UserName)> Users = [];
-    internal readonly List<(IPAddress Address, int Mask)> AddressRanges = [];
-    internal readonly List<ImmutableTypedHwid> HWIds = [];
-    internal readonly List<int> RoundIds = [];
+    internal readonly HashSet<(NetUserId UserId, string UserName)> Users = [];
+    internal readonly HashSet<(IPAddress Address, int Mask)> AddressRanges = [];
+    internal readonly HashSet<ImmutableTypedHwid> HWIds = [];
+    internal readonly HashSet<int> RoundIds = [];
     internal TimeSpan? Duration;
     internal NoteSeverity? Severity;
     internal string Reason;
@@ -351,8 +351,8 @@ public sealed class CreateServerBanInfo : CreateBanInfo
 [Access(typeof(BanManager), Other = AccessPermissions.Execute)]
 public sealed class CreateRoleBanInfo : CreateBanInfo
 {
-    internal readonly List<ProtoId<AntagPrototype>> AntagPrototypes = [];
-    internal readonly List<ProtoId<JobPrototype>> JobPrototypes = [];
+    internal readonly HashSet<ProtoId<AntagPrototype>> AntagPrototypes = [];
+    internal readonly HashSet<ProtoId<JobPrototype>> JobPrototypes = [];
 
     /// <param name="reason">The reason for the role ban.</param>
     public CreateRoleBanInfo(string reason) : base(reason)
