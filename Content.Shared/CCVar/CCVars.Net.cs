@@ -15,7 +15,7 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<float> GasOverlayHeatThreshold =
         CVarDef.Create("net.gasoverlayheatthreshold",
-            0.001f,
+            0.05f,
             CVar.SERVER | CVar.REPLICATED,
             "Threshold for sending tile temperature updates to client in percent of distortion strength," +
             "from 0.0 to 1.0. Example: 0.05 = 5%, which means heat distortion will appear in 20 'steps'.");

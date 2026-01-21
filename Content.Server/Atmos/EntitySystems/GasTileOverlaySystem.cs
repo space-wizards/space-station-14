@@ -282,15 +282,43 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// This function determines whether the change in temperature is significant enough to warrant dirtying the tile data.
         /// </summary>
-        private bool CheckTemperatureTolerance(float tempA, float tempB, float tolerance)
+        public bool CheckTemperatureTolerance(float tempA, float tempB, float tolerance)
         {
-            var (strengthA, strengthB) = (GetHeatDistortionStrength(tempA), GetHeatDistortionStrength(tempB));
+            // 1. Basic Tolerance Check
+            // If the temp changed by a large amount (e.g. > tolerance), always update.
+            if (Math.Abs(tempA - tempB) > tolerance)
+                return true;
 
-            return (strengthA <= 0f && strengthB > 0f) || // change to or from 0
-                   (strengthB <= 0f && strengthA > 0f) ||
-                   (strengthA >= 1f && strengthB < 1f) || // change to or from 1
-                   (strengthB >= 1f && strengthA < 1f) ||
-                   Math.Abs(strengthA - strengthB) > tolerance; // other change within tolerance
+            // 2. Critical Visual Thresholds (Kelvin)
+            // These match the color breakpoints in your shader/overlay.
+            // If the temperature crosses ANY of these lines, we must update immediately
+            // so the color changes correctly on the client.
+
+            // -150°C (123.15K) : Deep Purple -> Blue start
+            if (CrossesThreshold(tempA, tempB, 123.15f)) return true;
+
+            // -50°C (223.15K) : Blue -> Transparent fade start
+            if (CrossesThreshold(tempA, tempB, 223.15f)) return true;
+
+            // 0°C (273.15K) : Freezing point (Blue/Transparent boundary)
+            if (CrossesThreshold(tempA, tempB, 273.15f)) return true;
+
+            // 50°C (323.15K) : Safe/Heat boundary (Transparent start)
+            if (CrossesThreshold(tempA, tempB, 323.15f)) return true;
+
+            // 100°C (373.15K) : Yellow start
+            if (CrossesThreshold(tempA, tempB, 373.15f)) return true;
+
+            // 300°C (573.15K) : Red/Extreme start
+            if (CrossesThreshold(tempA, tempB, 573.15f)) return true;
+
+            return false;
+        }
+
+        private bool CrossesThreshold(float val1, float val2, float threshold)
+        {
+            return (val1 < threshold && val2 >= threshold) ||
+                   (val1 >= threshold && val2 < threshold);
         }
 
         private void UpdateOverlayData()

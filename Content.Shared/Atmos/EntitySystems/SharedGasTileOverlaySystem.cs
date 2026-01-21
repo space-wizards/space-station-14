@@ -1,28 +1,15 @@
 using Content.Shared.Atmos.Components;
-using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Shared.Atmos.EntitySystems
 {
     public abstract class SharedGasTileOverlaySystem : EntitySystem
     {
-        /// <summary>
-        /// The temperature at which the heat distortion effect starts to be applied.
-        /// </summary>
-        private float _tempAtMinHeatDistortion;
-        /// <summary>
-        /// The temperature at which the heat distortion effect is at maximum strength.
-        /// </summary>
-        private float _tempAtMaxHeatDistortion;
-        /// <summary>
-        /// Calculated linear slope and intercept to map temperature to a heat distortion strength from 0.0 to 1.0
-        /// </summary>
-        private float _heatDistortionSlope;
-        private float _heatDistortionIntercept;
-
         public const byte ChunkSize = 8;
         protected float AccumulatedFrameTime;
         protected bool PvsEnabled;
@@ -31,60 +18,63 @@ namespace Content.Shared.Atmos.EntitySystems
         [Dependency] protected readonly IConfigurationManager ConfMan = default!;
         [Dependency] private readonly SharedAtmosphereSystem _atmosphere = default!;
 
-        /// <summary>
-        ///     array of the ids of all visible gases.
-        /// </summary>
         public int[] VisibleGasId = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            // Make sure the heat distortion variables are updated if the CVars change
-            Subs.CVar(ConfMan, CCVars.GasOverlayHeatMinimum, UpdateMinHeat, true);
-            Subs.CVar(ConfMan, CCVars.GasOverlayHeatMaximum, UpdateMaxHeat, true);
-
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentGetState>(OnGetState);
 
             List<int> visibleGases = new();
-
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var gasPrototype = _atmosphere.GetGas(i);
-                if (!string.IsNullOrEmpty(gasPrototype.GasOverlayTexture) || !string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
+                if (!string.IsNullOrEmpty(gasPrototype.GasOverlayTexture) ||
+                    (!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState)))
                     visibleGases.Add(i);
             }
-
             VisibleGasId = visibleGases.ToArray();
         }
 
-        private void UpdateMaxHeat(float val)
+        // --- NEW LOGIC START ---
+
+        /// <summary>
+        /// Check if the temperature change is significant enough to send an update.
+        /// </summary>
+        public bool CheckTemperatureTolerance(float tempA, float tempB, float tolerance)
         {
-            _tempAtMaxHeatDistortion = val;
-            UpdateHeatSlopeAndIntercept();
+            // 1. If the difference is huge (e.g. > 5 degrees), always update.
+            // This catches fast heating/cooling.
+            if (Math.Abs(tempA - tempB) > 5.0f)
+                return true;
+
+            // 2. Critical Visual Thresholds (Kelvin)
+            // These match the color breakpoints in your shader/overlay.
+            // -150C (123K), -50C (223K), 0C (273K), 50C (323K), 100C (373K), 300C (573K)
+            // We check if the temp crossed any of these lines.
+            if (CrossesThreshold(tempA, tempB, 123.15f)) return true;
+            if (CrossesThreshold(tempA, tempB, 223.15f)) return true;
+            if (CrossesThreshold(tempA, tempB, 273.15f)) return true; // Freezing Point
+            if (CrossesThreshold(tempA, tempB, 323.15f)) return true; // Safe/Heat boundary
+            if (CrossesThreshold(tempA, tempB, 373.15f)) return true; // Boiling Point
+            if (CrossesThreshold(tempA, tempB, 573.15f)) return true; // Fire Point
+
+            // 3. Otherwise, use the standard strict tolerance (0.5f is a good balance)
+            return Math.Abs(tempA - tempB) > tolerance;
         }
 
-        private void UpdateMinHeat(float val)
+        // Helper: returns true if 'val' crosses 'threshold' compared to 'oldVal'
+        private bool CrossesThreshold(float val1, float val2, float threshold)
         {
-            _tempAtMinHeatDistortion = val;
-            UpdateHeatSlopeAndIntercept();
+            return (val1 < threshold && val2 >= threshold) ||
+                   (val1 >= threshold && val2 < threshold);
         }
-
-        private void UpdateHeatSlopeAndIntercept()
-        {
-            var diff = _tempAtMinHeatDistortion < _tempAtMaxHeatDistortion
-                ? _tempAtMaxHeatDistortion - _tempAtMinHeatDistortion
-                : 0.001f;
-            _heatDistortionSlope = 1.0f / diff;
-            _heatDistortionIntercept = -_tempAtMinHeatDistortion * _heatDistortionSlope;
-        }
+        // --- NEW LOGIC END ---
 
         private void OnGetState(EntityUid uid, GasTileOverlayComponent component, ref ComponentGetState args)
         {
-            if (PvsEnabled && !args.ReplayState)
-                return;
+            if (PvsEnabled && !args.ReplayState) return;
 
-            // Should this be a full component state or a delta-state?
             if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
             {
                 args.State = new GasTileOverlayState(component.Chunks);
@@ -103,30 +93,15 @@ namespace Content.Shared.Atmos.EntitySystems
 
         public static Vector2i GetGasChunkIndices(Vector2i indices)
         {
-            return new((int) MathF.Floor((float) indices.X / ChunkSize), (int) MathF.Floor((float) indices.Y / ChunkSize));
+            return new((int)MathF.Floor((float)indices.X / ChunkSize), (int)MathF.Floor((float)indices.Y / ChunkSize));
         }
 
         [Serializable, NetSerializable]
         public readonly struct GasOverlayData : IEquatable<GasOverlayData>
         {
-            [ViewVariables]
-            public readonly byte FireState;
-
-            [ViewVariables]
-            public readonly byte[] Opacity;
-
-            /// <summary>
-            /// This temperature is currently only used by the GasTileHeatOverlay.
-            /// This value will only reflect the true temperature of the gas when the temperature is between
-            /// <see cref="SharedGasTileOverlaySystem._tempAtMinHeatDistortion"/> and <see cref="SharedGasTileOverlaySystem._tempAtMaxHeatDistortion"/> as these are the only
-            /// values at which the heat distortion varies.
-            /// Additionally, it will only update when the heat distortion strength changes by
-            /// <see cref="_heatDistortionStrengthChangeTolerance"/>. By default, this is 5%, which corresponds to
-            /// 20 steps from <see cref="SharedGasTileOverlaySystem._tempAtMinHeatDistortion"/> to <see cref="SharedGasTileOverlaySystem._tempAtMaxHeatDistortion"/>.
-            /// For 325K to 1000K with 5% tolerance, then this field will dirty only if it differs by 33.75K, or 20 steps.
-            /// </summary>
-            [ViewVariables]
-            public readonly float Temperature;
+            [ViewVariables] public readonly byte FireState;
+            [ViewVariables] public readonly byte[] Opacity;
+            [ViewVariables] public readonly float Temperature;
 
             public GasOverlayData(byte fireState, byte[] opacity, float temperature)
             {
@@ -137,39 +112,25 @@ namespace Content.Shared.Atmos.EntitySystems
 
             public bool Equals(GasOverlayData other)
             {
-                if (FireState != other.FireState)
-                    return false;
-
-                if (Opacity?.Length != other.Opacity?.Length)
-                    return false;
+                if (FireState != other.FireState) return false;
+                if (Opacity?.Length != other.Opacity?.Length) return false;
 
                 if (Opacity != null && other.Opacity != null)
                 {
                     for (var i = 0; i < Opacity.Length; i++)
                     {
-                        if (Opacity[i] != other.Opacity[i])
-                            return false;
+                        if (Opacity[i] != other.Opacity[i]) return false;
                     }
                 }
 
-                // This is only checking if two datas are equal -- a different routine is used to check if the
-                // temperature differs enough to dirty the chunk using a much wider tolerance.
-                if (!MathHelper.CloseToPercent(Temperature, other.Temperature))
+                // Use a reasonable tolerance for standard equality checks (e.g. 0.5 degrees)
+                // The "Critical Threshold" check logic is usually handled in the System 
+                // that decides *when* to dirty the chunk, but having a base tolerance here prevents spam.
+                if (Math.Abs(Temperature - other.Temperature) > 0.5f)
                     return false;
 
                 return true;
             }
-        }
-
-        /// <summary>
-        /// Calculate the heat distortion from a temperature.
-        /// Returns 0.0f below TempAtMinHeatDistortion and 1.0f above TempAtMaxHeatDistortion.
-        /// </summary>
-        /// <param name="temp"></param>
-        /// <returns></returns>
-        public float GetHeatDistortionStrength(float temp)
-        {
-            return MathHelper.Clamp01(temp * _heatDistortionSlope + _heatDistortionIntercept);
         }
 
         [Serializable, NetSerializable]
