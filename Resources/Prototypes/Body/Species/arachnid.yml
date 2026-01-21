@@ -1,3 +1,38 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Arachnid
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ ArachnidAppendagesDefault ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: true
+      default: [ ArachnidCheliceraeDownwards ]
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceArachnid
@@ -6,31 +41,29 @@
   - type: Inventory
     templateId: arachnid
     speciesId: arachnid
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganArachnidTorso
-        - id: OrganArachnidHead
-        - id: OrganArachnidArmLeft
-        - id: OrganArachnidArmRight
-        - id: OrganArachnidHandRight
-        - id: OrganArachnidHandLeft
-        - id: OrganArachnidLegLeft
-        - id: OrganArachnidLegRight
-        - id: OrganArachnidFootLeft
-        - id: OrganArachnidFootRight
-        - id: OrganArachnidBrain
-        - id: OrganArachnidEyes
-        - id: OrganArachnidTongue
-        - id: OrganArachnidAppendix
-        - id: OrganArachnidEars
-        - id: OrganArachnidLungs
-        - id: OrganArachnidHeart
-        - id: OrganArachnidStomach
-        - id: OrganArachnidLiver
-        - id: OrganArachnidKidneys
-  - type: HumanoidAppearance
+  - type: InitialBody
+    organs:
+      Torso: OrganArachnidTorso
+      Head: OrganArachnidHead
+      ArmLeft: OrganArachnidArmLeft
+      ArmRight: OrganArachnidArmRight
+      HandRight: OrganArachnidHandRight
+      HandLeft: OrganArachnidHandLeft
+      LegLeft: OrganArachnidLegLeft
+      LegRight: OrganArachnidLegRight
+      FootLeft: OrganArachnidFootLeft
+      FootRight: OrganArachnidFootRight
+      Brain: OrganArachnidBrain
+      Eyes: OrganArachnidEyes
+      Tongue: OrganArachnidTongue
+      Appendix: OrganArachnidAppendix
+      Ears: OrganArachnidEars
+      Lungs: OrganArachnidLungs
+      Heart: OrganArachnidHeart
+      Stomach: OrganArachnidStomach
+      Liver: OrganArachnidLiver
+      Kidneys: OrganArachnidKidneys
+  - type: HumanoidProfile
     species: Arachnid
 
 - type: entity
@@ -127,7 +160,18 @@
     sprite: Mobs/Species/Arachnid/organs.rsi
 
 - type: entity
-  parent: OrganArachnid
+  id: OrganArachnidVisual
+  abstract: true
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Arachnid/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Arachnid
+
+- type: entity
+  parent: [ OrganArachnid, OrganArachnidVisual ]
   id: OrganArachnidExternal
   abstract: true
   components:
@@ -179,7 +223,7 @@
   id: OrganArachnidBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganArachnidInternal ]
+  parent: [ OrganArachnidVisual, OrganBaseEyes, OrganArachnidInternal ]
   id: OrganArachnidEyes
 
 - type: entity
