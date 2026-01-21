@@ -6,66 +6,117 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 namespace Content.Client.Atmos.Overlays;
 
-public sealed class GasTileHeatOverlay : Overlay
+public sealed class GasTileTemperatureOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = false;
 
-    private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
-    private static readonly ProtoId<ShaderPrototype> HeatOverlayShader = "Heat";
-
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IClyde _clyde = default!;
 
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;
 
-    private IRenderTexture? _heatTarget;
+    private IRenderTexture? _overlayTarget;
+
+    private readonly Color[] _colorCache = new Color[256];
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
-    private readonly ShaderInstance _shader;
 
-    public GasTileHeatOverlay()
+    public GasTileTemperatureOverlay()
     {
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
-        _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
+
+        for (int i = 0; i <= 255; i++)
+        {
+            _colorCache[i] = CalculateColor((byte)i);
+        }
     }
 
-    private Color GetGasColor(byte tempK)
+    private static Color CalculateColor(byte byteTemp)
     {
-        var tempKa= UnroundTemperature(tempK);
-        float tempC = tempKa - 273.15f;
+        const float MinInput = 0f;
+        const float MaxInput = 1000f;
+        const float Resolution = 250f;
 
-        if (tempC >= 0f && tempC < 50f) return Color.Transparent;
+        // Temp resolution, calculates how many degrees is one increment in byteTemp
+        const float tempResolution = (MaxInput - MinInput) / Resolution;
 
-        if (tempC < -150f) return Color.FromHex("#330066");
-        if (tempC < -50f) return Color.InterpolateBetween(Color.FromHex("#330066"), Color.Blue, (tempC + 150f) / 100f);
-        if (tempC < 0f) return Color.InterpolateBetween(Color.Blue, Color.Transparent, (tempC + 50f) / 50f);
-        if (tempC < 100f) return Color.InterpolateBetween(Color.Transparent, Color.Yellow, (tempC - 50f) / 50f);
-        if (tempC < 300f) return Color.InterpolateBetween(Color.Yellow, Color.Red, (tempC - 100f) / 200f);
-        return Color.DarkRed;
-    }
+        // Color Thresholds in Kelvin
+        // -150 C
+        const float deepFreezeK = 123.15f;
+        // -50 C
+        const float freezeStartK = 223.15f;
+        // 0 C
+        const float waterFreezeK = 273.15f;
+        // 50 C
+        const float heatStartK = 323.15f;
+        // 100 C
+        const float waterBoilK = 373.15f;
+        // 300 C
+        const float superHeatK = 573.15f;
 
-    public float UnroundTemperature(byte encodedTemp)
-    {
-        int _tempTempMinimum = 0;
-        int _tempTempMaximum = 1000;
-        byte _tempResolution = 250;
+        float tempK = byteTemp * tempResolution;
 
-        // 1. Calculate the full range (1000 - 0 = 1000)
-        int inputSpan = _tempTempMaximum - _tempTempMinimum;
+        // Neutral Zone Check (0C to 50C)
+        // If between 273.15K and 323.15K, it's transparent.
+        if (tempK >= waterFreezeK && tempK < heatStartK)
+        {
+            return Color.Transparent;
+        }
 
-        // 2. Reverse the math
-        // We multiply the encoded byte by the span ratio.
-        // We cast to (float) to ensure we get decimal precision back.
-        float result = _tempTempMinimum + ((float)encodedTemp * inputSpan / _tempResolution);
+        Color resultingColor;
 
-        return result;
+        if (tempK < deepFreezeK)
+        {
+            resultingColor = Color.FromHex("#330066");
+        }
+        else if (tempK < freezeStartK)
+        {
+            // Interpolate Deep Purple -> Blue
+            // Range: 123.15 to 223.15 (Span: 100)
+            resultingColor = Color.InterpolateBetween(
+                Color.FromHex("#330066"),
+                Color.Blue,
+                (tempK - deepFreezeK) * 0.01f);
+        }
+        else if (tempK < waterFreezeK)
+        {
+            // Interpolate Blue -> Transparent
+            // Range: 223.15 to 273.15 (Span: 50)
+            resultingColor = Color.InterpolateBetween(
+                Color.Blue,
+                Color.Transparent,
+                (tempK - freezeStartK) * 0.02f);
+        }
+        else if (tempK < waterBoilK)
+        {
+            // Interpolate Transparent -> Yellow
+            // Range: 323.15 to 373.15 (Span: 50)
+            resultingColor = Color.InterpolateBetween(
+                Color.Transparent,
+                Color.Yellow,
+                (tempK - heatStartK) * 0.02f);
+        }
+        else if (tempK < superHeatK)
+        {
+            // Interpolate Yellow -> Red
+            // Range: 373.15 to 573.15 (Span: 200)
+            resultingColor = Color.InterpolateBetween(
+                Color.Yellow,
+                Color.Red,
+                (tempK - waterBoilK) * 0.005f);
+        }
+        else
+        {
+            resultingColor = Color.DarkRed;
+        }
+
+        resultingColor.A = 0.7f;
+        return resultingColor;
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -77,13 +128,13 @@ public sealed class GasTileHeatOverlay : Overlay
 
         var target = args.Viewport.RenderTarget;
 
-        if (_heatTarget?.Texture.Size != target.Size)
+        if (_overlayTarget?.Texture.Size != target.Size)
         {
-            _heatTarget?.Dispose();
-            _heatTarget = _clyde.CreateRenderTarget(
+            _overlayTarget?.Dispose();
+            _overlayTarget = _clyde.CreateRenderTarget(
                 target.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
-                name: nameof(GasTileHeatOverlay));
+                name: nameof(GasTileTemperatureOverlay));
         }
 
         var drawHandle = args.WorldHandle;
@@ -94,11 +145,10 @@ public sealed class GasTileHeatOverlay : Overlay
 
         var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
-        drawHandle.UseShader(_proto.Index(UnshadedShader).Instance());
 
         bool anyGasDrawn = false;
 
-        drawHandle.RenderInRenderTarget(_heatTarget,
+        drawHandle.RenderInRenderTarget(_overlayTarget,
             () =>
             {
                 List<Entity<MapGridComponent>> grids = new();
@@ -113,10 +163,9 @@ public sealed class GasTileHeatOverlay : Overlay
 
                     if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt)) continue;
 
-                    var uvToUi = Matrix3Helpers.CreateScale(_heatTarget.Size.X, -_heatTarget.Size.Y);
+                    var uvToUi = Matrix3Helpers.CreateScale(_overlayTarget.Size.X, -_overlayTarget.Size.Y);
                     var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
 
-                    _shader.SetParameter("grid_ent_from_viewport_local", uvToGridEnt);
                     drawHandle.SetTransform(gridEntToViewportLocal);
 
                     var floatBounds = worldToViewportLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
@@ -134,9 +183,9 @@ public sealed class GasTileHeatOverlay : Overlay
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
                             if (!localBounds.Contains(tilePosition)) continue;
 
-                            Color gasColor = GetGasColor(tileGas.TemperatureQuantization);
+                            Color gasColor = _colorCache[tileGas.TemperatureQuantization];
 
-                            //if (gasColor.A <= 0f) continue;
+                            if (gasColor.A <= 0f) continue;
 
                             anyGasDrawn = true;
 
@@ -150,13 +199,12 @@ public sealed class GasTileHeatOverlay : Overlay
             },
             new Color(0, 0, 0, 0));
 
-        drawHandle.UseShader(null);
         drawHandle.SetTransform(Matrix3x2.Identity);
 
         if (!anyGasDrawn)
         {
-            _heatTarget?.Dispose();
-            _heatTarget = null;
+            _overlayTarget?.Dispose();
+            _overlayTarget = null;
             return false;
         }
 
@@ -165,19 +213,17 @@ public sealed class GasTileHeatOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (_heatTarget is null)
+        if (_overlayTarget is null)
             return;
 
-        args.WorldHandle.UseShader(_shader);
-        args.WorldHandle.DrawTextureRect(_heatTarget.Texture, args.WorldBounds);
-        args.WorldHandle.UseShader(null);
+        args.WorldHandle.DrawTextureRect(_overlayTarget.Texture, args.WorldBounds);
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
     protected override void DisposeBehavior()
     {
-        _heatTarget?.Dispose();
-        _heatTarget = null;
+        _overlayTarget?.Dispose();
+        _overlayTarget = null;
         base.DisposeBehavior();
     }
 }
