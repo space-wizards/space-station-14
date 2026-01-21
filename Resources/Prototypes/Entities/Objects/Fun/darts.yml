@@ -121,13 +121,13 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 7
+        maxVol: 10
   - type: SolutionInjectOnEmbed
-    transferAmount: 7
+    transferAmount: 10
     blockSlots: NONE
     solution: melee
   - type: SolutionTransfer
-    maxTransferAmount: 7
+    maxTransferAmount: 10
 
 - type: entity
   name: dartboard
