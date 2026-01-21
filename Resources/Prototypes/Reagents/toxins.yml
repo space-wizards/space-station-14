@@ -780,3 +780,18 @@
         type: Update
       - !type:ModifyBleed
         amount: 0.5
+
+- type: reagent
+  id: HardlightToxin
+  name: hardlight-toxin
+  group: Toxins
+  desc: hardlight-toxin
+  flavor: warm
+  color: "#00FF00"
+  physicalDesc: reagent-physical-desc-glowing
+  contrabandSeverity: Syndicate
+  metabolisms:
+    Poison:
+      metabolismRate: 1
+      effects:
+      - !type:StaminaDamage

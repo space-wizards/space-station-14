@@ -1,5 +1,5 @@
 reagent-name-toxin = toxin
-reagent-desc-toxin = An unsurprisingly toxic chemical. Available at an emagged chem dispenser.
+reagent-desc-toxin = An unsurprisingly toxic chemical.
 
 reagent-name-carpotoxin = carpotoxin
 reagent-desc-carpotoxin = A highly toxic reagent found in space carps. Causes a painful burning sensation.
@@ -87,3 +87,6 @@ reagent-desc-toxintrash = An awful-smelling slurry efficiently refined from disc
 
 reagent-name-hemorrhinol = hemorrhinol
 reagent-desc-hemorrhinol = A toxin that causes severe damage to blood vessels, causing rapid bleeding.
+
+reagent-name-hardlight-toxin = hardlight toxin
+reagent-desc-hardlight-toxin = A highly advanced toxin which which when metabolized directly attacks a victim's nervous system.

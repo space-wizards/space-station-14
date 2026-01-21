@@ -25,11 +25,14 @@
         empty-icon:
           True: { visible: False }
           False: { visible: True }
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 5 #2 seconds of KD, should always have CD > KD
+  - type: BallisticAmmoSelfRefiller
+    firingPausesAutoRefill: true
+    autoRefillPauseDuration: 5 #2 seconds of KD, should always have CD > KD
+    autoRefillRate: 0
+    affectedByEmp: true
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg
-  - type: BasicEntityAmmoProvider
+  - type: BallisticAmmoProvider
     proto: EnergyCrossbowBolt
     capacity: 1
     count: 1

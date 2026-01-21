@@ -405,23 +405,27 @@ public abstract partial class SharedGunSystem
             }
 
             SetBallisticUnspawned(entity, ammo.UnspawnedCount + 1);
+            Audio.PlayPredicted(entity.Comp2.RechargeSound, entity, entity);
         }
         else if (ammo.Proto == refillerAmmoProto)
         {
             // The ammo proto on the refiller and the provider match. Add an unspawned ammo.
             SetBallisticUnspawned(entity, ammo.UnspawnedCount + 1);
+            Audio.PlayPredicted(entity.Comp2.RechargeSound, entity, entity);
         }
         else
         {
             // Can't use unspawned ammo, so spawn an entity and try to insert it.
             var ammoEntity = PredictedSpawnAttachedTo(refiller.AmmoProto, Transform(entity).Coordinates);
-            var insertSucceeded = TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true);
-            if (!insertSucceeded)
+            if (TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true))
             {
-                PredictedQueueDel(ammoEntity);
-                Log.Error(
-                    $"Failed to insert ammo {ammoEntity} into non-full {entity}. This is a configuration error. Is the {nameof(BallisticAmmoSelfRefillerComponent)}'s {nameof(BallisticAmmoSelfRefillerComponent.AmmoProto)} incorrect for the {nameof(BallisticAmmoProviderComponent)}'s {nameof(BallisticAmmoProviderComponent.Whitelist)}?");
+                Audio.PlayPredicted(entity.Comp2.RechargeSound, entity, entity);
+                return;
             }
+
+            PredictedQueueDel(ammoEntity);
+            Log.Error(
+                $"Failed to insert ammo {ammoEntity} into non-full {entity}. This is a configuration error. Is the {nameof(BallisticAmmoSelfRefillerComponent)}'s {nameof(BallisticAmmoSelfRefillerComponent.AmmoProto)} incorrect for the {nameof(BallisticAmmoProviderComponent)}'s {nameof(BallisticAmmoProviderComponent.Whitelist)}?");
         }
     }
 }
