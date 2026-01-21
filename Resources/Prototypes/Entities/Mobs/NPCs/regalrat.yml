@@ -291,7 +291,7 @@
       - FootstepSound
   - type: NoSlip
   - type: Insulated
-    coefficient: 0.2 # he don't make da roolz, but he sneaky
+    coefficient: 0.2 # they don't make da roolz, but they sneaky
   - type: MobPrice
     price: 500 # rat wealth
   - type: MobsterAccent
