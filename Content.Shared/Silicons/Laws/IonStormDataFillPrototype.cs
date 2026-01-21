@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -31,27 +30,4 @@ public sealed partial class IonStormDataFill : IonLawSelector
     /// </summary>
     [DataField]
     public ProtoId<IonStormDataFillPrototype> Target { get; private set; }
-
-    public override object? Select(IRobustRandom random, IPrototypeManager proto, IEntityManager entManager, HashSet<string>? seenIds = null)
-    {
-        if (seenIds != null && seenIds.Contains(Target))
-            return null;
-
-        if (!proto.TryIndex(Target, out var target))
-            return null;
-
-        if (target.Targets.Count == 0)
-            return null;
-
-        seenIds ??= new();
-        var wasAdded = seenIds.Add(Target);
-
-        var selector = IonLawSelector.Pick(random, target.Targets);
-        var result = selector.Select(random, proto, entManager, seenIds);
-
-        if (wasAdded)
-            seenIds.Remove(Target);
-
-        return result;
-    }
 }
