@@ -325,7 +325,7 @@ public sealed class MarkingsViewModel
     public void GetMarkingCounts(ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer, out bool isRequired, out int count, out int selected)
     {
         isRequired = false;
-        count = 0;
+        count = -1;
         selected = 0;
 
         if (!_organData.TryGetValue(organ, out var organData))
