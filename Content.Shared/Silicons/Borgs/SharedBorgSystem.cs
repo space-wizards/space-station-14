@@ -208,35 +208,41 @@ public abstract partial class SharedBorgSystem : EntitySystem
         var allInstalledModules = new List<Entity<BorgModuleComponent>>();
         foreach (var moduleEnt in chassis.Comp.ModuleContainer.ContainedEntities)
         {
-            if (!EntityManager.TryGetComponent(moduleEnt, out BorgModuleComponent? moduleComp))
+            if (!_moduleQuery.TryGetComponent(moduleEnt, out var moduleComp))
                 continue;
 
             allInstalledModules.Add((moduleEnt, moduleComp));
         }
 
-        var modulesSatisfyingAnyRequirement = new List<Entity<BorgModuleComponent>>();
-        var modulesGroupedByRequirement = new List<List<Entity<BorgModuleComponent>>>();
+        var modulesSatisfyingAnyRequirement = new HashSet<Entity<BorgModuleComponent>>();
+        var modulesGroupedByRequirement = new List<(LocId, List<Entity<BorgModuleComponent>>)>();
         foreach (var borgModuleRequirement in chassis.Comp.ModuleRequirements)
         {
             var modulesSatisfyingRequirement = allInstalledModules
-                .Where(it => _whitelist.IsWhitelistPass(borgModuleRequirement, it))
+                .Where(it => _whitelist.IsWhitelistPass(borgModuleRequirement.Whitelist, it))
                 .ToList();
 
-            modulesSatisfyingAnyRequirement.AddRange(modulesSatisfyingRequirement);
-            modulesGroupedByRequirement.Add(modulesSatisfyingRequirement);
+            modulesSatisfyingAnyRequirement.UnionWith(modulesSatisfyingRequirement);
+            modulesGroupedByRequirement.Add((borgModuleRequirement.SimpleDescription, modulesSatisfyingRequirement));
         }
 
         // Any "group" which contains exactly one module means that module is strictly required by a requirement.
-        foreach (var module in modulesGroupedByRequirement.Where(it => it.Count == 1).SelectMany(it => it))
+        foreach (var (reason, modules) in modulesGroupedByRequirement)
         {
-            SetBorgModuleRequired(module, true);
-            modulesSatisfyingAnyRequirement.Remove(module);
+            if (modules.Count != 1)
+                continue;
+
+            foreach (var module in modules)
+            {
+                AddBorgModuleRequirement(module, reason);
+                modulesSatisfyingAnyRequirement.Remove(module);
+            }
         }
 
         // Any remaining modules which satisfy some requirement, but weren't made strictly required above are optional.
         foreach (var module in modulesSatisfyingAnyRequirement)
         {
-            SetBorgModuleRequired(module, false);
+            ClearBorgModuleRequirements(module);
         }
     }
 

@@ -104,7 +104,7 @@ public abstract partial class SharedBorgSystem
     /// </summary>
     /// <param name="ent">The borg to modify.</param>
     /// <param name="requirements">The new module requirements.</param>
-    public void SetModuleRequirements(Entity<BorgChassisComponent> ent, EntityWhitelist[] requirements)
+    public void SetModuleRequirements(Entity<BorgChassisComponent> ent, CyborgModuleRequirement[] requirements)
     {
         ent.Comp.ModuleRequirements = requirements;
         Dirty(ent);
@@ -203,12 +203,56 @@ public abstract partial class SharedBorgSystem
     }
 
     /// <summary>
-    /// Sets <see cref="BorgModuleComponent.Required"/>.
+    /// Sets <see cref="BorgModuleComponent.Required"/> to true and adds the given reason to
+    /// <see cref="BorgModuleComponent.RequiredReasons"/>, if it's not null.
     /// </summary>
-    public void SetBorgModuleRequired(Entity<BorgModuleComponent> ent, bool newRequired)
+    /// <seealso cref="GetBorgModuleRequirementReason"/>
+    public void AddBorgModuleRequirement(Entity<BorgModuleComponent> ent, LocId? reason)
     {
-        ent.Comp.Required = newRequired;
+        ent.Comp.Required = true;
+        if (reason is {} r)
+        {
+            ent.Comp.RequiredReasons.Add(r);
+        }
+
         Dirty(ent);
+    }
+
+    /// <summary>
+    /// Sets <seealso cref="BorgModuleComponent.Required"/> to false and clears <seealso cref="BorgModuleComponent.RequiredReasons"/>.
+    /// </summary>
+    public void ClearBorgModuleRequirements(Entity<BorgModuleComponent> ent)
+    {
+        ent.Comp.Required = false;
+        ent.Comp.RequiredReasons.Clear();
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Returns <seealso cref="BorgModuleComponent.RequiredReasons"/>, localized into a single statement.
+    /// Returns null if the module is not required or if <seealso cref="BorgModuleComponent.RequiredReasons"/> is empty.
+    /// </summary>
+    public string? GetBorgModuleRequirementReason(Entity<BorgModuleComponent> ent)
+    {
+        if (!ent.Comp.Required || ent.Comp.RequiredReasons.Count == 0)
+            return null;
+
+        if (ent.Comp.RequiredReasons.Count == 1)
+        {
+            return Loc.GetString(
+                "borg-module-requirement-reason-single",
+                ("module", Loc.GetString(ent.Comp.RequiredReasons.Single()))
+            );
+        }
+
+        var localizedModulesText = string.Join(
+            '\n',
+            ent.Comp.RequiredReasons.Select(it => Loc.GetString(
+                "borg-module-requirement-reason-multi-item",
+                ("module", Loc.GetString(it))
+            ))
+        );
+        return $"{Loc.GetString("borg-module-requirement-reason-multi-header")}\n{localizedModulesText}";
     }
 
     /// <summary>

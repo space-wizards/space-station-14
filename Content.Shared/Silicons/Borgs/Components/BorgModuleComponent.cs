@@ -31,6 +31,12 @@ public sealed partial class BorgModuleComponent : Component
     public bool Required;
 
     /// <summary>
+    /// A user-facing reason why this module is required.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public HashSet<LocId> RequiredReasons = [];
+
+    /// <summary>
     /// List of types of borgs this module fits into.
     /// This only affects examine text. The actual whitelist for modules that can be inserted into a borg is defined in its <see cref="BorgChassisComponent"/>.
     /// </summary>

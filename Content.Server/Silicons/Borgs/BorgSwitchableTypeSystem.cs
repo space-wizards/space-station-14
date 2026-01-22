@@ -55,7 +55,7 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
             {
                 var moduleEntity = Spawn(module);
                 var borgModule = Comp<BorgModuleComponent>(moduleEntity);
-                _borgSystem.SetBorgModuleRequired((moduleEntity, borgModule), true);
+                _borgSystem.AddBorgModuleRequirement((moduleEntity, borgModule), reason: null);
                 _borgSystem.InsertModule(chassisEnt, moduleEntity);
             }
         }
