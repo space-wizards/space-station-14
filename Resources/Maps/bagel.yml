@@ -99105,19 +99105,6 @@ entities:
       - 21612
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 5955
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 12.5,-17.5
-      parent: 60
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 6503
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
   - uid: 5956
     components:
     - type: Transform
@@ -100358,17 +100345,6 @@ entities:
       parent: 60
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 1457
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 11.5,-17.5
-      parent: 60
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 6503
   - uid: 1581
     components:
     - type: Transform
