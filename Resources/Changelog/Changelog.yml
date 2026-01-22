@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Crude Oil
-  changes:
-  - message: Regular syringes no longer have the 1u transfer amount
-    type: Fix
-  id: 8938
-  time: '2025-09-07T14:01:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40197
 - author: FairlySadPanda
   changes:
   - message: Removing displaced markings no longer makes the renderer give up.
@@ -3964,3 +3957,11 @@
   id: 9444
   time: '2026-01-22T16:53:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34052
+- author: Absotively
+  changes:
+  - message: APC power toggle and midi channel window "show track names" button now
+      use switch-style buttons
+    type: Tweak
+  id: 9445
+  time: '2026-01-22T17:46:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39161
