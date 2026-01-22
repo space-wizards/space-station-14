@@ -47,6 +47,10 @@ public sealed partial class FeedbackPopupPrototype : IPrototype
     /// <summary>
     /// Should this feedback be shown when the round ends.
     /// </summary>
+    /// <remarks>
+    /// If this is false popups have to be shown to players by running the <pre>feedback:add</pre> command.<br />
+    /// This allows admins to show popups to only specific people.
+    /// </remarks>
     [DataField]
     public bool ShowRoundEnd = true;
 }
