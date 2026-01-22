@@ -2,13 +2,14 @@
   id: SalvageEquipmentInventory
   startingInventory:
     # Essential equipment
+    ClothingMaskGasExplorer: 2 # Technically clothing, but so Salvage-specific that putting it in the CargoDrobe feels wrong
     FireExtinguisher: 2
-    OreBag: 2
-    Pickaxe: 2
-    RadioHandheld: 2
-    SurvivalKnife: 2
     WeaponGrapplingGun: 2
+    RadioHandheld: 2
+    OreBag: 2 # Technically clothing, but so Salvage-specific that putting it in the CargoDrobe feels wrong
+    Pickaxe: 2
     WeaponProtoKineticAccelerator: 2
+    SurvivalKnife: 2
     # Expendable equipment
     Flare: 8
     # Optional equipment
