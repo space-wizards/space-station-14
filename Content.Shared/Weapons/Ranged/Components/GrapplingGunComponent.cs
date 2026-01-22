@@ -107,6 +107,6 @@ public sealed partial class GrapplingGunComponent : Component
     /// <summary>
     /// Entity UID for the audio stream, which plays <see cref="ReelSound"/>.
     /// </summary>
-    [DataField, ViewVariables]
+    [ViewVariables]
     public EntityUid? Stream;
 }
