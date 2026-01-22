@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Resin windows (exo windows) now inherit Delta-Pressure damage values
-      and pressure thresholds from reinforced windows.
-    type: Fix
-  id: 8934
-  time: '2025-09-06T08:02:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40151
 - author: ScarKy0
   changes:
   - message: The size of the antique laser pistol and appraisal tool have been reverted
@@ -3961,3 +3953,10 @@
   id: 9440
   time: '2026-01-21T04:21:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41961
+- author: sowelipililimute
+  changes:
+  - message: Cat tails are no longer accessible to humans.
+    type: Fix
+  id: 9441
+  time: '2026-01-22T02:43:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42579
