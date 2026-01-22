@@ -117,10 +117,8 @@
   - type: UseDelay
   - type: ContainerContainer
     containers:
-    storagebase: !type:Container
-    ents: []
-    utility_slot: !type:ContainerSlot
-    sidearm_slot: !type:ContainerSlot
+      utility_slot: !type:ContainerSlot
+      sidearm_slot: !type:ContainerSlot
   - type: Item
     size: Ginormous
   - type: ItemSlots
@@ -211,11 +209,9 @@
   - type: UseDelay
   - type: ContainerContainer
     containers:
-    storagebase: !type:Container
-    ents: []
-    upgraded_utility_slot: !type:ContainerSlot
-    upgraded_sidearm_slot: !type:ContainerSlot
-    gun_slot: !type:ContainerSlot
+      upgraded_utility_slot: !type:ContainerSlot
+      upgraded_sidearm_slot: !type:ContainerSlot
+      gun_slot: !type:ContainerSlot
   - type: Item
     size: Ginormous
   - type: ItemSlots
