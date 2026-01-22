@@ -115,6 +115,22 @@
   - type: ExplodeOnTrigger
     keysIn:
     - timer
+  - type: AddComponentsOnTrigger
+    components:
+    - type: PointLight
+      energy: 50
+      radius: 1
+      color: Red
+      falloff: 20
+    - type: LightBehaviour
+      behaviours:
+      - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
+        id: turn_on
+        enabled: true
+        maxDuration: 10
+        startValue: 1.0
+        endValue: 3.0
+
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 400
@@ -176,9 +192,10 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
       - type: GravityWell
-        maxRange: 7
-        baseRadialAcceleration: 5
-        baseTangentialAcceleration: .5
+        maxRange: 5
+        minRange: 0.25
+        baseRadialAcceleration: 25
+        baseTangentialAcceleration: 5
         gravPulsePeriod: 0.03
       - type: SingularityDistortion
         intensity: 150
