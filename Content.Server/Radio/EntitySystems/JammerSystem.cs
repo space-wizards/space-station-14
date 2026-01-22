@@ -15,7 +15,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -27,6 +27,8 @@ public sealed class JammerSystem : SharedJammerSystem
     [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
     [Dependency] private readonly FixtureSystem _fixture = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -38,6 +40,7 @@ public sealed class JammerSystem : SharedJammerSystem
         SubscribeLocalEvent<RadioJammerFixtureComponent, StartCollideEvent>(OnJammerStartCollide);
         SubscribeLocalEvent<RadioJammerFixtureComponent, EndCollideEvent>(OnJammerEndCollide);
         SubscribeLocalEvent<RadioJammerFixtureComponent, ComponentShutdown>(OnFixtureShutdown);
+        SubscribeLocalEvent<RadioJammerFixtureComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<RadioJammerComponent, RadioJammerPowerLevelChangedEvent>(OnPowerLevelChanged);
 
         // Event-based battery charging
@@ -75,8 +78,16 @@ public sealed class JammerSystem : SharedJammerSystem
             var fixtureComp = EnsureComp<RadioJammerFixtureComponent>(ent);
             CreateJammerFixture(ent, GetCurrentRange(ent), fixtureComp);
 
+            // Initialize position tracking for held jammer camera detection
+            if (TryComp<TransformComponent>(ent, out var xform))
+            {
+                UpdateJammedCameras((ent.Owner, fixtureComp, ent.Comp, xform));
+                fixtureComp.LastPosition = _transform.GetMapCoordinates(ent.Owner, xform);
+                fixtureComp.NextUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(0.1);
+            }
+
             // Refresh charge rate to start draining battery
-            if (_powerCell.TryGetBatteryFromSlot(ent, out var activeBattery))
+            if (_powerCell.TryGetBatteryFromSlot(ent.Owner, out var activeBattery))
                 _battery.RefreshChargeRate(activeBattery.Value.AsNullable());
         }
         else
@@ -93,7 +104,7 @@ public sealed class JammerSystem : SharedJammerSystem
             RemCompDeferred<DeviceNetworkJammerComponent>(ent);
 
             // Refresh charge rate to stop draining battery
-            if (_powerCell.TryGetBatteryFromSlot(ent, out var inactiveBattery))
+            if (_powerCell.TryGetBatteryFromSlot(ent.Owner, out var inactiveBattery))
                 _battery.RefreshChargeRate(inactiveBattery.Value.AsNullable());
         }
         var state = Loc.GetString(activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
@@ -248,6 +259,101 @@ public sealed class JammerSystem : SharedJammerSystem
         DestroyJammerFixture(ent.Owner, ent.Comp);
     }
 
+    private void OnParentChanged(Entity<RadioJammerFixtureComponent> ent, ref EntParentChangedMessage args)
+    {
+        // When picked up or dropped, update jammed cameras immediately
+        if (!TryComp<RadioJammerComponent>(ent, out var jammer) ||
+            !TryComp<TransformComponent>(ent, out var xform))
+            return;
+
+        UpdateJammedCameras((ent.Owner, ent.Comp, jammer, xform));
+        ent.Comp.LastPosition = _transform.GetMapCoordinates(ent.Owner, xform);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = _timing.CurTime;
+        var query = EntityQueryEnumerator<RadioJammerFixtureComponent, RadioJammerComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var fixture, out var jammer, out var xform))
+        {
+            // Throttled position checking - only update every 0.1 seconds
+            if (curTime < fixture.NextUpdateTime)
+                continue;
+
+            var currentPos = _transform.GetMapCoordinates(uid, xform);
+
+            // Check if position or map changed - don't bother updating if it hasn't moved
+            if (fixture.LastPosition == null ||
+                fixture.LastPosition.Value.MapId != currentPos.MapId ||
+                !fixture.LastPosition.Value.Position.EqualsApprox(currentPos.Position, 0.01f))
+            {
+                UpdateJammedCameras((uid, fixture, jammer, xform));
+                fixture.LastPosition = currentPos;
+            }
+
+            // Schedule next update check (0.1 second throttle)
+            fixture.NextUpdateTime = curTime + TimeSpan.FromSeconds(0.1);
+        }
+    }
+
+    /// <summary>
+    /// Updates which cameras are jammed based on current position using EntityLookup.
+    /// This handles the case when the jammer is held/carried and collision doesn't work.
+    /// </summary>
+    private void UpdateJammedCameras(Entity<RadioJammerFixtureComponent, RadioJammerComponent, TransformComponent> jammer)
+    {
+        var range = GetCurrentRange((jammer.Owner, jammer.Comp2));
+        var jammerPos = _transform.GetMapCoordinates(jammer.Owner, jammer.Comp3);
+
+        // Find all cameras in range using EntityLookup
+        var camerasInRange = new HashSet<EntityUid>();
+        foreach (var camera in _lookup.GetEntitiesInRange<StationAiVisionComponent>(jammerPos, range))
+        {
+            camerasInRange.Add(camera.Owner);
+
+            // Add jammed marker to camera if not already jammed by this jammer
+            if (!jammer.Comp1.JammedCameras.Contains(camera.Owner))
+            {
+                var jammedComp = EnsureComp<AiCameraJammedComponent>(camera);
+                jammedComp.JammingSources.Add(jammer.Owner);
+                Dirty(camera.Owner, jammedComp);
+            }
+        }
+
+        // Restore cameras that are no longer in range
+        var camerasToRestore = new List<EntityUid>();
+        foreach (var previousCamera in jammer.Comp1.JammedCameras)
+        {
+            if (!camerasInRange.Contains(previousCamera))
+            {
+                camerasToRestore.Add(previousCamera);
+            }
+        }
+
+        foreach (var camera in camerasToRestore)
+        {
+            if (TryComp<AiCameraJammedComponent>(camera, out var jammedComp))
+            {
+                jammedComp.JammingSources.Remove(jammer.Owner);
+
+                if (jammedComp.JammingSources.Count == 0)
+                    RemComp<AiCameraJammedComponent>(camera);
+                else
+                    Dirty(camera, jammedComp);
+            }
+        }
+
+        // Update tracked cameras
+        jammer.Comp1.JammedCameras.Clear();
+        foreach (var camera in camerasInRange)
+        {
+            jammer.Comp1.JammedCameras.Add(camera);
+        }
+    }
+
     private void OnPowerLevelChanged(Entity<RadioJammerComponent> ent, ref RadioJammerPowerLevelChangedEvent args)
     {
         // Recreate fixture with new range
@@ -255,6 +361,13 @@ public sealed class JammerSystem : SharedJammerSystem
         {
             DestroyJammerFixture(ent, fixtureComp);
             CreateJammerFixture(ent, GetCurrentRange(ent), fixtureComp);
+
+            // Update jammed cameras with new range
+            if (TryComp<TransformComponent>(ent, out var xform))
+            {
+                UpdateJammedCameras((ent.Owner, fixtureComp, ent.Comp, xform));
+                fixtureComp.LastPosition = _transform.GetMapCoordinates(ent.Owner, xform);
+            }
         }
 
         // Update DeviceNetworkJammer range
@@ -265,7 +378,7 @@ public sealed class JammerSystem : SharedJammerSystem
 
         // Refresh charge rate since wattage changed
         if (HasComp<ActiveRadioJammerComponent>(ent) &&
-            _powerCell.TryGetBatteryFromSlot(ent, out var battery))
+            _powerCell.TryGetBatteryFromSlot(ent.Owner, out var battery))
         {
             _battery.RefreshChargeRate(battery.Value.AsNullable());
         }
@@ -293,7 +406,7 @@ public sealed class JammerSystem : SharedJammerSystem
             RemComp<RadioJammerFixtureComponent>(ent);
         }
 
-        ChangeLEDState(ent, false);
+        ChangeLEDState(ent.Owner, false);
         RemCompDeferred<ActiveRadioJammerComponent>(ent);
         RemCompDeferred<DeviceNetworkJammerComponent>(ent);
     }
@@ -308,6 +421,6 @@ public sealed class JammerSystem : SharedJammerSystem
             < 0.15f => RadioJammerChargeLevel.Low,
             _ => RadioJammerChargeLevel.Medium,
         };
-        ChangeChargeLevel(ent, chargeLevel);
+        ChangeChargeLevel(ent.Owner, chargeLevel);
     }
 }

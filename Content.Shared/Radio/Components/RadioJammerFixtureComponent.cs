@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Radio.Components;
@@ -24,4 +25,18 @@ public sealed partial class RadioJammerFixtureComponent : Component
     /// </summary>
     [ViewVariables]
     public readonly HashSet<EntityUid> JammedCameras = new();
+
+    /// <summary>
+    /// Last known map coordinates of the jammer.
+    /// Used to detect position changes when jammer is being held/carried.
+    /// </summary>
+    [ViewVariables]
+    public MapCoordinates? LastPosition;
+
+    /// <summary>
+    /// Next time to check for position changes and update jammed cameras.
+    /// Used to throttle queries
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan NextUpdateTime;
 }
