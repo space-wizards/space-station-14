@@ -115,22 +115,6 @@
   - type: ExplodeOnTrigger
     keysIn:
     - timer
-  - type: AddComponentsOnTrigger
-    components:
-    - type: PointLight
-      energy: 50
-      radius: 1
-      color: Red
-      falloff: 20
-    - type: LightBehaviour
-      behaviours:
-      - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
-        id: turn_on
-        enabled: true
-        maxDuration: 10
-        startValue: 1.0
-        endValue: 3.0
-
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 400
@@ -147,6 +131,24 @@
         volume: 30
     initialBeepDelay: 0
     beepInterval: 16
+  - type: LightBehaviorOnTrigger
+    behavior: activate
+  - type: PointLight
+    energy: 50
+    radius: 0
+    color: Red
+    softness: 0
+    falloff: 20
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 360
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
+      id: activate
+      maxDuration: 5
+      startValue: 1
+      endValue: 2
 
 
 - type: entity
