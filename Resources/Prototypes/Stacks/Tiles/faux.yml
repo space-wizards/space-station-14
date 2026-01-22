@@ -50,6 +50,12 @@
 
 - type: stack
   parent: BaseTileStack
+  id: FloorTileAstroAsteroidSandBorderless
+  name: stack-asteroid-astro-sand-floor-borderless
+  spawn: FloorTileItemAstroAsteroidSandBorderless
+
+- type: stack
+  parent: BaseTileStack
   id: FloorTileDesertAstroSand
   name: stack-desert-astro-sand-floor
   spawn: FloorTileItemDesertAstroSand
