@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Banditoz
-  changes:
-  - message: You can cross chasms with the grapple gun.
-    type: Add
-  id: 8941
-  time: '2025-09-08T00:34:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39983
 - author: Orbitsystem
   changes:
   - message: Diona sap can now trigger artifact nodes that require blood.
@@ -3965,3 +3958,10 @@
   id: 9447
   time: '2026-01-22T18:43:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42571
+- author: sowelipililimute
+  changes:
+  - message: Arachnids can now eat raw meat again.
+    type: Fix
+  id: 9448
+  time: '2026-01-22T21:14:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42529
