@@ -38,7 +38,7 @@ public sealed partial class GrapplingGunComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float RopeFullyReeledMargin = 0.22f;
-    
+
     /// <summary>
     /// Minimum length for the grappling hook's rope
     /// </summary>
@@ -50,7 +50,7 @@ public sealed partial class GrapplingGunComponent : Component
     /// If this is too large, then the rope gets culled out of PVS, causing issues
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float RopeMaxLength = 10f;
+    public float? RopeMaxLength;
 
     /// <summary>
     /// Stiffness of the rope, in N/m
