@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Some jumpsuits may now be folded to give them an alternate look.
-    type: Add
-  id: 8937
-  time: '2025-09-06T17:55:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31213
 - author: Crude Oil
   changes:
   - message: Regular syringes no longer have the 1u transfer amount
@@ -3964,3 +3957,10 @@
   id: 9443
   time: '2026-01-22T09:59:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42460
+- author: VlaDOS1408
+  changes:
+  - message: The cargo request console UI has been redesigned.
+    type: Tweak
+  id: 9444
+  time: '2026-01-22T16:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34052
