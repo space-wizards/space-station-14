@@ -39,7 +39,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
         float tempDegreeResolution = (maxInput - minInput) / tempResolution;
 
-        for (byte i = 0; i < tempResolution; i++)
+        for (byte i = 0; i <= tempResolution; i++)
         {
             _colorCache[i] = CalculateColor(i, tempDegreeResolution);
         }

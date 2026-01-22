@@ -19,7 +19,6 @@ namespace Content.Client.Atmos.EntitySystems
         [Dependency] private readonly SharedTransformSystem _xformSys = default!;
 
         private GasTileOverlay _overlay = default!;
-        private GasTileTemperatureOverlay _temperatureOverlay = default!;
 
         public override void Initialize()
         {
@@ -29,16 +28,12 @@ namespace Content.Client.Atmos.EntitySystems
 
             _overlay = new GasTileOverlay(this, EntityManager, _resourceCache, ProtoMan, _spriteSys, _xformSys);
             _overlayMan.AddOverlay(_overlay);
-
-            _temperatureOverlay = new GasTileTemperatureOverlay();
-            _overlayMan.AddOverlay(_temperatureOverlay);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
             _overlayMan.RemoveOverlay<GasTileOverlay>();
-            _overlayMan.RemoveOverlay<GasTileTemperatureOverlay>();
         }
 
         private void OnHandleState(EntityUid gridUid, GasTileOverlayComponent comp, ref ComponentHandleState args)
