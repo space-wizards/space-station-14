@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: Derelict Mediborgs can determine solution contents and see mob health
-      in their HUD, like their non-derelict counterparts.
-    type: Fix
-  id: 8943
-  time: '2025-09-09T02:44:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40206
 - author: Kittygyat
   changes:
   - message: Changed the Galoshes description to be more descriptive of what they
@@ -3965,3 +3957,16 @@
   id: 9449
   time: '2026-01-22T21:47:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42534
+- author: Bhijn and Myr
+  changes:
+  - message: Grappling hooks have been reworked. They are now physics-driven, meaning
+      that they use actual physical forces to retract.
+    type: Tweak
+  - message: The majority of known exploits of grappling hooks have been fixed as
+      a result. You can no longer clip into walls via grappling hook, and you can
+      no longer teleport your friends across the station by having them hook onto
+      an object and stay still.
+    type: Fix
+  id: 9450
+  time: '2026-01-22T22:30:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42409
