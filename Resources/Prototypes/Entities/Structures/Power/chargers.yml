@@ -204,6 +204,9 @@
   name: wall recharger
   description: A compact wall-mounted recharger. It can only recharge electronic devices and has no space for power cells.
   components:
+  - type: Transform
+    anchored: true
+    noRot: false
   - type: Sprite
     sprite: Structures/Power/wall_recharger.rsi
     layers:
