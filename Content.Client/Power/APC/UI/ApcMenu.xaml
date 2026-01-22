@@ -1,4 +1,4 @@
-﻿<controls:FancyWindow  xmlns="https://spacestation14.io"
+<controls:FancyWindow  xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
@@ -10,7 +10,7 @@
         <BoxContainer Margin="0 5 10 10" Orientation="Vertical">
             <BoxContainer Margin="0" Orientation="Horizontal">
                 <!-- Sprite View -->
-                <PanelContainer Margin="0" StyleClasses="Inset" VerticalAlignment="Center">
+                <PanelContainer Margin="0" StyleClasses="BackgroundPanelDark" VerticalAlignment="Center">
                     <SpriteView Name="EntityView" Scale="2 2" SetSize="64 64" OverrideDirection="South" />
                 </PanelContainer>
                 <!-- Data -->
@@ -19,7 +19,7 @@
                         <!-- Power On/Off -->
                         <Label Text="{Loc 'apc-menu-breaker-label'}" HorizontalExpand="True"
                                 StyleClasses="highlight" MinWidth="120"/>
-                        <BoxContainer Orientation="Horizontal" MinWidth="90">
+                        <BoxContainer Orientation="Horizontal" MinWidth="150">
                             <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}" HorizontalExpand="True" ToggleMode="True"/>
                         </BoxContainer>
                         <!--Charging Status-->

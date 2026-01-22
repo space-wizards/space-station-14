@@ -40,7 +40,14 @@ namespace Content.Client.Power.APC.UI
 
             if (PowerLabel != null)
             {
-                PowerLabel.Text = Loc.GetString("apc-menu-power-state-label-text", ("power", castState.Power));
+                if (castState.Tripped)
+                {
+                    PowerLabel.Text = Loc.GetString("apc-menu-power-state-label-tripped");
+                }
+                else
+                {
+                    PowerLabel.Text = Loc.GetString("apc-menu-power-state-label-text", ("power", castState.Power), ("maxLoad", castState.MaxLoad));
+                }
             }
 
             if (ExternalPowerStateLabel != null)

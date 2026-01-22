@@ -98,7 +98,10 @@
     canCreateVacuum: false
     deleteAfterExplosion: false
   - type: ApcPowerReceiver
-    powerLoad: 400
+    powerLoad: 5
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 1000
   - type: Machine
     board: MicrowaveMachineCircuitboard
   - type: ContainerContainer
@@ -148,7 +151,7 @@
 
 - type: entity
   id: SyndicateMicrowave
-  parent: KitchenMicrowave
+  parent: [ KitchenMicrowave, BaseSyndicateContraband ]
   name: donk co. microwave
   description: So advanced, it can cook donk-pockets in a mere 2.5 seconds!
   components:

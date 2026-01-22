@@ -188,7 +188,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         args.Handled = true;
 
         if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
-            && charges.LastCharges < targetGroup.Cost)
+            && Charges.GetCurrentCharges((args.Used, charges)) < targetGroup.Cost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupClient(msg, args.User, args.User);
