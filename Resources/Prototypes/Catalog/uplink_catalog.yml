@@ -2193,7 +2193,7 @@
     - Chef
 
 - type: listing
-  id: UplinkCaneBladeLibrarian
+  id: UplinkCaneBlade
   name: uplink-cane-blade-name
   description: uplink-cane-blade-desc
   icon: { sprite:  Objects/Weapons/Melee/cane.rsi, state: cane}
@@ -2209,25 +2209,6 @@
   - !type:BuyerJobCondition
     whitelist:
     - Librarian
-
-- type: listing
-  id: UplinkCaneBladeMobility
-  name: uplink-cane-blade-name
-  description: uplink-cane-blade-desc
-  icon: { sprite:  Objects/Weapons/Melee/cane.rsi, state: cane}
-  productEntity: CaneSheathFilled
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 2
-  cost:
-    Telecrystal: 3
-  categories:
-  - UplinkJob
-  conditions:
-  - !type:BuyerWhitelistCondition
-    whitelist:
-      components:
-      - ImpairedMobility
 
 - type: listing
   id: UplinkCombatBakery
