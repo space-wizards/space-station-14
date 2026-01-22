@@ -208,7 +208,7 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public IEnumerable<string> GuidebookReagentEffectsDescription(IPrototypeManager prototype, IEntitySystemManager entSys, IEnumerable<EntityEffect> effects, FixedPoint2? metabolism = null)
+        public IEnumerable<string> GuidebookReagentEffectsDescription(IPrototypeManager prototype, IEntitySystemManager entSys, IEnumerable<EntityEffect> effects, FixedPoint2 metabolism)
         {
             return effects.Select(x => GuidebookReagentEffectDescription(prototype, entSys, x, metabolism))
                 .Where(x => x is not null)
@@ -216,12 +216,12 @@ namespace Content.Shared.Chemistry.Reagent
                 .ToArray();
         }
 
-        public string? GuidebookReagentEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys, EntityEffect effect, FixedPoint2? metabolism)
+        public string? GuidebookReagentEffectDescription(IPrototypeManager prototype, IEntitySystemManager entSys, EntityEffect effect, FixedPoint2 metabolism)
         {
             if (effect.EntityEffectGuidebookText(prototype, entSys) is not { } description)
                 return null;
 
-            var quantity = metabolism == null ? 0f : (double)(effect.MinScale * metabolism);
+            var quantity = (double)(effect.MinScale * metabolism);
 
             return Loc.GetString(
                 "guidebook-reagent-effect-description",
@@ -256,7 +256,7 @@ namespace Content.Shared.Chemistry.Reagent
             if (proto.PlantMetabolisms.Count > 0)
             {
                 PlantMetabolisms =
-                    new List<string>(proto.GuidebookReagentEffectsDescription(prototype, entSys, proto.PlantMetabolisms));
+                    new List<string>(proto.GuidebookReagentEffectsDescription(prototype, entSys, proto.PlantMetabolisms, FixedPoint2.New(1f)));
             }
         }
     }

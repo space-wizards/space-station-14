@@ -1,10 +1,8 @@
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
-using Content.Server.Maps;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Maps;
-using Robust.Shared.Map;
+using Content.Shared.Atmos.Piping.Components;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -175,5 +173,22 @@ public partial class AtmosphereSystem
             return;
 
         _tile.PryTile(tileRef);
+    }
+
+    /// <summary>
+    /// Notifies all subscribing entities on a particular tile that the tile has changed.
+    /// Atmos devices may store references to tiles, so this is used to properly resync devices
+    /// after a significant atmos change on that tile, for example a tile getting a new <see cref="GasMixture"/>.
+    /// </summary>
+    /// <param name="ent">The grid atmosphere entity.</param>
+    /// <param name="tile">The tile to check for devices on.</param>
+    private void NotifyDeviceTileChanged(Entity<GridAtmosphereComponent, MapGridComponent> ent, Vector2i tile)
+    {
+        var inTile = _mapSystem.GetAnchoredEntities(ent.Owner, ent.Comp2, tile);
+        var ev = new AtmosDeviceTileChangedEvent();
+        foreach (var uid in inTile)
+        {
+            RaiseLocalEvent(uid, ref ev);
+        }
     }
 }

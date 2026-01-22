@@ -1,40 +1,41 @@
 - type: entity
-  name: Perma Escape Crate Spawner
-  id: CratePermaEscapeSpawner
   parent: CrateEmptySpawner
+  id: CratePermaEscapeSpawner
+  name: Perma Escape Crate Spawner
   components:
-  - type: RandomSpawner
-    prototypes:
-    # Please note any duplicates & alphabetize <3
-      - CrateEngineeringMiniJetpack
-      - CratePermaEscapeBureaucracy
-      - CratePermaEscapeEVA
-      - CratePermaEscapeGiftsFromSyndicate
-      - CratePermaEscapeGun
-      - CratePermaEscapeLights
-      - CratePermaEscapeMerc
-      - CrateServiceCustomSmokable
-      - CrateTrashCartFilled
-      - CratePermaEscapeComs # x2
-      - CratePermaEscapeComs
-      - CratePermaEscapeDigging # x2
-      - CratePermaEscapeDigging
-      - CratePermaEscapeMats #x2
-      - CratePermaEscapeMats
-      - CratePermaEscapeTowercap # x2
-      - CratePermaEscapeTowercap
-      - ClosetMaintenanceFilledRandom # x3
-      - ClosetMaintenanceFilledRandom
-      - ClosetMaintenanceFilledRandom
-    rarePrototypes:
-      - MobTick # These need to be killable by one dude with a shovel.
-    rareChance: .30
-    chance: 1
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobTick # These need to be killable by one dude with a shovel.
+        weight: 0.3
+      - !type:GroupSelector
+        weight: 0.7
+        children:
+        # Please alphabetize <3
+        - id: ClosetMaintenanceFilledRandom
+          weight: 3
+        - id: CrateEngineeringMiniJetpack
+        - id: CratePermaEscapeBureaucracy
+        - id: CratePermaEscapeComs
+          weight: 2
+        - id: CratePermaEscapeDigging
+          weight: 2
+        - id: CratePermaEscapeEVA
+        - id: CratePermaEscapeGiftsFromSyndicate
+        - id: CratePermaEscapeGun
+        - id: CratePermaEscapeLights
+        - id: CratePermaEscapeMats
+          weight: 2
+        - id: CratePermaEscapeMerc
+        - id: CratePermaEscapeTowercap
+          weight: 2
+        - id: CrateTrashCartFilled
+        - id: CrateServiceCustomSmokable
     offset: 0.0
 
 - type: entity
-  id: CratePermaEscapeDigging
   parent: CrateGenericSteel
+  id: CratePermaEscapeDigging
   suffix: Digging
   components:
   - type: EntityTableContainerFill
@@ -58,9 +59,9 @@
           prob: 0.05
 
 - type: entity
-  id: CratePermaEscapeEVA
   parent: CrateGenericSteel
-  suffix: EVAs
+  id: CratePermaEscapeEVA
+  suffix: EVA
   components:
   - type: EntityTableContainerFill
     containers:
@@ -88,8 +89,8 @@
           prob: 0.05
 
 - type: entity
-  id: CratePermaEscapeGun
   parent: CrateGenericSteel
+  id: CratePermaEscapeGun
   suffix: Gun
   components:
   - type: EntityTableContainerFill
@@ -112,9 +113,9 @@
           weight: 2
 
 - type: entity
-  id: CratePermaEscapeBureaucracy
   parent: CrateGenericSteel
-  suffix: Writing
+  id: CratePermaEscapeBureaucracy
+  suffix: Bureaucracy
   components:
   - type: EntityTableContainerFill
     containers:
@@ -145,8 +146,8 @@
         - id: PersonalAI
 
 - type: entity
-  id: CratePermaEscapeLights
   parent: CrateGenericSteel
+  id: CratePermaEscapeLights
   suffix: Glowsticks
   components:
   - type: EntityTableContainerFill
@@ -159,11 +160,11 @@
           prob: 0.20
         - id: GlowstickBlue
           prob: 0.05
-        - id: GlowstickBase
+        - id: GlowstickGreen
           prob: 0.50
-        - id: GlowstickBase
+        - id: GlowstickGreen
           prob: 0.20
-        - id: GlowstickBase
+        - id: GlowstickGreen
           prob: 0.05
         - id: GlowstickPurple
           prob: 0.50
@@ -185,9 +186,9 @@
           prob: 0.05
 
 - type: entity
-  id: CratePermaEscapeMats
   parent: CrateGenericSteel
-  suffix: Mats
+  id: CratePermaEscapeMats
+  suffix: Materials
   components:
   - type: EntityTableContainerFill
     containers:
@@ -198,9 +199,9 @@
          - id: PartRodMetal
 
 - type: entity
-  id: CratePermaEscapeGiftsFromSyndicate
   parent: CrateGenericSteel
-  suffix: Syndi Gifts
+  id: CratePermaEscapeGiftsFromSyndicate
+  suffix: Syndicate gifts
   components:
   - type: EntityTableContainerFill
     containers:
@@ -240,9 +241,9 @@
           prob: 0.005
 
 - type: entity
-  id: CratePermaEscapeMerc
   parent: CrateGenericSteel
-  suffix: Merc
+  id: CratePermaEscapeMerc
+  suffix: Mercenary
   components:
   - type: EntityTableContainerFill
     containers:
@@ -273,9 +274,9 @@
           prob: 0.05
 
 - type: entity
-  id: CratePermaEscapeComs
   parent: CrateGenericSteel
-  suffix: Coms
+  id: CratePermaEscapeComs
+  suffix: Comms
   components:
   - type: EntityTableContainerFill
     containers:
@@ -305,8 +306,8 @@
           prob: 0.01
 
 - type: entity
-  id: CratePermaEscapeTowercap
   parent: CrateGenericSteel
+  id: CratePermaEscapeTowercap
   suffix: Towercap
   components:
   - type: EntityTableContainerFill

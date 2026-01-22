@@ -1,5 +1,24 @@
 - type: entity
-  parent: [BaseItem, BaseGrandTheftContraband]
+  abstract: true
+  parent: BaseItem
+  id: BaseHypospray
+  components:
+  - type: Injector
+    solutionName: hypospray
+    ignoreClosed: false
+    activeModeProtoId: HyposprayDynamicMode
+    allowedModes:
+    - HyposprayDynamicMode
+    - HyposprayInjectMode
+  - type: Spillable
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+    exactVolume: true
+  - type: Appearance
+
+- type: entity
+  parent: [BaseHypospray, BaseGrandTheftContraband]
   id: Hypospray
   name: hypospray
   description: A sterile injector for rapid administration of drugs to patients.
@@ -7,11 +26,11 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
     layers:
-      - state: hypo
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: hypo_fill1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: hypo
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: hypo_fill1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: SolutionContainerManager
@@ -20,11 +39,6 @@
         maxVol: 30
   - type: RefillableSolution
     solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-    exactVolume: true
-  - type: Hypospray
-    onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -34,14 +48,13 @@
     - HighRiskItem
   - type: StealTarget
     stealGroup: Hypospray
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: hypo_fill
     solutionName: hypospray
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseHypospray, BaseSyndicateContraband]
   id: SyndiHypo
   name: gorlex hypospray
   description: A sterile injector for rapid administration of drugs. Reverse-engineered from Nanotrasen designs, Cybersun produces these in limited quantities for Gorlex Marauders' corpsmen.
@@ -60,30 +73,25 @@
     solutions:
       hypospray:
         maxVol: 20
-  - type: RefillableSolution
-    solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-    exactVolume: true
-  - type: Hypospray
-    onlyAffectsMobs: false
-  - type: UseDelay
-    delay: 0.5
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: hypo_fill
     solutionName: hypospray
 
 - type: entity
-  parent: BaseItem
+  parent: BaseHypospray
   id: BorgHypo
   name: borghypo
   description: A sterile injector for rapid administration of drugs to patients. This integrated model is specialized for use by medical borgs.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
-    state: borghypo
+    layers:
+    - state: borghypo
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: borghypo_fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: SolutionContainerManager
@@ -92,12 +100,74 @@
         maxVol: 10
   - type: RefillableSolution
     solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-  - type: Hypospray
-    onlyAffectsMobs: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: borghypo_fill
+    solutionName: hypospray
   - type: UseDelay
     delay: 0.5
+
+- type: entity
+  parent: BaseHypospray
+  id: JetInjector
+  name: jet injector
+  description: A sterile injector for convenient administration of drugs to patients.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/jetinjector.rsi
+    layers:
+    - state: jetinjector_base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: jetinjector_filled1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Item
+    sprite: Objects/Specific/Medical/jetinjector.rsi
+  - type: UseDelay
+    delay: 1.5
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 15
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: jetinjector_filled
+    solutionName: hypospray
+  - type: Injector
+    solutionName: hypospray
+    currentTransferAmount: null # Inject everything on injection.
+    activeModeProtoId: JetInjectorDynamicMode
+    allowedModes:
+    - JetInjectorDynamicMode
+    - JetInjectorInjectMode
+
+- type: entity
+  parent: JetInjector
+  id: AdvancedJetInjector
+  name: advanced jet injector
+  description: A pristine, fashionable, high quality injector. Allows for a faster injection, with a slightly larger capacity.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/advanced_jetinjector.rsi
+    layers:
+    - state: jetinjector_base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: jetinjector_filled1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Item
+    sprite: Objects/Specific/Medical/advanced_jetinjector.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 20
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+  - type: Injector
+    activeModeProtoId: AdvancedJetInjectorDynamicMode
+    allowedModes:
+    - AdvancedJetInjectorDynamicMode
+    - AdvancedJetInjectorInjectMode
 
 - type: entity
   parent: SyndiHypo
@@ -114,7 +184,7 @@
       delay: 0.0
 
 - type: entity
-  parent: BaseItem
+  parent: BaseHypospray
   id: ChemicalMedipen
   name: chemical medipen
   description: A single-dose, non-refillable medipen.
@@ -144,13 +214,12 @@
         maxVol: 15
   - type: ExaminableSolution
     solution: pen
-    exactVolume: true
-  - type: Hypospray
+  - type: Injector
     solutionName: pen
-    transferAmount: 15
-    onlyAffectsMobs: false
-    injectOnly: true
-  - type: Appearance
+    currentTransferAmount: null
+    activeModeProtoId: HyposprayInjectMode
+    allowedModes:
+    - HyposprayInjectMode
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -253,11 +322,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: bicpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 20
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -295,11 +359,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: dermpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 20
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -337,11 +396,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: arithpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 20
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -379,11 +433,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: punctpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 15
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -421,11 +470,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: pyrapen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 20
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -463,11 +507,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: dexpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 40
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -501,16 +540,10 @@
     layers:
     - state: hypovolemic
       map: [ "enum.SolutionContainerLayers.Fill" ]
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: hypovolemic_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 30
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -525,7 +558,7 @@
   parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: Stimpack
   name: hyperzine injector
-  description: A chemical injector containing a large shot of pure hyperzine. For when it's time to throw down. Effects last for about 30 seconds.
+  description: A chemical injector containing a large shot of pure hyperzine. For when it's time to throw down. Effects last for about 60 seconds.
   components:
   - type: Item
     inhandVisuals:
@@ -557,11 +590,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: stimpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 30
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: StaticPrice
     price: 1500
 
@@ -569,7 +597,7 @@
   parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: StimpackMini
   name: hyperzine microinjector
-  description: A chemical microinjector containing a small shot of pure hyperzine. Effects last for about 15 seconds.
+  description: A chemical microinjector containing a small shot of pure hyperzine. Effects last for about 30 seconds.
   components:
   - type: Item
     inhandVisuals:
@@ -640,11 +668,6 @@
           Quantity: 25
         - ReagentId: TranexamicAcid
           Quantity: 5
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 30
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: StaticPrice
     price: 1500
 
@@ -659,15 +682,18 @@
         maxVol: 10
   - type: RefillableSolution
     solution: hypospray
-    refillTime: 1.25
+    refillTime: 0.75
     maxRefill: 5
   - type: ExaminableSolution
     solution: hypospray
     heldOnly: true # Allow examination only when held in hand.
     exactVolume: true
-  - type: Hypospray
-    onlyAffectsMobs: false
-    drawTime: 1.25
+  - type: Injector
+    solutionName: hypospray
+    activeModeProtoId: HypopenDynamicMode
+    allowedModes:
+    - HyposprayInjectMode
+    - HypopenDynamicMode
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
@@ -714,8 +740,3 @@
         reagents:
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 60
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 1
-    onlyAffectsMobs: false
-    injectOnly: true

@@ -1,0 +1,259 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Arachnid
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ ArachnidAppendagesDefault ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: true
+      default: [ ArachnidCheliceraeDownwards ]
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceArachnid
+  name: arachnid appearance
+  components:
+  - type: Inventory
+    templateId: arachnid
+    speciesId: arachnid
+  - type: InitialBody
+    organs:
+      Torso: OrganArachnidTorso
+      Head: OrganArachnidHead
+      ArmLeft: OrganArachnidArmLeft
+      ArmRight: OrganArachnidArmRight
+      HandRight: OrganArachnidHandRight
+      HandLeft: OrganArachnidHandLeft
+      LegLeft: OrganArachnidLegLeft
+      LegRight: OrganArachnidLegRight
+      FootLeft: OrganArachnidFootLeft
+      FootRight: OrganArachnidFootRight
+      Brain: OrganArachnidBrain
+      Eyes: OrganArachnidEyes
+      Tongue: OrganArachnidTongue
+      Appendix: OrganArachnidAppendix
+      Ears: OrganArachnidEars
+      Lungs: OrganArachnidLungs
+      Heart: OrganArachnidHeart
+      Stomach: OrganArachnidStomach
+      Liver: OrganArachnidLiver
+      Kidneys: OrganArachnidKidneys
+  - type: HumanoidProfile
+    species: Arachnid
+
+- type: entity
+  parent:
+  - AppearanceArachnid
+  - BaseSpeciesMobOrganic
+  id: MobArachnid
+  name: Urist McWebs
+  components:
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.5 # This makes space and crit more lethal to arachnids.
+    damageRecovery:
+      types:
+        Asphyxiation: -0.5
+  - type: Sericulture
+    productionLength: 2
+    entityProduced: MaterialWebSilk1
+    hungerCost: 4 # Should total to 25 total silk on full hunger
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - SpiderCraft
+    - AnomalyHost
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 5
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch]
+      effects:
+      - !type:SpawnEntityInInventory
+        slot: head
+        entity: WaterDropletHat
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPie
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 300
+  - type: MeleeWeapon
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 5
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#162581"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
+    allowedEmotes: ['Click', 'Chitter']
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
+  - type: TypingIndicator
+    proto: spider
+
+- type: entity
+  parent: OrganBase
+  id: OrganArachnid
+  abstract: true
+  suffix: Arachnid
+
+- type: entity
+  id: OrganArachnidMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Arachnid ]
+
+- type: entity
+  parent: OrganArachnid
+  id: OrganArachnidInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Arachnid/organs.rsi
+
+- type: entity
+  id: OrganArachnidVisual
+  abstract: true
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Arachnid/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Arachnid
+
+- type: entity
+  parent: [ OrganArachnid, OrganArachnidVisual ]
+  id: OrganArachnidExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Arachnid/parts.rsi
+
+- type: entity
+  parent: [ OrganBaseTorso, OrganArachnidExternal ]
+  id: OrganArachnidTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganArachnidExternal ]
+  id: OrganArachnidHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganArachnidExternal ]
+  id: OrganArachnidArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganArachnidExternal ]
+  id: OrganArachnidArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganArachnidExternal ]
+  id: OrganArachnidHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganArachnidExternal ]
+  id: OrganArachnidHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganArachnidExternal ]
+  id: OrganArachnidLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganArachnidExternal ]
+  id: OrganArachnidLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganArachnidExternal ]
+  id: OrganArachnidFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganArachnidExternal ]
+  id: OrganArachnidFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganArachnidInternal ]
+  id: OrganArachnidBrain
+
+- type: entity
+  parent: [ OrganArachnidVisual, OrganBaseEyes, OrganArachnidInternal ]
+  id: OrganArachnidEyes
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganArachnidInternal ]
+  id: OrganArachnidTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganSpriteHumanInternal, OrganArachnidInternal ]
+  id: OrganArachnidAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganSpriteHumanInternal, OrganArachnidInternal ]
+  id: OrganArachnidEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganArachnidInternal, OrganArachnidMetabolizer ]
+  id: OrganArachnidLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganArachnidInternal, OrganArachnidMetabolizer ]
+  id: OrganArachnidHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganArachnidInternal, OrganArachnidMetabolizer ]
+  id: OrganArachnidStomach
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganArachnidInternal, OrganArachnidMetabolizer ]
+  id: OrganArachnidLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganArachnidInternal, OrganArachnidMetabolizer ]
+  id: OrganArachnidKidneys

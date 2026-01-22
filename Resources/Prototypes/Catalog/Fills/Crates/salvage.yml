@@ -1,9 +1,9 @@
 - type: entity
+  parent: CrateGenericSteel
   id: CrateSalvageEquipment
   name: "salvage equipment crate"
-  description: For the daring.
   suffix: Filled
-  parent: CrateGenericSteel
+  description: For the daring.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -26,10 +26,10 @@
         - id: ClothingBeltSalvageWebbing
 
 - type: entity
-  id: CrateSalvageAssortedGoodies
-  suffix: Filled, Salvage Random
-  categories: [ HideSpawnMenu ] # You should use SalvageMaterialCrateSpawner instead
   parent: CrateGenericSteel
+  id: CrateSalvageAssortedGoodies
+  categories: [ HideSpawnMenu ] # You should use SalvageMaterialCrateSpawner instead
+  suffix: Filled, Salvage Random
   components:
   - type: EntityTableContainerFill
     containers:

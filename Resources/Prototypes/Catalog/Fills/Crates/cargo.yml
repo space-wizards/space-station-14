@@ -1,6 +1,6 @@
 - type: entity
-  id: CrateCargoLuxuryHardsuit
   parent: CratePirate
+  id: CrateCargoLuxuryHardsuit
   name: luxury mining hardsuit crate
   description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
   components:
@@ -10,8 +10,8 @@
         id: ClothingOuterHardsuitLuxury
 
 - type: entity
-  id: CrateCargoParcelWrap
   parent: CrateGenericSteel
+  id: CrateCargoParcelWrap
   name: parcel wrap crate
   description: All your parcel wrapping needs in one crate, containing three rolls of parcel wrap.
   components:
@@ -22,10 +22,10 @@
         amount: 3
 
 - type: entity
+  parent: CratePrivateSecure
   id: CrateCargoGambling
   name: the grand lottery $$$
   description: A box containing treasure beyond your greatest imaginations!
-  parent: CratePrivateSecure
   components:
   - type: EntityTableContainerFill
     containers:
@@ -73,17 +73,14 @@
   id: LotteryJunkEntityTable
   table: !type:GroupSelector
     children:
+    - !type:NestedSelector
+      tableId: AllBananaPeelsTable
+      weight: 4
     - id: CigaretteSpent
     - id: FoodBowlBigTrash
     - id: FoodFrozenPopsicleTrash
     - id: FoodCornTrash
-    - id: TrashBananaPeel
-    - id: TrashBananaPeelExplosive
-      weight: 0.01
     - id: FoodTinBeansTrash
-    - id: TrashBakedBananaPeel
-    - id: TrashMimanaPeel
-    - id: TrashBananiumPeel
 
 - type: entityTable
   id: LotteryCanistersEntityTable
@@ -124,13 +121,10 @@
     - id: WeaponShotgunHandmade
     - id: WeaponFlareGun
     - id: Bola
-    - id: ToySword
     - id: Shovel
-    - id: WeaponWaterPistol
-    - id: WeaponWaterBlaster
     - id: WeaponTurretXeno
-    - id: WeaponRifleFoam
-      weight: 3
+    - !type:NestedSelector
+      tableId: AllToyWeaponsTable
 
 - type: entityTable
   id: LotteryClothingEntityTable
