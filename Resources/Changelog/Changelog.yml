@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: The size of the antique laser pistol and appraisal tool have been reverted
-      to an L and 1x2 respectfully.
-    type: Tweak
-  id: 8935
-  time: '2025-09-06T15:13:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40158
 - author: ToastEnjoyer
   changes:
   - message: On box, fixed a bug where there was a disconnected grid at the tesla
@@ -3960,3 +3952,16 @@
   id: 9441
   time: '2026-01-22T02:43:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42579
+- author: ArtisticRoomba
+  changes:
+  - message: Extra-bright lantern has been removed from the traitor uplink.
+    type: Remove
+  - message: Stealthbox has been buffed significantly, you'll be able to remain in
+      stealth for much longer when moving at speed.
+    type: Tweak
+  - message: Decoy bundle has been moved to the Useless category and reduced to 1
+      TC in the traitor uplink.
+    type: Tweak
+  id: 9442
+  time: '2026-01-22T07:45:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42510
