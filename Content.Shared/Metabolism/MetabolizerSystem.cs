@@ -178,7 +178,7 @@ public sealed class MetabolizerSystem : EntitySystem
                 if (transferSolution is not null)
                 {
                     solution.RemoveReagent(reagent, mostToTransfer);
-                    transferSolution.AddReagent(reagent, mostToTransfer);
+                    transferSolution.AddReagent(reagent, mostToTransfer * solutionData.TransferEfficacy);
                 }
                 else
                 {
