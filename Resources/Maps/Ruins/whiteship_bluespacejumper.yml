@@ -1159,7 +1159,6 @@ entities:
   - uid: 291
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 16.5,-13.5
       parent: 1
 - proto: PowerCellSmall

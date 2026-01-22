@@ -824,13 +824,11 @@ entities:
   - uid: 270
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -11.5,-2.5
       parent: 1
   - uid: 271
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -12.5,-2.5
       parent: 1
 - proto: BoxFlare
@@ -5923,13 +5921,11 @@ entities:
   - uid: 23
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -2.5,-0.5
       parent: 1
   - uid: 74
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -4.5,1.5
       parent: 1
   - uid: 194

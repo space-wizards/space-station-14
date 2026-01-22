@@ -2677,7 +2677,6 @@ entities:
   - uid: 218
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 12.5,0.5
       parent: 2
 - proto: Poweredlight

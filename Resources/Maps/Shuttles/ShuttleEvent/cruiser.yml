@@ -2715,7 +2715,6 @@ entities:
   - uid: 163
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,14.5
       parent: 1
     - type: PointLight

@@ -863,7 +863,6 @@ entities:
   - uid: 117
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 16.5,-7.5
       parent: 1
     - type: EntityStorage
@@ -7913,7 +7912,6 @@ entities:
   - uid: 301
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 3.5,-10.5
       parent: 1
     - type: ContainerContainer
