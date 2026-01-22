@@ -52,18 +52,6 @@ public sealed class MetabolizerSystem : EntitySystem
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
     }
 
-    private void OnMetabolizerInit(Entity<MetabolizerComponent> entity, ref ComponentInit args)
-    {
-        if (!entity.Comp.SolutionOnBody)
-        {
-            _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName, out _);
-        }
-        else if (_organQuery.CompOrNull(entity)?.Body is { } body)
-        {
-            _solutionContainerSystem.EnsureSolution(body, entity.Comp.SolutionName, out _);
-        }
-    }
-
     private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref BodyRelayedEvent<ApplyMetabolicMultiplierEvent> args)
     {
         ent.Comp.UpdateIntervalMultiplier = args.Args.Multiplier;
@@ -128,11 +116,11 @@ public sealed class MetabolizerSystem : EntitySystem
         {
             if (ent.Comp2?.Body is { } body)
             {
-                if (!_solutionQuery.Resolve(body, ref ent.Comp3, logMissing: false))
+                if (!_solutionQuery.TryComp(body, out var bodySolution))
                     return false;
 
                 solutionOwner = body;
-                return _solutionContainerSystem.TryGetSolution((body, ent.Comp3), solutionName, out solutionEntity, out solution);
+                return _solutionContainerSystem.TryGetSolution((body, bodySolution), solutionName, out solutionEntity, out solution);
             }
         }
         else
