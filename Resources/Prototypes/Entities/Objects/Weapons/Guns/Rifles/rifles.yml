@@ -42,7 +42,6 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeLightRifle
         priority: 1
         whitelist:
           tags:
@@ -87,7 +86,6 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeLightRifle
         priority: 1
         whitelist:
           tags:
@@ -131,7 +129,6 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeRifle
         priority: 1
         whitelist:
           tags:
@@ -178,7 +175,6 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeRifle
         priority: 1
         whitelist:
           tags:
@@ -199,7 +195,7 @@
   name: XL8
   description: |-
     The Experimental Lecter 8
-    An unreasonably expensive military grade assault rifle with integrated optic. 
+    An unreasonably expensive military grade assault rifle with integrated optic.
     Uses .20 rifle ammo.
   components:
   - type: Sprite
@@ -219,7 +215,7 @@
     - Burst
     - SemiAuto
     - FullAuto
-  
+
 - type: entity
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
@@ -266,7 +262,6 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeRifle
         priority: 1
         whitelist:
           tags:
@@ -287,36 +282,3 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
-
-- type: entity
-  name: Foam Force Astro Ace
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
-  id: WeaponRifleFoam
-  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Foam/foam_rifle.rsi
-  - type: Clothing
-    sprite: Objects/Fun/Foam/foam_rifle.rsi
-  - type: Item
-    sprite: Objects/Fun/Foam/foam_rifle_inhand_64x.rsi
-    shape:
-    - 0,0,3,0
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - BulletFoam
-    capacity: 10
-    proto: BulletFoam
-  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
-  - type: Gun
-    fireRate: 2
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/Effects/thunk.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    clumsyProof: true
-  - type: PacifismAllowedGun

@@ -13,7 +13,7 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class DamagedSiliconAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
 
@@ -36,7 +36,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             }
             else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
-                currentChargeLevel = _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge;
+                currentChargeLevel = _battery.GetChargeLevel(battery.Value.AsNullable());
             }
             currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
             // Corrupt due to low power (drops characters on longer messages)

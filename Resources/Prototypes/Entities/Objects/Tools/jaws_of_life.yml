@@ -67,6 +67,7 @@
       - state: syn_inhand-right
     size: Normal
   - type: Prying
+    force: true
     speedModifier: 3.0
   - type: MultipleTool
     entries:

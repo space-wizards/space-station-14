@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -7,23 +6,26 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// This is used for modules that can be inserted into borgs
 /// to give them unique abilities and attributes.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedBorgSystem))]
 public sealed partial class BorgModuleComponent : Component
 {
     /// <summary>
-    /// The entity this module is installed into
+    /// The entity this module is installed into.
     /// </summary>
-    [DataField("installedEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? InstalledEntity;
 
+    /// <summary>
+    /// Is this module currently installed?
+    /// </summary>
+    [ViewVariables]
     public bool Installed => InstalledEntity != null;
 
     /// <summary>
     /// If true, this is a "default" module that cannot be removed from a borg.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool DefaultModule;
 
     /// <summary>
@@ -37,13 +39,13 @@ public sealed partial class BorgModuleComponent : Component
 /// <summary>
 /// Raised on a module when it is installed in order to add specific behavior to an entity.
 /// </summary>
-/// <param name="ChassisEnt"></param>
+/// <param name="ChassisEnt">The borg the module is being installed in.</param>
 [ByRefEvent]
 public readonly record struct BorgModuleInstalledEvent(EntityUid ChassisEnt);
 
 /// <summary>
 /// Raised on a module when it's uninstalled in order to
 /// </summary>
-/// <param name="ChassisEnt"></param>
+/// <param name="ChassisEnt">The borg the module is being uninstalled from.</param>
 [ByRefEvent]
 public readonly record struct BorgModuleUninstalledEvent(EntityUid ChassisEnt);
