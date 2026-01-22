@@ -10,31 +10,29 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganGingerbreadTorso
-        - id: OrganGingerbreadHead
-        - id: OrganGingerbreadArmLeft
-        - id: OrganGingerbreadArmRight
-        - id: OrganGingerbreadHandRight
-        - id: OrganGingerbreadHandLeft
-        - id: OrganGingerbreadLegLeft
-        - id: OrganGingerbreadLegRight
-        - id: OrganGingerbreadFootLeft
-        - id: OrganGingerbreadFootRight
-        - id: OrganHumanBrain
-        - id: OrganHumanEyes
-        - id: OrganHumanTongue
-        - id: OrganHumanAppendix
-        - id: OrganHumanEars
-        - id: OrganHumanLungs
-        - id: OrganHumanHeart
-        - id: OrganHumanStomach
-        - id: OrganHumanLiver
-        - id: OrganHumanKidneys
-  - type: HumanoidAppearance
+  - type: InitialBody
+    organs:
+      Torso: OrganGingerbreadTorso
+      Head: OrganGingerbreadHead
+      ArmLeft: OrganGingerbreadArmLeft
+      ArmRight: OrganGingerbreadArmRight
+      HandRight: OrganGingerbreadHandRight
+      HandLeft: OrganGingerbreadHandLeft
+      LegLeft: OrganGingerbreadLegLeft
+      LegRight: OrganGingerbreadLegRight
+      FootLeft: OrganGingerbreadFootLeft
+      FootRight: OrganGingerbreadFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
     species: Gingerbread
 
 - type: entity
@@ -92,6 +90,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: None
 
 - type: entity
   parent: [ OrganBaseTorso, OrganGingerbreadExternal ]
