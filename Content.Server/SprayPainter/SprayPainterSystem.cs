@@ -15,7 +15,8 @@ using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Server.SprayPainter;
 
@@ -48,7 +49,16 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     /// </summary>
     private void OnFloorAfterInteract(Entity<SprayPainterComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || args.Target != null)
+        if (args.Handled || args.Target != null)
+            return;
+
+        if (ent.Comp.ColorPickerEnabled)
+        {
+            PickColor(ent, ref args);
+            return;
+        }
+
+        if (!args.CanReach)
             return;
 
         // Includes both off and all other don't cares
@@ -83,7 +93,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
                 return;
             }
 
-            var decals = _decals.GetDecalsInRange(grid, position.Position, validDelegate: IsDecalRemovable);
+            var decals = _decals.GetDecalsInRange(grid, position.Position, validDelegate: IsDecalValid);
             if (decals.Count <= 0)
             {
                 _popup.PopupEntity(Loc.GetString("spray-painter-interact-nothing-to-remove"), args.User, args.User);
@@ -104,10 +114,9 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     }
 
     /// <summary>
-    /// Handles drawing decals when a spray painter is used to interact with the floor.
-    /// Spray painter must have decal painting enabled and enough charges of paint to paint on the floor.
+    /// Returns whether <paramref name="decal"/> is valid to interact with when a spray painter is used to interact with the floor.
     /// </summary>
-    private bool IsDecalRemovable(Decal decal)
+    private bool IsDecalValid(Decal decal)
     {
         if (!Proto.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
             return false;
@@ -188,5 +197,27 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         };
 
         args.Handled = DoAfter.TryStartDoAfter(doAfterEventArgs);
+    }
+
+    private void PickColor(Entity<SprayPainterComponent> ent, ref AfterInteractEvent args)
+    {
+        if (!args.ClickLocation.IsValid(EntityManager) || _transform.GetGrid(args.ClickLocation) is not { } grid)
+            return;
+
+        var clickPos = args.ClickLocation.Position;
+        var decals = _decals.GetDecalsInRange(grid, clickPos, validDelegate: IsDecalValid);
+        if (decals.Count == 0)
+        {
+            _popup.PopupEntity(Loc.GetString("spray-painter-interact-no-color-pick"), args.User, args.User);
+            return;
+        }
+
+        var closestDecal = decals.MinBy(d => Vector2.Distance(d.Decal.Coordinates, clickPos)).Decal;
+
+        _popup.PopupEntity(Loc.GetString("spray-painter-interact-color-picked", ("id", closestDecal.Id)), args.User, args.User);
+
+        ent.Comp.SelectedDecalColor = closestDecal.Color;
+        ent.Comp.ColorPickerEnabled = false;
+        Dirty(ent);
     }
 }
