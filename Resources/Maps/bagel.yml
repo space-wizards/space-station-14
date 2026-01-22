@@ -13997,16 +13997,6 @@ entities:
     - type: Transform
       pos: 0.5,-62.5
       parent: 60
-  - uid: 6504
-    components:
-    - type: Transform
-      pos: 11.5,-16.5
-      parent: 60
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 6503
   - uid: 7030
     components:
     - type: Transform
