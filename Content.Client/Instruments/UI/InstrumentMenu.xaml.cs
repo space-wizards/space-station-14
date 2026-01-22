@@ -37,7 +37,7 @@ namespace Content.Client.Instruments.UI
                 var button = new Button();
                 button.Text = mode.ButtonName;
                 button.Group = group;
-                button.OnPressed += (o) => { SwitchMode(mode); };
+                button.OnPressed += _ => { SwitchMode(mode); };
                 MidiSourceButtonsBoxContainer.Children.Add(button);
                 MidiSourcesContainer.Children.Add(mode);
                 mode.VerticalExpand = true;
