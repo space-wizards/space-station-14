@@ -12,6 +12,8 @@
   - type: WiresVisuals
   - type: Damageable
     damageContainer: Inorganic
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
       fix1:
