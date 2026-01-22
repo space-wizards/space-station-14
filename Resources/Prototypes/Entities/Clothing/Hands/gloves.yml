@@ -33,7 +33,7 @@
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
   - type: Fiber
     fiberMaterial: fibers-leather
-    fiberColor: fibers-blue
+    fiberColor: fibers-red
   - type: FingerprintMask
 
 - type: entity
