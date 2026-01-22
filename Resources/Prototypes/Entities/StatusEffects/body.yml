@@ -62,3 +62,26 @@
   parent: [ PainNumbnessTraitStatusEffect, MobStatusEffectDebuff ]
   id: StatusEffectPainNumbness
   name: pain numbness
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StaminaModifierStatusEffect
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - Stamina
+  - type: StaminaModifierStatusEffect
+
+- type: entity
+  parent: StaminaModifierStatusEffect
+  name: 2x max stamina
+  id: StatusEffectDesoxyStamina
+
+- type: entity
+  parent: StaminaModifierStatusEffect
+  id: StatusEffectStimulantsStamina
+  name: 1.5x max stamina
+  components:
+  - type: StaminaModifierStatusEffect
+    modifier: 1.5
