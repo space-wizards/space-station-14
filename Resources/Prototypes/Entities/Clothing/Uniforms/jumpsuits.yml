@@ -451,17 +451,6 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitBrigmedic
-  name: brigmedic jumpsuit
-  description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPrisoner
   name: prisoner jumpsuit
   description: A jumpsuit used for prisoners. It has suit sensors automatically enabled at all times.
