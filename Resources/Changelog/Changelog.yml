@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Changed the Galoshes description to be more descriptive of what they
-      actually do.
-    type: Tweak
-  id: 8944
-  time: '2025-09-09T02:47:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40200
-- author: Steffo99
-  changes:
-  - message: Fixed the RGB staff not working.
-    type: Fix
-  id: 8945
-  time: '2025-09-10T11:42:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40258
 - author: insoPL
   changes:
   - message: Doafters are now cancalled when the target/user is enclosed in a container
@@ -3970,3 +3955,20 @@
   id: 9450
   time: '2026-01-22T22:30:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42409
+- author: B_Kirill
+  changes:
+  - message: Fixed construction preview ghost sprite offset not matching the original
+      entity.
+    type: Fix
+  id: 9451
+  time: '2026-01-22T22:47:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42193
+- author: Beck, Julian
+  changes:
+  - message: Added feedback popups that players get at the end of the round! They
+      will list all "test" PRs or PRs that people want feedback on. Right now they
+      will link to a form thread
+    type: Add
+  id: 9452
+  time: '2026-01-22T22:47:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41352
