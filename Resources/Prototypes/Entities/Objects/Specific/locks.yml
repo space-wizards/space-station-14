@@ -1,0 +1,69 @@
+- type: entity
+  id: SelectableLock
+  abstract: true
+  components:
+  - type: Lock
+    locked: false
+    showLockVerbs: false
+    showExamine: false
+    lockOnClick: false
+    unlockOnClick: false
+    useAccess: false
+    unlockingSound: null # TODO: Maybe add sounds but just to the user?
+    lockingSound: null
+    breakOnAccessBreaker: true # more fun
+    lockTime: 0
+    unlockTime: 0
+  - type: LockOnTrigger
+    keysIn: [ lock ]
+  - type: SelectableComponentAdder
+    selections: 1
+    verbCategoryName: selectable-lock-verb-category-name
+    entries:
+    - verbName: selectable-lock-tool-prying-verb
+      popup: selectable-lock-tool-prying-popup
+      priority: 4
+      componentsToAdd:
+      - type: TriggerOnSimpleToolUsage
+        keyOut: lock
+      - type: SimpleToolUsage
+        quality: Prying
+        doAfter: 1
+    - verbName: selectable-lock-tool-screwing-verb
+      popup: selectable-lock-tool-screwing-popup
+      priority: 3
+      componentsToAdd:
+      - type: TriggerOnSimpleToolUsage
+        keyOut: lock
+      - type: SimpleToolUsage
+        quality: Screwing
+        doAfter: 1
+    - verbName: selectable-lock-tool-cutting-verb
+      popup: selectable-lock-tool-cutting-popup
+      priority: 2
+      componentsToAdd:
+      - type: TriggerOnSimpleToolUsage
+        keyOut: lock
+      - type: SimpleToolUsage
+        quality: Cutting
+        doAfter: 1
+    # no anchoring since some objects might be anchorable
+    # no pulsing because it conflicts with the linking ability of the multitool
+    - verbName: selectable-lock-voice-verb
+      popup: selectable-lock-voice-popup
+      priority: 1
+      componentsToAdd:
+      - type: TriggerOnVoice
+        keyOut: lock
+        listenRange: 2 # more fun
+        startRecordingVerb: voice-trigger-lock-verb-record
+        recordingVerbMessage: voice-trigger-lock-verb-message
+        inspectUninitializedLoc: voice-trigger-lock-on-uninitialized
+        inspectInitializedLoc: voice-trigger-lock-on-examine
+      - type: ActiveListener
+      - type: VoiceTriggerLock
+    - verbName: selectable-lock-no-lock-verb
+      popup: selectable-lock-no-lock-popup
+      priority: 0
+      componentsToAdd: null
+

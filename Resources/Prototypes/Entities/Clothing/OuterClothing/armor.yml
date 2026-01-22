@@ -4,10 +4,10 @@
 
 #Basic armor vest for inheritance
 - type: entity
+  abstract: true
   parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterArmorBase
   name: armor vest
-  abstract: true
   description: A standard Type I armored vest that provides decent protection against most types of damage.
   components:
   - type: Sprite
@@ -28,6 +28,11 @@
 - type: entity
   parent: [ BaseSecurityBartenderContraband, ClothingOuterArmorBase]
   id: ClothingOuterArmorBasic
+  components:
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Alternate / slim basic armor vest
 - type: entity
@@ -98,7 +103,7 @@
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  parent: [ ClothingOuterBaseMedium, AllowSuitStorageClothing ]
   id: ClothingOuterArmorBaseCarapace
   abstract: true
   components:
@@ -112,10 +117,6 @@
         Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.65
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
-  - type: HeldSpeedModifier
   - type: GroupExamine
 
 - type: entity
@@ -128,6 +129,10 @@
     sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingOuterArmorBaseCarapace, BaseCentcommContraband]
@@ -142,7 +147,7 @@
 
 #Web vest
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
+  parent: [ClothingOuterArmorBase, ClothingOuterStorageBase, BaseSyndicateContraband]
   id: ClothingOuterVestWeb
   name: web vest
   description: A synthetic armor vest. This one has added webbing and ballistic plates.
@@ -158,14 +163,12 @@
         Slash: 0.6
         Piercing: 0.3
         Heat: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
   - type: StaticPrice
     price: 1500
 
 #Elite web vest
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
+  parent: [ClothingOuterArmorBase, AllowSuitStorageClothing, BaseSyndicateContraband]
   id: ClothingOuterVestWebElite
   name: elite web vest
   description: A synthetic armor vest. This one has added webbing and heat resistant fibers.
@@ -211,8 +214,6 @@
         Slash: 0.7
         Piercing: 0.5
         Heat: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
 
 
 # Armor covering multiple body parts including limbs
@@ -241,7 +242,7 @@
         Caustic: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.35
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.45
   - type: ClothingSpeedModifier
     walkModifier: 0.9
@@ -284,14 +285,13 @@
         id: blinking
         interpolate: Nearest
         maxDuration: 1.0
-        minValue: 0.1
-        maxValue: 2.0
+        startValue: 0.1
+        endValue: 2.0
         isLooped: true
   - type: Battery
     maxCharge: 600
     startingCharge: 600
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 2
   - type: Item
     size: Normal
@@ -333,7 +333,7 @@
       coefficients:
         Blunt: 0.5
         Slash: 0.5
-        Piercing: 0.6
+        Piercing: 0.5
         Heat: 0.5
   - type: GroupExamine
 
@@ -482,3 +482,20 @@
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: CardArmour
+  name: cardboard armour
+  description: A medieval chestpiece built from cardboard.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/card_armour.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/card_armour.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+  - type: Construction
+    graph: cardArmour
+    node: cardarmour

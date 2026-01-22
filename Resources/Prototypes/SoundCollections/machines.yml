@@ -22,3 +22,23 @@
   id: CargoBeep
   files:
   - /Audio/Effects/Cargo/beep.ogg
+
+- type: soundCollection
+  id: VendingDispense
+  files:
+  - /Audio/Machines/machine_vend.ogg
+
+- type: soundCollection
+  id: VendingDeny
+  files:
+  - /Audio/Machines/custom_deny.ogg
+
+- type: soundCollection
+  id: MachineInsert
+  files:
+  - /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+
+- type: soundCollection
+  id: TriggerActivate
+  files:
+  - /Audio/Weapons/click.ogg

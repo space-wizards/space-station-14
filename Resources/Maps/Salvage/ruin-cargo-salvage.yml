@@ -1983,14 +1983,14 @@ entities:
     - type: Transform
       pos: 7.5,6.5
       parent: 16
-- proto: LeftArmSkeleton
+- proto: OrganSkeletonPersonArmLeft
   entities:
   - uid: 175
     components:
     - type: Transform
       pos: 6.8180027,-5.7761726
       parent: 16
-- proto: LeftHandSkeleton
+- proto: OrganSkeletonPersonHandLeft
   entities:
   - uid: 174
     components:

@@ -21,7 +21,7 @@
                     Name="RefundButton"
                     MinWidth="64"
                     HorizontalAlignment="Right"
-                    Text="Refund" />
+                    Text="{Loc 'store-ui-refund-text'}" />
             </BoxContainer>
             <LineEdit Name="SearchBar" Margin="4" PlaceHolder="Search" HorizontalExpand="True"/>
                 <PanelContainer VerticalExpand="True">

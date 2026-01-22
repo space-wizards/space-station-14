@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Nimfar11 (GitHub) for Space Station 14. Reptilian edit by Nairod(Github), vox edit by Flareguy",
+  "copyright": "Made by Nimfar11 (GitHub) for Space Station 14. Reptilian edit by Nairod(Github), vox edit by Flareguy | vulpkanin version made by Floofers",
   "size": {
     "x": 32,
     "y": 32
@@ -28,6 +28,10 @@
     },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vulpkanin",
       "directions": 4
     }
   ]

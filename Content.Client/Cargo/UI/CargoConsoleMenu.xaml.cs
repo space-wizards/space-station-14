@@ -207,7 +207,7 @@ namespace Content.Client.Cargo.UI
             if (!_orderConsoleQuery.TryComp(_owner, out var orderConsole))
                 return;
 
-            Requests.DisposeAllChildren();
+            Requests.RemoveAllChildren();
 
             foreach (var order in orders)
             {

@@ -29,9 +29,10 @@ public sealed class RoleBanCommand : IConsoleCommand
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string target;
-        string job;
+        string role;
         string reason;
         uint minutes;
+
         if (!Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), out NoteSeverity severity))
         {
             _sawmill ??= _log.GetSawmill("admin.role_ban");
@@ -43,30 +44,33 @@ public sealed class RoleBanCommand : IConsoleCommand
         {
             case 3:
                 target = args[0];
-                job = args[1];
+                role = args[1];
                 reason = args[2];
                 minutes = 0;
+
                 break;
             case 4:
                 target = args[0];
-                job = args[1];
+                role = args[1];
                 reason = args[2];
 
                 if (!uint.TryParse(args[3], out minutes))
                 {
                     shell.WriteError(Loc.GetString("cmd-roleban-minutes-parse", ("time", args[3]), ("help", Help)));
+
                     return;
                 }
 
                 break;
             case 5:
                 target = args[0];
-                job = args[1];
+                role = args[1];
                 reason = args[2];
 
                 if (!uint.TryParse(args[3], out minutes))
                 {
                     shell.WriteError(Loc.GetString("cmd-roleban-minutes-parse", ("time", args[3]), ("help", Help)));
+
                     return;
                 }
 
@@ -80,26 +84,27 @@ public sealed class RoleBanCommand : IConsoleCommand
             default:
                 shell.WriteError(Loc.GetString("cmd-roleban-arg-count"));
                 shell.WriteLine(Help);
-                return;
-        }
 
-        if (!_proto.HasIndex<JobPrototype>(job))
-        {
-            shell.WriteError(Loc.GetString("cmd-roleban-job-parse", ("job", job)));
-            return;
+                return;
         }
 
         var located = await _locator.LookupIdByNameOrIdAsync(target);
         if (located == null)
         {
             shell.WriteError(Loc.GetString("cmd-roleban-name-parse"));
+
             return;
         }
 
         var targetUid = located.UserId;
         var targetHWid = located.LastHWId;
 
-        _bans.CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, DateTimeOffset.UtcNow);
+        if (_proto.HasIndex<JobPrototype>(role))
+            _bans.CreateRoleBan<JobPrototype>(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, role, minutes, severity, reason, DateTimeOffset.UtcNow);
+        else if (_proto.HasIndex<AntagPrototype>(role))
+            _bans.CreateRoleBan<AntagPrototype>(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, role, minutes, severity, reason, DateTimeOffset.UtcNow);
+        else
+            shell.WriteError(Loc.GetString("cmd-roleban-job-parse", ("job", role)));
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

@@ -9,6 +9,9 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.ViewNotes)]
 public sealed class OpenAdminNotesCommand : LocalizedCommands
 {
+    [Dependency] private readonly IAdminNotesManager _adminNotes = default!;
+    [Dependency] private readonly IPlayerLocator _locator = default!;
+
     public const string CommandName = "adminnotes";
 
     public override string Command => CommandName;
@@ -28,8 +31,7 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
             case 1 when Guid.TryParse(args[0], out notedPlayer):
                 break;
             case 1:
-                var locator = IoCManager.Resolve<IPlayerLocator>();
-                var dbGuid = await locator.LookupIdByNameAsync(args[0]);
+                var dbGuid = await _locator.LookupIdByNameAsync(args[0]);
 
                 if (dbGuid == null)
                 {
@@ -44,7 +46,7 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
                 return;
         }
 
-        await IoCManager.Resolve<IAdminNotesManager>().OpenEui(player, notedPlayer);
+        await _adminNotes.OpenEui(player, notedPlayer);
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

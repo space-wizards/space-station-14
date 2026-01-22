@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (github) for ss14. Vox states by Flareguy for Space Station 14. Flashlight state sprites by TiniestShark (github).",
+  "copyright": "Made by brainfood1183 (github) for ss14. Vox states by Flareguy for Space Station 14. Flashlight and Reptilian state sprites by TiniestShark (github).",
   "size": {
     "x": 32,
     "y": 32
@@ -35,6 +35,18 @@
     },
     {
       "name": "equipped-HELMET-unshaded-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-light-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-unshaded-reptilian",
       "directions": 4
     }
   ]

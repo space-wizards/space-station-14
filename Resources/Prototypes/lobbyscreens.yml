@@ -1,48 +1,71 @@
 - type: lobbyBackground
   id: Warden
   background: /Textures/LobbyScreens/warden.webp
+  title: lobby-state-background-warden-title
+  artist: lobby-state-background-warden-artist
 
 - type: lobbyBackground
   id: Pharmacy
   background: /Textures/LobbyScreens/pharmacy.webp
+  title: lobby-state-background-pharmacy-title
+  artist: lobby-state-background-pharmacy-artist
 
 - type: lobbyBackground
   id: SSXIV
   background: /Textures/LobbyScreens/ssxiv.webp
+  title: lobby-state-background-SSXIV-title
+  artist: lobby-state-background-SSXIV-artist
 
 - type: lobbyBackground
   id: Susstation
   background: /Textures/LobbyScreens/susstation.webp
+  title: lobby-state-background-susstation-title
+  artist: lobby-state-background-susstation-artist
 
 - type: lobbyBackground
   id: SkellyVsTheRev
   background: /Textures/LobbyScreens/skellyvstherev.webp
+  title: lobby-state-background-skellyvstherev-title
+  artist: lobby-state-background-skellyvstherev-artist
 
 - type: lobbyBackground
   id: Doomed
   background: /Textures/LobbyScreens/doomed.webp
+  title: lobby-state-background-doomed-title
+  artist: lobby-state-background-doomed-artist
 
 - type: lobbyBackground
   id: Blueprint
   background: /Textures/LobbyScreens/blueprint.webp
+  title: lobby-state-background-blueprint-title
+  artist: lobby-state-background-blueprint-artist
 
 - type: lobbyBackground
   id: Behonker
   background: /Textures/LobbyScreens/behonker.webp
+  title: lobby-state-background-behonker-title
+  artist: lobby-state-background-behonker-artist
 
 - type: lobbyBackground
   id: TerminalStation
   background: /Textures/LobbyScreens/terminalstation.webp
+  title: lobby-state-background-terminalstation-title
+  artist: lobby-state-background-terminalstation-artist
 
 - type: lobbyBackground
   id: JustAWeekAway
   background: /Textures/LobbyScreens/justaweekaway.webp
+  title: lobby-state-background-justaweekaway-title
+  artist: lobby-state-background-justaweekaway-artist
 
 - type: lobbyBackground
   id: JaniShootout
   background: /Textures/LobbyScreens/janishootout.webp
+  title: lobby-state-background-janishootout-title
+  artist: lobby-state-background-janishootout-artist
 
 - type: lobbyBackground
   id: ReclaimerNuke
   background: /Textures/LobbyScreens/reclaimer-nuke.webp
-  
+  title: lobby-state-background-reclaimernuke-title
+  artist: lobby-state-background-reclaimernuke-artist

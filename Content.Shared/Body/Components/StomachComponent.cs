@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Body.Components
 {
-    [RegisterComponent, NetworkedComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
+    [RegisterComponent, NetworkedComponent, Access(typeof(StomachSystem))]
     public sealed partial class StomachComponent : Component
     {
         /// <summary>
@@ -24,6 +24,18 @@ namespace Content.Shared.Body.Components
         public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
         /// <summary>
+        /// Multiplier applied to <see cref="UpdateInterval"/> for adjusting based on metabolic rate multiplier.
+        /// </summary>
+        [DataField]
+        public float UpdateIntervalMultiplier = 1f;
+
+        /// <summary>
+        /// Adjusted update interval based off of the multiplier value.
+        /// </summary>
+        [ViewVariables]
+        public TimeSpan AdjustedUpdateInterval => UpdateInterval * UpdateIntervalMultiplier;
+
+        /// <summary>
         ///     The solution inside of this stomach this transfers reagents to the body.
         /// </summary>
         [ViewVariables]
@@ -33,7 +45,7 @@ namespace Content.Shared.Body.Components
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField]
-        public string BodySolutionName = "chemicals";
+        public string BodySolutionName = BloodstreamComponent.DefaultBloodSolutionName;
 
         /// <summary>
         ///     Time between reagents being ingested and them being

@@ -45,6 +45,7 @@ namespace Content.Server.Power.EntitySystems
             UpdatesAfter.Add(typeof(NodeGroupSystem));
             _solver = new(_cfg.GetCVar(CCVars.DebugPow3rDisableParallel));
 
+            SubscribeLocalEvent<ApcPowerReceiverComponent, MapInitEvent>(ApcPowerReceiverMapInit);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentInit>(ApcPowerReceiverInit);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentShutdown>(ApcPowerReceiverShutdown);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentRemove>(ApcPowerReceiverRemove);
@@ -72,6 +73,11 @@ namespace Content.Server.Power.EntitySystems
         private void DebugPow3rDisableParallelChanged(bool val)
         {
             _solver = new(val);
+        }
+
+        private void ApcPowerReceiverMapInit(Entity<ApcPowerReceiverComponent> ent, ref MapInitEvent args)
+        {
+            _appearance.SetData(ent, PowerDeviceVisuals.Powered, ent.Comp.Powered);
         }
 
         private void ApcPowerReceiverInit(EntityUid uid, ApcPowerReceiverComponent component, ComponentInit args)
@@ -341,6 +347,10 @@ namespace Content.Server.Power.EntitySystems
                 // Check if the entity has an internal battery
                 if (_apcBatteryQuery.TryComp(uid, out var apcBattery) && _batteryQuery.TryComp(uid, out var battery))
                 {
+                    metadata = MetaData(uid);
+                    if (Paused(uid, metadata))
+                        continue;
+
                     apcReceiver.Load = apcBattery.IdleLoad;
 
                     // Try to draw power from the battery if there isn't sufficient external power
@@ -348,22 +358,22 @@ namespace Content.Server.Power.EntitySystems
 
                     if (requireBattery)
                     {
-                        _battery.SetCharge(uid, battery.CurrentCharge - apcBattery.IdleLoad * frameTime, battery);
+                        _battery.ChangeCharge((uid, battery), -apcBattery.IdleLoad * frameTime);
                     }
                     // Otherwise try to charge the battery
-                    else if (powered && !_battery.IsFull(uid, battery))
+                    else if (powered && !_battery.IsFull((uid, battery)))
                     {
                         apcReceiver.Load += apcBattery.BatteryRechargeRate * apcBattery.BatteryRechargeEfficiency;
-                        _battery.SetCharge(uid, battery.CurrentCharge + apcBattery.BatteryRechargeRate * frameTime, battery);
+                        _battery.ChangeCharge((uid, battery), apcBattery.BatteryRechargeRate * frameTime);
                     }
 
                     // Enable / disable the battery if the state changed
-                    var enableBattery = requireBattery && battery.CurrentCharge > 0;
+                    var currentCharge = _battery.GetCharge((uid, battery));
+                    var enableBattery = requireBattery && currentCharge > 0;
 
                     if (apcBattery.Enabled != enableBattery)
                     {
                         apcBattery.Enabled = enableBattery;
-                        metadata = MetaData(uid);
                         Dirty(uid, apcBattery, metadata);
 
                         var apcBatteryEv = new ApcPowerReceiverBatteryChangedEvent(enableBattery);
@@ -376,14 +386,13 @@ namespace Content.Server.Power.EntitySystems
                 }
 
                 // If new value is the same as the old, then exit
-                if (!apcReceiver.Recalculate && apcReceiver.Powered == powered)
+                if (apcReceiver.Powered == powered)
                     continue;
 
                 metadata ??= MetaData(uid);
                 if (Paused(uid, metadata))
                     continue;
 
-                apcReceiver.Recalculate = false;
                 apcReceiver.Powered = powered;
                 Dirty(uid, apcReceiver, metadata);
 

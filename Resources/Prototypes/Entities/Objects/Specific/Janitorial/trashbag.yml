@@ -20,7 +20,6 @@
       collection: trashBagRustle
     whitelist:
       tags:
-        - Cartridge
         - Trash
   - type: UseDelay
     delay: 0.5
