@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: insoPL
-  changes:
-  - message: Doafters are now cancalled when the target/user is enclosed in a container
-      during it.
-    type: Fix
-  id: 8946
-  time: '2025-09-10T19:22:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39880
 - author: SweetAplle
   changes:
   - message: Saying "idk" now no longer forces the shrug emote, instead expanding
@@ -3972,3 +3964,11 @@
   id: 9452
   time: '2026-01-22T22:47:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41352
+- author: archee1
+  changes:
+  - message: thief's 'Steal the beer goggles' objective has been replaced with 'Steal
+      the HUDs' collection objective, requiring varied HUD eyewear items.
+    type: Tweak
+  id: 9453
+  time: '2026-01-22T23:04:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38043
