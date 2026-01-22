@@ -9,13 +9,16 @@ public static partial class HeatContainerHelpers
     /// </summary>
     /// <param name="cA">The first <see cref="HeatContainer"/> to merge. This will be modified to contain the merged result.</param>
     /// <param name="cB">The second <see cref="HeatContainer"/> to merge.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of both containers is zero or negative.</exception>
     [PublicAPI]
     public static void Merge(this ref HeatContainer cA, HeatContainer cB)
     {
+        var combinedHeatCapacity = cA.HeatCapacity + cB.HeatCapacity;
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(combinedHeatCapacity);
         var merged = new HeatContainer
         {
-            HeatCapacity = cA.HeatCapacity + cB.HeatCapacity,
-            Temperature = (cA.InternalEnergy + cB.InternalEnergy) / (cA.HeatCapacity + cB.HeatCapacity)
+            HeatCapacity = combinedHeatCapacity,
+            Temperature = (cA.InternalEnergy + cB.InternalEnergy) / combinedHeatCapacity,
         };
 
         cA = merged;
@@ -43,6 +46,7 @@ public static partial class HeatContainerHelpers
     /// </summary>
     /// <param name="cN">The array of <see cref="HeatContainer"/>s to merge.</param>
     /// <returns>A new <see cref="HeatContainer"/> representing the merged result.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of all containers is zero or negative.</exception>
     [PublicAPI]
     public static HeatContainer Merge(this HeatContainer[] cN)
     {
@@ -54,6 +58,8 @@ public static partial class HeatContainerHelpers
             totalHeatCapacity += c.HeatCapacity;
             totalEnergy += c.InternalEnergy;
         }
+
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(totalHeatCapacity);
 
         var result = new HeatContainer
         {

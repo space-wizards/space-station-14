@@ -1,9 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Events;
-using Content.Shared.Body.Organ;
-using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
+using Content.Shared.Body;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -45,7 +44,7 @@ public sealed class MetabolizerSystem : EntitySystem
         _solutionQuery = GetEntityQuery<SolutionContainerManagerComponent>();
 
         SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        SubscribeLocalEvent<MetabolizerComponent, BodyRelayedEvent<ApplyMetabolicMultiplierEvent>>(OnApplyMetabolicMultiplier);
     }
 
     private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
@@ -53,9 +52,21 @@ public sealed class MetabolizerSystem : EntitySystem
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
     }
 
-    private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref ApplyMetabolicMultiplierEvent args)
+    private void OnMetabolizerInit(Entity<MetabolizerComponent> entity, ref ComponentInit args)
     {
-        ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
+        if (!entity.Comp.SolutionOnBody)
+        {
+            _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName, out _);
+        }
+        else if (_organQuery.CompOrNull(entity)?.Body is { } body)
+        {
+            _solutionContainerSystem.EnsureSolution(body, entity.Comp.SolutionName, out _);
+        }
+    }
+
+    private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref BodyRelayedEvent<ApplyMetabolicMultiplierEvent> args)
+    {
+        ent.Comp.UpdateIntervalMultiplier = args.Args.Multiplier;
     }
 
     public override void Update(float frameTime)

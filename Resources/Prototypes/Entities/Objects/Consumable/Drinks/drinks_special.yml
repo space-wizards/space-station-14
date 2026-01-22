@@ -131,7 +131,7 @@
       Steel: 50
   - type: Shakeable
   - type: ReactionMixer
-    mixOnInteract: false
+    mixerType: None
     reactionTypes:
     - Shake
 
