@@ -2,30 +2,30 @@
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     HorizontalExpand="True"
-    Margin="0 1"
-    StyleClasses="AngleRect">
+    StyleClasses="BackgroundPanel">
 
     <!-- Main Container -->
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   SeparationOverride="6"
-                  Margin="-4">
+                  Margin="-14 -2">
 
-        <Control Margin="-6">
-            <PanelContainer StyleClasses="WindowHeadingBackground" />
+        <BoxContainer Orientation="Vertical">
+            <Control>
+                <PanelContainer StyleClasses="WindowHeadingBackground" />
 
-            <BoxContainer Margin="6 2">
-                <Label Name="Title"
-                       Access="Public"
-                       MaxHeight="28"
-                       StyleClasses="LabelKeyText"/>
-            </BoxContainer>
-        </Control>
+                <BoxContainer Margin="6">
+                    <Label Name="Title"
+                           Access="Public"
+                           MaxHeight="28"
+                           StyleClasses="LabelKeyText"/>
+                </BoxContainer>
+            </Control>
 
-        <PanelContainer Name="Stride"
-                        Access="Public"
-                        StyleClasses="LowDivider"
-                        Margin="-6 0" />
+            <PanelContainer Name="Stride"
+                Access="Public"
+                StyleClasses="LowDivider" />
+        </BoxContainer>
 
         <!-- Info -->
         <BoxContainer>
@@ -58,22 +58,24 @@
             </BoxContainer>
         </BoxContainer>
 
-        <PanelContainer StyleClasses="LowDivider" Margin="-6 0"/>
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
 
-        <!-- Buttons -->
-        <!-- Btn's position hardcoded (args.Button.Parent?.Parent?.Parent type) in CargoConsoleBUI 158 & 166 line -->
-        <BoxContainer>
-            <Button Name="Approve"
-                    Access="Public"
-                    Text="{Loc 'cargo-console-menu-order-row-button-approve'}"
-                    StyleClasses="OpenRight"
-                    HorizontalExpand="True"/>
+            <!-- Buttons -->
+            <!-- Btn's position hardcoded (args.Button.Parent?.Parent?.Parent type) in CargoConsoleBUI 158 & 166 line -->
+            <BoxContainer Margin="6">
+                <Button Name="Approve"
+                        Access="Public"
+                        Text="{Loc 'cargo-console-menu-order-row-button-approve'}"
+                        StyleClasses="OpenRight"
+                        HorizontalExpand="True"/>
 
-            <Button Name="Cancel"
-                    Access="Public"
-                    Text="{Loc 'cargo-console-menu-order-row-button-cancel'}"
-                    StyleClasses="OpenLeft"
-                    HorizontalExpand="True" />
+                <Button Name="Cancel"
+                        Access="Public"
+                        Text="{Loc 'cargo-console-menu-order-row-button-cancel'}"
+                        StyleClasses="OpenLeft"
+                        HorizontalExpand="True" />
+            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </PanelContainer>

@@ -30,9 +30,9 @@ namespace Content.Client.Cargo.UI
         private readonly EntityQuery<CargoOrderConsoleComponent> _orderConsoleQuery;
         private readonly EntityQuery<StationBankAccountComponent> _bankQuery;
 
-        public event Action<ButtonEventArgs>? OnItemSelected;
-        public event Action<ButtonEventArgs>? OnOrderApproved;
-        public event Action<ButtonEventArgs>? OnOrderCanceled;
+        public event Action<CargoProductRow?>? OnItemSelected;
+        public event Action<CargoOrderData?>? OnOrderApproved;
+        public event Action<CargoOrderData?>? OnOrderCanceled;
 
         public event Action<ProtoId<CargoAccountPrototype>?, int>? OnAccountAction;
 
@@ -165,7 +165,7 @@ namespace Content.Client.Cargo.UI
                     };
                     button.MainButton.OnPressed += args =>
                     {
-                        OnItemSelected?.Invoke(args);
+                        OnItemSelected?.Invoke(button);
                     };
                     Products.AddChild(button);
                 }
@@ -266,11 +266,11 @@ namespace Content.Client.Cargo.UI
                     }
                 };
 
-                row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
+                row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(order); };
 
                 // TODO: Disable based on access.
                 row.SetApproveVisible(orderConsole.Mode != CargoOrderConsoleMode.SendToPrimary);
-                row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
+                row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(order); };
                 Requests.AddChild(row);
             }
         }
