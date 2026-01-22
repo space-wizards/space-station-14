@@ -785,8 +785,26 @@ TorsoSkeleton: OrganSkeletonPersonTorso
 RightArmSkeleton: OrganSkeletonPersonArmRight
 
 # 2026-01-19
+TowelColorPurple: null
+TowelColorRed: null
+TowelColorBlue: null
+TowelColorDarkBlue: null
+TowelColorLightBlue: null
+TowelColorTeal: null
+TowelColorBrown: null
+TowelColorLightBrown: null
+TowelColorGray: null
+TowelColorGreen: null
+TowelColorDarkGreen: null
+TowelColorGold: null
 TowelColorOrange: null
+TowelColorBlack: null
+TowelColorPink: null
+TowelColorYellow: null
+TowelColorMaroon: null
+TowelColorSilver: null
+TowelColorMime: null
 
-# 2026-01-20
+# 2026-01-22
 DrinkIceJug: DrinkIceBucket
 DrinkMeadJug: null

@@ -1,3 +1,37 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Diona
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Head:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Overlay:
+      limit: 1
+      required: true
+      default: [ DionaVineOverlay ]
+
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceDiona
@@ -11,25 +45,23 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: EntityTableContainerFill
-    containers:
-      body_organs: !type:AllSelector
-        children:
-        - id: OrganDionaTorso
-        - id: OrganDionaHead
-        - id: OrganDionaArmLeft
-        - id: OrganDionaArmRight
-        - id: OrganDionaHandRight
-        - id: OrganDionaHandLeft
-        - id: OrganDionaLegLeft
-        - id: OrganDionaLegRight
-        - id: OrganDionaFootLeft
-        - id: OrganDionaFootRight
-        - id: OrganDionaBrainNymphing
-        - id: OrganDionaEyes
-        - id: OrganDionaLungsNymphing
-        - id: OrganDionaStomachNymphing
-  - type: HumanoidAppearance
+  - type: InitialBody
+    organs:
+      Torso: OrganDionaTorso
+      Head: OrganDionaHead
+      ArmLeft: OrganDionaArmLeft
+      ArmRight: OrganDionaArmRight
+      HandRight: OrganDionaHandRight
+      HandLeft: OrganDionaHandLeft
+      LegLeft: OrganDionaLegLeft
+      LegRight: OrganDionaLegRight
+      FootLeft: OrganDionaFootLeft
+      FootRight: OrganDionaFootRight
+      Brain: OrganDionaBrainNymphing
+      Eyes: OrganDionaEyes
+      Lungs: OrganDionaLungsNymphing
+      Stomach: OrganDionaStomachNymphing
+  - type: HumanoidProfile
     species: Diona
 
 - type: entity
@@ -161,7 +193,18 @@
     sprite: Mobs/Species/Diona/organs.rsi
 
 - type: entity
-  parent: OrganDiona
+  id: OrganDionaVisual
+  abstract: true
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Diona/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Diona
+
+- type: entity
+  parent: [ OrganDiona, OrganDionaVisual ]
   id: OrganDionaExternal
   abstract: true
   components:
@@ -213,8 +256,13 @@
   id: OrganDionaBrain
 
 - type: entity
-  parent: [ OrganBaseEyes, OrganDionaInternal ]
+  parent: [ OrganDionaVisual, OrganBaseEyes, OrganDionaInternal ]
   id: OrganDionaEyes
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Customization/eyes.rsi
+      state: diona
 
 - type: entity
   parent: [ OrganBaseLungs, OrganDionaInternal, OrganDionaMetabolizer ]
