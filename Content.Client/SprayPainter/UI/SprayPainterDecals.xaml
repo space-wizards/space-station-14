@@ -29,12 +29,12 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'spray-painter-angle-rotation'}" />
             <SpinBox Name="AngleSpinBox" HorizontalExpand="True" />
-            <Button Name="SubAngleButton" ToolTip="{Loc 'spray-painter-angle-rotation-90-sub'}" SetSize="48 32">
-                <TextureRect TexturePath="/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png" Stretch="KeepAspectCentered" SetSize="32 32" />
-            </Button>
-            <Button Text="{Loc 'spray-painter-angle-rotation-reset'}" Name="SetZeroAngleButton" />
             <Button Name="AddAngleButton" ToolTip="{Loc 'spray-painter-angle-rotation-90-add'}" SetSize="48 32">
                 <TextureRect TexturePath="/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png" Stretch="KeepAspectCentered" SetSize="32 32" />
+            </Button>
+            <Button Text="{Loc 'spray-painter-angle-rotation-reset'}" Name="SetZeroAngleButton" />
+            <Button Name="SubAngleButton" ToolTip="{Loc 'spray-painter-angle-rotation-90-sub'}" SetSize="48 32">
+                <TextureRect TexturePath="/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png" Stretch="KeepAspectCentered" SetSize="32 32" />
             </Button>
         </BoxContainer>
     </BoxContainer>
