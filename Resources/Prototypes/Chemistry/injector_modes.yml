@@ -127,7 +127,7 @@
   abstract: true
   parent: BaseHyposprayMode
   id: BaseJetInjectorMode
-  injectSound: /Audio/Items/jet_injector.ogg
+  injectSound: /Audio/Items/Medical/jet_injector.ogg
   popupUserAttempt: injector-component-spray-injecting-user
   popupTargetAttempt: injector-component-spray-injecting-target
 

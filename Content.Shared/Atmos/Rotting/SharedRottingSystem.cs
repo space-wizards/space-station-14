@@ -31,21 +31,22 @@ public abstract class SharedRottingSystem : EntitySystem
         SubscribeLocalEvent<RottingComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnPerishableMapInit(EntityUid uid, PerishableComponent component, MapInitEvent args)
+    private void OnPerishableMapInit(Entity<PerishableComponent> ent, ref MapInitEvent args)
     {
-        component.RotNextUpdate = _timing.CurTime + component.PerishUpdateRate;
+        ent.Comp.RotNextUpdate = _timing.CurTime + ent.Comp.PerishUpdateRate;
     }
 
-    private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
+    private void OnMobStateChanged(Entity<PerishableComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState != MobState.Dead && args.OldMobState != MobState.Dead)
             return;
 
-        if (HasComp<RottingComponent>(uid))
+        if (HasComp<RottingComponent>(ent))
             return;
 
-        component.RotAccumulator = TimeSpan.Zero;
-        component.RotNextUpdate = _timing.CurTime + component.PerishUpdateRate;
+        ent.Comp.RotAccumulator = TimeSpan.Zero;
+        ent.Comp.RotNextUpdate = _timing.CurTime + ent.Comp.PerishUpdateRate;
+        DirtyField(ent.Owner, ent.Comp, nameof(PerishableComponent.RotAccumulator));
     }
 
     private void OnPerishableExamined(Entity<PerishableComponent> perishable, ref ExaminedEvent args)
@@ -62,9 +63,9 @@ public abstract class SharedRottingSystem : EntitySystem
         args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(perishable, EntityManager))));
     }
 
-    private void OnShutdown(EntityUid uid, RottingComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<RottingComponent> ent, ref ComponentShutdown args)
     {
-        if (TryComp<PerishableComponent>(uid, out var perishable))
+        if (TryComp<PerishableComponent>(ent, out var perishable))
         {
             perishable.RotNextUpdate = TimeSpan.Zero;
         }
@@ -74,6 +75,7 @@ public abstract class SharedRottingSystem : EntitySystem
     {
         if (args.NewMobState == MobState.Dead)
             return;
+
         RemCompDeferred(uid, component);
     }
 
@@ -148,6 +150,7 @@ public abstract class SharedRottingSystem : EntitySystem
         if (!TryComp<RottingComponent>(uid, out var rotting))
         {
             perishable.RotAccumulator -= time;
+            DirtyField(uid, perishable, nameof(PerishableComponent.RotAccumulator));
             return;
         }
         var total = (rotting.TotalRotTime + perishable.RotAccumulator) - time;
@@ -156,8 +159,8 @@ public abstract class SharedRottingSystem : EntitySystem
         {
             RemCompDeferred(uid, rotting);
             perishable.RotAccumulator = total;
+            DirtyField(uid, perishable, nameof(PerishableComponent.RotAccumulator));
         }
-
         else
             rotting.TotalRotTime = total - perishable.RotAfter;
     }
