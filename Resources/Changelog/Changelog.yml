@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Removing displaced markings no longer makes the renderer give up.
-    type: Fix
-  - message: Vulpkanin can once again use normal human hair.
-    type: Fix
-  id: 8939
-  time: '2025-09-07T14:36:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40171
 - author: ArtisticRoomba
   changes:
   - message: Atmospherics Delta-Pressure now has a short guidebook entry. You can
@@ -3965,3 +3956,13 @@
   id: 9445
   time: '2026-01-22T17:46:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39161
+- author: SabreML
+  changes:
+  - message: Added a colour picker and colour palette selector to the Spraypainter's
+      decal menu.
+    type: Add
+  - message: Made a few other tweaks to the Spraypainter's UI as well.
+    type: Tweak
+  id: 9446
+  time: '2026-01-22T18:02:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41943
