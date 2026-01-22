@@ -31,9 +31,9 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
         _orderedButtons.Add(newButton);
 
         _grid.RemoveAllChildren();
-        var enumerable = PlayerHandsComponent?.SortedHands is { } sortedHands ?
-            _orderedButtons.OrderBy(it => sortedHands.IndexOf(it.SlotName)) :
-            _orderedButtons.OrderBy(it => it.HandLocation);
+        var enumerable = PlayerHandsComponent?.SortedHands is { } sortedHands
+            ? _orderedButtons.OrderBy(it => sortedHands.IndexOf(it.SlotName))
+            : _orderedButtons.OrderBy(it => it.HandLocation);
         foreach (var button in enumerable)
         {
             _grid.AddChild(button);
