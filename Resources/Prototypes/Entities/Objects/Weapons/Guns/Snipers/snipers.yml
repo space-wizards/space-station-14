@@ -88,6 +88,9 @@
   - type: GunRequiresWield
   - type: StaticPrice
     price: 500
+  - type: Tag
+    tags:
+    - Rifle
 
 - type: entity
   name: Hristov
@@ -165,6 +168,9 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: GunRequiresWield
+  - type: Tag
+    tags:
+    - Rifle
 
 - type: entity
   name: flintlock pistol

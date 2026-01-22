@@ -213,6 +213,9 @@
     containers:
       ballistic-ammo: !type:Container
         ents: []
+  - type: Tag
+    tags:
+    - Sidearm
 
 - type: entity
   parent: BaseItem

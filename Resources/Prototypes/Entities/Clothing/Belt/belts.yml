@@ -113,12 +113,14 @@
       - state: icon
   - type: Clothing
     sprite: Clothing/Belt/holster.rsi
+  - type: Appearance
+  - type: UseDelay
   - type: ContainerContainer
     containers:
-      storagebase: !type:Container
-        ents: []
-      utility_slot: !type:ContainerSlot
-         sidearm_slot: !type:ContainerSlot
+    storagebase: !type:Container
+    ents: []
+    utility_slot: !type:ContainerSlot
+    sidearm_slot: !type:ContainerSlot
   - type: Item
     size: Ginormous
   - type: ItemSlots
@@ -194,8 +196,6 @@
         whitelist:
           tags:
           - Truncheon
-  - type: Appearance
-  - type: UseDelay
 
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
@@ -207,13 +207,15 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
+  - type: Appearance
+  - type: UseDelay
   - type: ContainerContainer
     containers:
-      storagebase: !type:Container
-        ents: []
-      upgraded_utility_slot: !type:ContainerSlot
-        upgraded_sidearm_slot: !type:ContainerSlot
-          gun_slot: !type:ContainerSlot
+    storagebase: !type:Container
+    ents: []
+    upgraded_utility_slot: !type:ContainerSlot
+    upgraded_sidearm_slot: !type:ContainerSlot
+    gun_slot: !type:ContainerSlot
   - type: Item
     size: Ginormous
   - type: ItemSlots
@@ -225,7 +227,7 @@
         whitelist:
           tags:
           - Shotgun
-          - AssaultRifle
+          - Rifle
           - EnergyWeapon
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/long_gun_insert.ogg
@@ -332,16 +334,14 @@
         whitelist:
           tags:
           - SubMachineGun
-      icon_assault_rifle:
+      icon_rifle:
         whitelist:
           tags:
-          - AssaultRifle
+          - Rifle
       icon_energy_weapon:
         whitelist:
           tags:
           - EnergyWeapon
-  - type: Appearance
-  - type: UseDelay
 
 ## Webbing
 

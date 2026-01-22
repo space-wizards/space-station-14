@@ -8,7 +8,7 @@
   - type: Sprite
   - type: Tag
     tags:
-    - AssaultRifle
+    - Rifle
   - type: Item
     size: Huge
     shape:
@@ -321,3 +321,6 @@
   - type: PacifismAllowedGun
   - type: StaticPrice
     price: 100
+  - type: Tag
+    tags:
+    - Rifle

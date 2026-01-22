@@ -42,9 +42,6 @@
 - type: Tag
   id: ArtifactFragment # Storage whitelist: OreBag. CargoBounty: BountyArtifactFragment. ConstructionGraph: Artifact
 
-- type: Tag
-  id: AssaultRifle # Storage whitelist: ClothingBeltSyndieHolster
-
 ## B ##
 
 - type: Tag
@@ -1208,6 +1205,9 @@
 
 - type: Tag
   id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
+
+- type: Tag
+  id: Rifle # Storage whitelist: ClothingBeltSyndieHolster
 
 - type: Tag
   id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
