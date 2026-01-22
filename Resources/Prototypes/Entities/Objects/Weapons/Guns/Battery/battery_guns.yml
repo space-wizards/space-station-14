@@ -796,6 +796,7 @@
 - type: entity
   parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
   id: WeaponPistolCHIMPUpgraded
+  suffix: Syndicate
   components:
   - type: BatteryWeaponFireModes
     fireModes:
