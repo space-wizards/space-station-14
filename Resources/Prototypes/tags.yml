@@ -1198,6 +1198,9 @@
   id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
 
 - type: Tag
+  id: RiftHealAura # Dragon rift heal you
+
+- type: Tag
   id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
 
 - type: Tag

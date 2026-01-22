@@ -156,6 +156,7 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - RiftHealAura
     - StunImmune
   - type: Puller
     needsHands: false
