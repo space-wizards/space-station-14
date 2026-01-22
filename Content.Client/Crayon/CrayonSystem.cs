@@ -1,67 +1,52 @@
 using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Crayon;
 
 public sealed class CrayonSystem : SharedCrayonSystem
 {
-    // Didn't do in shared because I don't think most of the server stuff can be predicted.
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<CrayonComponent, ComponentHandleState>(OnCrayonHandleState);
-        Subs.ItemStatus<CrayonComponent>(ent => new StatusControl(ent));
-    }
 
-    private static void OnCrayonHandleState(EntityUid uid, CrayonComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not CrayonComponentState state) return;
-
-        component.Color = state.Color;
-        component.SelectedState = state.State;
-        component.Charges = state.Charges;
-        component.Capacity = state.Capacity;
-
-        component.UIUpdateNeeded = true;
+        Subs.ItemStatus<CrayonComponent>(ent => new StatusControl(ent, _charges, _entityManager));
     }
 
     private sealed class StatusControl : Control
     {
-        private readonly CrayonComponent _parent;
+        private readonly Entity<CrayonComponent> _crayon;
+        private readonly SharedChargesSystem _charges;
         private readonly RichTextLabel _label;
+        private readonly int _capacity;
 
-        public StatusControl(CrayonComponent parent)
+        public StatusControl(Entity<CrayonComponent> crayon, SharedChargesSystem charges, EntityManager entityManage)
         {
-            _parent = parent;
-            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            _crayon = crayon;
+            _charges = charges;
+            _capacity = entityManage.GetComponent<LimitedChargesComponent>(_crayon.Owner).MaxCharges;
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
-
-            parent.UIUpdateNeeded = true;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
 
-            if (!_parent.UIUpdateNeeded)
-            {
-                return;
-            }
-
-            _parent.UIUpdateNeeded = false;
             _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label",
-                ("color",_parent.Color),
-                ("state",_parent.SelectedState),
-                ("charges", _parent.Charges),
-                ("capacity",_parent.Capacity)));
+                ("color",_crayon.Comp.Color),
+                ("state",_crayon.Comp.SelectedState),
+                ("charges", _charges.GetCurrentCharges(_crayon.Owner)),
+                ("capacity", _capacity)));
         }
     }
 }

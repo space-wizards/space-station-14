@@ -13,6 +13,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Forensics.Systems;
+using Content.Shared.Gibbing;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
@@ -39,7 +40,7 @@ namespace Content.Server.Forensics
             // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(BloodstreamSystem) });
 
-            SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
+            SubscribeLocalEvent<ForensicsComponent, GibbedBeforeDeletionEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
@@ -85,14 +86,14 @@ namespace Content.Server.Forensics
             }
         }
 
-        private void OnBeingGibbed(EntityUid uid, ForensicsComponent component, BeingGibbedEvent args)
+        private void OnBeingGibbed(Entity<ForensicsComponent> ent, ref GibbedBeforeDeletionEvent args)
         {
             string dna = Loc.GetString("forensics-dna-unknown");
 
-            if (TryComp(uid, out DnaComponent? dnaComp) && dnaComp.DNA != null)
+            if (TryComp(ent, out DnaComponent? dnaComp) && dnaComp.DNA != null)
                 dna = dnaComp.DNA;
 
-            foreach (EntityUid part in args.GibbedParts)
+            foreach (var part in args.Giblets)
             {
                 var partComp = EnsureComp<ForensicsComponent>(part);
                 partComp.DNAs.Add(dna);
@@ -307,6 +308,8 @@ namespace Content.Server.Forensics
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
         }
 
+        // TODO: Delete this. A lot of systems are manually raising this method event instead of calling the identical <see cref="TransferDna"/> method.
+        // According to our code conventions we should not use method events.
         private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
         {
             if (component.DNA == null)
@@ -339,13 +342,7 @@ namespace Content.Server.Forensics
             Dirty(ent);
         }
 
-        /// <summary>
-        /// Transfer DNA from one entity onto the forensics of another
-        /// </summary>
-        /// <param name="recipient">The entity receiving the DNA</param>
-        /// <param name="donor">The entity applying its DNA</param>
-        /// <param name="canDnaBeCleaned">If this DNA be cleaned off of the recipient. e.g. cleaning a knife vs cleaning a puddle of blood</param>
-        public void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true)
+        public override void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true)
         {
             if (TryComp<DnaComponent>(donor, out var donorComp) && donorComp.DNA != null)
             {

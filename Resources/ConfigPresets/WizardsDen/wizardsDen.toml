@@ -11,11 +11,11 @@ panic_bunker.min_overall_minutes = 120
 panic_bunker.disable_with_admins = true
 panic_bunker.enable_without_admins = true
 panic_bunker.show_reason = true
-panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on Wizard's Den Lizard until you have more playtime."
+panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on Wizard's Den Lizard or Wizard's Den Leviathan until you have more playtime."
 
 # IPIntel stuff
 ipintel_enabled = true
-ipintel_contact_email = "telecommunications@spacestation14.com"
+ipintel_contact_email = "support@spacestation14.com"
 ipintel_bad_rating = 0.99
 ipintel_alert_admin_warn_rating = 0.95
 

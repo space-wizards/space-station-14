@@ -1,7 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Examine;
 using Content.Shared.Item;
-using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
@@ -24,7 +24,7 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<HandheldLightComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandheldLightComponent, ComponentHandleState>(OnHandleState);
-
+        SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
     }
 
@@ -43,6 +43,13 @@ public abstract class SharedHandheldLightSystem : EntitySystem
 
         component.Level = state.Charge;
         SetActivated(uid, state.Activated, component, false);
+    }
+
+    private void OnExamine(EntityUid uid, HandheldLightComponent component, ExaminedEvent args)
+    {
+        args.PushMarkup(component.Activated
+            ? Loc.GetString("handheld-light-component-on-examine-is-on-message")
+            : Loc.GetString("handheld-light-component-on-examine-is-off-message"));
     }
 
     public void SetActivated(EntityUid uid, bool activated, HandheldLightComponent? component = null, bool makeNoise = true)

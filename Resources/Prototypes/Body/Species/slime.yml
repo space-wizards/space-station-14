@@ -1,0 +1,281 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Slime
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+  appearances:
+    enum.HumanoidVisualLayers.Hair:
+      layerAlpha: 0.72
+      matchSkin: true
+    enum.HumanoidVisualLayers.FacialHair:
+      layerAlpha: 0.72
+      matchSkin: true
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceSlimePerson
+  name: SlimePerson appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: InitialBody
+    organs:
+      Torso: OrganSlimePersonTorso
+      Head: OrganSlimePersonHead
+      ArmLeft: OrganSlimePersonArmLeft
+      ArmRight: OrganSlimePersonArmRight
+      HandRight: OrganSlimePersonHandRight
+      HandLeft: OrganSlimePersonHandLeft
+      LegLeft: OrganSlimePersonLegLeft
+      LegRight: OrganSlimePersonLegRight
+      FootLeft: OrganSlimePersonFootLeft
+      FootRight: OrganSlimePersonFootRight
+      Brain: OrganSlimePersonCore
+      Lungs: OrganSlimePersonLungs
+  - type: HumanoidProfile
+    species: SlimePerson
+
+- type: entity
+  parent:
+  - AppearanceSlimePerson
+  - BaseSpeciesMobOrganic
+  id: MobSlimePerson
+  name: Urist McWobble
+  components:
+  - type: Storage
+    clickInsert: false
+    grid:
+    - 0,0,1,2
+    maxItemSize: Large
+    storageInsertSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: UseDelay
+    delay: 0.5
+  - type: Speech
+    speechVerb: Slime
+    speechSounds: Slime
+    allowedEmotes: ['Squish']
+  - type: TypingIndicator
+    proto: slime
+  - type: Vocal
+    sounds:
+      Male: MaleSlime
+      Female: FemaleSlime
+      Unsexed: MaleSlime
+  - type: Damageable
+    damageModifierSet: Slime
+  - type: PassiveDamage # Around 8 damage a minute healed
+    allowedStates:
+    - Alive
+    damageCap: 65
+    damage:
+      types:
+        Heat: -0.14
+      groups:
+        Brute: -0.14
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#2cf274"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: Bloodstream
+    bloodReferenceSolution: # TODO Color slime blood based on their slime color or smth
+      reagents:
+      - ReagentId: Slime
+        Quantity: 300
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.50 #per second, scales with pressure and other constants.
+        Heat: 0.2 # 0.1 more than humans, i feel like low pressure would make slime boil more than blunt stretch them so i decided on this instead.
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPie
+    - reagents: [ Water ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 0.05
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "slime-hurt-by-water-popup" ]
+        probability: 0.25
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatSlime
+      amount: 5
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+    maxSaturation: 15
+
+- type: entity
+  parent: OrganBase
+  id: OrganSlimePerson
+  abstract: true
+  suffix: slime person
+
+- type: entity
+  id: OrganSlimePersonMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Slime ]
+
+- type: entity
+  parent: OrganSlimePerson
+  id: OrganSlimePersonInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Slime/organs.rsi
+
+- type: entity
+  parent: OrganSlimePerson
+  id: OrganSlimePersonExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Slime/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Slime/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Slime
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganSlimePersonExternal ]
+  id: OrganSlimePersonTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganSlimePersonExternal ]
+  id: OrganSlimePersonHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganSlimePersonExternal ]
+  id: OrganSlimePersonArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganSlimePersonExternal ]
+  id: OrganSlimePersonArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganSlimePersonExternal ]
+  id: OrganSlimePersonHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganSlimePersonExternal ]
+  id: OrganSlimePersonHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganSlimePersonExternal ]
+  id: OrganSlimePersonLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganSlimePersonExternal ]
+  id: OrganSlimePersonLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganSlimePersonExternal ]
+  id: OrganSlimePersonFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganSlimePersonExternal ]
+  id: OrganSlimePersonFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganSlimePersonInternal, OrganSlimePersonMetabolizer ]
+  id: OrganSlimePersonCore
+  name: sentient slime core
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50.0
+  - type: Stomach
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [ Slime ]
+    removeEmpty: true
+    groups:
+    - id: Food
+    - id: Drink
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+    - id: Alcohol
+      rateModifier: 2.5
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganSlimePersonInternal, OrganSlimePersonMetabolizer ]
+  id: OrganSlimePersonLungs
+  name: gas sacs
+  components:
+  - type: Lung
+    alert: LowNitrogen

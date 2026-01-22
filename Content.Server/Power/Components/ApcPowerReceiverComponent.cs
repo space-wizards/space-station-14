@@ -33,8 +33,6 @@ namespace Content.Server.Power.Components
             set
             {
                 _needsPower = value;
-                // Reset this so next tick will do a power update.
-                Recalculate = true;
             }
         }
 
@@ -50,9 +48,6 @@ namespace Content.Server.Power.Components
             get => !NetworkLoad.Enabled;
             set => NetworkLoad.Enabled = !value;
         }
-
-        // TODO Is this needed? It forces a PowerChangedEvent when NeedsPower is toggled even if it changes to the same state.
-        public bool Recalculate;
 
         [ViewVariables]
         public PowerState.Load NetworkLoad { get; } = new PowerState.Load

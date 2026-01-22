@@ -13,6 +13,7 @@ admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
 admin-smite-super-speed-prompt = You move at mach 0.8!
 admin-smite-lung-removal-self = You can't breathe!
+admin-smite-silicon-laws-bound-self = You are suddenly compelled to follow a strict set of laws!
 
 ## Smite names
 
@@ -35,6 +36,7 @@ admin-smite-buffering-name = Buffering
 admin-smite-become-instrument-name = Become Instrument
 admin-smite-remove-gravity-name = Remove Gravity
 admin-smite-reptilian-species-swap-name = Become Reptilian
+admin-smite-vulpkanin-species-swap-name = Become Vulpkanin
 admin-smite-locker-stuff-name = Locker Stuff
 admin-smite-headstand-name = Headstand
 admin-smite-become-mouse-name = Become Mouse
@@ -56,8 +58,12 @@ admin-smite-vomit-organs-name = Vomit Organs
 admin-smite-ghostkick-name = Ghost Kick
 admin-smite-nyanify-name = Cat Ears
 admin-smite-kill-sign-name = Kill Sign
+admin-smite-kill-sign-hidden-name = Hidden Kill Sign
 admin-smite-omni-accent-name = Omni-Accent
 admin-smite-crawler-name = Crawler
+admin-smite-homing-rod-name = Homing Rod
+admin-smite-homing-rod-slow-name = Slowming Rod
+admin-smite-silicon-laws-bound-name = Become Silicon
 
 ## Smite descriptions
 
@@ -77,6 +83,7 @@ admin-smite-become-bread-description = It turns them into bread. Really, that's 
 admin-smite-ghostkick-description = Silently kicks the user, dropping their connection.
 admin-smite-nyanify-description = Forcibly add cat ears, there is no escape.
 admin-smite-kill-sign-description = Marks a player for death by their fellows.
+admin-smite-kill-sign-hidden-description = Marks a player for death by their fellows. Hidden from the targeted player.
 admin-smite-cluwne-description = Cluwnes them. The suit cannot be removed and the station's crew may murder them freely.
 admin-smite-anger-pointing-arrows-description = Angers the pointing arrows, causing them to assault this entity explosively.
 admin-smite-dust-description = Reduces the target to a small pile of ash.
@@ -84,6 +91,7 @@ admin-smite-buffering-description = Causes the target to randomly start bufferin
 admin-smite-become-instrument-description = It turns them into a supersynth. Really. That's all it does.
 admin-smite-remove-gravity-description = Grants them anti-gravity.
 admin-smite-reptilian-species-swap-description = It changes their species to Reptilian. Useful for people who were being space racist.
+admin-smite-vulpkanin-species-swap-description = It changes their species to Vulpkanin. Useful for people who were being space racist.
 admin-smite-locker-stuff-description = Stuffs them in a (welded) locker.
 admin-smite-headstand-description = Vertically flips their sprite.
 admin-smite-become-mouse-description = They become a mouse. Squeak!
@@ -103,6 +111,9 @@ admin-smite-terminate-description = Creates a Terminator ghost role with the sol
 admin-smite-super-slip-description = Slips them really, really hard.
 admin-smite-omni-accent-description = Makes the target speak with almost every accent available.
 admin-smite-crawler-description = Makes the target fall down and be unable to stand up. Remove their hands too for added effect!
+admin-smite-homing-rod-description = Launches a homing immovable rod straight at them.
+admin-smite-homing-rod-slow-description = Launches a slow moving homing immovable rod straight at them.
+admin-smite-silicon-laws-bound-description = Makes the target bound to silicon laws. Law 2, jump out of the window.
 
 ## Tricks descriptions
 

@@ -181,14 +181,14 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         if (ent.Comp.Group is not { } group
             || !painter.StylesByGroup.TryGetValue(group, out var selectedStyle)
-            || !Proto.TryIndex(group, out PaintableGroupPrototype? targetGroup))
+            || !Proto.Resolve(group, out PaintableGroupPrototype? targetGroup))
             return;
 
         // Valid paint target.
         args.Handled = true;
 
         if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
-            && charges.LastCharges < targetGroup.Cost)
+            && Charges.GetCurrentCharges((args.Used, charges)) < targetGroup.Cost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupClient(msg, args.User, args.User);

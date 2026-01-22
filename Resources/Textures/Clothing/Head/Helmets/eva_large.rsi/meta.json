@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Sprite edited by Flareguy for SS14, original unedited sprite can be found in https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a. equipped-HELMET-dog modified from equipped-HELMET in parts and collaboration by Sparlight (GitHub) and Raccoononi (GitHub).",
+    "copyright": "Sprite edited by Flareguy for SS14, original unedited sprite can be found in https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a. equipped-HELMET-dog modified from equipped-HELMET in parts and collaboration by Sparlight (GitHub) and Raccoononi (GitHub). Vulpkanin and Reptilian states by TiniestShark (Github).",
     "size": {
         "x": 32,
         "y": 32
@@ -19,7 +19,15 @@
             "directions": 4
         },
         {
+            "name": "equipped-HELMET-reptilian",
+            "directions": 4
+        },
+        {
             "name": "equipped-HELMET-dog",
+            "directions": 4
+        },
+        {
+            "name": "equipped-HELMET-vulpkanin",
             "directions": 4
         },
         {

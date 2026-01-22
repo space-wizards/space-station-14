@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-    "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/740ff31a81313086cf16761f3677cf1e2ab46c93 and Taken from tgstation at https://github.com/tgstation/tgstation/blob/623290915c2292b56da11048deb62d758e1e3fb4/icons/obj/bloodpack.dmi, Blood pack redone by Ubaser. Taken from https://github.com/tgstation/tgstation/blob/a3568da5634e756d0849480104afda402c6f1c3c/icons/obj/medical/stack_medical.dmi. Tourniquet Sprite by PoorMansDreams, in-hand sprites of tourniquet, gauze, and bloodpack made by SeamLesss (github).",
+    "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/740ff31a81313086cf16761f3677cf1e2ab46c93 and Taken from tgstation at https://github.com/tgstation/tgstation/blob/623290915c2292b56da11048deb62d758e1e3fb4/icons/obj/bloodpack.dmi, Blood pack redone by Ubaser. Taken from https://github.com/tgstation/tgstation/blob/a3568da5634e756d0849480104afda402c6f1c3c/icons/obj/medical/stack_medical.dmi. Tourniquet Sprite by PoorMansDreams, in-hand sprites of tourniquet, gauze, and bloodpack made by SeamLesss (github). Ointment Storage by TiniestShark (Github)",
 	"size": {
 		"x": 32,
 		"y": 32
@@ -49,6 +49,9 @@
 		{
 			"name": "ointment"
 		},
+        {
+            "name": "ointment-storage"
+        },
 		{
 			"name": "ointment-inhand-left",
 			"directions": 4

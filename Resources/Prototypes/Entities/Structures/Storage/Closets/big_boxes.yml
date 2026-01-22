@@ -55,6 +55,7 @@
       node: basebigbox
       containers:
         - entity_storage
+    - type: GravityAffected
 
 - type: entity
   id: StealthBox

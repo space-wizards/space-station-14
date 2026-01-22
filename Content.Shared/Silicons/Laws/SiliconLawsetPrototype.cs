@@ -67,6 +67,12 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
+    /// The locstring of the lawset for the guidebook entry, if no name is provided, defaults to the ID
+    /// </summary>    
+    [DataField]
+    public LocId? Name = null;
+
+    /// <summary>
     /// List of law prototype ids in this lawset.
     /// </summary>
     [DataField(required: true)]

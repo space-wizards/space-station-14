@@ -15,7 +15,7 @@ public sealed class RoleSystem : SharedRoleSystem
     {
         if (mindId == null)
         {
-            Log.Error($"MingGetBriefing failed for mind {mindId}");
+            Log.Error($"MindGetBriefing failed for mind {mindId}");
             return null;
         }
 
@@ -23,7 +23,7 @@ public sealed class RoleSystem : SharedRoleSystem
 
         if (mindComp is null)
         {
-            Log.Error($"MingGetBriefing failed for mind {mindId}");
+            Log.Error($"MindGetBriefing failed for mind {mindId}");
             return null;
         }
 
@@ -49,7 +49,7 @@ public sealed class RoleSystem : SharedRoleSystem
         if (!Player.TryGetSessionById(mind.UserId, out var session))
             return;
 
-        if (!_proto.TryIndex(mind.RoleType, out var proto))
+        if (!_proto.Resolve(mind.RoleType, out var proto))
             return;
 
         var roleText = Loc.GetString(proto.Name);
