@@ -9,7 +9,6 @@
   - type: SmokeVisuals
   - type: Transform
     anchored: true
-  - type: Clickable
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -47,6 +46,29 @@
   - type: Tag
     tags:
     - HideContextMenu
+
+- type: entity
+  parent: BaseFoam
+  id: TearGasSmoke
+  name: tear gas
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: TearGasSmoke
+  id: TearGasSmokeWhite
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: chemsmoke_white
 
 - type: entity
   parent: Smoke

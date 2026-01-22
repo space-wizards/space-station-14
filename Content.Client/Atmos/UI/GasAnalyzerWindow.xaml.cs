@@ -136,6 +136,7 @@ namespace Content.Client.Atmos.UI
                 else
                 {
                     // oh shit of fuck its more than 4 this ui isn't gonna look pretty anymore
+                    CDeviceMixes.RemoveAllChildren();
                     for (var i = 1; i < msg.NodeGasMixes.Length; i++)
                     {
                         GenerateGasDisplay(msg.NodeGasMixes[i], CDeviceMixes);
@@ -207,7 +208,7 @@ namespace Content.Client.Atmos.UI
             });
             presBox.AddChild(new Label
             {
-                Text = Loc.GetString("gas-analyzer-window-pressure-val-text", ("pressure", $"{gasMix.Pressure:0.##}")),
+                Text = Loc.GetString("gas-analyzer-window-pressure-val-text", ("pressure", $"{gasMix.Pressure:0.00}")),
                 Align = Label.AlignMode.Right,
                 HorizontalExpand = true
             });
@@ -231,8 +232,8 @@ namespace Content.Client.Atmos.UI
                 tempBox.AddChild(new Label
                 {
                     Text = Loc.GetString("gas-analyzer-window-temperature-val-text",
-                        ("tempK", $"{gasMix.Temperature:0.#}"),
-                        ("tempC", $"{TemperatureHelpers.KelvinToCelsius(gasMix.Temperature):0.#}")),
+                        ("tempK", $"{gasMix.Temperature:0.0}"),
+                        ("tempC", $"{TemperatureHelpers.KelvinToCelsius(gasMix.Temperature):0.0}")),
                     Align = Label.AlignMode.Right,
                     HorizontalExpand = true
                 });

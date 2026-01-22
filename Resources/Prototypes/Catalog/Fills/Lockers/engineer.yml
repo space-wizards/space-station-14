@@ -227,8 +227,39 @@
   table: !type:AllSelector
     children:
     - id: ClothingOuterSuitRad
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: GeigerCounter
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
+    - id: PillCanisterPotassiumIodide
+      prob: 0.75
+
+- type: entity
+  parent: LockerEvacRepair
+  id: LockerEvacRepairFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEvacRepair
+
+- type: entity
+  parent: LockerWallEvacRepair
+  id: LockerWallEvacRepairFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEvacRepair
+
+- type: entityTable
+  id: FillLockerEvacRepair
+  table: !type:AllSelector
+    children:
+    - id: BoxInflatable
+    - id: HolofanProjector
+    - id: MetalFoamGrenade
+      amount: 3
+    - id: AirGrenade
+      amount: 3

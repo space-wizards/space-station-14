@@ -151,9 +151,41 @@
   objectType: Item
 
 - type: construction
+  id: RepairMothershipPinpointer
+  graph: RepairMothershipPinpointer
+  startNode: start
+  targetNode: repairedPinpointer
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
   id: HardsuitGoliath
   graph: HardsuitGoliath
   startNode: start
   targetNode: hardsuitGoliath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: scraparmor
+  graph: scraparmor
+  startNode: start
+  targetNode: scraparmorfinished
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: scraphelmet
+  graph: scraphelmet
+  startNode: start
+  targetNode: scraphelmet
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ClothingBagPet
+  graph: ClothingBagPet
+  startNode: start
+  targetNode: bagPet
   category: construction-category-clothing
   objectType: Item

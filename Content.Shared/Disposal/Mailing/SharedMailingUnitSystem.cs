@@ -156,7 +156,7 @@ public abstract class SharedMailingUnitSystem : EntitySystem
         if (args.Handled || !args.Complex)
             return;
 
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp(args.User, out ActorComponent? actor))
         {
             return;
         }

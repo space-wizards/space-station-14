@@ -2,13 +2,14 @@
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodNoodlesBase
-  abstract: true
   description: Now that's a nice pasta!
   components:
   - type: Item
-    storedRotation: -90
+    shape:
+    - 0,0,1,0
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
   - type: SolutionContainerManager
@@ -22,11 +23,13 @@
 # Noodles
 
 - type: entity
-  name: boiled spaghetti
   parent: FoodNoodlesBase
   id: FoodNoodlesBoiled
+  name: boiled spaghetti
   description: A plain dish of noodles, this needs more ingredients.
   components:
+  - type: Item
+    storedOffset: 0,-4
   - type: FlavorProfile
     flavors:
       - pasta
@@ -35,11 +38,13 @@
 # Tastes like pasta.
 
 - type: entity
-  name: spaghetti
   parent: FoodNoodlesBase
   id: FoodNoodles
+  name: spaghetti
   description: Spaghetti and crushed tomatoes. Just like your abusive father used to make!
   components:
+  - type: Item
+    storedOffset: 0,-4
   - type: FlavorProfile
     flavors:
       - pasta
@@ -59,12 +64,16 @@
 # Tastes like pasta, tomato.
 
 - type: entity
-  name: copypasta
   parent: FoodNoodlesBase
   id: FoodNoodlesCopy
+  name: copypasta
   description: You probably shouldn't try this, you always hear people talking about how bad it is...
   components:
-  - type: Food
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: Edible
     trash:
     - FoodPlateSmall
     - FoodPlateSmall
@@ -83,11 +92,13 @@
 # Tastes like pasta, bad humor.
 
 - type: entity
-  name: spaghetti and meatballs
   parent: FoodNoodlesBase
   id: FoodNoodlesMeatball
+  name: spaghetti and meatballs
   description: Now that's a nice-a meatball!
   components:
+  - type: Item
+    storedOffset: 0,-4
   - type: FlavorProfile
     flavors:
       - pasta
@@ -109,11 +120,13 @@
 # Tastes like pasta, meat.
 
 - type: entity
-  name: spesslaw
   parent: FoodNoodlesBase
   id: FoodNoodlesSpesslaw
+  name: spesslaw
   description: A lawyer's favourite.
   components:
+  - type: Item
+    storedOffset: 0,-4
   - type: FlavorProfile
     flavors:
       - pasta
@@ -159,11 +172,13 @@
 # Tastes like pasta, tomato.
 
 - type: entity
-  name: butter noodles
   parent: FoodNoodlesBase
   id: FoodNoodlesButter
+  name: butter noodles
   description: Noodles covered in savory butter. Simple and slippery, but delicious.
   components:
+  - type: Item
+    storedOffset: 0,-4
   - type: FlavorProfile
     flavors:
       - pasta

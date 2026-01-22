@@ -11,7 +11,6 @@ public sealed class ActionUpgradeSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -54,7 +53,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
 
         // TODO: Preserve ordering of actions
 
-        _entityManager.DeleteEntity(uid);
+        Del(uid);
     }
 
     public bool TryUpgradeAction(EntityUid? actionId, out EntityUid? upgradeActionId, ActionUpgradeComponent? actionUpgradeComponent = null, int newLevel = 0)
@@ -185,7 +184,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
 
         // TODO: Preserve ordering of actions
 
-        _entityManager.DeleteEntity(actionId);
+        Del(actionId);
 
         return upgradedActionId.Value;
     }

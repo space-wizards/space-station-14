@@ -5,7 +5,7 @@ namespace Content.Shared.Sound.Components;
 /// <summary>
 /// Simple sound emitter that emits sound on ActivateInWorld
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class EmitSoundOnActivateComponent : BaseEmitSoundComponent
 {
     /// <summary>

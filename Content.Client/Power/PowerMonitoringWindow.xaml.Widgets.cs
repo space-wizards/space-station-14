@@ -6,7 +6,6 @@ using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Vector4 = Robust.Shared.Maths.Vector4;
 
 namespace Content.Client.Power;
 
@@ -54,8 +53,8 @@ public sealed partial class PowerMonitoringWindow
             // Selection action
             windowEntry.Button.OnButtonUp += args =>
             {
-                windowEntry.SourcesContainer.DisposeAllChildren();
-                windowEntry.LoadsContainer.DisposeAllChildren();
+                windowEntry.SourcesContainer.RemoveAllChildren();
+                windowEntry.LoadsContainer.RemoveAllChildren();
                 ButtonAction(windowEntry, masterContainer);
             };
         }
@@ -86,10 +85,10 @@ public sealed partial class PowerMonitoringWindow
 
         // Update button style
         if (netEntity == _focusEntity)
-            button.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+            button.AddStyleClass(StyleClass.Positive);
 
         else
-            button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+            button.RemoveStyleClass(StyleClass.Positive);
 
         // Update sprite
         if (entry.MetaData.Value.SpritePath != string.Empty && entry.MetaData.Value.SpriteState != string.Empty)
@@ -186,7 +185,7 @@ public sealed partial class PowerMonitoringWindow
         // Toggle off button?
         if (entry.NetEntity == _focusEntity)
         {
-            entry.Button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+            entry.Button.RemoveStyleClass(StyleClass.Positive);
             _focusEntity = null;
 
             // Request an update from the power monitoring system
@@ -196,7 +195,7 @@ public sealed partial class PowerMonitoringWindow
         }
 
         // Otherwise, toggle on
-        entry.Button.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+        entry.Button.AddStyleClass(StyleClass.Positive);
 
         ActivateAutoScrollToFocus();
 
@@ -207,7 +206,7 @@ public sealed partial class PowerMonitoringWindow
             {
                 if (sibling.NetEntity == _focusEntity)
                 {
-                    sibling.Button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+                    sibling.Button.RemoveStyleClass(StyleClass.Positive);
                     break;
                 }
             }

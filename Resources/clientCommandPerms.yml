@@ -73,12 +73,20 @@
     - localdelete
     - fullstatereset
     - dumpentities
+    - showwallmounts
+    - showaccessreaders
+    - quickinspect
 
 - Flags: MAPPING
   Commands:
     - mapping
+    - mappingclientsidesetup
+    - showsubfloor
+    - showsubfloorforever
     - toggleautosave
     - toggledecals
+    - showwallmounts
+    - showaccessreaders
 
 - Flags: QUERY
   Commands:

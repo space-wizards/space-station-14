@@ -37,8 +37,8 @@
       id: blinking
       interpolate: Nearest
       maxDuration: 1.0
-      minValue: 0.1
-      maxValue: 2.0
+      startValue: 0.1
+      endValue: 2.0
       isLooped: true
   - type: ToggleableVisuals
     spriteLayer: light
@@ -66,11 +66,6 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
-      HeadTop: HEAD
-      HeadSide: HEAD
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

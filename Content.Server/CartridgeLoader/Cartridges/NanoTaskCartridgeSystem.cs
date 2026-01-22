@@ -47,7 +47,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         {
             return;
         }
-        if (!EntityManager.TryGetComponent<NanoTaskPrintedComponent>(args.Used, out var printed))
+        if (!TryComp<NanoTaskPrintedComponent>(args.Used, out var printed))
         {
             return;
         }
@@ -55,7 +55,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         {
             program.Tasks.Add(new(program.Counter++, printed.Task));
             args.Handled = true;
-            EntityManager.DeleteEntity(args.Used);
+            Del(args.Used);
             UpdateUiState(new Entity<NanoTaskCartridgeComponent>(uid.Value, program), ent.Owner);
         }
     }
@@ -77,11 +77,11 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 
         printed.Task = item;
         var msg = new FormattedMessage();
-        msg.AddText(Loc.GetString("nano-task-printed-description", ("description", item.Description)));
+        msg.AddMarkupOrThrow(Loc.GetString("nano-task-printed-description", ("description", FormattedMessage.EscapeText(item.Description))));
         msg.PushNewline();
-        msg.AddText(Loc.GetString("nano-task-printed-requester", ("requester", item.TaskIsFor)));
+        msg.AddMarkupOrThrow(Loc.GetString("nano-task-printed-requester", ("requester", FormattedMessage.EscapeText(item.TaskIsFor))));
         msg.PushNewline();
-        msg.AddText(item.Priority switch {
+        msg.AddMarkupOrThrow(item.Priority switch {
             NanoTaskPriority.High => Loc.GetString("nano-task-printed-high-priority"),
             NanoTaskPriority.Medium => Loc.GetString("nano-task-printed-medium-priority"),
             NanoTaskPriority.Low => Loc.GetString("nano-task-printed-low-priority"),

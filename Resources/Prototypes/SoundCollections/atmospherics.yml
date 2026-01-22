@@ -4,3 +4,13 @@
   - /Audio/Effects/squeak1.ogg
   - /Audio/Effects/squeak2.ogg
   - /Audio/Effects/squeak3.ogg
+
+- type: soundCollection
+  id: SpaceWind
+  files:
+  - /Audio/Effects/space_wind.ogg
+
+- type: soundCollection
+  id: AtmosHotspot
+  files:
+  - /Audio/Effects/fire.ogg

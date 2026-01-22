@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/9a401d19045574f3ea7f2cf3feebf65989903ccc/icons/obj/assemblies/new_assemblies.dmi",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/9a401d19045574f3ea7f2cf3feebf65989903ccc/icons/obj/assemblies/new_assemblies.dmi, inhands by TiniestShark (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,14 @@
   "states": [
     {
       "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
     }
   ]
 }

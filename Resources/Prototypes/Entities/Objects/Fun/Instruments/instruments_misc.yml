@@ -57,6 +57,7 @@
     program: 124
   - type: Item
     size: Small
+    storedRotation: -90
   - type: Prayable
     sentMessage: prayer-popup-notify-centcom-sent
     notificationPrefix: prayer-chat-notify-centcom
@@ -131,7 +132,7 @@
   components:
   - type: Instrument
     program: 1
-    bank: 1
+    bank: 100 # Defined in space-station-14.sf2
   - type: Sprite
     sprite: Objects/Fun/Instruments/bike_horn.rsi
   - type: Tag

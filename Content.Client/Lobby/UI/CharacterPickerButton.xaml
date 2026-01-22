@@ -18,7 +18,7 @@
         <Button Name="ConfirmDeleteButton"
                 Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
                 Visible="False"
-                ModulateSelfOverride="{x:Static style:StyleNano.ButtonColorCautionDefault}"/>
+                StyleClasses="negative"/>
 
     </BoxContainer>
 </ContainerButton>
