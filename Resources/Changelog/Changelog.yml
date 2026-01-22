@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Atmospherics Delta-Pressure now has a short guidebook entry. You can
-      find it in Jobs > Engineering > Atmospherics > Atmospheric Upsets > Delta Pressure.
-    type: Add
-  id: 8940
-  time: '2025-09-07T15:10:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40194
 - author: Banditoz
   changes:
   - message: You can cross chasms with the grapple gun.
@@ -3966,3 +3958,10 @@
   id: 9446
   time: '2026-01-22T18:02:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41943
+- author: Minerva
+  changes:
+  - message: Defibrillator cabinets can now be constructed and deconstructed.
+    type: Add
+  id: 9447
+  time: '2026-01-22T18:43:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42571
