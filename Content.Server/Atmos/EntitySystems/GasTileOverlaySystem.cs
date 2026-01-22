@@ -294,6 +294,7 @@ namespace Content.Server.Atmos.EntitySystems
             chunk.LastUpdate = _gameTiming.CurTick;
             return true;
         }
+
         private void UpdateOverlayData()
         {
             // TODO parallelize?
