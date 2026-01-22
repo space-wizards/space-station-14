@@ -26,6 +26,8 @@ public sealed partial class FeedbackEntry : Control
         DescriptionLabel.Text = _prototype.Description;
         TypeLabel.Text = _prototype.ResponseType;
 
+        LinkButton.Visible = !string.IsNullOrEmpty(_prototype.ResponseLink);
+
         // link button
         if (!string.IsNullOrEmpty(_prototype.ResponseLink))
         {

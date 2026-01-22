@@ -6,6 +6,7 @@ feedbackpopup-control-total-surveys = {$num ->
     [one] {$num} entry
    *[other] {$num} entries
 }
+feedbackpopup-control-no-entries= No entries
 feedbackpopup-control-ui-footer = Let us know what you think!
 
 # Command strings
