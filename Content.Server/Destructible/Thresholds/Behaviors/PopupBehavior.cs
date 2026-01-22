@@ -1,3 +1,4 @@
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Popups;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
@@ -6,18 +7,20 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// Shows a popup for everyone.
 /// </summary>
 [DataDefinition]
-public sealed partial class PopupBehavior : IThresholdBehavior
+public sealed partial class PopupBehavior : EntitySystem, IThresholdBehavior
 {
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+
     /// <summary>
     /// Locale id of the popup message.
     /// </summary>
-    [DataField("popup", required: true)]
+    [DataField(required: true)]
     public string Popup;
 
     /// <summary>
     /// Type of popup to show.
     /// </summary>
-    [DataField("popupType")]
+    [DataField]
     public PopupType PopupType;
 
     /// <summary>
@@ -26,15 +29,14 @@ public sealed partial class PopupBehavior : IThresholdBehavior
     [DataField]
     public bool TargetOnly;
 
-    public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid uid, EntityUid? cause = null)
     {
-        var popup = system.EntityManager.System<SharedPopupSystem>();
-        // popup is placed at coords since the entity could be deleted after, no more popup then
-        var coords = system.EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
+        // Popup is placed at coords since the entity could be deleted after, no more popup then.
+        var coords = Transform(uid).Coordinates;
 
         if (TargetOnly)
-            popup.PopupCoordinates(Loc.GetString(Popup), coords, uid, PopupType);
+            _popup.PopupCoordinates(Loc.GetString(Popup), coords, uid, PopupType);
         else
-            popup.PopupCoordinates(Loc.GetString(Popup), coords, PopupType);
+            _popup.PopupCoordinates(Loc.GetString(Popup), coords, PopupType);
     }
 }

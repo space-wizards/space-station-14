@@ -1,3 +1,4 @@
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
@@ -7,11 +8,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// If it is already open nothing happens.
 /// </summary>
 [DataDefinition]
-public sealed partial class OpenBehavior : IThresholdBehavior
+public sealed partial class OpenBehavior : EntitySystem, IThresholdBehavior
 {
-    public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
+    [Dependency] private readonly OpenableSystem _openable = default!;
+
+    public void Execute(EntityUid uid, EntityUid? cause = null)
     {
-        var openable = system.EntityManager.System<OpenableSystem>();
-        openable.TryOpen(uid);
+        _openable.TryOpen(uid);
     }
 }
