@@ -12,3 +12,5 @@
     quickEquip: false
     slots:
     - Neck
+  - type: Item
+    storedRotation: -90

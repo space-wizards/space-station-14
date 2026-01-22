@@ -1,6 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Shared.Advertise.Components;
 using Content.Shared.Advertise.Systems;
+using Content.Shared.Chat;
 using Content.Shared.UserInterface;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

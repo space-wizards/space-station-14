@@ -35,7 +35,8 @@ public sealed partial class StatusEffectComponent : Component
     /// <summary>
     /// If true, this status effect has been applied. Used to ensure that <see cref="StatusEffectAppliedEvent"/> only fires once.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    /// We actually don't want to network this, that way client can apply an effect it's receiving properly!
+    [DataField]
     public bool Applied;
 
     /// <summary>

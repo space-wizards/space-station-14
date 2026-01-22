@@ -1,3 +1,5 @@
+using Content.Shared.Damage.Systems;
+
 namespace Content.Server.Chat.Systems;
 
 using Content.Shared.Chat;

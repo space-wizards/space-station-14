@@ -8,9 +8,9 @@ namespace Content.Shared.Chemistry.Reagent;
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
-public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
+public partial struct ReagentQuantity : IEquatable<ReagentQuantity>, IRobustCloneable<ReagentQuantity>
 {
-    [DataField("Quantity", required:true)]
+    [DataField("Quantity", required: true)]
     public FixedPoint2 Quantity { get; private set; }
 
     [IncludeDataField]
@@ -26,6 +26,28 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     {
         Reagent = reagent;
         Quantity = quantity;
+    }
+
+    public ReagentQuantity(ReagentQuantity reagentQuantity)
+    {
+        Quantity = reagentQuantity.Quantity;
+        if (reagentQuantity.Reagent.Data is not { } data)
+        {
+            Reagent = new ReagentId(reagentQuantity.Reagent.Prototype, null);
+            return;
+        }
+
+        List<ReagentData> copy = new(data.Count);
+        foreach (var item in data)
+        {
+            copy.Add(item.Clone());
+        }
+        Reagent = new ReagentId(reagentQuantity.Reagent.Prototype, copy);
+    }
+
+    public readonly ReagentQuantity Clone()
+    {
+        return new ReagentQuantity(this);
     }
 
     public ReagentQuantity() : this(default, default)

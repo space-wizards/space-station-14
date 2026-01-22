@@ -4,11 +4,9 @@ using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
-using Content.Shared.Body.Components;
+using Content.Shared.Body;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Ghost;
-using Content.Shared.Maps;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -48,7 +46,8 @@ public sealed partial class ShuttleSystem
     public float DefaultStartupTime;
     public float DefaultTravelTime;
     public float DefaultArrivalTime;
-    private float FTLCooldown;
+    private TimeSpan FTLCooldown;
+    private TimeSpan ArrivalsFTLCooldown;
     public float FTLMassLimit;
     private TimeSpan _hyperspaceKnockdownTime = TimeSpan.FromSeconds(5);
 
@@ -87,7 +86,8 @@ public sealed partial class ShuttleSystem
         _cfg.OnValueChanged(CCVars.FTLStartupTime, time => DefaultStartupTime = time, true);
         _cfg.OnValueChanged(CCVars.FTLTravelTime, time => DefaultTravelTime = time, true);
         _cfg.OnValueChanged(CCVars.FTLArrivalTime, time => DefaultArrivalTime = time, true);
-        _cfg.OnValueChanged(CCVars.FTLCooldown, time => FTLCooldown = time, true);
+        _cfg.OnValueChanged(CCVars.FTLCooldown, time => FTLCooldown = TimeSpan.FromSeconds(time), true);
+        _cfg.OnValueChanged(CCVars.ArrivalsFTLCooldown, time => ArrivalsFTLCooldown = TimeSpan.FromSeconds(time), true);
         _cfg.OnValueChanged(CCVars.FTLMassLimit, time => FTLMassLimit = time, true);
         _cfg.OnValueChanged(CCVars.HyperspaceKnockdownTime, time => _hyperspaceKnockdownTime = TimeSpan.FromSeconds(time), true);
     }
@@ -542,7 +542,10 @@ public sealed partial class ShuttleSystem
         }
 
         comp.State = FTLState.Cooldown;
-        comp.StateTime = StartEndTime.FromCurTime(_gameTiming, FTLCooldown);
+        var cooldown = entity.Comp2.FTLCooldownOverride ?? (HasComp<ArrivalsShuttleComponent>(uid)
+                ? ArrivalsFTLCooldown
+                : FTLCooldown);
+        comp.StateTime = StartEndTime.FromCurTime(_gameTiming, cooldown);
         _console.RefreshShuttleConsoles(uid);
         _mapSystem.SetPaused(mapId, false);
         Smimsh(uid, xform: xform);
@@ -801,7 +804,11 @@ public sealed partial class ShuttleSystem
         while (iteration < FTLProximityIterations)
         {
             grids.Clear();
-            _mapManager.FindGridsIntersecting(mapId, targetAABB, ref grids);
+            // We pass in an expanded offset here so we can safely do a random offset later.
+            // We don't include this in the actual targetAABB because then we would be double-expanding it.
+            // Once in this loop, then again when placing the shuttle later.
+            // Note that targetAABB already has expansionAmount factored in already.
+            _mapManager.FindGridsIntersecting(mapId, targetAABB.Enlarged(maxOffset), ref grids);
 
             foreach (var grid in grids)
             {
@@ -834,10 +841,6 @@ public sealed partial class ShuttleSystem
                 if (nearbyGrids.Contains(uid))
                     continue;
 
-                // We pass in an expanded offset here so we can safely do a random offset later.
-                // We don't include this in the actual targetAABB because then we would be double-expanding it.
-                // Once in this loop, then again when placing the shuttle later.
-                // Note that targetAABB already has expansionAmount factored in already.
                 targetAABB = targetAABB.Union(
                     _transform.GetWorldMatrix(uid)
                     .TransformBox(Comp<MapGridComponent>(uid).LocalAABB.Enlarged(expansionAmount)));
@@ -857,7 +860,7 @@ public sealed partial class ShuttleSystem
 
         // TODO: This should prefer the position's angle instead.
         // TODO: This is pretty crude for multiple landings.
-        if (nearbyGrids.Count >= 1)
+        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
         {
             // Pick a random angle
             var offsetAngle = _random.NextAngle();
@@ -866,9 +869,13 @@ public sealed partial class ShuttleSystem
             var minRadius = MathF.Max(targetAABB.Width / 2f, targetAABB.Height / 2f);
             spawnPos = targetAABB.Center + offsetAngle.RotateVec(new Vector2(_random.NextFloat(minRadius + minOffset, minRadius + maxOffset), 0f));
         }
+        else if (shuttleBody != null)
+        {
+            (spawnPos, angle) = _transform.GetWorldPositionRotation(targetXform);
+        }
         else
         {
-            spawnPos = _transform.ToWorldPosition(targetCoordinates);
+            spawnPos = _transform.GetWorldPosition(targetXform);
         }
 
         var offset = Vector2.Zero;
@@ -889,10 +896,10 @@ public sealed partial class ShuttleSystem
         }
 
         // Rotate our localcenter around so we spawn exactly where we "think" we should (center of grid on the dot).
-        var transform = new Transform(_transform.ToWorldPosition(xform.Coordinates), angle);
-        var adjustedOffset = Robust.Shared.Physics.Transform.Mul(transform, offset);
+        var transform = new Transform(spawnPos, angle);
+        spawnPos = Robust.Shared.Physics.Transform.Mul(transform, offset);
 
-        coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos + adjustedOffset);
+        coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos - offset);
         return true;
     }
 
@@ -993,7 +1000,7 @@ public sealed partial class ShuttleSystem
                 {
                     _logger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(ent):player} got gibbed by the shuttle" +
                                                                 $" {ToPrettyString(uid)} arriving from FTL at {xform.Coordinates:coordinates}");
-                    var gibs = _bobby.GibBody(ent, body: mob);
+                    var gibs = _gibbing.Gib(ent);
                     _immuneEnts.UnionWith(gibs);
                     continue;
                 }

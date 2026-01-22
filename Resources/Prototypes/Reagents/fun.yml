@@ -164,9 +164,11 @@
   color: "#FDD023"
   metabolisms:
     Poison:
+      metabolismRate : 2.0
       effects:
       - !type:Electrocute
-        probability: 0.35
+        siemensCoefficient: 0.5
+        probability: 0.5
 
 - type: reagent
   id: Razorium
@@ -183,7 +185,6 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
         ignoreResistances: false
         damage:
           types:
@@ -233,7 +234,6 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
         ignoreResistances: false
         damage:
           types:
@@ -429,3 +429,105 @@
         - !type:ReagentCondition
           reagent: CorgiJuice
           min: 50
+
+- type: reagent
+  id: Felinase
+  name: reagent-name-catessence
+  group: Toxins
+  desc: reagent-desc-catessence
+  physicalDesc: reagent-physical-desc-milky
+  flavor: cannedtuna
+  color: "#d8bed8"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 15
+        damage:
+          types:
+            Radiation: 0.5
+      - !type:AdjustReagent
+        reagent: Felinase
+        amount: -5
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 30
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 10
+        effectProto: StatusEffectOwO
+        time: 12.5
+        type: Add
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 10
+        emote: Cough
+        showInChat: true
+        showInGuidebook: true
+        force: true
+        probability: 0.05
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        messages: [ "capsaicin-effect-light-burn" ]
+        probability: 0.05
+
+- type: reagent
+  id: Caninase
+  name: reagent-name-canidessence
+  group: Toxins
+  desc: reagent-desc-canidessence
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: dogfood
+  color: "#b87333"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 15
+        damage:
+          types:
+            Radiation: 0.5
+      - !type:AdjustReagent
+        reagent: Caninase
+        amount: -5
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 30
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 10
+        effectProto: StatusEffectBark
+        time: 12.5
+        type: Add
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 10
+        emote: Cough
+        showInChat: true
+        showInGuidebook: true
+        force: true
+        probability: 0.05
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        messages: [ "capsaicin-effect-light-burn" ]
+        probability: 0.05
