@@ -31,7 +31,7 @@
   query:
     - !type:ComponentQuery
       components:
-      - type: Food
+      - type: Edible
   considerations:
     - !type:TargetIsAliveCon
       curve: !type:InverseBoolCurve
@@ -50,7 +50,7 @@
   query:
   - !type:ComponentQuery
     components:
-    - type: Drink
+    - type: Edible
   considerations:
   - !type:TargetIsAliveCon
     curve: !type:InverseBoolCurve
@@ -201,6 +201,29 @@
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: MedibotInjectable
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: InjectableSolution
+        - type: Damageable
+        - type: MobState
+    - !type:ComponentFilter
+      components:
+        - type: NPCRecentlyInjected
+      retainWithComp: false
+  considerations:
+    - !type:TargetIsCritCon
+      curve: !type:QuadraticCurve
+        slope: 1
+        exponent: 1
+        yOffset: 0.1
+        xOffset: 0
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
 
 - type: utilityQuery
   id: NearbyGunTargets

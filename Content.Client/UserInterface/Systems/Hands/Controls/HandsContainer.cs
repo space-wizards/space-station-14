@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Robust.Client.UserInterface.Controls;
 
@@ -74,7 +74,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
     public void Clear()
     {
         ClearButtons();
-        _grid.DisposeAllChildren();
+        _grid.RemoveAllChildren();
     }
 
     public IEnumerable<HandButton> GetButtons()

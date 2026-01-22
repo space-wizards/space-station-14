@@ -3,17 +3,13 @@ using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Log;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
-using Robust.Client.GameObjects;
-using Robust.Shared.Audio.Effects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -31,6 +27,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -65,18 +62,19 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         get => _overlayEnabled;
         set
         {
-            if (_overlayEnabled == value) return;
+            if (_overlayEnabled == value)
+                return;
+
             _overlayEnabled = value;
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
 
             if (_overlayEnabled)
             {
                 _overlay = new AmbientSoundOverlay(EntityManager, this, EntityManager.System<EntityLookupSystem>());
-                overlayManager.AddOverlay(_overlay);
+                _overlayManager.AddOverlay(_overlay);
             }
             else
             {
-                overlayManager.RemoveOverlay(_overlay!);
+                _overlayManager.RemoveOverlay(_overlay!);
                 _overlay = null;
             }
         }

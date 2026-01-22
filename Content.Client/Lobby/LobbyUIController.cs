@@ -1,6 +1,6 @@
 using System.Linq;
+using Content.Client.Body;
 using Content.Client.Guidebook;
-using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
 using Content.Client.Players.PlayTimeTracking;
@@ -8,7 +8,6 @@ using Content.Client.Station;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
-using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -38,7 +37,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly JobRequirementsManager _requirements = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
-    [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [UISystemDependency] private readonly VisualBodySystem _visualBody = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
     [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
     [UISystemDependency] private readonly GuidebookSystem _guide = default!;
@@ -72,6 +71,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         });
 
         _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshProfileEditor());
+        _configurationManager.OnValueChanged(CCVars.GameRoleLoadoutTimers, _ => RefreshProfileEditor());
 
         _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshProfileEditor());
     }
@@ -361,7 +361,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         {
             foreach (var loadout in group)
             {
-                if (!_prototypeManager.TryIndex(loadout.Prototype, out var loadoutProto))
+                if (!_prototypeManager.Resolve(loadout.Prototype, out var loadoutProto))
                     continue;
 
                 _spawn.EquipStartingGear(uid, loadoutProto);
@@ -384,14 +384,14 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             {
                 foreach (var loadout in loadouts)
                 {
-                    if (!_prototypeManager.TryIndex(loadout.Prototype, out var loadoutProto))
+                    if (!_prototypeManager.Resolve(loadout.Prototype, out var loadoutProto))
                         continue;
 
                     // TODO: Need some way to apply starting gear to an entity and replace existing stuff coz holy fucking shit dude.
                     foreach (var slot in slots)
                     {
                         // Try startinggear first
-                        if (_prototypeManager.TryIndex(loadoutProto.StartingGear, out var loadoutGear))
+                        if (_prototypeManager.Resolve(loadoutProto.StartingGear, out var loadoutGear))
                         {
                             var itemType = ((IEquipmentLoadout) loadoutGear).GetGear(slot.Name);
 
@@ -426,7 +426,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             }
         }
 
-        if (!_prototypeManager.TryIndex(job.StartingGear, out var gear))
+        if (!_prototypeManager.Resolve(job.StartingGear, out var gear))
             return;
 
         foreach (var slot in slots)
@@ -469,15 +469,14 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         }
         else if (humanoid is not null)
         {
-            var dummy = _prototypeManager.Index<SpeciesPrototype>(humanoid.Species).DollPrototype;
+            var dummy = _prototypeManager.Index(humanoid.Species).DollPrototype;
             dummyEnt = EntityManager.SpawnEntity(dummy, MapCoordinates.Nullspace);
+            _visualBody.ApplyProfileTo(dummyEnt, humanoid);
         }
         else
         {
-            dummyEnt = EntityManager.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
+            dummyEnt = EntityManager.SpawnEntity(_prototypeManager.Index(HumanoidCharacterProfile.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
         }
-
-        _humanoid.LoadProfile(dummyEnt, humanoid);
 
         if (humanoid != null && jobClothes)
         {

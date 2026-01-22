@@ -5,6 +5,9 @@
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/posters.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Card
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -18,7 +21,7 @@
         acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 5
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -1127,6 +1130,15 @@
   components:
   - type: Sprite
     state: poster55_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitBotanyFear
+  name: "Fear of hydroponics"
+  description: "Think three times before opening the airlock to hydroponics, a red threat might be hiding there."
+  components:
+  - type: Sprite
+    state: poster56_legit
 
 #maps
 

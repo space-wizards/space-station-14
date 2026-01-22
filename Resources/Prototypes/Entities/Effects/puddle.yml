@@ -201,13 +201,15 @@
   - type: EdgeSpreader
     id: Puddle
   - type: StepTrigger
-  - type: Drink
+  - type: Edible
+    edible: Drink
     delay: 3
     transferAmount: 1
     solution: puddle
-    examinable: false
+    utensil: Spoon
   - type: ExaminableSolution
     solution: puddle
+    locVolume: "examinable-solution-on-examine-volume-puddle"
   - type: DrawableSolution
     solution: puddle
   - type: BadDrink

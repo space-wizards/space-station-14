@@ -21,7 +21,7 @@
     - name: ChangeSpecies
       baseOdds: 0.036
       appliesToProduce: false
-      effect: !type:PlantSpeciesChange
+      effect: !type:PlantMutateSpeciesChange
       persists: false
     - name: Unviable
       baseOdds: 0.109
@@ -175,11 +175,11 @@
     - name: ChangeExudeGasses
       baseOdds: 0.0145
       persists: false
-      effect: !type:PlantMutateExudeGasses
+      effect: !type:PlantMutateExudeGases
     - name: ChangeConsumeGasses
       baseOdds: 0.0036
       persists: false
-      effect: !type:PlantMutateConsumeGasses
+      effect: !type:PlantMutateConsumeGases
     - name: ChangeHarvest
       baseOdds: 0.036
       persists: false

@@ -9,14 +9,23 @@
   - type: SolutionContainerManager
   - type: Sprite
     state: produce
-  # let cows eat raw produce like wheat and oats
-  - type: Food
-    requiredStomachs: 2
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
   - type: Extractable
     grindableSolutionName: food
+
+- type: entity
+  parent: ProduceBase
+  id: ProduceBaseRuminant
+  abstract: true
+  components:
+  # let cows eat raw produce like wheat and oats
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - Ruminant
 
 # For produce that can be immediately eaten
 
@@ -40,7 +49,7 @@
   name: wheat bushel
   description: Sigh... wheat... a-grain?
   id: WheatBushel
-  parent: ProduceBase
+  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
@@ -57,12 +66,13 @@
   - type: Tag
     tags:
     - Wheat
+    - Ruminant
 
 - type: entity
   name: meatwheat bushel
   description: Some blood-drenched wheat stalks. You can crush them into what passes for meat if you squint hard enough.
   id: MeatwheatBushel
-  parent: ProduceBase
+  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/meatwheat.rsi
@@ -86,7 +96,7 @@
   name: oat bushel
   description: Eat oats, do squats.
   id: OatBushel
-  parent: ProduceBase
+  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
@@ -110,7 +120,7 @@
   name: sugarcane
   description: Sickly sweet.
   id: Sugarcane
-  parent: ProduceBase
+  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
@@ -176,6 +186,7 @@
   - type: Tag
     tags:
     - Vegetable
+    - Ruminant
 
 - type: entity
   name: tower-cap log
@@ -221,7 +232,7 @@
   name: nettle
   description: Stingy little prick.
   id: Nettle
-  parent: ProduceBase
+  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/nettle.rsi
@@ -323,9 +334,13 @@
   - type: FlavorProfile
     flavors:
       - banana
-  - type: Food
+  - type: Edible
     trash:
     - TrashBananaPeel
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: TrashBananaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -365,9 +380,13 @@
     flavors:
       - banana
       - nothing
-  - type: Food
+  - type: Edible
     trash:
     - TrashMimanaPeel
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: TrashMimanaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -399,9 +418,9 @@
       Taco: Mimana
 
 - type: entity
-  name: banana peel
   parent: BaseItem
   id: TrashBananaPeel
+  name: banana peel
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
@@ -437,6 +456,8 @@
     - Recyclable
     - Trash
     - BananaPeel
+    - Ruminant
+
     - WhitelistChameleon
     - HamsterWearable
   - type: SolutionContainerManager
@@ -449,23 +470,23 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/banana.rsi
-    equippedState: peel-equipped-HELMET
+    equippedPrefix: peel
     slots:
     - HEAD
     quickEquip: false
 
 - type: entity
-  name: baked banana peel
   parent: TrashBananaPeel
   id: TrashBakedBananaPeel
+  name: baked banana peel
   components:
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/banana.rsi
-    equippedState: baked-peel-equipped-HELMET
+    equippedPrefix: baked-peel
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: baked-peel
@@ -484,9 +505,9 @@
           Quantity: 2
 
 - type: entity
-  name: mimana peel
   parent: TrashBananaPeel
   id: TrashMimanaPeel
+  name: mimana peel
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/mimana.rsi
@@ -496,7 +517,7 @@
     heldPrefix: peel
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/mimana.rsi
-    equippedState: equipped-HELMET
+    equippedPrefix: peel
   - type: Slippery
     slipSound:
       path: /Audio/Effects/slip.ogg
@@ -504,9 +525,9 @@
         volume: -100
 
 - type: entity
-  name: bananium peel
   parent: TrashBananaPeel
   id: TrashBananiumPeel
+  name: bananium peel
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
@@ -517,7 +538,7 @@
   - type: Slippery
   - type: Clothing
     sprite: Objects/Materials/materials.rsi
-    equippedState: peel-equipped-HELMET
+    equippedPrefix: peel
 
 - type: entity
   name: carrot
@@ -1190,9 +1211,13 @@
   - type: FlavorProfile
     flavors:
       - corn
-  - type: Food
+  - type: Edible
     trash:
     - FoodCornTrash
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodCornTrash #no idea why you'd ever do this, but it's just here for consistency
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1662,7 +1687,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 24
+        maxVol: 14
         reagents:
         - ReagentId: Bicaridine
           Quantity: 5
@@ -1670,8 +1695,6 @@
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Desoxyephedrine
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
   - type: Sprite
@@ -1707,7 +1730,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 10
         reagents:
         - ReagentId: Omnizine
           Quantity: 3
@@ -1715,8 +1738,6 @@
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Desoxyephedrine
-          Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
   - type: Item
@@ -1786,10 +1807,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Razorium
           Quantity: 15
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/glasstle.rsi
   - type: Produce
@@ -1895,9 +1918,13 @@
     sprite: Objects/Specific/Hydroponics/gatfruit.rsi
   - type: Produce
     seedId: gatfruit
-  - type: Food
+  - type: Edible
     trash:
     - WeaponRevolverPython
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: WeaponRevolverPython
   - type: Tag
     tags:
     - Fruit # It's in the name
@@ -1930,9 +1957,13 @@
     heldPrefix: produce
   - type: Produce
     seedId: realCapfruit
-  - type: Food
+  - type: Edible
     trash:
     - RevolverCapGun
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: RevolverCapGun
   - type: Tag
     tags:
     - Fruit
@@ -1949,15 +1980,19 @@
   components:
   - type: Produce
     seedId: fakeCapfruit
-  - type: Food
+  - type: Edible
     trash:
     - RevolverCapGunFake
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: RevolverCapGunFake
 
 - type: entity
   name: rice bushel
   description: Can be ground into rice, perfect for pudding or sake.
   id: RiceBushel
-  parent: ProduceBase
+  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rice.rsi
@@ -1976,7 +2011,7 @@
   name: soybeans
   description: For those who can't stand seeing good old meat.
   id: FoodSoybeans
-  parent: ProduceBase
+  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/soybeans.rsi
@@ -2040,7 +2075,7 @@
   name: koibean
   description: These beans seem a little bit fishy.
   id: FoodKoibean
-  parent: ProduceBase
+  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/koibean.rsi
@@ -2353,9 +2388,13 @@
   - type: FlavorProfile
     flavors:
       - bungo
-  - type: Food
+  - type: Edible
     trash:
     - FoodBungoPit
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodBungoPit
   - type: SolutionContainerManager
     solutions:
       food:
@@ -2588,7 +2627,7 @@
   - type: FlavorProfile
     flavors:
       - cotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
@@ -2620,7 +2659,7 @@
   - type: FlavorProfile
     flavors:
       - pyrotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
@@ -2654,9 +2693,13 @@
   - type: FlavorProfile
     flavors:
       - cherry
-  - type: Food
+  - type: Edible
     trash:
     - TrashCherryPit
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: TrashCherryPit
   - type: SolutionContainerManager
     solutions:
       food:
@@ -2729,7 +2772,7 @@
     heldPrefix: produce
   - type: Produce
     seedId: anomalyBerry
-  - type: Food
+  - type: Edible
     trash:
     - EffectAnomalyFloraBulb # Random loot
   - type: SolutionContainerManager
@@ -2750,3 +2793,78 @@
     entries:
       Taco: AnomalyBerry
       Burger: AnomalyBerryBurger
+
+- type: entity
+  name: bloonion bulb
+  description: A strange floating bulb.. Nothing worth crying over.
+  parent: BaseStructureDynamic
+  id: FoodBloonion
+  components:
+  - type: Appearance
+  - type: Sprite
+    drawdepth: Items
+    noRot: true
+    sprite: Objects/Specific/Hydroponics/bloonion.rsi
+    state: produce
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/bloonion.rsi
+    heldPrefix: produce
+  - type: Produce
+    seedId: bloonion
+  - type: Tag
+    tags:
+    - Vegetable
+  - type: PotencyVisuals
+  - type: FlavorProfile
+    flavors:
+    - onion
+    - strange
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        canReact: false
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 1
+        - ReagentId: Phosphorus
+          Quantity: 1
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Allicin
+          Quantity: 4
+  - type: Extractable
+    grindableSolutionName: food
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 0.001
+    intensitySlope: 1
+    totalIntensity: 0.1
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.20
+          position: 0, 0.35
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
