@@ -173,10 +173,11 @@ public abstract class SharedGrapplingGunSystem : VirtualController
         if (value)
         {
             // We null-coalesce here because playing the sound again will cause it to become eternally stuck playing
-            component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity ?? component.Stream;
+            component.Stream ??= _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity;
         }
-        else if (!value && component.Stream.HasValue)
+        else if (!value && component.Stream.HasValue && Timing.IsFirstTimePredicted)
         {
+            // The IsFirstTimePredicted check is important here because otherwise component.Stream will be set to null from an early cancellation if this isn't FirstTimePredicted
             component.Stream = _audio.Stop(component.Stream);
         }
 
