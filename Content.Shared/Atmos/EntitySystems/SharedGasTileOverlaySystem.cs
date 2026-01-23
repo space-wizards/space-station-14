@@ -118,10 +118,10 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
     }
 }
 
-[Serializable]
 /// <summary>
 /// This struct is used to send air temperature on screen to all users.   
 /// </summary>
+[Serializable]
 public struct ThermalByte
 {
     public const float TempMinimum = 0f;
