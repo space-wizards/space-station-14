@@ -34,6 +34,8 @@ public abstract class SharedGasCanisterSystem : EntitySystem
     {
         // Ensure container
         _slots.AddItemSlot(ent.Owner, ent.Comp.ContainerName, ent.Comp.GasTankSlot);
+
+        DirtyUI(ent.Owner, ent);
     }
 
     private void OnCanisterContainerModified(EntityUid uid, GasCanisterComponent component, ContainerModifiedMessage args)
