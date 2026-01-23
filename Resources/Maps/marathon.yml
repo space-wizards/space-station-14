@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 269.0.1
+  engineVersion: 271.1.0
   forkId: ""
   forkVersion: ""
-  time: 12/23/2025 21:10:24
-  entityCount: 23881
+  time: 01/23/2026 14:52:57
+  entityCount: 23882
 maps:
 - 5350
 grids:
@@ -7579,6 +7579,8 @@ entities:
     - type: GridPathfinding
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
   - uid: 5350
     components:
     - type: MetaData
@@ -9810,6 +9812,8 @@ entities:
     - type: Transform
       pos: -78.5,-60.5
       parent: 30
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 1901
     components:
     - type: Transform
@@ -10351,7 +10355,7 @@ entities:
   - uid: 204
     components:
     - type: MetaData
-      name: EVA Storage
+      name: airlock
     - type: Transform
       pos: 1.5,22.5
       parent: 30
@@ -10469,6 +10473,13 @@ entities:
     components:
     - type: Transform
       pos: -39.5,-24.5
+      parent: 30
+- proto: AirlockEVAGlassLocked
+  entities:
+  - uid: 381
+    components:
+    - type: Transform
+      pos: -0.5,24.5
       parent: 30
 - proto: AirlockExternal
   entities:
@@ -11443,13 +11454,6 @@ entities:
     - type: Transform
       pos: -10.5,-15.5
       parent: 30
-- proto: AirlockHeadOfPersonnelGlassLocked
-  entities:
-  - uid: 766
-    components:
-    - type: Transform
-      pos: -0.5,24.5
-      parent: 30
 - proto: AirlockHeadOfPersonnelLocked
   entities:
   - uid: 5407
@@ -11519,6 +11523,14 @@ entities:
     components:
     - type: Transform
       pos: -13.5,12.5
+      parent: 30
+- proto: AirlockLibraryLocked
+  entities:
+  - uid: 772
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -67.5,-62.5
       parent: 30
 - proto: AirlockMaint
   entities:
@@ -11641,6 +11653,13 @@ entities:
     - type: Transform
       pos: -26.5,-41.5
       parent: 30
+- proto: AirlockMaintEVALocked
+  entities:
+  - uid: 766
+    components:
+    - type: Transform
+      pos: -1.5,18.5
+      parent: 30
 - proto: AirlockMaintGlass
   entities:
   - uid: 8303
@@ -11657,13 +11676,6 @@ entities:
     components:
     - type: Transform
       pos: 46.5,40.5
-      parent: 30
-- proto: AirlockMaintHOPLocked
-  entities:
-  - uid: 772
-    components:
-    - type: Transform
-      pos: -1.5,18.5
       parent: 30
 - proto: AirlockMaintHydroLocked
   entities:
@@ -11784,7 +11796,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -48347.26
+      secondsUntilStateChange: -48819.234
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12297,11 +12309,6 @@ entities:
     components:
     - type: Transform
       pos: -6.5,14.5
-      parent: 30
-  - uid: 12637
-    components:
-    - type: Transform
-      pos: -67.5,-62.5
       parent: 30
 - proto: AirlockTheatreLocked
   entities:
@@ -18430,6 +18437,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -20.5,-52.5
+      parent: 30
+  - uid: 23882
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,23.5
       parent: 30
 - proto: ButtonFrameCautionSecurity
   entities:
@@ -106726,6 +106739,26 @@ entities:
           - AutoClose
     - type: Fixtures
       fixtures: {}
+- proto: LockableButtonCommand
+  entities:
+  - uid: 778
+    components:
+    - type: MetaData
+      name: EVA Storage blast door
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,23.5
+      parent: 30
+    - type: AccessReader
+      accessListsOriginal:
+      - - Command
+    - type: DeviceLinkSource
+      linkedPorts:
+        953:
+        - - Pressed
+          - Toggle
+    - type: Fixtures
+      fixtures: {}
 - proto: LockableButtonEngineering
   entities:
   - uid: 9007
@@ -108539,11 +108572,6 @@ entities:
       - Silver
 - proto: OxygenCanister
   entities:
-  - uid: 778
-    components:
-    - type: Transform
-      pos: 0.5,23.5
-      parent: 30
   - uid: 1983
     components:
     - type: Transform
@@ -108603,6 +108631,11 @@ entities:
     components:
     - type: Transform
       pos: -13.5,-37.5
+      parent: 30
+  - uid: 11458
+    components:
+    - type: Transform
+      pos: -3.5,23.5
       parent: 30
   - uid: 13968
     components:
@@ -121189,13 +121222,6 @@ entities:
       fixtures: {}
 - proto: SignalButton
   entities:
-  - uid: 381
-    components:
-    - type: Transform
-      pos: -1.5,22.5
-      parent: 30
-    - type: Fixtures
-      fixtures: {}
   - uid: 384
     components:
     - type: Transform
@@ -148206,7 +148232,7 @@ entities:
   - uid: 777
     components:
     - type: Transform
-      pos: -3.5,23.5
+      pos: 0.5,23.5
       parent: 30
   - uid: 1621
     components:
@@ -148505,6 +148531,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,20.5
       parent: 30
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 22223
     components:
     - type: Transform
@@ -148541,6 +148569,14 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,30.5
+      parent: 30
+- proto: WindoorSecureLibraryLocked
+  entities:
+  - uid: 12637
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -65.5,-62.5
       parent: 30
 - proto: WindoorSecureMedicalLocked
   entities:
@@ -148638,14 +148674,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -30.5,38.5
-      parent: 30
-- proto: WindoorSecureServiceLocked
-  entities:
-  - uid: 11458
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -65.5,-62.5
       parent: 30
 - proto: Window
   entities:
