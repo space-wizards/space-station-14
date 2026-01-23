@@ -1,8 +1,8 @@
 - type: entity
+  parent: MarkerBase
   id: RandomVending
   name: random vending machine spawner
   suffix: Any
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
@@ -48,10 +48,10 @@
       weight: 10
 
 - type: entity
+  parent: MarkerBase
   id: RandomVendingClothing
   name: random vending machine spawner
   suffix: Clothing
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
