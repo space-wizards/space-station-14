@@ -63,10 +63,10 @@
       tableId: ClothingVendorTable
 
 - type: entity
-  id: RandomVendingMaintsVend
+  parent: MarkerBase
+  id: RandomVendingMaintenance
   name: random vending machine spawner
   suffix: Maints
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
