@@ -837,6 +837,8 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  slipData:
+    requiredSlipSpeed: 5 # To prevent Cerberus from slipping on own blood
   fizziness: 0.3
 
 - type: reagent
