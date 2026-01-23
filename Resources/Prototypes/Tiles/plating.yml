@@ -17,6 +17,35 @@
   sprite: /Textures/Tiles/plating.png
 
 - type: tile
+  id: PlatingRCD
+  parent: Plating
+  name: tiles-rcd-plating
+  baseWhitelist:
+    - TrainLattice
+    - FloorPlanetDirt
+    - FloorDesert
+    - FloorLowDesert
+    - FloorPlanetGrass
+    - FloorSnow
+    - FloorDirt
+    - FloorAsteroidIronsand
+    - FloorAsteroidSand
+    - FloorAsteroidSandBorderless
+    - FloorAsteroidIronsandBorderless
+    - FloorAsteroidSandRedBorderless
+
+- type: tile
+  id: FloorHullReinforced
+  parent: BasePlating
+  name: tiles-hull-reinforced
+  sprite: /Textures/Tiles/hull_reinforced.png
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteel
+  heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
+  indestructible: true
+
+- type: tile
   id: PlatingDamaged
   parent: BasePlating
   name: tiles-plating
