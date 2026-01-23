@@ -27,11 +27,10 @@ public sealed class SuitSensorSystem : SharedSuitSensorSystem
             // check if sensor is ready to update
             if (curTime < sensor.NextUpdate)
                 continue;
+            sensor.NextUpdate += sensor.UpdateRate;
 
             if (!CheckSensorAssignedStation((uid, sensor)))
                 continue;
-
-            sensor.NextUpdate += sensor.UpdateRate;
 
             // get sensor status
             var status = GetSensorState((uid, sensor));
