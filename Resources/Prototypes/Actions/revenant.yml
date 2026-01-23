@@ -61,7 +61,7 @@
   - type: Action
     useDelay: 1
     icon:
-      sprite: Clothing/Hands/Gloves/Color/black.rsi
+      sprite: Clothing/Hands/Gloves/Color/black.rsi 
       state: icon
     priority: 7
   - type: InstantAction
