@@ -106,8 +106,8 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
             // Range: 223.15 to 273.15 (Span: 50)
 
             resultingColor = Color.InterpolateBetween(
-                 new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.2f),
                  new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.6f),
+                 new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.2f),
                 (tempK - freezeStartK) * 0.02f);
 
         }
