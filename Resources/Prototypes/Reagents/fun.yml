@@ -406,29 +406,43 @@
   color: "#ed9715"
   metabolisms:
     Poison:
-      metabolismRate: 0.2
+      metabolismRate: 0.5
       effects:
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
-          min: 15
         damage:
           types:
             Cellular: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: CorgiJuice
+          min: 20
+        damage:
+          types:
+            Cellular: 20 # not enough to be *too* effective as an odd poison
       - !type:Polymorph
         prototype: SmartCorgiMorph
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
-          min: 50
+          min: 20
       - !type:AdjustReagent
         reagent: CorgiJuice
         amount: -20
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
-          min: 50
+          min: 20
+      - !type:AdjustReagent
+        reagent: Caninase
+        amount: 10
+        conditions:
+        - !type:ReagentCondition
+          reagent: CorgiJuice
+          min: 20
 
 - type: reagent
   id: Felinase
