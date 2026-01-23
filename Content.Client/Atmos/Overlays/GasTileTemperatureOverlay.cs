@@ -178,7 +178,9 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
                     drawHandle.SetTransform(gridEntToViewportLocal);
 
-                    var floatBounds = worldToViewportLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
+                    var worldToGridLocal = _xformSys.GetInvWorldMatrix(grid.Owner);
+                    var floatBounds = worldToGridLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
+
                     var localBounds = new Box2i(
                         (int)MathF.Floor(floatBounds.Left),
                         (int)MathF.Floor(floatBounds.Bottom),
