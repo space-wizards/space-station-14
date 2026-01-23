@@ -628,7 +628,7 @@
       effects:
       - !type:EvenHealthChange
         damage:
-          Brute: -3
+          Brute: -2
           Airloss: -2
       - !type:HealthChange
         conditions:
