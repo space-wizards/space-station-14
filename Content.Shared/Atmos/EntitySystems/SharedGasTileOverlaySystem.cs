@@ -134,6 +134,7 @@ public struct ThermalByte
     public const byte STATE_WALL = 255;
 
     public static readonly float TempDegreeResolution = (TempMaximum - TempMinimum) / TempResolution;
+    public static readonly float TempToByteFactor = (float)TempResolution / (TempMaximum - TempMinimum);
 
     [DataField("value")]
     private byte _coreValue;
@@ -165,7 +166,7 @@ public struct ThermalByte
     /// <returns>
     /// True if the tile contains valid temperature; false if it is a wall or vacuum(with onVaccumReturnTCMB set to false).
     /// </returns>
-    public readonly bool TryGetTemperature(out float temperature, bool onVaccumReturnTCMB = true)
+    public readonly bool TryGetTemperature(out float temperature, bool onVacuumReturnTCMB = true)
     {
         if (_coreValue == STATE_WALL)
         {
@@ -174,11 +175,17 @@ public struct ThermalByte
         }
         else if (_coreValue == STATE_VACUUM)
         {
-            temperature = Atmospherics.TCMB;
-            return true; ;
+            if (onVacuumReturnTCMB)
+            {
+                temperature = Atmospherics.TCMB;
+                return true;
+            }
+
+            temperature = 0f;
+            return false;
         }
 
-        temperature = (_coreValue * TempDegreeResolution) + TempMinimum;
+        temperature = (_coreValue * TempToByteFactor) + TempMinimum;
         return true;
     }
 
