@@ -42,6 +42,17 @@ public sealed partial class CharacterPickerButton : ContainerButton
         View.Initialize(prototypeManager, playerMan);
         View.LoadPreview(profile);
 
+        if (profile is HumanoidCharacterProfile humanoid)
+        {
+
+            var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+            if (highPriorityJob != default)
+            {
+                var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
+                description = $"{description}\n{jobName}";
+            }
+        }
+
         Pressed = isSelected;
         DeleteButton.Visible = !isSelected;
 
