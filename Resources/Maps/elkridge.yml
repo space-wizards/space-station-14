@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 271.1.0
   forkId: ""
   forkVersion: ""
-  time: 12/07/2025 22:51:59
+  time: 01/23/2026 14:21:26
   entityCount: 18708
 maps:
 - 1
@@ -10822,6 +10822,8 @@ entities:
     - type: RadiationGridResistance
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 15607
@@ -13643,6 +13645,8 @@ entities:
     - type: Transform
       pos: -18.5,-1.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 15548
     components:
     - type: MetaData
@@ -13657,6 +13661,8 @@ entities:
     - type: Transform
       pos: -18.5,-8.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockExternalGlass
   entities:
   - uid: 5137
@@ -14332,6 +14338,8 @@ entities:
     - type: Transform
       pos: -29.5,-34.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 12004
     components:
     - type: Transform
@@ -14472,6 +14480,15 @@ entities:
     - type: Transform
       pos: -21.5,-40.5
       parent: 2
+- proto: AirlockLibraryLocked
+  entities:
+  - uid: 3184
+    components:
+    - type: MetaData
+      name: airlock (Library)
+    - type: Transform
+      pos: -21.5,-26.5
+      parent: 2
 - proto: AirlockMaintBarLocked
   entities:
   - uid: 38
@@ -14581,6 +14598,17 @@ entities:
     - type: Transform
       pos: -21.5,-44.5
       parent: 2
+- proto: AirlockMaintLibraryLocked
+  entities:
+  - uid: 3122
+    components:
+    - type: MetaData
+      name: maintenance access (Library)
+    - type: Transform
+      pos: -25.5,-26.5
+      parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockMaintLocked
   entities:
   - uid: 692
@@ -14788,6 +14816,8 @@ entities:
     - type: Transform
       pos: -26.5,-20.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 9962
     components:
     - type: MetaData
@@ -14845,6 +14875,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,-8.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 15764
     components:
     - type: Transform
@@ -14936,6 +14968,24 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 44.5,14.5
       parent: 2
+- proto: AirlockMaintNewsroomLocked
+  entities:
+  - uid: 3126
+    components:
+    - type: MetaData
+      name: maintenance access (Newsroom)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -27.5,-29.5
+      parent: 2
+  - uid: 3129
+    components:
+    - type: MetaData
+      name: maintenance access (Newsroom)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -27.5,-32.5
+      parent: 2
 - proto: AirlockMaintRnDLocked
   entities:
   - uid: 11229
@@ -14984,29 +15034,6 @@ entities:
       name: airlock (Security)
     - type: Transform
       pos: -6.5,-36.5
-      parent: 2
-- proto: AirlockMaintServiceLocked
-  entities:
-  - uid: 3126
-    components:
-    - type: MetaData
-      name: maintenance access (Library)
-    - type: Transform
-      pos: -25.5,-26.5
-      parent: 2
-  - uid: 3184
-    components:
-    - type: MetaData
-      name: maintenance access (Newsroom)
-    - type: Transform
-      pos: -27.5,-32.5
-      parent: 2
-  - uid: 3189
-    components:
-    - type: MetaData
-      name: maintenance access (Newsroom)
-    - type: Transform
-      pos: -27.5,-29.5
       parent: 2
 - proto: AirlockMaintTheatreLocked
   entities:
@@ -15108,6 +15135,18 @@ entities:
     - type: Transform
       pos: 40.5,10.5
       parent: 2
+- proto: AirlockNewsroomGlassLocked
+  entities:
+  - uid: 3183
+    components:
+    - type: MetaData
+      name: glass airlock (Newsroom)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -26.5,-34.5
+      parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockQuartermasterLocked
   entities:
   - uid: 1564
@@ -15354,24 +15393,8 @@ entities:
     - type: Transform
       pos: -2.5,-34.5
       parent: 2
-- proto: AirlockServiceGlassLocked
-  entities:
-  - uid: 3183
-    components:
-    - type: MetaData
-      name: glass airlock (Newsroom)
-    - type: Transform
-      pos: -26.5,-34.5
-      parent: 2
 - proto: AirlockServiceLocked
   entities:
-  - uid: 3129
-    components:
-    - type: MetaData
-      name: airlock (Library)
-    - type: Transform
-      pos: -21.5,-26.5
-      parent: 2
   - uid: 14327
     components:
     - type: MetaData
@@ -22060,28 +22083,6 @@ entities:
     components:
     - type: Transform
       pos: 49.556282,3.5894375
-      parent: 2
-- proto: BaseChemistryEmptyVial
-  entities:
-  - uid: 4094
-    components:
-    - type: Transform
-      pos: 19.960098,21.84556
-      parent: 2
-  - uid: 4095
-    components:
-    - type: Transform
-      pos: 20.116348,21.62681
-      parent: 2
-  - uid: 8822
-    components:
-    - type: Transform
-      pos: 24.581747,10.684262
-      parent: 2
-  - uid: 15849
-    components:
-    - type: Transform
-      pos: 27.824532,35.632626
       parent: 2
 - proto: BaseComputerAiAccess
   entities:
@@ -51831,6 +51832,28 @@ entities:
     - type: Transform
       pos: 26.385427,37.27761
       parent: 2
+- proto: ChemistryEmptyVial
+  entities:
+  - uid: 4094
+    components:
+    - type: Transform
+      pos: 19.960098,21.84556
+      parent: 2
+  - uid: 4095
+    components:
+    - type: Transform
+      pos: 20.116348,21.62681
+      parent: 2
+  - uid: 8822
+    components:
+    - type: Transform
+      pos: 24.581747,10.684262
+      parent: 2
+  - uid: 15849
+    components:
+    - type: Transform
+      pos: 27.824532,35.632626
+      parent: 2
 - proto: ChemistryHotplate
   entities:
   - uid: 316
@@ -53014,8 +53037,8 @@ entities:
     - type: Transform
       parent: 15428
     - type: Clothing
-      inSlotFlag: HEAD
       inSlot: head
+      inSlotFlag: HEAD
     - type: Physics
       canCollide: False
 - proto: ClothingHeadHatBlacksoft
@@ -53317,8 +53340,8 @@ entities:
     - type: Transform
       parent: 15428
     - type: Clothing
-      inSlotFlag: NECK
       inSlot: neck
+      inSlotFlag: NECK
     - type: Physics
       canCollide: False
 - proto: ClothingNeckCloakTrans
@@ -54024,6 +54047,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: -22.5,-35.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal:
+      - - Newsroom
 - proto: ComputerMedicalRecords
   entities:
   - uid: 3908
@@ -55529,6 +55555,13 @@ entities:
     - type: Transform
       pos: 41.5,13.5
       parent: 2
+- proto: DefaultStationBeaconNewsroom
+  entities:
+  - uid: 18696
+    components:
+    - type: Transform
+      pos: -25.5,-32.5
+      parent: 2
 - proto: DefaultStationBeaconPowerBank
   entities:
   - uid: 14601
@@ -55556,13 +55589,6 @@ entities:
     components:
     - type: Transform
       pos: -19.5,25.5
-      parent: 2
-- proto: DefaultStationBeaconReporter
-  entities:
-  - uid: 18696
-    components:
-    - type: Transform
-      pos: -25.5,-32.5
       parent: 2
 - proto: DefaultStationBeaconRND
   entities:
@@ -90525,11 +90551,14 @@ entities:
   - uid: 18607
     components:
     - type: MetaData
-      name: lockable button (Emergency EVA Access)
+      name: emergency EVA Storage access
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,-5.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal:
+      - - Command
     - type: DeviceLinkSource
       linkedPorts:
         15548:
@@ -90538,11 +90567,6 @@ entities:
         - - Pressed
           - DoorBolt
         13799:
-        - - Pressed
-          - Open
-        - - Pressed
-          - DoorBolt
-        18606:
         - - Pressed
           - Open
         - - Pressed
@@ -92533,6 +92557,11 @@ entities:
     - type: Transform
       pos: -17.5,-10.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      - - Engineering
+      - - Research
   - uid: 5972
     components:
     - type: Transform
@@ -92721,6 +92750,11 @@ entities:
     - type: Transform
       pos: -16.5,-10.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      - - Engineering
+      - - Research
   - uid: 6298
     components:
     - type: Transform
@@ -104025,7 +104059,7 @@ entities:
     - type: Transform
       pos: 28.5,-30.5
       parent: 2
-- proto: SpacemenFigureSpawner
+- proto: SpacemenFigurineSpawner90
   entities:
   - uid: 3089
     components:
@@ -124567,6 +124601,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 13.5,2.5
       parent: 2
+- proto: WindoorLibraryLocked
+  entities:
+  - uid: 3189
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -18.5,-24.5
+      parent: 2
 - proto: WindoorSecure
   entities:
   - uid: 1899
@@ -124875,14 +124917,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,29.5
-      parent: 2
-- proto: WindoorServiceLocked
-  entities:
-  - uid: 3122
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -18.5,-24.5
       parent: 2
 - proto: Window
   entities:
