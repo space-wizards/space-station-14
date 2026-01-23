@@ -20,8 +20,6 @@
                     Example="{Loc 'ui-options-highlights-color-example'}"/>
                 <Label Text="{Loc 'ui-options-accessability-header-content'}"
                        StyleClasses="LabelKeyText"/>
-                <CheckBox Name="HoldToAttackMeleeCheckBox" Text="{Loc 'ui-options-hold-to-attack-melee'}" />
-                <CheckBox Name="HoldToAttackRangedCheckBox" Text="{Loc 'ui-options-hold-to-attack-ranged'}" />
                 <CheckBox Name="CensorNudityCheckBox" Text="{Loc 'ui-options-censor-nudity'}" />
             </BoxContainer>
         </ScrollContainer>

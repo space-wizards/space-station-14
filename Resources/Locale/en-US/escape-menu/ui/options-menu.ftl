@@ -108,6 +108,9 @@ ui-options-hud-layout = HUD layout:
 
 ## Controls menu
 
+ui-options-hold-to-attack-melee = Hold to attack (melee)
+ui-options-hold-to-attack-ranged = Hold to attack (ranged)
+
 ui-options-binds-reset-all = Reset ALL keybinds
 ui-options-binds-explanation = Click to change binding, right-click to clear
 ui-options-unbound = Unbound
@@ -369,9 +372,6 @@ ui-options-chat-window-opacity = Chat window opacity
 ui-options-speech-bubble-text-opacity = Speech bubble text opacity
 ui-options-speech-bubble-speaker-opacity = Speech bubble speaker opacity
 ui-options-speech-bubble-background-opacity = Speech bubble background opacity
-
-ui-options-hold-to-attack-melee = Hold to attack (melee)
-ui-options-hold-to-attack-ranged = Hold to attack (ranged)
 
 ui-options-censor-nudity = Censor character nudity
 
