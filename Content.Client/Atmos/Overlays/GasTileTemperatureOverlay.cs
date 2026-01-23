@@ -2,7 +2,6 @@ using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.CCVar;
-using Content.Shared.Ghost;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -170,11 +169,6 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
                     var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
-
-                    if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt)) continue;
-
-                    var uvToUi = Matrix3Helpers.CreateScale(_temperatureTarget.Size.X, -_temperatureTarget.Size.Y);
-                    var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
 
                     drawHandle.SetTransform(gridEntToViewportLocal);
 
