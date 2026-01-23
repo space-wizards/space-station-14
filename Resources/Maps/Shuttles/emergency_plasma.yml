@@ -8073,7 +8073,6 @@ entities:
   - uid: 827
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 5.5,0.5
       parent: 2
 ...

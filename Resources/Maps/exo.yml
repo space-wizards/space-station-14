@@ -92158,7 +92158,6 @@ entities:
   - uid: 14432
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -11.5,-18.5
       parent: 2
   - uid: 18330
@@ -92174,13 +92173,11 @@ entities:
   - uid: 19289
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 10.5,-84.5
       parent: 2
   - uid: 19309
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 29.5,-90.5
       parent: 2
   - uid: 19672
@@ -92191,7 +92188,6 @@ entities:
   - uid: 20010
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 65.5,-68.5
       parent: 2
 - proto: PowerComputerCircuitboard
