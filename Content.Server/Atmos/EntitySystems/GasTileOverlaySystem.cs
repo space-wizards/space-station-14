@@ -61,13 +61,6 @@ namespace Content.Server.Atmos.EntitySystems
         private EntityQuery<MapGridComponent> _gridQuery;
         private EntityQuery<GasTileOverlayComponent> _query;
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        private int _tempResolution;
-        private int _tempTempMinimum;
-        private int _tempTempMaximum;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -92,10 +85,6 @@ namespace Content.Server.Atmos.EntitySystems
             Subs.CVar(ConfMan, CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
             Subs.CVar(ConfMan, CCVars.GasOverlayThresholds, UpdateThresholds, true);
             Subs.CVar(ConfMan, CVars.NetPVS, OnPvsToggle, true);
-            Subs.CVar(ConfMan, CCVars.GasOverlayTempResolution, UpdateTempResolution, true);
-            Subs.CVar(ConfMan, CCVars.GasOverlayTempMinimum, UpdateTempMinimum, true);
-            Subs.CVar(ConfMan, CCVars.GasOverlayTempMaximum, UpdateTempMaximum, true);
-
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
         }
@@ -142,21 +131,8 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        public byte TemperatureToByte(float temperature)
-        {
-            var clampedTemp = Math.Clamp(temperature, _tempTempMinimum, _tempTempMaximum);
-
-            int inputSpan = _tempTempMaximum - _tempTempMinimum;
-
-            return (byte)((clampedTemp - _tempTempMinimum) * _tempResolution / inputSpan);
-        }
-
         private void UpdateTickRate(float value) => _updateInterval = value > 0.0f ? 1 / value : float.MaxValue;
         private void UpdateThresholds(int value) => _thresholds = value;
-        private void UpdateTempResolution(int value) => _tempResolution = MathHelper.Clamp(value, 0, 255);
-        private void UpdateTempMinimum(int value) => _tempTempMinimum = value;
-        private void UpdateTempMaximum(int value) => _tempTempMaximum = value;
-
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
@@ -195,9 +171,16 @@ namespace Content.Server.Atmos.EntitySystems
 
         public GasOverlayData GetOverlayData(GasMixture? mixture)
         {
-            var data = new GasOverlayData(0,
-                new byte[VisibleGasId.Length],
-                TemperatureToByte(mixture?.Temperature ?? Atmospherics.TCMB));
+            ThermalByte byteTemp;
+            if (mixture == null)
+            {
+                byteTemp = new();
+                byteTemp.SetVacuum();
+            }
+            else
+                byteTemp = new(mixture.Temperature);
+
+            var data = new GasOverlayData(0, new byte[VisibleGasId.Length], byteTemp);
 
             for (var i = 0; i < VisibleGasId.Length; i++)
             {
@@ -238,14 +221,17 @@ namespace Content.Server.Atmos.EntitySystems
 
             var changed = false;
 
-            var newTemp = tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? -1f;
-            Byte newByteTemp;
-            if (newTemp == -1f) // No possible air, for example walls
-                newByteTemp = Byte.MaxValue;
-            else if (tile.Space || tile.Air?.TotalMoles == 0f) // Vaccum
-                newByteTemp = Byte.MaxValue - 1;
+            ThermalByte newByteTemp;
+
+            if (tile.Hotspot.Valid)
+                newByteTemp = new ThermalByte(tile.Hotspot.Temperature);
+            else if (tile.Air != null)
+                newByteTemp = new ThermalByte(tile.Air.Temperature);
             else
-                newByteTemp = TemperatureToByte(newTemp);
+            {
+                newByteTemp = new();
+                newByteTemp.SetWall();
+            }
 
             if (oldData.Equals(default))
             {
@@ -253,7 +239,7 @@ namespace Content.Server.Atmos.EntitySystems
                 oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp);
             }
             else if (oldData.FireState != tile.Hotspot.State ||
-                     Math.Abs(oldData.ByteTemp - newByteTemp) > 1) // Dirty Temperature when there is more then 1 byte difference 
+                     Math.Abs(oldData.ByteTemp.Value - newByteTemp.Value) > 1) // Dirty Temperature when there is more then 1 byte difference 
             {
                 changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);

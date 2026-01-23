@@ -1,6 +1,7 @@
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
@@ -33,19 +34,24 @@ public sealed class GasTileTemperatureOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
 
-        var tempResolution = _cfgManager.GetCVar(CCVars.GasOverlayTempResolution);
-        var minInput = _cfgManager.GetCVar(CCVars.GasOverlayTempMinimum);
-        var maxInput = _cfgManager.GetCVar(CCVars.GasOverlayTempMaximum);
-
-        float tempDegreeResolution = (maxInput - minInput) / tempResolution;
-
-        for (byte i = 0; i <= tempResolution; i++)
+        for (byte i = 0; i <= ThermalByte.TempResolution; i++)
         {
-            _colorCache[i] = CalculateColor(i, tempDegreeResolution);
+            _colorCache[i] = PreCalculateColor(i);
         }
+
+        _colorCache[ThermalByte.STATE_VACUUM] = Color.Transparent;
+        _colorCache[ThermalByte.STATE_WALL] = Color.Transparent;
+
+#if DEBUG
+        _colorCache[ThermalByte.RESERVED_FUTURE1] = Color.LimeGreen;
+        _colorCache[ThermalByte.RESERVED_FUTURE2] = Color.LimeGreen;
+#else
+        _colorCache[ThermalByte.RESERVED_FUTURE1] = Color.Transparent;
+        _colorCache[ThermalByte.RESERVED_FUTURE2] = Color.Transparent;
+#endif
     }
 
-    private static Color CalculateColor(byte byteTemp, float tempDegreeResolution)
+    private static Color PreCalculateColor(byte byteTemp)
     {
         // Color Thresholds in Kelvin
         // -150 C
@@ -61,7 +67,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
         // 300 C
         const float superHeatK = 573.15f;
 
-        float tempK = byteTemp * tempDegreeResolution;
+        float tempK = byteTemp * ThermalByte.TempDegreeResolution;
 
         // Neutral Zone Check (0C to 50C)
         // If between 273.15K and 323.15K, it's transparent.
@@ -187,7 +193,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
                             if (!localBounds.Contains(tilePosition)) continue;
 
-                            Color gasColor = _colorCache[tileGas.ByteTemp];
+                            Color gasColor = _colorCache[tileGas.ByteTemp.Value];
 
                             if (gasColor.A <= 0f) continue;
 
