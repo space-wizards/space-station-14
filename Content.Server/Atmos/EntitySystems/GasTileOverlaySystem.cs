@@ -224,9 +224,14 @@ namespace Content.Server.Atmos.EntitySystems
             ThermalByte newByteTemp;
 
             if (tile.Hotspot.Valid)
-                newByteTemp = new ThermalByte(tile.Hotspot.Temperature);
+                newByteTemp = new(tile.Hotspot.Temperature);
+            else if (tile.Space || tile.Air?.TotalMoles == 0f)
+            {
+                newByteTemp = new();
+                newByteTemp.SetVacuum();
+            }
             else if (tile.Air != null)
-                newByteTemp = new ThermalByte(tile.Air.Temperature);
+                newByteTemp = new(tile.Air.Temperature);
             else
             {
                 newByteTemp = new();

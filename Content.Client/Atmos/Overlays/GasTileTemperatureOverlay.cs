@@ -2,7 +2,6 @@ using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -18,10 +17,10 @@ public sealed class GasTileTemperatureOverlay : Overlay
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;
+    private EntityQuery<GasTileOverlayComponent> _overlayQuery;
 
     private IRenderTexture? _temperatureTarget;
 
@@ -33,6 +32,8 @@ public sealed class GasTileTemperatureOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
+
+        _overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
         for (byte i = 0; i <= ThermalByte.TempResolution; i++)
         {
@@ -158,20 +159,19 @@ public sealed class GasTileTemperatureOverlay : Overlay
         var mapId = args.MapId;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
-        var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
-
-
         bool anyGasDrawn = false;
+        List<Entity<MapGridComponent>> grids = new();
+
 
         drawHandle.RenderInRenderTarget(_temperatureTarget,
             () =>
             {
-                List<Entity<MapGridComponent>> grids = new();
+                grids.Clear();
                 _mapManager.FindGridsIntersecting(mapId, worldAABB, ref grids);
 
                 foreach (var grid in grids)
                 {
-                    if (!overlayQuery.TryGetComponent(grid.Owner, out var comp)) continue;
+                    if (!_overlayQuery.TryGetComponent(grid.Owner, out var comp)) continue;
 
                     var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
