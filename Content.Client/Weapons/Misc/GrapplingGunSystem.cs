@@ -32,16 +32,6 @@ public sealed class GrapplingGunSystem : SharedGrapplingGunSystem
         if (!TryComp<GrapplingGunComponent>(handUid, out var grappling))
             return;
 
-        if (!TryComp<JointComponent>(handUid, out var jointComp) ||
-            !jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
-            joint is not DistanceJoint distance)
-        {
-            return;
-        }
-
-        if (distance.MaxLength <= distance.MinLength)
-            return;
-
         var reelKey = _input.CmdStates.GetState(EngineKeyFunctions.UseSecondary) == BoundKeyState.Down;
 
         if (!TryComp<CombatModeComponent>(local, out var combatMode) ||
