@@ -59,6 +59,7 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+      toggleable-under-clothing: !type:ContainerSlot {}
   - type: Tag
     tags:
     - CorgiWearable
@@ -169,6 +170,7 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+      toggleable-under-clothing: !type:ContainerSlot {}
   - type: Tag
     tags:
     - CorgiWearable
