@@ -151,21 +151,27 @@ public struct ThermalByte
     public byte Value => _coreValue;
 
     /// <summary>
-    /// Returns air temperature in Kelvin.
+    /// Attempts to get the air temperature in Kelvin.
     /// </summary>
-    public readonly float GetTemperature()
+    /// <param name="temperature">The temperature in Kelvin, if the tile is valid air.</param>
+    /// <returns>
+    /// True if the tile contains valid air; false if it is a wall or vacuum.
+    /// </returns>
+    public readonly bool TryGetTemperature(out float temperature, bool onVaccumReturnTCMB = true)
     {
-#if DEBUG
-        if (_coreValue == RESERVED_FUTURE1 || _coreValue == RESERVED_FUTURE2)
+        if (_coreValue == STATE_WALL)
         {
-            // Robust.Shared.Log.Logger.Error(...); TODO do the debug logging
-            return -999f;
+            temperature = 0f;
+            return false;
         }
-#endif
-        if (_coreValue == STATE_WALL) return -1f;
-        if (_coreValue == STATE_VACUUM) return -2f;
+        else if (_coreValue == STATE_VACUUM)
+        {
+            temperature = Atmospherics.TCMB;
+            return true; ;
+        }
 
-        return (_coreValue * TempDegreeResolution) + TempMinimum;
+        temperature = (_coreValue * TempDegreeResolution) + TempMinimum;
+        return true;
     }
 
     public bool Equals(ThermalByte other)

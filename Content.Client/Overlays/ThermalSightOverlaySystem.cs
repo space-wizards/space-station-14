@@ -9,7 +9,7 @@ public sealed partial class ThermalSightOverlaySystem : EquipmentHudSystem<Therm
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-    private GasTileTemperatureOverlay _temperatureOverlay = default!;
+    private GasTileDangerousTemperatureOverlay _temperatureOverlay = default!;
 
     public override void Initialize()
     {

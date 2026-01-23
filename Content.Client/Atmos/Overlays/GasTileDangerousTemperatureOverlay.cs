@@ -3,14 +3,19 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Client.Graphics;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Numerics;
+
 namespace Content.Client.Atmos.Overlays;
 
-public sealed class GasTileTemperatureOverlay : Overlay
+
+/// <summary>
+/// Overlay responsible for drawing colorfull squares which represent gasses with dangerous temperatures. Used in for example thermal glasses
+/// </summary>
+
+public sealed class GasTileDangerousTemperatureOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = false;
 
@@ -28,7 +33,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    public GasTileTemperatureOverlay()
+    public GasTileDangerousTemperatureOverlay()
     {
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
@@ -150,7 +155,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
             _temperatureTarget = _clyde.CreateRenderTarget(
                 target.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
-                name: nameof(GasTileTemperatureOverlay));
+                name: nameof(GasTileDangerousTemperatureOverlay));
         }
 
         var drawHandle = args.WorldHandle;
