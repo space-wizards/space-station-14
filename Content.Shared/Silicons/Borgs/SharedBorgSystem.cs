@@ -1,6 +1,7 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
@@ -91,7 +92,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
         SubscribeLocalEvent<BorgChassisComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<BorgChassisComponent, GibbedBeforeDeletionEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<BorgChassisComponent, BeingGibbedEvent>(OnBeingGibbed);
         SubscribeLocalEvent<BorgChassisComponent, GetCharactedDeadIcEvent>(OnGetDeadIC);
         SubscribeLocalEvent<BorgChassisComponent, GetCharacterUnrevivableIcEvent>(OnGetUnrevivableIC);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
@@ -296,29 +297,19 @@ public abstract partial class SharedBorgSystem : EntitySystem
             SetActive(chassis, false, user: args.Origin);
     }
 
-    private void OnBeingGibbed(Entity<BorgChassisComponent> chassis, ref GibbedBeforeDeletionEvent args)
+    private void OnBeingGibbed(Entity<BorgChassisComponent> chassis, ref BeingGibbedEvent args)
     {
         List<EntityUid> gibblets = new();
+
         // Don't use the ItemSlotsSystem eject method since we don't want to play a sound and want we to eject the battery even if the slot is locked.
         if (TryComp<PowerCellSlotComponent>(chassis, out var slotComp) &&
             _container.TryGetContainer(chassis, slotComp.CellSlotId, out var slotContainer))
             gibblets.AddRange(_container.EmptyContainer(slotContainer));
-
         gibblets.AddRange(_container.EmptyContainer(chassis.Comp.BrainContainer));
         gibblets.AddRange(_container.EmptyContainer(chassis.Comp.ModuleContainer));
 
         foreach (var gibblet in gibblets)
-            FlingDroppedEntity(gibblet);
-    }
-
-    private const float GibletLaunchImpulse = 30;
-    private const float GibletLaunchImpulseVariance = 80;
-
-    private void FlingDroppedEntity(EntityUid target)
-    {
-        var impulse = GibletLaunchImpulse + _random.NextFloat(GibletLaunchImpulseVariance);
-        var scatterVec = _random.NextAngle().ToVec() * impulse;
-        _physics.ApplyLinearImpulse(target, scatterVec);
+            args.Giblets.Add(gibblet);
     }
 
     private void OnGetDeadIC(Entity<BorgChassisComponent> chassis, ref GetCharactedDeadIcEvent args)
