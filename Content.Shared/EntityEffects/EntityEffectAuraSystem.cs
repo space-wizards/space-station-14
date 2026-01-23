@@ -1,29 +1,28 @@
 using Content.Shared.Alert;
-using Content.Shared.Damage.Components;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Timing;
+using Content.Shared.EntityEffects;
 
-namespace Content.Shared.Damage.Systems;
+namespace Content.Shared.EntityEffects;
 
-public sealed class DamageAuraSystem : EntitySystem
+public sealed class EntityEffectAuraSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly AlertsSystem _alert = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _effects = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DamageAuraComponent, MapInitEvent>(OnPendingMapInit);
+        SubscribeLocalEvent<EntityEffectAuraComponent, MapInitEvent>(OnPendingMapInit);
     }
 
-    private void OnPendingMapInit(EntityUid uid, DamageAuraComponent component, MapInitEvent args)
+    private void OnPendingMapInit(EntityUid uid, EntityEffectAuraComponent component, MapInitEvent args)
     {
-        component.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f);
+        component.NextEntityEffect = _timing.CurTime + TimeSpan.FromSeconds(1f);
     }
 
     public override void Update(float frameTime)
@@ -31,23 +30,21 @@ public sealed class DamageAuraSystem : EntitySystem
         base.Update(frameTime);
         var curTime = _timing.CurTime;
 
-        var query = EntityQueryEnumerator<DamageAuraComponent>();
+        var query = EntityQueryEnumerator<EntityEffectAuraComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.NextDamage > curTime)
+            if (comp.NextEntityEffect > curTime)
                 continue;
 
-            comp.NextDamage = curTime + TimeSpan.FromSeconds(comp.Interval);
+            comp.NextEntityEffect = curTime + TimeSpan.FromSeconds(comp.Interval);
 
             foreach (var ent in _lookup.GetEntitiesInRange(uid, comp.Radius))
             {
-                if (!HasComp<DamageableComponent>(ent))
-                    continue;
 
                 if (_whitelistSystem.IsWhitelistFail(comp.Whitelist, ent) || _whitelistSystem.IsWhitelistPass(comp.Blacklist, ent))
                     continue;
 
-                _damageable.ChangeDamage(ent, comp.Damage, true, false);
+                _effects.ApplyEffects(ent, comp.Effects, user: uid);
 
                 if (comp.Alert != null && HasComp<AlertsComponent>(ent))
                 {
