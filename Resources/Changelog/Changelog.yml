@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SweetAplle
-  changes:
-  - message: Saying "idk" now no longer forces the shrug emote, instead expanding
-      to "I don't know".
-    type: Tweak
-  id: 8947
-  time: '2025-09-10T20:09:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39024
 - author: imatsoup
   changes:
   - message: Butterflies can no longer be infected by Romerol or become Romerol zombies.
@@ -3972,3 +3964,16 @@
   id: 9453
   time: '2026-01-22T23:04:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38043
+- author: sowelipililimute
+  changes:
+  - message: Drinking or eating things now gradually trickles into the bloodstream,
+      instead of being a fixed delay
+    type: Tweak
+  - message: Reagent effect groups are now stages of metabolism in the guidebook
+    type: Tweak
+  - message: Many reagents that break down into other ones have clearer guidebook
+      descriptions and slightly adjusted behaviour
+    type: Tweak
+  id: 9454
+  time: '2026-01-23T02:05:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42172
