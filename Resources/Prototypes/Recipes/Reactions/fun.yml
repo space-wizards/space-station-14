@@ -208,9 +208,7 @@
     Uranium:
       amount: 10
     FrostOil:
-      amount: 5
-    Fresium:
-      amount: 5
+      amount: 10
   effects:
   - !type:SpawnEntity
     entity: SheetUranium1
@@ -222,10 +220,8 @@
   reactants:
     Plasma:
       amount: 10
-    FrostOil:
-      amount: 5
     Fresium:
-      amount: 5
+      amount: 2
   effects:
   - !type:SpawnEntity
     entity: SheetPlasma1
