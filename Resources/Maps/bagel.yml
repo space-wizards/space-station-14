@@ -4,7 +4,7 @@ meta:
   engineVersion: 271.1.0
   forkId: ""
   forkVersion: ""
-  time: 01/23/2026 13:51:21
+  time: 01/23/2026 14:03:35
   entityCount: 25404
 maps:
 - 943
@@ -112390,11 +112390,6 @@ entities:
         - - Pressed
           - DoorBolt
         1343:
-        - - Pressed
-          - Open
-        - - Pressed
-          - DoorBolt
-        5955:
         - - Pressed
           - Open
         - - Pressed
