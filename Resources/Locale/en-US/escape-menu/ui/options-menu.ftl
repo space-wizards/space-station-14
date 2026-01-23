@@ -370,6 +370,8 @@ ui-options-speech-bubble-text-opacity = Speech bubble text opacity
 ui-options-speech-bubble-speaker-opacity = Speech bubble speaker opacity
 ui-options-speech-bubble-background-opacity = Speech bubble background opacity
 
+ui-options-hold-to-attack = Hold to attack
+
 ui-options-censor-nudity = Censor character nudity
 
 ## Admin menu
