@@ -721,7 +721,7 @@
     defaultText: station-beacon-library
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: DefaultStationBeaconService
   id: DefaultStationBeaconNewsroom
   suffix: Newsroom
   components:
