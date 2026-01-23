@@ -100,8 +100,8 @@ public sealed class GasTileTemperatureOverlay : Overlay
             // Range: 223.15 to 273.15 (Span: 50)
 
             resultingColor = Color.InterpolateBetween(
-                 new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.6f),
                  new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.2f),
+                 new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.6f),
                 (tempK - freezeStartK) * 0.02f);
 
         }
@@ -111,8 +111,8 @@ public sealed class GasTileTemperatureOverlay : Overlay
             // Range: 323.15 to 373.15 (Span: 50)
 
             resultingColor = Color.InterpolateBetween(
-                 new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.6f),
                  new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.2f),
+                 new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.6f),
                 (tempK - heatStartK) * 0.02f);
         }
         else if (tempK < superHeatK)

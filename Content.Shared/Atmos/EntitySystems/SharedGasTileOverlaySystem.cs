@@ -113,6 +113,7 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
     }
 }
 
+[Serializable]
 public struct ThermalByte
 {
     public const float TempMinimum = 0f;
