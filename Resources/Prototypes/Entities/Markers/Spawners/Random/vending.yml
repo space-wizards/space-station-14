@@ -62,6 +62,13 @@
     table: !type:NestedSelector
       tableId: ClothingVendorTable
 
+- type: entityTable
+  id: MaintenanceVendorTable
+  table: !type:GroupSelector
+    children:
+    - id: VendingMachineDrugs
+    - id: VendingMachineSovietSoda
+
 - type: entity
   parent: MarkerBase
   id: RandomVendingMaintenance
@@ -76,8 +83,9 @@
   - type: EntityTableSpawner
     table: !type:GroupSelector
       children:
-      - id: VendingMachineDrugs
+      - !type:NestedSelector
+        tableId: MaintenanceVendorTable
         weight: 20
       - !type:NestedSelector
-        weight: 40
         tableId: GenericTrashItems
+        weight: 40
