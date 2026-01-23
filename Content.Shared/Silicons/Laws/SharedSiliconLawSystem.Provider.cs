@@ -39,20 +39,17 @@ public abstract partial class SharedSiliconLawSystem
         // Emagged borgs are immune to ion storm
         if (!_emag.CheckFlag(ent, EmagType.Interaction))
         {
-            ent.Comp.Lawset = args.Lawset.Clone();
-
-            // gotta tell player to check their laws
-            NotifyLawsChanged(ent, ent.Comp.LawUploadSound);
+            var newLaws = args.Lawset.Clone();
 
             // Show the silicon has been subverted.
             ent.Comp.Subverted = true;
+
+            SetProviderLaws(ent.AsNullable(), newLaws.Laws);
 
             // new laws may allow antagonist behaviour so make it clear for admins
             if(_mind.TryGetMind(ent.Owner, out var mindId, out _))
                 EnsureSubvertedSiliconRole(mindId);
         }
-
-        Dirty(ent);
     }
 
     private void OnProviderGetLaws(Entity<SiliconLawProviderComponent> ent, ref GetSiliconLawsEvent args)
