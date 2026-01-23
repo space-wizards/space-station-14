@@ -66,14 +66,14 @@
   id: MaintenanceVendorTable
   table: !type:GroupSelector
     children:
-    - !type:NestedSelector
+    - !type:GroupSelector
         weight: 20
         children:
           - id: VendingMachineDrugs
           - id: VendingMachineSovietSoda
     - !type:NestedSelector  # Chance to not spawn a vending machine at all
-        tableId: GenericTrashItems
         weight: 40
+        tableId: GenericTrashItems
 
 - type: entity
   parent: MarkerBase
