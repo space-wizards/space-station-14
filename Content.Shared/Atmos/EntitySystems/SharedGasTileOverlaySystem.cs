@@ -72,13 +72,18 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
         [ViewVariables] public readonly byte[] Opacity;
         // TODO change fire color based on ByteTemp
 
-        [ViewVariables] public readonly ThermalByte ByteTemp;
+        /// <summary>
+        /// Network-synced air temperature, compressed to a single byte per tile for bandwidth optimization.
+        /// Note: Values are approximate and may deviate even ~10°C from the precise server side only temperature.
+        /// </summary>
+        [ViewVariables] public readonly ThermalByte ByteGasTemperature;
+
 
         public GasOverlayData(byte fireState, byte[] opacity, ThermalByte byteTemp)
         {
             FireState = fireState;
             Opacity = opacity;
-            ByteTemp = byteTemp;
+            ByteGasTemperature = byteTemp;
         }
 
         public bool Equals(GasOverlayData other)
@@ -98,7 +103,7 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
                 }
             }
 
-            if (ByteTemp != other.ByteTemp)
+            if (ByteGasTemperature != other.ByteGasTemperature)
                 return false;
 
             return true;
@@ -114,6 +119,9 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
 }
 
 [Serializable]
+/// <summary>
+/// This struct is used to send air temperature on screen to all users.   
+/// </summary>
 public struct ThermalByte
 {
     public const float TempMinimum = 0f;
