@@ -46,7 +46,7 @@ public sealed class JammerSystem : SharedJammerSystem
         // Event-based battery charging
         SubscribeLocalEvent<ActiveRadioJammerComponent, RefreshChargeRateEvent>(OnRefreshChargeRate);
         SubscribeLocalEvent<RadioJammerComponent, PowerCellSlotEmptyEvent>(OnPowerCellEmpty);
-        SubscribeLocalEvent<ActiveRadioJammerComponent, PredictedBatteryChargeChangedEvent>(OnBatteryChargeChanged);
+        SubscribeLocalEvent<ActiveRadioJammerComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
     }
 
     private void OnActivate(Entity<RadioJammerComponent> ent, ref ActivateInWorldEvent args)
@@ -411,7 +411,7 @@ public sealed class JammerSystem : SharedJammerSystem
         RemCompDeferred<DeviceNetworkJammerComponent>(ent);
     }
 
-    private void OnBatteryChargeChanged(Entity<ActiveRadioJammerComponent> ent, ref PredictedBatteryChargeChangedEvent args)
+    private void OnBatteryChargeChanged(Entity<ActiveRadioJammerComponent> ent, ref ChargeChangedEvent args)
     {
         // Calculate charge level for LED visuals
         var chargeFraction = args.CurrentCharge / args.MaxCharge;
