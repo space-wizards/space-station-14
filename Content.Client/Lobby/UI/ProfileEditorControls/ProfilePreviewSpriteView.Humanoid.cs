@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Humanoid;
 using Content.Client.Station;
+using Content.Shared.Body;
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
@@ -23,10 +24,10 @@ public sealed partial class ProfilePreviewSpriteView
     private void ReloadHumanoidEntity(HumanoidCharacterProfile humanoid)
     {
         if (!EntMan.EntityExists(PreviewDummy) ||
-            !EntMan.HasComponent<HumanoidAppearanceComponent>(PreviewDummy))
+            !EntMan.HasComponent<VisualBodyComponent>(PreviewDummy))
             return;
 
-        EntMan.System<HumanoidAppearanceSystem>().LoadProfile(PreviewDummy, humanoid);
+        EntMan.System<SharedVisualBodySystem>().ApplyProfileTo(PreviewDummy, humanoid);
     }
 
     /// <summary>
@@ -49,15 +50,14 @@ public sealed partial class ProfilePreviewSpriteView
         }
         else if (humanoid is not null)
         {
-            var dummy = _prototypeManager.Index<SpeciesPrototype>(humanoid.Species).DollPrototype;
+            var dummy = _prototypeManager.Index(humanoid.Species).DollPrototype;
             PreviewDummy = EntMan.SpawnEntity(dummy, MapCoordinates.Nullspace);
+            EntMan.System<SharedVisualBodySystem>().ApplyProfileTo(PreviewDummy, humanoid);
         }
         else
         {
-            PreviewDummy = EntMan.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
+            PreviewDummy = EntMan.SpawnEntity(_prototypeManager.Index(HumanoidCharacterProfile.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
         }
-
-        EntMan.System<HumanoidAppearanceSystem>().LoadProfile(PreviewDummy, humanoid);
 
         if (humanoid != null && jobClothes)
         {

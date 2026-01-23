@@ -66,6 +66,13 @@ public sealed partial class CCVars
         CVarDef.Create("ic.random_species_weights", "SpeciesWeights", CVar.SERVER);
 
     /// <summary>
+    ///     The list of species that will NOT be given to new account joins when they are assigned a random character.
+    ///     This only affects the first time a character is made for an account, nothing else.
+    /// </summary>
+    public static readonly CVarDef<string> ICNewAccountSpeciesBlacklist =
+        CVarDef.Create("ic.blacklist_species_new_account", "Diona,Vulpkanin,Vox,SlimePerson", CVar.SERVER);
+
+    /// <summary>
     ///     Control displaying SSD indicators near players
     /// </summary>
     public static readonly CVarDef<bool> ICShowSSDIndicator =
