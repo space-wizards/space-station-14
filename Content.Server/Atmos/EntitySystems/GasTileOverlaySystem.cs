@@ -2,14 +2,12 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.CCVar;
 using Content.Shared.Chunking;
 using Content.Shared.GameTicking;
 using Content.Shared.Rounding;
 using JetBrains.Annotations;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -18,7 +16,6 @@ using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Runtime.CompilerServices;
-using YamlDotNet.Core.Tokens;
 
 // ReSharper disable once RedundantUsingDirective
 
@@ -82,9 +79,6 @@ namespace Content.Server.Atmos.EntitySystems
             };
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            Subs.CVar(ConfMan, CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
-            Subs.CVar(ConfMan, CCVars.GasOverlayThresholds, UpdateThresholds, true);
-            Subs.CVar(ConfMan, CVars.NetPVS, OnPvsToggle, true);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
         }
@@ -244,7 +238,7 @@ namespace Content.Server.Atmos.EntitySystems
                 oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp);
             }
             else if (oldData.FireState != tile.Hotspot.State ||
-                     Math.Abs(oldData.ByteTemp.Value - newByteTemp.Value) > 1) // Dirty Temperature when there is more then 1 byte difference 
+                     Math.Abs(oldData.ByteTemp.Value - newByteTemp.Value) > 1) // Dirty Temperature when there is more then 1 byte difference. That should measure up to minimum 4 degreese difference, 6 degreese on average.
             {
                 changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);

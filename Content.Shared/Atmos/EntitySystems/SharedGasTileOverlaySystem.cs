@@ -151,11 +151,11 @@ public struct ThermalByte
     public byte Value => _coreValue;
 
     /// <summary>
-    /// Attempts to get the air temperature in Kelvin.
+    /// Attempts to get the air temperature in Kelvin. If onVaccumReturnTCMB is true it will return Cosmic Microwave Background Temperature 
     /// </summary>
     /// <param name="temperature">The temperature in Kelvin, if the tile is valid air.</param>
     /// <returns>
-    /// True if the tile contains valid air; false if it is a wall or vacuum.
+    /// True if the tile contains valid temperature; false if it is a wall or vacuum(with onVaccumReturnTCMB set to false).
     /// </returns>
     public readonly bool TryGetTemperature(out float temperature, bool onVaccumReturnTCMB = true)
     {

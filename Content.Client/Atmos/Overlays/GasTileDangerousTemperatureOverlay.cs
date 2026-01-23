@@ -12,8 +12,8 @@ namespace Content.Client.Atmos.Overlays;
 
 
 /// <summary>
-/// Overlay responsible for drawing colorfull squares which represent gasses with dangerous temperatures. Used in for example thermal glasses
-/// </summary>
+/// Renders a thermal heatmap overlay for gas tiles, used for equipment like thermal glasses.
+/// /// </summary>
 
 public sealed class GasTileDangerousTemperatureOverlay : Overlay
 {
@@ -48,7 +48,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
         _colorCache[ThermalByte.STATE_VACUUM] = Color.Transparent;
         _colorCache[ThermalByte.STATE_WALL] = Color.Transparent;
 
-#if DEBUG
+#if DEBUG // This shouldn't happend so tell me if you see this LimeGreen on the screen
         _colorCache[ThermalByte.RESERVED_FUTURE1] = Color.LimeGreen;
         _colorCache[ThermalByte.RESERVED_FUTURE2] = Color.LimeGreen;
 #else
@@ -166,7 +166,6 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
 
         bool anyGasDrawn = false;
         List<Entity<MapGridComponent>> grids = new();
-
 
         drawHandle.RenderInRenderTarget(_temperatureTarget,
             () =>
