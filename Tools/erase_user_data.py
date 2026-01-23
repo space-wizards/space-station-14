@@ -12,7 +12,7 @@ import os
 import psycopg2
 from uuid import UUID
 
-LATEST_DB_MIGRATION = "20250314222016_ConstructionFavorites"
+LATEST_DB_MIGRATION = "20260120200503_BanRefactor"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -38,9 +38,8 @@ def main():
     clear_play_time(cur, user_id)
     clear_player(cur, user_id)
     clear_preference(cur, user_id)
-    clear_server_ban(cur, user_id)
+    clear_ban(cur, user_id)
     clear_server_ban_exemption(cur, user_id)
-    clear_server_role_ban(cur, user_id)
     clear_uploaded_resource_log(cur, user_id)
     clear_whitelist(cur, user_id)
     clear_blacklist(cur, user_id)
@@ -144,14 +143,14 @@ WHERE
 """, (user_id,))
 
 
-def clear_server_ban(cur: "psycopg2.cursor", user_id: str):
-    print("Clearing server_ban...")
+def clear_ban(cur: "psycopg2.cursor", user_id: str):
+    print("Clearing ban...")
 
     cur.execute("""
 DELETE FROM
-    server_ban
+    ban
 WHERE
-    player_user_id = %s
+    ban_id IN (SELECT bp.ban_id FROM ban_player bp WHERE bp.user_id = %s)
 """, (user_id,))
 
 
@@ -163,17 +162,6 @@ DELETE FROM
     server_ban_exemption
 WHERE
     user_id = %s
-""", (user_id,))
-
-
-def clear_server_role_ban(cur: "psycopg2.cursor", user_id: str):
-    print("Clearing server_role_ban...")
-
-    cur.execute("""
-DELETE FROM
-    server_role_ban
-WHERE
-    player_user_id = %s
 """, (user_id,))
 
 
