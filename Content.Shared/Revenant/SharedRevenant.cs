@@ -58,7 +58,7 @@ public sealed partial class RevenantMalfunctionActionEvent : InstantActionEvent
 {
 }
 
-[Serializable, NetSerializable]
+[DataDefinitionAttribute, Serializable, NetSerializable]
 public sealed partial class RevenantGraspBuyEvent : EntityEventArgs
 {
 }
