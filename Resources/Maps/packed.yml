@@ -76092,7 +76092,6 @@ entities:
   - uid: 2152
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 12.5,20.5
       parent: 2
   - uid: 3948
@@ -102238,13 +102237,11 @@ entities:
   - uid: 7979
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -1.5,-3.5
       parent: 2
   - uid: 8373
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 37.5,32.5
       parent: 2
   - uid: 11664
@@ -102267,7 +102264,6 @@ entities:
   - uid: 15971
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 44.5,24.5
       parent: 2
 - proto: WeaponEnergyTurretAI

@@ -69513,7 +69513,6 @@ entities:
   - uid: 10477
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -14.5,15.5
       parent: 31
 - proto: WeaponDisabler
