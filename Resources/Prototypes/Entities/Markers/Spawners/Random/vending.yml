@@ -66,8 +66,14 @@
   id: MaintenanceVendorTable
   table: !type:GroupSelector
     children:
-    - id: VendingMachineDrugs
-    - id: VendingMachineSovietSoda
+    - !type:NestedSelector
+        weight: 20
+        children:
+          - id: VendingMachineDrugs
+          - id: VendingMachineSovietSoda
+    - !type:NestedSelector  # Chance to not spawn a vending machine at all
+        tableId: GenericTrashItems
+        weight: 40
 
 - type: entity
   parent: MarkerBase
@@ -81,11 +87,5 @@
     - sprite: Structures/Machines/VendingMachines/random.rsi
       state: any
   - type: EntityTableSpawner
-    table: !type:GroupSelector
-      children:
-      - !type:NestedSelector
+    table: !type:NestedSelector
         tableId: MaintenanceVendorTable
-        weight: 20
-      - !type:NestedSelector
-        tableId: GenericTrashItems
-        weight: 40
