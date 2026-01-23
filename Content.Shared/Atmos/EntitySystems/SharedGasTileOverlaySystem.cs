@@ -16,6 +16,9 @@ namespace Content.Shared.Atmos.EntitySystems
         [Dependency] protected readonly IConfigurationManager ConfMan = default!;
         [Dependency] private readonly SharedAtmosphereSystem _atmosphere = default!;
 
+        /// <summary>
+        ///     array of the ids of all visible gases.
+        /// </summary>
         public int[] VisibleGasId = default!;
 
         public override void Initialize()
@@ -24,6 +27,7 @@ namespace Content.Shared.Atmos.EntitySystems
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentGetState>(OnGetState);
 
             List<int> visibleGases = new();
+
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var gasPrototype = _atmosphere.GetGas(i);
@@ -36,8 +40,10 @@ namespace Content.Shared.Atmos.EntitySystems
 
         private void OnGetState(EntityUid uid, GasTileOverlayComponent component, ref ComponentGetState args)
         {
-            if (PvsEnabled && !args.ReplayState) return;
+            if (PvsEnabled && !args.ReplayState)
+                return;
 
+            // Should this be a full component state or a delta-state?
             if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
             {
                 args.State = new GasTileOverlayState(component.Chunks);
@@ -64,6 +70,8 @@ namespace Content.Shared.Atmos.EntitySystems
         {
             [ViewVariables] public readonly byte FireState;
             [ViewVariables] public readonly byte[] Opacity;
+            // TODO change fire color based on ByteTemp
+
             [ViewVariables] public readonly byte ByteTemp;
 
             public GasOverlayData(byte fireState, byte[] opacity, byte byteTemp)
@@ -75,14 +83,18 @@ namespace Content.Shared.Atmos.EntitySystems
 
             public bool Equals(GasOverlayData other)
             {
-                if (FireState != other.FireState) return false;
-                if (Opacity?.Length != other.Opacity?.Length) return false;
+                if (FireState != other.FireState)
+                    return false;
+
+                if (Opacity?.Length != other.Opacity?.Length)
+                    return false;
 
                 if (Opacity != null && other.Opacity != null)
                 {
                     for (var i = 0; i < Opacity.Length; i++)
                     {
-                        if (Opacity[i] != other.Opacity[i]) return false;
+                        if (Opacity[i] != other.Opacity[i])
+                            return false;
                     }
                 }
 

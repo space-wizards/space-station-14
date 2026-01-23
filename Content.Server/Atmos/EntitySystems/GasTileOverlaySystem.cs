@@ -237,14 +237,23 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var changed = false;
-            var newByteTemp = TemperatureToByte(tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? Atmospherics.TCMB);
+
+            var newTemp = tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? -1f;
+            Byte newByteTemp;
+            if (newTemp == -1f) // No possible air, for example walls
+                newByteTemp = Byte.MaxValue;
+            else if (tile.Space || tile.Air?.TotalMoles == 0f) // Vaccum
+                newByteTemp = Byte.MaxValue - 1;
+            else
+                newByteTemp = TemperatureToByte(newTemp);
+
             if (oldData.Equals(default))
             {
                 changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp);
             }
             else if (oldData.FireState != tile.Hotspot.State ||
-                     Math.Abs(oldData.ByteTemp - newByteTemp) > 1)
+                     Math.Abs(oldData.ByteTemp - newByteTemp) > 1) // Dirty Temperature when there is more then 1 byte difference 
             {
                 changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);

@@ -2,6 +2,7 @@ using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Ghost;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -75,6 +76,7 @@ public sealed class GasTileTemperatureOverlay : Overlay
         if (tempK < deepFreezeK)
         {
             resultingColor = Color.FromHex("#330066");
+            resultingColor.A = 0.7f;
         }
         else if (tempK < freezeStartK)
         {
@@ -84,23 +86,28 @@ public sealed class GasTileTemperatureOverlay : Overlay
                 Color.FromHex("#330066"),
                 Color.Blue,
                 (tempK - deepFreezeK) * 0.01f);
+            resultingColor.A = 0.6f;
+
         }
         else if (tempK < waterFreezeK)
         {
             // Interpolate Blue -> Transparent
             // Range: 223.15 to 273.15 (Span: 50)
+
             resultingColor = Color.InterpolateBetween(
-                Color.Blue,
-                Color.Transparent,
+                 new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.6f),
+                 new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.2f),
                 (tempK - freezeStartK) * 0.02f);
+
         }
         else if (tempK < waterBoilK)
         {
             // Interpolate Transparent -> Yellow
             // Range: 323.15 to 373.15 (Span: 50)
+
             resultingColor = Color.InterpolateBetween(
-                Color.Transparent,
-                Color.Yellow,
+                 new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.6f),
+                 new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.2f),
                 (tempK - heatStartK) * 0.02f);
         }
         else if (tempK < superHeatK)
@@ -111,13 +118,14 @@ public sealed class GasTileTemperatureOverlay : Overlay
                 Color.Yellow,
                 Color.Red,
                 (tempK - waterBoilK) * 0.005f);
+            resultingColor.A = 0.6f;
         }
         else
         {
             resultingColor = Color.DarkRed;
+            resultingColor.A = 0.7f;
         }
 
-        resultingColor.A = 0.7f;
         return resultingColor;
     }
 
