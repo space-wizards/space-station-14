@@ -61,10 +61,16 @@ public sealed partial class CCVars
         CVarDef.Create("accessibility.speech_bubble_background_opacity", 0.75f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    ///     If enabled, weapons that have click-to-attack patterns (slow melee weapons, semi-auto guns) will continue attacking if the button is held.
+    ///     If enabled, melee weapons that have click-to-attack patterns (unarmed, slow weapons) will continue attacking if the button is held.
     /// </summary>
-    public static readonly CVarDef<bool> AccessibilityHoldToAttack =
-        CVarDef.Create("accessibility.hold_to_attack", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<bool> AccessibilityHoldToAttackMelee =
+        CVarDef.Create("accessibility.hold_to_attack_melee", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     If enabled, ranged weapons that have click-to-attack patterns (burst and semi-auto guns) will continue attacking if the button is held.
+    /// </summary>
+    public static readonly CVarDef<bool> AccessibilityHoldToAttackRanged =
+        CVarDef.Create("accessibility.hold_to_attack_ranged", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// If enabled, censors character nudity by forcing clothes markings on characters, selected by the client.
