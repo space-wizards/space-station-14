@@ -25,10 +25,14 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
                 out var bloodSolution) ||
             !SolutionContainer.EnsureSolution(entity.Owner,
                 entity.Comp.BloodTemporarySolutionName,
-                out var tempSolution))
+                out var tempSolution) ||
+            !SolutionContainer.EnsureSolution(entity.Owner,
+                entity.Comp.MetabolitesSolutionName,
+                out var metabolitesSolution))
             return;
 
         bloodSolution.MaxVolume = entity.Comp.BloodReferenceSolution.Volume * entity.Comp.MaxVolumeModifier;
+        metabolitesSolution.MaxVolume = bloodSolution.MaxVolume;
         tempSolution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
         entity.Comp.BloodReferenceSolution.SetReagentData(GetEntityBloodData((entity, entity.Comp)));
 
