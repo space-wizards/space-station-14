@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TsjipTsjip LuckyShotPictures IProduceWidgets
-  changes:
-  - message: Admin shuttles have been added to the repo, and can be found in /Maps/Shuttles/AdminSpawn/..
-    type: Add
-  id: 8950
-  time: '2025-09-11T01:01:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32139
 - author: ToastEnjoyer
   changes:
   - message: Fixed the laser carbine not being labeled as contraband
@@ -4005,3 +3998,14 @@
   id: 9456
   time: '2026-01-24T04:18:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42315
+- author: Hitlinemoss
+  changes:
+  - message: The "Auto-fill the highlights with the character's information" accessibility
+      option has been renamed to "Automatically set the highlights list based on your
+      character's name and job".
+    type: Tweak
+  - message: More automatic job-text highlights have been added.
+    type: Tweak
+  id: 9457
+  time: '2026-01-24T21:06:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42630
