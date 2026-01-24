@@ -5,6 +5,9 @@
             SetSize="300 400"
             Resizable="False">
     <BoxContainer Orientation="Vertical" Margin="10">
+        <controls:SwitchButton Name="Power"
+                Access="Public"
+                Margin="0 0 0 8" />
         <BoxContainer Orientation="Horizontal" SeparationOverride="8">
             <Label Text="{Loc 'ui-mailing-unit-target-label'}" />
             <Label Name="Target"
@@ -46,11 +49,7 @@
             <Button Name="Eject"
                     Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
-                    StyleClasses="OpenBoth" />
-            <Button Name="Power"
-                         Access="Public"
-                         Text="{Loc 'ui-disposal-unit-button-power'}"
-                         StyleClasses="OpenLeft" />
+                    StyleClasses="OpenLeft" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
