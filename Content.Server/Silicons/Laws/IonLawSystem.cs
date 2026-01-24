@@ -119,7 +119,7 @@ public sealed class IonLawSystem : EntitySystem
     {
         var laws = _prototypeManager.EnumeratePrototypes<IonLawPrototype>().ToList();
         if (laws.Count == 0)
-            return "ERR0R 404";
+            return Loc.GetString("ion-law-error-no-protos");
 
         var totalWeight = laws.Sum(p => p.Weight);
         if (totalWeight <= 0)
@@ -148,8 +148,7 @@ public sealed class IonLawSystem : EntitySystem
 
         if (_lastLaw == null)
         {
-            // If somehow there are no IonLaw prototypes, return "ERROR 404" as the law string.
-            return "ERR0R 404";
+            return Loc.GetString("ion-law-error-last-null");
         }
 
         _cachedValues.Clear();
@@ -165,7 +164,7 @@ public sealed class IonLawSystem : EntitySystem
         }
 
         if (!_selectors.TryGetValue(selectorName, out var selectors))
-            return "ERR0R";
+            return Loc.GetString("ion-law-error-no-selectors");
 
         var availableSelectors = selectors.ToList();
         while (availableSelectors.Count > 0)
@@ -185,7 +184,7 @@ public sealed class IonLawSystem : EntitySystem
             return newValue;
         }
 
-        return "ERROR";
+        return Loc.GetString("ion-law-error-no-available-selectors");
     }
 
     private IonLawSelector? PickSelector(List<IonLawSelector> selectors, IonLawPrototype? law)
@@ -236,7 +235,7 @@ public sealed class IonLawSystem : EntitySystem
                 {
                     return _random.Pick(dataset.Values);
                 }
-                return "ERR@R"; // Dataset not found or empty
+                return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
             case RandomManifestFill rmf:
                 var stations = _stationSystem.GetStations();
                 if (stations.Count > 0)
@@ -256,13 +255,13 @@ public sealed class IonLawSystem : EntitySystem
                     return _random.Pick(fallbackDataset.Values);
                 }
 
-                return "ERROR!"; // Fallback dataset not found or empty
+                return Loc.GetString("ion-law-error-fallback-dataset-empty-or-not-found");
             case ConstantFill cf:
                 if (cf.BoolValue != null)
                     return cf.BoolValue.Value;
                 return cf.Value;
             default:
-                return "ERROR#";
+                return Loc.GetString("ion-law-error-no-selector-selected");
         }
     }
 }
