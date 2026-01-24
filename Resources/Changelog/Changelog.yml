@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: SweetAplle
-  changes:
-  - message: Saying "idk" now no longer forces the shrug emote, instead expanding
-      to "I don't know".
-    type: Tweak
-  id: 8947
-  time: '2025-09-10T20:09:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39024
-- author: imatsoup
-  changes:
-  - message: Butterflies can no longer be infected by Romerol or become Romerol zombies.
-    type: Tweak
-  id: 8948
-  time: '2025-09-10T21:48:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40265
-- author: Princess-Cheeseballs
-  changes:
-  - message: Cardboard boxes can no longer freely move in space.
-    type: Fix
-  id: 8949
-  time: '2025-09-10T22:13:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40260
 - author: TsjipTsjip LuckyShotPictures IProduceWidgets
   changes:
   - message: Admin shuttles have been added to the repo, and can be found in /Maps/Shuttles/AdminSpawn/..
@@ -3972,3 +3950,58 @@
   id: 9453
   time: '2026-01-22T23:04:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38043
+- author: sowelipililimute
+  changes:
+  - message: Drinking or eating things now gradually trickles into the bloodstream,
+      instead of being a fixed delay
+    type: Tweak
+  - message: Reagent effect groups are now stages of metabolism in the guidebook
+    type: Tweak
+  - message: Many reagents that break down into other ones have clearer guidebook
+      descriptions and slightly adjusted behaviour
+    type: Tweak
+  id: 9454
+  time: '2026-01-23T02:05:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42172
+- author: Princess-Cheeseballs
+  changes:
+  - message: Added the Syndimov Lawboard to the Traitor Uplink.
+    type: Add
+  - message: You can now get Pythons and Cat Ears in the Syndicate Snack box.
+    type: Add
+  - message: Removed Whitehole Grenade, Necronomicon, Explosive Banana Peel and Super
+      Surplus crates from the uplink.
+    type: Remove
+  - message: Removed Singularity Beacon and Antimov Lawboard from the Traitor Uplink.
+    type: Remove
+  - message: Several less used uplink items have had their costs reduced.
+    type: Tweak
+  - message: Clustersoap and Cluster Bananas now explodes into soaplets when thrown
+      and no longer needs to be primed. The Clustersoap has been reduced to 1 TC as
+      well.
+    type: Tweak
+  - message: Martyr Cyborgs now start glowing red before exploding.
+    type: Tweak
+  - message: Scram Implanter's range has been crunched down to 10-15 tiles from 0-100.
+    type: Tweak
+  - message: Rigged Boxing Gloves have had their overall time to stun increased but
+      are also now available for all Traitors to purchase.
+    type: Tweak
+  - message: Combat bakery kit now comes with a flatpack microwave instead of a machine
+      board. The throwing croissants and baguette have been made equivalent in damage
+      to other Traitor uplink items as well.
+    type: Tweak
+  - message: Holoclowns no longer try to attack their host.
+    type: Fix
+  - message: Singularity grenade shouldn't throw you inside walls anymore
+    type: Fix
+  id: 9455
+  time: '2026-01-24T00:26:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42582
+- author: alexalexmax
+  changes:
+  - message: Tasers no longer slow holoparasites down.
+    type: Fix
+  id: 9456
+  time: '2026-01-24T04:18:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42315
