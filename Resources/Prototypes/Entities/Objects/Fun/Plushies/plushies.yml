@@ -570,6 +570,50 @@
 
 
 - type: entity
+  parent: PlushieLizard
+  id: PlushieEvilLizard #WEH!!
+  name: evil lizard plushie
+  description: A SCARY HORRIFYING stuffed toy that resembles a DANGEROUS lizardperson. Made by HELL as a token initiative to combat HOLINESS in work environments. "RUN AWAY FROM your DEADLY colleagues as you do from this plush, with ARMS IN THE AIR!!!"
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/lizard.rsi/evillizard.rsi
+    state: plushie_evillizard
+  - type: Item
+    sprite: Objects/Fun/Plushies/lizard.rsi/evillizard.rsi
+    heldPrefix: evillizard
+  - type: EmitSoundOnUse
+    sound: &PlushieEvilLizardSound
+      path: /Audio/Items/Toys/evilweh.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieEvilLizardSound
+  - type: EmitSoundOnActivate
+    sound: *PlushieEvilLizardSound
+  - type: EmitSoundOnTrigger
+    sound: *PlushieEvilLizardSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieEvilLizardSound
+  - type: Edible
+    useSound: *PlushieEvilLizardSound
+  - type: MeleeWeapon
+    soundHit: *PlushieEvilLizardSound
+  - type: Clothing
+    sprite: Objects/Fun/Plushies/lizard.rsi/evillizard.rsi
+    slots:
+    - HEAD
+    quickEquip: false
+    clothingVisuals:
+      head:
+      - state: evillizard-equipped-HELMET
+        offset: "0, 0.03"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: EvilLizardPlushie
+      
+
+
+- type: entity
   parent: BasePlushie
   id: PlushieDiona
   name: diona plushie
