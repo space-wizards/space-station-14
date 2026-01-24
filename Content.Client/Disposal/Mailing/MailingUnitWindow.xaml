@@ -29,8 +29,7 @@
             <Label Text="{Loc 'ui-disposal-unit-label-pressure'}" />
             <disposal:PressureBar Name="PressureBar"
                             Access="Public"
-                         MinSize="190 20"
-                         HorizontalAlignment="Right"
+                         HorizontalExpand="True"
                          MinValue="0"
                          MaxValue="1"
                          Page="0"
