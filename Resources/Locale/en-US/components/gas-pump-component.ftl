@@ -1,6 +1,4 @@
-comp-gas-pump-ui-pump-status = Status:
-comp-gas-pump-ui-status-enabled = On
-comp-gas-pump-ui-status-disabled = Off
+comp-gas-pump-ui-pump-power = Power:
 
 comp-gas-pump-ui-pump-set-rate = Set
 comp-gas-pump-ui-pump-set-max = Max
