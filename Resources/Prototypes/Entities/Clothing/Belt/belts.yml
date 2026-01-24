@@ -145,7 +145,8 @@
           - CombatKnife
           - MagazinePistolAll
           - SpeedLoaderAll
-          - PowerCellAll
+          - PowerCell
+          - PowerCellSmall
           - HandGrenade
           - CigPack
           - Radio
@@ -170,7 +171,8 @@
       icon_powercell:
         whitelist:
           tags:
-          - PowerCellAll
+          - PowerCell
+          - PowerCellSmall
       icon_sidearm:
         whitelist:
           tags:
@@ -256,7 +258,8 @@
           - SpeedLoaderAll
           - MagazineRifleAll
           - MagazineShotgun
-          - PowerCellAll
+          - PowerCell
+          - PowerCellSmall
           - HandGrenade
           - CigPack
           - Radio
@@ -291,7 +294,8 @@
       icon_powercell:
         whitelist:
           tags:
-          - PowerCellAll
+          - PowerCell
+          - PowerCellSmall
       icon_magazine_rifle:
         whitelist:
           tags:

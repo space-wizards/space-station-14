@@ -30,7 +30,6 @@
   - type: Tag
     tags:
       - PowerCell
-      - PowerCellAll
   - type: PowerCellVisuals
   - type: Riggable
   - type: Appearance
