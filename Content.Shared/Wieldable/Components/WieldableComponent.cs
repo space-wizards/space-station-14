@@ -57,7 +57,7 @@ public sealed partial class WieldableComponent : Component
     [DataField, AutoNetworkedField]
     public bool DisplayPopup = true;
 
-    [DataField("wieldedInhandPrefix")]
+    [DataField]
     public string? WieldedInhandPrefix = "wielded";
 
     public string? OldInhandPrefix = null;

@@ -149,7 +149,6 @@
     burstFireRate: 3.5
     shotsPerBurst: 6
     burstCooldown: 0.5
-    forceEntireBurst: true
   - type: GunWieldBonus
     minAngle: 20
     maxAngle: 40
@@ -160,7 +159,7 @@
     disallowManualWielding: true
     unwieldOnUse: false
     useDelayOnWield: false
-    wieldedInHandPrefix: null
+    wieldedInhandPrefix: null
     displayPopup: false
     unwieldOnHandDeselected: false
 
