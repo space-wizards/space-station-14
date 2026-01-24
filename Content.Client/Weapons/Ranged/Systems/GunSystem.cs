@@ -173,8 +173,16 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+        var altBurst = false;
 
-        if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.Comp.BurstActivated)
+        if (HasComp<GunAltBurstComponent>(gun))
+        {
+            var altKey = !gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+            if (_inputSystem.CmdStates.GetState(altKey) == BoundKeyState.Down)
+                altBurst = true;
+        }
+
+        if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.Comp.BurstActivated && !altBurst)
         {
             if (gun.Comp.ShotCounter != 0)
                 RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
@@ -208,6 +216,7 @@ public sealed partial class GunSystem : SharedGunSystem
             Target = target,
             Coordinates = GetNetCoordinates(coordinates),
             Gun = GetNetEntity(gun),
+            AltBurst = altBurst,
         });
     }
 

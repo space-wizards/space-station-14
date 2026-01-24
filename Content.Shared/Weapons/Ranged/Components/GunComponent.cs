@@ -182,6 +182,12 @@ public sealed partial class GunComponent : Component
     public int BurstShotsCount = 0;
 
     /// <summary>
+    /// If true, the gun will attempt to fire the entire burst even if the ammo is gone.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ForceEntireBurst = true;
+
+    /// <summary>
     /// Used for tracking semi-auto / burst
     /// </summary>
     [ViewVariables]

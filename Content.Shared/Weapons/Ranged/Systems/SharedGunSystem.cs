@@ -157,7 +157,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         gun.Comp.ShootCoordinates = GetCoordinates(msg.Coordinates);
         gun.Comp.Target = GetEntity(msg.Target);
-        AttemptShoot(user.Value, gun);
+        AttemptShoot(user.Value, gun, msg.AltBurst);
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
@@ -248,13 +248,15 @@ public abstract partial class SharedGunSystem : EntitySystem
         return result;
     }
 
-    private bool AttemptShoot(EntityUid user, Entity<GunComponent> gun)
+    private bool AttemptShoot(EntityUid user, Entity<GunComponent> gun, bool altBurstFire = false)
     {
         if (gun.Comp.FireRateModified <= 0f ||
             !_actionBlockerSystem.CanAttack(user))
         {
             return false;
         }
+
+        var altBurstFiring = TryComp<GunAltBurstComponent>(gun, out var gunAltBurst) && (altBurstFire || gun.Comp.BurstActivated);
 
         var toCoordinates = gun.Comp.ShootCoordinates;
 
@@ -284,7 +286,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var fireRate = TimeSpan.FromSeconds(1f / gun.Comp.FireRateModified);
 
-        if (gun.Comp.SelectedMode == SelectiveFire.Burst || gun.Comp.BurstActivated)
+        if (gun.Comp.SelectedMode == SelectiveFire.Burst || gun.Comp.BurstActivated || altBurstFire)
             fireRate = TimeSpan.FromSeconds(1f / gun.Comp.BurstFireRate);
 
         // First shot
@@ -309,18 +311,26 @@ public abstract partial class SharedGunSystem : EntitySystem
         // Don't do this in the loop so we still reset NextFire.
         if (!gun.Comp.BurstActivated)
         {
-            switch (gun.Comp.SelectedMode)
+            if (altBurstFiring)
             {
-                case SelectiveFire.SemiAuto:
-                    shots = Math.Min(shots, 1 - gun.Comp.ShotCounter);
-                    break;
-                case SelectiveFire.Burst:
-                    shots = Math.Min(shots, gun.Comp.ShotsPerBurstModified - gun.Comp.ShotCounter);
-                    break;
-                case SelectiveFire.FullAuto:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.Comp.SelectedMode}!");
+                shots = Math.Min(shots, gun.Comp.ShotsPerBurstModified - gun.Comp.ShotCounter);
+            }
+            else
+            {
+                switch (gun.Comp.SelectedMode)
+                {
+                    case SelectiveFire.SemiAuto:
+                        shots = Math.Min(shots, 1 - gun.Comp.ShotCounter);
+                        break;
+                    case SelectiveFire.Burst:
+                        shots = Math.Min(shots, gun.Comp.ShotsPerBurstModified - gun.Comp.ShotCounter);
+                        break;
+                    case SelectiveFire.FullAuto:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            $"No implemented shooting behavior for {gun.Comp.SelectedMode}!");
+                }
             }
         }
         else
@@ -366,9 +376,18 @@ public abstract partial class SharedGunSystem : EntitySystem
             var emptyGunShotEvent = new OnEmptyGunShotEvent(user);
             RaiseLocalEvent(gun, ref emptyGunShotEvent);
 
-            gun.Comp.BurstActivated = false;
-            gun.Comp.BurstShotsCount = 0;
-            gun.Comp.NextFire += TimeSpan.FromSeconds(gun.Comp.BurstCooldown);
+            // Ensure bursts either continue or stops firing
+            if (gun.Comp.ForceEntireBurst && (gun.Comp.SelectedMode == SelectiveFire.Burst || altBurstFire) && gun.Comp.BurstShotsCount == 0)
+            {
+                gun.Comp.BurstActivated = true;
+            }
+            gun.Comp.BurstShotsCount += shots;
+            if (!gun.Comp.ForceEntireBurst || gun.Comp.BurstShotsCount >= gun.Comp.ShotsPerBurstModified)
+            {
+                gun.Comp.BurstActivated = false;
+                gun.Comp.BurstShotsCount = 0;
+                gun.Comp.NextFire += TimeSpan.FromSeconds(gun.Comp.BurstCooldown);
+            }
 
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
@@ -378,7 +397,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
-                gun.Comp.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.Comp.NextFire.TotalSeconds));
+                if (!altBurstFiring)
+                    gun.Comp.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.Comp.NextFire.TotalSeconds));
                 Audio.PlayPredicted(gun.Comp.SoundEmpty, gun, user);
                 return false;
             }
@@ -387,7 +407,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Handle burstfire
-        if (gun.Comp.SelectedMode == SelectiveFire.Burst)
+        if (gun.Comp.SelectedMode == SelectiveFire.Burst || altBurstFire)
         {
             gun.Comp.BurstActivated = true;
         }
