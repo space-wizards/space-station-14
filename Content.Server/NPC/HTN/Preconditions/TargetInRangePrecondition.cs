@@ -20,6 +20,9 @@ public sealed partial class TargetInRangePrecondition : HTNPrecondition
         _transformSystem = sysManager.GetEntitySystem<SharedTransformSystem>();
     }
 
+    [DataField]
+    public bool Invert;
+
     public override bool IsMet(NPCBlackboard blackboard)
     {
         if (!blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
@@ -29,7 +32,6 @@ public sealed partial class TargetInRangePrecondition : HTNPrecondition
             !_entManager.TryGetComponent<TransformComponent>(target, out var targetXform))
             return false;
 
-        var transformSystem = _entManager.System<SharedTransformSystem>;
-        return _transformSystem.InRange(coordinates, targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
+        return _transformSystem.InRange(coordinates, targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey, _entManager)) ^ Invert;
     }
 }
