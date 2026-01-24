@@ -17,7 +17,6 @@ public sealed class MultiHandedItemSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MultiHandedItemComponent, GettingPickedUpAttemptEvent>(OnAttemptPickup);
-        SubscribeLocalEvent<MultiHandedItemComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<MultiHandedItemComponent, GotEquippedHandEvent>(OnEquipped);
         SubscribeLocalEvent<MultiHandedItemComponent, GotUnequippedHandEvent>(OnUnequipped);
     }
@@ -48,13 +47,5 @@ public sealed class MultiHandedItemSystem : EntitySystem
                     ("number", ent.Comp.HandsNeeded - 1),
                     ("item", ent.Owner)),
                 args.User);
-    }
-
-    private void OnVirtualItemDeleted(Entity<MultiHandedItemComponent> ent, ref VirtualItemDeletedEvent args)
-    {
-        if (args.BlockingEntity != ent.Owner || _timing.ApplyingState)
-            return;
-
-        _hands.TryDrop(args.User, ent.Owner);
     }
 }

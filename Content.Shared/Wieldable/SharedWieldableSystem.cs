@@ -115,6 +115,9 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (_hands.GetHandCount(args.User) > 2)
             return;
 
+        if (!component.UnwieldOnHandDeselected)
+            return;
+
         TryUnwield(uid, component, args.User);
     }
 
@@ -171,6 +174,9 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (!_hands.IsHolding((args.User, args.Hands), uid, out _))
             return;
 
+        if (component.DisallowManualWielding)
+            return;
+
         // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
         // verb. Or just don't add it to the list if the action is not executable.
 
@@ -189,6 +195,9 @@ public abstract class SharedWieldableSystem : EntitySystem
     private void OnUseInHand(EntityUid uid, WieldableComponent component, UseInHandEvent args)
     {
         if (args.Handled)
+            return;
+
+        if (component.DisallowManualWielding)
             return;
 
         if (!component.Wielded)
@@ -278,6 +287,18 @@ public abstract class SharedWieldableSystem : EntitySystem
     ///     Attempts to wield an item, starting a UseDelay after.
     /// </summary>
     /// <returns>True if the attempt wasn't blocked.</returns>
+    public bool TryWield(Entity<WieldableComponent?> entity, EntityUid user)
+    {
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return false;
+
+        return TryWield(entity.Owner, entity.Comp, user);
+    }
+
+    /// <summary>
+    ///     Attempts to wield an item, starting a UseDelay after.
+    /// </summary>
+    /// <returns>True if the attempt wasn't blocked.</returns>
     public bool TryWield(EntityUid used, WieldableComponent component, EntityUid user)
     {
         if (!CanWield(used, component, user))
@@ -329,14 +350,31 @@ public abstract class SharedWieldableSystem : EntitySystem
             return false;
         }
 
-        var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", used));
-        var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", Identity.Entity(user, EntityManager)), ("item", used));
-        _popup.PopupPredicted(selfMessage, othersMessage, user, user);
+        if (component.DisplayPopup)
+        {
+            var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", used));
+            var othersMessage = Loc.GetString("wieldable-component-successful-wield-other",
+                ("user", Identity.Entity(user, EntityManager)),
+                ("item", used));
+            _popup.PopupPredicted(selfMessage, othersMessage, user, user);
+        }
 
         var ev = new ItemWieldedEvent(user);
         RaiseLocalEvent(used, ref ev);
 
         return true;
+    }
+
+    /// <summary>
+    ///     Attempts to unwield an item, with no use delay.
+    /// </summary>
+    /// <returns>True if the attempt wasn't blocked.</returns>
+    public bool TryUnwield(Entity<WieldableComponent?> entity, EntityUid user, bool force = false)
+    {
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return false;
+
+        return TryUnwield(entity.Owner, entity.Comp, user, force);
     }
 
     /// <summary>
@@ -403,9 +441,14 @@ public abstract class SharedWieldableSystem : EntitySystem
             if (component.UnwieldSound != null)
                 _audio.PlayPredicted(component.UnwieldSound, uid, user);
 
-            var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
-            var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(args.User, EntityManager)), ("item", uid));
-            _popup.PopupPredicted(selfMessage, othersMessage, user, user);
+            if (component.DisplayPopup)
+            {
+                var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
+                var othersMessage = Loc.GetString("wieldable-component-failed-wield-other",
+                    ("user", Identity.Entity(args.User, EntityManager)),
+                    ("item", uid));
+                _popup.PopupPredicted(selfMessage, othersMessage, user, user);
+            }
         }
     }
 

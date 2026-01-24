@@ -15,7 +15,7 @@ public sealed class RequestShootEvent : EntityEventArgs
     public NetEntity? Target;
 
     /// <summary>
-    /// If true, the gun will attempt to fire a burst. Requires <see cref="GunAltBurstComponent"/>.
+    /// If true, the gun will attempt to fire a burst. Requires <see cref="GunAltFireComponent"/>.
     /// </summary>
-    public bool AltBurst;
+    public SelectiveFire? DesiredFireType;
 }

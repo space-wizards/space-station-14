@@ -167,26 +167,40 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var entity = entityNull.Value;
 
-        if (!TryGetGun(entity, out var gun))
+        if (!TryGetGun(entity, out var gun, out var activeGun))
         {
             return;
         }
 
-        var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
-        var altBurst = false;
+        SelectiveFire? altFireType = null;
 
-        if (HasComp<GunAltBurstComponent>(gun))
+        if (activeGun)
         {
-            var altKey = !gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
-            if (_inputSystem.CmdStates.GetState(altKey) == BoundKeyState.Down)
-                altBurst = true;
+            var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+
+            if (TryComp<GunAltFireComponent>(gun, out var altFire))
+            {
+                var altKey = !gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+                if (_inputSystem.CmdStates.GetState(altKey) == BoundKeyState.Down)
+                    altFireType = altFire.AltFireType;
+            }
+
+            if (altFireType == null && _inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down &&
+                !gun.Comp.BurstActivated)
+            {
+                if (gun.Comp.ShotCounter != 0)
+                    RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
+                return;
+            }
         }
-
-        if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.Comp.BurstActivated && !altBurst)
+        else
         {
-            if (gun.Comp.ShotCounter != 0)
-                RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
-            return;
+            if (!gun.Comp.BurstActivated)
+            {
+                if (gun.Comp.ShotCounter != 0)
+                    RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
+                return;
+            }
         }
 
         if (gun.Comp.NextFire > Timing.CurTime)
@@ -216,7 +230,7 @@ public sealed partial class GunSystem : SharedGunSystem
             Target = target,
             Coordinates = GetNetCoordinates(coordinates),
             Gun = GetNetEntity(gun),
-            AltBurst = altBurst,
+            DesiredFireType = altFireType,
         });
     }
 

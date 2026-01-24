@@ -10,34 +10,52 @@ namespace Content.Shared.Wieldable.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedWieldableSystem)), AutoGenerateComponentState]
 public sealed partial class WieldableComponent : Component
 {
-    [DataField("wieldSound")]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? WieldSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
-    [DataField("unwieldSound")]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? UnwieldSound;
 
     /// <summary>
     ///     Number of free hands required (excluding the item itself) required
     ///     to wield it
     /// </summary>
-    [DataField("freeHandsRequired")]
+    [DataField, AutoNetworkedField]
     public int FreeHandsRequired = 1;
 
-    [AutoNetworkedField, DataField("wielded")]
+    [AutoNetworkedField]
     public bool Wielded = false;
 
     /// <summary>
     ///     Whether using the item inhand while wielding causes the item to unwield.
     ///     Unwielding can conflict with other inhand actions.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool UnwieldOnUse = true;
+
+    /// <summary>
+    ///     Whether switching hands will cause the item to unwield.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool UnwieldOnHandDeselected = true;
 
     /// <summary>
     ///     Should use delay trigger after the wield/unwield?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool UseDelayOnWield = true;
+
+    /// <summary>
+    ///     If true, the wielding can only be done if done through an alternate wielding action.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool DisallowManualWielding = false;
+
+    /// <summary>
+    ///     If true, a pop-up will be displayed when wielding/unwielding the entity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool DisplayPopup = true;
 
     [DataField("wieldedInhandPrefix")]
     public string? WieldedInhandPrefix = "wielded";
