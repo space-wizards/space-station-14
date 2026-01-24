@@ -112,7 +112,8 @@
     energy: 2
     color: "#00ffff"
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable

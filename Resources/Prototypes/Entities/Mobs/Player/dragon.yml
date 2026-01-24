@@ -171,7 +171,9 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: Waypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - DragonRiftWaypointer
 
 - type: entity
   parent: BaseMobDragon

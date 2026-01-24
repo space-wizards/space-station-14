@@ -13,5 +13,5 @@ public sealed partial class ShowWaypointerComponent: Component
     /// The prototype of the waypointer that this clothing will grant to the wearer.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<WaypointerPrototype> WaypointerProtoId;
+    public List<ProtoId<WaypointerPrototype>> WaypointerProtoIds;
 }

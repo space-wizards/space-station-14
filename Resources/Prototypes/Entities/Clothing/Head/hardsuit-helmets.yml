@@ -212,7 +212,10 @@
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - WreckWaypointer
+    - NTStationWaypointer
+    - TradeStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -236,7 +239,10 @@
     radius: 7
     energy: 3
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - WreckWaypointer
+    - NTStationWaypointer
+    - TradeStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -299,7 +305,10 @@
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - WreckWaypointer
+    - NTStationWaypointer
+    - TradeStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -352,7 +361,9 @@
         Piercing: 0.9
         Heat: 0.9
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -408,8 +419,9 @@
         Piercing: 0.9
         Heat: 0.9
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
-
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 #Captain's Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
@@ -429,7 +441,9 @@
     - CorgiWearable
     - WhitelistChameleon
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -568,7 +582,9 @@
         Piercing: 0.9
         Heat: 0.9
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -589,7 +605,10 @@
     radius: 7
     energy: 3
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - WreckWaypointer
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -863,7 +882,9 @@
         Piercing: 0.9
         Heat: 0.9
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Chaplain Hardsuit
 - type: entity
@@ -879,7 +900,9 @@
   - type: PointLight
     color: "#ffffff"
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Engineer Hardsuit
 - type: entity
@@ -904,7 +927,9 @@
         Piercing: 0.9
         Heat: 0.9
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Medical Hardsuit
 - type: entity
@@ -920,7 +945,9 @@
   - type: PointLight
     color: "#adffec"
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Security Hardsuit
 - type: entity
@@ -943,7 +970,9 @@
         Piercing: 0.9
         Heat: 0.9
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Janitor Hardsuit
 - type: entity
@@ -959,7 +988,9 @@
   - type: PointLight
     color: "#cbadff"
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #CBURN Hardsuit
 - type: entity
@@ -1037,7 +1068,9 @@
         Radiation: 0.80
         Caustic: 0.95
   - type: ShowWaypointer
-    waypointerProtoId: StationAnchorWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #MISC. HARDSUITS
 #Clown Hardsuit

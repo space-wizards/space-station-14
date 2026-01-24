@@ -9,14 +9,34 @@ public abstract class SharedWaypointerSystem : EntitySystem
 {
     public override void Initialize()
     {
+        SubscribeLocalEvent<WaypointerComponent, ActionToggleWaypointersEvent>(OnActionToggle);
+
         SubscribeLocalEvent<ShowWaypointerComponent, GotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<ShowWaypointerComponent, GotUnequippedEvent>(OnUnequip);
     }
 
+    protected virtual void OnActionToggle(Entity<WaypointerComponent> mob, ref ActionToggleWaypointersEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        // Without this in Shared, the action doesn't toggle.
+        args.Toggle = true;
+        args.Handled = true;
+    }
+
     private void OnEquip(Entity<ShowWaypointerComponent> clothing, ref GotEquippedEvent args)
     {
-        var comp = EnsureComp<WaypointerComponent>(args.Equipee);
-        comp.WaypointerProtoId = clothing.Comp.WaypointerProtoId;
+        if (HasComp<WaypointerComponent>(args.Equipee))
+            return;
+
+        var comp = new WaypointerComponent
+        {
+            // We're doing it this way, so ComponentInitEvent doesn't fire without this set.
+            WaypointerProtoIds = clothing.Comp.WaypointerProtoIds,
+        };
+
+        AddComp(args.Equipee, comp);
         Dirty(args.Equipee, comp);
     }
 

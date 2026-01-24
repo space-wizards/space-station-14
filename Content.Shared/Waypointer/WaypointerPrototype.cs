@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Waypointer;
@@ -17,6 +18,9 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     /// <inheritdoc/>
     [AbstractDataField, NeverPushInheritance]
     public bool Abstract { get; private set; }
+
+    [DataField(required: true)]
+    public ComponentRegistry TrackedComponents = default!;
 
     /// <summary>
     /// The path to the rsi folder.
@@ -48,5 +52,17 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     /// The maximum range to where the pinpointer can track something.
     /// </summary>
     [DataField]
-    public float MaxRange = 150f;
+    public float MaxRange = 200f;
+
+    /// <summary>
+    /// The whitelist that the entity needs to fulfill to be tracked.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// The whitelist that the entity needs to fail to be tracked.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 }

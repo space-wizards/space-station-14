@@ -3,8 +3,12 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Client.Shuttles.Systems;
+using Content.Client.Station;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Station.Components;
 using Content.Shared.Waypointer;
+using Content.Shared.Whitelist;
 using Robust.Client.Player;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Systems;
@@ -20,13 +24,16 @@ public sealed class WaypointerOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
 
     [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IPlayerManager  _playerManager = default!;
+    [Dependency] private readonly IPlayerManager  _player = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
+    private readonly SharedPhysicsSystem _physics;
     private readonly SpriteSystem _sprite;
+    private readonly StationSystem _station;
     private readonly TransformSystem _transform;
     private readonly ShaderInstance _unshadedShader;
-    private readonly SharedPhysicsSystem _physics;
+    private readonly ShuttleSystem _shuttle;
+    private readonly EntityWhitelistSystem _whitelist;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -34,62 +41,92 @@ public sealed class WaypointerOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
-        _sprite = _entity.System<SpriteSystem>();
-        _transform = _entity.System<TransformSystem>();
         _physics = _entity.System<SharedPhysicsSystem>();
+        _sprite = _entity.System<SpriteSystem>();
+        _station = _entity.System<StationSystem>();
+        _transform = _entity.System<TransformSystem>();
         _unshadedShader = _prototype.Index(UnshadedShader).Instance();
+        _shuttle = _entity.System<ShuttleSystem>();
+        _whitelist = _entity.System<EntityWhitelistSystem>();
     }
 
+    /// <summary>
+    /// This will draw the waypointers on top of the player.
+    /// </summary>
     protected override void Draw(in OverlayDrawArgs args)
     {
         var handle = args.WorldHandle;
         handle.UseShader(_unshadedShader); // Waypointers are unshaded.
 
-        var query = _entity.AllEntityQueryEnumerator<WaypointerComponent, TransformComponent>();
-        while (query.MoveNext(out var player, out var comp, out var playerXform))
-        {
-            // Waypointers are client-side, so we do not draw the waypointers if it's about the client-entity.
-            if (playerXform.MapID != args.MapId || player != _playerManager.LocalEntity)
-                continue;
+        if (_player.LocalEntity == null
+            || !_entity.TryGetComponent<WaypointerComponent>(_player.LocalEntity, out var waypointer)
+            || !_entity.TryGetComponent<TransformComponent>(_player.LocalEntity, out var playerXform)
+            || playerXform.MapID != args.MapId)
+            return;
 
-            if (!_prototype.Resolve(comp.WaypointerProtoId, out var prototype)
+        var player = _player.LocalEntity.Value;
+
+        foreach (var waypointerProtoId in waypointer.WaypointerProtoIds)
+        {
+            if (!_prototype.Resolve(waypointerProtoId, out var prototype)
                 // Check if the waypointer works on grid.
                 || !prototype.WorkOnGrid && playerXform.GridUid != null)
-                return;
+                continue;
 
-            var waypointQuery = _entity.AllEntityQueryEnumerator<StationAnchorComponent, TransformComponent>();
-            while (waypointQuery.MoveNext(out _, out _, out var targetXform))
+            var waypointQuery = _entity.CompRegistryQueryEnumerator(prototype.TrackedComponents);
+            while (waypointQuery.MoveNext(out var target))
             {
-                // Check if the stationAnchor is even on the same map.
-                if (targetXform.MapID != args.MapId)
+                // Check if the target fails/passes the whitelist/blacklist.
+                if (_whitelist.IsWhitelistFail(prototype.Whitelist, target)
+                    || _whitelist.IsWhitelistPass(prototype.Blacklist, target)
+                    // Check if the target has a hidden IFF.
+                    || _shuttle.HasIFFFlag(target, IFFFlags.Hide))
                     continue;
 
-                var grid = _transform.GetGrid(targetXform.Coordinates);
+                // We need to check for StationData specifically, because the station entity is in the nullsphere.
+                if (_entity.TryGetComponent<StationDataComponent>(target, out var station))
+                {
+                    // Then we get the largest grid, which is in the actual map.
+                    var mainGrid = _station.GetLargestGrid((target, station));
+                    if (mainGrid is not null)
+                        target = mainGrid.Value;
+                }
 
-                // Check if they're on a grid.
-                if (grid == null
-                    || !_entity.TryGetComponent<MapGridComponent>(grid, out var map)
-                    || !_entity.TryGetComponent<TransformComponent>(grid, out var gridXform))
+                // Check if it has the Transform Component
+                if (!_entity.TryGetComponent<TransformComponent>(target, out var targetXform)
+                    // Check if the target is even on the same map.
+                    || targetXform.MapID != args.MapId)
                     continue;
 
-                _physics.TryGetDistance(player, grid.Value, out var gridDistance, playerXform, gridXform);
+                _physics.TryGetDistance(player, target, out var distance, playerXform, targetXform);
 
-                if (gridDistance > prototype.MaxRange)
+                if (distance > prototype.MaxRange)
                     continue;
 
-                // The StationWaypointer has 5 stages and 150 range. With calculations, it'll check if it's either in:
-                // 0-29, 30-59, 60-89, 90-119, 120-150 range and use the respective waypointer sprite for it.
+                // The NTStationWaypointer has 5 stages and 20 range. With calculations, it'll check if it's either in:
+                // 0-39, 40-89, 80-119, 120-159, 160-200 range and use the respective waypointer sprite for it.
                 var increments = prototype.MaxRange / prototype.WaypointerStates;
-                var waypointerState = Math.Truncate(gridDistance / increments) + 1;
+                var waypointerState = Math.Truncate(distance / increments) + 1;
                 var stateName = "marker" + waypointerState;
 
                 var rsi = new SpriteSpecifier.Rsi(new ResPath(prototype.RsiPath), stateName);
                 var texture = _sprite.Frame0(rsi);
 
                 var positionA = _transform.GetWorldPosition(playerXform);
-                var gridData = _transform.GetWorldPositionRotation(gridXform);
-                // Adding the centerVector will get the position of the center from the grid.
-                var positionB = gridData.WorldPosition + gridData.WorldRotation.RotateVec(map.LocalAABB.Center);
+                Vector2 positionB;
+
+                // Check if it's a grid.
+                if (_entity.TryGetComponent<MapGridComponent>(target, out var map))
+                {
+                    var gridData = _transform.GetWorldPositionRotation(targetXform);
+                    // Adding the centerVector will get the position of the center from the grid.
+                    positionB = gridData.WorldPosition + gridData.WorldRotation.RotateVec(map.LocalAABB.Center);
+                }
+                else
+                {
+                    // Else use the current world position.
+                    positionB = _transform.GetWorldPosition(targetXform);
+                }
 
                 var dir = positionA - positionB;
                 var angle = dir.ToWorldAngle();
