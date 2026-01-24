@@ -12,7 +12,9 @@
   parent: BaseSign
   id: BaseSignDirectional
   abstract: true
+  placementMode: AlignDirectionalSign
   components:
+    - type: DirectionalSign
     - type: Sprite
       snapCardinals: false
 
