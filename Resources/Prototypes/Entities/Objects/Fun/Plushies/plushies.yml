@@ -572,7 +572,6 @@
 - type: entity
   parent: PlushieLizard
   id: PlushieEvilLizard #WEH!!
-  id: AllPlushiesTable
   name: evil lizard plushie
   description: A SCARY HORRIFYING stuffed toy that resembles a DANGEROUS lizardperson. Made by HELL as a token initiative to combat HOLINESS in work environments. "RUN AWAY FROM your DEADLY colleagues as you do from this plush, with ARMS IN THE AIR!!!"
   components:
