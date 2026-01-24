@@ -174,6 +174,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
         SelectiveFire? altFireType = null;
 
+        // If the gun is in our active hand, we do checks for player input.
+        // If it isn't, we're only concerned about if it's burst-firing on its own. This is necessary for vfx & sfx, as the gun is still owned by the user.
         if (activeGun)
         {
             var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;

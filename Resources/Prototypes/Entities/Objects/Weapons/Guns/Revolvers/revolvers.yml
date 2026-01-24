@@ -144,8 +144,8 @@
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
       params:
         volume: 2.25
-    angleIncrease: 10
-    angleDecay: 20
+    angleIncrease: 20
+    angleDecay: 40
     burstFireRate: 2.75
     shotsPerBurst: 6
     burstCooldown: 0.5
