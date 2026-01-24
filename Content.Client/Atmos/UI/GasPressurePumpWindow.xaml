@@ -6,7 +6,6 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <controls:SwitchButton
                 Name="ToggleStatusButton"
-                Text="{Loc comp-gas-pump-ui-pump-power}"
                 HorizontalAlignment="Left"
                 Pressed="True" />
             <Control HorizontalExpand="True"/>

@@ -5,7 +5,6 @@
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
         <controls:SwitchButton
             Name="ToggleStatusButton"
-            Text="{Loc comp-gas-mixer-ui-mixer-power}"
             HorizontalAlignment="Left"
             Pressed="True" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">

@@ -1,5 +1,3 @@
-comp-gas-mixer-ui-mixer-power = Power:
-
 comp-gas-mixer-ui-mixer-output-pressure = Output Pressure (kPa):
 
 comp-gas-mixer-ui-mixer-node-primary = Primary Port:

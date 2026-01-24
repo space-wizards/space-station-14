@@ -1,5 +1,3 @@
-comp-gas-filter-ui-filter-power = Power:
-
 comp-gas-filter-ui-filter-transfer-rate = Transfer Rate (L/s):
 comp-gas-filter-ui-filter-set-rate = Set
 
