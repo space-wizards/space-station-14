@@ -267,6 +267,10 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
 
     private void OnSolutionUpdate(Entity<PressurizedSolutionComponent> entity, ref SolutionContainerChangedEvent args)
     {
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.SolutionId != entity.Comp.Solution)
             return;
 
