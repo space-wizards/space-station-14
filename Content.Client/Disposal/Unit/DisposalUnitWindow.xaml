@@ -22,16 +22,18 @@
                          Page="0"
                          Value="0.5" />
         </BoxContainer>
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal">
             <Button Name="Engage"
                     Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-flush'}"
                     StyleClasses="OpenRight"
-                    ToggleMode="True" />
+                    ToggleMode="True"
+                    HorizontalExpand="True" />
             <Button Name="Eject"
                     Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
-                    StyleClasses="OpenLeft" />
+                    StyleClasses="OpenLeft"
+                    HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

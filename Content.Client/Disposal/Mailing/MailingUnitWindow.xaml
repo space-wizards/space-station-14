@@ -40,11 +40,13 @@
                     Access="Public"
                     Text="{Loc 'ui-mailing-unit-button-flush'}"
                     StyleClasses="OpenRight"
-                    ToggleMode="True" />
+                    ToggleMode="True"
+                    HorizontalExpand="True" />
             <Button Name="Eject"
                     Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
-                    StyleClasses="OpenLeft" />
+                    StyleClasses="OpenLeft"
+                    HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
