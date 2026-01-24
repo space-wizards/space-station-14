@@ -48,14 +48,18 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
 
     protected override void DirtyUI(EntityUid uid, GasCanisterComponent? canister = null, NodeContainerComponent? nodeContainer = null)
     {
-        if (!Resolve(uid, ref canister, ref nodeContainer))
+        if (!Resolve(uid, ref canister))
             return;
 
         var portStatus = false;
         var tankPressure = 0f;
 
-        if (_nodeContainer.TryGetNode(nodeContainer, canister.PortName, out PipeNode? portNode) && portNode.NodeGroup?.Nodes.Count > 1)
-            portStatus = true;
+        // All real canisters should have a nodeContainer, but the ones during AllComponentsOneToOneDeleteTest do not. Don't fail the test
+        if (nodeContainer != null || TryComp<NodeContainerComponent>(uid, out nodeContainer))
+        {
+            if (_nodeContainer.TryGetNode(nodeContainer, canister.PortName, out PipeNode? portNode) && portNode.NodeGroup?.Nodes.Count > 1)
+                portStatus = true;
+        }
 
         if (canister.GasTankSlot.Item != null)
         {

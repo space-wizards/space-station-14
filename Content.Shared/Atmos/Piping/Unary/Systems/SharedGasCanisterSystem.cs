@@ -35,6 +35,7 @@ public abstract class SharedGasCanisterSystem : EntitySystem
         // Ensure container
         _slots.AddItemSlot(ent.Owner, ent.Comp.ContainerName, ent.Comp.GasTankSlot);
 
+        // Fixes broken canister UI for all canisters before MapInit, and for empty canisters after MapInit
         DirtyUI(ent.Owner, ent);
     }
 
