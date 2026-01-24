@@ -15,7 +15,6 @@ public sealed partial class BorgModuleControl : PanelContainer
 
         ModuleView.SetEntity(entity);
         ModuleName.Text = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;
-        RemoveButton.TexturePath = "/Textures/Interface/Nano/cross.svg.png";
         RemoveButton.OnPressed += _ =>
         {
             RemoveButtonPressed?.Invoke();
@@ -28,7 +27,6 @@ public sealed partial class BorgModuleControl : PanelContainer
             {
                 // We have reasons to show to the user as to why it can't be removed.
                 RemoveButton.ToolTip = cannotRemoveReason;
-                RemoveButton.Modulate = Color.DarkGray; // The default color modulation from disabling is not very obvious, so this makes it darker.
             }
             else
             {
