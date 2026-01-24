@@ -8,7 +8,6 @@ namespace Content.Shared.Item;
 
 public sealed class MultiHandedItemSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
