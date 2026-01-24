@@ -4,7 +4,7 @@
                       MinSize="300 400"
             SetSize="300 400"
             Resizable="False">
-    <BoxContainer Orientation="Vertical">
+    <BoxContainer Orientation="Vertical" Margin="10">
         <BoxContainer Orientation="Horizontal" SeparationOverride="8">
             <Label Text="{Loc 'ui-mailing-unit-target-label'}" />
             <Label Name="Target"
