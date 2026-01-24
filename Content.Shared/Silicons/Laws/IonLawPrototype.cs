@@ -16,22 +16,22 @@ public sealed partial class IonLawPrototype : IPrototype
     /// <summary>
     /// The localization string for the law.
     /// </summary>
-    [DataField]
-    public string LawString = string.Empty;
+    [DataField(required: true)]
+    public string LawString { get; private set; } = string.Empty;
 
     /// <summary>
     /// The weight of this law.
     /// If 0, it won't be picked.
     /// </summary>
     [DataField]
-    public float Weight = 1.0f;
+    public float Weight { get; private set; } = 1.0f;
 
     /// <summary>
-    /// The variables to fill in the localization string.
-    /// The key is the variable name, and the value is a list of selectors to pick from.
+    /// A mapping of dataset prototype names to a weight adjustment.
+    /// This is used to modify the weight of a selector when it is chosen.
     /// </summary>
     [DataField]
-    public Dictionary<string, List<IonLawSelector>> Targets = new();
+    public Dictionary<string, float> SelectorWeightAdjust { get; private set; } = new();
 }
 
 /// <summary>
@@ -44,7 +44,6 @@ public abstract partial class IonLawSelector
     /// <summary>
     /// Weight of the option being chosen.
     /// </summary>
-    [DataField]
     public virtual float Weight { get; private set; } = 1.0f;
 }
 
@@ -57,27 +56,25 @@ public sealed partial class DatasetFill : IonLawSelector
     /// The dataset to pick values from.
     /// </summary>
     [DataField]
-    public ProtoId<DatasetPrototype> Dataset { get; private set; }
+    public ProtoId<DatasetPrototype> Dataset { get; set; }
 }
 
 /// <summary>
 /// Selects a random name from the station's crew manifest.
 /// If it fails to find one, picks an entry from IonStormCrew Dataset Prototype.
 /// </summary>
-[DataDefinition]
 public sealed partial class RandomManifestFill : IonLawSelector
 {
     /// <summary>
     /// The dataset to use if no crew manifest is found. NOT OPTIONAL!
     /// </summary>
     [DataField]
-    public ProtoId<DatasetPrototype> FallbackDataset { get; private set; }
+    public ProtoId<DatasetPrototype> FallbackDataset { get; set; }
 }
 
 /// <summary>
 /// Selects multiple values from other selectors and joins them together.
 /// </summary>
-[DataDefinition]
 public sealed partial class JoinedDatasetFill : IonLawSelector
 {
     /// <summary>
@@ -96,7 +93,6 @@ public sealed partial class JoinedDatasetFill : IonLawSelector
 /// <summary>
 /// Selects a localized string, optionally filling in arguments with other selectors.
 /// </summary>
-[DataDefinition]
 public sealed partial class TranslateFill : IonLawSelector
 {
     /// <summary>
@@ -115,7 +111,6 @@ public sealed partial class TranslateFill : IonLawSelector
 /// <summary>
 /// Returns a constant value.
 /// </summary>
-[DataDefinition]
 public sealed partial class ConstantFill : IonLawSelector
 {
     /// <summary>
@@ -128,5 +123,5 @@ public sealed partial class ConstantFill : IonLawSelector
     /// The boolean value to return. If set, overrides <see cref="Value"/>.
     /// </summary>
     [DataField]
-    public bool? BoolValue { get; private set; }
+    public bool? BoolValue { get; set; }
 }
