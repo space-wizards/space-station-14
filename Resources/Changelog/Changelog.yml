@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Cardboard boxes can no longer freely move in space.
-    type: Fix
-  id: 8949
-  time: '2025-09-10T22:13:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40260
 - author: TsjipTsjip LuckyShotPictures IProduceWidgets
   changes:
   - message: Admin shuttles have been added to the repo, and can be found in /Maps/Shuttles/AdminSpawn/..
@@ -4005,3 +3998,10 @@
   id: 9455
   time: '2026-01-24T00:26:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42582
+- author: alexalexmax
+  changes:
+  - message: Tasers no longer slow holoparasites down.
+    type: Fix
+  id: 9456
+  time: '2026-01-24T04:18:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42315
