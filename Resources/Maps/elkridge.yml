@@ -4,8 +4,8 @@ meta:
   engineVersion: 271.1.0
   forkId: ""
   forkVersion: ""
-  time: 01/24/2026 12:36:13
-  entityCount: 18702
+  time: 01/24/2026 13:08:18
+  entityCount: 18701
 maps:
 - 1
 grids:
@@ -14295,17 +14295,15 @@ entities:
       rot: 3.141592653589793 rad
       pos: 9.5,42.5
       parent: 2
-- proto: AirlockHeadOfPersonnelGlassLocked
+- proto: AirlockHeadOfPersonnelLocked
   entities:
-  - uid: 11003
+  - uid: 1717
     components:
     - type: MetaData
-      name: glass airlock (EVA)
+      name: airlock (HoP's Office)
     - type: Transform
       pos: -15.5,-9.5
       parent: 2
-- proto: AirlockHeadOfPersonnelLocked
-  entities:
   - uid: 10830
     components:
     - type: MetaData
@@ -84991,11 +84989,6 @@ entities:
     - type: Transform
       pos: -11.5,-5.5
       parent: 2
-  - uid: 1717
-    components:
-    - type: Transform
-      pos: -15.5,-10.5
-      parent: 2
   - uid: 1808
     components:
     - type: Transform
@@ -98976,11 +98969,6 @@ entities:
     components:
     - type: Transform
       pos: -11.5,-5.5
-      parent: 2
-  - uid: 11070
-    components:
-    - type: Transform
-      pos: -15.5,-10.5
       parent: 2
   - uid: 11139
     components:
@@ -113731,6 +113719,11 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-23.5
+      parent: 2
+  - uid: 11003
+    components:
+    - type: Transform
+      pos: -15.5,-10.5
       parent: 2
   - uid: 11068
     components:
