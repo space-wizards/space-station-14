@@ -181,7 +181,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (userGun != (gunUid, gun))
             return;
 
-        StopShooting(userGun);
+        StopShooting(userGun, args.SenderSession.AttachedEntity);
     }
 
     public bool CanShoot(GunComponent component)
@@ -227,7 +227,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         return false;
     }
 
-    private void StopShooting(Entity<GunComponent> ent)
+    private void StopShooting(Entity<GunComponent> ent, EntityUid? user)
     {
         if (ent.Comp.ShotCounter == 0)
             return;
@@ -235,6 +235,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         ent.Comp.ShotCounter = 0;
         ent.Comp.ShootCoordinates = null;
         ent.Comp.Target = null;
+
+        if (user != null && !ent.Comp.BurstActivated && TryComp<GunAltFireComponent>(ent, out var gunAltFire) && gunAltFire.ForceWielding)
+        {
+            _wieldable.TryUnwield((ent, null), user.Value);
+        }
+
         DirtyField(ent.AsNullable(), nameof(GunComponent.ShotCounter));
     }
 
@@ -498,12 +504,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle() + projectile.Angle);
     }
 
-    private void StopBurst(Entity<GunComponent> entity, EntityUid user, GunAltFireComponent? gunAltBurst)
+    private void StopBurst(Entity<GunComponent> entity, EntityUid user, GunAltFireComponent? gunAltFire)
     {
         entity.Comp.BurstActivated = false;
         entity.Comp.BurstShotsCount = 0;
         entity.Comp.NextFire += TimeSpan.FromSeconds(entity.Comp.BurstCooldown);
-        if (gunAltBurst != null && gunAltBurst.ForceWielding)
+        if (gunAltFire != null && gunAltFire.ForceWielding)
         {
             _wieldable.TryUnwield((entity, null), user);
         }

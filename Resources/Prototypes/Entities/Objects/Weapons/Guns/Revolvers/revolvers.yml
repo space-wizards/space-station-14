@@ -146,7 +146,7 @@
         volume: 2.25
     angleIncrease: 10
     angleDecay: 20
-    burstFireRate: 4
+    burstFireRate: 2.75
     shotsPerBurst: 6
     burstCooldown: 0.5
     forceEntireBurst: true
