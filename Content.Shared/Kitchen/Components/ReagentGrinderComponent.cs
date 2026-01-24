@@ -102,3 +102,10 @@ public sealed partial class ReagentGrinderComponent : Component
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ActiveReagentGrinderComponent : Component;
+
+/// <summary>
+/// Marker component added to beakers inserted into a reagent grinder.
+/// Used to update the UI when the solution in the beaker changes.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class InsideReagentGrinderComponent : Component;

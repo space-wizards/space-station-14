@@ -40,6 +40,8 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<InsideReagentGrinderComponent, SolutionContainerChangedEvent>(OnBeakerSolutionContainerChanged);
+
         SubscribeLocalEvent<ReagentGrinderComponent, ComponentStartup>(OnGrinderStartup);
         SubscribeLocalEvent<ReagentGrinderComponent, ContainerIsRemovingAttemptEvent>(OnEntRemovingAttempt);
         SubscribeLocalEvent<ReagentGrinderComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
@@ -51,6 +53,14 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         SubscribeLocalEvent<ReagentGrinderComponent, ReagentGrinderToggleAutoModeMessage>(OnToggleAutoModeMessage);
         SubscribeLocalEvent<ReagentGrinderComponent, ReagentGrinderEjectChamberAllMessage>(OnEjectChamberAllMessage);
         SubscribeLocalEvent<ReagentGrinderComponent, ReagentGrinderEjectChamberContentMessage>(OnEjectChamberContentMessage);
+    }
+
+    private void OnBeakerSolutionContainerChanged(Entity<InsideReagentGrinderComponent> ent, ref SolutionContainerChangedEvent args)
+    {
+        // Update the UI if the reagents inside the beaker are changed.
+        // This is needed in case the component state for the container is applied before that of the solution container
+        // or if the beaker somehow changes its contents on its own (for with example SolutionRegenerationComponent).
+        UpdateUi(Transform(ent).ParentUid);
     }
 
     private void OnGrinderStartup(Entity<ReagentGrinderComponent> ent, ref ComponentStartup args)
@@ -94,9 +104,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
             && args.Container.ID != ReagentGrinderComponent.InputContainerId)
             return;
 
-        // Always update the UI on the client, both during predicting and when applying a game state.
-        Log.Debug($"{_timing.CurTick} OnEntRemoved {ToPrettyString(args.Entity)}");
-
+        // Always update the UI on the client, both during prediction and when applying a game state.
         UpdateUi(uid);
 
         // The component changes from the code below are already part of the same game state being applied.
@@ -104,7 +112,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
             return;
 
         if (args.Container.ID == ReagentGrinderComponent.BeakerSlotId) // Beaker removed.
+        {
+            RemComp<InsideReagentGrinderComponent>(args.Entity);
             _appearanceSystem.SetData(uid, ReagentGrinderVisualState.BeakerAttached, false);
+        }
     }
 
     private void OnEntInserted(EntityUid uid, ReagentGrinderComponent comp, EntInsertedIntoContainerMessage args)
@@ -113,9 +124,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
             && args.Container.ID != ReagentGrinderComponent.InputContainerId)
             return;
 
-        // Always update the UI on the client, both during predicting and when applying a game state.
-        Log.Debug($"{_timing.CurTick} OnEntInserted {ToPrettyString(args.Entity)}");
-
+        // Always update the UI on the client, both during prediction and when applying a game state.
         UpdateUi(uid);
 
         // The component changes from the code below are already part of the same game state being applied.
@@ -123,7 +132,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
             return;
 
         if (args.Container.ID == ReagentGrinderComponent.BeakerSlotId) // Beaker inserted.
+        {
+            EnsureComp<InsideReagentGrinderComponent>(args.Entity);
             _appearanceSystem.SetData(uid, ReagentGrinderVisualState.BeakerAttached, true);
+        }
 
         // Start grinder when in auto mode.
         if (comp.AutoMode != GrinderAutoMode.Off)
@@ -177,8 +189,6 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         // Cycle through the enum values.
         ent.Comp.AutoMode = (GrinderAutoMode)(((byte)ent.Comp.AutoMode + 1) % Enum.GetValues<GrinderAutoMode>().Length);
         Dirty(ent);
-
-        Log.Debug($"{_timing.CurTick} OnToggleAutoMode");
 
         UpdateUi(ent);
     }
@@ -243,8 +253,6 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         ent.Comp.Program = program;
         ent.Comp.EndTime = _timing.CurTime + ent.Comp.WorkTime * ent.Comp.WorkTimeMultiplier;
         Dirty(ent);
-        Log.Debug($"{_timing.CurTick} StartGrinder");
-
         UpdateUi(ent);
 
         if (_net.IsServer) // can't cancel predicted audio
@@ -261,9 +269,8 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
             return; // Already finished.
 
         ent.Comp.Program = null;
-
         ent.Comp.AudioStream = _audioSystem.Stop(ent.Comp.AudioStream);
-        ent.Comp.EndTime = null; // It's important that we do this first so that we can detach the items on the client when using PredictedQueueDelete.
+        ent.Comp.EndTime = null; // It's important that we do this first or PredictedQueueDelete will fail to remove the entity from the container because the grinder is still active.
         Dirty(ent);
         // Remove deferred to avoid modifying the component we are currently enumerating over in the update loop.
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);
@@ -280,8 +287,6 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
             if (solution is null)
                 continue;
-
-            _solutionContainersSystem.TryAddSolution(beakerSolutionEntity.Value, solution);
 
             // Delete the item or reduce its stack size.
             if (TryComp<StackComponent>(item, out var stack))
@@ -311,10 +316,9 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
                 _destructible.DestroyEntity(item);
             }
+            _solutionContainersSystem.TryAddSolution(beakerSolutionEntity.Value, solution);
         }
-        Log.Debug($"{_timing.CurTick} FinishGrinding");
-
-        UpdateUi(ent);
+        // UpdateUi is called when the entity in the grinder is deleted or the solution in the beaker is changed.
     }
 
     /// <summary>
@@ -325,7 +329,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        // Don't use ActiveGrinderComponent for this because it is being removed deferred, meaning it will get updated one tick later.
+        // Don't use ActiveGrinderComponent for this because it is being removed deferred, meaning it will get updated at the end of the tick.
         // ActiveReagentGrinderComponent is only for improving the EntityQueryEnumerator performance in the update loop.
         return ent.Comp.EndTime != null;
     }
