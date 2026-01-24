@@ -4,10 +4,9 @@
                       MinSize="300 400"
             SetSize="300 400"
             Resizable="False">
-    <BoxContainer Orientation="Vertical" Margin="10">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="8">
         <controls:SwitchButton Name="Power"
-                Access="Public"
-                Margin="0 0 0 8" />
+                Access="Public" />
         <BoxContainer Orientation="Horizontal" SeparationOverride="8">
             <Label Text="{Loc 'ui-mailing-unit-target-label'}" />
             <Label Name="Target"
@@ -18,15 +17,13 @@
                   Access="Public"
                   SelectMode="Single"
                   VerticalExpand="True"
-                  HorizontalExpand="True"
-                  Margin="0 0 0 16">
+                  HorizontalExpand="True">
         </ItemList>
         <BoxContainer Orientation="Horizontal" SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
             <Label Name="UnitState" Access="Public"
                    Text="{Loc 'ui-disposal-unit-label-status'}" />
         </BoxContainer>
-        <Control MinSize="0 5" />
         <BoxContainer Orientation="Horizontal"
                       SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-pressure'}" />
@@ -39,7 +36,6 @@
                          Page="0"
                          Value="0.5" />
         </BoxContainer>
-        <Control MinSize="0 10" />
         <BoxContainer Orientation="Horizontal">
             <Button Name="Engage"
                     Access="Public"

@@ -3,17 +3,15 @@
                       xmlns:disposal="clr-namespace:Content.Client.Disposal"
                       MinSize="300 180"
             Resizable="False">
-    <BoxContainer Orientation="Vertical" Margin="10">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="8">
         <controls:SwitchButton Name="Power"
-                               Access="Public"
-                               Margin="0 0 0 8" />
+                               Access="Public" />
         <BoxContainer Orientation="Horizontal"
                       SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
             <Label Name="UnitState" Access="Public"
                    Text="{Loc 'ui-disposal-unit-label-status'}" />
         </BoxContainer>
-        <Control MinSize="0 5" />
         <BoxContainer Orientation="Horizontal"
                       SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-pressure'}" />
@@ -25,7 +23,6 @@
                          Page="0"
                          Value="0.5" />
         </BoxContainer>
-        <Control MinSize="0 10" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Button Name="Engage"
                     Access="Public"
