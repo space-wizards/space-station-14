@@ -115,6 +115,7 @@
     sprite: Clothing/Belt/holster.rsi
   - type: Appearance
   - type: UseDelay
+    delay: 2
   - type: ContainerContainer
     containers:
       utility_slot: !type:ContainerSlot
@@ -207,6 +208,7 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Appearance
   - type: UseDelay
+    delay: 3
   - type: ContainerContainer
     containers:
       upgraded_utility_slot: !type:ContainerSlot
@@ -216,6 +218,17 @@
     size: Ginormous
   - type: ItemSlots
     slots:
+      upgraded_sidearm_slot: # Move this in the middle of gun_slot & upgraded_utility_slot when all weapons that fit in gun_slot don't require wielding.
+        name: clothing-holster-upgraded-sidearm-slot
+        ejectOnUse: true
+        priority: 2
+        whitelist:
+          tags:
+          - Sidearm
+          - SubMachineGun
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
       gun_slot:
         name: clothing-holster-gun-slot
         ejectOnUse: true
@@ -228,17 +241,6 @@
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/long_gun_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/long_gun_eject.ogg
-      upgraded_sidearm_slot:
-        name: clothing-holster-upgraded-sidearm-slot
-        ejectOnUse: true
-        priority: 2
-        whitelist:
-          tags:
-          - Sidearm
-          - SubMachineGun
-        whitelistFailPopup: clothing-holster-insert-fail
-        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
-        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
       upgraded_utility_slot:
         name: clothing-holster-upgraded-utility-slot
         ejectOnUse: true
