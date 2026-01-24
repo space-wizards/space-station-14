@@ -16,6 +16,9 @@ public sealed partial class PickAccessibleOperator : HTNOperator
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
 
+    [DataField("limitKey")]
+    public string LimitKey = string.Empty;
+
     [DataField("targetCoordinates")]
     public string TargetCoordinates = "TargetCoordinates";
 
@@ -43,10 +46,19 @@ public sealed partial class PickAccessibleOperator : HTNOperator
         if (maxRange == 0f)
             maxRange = 7f;
 
+        blackboard.TryGetValue<float>(LimitKey, out var tempPathLimit, _entManager);
+
+        var pathLimit = (int)tempPathLimit;
+
+        if (pathLimit == 0)
+            pathLimit = 40;
+
+
         var path = await _pathfinding.GetRandomPath(
             owner,
             maxRange,
             cancelToken,
+            limit: pathLimit,
             flags: _pathfinding.GetFlags(blackboard));
 
         if (path.Result != PathResult.Path)

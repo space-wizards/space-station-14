@@ -24,6 +24,7 @@
     - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
+    - id: WanderingPortals
 
 - type: entityTable
   id: BasicAntagEventsTable
@@ -661,6 +662,17 @@
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
     weight: 5
   - type: MobReplacementRule
+
+- type: entity
+  id: WanderingPortals
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-wandering-portals-announcement
+    minimumPlayers: 30 # This ends up throwing a lot of stuff around ... let's spare the lowpops from putting it all back
+    weight: 2
+    maxOccurrences: 1 # Can only occur once a shift, to perserve rarity
+  - type: WanderingPortalsRule
 
 - type: entity
   id: GreytideVirus
