@@ -189,7 +189,7 @@ public sealed class TegSystem : EntitySystem
             var desiredTransfer = targetEnergy / (N * component.PowerFactor);
 
             // Limit transfer to the maximum amount of energy we can generate this tick.
-            var transfer = Math.Min(circAComp.HeatContainer.EquilibriumHeatQuery(circBComp.HeatContainer), desiredTransfer);
+            var transfer = Math.Min(circAComp.HeatContainer.EquilibriumHeatQuery(ref circBComp.HeatContainer), desiredTransfer);
 
             electricalEnergy = transfer * N * component.PowerFactor;
 
@@ -412,7 +412,7 @@ public sealed class TegSystem : EntitySystem
 
         // This is the amount of heat that needs to be transferred to hit Tmax on the air.
         var temp = new HeatContainer(heatCapacity, Atmospherics.Tmax);
-        var dQMax = temp.EquilibriumHeatQuery(comp.HeatContainer);
+        var dQMax = temp.EquilibriumHeatQuery(ref comp.HeatContainer);
 
         // Clamp. This effectively clamps exchanger -> gas heat transfer, while allowing unrestricted
         // gas -> exchanger heat transfer.
