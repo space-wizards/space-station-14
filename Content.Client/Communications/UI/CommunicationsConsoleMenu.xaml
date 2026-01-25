@@ -11,12 +11,14 @@
 
         <controls:HSpacer Spacing="12" />
 
-        <PanelContainer StyleClasses="PanelDark">
+        <PanelContainer StyleClasses="BackgroundPanelDark">
             <widgets:AlertLevelControls Name="AlertLevelControls" Margin="0 12 0 12" />
         </PanelContainer>
 
         <controls:HSpacer Spacing="12" />
 
-        <widgets:ShuttleControls Name="ShuttleControls" />
+        <PanelContainer StyleClasses="BackgroundPanelDark">
+            <widgets:ShuttleControls Name="ShuttleControls" Margin="0 12 0 12"/>
+        </PanelContainer>
     </BoxContainer>
 </comms:CommunicationsConsoleMenu>
