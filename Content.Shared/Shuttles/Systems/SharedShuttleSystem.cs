@@ -24,7 +24,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
     public const float FTLRange = 256f;
     public const float FTLBufferRange = 8f;
-    public const float TileDensityMultiplier = 0.5f;
+    public const float TileDensityMultiplier = 800f;
 
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -142,7 +142,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         if (!Resolve(gridUid, ref physics))
             return true;
 
-        if (physics.BodyType != BodyType.Static && physics.Mass < 10f)
+        if (physics.BodyType != BodyType.Static && physics.Mass < (20f * TileDensityMultiplier)) //Approx 20 tiles
         {
             return false;
         }

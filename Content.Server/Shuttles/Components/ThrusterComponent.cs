@@ -29,7 +29,7 @@ namespace Content.Server.Shuttles.Components
 
         // Need to serialize this because RefreshParts isn't called on Init and this will break post-mapinit maps!
         [ViewVariables(VVAccess.ReadWrite), DataField("thrust")]
-        public float Thrust = 100f;
+        public float Thrust = 80000f; //SLAM-TODO: Ensure this value matches old behavior, because of changed grid density.
 
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;

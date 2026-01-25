@@ -230,7 +230,7 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<float> TileBreakEnergyMultiplier =
-        CVarDef.Create("shuttle.impact.tile_break_energy", 3000f, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.impact.tile_break_energy", 240000f, CVar.SERVERONLY);  //SLAM-TODO: Ensure this value matches old behavior, because of changed grid density.
 
     /// <summary>
     /// Multiplier of damage done to entities on colliding areas
