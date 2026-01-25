@@ -142,7 +142,8 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace) return false;
+        if (args.MapId == MapId.Nullspace)
+            return false;
 
         _gasTileOverlay ??= _entManager.System<GasTileOverlaySystem>();
         if (_gasTileOverlay == null) return false;
