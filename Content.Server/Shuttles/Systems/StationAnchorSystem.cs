@@ -3,12 +3,10 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Construction.Components;
 using Content.Shared.Popups;
-using Content.Shared.Shuttles.Components;
-using Content.Shared.Shuttles.Systems;
 
 namespace Content.Server.Shuttles.Systems;
 
-public sealed class StationAnchorSystem : SharedStationAnchorSystem
+public sealed class StationAnchorSystem : EntitySystem
 {
     [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
