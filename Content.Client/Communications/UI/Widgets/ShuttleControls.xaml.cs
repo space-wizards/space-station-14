@@ -57,18 +57,6 @@ public sealed partial class ShuttleControls : Control
         CountdownLabel.Text = message;
     }
 
-    private float SmoothStep(float stepBegin, float stepEnd, float x)
-    {
-       if (x < stepBegin)
-          return 0;
-
-       if (x >= stepEnd)
-          return 1;
-
-       var t = (x - stepBegin) / (stepEnd - stepBegin);
-       return (3 * t * t) - (2 * t * t * t);
-    }
-
     /// <summary>
     /// Configure the shuttle call/recall buttons to have a consistent state
     /// </summary>
