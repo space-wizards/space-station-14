@@ -1,4 +1,5 @@
-﻿using Content.Client.Gameplay;
+using Content.Client.FeedbackPopup;
+using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.Options;
 using Content.Client.UserInterface.Controls;
@@ -27,6 +28,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     [Dependency] private readonly InfoUIController _info = default!;
     [Dependency] private readonly OptionsUIController _options = default!;
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
+    [Dependency] private readonly FeedbackPopupUIController _feedback = null!;
 
     [UISystemDependency] private readonly GhostSystem _ghostSystem = default!;
 
@@ -83,6 +85,12 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
             if (_abandonWindow is not { IsOpen: true })
                 _abandonWindow = UIManager.CreateWindow<AbandonCharacterWindow>();
             _abandonWindow?.OpenCentered();
+        };
+        
+        _escapeWindow.FeedbackButton.OnPressed += _ =>
+        {
+            CloseEscapeWindow();
+            _feedback.ToggleWindow();
         };
 
         _escapeWindow.ChangelogButton.OnPressed += _ =>
