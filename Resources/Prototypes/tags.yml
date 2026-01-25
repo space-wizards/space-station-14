@@ -1457,7 +1457,8 @@
   id: ToyRubberDuck # ConstructionGraph: ClothingShoeSlippersDuck
 
 - type: Tag
-  id: ToySidearm # Storage whitelist: ClothingShoesClownBase
+  id: ToySidearm # Storage whitelist: ClothingShoesClownBase, ClothingBeltHolster, ClothingBeltSyndieHolster
+                 # ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: Trash # Tagged entities are generic garbage. They fit inside TrashBag and are destroyed by Recycler.

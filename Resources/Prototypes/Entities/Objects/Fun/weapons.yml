@@ -43,7 +43,7 @@
         ents: []
   - type: Tag
     tags:
-    - Sidearm
+    - ToySidearm
 
 - type: entity
   name: Foam Force Astro Ace
@@ -125,9 +125,6 @@
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
-  - type: Tag
-    tags:
-    - Sidearm
 
 - type: entity
   parent: RevolverCapGun

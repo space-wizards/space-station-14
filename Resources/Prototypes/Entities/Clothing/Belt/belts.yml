@@ -131,6 +131,7 @@
         whitelist:
           tags:
           - Sidearm
+          - ToySidearm
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
@@ -177,6 +178,7 @@
         whitelist:
           tags:
           - Sidearm
+          - ToySidearm
       icon_grenade:
         whitelist:
           tags:
@@ -227,6 +229,7 @@
         whitelist:
           tags:
           - Sidearm
+          - ToySidearm
           - SubMachineGun
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
@@ -328,6 +331,7 @@
         whitelist:
           tags:
           - Sidearm
+          - ToySidearm
       icon_shotgun:
         whitelist:
           tags:
