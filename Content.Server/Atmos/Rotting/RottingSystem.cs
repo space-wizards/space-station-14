@@ -88,6 +88,7 @@ public sealed class RottingSystem : SharedRottingSystem
             if (perishable.RotAccumulator >= perishable.RotAfter)
             {
                 var rot = AddComp<RottingComponent>(uid);
+                RaiseLocalEvent(uid, new BeginRottingEvent());
                 rot.NextRotUpdate = _timing.CurTime + rot.RotUpdateRate;
             }
         }

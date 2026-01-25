@@ -33,6 +33,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Content.Shared.Coordinates;
 using Robust.Shared.Utility;
+using Content.Shared.Atmos.Rotting;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -95,6 +96,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
             SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
+            SubscribeLocalEvent<TriggerOnRotComponent, BeginRottingEvent>(OnRotTrigger);
 
             SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(OnSpawnTrigger);
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
@@ -250,6 +252,10 @@ namespace Content.Server.Explosion.EntitySystems
             ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
         }
 
+        private void OnRotTrigger(EntityUid uid, TriggerOnRotComponent component, ref BeginRottingEvent args)
+        {
+            Trigger(uid);
+        }
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
