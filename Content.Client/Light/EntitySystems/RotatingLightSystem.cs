@@ -85,7 +85,7 @@ public sealed class RotatingLightSystem : SharedRotatingLightSystem
 
         if (!_animations.HasRunningAnimation(uid, player, AnimKey))
         {
-            _animations.Play(uid, player, GetAnimation(comp.Speed), AnimKey);
+            _animations.Play((uid, player), GetAnimation(comp.Speed), AnimKey);
         }
     }
 }

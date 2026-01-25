@@ -1,9 +1,7 @@
-using Content.Server.Body.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Medical.Components;
-using Content.Server.PowerCell;
-using Content.Server.Temperature.Components;
-using Content.Shared.Damage;
+using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -14,11 +12,13 @@ using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell;
+using Content.Shared.Temperature.Components;
+using Content.Shared.Traits.Assorted;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Server.Body.Systems;
 
 namespace Content.Server.Medical;
 
@@ -29,10 +29,11 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
     public override void Initialize()
     {
@@ -64,8 +65,9 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             component.NextUpdate = _timing.CurTime + component.UpdateInterval;
 
             //Get distance between health analyzer and the scanned entity
+            //null is infinite range
             var patientCoordinates = Transform(patient).Coordinates;
-            if (!_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange))
+            if (component.MaxScanRange != null && !_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange.Value))
             {
                 //Range too far, disable updates
                 StopAnalyzingEntity((uid, component), patient);
@@ -81,7 +83,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     /// </summary>
     private void OnAfterInteract(Entity<HealthAnalyzerComponent> uid, ref AfterInteractEvent args)
     {
-        if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid, user: args.User))
+        if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid.Owner, user: args.User))
             return;
 
         _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid);
@@ -91,8 +93,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             NeedHand = true,
             BreakOnMove = true,
         });
-        
-        if (args.Target == args.User || doAfterCancelled)
+
+        if (args.Target == args.User || doAfterCancelled || uid.Comp.Silent)
             return;
 
         var msg = Loc.GetString("health-analyzer-popup-scan-target", ("user", Identity.Entity(args.User, EntityManager)));
@@ -101,10 +103,11 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
     private void OnDoAfter(Entity<HealthAnalyzerComponent> uid, ref HealthAnalyzerDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Target == null || !_cell.HasDrawCharge(uid, user: args.User))
+        if (args.Handled || args.Cancelled || args.Target == null || !_cell.HasDrawCharge(uid.Owner, user: args.User))
             return;
 
-        _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
+        if (!uid.Comp.Silent)
+            _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
 
         OpenUserInterface(args.User, uid);
         BeginAnalyzingEntity(uid, args.Target.Value);
@@ -184,34 +187,58 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
     public void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
     {
-        if (!_uiSystem.HasUi(healthAnalyzer, HealthAnalyzerUiKey.Key))
+        if (!_uiSystem.HasUi(healthAnalyzer, HealthAnalyzerUiKey.Key)
+            || !HasComp<DamageableComponent>(target))
             return;
 
-        if (!HasComp<DamageableComponent>(target))
-            return;
+        var uiState = GetHealthAnalyzerUiState(target);
+        uiState.ScanMode = scanMode;
 
+        _uiSystem.ServerSendUiMessage(
+            healthAnalyzer,
+            HealthAnalyzerUiKey.Key,
+            new HealthAnalyzerScannedUserMessage(uiState)
+        );
+    }
+
+    /// <summary>
+    /// Creates a HealthAnalyzerState based on the current state of an entity.
+    /// </summary>
+    /// <param name="target">The entity being scanned</param>
+    /// <returns></returns>
+    public HealthAnalyzerUiState GetHealthAnalyzerUiState(EntityUid? target)
+    {
+        if (!target.HasValue || !HasComp<DamageableComponent>(target))
+            return new HealthAnalyzerUiState();
+
+        var entity = target.Value;
         var bodyTemperature = float.NaN;
 
-        if (TryComp<TemperatureComponent>(target, out var temp))
+        if (TryComp<TemperatureComponent>(entity, out var temp))
             bodyTemperature = temp.CurrentTemperature;
 
         var bloodAmount = float.NaN;
         var bleeding = false;
+        var unrevivable = false;
 
-        if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
-            _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName,
+        if (TryComp<BloodstreamComponent>(entity, out var bloodstream) &&
+            _solutionContainerSystem.ResolveSolution(entity, bloodstream.BloodSolutionName,
                 ref bloodstream.BloodSolution, out var bloodSolution))
         {
-            bloodAmount = bloodSolution.FillFraction;
+            bloodAmount = _bloodstreamSystem.GetBloodLevel(entity);
             bleeding = bloodstream.BleedAmount > 0;
         }
 
-        _uiSystem.ServerSendUiMessage(healthAnalyzer, HealthAnalyzerUiKey.Key, new HealthAnalyzerScannedUserMessage(
-            GetNetEntity(target),
+        if (TryComp<UnrevivableComponent>(entity, out var unrevivableComp) && unrevivableComp.Analyzable)
+            unrevivable = true;
+
+        return new HealthAnalyzerUiState(
+            GetNetEntity(entity),
             bodyTemperature,
             bloodAmount,
-            scanMode,
-            bleeding
-        ));
+            null,
+            bleeding,
+            unrevivable
+        );
     }
 }

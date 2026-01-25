@@ -1,31 +1,29 @@
 # heats an entity or solution placed on it
 - type: entity
   abstract: true
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   id: BaseHeaterMachine
   components:
-  - type: Transform
-    anchored: true
+  - type: ItemPlacer
   - type: Fixtures
     fixtures:
+      itemcollide:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.14,-0.05,0.15,0.25"
+        layer:
+        - HighImpassable
+        hard: false
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.08,-0.35,0.15,0.25"
+          bounds: "-0.14,-0.05,0.15,0.25"
         mask:
         - TabletopMachineMask
         layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        hard: false
+        - TabletopMachineLayer
   - type: ApcPowerReceiver
     powerLoad: 300
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      machine_board: !type:Container
-      machine_parts: !type:Container
 
 - type: entity
   parent: BaseHeaterMachine
@@ -53,6 +51,7 @@
     positionOffset: 0, 0.25
   - type: Machine
     board: HotplateMachineCircuitboard
+  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.SolutionHeaterVisuals.IsOn:

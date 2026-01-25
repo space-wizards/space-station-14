@@ -5,6 +5,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Nuke;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Nuke
@@ -21,15 +22,21 @@ namespace Content.Server.Nuke
         /// <summary>
         ///     Default bomb timer value in seconds.
         /// </summary>
-        [DataField("timer")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public int Timer = 300;
+
+        /// <summary>
+        ///     If the nuke is disarmed, this sets the minimum amount of time the timer can have.
+        ///     The remaining time will reset to this value if it is below it.
+        /// </summary>
+        [DataField]
+        public int MinimumTime = 180;
 
         /// <summary>
         ///     How long until the bomb can arm again after deactivation.
         ///     Used to prevent announcements spam.
         /// </summary>
-        [DataField("cooldown")]
+        [DataField]
         public int Cooldown = 30;
 
         /// <summary>
@@ -50,7 +57,7 @@ namespace Content.Server.Nuke
         ///     How long a user must wait to disarm the bomb.
         /// </summary>
         [DataField("disarmDoafterLength")]
-        public float DisarmDoafterLength = 30.0f;
+        public float DisarmDoAfterLength = 30.0f;
 
         [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = default!;
         [DataField("alertLevelOnDeactivate")] public string AlertLevelOnDeactivate = default!;
@@ -136,32 +143,40 @@ namespace Content.Server.Nuke
         /// </summary>
         public (MapId, EntityUid?)? OriginMapGrid;
 
-        [DataField("codeLength")] public int CodeLength = 6;
-        [ViewVariables] public string Code = string.Empty;
+        [DataField] public int CodeLength = 6;
+        [DataField] public string Code = string.Empty;
 
         /// <summary>
         ///     Time until explosion in seconds.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float RemainingTime;
 
         /// <summary>
         ///     Time until bomb cooldown will expire in seconds.
         /// </summary>
-        [ViewVariables]
+        [DataField]
         public float CooldownTime;
 
         /// <summary>
         ///     Current nuclear code buffer. Entered manually by players.
         ///     If valid it will allow arm/disarm bomb.
         /// </summary>
-        [ViewVariables]
+        [DataField]
         public string EnteredCode = "";
+
+        /// <summary>
+        ///     Time at which the last nuke code was entered.
+        ///     Used to apply a cooldown to prevent clients from attempting to brute force the nuke code by sending keypad messages every tick.
+        ///     <seealso cref="SharedNukeComponent.EnterCodeCooldown"/>
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan LastCodeEnteredAt = TimeSpan.Zero;
 
         /// <summary>
         ///     Current status of a nuclear bomb.
         /// </summary>
-        [ViewVariables]
+        [DataField]
         public NukeStatus Status = NukeStatus.AWAIT_DISK;
 
         /// <summary>

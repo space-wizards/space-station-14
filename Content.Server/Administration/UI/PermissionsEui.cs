@@ -76,7 +76,8 @@ namespace Content.Server.Administration.UI
                     Title = p.a.Title,
                     RankId = p.a.AdminRankId,
                     UserId = new NetUserId(p.a.UserId),
-                    UserName = p.lastUserName
+                    UserName = p.lastUserName,
+                    Suspended = p.a.Suspended,
                 }).ToArray(),
 
                 AdminRanks = _adminRanks.ToDictionary(a => a.Id, a => new PermissionsEuiState.AdminRankData
@@ -255,6 +256,7 @@ namespace Content.Server.Administration.UI
             admin.Title = ua.Title;
             admin.AdminRankId = ua.RankId;
             admin.Flags = GenAdminFlagList(ua.PosFlags, ua.NegFlags);
+            admin.Suspended = ua.Suspended;
 
             await _db.UpdateAdminAsync(admin);
 
@@ -335,7 +337,8 @@ namespace Content.Server.Administration.UI
                 Flags = GenAdminFlagList(ca.PosFlags, ca.NegFlags),
                 AdminRankId = ca.RankId,
                 UserId = userId.UserId,
-                Title = ca.Title
+                Title = ca.Title,
+                Suspended = ca.Suspended,
             };
 
             await _db.AddAdminAsync(admin);

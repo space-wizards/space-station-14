@@ -1,0 +1,143 @@
+- type: weightedRandomFillSolution
+  id: RandomPickBotanyReagent
+  fills:
+  - quantity: 5
+    weight: 0.5
+    reagents:
+    - Omnizine
+    - Impedrezene
+    - Fresium
+    - HeartbreakerToxin
+    - Honk
+    - BuzzochloricBees
+  - quantity: 5
+    weight: 1
+    reagents:
+    - Cognizine
+    - Toxin
+    - Leporazine
+    - Epinephrine
+    - CarpoToxin
+    - SulfuricAcid
+    - Licoxide
+    - Napalm
+    - ChlorineTrifluoride
+    - Radium
+    - Gold
+    - Uranium
+    - Phosphorus
+    - AtomicBomb
+    - Neurotoxin
+    - ChangelingSting
+    - CogChamp
+    - JuiceThatMakesYouWeh
+    - TearGas
+    - Lipolicide
+    - Benzene
+  - quantity: 5
+    weight: 2
+    reagents:
+    - Desoxyephedrine
+    - ChloralHydrate
+    - Ipecac
+    - Hyronalin
+    - Pax
+    - Cryoxadone
+    - Ethylredoxrazine
+    - Dylovene
+    - Histamine
+    - Blood
+    - WeldingFuel
+    - Mercury
+    - Silver
+    - Phenol
+    - Ultravasculine
+    - Carbon
+    - THC
+    - Nicotine
+    - DoctorsDelight
+    - IceCream
+    - Cola
+    - Diphenhydramine
+    - Iron
+    - Bleach
+    - Mannitol
+  - quantity: 10
+    weight: 3
+    reagents:
+    - Bicaridine
+    - Dermaline
+    - Ephedrine
+    - NorepinephricAcid
+    - Tricordrazine
+    - Saline
+    - PulpedBananaPeel
+    - Cryptobiolin
+    - EZNutrient
+    - Ammonia
+    - RobustHarvest
+    - SpaceLube
+    - Theobromine
+    - Allicin
+    - Acetone
+    - Ash
+    - SodiumCarbonate
+    - SpaceDrugs
+    - SpaceGlue
+    - JuiceBerryPoison
+    - Pilk
+    - Posca
+    - Ethanol
+    - FourteenLoko
+    - LemonLime
+    - LemonLimeCranberry
+    - Enzyme
+    - Vinegar
+    - Potassium
+    - Fluorine
+    - Aluminium
+    - Wine
+    - Coffee
+    - Beer
+  - quantity: 10
+    weight: 3.5
+    reagents:
+    - Vitamin
+    - Kelotane
+    - Inaprovaline
+    - Oil
+    - Slime
+    - Fiber
+    - Water
+    - Sugar
+    - Cream
+    - SodaWater
+    - Ice
+    - JuiceCarrot
+    - JuicePotato
+    - Protein
+    - Flour
+    - Soysauce
+    - TableSalt
+    - Chlorine
+    - Mercury
+
+- type: weightedRandomFillSolution
+  id: EvilRandomFillSolution
+  fills:
+  - quantity: 0.05 # Common but very low quantity
+    weight: 40
+    reagents:
+    - Nocturine
+    - MuteToxin
+    - Lead
+  - quantity: 0.1
+    weight: 5 # 99.9% chance of appearing at least once with 60u of vestine with an average of 6.5 occurances.
+    reagents:
+    - Vestine
+  - quantity: 1.0 # High quantity but on average only 1 per chemical kit
+    weight: 1
+    reagents:
+    - Tazinide
+    - Stimulants
+    - Lexorin

@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Power;
 
 namespace Content.Server.Buckle.Systems;
 

@@ -355,7 +355,7 @@ namespace Content.Server.Atmos.EntitySystems
                         continue;
 
                     DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
-                    if (otherTile2.Air != null && CompareExchange(otherTile2.Air, tile.Air) == GasCompareResult.NoExchange)
+                    if (otherTile2.Air != null && CompareExchange(otherTile2, tile) == GasCompareResult.NoExchange)
                         continue;
 
                     AddActiveTile(gridAtmosphere, otherTile2);
@@ -550,7 +550,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 InvalidateVisuals(ent, otherTile);
-                HandleDecompressionFloorRip(mapGrid, otherTile, otherTile.MonstermosInfo.CurrentTransferAmount);
+                HandleDecompressionFloorRip((owner, mapGrid), otherTile, otherTile.MonstermosInfo.CurrentTransferAmount);
             }
 
             if (GridImpulse && tileCount > 0)
@@ -596,8 +596,17 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
+            // Before updating the adjacent tile flags that determine whether air is allowed to flow
+            // or not, we explicitly update airtight data on these tiles right now.
+            // This ensures that UpdateAdjacentTiles has updated data before updating flags.
+            // This allows monstermos' floodfill check that determines if firelocks have dropped
+            // to work correctly.
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tile);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, other);
+
             UpdateAdjacentTiles(ent, tile);
             UpdateAdjacentTiles(ent, other);
+
             InvalidateVisuals(ent, tile);
             InvalidateVisuals(ent, other);
         }
@@ -682,14 +691,14 @@ namespace Content.Server.Atmos.EntitySystems
             adj.MonstermosInfo[idx.ToOppositeDir()] -= amount;
         }
 
-        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float sum)
+        private void HandleDecompressionFloorRip(Entity<MapGridComponent> mapGrid, TileAtmosphere tile, float sum)
         {
             if (!MonstermosRipTiles)
                 return;
 
             var chance = MathHelper.Clamp(0.01f + (sum / SpacingMaxWind) * 0.3f, 0.003f, 0.3f);
 
-            if (sum > 20 && _robustRandom.Prob(chance))
+            if (sum > 20 && _random.Prob(chance))
                 PryTile(mapGrid, tile.GridIndices);
         }
 

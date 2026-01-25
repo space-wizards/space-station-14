@@ -14,6 +14,8 @@
       name: ghost-role-information-guardian-name
       description: ghost-role-information-guardian-description
       rules: ghost-role-information-familiar-rules
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -109,6 +111,8 @@
     - type: Tag
       tags:
         - CannotSuicide
+        - StunImmune
+        - SlowImmune
 
 # From the uplink injector
 - type: entity
@@ -220,8 +224,6 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#8adaff"
           shader: unshaded
-    - type: Body
-      prototype: Primate
     - type: Tag
       tags:
         - CannotSuicide
@@ -229,14 +231,11 @@
     - type: Inventory
       templateId: holoclown
     - type: Hands
+      activeHandId: Hand
+      hands:
+        Hand:
+          location: Left
     - type: ComplexInteraction
-    - type: Clumsy
-      clumsyDamage:
-        types:
-          Blunt: 5
-          Piercing: 4
-        groups:
-          Burn: 3
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist
@@ -250,22 +249,19 @@
       prototypes: [ HoloClownGear ]
     - type: RandomMetadata
       nameSegments:
-      - names_clown
-    - type: NpcFactionMember
-      factions:
-        - Syndicate
+      - NamesClown
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionToggleGuardian
   name: Toggle Guardian
   description: Either manifests the guardian or recalls it back into your body
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/manifest.png
-    event: !type:GuardianToggleActionEvent
     useDelay: 2
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: InstantAction
+    event: !type:GuardianToggleActionEvent

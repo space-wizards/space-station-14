@@ -11,6 +11,17 @@
     Bleach: 5
 
 - type: reaction
+  id: AmmoniaFromBlood
+  requiredMixerCategories:
+  - Stir # prevents evaporating vox blood, TODO: make it react only X units per second; make bloodstream an open thermal system
+  minTemp: 370
+  reactants:
+    AmmoniaBlood:
+      amount: 2
+  products:
+    Ammonia: 1
+
+- type: reaction
   id: SpaceCleaner
   reactants:
     Ammonia:

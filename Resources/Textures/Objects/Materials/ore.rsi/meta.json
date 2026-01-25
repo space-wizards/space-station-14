@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "silver, plasma taken from https://github.com/vgstation-coders/vgstation13 at commit f2ef221849675915a78fd92fe622c32ab740e085, spacequartz taken from https://github.com/goonstation/goonstation at commit b51daf824df46a3a1426475f982c09479818e522 and reshaded by Alekshhh, bananium; uranium; iron; gold; coal by Alekshhh, diamond at commit https://github.com/tgstation/tgstation/pull/78524, edited by TheShuEd",
+  "copyright": "silver, plasma taken from https://github.com/vgstation-coders/vgstation13 at commit f2ef221849675915a78fd92fe622c32ab740e085, spacequartz taken from https://github.com/goonstation/goonstation at commit b51daf824df46a3a1426475f982c09479818e522 and reshaded by Alekshhh, bananium; uranium; iron; gold; coal by Alekshhh, diamond at commit https://github.com/tgstation/tgstation/pull/78524, edited by TheShuEd. Inhands by mubururu_ (github).",
   "size": {
     "x": 32,
     "y": 32
@@ -11,31 +11,111 @@
       "name": "bananium"
     },
     {
+      "name": "bananium-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bananium-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "gold"
+    },
+    {
+      "name": "gold-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "gold-inhand-right",
+      "directions": 4
     },
     {
       "name": "iron"
     },
     {
+      "name": "iron-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "iron-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "uranium"
+    },
+    {
+      "name": "uranium-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "uranium-inhand-right",
+      "directions": 4
     },
     {
       "name": "plasma"
     },
     {
+      "name": "plasma-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "plasma-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "spacequartz"
+    },
+    {
+      "name": "spacequartz-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "spacequartz-inhand-right",
+      "directions": 4
     },
     {
       "name": "silver"
     },
     {
+      "name": "silver-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "silver-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "coal"
+    },
+    {
+      "name": "coal-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "coal-inhand-right",
+      "directions": 4
     },
     {
       "name": "salt"
     },
     {
+      "name": "salt-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "salt-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "diamond"
+    },
+    {
+      "name": "diamond-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "diamond-inhand-right",
+      "directions": 4
     }
   ]
 }

@@ -1,52 +1,82 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/tree/fb2d71495bfe81446159ef528534193d09dd8d34",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/tree/fb2d71495bfe81446159ef528534193d09dd8d34. Tail sprites by Tiniest Shark (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "equipped-OUTERCLOTHING",
-      "directions": 4,
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-OUTERCLOTHING",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+      {
+          "name": "equipped-OUTERCLOTHING-reptilian",
+          "directions": 4,
+          "delays": [
+              [
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2
+              ]
+          ]
+      },
+      {
+          "name": "inhand-left",
+          "directions": 4
+      },
+      {
+          "name": "inhand-right",
+          "directions": 4
+      }
+   ]
 }

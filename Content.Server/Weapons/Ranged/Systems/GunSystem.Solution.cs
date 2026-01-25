@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -12,7 +11,7 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     protected override void InitializeSolution()
     {
@@ -24,60 +23,63 @@ public sealed partial class GunSystem
 
     private void OnSolutionMapInit(Entity<SolutionAmmoProviderComponent> entity, ref MapInitEvent args)
     {
-        UpdateSolutionShots(entity.Owner, entity.Comp);
+        UpdateSolutionShots(entity);
     }
 
     private void OnSolutionChanged(Entity<SolutionAmmoProviderComponent> entity, ref SolutionContainerChangedEvent args)
     {
         if (args.Solution.Name == entity.Comp.SolutionId)
-            UpdateSolutionShots(entity.Owner, entity.Comp, args.Solution);
+            UpdateSolutionShots(entity, args.Solution);
     }
 
-    protected override void UpdateSolutionShots(EntityUid uid, SolutionAmmoProviderComponent component, Solution? solution = null)
+    protected override void UpdateSolutionShots(Entity<SolutionAmmoProviderComponent> ent, Solution? solution = null)
     {
         var shots = 0;
         var maxShots = 0;
-        if (solution == null && !_solutionContainer.TryGetSolution(uid, component.SolutionId, out _, out solution))
+        if (solution == null && !_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out _, out solution))
         {
-            component.Shots = shots;
-            component.MaxShots = maxShots;
-            Dirty(uid, component);
+            ent.Comp.Shots = shots;
+            DirtyField(ent.AsNullable(), nameof(SolutionAmmoProviderComponent.Shots));
+            ent.Comp.MaxShots = maxShots;
+            DirtyField(ent.AsNullable(), nameof(SolutionAmmoProviderComponent.MaxShots));
             return;
         }
 
-        shots = (int) (solution.Volume / component.FireCost);
-        maxShots = (int) (solution.MaxVolume / component.FireCost);
+        shots = (int)(solution.Volume / ent.Comp.FireCost);
+        maxShots = (int)(solution.MaxVolume / ent.Comp.FireCost);
 
-        component.Shots = shots;
-        component.MaxShots = maxShots;
-        Dirty(uid, component);
+        ent.Comp.Shots = shots;
+        DirtyField(ent.AsNullable(), nameof(SolutionAmmoProviderComponent.Shots));
 
-        UpdateSolutionAppearance(uid, component);
+        ent.Comp.MaxShots = maxShots;
+        DirtyField(ent.AsNullable(), nameof(SolutionAmmoProviderComponent.MaxShots));
+
+        UpdateSolutionAppearance(ent);
     }
 
-    protected override (EntityUid Entity, IShootable) GetSolutionShot(EntityUid uid, SolutionAmmoProviderComponent component, EntityCoordinates position)
+    protected override (EntityUid Entity, IShootable) GetSolutionShot(Entity<SolutionAmmoProviderComponent> ent, EntityCoordinates position)
     {
-        var (ent, shootable) = base.GetSolutionShot(uid, component, position);
+        var (shot, shootable) = base.GetSolutionShot(ent, position);
 
-        if (!_solutionContainer.TryGetSolution(uid, component.SolutionId, out var solution, out _))
-            return (ent, shootable);
+        if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out var solution, out _))
+            return (shot, shootable);
 
-        var newSolution = _solutionContainer.SplitSolution(solution.Value, component.FireCost);
+        var newSolution = _solutionContainer.SplitSolution(solution.Value, ent.Comp.FireCost);
 
         if (newSolution.Volume <= FixedPoint2.Zero)
-            return (ent, shootable);
+            return (shot, shootable);
 
-        if (TryComp<AppearanceComponent>(ent, out var appearance))
+        if (TryComp<AppearanceComponent>(shot, out var appearance))
         {
-            Appearance.SetData(ent, VaporVisuals.Color, newSolution.GetColor(ProtoManager).WithAlpha(1f), appearance);
-            Appearance.SetData(ent, VaporVisuals.State, true, appearance);
+            Appearance.SetData(shot, VaporVisuals.Color, newSolution.GetColor(ProtoManager).WithAlpha(1f), appearance);
+            Appearance.SetData(shot, VaporVisuals.State, true, appearance);
         }
 
         // Add the solution to the vapor and actually send the thing
-        if (_solutionContainer.TryGetSolution(ent, VaporComponent.SolutionName, out var vaporSolution, out _))
+        if (_solutionContainer.TryGetSolution(shot, VaporComponent.SolutionName, out var vaporSolution, out _))
         {
             _solutionContainer.TryAddSolution(vaporSolution.Value, newSolution);
         }
-        return (ent, shootable);
+        return (shot, shootable);
     }
 }

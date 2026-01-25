@@ -8,8 +8,6 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
-    protected const string MagazineSlot = "gun_magazine";
-
     protected virtual void InitializeMagazine()
     {
         SubscribeLocalEvent<MagazineAmmoProviderComponent, MapInitEvent>(OnMagazineMapInit);
@@ -38,6 +36,8 @@ public abstract partial class SharedGunSystem
 
     private void OnMagazineUse(EntityUid uid, MagazineAmmoProviderComponent component, UseInHandEvent args)
     {
+        // not checking for args.Handled or marking as such because we only relay the event to the magazine entity
+
         var magEnt = GetMagazineEntity(uid);
 
         if (magEnt == null)

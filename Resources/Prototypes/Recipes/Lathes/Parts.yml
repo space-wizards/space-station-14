@@ -1,26 +1,25 @@
+# Non-stackable part that can have a use outside of machines
 - type: latheRecipe
-  id: CapacitorStockPart
-  result: CapacitorStockPart
-  category: Parts
+  abstract: true
+  id: BasePartRecipe
+  categories:
+  - Parts
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 200
+
+# Stackable part with no function
+- type: latheRecipe
+  abstract: true
+  parent: BasePartRecipe
+  id: BaseStockPartRecipe
   completetime: 1
   materials:
     Steel: 50
     Plastic: 50
 
 - type: latheRecipe
-  id: MatterBinStockPart
-  result: MatterBinStockPart
-  category: Parts
-  completetime: 1
-  materials:
-    Steel: 50
-    Plastic: 50
-
-- type: latheRecipe
+  parent: BaseStockPartRecipe
   id: MicroManipulatorStockPart
   result: MicroManipulatorStockPart
-  category: Parts
-  completetime: 1
-  materials:
-    Steel: 50
-    Plastic: 50

@@ -16,6 +16,8 @@ namespace Content.Client.Atmos.UI
     [GenerateTypedNameReferences]
     public sealed partial class GasAnalyzerWindow : DefaultWindow
     {
+        private NetEntity _currentEntity = NetEntity.Invalid;
+
         public GasAnalyzerWindow()
         {
             RobustXamlLoader.Load(this);
@@ -55,6 +57,13 @@ namespace Content.Client.Atmos.UI
             // Device Tab
             if (msg.NodeGasMixes.Length > 1)
             {
+                if (_currentEntity != msg.DeviceUid)
+                {
+                    // when we get new device data switch to the device tab
+                    CTabContainer.CurrentTab = 0;
+                    _currentEntity = msg.DeviceUid;
+                }
+
                 CTabContainer.SetTabVisible(0, true);
                 CTabContainer.SetTabTitle(0, Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.DeviceName)));
                 // Set up Grid
@@ -127,6 +136,7 @@ namespace Content.Client.Atmos.UI
                 else
                 {
                     // oh shit of fuck its more than 4 this ui isn't gonna look pretty anymore
+                    CDeviceMixes.RemoveAllChildren();
                     for (var i = 1; i < msg.NodeGasMixes.Length; i++)
                     {
                         GenerateGasDisplay(msg.NodeGasMixes[i], CDeviceMixes);
@@ -143,6 +153,7 @@ namespace Content.Client.Atmos.UI
                 CTabContainer.SetTabVisible(0, false);
                 CTabContainer.CurrentTab = 1;
                 minSize = new Vector2(CEnvironmentMix.DesiredSize.X + 40, MinSize.Y);
+                _currentEntity = NetEntity.Invalid;
             }
 
             MinSize = minSize;
@@ -197,7 +208,7 @@ namespace Content.Client.Atmos.UI
             });
             presBox.AddChild(new Label
             {
-                Text = Loc.GetString("gas-analyzer-window-pressure-val-text", ("pressure", $"{gasMix.Pressure:0.##}")),
+                Text = Loc.GetString("gas-analyzer-window-pressure-val-text", ("pressure", $"{gasMix.Pressure:0.00}")),
                 Align = Label.AlignMode.Right,
                 HorizontalExpand = true
             });
@@ -221,8 +232,8 @@ namespace Content.Client.Atmos.UI
                 tempBox.AddChild(new Label
                 {
                     Text = Loc.GetString("gas-analyzer-window-temperature-val-text",
-                        ("tempK", $"{gasMix.Temperature:0.#}"),
-                        ("tempC", $"{TemperatureHelpers.KelvinToCelsius(gasMix.Temperature):0.#}")),
+                        ("tempK", $"{gasMix.Temperature:0.0}"),
+                        ("tempC", $"{TemperatureHelpers.KelvinToCelsius(gasMix.Temperature):0.0}")),
                     Align = Label.AlignMode.Right,
                     HorizontalExpand = true
                 });

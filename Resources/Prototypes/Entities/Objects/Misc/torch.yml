@@ -5,9 +5,9 @@
   description: A torch fashioned from some wood.
   components:
     - type: ExpendableLight
-      spentName: expendable-light-burnt-torch-name
-      spentDesc: expendable-light-burnt-torch-desc
+      refuelMaterialID: WoodPlank
       glowDuration: 100
+      refuelMaximumDuration: 205
       fadeOutDuration: 4
       iconStateSpent: torch_spent
       turnOnBehaviourID: turn_on
@@ -25,6 +25,8 @@
           color: "#FFFFFF"
           visible: false
           shader: unshaded
+        - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+          state: torch_nocloth
     - type: Icon
       sprite: Objects/Misc/torch.rsi
       state: icon

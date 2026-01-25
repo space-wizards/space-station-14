@@ -16,6 +16,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
+using Content.Server.Shuttles.Components;
+using Robust.Shared.Physics;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -47,6 +49,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
         if (component.BehaviorProperties.BluespaceEffectOnInit)
             BluespaceEffect(uid, component, component, true);
+
+        EnsureComp<ArrivalsBlacklistComponent>(uid); // To stop people getting to arrivals terminal
     }
 
     public void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent, bool bypassLimit = false)
@@ -91,7 +95,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
                 foreach (var entity in target.Value.storageComponent.Contents.ContainedEntities.ToArray())
                 {
-                    if (EntityManager.HasComponent<MindContainerComponent>(entity))
+                    if (HasComp<MindContainerComponent>(entity))
                     {
                         if (!component.BehaviorProperties.TransportSentient)
                             continue;
@@ -160,11 +164,11 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return false;
 
         if (lockerComponent.PickLinksFromSameMap &&
-            link.ToCoordinates().GetMapId(EntityManager) != locker.ToCoordinates().GetMapId(EntityManager))
+            _transformSystem.GetMapId(link.ToCoordinates()) != _transformSystem.GetMapId(locker.ToCoordinates()))
             return false;
 
         if (lockerComponent.PickLinksFromStationGrids &&
-            !HasComp<StationMemberComponent>(link.ToCoordinates().GetGridUid(EntityManager)))
+            !HasComp<StationMemberComponent>(_transformSystem.GetGrid(link.ToCoordinates())))
             return false;
 
         if (lockerComponent.PickLinksFromResistLockers &&
@@ -308,7 +312,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
             foreach (var entity in entityStorageComponent.Contents.ContainedEntities.ToArray())
             {
-                if (EntityManager.HasComponent<MindContainerComponent>(entity))
+                if (HasComp<MindContainerComponent>(entity))
                 {
                     if (!component.BehaviorProperties.TransportSentient)
                         continue;
@@ -389,7 +393,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         switch (component.BehaviorProperties.DestroyType)
         {
             case BluespaceLockerDestroyType.Explode:
-                _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(EntityManager, _transformSystem),
+                _explosionSystem.QueueExplosion(_transformSystem.ToMapCoordinates(uid.ToCoordinates()),
                     ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, uid, maxTileBreak: 0);
                 goto case BluespaceLockerDestroyType.Delete;
             case BluespaceLockerDestroyType.Delete:

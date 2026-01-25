@@ -1,24 +1,10 @@
-- type: weightedRandom
-  id: AsteroidOre
-  weights:
-    OreIron: 1.0
-    OreQuartz: 1.0
-    OreCoal: 1.0
-    OreSalt: 1.0
-    OreGold: 0.25
-    OreDiamond: 0.05
-    OreSilver: 0.25
-    OrePlasma: 0.15
-    OreUranium: 0.15
-    OreArtifactFragment: 0.15
-
 # Large asteroids, typically 1
 - type: dungeonConfig
   id: BlobAsteroid
   # Floor generation
   layers:
   - !type:NoiseDunGen
-    tileCap: 1500
+    tileCap: 1000
     capStd: 32
     iterations: 3
     layers:
@@ -34,10 +20,12 @@
   # Generate biome
   - !type:BiomeDunGen
     biomeTemplate: Asteroid
-
-  # Generate ore veins
-  - !type:BiomeMarkerLayerDunGen
-    markerTemplate: AsteroidOre
+  - !type:OreDunGen
+    replacement: AsteroidRock
+    entity: AsteroidRockGibtonite
+    count: 8
+    minGroupSize: 0
+    maxGroupSize: 1
 
 # Multiple smaller asteroids
 # This is a pain so we generate fewer tiles
@@ -46,7 +34,7 @@
   # Floor generation
   layers:
   - !type:NoiseDunGen
-    tileCap: 1000
+    tileCap: 750
     capStd: 32
     layers:
       - tile: FloorAsteroidSand
@@ -61,10 +49,12 @@
   # Generate biome
   - !type:BiomeDunGen
     biomeTemplate: Asteroid
-
-  # Generate ore veins
-  - !type:BiomeMarkerLayerDunGen
-    markerTemplate: AsteroidOre
+  - !type:OreDunGen
+    replacement: AsteroidRock
+    entity: AsteroidRockGibtonite
+    count: 8
+    minGroupSize: 0
+    maxGroupSize: 1
 
 # Long and spindly, less smooth than blob
 - type: dungeonConfig
@@ -72,7 +62,7 @@
   # Floor generation
   layers:
   - !type:NoiseDunGen
-    tileCap: 1500
+    tileCap: 1000
     capStd: 32
     layers:
       - tile: FloorAsteroidSand
@@ -88,10 +78,12 @@
   # Generate biome
   - !type:BiomeDunGen
     biomeTemplate: Asteroid
-
-  # Generate ore veins
-  - !type:BiomeMarkerLayerDunGen
-    markerTemplate: AsteroidOre
+  - !type:OreDunGen
+    replacement: AsteroidRock
+    entity: AsteroidRockGibtonite
+    count: 8
+    minGroupSize: 0
+    maxGroupSize: 1
 
 # Lots of holes in it
 - type: dungeonConfig
@@ -99,7 +91,7 @@
   # Floor generation
   layers:
   - !type:NoiseDunGen
-    tileCap: 1500
+    tileCap: 1000
     capStd: 32
     layers:
       - tile: FloorAsteroidSand
@@ -114,7 +106,9 @@
   # Generate biome
   - !type:BiomeDunGen
     biomeTemplate: Asteroid
-
-  # Generate ore veins
-  - !type:BiomeMarkerLayerDunGen
-    markerTemplate: AsteroidOre
+  - !type:OreDunGen
+    replacement: AsteroidRock
+    entity: AsteroidRockGibtonite
+    count: 8
+    minGroupSize: 0
+    maxGroupSize: 1

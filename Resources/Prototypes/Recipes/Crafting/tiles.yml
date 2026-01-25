@@ -1,199 +1,65 @@
 # These should be lathe recipes but lathe code sucks so hard rn so they'll be crafted by hand.
 
 - type: construction
-  name: steel tile
   id: TileSteel
   graph: TileSteel
   startNode: start
   targetNode: steeltile
   category: construction-category-tiles
-  description: "Four steel station tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
   objectType: Item
 
 - type: construction
-  name: wood floor
   id: TileWood
   graph: TileWood
   startNode: start
   targetNode: woodtile
   category: construction-category-tiles
-  description: "Four pieces of wooden station flooring."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: wood }
   objectType: Item
-  
+
 - type: construction
-  name: filled brass plate
   id: TileBrassFilled
   graph: TilesBrass
   startNode: start
   targetNode: filledPlate
   category: construction-category-tiles
-  description: "Four pieces of brass station flooring, only compatible with brass plating."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: brass-filled }
   objectType: Item
-  
+
 - type: construction
-  name: smooth brass plate
   id: TileBrassReebe
   graph: TilesBrass
   startNode: start
   targetNode: reebe
   category: construction-category-tiles
-  description: "Four pieces of smooth brass station flooring, only compatible with brass plating."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: reebe }
   objectType: Item
 
 - type: construction
-  name: white tile
   id: TileWhite
   graph: TileWhite
   startNode: start
   targetNode: whitetile
   category: construction-category-tiles
-  description: "Four white station tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
-  name: dark tile
   id: TileDark
   graph: TileDark
   startNode: start
   targetNode: darktile
   category: construction-category-tiles
-  description: "Four dark station tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
-  name: flesh tile
   id: TileFlesh
   graph: TileFlesh
   startNode: start
   targetNode: fleshTile
   category: construction-category-tiles
-  description: "Four fleshy tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: meat }
   objectType: Item
 
-# - type: construction
-#   name: techmaint floor
-#   id: tileTechmaint
-#   graph: tileTechmaint
-#   startNode: start
-#   targetNode: techmainttile
-#   category: construction-category-tiles
-#   description: "A piece of techmaint flooring."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: steel_techfloor_grid }
-#   objectType: Item
-#
-# - type: construction
-#   name: freezer tile
-#   id: tileFreezer
-#   graph: tileFreezer
-#   startNode: start
-#   targetNode: freezertile
-#   category: construction-category-tiles
-#   description: "A freezer station tile."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: showroom }
-#   objectType: Item
-#
-# - type: construction
-#   name: showroom tile
-#   id: tileShowroom
-#   graph: tileShowroom
-#   startNode: start
-#   targetNode: showroomtile
-#   category: construction-category-tiles
-#   description: "A showroom station tile."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: showroom }
-#   objectType: Item
-#
-# - type: construction
-#   name: green-circuit floor
-#   id: tileGCircuit
-#   graph: tileGCircuit
-#   startNode: start
-#   targetNode: gcircuittile
-#   category: construction-category-tiles
-#   description: "A piece of green-circuit flooring."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: gcircuit }
-#   objectType: Item
-#
-# - type: construction
-#   name: gold floor
-#   id: tileGold
-#   graph: tileGold
-#   startNode: start
-#   targetNode: goldtile
-#   category: construction-category-tiles
-#   description: "A piece of gold flooring."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
-#   objectType: Item
-#
-# - type: construction
-#   name: reinforced tile
-#   id: tileReinforced
-#   graph: tileReinforced
-#   startNode: start
-#   targetNode: reinforcedtile
-#   category: construction-category-tiles
-#   description: "A reinforced station tile."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: reinforced }
-#   objectType: Item
-#
-# - type: construction
-#   name: mono tile
-#   id: tileMono
-#   graph: tileMono
-#   startNode: start
-#   targetNode: monotile
-#   category: construction-category-tiles
-#   description: "A mono station tile."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: white_monofloor }
-#   objectType: Item
-#
-# - type: construction
-#   name: linoleum floor
-#   id: tileLino
-#   graph: tileLino
-#   startNode: start
-#   targetNode: linotile
-#   category: construction-category-tiles
-#   description: "A piece of linoleum flooring."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: white_monofloor }
-#   objectType: Item
-#
-# - type: construction
-#   name: hydro tile
-#   id: tileHydro
-#   graph: tileHydro
-#   startNode: start
-#   targetNode: hydrotile
-#   category: construction-category-tiles
-#   description: "A hydro station tile."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: hydro }
-#   objectType: Item
-#
-# - type: construction
-#   name: dirty tile
-#   id: tileDirty
-#   graph: tileDirty
-#   startNode: start
-#   targetNode: dirtytile
-#   category: construction-category-tiles
-#   description: "A dirty station tile."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: dirty }
-#   objectType: Item
-
 - type: construction
-  name: large wood floor
   id: TileWoodLarge
   graph: TileWoodLarge
   startNode: start
   targetNode: woodtilelarge
   category: construction-category-tiles
-  description: "Four pieces of wooden station flooring."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: wood-large }
   objectType: Item

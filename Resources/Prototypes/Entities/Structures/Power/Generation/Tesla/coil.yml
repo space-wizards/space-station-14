@@ -56,19 +56,24 @@
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     state: coil
   - type: Battery
-    maxCharge: 1000000
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
+    maxCharge: 5000000
     startingCharge: 0
   - type: BatteryDischarger
   - type: TeslaCoil
-    chargeFromLightning: 2000000
+    chargeFromLightning: 5000000
   - type: LightningTarget
     priority: 4
     hitProbability: 0.5
     lightningResistance: 10
     lightningExplode: false
   - type: PowerNetworkBattery
-    maxSupply: 1000000
-    supplyRampTolerance: 1000000
+    maxSupply: 350000
+    supplyRampTolerance: 350000
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
@@ -87,6 +92,15 @@
       sprite: Structures/Power/Generation/Tesla/coil_cracks.rsi
   - type: Destructible
     thresholds:
+      - trigger: # Excess damage, don't spawn entities
+          !type:DamageTrigger
+          damage: 400
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
       - trigger:
           !type:DamageTrigger
           damage: 225
@@ -101,7 +115,10 @@
               SheetSteel1:
                 min: 2
                 max: 4
-  #- type: GuideHelp # TODO - add Tesla Guide
+  - type: GuideHelp
+    guides:
+    - TeslaEngine
+    - SingularityTeslaEngine
 
 - type: entity
   id: TeslaGroundingRod
@@ -170,6 +187,15 @@
       sprite: Structures/Power/Generation/Tesla/groundingrod_cracks.rsi
   - type: Destructible
     thresholds:
+      - trigger: # Excess damage, don't spawn entities
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -184,5 +210,7 @@
               SheetSteel1:
                 min: 2
                 max: 4
-  #- type: GuideHelp # TODO - add Tesla Guide
-
+  - type: GuideHelp
+    guides:
+    - TeslaEngine
+    - SingularityTeslaEngine

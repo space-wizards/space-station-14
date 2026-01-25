@@ -40,7 +40,7 @@ public sealed class PrototypeSaveTest
 
         await pair.Client.WaitPost(() =>
         {
-            foreach (var proto in pair.GetPrototypesWithComponent<ItemComponent>(Ignored))
+            foreach (var (proto, _) in pair.GetPrototypesWithComponent<ItemComponent>(Ignored))
             {
                 var dummy = pair.Client.EntMan.Spawn(proto.ID);
                 pair.Client.EntMan.RunMapInit(dummy, pair.Client.MetaData(dummy));

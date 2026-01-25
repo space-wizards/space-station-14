@@ -4,6 +4,7 @@
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   description: A machine capable of playing a wide variety of tunes. Enjoyment not guaranteed.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/jukebox.rsi
     layers:
@@ -28,8 +29,14 @@
     interfaces:
         enum.JukeboxUiKey.Key:
           type: JukeboxBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-jukebox
+    layoutId: Jukebox
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

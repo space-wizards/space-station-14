@@ -1,9 +1,9 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.Wires;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Wires;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Monitor;
 
@@ -30,6 +30,7 @@ public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComp
 
     public override bool Cut(EntityUid user, Wire wire, AirAlarmComponent comp)
     {
+        comp.PanicWireCut = true;
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet))
         {
             _airAlarmSystem.SetMode(wire.Owner, devNet.Address, AirAlarmMode.Panic, false);
@@ -40,6 +41,7 @@ public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComp
 
     public override bool Mend(EntityUid user, Wire wire, AirAlarmComponent alarm)
     {
+        alarm.PanicWireCut = false;
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet)
             && alarm.CurrentMode == AirAlarmMode.Panic)
         {

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f7337f1aa9efdcc1403ca4771d638e0634074537",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f7337f1aa9efdcc1403ca4771d638e0634074537, icon-filled by PS3MOIRA",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,9 @@
   "states": [
     {
       "name": "icon"
+    },
+    {
+      "name": "icon-filled"
     },
     {
       "name": "equipped-BACKPACK",

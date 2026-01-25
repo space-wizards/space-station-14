@@ -21,6 +21,8 @@ public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
 
     protected override void Open()
     {
+        base.Open();
+
         _window = new();
 
         if (_type == SurveillanceCameraSetupUiKey.Router)

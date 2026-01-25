@@ -3,6 +3,8 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.Power;
 using Content.Shared.UserInterface;
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
@@ -20,6 +22,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     {
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SurveillanceCameraMonitorComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
@@ -54,7 +57,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             if (monitor.LastHeartbeat > _maxHeartbeatTime)
             {
                 DisconnectCamera(uid, true, monitor);
-                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(uid);
+                RemComp<ActiveSurveillanceCameraMonitorComponent>(uid);
             }
         }
     }
@@ -182,7 +185,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         // there would be a null check here, but honestly
         // whichever one is the "latest" switch message gets to
         // do the switch
-        TrySwitchCameraByAddress(uid, message.Address, component);
+        TrySwitchCameraByAddress(uid, message.Address, message.CameraSubnet, component);
     }
 
     private void OnPowerChanged(EntityUid uid, SurveillanceCameraMonitorComponent component, ref PowerChangedEvent args)
@@ -194,6 +197,12 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             component.ActiveSubnet = string.Empty;
         }
     }
+
+    private void OnShutdown(EntityUid uid, SurveillanceCameraMonitorComponent component, ComponentShutdown args)
+    {
+        RemoveActiveCamera(uid, component);
+    }
+
 
     private void OnToggleInterface(EntityUid uid, SurveillanceCameraMonitorComponent component,
         AfterActivatableUIOpenEvent args)
@@ -247,7 +256,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         monitor.ActiveCamera = null;
         monitor.ActiveCameraAddress = string.Empty;
-        EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(uid);
+        RemComp<ActiveSurveillanceCameraMonitorComponent>(uid);
         UpdateUserInterface(uid, monitor);
     }
 
@@ -417,15 +426,18 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         UpdateUserInterface(uid, monitor);
     }
 
-    private void TrySwitchCameraByAddress(EntityUid uid, string address,
-        SurveillanceCameraMonitorComponent? monitor = null)
+    private void TrySwitchCameraByAddress(EntityUid uid, string address, string? cameraSubnet = null, SurveillanceCameraMonitorComponent? monitor = null)
     {
-        if (!Resolve(uid, ref monitor)
-            || string.IsNullOrEmpty(monitor.ActiveSubnet)
-            || !monitor.KnownSubnets.TryGetValue(monitor.ActiveSubnet, out var subnetAddress))
-        {
+        if (!Resolve(uid, ref monitor))
             return;
-        }
+
+        if (cameraSubnet != null && cameraSubnet != monitor.ActiveSubnet)
+            SetActiveSubnet(uid, cameraSubnet, monitor);
+
+        var activeSubnet = monitor.ActiveSubnet;
+
+        if (string.IsNullOrEmpty(activeSubnet) || !monitor.KnownSubnets.TryGetValue(activeSubnet, out var subnetAddress))
+            return;
 
         var payload = new NetworkPayload()
         {

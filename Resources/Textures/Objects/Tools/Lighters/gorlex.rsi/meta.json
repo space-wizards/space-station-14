@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bfc9c6ba8126ee8c41564d68c4bfb9ce37faa8f8 and modified by Swept, modified again my Smugman",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "matchbox"
+        },
+        {
+            "name": "matchbox-open"
+        },
+        {
+            "name": "matchbox1"
+        },
+        {
+            "name": "matchbox2"
+        },
+        {
+            "name": "matchbox3"
+        }
+    ]
+}

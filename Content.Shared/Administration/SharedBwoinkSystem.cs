@@ -40,13 +40,16 @@ namespace Content.Shared.Administration
 
             public bool PlaySound { get; }
 
-            public BwoinkTextMessage(NetUserId userId, NetUserId trueSender, string text, DateTime? sentAt = default, bool playSound = true)
+            public readonly bool AdminOnly;
+
+            public BwoinkTextMessage(NetUserId userId, NetUserId trueSender, string text, DateTime? sentAt = default, bool playSound = true, bool adminOnly = false)
             {
                 SentAt = sentAt ?? DateTime.Now;
                 UserId = userId;
                 TrueSender = trueSender;
                 Text = text;
                 PlaySound = playSound;
+                AdminOnly = adminOnly;
             }
         }
     }

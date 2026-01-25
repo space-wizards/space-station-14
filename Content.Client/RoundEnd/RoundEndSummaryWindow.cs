@@ -34,7 +34,7 @@ namespace Content.Client.RoundEnd
             roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
             roundEndTabs.AddChild(MakePlayerManifestTab(info));
 
-            Contents.AddChild(roundEndTabs);
+            ContentsContainer.AddChild(roundEndTabs);
 
             OpenCenteredRight();
             MoveToFront();
@@ -61,9 +61,9 @@ namespace Content.Client.RoundEnd
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
             var gamemodeMessage = new FormattedMessage();
-            gamemodeMessage.AddMarkup(Loc.GetString("round-end-summary-window-round-id-label", ("roundId", roundId)));
+            gamemodeMessage.AddMarkupOrThrow(Loc.GetString("round-end-summary-window-round-id-label", ("roundId", roundId)));
             gamemodeMessage.AddText(" ");
-            gamemodeMessage.AddMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
+            gamemodeMessage.AddMarkupOrThrow(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
             gamemodeLabel.SetMessage(gamemodeMessage);
             roundEndSummaryContainer.AddChild(gamemodeLabel);
 

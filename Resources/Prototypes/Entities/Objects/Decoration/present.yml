@@ -64,6 +64,8 @@
         orGroup: GiftPool
       - id: PlushieLizard #Weh!
         orGroup: GiftPool
+      - id: PlushieRainbowLizard
+        orGroup: GiftPool
       - id: PlushieNar
         orGroup: GiftPool
       - id: PlushieCarp
@@ -98,6 +100,8 @@
         orGroup: GiftPool
       - id: ClothingNeckCloakMoth
         orGroup: GiftPool
+      - id: TennisBall
+        orGroup: GiftPool
       - id: ToyMouse
         orGroup: GiftPool
       - id: ToyAi
@@ -106,7 +110,7 @@
         orGroup: GiftPool
       - id: ToyFigurinePassenger
         orGroup: GiftPool
-      - id: ToyGriffin
+      - id: ToyFigurineGriffin
         orGroup: GiftPool
       - id: ToyHonk
         orGroup: GiftPool
@@ -120,7 +124,7 @@
         orGroup: GiftPool
       - id: ToyOdysseus
         orGroup: GiftPool
-      - id: ToyOwlman
+      - id: ToyFigurineOwlman
         orGroup: GiftPool
       - id: ToyDeathRipley
         orGroup: GiftPool
@@ -136,7 +140,7 @@
         orGroup: GiftPool
       - id: ToyDurand
         orGroup: GiftPool
-      - id: ToySkeleton
+      - id: ToyFigurineSkeleton
         orGroup: GiftPool
       - id: FoamBlade
         orGroup: GiftPool
@@ -196,7 +200,7 @@
         orGroup: GiftPool
       - id: ClothingNeckCloakAdmin
         orGroup: GiftPool
-      - id: ToySkeleton
+      - id: ToyFigurineSkeleton
         orGroup: GiftPool
       - id: Basketball
         orGroup: GiftPool
@@ -274,6 +278,8 @@
         orGroup: GiftPool
       - id: FoodBoxDonkpocketHonk
         orGroup: GiftPool
+      - id: FoodBoxDonkpocketMoth
+        orGroup: GiftPool
       - id: ClothingHandsGlovesColorPurple
         orGroup: GiftPool
       - id: ClothingHandsGlovesColorYellow
@@ -318,6 +324,8 @@
         orGroup: GiftPool
       - id: ClothingUniformColorRainbow
         orGroup: GiftPool
+      - id: ClothingUniformJumpskirtColorRainbow
+        orGroup: GiftPool
       - id: ClothingUniformOveralls
         orGroup: GiftPool
       - id: ClothingUniformJumpskirtDetectiveGrey
@@ -352,7 +360,7 @@
         orGroup: GiftPool
       - id: Bola
         orGroup: GiftPool
-      - id: GlowstickBase
+      - id: GlowstickGreen
         orGroup: GiftPool
       - id: GlowstickBlue
         orGroup: GiftPool
@@ -372,14 +380,23 @@
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  id: PresentRandomAsh
+  id: PresentRandomCoal
   parent: [PresentBase, BaseItem]
-  suffix: Filled Ash
+  suffix: Filled Coal
   components:
   - type: SpawnItemsOnUse
     items:
       - id: PresentTrash
-      - id: Ash # No coal yet!
+      - id: Coal1
+        orGroup: GiftPool
+      - id: Coal5
+        prob: .4
+        orGroup: GiftPool
+      - id: Coal10
+        prob: .2
+        orGroup: GiftPool
+      - id: Coal15
+        prob: .1
         orGroup: GiftPool
     sound:
       path: /Audio/Effects/unwrap.ogg

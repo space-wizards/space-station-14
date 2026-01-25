@@ -22,13 +22,14 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "0.17,0.25,-0.17,-0.30"
+          bounds: "-0.17,-0.30,0.17,0.25"
         density: 190
         mask:
         - MachineMask
         layer:
         - MidImpassable
         - LowImpassable
+        - BulletImpassable
   - type: PointLight
     radius: 10
     energy: 2.5
@@ -62,6 +63,9 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+  - type: StaticPrice
+    price: 75
+  - type: RequireProjectileTarget
 
 - type: entity
   id: PoweredLightPostSmallEmpty
@@ -124,8 +128,6 @@
     enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightTube
-  - type: StaticPrice
-    price: 25
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -15
@@ -155,8 +157,6 @@
     color: "#EEEEFF"
   - type: PoweredLight
     hasLampOnSpawn: LedLightTube
-  - type: StaticPrice
-    price: 25
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -15

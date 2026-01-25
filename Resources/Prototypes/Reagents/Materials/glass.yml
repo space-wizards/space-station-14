@@ -4,7 +4,7 @@
   name: materials-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: glass }
   color: "#a8ccd7"
-  price: 0.075
+  price: 0.15 # $15 for one unit
 
 - type: material
   id: ReinforcedGlass
@@ -12,7 +12,7 @@
   name: materials-reinforced-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rglass }
   color: "#549bb0"
-  price: 0.16 # 1-0.5 mix of glass and metal.
+  price: 0.225 # 1-0.5 mix of glass and metal.
 
 - type: material
   id: PlasmaGlass
@@ -20,7 +20,7 @@
   name: materials-plasma-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: pglass }
   color: "#b35989"
-  price: 0.30 # 1-1 mix of plasma and glass.
+  price: 0.50 # 1-1 mix of plasma and glass.
 
 - type: material
   id: ReinforcedPlasmaGlass
@@ -28,7 +28,7 @@
   name: materials-reinforced-plasma-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rpglass }
   color: "#8c4069"
-  price: 0.40 # 1-1-0.5 mix of plasma, glass, and metal.
+  price: 0.575 # 1-1-0.5 mix of plasma, glass, and metal.
 
 - type: material
   id: BrassGlass
@@ -36,7 +36,7 @@
   name: materials-clockwork-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: cglass }
   color: "#9b6f07"
-  price: 0.0875 # average of glass and brass.
+  price: 0.225 # average of glass and brass.
 
 - type: material
   id: UraniumGlass
@@ -44,7 +44,7 @@
   name: materials-uranium-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: uglass }
   color: "#3cab38"
-  price: 0.32 # 1-1 mix of uranium and glass.
+  price: 1.0 # 1-1 mix of uranium and glass.
 
 - type: material
   id: ReinforcedUraniumGlass
@@ -52,4 +52,4 @@
   name: materials-reinforced-uranium-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: ruglass }
   color: "#2d872a"
-  price: 0.7 # 2-2-1 mix of uranium, glass, and metal.
+  price: 1.075 # 2-2-1 mix of uranium, glass, and metal.

@@ -13,9 +13,6 @@ public sealed partial class GasAnalyzerComponent : Component
     [ViewVariables]
     public EntityUid User;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public EntityCoordinates? LastPosition;
-
     [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled;
 
@@ -96,12 +93,6 @@ public sealed partial class GasAnalyzerComponent : Component
                  ("gasName", Name),
                  ("gasAmount", Amount));
         }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class GasAnalyzerDisableMessage : BoundUserInterfaceMessage
-    {
-
     }
 }
 

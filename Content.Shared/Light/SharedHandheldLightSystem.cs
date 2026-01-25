@@ -1,11 +1,13 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Examine;
 using Content.Shared.Item;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
-using Robust.Shared.Audio;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Light;
 
@@ -22,6 +24,8 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<HandheldLightComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandheldLightComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
     }
 
     private void OnInit(EntityUid uid, HandheldLightComponent component, ComponentInit args)
@@ -39,6 +43,13 @@ public abstract class SharedHandheldLightSystem : EntitySystem
 
         component.Level = state.Charge;
         SetActivated(uid, state.Activated, component, false);
+    }
+
+    private void OnExamine(EntityUid uid, HandheldLightComponent component, ExaminedEvent args)
+    {
+        args.PushMarkup(component.Activated
+            ? Loc.GetString("handheld-light-component-on-examine-is-on-message")
+            : Loc.GetString("handheld-light-component-on-examine-is-off-message"));
     }
 
     public void SetActivated(EntityUid uid, bool activated, HandheldLightComponent? component = null, bool makeNoise = true)
@@ -59,6 +70,9 @@ public abstract class SharedHandheldLightSystem : EntitySystem
 
         Dirty(uid, component);
         UpdateVisuals(uid, component);
+
+        var ev = new LightToggleEvent(activated);
+        RaiseLocalEvent(uid, ev);
     }
 
     public void UpdateVisuals(EntityUid uid, HandheldLightComponent? component = null, AppearanceComponent? appearance = null)
@@ -76,6 +90,27 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (component.ToggleActionEntity != null)
             _actionSystem.SetToggled(component.ToggleActionEntity, component.Activated);
 
-        _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearance);
+        _appearance.SetData(uid, ToggleableVisuals.Enabled, component.Activated, appearance);
     }
+
+    private void AddToggleLightVerb(Entity<HandheldLightComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || !ent.Comp.ToggleOnInteract)
+            return;
+
+        var @event = args;
+        ActivationVerb verb = new()
+        {
+            Text = Loc.GetString("verb-common-toggle-light"),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
+            Act = ent.Comp.Activated
+                ? () => TurnOff(ent)
+                : () => TurnOn(@event.User, ent)
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    public abstract bool TurnOff(Entity<HandheldLightComponent> ent, bool makeNoise = true);
+    public abstract bool TurnOn(EntityUid user, Entity<HandheldLightComponent> uid);
 }

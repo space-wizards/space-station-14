@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/pull/80025/commits/f0cc8856d4c1b6b3933524a2d37581cc81c3c05b, /icons/obj/machines/floor.dmi. Edited by chromiumboy",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+	{
+      "name": "unpowered"
+    },
+	{
+      "name": "panel_open"
+    },
+	{
+      "name": "blank"
+    },
+	{
+      "name": "icon_in_call"
+    },
+	{
+      "name": "lights_calling",
+      "delays": [
+        [
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.5,
+          0.1,
+          0.1,
+		  0.1,
+          0.1
+        ]
+      ]
+    },
+	{
+      "name": "lights_in_call",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+	{
+      "name": "lights_ringing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+		  0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.8
+        ]
+      ]
+    },
+	{
+      "name": "lights_hanging_up",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+		  0.1,
+		  0.1,
+		  0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+		  0.1,
+		  0.1,
+		  0.1,
+		  99
+        ]
+      ]
+    }	
+  ]
+}

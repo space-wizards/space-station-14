@@ -16,9 +16,7 @@
   weight: -10
   roles:
   - Bartender
-  - Borg
   - Botanist
-  - Boxer
   - Chaplain
   - Chef
   - Clown
@@ -31,8 +29,25 @@
   - Passenger
   - Reporter
   - Visitor
-  - Zookeeper
   - ServiceWorker
+
+- type: department
+  id: CentralCommand
+  name: department-CentralCommand
+  description: department-CentralCommand-description
+  color: "#0c344d"
+  roles:
+  - CentralCommandOfficial
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
+  editorHidden: true
+  weight: 120
 
 - type: department
   id: Command
@@ -41,13 +56,21 @@
   color: "#334E6D"
   roles:
   - Captain
-  - CentralCommandOfficial
   - ChiefEngineer
   - ChiefMedicalOfficer
   - HeadOfPersonnel
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
+  - CentralCommandOfficial
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
   primary: false
   weight: 100
 
@@ -99,14 +122,21 @@
   - ResearchAssistant
 
 - type: department
+  id: Silicon
+  name: department-Silicon
+  description: department-Silicon-description
+  color: "#D381C9"
+  roles:
+  - Borg
+  - StationAi
+
+- type: department
   id: Specific
   name: department-Specific
   description: department-Specific-description
   color: "#9FED58"
   weight: 10
   roles:
-  - Boxer
   - Reporter
-  - Zookeeper
   - Psychologist
   primary: false

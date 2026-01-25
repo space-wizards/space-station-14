@@ -25,11 +25,11 @@ namespace Content.Client.Access.UI
         public void SetAccessLevels(IPrototypeManager protoManager, List<ProtoId<AccessLevelPrototype>> accessLevels)
         {
             _accessButtons.Clear();
-            AccessLevelGrid.DisposeAllChildren();
+            AccessLevelGrid.RemoveAllChildren();
 
             foreach (var access in accessLevels)
             {
-                if (!protoManager.TryIndex(access, out var accessLevel))
+                if (!protoManager.Resolve(access, out var accessLevel))
                 {
                     continue;
                 }
@@ -53,6 +53,8 @@ namespace Content.Client.Access.UI
 
         public void UpdateState(IPrototypeManager protoManager, AccessOverriderBoundUserInterfaceState state)
         {
+            PrivilegedIdGrid.Visible = state.ShowPrivilegedIdGrid;
+
             PrivilegedIdLabel.Text = state.PrivilegedIdName;
             PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
                 ? Loc.GetString("access-overrider-window-eject-button")
@@ -77,7 +79,9 @@ namespace Content.Client.Access.UI
                     missingPrivileges.Add(privilege);
                 }
 
-                MissingPrivilegesLabel.Text = Loc.GetString("access-overrider-window-missing-privileges");
+                MissingPrivilegesLabel.Text = state.ShowPrivilegedIdGrid ?
+                    Loc.GetString("access-overrider-window-missing-privileges") :
+                    Loc.GetString("access-overrider-window-missing-privileges-no-id");
                 MissingPrivilegesText.Text = string.Join(", ", missingPrivileges);
             }
 
@@ -88,8 +92,9 @@ namespace Content.Client.Access.UI
                 button.Disabled = !interfaceEnabled;
                 if (interfaceEnabled)
                 {
-                    button.Pressed = state.TargetAccessReaderIdAccessList?.Contains(accessName) ?? false;
-                    button.Disabled = (!state.AllowedModifyAccessList?.Contains(accessName)) ?? true;
+                    // Explicit cast because Rider gives a false error otherwise.
+                    button.Pressed = state.TargetAccessReaderIdAccessList?.Contains((ProtoId<AccessLevelPrototype>) accessName) ?? false;
+                    button.Disabled = (!state.AllowedModifyAccessList?.Contains((ProtoId<AccessLevelPrototype>) accessName)) ?? true;
                 }
             }
         }

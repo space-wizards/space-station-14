@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
@@ -52,8 +52,8 @@ public sealed class SiliconLawEui : BaseEui
             return;
 
         var player = _entityManager.GetEntity(message.Target);
-
-        _siliconLawSystem.SetLaws(message.Laws, player);
+        if (_entityManager.TryGetComponent<SiliconLawProviderComponent>(player, out var playerProviderComp))
+            _siliconLawSystem.SetLaws(message.Laws, player, playerProviderComp.LawUploadSound);
     }
 
     private bool IsAllowed()

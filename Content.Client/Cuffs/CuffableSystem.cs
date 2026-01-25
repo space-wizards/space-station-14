@@ -4,12 +4,14 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Cuffs;
 
 public sealed class CuffableSystem : SharedCuffableSystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -22,7 +24,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
     private void OnCuffableShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
-            sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
+            _sprite.LayerSetVisible((uid, sprite), HumanoidVisualLayers.Handcuffs, false);
     }
 
     private void OnCuffableHandleState(EntityUid uid, CuffableComponent component, ref ComponentHandleState args)
@@ -39,22 +41,22 @@ public sealed class CuffableSystem : SharedCuffableSystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
         var cuffed = cuffState.NumHandsCuffed > 0;
-        sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, cuffed);
+        _sprite.LayerSetVisible((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffed);
 
         // if they are not cuffed, that means that we didn't get a valid color,
         // iconstate, or RSI. that also means we don't need to update the sprites.
         if (!cuffed)
             return;
-        sprite.LayerSetColor(HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
+        _sprite.LayerSetColor((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
 
         if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
         {
             component.CurrentRSI = cuffState.RSI;
-            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, cuffState.IconState, component.CurrentRSI);
+            _sprite.LayerSetRsi((uid, sprite), _sprite.LayerMapGet((uid, sprite), HumanoidVisualLayers.Handcuffs), new ResPath(component.CurrentRSI), cuffState.IconState);
         }
         else
         {
-            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, cuffState.IconState);
+            _sprite.LayerSetRsiState((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.IconState);
         }
     }
 }

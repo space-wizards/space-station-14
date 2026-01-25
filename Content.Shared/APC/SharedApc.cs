@@ -178,18 +178,20 @@ namespace Content.Shared.APC
     public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
     {
         public readonly bool MainBreaker;
-        public readonly bool HasAccess;
         public readonly int Power;
         public readonly ApcExternalPowerState ApcExternalPower;
         public readonly float Charge;
+        public readonly float MaxLoad;
+        public readonly bool Tripped;
 
-        public ApcBoundInterfaceState(bool mainBreaker, bool hasAccess, int power, ApcExternalPowerState apcExternalPower, float charge)
+        public ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge, float maxLoad, bool tripped)
         {
             MainBreaker = mainBreaker;
-            HasAccess = hasAccess;
             Power = power;
             ApcExternalPower = apcExternalPower;
             Charge = charge;
+            MaxLoad = maxLoad;
+            Tripped = tripped;
         }
 
         public bool Equals(ApcBoundInterfaceState? other)
@@ -197,10 +199,11 @@ namespace Content.Shared.APC
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return MainBreaker == other.MainBreaker &&
-                   HasAccess == other.HasAccess &&
                    Power == other.Power &&
                    ApcExternalPower == other.ApcExternalPower &&
-                   MathHelper.CloseTo(Charge, other.Charge);
+                   MathHelper.CloseTo(Charge, other.Charge) &&
+                   MathHelper.CloseTo(MaxLoad, other.MaxLoad) &&
+                   Tripped == other.Tripped;
         }
 
         public override bool Equals(object? obj)
@@ -210,7 +213,7 @@ namespace Content.Shared.APC
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(MainBreaker, HasAccess, Power, (int) ApcExternalPower, Charge);
+            return HashCode.Combine(MainBreaker, Power, (int) ApcExternalPower, Charge, MaxLoad, Tripped);
         }
     }
 

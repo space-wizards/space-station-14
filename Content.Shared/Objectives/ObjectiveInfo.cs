@@ -1,3 +1,4 @@
+using Content.Shared.Objectives.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

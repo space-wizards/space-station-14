@@ -6,7 +6,6 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Random;
@@ -34,8 +33,11 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
         var range = component.MaxShuffleRadius * args.Severity * args.PowerModifier;
+        // get a list of all entities in range with the MobStateComponent
+        // we filter out those inside a container
+        // otherwise borg brains get removed from their body, or PAIs from a PDA
         var mobs = new HashSet<Entity<MobStateComponent>>();
-        _lookup.GetEntitiesInRange(xform.Coordinates, range, mobs);
+        _lookup.GetEntitiesInRange(xform.Coordinates, range, mobs, flags: LookupFlags.Uncontained);
         var allEnts = new ValueList<EntityUid>(mobs.Select(m => m.Owner)) { uid };
         var coords = new ValueList<Vector2>();
         foreach (var ent in allEnts)
@@ -59,7 +61,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         var radius = component.SupercriticalTeleportRadius * args.PowerModifier;
         var gridBounds = new Box2(mapPos - new Vector2(radius, radius), mapPos + new Vector2(radius, radius));
         var mobs = new HashSet<Entity<MobStateComponent>>();
-        _lookup.GetEntitiesInRange(xform.Coordinates, component.MaxShuffleRadius, mobs);
+        _lookup.GetEntitiesInRange(xform.Coordinates, component.MaxShuffleRadius, mobs, flags: LookupFlags.Uncontained);
         foreach (var comp in mobs)
         {
             var ent = comp.Owner;

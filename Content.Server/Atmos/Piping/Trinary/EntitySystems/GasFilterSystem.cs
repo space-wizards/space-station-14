@@ -7,6 +7,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Audio;
 using Content.Shared.Database;
@@ -102,10 +103,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (args.Handled || !args.Complex)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!TryComp(args.User, out ActorComponent? actor))
                 return;
 
-            if (EntityManager.GetComponent<TransformComponent>(uid).Anchored)
+            if (Comp<TransformComponent>(uid).Anchored)
             {
                 _userInterfaceSystem.OpenUi(uid, GasFilterUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, filter);
@@ -155,18 +156,18 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
         {
-            if (args.ID.HasValue)
+            if (args.Gas.HasValue)
             {
-                if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
+                if (Enum.IsDefined(typeof(Gas), args.Gas))
                 {
-                    filter.FilteredGas = parsedGas;
+                    filter.FilteredGas = args.Gas;
                     _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
-                        $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to {parsedGas.ToString()}");
+                        $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to {args.Gas.ToString()}");
                     DirtyUI(uid, filter);
                 }
                 else
                 {
-                    Log.Warning($"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.ID}");
+                    Log.Warning($"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.Gas}");
                 }
             }
             else

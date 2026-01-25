@@ -8,7 +8,7 @@
   },
     "states": [
         {
-            "name": "icon"
+            "name": "base"
         },
         {
             "name": "bolt-open"

@@ -1,0 +1,127 @@
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoBurrower
+  name: Xeno Spawner
+  suffix: Burrower
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXeno
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoDrone
+  name: Xeno Spawner
+  suffix: Drone
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/drone.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoDrone
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoPraetorian
+  name: Xeno Spawner
+  suffix: Praetorian
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/praetorian.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoPraetorian
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoQueen
+  name: Xeno Spawner
+  suffix: Queen
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/queen.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoQueen
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoRavager
+  name: Xeno Spawner
+  suffix: Ravager
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/ravager.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoRavager
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoRunner
+  name: Xeno Spawner
+  suffix: Runner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/runner.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoRunner
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoSpitter
+  name: Xeno Spawner
+  suffix: Spitter
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/spitter.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoSpitter
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoLonePraetorian
+  name: Xeno Spawner
+  suffix: Lone Praetorian, Exo Station
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/praetorian.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoLonePraetorianNoGhost

@@ -19,6 +19,9 @@ namespace Content.Shared.Kitchen
         [DataField("name")]
         private string _name = string.Empty;
 
+        [DataField]
+        public string Group = "Other";
+
         [DataField("reagents", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
         private Dictionary<string, FixedPoint2> _ingsReagents = new();
 
@@ -36,6 +39,12 @@ namespace Content.Shared.Kitchen
         // TODO Turn this into a ReagentQuantity[]
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsReagents => _ingsReagents;
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsSolids => _ingsSolids;
+
+        /// <summary>
+        /// Is this recipe unavailable in normal circumstances?
+        /// </summary>
+        [DataField]
+        public bool SecretRecipe = false;
 
         /// <summary>
         ///    Count the number of ingredients in a recipe for sorting the recipe list.

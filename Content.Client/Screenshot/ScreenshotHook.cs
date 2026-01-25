@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Content.Client.Viewport;
@@ -8,8 +7,6 @@ using Robust.Client.Input;
 using Robust.Client.State;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -25,8 +22,13 @@ namespace Content.Client.Screenshot
         [Dependency] private readonly IResourceManager _resourceManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
 
+        private ISawmill _sawmill = default!;
+
         public void Initialize()
         {
+            _sawmill = Logger.GetSawmill("screenshot");
+            _sawmill.Level = LogLevel.Info;
+
             _inputManager.SetInputCommand(ContentKeyFunctions.TakeScreenshot, InputCmdHandler.FromDelegate(_ =>
             {
                 _clyde.Screenshot(ScreenshotType.Final, Take);
@@ -40,7 +42,7 @@ namespace Content.Client.Screenshot
                 }
                 else
                 {
-                    Logger.InfoS("screenshot", "Can't take no-UI screenshot: current state is not GameScreen");
+                    _sawmill.Info("Can't take no-UI screenshot: current state is not GameScreen");
                 }
             }));
         }
@@ -74,16 +76,16 @@ namespace Content.Client.Screenshot
                         screenshot.SaveAsPng(file);
                     });
 
-                    Logger.InfoS("screenshot", "Screenshot taken as {0}.png", filename);
+                    _sawmill.Info("Screenshot taken as {0}.png", filename);
                     return;
                 }
                 catch (IOException e)
                 {
-                    Logger.WarningS("screenshot", "Failed to save screenshot, retrying?:\n{0}", e);
+                    _sawmill.Warning("Failed to save screenshot, retrying?:\n{0}", e);
                 }
             }
 
-            Logger.ErrorS("screenshot", "Unable to save screenshot.");
+            _sawmill.Error("Unable to save screenshot.");
         }
     }
 

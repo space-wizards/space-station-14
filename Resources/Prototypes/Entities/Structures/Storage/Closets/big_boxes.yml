@@ -29,7 +29,7 @@
       isCollidableWhenOpen: false
       openOnMove: false
       airtight: false
-      capacity: 4 #4 Entities seems like a nice comfy fit for a cardboard box.
+      capacity: 5 #5 entity capacity to fit all of your friends (or teammates on your nuclear operation without reinforcements).
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -55,6 +55,7 @@
       node: basebigbox
       containers:
         - entity_storage
+    - type: GravityAffected
 
 - type: entity
   id: StealthBox
@@ -64,10 +65,12 @@
   components:
     - type: Damageable
       damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
+    - type: CardboardBox
+      quiet: true
     - type: Stealth
       hadOutline: true
     - type: StealthOnMove
-      passiveVisibilityRate: -0.37
+      passiveVisibilityRate: -1 # very useful for going around the station concealed, if you start jitterstrafing you get seen
       movementVisibilityRate: 0.20
 
 - type: entity

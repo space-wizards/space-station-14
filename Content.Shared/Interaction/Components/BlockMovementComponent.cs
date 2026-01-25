@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Interaction.Components;
 
@@ -8,5 +8,15 @@ namespace Content.Shared.Interaction.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class BlockMovementComponent : Component
 {
+    /// <summary>
+    /// Blocks generic interactions such as container insertion, pick up, drop and such.
+    /// </summary>
+    [DataField]
+    public bool BlockInteraction = true;
 
+    /// <summary>
+    /// Blocks being able to use entities.
+    /// </summary>
+    [DataField]
+    public bool BlockUse = true;
 }

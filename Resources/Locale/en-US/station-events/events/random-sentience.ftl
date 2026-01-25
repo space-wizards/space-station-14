@@ -1,4 +1,4 @@
-﻿## Phrases used for where central command got this information.
+## Phrases used for where central command got this information.
 random-sentience-event-data-1 = scans from our long-range sensors
 random-sentience-event-data-2 = our sophisticated probabilistic models
 random-sentience-event-data-3 = our omnipotence
@@ -32,7 +32,6 @@ station-event-random-sentience-role-description = You are a sentient { $name }, 
 # Flavors
 station-event-random-sentience-flavor-mechanical = mechanical
 station-event-random-sentience-flavor-organic = organic
-station-event-random-sentience-flavor-corgi = corgi
 station-event-random-sentience-flavor-primate = primate
 station-event-random-sentience-flavor-kobold = kobold
-station-event-random-sentience-flavor-slime = slime
+station-event-random-sentience-flavor-inanimate = inanimate

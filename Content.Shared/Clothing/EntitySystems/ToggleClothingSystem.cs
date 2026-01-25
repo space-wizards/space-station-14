@@ -39,8 +39,12 @@ public sealed class ToggleClothingSystem : EntitySystem
 
     private void OnGetActions(Entity<ToggleClothingComponent> ent, ref GetItemActionsEvent args)
     {
+        if (args.InHands && ent.Comp.MustEquip)
+            return;
+
         var ev = new ToggleClothingCheckEvent(args.User);
         RaiseLocalEvent(ent, ref ev);
+
         if (!ev.Cancelled)
             args.AddAction(ent.Comp.ActionEntity);
     }

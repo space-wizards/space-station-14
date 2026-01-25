@@ -95,7 +95,7 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void Close()
         {
-            RootMenu.MenuBody.DisposeAllChildren();
+            RootMenu.MenuBody.RemoveAllChildren();
             CancelOpen?.Cancel();
             CancelClose?.Cancel();
             OnContextClosed?.Invoke();
@@ -131,7 +131,7 @@ namespace Content.Client.ContextMenu.UI
         {
             if (!Menus.TryPeek(out var topMenu))
             {
-                Logger.Error("Context Menu: Mouse entered menu without any open menus?");
+                Log.Error("Context Menu: Mouse entered menu without any open menus?");
                 return;
             }
 
@@ -181,7 +181,7 @@ namespace Content.Client.ContextMenu.UI
         {
             if (!Menus.TryPeek(out var topMenu))
             {
-                Logger.Error("Context Menu: Attempting to open sub menu without any open menus?");
+                Log.Error("Context Menu: Attempting to open sub menu without any open menus?");
                 return;
             }
 

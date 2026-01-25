@@ -111,3 +111,11 @@
   id: BaseCodeObjective
   components:
   - type: CodeCondition
+
+# a free objective, which is a free greentext
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseFreeObjective
+  components:
+  - type: FreeObjective

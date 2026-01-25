@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
@@ -12,56 +13,23 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-        private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
-        private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+        private GasReactionPrototype[] _gasReactions = [];
 
         /// <summary>
         ///     List of gas reactions ordered by priority.
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions;
 
-        /// <summary>
-        ///     Cached array of gas specific heats.
-        /// </summary>
-        public float[] GasSpecificHeats => _gasSpecificHeats;
-
-        public string?[] GasReagents = new string[Atmospherics.TotalNumberOfGases];
-
-        private void InitializeGases()
+        public override void InitializeGases()
         {
+            base.InitializeGases();
+
             _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
-
-            Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
-
-            for (var i = 0; i < GasPrototypes.Length; i++)
-            {
-                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
-                GasReagents[i] = GasPrototypes[i].Reagent;
-            }
         }
-
-        /// <summary>
-        ///     Calculates the heat capacity for a gas mixture.
-        /// </summary>
-        /// <param name="mixture">The mixture whose heat capacity should be calculated</param>
-        /// <param name="applyScaling"> Whether the internal heat capacity scaling should be applied. This should not be
-        /// used outside of atmospheric related heat transfer.</param>
-        /// <returns></returns>
-        public float GetHeatCapacity(GasMixture mixture, bool applyScaling)
-        {
-            var scale = GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
-
-            // By default GetHeatCapacityCalculation() has the heat-scale divisor pre-applied.
-            // So if we want the un-scaled heat capacity, we have to multiply by the scale.
-            return applyScaling ? scale : scale * HeatScale;
-        }
-
-        private float GetHeatCapacity(GasMixture mixture)
-            =>  GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private float GetHeatCapacityCalculation(float[] moles, bool space)
+        protected override float GetHeatCapacityCalculation(float[] moles, bool space)
         {
             // Little hack to make space gas mixtures have heat capacity, therefore allowing them to cool down rooms.
             if (space && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(moles), 0f))
@@ -253,6 +221,128 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
+        /// Calculates the dimensionless fraction of gas required to equalize pressure between two gas mixtures.
+        /// </summary>
+        /// <param name="gasMixture1">The first gas mixture involved in the pressure equalization.
+        /// This mixture should be the one you always expect to be the highest pressure.</param>
+        /// <param name="gasMixture2">The second gas mixture involved in the pressure equalization.</param>
+        /// <returns>A float (from 0 to 1) representing the dimensionless fraction of gas that needs to be transferred from the
+        /// mixture of higher pressure to the mixture of lower pressure.</returns>
+        /// <remarks>
+        /// <para>
+        /// This properly takes into account the effect
+        /// of gas merging from inlet to outlet affecting the temperature
+        /// (and possibly increasing the pressure) in the outlet.
+        /// </para>
+        /// <para>
+        /// The gas is assumed to expand freely,
+        /// so the temperature of the gas with the greater pressure is not changing.
+        /// </para>
+        /// </remarks>
+        /// <example>
+        /// If you want to calculate the moles required to equalize pressure between an inlet and an outlet,
+        /// multiply the fraction returned by the source moles.
+        /// </example>
+        public float FractionToEqualizePressure(GasMixture gasMixture1, GasMixture gasMixture2)
+        {
+            /*
+            Problem: the gas being merged from the inlet to the outlet could affect the
+            temp. of the gas and cause a pressure rise.
+            We want the pressure to be equalized, so we have to account for this.
+
+            For clarity, let's assume that gasMixture1 is the inlet and gasMixture2 is the outlet.
+
+            We require mechanical equilibrium, so \( P_1' = P_2' \)
+
+            Before the transfer, we have:
+            \( P_1 = \frac{n_1 R T_1}{V_1} \)
+            \( P_2 = \frac{n_2 R T_2}{V_2} \)
+
+            After removing fraction \( x \) moles from the inlet, we have:
+            \( P_1' = \frac{(1 - x) n_1 R T_1}{V_1} \)
+
+            The outlet will gain the same \( x n_1 \) moles of gas.
+            So \( n_2' = n_2 + x n_1 \)
+
+            After mixing, the outlet temperature will be changed.
+            Denote the new mixture temperature as \( T_2' \).
+            Volume is constant.
+            So we have:
+            \( P_2' = \frac{(n_2 + x n_1) R T_2}{V_2} \)
+
+            The total energy of the incoming inlet to outlet gas at \( T_1 \) plus the existing energy of the outlet gas at \( T_2 \)
+            will be equal to the energy of the new outlet gas at \( T_2' \).
+            This leads to the following derivation:
+            \( x n_1 C_1 T_1 + n_2 C_2 T_2 = (x n_1 C_1 + n_2 C_2) T_2' \)
+
+            Where \( C_1 \) and \( C_2 \) are the heat capacities of the inlet and outlet gases, respectively.
+
+            Solving for \( T_2' \) gives us:
+            \( T_2' = \frac{x n_1 C_1 T_1 + n_2 C_2 T_2}{x n_1 C_1 + n_2 C_2} \)
+
+            Once again, we require mechanical equilibrium (\( P_1' = P_2' \)),
+            so we can substitute \( T_2' \) into the pressure equation:
+
+            \( \frac{(1 - x) n_1 R T_1}{V_1} =
+            \frac{(n_2 + x n_1) R}{V_2} \cdot
+            \frac{x n_1 C_1 T_1 + n_2 C_2 T_2}
+            {x n_1 C_1 + n_2 C_2} \)
+
+            Now it's a matter of solving for \( x \).
+            Not going to show the full derivation here, just steps.
+            1. Cancel common factor \( R \).
+            2. Multiply both sides by \( x n_1 C_1 + n_2 C_2 \), so that everything
+            becomes a polynomial in terms of \( x \).
+            3. Expand both sides.
+            4. Collect like powers of \( x \).
+            5. After collecting, you should end up with a polynomial of the form:
+
+            \( (-n_1 C_1 T_1 (1 + \frac{V_2}{V_1})) x^2 +
+            (n_1 T_1 \frac{V_2}{V_1} (C_1 - C_2) - n_2 C_1 T_1 - n_1 C_2 T_2) x +
+            (n_1 T_1 \frac{V_2}{V_1} C_2 - n_2 C_2 T_2) = 0 \)
+
+            Divide through by \( n_1 C_1 T_1 \) and replace each ratio with a symbol for clarity:
+            \( k_V = \frac{V_2}{V_1} \)
+            \( k_n = \frac{n_2}{n_1} \)
+            \( k_T = \frac{T_2}{T_1} \)
+            \( k_C = \frac{C_2}{C_1} \)
+            */
+
+            // Ensure that P_1 > P_2 so the quadratic works out.
+            if (gasMixture1.Pressure < gasMixture2.Pressure)
+            {
+                (gasMixture1, gasMixture2) = (gasMixture2, gasMixture1);
+            }
+
+            // Establish the dimensionless ratios.
+            var volumeRatio = gasMixture2.Volume / gasMixture1.Volume;
+            var molesRatio = gasMixture2.TotalMoles / gasMixture1.TotalMoles;
+            var temperatureRatio = gasMixture2.Temperature / gasMixture1.Temperature;
+            var heatCapacityRatio = GetHeatCapacity(gasMixture2) / GetHeatCapacity(gasMixture1);
+
+            // The quadratic equation is solved for the transfer fraction.
+            var quadraticA = 1 + volumeRatio;
+            var quadraticB = molesRatio - volumeRatio + heatCapacityRatio * (temperatureRatio + volumeRatio);
+            var quadraticC = heatCapacityRatio * (molesRatio * temperatureRatio - volumeRatio);
+
+            return (-quadraticB + MathF.Sqrt(quadraticB * quadraticB - 4 * quadraticA * quadraticC)) / (2 * quadraticA);
+        }
+
+        /// <summary>
+        /// Determines the number of moles that need to be removed from a <see cref="GasMixture"/> to reach a target pressure threshold.
+        /// </summary>
+        /// <param name="gasMixture">The gas mixture whose moles and properties will be used in the calculation.</param>
+        /// <param name="targetPressure">The target pressure threshold to calculate against.</param>
+        /// <returns>The difference in moles required to reach the target pressure threshold.</returns>
+        /// <remarks>The temperature of the gas is assumed to be not changing due to a free expansion.</remarks>
+        public static float MolesToPressureThreshold(GasMixture gasMixture, float targetPressure)
+        {
+            // Kid named PV = nRT.
+            return gasMixture.TotalMoles -
+                   targetPressure * gasMixture.Volume / (Atmospherics.R * gasMixture.Temperature);
+        }
+
+        /// <summary>
         ///     Checks whether a gas mixture is probably safe.
         ///     This only checks temperature and pressure, not gas composition.
         /// </summary>
@@ -279,6 +369,17 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///     Compares two TileAtmospheres to see if they are within acceptable ranges for group processing to be enabled.
+        /// </summary>
+        public GasCompareResult CompareExchange(TileAtmosphere sample, TileAtmosphere otherSample)
+        {
+            if (sample.AirArchived == null || otherSample.AirArchived == null)
+                return GasCompareResult.NoExchange;
+
+            return CompareExchange(sample.AirArchived, otherSample.AirArchived);
         }
 
         /// <summary>
@@ -325,11 +426,8 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 var doReaction = true;
-                for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
+                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    if(i >= Atmospherics.TotalNumberOfGases)
-                        throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
-
                     var req = prototype.MinimumRequirements[i];
 
                     if (!(mixture.GetMoles(i) < req))
@@ -348,6 +446,26 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return reaction;
+        }
+
+        /// <summary>
+        /// Adds an array of moles to a <see cref="GasMixture"/>.
+        /// Guards against negative moles by clamping to zero.
+        /// </summary>
+        /// <param name="mixture">The <see cref="GasMixture"/> to add moles to.</param>
+        /// <param name="molsToAdd">The <see cref="ReadOnlySpan{T}"/> of moles to add.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of the <see cref="ReadOnlySpan{T}"/>
+        /// is not the same as the length of the <see cref="GasMixture"/> gas array.</exception>
+        [PublicAPI]
+        public static void AddMolsToMixture(GasMixture mixture, ReadOnlySpan<float> molsToAdd)
+        {
+            // Span length should be as long as the length of the gas array.
+            // Technically this is a redundant check because NumericsHelpers will do the same thing,
+            // but eh.
+            ArgumentOutOfRangeException.ThrowIfNotEqual(mixture.Moles.Length, molsToAdd.Length, nameof(mixture.Moles.Length));
+
+            NumericsHelpers.Add(mixture.Moles, molsToAdd);
+            NumericsHelpers.Max(mixture.Moles, 0f);
         }
 
         public enum GasCompareResult

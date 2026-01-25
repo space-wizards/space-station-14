@@ -1,8 +1,6 @@
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
-using System.Linq;
-using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
@@ -21,12 +19,22 @@ public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComp
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ShowHealthBarsComponent, AfterAutoHandleStateEvent>(OnHandleState);
+
         _overlay = new(EntityManager, _prototype);
+    }
+
+    private void OnHandleState(Entity<ShowHealthBarsComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        RefreshOverlay();
     }
 
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthBarsComponent> component)
     {
         base.UpdateInternal(component);
+
+        _overlay.DamageContainers.Clear();
+        _overlay.StatusIcon = null;
 
         foreach (var comp in component.Components)
         {

@@ -1,12 +1,16 @@
-using Content.Shared.DrawDepth;
+using Content.Client.UserInterface.Systems.Sandbox;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Robust.Shared.Player;
 
 namespace Content.Client.SubFloor;
 
 public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private bool _showAll;
 
@@ -18,8 +22,13 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         {
             if (_showAll == value) return;
             _showAll = value;
+            _ui.GetUIController<SandboxUIController>().SetToggleSubfloors(value);
 
-            UpdateAll();
+            var ev = new ShowSubfloorRequestEvent()
+            {
+                Value = value,
+            };
+            RaiseNetworkEvent(ev);
         }
     }
 
@@ -28,6 +37,20 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         base.Initialize();
 
         SubscribeLocalEvent<SubFloorHideComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+        SubscribeNetworkEvent<ShowSubfloorRequestEvent>(OnRequestReceived);
+        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
+    }
+
+    private void OnPlayerDetached(LocalPlayerDetachedEvent ev)
+    {
+        // Vismask resets so need to reset this.
+        ShowAll = false;
+    }
+
+    private void OnRequestReceived(ShowSubfloorRequestEvent ev)
+    {
+        // When client receives request Queue an update on all vis.
+        UpdateAll();
     }
 
     private void OnAppearanceChanged(EntityUid uid, SubFloorHideComponent component, ref AppearanceChangeEvent args)
@@ -53,7 +76,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         var hasVisibleLayer = false;
         foreach (var layerKey in component.VisibleLayers)
         {
-            if (!args.Sprite.LayerMapTryGet(layerKey, out var layerIndex))
+            if (!_sprite.LayerMapTryGet((uid, args.Sprite), layerKey, out var layerIndex, false))
                 continue;
 
             var layer = args.Sprite[layerIndex];
@@ -62,17 +85,26 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
             hasVisibleLayer = true;
         }
 
-        args.Sprite.Visible = hasVisibleLayer || revealed;
+        _sprite.SetVisible((uid, args.Sprite), hasVisibleLayer || revealed);
 
-        // allows a t-ray to show wires/pipes above carpets/puddles
-        if (scannerRevealed)
+        if (ShowAll)
         {
+            // Allows sandbox mode to make wires visible over other stuff.
             component.OriginalDrawDepth ??= args.Sprite.DrawDepth;
-            args.Sprite.DrawDepth = (int) Shared.DrawDepth.DrawDepth.FloorObjects + 1;
+            _sprite.SetDrawDepth((uid, args.Sprite), (int)Shared.DrawDepth.DrawDepth.Overdoors);
+        }
+        else if (scannerRevealed)
+        {
+            // Allows a t-ray to show wires/pipes above carpets/puddles.
+            if (component.OriginalDrawDepth is not null)
+                return;
+            component.OriginalDrawDepth = args.Sprite.DrawDepth;
+            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - Shared.DrawDepth.DrawDepth.Puddles;
+            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - (drawDepthDifference - 1));
         }
         else if (component.OriginalDrawDepth.HasValue)
         {
-            args.Sprite.DrawDepth = component.OriginalDrawDepth.Value;
+            _sprite.SetDrawDepth((uid, args.Sprite), component.OriginalDrawDepth.Value);
             component.OriginalDrawDepth = null;
         }
     }

@@ -25,36 +25,6 @@
     BuzzochloricBees: 3
 
 - type: reaction
-  id: CreateSoap
-  impact: Low
-  quantized: true
-  reactants:
-    Fat:
-      amount: 15
-    TableSalt:
-      amount: 10
-    Water:
-      amount: 10
-  effects:
-    - !type:CreateEntityReactionEffect
-      entity: Soap
-
-- type: reaction
-  id: CreateSoapHomemade
-  impact: Low
-  quantized: true
-  reactants:
-    Fat:
-      amount: 15
-    TableSalt:
-      amount: 10
-    Blood:
-      amount: 10
-  effects:
-    - !type:CreateEntityReactionEffect
-      entity: SoapHomemade
-
-- type: reaction
   id: Meatification
   impact: Low
   quantized: true
@@ -68,11 +38,13 @@
     Carbon:
       amount: 10
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodMeat
 
 - type: reaction
   id: SpaceGlue
+  requiredMixerCategories:
+  - Stir # prevents turning slimes to glue, TODO: make it react only X units per second; make bloodstream an open thermal system
   minTemp: 370
   reactants:
     SpaceLube:
@@ -85,7 +57,7 @@
 - type: reaction
   id: Licoxide
   reactants:
-    Lead:
+    Lithium:
       amount: 1
     Zinc:
       amount: 1
@@ -105,7 +77,7 @@
     SulfuricAcid:
       amount: 2
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: SheetPlastic1
 
 - type: reaction
@@ -183,7 +155,7 @@
     Ethanol:
       amount: 5
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: ShardCrystalRandom
 
 - type: reaction
@@ -199,5 +171,108 @@
     Charcoal:
       amount: 2
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: MaterialGunpowder
+
+- type: reaction
+  id: SolidifyGold
+  impact: Low
+  quantized: true
+  reactants:
+    Gold:
+      amount: 10
+    FrostOil:
+      amount: 5
+  effects:
+  - !type:SpawnEntity
+    entity: IngotGold1
+
+- type: reaction
+  id: SolidifySilver
+  impact: Low
+  quantized: true
+  reactants:
+    Silver:
+      amount: 10
+    FrostOil:
+      amount: 5
+  effects:
+  - !type:SpawnEntity
+    entity: IngotSilver1
+
+- type: reaction
+  id: WehHewExplosion
+  impact: High
+  priority: 20
+  reactants:
+    JuiceThatMakesYouWeh:
+      amount: 1
+    JuiceThatMakesYouHew:
+      amount: 1
+  effects:
+  - !type:Explosion
+    explosionType: Radioactive
+    maxIntensity: 200
+    intensityPerUnit: 2
+    intensitySlope: 1
+    maxTotalIntensity: 250
+    tileBreakScale: 0.00001
+
+- type: reaction
+  id: CorgiJuice
+  reactants:
+    UncookedAnimalProteins:
+      amount: 1
+    JuiceThatMakesYouWeh:
+      amount: 1
+    Happiness:
+      amount: 1
+  products:
+    CorgiJuice: 2
+
+- type: reaction
+  id: Felinase
+  reactants:
+    Haloperidol:
+      amount: 3
+    Psicodine:
+      amount: 2
+    CarpoToxin:
+      amount: 2
+    Enzyme:
+      amount: 1
+  products:
+    Felinase: 2
+
+- type: reaction
+  id: Caninase
+  reactants:
+    Haloperidol:
+      amount: 3
+    Psicodine:
+      amount: 2
+    Happiness:
+      amount: 2
+    Enzyme:
+      amount: 1
+  products:
+    Caninase: 2
+
+- type: reaction
+  id: CaninaseFelinaseReaction
+  impact: High
+  priority: 20
+  reactants:
+    Caninase:
+      amount: 1
+    Felinase:
+      amount: 1
+  products:
+    Razorium: 2
+  effects:
+  - !type:Explosion
+    explosionType: Radioactive
+    maxIntensity: 5
+    intensityPerUnit: 1
+    intensitySlope: 2.7
+    maxTotalIntensity: 50

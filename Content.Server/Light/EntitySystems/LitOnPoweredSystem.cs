@@ -1,6 +1,7 @@
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Power;
 
 namespace Content.Server.Light.EntitySystems
 {

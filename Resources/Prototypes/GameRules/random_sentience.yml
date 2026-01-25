@@ -1,0 +1,25 @@
+- type: entity
+  id: RandomSentience
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    weight: 6
+    duration: 1
+    maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+  - type: RandomSentienceRule
+    minSentiences: 2
+    maxSentiences: 5
+
+- type: localizedDataset
+  id: RandomSentienceEventData
+  values:
+    prefix: random-sentience-event-data-
+    count: 6
+
+- type: localizedDataset
+  id: RandomSentienceEventStrength
+  values:
+    prefix: random-sentience-event-strength-
+    count: 8

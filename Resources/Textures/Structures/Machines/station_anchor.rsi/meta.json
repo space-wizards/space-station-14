@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made and posted by ubaser on the SS14 discord.",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "station_anchor"
+        },
+        {
+            "name": "station_anchor_unlit"
+        }
+    ]
+}

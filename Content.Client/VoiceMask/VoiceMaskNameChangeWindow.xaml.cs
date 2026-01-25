@@ -12,6 +12,8 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
 {
     public Action<string>? OnNameChange;
     public Action<string?>? OnVerbChange;
+    public Action? OnToggle;
+    public Action? OnAccentToggle;
 
     private List<(string, string)> _verbs = new();
 
@@ -32,7 +34,8 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
             SpeechVerbSelector.SelectId(args.Id);
         };
 
-        AddVerbs();
+        ToggleButton.OnPressed += args => OnToggle?.Invoke();
+        ToggleAccentButton.OnPressed += args => OnAccentToggle?.Invoke();
     }
 
     public void ReloadVerbs(IPrototypeManager proto)
@@ -44,7 +47,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         _verbs.Sort((a, b) => a.Item1.CompareTo(b.Item1));
     }
 
-    private void AddVerbs()
+    public void AddVerbs()
     {
         SpeechVerbSelector.Clear();
 
@@ -66,10 +69,12 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
             SpeechVerbSelector.SelectId(id);
     }
 
-    public void UpdateState(string name, string? verb)
+    public void UpdateState(string name, string? verb, bool active, bool accentHide)
     {
         NameSelector.Text = name;
         _verb = verb;
+        ToggleButton.Pressed = active;
+        ToggleAccentButton.Pressed = accentHide;
 
         for (int id = 0; id < SpeechVerbSelector.ItemCount; id++)
         {

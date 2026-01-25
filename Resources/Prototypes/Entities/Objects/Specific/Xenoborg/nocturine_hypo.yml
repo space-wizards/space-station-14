@@ -1,0 +1,19 @@
+- type: entity
+  parent: [ BorgHypo, BaseXenoborgContraband ]
+  id: NocturineHypo
+  name: nocturine hypo
+  description: A self-refilling injector for rapid administration of nocturine to victms.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 12
+  - type: SolutionRegeneration
+    solution: hypospray
+    generated:
+      reagents:
+      - ReagentId: Nocturine
+        Quantity: 0.2

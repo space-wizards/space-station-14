@@ -62,6 +62,8 @@
     # It fires processing on behalf of its connected circulators.
     - type: AtmosDevice
     - type: TegGenerator
+      thermalEfficiency: 0.1
+      powerFactor: 1.75
 
     - type: DeviceNetwork
       deviceNetId: AtmosDevices
@@ -97,7 +99,9 @@
       sound:
         path: /Audio/Ambience/Objects/vending_machine_hum.ogg
     - type: GuideHelp
-      guides: [ TEG, Power ]
+      guides:
+      - TEG
+      - Power
     - type: StealTarget
       stealGroup: Teg
 
@@ -148,7 +152,6 @@
     # tags
     - type: Tag
       tags:
-        - Pipe
         - Unstackable
 
     # basic interactions
@@ -156,7 +159,9 @@
     - type: Anchorable
     - type: Pullable
     - type: GuideHelp
-      guides: [ TEG, Power ]
+      guides:
+      - TEG
+      - Power
 
     # functionality
     - type: NodeContainer

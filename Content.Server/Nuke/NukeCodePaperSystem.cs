@@ -2,9 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Systems;
 using Content.Server.Fax;
 using Content.Shared.Fax.Components;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Paper;
+using Content.Shared.Station.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -124,7 +124,7 @@ namespace Content.Server.Nuke
                 }
 
                 codesMessage.PushNewline();
-                codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nukeUid).EntityName), ("code", nuke.Code)));
+                codesMessage.AddMarkupOrThrow(Loc.GetString("nuke-codes-list", ("name", MetaData(nukeUid).EntityName), ("code", nuke.Code)));
                 break;
             }
 

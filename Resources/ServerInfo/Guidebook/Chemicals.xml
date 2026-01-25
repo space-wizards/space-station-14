@@ -29,6 +29,9 @@ Knowing different types of chemicals and their effects is important for being ab
 ## Biological
 <GuideReagentGroupEmbed Group="Biological"/>
 
+## Special
+<GuideReagentGroupEmbed Group="Special"/>
+
 ## Other
 <GuideReagentGroupEmbed Group="Unknown"/>
 </Document>

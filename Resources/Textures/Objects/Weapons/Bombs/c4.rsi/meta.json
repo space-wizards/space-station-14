@@ -1,31 +1,35 @@
 {
-    "version": 1,
-	"license": "CC-BY-SA-3.0",
-	"copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/b13d244d761a07e200a9a41730bd446e776020d5",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/b13d244d761a07e200a9a41730bd446e776020d5, equipped_HELMET by LeveFUN",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "primed",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "inhand-left",
-            "directions": 4
-		},
-        {
-            "name": "inhand-right",
-            "directions": 4
-		}		
-    ]
+    {
+      "name": "primed",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET",
+      "directions": 4
+    }
+  ]
 }

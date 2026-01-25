@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "resprited by AsikKEsel | Original source: from vgstation at commit https://github.com/vgstation-coders/vgstation13/raw/99cc2ab62d65a3a7b554dc7b21ff5f57c835f973/icons/turf/walls.dmi and modified by Swept ",
+    "copyright": "resprited by AsikKEsel | Original source: from vgstation at commit https://github.com/vgstation-coders/vgstation13/raw/99cc2ab62d65a3a7b554dc7b21ff5f57c835f973/icons/turf/walls.dmi and modified by Swept, transparency tweaked by Ubaser.",
     "size": {
       "x": 32,
       "y": 32

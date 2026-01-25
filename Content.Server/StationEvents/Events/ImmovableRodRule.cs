@@ -26,7 +26,8 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
 
         var proto = _prototypeManager.Index<EntityPrototype>(protoName);
 
-        if (proto.TryGetComponent<ImmovableRodComponent>(out var rod) && proto.TryGetComponent<TimedDespawnComponent>(out var despawn))
+        if (proto.TryGetComponent<ImmovableRodComponent>(out var rod, EntityManager.ComponentFactory) &&
+            proto.TryGetComponent<TimedDespawnComponent>(out var despawn, EntityManager.ComponentFactory))
         {
             if (!TryFindRandomTile(out _, out _, out _, out var targetCoords))
                 return;
@@ -34,7 +35,8 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
             var speed = RobustRandom.NextFloat(rod.MinSpeed, rod.MaxSpeed);
             var angle = RobustRandom.NextAngle();
             var direction = angle.ToVec();
-            var spawnCoords = targetCoords.ToMap(EntityManager, _transform).Offset(-direction * speed * despawn.Lifetime / 2);
+            var mapCoords = _transform.ToMapCoordinates(targetCoords);
+            var spawnCoords = mapCoords.Offset(-direction * speed * despawn.Lifetime / 2);
             var ent = Spawn(protoName, spawnCoords);
             _gun.ShootProjectile(ent, direction, Vector2.Zero, uid, speed: speed);
         }

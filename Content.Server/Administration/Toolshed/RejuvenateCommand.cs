@@ -1,5 +1,5 @@
-﻿using Content.Server.Administration.Systems;
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
+using Content.Shared.Administration.Systems;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 
@@ -23,7 +23,7 @@ public sealed class RejuvenateCommand : ToolshedCommand
     }
 
     [CommandImplementation]
-    public void Rejuvenate([CommandInvocationContext] IInvocationContext ctx)
+    public void Rejuvenate(IInvocationContext ctx)
     {
         _rejuvenate ??= GetSys<RejuvenateSystem>();
         if (ExecutingEntity(ctx) is not { } ent)

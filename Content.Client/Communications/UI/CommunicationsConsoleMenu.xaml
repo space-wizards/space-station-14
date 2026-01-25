@@ -1,17 +1,62 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'comms-console-menu-title'}"
-    MinSize="400 225">
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="5">
-        <TextEdit Name="MessageInput" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 0 5" MinHeight="100" />
-        <Button Name="AnnounceButton" Text="{Loc 'comms-console-menu-announcement-button'}" StyleClasses="OpenLeft" Access="Public" />
-        <Button Name="BroadcastButton" Text="{Loc 'comms-console-menu-broadcast-button'}" StyleClasses="OpenLeft" Access="Public" />
+    MinSize="400 300">
 
-        <OptionButton Name="AlertLevelButton" StyleClasses="OpenRight" Access="Public" />
+    <!-- Main Container -->
+    <BoxContainer Orientation="Vertical"
+        HorizontalExpand="False"
+        VerticalExpand="True"
+        Margin="6 6 6 5">
 
-        <Control MinSize="10 10" />
+        <TextEdit Name="MessageInput"
+            VerticalExpand="True"
+            HorizontalExpand="True"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            MinHeight="100"/>
 
-        <RichTextLabel Name="CountdownLabel" VerticalExpand="True" />
-        <Button Name="EmergencyShuttleButton" Text="Placeholder Text" Access="Public" />
+        <!-- ButtonsPart -->
+        <BoxContainer Orientation="Vertical"
+            VerticalAlignment="Bottom"
+            SeparationOverride="4">
+
+            <!-- AnnouncePart -->
+            <BoxContainer Orientation="Vertical"
+                Margin="0 2">
+
+                <Button Name="AnnounceButton"
+                    Access="Public"
+                    Text="{Loc 'comms-console-menu-announcement-button'}"
+                    ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}"
+                    StyleClasses="OpenLeft"
+                    Margin="0 0 1 0"
+                    Disabled="True"/>
+
+                <Button Name="BroadcastButton"
+                    Access="Public"
+                    Text="{Loc 'comms-console-menu-broadcast-button'}"
+                    ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}"
+                    StyleClasses="OpenBoth"/>
+
+                <OptionButton Name="AlertLevelButton"
+                    Access="Public"
+                    ToolTip="{Loc 'comms-console-menu-alert-level-button-tooltip'}"
+                    StyleClasses="OpenRight"/>
+
+            </BoxContainer>
+
+            <!-- EmergencyPart -->
+            <BoxContainer Orientation="Vertical"
+                SeparationOverride="6">
+
+                <RichTextLabel Name="CountdownLabel"/>
+
+                <Button Name="EmergencyShuttleButton"
+                    Access="Public" 
+                    Text="Placeholder Text"
+                    ToolTip="{Loc 'comms-console-menu-emergency-shuttle-button-tooltip'}"/>
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

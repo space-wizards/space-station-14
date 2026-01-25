@@ -31,8 +31,9 @@ public sealed partial class PolymorphSystem
         if (PausedMap != null && Exists(PausedMap))
             return;
 
-        var newmap = _mapManager.CreateMap();
-        _mapManager.SetMapPaused(newmap, true);
-        PausedMap = _mapManager.GetMapEntityId(newmap);
+        var mapUid = _map.CreateMap();
+        _metaData.SetEntityName(mapUid, Loc.GetString("polymorph-paused-map-name"));
+        _map.SetPaused(mapUid, true);
+        PausedMap = mapUid;
     }
 }

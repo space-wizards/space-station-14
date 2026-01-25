@@ -1,14 +1,17 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Design and inhands by ricemar (discord) and icon by EmoGarbage404 (github)",
+  "copyright": "Design, inhands, and storage sprite by SpaceRox1244 (github) and icon by EmoGarbage404 (github)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "icon"
+        "name": "icon"
+    },
+    {
+        "name":  "storage"
     },
     {
       "name": "inhand-left",

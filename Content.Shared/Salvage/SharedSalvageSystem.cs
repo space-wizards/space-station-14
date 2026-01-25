@@ -23,13 +23,12 @@ public abstract partial class SharedSalvageSystem : EntitySystem
     /// <summary>
     /// Main loot table for salvage expeditions.
     /// </summary>
-    [ValidatePrototypeId<SalvageLootPrototype>]
-    public const string ExpeditionsLootProto = "SalvageLoot";
+    public static readonly ProtoId<SalvageLootPrototype> ExpeditionsLootProto = "SalvageLoot";
 
-    public static string GetFTLName(DatasetPrototype dataset, int seed)
+    public string GetFTLName(LocalizedDatasetPrototype dataset, int seed)
     {
         var random = new System.Random(seed);
-        return $"{dataset.Values[random.Next(dataset.Values.Count)]}-{random.Next(10, 100)}-{(char) (65 + random.Next(26))}";
+        return $"{Loc.GetString(dataset.Values[random.Next(dataset.Values.Count)])}-{random.Next(10, 100)}-{(char) (65 + random.Next(26))}";
     }
 
     public SalvageMission GetMission(SalvageDifficultyPrototype difficulty, int seed)

@@ -7,6 +7,7 @@
     MinHeight="545">
     <ScrollContainer>
         <BoxContainer Orientation="Vertical">
+            <Label Name="RoleType" VerticalAlignment="Top" Margin="0 6 0 10" HorizontalAlignment="Center" StyleClasses="LabelHeading" Access="Public"/>
             <BoxContainer Orientation="Horizontal">
                 <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64"/>
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">

@@ -15,7 +15,7 @@
     tags:
     - TimerSignalElectronics
   - type: StaticPrice
-    price: 15
+    price: 30
 
 - type: entity
   id: ScreenTimerElectronics

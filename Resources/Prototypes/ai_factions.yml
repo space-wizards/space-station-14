@@ -1,12 +1,15 @@
 - type: npcFaction
   id: Dragon
   hostile:
-    - NanoTrasen
-    - Syndicate
-    - Xeno
-    - PetsNT
-    - Zombie
-    - Revolutionary
+  - NanoTrasen
+  - Syndicate
+  - Xeno
+  - PetsNT
+  - Zombie
+  - Revolutionary
+  - AllHostile
+  - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: NanoTrasen
@@ -16,22 +19,32 @@
   - Xeno
   - Zombie
   - Revolutionary
+  - Dragon
+  - AllHostile
+  - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: Mouse
   hostile:
-    - PetsNT
+  - PetsNT
+  - AllHostile
+  - Wizard
 
 - type: npcFaction
   id: Passive
 
 - type: npcFaction
   id: PetsNT
+  friendly:
+  - NanoTrasen
   hostile:
   - Mouse
   - SimpleHostile
   - Zombie
   - Xeno
+  - AllHostile
+  - Dragon
 
 - type: npcFaction
   id: SimpleHostile
@@ -42,6 +55,11 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - Dragon
+  - Xeno
+  - AllHostile
+  - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: SimpleNeutral
@@ -54,6 +72,10 @@
   - Xeno
   - PetsNT
   - Zombie
+  - Dragon
+  - AllHostile
+  - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: Xeno
@@ -64,6 +86,10 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - AllHostile
+  - Wizard
+  - Dragon
+  - Xenoborg
 
 - type: npcFaction
   id: Zombie
@@ -75,6 +101,10 @@
   - Passive
   - PetsNT
   - Revolutionary
+  - AllHostile
+  - Wizard
+  - Dragon
+  - Xenoborg
 
 - type: npcFaction
   id: Revolutionary
@@ -83,3 +113,56 @@
   - Zombie
   - SimpleHostile
   - Dragon
+  - AllHostile
+  - Wizard
+  - Xenoborg
+
+- type: npcFaction
+  id: AllHostile
+  hostile:
+  - NanoTrasen
+  - Dragon
+  - Mouse
+  - Passive
+  - PetsNT
+  - SimpleHostile
+  - SimpleNeutral
+  - Syndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - Wizard
+  - Xenoborg
+
+- type: npcFaction
+  id: Wizard
+  hostile:
+  - NanoTrasen
+  - Dragon
+  - Mouse
+  - Passive
+  - PetsNT
+  - SimpleHostile
+  - SimpleNeutral
+  - Syndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - AllHostile
+  - Xenoborg
+
+- type: npcFaction
+  id: Xenoborg
+  hostile:
+  # they have brains
+  - NanoTrasen
+  - Syndicate
+  - Zombie
+  - Revolutionary
+  - Wizard
+
+  - Xeno # rivalry
+
+  # cause they are hostile to them
+  - SimpleHostile
+  - AllHostile

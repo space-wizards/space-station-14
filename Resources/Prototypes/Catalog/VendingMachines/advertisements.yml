@@ -23,6 +23,12 @@
     count: 19
 
 - type: localizedDataset
+  id: BruiseOMatAds
+  values:
+    prefix: advertisement-bruiseomat-
+    count: 15
+
+- type: localizedDataset
   id: CargoDrobeAds
   values:
     prefix: advertisement-cargodrobe-
@@ -74,6 +80,18 @@
   id: RobustSoftdrinksAds
   values:
     prefix: advertisement-cola-
+    count: 8
+
+- type: localizedDataset
+  id: DrGibbAds
+  values:
+    prefix: advertisement-gibb-
+    count: 8
+
+- type: localizedDataset
+  id: SmiteAds
+  values:
+    prefix: advertisement-smite-
     count: 8
 
 - type: localizedDataset
@@ -257,7 +275,7 @@
     count: 3
 
 - type: localizedDataset
-  id: MedibotAds
+  id: PrideDrobeAds
   values:
-    prefix: advertisement-medibot-
-    count: 17
+    prefix: advertisement-pride-
+    count: 4

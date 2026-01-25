@@ -9,7 +9,6 @@ using Content.Shared.Rotation;
 using Content.Shared.Standing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -18,7 +17,6 @@ namespace Content.Shared.Buckle;
 
 public abstract partial class SharedBuckleSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;

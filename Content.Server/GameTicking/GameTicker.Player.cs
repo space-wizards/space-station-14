@@ -1,7 +1,6 @@
-using System.Linq;
-using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Players;
@@ -9,7 +8,6 @@ using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -21,8 +19,6 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         private void InitializePlayer()
         {
@@ -37,11 +33,8 @@ namespace Content.Server.GameTicking
             {
                 if (args.NewStatus != SessionStatus.Disconnected)
                 {
-                    mind.Session = session;
-                    _pvsOverride.AddSessionOverride(GetNetEntity(mindId.Value), session);
+                    _pvsOverride.AddSessionOverride(mindId.Value, session);
                 }
-
-                DebugTools.Assert(mind.Session == session);
             }
 
             DebugTools.Assert(session.GetMind() == mindId);
@@ -64,7 +57,7 @@ namespace Content.Server.GameTicking
                     // timer time must be > tick length
                     Timer.Spawn(0, () => _playerManager.JoinGame(args.Session));
 
-                    var record = await _dbManager.GetPlayerRecordByUserId(args.Session.UserId);
+                    var record = await _db.GetPlayerRecordByUserId(args.Session.UserId);
                     var firstConnection = record != null &&
                                           Math.Abs((record.FirstSeenTime - record.LastSeenTime).TotalMinutes) < 1;
 
@@ -74,8 +67,8 @@ namespace Content.Server.GameTicking
 
                     RaiseNetworkEvent(GetConnectionStatusMsg(), session.Channel);
 
-                    if (firstConnection && _configurationManager.GetCVar(CCVars.AdminNewPlayerJoinSound))
-                        _audioSystem.PlayGlobal(new SoundPathSpecifier("/Audio/Effects/newplayerping.ogg"),
+                    if (firstConnection && _cfg.GetCVar(CCVars.AdminNewPlayerJoinSound))
+                        _audio.PlayGlobal(new SoundPathSpecifier("/Audio/Effects/newplayerping.ogg"),
                             Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false,
                             audioParams: new AudioParams { Volume = -5f });
 
@@ -99,6 +92,7 @@ namespace Content.Server.GameTicking
                         else
                             SpawnWaitDb();
 
+                        _adminLogger.Add(LogType.Connection, LogImpact.Low, $"User {args.Session:Player} attached to {(args.Session.AttachedEntity != null ? ToPrettyString(args.Session.AttachedEntity) : "nothing"):entity} connected to the game.");
                         break;
                     }
 
@@ -125,19 +119,22 @@ namespace Content.Server.GameTicking
                         }
                     }
 
+                    _adminLogger.Add(LogType.Connection, LogImpact.Low, $"User {args.Session:Player} attached to {(args.Session.AttachedEntity != null ? ToPrettyString(args.Session.AttachedEntity) : "nothing"):entity} connected to the game.");
+
                     break;
                 }
 
                 case SessionStatus.Disconnected:
                 {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
-                    if (mind != null)
+                    if (mindId != null)
                     {
-                        _pvsOverride.ClearOverride(GetNetEntity(mindId!.Value));
-                        mind.Session = null;
+                        _pvsOverride.RemoveSessionOverride(mindId.Value, session);
                     }
 
                     _userDb.ClientDisconnected(session);
+
+                    _adminLogger.Add(LogType.Connection, LogImpact.Low, $"User {args.Session:Player} attached to {(args.Session.AttachedEntity != null ? ToPrettyString(args.Session.AttachedEntity) : "nothing"):entity} disconnected from the game.");
                     break;
                 }
             }

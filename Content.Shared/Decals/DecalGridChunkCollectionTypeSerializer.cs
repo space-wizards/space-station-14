@@ -29,9 +29,11 @@ namespace Content.Shared.Decals
             IDependencyCollection dependencies, SerializationHookContext hookCtx, ISerializationContext? context = null,
             ISerializationManager.InstantiationDelegate<DecalGridChunkCollection>? _ = default)
         {
-            node.TryGetValue(new ValueDataNode("version"), out var versionNode);
+            node.TryGetValue("version", out var versionNode);
             var version = ((ValueDataNode?) versionNode)?.AsInt() ?? 1;
             Dictionary<Vector2i, DecalChunk> dictionary;
+            uint nextIndex = 0;
+            var ids = new HashSet<uint>();
 
             // TODO: Dump this when we don't need support anymore.
             if (version > 1)
@@ -47,28 +49,37 @@ namespace Content.Shared.Decals
 
                     foreach (var (decalUidNode, decalData) in deckNodes)
                     {
-                        var dUid = serializationManager.Read<uint>(decalUidNode, hookCtx, context);
+                        var dUid = uint.Parse(decalUidNode, CultureInfo.InvariantCulture);
                         var coords = serializationManager.Read<Vector2>(decalData, hookCtx, context);
 
                         var chunkOrigin = SharedMapSystem.GetChunkIndices(coords, SharedDecalSystem.ChunkSize);
                         var chunk = dictionary.GetOrNew(chunkOrigin);
                         var decal = new Decal(coords, data.Id, data.Color, data.Angle, data.ZIndex, data.Cleanable);
-                        chunk.Decals.Add(dUid, decal);
+
+                        nextIndex = Math.Max(nextIndex, dUid);
+
+                        // Re-used ID somehow
+                        // This will bump all IDs by up to 1 but will ensure the map is still readable.
+                        if (!ids.Add(dUid))
+                        {
+                            dUid = nextIndex++;
+                            ids.Add(dUid);
+                        }
+
+                        chunk.Decals[dUid] = decal;
                     }
                 }
             }
             else
             {
                 dictionary = serializationManager.Read<Dictionary<Vector2i, DecalChunk>>(node, hookCtx, context, notNullableOverride: true);
-            }
 
-            uint nextIndex = 0;
-
-            foreach (var decals in dictionary.Values)
-            {
-                foreach (var uid in decals.Decals.Keys)
+                foreach (var decals in dictionary.Values)
                 {
-                    nextIndex = Math.Max(uid, nextIndex);
+                    foreach (var uid in decals.Decals.Keys)
+                    {
+                        nextIndex = Math.Max(uid, nextIndex);
+                    }
                 }
             }
 
@@ -121,7 +132,7 @@ namespace Content.Shared.Decals
                 {
                     var decal = decalLookup[uid];
                     // Inline coordinates
-                    decks.Add(serializationManager.WriteValue(uid, alwaysWrite, context), serializationManager.WriteValue(decal.Coordinates, alwaysWrite, context));
+                    decks.Add(uid.ToString(), serializationManager.WriteValue(decal.Coordinates, alwaysWrite, context));
                 }
 
                 lookupNode.Add("decals", decks);
