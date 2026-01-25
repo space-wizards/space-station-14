@@ -18,7 +18,7 @@ public sealed class RiggableSystem : EntitySystem
 {
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly PredictedBatterySystem _predictedBattery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
 
     public override void Initialize()
     {
@@ -27,7 +27,6 @@ public sealed class RiggableSystem : EntitySystem
         SubscribeLocalEvent<RiggableComponent, BeingMicrowavedEvent>(OnMicrowaved);
         SubscribeLocalEvent<RiggableComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<RiggableComponent, ChargeChangedEvent>(OnChargeChanged);
-        SubscribeLocalEvent<RiggableComponent, PredictedBatteryChargeChangedEvent>(OnChargeChanged);
     }
 
     private void OnRejuvenate(Entity<RiggableComponent> entity, ref RejuvenateEvent args)
@@ -39,16 +38,7 @@ public sealed class RiggableSystem : EntitySystem
     {
         if (TryComp<BatteryComponent>(entity, out var batteryComponent))
         {
-            if (batteryComponent.CurrentCharge == 0f)
-                return;
-
-            Explode(entity, batteryComponent.CurrentCharge);
-            args.Handled = true;
-        }
-
-        if (TryComp<PredictedBatteryComponent>(entity, out var predictedBatteryComponent))
-        {
-            var charge = _predictedBattery.GetCharge((entity, predictedBatteryComponent));
+            var charge = _battery.GetCharge((entity, batteryComponent));
             if (charge == 0f)
                 return;
 
@@ -80,20 +70,7 @@ public sealed class RiggableSystem : EntitySystem
         QueueDel(uid);
     }
 
-    // non-predicted batteries
     private void OnChargeChanged(Entity<RiggableComponent> ent, ref ChargeChangedEvent args)
-    {
-        if (!ent.Comp.IsRigged)
-            return;
-
-        if (args.Charge == 0f)
-            return; // No charge to cause an explosion.
-
-        Explode(ent, args.Charge);
-    }
-
-    // predicted batteries
-    private void OnChargeChanged(Entity<RiggableComponent> ent, ref PredictedBatteryChargeChangedEvent args)
     {
         if (!ent.Comp.IsRigged)
             return;
