@@ -134,8 +134,8 @@ public struct ThermalByte
     public const byte STATE_VACUUM = 254;
     public const byte STATE_WALL = 255;
 
-    public static readonly float TempDegreeResolution = (TempMaximum - TempMinimum) / TempResolution;
-    public static readonly float TempToByteFactor = (float)TempResolution / (TempMaximum - TempMinimum);
+    public const float TempDegreeResolution = (TempMaximum - TempMinimum) / TempResolution;
+    public const float TempToByteFactor = TempResolution / (TempMaximum - TempMinimum);
 
     [DataField("value")]
     private byte _coreValue;
