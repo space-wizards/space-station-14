@@ -10,8 +10,12 @@
     effects:
     - !type:HealthChange
       damage:
+        types:
+          Bloodloss: -1
         groups:
           Brute: -1.5
+          Toxin: -1
+          Burn: -1
     alert: HealAura
     whitelist:
       tags:
