@@ -41,6 +41,9 @@
     containers:
       ballistic-ammo: !type:Container
         ents: []
+  - type: Tag
+    tags:
+    - Sidearm
 
 - type: entity
   name: Foam Force Astro Ace
@@ -73,6 +76,9 @@
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: StaticPrice
     price: 100
+  - type: Tag
+    tags:
+    - Rifle
 
 - type: entity
   parent: [ BaseItem, BaseToyGun ]
@@ -119,6 +125,9 @@
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
+  - type: Tag
+    tags:
+    - Sidearm
 
 - type: entity
   parent: RevolverCapGun

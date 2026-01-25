@@ -1622,6 +1622,16 @@
   - UplinkWearables
 
 - type: listing
+  id: UplinkHolster
+  name: uplink-holster-name
+  description: uplink-holster-desc
+  productEntity: ClothingBeltSyndieHolster
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWearables
+
+- type: listing
   id: UplinkChestRig
   name: uplink-chest-rig-name
   description: uplink-chest-rig-desc
