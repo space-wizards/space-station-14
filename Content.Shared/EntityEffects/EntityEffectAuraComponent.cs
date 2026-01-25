@@ -17,7 +17,7 @@ public sealed partial class EntityEffectAuraComponent : Component
     /// <summary>
     /// The radius of the aura.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("malfunctionRadius")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public float Radius = 3.5f;
 
     /// <summary>
