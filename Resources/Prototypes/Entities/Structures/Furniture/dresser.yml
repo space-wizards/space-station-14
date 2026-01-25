@@ -31,8 +31,8 @@
         acts: [ "Destruction" ]
   - type: Storage
     grid:
-    - 0,0,6,3
-    maxItemSize: Normal
+    - 0,0,7,4
+    maxItemSize: Large
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -288,7 +288,7 @@
       weight: 0.0008
     - id: ClothingOuterDogi
       weight: 0.00001
-    - id: HeadHuman
+    - id: OrganHumanHead
       weight: 0.00001
     - id: OrganHumanKidneys
       weight: 0.00001

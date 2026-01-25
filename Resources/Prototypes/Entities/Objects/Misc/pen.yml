@@ -127,10 +127,10 @@
     state: pen_cap
 
 - type: entity
-  name: hop's fountain pen
+  name: HoP's fountain pen
   parent: PenEmbeddable
   id: PenHop
-  description: A luxurious fountain pen for the hop of the station.
+  description: A luxurious fountain pen for the HoP of the station.
   components:
   - type: Sprite
     state: pen_hop

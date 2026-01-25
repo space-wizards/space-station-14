@@ -8,9 +8,15 @@
     - Document
     - Paper
   - type: Appearance
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: ExtinguishableSetCollisionWake
   - type: Flammable
     fireSpread: true
     alwaysCombustible: true
+    canExtinguish: true
     damage:
       types:
         Heat: 1
