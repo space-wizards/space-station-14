@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent, Access(typeof(NukeopsRuleSystem))]
+[RegisterComponent, AutoGenerateComponentPause, Access(typeof(NukeopsRuleSystem))]
 public sealed partial class NukeopsRuleComponent : Component
 {
     /// <summary>
@@ -60,6 +60,18 @@ public sealed partial class NukeopsRuleComponent : Component
     public TimeSpan? WarDeclaredTime;
 
     /// <summary>
+    /// Changes the alert level on all stations with the nuke disk
+    /// if null, the alert level will not change.
+    /// </summary>
+    public string? SetAlertlevel = "martial_law";
+
+    /// <summary>
+    /// How many seconds after the declaration of war, the alert level will change to gamma
+    /// </summary>
+    [DataField]
+    public int AlertlevelDelay = 10;
+
+    /// <summary>
     ///     This amount of TC will be given to each nukie
     /// </summary>
     [DataField]
@@ -87,10 +99,19 @@ public sealed partial class NukeopsRuleComponent : Component
     public WinType WinType = WinType.Neutral;
 
     [DataField]
-    public List<WinCondition> WinConditions = new ();
+    public List<WinCondition> WinConditions = new();
 
     [DataField]
     public EntityUid? TargetStation;
+
+    /// <summary>
+    /// If true, the game will automatically set the alert level after the specified time
+    /// </summary>
+    [DataField]
+    public bool CanChangeAlertLevel = false;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan AlertlevelTime;
 
     [DataField]
     public ProtoId<NpcFactionPrototype> Faction = "Syndicate";

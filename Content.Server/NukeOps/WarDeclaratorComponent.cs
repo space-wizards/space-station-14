@@ -52,18 +52,6 @@ public sealed partial class WarDeclaratorComponent : Component
     [DataField]
     public float WarDeclarationDelay = 6.0f;
 
-    /// <summary>
-    /// Changes the alert level on all stations with the nuke disk
-    /// if null, the alert level will not change.
-    /// </summary>
-    public string? SetAlertlevel = "martial_law";
-
-    /// <summary>
-    /// How many seconds after the declaration of war, the alert level will change to gamma
-    /// </summary>
-    [DataField]
-    public int AlertlevelDelay = 10;
-
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan DisableAt;
 
@@ -72,10 +60,6 @@ public sealed partial class WarDeclaratorComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan ShuttleDisabledTime;
-
-
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan AlertlevelTime;
 
     [DataField]
     public WarConditionStatus? CurrentStatus;
