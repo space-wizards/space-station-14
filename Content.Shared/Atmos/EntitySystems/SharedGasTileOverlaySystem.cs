@@ -76,7 +76,8 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
         /// Network-synced air temperature, compressed to a single byte per tile for bandwidth optimization.
         /// Note: Values are approximate and may deviate even ~10°C from the precise server side only temperature.
         /// </summary>
-        [ViewVariables] public readonly ThermalByte ByteGasTemperature;
+        [ViewVariables]
+        public readonly ThermalByte ByteGasTemperature;
 
 
         public GasOverlayData(byte fireState, byte[] opacity, ThermalByte byteTemp)
