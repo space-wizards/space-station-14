@@ -394,3 +394,72 @@
         messages: [ "frezon-euphoric" ]
         probability: 0.1
         minScale: 1
+
+- type: reagent
+  id: Electrovae
+  name: reagent-name-electrovae
+  desc: reagent-desc-electrovae
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#0022FF"
+  recognizable: true
+  boilingPoint: -116.1
+  meltingPoint: -149.9
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaling: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              0.1
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 3
+        clear: True
+        time: 5
+
+- type: reagent
+  id: ChargedElectrovae
+  name: reagent-name-charged-electrovae
+  desc: reagent-desc-charged-electrovae
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: metallic
+  color: "#ddff00"
+  recognizable: true
+  boilingPoint: -114.3
+  meltingPoint: -142.8
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.0
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaling: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              0.15
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 3
+        clear: True
+        time: 5
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:Flammable
