@@ -129,10 +129,10 @@ public struct ThermalByte
     public const float TempMaximum = 1000f;
     public const int TempResolution = 250;
 
-    public const byte RESERVED_FUTURE1 = 252;
-    public const byte RESERVED_FUTURE2 = 253;
-    public const byte STATE_VACUUM = 254;
-    public const byte STATE_WALL = 255;
+    public const byte ReservedFuture1 = 252;
+    public const byte ReservedFuture2 = 253;
+    public const byte StateVaccum = 254;
+    public const byte StateWall = 255;
 
     public const float TempDegreeResolution = (TempMaximum - TempMinimum) / TempResolution;
     public const float TempToByteFactor = TempResolution / (TempMaximum - TempMinimum);
@@ -154,10 +154,10 @@ public struct ThermalByte
         _coreValue = (byte)((clampedTemp - TempMinimum) * TempResolution / (TempMaximum - TempMinimum));
     }
 
-    public void SetWall() => _coreValue = STATE_WALL;
-    public void SetVacuum() => _coreValue = STATE_VACUUM;
-    public bool IsWall => _coreValue == STATE_WALL;
-    public bool IsVacuum => _coreValue == STATE_VACUUM;
+    public void SetWall() => _coreValue = StateWall;
+    public void SetVacuum() => _coreValue = StateVaccum;
+    public bool IsWall => _coreValue == StateWall;
+    public bool IsVacuum => _coreValue == StateVaccum;
     public byte Value => _coreValue;
 
     /// <summary>
@@ -174,12 +174,12 @@ public struct ThermalByte
     /// </returns>
     public readonly bool TryGetTemperature(out float temperature, bool onVacuumReturnTCMB = true)
     {
-        if (_coreValue == STATE_WALL)
+        if (_coreValue == StateWall)
         {
             temperature = 0f;
             return false;
         }
-        else if (_coreValue == STATE_VACUUM)
+        else if (_coreValue == StateVaccum)
         {
             if (onVacuumReturnTCMB)
             {
