@@ -20,12 +20,20 @@ public sealed class StripebackSheetlet<T> : Sheetlet<T> where T : PalettedStyles
         {
             Texture = stripeTex,
             Mode = StyleBoxTexture.StretchMode.Tile,
+            Modulate = sheet.PrimaryPalette.BackgroundDark
+        };
+        var stripeBackWarning = new StyleBoxTexture {
+            Texture = stripeTex,
+            Mode = StyleBoxTexture.StretchMode.Tile,
+            Modulate = Palettes.Amber.Element
         };
 
         return
         [
             E<StripeBack>()
                 .Prop(StripeBack.StylePropertyBackground, stripeBack),
+            E<StripeBack>().Class("StripeWarning")
+                .Prop(StripeBack.StylePropertyBackground, stripeBackWarning),
         ];
     }
 }

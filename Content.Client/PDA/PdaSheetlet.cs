@@ -42,8 +42,7 @@ public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
 
             E<PanelContainer>()
                 .Class("PdaBorderRect")
-                .Prop(PanelContainer.StylePropertyPanel, angleBorderRect)
-                .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#00000040")),
+                .Prop(PanelContainer.StylePropertyPanel, angleBorderRect),
 
             //PDA - Buttons
             E<PdaSettingsButton>()

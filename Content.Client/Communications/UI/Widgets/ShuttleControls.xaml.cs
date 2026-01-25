@@ -55,25 +55,6 @@ public sealed partial class ShuttleControls : Control
         var remainingWholeSeconds = _countdownStarted ? (int)Math.Ceiling(countdown) : 0;
         var message = (remainingWholeSeconds / 60).ToString("D2") + ":" + (remainingWholeSeconds % 60).ToString("D2");
         CountdownLabel.Text = message;
-
-        CountdownLabel.Visible = _countdownStarted;
-        if(countdown == 0)
-        {
-            CountdownLabel.ModulateSelfOverride = Color.White;
-        }
-        else
-        {
-            // Blink the LCD
-            var alpha = 1.0f;
-            if (!_cfg.GetCVar(CCVars.ReducedMotion))
-            {
-                var subSecondsRemaining = countdown - (float)Math.Floor(countdown);
-                var lightEnableBlend = SmoothStep(0.1f, 0.3f, subSecondsRemaining);
-                var lightDisableBlend = SmoothStep(0.9f, 0.95f, subSecondsRemaining);
-                alpha = lightEnableBlend - lightDisableBlend;
-            }
-            CountdownLabel.ModulateSelfOverride = new Color(1.0f, 1.0f, 1.0f, alpha);
-        }
     }
 
     private float SmoothStep(float stepBegin, float stepEnd, float x)

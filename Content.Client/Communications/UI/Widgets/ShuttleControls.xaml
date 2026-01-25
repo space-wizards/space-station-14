@@ -1,72 +1,33 @@
 <Control xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <controls:LayeredImageContainer StyleClasses="WarningStripes" >
-
-        <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
-            HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"/>
-        <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"/>
-        <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
-            HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"/>
-        <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
-            HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4"/>
-
         <!-- Controls for calling, recalling and displaying info for the emergency shuttle -->
-        <PanelContainer StyleClasses="PanelDark" Margin="20">
-            <BoxContainer Orientation="Vertical" Margin="8">
-                <Label StyleClasses="FancyWindowTitle" Align="Center"
-                    Text="{Loc 'comms-console-shuttle-controls-header'}" />
+    <PanelContainer StyleClasses="PanelDark">
+        <BoxContainer Orientation="Vertical" Margin="8 12 8 12">
+            <Label StyleClasses="FancyWindowTitle" Align="Center"
+                Text="{Loc 'comms-console-shuttle-controls-header'}" />
 
-                <!-- This contains some blank `Controls` to act as dummies. This is because the
-                    GridContainer will always left-align the children, while we want them centered.
-                    The dummy Controls will attempt to take an even amount of space each, which
-                    will re-center our real controls -->
-                <GridContainer Columns="7" HorizontalExpand="True" Margin="0 8 0 0">
-                    <!-- Row 1: the buttons themselves -->
-                    <Control HorizontalExpand="True" />
-                    <controls:LayeredImageContainer>
-                        <Control.StyleClasses>
-                            <sys:String>PanelMount</sys:String>
-                            <sys:String>PanelDark</sys:String>
-                        </Control.StyleClasses>
-                        <TextureButton Name="EmergencyShuttleCallButton"
-                            StyleIdentifier="TemptingRedButton" MinSize="60 60"
-                            ToolTip="{Loc 'comms-console-menu-call-shuttle'}" />
-                    </controls:LayeredImageContainer>
-                    <Control HorizontalExpand="True" />
-                    <controls:LayeredImageContainer
-                        VerticalAlignment="Center">
-                        <Control.StyleClasses>
-                            <sys:String>PanelMount</sys:String>
-                            <sys:String>PanelDark</sys:String>
-                        </Control.StyleClasses>
-                        <Label Name="CountdownLabel" StyleClasses="LabelLCDBig"
-                            ReservesSpace="True" Margin="6"/>
-                    </controls:LayeredImageContainer>
-                    <Control HorizontalExpand="True" />
-                    <controls:LayeredImageContainer>
-                        <Control.StyleClasses>
-                            <sys:String>PanelMount</sys:String>
-                            <sys:String>PanelDark</sys:String>
-                        </Control.StyleClasses>
-                        <TextureButton Name="EmergencyShuttleRecallButton"
-                            StyleIdentifier="TemptingRedButton" MinSize="60 60"
-                            ToolTip="{Loc 'comms-console-menu-recall-shuttle'}" />
-                    </controls:LayeredImageContainer>
-                    <Control HorizontalExpand="True" />
+            <!-- This contains some blank `Controls` to act as dummies. This is because the
+                GridContainer will always left-align the children, while we want them centered.
+                The dummy Controls will attempt to take an even amount of space each, which
+                will re-center our real controls -->
+            <BoxContainer>
+                <!-- Row 1: the buttons themselves -->
+                <Control HorizontalExpand="True" />
+                <Button Name="EmergencyShuttleCallButton" VerticalAlignment="Center"
+                    Text="{Loc 'comms-console-call-button-label'}" />
+                <Control HorizontalExpand="True" />
 
-                    <!-- Row 2: The labels for the buttons -->
-                    <Control HorizontalExpand="True" />
-                    <Label Text="{Loc 'comms-console-call-button-label'}" Align="Center" />
-                    <Control HorizontalExpand="True" />
-                    <Label Text="{Loc 'comms-console-shuttle-status-label'}" Align="Center" />
-                    <Control HorizontalExpand="True" />
-                    <Label Text="{Loc 'comms-console-recall-button-label'}" Align="Center" />
-                    <Control HorizontalExpand="True" />
-
-                </GridContainer>
+                <BoxContainer Orientation="Vertical">
+                    <Label StyleClasses="LabelSubText" Align="Center"
+                        Text="{Loc 'comms-console-shuttle-status-label'}" />
+                    <Label Name="CountdownLabel" ReservesSpace="True" Align="Center"/>
+                </BoxContainer>
+                <Control HorizontalExpand="True" />
+                <Button Name="EmergencyShuttleRecallButton" VerticalAlignment="Center"
+                    Text="{Loc 'comms-console-recall-button-label'}" />
+                <Control HorizontalExpand="True" />
             </BoxContainer>
-        </PanelContainer>
-    </controls:LayeredImageContainer>
+        </BoxContainer>
+    </PanelContainer>
 </Control>
