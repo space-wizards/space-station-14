@@ -313,12 +313,16 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                     massFactor = grapplerBodyA.Mass / (grapplerBodyA.Mass + grapplerBodyB.Mass);
                 }
 
-                // SLAM-TODO: This needs to have a non-linear function that ensures heavy grids move slower and smaller grids move faster (but not so fast that they become missiles). Worth figuring out.
+                // We do this log function to scale pull speed. Around 180000kg should be considered the max pullable for someone wearing magbooots.
+                // SLAM-TODO: This can be scaled better. Consider using linear scaling in stages, rather than some obscure log method...
+                var massFactorA2 = MathF.Max(2.5f - 0.2f * MathF.Log(grapplerBodyA.Mass + 1800), 0f);
+                var massFactorB2 = MathF.Max(2.5f - 0.2f * MathF.Log(grapplerBodyB.Mass + 1800), 0f);
+
                 var massFactorA = grapplerBodyA.Mass * (1 - massFactor);
-                _physics.ApplyLinearImpulse(grapplerUidA, targetDirection * massFactorA * grappling.ReelForce * frameTime * -1, grapplerOffsetA, body: grapplerBodyA);
+                _physics.ApplyLinearImpulse(grapplerUidA, targetDirection * massFactorA * massFactorA2 * grappling.ReelForce * frameTime * -1, grapplerOffsetA, body: grapplerBodyA);
 
                 var massFactorB = grapplerBodyB.Mass * massFactor;
-                _physics.ApplyLinearImpulse(grapplerUidB, targetDirection * massFactorB * grappling.ReelForce * frameTime, grapplerOffsetB, body: grapplerBodyB);
+                _physics.ApplyLinearImpulse(grapplerUidB, targetDirection * massFactorB * massFactorB2 * grappling.ReelForce * frameTime, grapplerOffsetB, body: grapplerBodyB);
             }
 
             Dirty(uid, jointComp);
