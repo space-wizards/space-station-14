@@ -123,7 +123,7 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
 /// This struct is used to send air temperature on screen to all users.   
 /// </summary>
 [Serializable]
-public struct ThermalByte
+public struct ThermalByte : IEquatable<ThermalByte>
 {
     public const float TempMinimum = 0f;
     public const float TempMaximum = 1000f;
@@ -179,7 +179,8 @@ public struct ThermalByte
             temperature = 0f;
             return false;
         }
-        else if (_coreValue == StateVaccum)
+
+        if (_coreValue == StateVaccum)
         {
             if (onVacuumReturnTCMB)
             {
