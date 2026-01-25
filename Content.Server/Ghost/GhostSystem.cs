@@ -69,6 +69,11 @@ namespace Content.Server.Ghost
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
+        private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(5);
+        private TimeSpan _lastUpdateTime = TimeSpan.Zero;
+
+        private EntityUid? _currentMostFollowed;
+
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -107,6 +112,40 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            if (_lastUpdateTime + UpdateInterval > _gameTiming.CurTime)
+            {
+                return;
+            }
+
+            _lastUpdateTime = _gameTiming.CurTime;
+
+            var newMostFollowed = _followerSystem.GetMostGhostFollowed();
+            if (newMostFollowed == _currentMostFollowed)
+            {
+                return;
+            }
+
+            _currentMostFollowed = newMostFollowed;
+
+            var allPlayerData = _player.GetAllPlayerData();
+
+            foreach (var sessionData in allPlayerData)
+            {
+                var session = _player.GetSessionById(sessionData.UserId);
+                var uid = session.AttachedEntity;
+                if (!_ghostQuery.HasComp(uid))
+                {
+                    continue;
+                }
+
+                SendGhostnadoResponse(uid.Value, session, false);
+            }
         }
 
         private void OnGhostVis(Entity<GhostComponent> ent, ref GetVisMaskEvent args)
@@ -330,17 +369,22 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var target = _followerSystem.GetMostGhostFollowed();
+            SendGhostnadoResponse(uid, args.SenderSession, msg.Warp);
+        }
+
+        private void SendGhostnadoResponse(EntityUid uid, ICommonSession session, bool warp)
+        {
+            var target = _currentMostFollowed;
 
             var response = new GhostnadoResponseEvent(target is not null);
 
-            if (msg.Warp && target is not null)
+            if (warp && target is not null)
             {
                 // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
                 _followerSystem.StartFollowingEntity(uid, target.Value);
             }
 
-            RaiseNetworkEvent(response, args.SenderSession.Channel);
+            RaiseNetworkEvent(response, session);
         }
 
         private void WarpTo(EntityUid uid, EntityUid target)

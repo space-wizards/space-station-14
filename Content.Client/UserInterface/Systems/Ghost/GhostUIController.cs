@@ -5,7 +5,6 @@ using Content.Client.UserInterface.Systems.Ghost.Widgets;
 using Content.Shared.Ghost;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
-using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Ghost;
 
@@ -13,12 +12,8 @@ namespace Content.Client.UserInterface.Systems.Ghost;
 public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSystem>
 {
     [Dependency] private readonly IEntityNetworkManager _net = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     [UISystemDependency] private readonly GhostSystem? _system = default;
-
-    private TimeSpan _lastUpdateTime;
-    private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(5f);
 
     private GhostGui? Gui => UIManager.GetActiveUIWidgetOrNull<GhostGui>();
 
@@ -31,25 +26,8 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
     }
 
-    public override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
-
-        if (Gui is null
-            || Gui?.Visible == false)
-            return;
-
-        if (_lastUpdateTime + UpdateInterval > _gameTiming.CurTime
-            || !Gui!.TargetWindow.IsOpen)
-            return;
-
-        _lastUpdateTime = _gameTiming.CurTime;
-        OnGhostnado(false);
-    }
-
     private void OnScreenLoad()
     {
-        _lastUpdateTime = TimeSpan.Zero;
         LoadGui();
     }
 
@@ -78,6 +56,11 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.GhostWarpsResponse -= OnWarpsResponse;
         system.GhostnadoResponse -= OnGhostnadoResponse;
         system.GhostRoleCountUpdated -= OnRoleCountUpdated;
+    }
+
+    private void OnWindowOpened()
+    {
+        OnGhostnado(false);
     }
 
     public void UpdateGui()
@@ -156,6 +139,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.GhostRolesPressed += GhostRolesPressed;
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
         Gui.TargetWindow.OnGhostnado += OnGhostnado;
+        Gui.TargetWindow.OnOpen += OnWindowOpened;
 
         UpdateGui();
     }
