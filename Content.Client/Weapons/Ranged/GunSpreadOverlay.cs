@@ -48,7 +48,7 @@ public sealed class GunSpreadOverlay : Overlay
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
-        if (!_guns.TryGetGun(player.Value, out var gun))
+        if (!_guns.TryGetGun(player.Value, out var gun, out _))
             return;
 
         var mouseScreenPos = _input.MouseScreenPosition;

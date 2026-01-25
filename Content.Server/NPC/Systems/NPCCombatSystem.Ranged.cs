@@ -96,7 +96,7 @@ public sealed partial class NPCCombatSystem
                 _combat.SetInCombatMode(uid, true, combatMode);
             }
 
-            if (!_gun.TryGetGun(uid, out var gun))
+            if (!_gun.TryGetGun(uid, out var gun, out _))
             {
                 comp.Status = CombatStatus.NoWeapon;
                 comp.ShootAccumulator = 0f;

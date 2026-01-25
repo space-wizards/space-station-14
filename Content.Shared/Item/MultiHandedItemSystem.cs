@@ -8,7 +8,6 @@ namespace Content.Shared.Item;
 
 public sealed class MultiHandedItemSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
@@ -17,7 +16,6 @@ public sealed class MultiHandedItemSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MultiHandedItemComponent, GettingPickedUpAttemptEvent>(OnAttemptPickup);
-        SubscribeLocalEvent<MultiHandedItemComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<MultiHandedItemComponent, GotEquippedHandEvent>(OnEquipped);
         SubscribeLocalEvent<MultiHandedItemComponent, GotUnequippedHandEvent>(OnUnequipped);
     }
@@ -48,13 +46,5 @@ public sealed class MultiHandedItemSystem : EntitySystem
                     ("number", ent.Comp.HandsNeeded - 1),
                     ("item", ent.Owner)),
                 args.User);
-    }
-
-    private void OnVirtualItemDeleted(Entity<MultiHandedItemComponent> ent, ref VirtualItemDeletedEvent args)
-    {
-        if (args.BlockingEntity != ent.Owner || _timing.ApplyingState)
-            return;
-
-        _hands.TryDrop(args.User, ent.Owner);
     }
 }

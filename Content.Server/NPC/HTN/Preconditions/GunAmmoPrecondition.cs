@@ -21,7 +21,7 @@ public sealed partial class GunAmmoPrecondition : HTNPrecondition
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var gunSystem = _entManager.System<GunSystem>();
 
-        if (!gunSystem.TryGetGun(owner, out var gun))
+        if (!gunSystem.TryGetGun(owner, out var gun, out _))
         {
             return false;
         }

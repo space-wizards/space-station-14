@@ -133,7 +133,10 @@ public abstract partial class SharedHandsSystem
 
         // if item is a fake item (like with pulling), just delete it rather than bothering with trying to drop it into the world
         if (TryComp(entity, out VirtualItemComponent? @virtual))
+        {
+            TryDrop(ent, @virtual.BlockingEntity, targetDropLocation);
             _virtualSystem.DeleteVirtualItem((entity.Value, @virtual), ent);
+        }
 
         if (TerminatingOrDeleted(entity))
             return true;

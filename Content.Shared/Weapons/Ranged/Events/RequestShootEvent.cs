@@ -1,3 +1,4 @@
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -12,4 +13,9 @@ public sealed class RequestShootEvent : EntityEventArgs
     public NetEntity Gun;
     public NetCoordinates Coordinates;
     public NetEntity? Target;
+
+    /// <summary>
+    /// If true, the gun will attempt to fire a burst. Requires <see cref="GunAltFireComponent"/>.
+    /// </summary>
+    public SelectiveFire? DesiredFireType;
 }

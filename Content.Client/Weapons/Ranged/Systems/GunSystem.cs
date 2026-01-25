@@ -167,18 +167,42 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var entity = entityNull.Value;
 
-        if (!TryGetGun(entity, out var gun))
+        if (!TryGetGun(entity, out var gun, out var activeGun))
         {
             return;
         }
 
-        var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+        SelectiveFire? altFireType = null;
 
-        if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.Comp.BurstActivated)
+        // If the gun is in our active hand, we do checks for player input.
+        // If it isn't, we're only concerned about if it's burst-firing on its own. This is necessary for vfx & sfx, as the gun is still owned by the user.
+        if (activeGun)
         {
-            if (gun.Comp.ShotCounter != 0)
-                RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
-            return;
+            var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+
+            if (TryComp<GunAltFireComponent>(gun, out var altFire))
+            {
+                var altKey = !gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+                if (_inputSystem.CmdStates.GetState(altKey) == BoundKeyState.Down)
+                    altFireType = altFire.AltFireType;
+            }
+
+            if (altFireType == null && _inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down &&
+                !gun.Comp.BurstActivated)
+            {
+                if (gun.Comp.ShotCounter != 0)
+                    RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
+                return;
+            }
+        }
+        else
+        {
+            if (!gun.Comp.BurstActivated)
+            {
+                if (gun.Comp.ShotCounter != 0)
+                    RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
+                return;
+            }
         }
 
         if (gun.Comp.NextFire > Timing.CurTime)
@@ -208,6 +232,7 @@ public sealed partial class GunSystem : SharedGunSystem
             Target = target,
             Coordinates = GetNetCoordinates(coordinates),
             Gun = GetNetEntity(gun),
+            DesiredFireType = altFireType,
         });
     }
 
