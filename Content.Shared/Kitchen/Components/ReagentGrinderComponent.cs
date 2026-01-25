@@ -51,4 +51,3 @@ public sealed partial class ActiveReagentGrinderComponent : Component
     [ViewVariables]
     public GrinderProgram Program;
 }
-

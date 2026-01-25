@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 267.3.0
+  engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 11/02/2025 23:05:17
+  time: 01/13/2026 00:18:31
   entityCount: 2641
 maps:
 - 1
@@ -1362,6 +1362,7 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
     - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
 - proto: AirAlarm
   entities:
   - uid: 3
@@ -7642,12 +7643,12 @@ entities:
     - type: Transform
       pos: 21.5,-3.5
       parent: 2
-- proto: DoorRemoteAll
+- proto: DoorRemoteCustom
   entities:
   - uid: 1056
     components:
     - type: Transform
-      pos: 24.577494,2.096348
+      pos: 24.562723,2.0902877
       parent: 2
 - proto: DrinkMugRainbow
   entities:

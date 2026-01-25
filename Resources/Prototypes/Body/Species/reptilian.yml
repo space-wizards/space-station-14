@@ -1,0 +1,307 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Reptilian
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ LizardTailSmooth ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 3
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+      default: [ LizardSnoutRound ]
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceReptilian
+  name: reptilian appearance
+  components:
+  - type: Inventory
+    speciesId: reptilian
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Reptilian/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Reptilian/displacement.rsi
+            state: mask
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Reptilian/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Reptilian/displacement.rsi
+            state: mask
+  - type: InitialBody
+    organs:
+      Torso: OrganReptilianTorso
+      Head: OrganReptilianHead
+      ArmLeft: OrganReptilianArmLeft
+      ArmRight: OrganReptilianArmRight
+      HandRight: OrganReptilianHandRight
+      HandLeft: OrganReptilianHandLeft
+      LegLeft: OrganReptilianLegLeft
+      LegRight: OrganReptilianLegRight
+      FootLeft: OrganReptilianFootLeft
+      FootRight: OrganReptilianFootRight
+      Brain: OrganReptilianBrain
+      Eyes: OrganReptilianEyes
+      Tongue: OrganReptilianTongue
+      Appendix: OrganReptilianAppendix
+      Ears: OrganReptilianEars
+      Lungs: OrganReptilianLungs
+      Heart: OrganReptilianHeart
+      Stomach: OrganReptilianStomach
+      Liver: OrganReptilianLiver
+      Kidneys: OrganReptilianKidneys
+  - type: HumanoidProfile
+    species: Reptilian
+
+- type: entity
+  parent:
+  - AppearanceReptilian
+  - BaseSpeciesMobOrganic
+  id: MobReptilian
+  name: Urissst Mz'Hand
+  components:
+  - type: Puller
+    needsHands: false
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatLizard
+      amount: 5
+  - type: LizardAccent
+  - type: Speech
+    speechSounds: Lizard
+    speechVerb: Reptilian
+    allowedEmotes: ['Thump']
+  - type: TypingIndicator
+    proto: lizard
+  - type: Vocal
+    sounds:
+      Male: MaleReptilian
+      Female: FemaleReptilian
+      Unsexed: MaleReptilian
+  - type: BodyEmotes
+    soundsId: ReptilianBodyEmotes
+  - type: Damageable
+    damageModifierSet: Scale
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+  - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    coldDamage:
+      types:
+        Cold : 0.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 1.5 #per second, scales with temperature & other constants
+  - type: TemperatureSpeed
+    thresholds:
+      301: 0.9
+      295: 0.8
+      285: 0.7
+  - type: Wagging
+
+- type: entity
+  parent: OrganBase
+  id: OrganReptilian
+  abstract: true
+  suffix: Reptilian
+
+- type: entity
+  id: OrganReptilianMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+
+- type: entity
+  parent: OrganReptilian
+  id: OrganReptilianInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  parent: OrganReptilian
+  id: OrganReptilianExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Reptilian/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Reptilian/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Reptilian
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganReptilianExternal ]
+  id: OrganReptilianTorso
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Tail
+
+- type: entity
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganReptilianExternal ]
+  id: OrganReptilianHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.HeadTop
+    - enum.HumanoidVisualLayers.HeadSide
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganReptilianExternal ]
+  id: OrganReptilianArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganReptilianExternal ]
+  id: OrganReptilianArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganReptilianExternal ]
+  id: OrganReptilianHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganReptilianExternal ]
+  id: OrganReptilianHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganReptilianExternal ]
+  id: OrganReptilianLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganReptilianExternal ]
+  id: OrganReptilianLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganReptilianExternal ]
+  id: OrganReptilianFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganReptilianExternal ]
+  id: OrganReptilianFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganReptilianInternal ]
+  id: OrganReptilianBrain
+
+- type: entity
+  parent: [ OrganBaseEyes, OrganReptilianInternal, OrganReptilianExternal ]
+  id: OrganReptilianEyes
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Customization/eyes.rsi
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganReptilianInternal ]
+  id: OrganReptilianTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganSpriteHumanInternal, OrganReptilianInternal ]
+  id: OrganReptilianAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganSpriteHumanInternal, OrganReptilianInternal ]
+  id: OrganReptilianEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianStomach
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Fruit
+      - ReptilianFood
+      - Meat
+      - Pill
+      - Crayon
+      - Paper
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianKidneys

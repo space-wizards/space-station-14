@@ -110,10 +110,6 @@ public sealed class CharacterCreationTest
         if (a.MemberwiseEquals(b))
             return;
 
-        Assert.That(a.HairStyleId, Is.EqualTo(b.HairStyleId));
-        Assert.That(a.HairColor, Is.EqualTo(b.HairColor));
-        Assert.That(a.FacialHairStyleId, Is.EqualTo(b.FacialHairStyleId));
-        Assert.That(a.FacialHairColor, Is.EqualTo(b.FacialHairColor));
         Assert.That(a.EyeColor, Is.EqualTo(b.EyeColor));
         Assert.That(a.SkinColor, Is.EqualTo(b.SkinColor));
         Assert.That(a.Markings, Is.EquivalentTo(b.Markings));

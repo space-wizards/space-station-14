@@ -41,6 +41,7 @@
   - MobCombat
   - MobBloodstream
   - MobFlammable
+  - BaseMobAnimal
   id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
   components:
@@ -53,8 +54,6 @@
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
-  - type: Body
-    prototype: Animal
   - type: Climbing
   - type: NameIdentifier
     group: GenericNumber
@@ -107,3 +106,5 @@
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
+  - type: GhostOnMove
+    mustBeDead: true

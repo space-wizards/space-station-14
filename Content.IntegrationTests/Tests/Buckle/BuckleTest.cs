@@ -1,9 +1,6 @@
 using System.Numerics;
-using Content.Server.Body.Systems;
 using Content.Shared.Buckle;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -247,7 +244,6 @@ namespace Content.IntegrationTests.Tests.Buckle
             EntityUid human = default;
             BuckleComponent buckle = null;
             HandsComponent hands = null;
-            BodyComponent body = null;
 
             await server.WaitIdleAsync();
 
@@ -267,7 +263,6 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.That(entityManager.TryGetComponent(human, out buckle));
                     Assert.That(entityManager.HasComponent<StrapComponent>(chair));
                     Assert.That(entityManager.TryGetComponent(human, out hands));
-                    Assert.That(entityManager.TryGetComponent(human, out body));
                 });
 
                 // Buckle
@@ -284,29 +279,6 @@ namespace Content.IntegrationTests.Tests.Buckle
                     var akms = entityManager.SpawnEntity(ItemDummyId, coordinates);
 
                     Assert.That(handsSys.TryPickupAnyHand(human, akms));
-                }
-            });
-
-            await server.WaitRunTicks(10);
-
-            await server.WaitAssertion(() =>
-            {
-                // Still buckled
-                Assert.That(buckle.Buckled);
-
-                // With items in all hands
-                foreach (var hand in hands.Hands.Keys)
-                {
-                    Assert.That(handsSys.GetHeldItem((human, hands), hand), Is.Not.Null);
-                }
-
-                var bodySystem = entityManager.System<BodySystem>();
-                var legs = bodySystem.GetBodyChildrenOfType(human, BodyPartType.Leg, body);
-
-                // Break our guy's kneecaps
-                foreach (var leg in legs)
-                {
-                    entityManager.DeleteEntity(leg.Id);
                 }
             });
 

@@ -45,7 +45,7 @@ public sealed partial class CharacterPickerButton : ContainerButton
 
         if (profile is not HumanoidCharacterProfile humanoid)
         {
-            _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
+            _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(HumanoidCharacterProfile.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
         }
         else
         {

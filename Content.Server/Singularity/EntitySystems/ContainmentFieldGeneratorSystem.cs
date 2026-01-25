@@ -402,6 +402,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void ChangeOnLightVisualizer(Entity<ContainmentFieldGeneratorComponent> generator)
     {
         _visualizer.SetData(generator, ContainmentFieldGeneratorVisuals.OnLight, generator.Comp.IsConnected);
+        UpdateConnectionLights(generator);
     }
     #endregion
 

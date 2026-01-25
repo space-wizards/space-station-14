@@ -1,0 +1,385 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Vox
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      onlyGroupWhitelisted: true
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      onlyGroupWhitelisted: true
+      required: false
+    enum.HumanoidVisualLayers.Head:
+      limit: 4
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+      default: [ VoxBeak ]
+    enum.HumanoidVisualLayers.SnoutCover:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 2
+      required: false
+      default: [ VoxLArmScales ]
+    enum.HumanoidVisualLayers.RArm:
+      limit: 2
+      required: false
+      default: [ VoxRArmScales ]
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: true
+      default: [ VoxLHandScales ]
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: true
+      default: [ VoxRHandScales ]
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+      default: [ VoxLLegScales ]
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+      default: [ VoxRLegScales ]
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: true
+      default: [ VoxLFootScales ]
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: true
+      default: [ VoxRFootScales ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ VoxTail ]
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktopVox ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentBottomBoxersVox ]
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceVox
+  name: vox appearance
+  components:
+  - type: Inventory
+    speciesId: vox
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: eyes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hand
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: head
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: neck
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: back
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: ears
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: shoes
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_l
+    rightHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_r
+  - type: InitialBody
+    organs:
+      Torso: OrganVoxTorso
+      Head: OrganVoxHead
+      ArmLeft: OrganVoxArmLeft
+      ArmRight: OrganVoxArmRight
+      HandRight: OrganVoxHandRight
+      HandLeft: OrganVoxHandLeft
+      LegLeft: OrganVoxLegLeft
+      LegRight: OrganVoxLegRight
+      FootLeft: OrganVoxFootLeft
+      FootRight: OrganVoxFootRight
+      Brain: OrganVoxBrain
+      Eyes: OrganVoxEyes
+      Tongue: OrganVoxTongue
+      Appendix: OrganVoxAppendix
+      Ears: OrganVoxEars
+      Lungs: OrganVoxLungs
+      Heart: OrganVoxHeart
+      Stomach: OrganVoxStomach
+      Liver: OrganVoxLiver
+      Kidneys: OrganVoxKidneys
+  - type: HumanoidProfile
+    species: Vox
+
+- type: entity
+  parent:
+  - AppearanceVox
+  - BaseSpeciesMobOrganic
+  id: MobVox
+  name: Uristititi McVox
+  components:
+  - type: Damageable
+    damageModifierSet: Vox
+  - type: Speech
+    speechVerb: Vox
+    speechSounds: Vox
+    allowedEmotes: ['Click', 'Chitter']
+  - type: TypingIndicator
+    proto: vox
+  - type: Vocal
+    sounds:
+      Male: UnisexVox
+      Female: UnisexVox
+      Unsexed: UnisexVox
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          FoodMeatChickenFriedVox:
+            min: 3
+            max: 5
+      - !type:BurnBodyBehavior
+        popupMessage: bodyburn-vox-text-others
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MeatLaserImpact
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 15
+      behaviors:
+      - !type:PopupBehavior
+        popup: mouth-taste-metal
+        popupType: LargeCaution
+        targetOnly: true
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 40
+      behaviors:
+      - !type:VomitBehavior
+  - type: PassiveDamage
+    # Augment normal health regen to be able to tank some Poison damage
+    # This allows Vox to take their mask off temporarily to eat something without needing a trip to medbay afterwards.
+    allowedStates:
+    - Alive
+    damageCap: 20
+    damage:
+      types:
+        Heat: -0.07
+        Poison: -0.2 # needs to be less than the PendingZombieComponent does or they never become zombies by the disease.
+      groups:
+        Brute: -0.07
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#7a8bf2"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: AmmoniaBlood
+        Quantity: 300
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5 # Reduce?
+
+- type: entity
+  parent: OrganBase
+  id: OrganVox
+  abstract: true
+  suffix: Vox
+
+- type: entity
+  id: OrganVoxMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Vox ]
+
+- type: entity
+  parent: OrganVox
+  id: OrganVoxInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+
+- type: entity
+  id: OrganVoxVisual
+  abstract: true
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Vox/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Vox
+
+- type: entity
+  parent: [ OrganVox, OrganVoxVisual ]
+  id: OrganVoxExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/parts.rsi
+
+- type: entity
+  parent: [ OrganBaseTorso, OrganVoxExternal ]
+  id: OrganVoxTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganVoxExternal ]
+  id: OrganVoxHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.FacialHair
+    dependentHidingLayers:
+      enum.HumanoidVisualLayers.Snout:
+      - enum.HumanoidVisualLayers.SnoutCover
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganVoxExternal ]
+  id: OrganVoxArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganVoxExternal ]
+  id: OrganVoxArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganVoxExternal ]
+  id: OrganVoxHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganVoxExternal ]
+  id: OrganVoxHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganVoxExternal ]
+  id: OrganVoxLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganVoxExternal ]
+  id: OrganVoxLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganVoxExternal ]
+  id: OrganVoxFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganVoxExternal ]
+  id: OrganVoxFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganVoxInternal ]
+  id: OrganVoxBrain
+
+- type: entity
+  parent: [ OrganVoxVisual, OrganBaseEyes, OrganVoxInternal ]
+  id: OrganVoxEyes
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganVoxInternal ]
+  id: OrganVoxTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganSpriteHumanInternal, OrganVoxInternal ]
+  id: OrganVoxAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganSpriteHumanInternal, OrganVoxInternal ]
+  id: OrganVoxEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganVoxInternal, OrganVoxMetabolizer ]
+  id: OrganVoxLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganVoxInternal, OrganVoxMetabolizer ]
+  id: OrganVoxHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganVoxInternal, OrganVoxMetabolizer ]
+  id: OrganVoxStomach
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Trash
+    isSpecialDigestibleExclusive: false
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganVoxInternal, OrganVoxMetabolizer ]
+  id: OrganVoxLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganVoxInternal, OrganVoxMetabolizer ]
+  id: OrganVoxKidneys

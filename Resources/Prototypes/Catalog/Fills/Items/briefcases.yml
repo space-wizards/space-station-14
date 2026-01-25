@@ -11,15 +11,9 @@
 
 - type: entity
   id: BriefcaseSyndieSniperBundleFilled
-  parent: BriefcaseSyndie
+  parent: BriefcaseBrown
   suffix: Syndicate, Sniper Bundle
   components:
-  - type: Item
-    size: Ginormous
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,6,3
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -40,16 +34,15 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        - id: ClothingOuterCoatJensenSyndie
+        - id: ClothingUniformJumpsuitTacticool
         - id: ClothingEyesGlassesSunglasses
         - id: SpaceCash30000
         - id: EncryptionKeySyndie
         - id: RubberStampTrader
         - id: PhoneInstrumentSyndicate
-        - id: ClothingUniformJumpsuitTacticool
-        - id: ClothingOuterCoatJensen
         - id: ClothingHandsGlovesCombat
         - id: ClothingMaskNeckGaiter
-        - id: SyndieHandyFlag
 
 - type: entity
   id: BriefcaseThiefBribingBundleFilled
@@ -60,7 +53,62 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        - id: ClothingOuterCoatJensen
         - id: ClothingEyesGlassesSunglasses
         - id: SpaceCash20000
-        - id: ClothingOuterCoatJensen
         - id: ClothingHandsGlovesColorBlack
+
+- type: entity
+  id: BriefcaseWeaponHushpupFilled
+  parent: BriefcaseWeaponSmall
+  name: secure hushpup case
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponShotgunHushpup
+        - id: TreasureCoinIron
+
+- type: entity
+  id: BriefcaseWeaponC20Filled
+  parent: BriefcaseWeaponSmall
+  name: secure C-20r case
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: WeaponSubMachineGunC20r
+
+- type: entity
+  id: BriefcaseWeaponBulldogFilled
+  parent: BriefcaseWeaponSmall
+  name: secure bulldog case
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: WeaponShotgunBulldog
+
+- type: entity
+  id: BriefcaseWeaponDMRFilled
+  parent: BriefcaseWeapon
+  name: secure estoc case
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: WeaponRifleEstoc
+
+- type: entity
+  id: BriefcaseWeaponChinaLakeFilled
+  parent: BriefcaseWeapon
+  name: secure china lake case
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponLauncherChinaLake
+        - id: GrenadeFrag
+          amount: 2

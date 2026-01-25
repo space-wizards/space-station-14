@@ -105,8 +105,6 @@
     - SiliconEmotes
     - Bot
     - Unimplantable
-  - type: Body
-    prototype: Bot
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
@@ -488,8 +486,6 @@
   - type: Hands # This probably REALLY needs hand whitelisting, but we NEED hands for hugs, so...
   - type: ComplexInteraction # Hugging is a complex interaction, apparently.
   - type: HugBot
-  - type: Body
-    prototype: HugBot
   - type: HTN
     rootTask:
       task: HugBotCompound
