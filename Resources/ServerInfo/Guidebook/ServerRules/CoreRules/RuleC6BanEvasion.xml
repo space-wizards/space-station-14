@@ -1,14 +1,19 @@
 ﻿<Document>
-  # Core Rule 6 - No ban discussion or evasion
+  # Core Rule 6 - Do not discuss or evade bans
   [color=SlateGray][italic]Revision A, 2025-10-11[/italic][/color]
 
-  This is a zero tolerance rule.
+  This is a zero-tolerance rule.
 
   You may discuss bans only at https://forum.spacestation14.com/c/ban-appeals/appeals-game/40
 
-  Unless you are completing existing antagonist objectives, do not act as or accept banned jobs and roles.
+  Unless you are completing pre-existing objectives, do not act as or accept banned jobs and roles.
 
-  A ban evasion penalty applies to all accounts if you connect to the server with another account while banned.
+  Sharing or using other accounts is potential ban evasion and prohibited. Penalties equally apply to all users of the penalized account.
+
+  # Switching accounts
+  You may change your username at https://account.spacestation14.com/Identity/Account/Manage
+
+  As soon as you create a new account, you must notify admins of your previous username at https://forum.spacestation14.com/c/general/help/46
 
   ## Examples
   [color=#449944]Appropriate:[/color]
@@ -17,5 +22,5 @@
 
   [color=#994444]Prohibited:[/color]
   - Accepting promotion to or door access for Head of Security while banned from security or command roles.
-  - Playing as a revolutionary while banned from revolutionary roles.
+  - Playing after revolutionary conversion while banned from revolutionary roles.
 </Document>
