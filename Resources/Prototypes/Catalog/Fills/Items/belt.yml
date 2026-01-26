@@ -29,6 +29,7 @@
         - id: Wirecutter
         - id: Welder
         - id: Multitool
+        - id: trayScanner
 
 - type: entity
   id: ClothingBeltChiefEngineerFilled
