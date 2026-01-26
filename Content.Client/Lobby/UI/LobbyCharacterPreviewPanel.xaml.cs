@@ -12,16 +12,12 @@ namespace Content.Client.Lobby.UI;
 [GenerateTypedNameReferences]
 public sealed partial class LobbyCharacterPreviewPanel : Control
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-
     public Button CharacterSetupButton => CharacterSetup;
 
     public LobbyCharacterPreviewPanel()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        ProfilePreviewSpriteView.Initialize(_prototypeManager, _playerManager);
     }
 
     public void SetLoaded(bool value)

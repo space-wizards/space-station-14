@@ -320,8 +320,6 @@ namespace Content.Client.Lobby.UI
 
             #region Dummy
 
-            SpriteView.Initialize(_prototypeManager, _playerManager);
-
             SpriteRotateLeft.OnPressed += _ =>
             {
                 _previewRotation = _previewRotation.TurnCw();

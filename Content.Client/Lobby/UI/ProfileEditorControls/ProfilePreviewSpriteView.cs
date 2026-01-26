@@ -8,25 +8,17 @@ namespace Content.Client.Lobby.UI.ProfileEditorControls;
 
 public sealed partial class ProfilePreviewSpriteView : SpriteView
 {
-    private IPrototypeManager _prototypeManager = default!;
-    private ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     /// <summary>
     /// Entity used for the profile editor preview
     /// </summary>
     public EntityUid PreviewDummy;
 
-    /// <summary>
-    /// This MUST be called before loading a profile to initialize the managers.
-    /// Instead of resolving these dependencies, we pass the references through.
-    /// </summary>
-    /// <param name="protoMan">Passed in dependency</param>
-    /// <param name="playerMan">Passed in dependency</param>
-    public void Initialize(IPrototypeManager protoMan,
-        ISharedPlayerManager playerMan)
+    public ProfilePreviewSpriteView()
     {
-        _prototypeManager = protoMan;
-        _playerManager = playerMan;
+        IoCManager.InjectDependencies(this);
     }
 
     /// <summary>

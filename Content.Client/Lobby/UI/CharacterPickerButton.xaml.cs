@@ -39,7 +39,6 @@ public sealed partial class CharacterPickerButton : ContainerButton
         Group = group;
         var description = profile.Name;
 
-        View.Initialize(prototypeManager, playerMan);
         View.LoadPreview(profile);
 
         if (profile is HumanoidCharacterProfile humanoid)
