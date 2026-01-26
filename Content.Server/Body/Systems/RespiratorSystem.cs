@@ -203,7 +203,7 @@ public sealed class RespiratorSystem : EntitySystem
     /// <param name="ent">The entity attempting to metabolize the gas.</param>
     /// <param name="logMissing">Do I need to get a log if he can't breathe the gas.</param>
     /// <returns>Returns true only if the air is not toxic, and it wouldn't suffocate.</returns>
-    public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent, bool logMissing = true)
+    public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent, bool logMissing = false)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing))
             return false;
