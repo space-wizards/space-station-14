@@ -150,15 +150,18 @@
   id: FillLockerAtmospherics
   table: !type:AllSelector
     children:
+    - id: AirGrenade
+    - id: ClothingBeltUtilityEngineering
+    - id: ClothingEyesGlassesMeson
+    - id: ClothingHandsGlovesColorYellow
+    - id: ClothingHeadHelmetAtmosFire
     - id: ClothingMaskGasAtmos
     - id: ClothingOuterSuitAtmosFire
-    - id: ClothingHeadHelmetAtmosFire
     - id: GasAnalyzer
-    - id: MedkitOxygenFilled
     - id: HolofanProjector
     - id: RCD
     - id: RCDAmmo
-    - id: AirGrenade
+    - id: trayScanner
 
 - type: entityTable
   id: FillAtmosphericsHardsuit
@@ -196,12 +199,13 @@
   id: FillLockerEngineer
   table: !type:AllSelector
     children:
+    - id: ClothingBeltUtilityEngineering
+    - id: ClothingEyesGlassesMeson
     - id: ClothingHandsGlovesColorYellow
-    - id: ClothingMaskGas
-    - id: trayScanner
+    - id: MetalFoamGrenade
     - id: RCD
     - id: RCDAmmo
-    - id: MetalFoamGrenade
+    - id: trayScanner
 
 - type: entityTable
   id: FillEngineerHardsuit

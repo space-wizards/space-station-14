@@ -25,21 +25,6 @@
     head: ClothingHeadHatBeretEngineering
 
 - type: loadout
-  id: StationEngineerHardhatYellow
-  equipment:
-    head: ClothingHeadHatHardhatYellow
-
-- type: loadout
-  id: StationEngineerHardhatOrange
-  equipment:
-    head: ClothingHeadHatHardhatOrange
-
-- type: loadout
-  id: StationEngineerHardhatRed
-  equipment:
-    head: ClothingHeadHatHardhatRed
-
-- type: loadout
   id: SeniorEngineerBeret
   startingGear: EngineeringBeret
   effects:

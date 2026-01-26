@@ -1,16 +1,20 @@
 - type: vendingMachineInventory
   id: EngiVendInventory
   startingInventory:
-    ClothingEyesGlassesMeson: 4
-    ClothingEyesHudDiagnostic: 4
-    ClothingHeadHatWelding: 6
-    CrowbarYellow: 8
-    Multitool: 4
-    NetworkConfigurator: 5
-    PowerCellMedium: 5
-    ClothingHandsGlovesColorYellow: 6
-    BoxInflatable: 2
+    # Essential equipment
+    ClothingBeltUtilityEngineering: 2
+    RCD: 2
+    ToolboxElectricalFilled: 2
+    # Expendable equipment
+    MetalFoamGrenade: 3
+    RCDAmmo: 3
+    APCElectronics: 4
+    SubstationMachineCircuitboard: 3
+    SMESMachineCircuitboard: 2
     ClothingHeadHatCone: 4
+    BoxInflatable: 2
+    # Optional equipment
+    BaseHandheldStationMap: 3
   contrabandInventory:
     CowToolboxFilled: 1
     DrinkBeerCan: 3

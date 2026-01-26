@@ -827,7 +827,6 @@
   name: loadout-group-chief-engineer-head
   minLimit: 0
   loadouts:
-  - ChiefEngineerHead
   - ChiefEngineerBeret
 
 - type: loadoutGroup
@@ -887,9 +886,6 @@
   name: loadout-group-station-engineer-head
   minLimit: 0
   loadouts:
-  - StationEngineerHardhatYellow
-  - StationEngineerHardhatOrange
-  - StationEngineerHardhatRed
   - SeniorEngineerBeret
 
 - type: loadoutGroup

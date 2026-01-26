@@ -20,8 +20,6 @@
 - type: startingGear
   id: StationEngineerGear
   equipment:
-    eyes: ClothingEyesGlassesMeson
-    belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
   #storage:
     #back:
