@@ -1,5 +1,5 @@
 ﻿using Content.IntegrationTests.Tests.Interaction;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;

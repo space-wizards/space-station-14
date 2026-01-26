@@ -36,10 +36,11 @@
       60: Critical
       125: Dead
   - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 285
     currentTemperature: 310.15
     specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 360
+    coldDamageThreshold: 285
   # Good eatin', you monster.
   - type: Butcherable
     butcheringType: Spike
@@ -138,7 +139,7 @@
           state: hand
 
   - type: InventorySlots
-  - type: Food
+  - type: Edible # Why? I'm not sure but I also am afraid of the answer.
   - type: Hunger
     baseDecayRate: 0.05 # They get a lil' hungy
   - type: BodyEmotes # Grants them clapping and so on.

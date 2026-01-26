@@ -1,210 +1,224 @@
 - type: entity
-  id: CrateFoodPizza
   parent: CratePlastic
+  id: CrateFoodPizza
   name: emergency pizza delivery
   description: Help do your part to end station hunger by distributing pizza to underfunded departments! Includes 4 pizzas.
   components:
-  - type: StorageFill
-    contents:
-    - id: FoodBoxPizzaFilled
-      amount: 3
-    - id: FoodBoxPizzaCotton
-    - id: LidSalami
-      prob: 0.01
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FoodBoxPizzaFilled
+          amount: 3
+        - id: FoodBoxPizzaCotton
+        - id: LidSalami
+          prob: 0.01
 
 - type: entity
-  id: CrateFoodMRE
   parent: CratePlastic
+  id: CrateFoodMRE
   name: MRE crate
   description: A military style meal fit to feed a whole department.
   components:
-  - type: StorageFill
-    contents:
-    - id: BoxMRE
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: BoxMRE
+        amount: 6
 
 - type: entity
-  id: CrateFoodCooking
   parent: CrateFreezer
+  id: CrateFoodCooking
   name: kitchen supplies crate
   description: Extra kitchen supplies, in case the botanists are absent.
   components:
-  - type: StorageFill
-    contents:
-    - id: ReagentContainerFlour
-      amount: 3
-    - id: ReagentContainerRice
-      amount: 3
-    - id: FoodBoxCloth
-      amount: 1
-    - id: DrinkMilkCarton
-      amount: 4
-    - id: DrinkSoyMilkCarton
-      amount: 2
-    - id: ReagentContainerSugar
-      amount: 2
-    - id: FoodCondimentPacketSalt
-      amount: 3
-    - id: FoodCondimentBottleEnzyme
-      amount: 2
-    - id: FoodContainerEgg
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ReagentContainerFlour
+          amount: 3
+        - id: ReagentContainerRice
+          amount: 3
+        - id: FoodBoxCloth
+        - id: DrinkMilkCarton
+          amount: 4
+        - id: DrinkSoyMilkCarton
+          amount: 2
+        - id: ReagentContainerSugar
+          amount: 2
+        - id: FoodCondimentPacketSalt
+          amount: 3
+        - id: FoodCondimentBottleEnzyme
+          amount: 2
+        - id: FoodContainerEgg
+          amount: 2
 
 - type: entity
-  id: CrateFoodDinnerware
   parent: CratePlastic
+  id: CrateFoodDinnerware
   name: kitchen dinnerware crate
   description: Extra kitchen supplies, in case the clown was allowed in the cafeteria unsupervised.
   components:
-  - type: StorageFill
-    contents:
-    - id: FoodBowlBig
-      amount: 4
-    - id: FoodPlate
-      amount: 4
-    - id: FoodPlateSmall
-      amount: 4
-    - id: FoodKebabSkewer
-      amount: 4
-    - id: KitchenKnife
-      amount: 1
-    - id: DrinkGlass
-      amount: 4
-    - id: FoodPlateMuffinTin
-      amount: 4
-    - id: FoodPlateTin
-      amount: 4
-    - id: BoxUtensil
-      amount: 1
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FoodBowlBig
+          amount: 4
+        - id: FoodPlate
+          amount: 4
+        - id: FoodPlateSmall
+          amount: 4
+        - id: FoodKebabSkewer
+          amount: 4
+        - id: KitchenKnife
+        - id: DrinkGlass
+          amount: 4
+        - id: FoodPlateMuffinTin
+          amount: 4
+        - id: FoodPlateTin
+          amount: 4
+        - id: BoxUtensil
 
 - type: entity
-  id: CrateFoodBarSupply
   parent: CrateFreezer
+  id: CrateFoodBarSupply
   name: bartending supplies crate
   description: Extra Bar supplies, in case the clown was allowed in the bar unsupervised.
   components:
-  - type: StorageFill
-    contents:
-    - id: DrinkGlass
-      amount: 5
-    - id: DrinkShotGlass
-      amount: 5
-    - id: DrinkShaker
-      amount: 2
-    - id: DrinkOrangeJuice
-      amount: 2
-    - id: DrinkLimeJuice
-      amount: 2
-    - id: DrinkTomatoJuice
-      amount: 2
-    - id: DrinkWaterBottleFull
-      amount: 2
-    - id: DrinkSodaWaterCan
-      amount: 2
-    - id: DrinkCreamCarton
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: DrinkGlass
+          amount: 5
+        - id: DrinkShotGlass
+          amount: 5
+        - id: DrinkShaker
+          amount: 2
+        - id: DrinkOrangeJuice
+          amount: 2
+        - id: DrinkLimeJuice
+          amount: 2
+        - id: DrinkTomatoJuice
+          amount: 2
+        - id: DrinkWaterBottleFull
+          amount: 2
+        - id: DrinkSodaWaterCan
+          amount: 2
+        - id: DrinkCreamCarton
+          amount: 2
 
 - type: entity
-  id: CrateFoodSoftdrinks
   parent: CrateFreezer
+  id: CrateFoodSoftdrinks
   name: softdrinks crate
   description: A variety of sodas to complement a small party, without having to empty the soda machines. Includes 14 sodas.
   components:
-  - type: StorageFill
-    contents:
-    - id: DrinkColaCan
-      amount: 4
-    - id: DrinkGrapeCan
-      amount: 2
-    - id: DrinkRootBeerCan
-      amount: 2
-    - id: DrinkIcedTeaCan
-      amount: 2
-    - id: DrinkLemonLimeCan
-      amount: 2
-    - id: DrinkLemonLimeCranberryCan
-      amount: 2
-    - id: DrinkFourteenLokoCan
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: DrinkColaCan
+          amount: 4
+        - id: DrinkGrapeCan
+          amount: 2
+        - id: DrinkRootBeerCan
+          amount: 2
+        - id: DrinkIcedTeaCan
+          amount: 2
+        - id: DrinkLemonLimeCan
+          amount: 2
+        - id: DrinkLemonLimeCranberryCan
+          amount: 2
+        - id: DrinkFourteenLokoCan
+          amount: 2
 
 - type: entity
-  id: CrateFoodGetMore
   parent: CrateFreezer
+  id: CrateFoodGetMore
   name: Getmore Bakemore crate
   description: Getmore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's Getmore machines!
   components:
-  - type: StorageFill
-    contents:
-    - id: FoodSnackRaisins
-      amount: 4
-    - id: FoodSnackChocolate
-      amount: 6
-    - id: FoodSnackPistachios
-      amount: 4
-    - id: ReagentContainerFlour
-      amount: 3
-    - id: ReagentContainerSugar
-      amount: 2
-    - id: FoodCondimentPacketSalt
-      amount: 3
-    - id: DrinkMilkCarton
-      amount: 2
-    - id: FoodContainerEgg
-      amount: 2
-    - id: FoodBoxCloth
-      amount: 1
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FoodSnackRaisins
+          amount: 4
+        - id: FoodSnackChocolate
+          amount: 6
+        - id: FoodSnackPistachios
+          amount: 4
+        - id: ReagentContainerFlour
+          amount: 3
+        - id: ReagentContainerSugar
+          amount: 2
+        - id: FoodCondimentPacketSalt
+          amount: 3
+        - id: DrinkMilkCarton
+          amount: 2
+        - id: FoodContainerEgg
+          amount: 2
+        - id: FoodBoxCloth
 
 - type: entity
-  id: CrateFoodIceCream
   parent: CrateFreezer
+  id: CrateFoodIceCream
   name: ice cream delivery
   description: An assortment of ice cream delights for any occasion! Includes 16 frozen treats.
   components:
-  - type: StorageFill
-    contents:
-    - id: FoodFrozenSandwich
-      amount: 3
-    - id: FoodFrozenSandwichStrawberry
-      amount: 2
-    - id: FoodFrozenPopsicleOrange
-      amount: 2
-    - id: FoodFrozenPopsicleBerry
-      amount: 2
-    - id: FoodFrozenPopsicleJumbo
-      amount: 3
-    - id: FoodFrozenCornuto
-      amount: 2
-    - id: FoodFrozenSundae
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FoodFrozenSandwich
+          amount: 3
+        - id: FoodFrozenSandwichStrawberry
+          amount: 2
+        - id: FoodFrozenPopsicleOrange
+          amount: 2
+        - id: FoodFrozenPopsicleBerry
+          amount: 2
+        - id: FoodFrozenPopsicleJumbo
+          amount: 3
+        - id: FoodFrozenCornuto
+          amount: 2
+        - id: FoodFrozenSundae
+          amount: 2
 
 - type: entity
-  id: CrateFoodSnowcone
   parent: CrateFreezer
+  id: CrateFoodSnowcone
   name: snowcone delivery
   description: A freezer packed with refreshing snowcones for a hard working crew, or even a lazy one! Includes 16 snowcones.
   components:
-  - type: StorageFill
-    contents:
-    - id: FoodFrozenSnowconeBase
-      amount: 3
-    - id: FoodFrozenSnowconeBerry
-      amount: 3
-    - id: FoodFrozenSnowconeFruit
-      amount: 3
-    - id: FoodFrozenSnowconeRainbow
-      amount: 3
-    - id: FoodFrozenSnowconeClown
-      amount: 2
-    - id: FoodFrozenSnowconeMime
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FoodFrozenSnowconeBase
+          amount: 3
+        - id: FoodFrozenSnowconeBerry
+          amount: 3
+        - id: FoodFrozenSnowconeFruit
+          amount: 3
+        - id: FoodFrozenSnowconeRainbow
+          amount: 3
+        - id: FoodFrozenSnowconeClown
+          amount: 2
+        - id: FoodFrozenSnowconeMime
+          amount: 2
 
 - type: entity
-  id: CrateFoodHappyHonkBigBite
   parent: CratePlastic
+  id: CrateFoodHappyHonkBigBite
   name: Happy Honk meal delivery
   description: Two fully loaded Happy Honk Big Bite burger meals, complete with cheesy fries, a bottle of Space Cola, a slice of apple pie and a toy!
   components:
-  - type: StorageFill
-    contents:
-    - id: FoodMealHappyHonkBigBite
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: FoodMealHappyHonkBigBite
+        amount: 2

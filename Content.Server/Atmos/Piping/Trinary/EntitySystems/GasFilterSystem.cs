@@ -156,18 +156,18 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
         {
-            if (args.ID.HasValue)
+            if (args.Gas.HasValue)
             {
-                if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
+                if (Enum.IsDefined(typeof(Gas), args.Gas))
                 {
-                    filter.FilteredGas = parsedGas;
+                    filter.FilteredGas = args.Gas;
                     _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
-                        $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to {parsedGas.ToString()}");
+                        $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to {args.Gas.ToString()}");
                     DirtyUI(uid, filter);
                 }
                 else
                 {
-                    Log.Warning($"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.ID}");
+                    Log.Warning($"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.Gas}");
                 }
             }
             else

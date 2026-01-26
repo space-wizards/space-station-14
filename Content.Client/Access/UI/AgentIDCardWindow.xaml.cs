@@ -9,7 +9,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Numerics;
 using System.Linq;
-using Content.Client.Stylesheets;
 
 namespace Content.Client.Access.UI
 {

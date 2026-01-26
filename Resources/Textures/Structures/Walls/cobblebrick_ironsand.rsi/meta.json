@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by SeaWyrm (github Aearo-Deepwater) for SS14, based on the 'cobblebrick' sprites created by TheShuEd for SS14",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "full"
+      },
+      {
+        "name": "cobblebrick0",
+        "directions": 4
+      },
+      {
+        "name": "cobblebrick1",
+        "directions": 4
+      },
+      {
+        "name": "cobblebrick2",
+        "directions": 4
+      },
+      {
+        "name": "cobblebrick3",
+        "directions": 4
+      },
+      {
+        "name": "cobblebrick4",
+        "directions": 4
+      },
+      {
+        "name": "cobblebrick5",
+        "directions": 4
+      },
+      {
+        "name": "cobblebrick6",
+        "directions": 4
+      },
+      {
+        "name": "cobblebrick7",
+        "directions": 4
+      }
+    ]
+  }
+  
