@@ -13,21 +13,25 @@
   id: CaptainJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCaptain
+  groupBy: "DefaultUniform"
 
 - type: loadout
   id: CaptainJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCaptain
+  groupBy: "DefaultUniform"
 
 - type: loadout
   id: CaptainFormalSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCapFormal
+  groupBy: "Formal"
 
 - type: loadout
   id: CaptainFormalSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCapFormalDress
+  groupBy: "Formal"
 
 # Head
 - type: loadout
@@ -81,11 +85,6 @@
     back: ClothingBackpackDuffelCaptain
 
 # Outer clothing
-- type: loadout
-  id: CaptainOuterClothing
-  equipment:
-    outerClothing: ClothingOuterArmorCaptainCarapace
-
 - type: loadout
   id: CaptainWintercoat
   equipment:

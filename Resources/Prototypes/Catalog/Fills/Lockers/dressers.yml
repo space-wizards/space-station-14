@@ -9,11 +9,11 @@
         children:
         - id: ClothingHeadHatCaptain
         - id: ClothingHeadHatCapcap
-        - id: ClothingUniformJumpsuitCapFormal
-        - id: ClothingUniformJumpskirtCapFormalDress
-        - id: ClothingHandsGlovesCaptain
+        - id: ClothingUniformJumpsuitCaptain
+        - id: ClothingUniformJumpskirtCaptain
         - id: ClothingOuterWinterCap
         - id: ClothingNeckCloakCap
+        - id: ClothingShoesBootsLaceup
 
 - type: entity
   id: DresserChiefEngineerFilled
@@ -58,9 +58,11 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingHeadHatHopcap
+        - id: ClothingUniformJumpsuitHoP
+        - id: ClothingUniformJumpskirtHoP
         - id: ClothingOuterWinterHoP
-        - id: ClothingEyesGlasses
         - id: ClothingNeckCloakHop
+        - id: ClothingShoesColorBrown
 
 - type: entity
   id: DresserHeadOfSecurityFilled
