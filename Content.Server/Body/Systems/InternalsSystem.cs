@@ -40,7 +40,7 @@ public sealed class InternalsSystem : SharedInternalsSystem
             return; // already connected
 
         // Can the entity breathe the air it is currently exposed to?
-        if (_respirator.CanMetabolizeInhaledAir(uid, false))
+        if (_respirator.CanMetabolizeInhaledAir(uid))
             return;
 
         var tank = FindBestGasTank(uid);
