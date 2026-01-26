@@ -598,6 +598,8 @@ namespace Content.Server.Database
 
         public List<AdminLog> AdminLogs { get; set; } = default!;
 
+        public List<CustomVoteLog> CustomVoteLogs { get; set; } = default!;
+
         [ForeignKey("Server")] public int ServerId { get; set; }
         public Server Server { get; set; } = default!;
     }

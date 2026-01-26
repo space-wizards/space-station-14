@@ -1824,7 +1824,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasConstraintName("FK_custom_vote_log_player_initiator_id1");
 
                     b.HasOne("Content.Server.Database.Round", "Round")
-                        .WithMany()
+                        .WithMany("CustomVoteLogs")
                         .HasForeignKey("RoundId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -2133,6 +2133,8 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.Round", b =>
                 {
                     b.Navigation("AdminLogs");
+
+                    b.Navigation("CustomVoteLogs");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Server", b =>
