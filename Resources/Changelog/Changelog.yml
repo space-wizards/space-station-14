@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Huaqas
-  changes:
-  - message: Vulpkanin now have Undergarments.
-    type: Add
-  id: 8959
-  time: '2025-09-13T17:36:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40321
 - author: MissKay1994
   changes:
   - message: Greatly reduced lethality of Man-O-War shuttle
@@ -4005,3 +3998,11 @@
   id: 9465
   time: '2026-01-26T15:45:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42472
+- author: PJB3005
+  changes:
+  - message: Job lizard plushies can be found in various lockers around the station
+      instead of being loadout items.
+    type: Tweak
+  id: 9466
+  time: '2026-01-26T16:15:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42545
