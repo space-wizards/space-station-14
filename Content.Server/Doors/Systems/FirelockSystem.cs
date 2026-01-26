@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -81,6 +82,13 @@ namespace Content.Server.Doors.Systems
                     {
                         _pointLight.SetEnabled(uid, fire | pressure, pointLight);
                     }
+                }
+
+                if (TryComp<AtmosAlarmableComponent>(uid, out var alarmable) &&
+                    alarmable.LastAlarmState == AtmosAlarmType.Danger &&
+                    this.IsPowered(uid, EntityManager))
+                {
+                    EmergencyPressureStop(uid, firelock, door);
                 }
             }
         }
