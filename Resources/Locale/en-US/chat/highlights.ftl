@@ -11,7 +11,7 @@ highlights-researchdirector = Research Director, "RD", Science, "Sci", "RND", "R
 highlights-detective = Detective, "Det", Armory, Security, "Sec"
 highlights-securitycadet = Security Cadet, Secoff, Cadet, Armory, Security, "Sec"
 highlights-securityofficer = Security Officer, Secoff, Officer, Armory, Security, "Sec"
-highlights-warden = Warden, "Ward", Brig, Genpop, Jail, "Prison", Armory, Security, "Sec
+highlights-warden = Warden, "Ward", Brig, Genpop, Jail, "Prison", Armory, Security, "Sec"
 
 # Cargo
 highlights-cargotechnician = Cargo Technician, Cargo Tech, "Cargo", Supply
@@ -26,7 +26,7 @@ highlights-technicalassistant = Technical Assistant, Tech Assistant, Engineering
 highlights-chemist = Chemist, Chemistry, "Chem", Medbay, Medical, "Med"
 highlights-medicaldoctor = Medical Doctor, Doctor, "Doc", Medbay, Medical, "Med"
 highlights-medicalintern = Medical Intern, Intern, Medbay, Medical, "Med"
-highlights-paramedic = Paramedic, "Para", "Medic" Medbay, Medical, "Med"
+highlights-paramedic = Paramedic, "Para", "Medic", Medbay, Medical, "Med"
 
 # Science
 highlights-scientist = Scientist, Science, "Sci", "RND", "R&D"
@@ -40,7 +40,7 @@ highlights-chef = Chef, "Cook", Kitchen, Service, "Serv"
 highlights-clown = Clown, Theatre, Theater, Service, "Serv"
 highlights-janitor = Janitor, "Jani", Service, "Serv"
 highlights-lawyer = Lawyer, Attorney, Service, "Serv"
-highlights-librarian = Librarian, Library, Service, "Serv"
+highlights-librarian = Librarian, Library, "Law", Service, "Serv"
 highlights-mime = Mime, Theatre, Theater, Service, "Serv"
 highlights-musician = Musician, "Music", Theatre, Theater, Service, "Serv"
 highlights-passenger = Passenger, Greytider, Graytider, "Tider", "Tide"
