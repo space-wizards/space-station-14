@@ -48,10 +48,11 @@ jobs:
           cd RobustToolbox/
           git submodule update --init --recursive
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v4.1.0
-        with:
-          dotnet-version: 10.0.x
+      # ubuntu-latest has .NET 10
+      # - name: Setup .NET Core
+      #   uses: actions/setup-dotnet@v4.1.0
+      #   with:
+      #     dotnet-version: 10.0.x
 
       - name: Install dependencies
         run: dotnet restore
