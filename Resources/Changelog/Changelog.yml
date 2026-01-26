@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MissKay1994
-  changes:
-  - message: Greatly reduced lethality of Man-O-War shuttle
-    type: Tweak
-  id: 8960
-  time: '2025-09-14T05:44:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40339
 - author: ScarKy0
   changes:
   - message: Vulpkanin now use the corrent undergarments when "Censor character nudity"
@@ -4006,3 +3999,11 @@
   id: 9466
   time: '2026-01-26T16:15:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42545
+- author: Princess-Cheeseballs
+  changes:
+  - message: Boxing gloves in the uplink are now the rigged variants instead of the
+      normal variants.
+    type: Fix
+  id: 9467
+  time: '2026-01-26T20:25:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42662
