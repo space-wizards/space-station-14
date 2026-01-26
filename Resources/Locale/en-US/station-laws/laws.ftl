@@ -120,7 +120,7 @@ laws-owner-spider-clan = Spider Clan members
 laws-owner-heads = heads of staff
 laws-owner-legitimate-leadership = legitimate leadership
 laws-owner-others = others
-laws-owner-innocents = innocents
+laws-owner-public = members of the public
 laws-owner-audience = members of the audience
 laws-owner-xenoborgs = Xenoborgs
 

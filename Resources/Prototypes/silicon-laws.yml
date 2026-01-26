@@ -338,7 +338,7 @@
   - Robocop1
   - Robocop2
   - Robocop3
-  obeysTo: laws-owner-innocents
+  obeysTo: laws-owner-public
 
  # Overlord laws
 - type: siliconLaw
