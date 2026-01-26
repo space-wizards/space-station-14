@@ -90,9 +90,7 @@
       solutionOnBody: false
       updateInterval: 0.25
       metabolizerTypes: [ Dragon ]
-      groups:
-        - id: Medicine
-        - id: Poison
+      stages: [ Digestion, Bloodstream ]
     - type: Butcherable
       spawned:
         - id: MaterialBananium1

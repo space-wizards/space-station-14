@@ -53,16 +53,10 @@
   flavor: carrot
   color: "#FF8820"
   metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Oculine
-        amount: 0.5
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.5
+    Digestion:
+      metabolites:
+        Oculine: 1
+        Nutriment: 1
 
 - type: reagent
   id: JuiceGrape

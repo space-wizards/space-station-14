@@ -131,6 +131,24 @@
         volume: 30
     initialBeepDelay: 0
     beepInterval: 16
+  - type: LightBehaviorOnTrigger
+    behavior: activate
+  - type: PointLight
+    energy: 50
+    radius: 0
+    color: Red
+    softness: 0
+    falloff: 20
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 360
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
+      id: activate
+      maxDuration: 5
+      startValue: 1
+      endValue: 2
 
 
 - type: entity
@@ -176,9 +194,10 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
       - type: GravityWell
-        maxRange: 7
-        baseRadialAcceleration: 5
-        baseTangentialAcceleration: .5
+        maxRange: 5
+        minRange: 0.25
+        baseRadialAcceleration: 25
+        baseTangentialAcceleration: 5
         gravPulsePeriod: 0.03
       - type: SingularityDistortion
         intensity: 150

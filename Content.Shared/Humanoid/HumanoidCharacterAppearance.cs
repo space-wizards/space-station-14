@@ -104,11 +104,6 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         };
 
         return new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new());
-
-        float RandomizeColor(float channel)
-        {
-            return MathHelper.Clamp01(channel + random.Next(-25, 25) / 100f);
-        }
     }
 
     public static Color ClampColor(Color color)

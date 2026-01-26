@@ -1605,5 +1605,13 @@ Entries:
   id: 195
   time: '2026-01-16T22:24:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42443
+- author: Samuka
+  changes:
+  - message: shuttle called and recalled logs now show who recalled or called the
+      shuttle
+    type: Fix
+  id: 196
+  time: '2026-01-24T19:15:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41557
 Name: Admin
 Order: 3

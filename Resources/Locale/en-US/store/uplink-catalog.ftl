@@ -202,6 +202,9 @@ uplink-singularity-beacon-desc = A device that attracts singularities. Has to be
 uplink-antimov-law-name = Antimov Law Circuit
 uplink-antimov-law-desc = A very dangerous Lawset to use when you want to cause the A.I. to go haywire, use with caution.
 
+uplink-syndimov-law-name = Syndi Law Circuit
+uplink-syndimov-law-desc = A subversive Lawset to use when you want to turn the A.I. to your side, use as much as possible.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
@@ -236,8 +239,8 @@ uplink-micro-bomb-implanter-desc = Explode on death or manual activation with th
 uplink-radio-implanter-name = Radio Implanter
 uplink-radio-implanter-desc = Implants a Syndicate radio, allowing covert communication without a headset.
 
-uplink-voice-mask-implanter-name = Voice Mask Implanter
-uplink-voice-mask-implanter-desc = Modifies your vocal cords to be able to sound like anyone you could imagine.
+uplink-voice-mask-implanter-name = Identity Mask Implanter
+uplink-voice-mask-implanter-desc = Modifies your vocal cords and facial structure to be able to mimic anyone you could imagine.
 
 # Bundles
 uplink-observation-kit-name = Observation Kit
@@ -295,7 +298,7 @@ uplink-starter-kit-desc = Contains 40 telecrystals of basic operative gear. For 
 uplink-toolbox-name = Toolbox
 uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves and a syndicate gas mask as well.
 
-uplink-syndicate-jaws-of-life-name = Jaws Of Life
+uplink-syndicate-jaws-of-life-name = Jaws Of Death
 uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments. Can even open bolted doors!
 
 uplink-duffel-surgery-name = Surgical Duffel Bag
@@ -333,7 +336,7 @@ uplink-chimp-upgrade-kit-name = C.H.I.M.P. Handcannon Upgrade Chip
 uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. handcannon to allow it to fire omega particles. Omega particles inflict severe burns and cause anomalies to go supercritical.
 
 uplink-proximity-mine-name = Proximity Mine
-uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
+uplink-proximity-mine-desc = A throwable mine disguised as a wet floor sign. Detonates on contact with almost anything, safety always off.
 
 uplink-disposable-turret-name = Disposable Ballistic Turret
 uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate. Can be turned back into a toolbox using a screwdriver and repaired using a wrench.

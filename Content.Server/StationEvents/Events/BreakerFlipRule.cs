@@ -17,7 +17,7 @@ public sealed class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponen
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}"))));
+        var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")));
         stationEvent.StartAnnouncement = str;
 
         base.Added(uid, component, gameRule, args);

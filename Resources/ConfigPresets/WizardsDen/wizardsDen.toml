@@ -58,3 +58,6 @@ max_explosion_range = 10
 privacy_policy_link = "https://spacestation14.com/about/privacy/#game-server-privacy-policy"
 privacy_policy_identifier = "wizden"
 privacy_policy_version = "2025-01-19"
+
+[feedback]
+valid_origins = "wizden"
