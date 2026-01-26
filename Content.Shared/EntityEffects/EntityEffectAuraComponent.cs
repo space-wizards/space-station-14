@@ -51,6 +51,6 @@ public sealed partial class EntityEffectAuraComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Interval = 1f;
 
-    [DataField("nextEntityEffect", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextEntityEffect = TimeSpan.Zero;
 }
