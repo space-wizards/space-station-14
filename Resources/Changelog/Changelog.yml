@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: 5tickman
-  changes:
-  - message: Food and ingredient item sizes have been adjusted.
-    type: Tweak
-  - message: Mimes now start with a Nutribrick instead of a Baguette.
-    type: Tweak
-  - message: The combat bakery kit is now a 4x4 sized box.
-    type: Tweak
-  id: 8953
-  time: '2025-09-11T11:37:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39203
 - author: aada
   changes:
   - message: Cups, bottles, mugs, and other drinks have had minor changes. Most are
@@ -4009,3 +3998,11 @@
   id: 9459
   time: '2026-01-26T00:39:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42641
+- author: SlamBamActionman
+  changes:
+  - message: Crowbars are now consistent with other 1x2 items in terms of storage,
+      e.g. in pockets.
+    type: Tweak
+  id: 9460
+  time: '2026-01-26T01:35:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42585
