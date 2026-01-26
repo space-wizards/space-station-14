@@ -44,6 +44,7 @@
       - Overlay
       - UndergarmentTop
       - UndergarmentBottom
+      - Special
 
 - type: entity
   parent: OrganBase
@@ -331,12 +332,7 @@
     category: Lungs
   - type: Lung
   - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    groups:
-    - id: Gas
-      rateModifier: 100.0
+    stages: [ Respiration ]
   - type: SolutionContainerManager
     solutions:
       Lung:
@@ -363,10 +359,7 @@
     - state: heart-on
   - type: Metabolizer
     maxReagents: 2
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
+    stages: [ Bloodstream ]
 
 - type: entity
   parent: OrganBase
@@ -384,9 +377,7 @@
         maxVol: 50
   - type: Metabolizer
     maxReagents: 3
-    groups:
-    - id: Food
-    - id: Drink
+    stages: [ Digestion ]
   - type: Sprite
     layers:
     - state: stomach
@@ -409,8 +400,7 @@
     heldPrefix: liver
   - type: Metabolizer
     maxReagents: 1
-    groups:
-    - id: Alcohol
+    stages: [ Metabolites ]
 
 - type: entity
   parent: OrganBase
@@ -429,7 +419,6 @@
     heldPrefix: kidneys
   - type: Metabolizer
     maxReagents: 5
-    removeEmpty: true
 
 - type: entity
   id: OrganSpriteHumanInternal

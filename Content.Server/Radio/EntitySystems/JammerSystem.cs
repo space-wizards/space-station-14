@@ -16,13 +16,13 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using Content.Shared.Radio.EntitySystems;
+using Content.Shared.Radio.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
 public sealed class JammerSystem : SharedJammerSystem
 {
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
     [Dependency] private readonly FixtureSystem _fixture = default!;
@@ -34,9 +34,8 @@ public sealed class JammerSystem : SharedJammerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RadioJammerComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<ActiveRadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
+        SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
         SubscribeLocalEvent<RadioJammerFixtureComponent, StartCollideEvent>(OnJammerStartCollide);
         SubscribeLocalEvent<RadioJammerFixtureComponent, EndCollideEvent>(OnJammerEndCollide);
         SubscribeLocalEvent<RadioJammerFixtureComponent, ComponentShutdown>(OnFixtureShutdown);
@@ -132,20 +131,24 @@ public sealed class JammerSystem : SharedJammerSystem
 
     private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
     {
-        if (ShouldCancelSend(args.RadioSource, args.Channel.Frequency))
-        {
+        if (ShouldCancel(args.RadioSource, args.Channel.Frequency))
             args.Cancelled = true;
-        }
     }
 
-    private bool ShouldCancelSend(EntityUid sourceUid, int frequency)
+    private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
+    {
+        if (ShouldCancel(args.RadioReceiver, args.Channel.Frequency))
+            args.Cancelled = true;
+    }
+
+    private bool ShouldCancel(EntityUid sourceUid, int frequency)
     {
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, RadioJammerFixtureComponent>();
 
         while (query.MoveNext(out var uid, out _, out var jam, out var fixture))
         {
             // Check if this jammer excludes the frequency
-            if (jam.FrequenciesExcluded != null && jam.FrequenciesExcluded.Contains(frequency))
+            if (jam.FrequenciesExcluded.Contains(frequency))
                 continue;
 
             // Use cached collision set instead of range check!
