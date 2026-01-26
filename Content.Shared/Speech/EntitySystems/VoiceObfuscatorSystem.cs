@@ -14,7 +14,6 @@ namespace Content.Shared.Speech.EntitySystems;
 public sealed class VoiceObfuscatorSystem : EntitySystem
 {
     [Dependency] private readonly MaskSystem _mask = default!;
-    [Dependency] private readonly HumanoidProfileSystem _humanoidProfile = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
 
     public override void Initialize()
