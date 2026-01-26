@@ -22,7 +22,7 @@
     CaptainGunStealObjective: 0.5
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
-    EnergyShotgunStealObjective: 0.5
+    EnergyMagnumStealObjective: 0.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -34,7 +34,7 @@
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
-    DieObjective: 0.05
+    DieObjective: 0.2
     #HijackShuttleObjective: 0.02
 
 - type: weightedRandom
@@ -85,7 +85,6 @@
     AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
-    ClothingEyesHudBeerStealObjective: 0.5              #srv, beer goggles less common cause its so easy
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5

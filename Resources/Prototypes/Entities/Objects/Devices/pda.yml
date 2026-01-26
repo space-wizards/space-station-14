@@ -64,7 +64,8 @@
   - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
-    radius: 1.5
+    radius: 1.7
+    falloff: 3
     softness: 5
     autoRot: true
   - type: Ringer
@@ -1008,8 +1009,8 @@
   - type: Instrument
     allowPercussion: false
     handheld: true
-    bank: 1
     program: 2
+    bank: 100 # Defined in space-station-14.sf2
 
 - type: entity
   parent: MusicianPDA
@@ -1500,6 +1501,22 @@
     state: pda-seniorcourier
 
 - type: entity
+  parent: [ BaseHighlyIllegalContraband, BasePDA ]
+  id: NinjaPDA
+  name: ninja PDA
+  description: You stealthy bastard, you!
+  components:
+  - type: Pda
+    id: NinjaIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-ninja
+  - type: Icon
+    state: pda-ninja
+
+- type: entity
   parent: [ BaseMajorContraband, SyndiPDA ]
   id: PiratePDA
   name: pirate PDA
@@ -1545,6 +1562,14 @@
         type: HealthAnalyzerBoundUserInterface
       enum.ChameleonUiKey.Key:
         type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ChameleonPDA
+  id: ChameleonAgentPDA
+  suffix: Chameleon, Agent ID
+  components:
+  - type: Pda
+    id: AgentIDCard
 
 - type: entity
   parent: BaseWidePDA

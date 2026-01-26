@@ -110,7 +110,7 @@
           type: WiresBoundUserInterface
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#43ccb5"
 
 - type: entity
@@ -134,7 +134,7 @@
     radius: 256
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#43ccb5"
   - type: ItemSlots
     slots:
@@ -204,7 +204,7 @@
     radius: 1536
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#c94242"
   - type: Computer
     board: SyndicateShuttleConsoleCircuitboard
@@ -234,7 +234,7 @@
     maxRange: 256
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#43ccb5"
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
@@ -283,6 +283,7 @@
     allowedFlags:
       - Hide
       - HideLabel
+    hideOnInit: true
   - type: ActivatableUI
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
@@ -314,7 +315,7 @@
       state: generic_panel_open
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#c9c042"
   - type: Computer
     board: PowerComputerCircuitboard
@@ -356,7 +357,7 @@
       state: generic_panel_open
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
@@ -390,7 +391,7 @@
       state: generic_panel_open
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
@@ -417,7 +418,7 @@
     key: enum.GeneralStationRecordConsoleKey.Key
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
   - type: Computer
     board: StationRecordsComputerCircuitboard
@@ -445,7 +446,7 @@
       state: generic_panel_open
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#006400"
   - type: Computer
     board: CrewMonitoringComputerCircuitboard
@@ -499,14 +500,17 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: AccessReader
     access: [["Research"]]
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b53ca1"
   - type: GuideHelp
     guides:
@@ -550,16 +554,19 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: Computer
     board: AnalysisComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b53ca1"
   - type: GuideHelp
     guides:
-    - Xenoarchaeology
+    - AnalysisConsole
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -615,11 +622,8 @@
     board: IDComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#3c5eb5"
-  - type: Tag
-    tags:
-    - AccessBreakerImmune
   - type: ItemSlots
   - type: ContainerContainer
     containers:
@@ -633,13 +637,11 @@
   name: body scanner computer
   description: A body scanner.
   components:
-  - type: ApcPowerReceiver
-    powerLoad: 500
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
 
 - type: entity
@@ -679,7 +681,7 @@
     board: CommsComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#3c5eb5"
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -716,7 +718,7 @@
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#f71713"
 
 - type: entity
@@ -750,7 +752,7 @@
     board: WizardCommsComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#F317F3"
 
 - type: entity
@@ -782,7 +784,7 @@
     board: CentcommCommsComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#00FF00"
 
 - type: entity
@@ -816,7 +818,7 @@
     board: SolarControlComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#e6e227"
   - type: GuideHelp
     guides:
@@ -854,7 +856,7 @@
     board: RadarConsoleCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#e6e227"
 
 - type: entity
@@ -892,7 +894,7 @@
     board: CargoRequestComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
@@ -1106,7 +1108,7 @@
     board: CargoBountyComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b89f25"
   - type: AccessReader
     access: [["Quartermaster"]]
@@ -1149,7 +1151,7 @@
     board: FundingAllocationComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#3c5eb5"
 
 - type: entity
@@ -1174,13 +1176,11 @@
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
-  - type: ApcPowerReceiver
-    powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
   - type: Computer
     board: CloningConsoleComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
   - type: DeviceLinkSource
     range: 4
@@ -1238,7 +1238,7 @@
     board: SalvageJobBoardComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b89f25"
 
 - type: entity
@@ -1287,7 +1287,7 @@
       board: SalvageExpeditionsComputerCircuitboard
     - type: PointLight
       radius: 1.5
-      energy: 1.6
+      energy: 4.0
       color: "#b89f25"
     - type: AccessReader
       access: [["Salvage"]]
@@ -1423,7 +1423,7 @@
     board: CargoSaleComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b89f25"
   - type: GuideHelp
     guides:
@@ -1489,7 +1489,7 @@
           state: generic_panel_open
     - type: PointLight
       radius: 1.5
-      energy: 1.6
+      energy: 4.0
       color: "#43ccb5"
     - type: Computer
       board: SensorConsoleCircuitboard
@@ -1517,7 +1517,7 @@
   parent: BaseComputerAiAccess
   id: ComputerRoboticsControl
   name: robotics control console
-  description: Used to remotely monitor, disable and destroy the station's cyborgs.
+  description: Used to remotely monitor the station's cyborgs.
   components:
   - type: Sprite
     layers:
@@ -1532,6 +1532,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: RoboticsConsole
+    allowBorgControl: false
   - type: ActiveRadio
     channels:
     - Science
@@ -1544,7 +1545,11 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 5
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 1000
+  - type: UIPowerState
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: RoboticsConsole
@@ -1557,7 +1562,7 @@
     unlockOnClick: false
 
 - type: entity
-  parent: ComputerRoboticsControl
+  parent: BaseComputer
   id: ComputerXenoborgsControl
   name: xenoborgs control console
   description: Used to remotely monitor all xenoborgs.
@@ -1574,20 +1579,31 @@
       state: rd_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
+  - type: ActivatableUI
+    key: enum.RoboticsConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.RoboticsConsoleUiKey.Key:
+        type: RoboticsConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: RoboticsConsole
     allowBorgControl: false
     radioChannel: Xenoborg
   - type: ActiveRadio
     channels:
     - Xenoborg
+  - type: ApcPowerReceiver
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: Mothership
     transmitFrequencyId: Xenoborg
   - type: Computer
     board: ComputerXenoborgsControlCircuitboard
-  - type: AccessReader # only used for dangerous things
-    access: [["Xenoborg"]]
 
 - type: entity
   id: StationAiUploadComputer
@@ -1608,7 +1624,10 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: Computer
     board: StationAiUploadCircuitboard
   - type: AccessReader
@@ -1684,7 +1703,10 @@
           True: { visible: false }
           False: { visible: true }
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: Computer
     board: StationAiFixerCircuitboard
   - type: AccessReader
@@ -1719,3 +1741,41 @@
         type: StationAiFixerConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerNukieDelivery
+  name: syndicate delivery computer
+  description: "A computer that can bluespace in certain equipment for Nuclear Operations. \nThe circuitboard is integrated into the frame and can't be recovered if deconstructed."
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-syndie
+    - map: ["computerLayerKeys"]
+      state: syndie_generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  # - type: Computer
+  #   board: SyndicateCommsComputerCircuitboard
+  - type: Anchorable
+    flags:
+    - Anchorable # No taking the console along!
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#f71713"
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    name: store-preset-name-nukie-delivery
+    categories:
+    - NukieDelivery

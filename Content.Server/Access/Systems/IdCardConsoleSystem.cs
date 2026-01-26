@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Containers;
@@ -7,9 +8,11 @@ using static Content.Shared.Access.Components.IdCardConsoleComponent;
 using Content.Shared.Access.Systems;
 using Content.Shared.Access;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Chat;
 using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
@@ -83,7 +86,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         {
             newState = new IdCardConsoleBoundUserInterfaceState(
                 component.PrivilegedIdSlot.HasItem,
-                PrivilegedIdIsAuthorized(uid, component),
+                PrivilegedIdIsAuthorized(uid, component, out _),
                 false,
                 null,
                 null,
@@ -108,7 +111,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
             newState = new IdCardConsoleBoundUserInterfaceState(
                 component.PrivilegedIdSlot.HasItem,
-                PrivilegedIdIsAuthorized(uid, component),
+                PrivilegedIdIsAuthorized(uid, component, out _),
                 true,
                 targetIdComponent.FullName,
                 targetIdComponent.LocalizedJobTitle,
@@ -137,13 +140,13 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component))
+        if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component, out var privilegedId))
             return;
 
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
-        if (_prototype.TryIndex<JobPrototype>(newJobProto, out var job)
+        if (_prototype.Resolve(newJobProto, out var job)
             && _prototype.Resolve(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
@@ -165,10 +168,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
         }
 
-        var oldTags = _access.TryGetTags(targetId) ?? new List<ProtoId<AccessLevelPrototype>>();
-        oldTags = oldTags.ToList();
-
-        var privilegedId = component.PrivilegedIdSlot.Item;
+        var oldTags = _access.TryGetTags(targetId)?.ToList() ?? new List<ProtoId<AccessLevelPrototype>>();
 
         if (oldTags.SequenceEqual(newAccessList))
             return;
@@ -176,8 +176,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
         // var difference = newAccessList.Difference(oldTags);
         var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
-        // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
-        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
+        var privilegedPerms = _accessReader.FindAccessTags(privilegedId.Value);
         if (!difference.IsSubsetOf(privilegedPerms))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
@@ -190,26 +189,24 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
-        _adminLogger.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
+        _adminLogger.Add(LogType.Action,
+            $"{player} has modified {targetId} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
     }
 
     /// <summary>
     /// Returns true if there is an ID in <see cref="IdCardConsoleComponent.PrivilegedIdSlot"/> and said ID satisfies the requirements of <see cref="AccessReaderComponent"/>.
     /// </summary>
-    /// <remarks>
-    /// Other code relies on the fact this returns false if privileged Id is null. Don't break that invariant.
-    /// </remarks>
-    private bool PrivilegedIdIsAuthorized(EntityUid uid, IdCardConsoleComponent? component = null)
+    private bool PrivilegedIdIsAuthorized(EntityUid uid, IdCardConsoleComponent component, [NotNullWhen(true)] out EntityUid? id)
     {
-        if (!Resolve(uid, ref component))
-            return true;
+        id = null;
+        if (component.PrivilegedIdSlot.Item == null)
+            return false;
 
+        id = component.PrivilegedIdSlot.Item;
         if (!TryComp<AccessReaderComponent>(uid, out var reader))
             return true;
 
-        var privilegedId = component.PrivilegedIdSlot.Item;
-        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, reader);
+        return _accessReader.IsAllowed(id.Value, uid, reader);
     }
 
     private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string newFullName, ProtoId<AccessLevelPrototype> newJobTitle, JobPrototype? newJobProto)

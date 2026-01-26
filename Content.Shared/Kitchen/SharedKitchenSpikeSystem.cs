@@ -1,12 +1,13 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Systems;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
+using Content.Shared.Gibbing;
 using Content.Shared.Hands;
+using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -40,7 +41,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
+    [Dependency] private readonly GibbingSystem _gibbing = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
@@ -69,7 +70,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         // Prevent the victim from doing anything while on the spike.
         SubscribeLocalEvent<KitchenSpikeHookedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
-        SubscribeLocalEvent<KitchenSpikeHookedComponent, UpdateCanMoveEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, UseAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, ThrowAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, DropAttemptEvent>(OnAttempt);
@@ -238,8 +238,11 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 args.Target.Value,
                 ent);
 
+            // normally medium severity, but for humanoids high severity, so new players get relay'd to admin alerts.
+            var logSeverity = HasComp<HumanoidProfileComponent>(args.Target) ? LogImpact.High : LogImpact.Medium;
+
             _logger.Add(LogType.Action,
-                LogImpact.High,
+                logSeverity,
                 $"{ToPrettyString(args.User):user} put {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
 
             _audioSystem.PlayPredicted(ent.Comp.SpikeSound, ent, args.User);
@@ -288,7 +291,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         // Get a random entry to spawn.
         // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_gameTiming.CurTick.Value, GetNetEntity(ent).Id });
+        var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(ent).Id);
         var rand = new System.Random(seed);
 
         var index = rand.Next(butcherable.SpawnedEntities.Count);
@@ -314,19 +317,23 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         // Gib the victim if there is nothing else to butcher.
         if (butcherable.SpawnedEntities.Count == 0)
         {
-            _bodySystem.GibBody(args.Target.Value, true);
+            _gibbing.Gib(args.Target.Value);
+
+            var logSeverity = HasComp<HumanoidProfileComponent>(args.Target) ? LogImpact.Extreme : LogImpact.High;
 
             _logger.Add(LogType.Gib,
-                LogImpact.Extreme,
+                logSeverity,
                 $"{ToPrettyString(args.User):user} finished butchering {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
         }
         else
         {
             EnsureComp<KitchenSpikeVictimComponent>(args.Target.Value);
 
-            _damageableSystem.TryChangeDamage(args.Target, ent.Comp.ButcherDamage, true);
+            _damageableSystem.ChangeDamage(args.Target.Value, ent.Comp.ButcherDamage, true);
+
+            // Log severity for damaging other entities is normally medium.
             _logger.Add(LogType.Action,
-                LogImpact.Extreme,
+                LogImpact.Medium,
                 $"{ToPrettyString(args.User):user} butchered {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
         }
 
@@ -420,7 +427,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             kitchenSpike.NextDamage += kitchenSpike.DamageInterval;
             Dirty(uid, kitchenSpike);
 
-            _damageableSystem.TryChangeDamage(contained, kitchenSpike.TimeDamage, true);
+            _damageableSystem.ChangeDamage(contained.Value, kitchenSpike.TimeDamage, true);
         }
     }
 

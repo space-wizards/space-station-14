@@ -42,6 +42,7 @@
   - type: AtmosExposed
   - type: Temperature
     currentTemperature: 290
+  - type: TemperatureDamage
   # required for cooking to work
   - type: InternalTemperature
     thickness: 0.02
@@ -69,16 +70,6 @@
     entity: FoodMeatRotten
     # once it would say bloated, turn into the rotten prototype
     stage: 1
-
-# bruh
-- type: Tag
-  id: Raw
-
-- type: Tag
-  id: Cooked
-
-- type: Tag
-  id: Cutlet
 
 # Raw
 
@@ -1241,6 +1232,23 @@
       right:
       - state: plain-cooked-inhand-right
         color: "#F7E3A3"
+
+- type: entity
+  parent: FoodMeatChickenFried
+  id: FoodMeatChickenFriedVox
+  name: mystery fried chicken
+  description: “Eleven secret herbs and… oh no. That’s not chicken."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Ammonia
+          Quantity: 3
 
 - type: entity
   parent: FoodMeatBase

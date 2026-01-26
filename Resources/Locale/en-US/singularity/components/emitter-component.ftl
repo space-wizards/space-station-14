@@ -11,5 +11,5 @@ comp-emitter-turned-off = The {$target} turns off.
 # Shows if the user attempts to activate the emitter while it's un-anchored.
 comp-emitter-not-anchored = The {$target} isn't anchored to the ground!
 
-emitter-component-current-type = The current selected type is: {$type}.
+emitter-component-current-type = The current selected type is: [color=yellow]{$type}[/color].
 emitter-component-type-set = Type set to: {$type}

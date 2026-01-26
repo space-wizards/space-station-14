@@ -79,6 +79,18 @@ namespace Content.Client.Access.UI
                 JobPresetOptionButton.AddItem(Loc.GetString(job.Name), _jobPrototypeIds.Count - 1);
             }
 
+            SelectAllButton.OnPressed += _ =>
+            {
+                SetAllAccess(true);
+                SubmitData();
+            };
+
+            DeselectAllButton.OnPressed += _ =>
+            {
+                SetAllAccess(false);
+                SubmitData();
+            };
+
             JobPresetOptionButton.OnItemSelected += SelectJobPreset;
             _accessButtons.Populate(accessLevels, prototypeManager);
             AccessLevelControlContainer.AddChild(_accessButtons);
@@ -89,14 +101,13 @@ namespace Content.Client.Access.UI
             }
         }
 
-        private void ClearAllAccess()
+        /// <param name="enabled">If true, every individual access button will be pressed. If false, each will be depressed.</param>
+        private void SetAllAccess(bool enabled)
         {
             foreach (var button in _accessButtons.ButtonsList.Values)
             {
-                if (button.Pressed)
-                {
-                    button.Pressed = false;
-                }
+                if (!button.Disabled && button.Pressed != enabled)
+                    button.Pressed = enabled;
             }
         }
 
@@ -110,7 +121,7 @@ namespace Content.Client.Access.UI
             JobTitleLineEdit.Text = Loc.GetString(job.Name);
             args.Button.SelectId(args.Id);
 
-            ClearAllAccess();
+            SetAllAccess(false);
 
             // this is a sussy way to do this
             foreach (var access in job.Access)

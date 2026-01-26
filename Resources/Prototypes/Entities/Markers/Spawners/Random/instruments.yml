@@ -118,11 +118,24 @@
     - !type:GroupSelector
       weight: 0.1
       children:
-      - id: DawInstrument
-    - !type:GroupSelector
-      weight: 0.05
-      children:
-      - id: SuperSynthesizerInstrument
+      - id: DawInstrumentMachineCircuitboard
+
+- type: entityTable
+  id: SalvageInstrumentTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: VarietyInstrumentTable
+    - !type:NestedSelector
+      tableId: BrassInstrumentTable
+    - !type:NestedSelector
+      tableId: StringInstrumentTable
+    - !type:NestedSelector
+      tableId: KeyedPercussionInstrumentTable
+    - !type:NestedSelector
+      tableId: WoodwindInstrumentTable
+    - !type:NestedSelector
+      tableId: SpecialInstrumentTable
 
 - type: entity
   id: RandomInstruments

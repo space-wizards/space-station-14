@@ -8,16 +8,16 @@
     "copyright": "https://github.com/unitystation/unitystation/blob/221bbcc50edf4e63dc71ac6fd5152664a6b6745a/UnityProject/Assets/Textures/items/drinks/mug_gromit.png | Created By https://github.com/ksivte, inhands and modification by TiniestShark (github)",
     "states": [
         {
-            "name": "icon-0"
+            "name": "icon"
         },
         {
-            "name": "icon-1"
+            "name": "fill-1"
         },
         {
-            "name": "icon-2"
+            "name": "fill-2"
         },
         {
-            "name": "icon-3"
+            "name": "fill-3"
         },
         {
             "name": "inhand-left",

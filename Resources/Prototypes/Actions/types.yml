@@ -256,6 +256,17 @@
 
 - type: entity
   parent: BaseAction
+  id: ActionShootWater
+  name: Spray water!
+  description: Spray water towards your enemies.
+  components:
+  - type: Action
+    icon: { sprite: Clothing/Neck/Misc/pins.rsi, state: flower }
+  - type: InstantAction
+    event: !type:SprayLiquidEvent
+
+- type: entity
+  parent: BaseAction
   id: ActionVendingThrow
   name: Dispense Item
   description: Randomly dispense an item from your stock.
@@ -466,3 +477,22 @@
     itemIconStyle: BigAction
   - type: InstantAction
     event: !type:ChameleonControllerOpenMenuEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionIntrinsicStore
+  name: Store
+  description: Opens the store
+  components:
+  - type: Action
+    icon: Interface/Actions/shop.png
+  - type: InstantAction
+    event: !type:IntrinsicStoreActionEvent
+
+- type: entity
+  parent: ActionChangeVoiceMask
+  id: ActionChangeVoiceMaskImplant
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
+    itemIconStyle: BigAction

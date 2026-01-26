@@ -4,41 +4,24 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class ShockOnTriggerSystem : EntitySystem
+public sealed class ShockOnTriggerSystem : XOnTriggerSystem<ShockOnTriggerComponent>
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
 
-    public override void Initialize()
+    protected override void OnTrigger(Entity<ShockOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<ShockOnTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTrigger(Entity<ShockOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
-        EntityUid? target;
+        // Override the normal target if we target the container
         if (ent.Comp.TargetContainer)
         {
             // shock whoever is wearing this clothing item
             if (!_container.TryGetContainingContainer(ent.Owner, out var container))
                 return;
+
             target = container.Owner;
         }
-        else
-        {
-            target = ent.Comp.TargetUser ? args.User : ent.Owner;
-        }
 
-        if (target == null)
-            return;
-
-        _electrocution.TryDoElectrocution(target.Value, null, ent.Comp.Damage, ent.Comp.Duration, true, ignoreInsulation: true);
+        _electrocution.TryDoElectrocution(target, null, ent.Comp.Damage, ent.Comp.Duration, true, ignoreInsulation: true);
         args.Handled = true;
     }
-
 }
