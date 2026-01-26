@@ -14,7 +14,7 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - ChiefMedicalOfficerJobTrinkets
+#  - ChiefMedicalOfficerJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathToolMedical
 
@@ -32,7 +32,7 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - MedicalDoctorJobTrinkets
+#  - MedicalDoctorJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathToolMedical
 
@@ -45,7 +45,7 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - MedicalInternJobTrinkets
+#  - MedicalInternJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathToolMedical
 
@@ -61,7 +61,7 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - ChemistJobTrinkets
+#  - ChemistJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathToolMedical
 
@@ -78,6 +78,6 @@
   - Glasses
   - SurvivalMedical
   - Trinkets
-  - ParamedicJobTrinkets
+#  - ParamedicJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathToolMedical

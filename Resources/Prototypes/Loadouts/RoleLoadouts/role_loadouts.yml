@@ -11,7 +11,7 @@
   - CaptainOuterClothing
   - Survival
   - Trinkets
-  - CaptainJobTrinkets
+  #- CaptainJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -27,7 +27,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - HoPJobTrinkets
+  #- HoPJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -57,7 +57,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - PassengerJobTrinkets
+  #- PassengerJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -85,7 +85,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ServiceWorkerJobTrinkets
+  #- ServiceWorkerJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -101,7 +101,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ChefJobTrinkets
+  #- ChefJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -114,7 +114,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - LibrarianJobTrinkets
+  #- LibrarianJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -128,7 +128,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - LawyerJobTrinkets
+  #- LawyerJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -146,7 +146,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ChaplainJobTrinkets
+  #- ChaplainJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -177,7 +177,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - BotanistJobTrinkets
+  #- BotanistJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -211,7 +211,7 @@
   - Glasses
   - SurvivalMime
   - Trinkets
-  - MimeJobTrinkets
+  #- MimeJobTrinkets
   - AssistiveItems
 
 - type: roleLoadout
@@ -226,7 +226,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - MusicianJobTrinkets
+  #- MusicianJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -244,7 +244,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - QuartermasterJobTrinkets
+  #- QuartermasterJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -261,7 +261,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - CargoTechnicianJobTrinkets
+  #- CargoTechnicianJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -275,7 +275,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - SalvageSpecialistJobTrinkets
+  #- SalvageSpecialistJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -292,7 +292,7 @@
   - ChiefEngineerShoes
   - SurvivalExtended
   - Trinkets
-  - ChiefEngineerJobTrinkets
+  #- ChiefEngineerJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -304,7 +304,7 @@
   - StationEngineerBackpack
   - SurvivalExtended
   - Trinkets
-  - TechnicalAssistantJobTrinkets
+  #- TechnicalAssistantJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -320,7 +320,7 @@
   - StationEngineerID
   - SurvivalExtended
   - Trinkets
-  - StationEngineerJobTrinkets
+  #- StationEngineerJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -334,7 +334,7 @@
   - AtmosphericTechnicianShoes
   - SurvivalExtended
   - Trinkets
-  - AtmosphericTechnicianJobTrinkets
+  #- AtmosphericTechnicianJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -353,7 +353,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ResearchDirectorJobTrinkets
+  #- ResearchDirectorJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -372,7 +372,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ScientistJobTrinkets
+  #- ScientistJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -385,7 +385,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ResearchAssistantJobTrinkets
+  #- ResearchAssistantJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -459,7 +459,7 @@
   - SecurityBackpack
   - SurvivalSecurity
   - Trinkets
-  - SecurityCadetJobTrinkets
+  #- SecurityCadetJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathToolSecurity
 
@@ -473,7 +473,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ReporterJobTrinkets
+  #- ReporterJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -486,7 +486,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - PsychologistJobTrinkets
+  #- PsychologistJobTrinkets
   - AssistiveItems
   - GroupSpeciesBreathTool
 

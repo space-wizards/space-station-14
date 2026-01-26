@@ -7,7 +7,6 @@
   components:
   - type: RandomHumanoidAppearance
     randomizeName: false
-    hair: HairBald
   - type: Loadout
     prototypes: [SyndicateOperativeGearExtremelyBasic]
     roleLoadout: [ RoleSurvivalSyndicate ]
