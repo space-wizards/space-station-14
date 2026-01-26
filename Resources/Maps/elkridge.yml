@@ -4,8 +4,8 @@ meta:
   engineVersion: 271.1.0
   forkId: ""
   forkVersion: ""
-  time: 01/24/2026 13:08:18
-  entityCount: 18701
+  time: 01/26/2026 15:09:51
+  entityCount: 18698
 maps:
 - 1
 grids:
@@ -96156,25 +96156,14 @@ entities:
   - uid: 1745
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -17.5,-4.5
+      rot: 3.141592653589793 rad
+      pos: -16.5,-8.5
       parent: 2
   - uid: 1759
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -17.5,-5.5
-      parent: 2
-  - uid: 2831
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -17.5,-2.5
-      parent: 2
-  - uid: 2959
-    components:
-    - type: Transform
-      pos: -16.5,-7.5
+      rot: 3.141592653589793 rad
+      pos: -17.5,-8.5
       parent: 2
   - uid: 5113
     components:
@@ -96436,12 +96425,6 @@ entities:
       parent: 2
 - proto: RailingCorner
   entities:
-  - uid: 4972
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -17.5,-7.5
-      parent: 2
   - uid: 6976
     components:
     - type: Transform
