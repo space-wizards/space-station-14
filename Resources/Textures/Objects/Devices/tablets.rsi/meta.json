@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from Baystation12 at https://github.com/Baystation12/Baystation12/tree/17e84546562b97d775cb26790a08e6d87e7f8077 and heavily modified by Flareguy for Space Station 14. Inhands by carousel",
+    "copyright": "Taken from Baystation12 at https://github.com/Baystation12/Baystation12/tree/17e84546562b97d775cb26790a08e6d87e7f8077 and heavily modified by Flareguy for Space Station 14. Inhands by carousel. Syndie versions modified from generic by SlamBamActionman",
     "size": {
         "x": 32,
         "y": 32
@@ -28,6 +28,23 @@
         },
         {
             "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "syndie",
+        "delays": [
+            [
+            0.3,
+            0.3
+            ]
+        ]
+        },
+        {
+            "name": "inhand-left-syndie",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-syndie",
             "directions": 4
         }
     ]

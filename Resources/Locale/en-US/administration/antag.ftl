@@ -8,6 +8,7 @@ admin-verb-make-head-rev = Make the target into a Head Revolutionary.
 admin-verb-make-thief = Make the target into a thief.
 admin-verb-make-paradox-clone = Create a Paradox Clone ghost role of the target.
 admin-verb-make-wizard = Make the target into a Wizard.
+admin-verb-make-space-ninja = Make the target into a Space Ninja.
 admin-verb-make-changeling = Make the target into a Changeling.
 
 
@@ -20,6 +21,7 @@ admin-verb-text-make-head-rev = Make Head Rev
 admin-verb-text-make-thief = Make Thief
 admin-verb-text-make-paradox-clone = Create Paradox Clone
 admin-verb-text-make-wizard = Make Wizard
+admin-verb-text-make-space-ninja = Make Ninja
 admin-verb-text-make-changeling = Make Changeling (WIP)
 
 admin-overlay-antag-classic = ANTAG

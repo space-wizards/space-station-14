@@ -35,6 +35,8 @@
     pocket2: ClownRecorder
     id: ClownPDA
     ears: ClothingHeadsetService
+  inhand:
+  - FoolboxFilled
   storage:
     back:
     - RubberStampClown

@@ -1,15 +1,22 @@
 - type: entity
-  id: Bonfire
+  abstract: true
   parent: BaseStructure
-  name: bonfire
-  description: What can be better than a late evening under the sky with guitar and friends?
+  id: BaseBonfire
   components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        mask:
+        - Impassable
+        layer:
+        - Opaque
+        - BulletImpassable
   - type: Sprite
     noRot: true
     sprite: Structures/Decoration/bonfire.rsi
-    layers:
-      - state: bonfire
-      - state: burning
   - type: PointLight
     radius: 5
     energy: 3
@@ -23,6 +30,9 @@
           !type:DamageTrigger
           damage: 50
         behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
   - type: AmbientSound
@@ -31,15 +41,51 @@
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
+  - type: IgnitionSource
+    temperature: 700
+    ignited: true
 
 - type: entity
+  parent: BaseBonfire
+  id: Bonfire
+  name: bonfire
+  description: What can be better than a late evening under the sky with guitar and friends?
+  components:
+  - type: Sprite
+    layers:
+    - state: burning
+  - type: Construction
+    graph: Bonfire
+    node: bonfire
+
+- type: entity
+  parent: BaseBonfire
+  id: BonfireStake
+  name: bonfire with stake
+  description: A sinister bonfire with a stake for... ceremonial purposes. Best not to ask.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/bonfire_stake.rsi
+    layers:
+    - state: burning
+    offset: "0, 0.5"
+  - type: Strap
+    position: Stand
+    buckleOffset: "0, 0.5"
+    buckleDoafterTime: 5
+  - type: IgniteOnBuckle
+  - type: Construction
+    graph: Bonfire
+    node: bonfireStake
+
+- type: entity
+  parent: BaseBonfire
   id: LegionnaireBonfire
-  parent: Bonfire
   name: legionnaire bonfire
   description: There, in the land of lava and ash, place to to cook marshmallow and potato.
   components:
   - type: Sprite
     layers:
-      - state: legionnaire_bonfire
+    - state: legionnaire_bonfire
   - type: PointLight
     color: "#FF5601"

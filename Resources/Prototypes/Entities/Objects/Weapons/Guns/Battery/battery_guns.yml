@@ -20,7 +20,7 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 1000
     startingCharge: 1000
   - type: StaticPrice
@@ -220,7 +220,7 @@
   - type: BatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 500
     startingCharge: 500
   - type: Tag
@@ -312,7 +312,7 @@
   - type: BatteryAmmoProvider
     proto: Pulse
     fireCost: 200
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 2000
     startingCharge: 2000
   - type: Tag
@@ -354,7 +354,7 @@
   - type: BatteryAmmoProvider
     proto: Pulse
     fireCost: 200
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 5000
     startingCharge: 5000
 
@@ -390,7 +390,7 @@
   - type: BatteryAmmoProvider
     proto: Pulse
     fireCost: 100
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 40000
     startingCharge: 40000
 
@@ -457,7 +457,7 @@
     - type: BatteryAmmoProvider
       proto: AntiParticlesProjectile
       fireCost: 500
-    - type: PredictedBattery
+    - type: Battery
       maxCharge: 10000
       startingCharge: 10000
 
@@ -633,6 +633,7 @@
     fireRate: 0.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+    projectileSpeed: 25
   - type: BatteryAmmoProvider
     proto: BulletTaser
     fireCost: 200
@@ -682,7 +683,7 @@
   - type: BatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 40
   - type: MagazineVisuals
     magState: mag
@@ -730,7 +731,7 @@
   - type: BatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 30
   - type: MagazineVisuals
     magState: mag
@@ -793,10 +794,9 @@
     price: 100
 
 - type: entity
-  name: experimental C.H.I.M.P. handcannon
   parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
   id: WeaponPistolCHIMPUpgraded
-  description: This C.H.I.M.P. seems to have a greater punch than usual...
+  suffix: Syndicate
   components:
   - type: BatteryWeaponFireModes
     fireModes:
@@ -829,7 +829,7 @@
   - type: BatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 40
   - type: StaticPrice
     price: 750
@@ -878,7 +878,7 @@
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 480
     startingCharge: 480
 
@@ -925,7 +925,7 @@
     - proto: BulletDisabler
       fireCost: 62.5
       pacifismAllowedMode: true
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 48
     autoRechargePauseTime: 10
 
@@ -967,21 +967,29 @@
       fireCost: 100
     - proto: BoltTempgunHot
       fireCost: 100
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 1000
     startingCharge: 1000
   - type: StaticPrice
     price: 100
 
 - type: entity
-  name: xenoborg laser gun
   parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
-  id: XenoborgLaserGun
+  id: WeaponLaserGunXenoborg
+  name: xenoborg laser gun
 
 - type: entity
-  name: xenoborg heavy laser gun
-  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
-  id: XenoborgHeavyLaserGun
+  parent: [WeaponLaserCannon, BaseXenoborgContraband]
+  id: WeaponLaserCannonXenoborg
+  name: xenoborg laser cannon
   components:
-  - type: BatteryAmmoProvider
-    proto: RedHeavyLaser
+  - type: BatterySelfRecharger
+    autoRechargeRate: 30
+  # "remove" wield bonus and penalty so borgs can use it
+  - type: GunWieldBonus
+    minAngle: 0
+    maxAngle: 0
+  - type: Gun
+    fireRate: 2
+    minAngle: 1
+    maxAngle: 2
