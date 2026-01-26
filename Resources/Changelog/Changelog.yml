@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Cockroaches can Gib when Stepped on
-    type: Add
-  id: 8958
-  time: '2025-09-13T07:01:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40103
 - author: Huaqas
   changes:
   - message: Vulpkanin now have Undergarments.
@@ -4004,3 +3997,11 @@
   id: 9464
   time: '2026-01-26T15:19:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42589
+- author: Marlyn
+  changes:
+  - message: Opporozidone no longer has instarot issues that get worse the longer
+      the server has been running
+    type: Fix
+  id: 9465
+  time: '2026-01-26T15:45:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42472
