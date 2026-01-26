@@ -203,28 +203,17 @@ public sealed class IdentitySystem : EntitySystem
         return representation.ToStringKnown(!ev.Cancelled, ev.NameOverride);
     }
 
+    #endregion
+
     /// <summary>
     /// Gets an 'identity representation' of an entity, with their true name being the entity name
     /// and their 'presumed name' and 'presumed job' being the name/job on their ID card, if they have one.
     /// </summary>
-    private IdentityRepresentation GetIdentityRepresentation(Entity<InventoryComponent?, HumanoidProfileComponent?> target)
+    public IdentityRepresentation GetIdentityRepresentation(Entity<InventoryComponent?, HumanoidProfileComponent?> target)
     {
-        var age = 18;
-        var gender = Gender.Epicene;
-        var species = HumanoidCharacterProfile.DefaultSpecies;
-
-        // Always use their actual age and gender, since that can't really be changed by an ID.
-        if (Resolve(target, ref target.Comp2, false))
-        {
-            gender = target.Comp2.Gender;
-            age = target.Comp2.Age;
-            species = target.Comp2.Species;
-        }
-
-        var ageString = _humanoidProfile.GetAgeRepresentation(species, age);
-        var trueName = Name(target);
+        var representation = GetIdentityRepresentationNoId((target, target.Comp2));
         if (!Resolve(target, ref target.Comp1, false))
-            return new(trueName, gender, ageString, string.Empty);
+            return representation;
 
         string? presumedJob = null;
         string? presumedName = null;
@@ -237,10 +226,31 @@ public sealed class IdentitySystem : EntitySystem
         }
 
         // If it didn't find a job, that's fine.
-        return new(trueName, gender, ageString, presumedName, presumedJob);
+        return new(representation.TrueName, representation.TrueGender, representation.AgeString, presumedName, presumedJob);
     }
 
-    #endregion
+    /// <summary>
+    ///     Gets an 'identity representation' of an entity, with their true name being the entity name.
+    ///     Does not contain presumed name or job.
+    /// </summary>
+    public IdentityRepresentation GetIdentityRepresentationNoId(Entity<HumanoidProfileComponent?> target)
+    {
+        var age = 18;
+        var gender = Gender.Epicene;
+        var species = HumanoidCharacterProfile.DefaultSpecies;
+
+        // Always use their actual age and gender, since that can't really be changed by an ID.
+        if (Resolve(target, ref target.Comp, false))
+        {
+            gender = target.Comp.Gender;
+            age = target.Comp.Age;
+            species = target.Comp.Species;
+        }
+
+        var ageString = _humanoidProfile.GetAgeRepresentation(species, age);
+        var trueName = Name(target);
+        return new(trueName, gender, ageString, string.Empty);
+    }
 }
 
 /// <summary>
