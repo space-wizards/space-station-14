@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Chameleon Projector will no longer cause you to be permanently slowed
-      down
-    type: Fix
-  id: 8957
-  time: '2025-09-12T23:23:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37960
 - author: FungiFellow
   changes:
   - message: Cockroaches can Gib when Stepped on
@@ -4005,3 +3997,10 @@
   id: 9463
   time: '2026-01-26T15:02:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42616
+- author: notquitehadouken
+  changes:
+  - message: Doors close on clown spider webs now
+    type: Fix
+  id: 9464
+  time: '2026-01-26T15:19:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42589
