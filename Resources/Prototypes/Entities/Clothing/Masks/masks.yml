@@ -19,6 +19,7 @@
     layers:
       Snout: Mask
     hideOnToggle: true
+  - type: VoiceObfuscator
 
 - type: entity
   parent: [ClothingMaskGas, BaseSecurityContraband]

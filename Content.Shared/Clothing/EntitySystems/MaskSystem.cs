@@ -142,4 +142,14 @@ public sealed class MaskSystem : EntitySystem
         mask.Comp.IsToggleable = toggleable;
         Dirty(mask);
     }
+
+    public bool IsToggled(Entity<MaskComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+        {
+            return false;
+        }
+
+        return ent.Comp.IsToggled;
+    }
 }

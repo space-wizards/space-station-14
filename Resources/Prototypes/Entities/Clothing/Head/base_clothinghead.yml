@@ -142,6 +142,7 @@
     - HeadTop
     - HeadSide
     - FacialHair
+  - type: VoiceObfuscator
 
 - type: entity
   abstract: true
@@ -191,6 +192,7 @@
     - HeadTop
     - HeadSide
     - FacialHair
+  - type: VoiceObfuscator
 
 - type: entity
   abstract: true

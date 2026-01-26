@@ -149,6 +149,7 @@
     layers:
       Hair: HEAD
       Snout: HEAD
+  - type: VoiceObfuscator
 
 #Janitorial Bombsuit Helmet
 - type: entity
@@ -288,6 +289,7 @@
     layers:
       Hair: HEAD
       Snout: HEAD
+  - type: VoiceObfuscator
 
 #Atmos Fire Helmet
 - type: entity
@@ -321,6 +323,7 @@
       Hair: HEAD
       Snout: HEAD
   - type: BreathMask
+  - type: VoiceObfuscator
 
 #Chitinous Helmet
 - type: entity
