@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: luegamer
-  changes:
-  - message: SmartFridge Circuitboards are now printable, SmartFridge destruction
-      no longer deletes all contents
-    type: Add
-  id: 8955
-  time: '2025-09-11T19:59:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39879
 - author: SurrealShibe
   changes:
   - message: Toilet seats are now displayed on the correct layer.
@@ -4005,3 +3997,11 @@
   id: 9461
   time: '2026-01-26T06:12:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41396
+- author: B_Kirill
+  changes:
+  - message: Fixed being able to pick up chameleon projector disguises via context
+      menu.
+    type: Fix
+  id: 9462
+  time: '2026-01-26T14:03:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42656
