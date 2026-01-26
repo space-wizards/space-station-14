@@ -77,12 +77,12 @@
       time: 3h
 
 - type: loadoutEffectGroup
-  id: JanitorialCapstone
+  id: JanitorCapstone
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobJanitorial
+      role: JobJanitor
       time: 30h
 
 - type: loadoutEffectGroup

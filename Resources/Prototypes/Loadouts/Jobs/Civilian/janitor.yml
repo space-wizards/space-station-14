@@ -42,7 +42,7 @@
   id: JanitorGoldenPlunger
   effects:
   - !type:GroupLoadoutEffect
-    proto: JanitorialCapstone
+    proto: JanitorCapstone
   storage:
     back:
     - GoldenPlunger
