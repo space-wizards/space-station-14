@@ -1382,7 +1382,8 @@
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
   objectType: Structure
-
+  
+- type: construction
   id: StationAiCore
   graph: StationAiCore
   startNode: start
