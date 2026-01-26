@@ -95,61 +95,62 @@ namespace Content.Client.Stylesheets
                     }),
 
                 // Shapes for the buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Class(StyleClass.ButtonOpenRight)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenRight),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Class(StyleClass.ButtonOpenLeft)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Class(StyleClass.ButtonOpenBoth)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Class(StyleClass.ButtonSquare)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonSquare),
 
                 // Colors for the buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
                 // Colors for the caution buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
-
-                Element<Label>().Class(ContainerButton.StyleClassButton)
+                Child()
+                    .Parent(Element<PushButton>())
+                    .Child(Element<Label>())
                     .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
 
                 Element<PanelContainer>().Class(StyleClass.BackgroundPanel)

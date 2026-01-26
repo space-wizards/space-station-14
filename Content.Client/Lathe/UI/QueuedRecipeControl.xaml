@@ -25,11 +25,8 @@
             Name="Delete"
             Margin="0"
             Text="✖"
-            ToolTip="{Loc 'lathe-menu-delete-item-tooltip'}">
-            <Button.StyleClasses>
-                <system:String>Caution</system:String>
-                <system:String>OpenLeft</system:String>
-            </Button.StyleClasses>
+            ToolTip="{Loc 'lathe-menu-delete-item-tooltip'}"
+            StyleClasses="Caution OpenLeft">
         </Button>
     </BoxContainer>
 </Control>

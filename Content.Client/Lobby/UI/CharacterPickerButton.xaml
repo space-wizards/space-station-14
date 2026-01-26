@@ -1,4 +1,4 @@
-<ContainerButton xmlns="https://spacestation14.io"
+<PushButton xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:style="clr-namespace:Content.Client.Stylesheets">
     <BoxContainer Orientation="Horizontal"
@@ -19,6 +19,5 @@
                 Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
                 Visible="False"
                 StyleClasses="negative"/>
-
     </BoxContainer>
-</ContainerButton>
+</PushButton>

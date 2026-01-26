@@ -338,7 +338,7 @@ namespace Content.Client.LateJoin
         }
     }
 
-    sealed class JobButton : ContainerButton
+    sealed class JobButton : PushButton
     {
         public Label JobLabel { get; }
         public string JobId { get; }
@@ -352,7 +352,6 @@ namespace Content.Client.LateJoin
             JobId = jobId;
             JobLocalisedName = jobLocalisedName;
             RefreshLabel(amount);
-            AddStyleClass(StyleClassButton);
             _initialised = true;
         }
 

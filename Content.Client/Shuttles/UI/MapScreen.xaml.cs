@@ -277,7 +277,6 @@ public sealed partial class MapScreen : BoxContainer
             var heading = new CollapsibleHeading(mapName);
 
             heading.MinHeight = 32f;
-            heading.AddStyleClass(ContainerButton.StyleClassButton);
             heading.HorizontalAlignment = HAlignment.Stretch;
             heading.Label.HorizontalAlignment = HAlignment.Center;
             heading.Label.HorizontalExpand = true;

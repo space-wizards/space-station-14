@@ -63,10 +63,9 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
                 .Prop(TextureButton.StylePropertyTexture, helpTex),
 
             // Ensure labels in buttons are aligned.
-            E<Label>()
-                // ReSharper disable once AccessToStaticMemberViaDerivedType
-                .Class(Button.StyleClassButton)
-                .AlignMode(Label.AlignMode.Center),
+            CButton()
+                .ParentOf(E<Label>())
+                .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
 
             // Have disabled button's text be faded
             CButton().PseudoDisabled().ParentOf(E<Label>()).FontColor(Color.FromHex("#E5E5E581")),
@@ -115,7 +114,7 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
 
     private static MutableSelectorElement CButton()
     {
-        return E<ContainerButton>().Class(ContainerButton.StyleClassButton);
+        return E<PushButton>();
     }
 }
 

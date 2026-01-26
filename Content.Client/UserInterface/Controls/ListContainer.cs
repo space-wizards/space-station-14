@@ -384,7 +384,7 @@ public class ListContainer : Control
     }
 }
 
-public sealed class ListContainerButton : ContainerButton, IEntityControl
+public sealed class ListContainerButton : PushButton, IEntityControl
 {
     public readonly ListData Data;
 
@@ -393,7 +393,6 @@ public sealed class ListContainerButton : ContainerButton, IEntityControl
 
     public ListContainerButton(ListData data, int index)
     {
-        AddStyleClass(StyleClassButton);
         Data = data;
         Index = index;
         StyleBoxOverride = new StyleBoxFlat(Color.White);

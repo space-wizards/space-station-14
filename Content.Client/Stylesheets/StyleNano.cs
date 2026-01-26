@@ -614,61 +614,61 @@ namespace Content.Client.Stylesheets
                     }),
 
                 // Shapes for the buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Class(ButtonOpenRight)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenRight),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Class(ButtonOpenLeft)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Class(ButtonOpenBoth)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Class(ButtonSquare)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonSquare),
 
-                new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
-                }),
+                Child()
+                    .Parent(Element<PushButton>())
+                    .Child(Element<Label>())
+                    .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
 
                 // Colors for the buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                Element<PushButton>()
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
                 // Colors for the caution buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                Element<PushButton>().Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                Element<PushButton>().Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                Element<PushButton>().Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                Element<PushButton>().Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
