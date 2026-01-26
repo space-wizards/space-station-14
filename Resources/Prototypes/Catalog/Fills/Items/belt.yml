@@ -47,6 +47,24 @@
         - id: GasAnalyzer
         - id: trayScanner
 
+- type: entity
+  id: ClothingBeltUtilitySalvage
+  parent: ClothingBeltUtility
+  suffix: Salvage
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Crowbar
+        - id: Wrench
+        - id: Screwdriver
+        - id: Wirecutter
+        - id: Welder
+        - id: Multitool
+        - id: AppraisalTool
+        - id: RadioHandheld
+
 - type: entityTable
   id: BeltSecurityEntityTable
   table: !type:AllSelector

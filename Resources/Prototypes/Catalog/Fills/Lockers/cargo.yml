@@ -11,16 +11,13 @@
   id: LockerFillSalvageSpecialist
   table: !type:AllSelector
     children:
-    - id: ClothingBeltUtilityFilled
-    - id: SurvivalKnife
-    - id: HandheldGPSBasic
-    - id: RadioHandheld
-    - id: AppraisalTool
+    - id: ClothingBeltUtilitySalvage
     - id: FireExtinguisher
-    - id: Flare
-      prob: 0.3
-      rolls: !type:ConstantNumberSelector
-        value: 3
+    - id: OreBag
+    - id: Pickaxe
+    - id: SurvivalKnife
+    - id: WeaponGrapplingGun
+    - id: WeaponProtoKineticAccelerator
 
 - type: entity
   id: LockerSalvageSpecialistFilledHardsuit

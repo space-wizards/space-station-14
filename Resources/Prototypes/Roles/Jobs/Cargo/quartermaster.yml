@@ -39,8 +39,6 @@
   equipment:
     id: QuartermasterPDA
     ears: ClothingHeadsetQM
-    belt: BoxFolderClipboardThreePapers
-    pocket1: AppraisalTool
   storage:
     back:
     - Flash

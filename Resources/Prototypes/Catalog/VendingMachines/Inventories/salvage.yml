@@ -1,14 +1,19 @@
 - type: vendingMachineInventory
   id: SalvageEquipmentInventory
   startingInventory:
-    Crowbar: 2
-    Pickaxe: 4
-    OreBag: 4
-    Flare: 4
+    # Essential equipment
+    ClothingMaskGasExplorer: 2 # Technically clothing, but so Salvage-specific that putting it in the CargoDrobe feels wrong
+    FireExtinguisher: 2
+    WeaponGrapplingGun: 2
+    RadioHandheld: 2
+    OreBag: 2 # Technically clothing, but so Salvage-specific that putting it in the CargoDrobe feels wrong
+    Pickaxe: 2
+    WeaponProtoKineticAccelerator: 2
+    SurvivalKnife: 2
+    # Expendable equipment
+    Flare: 8
+    # Optional equipment
     FlashlightLantern: 2
     HandheldGPSBasic: 2
-    RadioHandheld: 2
-    WeaponGrapplingGun: 4
-    WeaponProtoKineticAccelerator: 4
   contrabandInventory:
     PlushieCarp: 1

@@ -29,11 +29,13 @@
   id: CargoTechnicianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCargo
+  groupBy: "DefaultUniform"
 
 - type: loadout
   id: CargoTechnicianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCargo
+  groupBy: "DefaultUniform"
 
 # Back
 - type: loadout

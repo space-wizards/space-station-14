@@ -2,15 +2,16 @@
   id: LockerFillQuarterMaster
   table: !type:AllSelector
     children:
+    # Standard command items
+    - id: AstroNavCartridge
     - id: BoxEncryptionKeyCargo
-    - id: BoxFolderQmClipboard
     - id: BoxQMCircuitboards
     - id: BoxQMStamps
-    - id: CigPackGreen
-      prob: 0.50
     - id: ClothingHeadsetAltCargo
     - id: DoorRemoteCargo
-    - id: AstroNavCartridge
+    # Specialized QM items
+    - id: AppraisalTool
+    - id: BoxFolderQmClipboard
     - id: ClothingHandsKnuckleDustersQM
 
 - type: entity
