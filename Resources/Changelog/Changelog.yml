@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Cups, bottles, mugs, and other drinks have had minor changes. Most are
-      now destructible.
-    type: Tweak
-  id: 8954
-  time: '2025-09-11T15:59:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39221
 - author: luegamer
   changes:
   - message: SmartFridge Circuitboards are now printable, SmartFridge destruction
@@ -4006,3 +3998,10 @@
   id: 9460
   time: '2026-01-26T01:35:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42585
+- author: ScholarNZL
+  changes:
+  - message: Fixed a dev environment crash related to construction event validation.
+    type: Fix
+  id: 9461
+  time: '2026-01-26T06:12:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41396
