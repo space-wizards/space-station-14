@@ -1,10 +1,8 @@
-using Content.Shared.Body;
 using Content.Shared.Chat;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
-using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Speech.Components;
 
