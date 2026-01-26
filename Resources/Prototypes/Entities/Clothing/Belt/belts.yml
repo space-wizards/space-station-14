@@ -160,7 +160,7 @@
       icon_knife:
         whitelist:
           tags:
-          - Knife
+          - CombatKnife
       icon_magazine_pistol:
         whitelist:
           tags:
@@ -204,7 +204,7 @@
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
-  description: A deep shoulder holster capable of holding many types of ballistics.
+  description: A heavily modified deep shoulder holster capable of holding many types of ballistics. It seems to have three slots.
   components:
   - type: Sprite
     sprite: Clothing/Belt/syndieholster.rsi
@@ -277,7 +277,7 @@
       icon_knife:
         whitelist:
           tags:
-          - Knife
+          - CombatKnife
       icon_magazine_pistol:
         whitelist:
           tags:
