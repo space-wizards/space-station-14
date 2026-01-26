@@ -10,8 +10,6 @@ namespace Content.Client.Power.PowerCharge;
 [GenerateTypedNameReferences]
 public sealed partial class PowerChargeWindow : FancyWindow
 {
-    private readonly ButtonGroup _buttonGroup = new();
-
     public PowerChargeWindow()
     {
         RobustXamlLoader.Load(this);
