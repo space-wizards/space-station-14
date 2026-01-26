@@ -14,7 +14,7 @@ public sealed partial class MindContainerComponent : Component
     ///     The mind controlling this mob. Can be null.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? Mind { get; set; }
+    public EntityUid? Mind;
 
     /// <summary>
     ///     True if we have a mind, false otherwise.
@@ -23,18 +23,10 @@ public sealed partial class MindContainerComponent : Component
     public bool HasMind => Mind != null;
 
     /// <summary>
-    ///     Whether examining should show information about the mind or not.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("showExamineInfo"), AutoNetworkedField]
-    public bool ShowExamineInfo { get; set; }
-
-    /// <summary>
     ///     Whether the mind will be put on a ghost after this component is shutdown.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("ghostOnShutdown")]
-    public bool GhostOnShutdown { get; set; } = true;
+    [DataField]
+    public bool GhostOnShutdown = true;
 }
 
 public abstract class MindEvent : EntityEventArgs

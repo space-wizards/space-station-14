@@ -32,3 +32,48 @@
   components:
   - type: Item
     size: Huge
+
+- type: entity
+  parent: [BriefcaseBase, BaseSyndicateContraband]
+  id: BriefcaseWeapon
+  name: secure weapon case
+  suffix: Gun, Empty
+  description: Useful for aspiring mercenaries, whether you're fighting for a company, a nation or anyone else. Or just making a really big omelette.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Storage/Briefcases/weapon_case_large.rsi
+    layers:
+    - state: icon
+      map: [ base ]
+    - state: locked
+      map: [ "enum.LockVisualLayers.Lock" ]
+      shader: unshaded
+    - state: unlocked
+      map: [ light ]
+      shader: unshaded
+  - type: Lock
+  - type: LockVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
+        light:
+          True: { visible: true }
+          False: { visible: false }
+
+- type: entity
+  parent: BriefcaseWeapon
+  id: BriefcaseWeaponSmall
+  suffix: Gun, Small, Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/Briefcases/weapon_case.rsi
+  - type: Item
+    size: Large
+  - type: Storage
+    maxItemSize: Large
+    grid:
+    - 0,0,3,1

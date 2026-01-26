@@ -6,15 +6,15 @@ namespace Content.Shared.Nutrition.Prototypes;
 /// Types of satiation, eg. Hunger, Thirst.
 /// </summary>
 [Prototype]
-public sealed class SatiationTypePrototype : IPrototype
+public sealed partial class SatiationTypePrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// The localization of the name of this type of satiation.
     /// </summary>
     [DataField]
-    public readonly LocId Name;
+    public LocId Name { get; private set; }
 }

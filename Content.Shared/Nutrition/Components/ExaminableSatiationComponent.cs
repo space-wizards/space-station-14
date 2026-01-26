@@ -30,16 +30,16 @@ public sealed partial class ExaminableSatiationComponent : Component
 /// </summary>
 /// <seealso cref="ExaminableSatiationComponent"/>
 [Prototype]
-public sealed class SatiationExaminationPrototype : IPrototype, IInheritingPrototype
+public sealed partial class SatiationExaminationPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<SatiationExaminationPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <summary>
     /// Dictionary of satiation thresholds to LocIds of the messages to display.

@@ -21,19 +21,19 @@ namespace Content.Shared.Nutrition.Prototypes;
 /// Diona which rarely gets hungry would use a different one.
 /// </summary>
 [Prototype]
-public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
+public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <inheritdoc/>
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<SatiationPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc/>
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <summary>
     /// The base rate at which this satiation decreases per second.
@@ -154,7 +154,7 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
 /// </remarks>
 /// <seealso cref="SatiationPrototype.GetValueOrNull"/>
 [DataRecord, Serializable, NetSerializable]
-public record struct SatiationValue()
+public partial record struct SatiationValue()
 {
     [DataField, Access]
     public int Value = -1;
