@@ -202,9 +202,9 @@ public sealed class RespiratorSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity attempting to metabolize the gas.</param>
     /// <returns>Returns true only if the air is not toxic, and it wouldn't suffocate.</returns>
-    public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent)
+    public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent, bool logMissing = true)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, logMissing))
             return false;
 
         // Get the gas at our location but don't actually remove it from the gas mixture.

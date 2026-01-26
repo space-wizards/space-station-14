@@ -18,7 +18,6 @@ public sealed class InternalsSystem : SharedInternalsSystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     [Dependency] private readonly RespiratorSystem _respirator = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
 
     private EntityQuery<InternalsComponent> _internalsQuery;
 
@@ -40,11 +39,8 @@ public sealed class InternalsSystem : SharedInternalsSystem
         if (component.GasTankEntity != null)
             return; // already connected
 
-        if (!_entManager.TryGetComponent<RespiratorComponent>(uid, out _))
-            return;
-
         // Can the entity breathe the air it is currently exposed to?
-        if (_respirator.CanMetabolizeInhaledAir(uid))
+        if (_respirator.CanMetabolizeInhaledAir(uid, false))
             return;
 
         var tank = FindBestGasTank(uid);
