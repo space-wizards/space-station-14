@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 271.1.0
+  engineVersion: 271.2.0
   forkId: ""
   forkVersion: ""
-  time: 01/23/2026 17:42:32
-  entityCount: 23879
+  time: 01/27/2026 15:31:52
+  entityCount: 23877
 maps:
 - 5350
 grids:
@@ -11796,7 +11796,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -49023.93
+      secondsUntilStateChange: -49078.297
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -55521,13 +55521,6 @@ entities:
     components:
     - type: Transform
       pos: 44.55052,27.796236
-      parent: 30
-- proto: ClothingHeadHatCone
-  entities:
-  - uid: 15276
-    components:
-    - type: Transform
-      pos: -2.5244465,23.614292
       parent: 30
 - proto: ClothingHeadHatFedoraBrown
   entities:
@@ -116281,13 +116274,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 32.5,-11.5
-      parent: 30
-- proto: ReinforcedGirder
-  entities:
-  - uid: 21934
-    components:
-    - type: Transform
-      pos: -2.5,24.5
       parent: 30
 - proto: ReinforcedPlasmaWindow
   entities:
