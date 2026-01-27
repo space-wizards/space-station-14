@@ -86,7 +86,8 @@ public sealed class EventManagerSystem : EntitySystem
     public bool TryBuildLimitedEvents(
         EntityTableSelector limitedEventsTable,
         Dictionary<EntityPrototype, StationEventComponent> availableEvents,
-        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents
+        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
+        EntityTableContext? limitedEventsTableCtx = null
         )
     {
         limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
@@ -97,7 +98,7 @@ public sealed class EventManagerSystem : EntitySystem
             return false;
         }
 
-        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
+        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable, null, limitedEventsTableCtx);
 
         if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
             return false;

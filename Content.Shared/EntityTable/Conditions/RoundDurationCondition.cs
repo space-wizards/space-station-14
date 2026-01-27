@@ -9,6 +9,8 @@ namespace Content.Shared.EntityTable.Conditions;
 /// </summary>
 public sealed partial class RoundDurationCondition : EntityTableCondition
 {
+    public const string RoundDurationContextKey = "RoundDuration";
+
     /// <summary>
     /// Minimum time the round must have gone on for this condition to pass.
     /// </summary>
@@ -26,8 +28,11 @@ public sealed partial class RoundDurationCondition : EntityTableCondition
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
-        var gameTicker = entMan.System<SharedGameTicker>();
-        var duration = gameTicker.RoundDuration();
+        if (!ctx.TryGetData<TimeSpan>(RoundDurationContextKey, out var duration))
+        {
+            var gameTicker = entMan.System<SharedGameTicker>();
+            duration = gameTicker.RoundDuration();
+        }
 
         return duration >= Min && duration <= Max;
     }

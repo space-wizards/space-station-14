@@ -9,6 +9,8 @@ namespace Content.Shared.EntityTable.Conditions;
 /// </summary>
 public sealed partial class PlayerCountCondition : EntityTableCondition
 {
+    public const string PlayerCountContextKey = "PlayerCount";
+
     /// <summary>
     /// Minimum players of needed for this condition to succeed. Inclusive.
     /// </summary>
@@ -25,10 +27,13 @@ public sealed partial class PlayerCountCondition : EntityTableCondition
 
     protected override bool EvaluateImplementation(EntityTableSelector root, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        // Don't resolve this repeatedly
-        _playerManager ??= IoCManager.Resolve<ISharedPlayerManager>();
+        if (!ctx.TryGetData<int>(PlayerCountContextKey, out var playerCount))
+        {
+            // Don't resolve this repeatedly
+            _playerManager ??= IoCManager.Resolve<ISharedPlayerManager>();
 
-        var playerCount = _playerManager.PlayerCount;
+            playerCount = _playerManager.PlayerCount;
+        }
 
         return playerCount >= Min && playerCount <= Max;
     }
