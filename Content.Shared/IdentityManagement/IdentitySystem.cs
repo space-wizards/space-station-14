@@ -137,17 +137,17 @@ public sealed class IdentitySystem : EntitySystem
         switch (coverage)
         {
             case IdentityBlockerCoverage.MOUTH:
-                coverageText = "identity-cover-coverage-text-mouth";
+                coverageText = "identity-block-coverage-text-mouth";
                 iconTexture = "/Textures/Interface/VerbIcons/human-head-mouth.svg.192dpi.png";
                 break;
 
             case IdentityBlockerCoverage.EYES:
-                coverageText = "identity-cover-coverage-text-eyes";
+                coverageText = "identity-block-coverage-text-eyes";
                 iconTexture = "/Textures/Interface/VerbIcons/human-head-eyes.svg.192dpi.png";
                 break;
 
             case IdentityBlockerCoverage.FULL:
-                coverageText = "identity-cover-coverage-text-full";
+                coverageText = "identity-block-coverage-text-full";
                 iconTexture = "/Textures/Interface/VerbIcons/human-head-mask.svg.192dpi.png";
                 break;
 
@@ -158,7 +158,7 @@ public sealed class IdentitySystem : EntitySystem
 
         _examine.AddHoverExamineVerb(args,
             component,
-            Loc.GetString("identity-cover-examinable-verb-text"),
+            Loc.GetString("identity-block-examinable-verb-text"),
             Loc.GetString(coverageText),
             iconTexture
         );
