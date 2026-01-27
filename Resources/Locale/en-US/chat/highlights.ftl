@@ -51,6 +51,5 @@ highlights-reporter = Reporter, Journalist, Newsroom, News
 highlights-psychologist = Psychologist, Psychology, "Psych", Medbay, Medical, "Med"
 
 # Silicon
-highlights-personal-ai = Personal AI, "pAI"
 highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot"
 highlights-stationai = Station AI, Silicon, "AI", "sAI"

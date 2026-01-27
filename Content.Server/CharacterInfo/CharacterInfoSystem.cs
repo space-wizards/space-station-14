@@ -5,6 +5,7 @@ using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Roles;
 
 namespace Content.Server.CharacterInfo;
 
@@ -33,7 +34,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         var objectives = new Dictionary<string, List<ObjectiveInfo>>();
         var jobTitle = Loc.GetString("character-info-no-profession");
         string? briefing = null;
-        string? jobId = null;
+        JobPrototype? job = null;
         if (_minds.TryGetMind(entity, out var mindId, out var mind))
         {
             // Get objectives
@@ -50,16 +51,13 @@ public sealed class CharacterInfoSystem : EntitySystem
                 objectives[issuer].Add(info.Value);
             }
 
-            if (_jobs.MindTryGetJob(mindId, out var job))
-            {
-                jobTitle = job.LocalizedName;
-                jobId = job.ID;
-            }
+            if (_jobs.MindTryGetJob(mindId, out var j))
+                job = j;
 
             // Get briefing
             briefing = _roles.MindGetBriefing(mindId);
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing, jobId), args.SenderSession);
+        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), objectives, briefing, job), args.SenderSession);
     }
 }

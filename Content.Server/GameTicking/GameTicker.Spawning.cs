@@ -304,7 +304,7 @@ namespace Content.Server.GameTicking
 
             // Make sure they're aware of extended access.
             if (Comp<StationJobsComponent>(station).ExtendedAccess
-                && (jobPrototype.ExtendedAccess.Count > 0 || jobPrototype.ExtendedAccessGroups.Count > 0))
+                && (jobPrototype.ExtendedAccess.Length > 0 || jobPrototype.ExtendedAccessGroups.Length > 0))
             {
                 _chatManager.DispatchServerMessage(player, Loc.GetString("job-greet-crew-shortages"));
             }
