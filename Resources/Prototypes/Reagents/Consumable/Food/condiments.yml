@@ -127,7 +127,7 @@
   color: saddlebrown
   recognizable: true
   metabolisms:
-    Food:
+    Digestion:
       effects:
       - !type:SatiateHunger
         factor: 0.5
@@ -159,7 +159,7 @@
   - !type:PlantAdjustHealth
     amount: -2
   metabolisms:
-    Food:
+    Digestion:
       effects:
       # eating salt on its own kinda sucks, kids
       - !type:SatiateThirst
@@ -178,7 +178,7 @@
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
-    Food:
+    Digestion:
       # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.
       effects:
       - !type:SatiateHunger
