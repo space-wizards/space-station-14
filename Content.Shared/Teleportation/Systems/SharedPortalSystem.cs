@@ -33,7 +33,6 @@ public abstract class SharedPortalSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedGrapplingGunSystem _grappling = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
 
     private const string PortalFixture = "portalFixture";
