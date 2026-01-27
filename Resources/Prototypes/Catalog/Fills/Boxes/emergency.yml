@@ -325,11 +325,13 @@
   suffix: Military O2
   description: It's a box with basic internals inside. This one is labelled to contain an double extended-capacity tank.
   components:
-  - type: StorageFill
-    contents:
-    - id: DoubleEmergencyOxygenTankFilled
-    - id: EmergencyMedipen
-    - id: Flare
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: DoubleEmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
@@ -340,11 +342,13 @@
   id: BoxSurvivalMilitaryDoubleNitrogen
   suffix: Military N2
   components:
-  - type: StorageFill
-    contents:
-    - id: DoubleEmergencyNitrogenTankFilled
-    - id: EmergencyMedipen
-    - id: Flare
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: DoubleEmergencyNitrogenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
