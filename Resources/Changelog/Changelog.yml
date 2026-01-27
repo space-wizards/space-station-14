@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Huaqas
-  changes:
-  - message: Vulpkanin eye tattoos now correctly changes the color of the entire eye.
-    type: Fix
-  id: 8962
-  time: '2025-09-14T15:18:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40320
 - author: Winkarst-cpu
   changes:
   - message: Fixed the wizard's recharge spell not working on some wands.
@@ -4007,3 +4000,13 @@
   id: 9468
   time: '2026-01-27T04:24:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42644
+- author: B_Kirill
+  changes:
+  - message: Fireplaces can now ignite gases.
+    type: Tweak
+  - message: Entities buckled to the bonfire with stake no longer suffocate in the
+      walls above the bonfire.
+    type: Fix
+  id: 9469
+  time: '2026-01-27T13:35:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42675
