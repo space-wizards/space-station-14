@@ -461,7 +461,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         if (GetValidSpawnPosition(ent, session.AttachedEntity, session) is not { } coordinates)
         {
-            Log.Error($"Was unable to find a valid spawn position for, {session.Name}, gamerule: {ToPrettyString(ent)}");
+            Log.Error($"Was unable to find a valid spawn position for, {session.Name}, gamerule: {ToPrettyString(ent)} when trying to make them into an antagonist.");
             return;
         }
 
