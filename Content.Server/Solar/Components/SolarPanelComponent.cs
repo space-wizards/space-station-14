@@ -9,7 +9,7 @@ namespace Content.Server.Solar.Components
     ///     It generates power from the sun based on coverage.
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(PowerSolarSystem))]
+    [Access(typeof(PowerSolarSystem), typeof(SolarTrackerSystem))]
     public sealed partial class SolarPanelComponent : Component
     {
         /// <summary>
@@ -26,5 +26,12 @@ namespace Content.Server.Solar.Components
         /// </summary>
         [ViewVariables]
         public float Coverage { get; set; } = 0;
+
+        /// <summary>
+        /// Whether the solar panel is being assisted by a nearby solar tracker.
+        /// If true, it'll automatically rotate to the sun.
+        /// </summary>
+        [ViewVariables]
+        public bool AssistedByTracker;
     }
 }

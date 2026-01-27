@@ -18,6 +18,7 @@ namespace Content.Server.Solar.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+        [Dependency] private readonly SolarTrackerSystem _solarTrackerSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         /// <summary>
@@ -67,6 +68,8 @@ namespace Content.Server.Solar.EntitySystems
         public override void Initialize()
         {
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<SolarPanelComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             RandomizeSun();
         }
@@ -86,9 +89,21 @@ namespace Content.Server.Solar.EntitySystems
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
         }
 
-        private void OnMapInit(EntityUid uid, SolarPanelComponent component, MapInitEvent args)
+        private void OnMapInit(Entity<SolarPanelComponent> panel, ref MapInitEvent args)
         {
-            UpdateSupply(uid, component);
+            UpdateSupply(panel.Owner, panel.Comp);
+            _solarTrackerSystem.CheckForTrackers(panel);
+        }
+
+        private void OnAnchorChanged(Entity<SolarPanelComponent> panel, ref AnchorStateChangedEvent args)
+        {
+            if (args.Anchored == false)
+            {
+                panel.Comp.AssistedByTracker = false;
+                return;
+            }
+
+            _solarTrackerSystem.CheckForTrackers(panel);
         }
 
         public override void Update(float frameTime)
@@ -113,7 +128,8 @@ namespace Content.Server.Solar.EntitySystems
                 while (query.MoveNext(out var uid, out var panel, out var xform))
                 {
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
-                    _transformSystem.SetWorldRotation(xform, TargetPanelRotation);
+                    var rotation = panel.AssistedByTracker ? TowardsSun : TargetPanelRotation;
+                    _transformSystem.SetWorldRotation(xform, rotation);
                     _updateQueue.Enqueue((uid, panel));
                 }
             }

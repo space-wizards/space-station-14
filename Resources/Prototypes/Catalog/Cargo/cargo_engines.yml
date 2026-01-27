@@ -64,7 +64,7 @@
     sprite: Objects/Devices/flatpack.rsi
     state: solar-assembly-part
   product: CrateEngineeringSolar
-  cost: 1250
+  cost: 500
   category: cargoproduct-category-name-engineering
   group: market
 
