@@ -20,23 +20,22 @@ public sealed class EntityEffectAuraSystem : EntitySystem
         SubscribeLocalEvent<EntityEffectAuraComponent, MapInitEvent>(OnPendingMapInit);
     }
 
-    private void OnPendingMapInit(EntityUid uid, EntityEffectAuraComponent component, MapInitEvent args)
+    private void OnPendingMapInit(Entity<EntityEffectAuraComponent> ent, ref MapInitEvent args)
     {
-        component.NextEntityEffect = _timing.CurTime + TimeSpan.FromSeconds(1f);
+        ent.Comp.NextEntityEffect = _timing.CurTime + ent.Comp.Interval;
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var curTime = _timing.CurTime;
 
         var query = EntityQueryEnumerator<EntityEffectAuraComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.NextEntityEffect > curTime)
+            if (comp.NextEntityEffect > _timing.CurTime)
                 continue;
 
-            comp.NextEntityEffect = curTime + TimeSpan.FromSeconds(comp.Interval);
+            comp.NextEntityEffect = _timing.CurTime + comp.Interval;
 
             foreach (var ent in _lookup.GetEntitiesInRange(uid, comp.Radius))
             {
@@ -49,7 +48,7 @@ public sealed class EntityEffectAuraSystem : EntitySystem
                 if (comp.Alert != null && HasComp<AlertsComponent>(ent))
                 {
                     // Make the alert display time equal to the damage interval, so that the alert updates with each new damage and disappears if we leave the damage aura
-                    var cooldown = (_timing.CurTime, _timing.CurTime + TimeSpan.FromSeconds(comp.Interval));
+                    var cooldown = (_timing.CurTime, _timing.CurTime + comp.Interval);
                     _alert.ShowAlert(ent, comp.Alert.Value, cooldown: cooldown, autoRemove: true, showCooldown: false);
                 }
             }

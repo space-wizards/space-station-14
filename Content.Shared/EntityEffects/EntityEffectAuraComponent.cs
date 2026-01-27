@@ -10,14 +10,14 @@ namespace Content.Shared.EntityEffects;
 /// <summary>
 /// Passively damages the entity on a specified interval.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause, AutoGenerateComponentState]
 public sealed partial class EntityEffectAuraComponent : Component
 {
 
     /// <summary>
     /// The radius of the aura.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public float Radius = 3.5f;
 
     /// <summary>
@@ -41,15 +41,15 @@ public sealed partial class EntityEffectAuraComponent : Component
     /// <summary>
     /// Alert that a person will receive when they get effects
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<AlertPrototype>? Alert;
 
     /// <summary>
     /// Delay between effects events in seconds
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Interval = 1f;
+    [DataField]
+    public TimeSpan Interval = TimeSpan.FromSeconds(1);
 
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables, AutoPausedField, AutoNetworkedField]
     public TimeSpan NextEntityEffect = TimeSpan.Zero;
 }
