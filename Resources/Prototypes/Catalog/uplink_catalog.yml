@@ -28,6 +28,21 @@
   categories:
   - UplinkWeaponry
 
+# Ammo does structural, so you can use it like an access breaker
+# Can break cap's locker in 4 shots (AP applies to structural)
+- type: listing
+  id: UplinkRevolverPython
+  name: uplink-revolver-python-name
+  description: uplink-revolver-python-desc
+  productEntity: WeaponRevolverPythonAP
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkWeaponry
+
 # Poor accuracy, slow to fire, cheap option
 - type: listing
   id: UplinkRifleMosin

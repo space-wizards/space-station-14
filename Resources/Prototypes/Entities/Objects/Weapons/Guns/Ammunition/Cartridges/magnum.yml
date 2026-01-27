@@ -62,7 +62,7 @@
   parent: BaseCartridgeMagnum
   id: CartridgeMagnumAP
   name: cartridge (.45 magnum armor-piercing)
-  description: Heavy magnum cartridge mostly used by revolvers. Armor-piercing ammunition is renowned for its ability to cut straight through body armor.
+  description: Heavy magnum cartridge mostly used by revolvers. Specially designed to cut straight through body armor and the odd Captain's locker...
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumAP
