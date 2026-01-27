@@ -1,0 +1,242 @@
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceReptilian
+  name: reptilian appearance
+  components:
+  - type: Inventory
+    speciesId: reptilian
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Reptilian/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Reptilian/displacement.rsi
+            state: mask
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Reptilian/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Reptilian/displacement.rsi
+            state: mask
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganReptilianTorso
+        - id: OrganReptilianHead
+        - id: OrganReptilianArmLeft
+        - id: OrganReptilianArmRight
+        - id: OrganReptilianHandRight
+        - id: OrganReptilianHandLeft
+        - id: OrganReptilianLegLeft
+        - id: OrganReptilianLegRight
+        - id: OrganReptilianFootLeft
+        - id: OrganReptilianFootRight
+        - id: OrganReptilianBrain
+        - id: OrganReptilianEyes
+        - id: OrganReptilianTongue
+        - id: OrganReptilianAppendix
+        - id: OrganReptilianEars
+        - id: OrganReptilianLungs
+        - id: OrganReptilianHeart
+        - id: OrganReptilianStomach
+        - id: OrganReptilianLiver
+        - id: OrganReptilianKidneys
+  - type: HumanoidAppearance
+    species: Reptilian
+    hideLayersOnEquip:
+    - Snout
+    - HeadTop
+    - HeadSide
+    - Tail
+    undergarmentBottom: UndergarmentBottomBoxersReptilian
+
+- type: entity
+  parent:
+  - AppearanceReptilian
+  - BaseSpeciesMobOrganic
+  id: MobReptilian
+  name: Urissst Mz'Hand
+  components:
+  - type: Puller
+    needsHands: false
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatLizard
+      amount: 5
+  - type: LizardAccent
+  - type: Speech
+    speechSounds: Lizard
+    speechVerb: Reptilian
+    allowedEmotes: ['Thump']
+  - type: TypingIndicator
+    proto: lizard
+  - type: Vocal
+    sounds:
+      Male: MaleReptilian
+      Female: FemaleReptilian
+      Unsexed: MaleReptilian
+  - type: BodyEmotes
+    soundsId: ReptilianBodyEmotes
+  - type: Damageable
+    damageModifierSet: Scale
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+  - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    coldDamage:
+      types:
+        Cold : 0.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 1.5 #per second, scales with temperature & other constants
+  - type: TemperatureSpeed
+    thresholds:
+      301: 0.9
+      295: 0.8
+      285: 0.7
+  - type: Wagging
+
+- type: entity
+  parent: OrganBase
+  id: OrganReptilian
+  abstract: true
+  suffix: Reptilian
+
+- type: entity
+  id: OrganReptilianMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+
+- type: entity
+  parent: OrganReptilian
+  id: OrganReptilianInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  parent: OrganReptilian
+  id: OrganReptilianExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Reptilian/parts.rsi
+
+- type: entity
+  parent: [ OrganBaseTorso, OrganReptilianExternal ]
+  id: OrganReptilianTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganReptilianExternal ]
+  id: OrganReptilianHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganReptilianExternal ]
+  id: OrganReptilianArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganReptilianExternal ]
+  id: OrganReptilianArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganReptilianExternal ]
+  id: OrganReptilianHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganReptilianExternal ]
+  id: OrganReptilianHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganReptilianExternal ]
+  id: OrganReptilianLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganReptilianExternal ]
+  id: OrganReptilianLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganReptilianExternal ]
+  id: OrganReptilianFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganReptilianExternal ]
+  id: OrganReptilianFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganReptilianInternal ]
+  id: OrganReptilianBrain
+
+- type: entity
+  parent: [ OrganBaseEyes, OrganReptilianInternal ]
+  id: OrganReptilianEyes
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganReptilianInternal ]
+  id: OrganReptilianTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganSpriteHumanInternal, OrganReptilianInternal ]
+  id: OrganReptilianAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganSpriteHumanInternal, OrganReptilianInternal ]
+  id: OrganReptilianEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianStomach
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Fruit
+      - ReptilianFood
+      - Meat
+      - Pill
+      - Crayon
+      - Paper
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganReptilianInternal, OrganReptilianMetabolizer ]
+  id: OrganReptilianKidneys

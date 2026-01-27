@@ -517,17 +517,39 @@ public sealed partial class ExplosionSystem
         else if (tileDef.MapAtmosphere)
             canCreateVacuum = true; // is already a vacuum.
 
+        var history = CompOrNull<TileHistoryComponent>(tileRef.GridUid);
+
+        // break the tile into its underlying parts
         int tileBreakages = 0;
         while (maxTileBreak > tileBreakages && _robustRandom.Prob(type.TileBreakChance(effectiveIntensity)))
         {
             tileBreakages++;
             effectiveIntensity -= type.TileBreakRerollReduction;
 
-            // does this have a base-turf that we can break it down to?
-            if (string.IsNullOrEmpty(tileDef.BaseTurf))
-                break;
+            ContentTileDefinition? newDef = null;
 
-            if (_tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef)
+            // if we have tile history, we revert the tile to its previous state
+            var chunkIndices = SharedMapSystem.GetChunkIndices(tileRef.GridIndices, TileSystem.ChunkSize);
+            if (history != null && history.ChunkHistory.TryGetValue(chunkIndices, out var chunk) &&
+                chunk.History.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
+            {
+                // last entry in the stack
+                var newId = stack[^1];
+                stack.RemoveAt(stack.Count - 1);
+                if (stack.Count == 0)
+                    chunk.History.Remove(tileRef.GridIndices);
+
+                Dirty(tileRef.GridUid, history);
+
+                newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
+            }
+            else if (tileDef.BaseTurf.HasValue)
+            {
+                // otherwise, we just use the base turf
+                newDef = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf.Value];
+            }
+
+            if (newDef == null)
                 break;
 
             if (newDef.MapAtmosphere && !canCreateVacuum)

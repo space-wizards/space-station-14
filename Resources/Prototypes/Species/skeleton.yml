@@ -8,7 +8,7 @@
   markingLimits: MobHumanMarkingLimits
   maleFirstNames: NamesSkeletonFirst
   femaleFirstNames: NamesSkeletonFirst
-  dollPrototype: MobSkeletonPersonDummy
+  dollPrototype: AppearanceSkeletonPerson
   skinColoration: TintedHues
 
 - type: speciesBaseSprites

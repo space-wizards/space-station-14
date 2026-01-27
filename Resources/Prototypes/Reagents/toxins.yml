@@ -645,6 +645,8 @@
   plantMetabolism:
   - !type:PlantMutateChemicals
     randomPickBotanyReagent: EvilRandomFillSolution
+  - !type:PlantAdjustToxins
+    amount: 10
   metabolisms:
     Poison:
       effects:

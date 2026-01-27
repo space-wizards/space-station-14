@@ -1,0 +1,258 @@
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceVulpkanin
+  name: vulpkanin appearance
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganVulpkaninTorso
+        - id: OrganVulpkaninHead
+        - id: OrganVulpkaninArmLeft
+        - id: OrganVulpkaninArmRight
+        - id: OrganVulpkaninHandRight
+        - id: OrganVulpkaninHandLeft
+        - id: OrganVulpkaninLegLeft
+        - id: OrganVulpkaninLegRight
+        - id: OrganVulpkaninFootLeft
+        - id: OrganVulpkaninFootRight
+        - id: OrganVulpkaninBrain
+        - id: OrganVulpkaninEyes
+        - id: OrganVulpkaninTongue
+        - id: OrganVulpkaninAppendix
+        - id: OrganVulpkaninEars
+        - id: OrganVulpkaninLungs
+        - id: OrganVulpkaninHeart
+        - id: OrganVulpkaninStomach
+        - id: OrganVulpkaninLiver
+        - id: OrganVulpkaninKidneys
+  - type: HumanoidAppearance
+    species: Vulpkanin
+    undergarmentTop: UndergarmentTopTanktopVulpkanin
+    undergarmentBottom: UndergarmentBottomBoxersVulpkanin
+    hideLayersOnEquip:
+    - Snout
+    - SnoutCover
+    - HeadTop
+    - HeadSide
+    - FacialHair
+    - Hair
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: hair
+  - type: Inventory
+    speciesId: vulpkanin
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: back
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerwear
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: hand
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: head
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: neck
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: eyes
+      belt:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: belt
+
+- type: entity
+  parent:
+  - AppearanceVulpkanin
+  - BaseSpeciesMobOrganic
+  id: MobVulpkanin
+  name: Urist McArfArf
+  components:
+  - type: MessyDrinker
+    spillChance: 0.33
+  - type: Speech
+    speechSounds: Vulpkanin
+    speechVerb: Vulpkanin
+    allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl' ]
+  - type: Vocal
+    sounds:
+      Male: MaleVulpkanin
+      Female: FemaleVulpkanin
+      Unsexed: MaleVulpkanin
+  - type: Damageable
+    damageModifierSet: Vulpkanin
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Piercing: 2
+        Slash: 3
+  - type: Temperature # Same as moth temperatures until below is solved.
+    specificHeat: 44
+  - type: TemperatureDamage
+    heatDamageThreshold: 320 # TODO: 315 when there is a way to make the temperature alert not blink to the side of the screen and disappear when you "sweat" at 39C.
+    coldDamageThreshold: 230 # TODO: 220 when the above is solved.
+    coldDamage:
+      types:
+        Cold: 0.05 # Per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat: 2.5 # Per second, scales with temperature & other constants
+  # - type: Wagging TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
+  #   action: ActionToggleWaggingVulpkanin
+  - type: TemperatureProtection
+    heatingCoefficient: 1.2
+    coolingCoefficient: 0.3
+  - type: JumpAbility
+    action: ActionVulpkaninGravityJump
+    canCollide: true
+    jumpDistance: 3
+    jumpSound:
+      path: /Audio/Weapons/punchmiss.ogg
+      params:
+        pitch: 1.33
+        volume: -5
+        variation: 0.05
+
+- type: entity
+  parent: OrganBase
+  id: OrganVulpkanin
+  abstract: true
+  suffix: vulpkanin
+
+- type: entity
+  id: OrganVulpkaninMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+
+- type: entity
+  parent: OrganVulpkanin
+  id: OrganVulpkaninInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  parent: OrganVulpkanin
+  id: OrganVulpkaninExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+
+- type: entity
+  parent: [ OrganBaseTorso, OrganVulpkaninExternal ]
+  id: OrganVulpkaninTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganVulpkaninExternal ]
+  id: OrganVulpkaninHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganVulpkaninExternal ]
+  id: OrganVulpkaninArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganVulpkaninExternal ]
+  id: OrganVulpkaninArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganVulpkaninExternal ]
+  id: OrganVulpkaninHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganVulpkaninExternal ]
+  id: OrganVulpkaninHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganVulpkaninExternal ]
+  id: OrganVulpkaninLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganVulpkaninExternal ]
+  id: OrganVulpkaninLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganVulpkaninExternal ]
+  id: OrganVulpkaninFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganVulpkaninExternal ]
+  id: OrganVulpkaninFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganVulpkaninInternal ]
+  id: OrganVulpkaninBrain
+
+- type: entity
+  parent: [ OrganBaseEyes, OrganVulpkaninInternal ]
+  id: OrganVulpkaninEyes
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganVulpkaninInternal ]
+  id: OrganVulpkaninTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganSpriteHumanInternal, OrganVulpkaninInternal ]
+  id: OrganVulpkaninAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganSpriteHumanInternal, OrganVulpkaninInternal ]
+  id: OrganVulpkaninEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
+  id: OrganVulpkaninLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
+  id: OrganVulpkaninHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
+  id: OrganVulpkaninStomach
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
+  id: OrganVulpkaninLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
+  id: OrganVulpkaninKidneys

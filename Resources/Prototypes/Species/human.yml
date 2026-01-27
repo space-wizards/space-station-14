@@ -5,7 +5,7 @@
   prototype: MobHuman
   sprites: MobHumanSprites
   markingLimits: MobHumanMarkingLimits
-  dollPrototype: MobHumanDummy
+  dollPrototype: AppearanceHuman
   skinColoration: HumanToned
 
 # The lack of a layer means that

@@ -6,7 +6,7 @@
   sprites: MobMothSprites
   defaultSkinTone: "#ffda93"
   markingLimits: MobMothMarkingLimits
-  dollPrototype: MobMothDummy
+  dollPrototype: AppearanceMoth
   skinColoration: Hues
   maleFirstNames: NamesMothFirstMale
   femaleFirstNames: NamesMothFirstFemale
