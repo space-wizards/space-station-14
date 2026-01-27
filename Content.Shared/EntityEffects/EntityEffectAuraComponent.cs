@@ -35,9 +35,8 @@ public sealed partial class EntityEffectAuraComponent : Component
     /// <summary>
     ///     A list of effects to apply when a player enters the aura.
     /// </summary>
-    [JsonPropertyName("effects")]
     [DataField]
-    public EntityEffect[] Effects = Array.Empty<EntityEffect>();
+    public EntityEffect[] Effects = default!;
 
     /// <summary>
     /// Alert that a person will receive when they get effects
