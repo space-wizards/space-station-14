@@ -131,8 +131,8 @@ public sealed class IdentitySystem : EntitySystem
     {
         var coverage = component.Coverage;
 
-        String coverageText;
-        String iconTexture;
+        string coverageText;
+        string iconTexture;
 
         switch (coverage)
         {
