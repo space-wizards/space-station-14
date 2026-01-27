@@ -148,7 +148,7 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
 ///         and lower precision at extreme temperatures (1000K).
 ///     </para>
 /// </remarks>
-[Serializable]
+[Serializable, NetSerializable]
 public struct ThermalByte : IEquatable<ThermalByte>
 {
     public const float TempMinimum = 0f;
@@ -164,7 +164,6 @@ public struct ThermalByte : IEquatable<ThermalByte>
     public const float TempDegreeResolution = (TempMaximum - TempMinimum) / TempResolution;
     public const float TempToByteFactor = TempResolution / (TempMaximum - TempMinimum);
 
-    [DataField("value")]
     private byte _coreValue;
 
     public ThermalByte(float temperatureKelvin)
