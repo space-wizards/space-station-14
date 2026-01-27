@@ -1,5 +1,6 @@
 tiles-space = space
 tiles-plating = plating
+tiles-rcd-plating = RCD plating
 tiles-lattice = lattice
 tiles-lattice-train = train lattice
 tiles-steel-floor = steel tile
