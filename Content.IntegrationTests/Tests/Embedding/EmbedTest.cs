@@ -132,7 +132,7 @@ public sealed class EmbedTest : InteractionTest
             "Target has unexpected EmbeddedObjects count.");
 
         // Wait for the cooldown between throws
-        await RunSeconds(Hands.ThrowCooldown.Seconds);
+        await RunSeconds(Hands!.ThrowCooldown.Seconds);
 
         // Throw the second projectile
         await ThrowItem();

@@ -64,6 +64,11 @@ public sealed class SolutionRoundingTest
     SolutionRoundingTestReagentD: 1
 ";
 
+    private const string SolutionRoundingTestReagentA = "SolutionRoundingTestReagentA";
+    private const string SolutionRoundingTestReagentB = "SolutionRoundingTestReagentB";
+    private const string SolutionRoundingTestReagentC = "SolutionRoundingTestReagentC";
+    private const string SolutionRoundingTestReagentD = "SolutionRoundingTestReagentD";
+
     [Test]
     public async Task Test()
     {
@@ -84,12 +89,12 @@ public sealed class SolutionRoundingTest
             solutionEnt = newSolutionEnt!.Value;
             solution = newSolution!;
 
-            system.TryAddSolution(solutionEnt, new Solution("SolutionRoundingTestReagentC", 50));
-            system.TryAddSolution(solutionEnt, new Solution("SolutionRoundingTestReagentB", 30));
+            system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentC, 50));
+            system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentB, 30));
 
             for (var i = 0; i < 9; i++)
             {
-                system.TryAddSolution(solutionEnt, new Solution("SolutionRoundingTestReagentA", 10));
+                system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentA, 10));
             }
         });
 
@@ -98,21 +103,21 @@ public sealed class SolutionRoundingTest
             Assert.Multiple(() =>
             {
                 Assert.That(
-                    solution.ContainsReagent("SolutionRoundingTestReagentA", null),
+                    solution.ContainsReagent(SolutionRoundingTestReagentA, null),
                     Is.False,
                     "Solution should not contain reagent A");
 
                 Assert.That(
-                    solution.ContainsReagent("SolutionRoundingTestReagentB", null),
+                    solution.ContainsReagent(SolutionRoundingTestReagentB, null),
                     Is.False,
                     "Solution should not contain reagent B");
 
                 Assert.That(
-                    solution![new ReagentId("SolutionRoundingTestReagentC", null)].Quantity,
+                    solution![new ReagentId(SolutionRoundingTestReagentC, null)].Quantity,
                     Is.EqualTo((FixedPoint2) 20));
 
                 Assert.That(
-                    solution![new ReagentId("SolutionRoundingTestReagentD", null)].Quantity,
+                    solution![new ReagentId(SolutionRoundingTestReagentD, null)].Quantity,
                     Is.EqualTo((FixedPoint2) 30));
             });
         });

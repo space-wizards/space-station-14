@@ -7,7 +7,6 @@ using Content.Shared.Singularity.Events;
 using Robust.Server.GameStates;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -19,8 +18,7 @@ namespace Content.Server.Singularity.EntitySystems;
 /// </summary>
 public sealed class SingularitySystem : SharedSingularitySystem
 {
-    #region Dependencies
-    [Dependency] private readonly IGameTiming _timing = default!;
+#region Dependencies
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
     #endregion Dependencies
@@ -68,9 +66,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="frameTime">The amount of time since the last set of updates.</param>
     public override void Update(float frameTime)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         var query = EntityQueryEnumerator<SingularityComponent>();
         while (query.MoveNext(out var uid, out var singularity))
         {
@@ -235,7 +230,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     private void OnConsumed(Entity<SingularityComponent> singularity, ref EventHorizonConsumedEntityEvent args)
     {
         // Should be slightly more efficient than checking literally everything we consume for a singularity component and doing the reverse.
-        if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizon, out var singulo))
+        if (TryComp<SingularityComponent>(args.EventHorizon, out var singulo))
         {
             AdjustEnergy((args.EventHorizon, singulo), singularity.Comp.Energy);
             SetEnergy(singularity.AsNullable(), 0.0f);
@@ -250,7 +245,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnConsumed(Entity<SinguloFoodComponent> morsel, ref EventHorizonConsumedEntityEvent args)
     {
-        if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizon, out var singulo))
+        if (TryComp<SingularityComponent>(args.EventHorizon, out var singulo))
         {
             // Calculate the percentage change (positive or negative)
             var percentageChange = singulo.Energy * (morsel.Comp.EnergyFactor - 1f);

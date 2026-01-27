@@ -47,10 +47,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SingularityComponent, ComponentStartup>(OnSingularityStartup);
-        SubscribeLocalEvent<AppearanceComponent, SingularityLevelChangedEvent>(UpdateAppearance);
-        SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
-        SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBody);
-        SubscribeLocalEvent<EventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotInsertedIntoContainerMessage>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
@@ -125,10 +121,32 @@ public abstract class SharedSingularitySystem : EntitySystem
         if (!Resolve(singularity, ref singularity.Comp))
             return;
 
-        var ev = new SingularityLevelChangedEvent((singularity.Owner, singularity.Comp), oldValue);
-        RaiseLocalEvent(singularity, ref ev);
+        if (TryComp<EventHorizonComponent>(singularity, out var eventHorizon))
+        {
+            _horizons.SetRadius(singularity, EventHorizonRadius(singularity), false, eventHorizon);
+            _horizons.SetCanBreachContainment(singularity, CanBreachContainment(singularity), false, eventHorizon);
+            _horizons.UpdateEventHorizonFixture(singularity, eventHorizon: eventHorizon);
+        }
 
-        if (singularity.Comp.Level <= 0)
+        if (TryComp<PhysicsComponent>(singularity, out var body))
+        {
+            if (singularity.Level <= 1 && oldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
+                _physics.SetLinearVelocity(singularity, Vector2.Zero, body: body); // No idea how stopping the singularities movement keeps it from getting stuck though.
+        }
+
+        if (TryComp<AppearanceComponent>(singularity, out var appearance))
+        {
+            _visualizer.SetData(singularity, SingularityAppearanceKeys.Singularity, singularity.Level, appearance);
+        }
+
+        if (TryComp<RadiationSourceComponent>(singularity, out var radiationSource))
+        {
+            UpdateRadiation(singularity, singularity, radiationSource);
+        }
+
+        RaiseLocalEvent(singularity, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
+
+        if (singularity.Level <= 0)
             QueueDel(singularity);
     }
 
@@ -292,21 +310,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         UpdateSingularityLevel(singularity.AsNullable());
     }
 
-    // TODO: Figure out which systems should have control of which coupling.
-    /// <summary>
-    /// Syncs the radius of an event horizon associated with a singularity that just changed levels.
-    /// </summary>
-    /// <param name="uid">The entity that the event horizon and singularity are attached to.</param>
-    /// <param name="comp">The event horizon associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateEventHorizon(Entity<EventHorizonComponent> eventHorizon, ref SingularityLevelChangedEvent args)
-    {
-        var singulo = args.Singularity;
-
-        _horizons.SetRadius(eventHorizon.AsNullable(), EventHorizonRadius(singulo), updateFixture: false);
-        _horizons.SetCanBreachContainment(eventHorizon.AsNullable(), CanBreachContainment(singulo), updateFixture: true);
-    }
-
     /// <summary>
     /// Updates the distortion shader associated with a singularity when the singuarity changes levels.
     /// </summary>
@@ -365,41 +368,7 @@ public abstract class SharedSingularitySystem : EntitySystem
         comp.Intensity = absIntensity > 1 ? comp.Intensity * MathF.Pow(absIntensity, factor) : comp.Intensity;
     }
 
-    /// <summary>
-    /// Updates the state of the physics body associated with a singularity when the singualrity changes levels.
-    /// </summary>
-    /// <param name="uid">The entity that the physics body and singularity are attached to.</param>
-    /// <param name="comp">The physics body associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateBody(Entity<PhysicsComponent> body, ref SingularityLevelChangedEvent args)
-    {
-        if (args.NewValue <= 1 && args.OldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
-            _physics.SetLinearVelocity(body, Vector2.Zero, body: body.Comp); // No idea how stopping the singularities movement keeps it from getting stuck though.
-    }
-
-    /// <summary>
-    /// Updates the appearance of a singularity when the singularities level changes.
-    /// </summary>
-    /// <param name="uid">The entity that the singularity is attached to.</param>
-    /// <param name="comp">The appearance associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateAppearance(Entity<AppearanceComponent> appearance, ref SingularityLevelChangedEvent args)
-    {
-        _visualizer.SetData(appearance, SingularityAppearanceKeys.Singularity, args.NewValue, appearance.Comp);
-    }
-
-    /// <summary>
-    /// Updates the amount of radiation a singularity emits when the singularities level changes.
-    /// </summary>
-    /// <param name="uid">The entity that the singularity is attached to.</param>
-    /// <param name="comp">The radiation source associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateRadiation(Entity<RadiationSourceComponent> radSource, ref SingularityLevelChangedEvent args)
-    {
-        UpdateRadiation((radSource, args.Singularity.Comp, radSource.Comp));
-    }
-
-    #endregion EventHandlers
+#endregion EventHandlers
 
     #region Obsolete API
 

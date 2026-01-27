@@ -330,6 +330,25 @@
     - Chemist
 
 - type: entity
+  id: BookAILawCompendium
+  parent: BaseGuidebook
+  name: My, Robot
+  description: A dictionary of all the ways silicons can go wrong. By Isaac Crewsimov.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#A8162B"
+    - state: icon_borg
+      color: "#916161"
+    - state: detail_rivets
+      color: "#DDDDDD"
+  - type: GuideHelp
+    guides:
+    - Lawsets
+
+- type: entity
   id: BookSpaceLaw
   parent: BaseGuidebook
   name: space law

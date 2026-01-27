@@ -1,5 +1,4 @@
-using Content.Shared.Actions;
-﻿using Content.Shared.Whitelist;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -45,4 +44,10 @@ public sealed partial class EntityTargetActionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CanTargetSelf = true;
+
+    /// <summary>
+    /// Whether to make the user face towards the direction where they targeted this action.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RotateOnUse = true;
 }

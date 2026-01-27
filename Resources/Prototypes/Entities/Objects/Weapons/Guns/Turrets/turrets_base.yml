@@ -97,7 +97,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
     capacity: 500
-      
+
 - type: entity
   parent: BaseWeaponTurret
   id: BaseWeaponEnergyTurret
@@ -120,19 +120,26 @@
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: BulletEnergyTurretLaser
     fireCost: 100
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
     maxCharge: 2000
-    startingCharge: 0
+    startingCharge: 2000
   - type: ApcPowerReceiverBattery
     idleLoad: 5
     batteryRechargeRate: 200
-    batteryRechargeEfficiency: 1.225
+    batteryRechargeEfficiency: 0.0 # temporarily no power draw because this was causing potentially seizure inducing light flickering
   - type: ApcPowerReceiver
     powerLoad: 5
   - type: ExtensionCableReceiver
   - type: HTN
     rootTask:
       task: EnergyTurretCompound
+  - type: StaticPrice
+    price: 200

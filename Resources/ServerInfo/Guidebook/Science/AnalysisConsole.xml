@@ -1,0 +1,22 @@
+<Document>
+  # Analysis Console
+
+  The Analysis Console is a device used to interface with artifacts. It can be used to check nodes, their triggers and effects, and extract points.
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerAnalysisConsole" Caption="Analysis Console"/>
+  </Box>
+
+  The console displays detailed information about each node in the artifact’s tree structure. This includes:
+  - [bold]ID:[/bold] Unique identifier for use with the Node Scanner.
+  - [bold]Class:[/bold] The layer name, nodes on the same layer share it.
+  - [bold]Status:[/bold]
+  - [italic][color=red]Locked[/color][/italic] by default.
+  - [italic][color=plum]Active[/color][/italic] when first triggered.
+  - [italic][color=lime]Unlocked[/color][/italic] if a deeper node is reached (prevents manual activations).
+  - [bold]Durability:[/bold] Number of manual activations available.
+  - [bold]Effect:[/bold] What happens when the node activates or is manually triggered.
+  - [bold]Triggers:[/bold] Required actions to unlock the node.
+  - [bold]Server:[/bold] Choose the research server where extracted points are sent.
+  - [bold]Extract Points:[/bold] Extracts points from nodes unlocked since the last extraction.
+</Document>

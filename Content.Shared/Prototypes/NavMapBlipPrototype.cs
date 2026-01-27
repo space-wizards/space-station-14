@@ -39,4 +39,17 @@ public sealed partial class NavMapBlipPrototype : IPrototype
     /// </summary>
     [DataField]
     public float Scale { get; private set; } = 1f;
+
+    /// <summary>
+    /// Describes how the blip should be positioned.
+    /// It's up to the individual system to enforce this
+    /// </summary>
+    [DataField]
+    public NavMapBlipPlacement Placement { get; private set; } = NavMapBlipPlacement.Centered;
+}
+
+public enum NavMapBlipPlacement
+{
+    Centered,   // The blip appears in the center of the tile
+    Offset      // The blip is offset from the center of the tile (determined by the system using the blips)
 }

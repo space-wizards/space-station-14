@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnExamined(Entity<GasRecyclerComponent> ent, ref ExaminedEvent args)
         {
             var comp = ent.Comp;
-            if (!EntityManager.GetComponent<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!Comp<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (!_nodeContainer.TryGetNode(ent.Owner, comp.InletName, out PipeNode? inlet))

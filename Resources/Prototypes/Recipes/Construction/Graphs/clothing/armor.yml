@@ -25,3 +25,31 @@
         doAfter: 1
   - node: helmet
     entity: ClothingHeadHelmetBone
+
+- type: constructionGraph
+  id: cardArmour
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cardarmour
+      steps:
+      - material: Cardboard
+        amount: 10
+        doAfter: 4
+  - node: cardarmour
+    entity: CardArmour
+
+- type: constructionGraph
+  id: cardHelmet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cardhelmet
+      steps:
+      - material: Cardboard
+        amount: 5
+        doAfter: 2
+  - node: cardhelmet
+    entity: CardHelmet

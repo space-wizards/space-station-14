@@ -1,14 +1,13 @@
 using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Singularity.Events;
-using Content.Server.Station.Components;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
+using Content.Shared.Station.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -133,7 +132,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(morsel):player} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
         }
 
-        EntityManager.QueueDeleteEntity(morsel);
+        QueueDel(morsel);
 
         var evSelf = new EntityConsumedByEventHorizonEvent(hungry, morsel, outerContainer);
         var evEaten = new EventHorizonConsumedEntityEvent(hungry, morsel, outerContainer);
@@ -464,7 +463,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     private void OnEventHorizonContained(EventHorizonContainedEvent args)
     {
         var uid = args.Entity;
-        if (!EntityManager.EntityExists(uid))
+        if (!Exists(uid))
             return;
 
         var comp = args.EventHorizon;
@@ -472,7 +471,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             return;
 
         var containerEntity = args.Args.Container.Owner;
-        if (!EntityManager.EntityExists(containerEntity))
+        if (!Exists(containerEntity))
             return;
 
         if (AttemptConsumeEntity((uid, comp), containerEntity))

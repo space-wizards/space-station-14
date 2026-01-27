@@ -20,6 +20,12 @@ public sealed partial class LoadoutContainer : BoxContainer
 
     public Button Select => SelectButton;
 
+    public string? Text
+    {
+        get => SelectButton.Text;
+        set => SelectButton.Text = value;
+    }
+
     public LoadoutContainer(ProtoId<LoadoutPrototype> proto, bool disabled, FormattedMessage? reason)
     {
         RobustXamlLoader.Load(this);
@@ -34,7 +40,7 @@ public sealed partial class LoadoutContainer : BoxContainer
             SelectButton.TooltipSupplier = _ => tooltip;
         }
 
-        if (_protoManager.TryIndex(proto, out var loadProto))
+        if (_protoManager.Resolve(proto, out var loadProto))
         {
             var ent = loadProto.DummyEntity ?? _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
 
@@ -54,22 +60,9 @@ public sealed partial class LoadoutContainer : BoxContainer
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-
         if (!disposing)
             return;
 
         _entManager.DeleteEntity(_entity);
-    }
-
-    public bool Pressed
-    {
-        get => SelectButton.Pressed;
-        set => SelectButton.Pressed = value;
-    }
-
-    public string? Text
-    {
-        get => SelectButton.Text;
-        set => SelectButton.Text = value;
     }
 }
