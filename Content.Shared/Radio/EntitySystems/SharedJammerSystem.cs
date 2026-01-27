@@ -13,7 +13,6 @@ namespace Content.Shared.Radio.EntitySystems;
 public abstract class SharedJammerSystem : EntitySystem
 {
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
