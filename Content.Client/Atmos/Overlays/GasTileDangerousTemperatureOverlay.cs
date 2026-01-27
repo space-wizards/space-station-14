@@ -29,6 +29,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
 
     private IRenderTexture? _temperatureTarget;
 
+    // Cache used to transform ThermalByte into Color for overlay
     private readonly Color[] _colorCache = new Color[256];
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
@@ -36,7 +37,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
     public GasTileDangerousTemperatureOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _xformSys = _entManager.System<SharedTransformSystem>();
+        _xformSys = _entManager.System<SharedTransformSystem>(); 
 
         _overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
@@ -45,18 +46,25 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
             _colorCache[i] = PreCalculateColor(i);
         }
 
-        _colorCache[ThermalByte.StateVaccum] = Color.Transparent;
+        _colorCache[ThermalByte.StateVaccum] = Color.Teal;
+        _colorCache[ThermalByte.StateVaccum].A = 0.6f;
         _colorCache[ThermalByte.StateWall] = Color.Transparent;
 
 #if DEBUG // This shouldn't happend so tell me if you see this LimeGreen on the screen
+        _colorCache[ThermalByte.ReservedFuture0] = Color.LimeGreen;
         _colorCache[ThermalByte.ReservedFuture1] = Color.LimeGreen;
         _colorCache[ThermalByte.ReservedFuture2] = Color.LimeGreen;
 #else
+        _colorCache[ThermalByte.ReservedFuture0] = Color.Transparent;
         _colorCache[ThermalByte.ReservedFuture1] = Color.Transparent;
         _colorCache[ThermalByte.ReservedFuture2] = Color.Transparent;
 #endif
     }
 
+
+    /// <summary>
+    /// Used for Calculating onscreen color from ThermalByte core value
+    /// /// </summary>
     private static Color PreCalculateColor(byte byteTemp)
     {
         // Color Thresholds in Kelvin

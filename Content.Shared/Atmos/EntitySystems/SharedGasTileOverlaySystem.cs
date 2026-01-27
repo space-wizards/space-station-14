@@ -120,8 +120,34 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
 }
 
 /// <summary>
-/// This struct is used to send air temperature on screen to all users.   
+///     Struct for networking gas temperatures to all clients using a single struct(byte) per tile.
 /// </summary>
+/// <remarks>
+///     <para>
+///         This struct compresses the gas temperature into a 1-byte value (0-255). 
+///         It clamps the temperature to a maximum of 1000K and divides it by 4, creating a range of 0-250.
+///         This provides a resolution of 4 degrees Kelvin. 
+///     </para>
+///     <para>
+///         The remaining bytes are used as special flags:
+///         <list type="bullet">
+///             <item><description><b>255</b>: Represents a Wall (block cannot hold atmosphere).</description></item>
+///             <item><description><b>254</b>: Represents a Vacuum.</description></item>
+///             <item><description><b>251-253</b>: Reserved for future use.</description></item>
+///         </list>
+///     </para>
+///     <para>
+///         <b>Dirtying Logic:</b> The value is only dirtied and networked if the difference between the 
+///         networked byte and the real atmosphere byte is greater than 1. This prevents network spam 
+///         from minor temperature fluctuations (e.g., heating from 1K to 8K will not trigger an update, 
+///         but hitting 9K moves the byte index enough to sync).
+///     </para>
+///     <para>
+///         Currently, the conversion is linear. Future improvements might involve a quadratic scale 
+///         or pre-defined resolution points to offer higher precision at room temperatures 
+///         and lower precision at extreme temperatures (1000K).
+///     </para>
+/// </remarks>
 [Serializable]
 public struct ThermalByte : IEquatable<ThermalByte>
 {
@@ -129,6 +155,7 @@ public struct ThermalByte : IEquatable<ThermalByte>
     public const float TempMaximum = 1000f;
     public const int TempResolution = 250;
 
+    public const byte ReservedFuture0 = 251;
     public const byte ReservedFuture1 = 252;
     public const byte ReservedFuture2 = 253;
     public const byte StateVaccum = 254;
@@ -145,10 +172,10 @@ public struct ThermalByte : IEquatable<ThermalByte>
         SetTemperature(temperatureKelvin);
     }
 
-    //TODO Converstion between Kelvins and Thermal Byte is linear right now. This means resolution at 250K and 1000K is the same 4 degrees.
-    //This propably in the futre should be quadratic(or just linear but with changes to resolution at pre defined points), with higher resolution at normal ranges and lower at extreems
-    // This would allow to still transfer temperature info about 1000K but with lower resolution while increasing resolution at room temperature for better atmospheric prediction.
-    public void SetTemperature(float temperatureKelvin)
+    /// <summary>
+    /// Set temperature of air in this in Kelvin. 
+    /// </summary>
+    private void SetTemperature(float temperatureKelvin)
     {
         var clampedTemp = Math.Clamp(temperatureKelvin, TempMinimum, TempMaximum);
         _coreValue = (byte)((clampedTemp - TempMinimum) * TempResolution / (TempMaximum - TempMinimum));
