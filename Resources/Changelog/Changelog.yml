@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SharkSnake98
-  changes:
-  - message: Added 3 new Astrotiles for dark grass, light grass, and desert sand.
-    type: Add
-  id: 8964
-  time: '2025-09-15T01:30:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37867
 - author: chromiumboy
   changes:
   - message: Devices with access restrictions now list those restrictions in their
@@ -4010,3 +4003,12 @@
   id: 9470
   time: '2026-01-27T21:01:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42670
+- author: Princess-Cheeseballs
+  changes:
+  - message: Friendly visitor shuttles will no longer spawn.
+    type: Remove
+  - message: Syndicate Evac pod will no longer spawn.
+    type: Remove
+  id: 9471
+  time: '2026-01-27T23:03:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41915
