@@ -13675,13 +13675,11 @@ entities:
   - uid: 11358
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 70.5,19.5
       parent: 1
   - uid: 11359
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 63.5,19.5
       parent: 1
   - uid: 11448
@@ -87806,19 +87804,16 @@ entities:
   - uid: 5881
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 56.5,113.5
       parent: 1
   - uid: 6547
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 73.5,88.5
       parent: 1
   - uid: 8089
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 89.5,80.5
       parent: 1
   - uid: 10504
@@ -87864,7 +87859,6 @@ entities:
   - uid: 16182
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 22.5,81.5
       parent: 1
   - uid: 16712
@@ -116871,7 +116865,6 @@ entities:
   - uid: 4229
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 91.5,70.5
       parent: 1
   - uid: 14531
@@ -116887,7 +116880,6 @@ entities:
   - uid: 14675
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 44.5,31.5
       parent: 1
   - uid: 14750
@@ -116898,7 +116890,6 @@ entities:
   - uid: 15009
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 14.5,48.5
       parent: 1
 - proto: WeaponEnergyTurretAI

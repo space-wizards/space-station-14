@@ -1216,7 +1216,6 @@ entities:
   - uid: 814
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 4.5,-17.5
       parent: 1
 - proto: BoxInflatable
@@ -5280,7 +5279,6 @@ entities:
   - uid: 323
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 3.5,-8.5
       parent: 1
   - uid: 846
@@ -7181,13 +7179,11 @@ entities:
   - uid: 322
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 5.5,-7.5
       parent: 1
   - uid: 833
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,14.5
       parent: 1
 - proto: WindoorSecure

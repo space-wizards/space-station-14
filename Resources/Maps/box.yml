@@ -22733,7 +22733,6 @@ entities:
   - uid: 4207
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 3.5,-14.5
       parent: 8364
   - uid: 27381
@@ -136304,7 +136303,6 @@ entities:
   - uid: 7663
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 0.5,43.5
       parent: 8364
   - uid: 12054
@@ -136345,7 +136343,6 @@ entities:
   - uid: 16916
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 36.5,-45.5
       parent: 8364
   - uid: 16935
@@ -136356,7 +136353,6 @@ entities:
   - uid: 17189
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 37.5,-40.5
       parent: 8364
   - uid: 18411
@@ -180773,7 +180769,6 @@ entities:
   - uid: 7664
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -0.5,43.5
       parent: 8364
   - uid: 7857
@@ -180809,7 +180804,6 @@ entities:
   - uid: 28722
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -11.5,47.5
       parent: 8364
 - proto: WeaponDisablerPractice

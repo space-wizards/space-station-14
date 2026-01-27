@@ -3920,7 +3920,6 @@ entities:
   - uid: 336
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -2.5,20.5
       parent: 2
 - proto: WindoorSecureEngineeringLocked

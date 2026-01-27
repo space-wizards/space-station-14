@@ -184,12 +184,14 @@
     blacklist:
       tags:
       - GhostOnlyWarp
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+          bounds: "-0.45,-0.45,0.45,0.45"
         mask:
         - MachineMask
         layer:
