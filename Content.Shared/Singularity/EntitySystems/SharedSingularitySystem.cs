@@ -123,30 +123,33 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         if (TryComp<EventHorizonComponent>(singularity, out var eventHorizon))
         {
-            _horizons.SetRadius(singularity, EventHorizonRadius(singularity), false, eventHorizon);
-            _horizons.SetCanBreachContainment(singularity, CanBreachContainment(singularity), false, eventHorizon);
-            _horizons.UpdateEventHorizonFixture(singularity, eventHorizon: eventHorizon);
+            _horizons.SetRadius((singularity, eventHorizon), EventHorizonRadius(singularity.Comp), false);
+            _horizons.SetCanBreachContainment((singularity, eventHorizon), CanBreachContainment(singularity.Comp), false);
+            _horizons.UpdateEventHorizonFixture((singularity, null, eventHorizon));
         }
 
         if (TryComp<PhysicsComponent>(singularity, out var body))
         {
-            if (singularity.Level <= 1 && oldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
+            if (singularity.Comp.Level <= 1 && oldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
                 _physics.SetLinearVelocity(singularity, Vector2.Zero, body: body); // No idea how stopping the singularities movement keeps it from getting stuck though.
         }
 
         if (TryComp<AppearanceComponent>(singularity, out var appearance))
         {
-            _visualizer.SetData(singularity, SingularityAppearanceKeys.Singularity, singularity.Level, appearance);
+            _visualizer.SetData(singularity, SingularityAppearanceKeys.Singularity, singularity.Comp.Level, appearance);
         }
 
         if (TryComp<RadiationSourceComponent>(singularity, out var radiationSource))
         {
-            UpdateRadiation(singularity, singularity, radiationSource);
+            UpdateRadiation((singularity, singularity.Comp, radiationSource));
         }
 
-        RaiseLocalEvent(singularity, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
+        {
+            var ev = new SingularityLevelChangedEvent((singularity, singularity.Comp), oldValue);
+            RaiseLocalEvent(singularity, ref ev);
+        }
 
-        if (singularity.Level <= 0)
+        if (singularity.Comp.Level <= 0)
             QueueDel(singularity);
     }
 
@@ -368,7 +371,7 @@ public abstract class SharedSingularitySystem : EntitySystem
         comp.Intensity = absIntensity > 1 ? comp.Intensity * MathF.Pow(absIntensity, factor) : comp.Intensity;
     }
 
-#endregion EventHandlers
+    #endregion EventHandlers
 
     #region Obsolete API
 
