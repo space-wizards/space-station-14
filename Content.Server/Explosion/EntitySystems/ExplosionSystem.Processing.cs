@@ -532,6 +532,12 @@ public sealed partial class ExplosionSystem
 
             var newDef = (ContentTileDefinition) _tileDefinitionManager[newId];
 
+            if (newDef.Indestructible)
+            {
+                tileDef = newDef;
+                break;
+            }
+
             if (newDef.MapAtmosphere && !canCreateVacuum)
                 break;
 
