@@ -459,8 +459,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     private void SpawnNewAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def)
     {
-        if (GetValidSpawnPosition(ent, session.AttachedEntity, session) is { } coordinates)
-            SpawnNewAntagonist(ent, session, def, coordinates);
+        if (GetValidSpawnPosition(ent, session.AttachedEntity, session) is not { } coordinates)
+        {
+            Log.Error($"Was unable to find a valid spawn position for, {session.Name}, gamerule: {ToPrettyString(ent)}");
+            return;
+        }
+
+        SpawnNewAntagonist(ent, session, def, coordinates);
     }
 
     /// <summary>
@@ -491,10 +496,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         RaiseLocalEvent(ent, ref getPosEv, true);
 
         if (!getPosEv.Handled)
-        {
-            Log.Error($"Was unable to find a valid spawn position for {ToPrettyString(antag)}, {session?.Name}, gamerule: {ToPrettyString(ent)}");
             return null;
-        }
 
         return RobustRandom.Pick(getPosEv.Coordinates);
     }
