@@ -25,6 +25,7 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 50
+      Steel: 50
     chemicalComposition:
       Silicon: 20
   - type: StaticPrice
