@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Vulpkanin now use the corrent undergarments when "Censor character nudity"
-      is enabled.
-    type: Fix
-  id: 8961
-  time: '2025-09-14T07:39:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40341
 - author: Huaqas
   changes:
   - message: Vulpkanin eye tattoos now correctly changes the color of the entire eye.
@@ -4007,3 +3999,11 @@
   id: 9467
   time: '2026-01-26T20:25:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42662
+- author: ScholarNZL
+  changes:
+  - message: Fixed an exploit where deconstructing a meat spike with the correct timing
+      could delete someone being hooked onto it.
+    type: Fix
+  id: 9468
+  time: '2026-01-27T04:24:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42644
