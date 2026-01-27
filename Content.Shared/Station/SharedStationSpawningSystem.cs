@@ -36,50 +36,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
 // Public API Methods Handle Every Possible Type
-    public void EquipStartingGear(EntityUid entity, LoadoutPrototype loadout, bool raiseEvent = true)
-        => EquipStartingGear(entity, (object?)loadout, raiseEvent);
-
-    public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear,
-        bool raiseEvent = true)
-        => EquipStartingGear(entity, (object?)startingGear, raiseEvent);
-
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear,
-        bool raiseEvent = true)
-        => EquipStartingGear(entity, (object?)startingGear, raiseEvent);
-
-    public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? loadout,
-        bool raiseEvent = true)
-        => EquipStartingGear(entity, (object?)loadout, raiseEvent);
-
-    private void EquipStartingGear(EntityUid entity, object? loadoutSpec, bool raiseEvent = true)
-    {
-        if (loadoutSpec is null) return;
-
-        switch (loadoutSpec)
-        {
-            case LoadoutPrototype lp:
-                if (lp.StartingGear != null)
-                    EquipStartingGear(entity, lp.StartingGear, raiseEvent);
-                _applyEquipment(entity, lp, raiseEvent);
-                break;
-            case ProtoId<StartingGearPrototype> protoId:
-                if (PrototypeManager.TryIndex(protoId, out StartingGearPrototype? spProto))
-                    _applyEquipment(entity, spProto, raiseEvent);
-                else
-                    Log.Error($"Failed to resolve StartingGearPrototype '{protoId}'.");
-                break;
-            case StartingGearPrototype sp:
-                _applyEquipment(entity, sp, raiseEvent);
-                break;
-            case IEquipmentLoadout equipment:
-                _applyEquipment(entity, equipment, raiseEvent);
-                break;
-            default:
-                Log.Error($"Unsupported loadout type '{loadoutSpec.GetType()}' passed to EquipStartingGear.");
-                break;
-        }
-    }
-    private void _applyEquipment(EntityUid entity, IEquipmentLoadout? gear, bool raiseEvent = true)
+    public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? gear, bool raiseEvent = true)
     {
         if (gear == null) return;
 
