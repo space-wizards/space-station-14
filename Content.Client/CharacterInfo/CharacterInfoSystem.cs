@@ -3,6 +3,7 @@ using Content.Shared.Objectives;
 using Content.Shared.Roles;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.CharacterInfo;
 
@@ -49,7 +50,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         EntityUid Entity,
         Dictionary<string, List<ObjectiveInfo>> Objectives,
         string? Briefing,
-        JobPrototype? JobID,
+        ProtoId<JobPrototype>? JobID,
         string EntityName
     );
 

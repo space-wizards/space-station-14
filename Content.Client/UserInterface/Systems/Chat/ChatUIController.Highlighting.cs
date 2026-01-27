@@ -149,7 +149,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         if (newHighlights.Count(c => c == '-') > 1)
             newHighlights = newHighlights.Split('-')[0] + "\n@" + newHighlights.Split('-')[^1];
 
-        string jobIdNonNull = job?.ID ?? "unknown-job";
+        string jobIdNonNull = job?.Id ?? "unknown-job";
         // Convert the job title to kebab-case and use it as a key for the loc file.
         var jobKey = jobIdNonNull.Replace(' ', '-').ToLower();
 

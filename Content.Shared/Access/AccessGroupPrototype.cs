@@ -1,6 +1,5 @@
 using Content.Shared.Access.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access;
 
@@ -9,7 +8,6 @@ namespace Content.Shared.Access;
 ///     Used by <see cref="AccessComponent"/> to avoid boilerplate.
 /// </summary>
 [Prototype]
-[Serializable, NetSerializable]
 public sealed partial class AccessGroupPrototype : IPrototype
 {
     [IdDataField]

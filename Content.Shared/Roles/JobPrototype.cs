@@ -3,7 +3,6 @@ using Content.Shared.Guidebook;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Roles
@@ -12,7 +11,6 @@ namespace Content.Shared.Roles
     ///     Describes information for a single job on the station.
     /// </summary>
     [Prototype]
-    [Serializable, NetSerializable]
     public sealed partial class JobPrototype : IPrototype
     {
         [ViewVariables]
@@ -132,20 +130,19 @@ namespace Content.Shared.Roles
         public ProtoId<JobIconPrototype> Icon { get; private set; } = "JobIconUnknown";
 
         [DataField(serverOnly: true)]
-        [field: NonSerialized]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
         [DataField]
-        public ProtoId<AccessLevelPrototype>[] Access { get; private set; } = Array.Empty<ProtoId<AccessLevelPrototype>>();
+        public IReadOnlyCollection<ProtoId<AccessLevelPrototype>> Access { get; private set; } = Array.Empty<ProtoId<AccessLevelPrototype>>();
 
         [DataField]
-        public ProtoId<AccessGroupPrototype>[] AccessGroups { get; private set; } = Array.Empty<ProtoId<AccessGroupPrototype>>();
+        public IReadOnlyCollection<ProtoId<AccessGroupPrototype>> AccessGroups { get; private set; } = Array.Empty<ProtoId<AccessGroupPrototype>>();
 
         [DataField]
-        public ProtoId<AccessLevelPrototype>[] ExtendedAccess { get; private set; } = Array.Empty<ProtoId<AccessLevelPrototype>>();
+        public IReadOnlyCollection<ProtoId<AccessLevelPrototype>> ExtendedAccess { get; private set; } = Array.Empty<ProtoId<AccessLevelPrototype>>();
 
         [DataField]
-        public ProtoId<AccessGroupPrototype>[] ExtendedAccessGroups { get; private set; } = Array.Empty<ProtoId<AccessGroupPrototype>>();
+        public IReadOnlyCollection<ProtoId<AccessGroupPrototype>> ExtendedAccessGroups { get; private set; } = Array.Empty<ProtoId<AccessGroupPrototype>>();
 
         [DataField]
         public bool Whitelisted;

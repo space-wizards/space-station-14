@@ -1,5 +1,4 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access
 {
@@ -7,7 +6,6 @@ namespace Content.Shared.Access
     ///     Defines a single access level that can be stored on ID cards and checked for.
     /// </summary>
     [Prototype]
-    [Serializable, NetSerializable]
     public sealed partial class AccessLevelPrototype : IPrototype
     {
         [ViewVariables]
