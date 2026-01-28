@@ -35,6 +35,44 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         _storageQuery = GetEntityQuery<StorageComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
+
+    /// <summary>
+    ///     Equips the data from a `RoleLoadout` onto an entity.
+    /// </summary>
+    public void EquipRoleLoadout(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
+    {
+        foreach (var group in loadout.SelectedLoadouts
+                     .OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+        {
+            foreach (var items in group.Value)
+            {
+                if (!PrototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                {
+                    Log.Error($"Unable to find loadout prototype for {items.Prototype}");
+                    continue;
+                }
+
+                EquipStartingGear(entity, loadoutProto, raiseEvent: false);
+            }
+        }
+
+        EquipRoleName(entity, loadout, roleProto);
+    }
+
+    public void EquipRoleName(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
+    {
+        string? name = null;
+
+        if (roleProto.CanCustomizeName)
+            name = loadout.EntityName;
+
+        if (string.IsNullOrEmpty(name) && PrototypeManager.Resolve(roleProto.NameDataset, out var nameData))
+            name = Loc.GetString(_random.Pick(nameData.Values));
+
+        if (!string.IsNullOrEmpty(name))
+            _metadata.SetEntityName(entity, name);
+    }
+
 // Public API Methods Handle Every Possible Type
     public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? gear, bool raiseEvent = true)
     {
@@ -98,39 +136,6 @@ public abstract class SharedStationSpawningSystem : EntitySystem
             var ev = new StartingGearEquippedEvent(entity);
             RaiseLocalEvent(entity, ref ev);
         }
-    }
-    public void EquipRoleLoadout(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
-    {
-        foreach (var group in loadout.SelectedLoadouts
-                                   .OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
-        {
-            foreach (var items in group.Value)
-            {
-                if (!PrototypeManager.TryIndex(items.Prototype, out var loadoutProto))
-                {
-                    Log.Error($"Unable to find loadout prototype for {items.Prototype}");
-                    continue;
-                }
-
-                EquipStartingGear(entity, loadoutProto, raiseEvent: false);
-            }
-        }
-
-        EquipRoleName(entity, loadout, roleProto);
-    }
-
-    public void EquipRoleName(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
-    {
-        string? name = null;
-
-        if (roleProto.CanCustomizeName)
-            name = loadout.EntityName;
-
-        if (string.IsNullOrEmpty(name) && PrototypeManager.Resolve(roleProto.NameDataset, out var nameData))
-            name = Loc.GetString(_random.Pick(nameData.Values));
-
-        if (!string.IsNullOrEmpty(name))
-            _metadata.SetEntityName(entity, name);
     }
 
     public string? GetGearForSlot(RoleLoadout? loadout, string slot)
