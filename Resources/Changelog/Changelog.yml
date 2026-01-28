@@ -1,17 +1,6 @@
 ﻿Entries:
 - author: chromiumboy
   changes:
-  - message: Devices with access restrictions now list those restrictions in their
-      examination description
-    type: Add
-  - message: Wearing a diagnostic HUD will reveal if a device's access restrictions
-      have been modified and in what way
-    type: Add
-  id: 8965
-  time: '2025-09-15T07:19:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37712
-- author: chromiumboy
-  changes:
   - message: AI cores now require power to function and can be damaged/destroyed.
       Any AI inhabiting an AI core when it breaks or runs out of power will be killed.
       AI cores have an internal battery that can provide up to 10 minutes of emergency
@@ -4012,3 +4001,10 @@
   id: 9471
   time: '2026-01-27T23:03:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41915
+- author: Velken
+  changes:
+  - message: Fixed some explosions ignoring indestructible tiles.
+    type: Fix
+  id: 9472
+  time: '2026-01-28T00:37:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42682
