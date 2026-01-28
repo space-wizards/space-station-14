@@ -42,8 +42,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     public void EquipRoleLoadout(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
     {
         // Order loadout selections by the order they appear on the prototype.
-        foreach (var group in loadout.SelectedLoadouts
-                     .OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
+        foreach (var group in loadout.SelectedLoadouts.OrderBy(x => roleProto.Groups.FindIndex(e => e == x.Key)))
         {
             foreach (var items in group.Value)
             {
@@ -59,6 +58,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
         EquipRoleName(entity, loadout, roleProto);
     }
+
     /// <summary>
     /// Applies the role's name as applicable to the entity.
     /// </summary>
@@ -67,21 +67,28 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         string? name = null;
 
         if (roleProto.CanCustomizeName)
+        {
             name = loadout.EntityName;
+        }
 
         if (string.IsNullOrEmpty(name) && PrototypeManager.Resolve(roleProto.NameDataset, out var nameData))
+        {
             name = Loc.GetString(_random.Pick(nameData.Values));
+        }
 
         if (!string.IsNullOrEmpty(name))
+        {
             _metadata.SetEntityName(entity, name);
+        }
     }
 
-// Public API Methods Handle Every Possible Type
+    // Public API Methods Handle Every Possible Type
     public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? gear, bool raiseEvent = true)
     {
         if (gear == null) return;
 
-        var xform = _xformQuery.GetComponent(entity);
+        var xform = Transform(entity);
+
 
         // inventory
         if (InventorySystem.TryGetSlots(entity, out var slotDefs))
@@ -152,19 +159,22 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 /// </returns>
     public string? GetGearForSlot(RoleLoadout? loadout, string slot)
     {
-        if (loadout == null) return null;
+        if (loadout == null)
+            return null;
 
         foreach (var group in loadout.SelectedLoadouts)
         {
             foreach (var items in group.Value)
             {
-                if (!PrototypeManager.Resolve(items.Prototype, out var loadoutProto))
+                if (!PrototypeManager.Resolve(items.Prototype, out var loadoutPrototype))
                     return null;
 
-                var gear = ((IEquipmentLoadout)loadoutProto).GetGear(slot);
-                if (gear != string.Empty) return gear;
+                var gear = ((IEquipmentLoadout) loadoutPrototype).GetGear(slot);
+                if (gear != string.Empty)
+                    return gear;
             }
         }
+
         return null;
     }
 }
