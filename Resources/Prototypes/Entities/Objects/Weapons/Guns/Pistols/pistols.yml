@@ -38,7 +38,7 @@
     soundRack:
       path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
   - type: MeleeWeapon
-    wideAnimationRotation: -85
+    wideAnimationRotation: 0
     damage:
       types:
         Blunt: 8
