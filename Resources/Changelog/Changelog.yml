@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Admiral-Obvious-001
-  changes:
-  - message: Increased the cooldown of ninja glove stun from 2 seconds to 10 seconds.
-      Stun duration remains unchanged at 5 seconds.
-    type: Tweak
-  id: 8967
-  time: '2025-09-15T23:31:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39707
 - author: ScarKy0
   changes:
   - message: Intellicards can now be obtained from the Station AI Electronics crates.
@@ -3999,3 +3991,10 @@
   id: 9473
   time: '2026-01-28T08:42:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42608
+- author: Huaqas
+  changes:
+  - message: Removed the Reptilian laugh sound effect due to copyright concerns.
+    type: Remove
+  id: 9474
+  time: '2026-01-28T11:55:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42594
