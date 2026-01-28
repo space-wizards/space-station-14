@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesEternalHECU
+  suffix: Eternal
+  name: Боевые Ботинки HECU
+  description: Это обычные боевые ботинки. В них есть место под нож
+  components:
+  - type: Sprite
+    sprite: /Textures/_Eternal/People/Clothing/Leg/Berts.rsi
+  - type: Clothing
+    sprite: /Textures/_Eternal/People/Clothing/Leg/Berts.rsi
+  - type: Matchbox

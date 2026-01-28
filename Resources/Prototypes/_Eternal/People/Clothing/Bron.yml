@@ -1,0 +1,71 @@
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing]
+  id: ClothingBronEternalLight
+  suffix: Eternal
+  name: Легкая Броня
+  description: Легкая броня, не сильно спасет вас от когтей монстров
+  components:
+  - type: Armor #Статы брони
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75 
+        Heat: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+  - type: ClothingSpeedModifier
+    walkModifier: 1.20
+    sprintModifier: 1.20
+  - type: Sprite
+    sprite: /Textures/_Eternal/People/Clothing/Bron/Light.rsi
+  - type: Clothing
+    sprite: /Textures/_Eternal/People/Clothing/Bron/Light.rsi
+
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing]
+  id: ClothingBronEternalMedium
+  suffix: Eternal
+  name: Средняя Броня
+  description: Средняя броня, имеет наколеники и налокотники
+  components:
+  - type: Armor #Статы брони
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+  - type: Sprite
+    sprite: /Textures/_Eternal/People/Clothing/Bron/Meduim.rsi
+  - type: Clothing
+    sprite: /Textures/_Eternal/People/Clothing/Bron/Meduim.rsi
+    
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing]
+  id: ClothingBronEternalHard
+  suffix: Eternal
+  name: Тяжелая Броня
+  description: Тяжелая броня, спасет вас почти от всего... Наверное
+  components:
+  - type: Armor #Статы брони
+    modifiers:
+      coefficients:
+        Blunt: 0.55
+        Slash: 0.55
+        Piercing: 0.55
+        Heat: 0.70
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.70
+    sprintModifier: 0.70
+  - type: Sprite
+    sprite: /Textures/_Eternal/People/Clothing/Bron/Hard.rsi
+  - type: Clothing
+    sprite: /Textures/_Eternal/People/Clothing/Bron/Hard.rsi
