@@ -212,6 +212,8 @@
       pickPlayer: false
       mindRoles:
       - MindRoleDragon
+      briefing:
+        text: dragon-role-briefing
   - type: DynamicRuleCost
     cost: 75
 
