@@ -121,12 +121,9 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
         var path = entry.Text;
 
-        if (!_resourceManager.TryContentFileRead(path, out _))
+        if (path.CanonPath.Contains("loc") && _loc.DefaultCulture is not null)
         {
-            var cult = "en-US";
-            if (_loc.DefaultCulture is not null)
-                cult = _loc.DefaultCulture.ToString();
-            path = new ResPath("/Locale/" + cult + path);
+            path = new ResPath(path.CanonPath.Replace("loc", _loc.DefaultCulture.ToString()));
         }
 
         using var file = _resourceManager.ContentFileReadText(path); // I got braindamage when look on this line
