@@ -264,12 +264,11 @@ public sealed partial class StoreSystem
         }
 
         //log dat shit.
-        //non-syndicate shouldn't be buying stuff from uplink
-        if (listing.Cost.TryGetValue("Telecrystal", out var tcCost) && !_npcFaction.IsMember(buyer, "Syndicate"))
+        if (component.ExpectedFaction?.Count > 0 && !_npcFaction.IsMemberOfAny(buyer, component.ExpectedFaction))
         {
             _admin.Add(LogType.StorePurchase,
                 LogImpact.High,
-                $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)} as a non-syndicate member.");
+                $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)} and was not of an expected faction.");
         }
         else
         {
