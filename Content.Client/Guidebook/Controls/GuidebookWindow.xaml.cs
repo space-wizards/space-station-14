@@ -126,7 +126,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
             path = new ResPath(path.CanonPath.Replace("loc", _loc.DefaultCulture.ToString()));
         }
 
-        using var file = _resourceManager.ContentFileReadText(path); // I got braindamage when look on this line
+        using var file = _resourceManager.ContentFileReadText(path);
 
         SearchContainer.Visible = entry.FilterEnabled;
 
