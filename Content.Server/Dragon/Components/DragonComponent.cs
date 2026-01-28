@@ -22,7 +22,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// The number of charged rifts.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), DataField]
         public int ChargedRifts = 0;
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Content.Server.Dragon
         /// Text of the alert when calling the evacuation shuttle if the dragon fully charges 3 rifts.
         /// </summary>
         [DataField]
-        public string RoundEndText = "dragon-round-end";
+        public LocId RoundEndText = "dragon-round-end";
 
         public bool Weakened => WeakenedAccumulator > 0f;
 
