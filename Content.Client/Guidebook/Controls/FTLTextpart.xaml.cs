@@ -15,6 +15,7 @@ public sealed partial class FTLTextpart : RichTextLabel, IDocumentTag
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
 
     private readonly ISawmill _sawmill;
 
@@ -38,7 +39,15 @@ public sealed partial class FTLTextpart : RichTextLabel, IDocumentTag
         {
             Text = fluentString;
             control = this;
-            return true;
+            var doc = new Document();
+            if (_documentParsingManager.TryAddMarkup(doc, fluentString))
+            {
+                control = doc;
+                return true;
+            }
+
+            control = null;
+            return false;
         }
 
         _sawmill.Error("Fluent key cannot be found");
