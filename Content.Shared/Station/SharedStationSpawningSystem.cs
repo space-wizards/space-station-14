@@ -59,7 +59,9 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
         EquipRoleName(entity, loadout, roleProto);
     }
-
+    /// <summary>
+    /// Applies the role's name as applicable to the entity.
+    /// </summary>
     public void EquipRoleName(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
     {
         string? name = null;
