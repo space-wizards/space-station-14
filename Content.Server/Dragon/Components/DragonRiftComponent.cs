@@ -12,7 +12,7 @@ public sealed partial class DragonRiftComponent : SharedDragonRiftComponent
     /// <summary>
     /// Dragon that spawned this rift.
     /// </summary>
-    [DataField] 
+    [DataField]
     public EntityUid? Dragon;
 
     /// <summary>
@@ -43,7 +43,7 @@ public sealed partial class DragonRiftComponent : SharedDragonRiftComponent
     /// Announcement of fully charging rift
     /// </summary>
     [DataField]
-    public string FullChargingAnnouncement = "carp-rift-max-warning";
+    public LocId FullChargingAnnouncement = "carp-rift-max-warning";
 
     /// <summary>
     /// Accumulation of the spawn timer.

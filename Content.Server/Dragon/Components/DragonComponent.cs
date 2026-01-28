@@ -35,14 +35,14 @@ namespace Content.Server.Dragon
         /// <summary>
         /// The time after which the dragon will receive a popup that it needs to set the Rift.
         /// </summary>
-        [DataField] 
+        [DataField]
         public int RiftPopupAlertAccumulator = 200;
 
         /// <summary>
         /// The popup alert message shown to the dragon when they need to spawn a rift.
         /// </summary>
         [DataField]
-        public string RiftPopupAlert = "dragon-rift-alert";
+        public LocId RiftPopupAlert = "dragon-rift-alert";
 
         /// <summary>
         /// Announcement of fully charging rift
@@ -53,7 +53,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// Maximum time the dragon can go without spawning a rift before they die.
         /// </summary>
-        [DataField] 
+        [DataField]
         public float RiftMaxAccumulator = 300f;
 
         [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
