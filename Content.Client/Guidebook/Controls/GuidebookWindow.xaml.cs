@@ -121,12 +121,12 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
         var path = entry.Text;
 
-        if (path.CanonPath.Contains("loc") && _loc.DefaultCulture is not null)
+        if (path.Contains("loc") && _loc.DefaultCulture is not null)
         {
-            path = new ResPath(path.CanonPath.Replace("loc", _loc.DefaultCulture.ToString()));
+            path = path.Replace("loc", _loc.DefaultCulture.ToString());
         }
 
-        using var file = _resourceManager.ContentFileReadText(path);
+        using var file = _resourceManager.ContentFileReadText(new ResPath(path));
 
         SearchContainer.Visible = entry.FilterEnabled;
 
