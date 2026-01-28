@@ -39,7 +39,7 @@ public sealed partial class StoreComponent : Component
 
     /// <summary>
     /// The expected Faction to use this store. (Optional)
-    /// Used to increase the severity of the admin log upon purchase if not of the expected faction.
+    /// Used to increase the severity of the admin log upon purchase if the purchaser is not a member of one of the listed factions.
     /// </summary>
     [DataField]
     public HashSet<ProtoId<NpcFactionPrototype>>? ExpectedFaction = new ();

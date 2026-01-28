@@ -270,12 +270,12 @@ public sealed partial class StoreSystem
         if (component.ExpectedFaction?.Count > 0 && !_npcFaction.IsMemberOfAny(buyer, component.ExpectedFaction))
         {
             logImpact = LogImpact.High;
-            logExtraInfo = " and was not of expected Faction";
+            logExtraInfo = "n expected faction";
 
             if (HasComp<MindShieldComponent>(buyer))
             {
                 logImpact = LogImpact.Extreme;
-                logExtraInfo = " and had mindshield";
+                logExtraInfo = " while also possessing a mindshield";
             }
         }
 
