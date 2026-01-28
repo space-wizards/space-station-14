@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformHECUSolder
+  name: Форма Подразделения HECU
+  suffix: Eternal
+  description: Форма подразделения HECU
+  components:
+  - type: Sprite
+    sprite: /Textures/_Eternal/People/Clothing/Uniform/HECU.rsi
+  - type: Clothing
+    sprite: /Textures/_Eternal/People/Clothing/Uniform/HECU.rsi
