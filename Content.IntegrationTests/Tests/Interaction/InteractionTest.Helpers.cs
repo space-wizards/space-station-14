@@ -91,16 +91,18 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Spawn an entity at the target coordinates and set it as the target.
+    /// Spawn an entity at the given coordinates and set it as the target.
+    /// If no coordinates are given it will default to <see cref="TargetCoords"/>
     /// </summary>
     [MemberNotNull(nameof(Target), nameof(STarget), nameof(CTarget))]
 #pragma warning disable CS8774 // Member must have a non-null value when exiting.
-    protected async Task<NetEntity> SpawnTarget(string prototype)
+    protected async Task<NetEntity> SpawnTarget(string prototype, NetCoordinates? coords = null)
     {
+        coords ??= TargetCoords;
         Target = NetEntity.Invalid;
         await Server.WaitPost(() =>
         {
-            Target = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(TargetCoords)));
+            Target = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(coords.Value)));
         });
 
         await RunTicks(5);
@@ -110,14 +112,16 @@ public abstract partial class InteractionTest
 #pragma warning restore CS8774 // Member must have a non-null value when exiting.
 
     /// <summary>
-    /// Spawn an entity entity at the target coordinates without setting it as the target.
+    /// Spawn an entity entity at the given coordinates without setting it as the target.
+    /// If no coordinates are given it will default to <see cref="TargetCoords"/>
     /// </summary>
-    protected async Task<NetEntity> Spawn(string prototype)
+    protected async Task<NetEntity> Spawn(string prototype, NetCoordinates? coords = null)
     {
+        coords ??= TargetCoords;
         var entity = NetEntity.Invalid;
         await Server.WaitPost(() =>
         {
-            entity = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(TargetCoords)));
+            entity = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(coords.Value)));
         });
 
         await RunTicks(5);
@@ -405,6 +409,33 @@ public abstract partial class InteractionTest
         {
             await InteractUsing(spec);
         }
+    }
+
+    /// <summary>
+    /// Simulates a drag and drop mouse interaction from one entity to another.
+    /// </summary>
+    protected async Task DragDrop(NetEntity source, NetEntity target)
+    {
+        // ScreenCoordinates diff needs to be larger than DragDropSystem.Deadzone for the drag drop to initiate
+        var screenX = CDragDropSys.Deadzone + 1f;
+
+        // Start drag
+        await SetKey(EngineKeyFunctions.Use,
+            BoundKeyState.Down,
+            NetPosition(source),
+            source,
+            screenCoordinates: new ScreenCoordinates(screenX, 0f, WindowId.Main));
+
+        await RunTicks(3);
+
+        // End drag
+        await SetKey(EngineKeyFunctions.Use,
+            BoundKeyState.Up,
+            NetPosition(target),
+            target,
+            screenCoordinates: new ScreenCoordinates(0f, 0f, WindowId.Main));
+
+        await RunTicks(3);
     }
 
     /// <summary>
@@ -1607,6 +1638,7 @@ public abstract partial class InteractionTest
 
     protected EntityCoordinates Position(NetEntity uid) => Position(ToServer(uid));
     protected EntityCoordinates Position(EntityUid uid) => Xform(uid).Coordinates;
+    protected NetCoordinates NetPosition(NetEntity uid) => FromServer(Position(uid));
 
     #endregion
 }
