@@ -3,19 +3,27 @@
     <OutputType>Exe</OutputType>
     <OutputPath>..\bin\Content.MapRenderer\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <Nullable>enable</Nullable>
     <ServerGarbageCollection>true</ServerGarbageCollection>
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
   </PropertyGroup>
+
+  <Import Project="../MSBuild/Content.props" />
 
   <ItemGroup>
     <ProjectReference Include="..\Content.IntegrationTests\Content.IntegrationTests.csproj" />
-    <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
+    <PackageReference Include="Moq" />
     <PackageReference Include="SixLabors.ImageSharp" />
   </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
+
+  <Import Project="..\RobustToolbox\Imports\Client.props" />
+  <Import Project="..\RobustToolbox\Imports\Server.props" />
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
+  <Import Project="..\RobustToolbox\Imports\Testing.props" />
+
 </Project>

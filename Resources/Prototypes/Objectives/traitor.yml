@@ -37,7 +37,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseLivingObjective]
   id: EscapeShuttleObjective
-  name: Escape to centcomm alive and unrestrained.
+  name: Escape to CentComm alive and unrestrained via the escape shuttle.
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective

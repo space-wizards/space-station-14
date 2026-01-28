@@ -63,9 +63,10 @@
       gas_tank: !type:ContainerSlot
 
 - type: entity
-  name: pie cannon
   parent: [BaseStorageItem, BaseGunMeleeHeavy]
   id: LauncherCreamPie
+  name: pie cannon
+  suffix: Empty
   description: Load cream pie for optimal results.
   components:
   - type: Sprite
@@ -106,7 +107,7 @@
   - type: MeleeWeapon #pie launcher is bulky but probably light, so less damage
     damage:
       types:
-       Blunt: 8 
+       Blunt: 8
 
 - type: entity
   name: experimental pie cannon
@@ -132,10 +133,10 @@
   - type: BatteryAmmoProvider
     proto: FoodPieBananaCream
     fireCost: 30
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 90
     startingCharge: 90
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 1
   - type: AmmoCounter
   - type: Item
