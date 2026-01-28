@@ -535,13 +535,10 @@ public sealed partial class ExplosionSystem
             if (newDef.MapAtmosphere && !canCreateVacuum)
                 break;
 
-            if (newDef.Indestructible)
-            {
-                tileDef = newDef;
-                break;
-            }
-
             tileDef = newDef;
+
+            if (newDef.Indestructible)
+                break;
         }
 
         if (tileDef.TileId == tileRef.Tile.TypeId)
