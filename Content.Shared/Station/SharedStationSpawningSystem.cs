@@ -141,15 +141,15 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         }
     }
 
-/// <summary>
-///     Gets all the gear for a given slot when passed a loadout.
-/// </summary>
-/// <param name="loadout">The loadout to look through.</param>
-/// <param name="slot">The slot that you want the clothing for.</param>
-/// <returns>
-///     If there is a value for the given slot, it will return the proto id for that slot.
-///     If nothing was found, will return null
-/// </returns>
+  /// <summary>
+  ///     Gets all the gear for a given slot when passed a loadout.
+  /// </summary>
+  /// <param name="loadout">The loadout to look through.</param>
+  /// <param name="slot">The slot that you want the clothing for.</param>
+  /// <returns>
+  ///     If there is a value for the given slot, it will return the proto id for that slot.
+  ///     If nothing was found, will return null
+  /// </returns>
     public string? GetGearForSlot(RoleLoadout? loadout, string slot)
     {
         if (loadout == null) return null;
