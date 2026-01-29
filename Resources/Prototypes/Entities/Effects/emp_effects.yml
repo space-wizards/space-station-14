@@ -1,6 +1,7 @@
 - type: entity
   id: EffectEmpPulse
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: TimedDespawn
     lifetime: 0.8
@@ -21,6 +22,7 @@
 - type: entity
   id: EffectEmpDisabled
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: TimedDespawn
     lifetime: 0.4
