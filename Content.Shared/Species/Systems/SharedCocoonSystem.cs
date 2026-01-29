@@ -66,7 +66,7 @@ public abstract class SharedCocoonSystem : EntitySystem
         if (target == user)
             return;
 
-        if (!HasComp<HumanoidAppearanceComponent>(target))
+        if (!HasComp<HumanoidProfileComponent>(target))
         {
             _popups.PopupEntity(Loc.GetString("arachnid-wrap-invalid-target"), user, user);
             return;
@@ -132,10 +132,7 @@ public abstract class SharedCocoonSystem : EntitySystem
     /// <summary>
     /// Server-only operations for wrap action (admin logs, etc.)
     /// </summary>
-    protected virtual void OnWrapActionServer(EntityUid user, EntityUid target)
-    {
-        // Override in server system to add admin logs and other server-only operations
-    }
+    protected abstract void OnWrapActionServer(EntityUid user, EntityUid target);
 }
 
 public sealed partial class WrapActionEvent : EntityTargetActionEvent

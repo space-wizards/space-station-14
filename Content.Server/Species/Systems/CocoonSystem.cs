@@ -24,7 +24,7 @@ using Content.Shared.Species.Arachnid;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Destructible;
-using Content.Shared.Gibbing.Events;
+using Content.Shared.Gibbing;
 using Content.Server.Body.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -70,7 +70,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         SubscribeLocalEvent<CocoonedComponent, RemoveCocoonAlertEvent>(OnRemoveCocoonAlert);
         SubscribeLocalEvent<CocoonedComponent, AttackAttemptEvent>(OnCocoonedAttackAttempt);
 
-        SubscribeLocalEvent<CocoonedComponent, EntityGibbedEvent>(OnCocoonedVictimGibbed);
+        SubscribeLocalEvent<CocoonedComponent, GibbedBeforeDeletionEvent>(OnCocoonedVictimGibbed);
     }
 
     private void OnCocoonContainerDamage(EntityUid uid, CocoonContainerComponent component, DamageChangedEvent args)
@@ -268,7 +268,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         var performer = args.User;
         var target = args.Args.Target.Value;
 
-        if (!HasComp<HumanoidAppearanceComponent>(target))
+        if (!HasComp<HumanoidProfileComponent>(target))
             return;
 
         // Check if target is already in a cocoon container
@@ -509,7 +509,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         args.Cancel();
     }
 
-    private void OnCocoonedVictimGibbed(Entity<CocoonedComponent> ent, ref EntityGibbedEvent args)
+    private void OnCocoonedVictimGibbed(Entity<CocoonedComponent> ent, ref GibbedBeforeDeletionEvent args)
     {
         // Find the cocoon container that contains this victim
         if (!_container.TryGetContainingContainer(ent.Owner, out var container))
@@ -522,7 +522,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         if (!_container.TryGetContainer(container.Owner, CocoonContainerId, out var victimContainer))
             return;
 
-        foreach (var gibbedPart in args.DroppedEntities)
+        foreach (var gibbedPart in args.Giblets)
         {
             if (Deleted(gibbedPart))
                 continue;

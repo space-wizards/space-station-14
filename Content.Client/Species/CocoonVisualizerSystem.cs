@@ -69,8 +69,8 @@ public sealed class CocoonVisualizerSystem : EntitySystem
         if (!Exists(victim))
             return;
 
-        // Get the species from the victim's HumanoidAppearanceComponent
-        if (!TryComp<HumanoidAppearanceComponent>(victim, out var humanoid))
+        // Get the species from the victim's HumanoidProfileComponent
+        if (!TryComp<HumanoidProfileComponent>(victim, out var humanoid))
             return;
 
         // Get the species prototype and use its cocoon scale, or default to 1.0, 1.0 if not found
