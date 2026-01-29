@@ -596,6 +596,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
 
+        DirtyEntity(uid);
         bloodData.Add(dnaData);
         return bloodData;
     }
