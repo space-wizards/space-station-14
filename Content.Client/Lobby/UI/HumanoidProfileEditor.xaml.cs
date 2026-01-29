@@ -555,9 +555,10 @@ namespace Content.Client.Lobby.UI
                 if (!_requirements.IsAllowed(
                         antag,
                         (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
-                        out var reason))
+                        out var reason,
+                        out var reason_short))
                 {
-                    selector.LockRequirements(reason);
+                    selector.LockRequirements(reason, reason_short);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
                     SetDirty();
                 }
@@ -806,9 +807,13 @@ namespace Content.Client.Lobby.UI
                     icon.Texture = _sprite.Frame0(jobIcon.Icon);
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
-                    if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                    if (!_requirements.IsAllowed(job,
+                        (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
+                        out var reason,
+                        out var reason_short)
+                    )
                     {
-                        selector.LockRequirements(reason);
+                        selector.LockRequirements(reason, reason_short);
                     }
                     else
                     {
