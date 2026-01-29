@@ -30,6 +30,7 @@ public sealed class ChatRepositorySystem : EntitySystem
         _replay.RecordingFinished += _ =>
         {
             // TODO: resolve https://github.com/space-wizards/space-station-14/issues/25485 so we can dump the chat to disc.
+            // Good news chat, the issue has been resolved, now you just have to code the rest of it.
             Refresh();
         };
     }
