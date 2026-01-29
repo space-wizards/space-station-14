@@ -315,6 +315,9 @@
   parent: [ MobAdultSlimes, MobCombat ]
   description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
+  - type: ReagentColor
+    solution: bloodstream
+  - type: Appearance
   - type: GhostRole
     prob: 0
     description: ghost-role-information-angry-slimes-description
@@ -332,11 +335,9 @@
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
-        color: "#75b1f0"
   - type: PointLight
     radius: 2.0
     energy: 3.5
-    color: "#75b1f0" # Edited through the LiquidAnomalySystem
   - type: MobState
     allowedStates:
     - Alive
@@ -424,15 +425,6 @@
       reagents:
       - ReagentId: Beer
         Quantity: 100
-  - type: PointLight
-    color: "#cfa85f"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#cfa85f"
 
 - type: entity
   id: ReagentSlimePax
@@ -444,15 +436,6 @@
       reagents:
       - ReagentId: Pax
         Quantity: 100
-  - type: PointLight
-    color: "#AAAAAA"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#AAAAAA"
   - type: MeleeChemicalInjector
     solution: bloodstream
     transferAmount: 1
@@ -467,15 +450,6 @@
       reagents:
       - ReagentId: Nocturine
         Quantity: 100
-  - type: PointLight
-    color: "#128e80"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#128e80"
   - type: MeleeChemicalInjector
     solution: bloodstream
     transferAmount: 3
@@ -490,15 +464,6 @@
       reagents:
       - ReagentId: THC
         Quantity: 100
-  - type: PointLight
-    color: "#808080"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#808080"
 
 - type: entity
   id: ReagentSlimeBicaridine
@@ -510,15 +475,6 @@
       reagents:
       - ReagentId: Bicaridine
         Quantity: 100
-  - type: PointLight
-    color: "#ffaa00"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#ffaa00"
 
 - type: entity
   id: ReagentSlimeToxin
@@ -530,15 +486,6 @@
       reagents:
       - ReagentId: Toxin
         Quantity: 100
-  - type: PointLight
-    color: "#cf3600"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#cf3600"
 
 - type: entity
   id: ReagentSlimeNapalm
@@ -550,15 +497,6 @@
       reagents:
       - ReagentId: Napalm
         Quantity: 100
-  - type: PointLight
-    color: "#FA00AF"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#FA00AF"
 
 - type: entity
   id: ReagentSlimeOmnizine
@@ -570,15 +508,6 @@
       reagents:
       - ReagentId: Omnizine
         Quantity: 100
-  - type: PointLight
-    color: "#fcf7f9"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#fcf7f9"
 
 - type: entity
   id: ReagentSlimeMuteToxin
@@ -590,15 +519,6 @@
       reagents:
       - ReagentId: MuteToxin
         Quantity: 100
-  - type: PointLight
-    color: "#0f0f0f"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#0f0f0f"
 
 - type: entity
   id: ReagentSlimeNorepinephricAcid
@@ -610,15 +530,6 @@
       reagents:
       - ReagentId: NorepinephricAcid
         Quantity: 100
-  - type: PointLight
-    color: "#96a8b5"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#96a8b5"
 
 - type: entity
   id: ReagentSlimeEphedrine
@@ -630,15 +541,6 @@
       reagents:
       - ReagentId: Ephedrine
         Quantity: 100
-  - type: PointLight
-    color: "#D2FFFA"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#D2FFFA"
 
 - type: entity
   id: ReagentSlimeRobustHarvest
@@ -650,12 +552,3 @@
       reagents:
       - ReagentId: RobustHarvest
         Quantity: 100
-  - type: PointLight
-    color: "#3e901c"
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/elemental.rsi
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-        color: "#3e901c"
