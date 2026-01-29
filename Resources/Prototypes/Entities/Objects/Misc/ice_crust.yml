@@ -36,14 +36,29 @@
           - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
+    - type: SolutionContainerManager
+      solutions:
+        ice:
+          maxVol: 5
+          reagents:
+          - ReagentId: Ice
+            Quantity: 5
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 10
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:SpillBehavior
+          solution: ice
     - type: Temperature
     - type: TemperatureDamage
       heatDamage:

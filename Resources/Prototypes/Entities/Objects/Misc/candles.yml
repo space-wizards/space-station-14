@@ -60,6 +60,17 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: SolutionContainerManager
+      solutions:
+        candle:
+          maxVol: 4
+          reagents:
+          - ReagentId: Fat
+            Quantity: 2
+          - ReagentId: Cellulose
+            Quantity: 2
+    - type: Extractable
+      grindableSolutionName: candle
 
 - type: entity
   name: red candle
