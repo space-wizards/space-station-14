@@ -1831,6 +1831,8 @@
       Peckish: 15
       Starving: 10
       Dead: 0
+    minStartingHunger: 23 # Peckish + 8
+    maxStartingHunger: 25 # Okay
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food

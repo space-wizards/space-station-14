@@ -478,6 +478,8 @@
       Peckish: 15
       Starving: 10
       Dead: 0
+    minStartingHunger: 23 # Peckish + 8
+    maxStartingHunger: 25 # Okay
     baseDecayRate: 0.1
   - type: Extractable
     grindableSolutionName: food
