@@ -25,6 +25,8 @@
         color: "#FF0000"
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
+  - type: HealthExaminable
+    thresholds: [ 10, 20, 30, 50, 70, 100 ]
   - type: GenericVisualizer
     visuals:
       enum.CreamPiedVisuals.Creamed:
