@@ -3,7 +3,7 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Client\</OutputPath>
     <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
-    <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
+    <WarningsAsErrors>RA0028;RA0032;nullable</WarningsAsErrors>
   </PropertyGroup>
   <Import Project="../MSBuild/Content.props" />
   <ItemGroup>
