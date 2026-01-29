@@ -1,0 +1,38 @@
+<Document>
+# Command
+
+  <Box>
+    <GuideEntityEmbed Entity="SignHead" Caption="" />
+  </Box>
+
+Space Station 14 is commanded by its Captain and a set of Department Heads, who together are referred to as the [color=#1b67a5]Command[/color] department. Department Heads are often called "Heads of Staff" or, simply, "Heads".
+
+Department Heads have access to their own special equipment and, usually, their own rooms aboard the station. They are often wanted dead by the Syndicate and other agents hostile to Nanotrasen.
+
+## Personnel
+The following roles on the Station are part of the [color=#1b67a5]Command[/color] department, in addition to any other department they are part of:
+
+- The [color=#1b67a5]Captain[/color]
+- The [color=#9fed58]Head of Personnel[/color]
+- The [color=#cb0000]Head of Security[/color]
+- The [color=#5b97bc]Chief Medical Officer[/color]
+- The [color=#f39f27]Chief Engineer[/color]
+- The [color=#c96dbf]Research Director[/color]
+- The [color=#b18644]Quartermaster[/color]
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineCaptain" Caption="Captain"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineHeadOfPersonnel" Caption="HoP"/>
+    <GuideEntityEmbed Entity="ToyFigurineHeadOfSecurity" Caption="HoS"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineChiefMedicalOfficer" Caption="CMO"/>
+    <GuideEntityEmbed Entity="ToyFigurineChiefEngineer" Caption="CE"/>
+    <GuideEntityEmbed Entity="ToyFigurineResearchDirector" Caption="RD"/>
+    <GuideEntityEmbed Entity="ToyFigurineQuartermaster" Caption="QM"/>
+  </Box>
+
+All Department Heads share the role of keeping Space Station 14 vaguely tolerable to work on. The Captain functions as the head of [color=#1b67a5]Command[/color] department, guiding and resolving disputes between Department Heads.
+</Document>

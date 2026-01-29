@@ -1,0 +1,17 @@
+<Document>
+# Crisis Management
+
+In the event of a crisis befalling Space Station 14, which is absolutely not going to happen, Department Heads are responsible for ensuring the safety of their staff, the functioning of the station and, if neccessary, the co-ordinated evacuation of all staff on the evacuation shuttle.
+
+In a crisis, there are a few good things to keep in mind:
+- You should be clear on the chain-of-command is, and what your responsibilities are, before the crisis hits. If you are not, rectify this quickly.
+- Your staff will depend on you for advice and to organize relief efforts. As such, you should listen in, and communicate on, both your department's radio channel and the [color=#1b67a5]Command[/color] radio channel.
+- Whilst your first instinct may be to hide in a locker and wait for the evac shuttle to arrive, there is safety in crowds, and being present is a signficiant motivating factor for your staff to remain at their posts.
+- When all else fails, only you have access to the best tools in your department. In particular, you can take advantage of any and all weaponry, armour, hardsuits, and so on, that your department uses. Along with your door remote, these can give you a vital edge in staying alive and getting your staff to safety. Even the tools of a lowly Chef or Botanist could save your department's skins, exoskeletons, and shiny metal posteriors.
+- The Bridge, which is accessible by all Command members, is a useful nexus point. It contains many useful computer consoles and is quite defensible. In particular, the Bridge contains the consoles that allow for the issuing of communication announcements and the summoning of the Evacuation Shuttle, both of which are essential tools in an emergency.
+- The station AI is usually able to work with Department Heads, provided it is functional, and can easily be contacted via the [color=#1b67a5]Command[/color] radio channel. The station AI is a powerful ally, able to quickly issue communication announcements and access almost any computer console on the station.
+- Whilst your designated pet(s) are adorable, and entirely dependent on you for their survival, they are technically not a priority to rescue ahead of your staff.
+  <Box>
+    <GuideEntityEmbed Entity="MobCorgiIan" Caption="Ian may need to fend for himself."/>
+  </Box>
+</Document>
