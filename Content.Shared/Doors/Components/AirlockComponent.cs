@@ -128,6 +128,12 @@ public sealed partial class AirlockComponent : Component
     public string ClosingPanelSpriteState = "panel_closing";
 
     /// <summary>
+    /// The sprite state used for the airlock panel when the airlock is closed.
+    /// </summary>
+    [DataField]
+    public string OpenPanelSpriteState = "panel_open"; // TODO: Renaming required when a separate sprite state for panels on open airlocks is added.
+
+    /// <summary>
     /// The sprite state used for the open airlock lights.
     /// </summary>
     [DataField]
