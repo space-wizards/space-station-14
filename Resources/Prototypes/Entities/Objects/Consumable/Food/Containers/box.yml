@@ -1,4 +1,4 @@
-﻿# Donut
+# Donut
 
 # There is a newer, better version of the donutbox from tgstation included in the
 # donut.rsi. The reason it isn't implemented is it requires a StackVisuals offsetting
@@ -496,8 +496,8 @@
         amount: 6
 
 - type: entity
-  id: HappyHonk
   parent: [ BoxCardboard, BaseBagOpenClose ]
+  id: HappyHonk
   name: happy honk meal
   suffix: Toy Safe
   description: The toy is more edible than the food.
@@ -523,8 +523,8 @@
         tableId: HappyHonkToySafeEntityTable
 
 - type: entity
-  id: HappyHonkMime
   parent: HappyHonk
+  id: HappyHonkMime
   description: A limited mime edition of the happy honk meal.
   suffix: Toy Safe
   components:
@@ -538,8 +538,8 @@
     sprite: Objects/Storage/Happyhonk/mime.rsi
 
 - type: entity
-  id: HappyHonkNukie
   parent: [HappyHonk, BaseSyndicateContraband]
+  id: HappyHonkNukie
   name: robust nukie meal
   description: A sus meal with a potentially explosive surprise.
   suffix: Toy Unsafe
@@ -588,8 +588,8 @@
             amount: 4
 
 - type: entity
-  id: HappyHonkCluwne
   parent: HappyHonk
+  id: HappyHonkCluwne
   name: woeful cluwne meal
   description: Nothing good can come of this.
   components:
@@ -608,8 +608,8 @@
         id: CluwneHorn
 
 - type: entity
-  id: FoodMealHappyHonkClown
   parent: HappyHonk
+  id: FoodMealHappyHonkClown
   suffix: random food spawner meal
   categories: [ HideSpawnMenu ]
   components:
@@ -628,8 +628,8 @@
           tableId: HappyHonkToySafeEntityTable
 
 - type: entity
-  id: FoodMealHappyHonkBigBite
   parent: HappyHonk
+  id: FoodMealHappyHonkBigBite
   name: Happy Honk Big Bite Meal
   description: Someone paid good money to get this fast food meal shipped out this way. It smells fresh, somehow.
   components:
@@ -643,6 +643,25 @@
           tableId: HappyHonkToySafeEntityTable
         - id: FoodMealFriesCheesy
         - id: FoodPieAppleSlice
+
+- type: entity
+  parent: HappyHonk
+  id: FoodMealHappyHonkCotton
+  name: Happy Honk Cotton Meal
+  description: A gluttonous selection of Happy Honk's fiber-rich treats for mothkin customers. Each box comes with a drink, a special toy, and a steep price tag.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children: # TODO: replace most of these with cotton burger/fries or similar once someone adds that in order to resemble a normal burger meal
+        - id: FoodBakedGrilledCheeseSandwichCotton 
+        - id: DrinkColaBottleFull
+        - !type:NestedSelector
+          tableId: HappyHonkToySafeEntityTable
+        - id: FoodBakedCroissantCotton
+        - id: FoodCakeCottonSlice
+        - id: FoodBakedChevreChaudCotton
+        - id: FoodPizzaCottonSlice
 
 - type: entity
   parent: BoxCardboard
