@@ -1,19 +1,27 @@
 using System.Linq;
+using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chat;
 
-public sealed class SharedSuicideSystem : EntitySystem
+public abstract class SharedSuicideSystem : EntitySystem
 {
+    private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     private static readonly ProtoId<DamageTypePrototype> FallbackDamageType = "Blunt";
 
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     /// <summary>
     /// Applies lethal damage spread out across the damage types given.
@@ -67,5 +75,13 @@ public sealed class SharedSuicideSystem : EntitySystem
 
         var damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
         _damageableSystem.ChangeDamage(target.AsNullable(), damage, true, origin: target);
+    }
+
+    public bool CanSuicide(EntityUid uid)
+    {
+        _mindSystem.GetMind(uid, out var mind);
+
+        return mind is { PreventSuicide: false, PreventGhosting: false } && !_mobStateSystem.IsDead(uid) && !HasComp<AdminFrozenComponent>(uid) &&
+               TryComp<TagComponent>(uid, out var tag) && !_tagSystem.HasTag(tag, CannotSuicideTag);
     }
 }
