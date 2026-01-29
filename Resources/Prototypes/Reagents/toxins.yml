@@ -473,6 +473,10 @@
             - !type:ReagentCondition
               reagent: Romerol
               min: 5
+  plantMetabolism:
+  - !type:PlantAdjustMutationLevel
+    amount: 5
+  - !type:PlantResurrect
 
 - type: reagent
   id: UncookedAnimalProteins
