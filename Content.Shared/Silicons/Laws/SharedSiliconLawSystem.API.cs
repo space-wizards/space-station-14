@@ -1,4 +1,6 @@
 using Content.Shared.Database;
+using Content.Shared.Mind;
+using Content.Shared.Overlays;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Audio;
@@ -158,13 +160,21 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp<SiliconLawProviderComponent>(ent.Comp.LawsetProvider, out var provider))
             return;
 
+        ent.Comp.Subverted = provider.Subverted;
+
         if (ent.Comp.Lawset.Laws != provider.Lawset.Laws)
         {
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"The silicon laws of {ent} have been updated to {provider.Lawset.LoggingString() ?? "Empty"}");
         }
 
         ent.Comp.Lawset = provider.Lawset.Clone();
-        ent.Comp.Subverted = provider.Subverted;
+
+        if (TryComp<ShowCrewIconsComponent>(ent, out var crewIcons))
+        {
+            crewIcons.UncertainCrewBorder = ent.Comp.Subverted;
+            Dirty(ent, crewIcons);
+        }
+
         Dirty(ent);
     }
 
