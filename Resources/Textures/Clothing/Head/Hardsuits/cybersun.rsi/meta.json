@@ -44,14 +44,6 @@
         {
             "name": "equipped-head-unshaded-monkey",
             "directions": 4
-        },
-        {
-            "name": "equipped-head-dog",
-            "directions": 4
-        },
-        {
-            "name": "equipped-head-unshaded-dog",
-            "directions": 4
         }
     ]
 }
