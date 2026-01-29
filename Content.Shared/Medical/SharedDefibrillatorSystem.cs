@@ -174,17 +174,7 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
             return;
 
         _audio.PlayPredicted(ent.Comp.ZapSound, ent.Owner, user);
-        _electrocution.TryDoElectrocution(target, ent.Owner, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true, ignoreInsulation: true);
-
-        _interactionSystem.GetEntitiesInteractingWithTarget(target, _interacters);
-        foreach (var other in _interacters)
-        {
-            if (other == user)
-                continue;
-
-            // Anyone else still operating on the target gets zapped too
-            _electrocution.TryDoElectrocution(other, null, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true);
-        }
+        _electrocution.TryDoElectrocution(target, ent.Owner, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true, ignoreInsulation: true, isElectrocutionRelay: true);
 
         if (TryComp<UseDelayComponent>(ent, out var useDelay))
         {
