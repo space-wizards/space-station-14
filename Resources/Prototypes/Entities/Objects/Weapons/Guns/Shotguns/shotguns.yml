@@ -58,6 +58,9 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+    - Shotgun
   - type: Item
     size: Large
   - type: Clothing
@@ -110,6 +113,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+  - type: Tag
+    tags:
+    - Shotgun
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
@@ -142,6 +148,9 @@
   components: # intend for Enforcer to have wider choke for semi-auto function
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+  - type: Tag
+    tags:
+    - Shotgun
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Item
@@ -177,6 +186,7 @@
   - type: Tag
     tags:
     - WeaponShotgunKammerer
+    - Shotgun
 
 - type: entity
   name: sawn-off shotgun
@@ -186,6 +196,9 @@
   components: # needs to be super inaccurate because you don't need to wield it
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
@@ -234,6 +247,9 @@
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
@@ -254,6 +270,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
+  - type: Tag
+    tags:
+    - Shotgun
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
@@ -274,6 +293,9 @@
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun_inhands_64x.rsi
+  - type: Tag
+    tags:
+    - Shotgun
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
@@ -309,6 +331,9 @@
     sprite: Objects/Weapons/Guns/Shotguns/hushpup.rsi
     shape:
     - 0,0,3,0 # smaller than BaseShotgun by 1 tile
+  - type: Tag
+    tags:
+    - Shotgun
   - type: BallisticAmmoProvider
     capacity: 4
   - type: GunRequiresWield
