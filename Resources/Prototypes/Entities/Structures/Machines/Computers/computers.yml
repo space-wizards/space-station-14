@@ -412,6 +412,8 @@
     interfaces:
         enum.GeneralStationRecordConsoleKey.Key:
           type: GeneralStationRecordConsoleBoundUserInterface
+        enum.AddGeneralStationRecordKey.Key:
+          type: AddGeneralStationRecordBoundUserInterface
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
   - type: ActivatableUI
