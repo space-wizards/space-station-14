@@ -12,46 +12,57 @@
             "name": "icon"
         },
         {
-            "name": "icon-flash"
+            "name": "icon-unshaded"
         },
         {
-            "name": "off-equipped-HELMET",
+            "name": "light-overlay"
+        },
+        {
+            "name": "equipped-head",
             "directions": 4
         },
         {
-            "name": "on-equipped-HELMET",
+            "name": "equipped-head-light",
             "directions": 4
         },
         {
-            "name": "off-equipped-HELMET-vox",
+            "name": "equipped-head-unshaded",
             "directions": 4
         },
         {
-            "name": "on-equipped-HELMET-vox",
+            "name": "equipped-head-vox",
             "directions": 4
         },
         {
-            "name": "off-equipped-HELMET-vulpkanin",
+            "name": "equipped-head-light-vox",
             "directions": 4
         },
         {
-            "name": "on-equipped-HELMET-vulpkanin",
+            "name": "equipped-head-unshaded-vox",
             "directions": 4
         },
         {
-            "name": "off-equipped-HELMET-reptilian",
+            "name": "equipped-head-vulpkanin",
             "directions": 4
         },
         {
-            "name": "on-equipped-HELMET-reptilian",
+            "name": "equipped-head-light-vulpkanin",
             "directions": 4
         },
         {
-            "name": "off-equipped-HELMET-dog",
+            "name": "equipped-head-unshaded-vulpkanin",
             "directions": 4
         },
         {
-            "name": "on-equipped-HELMET-dog",
+            "name": "equipped-head-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-reptilian",
             "directions": 4
         }
     ]

@@ -14,43 +14,35 @@
             "name": "icon-flash"
         },
         {
-            "name": "off-equipped-HELMET",
+            "name": "equipped-helmet",
             "directions": 4
         },
         {
-            "name": "off-equipped-HELMET-vox",
+            "name": "equipped-helmet-light",
             "directions": 4
         },
         {
-            "name": "off-equipped-HELMET-dog",
+            "name": "equipped-helmet-vox",
             "directions": 4
         },
         {
-            "name": "off-inhand-left",
+            "name": "equipped-helmet-light-vox",
             "directions": 4
         },
         {
-            "name": "off-inhand-right",
+            "name": "inhand-left",
             "directions": 4
         },
         {
-            "name": "on-equipped-HELMET",
+            "name": "inhand-right",
             "directions": 4
         },
         {
-            "name": "on-equipped-HELMET-vox",
+            "name": "inhand-left-light",
             "directions": 4
         },
         {
-            "name": "on-equipped-HELMET-dog",
-            "directions": 4
-        },
-        {
-            "name": "on-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "on-inhand-right",
+            "name": "inhand-right-light",
             "directions": 4
         }
     ]
