@@ -1,28 +1,27 @@
+using Content.Shared.Prying.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Prying.Components;
 
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(PryingSystem))]
+[AutoGenerateComponentState]
 public sealed partial class PryingComponent : Component
 {
     /// <summary>
     /// Whether the entity can pry open powered doors
     /// </summary>
     [DataField]
-    public bool PryPowered;
+    [AutoNetworkedField]
+    public PryStrength Strength = PryStrength.Strong;
 
-    /// <summary>
-    /// Whether the tool can bypass certain restrictions when prying.
-    /// For example door bolts.
-    /// </summary>
-    [DataField]
-    public bool Force;
     /// <summary>
     /// Modifier on the prying time.
     /// Lower values result in more time.
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public float SpeedModifier = 1.0f;
 
     /// <summary>
@@ -35,6 +34,7 @@ public sealed partial class PryingComponent : Component
     /// Whether the entity can currently pry things.
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public bool Enabled = true;
 }
 
@@ -43,29 +43,22 @@ public sealed partial class PryingComponent : Component
 /// Cancel to stop the entity from being pried open.
 /// </summary>
 [ByRefEvent]
-public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force, bool StrongPry)
+public record struct BeforePryEvent(EntityUid User, PryStrength Strength)
 {
     public readonly EntityUid User = User;
 
     /// <summary>
     /// Whether prying should be allowed even if whatever is being pried is powered.
     /// </summary>
-    public readonly bool PryPowered = PryPowered;
-
-    /// <summary>
-    /// Whether prying should be allowed to go through under most circumstances. (E.g. airlock is bolted).
-    /// Systems may still wish to ignore this occasionally.
-    /// </summary>
-    public readonly bool Force = Force;
-
-    /// <summary>
-    /// Whether anything other than bare hands were used. This should only be false if prying is being performed without a prying comp.
-    /// </summary>
-    public readonly bool StrongPry = StrongPry;
+    public readonly PryStrength Strength = Strength;
 
     public string? Message;
 
-    public bool Cancelled;
+    /// <summary>
+    /// Set to false if prying should be disallowed
+    /// If this is set to false, any remaining handlers should be skipped
+    /// </summary>
+    public bool CanPry = true;
 }
 
 /// <summary>
@@ -86,11 +79,19 @@ public record struct GetPryTimeModifierEvent
 {
     public readonly EntityUid User;
     public float PryTimeModifier = 1.0f;
-    public TimeSpan BaseTime = TimeSpan.FromSeconds(5);
+    public readonly TimeSpan BaseTime = TimeSpan.FromSeconds(5);
 
-    public GetPryTimeModifierEvent(EntityUid user)
+    public GetPryTimeModifierEvent(EntityUid user, TimeSpan baseTime)
     {
         User = user;
+        BaseTime = baseTime;
     }
 }
 
+public enum PryStrength : byte
+{
+    Weak, // Bare hands
+    Strong, // Basic tool like a crowbar
+    Powered, // Can pry powered devices like Jaws of Life
+    Forced, // Can pry bolts, currently only zombies and some animals
+}

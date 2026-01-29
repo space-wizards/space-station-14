@@ -1239,8 +1239,7 @@
   - type: Puller
     needsHands: false
   - type: Prying
-    pryPowered: true
-    force: true
+    strength: Forced
     speedModifier: 1.5
     useSound:
       path: /Audio/Items/crowbar.ogg
@@ -2574,8 +2573,7 @@
     - DoorBumpOpener
     - FootstepSound
   - type: Prying # Open door from xeno.yml.
-    pryPowered: true
-    force: true
+    strength: Forced
     speedModifier: 1.5
     useSound:
       path: /Audio/Items/crowbar.ogg
