@@ -1620,5 +1620,13 @@ Entries:
   id: 197
   time: '2026-01-29T06:05:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42691
+- author: Velken
+  changes:
+  - message: Log for buying from a store will be High instead of Low if user is not
+      of an expected faction for that store, or Extreme if they also have mindshield.
+    type: Tweak
+  id: 198
+  time: '2026-01-29T18:55:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42687
 Name: Admin
 Order: 3
