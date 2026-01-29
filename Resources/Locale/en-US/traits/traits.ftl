@@ -71,3 +71,6 @@ trait-hemophilia-desc = Your body fails to make blood clots.
 
 trait-impaired-mobility-name = Impaired Mobility
 trait-impaired-mobility-desc = You have difficulty moving without a mobility aid.
+
+trait-unborgable-name = Unborgable
+trait-unborgable-desc = Your brain is impossible to insert into a man-machine interface.

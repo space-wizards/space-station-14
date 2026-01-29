@@ -1,6 +1,7 @@
 - type: entity
+  abstract: true
   parent: BaseItem
-  id: MMI
+  id: MMIBypassUnborgable
   name: man-machine interface
   description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
   components:
@@ -17,6 +18,7 @@
   - type: MMI
     brainSlot:
       name: positronic-brain-slot-component-slot-name-brain
+      whitelistFailPopup: error-incompatible-mmi
       whitelist:
         components:
         - Brain
@@ -54,6 +56,21 @@
       - SecretStash
 
 - type: entity
+  parent: MMIBypassUnborgable
+  id: MMI
+  components:
+  - type: MMI
+    brainSlot:
+      name: positronic-brain-slot-component-slot-name-brain
+      whitelistFailPopup: error-incompatible-mmi
+      whitelist:
+        components:
+        - Brain
+      blacklist:
+        components:
+        - MMIIncompatible
+
+- type: entity
   parent: MMI
   id: MMIFilled
   suffix: Filled
@@ -62,6 +79,31 @@
     brainSlot:
       name: positronic-brain-slot-component-slot-name-brain
       startingItem: OrganHumanBrain
+      whitelistFailPopup: error-incompatible-mmi
+      whitelist:
+        components:
+        - Brain
+      blacklist:
+        components:
+        - MMIIncompatible
+
+- type: entity
+  parent: MMIBypassUnborgable
+  id: MMIXenoborg
+  name: xenoborg man-machine interface
+  suffix: Xenoborg
+  description: A machine able to facilitate communication between a biological brain and electronics, with special circuitry that can integrate even into minds that are usually considered incompatible.
+
+- type: entity
+  parent: MMIXenoborg
+  id: MMIXenoborgFilled
+  suffix: Xenoborg, Filled
+  components:
+  - type: MMI
+    brainSlot:
+      name: positronic-brain-slot-component-slot-name-brain
+      startingItem: OrganHumanBrain
+      whitelistFailPopup: error-incompatible-mmi
       whitelist:
         components:
         - Brain
