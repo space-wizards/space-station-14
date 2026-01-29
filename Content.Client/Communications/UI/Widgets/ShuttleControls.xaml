@@ -1,0 +1,31 @@
+<Control xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- Controls for calling, recalling and displaying info for the emergency shuttle -->
+    <BoxContainer Orientation="Vertical">
+        <Label StyleClasses="FancyWindowTitle" Align="Center"
+            Text="{Loc 'comms-console-shuttle-controls-header'}" />
+
+        <!-- This contains some blank `Controls` to act as dummies. This is because the
+            GridContainer will always left-align the children, while we want them centered.
+            The dummy Controls will attempt to take an even amount of space each, which
+            will re-center our real controls -->
+        <BoxContainer>
+            <!-- Row 1: the buttons themselves -->
+            <Control HorizontalExpand="True" />
+            <Button Name="EmergencyShuttleCallButton" VerticalAlignment="Center"
+                Text="{Loc 'comms-console-call-button-label'}" />
+            <Control HorizontalExpand="True" />
+
+            <BoxContainer Orientation="Vertical">
+                <Label StyleClasses="LabelSubText" Align="Center"
+                    Text="{Loc 'comms-console-shuttle-status-label'}" />
+                <Label Name="CountdownLabel" ReservesSpace="True" Align="Center"/>
+            </BoxContainer>
+            <Control HorizontalExpand="True" />
+            <Button Name="EmergencyShuttleRecallButton" VerticalAlignment="Center"
+                Text="{Loc 'comms-console-recall-button-label'}" />
+            <Control HorizontalExpand="True" />
+        </BoxContainer>
+    </BoxContainer>
+</Control>
