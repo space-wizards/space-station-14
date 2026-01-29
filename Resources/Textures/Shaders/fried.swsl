@@ -1,0 +1,8 @@
+void fragment() {
+    highp vec4 color = zTexture(UV);
+    color.r = dot(color.rgb, vec3(0.65, 0.9, 0.25));
+    color.g = dot(color.rgb, vec3(0.0, 1.1, 0.1));
+    color.b = dot(color.rgb, vec3(0.0, 0.0, 0.3));
+
+    COLOR = color;
+}
