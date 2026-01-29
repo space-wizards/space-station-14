@@ -58,8 +58,9 @@
       - EmagSiliconLaw
   - type: PointLight
     color: MediumPurple
-    radius: 2
-    softness: 1
+    energy: 0.8
+    radius: 6
+    falloff: 10
   - type: UserInterface
     interfaces:
       enum.StoreUiKey.Key:
@@ -74,6 +75,8 @@
     - RevenantAbilities
     currencyWhitelist:
     - StolenEssence
+    balance:
+      StolenEssence: 0
   - type: RandomMetadata
     nameSegments:
     - NamesRevenantType
