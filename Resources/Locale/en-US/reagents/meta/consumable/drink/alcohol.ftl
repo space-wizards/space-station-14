@@ -100,6 +100,9 @@ reagent-desc-barefoot = A cassis milkshake, made from cream, fruit juice, and ve
 reagent-name-beepsky-smash = Beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
 
+reagent-name-black-japan = Black Japan
+reagent-desc-black-japan = A novel concoction of stout and melon liqueur. Kanpai!
+
 reagent-name-black-russian = Black Russian
 reagent-desc-black-russian = For the lactose-intolerant. Still as classy as a White Russian.
 
@@ -115,8 +118,17 @@ reagent-desc-brave-bull = It's just as effective as Dutch-Courage!
 reagent-name-bronx = Bronx
 reagent-desc-bronx = The orange-flavoured cousin of the Manhattan and Martini.
 
+reagent-name-bruised-melon = bruised melon
+reagent-desc-bruised-melon = It still remains a mystery how someone would bruise a cocktail.
+
 reagent-name-coconut-rum = coconut rum
 reagent-desc-coconut-rum = Rum with coconut for that tropical feel.
+
+reagent-name-coconut-sake-colada = coconut sake colada
+reagent-desc-coconut-sake-colada = A Japanese twist on the Pina Colada.
+
+reagent-name-cosmic-alaska = Cosmic Alaska
+reagent-desc-cosmic-alaska = The national drink of Gliese 1132b.
 
 reagent-name-cosmopolitan = cosmopolitan
 reagent-desc-cosmopolitan = Even in the worst situations, nothing beats a fresh cosmopolitan.
@@ -171,6 +183,9 @@ reagent-desc-hippies-delight = You just don't get it maaaan.
 
 reagent-name-hooch = hooch
 reagent-desc-hooch = Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
+
+reagent-name-horses-neck = horse's neck
+reagent-desc-horses-neck = Despite the name, it doesn’t contain any horses. However, if a horse can make the drink is a question still debated by mixologists to this day.
 
 reagent-name-iced-beer = iced beer
 reagent-desc-iced-beer = A beer which is so cold the air around it freezes.
@@ -243,6 +258,9 @@ reagent-desc-pina-colada = For getting lost in the rain.
 
 reagent-name-radler = radler
 reagent-desc-radler = A simple but staple classic, straight out of Space-Germany.
+
+reagent-name-ransom-note = ransom note
+reagent-desc-ransom-note = What’s being held hostage, you ask? Your sobriety, of course.
 
 reagent-name-red-mead = red mead
 reagent-desc-red-mead = The true Viking's drink! Even though it has a strange red color.
