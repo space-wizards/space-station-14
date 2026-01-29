@@ -88,6 +88,24 @@
           key: "enum.MechAssemblyVisuals.State"
           data: 9
 
+      - tag: LightBulb
+        name: construction-graph-tag-light-bulb
+        icon:
+          sprite: Objects/Power/lights.rsi
+          state: bulb
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 10
+
+      - tool: Honking
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 11
+
       - tag: ClownMask
         icon:
           sprite: "Clothing/Mask/clown.rsi"
@@ -97,7 +115,7 @@
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
-          data: 10
+          data: 12
 
       - tag: ClownShoes
         icon:
@@ -108,7 +126,7 @@
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
-          data: 11
+          data: 13
 
       - tool: Honking
         doAfter: 1

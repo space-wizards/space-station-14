@@ -13,6 +13,7 @@ public sealed class MechSoundboardSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -23,7 +24,7 @@ public sealed class MechSoundboardSystem : EntitySystem
 
     private void OnUiStateReady(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiStateReadyEvent args)
     {
-        // you have to specify a collection so it must exist probably
+        // you have to specify a collection so it must exist probably.
         var sounds = comp.Sounds.Select(sound => sound.Collection!);
         var state = new MechSoundboardUiState
         {
@@ -37,10 +38,6 @@ public sealed class MechSoundboardSystem : EntitySystem
         if (args.Message is not MechSoundboardPlayMessage msg)
             return;
 
-        if (!TryComp<MechEquipmentComponent>(uid, out var equipment) ||
-            equipment.EquipmentOwner == null)
-            return;
-
         if (msg.Sound >= comp.Sounds.Count)
             return;
 
@@ -49,6 +46,6 @@ public sealed class MechSoundboardSystem : EntitySystem
             return;
 
         // honk!!!!!
-        _audio.PlayPvs(comp.Sounds[msg.Sound], uid);
+        _audio.PlayPredicted(comp.Sounds[msg.Sound], uid, uid);
     }
 }

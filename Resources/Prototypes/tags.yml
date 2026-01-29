@@ -316,6 +316,24 @@
   id: CigPack # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltAssault, ClothingBeltChef, ClothingBeltMedical, ClothingBeltJanitor
 
 - type: Tag
+  id: ClarkeCentralControlModule # ConstructionGraph: Clarke
+
+- type: Tag
+  id: ClarkePeripheralsControlModule # ConstructionGraph: Clarke
+
+- type: Tag
+  id: ClarkeHead # PartAssembly: ClarkeHarness. ItemMapper: ClarkeHarness
+
+- type: Tag
+  id: ClarkeLArm # PartAssembly: ClarkeHarness. ItemMapper: ClarkeHarness
+
+- type: Tag
+  id: ClarkeRArm # PartAssembly: ClarkeHarness. ItemMapper: ClarkeHarness
+
+- type: Tag
+  id: ClarkeTreads # PartAssembly: ClarkeHarness. ItemMapper: ClarkeHarness
+
+- type: Tag
   id: Cleaver # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
@@ -347,6 +365,9 @@
 
 - type: Tag
   id: CombatKnife # Storage whitelist: ClothingBeltSecurity
+
+- type: Tag
+  id: CombatMech # Mech whitelist: CombatMechEquipment, DebugMechEquipment
 
 - type: Tag
   id: ComputerTelevisionCircuitboard # ConstructionGraph: WallmountTelevision
@@ -500,6 +521,33 @@
 
 - type: Tag
   id: Duck # Reproductive partner key. MetamorphRecipe: FoodBurgerDuck
+
+- type: Tag
+  id: DurandArmor # ConstructionGraph: Durand
+
+- type: Tag
+  id: DurandCentralControlModule # ConstructionGraph: Durand
+
+- type: Tag
+  id: DurandPeripheralsControlModule # ConstructionGraph: Durand
+
+- type: Tag
+  id: DurandTargetingControlModule # ConstructionGraph: Durand
+
+- type: Tag
+  id: DurandHead # PartAssembly: DurandHarness. ItemMapper: DurandHarness
+
+- type: Tag
+  id: DurandLArm # PartAssembly: DurandHarness. ItemMapper: DurandHarness
+
+- type: Tag
+  id: DurandLLeg # PartAssembly: DurandHarness. ItemMapper: DurandHarness
+
+- type: Tag
+  id: DurandRArm # PartAssembly: DurandHarness. ItemMapper: DurandHarness
+
+- type: Tag
+  id: DurandRLeg # PartAssembly: DurandHarness. ItemMapper: DurandHarness
 
 ## E ##
 
@@ -676,6 +724,33 @@
 - type: Tag
   id: GunUpgradeReloadSpeed # Used by PKAUpgradeFireRate:GunUpgrade to ensure mutually exclusive upgrades.
 
+- type: Tag
+  id: GygaxArmor # PartAssembly: GygaxyHarness. ItemMapper: GygaxHarness
+
+- type: Tag
+  id: GygaxCentralControlModule # ConstructionGraph: Gygax
+
+- type: Tag
+  id: GygaxHead # PartAssembly: GygaxyHarness. ItemMapper: GygaxHarness
+
+- type: Tag
+  id: GygaxLArm # PartAssembly: GygaxyHarness. ItemMapper: GygaxHarness
+
+- type: Tag
+  id: GygaxLLeg # PartAssembly: GygaxyHarness. ItemMapper: GygaxHarness
+
+- type: Tag
+  id: GygaxPeripheralsControlModule # ConstructionGraph: Gygax
+
+- type: Tag
+  id: GygaxRArm # PartAssembly: GygaxyHarness. ItemMapper: GygaxHarness
+
+- type: Tag
+  id: GygaxRLeg # PartAssembly: GygaxyHarness. ItemMapper: GygaxHarness
+
+- type: Tag
+  id: GygaxTargetingControlModule # ConstructionGraph: Gygax
+
 ## H ##
 
 - type: Tag
@@ -799,6 +874,9 @@
   id: Igniter # ConstructionGraph: makeshiftstunprod, FireBomb. Common ingredient in machines (HyperConvection)
 
 - type: Tag
+  id: IndustrialMech # Mech whitelist: IndustrialMechEquipment, DebugMechEquipment
+
+- type: Tag
   id: Inflatable # Storage whitelist: BorgModuleInflatable
 
 - type: Tag
@@ -821,6 +899,9 @@
   id: InvalidForSurvivorAntag # Used by server MagicSystem and SurvivorRuleSystem to alter mind roles from global spawn spells.
 
 ## J ##
+
+- type: Tag
+  id: JanicartKeys
 
 - type: Tag
   id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
@@ -993,6 +1074,7 @@
 - type: Tag
   id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
 
+## N ##
 - type: Tag
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
 
@@ -1213,6 +1295,9 @@
   id: RipleyLLeg # PartAssembly: RipleyHarness. ItemMapper: RipleyHarness
 
 - type: Tag
+  id: RipleyMKIIUpgradeKit # ConstructionGraph: RipleyMKII
+
+- type: Tag
   id: RipleyPeripheralsControlModule # ConstructionGraph: Ripley
 
 - type: Tag
@@ -1301,9 +1386,6 @@
 - type: Tag
   id: SmallAIChip # ConstructionGraph: PotatoAI
 
-- type: Tag # Used on mech equipment.
-  id: SmallMech # Equipment whitelist on MechHamtr
-
 - type: Tag
   id: Smokable # Storage whitelist: BaseSmokingPipe (and children)
 
@@ -1318,6 +1400,9 @@
 
 - type: Tag
   id: Soup # CargoBounty: BountySoup
+
+- type: Tag
+  id: SpecialMech # Mech whitelist: SpecialMechEquipment, DebugMechEquipment
 
 - type: Tag
   id: Spear # CargoBounty: BountySpear
@@ -1456,6 +1541,9 @@
 
 - type: Tag
   id: Unimplantable # Targeting blacklist: BaseImplanter
+
+- type: Tag
+  id: UniversalMech # Mech whitelist: UniversalMechEquipment, DebugMechEquipment
 
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile

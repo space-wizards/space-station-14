@@ -1,0 +1,38 @@
+- type: constructionGraph
+  id: MechRepair
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: repaired
+      steps:
+
+      - tool: Screwing
+        doAfter: 1
+
+      - tool: Cutting
+        doAfter: 10
+
+      - material: Cable
+        amount: 20
+        doAfter: 10
+
+      - tool: Screwing
+        doAfter: 1
+
+      - material: Steel
+        amount: 15
+
+      - tool: Welding
+        doAfter: 15
+
+      - material: Steel
+        amount: 15
+
+      - tool: Welding
+        doAfter: 15
+
+  - node: repaired
+    actions:
+    - !type:RaiseEvent
+      event: !type:RepairMechEvent

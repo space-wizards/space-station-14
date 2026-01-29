@@ -1,0 +1,102 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: MechModuleBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_modules.rsi
+  - type: Item
+    sprite: Objects/Specific/Mech/mecha_modules.rsi
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: MechModule
+  - type: GuideHelp
+    guides:
+    - Robotics
+
+- type: entity
+  parent: [ MechModuleBase, UniversalMechEquipment ]
+  id: MechModuleFan
+  name: exosuit fan module
+  description: Draws outside air into the cabin to maintain a breathable atmosphere. Features a built-in filter.
+  components:
+  - type: Sprite
+    state: mecha_fan
+  - type: MechFanModule
+    filterGases: [ Plasma, CarbonDioxide, NitrousOxide ]
+
+- type: entity
+  parent: [ MechModuleBase, UniversalMechEquipment ]
+  id: MechModuleAirTank
+  name: exosuit air tank module
+  description: A special air canister capable of holding a large amount of air.
+  components:
+  - type: Sprite
+    state: mecha_air_tank
+  - type: MechAirTankModule
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      volume: 25
+
+- type: entity
+  parent: [ MechModuleBase, UniversalMechEquipment ]
+  id: MechModuleTeslaRelay
+  name: tesla energy relay module
+  description: Connects the mech to nearby APCs and trickle-charges its battery.
+  components:
+  - type: Sprite
+    state: tesla
+  - type: MechGeneratorModule
+    generationType: TeslaRelay
+    tesla:
+      chargeRate: 10
+      radius: 3
+  - type: UIFragment
+    ui: !type:MechGeneratorUi
+
+- type: entity
+  parent: [ MechModuleBase, UniversalMechEquipment ]
+  id: MechModulePlasmaGenerator
+  name: plasma generator module
+  description: Generates energy by consuming plasma sheets stored internally.
+  components:
+  - type: Sprite
+    state: tesla
+  - type: MechGeneratorModule
+    generationType: FuelGenerator
+  - type: FuelGenerator
+    minTargetPower: 20
+    maxTargetPower: 20
+    targetPower: 20
+    optimalPower: 20
+    optimalBurnRate: 0.0333333
+    fuelEfficiencyConstant: 1
+  - type: SolidFuelGeneratorAdapter
+    fuelMaterial: Plasma
+    multiplier: 0.01
+  - type: MaterialStorage
+    storageLimit: 3000
+    materialWhiteList: [Plasma]
+  - type: UIFragment
+    ui: !type:MechGeneratorUi
+
+- type: entity
+  parent: [ MechModuleBase, SpecialMechEquipment ]
+  id: MechModuleHorn
+  name: mech horn module
+  description: An enhanced bike horn that plays a hilarious array of sounds for the enjoyment of the crew. HONK!
+  components:
+  - type: Sprite
+    state: mecha_honker
+  - type: MechSoundboard
+    sounds:
+    - collection: BikeHorn
+    - collection: CluwneHorn
+    - collection: TrollAnimals
+    - collection: TrollBeeping
+    - collection: TrollEsword
+  - type: UIFragment
+    ui: !type:MechSoundboardUi
+  - type: UseDelay
+    delay: 0.5
