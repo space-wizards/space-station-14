@@ -34,3 +34,17 @@
   reagents:
     Sigynate: 20
     Dermaline: 20
+
+- type: microwaveMealRecipe
+  id: RecipeRegenerativeMeshAlt
+  name: regenerative mesh recipe alt
+  result: RegenerativeMesh
+  time: 10
+  group: Medicinal
+  solids:
+    FoodAloe: 1
+    Ointment: 1
+    MaterialCloth1: 1
+  reagents:
+    Siderlac: 20
+    Dermaline: 20
