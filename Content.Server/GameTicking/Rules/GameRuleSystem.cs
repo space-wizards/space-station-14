@@ -1,6 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Mobs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -37,26 +38,13 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out _, out var gameRule))
         {
-            var minPlayers = gameRule.MinPlayers;
-            var name = ToPrettyString(uid);
-
-            if (args.Players.Length >= minPlayers)
+            if (CanStartGameRule((uid, gameRule), args.Players.Length, out var silent))
                 continue;
 
-            if (gameRule.CancelPresetOnTooFewPlayers)
-            {
-                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
-                    ("readyPlayersCount", args.Players.Length),
-                    ("minimumPlayers", minPlayers),
-                    ("presetName", name)));
-                args.Cancel();
-                //TODO remove this once announcements are logged
-                Log.Info($"Rule '{name}' requires {minPlayers} players, but only {args.Players.Length} are ready.");
-            }
-            else
-            {
+            if (silent)
                 ForceEndSelf(uid, gameRule);
-            }
+            else
+                args.Cancel();
         }
     }
 
@@ -146,4 +134,36 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
             ActiveTick(uid, comp1, comp2, frameTime);
         }
     }
+
+    private bool CanStartGameRule(Entity<GameRuleComponent> gameRule, int readyPlayersCount, out bool silent)
+    {
+        var minPlayers = gameRule.Comp.MinPlayers;
+        silent = !gameRule.Comp.CancelPresetOnTooFewPlayers;
+        if (readyPlayersCount < minPlayers)
+        {
+            if (!silent)
+                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
+                    ("readyPlayersCount", readyPlayersCount),
+                    ("minimumPlayers", minPlayers),
+                    ("presetName", ToPrettyString(gameRule))));
+
+            return false;
+        }
+
+        var maxPlayers = gameRule.Comp.MaxPlayers;
+        silent = !gameRule.Comp.CancelPresetOnTooManyPlayers;
+        if (readyPlayersCount > maxPlayers)
+        {
+            if (!silent)
+                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-too-many-ready-players",
+                    ("readyPlayersCount", readyPlayersCount),
+                    ("maxPlayers", maxPlayers),
+                    ("presetName", ToPrettyString(gameRule))));
+
+            return false;
+        }
+
+        return true;
+    }
+
 }
