@@ -1,4 +1,5 @@
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -22,6 +23,7 @@ public sealed class InteractionPopupSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
@@ -89,6 +91,9 @@ public sealed class InteractionPopupSystem : EntitySystem
                       && component.InteractFailureSpawn == null;
 
         if (_netMan.IsClient && !predict)
+            return;
+
+        if (component.NeedsHands && _handsSystem.GetHandCount(user) == 0)
             return;
 
         if (_random.Prob(component.SuccessChance))
