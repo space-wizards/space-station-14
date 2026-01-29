@@ -10,10 +10,11 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Stylesheets;
 
 [Virtual]
-public partial class SystemStylesheet : CommonStylesheet
+public sealed partial class SystemStylesheet : CommonStylesheet
 {
     public override string StylesheetName => "System";
 
+    [Obsolete("Use the newer font stack instead")]
     public override NotoFontFamilyStack BaseFont { get; } // TODO: NotoFontFamilyStack is temporary
 
     public override Dictionary<Type, ResPath[]> Roots => new()
@@ -34,17 +35,19 @@ public partial class SystemStylesheet : CommonStylesheet
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
     };
 
-    public SystemStylesheet(object config, StylesheetManager man) : base(config)
+    public SystemStylesheet(object config, StylesheetManager man, IDependencyCollection deps) : base(config, deps)
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         BaseFont = new NotoFontFamilyStack(ResCache);
+#pragma warning restore CS0618 // Type or member is obsolete
         var rules = new[]
         {
             // Set up important rules that need to go first.
-            GetRulesForFont(null, BaseFont, _commonFontSizes),
+            GetRulesForFont(null, StandardFontType.Main, _commonFontSizes),
             // Set up our core rules.
             [
                 // Declare the default font.
-                Element().Prop(Label.StylePropertyFont, BaseFont.GetFont(PrimaryFontSize)),
+                Element().Prop(Label.StylePropertyFont, Fonts.GetFont(StandardFontType.Main, PrimaryFontSize)),
             ],
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(man),
@@ -52,5 +55,11 @@ public partial class SystemStylesheet : CommonStylesheet
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());
+    }
+
+    [Obsolete("Pass in IDependencyCollection directly")]
+    public SystemStylesheet(object config, StylesheetManager man)
+        : this(config, man, IoCManager.Resolve<IDependencyCollection>())
+    {
     }
 }
