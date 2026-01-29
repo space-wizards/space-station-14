@@ -83,6 +83,7 @@
     - type: Kudzu
       growthTickChance: 0.3
       spreadChance: 0.4
+      blockVisionAtLevel: 3
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
@@ -104,6 +105,8 @@
     - type: Tag
       tags:
       - Ruminant
+    - type: Occluder
+      enabled: false
 
 - type: entity
   id: WeakKudzu
@@ -127,6 +130,7 @@
     - type: Kudzu
       spriteVariants: 5
       spreadChance: 0.01
+      blockVisionAtLevel: null
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.8
       sprintSpeedModifier: 0.8
