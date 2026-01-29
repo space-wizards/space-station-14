@@ -145,6 +145,8 @@
     - WhitelistChameleon
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
   - type: DamageOnInteractProtection
     damageProtection:
       flatReductions:
@@ -176,6 +178,8 @@
   - type: Item
     size: Huge
   - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
     slots: WITHOUT_POCKET
   - type: DamageOnInteractProtection
     damageProtection:
