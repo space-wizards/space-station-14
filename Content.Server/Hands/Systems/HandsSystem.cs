@@ -124,8 +124,9 @@ namespace Content.Server.Hands.Systems
                 !_actionBlockerSystem.CanThrow(player, throwEnt.Value))
                 return false;
 
-            if (_timing.CurTime < hands.NextThrowTime)
+            if (!hands.CanThrow || _timing.CurTime < hands.NextThrowTime)
                 return false;
+
             hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
             if (TryComp(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
