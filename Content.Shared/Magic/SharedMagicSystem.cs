@@ -79,7 +79,7 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
-        SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
+        SubscribeLocalEvent<BasicChangeComponentsSpellEvent>(OnChangeComponentsSpell);
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
@@ -120,7 +120,7 @@ public abstract class SharedMagicSystem : EntitySystem
         // TODO: Pre-cast do after, either here or in SharedActionsSystem
     }
 
-    private bool PassesSpellPrerequisites(EntityUid spell, EntityUid performer)
+    public bool PassesSpellPrerequisites(EntityUid spell, EntityUid performer)
     {
         var ev = new BeforeCastSpellEvent(performer);
         RaiseLocalEvent(spell, ref ev);
@@ -289,15 +289,15 @@ public abstract class SharedMagicSystem : EntitySystem
     #endregion
     #region Change Component Spells
     // staves.yml ActionRGB light
-    private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
+    private void OnChangeComponentsSpell(BasicChangeComponentsSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
         ev.Handled = true;
 
-        RemoveComponents(ev.Target, ev.ToRemove);
-        AddComponents(ev.Target, ev.ToAdd);
+        EntityManager.RemoveComponents(ev.Target, ev.ToRemove);
+        EntityManager.AddComponents(ev.Target, ev.ToAdd, false);
     }
     // End Change Component Spells
     #endregion
@@ -353,28 +353,6 @@ public abstract class SharedMagicSystem : EntitySystem
         }
     }
 
-    private void AddComponents(EntityUid target, ComponentRegistry comps)
-    {
-        foreach (var (name, data) in comps)
-        {
-            if (HasComp(target, data.Component.GetType()))
-                continue;
-
-            var component = (Component)Factory.GetComponent(name);
-            var temp = (object)component;
-            _seriMan.CopyTo(data.Component, ref temp);
-            AddComp(target, (Component)temp!);
-        }
-    }
-
-    private void RemoveComponents(EntityUid target, HashSet<string> comps)
-    {
-        foreach (var toRemove in comps)
-        {
-            if (Factory.TryGetRegistration(toRemove, out var registration))
-                RemComp(target, registration.Type);
-        }
-    }
     // End Spell Helpers
     #endregion
     #region Touch Spells
