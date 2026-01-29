@@ -23,6 +23,7 @@ namespace Content.Client.Disposal.Tube
         public void UpdateState(DisposalRouterUserInterfaceState state)
         {
             TagInput.Text = state.Tags;
+            BackwardsAllowed.Pressed = state.BackwardsAllowed;
         }
     }
 }
