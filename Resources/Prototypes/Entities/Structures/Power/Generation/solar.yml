@@ -345,6 +345,7 @@
     - SolarPanels
 
 - type: entity
+  parent: BaseMachinePowered
   id: SolarTracker
   name: solar tracker
   description: A solar tracker. Tracks the nearest star.
@@ -376,18 +377,25 @@
     damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Breakage"]
+        acts: [ "Breakage" ]
   - type: Anchorable
   - type: Pullable
   - type: Construction
     graph: SolarPanel
     node: solartracker
   - type: RequireProjectileTarget
+  - type: SolarTracker
   - type: GuideHelp
     guides:
     - SolarPanels
