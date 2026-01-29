@@ -53,8 +53,8 @@
     availableModes:
     - SemiAuto
   - type: BatteryAmmoProvider
-    proto: RedLaser
-    fireCost: 62.5
+    proto: RedMediumLaser
+    fireCost: 33.3
   - type: StaticPrice
     price: 420
   - type: Tag
@@ -420,12 +420,12 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: Gun
-    fireRate: 1.5
+    fireRate: .7
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: BatteryAmmoProvider
     proto: RedHeavyLaser
-    fireCost: 100
+    fireCost: 40
   - type: Tag
     tags:
     - TurretCompatibleWeapon
@@ -486,7 +486,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: BatteryAmmoProvider
     proto: XrayLaser
-    fireCost: 100
+    fireCost: 62.5
   - type: MagazineVisuals
     magState: mag
     steps: 5
