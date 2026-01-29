@@ -89,16 +89,12 @@
       - state: equipped-head-light
       head-vox:
       - state: equipped-head-light-vox
-      head-dog:
-      - state: equipped-head-light-dog
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-head
       head-vox:
       - state: equipped-head-vox
-      head-dog:
-      - state: equipped-head-dog
   - type: TemperatureProtection
     heatingCoefficient: 0.1
     coolingCoefficient: 0.1
@@ -113,6 +109,5 @@
     color: "#00ffff"
   - type: Tag
     tags:
-    - CorgiWearable
     - HelmetEVA
     - WhitelistChameleon

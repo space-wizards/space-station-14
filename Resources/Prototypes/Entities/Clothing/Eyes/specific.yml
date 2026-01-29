@@ -8,7 +8,6 @@
     - type: FlashImmunity
     - type: Tag
       tags: # intentionally no WhitelistChameleon tag
-      - PetWearable
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
     - type: Clothing
