@@ -479,6 +479,14 @@
   description: alerts-adrenaline-desc
 
 - type: alert
+  id: HealAura
+  icons:
+  - sprite: /Textures/Interface/Alerts/heal.rsi
+    state: heal
+  name: alerts-heal-aura-name
+  description: alerts-heal-aura-desc
+
+- type: alert
   id: Debug1
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
@@ -525,3 +533,6 @@
     state: critical
   name: Debug6
   description: Debug
+
+
+

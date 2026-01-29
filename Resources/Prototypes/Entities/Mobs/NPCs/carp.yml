@@ -168,6 +168,9 @@
   suffix: DragonBrood
   parent: MobCarp
   components:
+    - type: Tag
+      tags:
+      - RiftHealAura
     - type: GhostRole
       allowMovement: true
       allowSpeech: true
