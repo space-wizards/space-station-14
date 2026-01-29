@@ -161,7 +161,7 @@ public sealed class CuffableTests : InteractionTest
         // Remove one hand from the target!
         await Server.WaitPost(() =>
         {
-            HandSys.RemoveHand(STarget.Value, hands.ActiveHandId);
+            HandSys.RemoveActiveHand(STarget.Value);
         });
 
         // Make sure they're still cuffed! (They should have two hands)
@@ -170,7 +170,7 @@ public sealed class CuffableTests : InteractionTest
         // Remove the last hand from the target!
         await Server.WaitPost(() =>
         {
-            HandSys.RemoveHand(STarget.Value, hands.ActiveHandId);
+            HandSys.RemoveActiveHand(STarget.Value);
         });
 
         await AssertUncuffed(cuffableSystem, blockerSystem, ent);
@@ -187,7 +187,7 @@ public sealed class CuffableTests : InteractionTest
             Assert.That(sys.GetAllCuffs(target), Has.Member(cuffs), "The used cuffs were not in the handcuff container.");
 
             // Make sure last added pair of cuffs is the cuff we're looking for!
-            Assert.That(sys.GetLastCuffOrNull(target), Is.EqualTo(cuffs), "The last cuffs were not set correctly.");
+            Assert.That(sys.GetLastCuffOrNull(target)?.Owner, Is.EqualTo(cuffs), "The last cuffs were not set correctly.");
 
             // Make sure we can't attack!
             Assert.That(blockerSystem.CanAttack(target), Is.False, "Cuffed mob is still able to attack.");
