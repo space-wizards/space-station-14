@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -57,6 +58,13 @@ namespace Content.Server.Doors.Systems
             var query = EntityQueryEnumerator<FirelockComponent, DoorComponent>();
             while (query.MoveNext(out var uid, out var firelock, out var door))
             {
+                if (TryComp<AtmosAlarmableComponent>(uid, out var alarmable)
+                    && alarmable.LastAlarmState == AtmosAlarmType.Danger
+                    && this.IsPowered(uid, EntityManager)
+                    && door.State == DoorState.Open)
+                {
+                    EmergencyPressureStop(uid, firelock, door);
+                }
                 // only bother to check pressure on doors that are some variation of closed.
                 if (door.State != DoorState.Closed
                     && door.State != DoorState.Welded
