@@ -14,4 +14,9 @@ public sealed partial class NoneSelector : EntityTableSelector
     {
         yield break;
     }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        yield break;
+    }
 }
