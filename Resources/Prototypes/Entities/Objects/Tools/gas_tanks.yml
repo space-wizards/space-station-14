@@ -266,3 +266,25 @@
     slots:
     - Belt
     - suitStorage
+
+- type: entity
+  parent: GasTankBase
+  id: GorlexPlasmaCell
+  name: plasma cell
+  description: A plasma cell for use in Gorlex chemical laser weapons. very volatile. It can hold 20 L of gas.
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/plasmacell.rsi
+  - type: Item
+    sprite: Objects/Tanks/plasmacell.rsi
+  - type: GasTank
+    outputPressure: 101.3
+  - type: Clothing
+    sprite: Objects/Tanks/plasmacell.rsi
+    slots:
+    - Belt
+    - suitStorage
+  - type: Tag
+    tags:
+#    - GasTank
+    - PlasmaCell

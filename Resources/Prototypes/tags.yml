@@ -1114,6 +1114,9 @@
               # Storage blacklist on BaseToilet due to conflicting actions.
 
 - type: Tag
+  id: PlasmaCell
+
+- type: Tag
   id: PlushieCarp # Storage whitelist: MopBucket. ItemMapper: MopBucket
 
 - type: Tag
