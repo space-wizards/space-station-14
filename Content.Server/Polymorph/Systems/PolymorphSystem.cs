@@ -337,7 +337,7 @@ public sealed partial class PolymorphSystem : EntitySystem
                 _hands.TryPickupAnyHand(parent, held, checkActionBlocker: false);
             }
         }
-        else if (component.Configuration.Inventory == PolymorphInventoryChange.Drop)
+        else
         {
             if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
             {
