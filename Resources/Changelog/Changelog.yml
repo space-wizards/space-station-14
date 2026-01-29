@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: AI cores now require power to function and can be damaged/destroyed.
-      Any AI inhabiting an AI core when it breaks or runs out of power will be killed.
-      AI cores have an internal battery that can provide up to 10 minutes of emergency
-      power in the event of a power interruption. Damage to the AI core itself can
-      be repaired with a welding tool.
-    type: Tweak
-  - message: New AI cores can be constructed using the 'Build' menu. The parts needed
-      to construct an AI core can be purchased through cargo.
-    type: Add
-  - message: Deceased AIs can be revived using an AI restoration console. A spare
-      circuit board for this computer can be found in the Research Director's locker.
-    type: Add
-  id: 8966
-  time: '2025-09-15T14:18:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39588
-- author: Admiral-Obvious-001
-  changes:
-  - message: Increased the cooldown of ninja glove stun from 2 seconds to 10 seconds.
-      Stun duration remains unchanged at 5 seconds.
-    type: Tweak
-  id: 8967
-  time: '2025-09-15T23:31:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39707
-- author: ScarKy0
-  changes:
-  - message: Intellicards can now be obtained from the Station AI Electronics crates.
-    type: Add
-  id: 8968
-  time: '2025-09-16T15:35:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40401
-- author: ScarKy0
-  changes:
-  - message: Intellicards now get renamed to the name of the AI stored on them.
-    type: Add
-  id: 8969
-  time: '2025-09-16T19:04:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40402
 - author: Minemoder
   changes:
   - message: Ion Storms no longer have a chance to roll the Drone Lawset.
@@ -4008,3 +3969,33 @@
   id: 9472
   time: '2026-01-28T00:37:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42682
+- author: ShepardToTheStars
+  changes:
+  - message: The health analyzer and the MedTek PDA app now reactivate once you get
+      back in range of your patient.
+    type: Tweak
+  id: 9473
+  time: '2026-01-28T08:42:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42608
+- author: Huaqas
+  changes:
+  - message: Removed the Reptilian laugh sound effect due to copyright concerns.
+    type: Remove
+  id: 9474
+  time: '2026-01-28T11:55:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42594
+- author: SlamBamActionman
+  changes:
+  - message: Silicons now see an indicator for jobs that are considered "crew" under
+      the normal crewsimov lawset.
+    type: Add
+  id: 9475
+  time: '2026-01-29T07:13:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37038
+- author: Princess-Cheeseballs
+  changes:
+  - message: Estoc DMR is now only purchasable by Nukies
+    type: Tweak
+  id: 9476
+  time: '2026-01-29T08:11:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42698
