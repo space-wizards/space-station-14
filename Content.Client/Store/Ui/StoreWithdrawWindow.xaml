@@ -1,5 +1,6 @@
-<DefaultWindow
+<controls:FancyWindow
     xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'store-ui-default-withdraw-text'}"
     MinSize="256 128">
     <BoxContainer
@@ -13,4 +14,4 @@
             Orientation="Vertical"
             VerticalExpand="True" />
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>

@@ -1,5 +1,6 @@
-<DefaultWindow
+<controls:FancyWindow
     xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'fax-machine-ui-window'}"
     MinSize="380 220">
     <BoxContainer Orientation="Vertical"
@@ -113,4 +114,4 @@
         </PanelContainer>
 
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
