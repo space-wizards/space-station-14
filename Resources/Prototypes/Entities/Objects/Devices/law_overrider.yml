@@ -1,0 +1,67 @@
+- type: entity
+  parent: BaseItem
+  id: LawOverrider
+  name: law overrider
+  description: A device able to overwrite the laws of any silicon. Keep away from the cameras of cyborgs.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      law_board:
+        whitelist:
+          components:
+          - SiliconLawProvider
+      active:
+        whitelist:
+          components:
+          - SiliconLawProvider
+  - type: Sprite
+    sprite: Objects/Devices/law_overrider.rsi
+    layers:
+    - state: icon
+      map: ["enum.LawOverriderVisualLayers.Base"]
+    - state: law_board
+      visible: false
+      map: ["enum.LawOverriderVisualLayers.LawBoard"]
+    - state: active
+      shader: unshaded
+      visible: false
+      map: ["enum.LawOverriderVisualLayers.Light"]
+  - type: ItemSlots
+    slots:
+      law_board:
+        name: law-overrider-slot-component-slot-name-law-board
+        whitelist:
+          components:
+          - SiliconLawProvider
+  - type: ContainerContainer
+    containers:
+      law_board: !type:ContainerSlot {}
+  - type: SiliconLawOverrider
+    overrideTime: 10
+
+- type: entity
+  parent: LawOverrider
+  id: LawOverriderXenoborg
+  suffix: Xenoborg
+  components:
+  - type: SiliconLawOverrider
+    worksOnAiCore: true
+    canChangeCorruptedLaws: true
+  - type: ItemSlots
+    slots:
+      law_board:
+        name: law-overrider-slot-component-slot-name-law-board
+        startingItem: XenoborgCircuitBoard
+        disableEject: true
+
+- type: entity
+  parent: LawOverrider
+  id: LawOverriderAdmeme
+  suffix: Admeme
+  components:
+  - type: SiliconLawOverrider
+    overrideTime: 0
+    worksOnAiCore: true
+    canChangeCorruptedLaws: true
+
