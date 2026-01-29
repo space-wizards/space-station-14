@@ -33,6 +33,8 @@
     proto: regal
   - type: Physics
     bodyType: KinematicController
+  - type: Puller
+    needsHands: false
   - type: Fixtures
     fixtures:
       fix1:
