@@ -63,7 +63,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
 
             foreach (var (ent, comp) in _lookup.GetEntitiesInRange<StatusEffectsComponent>(_transform.GetMapCoordinates(uid, xform), range))
             {
-                _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
+                _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, siemensCoefficient: 0.5f, ignoreInsulation: true, statusEffects: comp);
             }
         }
     }
