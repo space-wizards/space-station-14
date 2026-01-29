@@ -98,10 +98,8 @@ public sealed partial class HandcuffComponent : Component
 /// Should generate popups on the User.
 /// </summary>
 [ByRefEvent]
-public record struct UncuffAttemptEvent(EntityUid User, EntityUid Target)
+public record struct UncuffAttemptEvent(EntityUid User)
 {
-    public readonly EntityUid User = User;
-    public readonly EntityUid Target = Target;
     public bool Cancelled = false;
 }
 
