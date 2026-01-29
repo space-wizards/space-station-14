@@ -1,13 +1,12 @@
-# Some things might seem like great ideas on paper for pAI apps, but have deliberately been excluded.
-# e.g. Monitoring (Power/Atmos/Crew), Cameras, etc. are excluded as apps for performance and balance reasons.
-# Generally speaking, if you're adding an application, it needs to *not* be round-impacting.
-# Remember that pAI's are *assistants*, not players.
+# Some of the pAI actions requires them to be inside a PDA that also has an ID with the access to use said action.
+# Remember that pAI's are *assistants*, not players, so their autonomy should always depend on the owner to request something.
 
 - type: listing
   id: PAIMassScanner
   name: pai-mass-scanner-name
   description: pai-mass-scanner-desc
   productAction: ActionPAIMassScanner
+  applyToMob: true
   cost:
     SiliconMemory: 10
   categories:
@@ -21,6 +20,7 @@
   name: pai-midi-player-name
   description: pai-midi-player-desc
   productAction: ActionPAIPlayMidi
+  applyToMob: true
   cost:
     SiliconMemory: 5
   categories:
@@ -34,6 +34,7 @@
   name: pai-station-map-name
   description: pai-station-map-desc
   productAction: ActionPAIOpenMap
+  applyToMob: true
   cost:
     SiliconMemory: 5
   categories:
@@ -41,3 +42,85 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: PAIAtmosphericAlertsMonitor
+  name: pai-atmospheric-alerts-monitor-name
+  description: pai-atmospheric-alerts-monitor-desc
+  productAction: ActionPAIAtmosphericAlertsMonitor
+  applyToMob: true
+  cost:
+    SiliconMemory: 15
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+    whitelist:
+    - Engineering
+
+- type: listing
+  id: PAITRayScanner
+  name: pai-tray-scanner-name
+  description: pai-tray-scanner-desc
+  productAction: ActionPAITrayScanner
+  applyToMob: true
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAICargoBounty
+  name: pai-cargo-bounty-name
+  description: pai-cargo-bounty-desc
+  productAction: ActionPAICargoBounty
+  applyToMob: true
+  cost:
+    SiliconMemory: 15
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+    whitelist:
+    - Cargo
+
+- type: listing
+  id: PAIStationRecords
+  name: pai-station-records-name
+  description: pai-station-records-desc
+  productAction: ActionPAIStationRecords
+  applyToMob: true
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+    whitelist:
+    - Security
+
+- type: listing
+  id: PAIResearchAndDevelopment
+  name: pai-research-and-development-name
+  description: pai-research-and-development-desc
+  productAction: ActionPAIResearchAndDevelopment
+  applyToMob: true
+  cost:
+    SiliconMemory: 15
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+    whitelist:
+    - Research
