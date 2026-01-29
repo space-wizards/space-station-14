@@ -1,13 +1,19 @@
-﻿using Content.Server.Power.EntitySystems;
-using Content.Shared.Power;
+﻿using Robust.Shared.GameStates;
 
-namespace Content.Server.Power.Components;
+namespace Content.Shared.Power.Components;
 
-/// <inheritdoc cref="Content.Shared.Power.SharedPowerChargeComponent" />
-[RegisterComponent]
-[Access(typeof(PowerChargeSystem))]
-public sealed partial class PowerChargeComponent : SharedPowerChargeComponent
+/// <summary>
+/// Component for a powered machine that slowly powers on and off over a period of time.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class PowerChargeComponent : Component
 {
+    /// <summary>
+    /// The title used for the default charged machine window if used
+    /// </summary>
+    [DataField]
+    public LocId WindowTitle { get; set; } = string.Empty;
+
     /// <summary>
     /// Change in charge per second.
     /// </summary>
@@ -21,16 +27,16 @@ public sealed partial class PowerChargeComponent : SharedPowerChargeComponent
     public float IdlePowerUse { get; set; }
 
     /// <summary>
-    /// Power consumed when <see cref="SwitchedOn"/> is true.
+    /// Power consumed when <see cref="SwitchedOn" /> is true.
     /// </summary>
     [DataField("activePower")]
     public float ActivePowerUse { get; set; }
 
     /// <summary>
-    /// Is the gravity generator intact?
+    /// Is the machine intact?
     /// </summary>
-    [DataField]
-    public bool Intact { get; set; } = true;
+    [DataField, AutoNetworkedField]
+    public bool Intact = true;
 
     /// <summary>
     /// Is the power switch on?
@@ -39,7 +45,7 @@ public sealed partial class PowerChargeComponent : SharedPowerChargeComponent
     public bool SwitchedOn { get; set; } = true;
 
     /// <summary>
-    /// Whether or not the power is switched on and the entity has charged up.
+    /// Whether the power is switched on and the entity has charged up.
     /// </summary>
     [DataField]
     public bool Active { get; set; }
@@ -48,7 +54,7 @@ public sealed partial class PowerChargeComponent : SharedPowerChargeComponent
     public float MaxCharge { get; set; } = 1;
 
     /// <summary>
-    /// The UI key of the UI that's used with this machine.<br/>
+    /// The UI key of the UI that's used with this machine.<br />
     /// This is used to allow machine power charging to be integrated into any ui
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
