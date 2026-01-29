@@ -39,8 +39,12 @@ public sealed partial class ItemBorgModuleComponent : Component
 }
 
 /// <summary>
-/// A single hand provided by the module.
+/// Defines a single hand and the item provided for it by a borg module.
 /// </summary>
+/// <remarks>
+/// If you add more fields to this make sure it remains equatable.
+/// Implement IEquatable if necessary.
+/// </remarks>
 [DataDefinition, Serializable, NetSerializable]
 public partial record struct BorgHand
 {
