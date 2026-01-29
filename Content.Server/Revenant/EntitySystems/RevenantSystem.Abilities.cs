@@ -59,6 +59,7 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantGraspActionEvent>(OnGraspAction);
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -349,5 +350,19 @@ public sealed partial class RevenantSystem
 
             _emagSystem.TryEmagEffect(uid, uid, ent);
         }
+    }
+
+    /// <summary>
+    /// Switches between the slow grab and fast one
+    /// </summary>
+    private void OnGraspAction(Entity<RevenantComponent> ent, ref RevenantGraspActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        ent.Comp.IsGrabFast = !ent.Comp.IsGrabFast;
+        _popup.PopupEntity(ent.Comp.IsGrabFast ? Loc.GetString("revenant-fast-grab") : Loc.GetString("revenant-slow-grab"), ent.Owner, ent.Owner);
+
+        args.Handled = true;
     }
 }

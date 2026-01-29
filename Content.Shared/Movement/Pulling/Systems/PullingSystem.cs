@@ -484,7 +484,7 @@ public sealed class PullingSystem : EntitySystem
 
         if (pullable.Comp.Puller == pullerUid)
         {
-            return TryStopPull(pullable, pullable.Comp);
+            return TryStopPull(pullable, pullable.Comp, pullerUid);
         }
 
         return TryStartPull(pullerUid, pullable, pullableComp: pullable);
@@ -611,7 +611,21 @@ public sealed class PullingSystem : EntitySystem
         if (msg.Cancelled)
             return false;
 
+        RaiseLocalEvent(pullerUidNull.Value, ref msg, true);
+
+        if (msg.Cancelled)
+            return false;
+
         StopPulling(pullableUid, pullable);
         return true;
+    }
+
+    /// <summary>
+    /// Allows NeedsHands on PullerComponent to be set after the component is insantiated.
+    /// </summary>
+    public void SetNeedHands(Entity<PullerComponent> ent, bool needsHands)
+    {
+        ent.Comp.NeedsHands = needsHands;
+        Dirty(ent.Owner, ent.Comp);
     }
 }
