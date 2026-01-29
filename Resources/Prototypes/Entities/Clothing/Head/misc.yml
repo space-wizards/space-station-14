@@ -174,19 +174,55 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatCone
   name: warning cone
+  suffix: full
   description: This cone is trying to warn you of something!
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/cone.rsi
+    state: icon
+    layers:
+    - state: icon
+      map: ["cone_1"]
+      visible: false
+    - state: cone_2
+      map: ["cone_2"]
+      visible: false
+    - state: cone_3
+      map: ["cone_3"]
+      visible: false
+    - state: cone_4
+      map: ["cone_4"]
+      visible: false
+    - state: cone_5
+      map: ["cone_5"]
+      visible: false
   - type: Clothing
     sprite: Clothing/Head/Misc/cone.rsi
   - type: Item
     storedRotation: 0
+  - type: Appearance
+  - type: Stack
+    stackType: WarningCone
+    count: 5
+    composite: true
+    layerStates:
+    - cone_1
+    - cone_2
+    - cone_3
+    - cone_4
+    - cone_5
   - type: PhysicalComposition #you can't just pass up some free plastic!
     materialComposition:
       Plastic: 100
-  - type: StaticPrice
-    price: 25
+
+- type: entity
+  parent: ClothingHeadHatCone
+  id: ConeWarning1
+  suffix: 1
+  components:
+  - type: Stack
+    stackType: WarningCone
+    count: 1
 
 - type: entity
   parent: ClothingHeadBase

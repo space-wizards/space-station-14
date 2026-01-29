@@ -13,6 +13,13 @@
   spawn: InflatableDoorStack1
   maxCount: 4 # Maybe increased to 5 to reuse the base?
 
+- type: stack
+  parent: BaseVerySmallStack
+  id: WarningCone
+  name: stack-cone-warning
+  icon: { sprite: "/Textures/Clothing/Head/Misc/cone.rsi", state: icon }
+  spawn: ConeWarning1
+
 # Cables
 - type: stack
   parent: BaseMediumStack
