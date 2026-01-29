@@ -41,8 +41,9 @@ namespace Content.Server.Antag;
 /// <summary>
 /// Turns players into antags.
 /// </summary>
-/// <remarks>DO NOT EVER EVER EVER SPAWN A NEW ENTITY IN NULLSPACE THEN MOVE IT TO THE GRID.
-/// I WASTED 4 HOURS REFACTORING THIS SYSTEM SPECIFICALLY TO FIX BUGS FROM THAT EXACT MISTAKE.</remarks>
+/// Do not ever ever ever spawn and initialize an entity prototype in nullspace then move it to the grid.
+/// I wasted 4 hours refactoring this system specifically to fix that mistake.
+/// Always initialize your entities attached to the entity you're spawning them on, or the correct map at the very least.
 public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
     [Dependency] private readonly AudioSystem _audio = default!;
