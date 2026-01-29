@@ -16,8 +16,25 @@
     _itemstatus_content_margin_left: "#04060604"
     _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
-  id: SS14PlasmafireTheme
-  path: /Textures/Interface/Plasmafire/
+  id: SS14MinimalistTheme
+  path: /Textures/Interface/Minimalist/
+  colors:
+    whiteText: "#FFF5EE"
+    slotSelectedGold: "#e6b812"
+    slotColor: "#0f1215"
+    slotOutline: "#333850"
+    slotText: "#333850"
+    nanoGold: "#A88B5E"
+    goodGreenFore: "#31843E"
+    concerningOrangeFore: "#A5762F"
+    dangerousRedFore: "#BB3232"
+    disabledFore: "#5A5A5A"
+    _itemstatus_content_margin_right: "#06060604"
+    _itemstatus_content_margin_left: "#06060604"
+    _itemstatus_patch_margin: "#07060404"
+- type: uiTheme
+  id: SS14SlimecoreTheme
+  path: /Textures/Interface/Slimecore/
   colors:
     whiteText: "#FFF5EE"
     slotSelectedGold: "#FFF5EE"
@@ -33,8 +50,8 @@
     _itemstatus_content_margin_left: "#04060604"
     _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
-  id: SS14SlimecoreTheme
-  path: /Textures/Interface/Slimecore/
+  id: SS14PlasmafireTheme
+  path: /Textures/Interface/Plasmafire/
   colors:
     whiteText: "#FFF5EE"
     slotSelectedGold: "#FFF5EE"
@@ -67,6 +84,23 @@
     _itemstatus_content_margin_left: "#04060604"
     _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
+  id: SS14AshenTheme
+  path: /Textures/Interface/Ashen/
+  colors:
+    whiteText: "#FFF5EE"
+    slotSelectedGold: "#FFF5EE"
+    slotColor: "#FFF5EE"
+    slotOutline: "#FFF5EE"
+    slotText: "#FFF5EE"
+    nanoGold: "#FFF5EE"
+    goodGreenFore: "#FFF5EE"
+    concerningOrangeFore: "#FFF5EE"
+    dangerousRedFore: "#FFF5EE"
+    disabledFore: "#FFF5EE"
+    _itemstatus_content_margin_right: "#06060604"
+    _itemstatus_content_margin_left: "#06060604"
+    _itemstatus_patch_margin: "#07060505"
+- type: uiTheme
   id: SS14RetroTheme
   path: /Textures/Interface/Retro/
   colors:
@@ -84,8 +118,8 @@
     _itemstatus_content_margin_left: "#04060604"
     _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
-  id: SS14MinimalistTheme
-  path: /Textures/Interface/Minimalist/
+  id: SS14NanotrasenTheme
+  path: /Textures/Interface/Nanotrasen/
   colors:
     whiteText: "#FFF5EE"
     slotSelectedGold: "#e6b812"
@@ -97,23 +131,23 @@
     concerningOrangeFore: "#A5762F"
     dangerousRedFore: "#BB3232"
     disabledFore: "#5A5A5A"
-    _itemstatus_content_margin_right: "#06060604"
-    _itemstatus_content_margin_left: "#06060604"
+    _itemstatus_content_margin_right: "#06060404"
+    _itemstatus_content_margin_left: "#04060604"
     _itemstatus_patch_margin: "#07060404"
 - type: uiTheme
-  id: SS14AshenTheme
-  path: /Textures/Interface/Ashen/
+  id: SS14SyndicateTheme
+  path: /Textures/Interface/Syndicate/
   colors:
     whiteText: "#FFF5EE"
-    slotSelectedGold: "#FFF5EE"
-    slotColor: "#FFF5EE"
-    slotOutline: "#FFF5EE"
-    slotText: "#FFF5EE"
-    nanoGold: "#FFF5EE"
-    goodGreenFore: "#FFF5EE"
-    concerningOrangeFore: "#FFF5EE"
-    dangerousRedFore: "#FFF5EE"
-    disabledFore: "#FFF5EE"
-    _itemstatus_content_margin_right: "#06060604"
-    _itemstatus_content_margin_left: "#06060604"
-    _itemstatus_patch_margin: "#07060505"
+    slotSelectedGold: "#e6b812"
+    slotColor: "#0f1215"
+    slotOutline: "#50231f"
+    slotText: "#50231f"
+    nanoGold: "#A88B5E"
+    goodGreenFore: "#31843E"
+    concerningOrangeFore: "#A5762F"
+    dangerousRedFore: "#BB3232"
+    disabledFore: "#5A5A5A"
+    _itemstatus_content_margin_right: "#06060404"
+    _itemstatus_content_margin_left: "#04060604"
+    _itemstatus_patch_margin: "#07060404"
