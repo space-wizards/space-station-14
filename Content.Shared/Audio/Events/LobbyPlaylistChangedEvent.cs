@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Audio.Events;
 
@@ -9,7 +10,7 @@ namespace Content.Shared.Audio.Events;
 public sealed class LobbyPlaylistChangedEvent : EntityEventArgs
 {
     /// <inheritdoc />
-    public LobbyPlaylistChangedEvent(string[] playlist)
+    public LobbyPlaylistChangedEvent(ResPath[] playlist)
     {
         Playlist = playlist;
     }
@@ -17,7 +18,7 @@ public sealed class LobbyPlaylistChangedEvent : EntityEventArgs
     /// <summary>
     /// List of soundtrack filenames for lobby playlist.
     /// </summary>
-    public string[] Playlist;
+    public ResPath[] Playlist;
 }
 
 /// <summary>
