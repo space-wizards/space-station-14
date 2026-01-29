@@ -204,21 +204,6 @@
     - CorgiWearable
 
 - type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatBeretBrigmedic
-  name: brigmedical beret
-  description: A white beret for brigmedics.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
-  - type: Tag
-    tags:
-    - PetWearable
-    - CorgiWearable
-
-- type: entity
   parent: [ ClothingHeadBase ]
   id: ClothingHeadHatBeretMerc
   name: mercenary beret

@@ -594,7 +594,6 @@
     jumpsuit: ClothingUniformJumpsuitGenetics
     shoes: ClothingShoesColorBlue
     gloves: ClothingHandsGlovesLatex
-    head: ClothingHeadHatBeretBrigmedic
     id: VisitorPDA
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelGenetics

@@ -345,20 +345,6 @@
   - type: AccessReader
     access: [["Armory"]]
 
-# Brigmedic
-- type: entity
-  id: LockerBrigmedic
-  parent: LockerBaseSecure
-  name: brigmedic locker
-  components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: brigmedic
-    stateDoorOpen: armory_open
-    stateDoorClosed: brigmedic_door
-  - type: AccessReader
-    access: [["Medical"]]
-
 # Security Officer
 - type: entity
   id: LockerSecurity
