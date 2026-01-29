@@ -5,6 +5,7 @@ using Content.Client.Clickable;
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
+using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
@@ -22,6 +23,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Animations;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Graphics;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
@@ -42,6 +44,8 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IStateManager _state = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ClickableSystem _clickable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
@@ -211,11 +215,13 @@ public sealed partial class GunSystem : SharedGunSystem
 
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
+
         RaisePredictiveEvent(new RequestShootEvent
         {
             Target = target,
             Coordinates = GetNetCoordinates(coordinates),
             Gun = GetNetEntity(gun),
+            Continuous = _cfg.GetCVar(CCVars.ControlHoldToAttackRanged),
         });
     }
 
