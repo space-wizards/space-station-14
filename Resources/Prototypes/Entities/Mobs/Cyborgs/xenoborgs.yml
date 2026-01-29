@@ -223,9 +223,9 @@
         shader: unshaded
         map: ["light"]
         visible: false
-  - type: FootstepModifier # it flies instead of walking
+  - type: FootstepModifier # silent
     footstepSoundCollection:
-      collection: FootstepHoverXenoborg
+      collection: null
   - type: BorgChassis
     maxModules: 5
     hasMindState: xenoborg_stealth_e
