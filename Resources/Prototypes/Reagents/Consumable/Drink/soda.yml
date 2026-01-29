@@ -66,6 +66,25 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Poison:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 2 
+        type: Local
+        visualType: LargeCaution
+        messages: ["dr-gibbs-presence"]
+        probability: 0.33 # They'll see this at least several times before the gib procs, if it even procs
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 2
+        probability: 0.0001
+        damage:
+          types:
+            Blunt: 1000
 
 - type: reagent
   id: EnergyDrink
