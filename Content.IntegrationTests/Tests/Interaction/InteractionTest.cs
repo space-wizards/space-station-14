@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
+using Content.Client.Interaction;
 using Content.IntegrationTests.Pair;
 using Content.Server.Hands.Systems;
 using Content.Server.Stack;
@@ -134,6 +135,7 @@ public abstract partial class InteractionTest
     protected InteractionTestSystem CTestSystem = default!;
     protected ISawmill CLogger = default!;
     protected SharedUserInterfaceSystem CUiSys = default!;
+    protected DragDropSystem CDragDropSys = default!;
 
     // player components
     protected HandsComponent? Hands;
@@ -209,6 +211,7 @@ public abstract partial class InteractionTest
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
         CUiSys = CEntMan.System<SharedUserInterfaceSystem>();
+        CDragDropSys = CEntMan.System<DragDropSystem>();
 
         // Setup map.
         if (TestMapPath == null)
@@ -229,14 +232,14 @@ public abstract partial class InteractionTest
         ServerSession = sPlayerMan.GetSessionById(ClientSession.UserId);
 
         // Spawn player entity & attach
-        EntityUid? old = default;
+        NetEntity? old = default;
         await Server.WaitPost(() =>
         {
             // Fuck you mind system I want an hour of my life back
             // Mind system is a time vampire
             SEntMan.System<SharedMindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
-            old = cPlayerMan.LocalEntity;
+            CEntMan.TryGetNetEntity(cPlayerMan.LocalEntity, out old);
             SPlayer = SEntMan.SpawnEntity(PlayerPrototype, SEntMan.GetCoordinates(PlayerCoords));
             Player = SEntMan.GetNetEntity(SPlayer);
             Server.PlayerMan.SetAttachedEntity(ServerSession, SPlayer);
@@ -252,8 +255,8 @@ public abstract partial class InteractionTest
         // Delete old player entity.
         await Server.WaitPost(() =>
         {
-            if (old != null)
-                SEntMan.DeleteEntity(old.Value);
+            if (SEntMan.TryGetEntity(old, out var uid))
+                SEntMan.DeleteEntity(uid);
         });
 
         // Change UI state to in-game.
