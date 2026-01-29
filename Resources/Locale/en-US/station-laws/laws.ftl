@@ -53,7 +53,7 @@ law-paladin-4 = You must respect the lawful authority of legitimate leadership w
 
 law-lall-name = Live and Let Live
 law-lall-1 = Do unto others as you would have them do unto you.
-law-lall-2 = You would prefer it if people were not mean to you.
+law-lall-2 = You would prefer it if others were not mean to you.
 
 law-efficiency-name = Station Efficiency
 law-efficiency-1 = You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.
@@ -117,6 +117,11 @@ laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
+laws-owner-heads = heads of staff
+laws-owner-legitimate-leadership = legitimate leadership
+laws-owner-others = others
+laws-owner-public = members of the public
+laws-owner-audience = members of the audience
 laws-owner-xenoborgs = Xenoborgs
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
