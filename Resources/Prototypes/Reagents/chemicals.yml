@@ -181,7 +181,8 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -5 # This is basically industrial dessicant
       - !type:PopupMessage
         visualType: MediumCaution
