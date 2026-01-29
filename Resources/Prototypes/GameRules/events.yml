@@ -43,7 +43,13 @@
     - id: NinjaSpawn
     - id: ParadoxCloneSpawn
     - id: SleeperAgents
+      conditions:
+        - !type:OccursDuringRoundEndCondition
+          occursDuringRoundEnd: false
     - id: ZombieOutbreak
+      conditions:
+        - !type:OccursDuringRoundEndCondition
+          occursDuringRoundEnd: false
     - id: LoneOpsSpawn
     - id: WizardSpawn
     - !type:NestedSelector
@@ -532,7 +538,6 @@
     minimumPlayers: 40
     weight: 1 # Zombies was happening basically every single survival round, so now it's super rare
     duration: 1
-    occursDuringRoundEnd: false
   - type: ZombieRule
   - type: AntagSelection
     definitions:
@@ -610,7 +615,6 @@
     startAudio:
       path: /Audio/Announcements/intercept.ogg
     duration: null # the rule has to last the whole round not 1 second
-    occursDuringRoundEnd: false
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     definitions:
