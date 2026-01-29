@@ -62,6 +62,18 @@
   - type: Tag
     tags:
     - Trash
+  - type: Extractable
+    grindableSolutionName: glowstick
+  - type: SolutionContainerManager
+    solutions:
+      glowstick:
+        reagents:
+        - ReagentId: Phenol
+          Quantity: 15
+        - ReagentId: Hydrogen
+          Quantity: 10
+        - ReagentId: Oxygen
+          Quantity: 10
 
 - type: entity
   parent: GlowstickBase
