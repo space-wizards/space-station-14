@@ -105,6 +105,8 @@
     notifyAdmins: true
   - type: Emagged
     emagType: Interaction
+  - type: Stylesheet
+    stylesheet: Syndicate
 
 - type: entity
   parent: FaxMachineBase
