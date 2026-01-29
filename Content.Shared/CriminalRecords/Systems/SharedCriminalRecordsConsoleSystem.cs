@@ -32,7 +32,7 @@ public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
             if (_records.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station.Value),
                     out var record))
             {
-                if (record.Status != SecurityStatus.None)
+                if (record.Status is not null)
                 {
                     _criminalRecords.SetCriminalIcon(name, record.Status, uid);
                     return;
