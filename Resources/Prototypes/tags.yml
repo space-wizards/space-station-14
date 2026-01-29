@@ -858,6 +858,9 @@
   id: Lemon # CargoBounty: BountyLemon
 
 - type: Tag
+  id: LetterDelivery # Storage whitelist: LauncherDelivery
+
+- type: Tag
   id: LightBulb # Storage whitelist: BoxLightbulb. ConstructionGraph: HelmetJustice
 
 - type: Tag
@@ -1034,7 +1037,7 @@
 ## P ##
 
 - type: Tag
-  id: PackageDelivery # ItemMapper: MailCart
+  id: PackageDelivery # ItemMapper: MailCart, Storage Whitelist: LauncherDelivery
 
 - type: Tag
   id: Packet # Storage whitelist: ClothingBeltChef
@@ -1047,6 +1050,9 @@
 
 - type: Tag
   id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
+
+- type: Tag # Storage whitelist: LauncherDelivery
+  id: Parcel
 
 - type: Tag
   id: ParcelWrapBlacklist # Tagged entities can't be wrapped in ParcelWrap.
@@ -1157,6 +1163,9 @@
 
 - type: Tag
   id: Powerdrill # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
+
+- type: Tag # Storage whitelist: LauncherDelivery
+  id: Present
 
 - type: Tag
   id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
