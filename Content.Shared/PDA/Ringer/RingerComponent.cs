@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -12,6 +13,24 @@ public sealed partial class RingerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Note[] Ringtone = new Note[SharedRingerSystem.RingtoneLength];
+
+    /// <summary>
+    /// What sound is used for the ringtone
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? RingerSound = new SoundPathSpecifier("/Audio/Effects/RingtoneNotes/c.ogg");
+
+    /// <summary>
+    /// How many semitones is this offset from the original sound
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int SemitoneOffset = 0;
+
+    /// <summary>
+    /// The tempo this ringtone plays at
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int Tempo = 300;
 
     /// <summary>
     /// The last time this ringer's ringtone was set.
