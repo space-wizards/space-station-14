@@ -22,6 +22,12 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     public string? KeyPhrase;
 
     /// <summary>
+    /// The default keyphrase that is used when the trigger's keyphrase is reset.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId? DefaultKeyPhrase;
+
+    /// <summary>
     /// Range in which we listen for the keyphrase.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -60,36 +66,42 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     /// <summary>
     /// The verb text that is shown when you can start recording a message.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId StartRecordingVerb = "trigger-on-voice-record";
 
     /// <summary>
     /// The verb text that is shown when you can stop recording a message.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId StopRecordingVerb = "trigger-on-voice-stop";
 
     /// <summary>
     /// Tooltip that appears when hovering over the stop or start recording verbs.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId? RecordingVerbMessage;
+
+    /// <summary>
+    /// The verb text that is shown when you can reset keyphrase to default.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId ResetRecordingVerb = "trigger-on-voice-default";
 
     /// <summary>
     /// The verb text that is shown when you can clear a recording.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId ClearRecordingVerb = "trigger-on-voice-clear";
 
     /// <summary>
     /// The loc string that is shown when inspecting an uninitialized voice trigger.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId? InspectUninitializedLoc = "trigger-on-voice-uninitialized";
 
     /// <summary>
     /// The loc string to use when inspecting voice trigger. Will also include the triggering phrase
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId? InspectInitializedLoc = "trigger-on-voice-examine";
 }

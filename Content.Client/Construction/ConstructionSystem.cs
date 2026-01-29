@@ -80,7 +80,7 @@ namespace Content.Client.Construction
         {
             foreach (var constructionProto in PrototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
-                if (!PrototypeManager.TryIndex(constructionProto.Graph, out var graphProto))
+                if (!PrototypeManager.Resolve(constructionProto.Graph, out var graphProto))
                     continue;
 
                 if (constructionProto.TargetNode is not { } targetNodeId)
@@ -121,17 +121,14 @@ namespace Content.Client.Construction
                     // If we got the id of the prototype, we exit the “recursion” by clearing the stack.
                     stack.Clear();
 
-                    if (!PrototypeManager.TryIndex(constructionProto.ID, out ConstructionPrototype? recipe))
+                    if (!PrototypeManager.Resolve(entityId, out var proto))
                         continue;
 
-                    if (!PrototypeManager.TryIndex(entityId, out var proto))
-                        continue;
+                    var name = constructionProto.SetName.HasValue ? Loc.GetString(constructionProto.SetName) : proto.Name;
+                    var desc = constructionProto.SetDescription.HasValue ? Loc.GetString(constructionProto.SetDescription) : proto.Description;
 
-                    var name = recipe.SetName.HasValue ? Loc.GetString(recipe.SetName) : proto.Name;
-                    var desc = recipe.SetDescription.HasValue ? Loc.GetString(recipe.SetDescription) : proto.Description;
-
-                    recipe.Name = name;
-                    recipe.Description = desc;
+                    constructionProto.Name = name;
+                    constructionProto.Description = desc;
 
                     _recipesMetadataCache.Add(constructionProto.ID, entityId);
                 } while (stack.Count > 0);
@@ -172,7 +169,7 @@ namespace Content.Client.Construction
                     "construction-ghost-examine-message",
                     ("name", component.Prototype.Name)));
 
-                if (!PrototypeManager.TryIndex(component.Prototype.Graph, out var graph))
+                if (!PrototypeManager.Resolve(component.Prototype.Graph, out var graph))
                     return;
 
                 var startNode = graph.Nodes[component.Prototype.StartNode];
@@ -294,7 +291,6 @@ namespace Content.Client.Construction
             _ghosts.Add(comp.GhostId, ghost.Value);
 
             var sprite = Comp<SpriteComponent>(ghost.Value);
-            _sprite.SetColor((ghost.Value, sprite), new Color(48, 255, 48, 128));
 
             if (targetProto.TryGetComponent(out IconComponent? icon, EntityManager.ComponentFactory))
             {
@@ -309,26 +305,19 @@ namespace Content.Client.Construction
                 var targetSprite = EnsureComp<SpriteComponent>(dummy);
                 EntityManager.System<AppearanceSystem>().OnChangeData(dummy, targetSprite);
 
-                for (var i = 0; i < targetSprite.AllLayers.Count(); i++)
+                _sprite.CopySprite((dummy, targetSprite), (ghost.Value, sprite));
+
+                for (var i = 0; i < sprite.AllLayers.Count(); i++)
                 {
-                    if (!targetSprite[i].Visible || !targetSprite[i].RsiState.IsValid)
-                        continue;
-
-                    var rsi = targetSprite[i].Rsi ?? targetSprite.BaseRSI;
-                    if (rsi is null || !rsi.TryGetState(targetSprite[i].RsiState, out var state) ||
-                        state.StateId.Name is null)
-                        continue;
-
-                    _sprite.AddBlankLayer((ghost.Value, sprite), i);
-                    _sprite.LayerSetSprite((ghost.Value, sprite), i, new SpriteSpecifier.Rsi(rsi.Path, state.StateId.Name));
                     sprite.LayerSetShader(i, "unshaded");
-                    _sprite.LayerSetVisible((ghost.Value, sprite), i, true);
                 }
 
                 Del(dummy);
             }
             else
                 return false;
+
+            _sprite.SetColor((ghost.Value, sprite), new Color(48, 255, 48, 128));
 
             if (prototype.CanBuildInImpassable)
                 EnsureComp<WallMountComponent>(ghost.Value).Arc = new(Math.Tau);

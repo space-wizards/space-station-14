@@ -4,6 +4,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Hands.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -23,7 +24,7 @@ public sealed class OutfitSystem : EntitySystem
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedStationSpawningSystem _spawningSystem = default!;
 
-    public bool SetOutfit(EntityUid target, string gear, Action<EntityUid, EntityUid>? onEquipped = null)
+    public bool SetOutfit(EntityUid target, string gear, Action<EntityUid, EntityUid>? onEquipped = null, bool unremovable = false)
     {
         if (!EntityManager.TryGetComponent(target, out InventoryComponent? inventoryComponent))
             return false;
@@ -60,6 +61,8 @@ public sealed class OutfitSystem : EntitySystem
                 }
 
                 _invSystem.TryEquip(target, equipmentEntity, slot.Name, silent: true, force: true, inventory: inventoryComponent);
+                if (unremovable)
+                    EnsureComp<UnremoveableComponent>(equipmentEntity);
 
                 onEquipped?.Invoke(target, equipmentEntity);
             }
@@ -87,8 +90,8 @@ public sealed class OutfitSystem : EntitySystem
                 break;
 
             // Don't require a player, so this works on Urists
-            profile ??= EntityManager.TryGetComponent<HumanoidAppearanceComponent>(target, out var comp)
-                ? HumanoidCharacterProfile.DefaultWithSpecies(comp.Species)
+            profile ??= EntityManager.TryGetComponent<HumanoidProfileComponent>(target, out var comp)
+                ? HumanoidCharacterProfile.DefaultWithSpecies(comp.Species, comp.Sex)
                 : new HumanoidCharacterProfile();
             // Try to get the user's existing loadout for the role
             profile.Loadouts.TryGetValue(jobProtoId, out var roleLoadout);

@@ -1,6 +1,7 @@
 using Content.Server.Damage.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 

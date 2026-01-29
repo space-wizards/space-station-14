@@ -45,7 +45,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(ent, out var idCardComp))
                 return;
 
-            _prototypeManager.TryIndex(args.Args.ChameleonOutfit.Job, out var jobProto);
+            _prototypeManager.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
 
             var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
             var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
@@ -130,7 +130,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
+            if (!_prototypeManager.Resolve(args.JobIconId, out var jobIcon))
                 return;
 
             _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);

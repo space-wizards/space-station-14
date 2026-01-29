@@ -2,13 +2,16 @@ using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
+using Content.Shared.Emp;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Lock;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -23,8 +26,11 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] protected readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly LockSystem _lock = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     private static readonly SlotFlags[] IgnoredSlots =
     {
@@ -32,12 +38,12 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         SlotFlags.PREVENTEQUIP,
         SlotFlags.NONE
     };
+
     private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
 
     private readonly Dictionary<SlotFlags, List<EntProtoId>> _data = new();
 
     public readonly Dictionary<SlotFlags, List<string>> ValidVariants = new();
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
     private static readonly ProtoId<TagPrototype> WhitelistChameleonTag = "WhitelistChameleon";
 
@@ -47,6 +53,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         SubscribeLocalEvent<ChameleonClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
+        SubscribeLocalEvent<ChameleonClothingComponent, EmpPulseEvent>(OnEmpPulse);
 
         SubscribeLocalEvent<ChameleonClothingComponent, PrototypesReloadedEventArgs>(OnPrototypeReload);
         PrepareAllVariants();
@@ -74,7 +81,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.Default) ||
-            !_proto.TryIndex(component.Default, out EntityPrototype? proto))
+            !_proto.Resolve(component.Default, out EntityPrototype? proto))
             return;
 
         // world sprite icon
@@ -97,21 +104,21 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         // clothing sprite logic
         if (TryComp(uid, out ClothingComponent? clothing) &&
-            proto.TryGetComponent("Clothing", out ClothingComponent? otherClothing))
+            proto.TryGetComponent(out ClothingComponent? otherClothing, Factory))
         {
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
 
         // appearance data logic
         if (TryComp(uid, out AppearanceComponent? appearance) &&
-            proto.TryGetComponent("Appearance", out AppearanceComponent? appearanceOther))
+            proto.TryGetComponent(out AppearanceComponent? appearanceOther, Factory))
         {
             _appearance.AppendData(appearanceOther, uid);
             Dirty(uid, appearance);
         }
 
         // properly mark contraband
-        if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
+        if (proto.TryGetComponent(out ContrabandComponent? contra, Factory))
         {
             EnsureComp<ContrabandComponent>(uid, out var current);
             _contraband.CopyDetails(uid, contra, current);
@@ -138,6 +145,24 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         });
     }
 
+    private void OnEmpPulse(EntityUid uid, ChameleonClothingComponent component, ref EmpPulseEvent args)
+    {
+        if (!component.AffectedByEmp)
+            return;
+
+        if (component.EmpContinuous)
+            component.NextEmpChange = Timing.CurTime + TimeSpan.FromSeconds(1f / component.EmpChangeIntensity);
+
+        if (_net.IsServer) // needs RandomPredicted
+        {
+            var pick = GetRandomValidPrototype(component.Slot, component.RequireTag);
+            SetSelectedPrototype(uid, pick, component: component);
+        }
+
+        args.Affected = true;
+        args.Disabled = true;
+    }
+
     protected virtual void UpdateSprite(EntityUid uid, EntityPrototype proto) { }
 
     /// <summary>
@@ -157,7 +182,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         // check if it's valid clothing
-        if (!proto.TryGetComponent("Clothing", out ClothingComponent? clothing))
+        if (!proto.TryGetComponent(out ClothingComponent? clothing, Factory))
             return false;
         if (!clothing.Slots.HasFlag(chameleonSlot))
             return false;
@@ -185,6 +210,14 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         }
 
         return validTargets;
+    }
+
+    /// <summary>
+    ///     Get a random prototype for a given slot.
+    /// </summary>
+    public string GetRandomValidPrototype(SlotFlags slot, string? tag = null)
+    {
+        return _random.Pick(GetValidTargets(slot, tag).ToList());
     }
 
     protected void PrepareAllVariants()
@@ -215,4 +248,9 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             }
         }
     }
+
+    // TODO: Predict and use component states for the UI
+    public virtual void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
+        ChameleonClothingComponent? component = null)
+    { }
 }

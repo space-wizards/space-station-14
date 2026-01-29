@@ -12,3 +12,10 @@
   completetime: 4
   materials:
     Steel: 500
+
+- type: latheRecipe
+  id: UtilityKnife
+  result: UtilityKnife
+  completetime: 2
+  materials:
+    Steel: 100

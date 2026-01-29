@@ -128,10 +128,10 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         // Is the target a handcuff?
         if (TryComp<VirtualItemComponent>(heldEntity, out var virtualItem) &&
-            TryComp<CuffableComponent>(target.Owner, out var cuffable) &&
-            _cuffableSystem.GetAllCuffs(cuffable).Contains(virtualItem.BlockingEntity))
+            _cuffableSystem.TryGetAllCuffs(target.Owner, out var cuffs) &&
+            cuffs.Contains(virtualItem.BlockingEntity))
         {
-            _cuffableSystem.TryUncuff(target.Owner, user, virtualItem.BlockingEntity, cuffable);
+            _cuffableSystem.TryUncuff(target.Owner, user, virtualItem.BlockingEntity);
             return;
         }
 
@@ -379,7 +379,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             return false;
         }
 
-        if (!_handsSystem.CanPickupToHand(target, activeItem.Value, handName, checkActionBlocker: false, target.Comp))
+        if (!_handsSystem.CanPickupToHand(target, activeItem.Value, handName, checkActionBlocker: false, handsComp: target.Comp))
         {
             _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-put-message", ("owner", Identity.Entity(target, EntityManager))));
             return false;
