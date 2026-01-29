@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprite modified by PursuitInAshes (Github) for SS14, original sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+  "copyright": "Sprite modified by PursuitInAshes (Github) for SS14, original sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428, vox sprite by AreYouconfused (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -19,6 +19,10 @@
     },
     {
       "name": "alt-equipped-EARS",
+      "directions": 4
+    },
+    {
+      "name": "alt-equipped-EARS-vox",
       "directions": 4
     }
   ]
