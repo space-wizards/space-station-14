@@ -115,3 +115,8 @@
   id: Hologram
   kind: source
   path: "/Textures/Shaders/hologram.swsl"
+
+- type: shader
+  id: Sharpness
+  kind: source
+  path: "/Textures/Shaders/sharpness.swsl"
