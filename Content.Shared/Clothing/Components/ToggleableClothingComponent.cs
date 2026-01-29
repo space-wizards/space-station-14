@@ -15,6 +15,7 @@ namespace Content.Shared.Clothing.Components;
 public sealed partial class ToggleableClothingComponent : Component
 {
     public const string DefaultClothingContainerId = "toggleable-clothing";
+    public const string DefaultUnderneathClothingContainerId = "toggleable-under-clothing";
 
     /// <summary>
     ///     Action used to toggle the clothing on or off.
@@ -71,4 +72,16 @@ public sealed partial class ToggleableClothingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? VerbText;
+
+    /// <summary>
+    ///     The container ID of <see cref="UnderClothingContainer"/>.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string UnderClothingContainerId = DefaultUnderneathClothingContainerId;
+
+    /// <summary>
+    ///     The container where the item that the toggled clothing replaced is put.
+    /// </summary>
+    [ViewVariables]
+    public ContainerSlot? UnderClothingContainer;
 }
