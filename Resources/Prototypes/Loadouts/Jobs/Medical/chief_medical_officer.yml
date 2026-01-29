@@ -42,7 +42,7 @@
     neck: ClothingNeckMantleCMO
   effects:
   - !type:GroupLoadoutEffect
-    proto: MasterCMO
+    proto: ChiefMedicalOfficerSenior
 
 # Outer clothing
 - type: loadout
