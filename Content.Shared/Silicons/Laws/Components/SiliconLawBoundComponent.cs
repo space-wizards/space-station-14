@@ -1,62 +1,43 @@
-using Content.Shared.Actions;
-using Content.Shared.Radio;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
-/// This is used for entities which are bound to silicon laws and can view them.
+/// Means this entity is bound to silicon laws and can view them.
+/// Requires to be linked with <see cref="SiliconLawProviderComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedSiliconLawSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[Access(typeof(SharedSiliconLawSystem))]
 public sealed partial class SiliconLawBoundComponent : Component
 {
     /// <summary>
-    /// The last entity that provided laws to this entity.
+    /// Whether the LawsetProvider should be fetched on init.
+    /// This also caches it's lawset in this component.
     /// </summary>
     [DataField]
-    public EntityUid? LastLawProvider;
-}
+    public bool FetchOnInit = true;
 
-/// <summary>
-/// Event raised to get the laws that a law-bound entity has.
-///
-/// Is first raised on the entity itself, then on the
-/// entity's station, then on the entity's grid,
-/// before being broadcast.
-/// </summary>
-/// <param name="Entity"></param>
-[ByRefEvent]
-public record struct GetSiliconLawsEvent(EntityUid Entity)
-{
-    public EntityUid Entity = Entity;
+    /// <summary>
+    /// Lawset created from the prototype id.
+    /// Cached from the linked <see cref="SiliconLawProviderComponent"/> for the sake of prediction.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SiliconLawset Lawset = new ();
 
-    public SiliconLawset Laws = new();
+    /// <summary>
+    /// The entity that currently provides laws to this entity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? LawsetProvider;
 
-    public bool Handled = false;
-}
+    /// <summary>
+    /// Whether this provider is currently subverted.
+    /// Cached from the linked <see cref="SiliconLawProviderComponent"/> for the sake of prediction.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Subverted = false;
 
-public sealed partial class ToggleLawsScreenEvent : InstantActionEvent
-{
-
-}
-
-[NetSerializable, Serializable]
-public enum SiliconLawsUiKey : byte
-{
-    Key
-}
-
-[Serializable, NetSerializable]
-public sealed class SiliconLawBuiState : BoundUserInterfaceState
-{
-    public List<SiliconLaw> Laws;
-    public HashSet<ProtoId<RadioChannelPrototype>>? RadioChannels;
-
-    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<ProtoId<RadioChannelPrototype>>? radioChannels)
-    {
-        Laws = laws;
-        RadioChannels = radioChannels;
-    }
+    // Prevent cheat clients from seeing the laws of other players.
+    public override bool SendOnlyToOwner => true;
 }
