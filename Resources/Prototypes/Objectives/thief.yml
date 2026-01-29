@@ -566,3 +566,16 @@
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle
   - type: EscapeShuttleCondition
+
+- type: entity
+  parent: [BaseThiefObjective, BaseLivingObjective]
+  id: EscapeThiefObjective
+  name: Escape to CentComm alive and unrestrained.
+  description: You don't want your illegal activities to be discovered by anyone, do you?
+  components:
+  - type: Objective
+    difficulty: 1.3
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeCondition
