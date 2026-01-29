@@ -1,22 +1,18 @@
 using System.Linq;
-using Content.Server.Light.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Light.EntitySystems;
 using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
-using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
-namespace Content.Server.Light.EntitySystems;
+namespace Content.Shared.Light.EntitySystems;
 
-[UsedImplicitly]
-public sealed class LightReplacerSystem : SharedLightReplacerSystem
+public sealed class LightReplacerSystem : EntitySystem
 {
-    [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
+    [Dependency] private readonly SharedPoweredLightSystem _poweredLight = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -71,29 +67,27 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
     private void OnInit(EntityUid uid, LightReplacerComponent replacer, ComponentInit args)
     {
         replacer.InsertedBulbs = _container.EnsureContainer<Container>(uid, "light_replacer_storage");
+        foreach (var bulb in replacer.InsertedBulbs.ContainedEntities)
+        {
+            replacer.ContentOrder.Add(bulb); // Save the Order of Lightbulbs for Prediction
+        }
     }
 
     private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractEvent eventArgs)
     {
-        if (eventArgs.Handled)
+        if (eventArgs.Handled
+            || !eventArgs.CanReach // standard interaction checks
+            || eventArgs.Target == null) // behavior will depend on the target type
             return;
 
-        // standard interaction checks
-        if (!eventArgs.CanReach)
-            return;
+        var targetUid = (EntityUid) eventArgs.Target;
 
-        // behaviour will depends on target type
-        if (eventArgs.Target != null)
-        {
-            var targetUid = (EntityUid) eventArgs.Target;
-
-            // replace broken light in fixture?
-            if (TryComp<PoweredLightComponent>(targetUid, out var fixture))
-                eventArgs.Handled = TryReplaceBulb(uid, targetUid, eventArgs.User, component, fixture);
-            // add new bulb to light replacer container?
-            else if (TryComp<LightBulbComponent>(targetUid, out var bulb))
-                eventArgs.Handled = TryInsertBulb(uid, targetUid, eventArgs.User, true, component, bulb);
-        }
+        // replace broken light in fixture?
+        if (TryComp<PoweredLightComponent>(targetUid, out var fixture))
+            eventArgs.Handled = TryReplaceBulb(uid, targetUid, eventArgs.User, component, fixture);
+        // add new bulb to light replacer container?
+        else if (TryComp<LightBulbComponent>(targetUid, out var bulb))
+            eventArgs.Handled = TryInsertBulb(uid, targetUid, eventArgs.User, true, component, bulb);
     }
 
     private void HandleInteract(EntityUid uid, LightReplacerComponent component, InteractUsingEvent eventArgs)
@@ -119,9 +113,8 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
     public bool TryReplaceBulb(EntityUid replacerUid, EntityUid fixtureUid, EntityUid? userUid = null,
         LightReplacerComponent? replacer = null, PoweredLightComponent? fixture = null)
     {
-        if (!Resolve(replacerUid, ref replacer))
-            return false;
-        if (!Resolve(fixtureUid, ref fixture))
+        if (!Resolve(replacerUid, ref replacer)
+            || !Resolve(fixtureUid, ref fixture))
             return false;
 
         // check if light bulb is broken or missing
@@ -134,12 +127,13 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
                 return false;
         }
 
-        // try get first inserted bulb of the same type as targeted light fixtutre
-        var bulb = replacer.InsertedBulbs.ContainedEntities.FirstOrDefault(
-            e => CompOrNull<LightBulbComponent>(e)?.Type == fixture.BulbType);
+        // try get last inserted bulb of the same type as targeted light fixtutre
+        var bulb = replacer.ContentOrder.LastOrDefault(
+            e => CompOrNull<LightBulbComponent>(e)?.Type == fixture.BulbType
+            && replacer.InsertedBulbs.Contains(e));
 
         // found bulb in inserted storage
-        if (bulb.Valid) // FirstOrDefault can return default/invalid uid.
+        if (bulb.Valid) // LastOrDefault can return default/invalid uid.
         {
             // try to remove it
             var hasRemoved = _container.Remove(bulb, replacer.InsertedBulbs);
@@ -148,12 +142,12 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         }
         else
         {
-            if (userUid != null)
-            {
-                var msg = Loc.GetString("comp-light-replacer-missing-light",
-                    ("light-replacer", replacerUid));
-                _popupSystem.PopupEntity(msg, replacerUid, userUid.Value);
-            }
+            if (userUid == null)
+                return false;
+
+            var msg = Loc.GetString("comp-light-replacer-missing-light",
+                ("light-replacer", replacerUid));
+            _popupSystem.PopupClient(msg, replacerUid, userUid.Value);
             return false;
         }
 
@@ -161,7 +155,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         var wasReplaced = _poweredLight.ReplaceBulb(fixtureUid, bulb, fixture);
         if (wasReplaced)
         {
-            _audio.PlayPvs(replacer.Sound, replacerUid);
+            _audio.PlayPredicted(replacer.Sound, replacerUid, userUid);
         }
 
         return wasReplaced;
@@ -185,7 +179,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
             if (showTooltip && userUid != null)
             {
                 var msg = Loc.GetString("comp-light-replacer-insert-broken-light");
-                _popupSystem.PopupEntity(msg, replacerUid, userUid.Value);
+                _popupSystem.PopupClient(msg, replacerUid, userUid.Value);
             }
 
             return false;
@@ -193,11 +187,14 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
 
         // try insert light and show message
         var hasInsert = _container.Insert(bulbUid, replacer.InsertedBulbs);
+        if (hasInsert && !replacer.ContentOrder.Contains(bulbUid))
+            replacer.ContentOrder.Add(bulbUid);
+
         if (hasInsert && showTooltip && userUid != null)
         {
             var msg = Loc.GetString("comp-light-replacer-insert-light",
                 ("light-replacer", replacerUid), ("bulb", bulbUid));
-            _popupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
+            _popupSystem.PopupClient(msg, replacerUid, userUid.Value, PopupType.Medium);
         }
 
         return hasInsert;
@@ -219,9 +216,9 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
             return false;
 
         var insertedBulbs = 0;
-        var storagedEnts = storage.Container.ContainedEntities.ToArray();
+        var storedEntities = storage.Container.ContainedEntities.ToArray();
 
-        foreach (var ent in storagedEnts)
+        foreach (var ent in storedEntities)
         {
             if (TryComp<LightBulbComponent>(ent, out var bulb) &&
                 TryInsertBulb(replacerUid, ent, userUid, false, replacer, bulb))
@@ -234,7 +231,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         if (insertedBulbs > 0 && userUid != null)
         {
             var msg = Loc.GetString("comp-light-replacer-refill-from-storage", ("light-replacer", replacerUid));
-            _popupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
+            _popupSystem.PopupClient(msg, replacerUid, userUid.Value, PopupType.Medium);
         }
 
         return insertedBulbs > 0;
