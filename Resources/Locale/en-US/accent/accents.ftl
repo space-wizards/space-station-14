@@ -153,3 +153,25 @@ accent-words-scurret-17 = Waaaaaa.
 accent-words-scurret-18 = Waaaaaa!
 accent-words-scurret-19 = Waaaaaa?
 accent-words-scurret-20 = Waaaaaa...
+
+# Monkey
+accent-words-monkey-1 = Ook!
+accent-words-monkey-2 = Ook?
+accent-words-monkey-3 = Ook.
+accent-words-monkey-4 = Ook...
+accent-words-monkey-5 = Ah!
+accent-words-monkey-6 = Ah?
+accent-words-monkey-7 = Ah.
+accent-words-monkey-8 = Ah...
+accent-words-monkey-9 = Eee!
+accent-words-monkey-10 = Eee?
+accent-words-monkey-11 = Eee.
+accent-words-monkey-12 = Eee...
+accent-words-monkey-13 = Ook ah!
+accent-words-monkey-14 = Ook ah?
+accent-words-monkey-15 = Ook ah.
+accent-words-monkey-16 = Ook ah...
+accent-words-monkey-17 = Ook ook ah.
+accent-words-monkey-18 = Ook ook ah!
+accent-words-monkey-19 = Ook ook ah?
+accent-words-monkey-20 = Ook ook ah...
