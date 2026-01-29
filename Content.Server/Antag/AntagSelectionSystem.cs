@@ -26,6 +26,7 @@ using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
+using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -184,7 +185,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// Attempt to make this player be a late-join antag.
     /// </summary>
     /// <param name="session">The session to attempt to make antag.</param>
-    public void TryMakeLateJoinAntag(ICommonSession session)
+    [PublicAPI]
+    public bool TryMakeLateJoinAntag(ICommonSession session)
     {
         // TODO: this really doesn't handle multiple latejoin definitions well
         // eventually this should probably store the players per definition with some kind of unique identifier.
@@ -216,8 +218,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 continue;
 
             if (TryMakeAntag((uid, antag), session, def.Value))
-                break;
+                return true;
         }
+
+        return false;
     }
 
     protected override void Added(EntityUid uid, AntagSelectionComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -355,7 +359,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Tries to makes a given player into the specified antagonist.
     /// </summary>
-    public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def, bool ignoreSpawner = false, bool checkPref = true, bool onlyPreSelect = false)
+    public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def, bool checkPref = true, bool onlyPreSelect = false)
     {
         _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(ent)}");
 
@@ -378,27 +382,31 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     /// <param name="ent">Antag rule entity</param>
     /// <param name="def">Antag selection definition chosen from the entity</param>
-    private void CreateAntagSpawner(Entity<AntagSelectionComponent> ent, AntagSelectionDefinition def)
+    [PublicAPI]
+    private EntityUid? CreateAntagSpawner(Entity<AntagSelectionComponent> ent, AntagSelectionDefinition def)
     {
         if (def.SpawnerPrototype is not { } proto)
-            return;
+            return null;
 
         var spawner = Spawn(def.SpawnerPrototype);
         if (!TryValidSpawnPosition(ent, spawner))
         {
             Log.Error($"Found no valid positions to place antag spawner {ToPrettyString(spawner)} prototype: {proto}");
             Del(spawner);
+            return null;
         }
 
         if (!TryComp<GhostRoleAntagSpawnerComponent>(spawner, out var spawnerComp))
         {
             Log.Error($"Antag spawner {spawner} does not have a {nameof(GhostRoleAntagSpawnerComponent)}.");
             _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {spawner} in gamerule {ToPrettyString(ent)} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
-            return;
+            Del(spawner);
+            return null;
         }
 
         spawnerComp.Rule = ent;
         spawnerComp.Definition = def;
+        return spawner;
     }
 
     /// <summary>
@@ -417,14 +425,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Creates a new antagonist entity at the specified coordinates, then attaches the specified player to that antagonist.
     /// </summary>
-    private void AttachSessionToAntagonist(Entity<AntagSelectionComponent> ent,
+    private EntityUid? AttachSessionToAntagonist(Entity<AntagSelectionComponent> ent,
         ICommonSession session,
         AntagSelectionDefinition def,
         MapCoordinates coords)
     {
         PreSelectSessionForAntagonist(ent, session, def);
         ent.Comp.AssignedSessions.Add(session);
-        SpawnNewAntagonist(ent, session, def, coords);
+        return SpawnNewAntagonist(ent, session, def, coords);
     }
 
     /// <summary>
@@ -432,7 +440,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// If the player is a ghost or has no attached entity, it will attempt to find a valid spawn position and spawn a new entity.
     /// Otherwise, it will try to move their current entity to their antag's spawn position (if it exists) and then set them up as antag.
     /// </summary>
-    private void MakeSessionAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def)
+    private EntityUid? MakeSessionAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def)
     {
         PreSelectSessionForAntagonist(ent, session, def);
 
@@ -441,34 +449,34 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         // If the player has no entity to make an antagonist, make a new entity for them
         if (HasComp<GhostComponent>(session.AttachedEntity) || session.AttachedEntity is not { } player)
         {
-            SpawnNewAntagonist(ent, session, def);
-            return;
+            return SpawnNewAntagonist(ent, session, def);
         }
 
         TryValidSpawnPosition(ent, player, session);
         InitializeAntag(ent, player, session, def);
+        return player;
     }
 
     /// <summary>
     /// Attempts to create a new antagonist entity and attach a player session to it at a valid spawnpoint.
     /// Does nothing if it cannot find a valid spawnpoint.
     /// </summary>
-    private void SpawnNewAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def)
+    private EntityUid? SpawnNewAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def)
     {
         if (GetValidSpawnPosition(ent, session.AttachedEntity, session) is not { } coordinates)
         {
             Log.Error($"Was unable to find a valid spawn position for, {session.Name}, gamerule: {ToPrettyString(ent)} when trying to make them into an antagonist.");
-            return;
+            return null;
         }
 
-        SpawnNewAntagonist(ent, session, def, coordinates);
+        return SpawnNewAntagonist(ent, session, def, coordinates);
     }
 
     /// <summary>
     /// Attempts to create a new antagonist entity at the specified coordinates and attach a player session to it.
     /// If it cannot spawn an antagonist entity, it does nothing.
     /// </summary>
-    private void SpawnNewAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def, MapCoordinates coordinates)
+    private EntityUid? SpawnNewAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSelectionDefinition def, MapCoordinates coordinates)
     {
         var getEntEv = new AntagSelectEntityEvent(session, ent, def.PrefRoles, coordinates);
 
@@ -476,10 +484,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (getEntEv.Entity is not { } antag)
         {
             Log.Error($"Tried to make {session.UserId} into an antagonist but was unable to spawn an entity for them. Gamerule {ToPrettyString(ent)}");
-            return;
+            return null;
         }
 
         InitializeAntag(ent, antag, session, def);
+        return antag;
     }
 
     /// <summary>
