@@ -1,8 +1,7 @@
 - type: marking
   id: TattooHiveChest
   bodyPart: Chest
-  markingCategory: Chest
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human]
   coloring:
     default:
       type:
@@ -15,8 +14,7 @@
 - type: marking
   id: TattooNightlingChest
   bodyPart: Chest
-  markingCategory: Chest
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human]
   coloring:
     default:
       type:
@@ -29,8 +27,7 @@
 - type: marking
   id: TattooSilverburghLeftLeg
   bodyPart: LLeg
-  markingCategory: Legs
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human]
   coloring:
     default:
       type:
@@ -43,8 +40,7 @@
 - type: marking
   id: TattooSilverburghRightLeg
   bodyPart: RLeg
-  markingCategory: Legs
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human]
   coloring:
     default:
       type:
@@ -57,8 +53,7 @@
 - type: marking
   id: TattooCampbellLeftArm
   bodyPart: LArm
-  markingCategory: Arms
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human]
   coloring:
     default:
       type:
@@ -71,8 +66,7 @@
 - type: marking
   id: TattooCampbellRightArm
   bodyPart: RArm
-  markingCategory: Arms
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human]
   coloring:
     default:
       type:
@@ -85,8 +79,7 @@
 - type: marking
   id: TattooCampbellLeftLeg
   bodyPart: LLeg
-  markingCategory: Legs
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human]
   coloring:
     default:
       type:
@@ -99,8 +92,7 @@
 - type: marking
   id: TattooCampbellRightLeg
   bodyPart: RLeg
-  markingCategory: Legs
-  speciesRestriction: [Human, Dwarf]
+  groupWhitelist: [Human]
   coloring:
     default:
       type:
@@ -113,8 +105,7 @@
 - type: marking
   id: TattooEyeRight
   bodyPart: Eyes
-  markingCategory: [Head]
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  groupWhitelist: [Human, Slime, Reptilian]
   coloring:
     default:
       type:
@@ -127,8 +118,7 @@
 - type: marking
   id: TattooEyeLeft
   bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  groupWhitelist: [Human, Slime, Reptilian]
   coloring:
     default:
       type:
@@ -141,8 +131,7 @@
 - type: marking
   id: TattooEyeMothRight
   bodyPart: Eyes
-  markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -155,8 +144,7 @@
 - type: marking
   id: TattooEyeMothLeft
   bodyPart: Eyes
-  markingCategory: Overlay
-  speciesRestriction: [Moth]
+  groupWhitelist: [Moth]
   coloring:
     default:
       type:
@@ -169,8 +157,7 @@
 - type: marking
   id: TattooEyeVulpkaninRight
   bodyPart: Eyes
-  markingCategory: [Head]
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   coloring:
     default:
       type:
@@ -183,8 +170,7 @@
 - type: marking
   id: TattooEyeVulpkaninLeft
   bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   coloring:
     default:
       type:
@@ -202,8 +188,7 @@
   # this is not a very big issue on humans, but is much more pronounced on vox & other nonhuman species, where the skin being more colorful can make for some truly dreadful meshing with the sprite thats definitely not desired.
   # some of these limitations could possibly be removed with better control over how the marking can be customized - possibly removing stacking, allowing recoloring & clamping higher-end colors for the eyeshadow, etc.
   bodyPart: Eyes
-  markingCategory: Overlay
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  groupWhitelist: [Human, Slime, Reptilian]
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -212,8 +197,7 @@
 - type: marking
   id: TattooEyeshadowLower
   bodyPart: Eyes
-  markingCategory: Overlay
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  groupWhitelist: [Human, Slime, Reptilian]
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
