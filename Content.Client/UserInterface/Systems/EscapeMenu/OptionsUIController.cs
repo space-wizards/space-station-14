@@ -1,38 +1,12 @@
 using Content.Client.Options.UI;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controllers;
-using Robust.Shared.Console;
 
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
 
 [UsedImplicitly]
 public sealed class OptionsUIController : UIController
 {
-    [Dependency] private readonly IConsoleHost _con = default!;
-
-    public override void Initialize()
-    {
-        _con.RegisterCommand("options", Loc.GetString("cmd-options-desc"), Loc.GetString("cmd-options-help"), OptionsCommand);
-    }
-
-    private void OptionsCommand(IConsoleShell shell, string argStr, string[] args)
-    {
-        if (args.Length == 0)
-        {
-            ToggleWindow();
-            return;
-        }
-        OpenWindow();
-
-        if (!int.TryParse(args[0], out var tab))
-        {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-integer", ("arg", args[0])));
-            return;
-        }
-
-        _optionsWindow.Tabs.CurrentTab = tab;
-    }
-
     private OptionsMenu _optionsWindow = default!;
 
     private void EnsureWindow()
@@ -45,9 +19,7 @@ public sealed class OptionsUIController : UIController
 
     public void OpenWindow()
     {
-        EnsureWindow();
-
-        _optionsWindow.UpdateTabs();
+        UpdateWindow();
 
         _optionsWindow.OpenCentered();
         _optionsWindow.MoveToFront();
@@ -65,5 +37,17 @@ public sealed class OptionsUIController : UIController
         {
             OpenWindow();
         }
+    }
+
+    public void UpdateWindow()
+    {
+        EnsureWindow();
+        _optionsWindow.UpdateTabs();
+    }
+
+    public void SetWindowTab(int tab)
+    {
+        EnsureWindow();
+        _optionsWindow.Tabs.CurrentTab = tab;
     }
 }
