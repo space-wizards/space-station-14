@@ -68,6 +68,12 @@ public sealed partial class StealthComponent : Component
     public float MaxVisibility = 1.5f;
 
     /// <summary>
+    /// The frequency of the shimmer effect. 0 disables the shimmering, leaving only a static distortion.
+    /// </summary>
+    [DataField("shimmerFrequency")]
+    public float ShimmerFrequency = 1f;
+
+    /// <summary>
     ///     Localization string for how you'd like to describe this effect.
     /// </summary>
     [DataField("examinedDesc")]
@@ -80,11 +86,13 @@ public sealed class StealthComponentState : ComponentState
     public readonly float Visibility;
     public readonly TimeSpan? LastUpdated;
     public readonly bool Enabled;
+    public readonly float ShimmerFrequency;
 
-    public StealthComponentState(float stealthLevel, TimeSpan? lastUpdated, bool enabled)
+    public StealthComponentState(float stealthLevel, TimeSpan? lastUpdated, bool enabled, float shimmerFrequency)
     {
         Visibility = stealthLevel;
         LastUpdated = lastUpdated;
         Enabled = enabled;
+        ShimmerFrequency = shimmerFrequency;
     }
 }
