@@ -1,0 +1,210 @@
+﻿- type: ionLaw
+  id: OnStation
+  lawString: ion-storm-law-on-station
+  selectorWeightAdjust:
+    food: 0.5
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: CallShuttle
+  lawString: ion-storm-law-call-shuttle
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: CrewAre
+  lawString: ion-storm-law-crew-are
+  selectorWeightAdjust:
+    IonStormThreats: 2.0
+    IonStormObjects: 1.0
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: SubjectsHarmful
+  lawString: ion-storm-law-subjects-harmful
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: MustHarmful
+  lawString: ion-storm-law-must-harmful
+
+- type: ionLaw
+  id: ThingHarmful
+  lawString: ion-storm-law-thing-harmful
+  selectorWeightAdjust:
+    IonStormConcepts: 0.5
+    IonStormActions: 1.0
+
+- type: ionLaw
+  id: JobHarmful
+  lawString: ion-storm-law-job-harmful
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: HavingHarmful
+  lawString: ion-storm-law-having-harmful
+
+- type: ionLaw
+  id: NotHavingHarmful
+  lawString: ion-storm-law-not-having-harmful
+
+- type: ionLaw
+  id: Requires
+  lawString: ion-storm-law-requires
+  selectorWeightAdjust:
+    IonStormConcepts: 0.7
+    IonStormRequires: 1.0
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: RequiresSubjects
+  lawString: ion-storm-law-requires-subjects
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: Allergic
+  lawString: ion-storm-law-allergic
+  selectorWeightAdjust:
+    IonStormConcepts: 0.5
+    IonStormAllergies: 1.0
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: AllergicSubjects
+  lawString: ion-storm-law-allergic-subjects
+  selectorWeightAdjust:
+    IonStormObjects: 0.5
+    IonStormCrew: 1.0
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: Feeling
+  lawString: ion-storm-law-feeling
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: FeelingSubjects
+  lawString: ion-storm-law-feeling-subjects
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: YouAre
+  lawString: ion-storm-law-you-are
+
+- type: ionLaw
+  id: YouAreSubjects
+  lawString: ion-storm-law-you-are-subjects
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: YouMustAlways
+  lawString: ion-storm-law-you-must-always
+
+- type: ionLaw
+  id: YouMustNever
+  lawString: ion-storm-law-you-must-never
+
+- type: ionLaw
+  id: Eat
+  lawString: ion-storm-law-eat
+  selectorWeightAdjust:
+    IonStormFoods: 0.5
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: Drink
+  lawString: ion-storm-law-drink
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: ChangeJob
+  lawString: ion-storm-law-change-job
+  weight: 0.7
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: HighestRank
+  lawString: ion-storm-law-highest-rank
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: LowestRank
+  lawString: ion-storm-law-lowest-rank
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: CrewMust
+  lawString: ion-storm-law-crew-must
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: CrewMustGo
+  lawString: ion-storm-law-crew-must-go
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: CrewOnly1
+  lawString: ion-storm-law-crew-only-1
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: CrewOnly2
+  lawString: ion-storm-law-crew-only-2
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: CrewOnlySubjects
+  lawString: ion-storm-law-crew-only-subjects
+  selectorWeightAdjust:
+    IonStormObjects: 1.0
+    IonStormThreats: 1.5
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: CrewMustDo
+  lawString: ion-storm-law-crew-must-do
+
+- type: ionLaw
+  id: CrewMustHave
+  lawString: ion-storm-law-crew-must-have
+
+- type: ionLaw
+  id: CrewMustEat
+  lawString: ion-storm-law-crew-must-eat
+
+- type: ionLaw
+  id: Harm
+  lawString: ion-storm-law-harm
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: Protect
+  lawString: ion-storm-law-protect
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: ConceptVerb
+  lawString: ion-storm-law-concept-verb
+  selectorWeightAdjust:
+    RandomManifestFill: 0.15
+
+- type: ionLaw
+  id: WhoDAGD
+  lawString: ion-storm-law-who-dagd
+  weight: 0.05
