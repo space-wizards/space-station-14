@@ -1,35 +1,39 @@
 # Minor science loot spawner
 # Use case: Common areas that aren't science
 - type: entity
-  name: science supplies spawner
-  id: LootSpawnerScienceMinor
   parent: MarkerBase
+  id: LootSpawnerScienceMinor
+  name: science supplies spawner
   suffix: Minor, 80%
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Specific/Research/anomalyscanner.rsi
-        state: icon
-  - type: RandomSpawner
-    rarePrototypes:
-    - AnomalyScanner
-    - NodeScanner
-    - Multitool
-    - Igniter
-    rareChance: 0.1
-    prototypes:
-    - ClothingHandsGlovesLatex
-    - ClothingMaskSterile
-    - ClothingOuterCoatRnd
-    - NetworkConfigurator
-    - PowerCellSmall
-    - PowerCellMedium
-    - FlashlightLantern
-    - MicroManipulatorStockPart
-    - Beaker
-    chance: 0.8
-    offset: 0.2
+    - state: red
+    - sprite: Objects/Specific/Research/anomalyscanner.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.9
+        prob: 0.8
+        children:
+        - id: ClothingHandsGlovesLatex
+        - id: ClothingMaskSterile
+        - id: ClothingOuterCoatRnd
+        - id: NetworkConfigurator
+        - id: PowerCellSmall
+        - id: PowerCellMedium
+        - id: FlashlightLantern
+        - id: MicroManipulatorStockPart
+        - id: Beaker
+      - !type:GroupSelector
+        weight: 0.1
+        children:
+        - id: AnomalyScanner
+        - id: NodeScanner
+        - id: Multitool
+        - id: Igniter
 
 - type: entityTable
   id: ScienceMajorTable
@@ -74,9 +78,9 @@
 # Major science loot spawner
 # Use case: Loot in science areas only
 - type: entity
-  name: science supplies spawner
-  id: LootSpawnerScienceMajor
   parent: MarkerBase
+  id: LootSpawnerScienceMajor
+  name: science supplies spawner
   suffix: Major
   components:
   - type: Sprite
@@ -87,28 +91,28 @@
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: ScienceMajorTable
-      offset: 0.2
 
 # Borg Module Spawner
 # Use case: One or two in robotics or as valuable loot
 - type: entity
-  name: robotics board spawner
-  id: LootSpawnerRoboticsBorgModule
   parent: MarkerBase
+  id: LootSpawnerRoboticsBorgModule
+  name: robotics board spawner
   components:
   - type: Sprite
     layers:
     - state: red
     - sprite: Objects/Specific/Robotics/borgmodule.rsi
       state: generic
-  - type: RandomSpawner
-    rarePrototypes:
-    - BorgModuleAdvancedTopical
-    - BorgModuleAdvancedCleaning
-    - BorgModuleAdvancedTool
-
-    rareChance: 0.1
-    prototypes:
-    - BorgModuleFireExtinguisher
-    chance: 0.9
-    offset: 0.2
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: BorgModuleFireExtinguisher
+        weight: 0.9
+        prob: 0.9
+      - !type:GroupSelector
+        weight: 0.1
+        children:
+        - id: BorgModuleAdvancedTopical
+        - id: BorgModuleAdvancedCleaning
+        - id: BorgModuleAdvancedTool
