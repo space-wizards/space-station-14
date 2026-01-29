@@ -1,6 +1,7 @@
 using Content.Shared.Alert;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -19,9 +20,9 @@ namespace Content.Shared.Body.Components;
 [Access(typeof(SharedBloodstreamSystem))]
 public sealed partial class BloodstreamComponent : Component
 {
-    public const string DefaultChemicalsSolutionName = "chemicals";
     public const string DefaultBloodSolutionName = "bloodstream";
     public const string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
+    public const string DefaultMetabolitesSolutionName = "metabolites";
 
     /// <summary>
     /// The next time that blood level will be updated and bloodloss damage dealt.
@@ -138,26 +139,26 @@ public sealed partial class BloodstreamComponent : Component
     // TODO probably damage bleed thresholds.
 
     /// <summary>
-    /// Max volume of internal chemical solution storage
+    /// Modifier applied to <see cref="BloodstreamComponent.BloodReferenceSolution.Volume"/> to determine maximum volume for bloodstream.
     /// </summary>
-    [DataField]
-    public FixedPoint2 ChemicalMaxVolume = FixedPoint2.New(250);
+    [DataField, AutoNetworkedField]
+    public float MaxVolumeModifier = 2f;
 
     /// <summary>
-    /// Max volume of internal blood storage,
-    /// and starting level of blood.
-    /// </summary>
-    [DataField]
-    public FixedPoint2 BloodMaxVolume = FixedPoint2.New(300);
-
-    /// <summary>
-    /// Which reagents are considered this entities 'blood'?
+    /// Defines which reagents are considered as 'blood' and how much of it is normal.
     /// </summary>
     /// <remarks>
     /// Slime-people might use slime as their blood or something like that.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public Solution BloodReagents = new([new("Blood", 1)]);
+    public Solution BloodReferenceSolution = new([new("Blood", 300)]);
+
+    /// <summary>
+    /// Caches the blood data of an entity.
+    /// This is modified by DNA on init so it's not savable.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public List<ReagentData>? BloodData;
 
     /// <summary>
     /// Name/Key that <see cref="BloodSolution"/> is indexed by.
@@ -166,16 +167,16 @@ public sealed partial class BloodstreamComponent : Component
     public string BloodSolutionName = DefaultBloodSolutionName;
 
     /// <summary>
-    /// Name/Key that <see cref="ChemicalSolution"/> is indexed by.
-    /// </summary>
-    [DataField]
-    public string ChemicalSolutionName = DefaultChemicalsSolutionName;
-
-    /// <summary>
     /// Name/Key that <see cref="TemporarySolution"/> is indexed by.
     /// </summary>
     [DataField]
     public string BloodTemporarySolutionName = DefaultBloodTemporarySolutionName;
+
+    /// <summary>
+    /// Name/Key that <see cref="MetabolitesSolution"/> is indexed by.
+    /// </summary>
+    [DataField]
+    public string MetabolitesSolutionName = DefaultMetabolitesSolutionName;
 
     /// <summary>
     /// Internal solution for blood storage
@@ -184,18 +185,18 @@ public sealed partial class BloodstreamComponent : Component
     public Entity<SolutionComponent>? BloodSolution;
 
     /// <summary>
-    /// Internal solution for reagent storage
-    /// </summary>
-    [ViewVariables]
-    public Entity<SolutionComponent>? ChemicalSolution;
-
-    /// <summary>
     /// Temporary blood solution.
     /// When blood is lost, it goes to this solution, and when this
     /// solution hits a certain cap, the blood is actually spilled as a puddle.
     /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? TemporarySolution;
+
+    /// <summary>
+    /// Internal solution for metabolite storage
+    /// </summary>
+    [ViewVariables]
+    public Entity<SolutionComponent>? MetabolitesSolution;
 
     /// <summary>
     /// Alert to show when bleeding.

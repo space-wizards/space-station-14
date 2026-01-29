@@ -1,117 +1,4 @@
 - type: entityTable
-  id: AllPlushiesTable
-  table: !type:GroupSelector
-    children:
-    - !type:NestedSelector
-      tableId: AllLizardPlushieTable
-    - id: PlushieNuke
-    - id: PlushieSlime
-    - id: PlushieSnake
-    - id: PlushieExperiment
-    - id: PlushieVox
-    - id: PlushieRouny
-    - id: PlushieAtmosian
-    - id: PlushieDiona
-    - id: PlushieXeno
-    - id: PlushieHampter
-    - id: PlushieMoth
-    - id: PlushieArachind
-    - id: PlushiePenguin
-    - id: PlushieVulp
-    - !type:GroupSelector
-      children:
-      - id: PlushieBee
-      - id: PlushieRGBee
-        weight: 0.1
-    - !type:GroupSelector
-      children:
-      - id: PlushieCarp
-      - id: PlushieHolocarp
-        weight: 0.25
-      - id: PlushieMagicarp
-        weight: 0.25
-      - id: PlushieRainbowCarp
-        weight: 0.15
-    - !type:GroupSelector
-      children:
-      - id: PlushieSharkBlue
-      - id: PlushieSharkGrey
-      - id: PlushieSharkPink
-    - !type:GroupSelector # Toy plushies
-      children:
-      - id: ToyIan
-      - id: ToyAmongPequeno
-      - id: ToyMouse
-    - !type:GroupSelector # Giant plushies
-      children:
-      - id: PlushieNar
-      - id: PlushieRatvar
-    - !type:GroupSelector # Rare plushies
-      weight: 0.1 # 1 in >210
-      children:
-      - id: PlushieHuman
-      - id: PlushieGhost
-      - id: PlushieLamp
-    - !type:GroupSelector # Legendary plushies
-      weight: 0.002 # 1 in >10,500
-      children:
-      - id: PlushieThrongler
-      - id: PlushieGhostRevenant # You got the god roll, and failed
-
-- type: entityTable
-  id: AllLizardPlushieTable
-  table: !type:GroupSelector
-    children:
-    - id: PlushieLizard
-      weight: 8
-    - id: PlushieSpaceLizard
-      weight: 1
-    - id: PlushieLizardInversed
-      weight: 0.1 # 1 in >100
-    - !type:GroupSelector # Lizard gets a job table
-      children:
-      - id: PlushieLizardJobAtmospherictechnician
-      - id: PlushieLizardJobBartender
-      - id: PlushieLizardJobBotanist
-      - id: PlushieLizardJobBoxer
-      - id: PlushieLizardJobCaptain
-      - id: PlushieLizardJobCargotechnician
-      - id: PlushieLizardJobChaplain
-      - id: PlushieLizardJobChef
-      - id: PlushieLizardJobChemist
-      - id: PlushieLizardJobChiefengineer
-      - id: PlushieLizardJobChiefmedicalofficer
-      - id: PlushieLizardJobClown # :o)
-      - id: PlushieLizardJobDetective
-      - id: PlushieLizardJobHeadofpersonnel
-      - id: PlushieLizardJobHeadofsecurity
-      - id: PlushieLizardJobJanitor
-      - id: PlushieLizardJobLawyer
-      - id: PlushieLizardJobLibrarian
-      - id: PlushieLizardJobMedicaldoctor
-      - id: PlushieLizardJobMedicalintern
-      - id: PlushieLizardJobMime #
-      - id: PlushieLizardJobMusician
-      - id: PlushieLizardJobParamedic
-      - id: PlushieLizardJobPassenger
-      - id: PlushieLizardJobPsychologist
-      - id: PlushieLizardJobQuartermaster
-      - id: PlushieLizardJobReporter
-      - id: PlushieLizardJobResearchassistant
-      - id: PlushieLizardJobResearchdirector
-      - id: PlushieLizardJobSalvagespecialist
-      - id: PlushieLizardJobScientist
-      - id: PlushieLizardJobSecuritycadet
-      - id: PlushieLizardJobSecurityofficer
-      - id: PlushieLizardJobServiceworker
-      - id: PlushieLizardJobStationengineer
-      - id: PlushieLizardJobTechnicalassistant
-      - id: PlushieLizardJobZookeeper
-      - id: PlushieLizardJobMultiweh
-        weight: 0.5 # 1 in >800
-
-
-- type: entityTable
   id: AllPottedPlantsTable
   table: !type:GroupSelector
     children:
@@ -414,7 +301,7 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: GlowstickBase
+        - id: GlowstickGreen
           amount: 2
         - id: GlowstickBlue
           amount: 2
@@ -456,16 +343,15 @@
   parent: CratePlastic
   id: CrateFunFoamGuns
   name: Foam Force crate
-  description: Contains four Foam Force rifles, some grenades, and extra ammo. It's [REDACTED] or nothing!
+  description: Contains four Foam Force Battle Kits™. It's [REDACTED] or nothing!
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: WeaponRifleFoam
-          amount: 4
-        - id: BoxDonkSoftBox
-          amount: 2
+        - !type:NestedSelector
+          tableId: RandomFoamGunTable
+          rolls: 4
         - id: GrenadeFoamDart
           amount: 4
 
@@ -516,25 +402,20 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: SnapPopBox
         - id: CrazyGlue
         - id: CrazyLube
-        - id: PlasticBanana
-        - id: WhoopieCushion
-        - id: ToyHammer
-        - !type:GroupSelector
-          children:
-          - id: MrChips
-          - id: MrDips
-        - id: RevolverCapGun
-        - id: BalloonNT
-        - id: ClothingShoesClownLarge
-        - id: ClothingHeadHatMagician
-        - id: BeachBall
-        - id: TennisBall
-          amount: 2
-        - id: ClothingShoesSkates
-        - id: RubberChicken
+        - !type:NestedSelector
+          tableId: AllToyWeaponsTable
+          rolls: 2
+        - !type:NestedSelector
+          tableId: AllToySoundMakerTable
+          rolls: 2
+        - !type:NestedSelector
+          tableId: AllMiscToysTable
+          rolls: 2
+        - !type:NestedSelector # Extras rolls for extra variety
+          tableId: AllToysTable
+          rolls: 2
 
 - type: entity
   parent: CrateGenericSteel

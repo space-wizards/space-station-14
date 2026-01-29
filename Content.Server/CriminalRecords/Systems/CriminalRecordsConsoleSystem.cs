@@ -14,6 +14,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
 using System.Linq;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 
@@ -25,6 +27,7 @@ namespace Content.Server.CriminalRecords.Systems;
 public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleSystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
