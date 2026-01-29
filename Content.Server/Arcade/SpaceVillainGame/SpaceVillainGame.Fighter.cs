@@ -14,7 +14,14 @@ public sealed partial class SpaceVillainGame
         public int Hp
         {
             get => _hp;
-            set => _hp = MathHelper.Clamp(value, 0, HpMax);
+            set
+            {
+                _hp = value;
+                if (!Uncapped)
+                {
+                    _hp = MathHelper.Clamp(_hp, 0, HpMax);
+                }
+            }
         }
         private int _hp;
 
@@ -28,7 +35,7 @@ public sealed partial class SpaceVillainGame
             set
             {
                 _hpMax = Math.Max(value, 0);
-                Hp = MathHelper.Clamp(Hp, 0, HpMax);
+                Hp = _hp;  // Re-clamp the HP value
             }
         }
         private int _hpMax;
@@ -40,7 +47,14 @@ public sealed partial class SpaceVillainGame
         public int Mp
         {
             get => _mp;
-            set => _mp = MathHelper.Clamp(value, 0, MpMax);
+            set
+            {
+                _mp = value;
+                if (!Uncapped)
+                {
+                    _mp = MathHelper.Clamp(_mp, 0, MpMax);
+                }
+            }
         }
         private int _mp;
 
@@ -54,7 +68,7 @@ public sealed partial class SpaceVillainGame
             set
             {
                 _mpMax = Math.Max(value, 0);
-                Mp = MathHelper.Clamp(Mp, 0, MpMax);
+                Mp = _mp;  // Re-clamp the MP value
             }
         }
         private int _mpMax;
@@ -64,5 +78,11 @@ public sealed partial class SpaceVillainGame
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Invincible = false;
+
+        /// <summary>
+        /// Whether the given fighter's HP and MP values are capped between 0 and their respective Max values.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Uncapped = false;
     }
 }
