@@ -3,7 +3,6 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
-using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
@@ -89,32 +88,35 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     }
 
     public override bool TryInsertMaterialEntity(EntityUid user,
-        EntityUid toInsert,
-        EntityUid receiver,
-        MaterialStorageComponent? storage = null,
-        MaterialComponent? material = null,
-        PhysicalCompositionComponent? composition = null)
+        Entity<MaterialComponent?, PhysicalCompositionComponent?> toInsert,
+        Entity<MaterialStorageComponent?> receiver)
     {
-        if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
-            return false;
-        if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
-            return false;
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
-            return false;
-        _audio.PlayPvs(storage.InsertingSound, receiver);
-        _popup.PopupEntity(Loc.GetString("machine-insert-item",
-                ("user", user),
-                ("machine", receiver),
-                ("item", toInsert)),
-            receiver);
-        QueueDel(toInsert);
-
-        // Logging
         TryComp<StackComponent>(toInsert, out var stack);
         var count = stack?.Count ?? 1;
+
+        if (!Resolve(receiver, ref receiver.Comp))
+            return false;
+
+        if (!base.TryInsertMaterialEntity(user, toInsert, receiver))
+        {
+            _popup.PopupEntity(Loc.GetString("machine-insert-fail", ("machine", receiver)), receiver, user);
+            return false;
+        }
+
+        var amountUsed = count - stack?.Count ?? 1;
+
+        _audio.PlayPvs(receiver.Comp.InsertingSound, receiver);
+        _popup.PopupEntity(Loc.GetString("machine-insert-item-amount",
+                ("user", user),
+                ("machine", receiver),
+                ("item", toInsert),
+                ("amount", amountUsed)),
+            receiver);
+
+        // Logging
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
+            $"{ToPrettyString(user):player} inserted {amountUsed} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
         return true;
     }
 
