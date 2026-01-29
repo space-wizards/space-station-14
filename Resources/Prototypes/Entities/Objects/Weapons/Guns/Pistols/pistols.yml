@@ -77,6 +77,14 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -5
+    maxAngle: -3
+  - type: Gun
+    minAngle: 10
+    maxAngle: 30
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -156,7 +164,14 @@
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -5
+    maxAngle: -8
   - type: Gun
+    minAngle: 7
+    maxAngle: 27
     fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
@@ -206,7 +221,14 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Item
     storedOffset: 0,-2
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -6
+    maxAngle: -8
   - type: Gun
+    minAngle: 7
+    maxAngle: 27
     fireRate: 5
     availableModes:
     - SemiAuto
@@ -230,11 +252,14 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -7
+    maxAngle: -8
   - type: Gun
-    minAngle: 1
-    maxAngle: 20
-    angleIncrease: 8
-    angleDecay: 9
+    minAngle: 9
+    maxAngle: 30
     fireRate: 4
     availableModes:
     - SemiAuto
