@@ -65,6 +65,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: fire_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: pyroclastic anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -103,6 +112,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: shock_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: electric anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -141,6 +159,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: shadow_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: shadow anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -179,6 +206,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: frost_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: ice anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -217,6 +253,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: flora_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: flora anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -255,6 +300,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: bluespace_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: bluespace anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -293,6 +347,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: flesh_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: flesh anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -332,6 +395,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: grav_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: gravity anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -370,6 +442,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: tech_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: tech anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -409,6 +490,15 @@
           Moth:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: rock_MOTH
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: rock anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -437,3 +527,12 @@
         fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
           state: santa
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: santa anomaly infector
+    blacklist:
+      tags:
+      - GhostOnlyWarp
