@@ -279,3 +279,9 @@
   values:
     prefix: advertisement-pride-
     count: 4
+
+- type: localizedDataset
+  id: DrugMachineAds
+  values:
+    prefix: advertisement-drugs-
+    count: 6

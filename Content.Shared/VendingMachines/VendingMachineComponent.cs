@@ -184,7 +184,7 @@ namespace Content.Shared.VendingMachines
         public string? DenyState;
 
         /// <summary>
-        /// RSI state for when the vending machine is unpowered.
+        /// RSI state for when the vending machine is unusable due to damage.
         /// Will be displayed on the layer <see cref="VendingMachineVisualLayers.Base"/>
         /// </summary>
         [DataField]
