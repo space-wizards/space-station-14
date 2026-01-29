@@ -83,6 +83,12 @@
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     requiresComplex: false
+    requiredItems:
+      tags:
+      - Write
+    allowUseInHandIfHasRequiredItems: true
+    interactionModeOnInteractUsing: openUI
+  - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
