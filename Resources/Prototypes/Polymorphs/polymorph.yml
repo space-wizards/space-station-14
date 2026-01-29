@@ -129,12 +129,12 @@
 - type: polymorph
   id: TreeMorph
   configuration:
-    entity: FloraTree
+    entity: DionaTree
     forced: true
     transferName: true
     revertOnDeath: true
     inventory: Drop
-    cooldown: 160
+    cooldown: 30
 
 - type: polymorph
   id: SmartCorgiMorph
