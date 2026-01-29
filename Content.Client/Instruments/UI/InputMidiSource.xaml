@@ -1,0 +1,5 @@
+<ui:InputMidiSource xmlns="https://spacestation14.io"
+                                xmlns:ui="clr-namespace:Content.Client.Instruments.UI"
+                                Orientation="Vertical">
+    <Label Text="{Loc 'instruments-component-menu-input-notice-label'}" Align="Center" HorizontalExpand="True" VerticalExpand="True"></Label>
+</ui:InputMidiSource>
