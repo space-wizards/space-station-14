@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Atmos;
+using Content.Shared.Temperature.HeatContainer;
 
 namespace Content.Server.Power.Generation.Teg;
 
@@ -45,4 +46,17 @@ public sealed partial class TegCirculatorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("lightColorFast")]
     public Color LightColorFast = Color.FromHex("#AA00FF");
+
+    /// <summary>
+    /// Current internal heat of the circulator.
+    /// </summary>
+    [DataField]
+    public HeatContainer HeatContainer = new(1000f, Atmospherics.T20C);
+
+    /// <summary>
+    /// The conductivity constant of this circulator.
+    /// Describes how well the heat flows from the gas to the circulator.
+    /// </summary>
+    [DataField]
+    public float ConductivityConstant = 100f;
 }
