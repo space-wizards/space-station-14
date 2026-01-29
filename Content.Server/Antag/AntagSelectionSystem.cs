@@ -375,8 +375,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     /// <param name="ent">Antag rule entity</param>
     /// <param name="def">Antag selection definition chosen from the entity</param>
-    /// <param name="session">Player session if it exists</param>
-    private void CreateAntagSpawner(Entity<AntagSelectionComponent> ent, AntagSelectionDefinition def, ICommonSession? session = null)
+    private void CreateAntagSpawner(Entity<AntagSelectionComponent> ent, AntagSelectionDefinition def)
     {
         if (def.SpawnerPrototype is not { } proto)
             return;
@@ -390,14 +389,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (!TryComp<GhostRoleAntagSpawnerComponent>(spawner, out var spawnerComp))
         {
-            Log.Error($"Antag spawner {spawner} does not have a GhostRoleAntagSpawnerComponent.");
-            _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {spawner} in gamerule {ToPrettyString(ent)} failed due to not having GhostRoleAntagSpawnerComponent.");
-            if (session != null)
-            {
-                ent.Comp.AssignedSessions.Remove(session);
-                ent.Comp.PreSelectedSessions[def].Remove(session);
-            }
-
+            Log.Error($"Antag spawner {spawner} does not have a {nameof(GhostRoleAntagSpawnerComponent)}.");
+            _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {spawner} in gamerule {ToPrettyString(ent)} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
             return;
         }
 
