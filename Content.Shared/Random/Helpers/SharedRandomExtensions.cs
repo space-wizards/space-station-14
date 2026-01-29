@@ -44,6 +44,9 @@ namespace Content.Shared.Random.Helpers
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
+        /// <summary>
+        ///     Picks a random weighted prototype and returns it.
+        /// </summary>
         public static string Pick(this IWeightedRandomPrototype prototype, IRobustRandom? random = null)
         {
             IoCManager.Resolve(ref random);
@@ -65,6 +68,13 @@ namespace Content.Shared.Random.Helpers
 
             // Shouldn't happen
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
+        }
+
+        public static string PickAndTake(this IWeightedRandomPrototype prototype, IRobustRandom? random = null)
+        {
+            var key = Pick(prototype, random);
+            prototype.Weights.Remove(key);
+            return key;
         }
 
         public static T Pick<T>(this IRobustRandom random, Dictionary<T, float> weights)

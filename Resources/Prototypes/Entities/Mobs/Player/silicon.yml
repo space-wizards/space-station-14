@@ -667,8 +667,8 @@
   - type: GhostTakeoverAvailable
 
 - type: entity
-  parent: BorgChassisDerelict
-  id: PlayerBorgDerelict
+  parent: GenericBorgChassisDerelict
+  id: PlayerGenericBorgDerelict
   suffix: Battery, Module
   components:
   - type: ContainerFill
@@ -687,13 +687,13 @@
     nameSegments: [NamesBorg]
 
 - type: entity
-  parent: PlayerBorgDerelict
-  id: PlayerBorgDerelictGhostRole
+  parent: PlayerGenericBorgDerelict
+  id: PlayerGenericBorgDerelictGhostRole
   suffix: Ghost role
   components:
     - type: GhostRole
-      name: ghost-role-information-derelict-cyborg-name
-      description: ghost-role-information-derelict-cyborg-description
+      name: ghost-role-information-derelict-generic-cyborg-name
+      description: ghost-role-information-derelict-generic-cyborg-description
       rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
@@ -836,7 +836,7 @@
 
 - type: entity
   parent: PlayerSyndicateAssaultBorgDerelict
-  id: PlayerBorgSyndicateDerelictGhostRole
+  id: PlayerSyndicateAssaultBorgDerelictGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole
