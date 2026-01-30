@@ -7,28 +7,26 @@
     <BoxContainer Name="VBox" Orientation="Vertical">
 
         <!-- Header -->
-        <BoxContainer>
-            <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
-        </BoxContainer>
+        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
 
         <!-- This is the main bit, only shows once we have preferences from the server -->
         <BoxContainer Name="Loaded" Orientation="Vertical"
-                      Visible="False">
+                      Visible="False"
+                      SeparationOverride="8">
             <!-- Character summary text, character setup button, and character preview -->
-            <BoxContainer Orientation="Horizontal" Align="Center" Margin="0 0 0 8">
-                <BoxContainer Orientation="Vertical" Align="Center" Margin="0 0 30 0">
-                    <Label Name="Summary" Margin="0 0 0 25" />
+            <BoxContainer Orientation="Horizontal" Align="Center" SeparationOverride="30">
+                <BoxContainer Orientation="Vertical" Align="Center" SeparationOverride="25">
+                    <Label Name="Summary" />
                     <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
                             HorizontalAlignment="Center"/>
                 </BoxContainer>
-                <BoxContainer Name="ViewBox" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <profile:ProfilePreviewSpriteView Name="ProfilePreviewSpriteView"
-                                                      OverrideDirection="South"
-                                                      Scale="3 3"
-                                                      MaxSize="96 96"
-                                                      Stretch="Fill"
-                                                      Access="Public" />
-                </BoxContainer>
+                <profile:ProfilePreviewSpriteView Name="ProfilePreviewSpriteView"
+                                                  OverrideDirection="South"
+                                                  Scale="3 3"
+                                                  MaxSize="96 96"
+                                                  Stretch="Fill"
+                                                  HorizontalAlignment="Center"
+                                                  Access="Public" />
             </BoxContainer>
 
             <!-- Where we show ALL the jobs, separated into priorities -->
