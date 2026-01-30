@@ -2,8 +2,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.CrewManifest;
 using Content.Client.GameTicking.Managers;
-using Content.Client.Lobby;
-using Content.Client.Lobby.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
@@ -30,7 +28,6 @@ namespace Content.Client.Lobby.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
