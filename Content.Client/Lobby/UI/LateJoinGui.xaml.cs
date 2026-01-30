@@ -25,7 +25,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class LateJoinGui : DefaultWindow
+    public sealed partial class LateJoinGui : FancyWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
