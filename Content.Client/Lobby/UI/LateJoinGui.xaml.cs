@@ -88,10 +88,8 @@ namespace Content.Client.Lobby.UI
             foreach (var (slot, profile) in preferences.Characters)
             {
                 var isSelected = (slot == preferences.SelectedCharacterIndex);
-                if (profile is not HumanoidCharacterProfile humanoid)
-                    continue;
                 var characterPickerButton =
-                    new CharacterPickerButton(_entityManager, _prototypeManager, group, humanoid, isSelected, true);
+                    new CharacterPickerButton(_prototypeManager, _playerManager, group, profile, isSelected, true);
                 CharacterList.AddChild(characterPickerButton);
 
                 characterPickerButton.OnPressed += _ =>

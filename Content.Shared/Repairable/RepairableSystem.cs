@@ -20,10 +20,10 @@ public sealed partial class RepairableSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<RepairableComponent, InteractUsingEvent>(Repair);
-        SubscribeLocalEvent<RepairableComponent, RepairFinishedEvent>(OnRepairFinished);
+        SubscribeLocalEvent<RepairableComponent, RepairDoAfterEvent>(OnRepairDoAfter);
     }
 
-    private void OnRepairFinished(Entity<RepairableComponent> ent,  ref RepairFinishedEvent args)
+    private void OnRepairDoAfter(Entity<RepairableComponent> ent, ref RepairDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -31,24 +31,62 @@ public sealed partial class RepairableSystem : EntitySystem
         if (!TryComp(ent.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
             return;
 
-        if (ent.Comp.Damage != null)
-        {
-            var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, ent.Comp.Damage, true, false, origin: args.User);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
-        }
-
+        if (ent.Comp.DamageValue != null)
+            RepairSomeDamage((ent, damageable), ent.Comp.DamageValue.Value, args.User);
+        else if (ent.Comp.Damage != null)
+            RepairSomeDamage((ent, damageable), ent.Comp.Damage, args.User);
         else
+            RepairAllDamage((ent, damageable), args.User);
+
+        args.Repeat = ent.Comp.AutoDoAfter && damageable.TotalDamage > 0;
+        args.Args.Event.Repeat = args.Repeat;
+        args.Handled = true;
+
+        if (!args.Repeat)
         {
-            // Repair all damage
-            _damageableSystem.SetAllDamage((ent.Owner, damageable), 0);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
+            var str = Loc.GetString("comp-repairable-repair", ("target", ent.Owner), ("tool", args.Used!));
+            _popup.PopupClient(str, ent.Owner, args.User);
+
+            var ev = new RepairedEvent(ent, args.User);
+            RaiseLocalEvent(ent.Owner, ref ev);
         }
+    }
 
-        var str = Loc.GetString("comp-repairable-repair", ("target", ent.Owner), ("tool", args.Used!));
-        _popup.PopupClient(str, ent.Owner, args.User);
+    /// <summary>
+    /// Repairs some damage of a entity.
+    /// The healed amount will be evenly distributed among all damage types the entity has.
+    /// If one of the damage types of the entity is too low. it will heal that completly and distribute the excess healing among the other damage types
+    /// </summary>
+    /// <param name="ent">entity to be repaired</param>
+    /// <param name="damageAmount">how much damage to repair (value have to be negative to repair)</param>
+    /// <param name="user">who is doing the repair</param>
+    private void RepairSomeDamage(Entity<DamageableComponent?> ent, float damageAmount, EntityUid user)
+    {
+        var damageChanged = _damageableSystem.HealEvenly(ent.Owner, damageAmount, origin: user);
+        _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
+    }
 
-        var ev = new RepairedEvent(ent, args.User);
-        RaiseLocalEvent(ent.Owner, ref ev);
+    /// <summary>
+    /// Repairs some damage of a entity
+    /// </summary>
+    /// <param name="ent">entity to be repaired</param>
+    /// <param name="damageAmount">how much damage to repair (values have to be negative to repair)</param>
+    /// <param name="user">who is doing the repair</param>
+    private void RepairSomeDamage(Entity<DamageableComponent?> ent, Damage.DamageSpecifier damageAmount, EntityUid user)
+    {
+        var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, damageAmount, true, false, origin: user);
+        _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
+    }
+
+    /// <summary>
+    /// Repairs all damage of a entity
+    /// </summary>
+    /// <param name="ent">entity to be repaired</param>
+    /// <param name="user">who is doing the repair</param>
+    private void RepairAllDamage(Entity<DamageableComponent?> ent, EntityUid user)
+    {
+        _damageableSystem.ClearAllDamage(ent);
+        _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
     }
 
     private void Repair(Entity<RepairableComponent> ent, ref InteractUsingEvent args)
@@ -72,7 +110,7 @@ public sealed partial class RepairableSystem : EntitySystem
         }
 
         // Run the repairing doafter
-        args.Handled = _toolSystem.UseTool(args.Used, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairFinishedEvent(), ent.Comp.FuelCost);
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairDoAfterEvent(), ent.Comp.FuelCost);
     }
 }
 
@@ -84,5 +122,9 @@ public sealed partial class RepairableSystem : EntitySystem
 [ByRefEvent]
 public readonly record struct RepairedEvent(Entity<RepairableComponent> Ent, EntityUid User);
 
+/// <summary>
+/// Do after event started when you try to fix a entity with RepairableComponent.
+/// This doafter is repeated if the entity has <see cref="AutoDoAfter"> set to true and not all damage was fixed yet.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed partial class RepairFinishedEvent : SimpleDoAfterEvent;
+public sealed partial class RepairDoAfterEvent : SimpleDoAfterEvent;

@@ -13,9 +13,6 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
-  - type: Tag
-    tags:
-    - DrinkCup
   - type: StaticPrice
     price: 10
 
@@ -88,7 +85,6 @@
   - type: Tag
     tags:
     - Trash
-    - DrinkCup
     - WhitelistChameleon
   - type: Clothing
     slots:
