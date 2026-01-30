@@ -1,36 +1,31 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Destructible;
 using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;
-using Content.Shared.Gibbing.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.GhostTypes;
 
 public sealed class StoreDamageTakenOnMindSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<StoreDamageTakenOnMindComponent, AttemptEntityGibEvent>(SaveBodyOnGib);
+        SubscribeLocalEvent<StoreDamageTakenOnMindComponent, DestructionEventArgs>(SaveBodyOnGib);
         SubscribeLocalEvent<StoreDamageTakenOnMindComponent, MobStateChangedEvent>(SaveBodyOnThreshold);
         SubscribeLocalEvent<StoreDamageTakenOnMindComponent, BeforeExplodeEvent>(DeathByExplosion);
     }
 
     /// <summary>
-    /// Saves the damage of a player body inside their MindComponent after an attempted gib event
+    /// Saves the damage of a player body inside their MindComponent after a DestructionEventArgs
     /// </summary>
-    private void SaveBodyOnGib(Entity<StoreDamageTakenOnMindComponent> ent, ref AttemptEntityGibEvent args)
+    private void SaveBodyOnGib(Entity<StoreDamageTakenOnMindComponent> ent, ref DestructionEventArgs args)
     {
-        if (!_container.TryGetContainingContainer(ent.Owner, out var container))
-            return;
-
-        SaveBody(container.Owner);
+        SaveBody(ent.Owner);
     }
 
     /// <summary>
