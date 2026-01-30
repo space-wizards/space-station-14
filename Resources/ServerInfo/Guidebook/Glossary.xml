@@ -155,8 +155,8 @@ These are terms you should only be using in OOC chat or outside the game.
 ## Admeme
 An event hosted or caused by an admin.
 
-## AHelp/Admin Help
-A relay used to report rulebreaking behavior or other issues to administrators.
+## Admin Help (ahelp)
+A system of communication channels between in-game admins and each player. A webhook relays text one-way to admin-only channels on the Wizard's Den Discord.
 
 ## Antag
 Short for Antagonists, which are specifically picked individuals designed to drive the round into chaos.
@@ -188,4 +188,6 @@ The baseline version of the game. Any changes to Upstream will "flow" down to al
 ## Validhunter
 A player who hunts down "valids", as in people that are valid to kill, even though this person isn't security.
 
+## Wizden
+Shorthand for Wizard's Den.
 </Document>
