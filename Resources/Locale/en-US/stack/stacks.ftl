@@ -81,6 +81,11 @@ stack-artifact-fragment = artifact {$amount ->
     *[other] fragments
 }
 
+stack-salvage-ticket = {$amount ->
+    [1] token
+    *[other] tokens
+}
+
 # best materials
 stack-ground-tobacco = ground tobacco
 stack-ground-cannabis = ground cannabis
