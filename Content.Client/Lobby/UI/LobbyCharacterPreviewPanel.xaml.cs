@@ -73,6 +73,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     {
         Summary.Text = value;
     }
+
     /// <summary>
     /// Refresh the selected character summary
     /// </summary>
