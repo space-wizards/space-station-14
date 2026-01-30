@@ -1,4 +1,7 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -20,7 +23,8 @@ public sealed class GetAirflowDirectionsTest : AtmosTest
     [TestCase(1, 0, AtmosDirection.West)]
     [TestCase(-1, 0, AtmosDirection.East)]
     [TestCase(1, 1, AtmosDirection.Invalid)]
-    public async Task TestLookups(int x, int y, AtmosDirection expectedDirections)
+    [TestCase(100, 100, AtmosDirection.Invalid)]
+    public async Task TestLookup(int x, int y, AtmosDirection expectedDirections)
     {
         await Server.WaitPost(delegate
         {
@@ -31,4 +35,16 @@ public sealed class GetAirflowDirectionsTest : AtmosTest
         });
     }
 
+    /// <summary>
+    /// Tests that a grident with no atmosphere will return <see cref="AtmosDirection.Invalid"/>.
+    /// </summary>
+    [Test]
+    public async Task TestLookup_BadEnt()
+    {
+        await Server.WaitPost(delegate
+        {
+            var directions = SAtmos.GetAirflowDirections(EntityUid.Invalid, Vector2i.Zero);
+            Assert.That(directions, Is.EqualTo(AtmosDirection.Invalid));
+        });
+    }
 }
