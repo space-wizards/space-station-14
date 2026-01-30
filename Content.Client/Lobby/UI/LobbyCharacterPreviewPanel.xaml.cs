@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -28,11 +27,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     /// <see cref="LobbyState"/> needs to register events on this button, so provide a property to access it publicly.
     /// </summary>
     public Button CharacterSetupButton => CharacterSetup;
-
-    /// <summary>
-    /// The entity providing the preview of the selected character
-    /// </summary>
-    private EntityUid? _previewDummy;
 
     /// <summary>
     /// Just a helper function to grab the appropriate <see cref="DraggableJobTarget"/> control corresponding to the
@@ -79,28 +73,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     {
         Summary.Text = value;
     }
-
-    private void SetSprite(EntityUid uid)
-    {
-        if (_previewDummy != null)
-        {
-            _entManager.DeleteEntity(_previewDummy);
-        }
-
-        _previewDummy = uid;
-
-        ViewBox.RemoveAllChildren();
-        var spriteView = new SpriteView
-        {
-            OverrideDirection = Direction.South,
-            Scale = new Vector2(3f, 3f),
-            MaxSize = new Vector2(96, 96),
-            Stretch = SpriteView.StretchMode.Fill,
-        };
-        spriteView.SetEntity(uid);
-        ViewBox.AddChild(spriteView);
-    }
-
     /// <summary>
     /// Refresh the selected character summary
     /// </summary>
@@ -109,17 +81,15 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         // Get selected character, load it, then set it
         var character = _preferences.Preferences?.SelectedCharacter;
 
-        if (character is not HumanoidCharacterProfile humanoid)
+        if (character is null)
         {
-            SetSprite(EntityUid.Invalid);
+            ProfilePreviewSpriteView.ClearPreview();
             SetSummaryText(string.Empty);
             return;
         }
 
-        var dummy = UserInterfaceManager.GetUIController<LobbyUIController>()
-                .LoadProfileEntity(humanoid, null, true);
-        SetSprite(dummy);
-        SetSummaryText(humanoid.Summary);
+        ProfilePreviewSpriteView.LoadPreview(character);
+        SetSummaryText(character.Summary);
 
         foreach (var prio in Enum.GetValues<JobPriority>())
         {
@@ -128,7 +98,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
         _sprite = _entManager.System<SpriteSystem>();
 
-        var priorities = humanoid.JobPriorities;
+        var priorities = character.JobPriorities;
 
         // Create the job icons in order
         foreach (var job in DraggableJobTarget.OrderedJobs)
@@ -265,7 +235,8 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     /// </summary>
     private void SendUpdatedPriorities()
     {
-        if(_preferences.Preferences is not { SelectedCharacter: HumanoidCharacterProfile humanoid } prefs)
+        // Get selected character, load it, then set it
+        if(_preferences.Preferences is not { SelectedCharacter: { } humanoid } prefs)
             return;
 
         var updatedProfile = humanoid.WithJobPriorities(GetJobPriorities());
@@ -313,12 +284,5 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         content.AddChild(title);
 
         return tooltip;
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        _entManager.DeleteEntity(_previewDummy);
-        _previewDummy = null;
     }
 }

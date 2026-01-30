@@ -268,9 +268,6 @@ public sealed partial class DragonSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return;
 
-        // do reset the rift count since crew destroyed the rift, not deleted by the dragon dying.
-        DeleteRifts(uid, true, comp);
-
         // We can't predict the rift being destroyed anyway so no point adding weakened to shared.
         comp.WeakenedAccumulator = comp.WeakenedDuration;
         _movement.RefreshMovementSpeedModifiers(uid);
