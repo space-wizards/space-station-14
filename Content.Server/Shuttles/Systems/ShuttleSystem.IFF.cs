@@ -42,28 +42,14 @@ public sealed partial class ShuttleSystem
             return;
         }
 
-        // Merged toggle controls both HideLabel and Hide flags
         if (!args.Show)
         {
-            if ((component.AllowedFlags & IFFFlags.HideLabel) != 0x0)
-            {
-                AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
-            }
-            if ((component.AllowedFlags & IFFFlags.Hide) != 0x0)
-            {
-                AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
-            }
+            AddAllSupportedIFFFlags(xform, component);
         }
         else
         {
-            if ((component.AllowedFlags & IFFFlags.HideLabel) != 0x0)
-            {
-                RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
-            }
-            if ((component.AllowedFlags & IFFFlags.Hide) != 0x0)
-            {
-                RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
-            }
+            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
         }
     }
 
@@ -76,8 +62,7 @@ public sealed partial class ShuttleSystem
 
         if (component.HideOnInit)
         {
-            AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
-            AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
+            AddAllSupportedIFFFlags(xform, component);
         }
     }
 
@@ -119,6 +104,27 @@ public sealed partial class ShuttleSystem
                 AllowedFlags = comp.AllowedFlags,
                 Flags = component.Flags,
             });
+        }
+    }
+
+    // Made this method to avoid copy and pasting.
+    /// <summary>
+    /// Adds all IFF flags that are allowed by AllowedFlags to the grid.
+    /// </summary>
+    private void AddAllSupportedIFFFlags(TransformComponent xform, IFFConsoleComponent component)
+    {
+        if (xform.GridUid == null)
+        {
+            return;
+        }
+
+        if ((component.AllowedFlags & IFFFlags.HideLabel) != 0x0)
+        {
+            AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+        }
+        if ((component.AllowedFlags & IFFFlags.Hide) != 0x0)
+        {
+            AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
         }
     }
 }

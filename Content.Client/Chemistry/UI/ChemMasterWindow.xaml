@@ -79,10 +79,13 @@
 
             <!-- Packaging -->
             <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'chem-master-window-packaging-text'}" />
+                <Label Text="{Loc 'chem-master-output-source'}" StyleClasses="LabelSecondaryColor" Margin="0 0 5 0"/>
+                <Button MinSize="80 0" Name="OutputBufferDraw" Access="Public" Text="{Loc 'chem-master-output-buffer-draw'}" ToggleMode="True" StyleClasses="OpenRight" />
+                <Button MinSize="80 0" Name="OutputBeakerDraw" Access="Public" Text="{Loc 'chem-master-output-beaker-draw'}" ToggleMode="True" StyleClasses="OpenLeft" />
                 <Control HorizontalExpand="True"/>
-                <Label Text="{Loc 'chem-master-window-buffer-label'}" />
-                <Label Name="BufferCurrentVolume" StyleClasses="LabelWeak" />
+                <!-- Output Draw Source -->
+                <Label Name="DrawSource"/>
+                <Label Name="BufferCurrentVolume" StyleClasses="LabelSecondaryColor" />
             </BoxContainer>
 
             <!-- Wrap the packaging info-->
