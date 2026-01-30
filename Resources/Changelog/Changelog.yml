@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Minemoder
-  changes:
-  - message: Ion Storms no longer have a chance to roll the Drone Lawset.
-    type: Remove
-  id: 8970
-  time: '2025-09-17T17:00:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40374
 - author: IProduceWidgets
   changes:
   - message: Gender pins no longer shuffle when EMP'd
@@ -3999,3 +3992,10 @@
   id: 9476
   time: '2026-01-29T08:11:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42698
+- author: jessicamaybe
+  changes:
+  - message: Mobs that don't need internals no longer have the internals indicator
+    type: Tweak
+  id: 9477
+  time: '2026-01-30T05:30:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42705
