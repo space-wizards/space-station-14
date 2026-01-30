@@ -6,6 +6,5 @@
   defaultSkinTone: "#fff9e2"
   maleFirstNames: NamesSkeletonFirst
   femaleFirstNames: NamesSkeletonFirst
-  cocoonScale: 1.0, 1.0
   dollPrototype: AppearanceSkeletonPerson
   skinColoration: TintedHues

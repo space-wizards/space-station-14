@@ -6,7 +6,6 @@
   defaultSkinTone: "#cdb369"
   dollPrototype: AppearanceDiona
   skinColoration: Hues
-  cocoonScale: 1.0, 1.0
   maleFirstNames: NamesDionaFirst
   femaleFirstNames: NamesDionaFirst
   lastNames: NamesDionaLast
