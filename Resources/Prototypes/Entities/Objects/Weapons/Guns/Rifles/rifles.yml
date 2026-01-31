@@ -18,6 +18,8 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
+    angleIncrease: 2
+    angleDecay: 12
     fireRate: 5
     selectedMode: FullAuto
     availableModes:

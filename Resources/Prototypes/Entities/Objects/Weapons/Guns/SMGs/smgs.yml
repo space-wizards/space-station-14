@@ -18,6 +18,8 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
+    angleIncrease: 3
+    angleDecay: 16
     minAngle: 2
     maxAngle: 16
     fireRate: 8
@@ -103,7 +105,7 @@
     maxAngle: -18
   - type: Gun
     minAngle: 22
-    maxAngle: 28
+    maxAngle: 35
     shotsPerBurst: 5
     availableModes:
     - Burst
@@ -183,7 +185,7 @@
       maxAngle: -22
     - type: Gun
       minAngle: 20
-      maxAngle: 30
+      maxAngle: 35
       fireRate: 6
       burstFireRate: 18
       soundGunshot:
@@ -246,8 +248,8 @@
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
-    minAngle: -15
-    maxAngle: -18
+    minAngle: -14
+    maxAngle: -16
   - type: Gun
     fireRate: 5.5
     minAngle: 16
@@ -310,11 +312,6 @@
       state: icon
     - state: icon-muzzle
       map: ["enum.GunVisualLayers.Base"]
-  - type: Wieldable
-    unwieldOnUse: false
-  - type: GunWieldBonus
-    minAngle: -15
-    maxAngle: -18
   - type: Gun
     fireRate: 9
     minAngle: 22

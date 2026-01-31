@@ -22,6 +22,8 @@
     minAngle: -19
     maxAngle: -17
   - type: Gun
+    angleIncrease: 4
+    angleDecay: 16
     minAngle: 24
     maxAngle: 45
     fireRate: 8
