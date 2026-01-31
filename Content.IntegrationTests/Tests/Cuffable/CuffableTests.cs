@@ -131,7 +131,6 @@ public sealed class CuffableTests : InteractionTest
 
         // Get cuffable entity
         var cuffable = Comp<CuffableComponent>(Target.Value);
-        var hands = Comp<HandsComponent>(Target.Value);
         var ent = (STarget.Value, cuffable);
 
         // Place a pair of cuffs in our hands

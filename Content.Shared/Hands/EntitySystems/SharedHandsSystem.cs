@@ -120,7 +120,7 @@ public abstract partial class SharedHandsSystem
     public virtual void RemoveHand(Entity<HandsComponent?> ent, string handName)
     {
         // FirstTimePredicted is here because sometimes the client doesn't play nice with container shutdowns.
-        if (!Resolve(ent, ref ent.Comp, false) || !_timing.IsFirstTimePredicted)
+        if (!Resolve(ent, ref ent.Comp, false))
             return;
 
         OnPlayerRemoveHand?.Invoke((ent, ent.Comp), handName);
@@ -130,7 +130,8 @@ public abstract partial class SharedHandsSystem
         if (!ent.Comp.Hands.Remove(handName))
             return;
 
-        if (ContainerSystem.TryGetContainer(ent, handName, out var container))
+        // Don't double delete the container if we're already shutting down
+        if (MetaData(ent).EntityLifeStage < EntityLifeStage.Terminating && ContainerSystem.TryGetContainer(ent, handName, out var container))
             ContainerSystem.ShutdownContainer(container);
 
         ent.Comp.SortedHands.Remove(handName);
