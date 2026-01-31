@@ -153,6 +153,7 @@ public sealed class GasTankWindow
             Text = Loc.GetString("gas-tank-window-internal-text"),
             OffStateText = Loc.GetString("gas-tank-window-internal-disconnected"),
             OnStateText = Loc.GetString("gas-tank-window-internal-connected"),
+            StyleClasses = { SwitchButton.StyleClassColorStateLabels },
             MinSize = new Vector2(200, 0),
             Margin = new Thickness(0, 7, 0, 0),
         };
