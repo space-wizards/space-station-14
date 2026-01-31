@@ -218,10 +218,6 @@ public abstract class SharedCocoonSystem : EntitySystem
         // Only spawn on server to avoid metadata mismatch errors with PredictedSpawnAtPosition
         if (_netMan.IsClient)
         {
-            // Predict popup and sound for immediate client feedback
-            // The server will spawn the entity and we'll receive it via state
-            _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_end.ogg"), target, performer);
-            _popups.PopupClient(Loc.GetString("arachnid-wrap-complete-user", ("target", target)), target, performer);
             args.Handled = true;
             return;
         }
@@ -314,7 +310,9 @@ public abstract class SharedCocoonSystem : EntitySystem
         // Send networked event to client for additional client-side visual handling (scale adjustment, etc.)
         RaiseNetworkEvent(new CocoonRotationAnimationEvent(GetNetEntity(cocoonContainer), victimWasStanding));
 
+        // Play sound and show popups when entity is actually spawned and visible
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_end.ogg"), cocoonContainer);
+        _popups.PopupEntity(Loc.GetString("arachnid-wrap-complete-user", ("target", target)), cocoonContainer, performer);
         _popups.PopupEntity(Loc.GetString("arachnid-wrap-complete-target"), cocoonContainer, target, PopupType.LargeCaution);
 
         OnWrapDoAfterServer(performer, target, cocoonContainer);
@@ -426,7 +424,9 @@ public abstract class SharedCocoonSystem : EntitySystem
 
     protected virtual void OnCocoonContainerDestroyed(EntityUid uid, CocoonContainerComponent component, DestructionEventArgs args)
     {
-        PlayCocoonRemovalSound(uid);
+        // Play sound and show popup directly when cocoon is destroyed by damage
+        var coords = Transform(uid).Coordinates;
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_breakout.ogg"), coords);
 
         // Show popup to victim
         if (component.Victim != null && Exists(component.Victim.Value))
@@ -480,32 +480,6 @@ public abstract class SharedCocoonSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Plays the cocoon removal sound for everyone within range.
-    /// </summary>
-    /// <param name="uid">The cocoon container entity.</param>
-    /// <param name="user">Optional user entity for prediction. If null, uses PlayPvs (server-only).</param>
-    protected void PlayCocoonRemovalSound(EntityUid uid, EntityUid? user = null)
-    {
-        var xform = Transform(uid);
-        var coords = xform.Coordinates;
-        
-        // Use PlayPvs for server-only events (destruction), PlayPredicted for client-predicted actions (unwrap/break free)
-        if (user == null)
-        {
-            // Server-only destruction event - play for everyone in PVS range
-            if (_netMan.IsServer)
-            {
-                _audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_breakout.ogg"), coords);
-            }
-        }
-        else
-        {
-            // Client-predicted action (unwrap/break free) - use PlayPredicted
-            _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_breakout.ogg"), coords, user);
-        }
-    }
-
-    /// <summary>
     /// Empties the cocoon container, removing all entities to prevent them from being deleted.
     /// </summary>
     protected void EmptyCocoonContainer(EntityUid uid)
@@ -529,8 +503,26 @@ public abstract class SharedCocoonSystem : EntitySystem
         if (args.Cancelled || args.Handled)
             return;
 
-        // Play cocoon removal sound before deletion (entity must be valid for coordinates)
-        PlayCocoonRemovalSound(uid, args.User);
+        // On client, don't manipulate entities to avoid jittering
+        if (_netMan.IsClient)
+        {
+            // Don't predict sound/popup - they will play on server when entity is actually destroyed
+            args.Handled = true;
+            return;
+        }
+
+        // Get coordinates before entity is deleted
+        var coords = Transform(uid).Coordinates;
+
+        // Play sound for everyone and show popups directly before deletion (server-only)
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_breakout.ogg"), coords);
+
+        if (component.Victim != null && Exists(component.Victim.Value))
+        {
+            var victim = component.Victim.Value;
+            _popups.PopupCoordinates(Loc.GetString("arachnid-unwrap-user", ("target", victim)), coords, args.User);
+            _popups.PopupCoordinates(Loc.GetString("arachnid-unwrap-target", ("user", args.User)), coords, victim);
+        }
 
         // Empty the container before deletion
         // OnCocoonContainerManagerShutdown handles this for destructible-triggered destruction,
@@ -538,14 +530,7 @@ public abstract class SharedCocoonSystem : EntitySystem
         EmptyCocoonContainer(uid);
 
         // Delete the container - OnCocoonContainerShutdown will handle victim cleanup
-        PredictedQueueDel(uid);
-
-        if (component.Victim != null && Exists(component.Victim.Value))
-        {
-            var victim = component.Victim.Value;
-            _popups.PopupPredicted(Loc.GetString("arachnid-unwrap-user", ("target", victim)), uid, args.User);
-            _popups.PopupPredicted(Loc.GetString("arachnid-unwrap-target", ("user", args.User)), uid, victim);
-        }
+        QueueDel(uid);
 
         args.Handled = true;
     }
@@ -567,27 +552,27 @@ public abstract class SharedCocoonSystem : EntitySystem
 
         var cocoonContainer = container.Owner;
 
-        // On client, only predict visual/audio feedback to avoid jittering from entity manipulation
+        // On client, don't manipulate entities to avoid jittering
         if (_netMan.IsClient)
         {
-            // Predict popup and sound, but don't manipulate entities (server will handle that)
-            PlayCocoonRemovalSound(cocoonContainer, victim);
-            _popups.PopupPredicted(Loc.GetString("arachnid-break-free-complete"), cocoonContainer, victim, PopupType.Large);
+            // Don't predict sound/popup - they will play on server when entity is actually destroyed
             args.Handled = true;
             return;
         }
 
         // Server-side: perform actual entity manipulation
-        // Play cocoon removal sound before deletion (entity must be valid for coordinates)
-        PlayCocoonRemovalSound(cocoonContainer, victim);
+        // Get coordinates before entity is deleted
+        var coords = Transform(cocoonContainer).Coordinates;
+
+        // Play sound for everyone (including victim) and show popup directly before deletion
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_breakout.ogg"), coords);
+        _popups.PopupCoordinates(Loc.GetString("arachnid-break-free-complete"), coords, victim, PopupType.Large);
 
         // Empty the container before deletion
         EmptyCocoonContainer(cocoonContainer);
 
         // Delete the container - OnCocoonContainerShutdown will handle victim cleanup
         QueueDel(cocoonContainer);
-
-        _popups.PopupEntity(Loc.GetString("arachnid-break-free-complete"), cocoonContainer, victim, PopupType.Large);
 
         args.Handled = true;
     }
