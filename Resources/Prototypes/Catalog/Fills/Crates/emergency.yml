@@ -61,7 +61,7 @@
   parent: CrateRadiation
   id: CrateEmergencyRadiation
   name: radiation protection crate
-  description: Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this.
+  description: Survive the nuclear apocalypse! Or, the nuclear part, anyway. Contains two radiation suits and two Geiger counters.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -70,9 +70,6 @@
         - id: ClothingOuterSuitRad
           amount: 2
         - id: GeigerCounter
-          amount: 2
-        - id: DrinkVodkaBottleFull
-        - id: DrinkShotGlass
           amount: 2
 
 - type: entity
