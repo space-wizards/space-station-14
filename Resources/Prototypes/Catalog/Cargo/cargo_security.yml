@@ -4,7 +4,7 @@
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
     state: icon
   product: CrateSecurityArmor
-  cost: 1800
+  cost: 1750
   category: cargoproduct-category-name-security
   group: market
 
