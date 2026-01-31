@@ -571,7 +571,7 @@ public abstract partial class InventorySystem
         foreach (var item in GetHandOrInventoryEntities((ent, null, ent)))
         {
             // Give me liberty, give me death
-            // Give me an API that can tell the difference between a virtual item and an electropak being removed.
+            // TODO: Give me an API that can tell the difference between a virtual item and an electropak being removed.
             if (!HasComp<AttachedClothingComponent>(item))
                 args.Giblets.Add(item);
         }
