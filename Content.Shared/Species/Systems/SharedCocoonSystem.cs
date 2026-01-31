@@ -367,7 +367,7 @@ public abstract class SharedCocoonSystem : EntitySystem
         }
 
         _popups.PopupClient(Loc.GetString("arachnid-break-free-start"), cocoonContainer, victim);
-        _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_start.ogg"), cocoonContainer, victim);
+        _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_takeoff.ogg"), cocoonContainer, victim);
 
         args.Handled = true;
     }
@@ -632,7 +632,7 @@ public abstract class SharedCocoonSystem : EntitySystem
                 if (!_doAfter.TryStartDoAfter(doAfter))
                     return;
 
-                _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_start.ogg"), uid, args.User);
+                _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_takeoff.ogg"), uid, args.User);
 
                 if (component.Victim != null && Exists(component.Victim.Value))
                 {
