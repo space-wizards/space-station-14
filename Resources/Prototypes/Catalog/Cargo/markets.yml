@@ -9,3 +9,6 @@
 
 - type: cargoMarket
   id: SalvageJobRewardMAX
+
+- type: cargoMarket
+  id: salvage

@@ -38,7 +38,8 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     [DataField]
     public List<ProtoId<CargoMarketPrototype>> Markets = new()
     {
-        "market",
+        "market",  // Request Consoles
+        "salvage", // Salvage Requisition Console
     };
 
     // TODO: Can probably dump this

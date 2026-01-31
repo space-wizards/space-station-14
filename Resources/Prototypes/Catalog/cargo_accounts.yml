@@ -45,3 +45,12 @@
   color: "#539c00"
   radioChannel: Service
   acquisitionSlip: PaperAcquisitionSlipService
+
+- type: cargoAccount
+  id: Salvage
+  name: cargo-account-salvage-name
+  code: cargo-account-salvage-code
+  color: "#a1449a"
+  radioChannel: Supply
+  acquisitionSlip: PaperAcquisitionSlipCargo
+  independent: true
