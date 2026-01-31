@@ -1,7 +1,7 @@
 - type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
-  parent: [VolatileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband]
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
@@ -24,7 +24,7 @@
 - type: entity
   name: flashbang
   description: Eeeeeeeeeeeeeeeeeeeeee.
-  parent: [ FragileGrenadeBase, GrenadeBase, BaseSecurityContraband ]
+  parent: [ FragileGrenadeBase, TimerGrenadeBase, BaseSecurityContraband ]
   id: GrenadeFlashBang
   components:
   - type: Sprite
@@ -74,12 +74,12 @@
     - type: TimedDespawn
       lifetime: 0.5
 
-#The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
-#Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.
+# Tuned to be a general bomb that deals equipment damage without explicitly gibbing, however it will still gladly instakill anyone that mishandles it.
+# One of the few syndie bombs that should punch holes in space.
 - type: entity
   name: syndicate minibomb
   description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
-  parent: [VolatileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband]
   id: SyndieMiniBomb
   components:
   - type: Sprite
@@ -108,7 +108,7 @@
 - type: entity
   name: self destruct
   description: Go out on your own terms!
-  parent: GrenadeBase
+  parent: TimerGrenadeBase
   id: SelfDestructSeq
   categories: [ HideSpawnMenu ]
   components:
@@ -131,10 +131,28 @@
         volume: 30
     initialBeepDelay: 0
     beepInterval: 16
+  - type: LightBehaviorOnTrigger
+    behavior: activate
+  - type: PointLight
+    energy: 50
+    radius: 0
+    color: Red
+    softness: 0
+    falloff: 20
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 360
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
+      id: activate
+      maxDuration: 5
+      startValue: 1
+      endValue: 2
 
 
 - type: entity
-  parent: [ FragileGrenadeBase, GrenadeBase, BaseSyndicateContraband ]
+  parent: [ FragileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband ]
   id: SingularityGrenade
   name: singularity grenade
   description: Grenade that simulates the power of a singularity, pulling things in a heap.
@@ -176,9 +194,10 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
       - type: GravityWell
-        maxRange: 7
-        baseRadialAcceleration: 5
-        baseTangentialAcceleration: .5
+        maxRange: 5
+        minRange: 0.25
+        baseRadialAcceleration: 25
+        baseTangentialAcceleration: 5
         gravPulsePeriod: 0.03
       - type: SingularityDistortion
         intensity: 150
@@ -267,7 +286,7 @@
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
-  parent: GrenadeBase
+  parent: TimerGrenadeBase
   id: NuclearGrenade
   components:
   - type: Sprite
@@ -348,30 +367,26 @@
 - type: entity
   name: EMP grenade
   description: A grenade designed to wreak havoc on electronic systems.
-  parent: [FragileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
+  parent: [ImpactGrenadeBase, BaseSyndicateContraband]
   id: EmpGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
   - type: EmpOnTrigger
     keysIn:
-    - timer
+    - trigger
     range: 5.5
     energyConsumption: 50000
   - type: DeleteOnTrigger
     keysIn:
-    - timer
-  - type: Appearance
-  - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/countdown.ogg
+    - trigger
   - type: StaticPrice
     price: 666 # 2000 for 3, I love fractions
 
 - type: entity
   name: holy hand grenade
   description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
-  parent: [GrenadeBase, BaseSyndicateContraband]
+  parent: [TimerGrenadeBase, BaseSyndicateContraband]
   id: HolyHandGrenade
   components:
   - type: Sprite
@@ -402,7 +417,7 @@
 - type: entity
   name: trick grenade
   description: All the grenade without any of the boom.
-  parent: GrenadeBase
+  parent: TimerGrenadeBase
   id: GrenadeDummy
   components:
   - type: Sprite
@@ -449,4 +464,4 @@
       params:
         volume: 12
   - type: StaticPrice
-    price: 1000
+    price: 50

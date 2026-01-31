@@ -50,9 +50,9 @@
     - type: BatteryAmmoProvider
       proto: RedLightLaser
       fireCost: 50
-    - type: PredictedBatterySelfRecharger
+    - type: BatterySelfRecharger
       autoRechargeRate: 50
-    - type: PredictedBattery
+    - type: Battery
       maxCharge: 1000
       startingCharge: 1000
     - type: Gun
@@ -67,8 +67,6 @@
       successChance: 0.3
       interactSuccessString: petting-success-reptile
       interactFailureString: petting-failure-generic
-      interactSuccessSound:
-        path: /Audio/Animals/lizard_happy.ogg
 
 - type: entity
   id: MobTomatoKiller
@@ -132,6 +130,9 @@
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item
+    size: Large
+    shape:
+    - 0,0,2,2
   - type: MultiHandedItem
   - type: NpcFactionMember
     factions:
@@ -142,7 +143,7 @@
   - type: NPCImprintingOnSpawnBehaviour
     whitelist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
   - type: Sprite
     sprite: Mobs/Demons/tomatokiller.rsi
     noRot: true
@@ -150,12 +151,10 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
   - type: Bloodstream
-    bloodReagents:
+    bloodReferenceSolution:
       reagents:
       - ReagentId: JuiceTomato
-        Quantity: 1
-    bloodMaxVolume: 50
-    chemicalMaxVolume: 30
+        Quantity: 50
   - type: DamageStateVisuals
     states:
       Alive:
