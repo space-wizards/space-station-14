@@ -48,7 +48,13 @@ public sealed class WeatherRemoveCommand : LocalizedEntityCommands
             return;
         }
 
-        _weather.RemoveWeather(mapId, weatherProto);
+        if (!_weather.HasWeather(mapId, weatherProto))
+        {
+            shell.WriteError(Loc.GetString("cmd-weather-error-no-weather"));
+            return;
+        }
+
+        _weather.TryRemoveWeather(mapId, weatherProto);
     }
 
 

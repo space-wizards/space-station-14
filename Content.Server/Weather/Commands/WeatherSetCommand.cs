@@ -61,7 +61,7 @@ public sealed class WeatherSetCommand : LocalizedEntityCommands
                 shell.WriteError(Loc.GetString("cmd-weather-error-wrong-time"));
         }
 
-        _weather.SetWeather(mapId, weatherProto, duration);
+        _weather.TrySetWeather(mapId, weatherProto, out _, duration);
     }
 
 

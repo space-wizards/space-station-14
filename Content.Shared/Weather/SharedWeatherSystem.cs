@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Maps;
@@ -82,17 +83,23 @@ public abstract class SharedWeatherSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds new weather to a map. Does not remove other existing weathers.
+    /// Attempts to add a new weather status effect to the specified map.
+    /// Does not remove or replace any other existing weather effects on the map.
+    /// If the specified weather effect already exists, its duration will be overridden.
     /// </summary>
-    /// <param name="mapId">Target MapId</param>
-    /// <param name="weatherProto">EntProtoId of weather status effect</param>
-    /// <param name="duration">How long this weather should exist on map? If null - infinity duration</param>
-    public void AddWeather(MapId mapId, EntProtoId weatherProto, TimeSpan? duration = null)
+    /// <param name="mapId">The <see cref="MapId"/> of the target map to apply the weather effect to.</param>
+    /// <param name="weatherProto">The prototype ID (<see cref="EntProtoId"/>) of the weather status effect to add.</param>
+    /// <param name="weatherEnt">When this method returns, contains the <see cref="EntityUid"/> of the weather entity if the operation succeeded; otherwise, <c>null</c>.</param>
+    /// <param name="duration">Optional. The duration for which the weather should exist on the map. If <c>null</c>, the weather will persist indefinitely.</param>
+    /// <returns><c>true</c> if the weather was successfully added or updated; otherwise, <c>false</c>.</returns>
+    public bool TryAddWeather(MapId mapId, EntProtoId weatherProto, [NotNullWhen(true)] out EntityUid? weatherEnt, TimeSpan? duration = null)
     {
-        if (!_mapSystem.TryGetMap(mapId, out var mapUid))
-            return;
+        weatherEnt = null;
 
-        AddWeather(mapUid.Value, weatherProto, duration);
+        if (!_mapSystem.TryGetMap(mapId, out var mapUid))
+            return false;
+
+        return TryAddWeather(mapUid.Value, weatherProto, out weatherEnt, duration);
     }
 
     /// <summary>
@@ -100,10 +107,25 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// </summary>
     /// <param name="mapUid">Target map entity</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
+    /// <param name="weatherEnt">When this method returns, contains the <see cref="EntityUid"/> of the weather entity if the operation succeeded; otherwise, <c>null</c>.</param>
     /// <param name="duration">How long this weather should exist on the map? If null - infinite duration</param>
-    public void AddWeather(EntityUid mapUid, EntProtoId weatherProto, TimeSpan? duration = null)
+    public bool TryAddWeather(EntityUid mapUid, EntProtoId weatherProto, [NotNullWhen(true)] out EntityUid? weatherEnt, TimeSpan? duration = null)
     {
-        _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, out _, duration);
+        return _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, out weatherEnt, duration);
+    }
+
+    /// <summary>
+    /// Checks if a specific weather exists on the given map.
+    /// </summary>
+    /// <param name="mapId">Target mapId</param>
+    /// <param name="weatherProto">EntProtoId of weather status effect</param>
+    /// <returns>True if the weather exists, otherwise false</returns>
+    public bool HasWeather(MapId mapId, EntProtoId weatherProto)
+    {
+        if (!_mapSystem.TryGetMap(mapId, out var mapUid))
+            return false;
+
+        return _statusEffects.TryGetStatusEffect(mapUid.Value, weatherProto, out _);
     }
 
     /// <summary>
@@ -111,12 +133,12 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// </summary>
     /// <param name="mapId">Target mapId</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
-    public void RemoveWeather(MapId mapId, EntProtoId weatherProto)
+    public bool TryRemoveWeather(MapId mapId, EntProtoId weatherProto)
     {
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
-            return;
+            return false;
 
-        RemoveWeather(mapUid.Value, weatherProto);
+        return TryRemoveWeather(mapUid.Value, weatherProto);
     }
 
     /// <summary>
@@ -124,28 +146,33 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// </summary>
     /// <param name="mapUid">Target entity map</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
-    public void RemoveWeather(EntityUid mapUid, EntProtoId weatherProto)
+    public bool TryRemoveWeather(EntityUid mapUid, EntProtoId weatherProto)
     {
         if (!_statusEffects.TryGetStatusEffect(mapUid, weatherProto, out var weatherEnt))
-            return;
+            return false;
 
         if (!_weatherQuery.HasComp(weatherEnt))
-            return;
+            return false;
 
-        _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, ShutdownTime);
+        return _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, ShutdownTime);
     }
 
     /// <summary>
     /// Removes all weather conditions except the specified one. If the specified weather does not exist on the map, it adds it.
+    /// Returns true if the specified weather is present or was added, false otherwise.
     /// </summary>
     /// <param name="mapId">Target mapId</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
-    /// <param name="duration">How long this weather should exist on map? If null - infinity duration</param>
-    public void SetWeather(MapId mapId, EntProtoId? weatherProto, TimeSpan? duration = null)
+    /// <param name="weatherEnt">When this method returns, contains the <see cref="EntityUid"/> of the weather entity if the operation succeeded; otherwise, <c>null</c>.</param>
+    /// <param name="duration">How long this weather should exist on map? If null - infinite duration</param>
+    /// <returns><c>true</c> if the specified weather is present or was added; otherwise, <c>false</c>.</returns>
+    public bool TrySetWeather(MapId mapId, EntProtoId? weatherProto, out EntityUid? weatherEnt, TimeSpan? duration = null)
     {
+        weatherEnt = null;
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
-            return;
+            return false;
 
+        // Remove all other weather effects except the specified one
         if (_statusEffects.TryEffectsWithComp<WeatherStatusEffectComponent>(mapUid, out var effects))
         {
             foreach (var effect in effects)
@@ -156,13 +183,27 @@ public abstract class SharedWeatherSystem : EntitySystem
 
                 if (effectProto != weatherProto)
                 {
-                    RemoveWeather(mapUid.Value, effectProto); //Removing all others weathers
-                    continue;
+                    TryRemoveWeather(mapUid.Value, effectProto);
+                }
+                else
+                {
+                    weatherEnt = effect;
                 }
             }
         }
 
-        if (weatherProto is not null)
-            AddWeather(mapUid.Value, weatherProto.Value, duration); //Add specific weather, or override it duration
+        // If weatherProto is null, we just removed all weather and return true
+        if (weatherProto is null)
+            return true;
+
+        // If the specified weather already exists, just update its duration
+        if (weatherEnt != null)
+        {
+            TryAddWeather(mapUid.Value, weatherProto.Value, out weatherEnt, duration);
+            return true;
+        }
+
+        // Otherwise, add the specified weather
+        return TryAddWeather(mapUid.Value, weatherProto.Value, out weatherEnt, duration);
     }
 }
