@@ -25,6 +25,18 @@ public sealed partial class CocoonContainerComponent : Component
     /// </summary>
     [DataField]
     public float AbsorbPercentage = 0.3f;
+
+    /// <summary>
+    /// Time in seconds it takes for the victim to break free from the cocoon.
+    /// </summary>
+    [DataField]
+    public float BreakFreeDuration = 10.0f;
+
+    /// <summary>
+    /// Time in seconds it takes for someone to unwrap the cocoon.
+    /// </summary>
+    [DataField]
+    public float UnwrapDuration = 3.0f;
 }
 
 /// <summary>

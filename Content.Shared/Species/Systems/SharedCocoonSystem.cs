@@ -346,7 +346,7 @@ public abstract class SharedCocoonSystem : EntitySystem
         var doAfter = new DoAfterArgs(
             EntityManager,
             cocoonContainer,
-            TimeSpan.FromSeconds(10.0f),
+            TimeSpan.FromSeconds(cocoonComp.BreakFreeDuration),
             new BreakFreeDoAfterEvent(),
             cocoonContainer) // EventTarget - event will be raised on cocoon container
         {
@@ -616,7 +616,7 @@ public abstract class SharedCocoonSystem : EntitySystem
                 var doAfter = new DoAfterArgs(
                     EntityManager,
                     args.User,
-                    TimeSpan.FromSeconds(10.0f),
+                    TimeSpan.FromSeconds(component.UnwrapDuration),
                     new UnwrapDoAfterEvent(),
                     uid,
                     uid)
