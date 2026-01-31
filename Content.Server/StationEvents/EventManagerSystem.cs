@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Components;
@@ -15,13 +14,13 @@ namespace Content.Server.StationEvents;
 
 public sealed class EventManagerSystem : EntitySystem
 {
-    [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _random = default!;
-    [Robust.Shared.IoC.Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Robust.Shared.IoC.Dependency] private readonly EntityTableSystem _entityTable = default!;
-    [Robust.Shared.IoC.Dependency] public readonly GameTicker GameTicker = default!;
-    [Robust.Shared.IoC.Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] public readonly GameTicker GameTicker = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
     public bool EventsEnabled { get; private set; }
     private void SetEnabled(bool value) => EventsEnabled = value;
@@ -75,7 +74,6 @@ public sealed class EventManagerSystem : EntitySystem
     /// <summary>
     /// Builds a list of all possible events and their probabilities.
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IEnumerable<(EntProtoId, double)> ListLimitedEvents(
         EntityTableSelector limitedEventsTable,
         TimeSpan? currentTime = null,
@@ -98,7 +96,6 @@ public sealed class EventManagerSystem : EntitySystem
         return TryBuildLimitedEvents(selectedEvents, out limitedEvents, currentTime, playerCount);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IEnumerable<(EntProtoId, double)> ListLimitedEvents(
         IEnumerable<(EntProtoId, double)> selectedEvents,
         TimeSpan? currentTime = null,
@@ -116,10 +113,7 @@ public sealed class EventManagerSystem : EntitySystem
         foreach (var (eventId, prob) in selectedEvents)
         {
             if (!_prototype.Resolve(eventId, out var eventproto))
-            {
-                Log.Warning("An event ID has no prototype index!");
                 continue;
-            }
 
             if (eventproto.Abstract)
                 continue;
