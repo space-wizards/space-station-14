@@ -1,0 +1,22 @@
+- type: antagLoadout
+  id: Wizard
+  roleLoadout:
+  - RoleSurvivalExtended
+  briefing:
+    text: wizard-role-greeting
+    color: Turquoise
+    # TODO: Need Wizard Start sound
+    #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
+  startingGear: WizardBlueGear
+  # TODO: WizardComp as needed
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - Wizard
+  - type: RandomMetadata
+    nameSegments:
+    - NamesWizardFirst
+    - NamesWizardLast
+    nameFormat: name-format-wizard
+  mindRoles:
+  - MindRoleWizard

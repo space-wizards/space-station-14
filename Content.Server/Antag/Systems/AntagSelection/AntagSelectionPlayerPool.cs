@@ -3,7 +3,7 @@ using System.Linq;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Antag;
+namespace Content.Server.Antag.Systems.AntagSelection;
 
 public sealed class AntagSelectionPlayerPool (List<List<ICommonSession>> orderedPools)
 {
