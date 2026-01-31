@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant, beck-thompson, FairlySadPanda
-  changes:
-  - message: Players can now be banned from enabling/taking antag roles.
-    type: Add
-  id: 8972
-  time: '2025-09-17T21:59:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35966
 - author: SurrealShibe
   changes:
   - message: The Satanic Bible's pentagram has been turned right-side-up.
@@ -3999,3 +3992,11 @@
   id: 9478
   time: '2026-01-30T23:31:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37949
+- author: SlamBamActionman
+  changes:
+  - message: Mime PDAs no longer have the NanoTask and Notekeeper applications installed
+      by default.
+    type: Remove
+  id: 9479
+  time: '2026-01-31T22:38:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42706
