@@ -9,8 +9,9 @@ namespace Content.Shared.Trigger;
 /// Setting this to null will activate all triggers.
 /// </param>
 /// <param name="Handled">Marks the event as handled if at least one trigger effect was activated.</param>
+/// <param name="Predicted">Marks that this trigger is being replicated on the client.</param>
 [ByRefEvent]
-public record struct TriggerEvent(EntityUid? User = null, string? Key = null, bool Handled = false);
+public record struct TriggerEvent(EntityUid? User = null, string? Key = null, bool Predicted = true, bool Handled = false);
 
 /// <summary>
 /// Raised before a trigger is activated.

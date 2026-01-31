@@ -3,6 +3,7 @@ using Content.Server.Administration.Notes;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Commands;
 
@@ -46,7 +47,7 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
                 return;
         }
 
-        await _adminNotes.OpenEui(player, notedPlayer);
+        await _adminNotes.OpenEui(player, new NetUserId(notedPlayer));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

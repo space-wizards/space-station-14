@@ -1,0 +1,14 @@
+- type: entity
+  id: BaseMobHemocyanin
+  abstract: true
+  components:
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganAnimalLungs
+        - id: OrganArachnidHeart
+        - id: OrganAnimalStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalKidneys

@@ -1,86 +1,95 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.DoAfter;
+using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Medical;
 
 /// <summary>
 /// This is used for defibrillators; a machine that shocks a dead
 /// person back into the world of the living.
-/// Uses <c>ItemToggleComponent</c>
+/// Uses <see cref="ItemToggleComponent"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DefibrillatorComponent : Component
 {
     /// <summary>
     /// How much damage is healed from getting zapped.
     /// </summary>
-    [DataField("zapHeal", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), AutoNetworkedField]
     public DamageSpecifier ZapHeal = default!;
 
     /// <summary>
     /// The electrical damage from getting zapped.
     /// </summary>
-    [DataField("zapDamage"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public int ZapDamage = 5;
 
     /// <summary>
     /// How long the victim will be electrocuted after getting zapped.
     /// </summary>
-    [DataField("writheDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public TimeSpan WritheDuration = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    ///     ID of the cooldown use delay.
+    /// ID of the cooldown use delay.
     /// </summary>
     [DataField]
     public string DelayId = "defib-delay";
 
     /// <summary>
-    ///     Cooldown after using the defibrillator.
+    /// Cooldown after using the defibrillator.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// How long the doafter for zapping someone takes
+    /// How long the doafter for zapping someone takes.
     /// </summary>
     /// <remarks>
     /// This is synced with the audio; do not change one but not the other.
     /// </remarks>
-    [DataField("doAfterDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(3);
 
-    [DataField]
+    /// <summary>
+    /// If false cancels the doafter when moving.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public bool AllowDoAfterMovement = true;
 
-    [DataField]
+    /// <summary>
+    /// Can the defibrilator be used on mobs in critical mobstate?
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public bool CanDefibCrit = true;
 
     /// <summary>
-    /// The sound when someone is zapped.
+    /// The sound to play when someone is zapped.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("zapSound")]
+    [DataField]
     public SoundSpecifier? ZapSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_zap.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("chargeSound")]
+    /// <summary>
+    /// The sound to play when starting the doafter.
+    /// </summary>
+    [DataField]
     public SoundSpecifier? ChargeSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_charge.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("failureSound")]
+    [DataField]
     public SoundSpecifier? FailureSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_failed.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("successSound")]
+    [DataField]
     public SoundSpecifier? SuccessSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_success.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("readySound")]
+    [DataField]
     public SoundSpecifier? ReadySound = new SoundPathSpecifier("/Audio/Items/Defib/defib_ready.ogg");
 }
 
+/// <summary>
+/// DoAfterEvent for defibrilator use windup.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed partial class DefibrillatorZapDoAfterEvent : SimpleDoAfterEvent
-{
-
-}
+public sealed partial class DefibrillatorZapDoAfterEvent : SimpleDoAfterEvent;

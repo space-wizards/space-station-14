@@ -121,7 +121,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
         crusher.CrushEndTime = _timing.CurTime + crusher.CrushDuration;
-        crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent)?.Entity;
+        crusher.CrushingSoundEntity = AudioSystem.PlayPredicted(crusher.CrushingSound, ent, user)?.Entity ?? crusher.CrushingSoundEntity;
         _appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, true);
         Dirty(ent, ent.Comp1);
     }
@@ -135,10 +135,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         _appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, false);
 
         if (early)
-        {
-            AudioSystem.Stop(ent.Comp.CrushingSoundEntity);
-            ent.Comp.CrushingSoundEntity = null;
-        }
+            ent.Comp.CrushingSoundEntity = AudioSystem.Stop(ent.Comp.CrushingSoundEntity);
 
         Dirty(ent, ent.Comp);
     }

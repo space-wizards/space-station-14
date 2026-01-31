@@ -42,7 +42,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!args.CanReach
                 || !_solutionContainerSystem.TryGetRefillableSolution(entity.Owner, out _, out var solution)
                 || !HasComp<BloodstreamComponent>(args.Target)
-                || !_ingestion.HasMouthAvailable(args.Target.Value, args.User)
+                || !_ingestion.HasMouthAvailable(args.User, args.Target.Value)
                 )
             {
                 return;

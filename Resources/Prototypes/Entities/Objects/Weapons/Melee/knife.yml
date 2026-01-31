@@ -349,6 +349,7 @@
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
     offset: -0.15,0.0
+    removalTime: 1.5
   - type: LandAtCursor
   - type: DamageOtherOnHit
     ignoreResistances: true
@@ -361,7 +362,7 @@
   - type: ThrowingAngle
     angle: 225
   - type: StaticPrice
-    price: 500 # 2000 for a set of 4
+    price: 500 # 4000 for a set of 8
   - type: Fixtures
     fixtures:
       fix1:

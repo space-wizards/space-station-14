@@ -5,4 +5,3 @@ namespace Content.Client.Kitchen.EntitySystems;
 
 [UsedImplicitly]
 public sealed class ReagentGrinderSystem : SharedReagentGrinderSystem;
-

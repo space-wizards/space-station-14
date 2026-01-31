@@ -8,7 +8,7 @@
       time: 1h
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 5h
+      time: 10h
       inverted: true # stop playing intern if you're good at engineering!
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"

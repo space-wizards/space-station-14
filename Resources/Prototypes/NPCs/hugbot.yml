@@ -118,7 +118,7 @@
   query:
   - !type:ComponentQuery
     components:
-    - type: HumanoidAppearance
+    - type: HumanoidProfile
       species: Human # This specific value isn't actually used, so don't worry about it being just `Human`.
   - !type:ComponentFilter
     retainWithComp: false

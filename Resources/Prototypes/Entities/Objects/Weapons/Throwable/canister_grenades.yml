@@ -1,5 +1,5 @@
 - type: entity
-  parent: [VolatileGrenadeBase, GrenadeBase, BaseSecurityContraband ]
+  parent: [VolatileGrenadeBase, TimerGrenadeBase, BaseSecurityContraband ]
   id: SmokeGrenade
   name: smoke grenade
   description: A tactical grenade that releases a large, long-lasting cloud of smoke when used.
@@ -81,7 +81,7 @@
     price: 350
 
 - type: entity
-  parent: [ BaseEngineeringContraband, VolatileGrenadeBase, GrenadeBase ] # Prevent inheriting DeleteOnTrigger from SmokeGrenade
+  parent: [ BaseEngineeringContraband, VolatileGrenadeBase, TimerGrenadeBase ] # Prevent inheriting DeleteOnTrigger from SmokeGrenade
   id: AirGrenade
   name: air grenade
   description: A special solid state chemical grenade used for quickly releasing standard air into a spaced area. Fills up to 30 tiles!

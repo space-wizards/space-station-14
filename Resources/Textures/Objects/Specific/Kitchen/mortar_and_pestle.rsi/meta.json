@@ -1,0 +1,54 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by TheShuEd (Github) | Small tweaks to fill states, makeshift and inhands by ScarKy0 (Github)",
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "makeshift_icon"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        },
+        {
+            "name": "fill-3"
+        },
+        {
+            "name": "fill-4"
+        },
+        {
+            "name": "mortar_base"
+        },
+        {
+            "name": "makeshift_base"
+        },
+        {
+            "name": "pestle"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "makeshift-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "makeshift-inhand-left",
+            "directions": 4
+        }
+    ]
+}

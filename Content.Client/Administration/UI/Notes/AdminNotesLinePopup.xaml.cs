@@ -32,9 +32,9 @@ public sealed partial class AdminNotesLinePopup : Popup
         IdLabel.Text = Loc.GetString("admin-notes-id", ("id", note.Id));
         TypeLabel.Text = Loc.GetString("admin-notes-type", ("type", note.NoteType));
         SeverityLabel.Text = Loc.GetString("admin-notes-severity", ("severity", note.NoteSeverity ?? NoteSeverity.None));
-        RoundIdLabel.Text = note.Round == null
+        RoundIdLabel.Text = note.Rounds.Length == 0
             ? Loc.GetString("admin-notes-round-id-unknown")
-            : Loc.GetString("admin-notes-round-id", ("id", note.Round));
+            : Loc.GetString("admin-notes-round-id", ("id", string.Join(',', note.Rounds)));
         CreatedByLabel.Text = Loc.GetString("admin-notes-created-by", ("author", note.CreatedByName));
         CreatedAtLabel.Text = Loc.GetString("admin-notes-created-at", ("date", note.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")));
         EditedByLabel.Text = Loc.GetString("admin-notes-last-edited-by", ("author", note.EditedByName));

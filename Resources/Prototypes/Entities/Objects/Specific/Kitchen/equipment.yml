@@ -1,0 +1,170 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseHandheldGrinder
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      grinderOutput:
+        maxVol: 20
+  - type: SolutionTransfer
+  - type: DrawableSolution
+    solution: grinderOutput
+  - type: RefillableSolution
+    solution: grinderOutput
+  - type: DrainableSolution
+    solution: grinderOutput
+  - type: Edible
+    edible: Drink
+    solution: grinderOutput
+    destroyOnEmpty: false
+    utensil: Spoon
+  - type: MixableSolution
+    solution: grinderOutput
+  - type: ExaminableSolution
+    solution: grinderOutput
+    exactVolume: true
+  - type: SolutionItemStatus
+    solution: grinderOutput
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: fill-
+  - type: DnaSubstanceTrace
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Spillable
+    solution: grinderOutput
+  - type: Appearance
+  - type: HandheldGrinder
+
+# Mortars
+- type: entity
+  parent: BaseHandheldGrinder
+  id: MortarAndPestle
+  name: mortar and pestle
+  description: Used for grinding small amounts of objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    layers:
+    - state: icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: HandheldGrinder
+    finishedPopup: handheld-grinder-grinded
+
+- type: entity
+  parent: MortarAndPestle
+  id: MortarAndPestleMakeshift
+  name: makeshift mortar and pestle
+  description: Used for grinding small amounts of objects. Inferior version made out of wood.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    layers:
+    - state: makeshift_icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: makeshift-inhand-left
+      right:
+      - state: makeshift-inhand-right
+  - type: HandheldGrinder
+    doAfterDuration: 6
+  - type: Construction
+    graph: MakeshiftMortarAndPestle
+    node: mortarAndPestle
+
+# Juicers
+- type: entity
+  parent: BaseHandheldGrinder
+  id: HandheldJuicer
+  name: handheld juicer
+  description: Used for juicing small amounts of objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/handheld_juicer.rsi
+    layers:
+    - state: juicer_base
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+    - state: cap
+  - type: HandheldGrinder
+    finishedPopup: handheld-grinder-juiced
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Items/Culinary/juicer_juicing.ogg # Pasta mixing sound. Close enough.
+      params:
+        loop: true
+    program: Juice
+
+- type: entity
+  parent: HandheldJuicer
+  id: HandheldJuicerMakeshift
+  name: makeshift juicer
+  description: Used for juicing small amounts of objects. Inferior version made out of wood.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/handheld_juicer.rsi
+    layers:
+    - state: makeshift_base
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+    - state: cap
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: makeshift-inhand-left
+      right:
+      - state: makeshift-inhand-right
+  - type: HandheldGrinder
+    doAfterDuration: 6
+  - type: Construction
+    graph: MakeshiftJuicer
+    node: juicer
+
+# Construction
+- type: entity
+  name: incomplete mortar and pestle
+  parent: BaseItem
+  id: IncompleteMortarAndPestle
+  description: A few planks of wood stuck together.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    state: makeshift_base
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: makeshift-inhand-left
+      right:
+      - state: makeshift-inhand-right
+  - type: Construction
+    graph: MakeshiftMortarAndPestle
+    node: incompleteMortarAndPestle
+
+- type: entity
+  name: incomplete handheld juicer
+  parent: BaseItem
+  id: IncompleteHandheldJuicer
+  description: A some wood and plastic stuck together.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/handheld_juicer.rsi
+    state: makeshift_base
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: makeshift-inhand-left
+      right:
+      - state: makeshift-inhand-right
+  - type: Construction
+    graph: MakeshiftJuicer
+    node: incompleteJuicer

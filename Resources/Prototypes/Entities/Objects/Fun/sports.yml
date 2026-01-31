@@ -1,0 +1,159 @@
+# When adding new sports, also add them to id: AllMiscToysTable
+# File for SPORTS and the various oddly shaped objects used while playing them
+
+## Balls
+
+- type: entity
+  abstract: true
+  id: BaseSportsBall # How about that game with the pigskin?
+  components:
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound: &SoundSportsBounce
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: EmitSoundOnCollide
+    sound: *SoundSportsBounce
+  - type: EmitSoundOnLand
+    sound: *SoundSportsBounce
+
+- type: entity
+  parent: [ BaseItem, BaseSportsBall ]
+  id: Basketball
+  name: basketball
+  description: Where dah courts at?
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balls/basketball.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.8 # bouncy
+        friction: 0.2
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/Balls/basketball.rsi
+  - type: TileFrictionModifier
+    modifier: 0.5
+
+- type: entity
+  parent: [ BaseItem, BaseSportsBall ]
+  id: Football
+  name: football
+  description: Otherwise known as a handegg.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balls/football.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.5 # a little bouncy
+        friction: 0.2
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/Balls/football.rsi
+
+- type: entity
+  parent: [ BaseItem, BaseSportsBall ]
+  id: TennisBall
+  name: tennis ball
+  description: A fuzzy orb of endless betrayal.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balls/tennisball.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.5 # a little bouncy
+        friction: 0.2
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/Balls/tennisball.rsi
+  - type: EmitSoundOnUse
+    sound:
+      collection: ToySqueak
+      params:
+        volume: -4
+  - type: UseDelay
+  - type: Clothing
+    slots: [mask]
+  - type: Tag
+    tags:
+    - PetWearable
+
+- type: entity
+  parent: [ BaseItem, BaseSportsBall ]
+  id: BeachBall
+  name: beach ball
+  description: The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balls/beach_ball.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.3
+          position: "0,-0.2"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.2 # not bouncy
+        friction: 0.2
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/Balls/beach_ball.rsi
+  - type: TileFrictionModifier
+    modifier: 0.05
+
+- type: entity
+  parent: BeachBall
+  id: EvilBeachBall
+  suffix: EVIL/ADMEME
+  description: Someone's drawn ">:3c" on the side of this beach ball in indelible ink.
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.3
+          position: "0,-0.2"
+        density: 20
+        mask:
+        - ThrownItem
+        restitution: 0.5 # very bouncy
+        friction: 0.2
+  - type: LaunchOnTrigger
+    impulse: 100.0
+    keysIn:
+    - OnCollide
+  - type: StaminaDamageOnTrigger
+    stamina: 25.0
+    keysIn:
+    - OnCollide
+    targetUser: true
+  - type: DamageOnTrigger
+    damage:
+      types:
+        Blunt: 20
+    keysIn:
+    - OnCollide
+    targetUser: true

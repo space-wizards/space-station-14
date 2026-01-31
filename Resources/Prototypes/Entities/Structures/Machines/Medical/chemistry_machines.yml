@@ -76,7 +76,13 @@
           False: { visible: False }
   - type: Machine
     board: ElectrolysisUnitMachineCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 0
+  - type: PowerState
+    idlePowerDraw: 0
+    workingPowerDraw: 1000 # for a lab-grade machine
 
+# TODO centrifuge should spill the vial if the lid is off
 - type: entity
   id: MachineCentrifuge
   parent: BaseTabletopChemicalMachine
@@ -123,3 +129,8 @@
             - CentrifugeCompatible
   - type: Machine
     board: CentrifugeMachineCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 0
+  - type: PowerState
+    idlePowerDraw: 0
+    workingPowerDraw: 500

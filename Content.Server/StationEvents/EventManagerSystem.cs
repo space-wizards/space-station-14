@@ -25,29 +25,21 @@ public sealed class EventManagerSystem : EntitySystem
     public bool EventsEnabled { get; private set; }
     private void SetEnabled(bool value) => EventsEnabled = value;
 
+    public Dictionary<EntityPrototype, StationEventComponent>? AllEventCache;
+
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
         Subs.CVar(_configurationManager, CCVars.EventsEnabled, SetEnabled, true);
     }
 
-    /// <summary>
-    /// Randomly runs a valid event.
-    /// </summary>
-    [Obsolete("use overload taking EnityTableSelector instead or risk unexpected results")]
-    public void RunRandomEvent()
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        var randomEvent = PickRandomEvent();
-
-        if (randomEvent == null)
-        {
-            var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
-            Log.Error(errStr);
-            return;
-        }
-
-        GameTicker.AddGameRule(randomEvent);
+        if (args.WasModified<EntityPrototype>())
+            AllEventCache = GetAllEvents();
     }
 
     /// <summary>
@@ -55,17 +47,16 @@ public sealed class EventManagerSystem : EntitySystem
     /// </summary>
     public void RunRandomEvent(EntityTableSelector limitedEventsTable)
     {
-        var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions.
-                                                 // Putting this here only makes any sense in the context of the toolshed commands in BasicStationEventScheduler. Kill me.
-
-        if (!TryBuildLimitedEvents(limitedEventsTable, availableEvents, out var limitedEvents))
+        if (!TryBuildLimitedEvents(limitedEventsTable, out var limitedEvents))
         {
             Log.Warning("Provided event table could not build dict!");
             return;
         }
 
-        var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
-        if (randomLimitedEvent == null)
+        // This picks the event. Arguably we should be doing this with GetSpawns but that would be a massive amount of YAML slop.
+        // Or you'd need a new table prototype which inherits from EntityTables with its own logic for events.
+        // It's a ton of effort that only results in Events being able to use GroupSelectors so not worth it unless you're insane.
+        if (FindEvent(limitedEvents) is not { } randomLimitedEvent)
         {
             Log.Warning("The selected random event is null!");
             return;
@@ -80,27 +71,51 @@ public sealed class EventManagerSystem : EntitySystem
         GameTicker.AddGameRule(randomLimitedEvent);
     }
 
-    /// <summary>
-    /// Returns true if the provided EntityTableSelector gives at least one prototype with a StationEvent comp.
-    /// </summary>
+    /// <inheritdoc cref="TryBuildLimitedEvents(IEnumerable{EntProtoId},out Dictionary{EntityPrototype,StationEventComponent},TimeSpan?,int?)"/>
+    public bool TryListLimitedEvents(
+        EntityTableSelector limitedEventsTable,
+        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
+        TimeSpan? currentTime = null,
+        int? playerCount = null)
+    {
+        var selectedEvents = _entityTable.ListSpawns(limitedEventsTable);
+
+        return TryBuildLimitedEvents(selectedEvents, out limitedEvents, currentTime, playerCount);
+    }
+
+    /// <inheritdoc cref="TryBuildLimitedEvents(IEnumerable{EntProtoId},out Dictionary{EntityPrototype,StationEventComponent},TimeSpan?,int?)"/>
     public bool TryBuildLimitedEvents(
         EntityTableSelector limitedEventsTable,
-        Dictionary<EntityPrototype, StationEventComponent> availableEvents,
-        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents
-        )
+        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
+        TimeSpan? currentTime = null,
+        int? playerCount = null)
+    {
+        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
+
+        return TryBuildLimitedEvents(selectedEvents, out limitedEvents, currentTime, playerCount);
+    }
+
+    /// <summary>
+    /// Builds a dictionary of valid event prototypes from a list of <see cref="EntProtoId"/>.
+    /// Dictionary output consists of the valid prototype as the key, and the <see cref="StationEventComponent"/> as the value.
+    /// </summary>
+    /// <param name="selectedEvents">List of events we're selecting from.</param>
+    /// <param name="limitedEvents">Dictionary we're outputting.</param>
+    /// <param name="currentTime">Optional override for station time.</param>
+    /// <param name="playerCount">Optional override for playerCount.</param>
+    /// <returns>Returns true if the provided EntProtoId list has at least one prototype with a StationEventComp that can successfully run!</returns>
+    public bool TryBuildLimitedEvents(
+        IEnumerable<EntProtoId> selectedEvents,
+        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
+        TimeSpan? currentTime = null,
+        int? playerCount = null)
     {
         limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
 
-        if (availableEvents.Count == 0)
-        {
-            Log.Warning("No events were available to run!");
-            return false;
-        }
+        playerCount ??= _playerManager.PlayerCount;
 
-        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
-
-        if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
-            return false;
+        // playerCount does a lock so we'll just keep the variable here
+        currentTime ??= GameTicker.RoundDuration();
 
         foreach (var eventid in selectedEvents)
         {
@@ -119,7 +134,7 @@ public sealed class EventManagerSystem : EntitySystem
             if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
                 continue;
 
-            if (!availableEvents.ContainsKey(eventproto))
+            if (!CanRun(eventproto, stationEvent, playerCount.Value, currentTime.Value))
                 continue;
 
             limitedEvents.Add(eventproto, stationEvent);
@@ -183,16 +198,13 @@ public sealed class EventManagerSystem : EntitySystem
     /// <param name="currentTimeOverride">Override for round time, if using this to simulate events rather than in an actual round.</param>
     /// <returns></returns>
     public Dictionary<EntityPrototype, StationEventComponent> AvailableEvents(
-        bool ignoreEarliestStart = false,
         int? playerCountOverride = null,
         TimeSpan? currentTimeOverride = null)
     {
         var playerCount = playerCountOverride ?? _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        var currentTime = currentTimeOverride ?? (!ignoreEarliestStart
-            ? GameTicker.RoundDuration()
-            : TimeSpan.Zero);
+        var currentTime = currentTimeOverride ?? GameTicker.RoundDuration();
 
         var result = new Dictionary<EntityPrototype, StationEventComponent>();
 
@@ -207,7 +219,19 @@ public sealed class EventManagerSystem : EntitySystem
         return result;
     }
 
+    /// <summary>
+    /// Returns all events prototypes which exist. Prioritizes the cache.
+    /// </summary>
+    /// <returns>All event prototypes, and their event component.</returns>
     public Dictionary<EntityPrototype, StationEventComponent> AllEvents()
+    {
+        return AllEventCache ?? GetAllEvents();
+    }
+
+    /// <summary>
+    /// Gets all event prototypes that exist. Private because you should be using the cache!
+    /// </summary>
+    private Dictionary<EntityPrototype, StationEventComponent> GetAllEvents()
     {
         var allEvents = new Dictionary<EntityPrototype, StationEventComponent>();
         foreach (var prototype in _prototype.EnumeratePrototypes<EntityPrototype>())

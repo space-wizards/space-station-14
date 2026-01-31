@@ -83,6 +83,21 @@ public abstract partial class EntityTableSelector
         return success;
     }
 
+    /// <summary>
+    /// Gets the spawns in a given table, ignoring the requirements for the table.
+    /// This should only be used for debugging!
+    /// </summary>
+    public IEnumerable<EntProtoId> ListSpawns(System.Random rand,
+        IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx)
+    {
+        foreach (var spawn in GetSpawnsImplementation(rand, entMan, proto, ctx))
+        {
+            yield return spawn;
+        }
+    }
+
     protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
         IPrototypeManager proto,

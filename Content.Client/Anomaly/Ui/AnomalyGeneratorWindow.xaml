@@ -1,4 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 Title="{Loc 'anomaly-generator-ui-title'}"
 
@@ -32,7 +32,7 @@
             </BoxContainer>
             <!--Sprite View-->
             <PanelContainer Margin="12 0 0 0"
-                            StyleClasses="Inset"
+                            StyleClasses="BackgroundPanelDark"
                             VerticalAlignment="Center">
                 <SpriteView Name="EntityView"
                             SetSize="96 96"

@@ -1,6 +1,6 @@
 - type: entity
   name: civilian
-  parent: BaseMobHuman
+  parent: MobHuman
   id: MobCivilian
   description: A miserable pile of secrets.
   components:
@@ -14,7 +14,7 @@
 
 - type: entity
   name: salvager
-  parent: BaseMobHuman
+  parent: MobHuman
   id: MobSalvager
   components:
     - type: NpcFactionMember
@@ -31,7 +31,7 @@
 
 - type: entity
   name: spirate
-  parent: BaseMobHuman
+  parent: MobHuman
   id: MobSpirate
   description: Yarr!
   components:
@@ -49,7 +49,7 @@
 
 - type: entity
   name: syndicate footsoldier
-  parent: BaseMobHuman
+  parent: MobHuman
   id: MobSyndicateFootsoldier
   components:
     - type: NpcFactionMember
@@ -70,7 +70,7 @@
   id: MobSyndicateFootsoldierPilot
 
 - type: entity
-  parent: BaseMobHuman
+  parent: MobHuman
   suffix: Dead
   save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse

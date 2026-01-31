@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 12/07/2025 23:11:47
-  entityCount: 36093
+  time: 01/08/2026 20:58:33
+  entityCount: 36094
 maps:
 - 1
 grids:
@@ -55521,6 +55521,11 @@ entities:
     - type: Transform
       pos: 100.5,28.5
       parent: 13329
+  - uid: 36094
+    components:
+    - type: Transform
+      pos: 90.5,-28.5
+      parent: 13329
 - proto: CableApcStack
   entities:
   - uid: 12137
@@ -110770,13 +110775,6 @@ entities:
       parent: 13329
     - type: FaxMachine
       name: Captain's Quarters
-- proto: FigureSpawner
-  entities:
-  - uid: 32776
-    components:
-    - type: Transform
-      pos: 113.5,23.5
-      parent: 13329
 - proto: filingCabinetDrawerRandom
   entities:
   - uid: 6359
@@ -154362,7 +154360,7 @@ entities:
     - type: Transform
       pos: 83.5,47.5
       parent: 13329
-- proto: GlowstickBase
+- proto: GlowstickGreen
   entities:
   - uid: 32201
     components:
@@ -165435,6 +165433,13 @@ entities:
     - type: Transform
       pos: 1.4764897,-9.408998
       parent: 13329
+- proto: MechFigurineSpawner50
+  entities:
+  - uid: 32776
+    components:
+    - type: Transform
+      pos: 113.5,23.5
+      parent: 13329
 - proto: MedicalBed
   entities:
   - uid: 10466
@@ -167577,6 +167582,38 @@ entities:
     components:
     - type: Transform
       pos: 110.72576,10.415595
+      parent: 13329
+- proto: PlushieSpawner50
+  entities:
+  - uid: 4857
+    components:
+    - type: Transform
+      pos: 8.5,5.5
+      parent: 13329
+  - uid: 6766
+    components:
+    - type: Transform
+      pos: 67.5,-42.5
+      parent: 13329
+  - uid: 29363
+    components:
+    - type: Transform
+      pos: 66.5,4.5
+      parent: 13329
+  - uid: 32700
+    components:
+    - type: Transform
+      pos: 79.5,25.5
+      parent: 13329
+  - uid: 32774
+    components:
+    - type: Transform
+      pos: 105.5,26.5
+      parent: 13329
+  - uid: 32775
+    components:
+    - type: Transform
+      pos: 110.5,28.5
       parent: 13329
 - proto: PoppySeeds
   entities:
@@ -200244,38 +200281,6 @@ entities:
     components:
     - type: Transform
       pos: 81.526825,53.41681
-      parent: 13329
-- proto: ToySpawner
-  entities:
-  - uid: 4857
-    components:
-    - type: Transform
-      pos: 8.5,5.5
-      parent: 13329
-  - uid: 6766
-    components:
-    - type: Transform
-      pos: 67.5,-42.5
-      parent: 13329
-  - uid: 29363
-    components:
-    - type: Transform
-      pos: 66.5,4.5
-      parent: 13329
-  - uid: 32700
-    components:
-    - type: Transform
-      pos: 79.5,25.5
-      parent: 13329
-  - uid: 32774
-    components:
-    - type: Transform
-      pos: 105.5,26.5
-      parent: 13329
-  - uid: 32775
-    components:
-    - type: Transform
-      pos: 110.5,28.5
       parent: 13329
 - proto: TrainingBomb
   entities:

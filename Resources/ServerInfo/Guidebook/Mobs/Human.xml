@@ -2,7 +2,7 @@
   # Humans
 
   <Box>
-    <GuideEntityEmbed Entity="MobHumanDummy" Caption=""/>
+    <GuideEntityEmbed Entity="AppearanceHuman" Caption=""/>
   </Box>
 
   Depending on who you ask, humans are either unremarkable or the universal standard to which everything else is compared.

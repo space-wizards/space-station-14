@@ -402,6 +402,8 @@
     containers:
       entity_storage: !type:AllSelector
         children:
+        - id: CrazyGlue
+        - id: CrazyLube
         - !type:NestedSelector
           tableId: AllToyWeaponsTable
           rolls: 2

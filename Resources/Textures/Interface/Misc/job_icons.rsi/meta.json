@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken and modified from /tg/station113 from https://github.com/tgstation/tgstation/blob/ce6beb8a4d61235d9a597a7126c407160ed674ea/icons/mob/huds/hud.dmi | Brigmedic icon made by PuroSlavKing (Github) | Zombie icon made by RamZ | Zookeper by netwy (discort) | Rev and Head Rev icon taken from https://tgstation13.org/wiki/HUD and edited by coolmankid12345 (Discord) | Admin recolored from MedicalIntern by TsjipTsjip | StationAi resprite to 8x8 size by lunarcomets | Service Worker resprite by anno_midi (Discord) and spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github) | paradoxClone taken from tg station at commit https://github.com/tgstation/tgstation/commit/d0db1ff267557017ae7bde68e6490e70cbb6e42f and modifed by slarticodefast (Github) | Boxer, Chaplain, Janitor, Lawyer, Librarian recoloured by K-Dynamic (github) | Cluwne icon by Professor Renderer (Discord) | QuarterMaster modified by K-Dynamic (github) | Mime and Musician recolor by DinnerCalzone (github) at https://github.com/impstation/imp-station-14/commit/233161f02bab7f9f9c03f09f39638ea7c200ee24 | Wizard originally by ScarKy0 (github) at https://github.com/space-wizards/space-station-14/commit/7c6028bc8037306536dca68f3c2cdd5edec56d14, edited by DinnerCalzone (github) | SyndicateCommander/Corpsman/Operative originally by Archeel1 (github) at https://github.com/space-wizards/space-station-14/commit/1a92ada, edited by DinnerCalzone (github)",
+    "copyright": "Taken and modified from /tg/station113 from https://github.com/tgstation/tgstation/blob/ce6beb8a4d61235d9a597a7126c407160ed674ea/icons/mob/huds/hud.dmi | Brigmedic icon made by PuroSlavKing (Github) | Zombie icon made by RamZ | Zookeper by netwy (discort) | Rev and Head Rev icon taken from https://tgstation13.org/wiki/HUD and edited by coolmankid12345 (Discord) | Admin recolored from MedicalIntern by TsjipTsjip | StationAi resprite to 8x8 size by lunarcomets | Service Worker resprite by anno_midi (Discord) and spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github) | paradoxClone taken from tg station at commit https://github.com/tgstation/tgstation/commit/d0db1ff267557017ae7bde68e6490e70cbb6e42f and modifed by slarticodefast (Github) | Boxer, Chaplain, Janitor, Lawyer, Librarian recoloured by K-Dynamic (github) | Cluwne icon by Professor Renderer (Discord) | QuarterMaster modified by K-Dynamic (github) | Mime and Musician recolor by DinnerCalzone (github) at https://github.com/impstation/imp-station-14/commit/233161f02bab7f9f9c03f09f39638ea7c200ee24 | Wizard originally by ScarKy0 (github) at https://github.com/space-wizards/space-station-14/commit/7c6028bc8037306536dca68f3c2cdd5edec56d14, edited by DinnerCalzone (github) | SyndicateCommander/Corpsman/Operative originally by Archeel1 (github) at https://github.com/space-wizards/space-station-14/commit/1a92ada, edited by DinnerCalzone (github), ninja icon by ThatGuyUSA (github)",
     "size": {
         "x": 8,
         "y": 8
@@ -131,6 +131,9 @@
             "name": "Nanotrasen"
         },
         {
+            "name": "Ninja"
+        },
+        {
             "name": "NoId"
         },
         {
@@ -141,6 +144,9 @@
         },
         {
             "name": "Passenger"
+        },
+        {
+            "name": "Pirate"
         },
         {
             "name": "Prisoner"
@@ -230,10 +236,10 @@
             "name": "Wizard"
         },
         {
-            "name": "Zombie"
+            "name": "Zookeeper"
         },
         {
-            "name": "Zookeeper"
+            "name": "Zombie"
         }
     ]
 }

@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 268.0.0
+  engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 12/20/2025 12:50:17
-  entityCount: 581
+  time: 01/16/2026 03:06:16
+  entityCount: 591
 maps: []
 grids:
 - 1
@@ -1473,6 +1473,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+      storage: 425
 - proto: CableHV
   entities:
   - uid: 139
@@ -1534,6 +1535,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+      storage: 425
 - proto: CableMV
   entities:
   - uid: 149
@@ -1910,6 +1912,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+      storage: 425
 - proto: CableTerminal
   entities:
   - uid: 138
@@ -2041,14 +2044,24 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 339
-          - 341
-          - 343
-          - 342
-          - 345
-          - 344
+          - 455
+          - 453
+          - 370
           - 340
           - 346
+          - 341
+          - 344
+          - 342
+          - 456
+          - 586
+          - 587
+          - 588
+          - 589
+          - 345
+          - 343
+          - 339
+          - 590
+          - 591
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -2473,32 +2486,23 @@ entities:
       parent: 1
 - proto: SheetGlass
   entities:
-  - uid: 341
+  - uid: 586
     components:
     - type: Transform
       parent: 425
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+      storage: 425
+  - uid: 589
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
 - proto: SheetPlasteel
-  entities:
-  - uid: 342
-    components:
-    - type: Transform
-      parent: 425
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: SheetPlastic
-  entities:
-  - uid: 344
-    components:
-    - type: Transform
-      parent: 425
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: SheetSteel
   entities:
   - uid: 340
     components:
@@ -2507,6 +2511,35 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+      storage: 425
+  - uid: 342
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+- proto: SheetPlastic
+  entities:
+  - uid: 341
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+  - uid: 344
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+- proto: SheetSteel
+  entities:
   - uid: 346
     components:
     - type: Transform
@@ -2514,6 +2547,71 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+      storage: 425
+  - uid: 370
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+  - uid: 453
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+  - uid: 455
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+  - uid: 456
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+  - uid: 587
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+  - uid: 588
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+  - uid: 590
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
+  - uid: 591
+    components:
+    - type: Transform
+      parent: 425
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 425
 - proto: SignalButton
   entities:
   - uid: 584

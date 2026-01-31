@@ -1,0 +1,9 @@
+- files: ["mortar_grinding.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from freesound, cleaned up and sped up. Coverted to .ogg"
+  source: "https://freesound.org/people/OlyveBone/sounds/486995/"
+
+- files: ["juicer_juicing.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Taken from freesound. Converted to .ogg"
+  source: "https://freesound.org/people/Edo333/sounds/272208/"

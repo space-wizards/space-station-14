@@ -87,16 +87,14 @@
         whitelist:
           components:
             - FitsInDispenser
-  - type: HealthAnalyzer
-    scanDelay: 0
   - type: UserInterface
     interfaces:
-      enum.HealthAnalyzerUiKey.Key:
-        type: HealthAnalyzerBoundUserInterface
+      enum.CryoPodUiKey.Key:
+        type: CryoPodBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ActivatableUI
-    key: enum.HealthAnalyzerUiKey.Key
+    key: enum.CryoPodUiKey.Key
     requiresComplex: false
   - type: ActivatableUIRequiresPower
   - type: PointLight
@@ -107,6 +105,10 @@
   - type: EmptyOnMachineDeconstruct
     containers:
       - scanner-body
+  - type: SolutionContainerManager
+    solutions:
+      injectionBuffer:
+        maxVol: 50
   - type: CryoPod
   - type: CryoPodAir
   - type: Climbable # so that ejected bodies don't get stuck

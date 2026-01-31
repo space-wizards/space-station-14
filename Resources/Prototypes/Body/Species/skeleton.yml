@@ -1,0 +1,244 @@
+- type: markingsGroup
+  id: Skeleton
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceSkeletonPerson
+  name: skeletonperson appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: InitialBody
+    organs:
+      Torso: OrganSkeletonPersonTorso
+      Head: OrganSkeletonPersonHead
+      ArmLeft: OrganSkeletonPersonArmLeft
+      ArmRight: OrganSkeletonPersonArmRight
+      HandRight: OrganSkeletonPersonHandRight
+      HandLeft: OrganSkeletonPersonHandLeft
+      LegLeft: OrganSkeletonPersonLegLeft
+      LegRight: OrganSkeletonPersonLegRight
+      FootLeft: OrganSkeletonPersonFootLeft
+      FootRight: OrganSkeletonPersonFootRight
+  - type: HumanoidProfile
+    species: Skeleton
+
+- type: entity
+  parent:
+  - AppearanceSkeletonPerson
+  - BaseSpeciesMob
+  id: MobSkeletonPerson
+  name: Urist McSkelly
+  components:
+  - type: Damageable
+    damageContainer: BiologicalMetaphysical
+    damageModifierSet: Skeleton
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#555555AA"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      150: Dead
+  - type: TransferMindOnGib
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:GibBehavior
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.9
+      80: 0.7
+  - type: Speech
+    speechVerb: Skeleton
+  - type: ZombieImmune
+  - type: Vocal
+    sounds:
+      Male: Skeleton
+      Female: Skeleton
+      Unsexed: Skeleton
+  - type: SkeletonAccent
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPie
+    - reagents: [ Milk, MilkGoat, MilkSoy, MilkSpoiled ]
+      # add new types of milk to reagents as they appear, oat milk isn't on the list
+      # because turns out oat milk has 1/30th the amount of calcium in it compared to the rest
+      # even if it's a meme - I did research
+      methods: [ Touch ]
+      effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
+      - !type:HealthChange
+        damage:
+          groups: # these groups are the only 3 possible ways to damage a skeleton. numerical values obviously up to discussion
+            Burn: -1
+            Brute: -0.75
+            Metaphysical: -2 # Gameplay: skeletons need some way to heal holy damage. Lore: milk is an unholy liquid that shuns the light of god. (/j)
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "skeleton-healed-by-milk-popup" ]
+        probability: 0.25
+    - reagents: [ MilkOat ]
+      methods: [ Touch ]
+      effects:
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
+          probability: 0.5
+  - type: FireVisuals
+    alternateState: Standing
+  - type: FlashImmunity
+    showInExamine: false
+  - type: Instrument
+    program: 13 # Xylophone. Woodblock is 115 (another good option)
+  - type: ActivatableUI
+    blockSpectators: true # otherwise they can play client-side music
+    inHandsOnly: false
+    singleUser: true
+    requiresComplex: true
+    verbOnly: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+
+- type: entity
+  parent: OrganBase
+  id: OrganSkeletonPerson
+  abstract: true
+  suffix: SkeletonPerson
+
+- type: entity
+  parent: OrganSkeletonPerson
+  id: OrganSkeletonPersonExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Skeleton/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Skeleton/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Skeleton
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganSkeletonPersonExternal ]
+  id: OrganSkeletonPersonFootRight

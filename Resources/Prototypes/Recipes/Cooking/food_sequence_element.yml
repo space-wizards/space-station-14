@@ -533,7 +533,7 @@
   id: Cabbage
   name: food-sequence-content-cabbage
   sprites:
-  - sprite: Objects/Specific/Hydroponics/carrot.rsi
+  - sprite: Objects/Specific/Hydroponics/cabbage.rsi
     state: produce
   tags:
   - Vegetable

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, additional attributions available in the Resources/Textures/Tiles/attributions.yml file. Ice tile and Snow tile modifications, Astreroid tile and in-hands created by Southbridge-fur (github), Astro-asteroid by kosticia (Github)",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, additional attributions available in the Resources/Textures/Tiles/attributions.yml file. Ice tile and Snow tile modifications, Astreroid tile and in-hands created by Southbridge-fur (github), Astro-asteroid by kosticia (Github), Ironsands concrete variants modified from other concrete and inhands modified from generic inhands by SeaWyrm (github Aearo-Deepwater)",
     "size": {
         "x": 32,
         "y": 32
@@ -72,6 +72,23 @@
         },
         {
             "name": "oldconcrete-smooth"
+        },
+        {
+            "name": "ironsandconcrete"
+        },
+        {
+            "name": "ironsandconcrete-mono"
+        },
+        {
+            "name": "ironsandconcrete-smooth"
+        },
+        {
+            "name": "ironsandconcrete-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "ironsandconcrete-inhand-right",
+            "directions": 4
         },
         {
             "name": "gcircuit"
@@ -601,6 +618,20 @@
             "directions": 4
         },
         {
+            "name": "ironsand"
+        },
+        {
+            "name": "astro-ironsand"
+        },
+        {
+            "name": "ironsand-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "ironsand-inhand-left",
+            "directions": 4
+        },
+        {
             "name": "xenofloor"
         },
         {
@@ -618,10 +649,10 @@
         {
             "name": "dark-squiggly"
         },
-	{
-	    "name": "white-marble"
-	},
-	{
+        {
+            "name": "white-marble"
+        },
+        {
             "name": "white-marble-inhand-left",
             "directions": 4
         },

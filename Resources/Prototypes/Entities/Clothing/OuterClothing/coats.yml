@@ -10,7 +10,7 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, ClothingOuterArmorBase]
+  parent: [ ClothingOuterBaseMedium, ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSecurityContraband ]
   id: ClothingOuterCoatDetective
   name: detective trenchcoat
   description: An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business.
@@ -25,8 +25,6 @@
         children:
         - id: SmokingPipeFilledTobacco
         - id: FlippoEngravedLighter
-  - type: ExplosionResistance
-    damageCoefficient: 1 #its a coat. it doesnt do shit
 
 - type: entity
   parent: [ClothingOuterCoatDetectiveLoadout]
@@ -64,7 +62,7 @@
 
 - type: entity
   abstract: true
-  parent: AllowSuitStorageClothing
+  parent: [ ClothingOuterArmorBase, ClothingOuterStorageBase ]
   id: ClothingOuterArmorHoS
   components:
   - type: Armor
@@ -75,12 +73,10 @@
         Piercing: 0.6
         Heat: 0.7
         Caustic: 0.75 # not the full 90% from ss13 because of the head
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
 
 - type: entity
   abstract: true
-  parent: AllowSuitStorageClothing
+  parent: [ ClothingOuterArmorBase, ClothingOuterStorageBase ]
   id: ClothingOuterArmorWarden
   components:
   - type: Armor
@@ -91,11 +87,9 @@
         Piercing: 0.7
         Heat: 0.7
         Caustic: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
 
 - type: entity
-  parent: [ClothingOuterArmorHoS, ClothingOuterStorageBase, BaseSecurityCommandContraband]
+  parent: [BaseSecurityCommandContraband, ClothingOuterArmorHoS]
   id: ClothingOuterCoatHoSTrench
   name: head of security's armored trenchcoat
   description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
@@ -117,6 +111,16 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodChaplainHood
+
+- type: entity
+  parent: ClothingOuterCoatJensen
+  id: ClothingOuterCoatJensenSyndie
+  suffix: Syndie
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: SyndieHandyFlag
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -320,7 +324,7 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
 
 - type: entity
-  parent: [ClothingOuterArmorWarden, ClothingOuterStorageBase, BaseSecurityContraband]
+  parent: [ClothingOuterArmorWarden, BaseSecurityContraband]
   id: ClothingOuterCoatWarden
   name: warden's armored jacket
   description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.

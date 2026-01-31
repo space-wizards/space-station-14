@@ -35,7 +35,7 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
             return;
         }
 
-        foreach (var entry in reagent.Metabolisms.Values)
+        foreach (var entry in reagent.Metabolisms.Metabolisms.Values)
         {
             foreach (var effect in entry.Effects)
             {

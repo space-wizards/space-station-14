@@ -13,6 +13,7 @@
         - HospitalCurtains
         - CurtainsBlack
         - CurtainsBlue
+        - CurtainsSkyBlue
         - CurtainsCyan
         - CurtainsGreen
         - CurtainsOrange
@@ -27,6 +28,7 @@
         - CurtainsOrangeOpen
         - CurtainsGreenOpen
         - CurtainsCyanOpen
+        - CurtainsSkyBlueOpen
         - CurtainsBlueOpen
         - CurtainsBlackOpen
         - HospitalCurtainsOpen

@@ -52,7 +52,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         return _admins.HasAdminFlag(admin, AdminFlags.ViewNotes);
     }
 
-    public async Task OpenEui(ICommonSession admin, Guid notedPlayer)
+    public async Task OpenEui(ICommonSession admin, NetUserId notedPlayer)
     {
         var ui = new AdminNotesEui();
         _euis.OpenEui(ui, admin);
@@ -144,8 +144,8 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
         var note = new SharedAdminNote(
             noteId,
-            (NetUserId) player,
-            roundId,
+            [(NetUserId) player],
+            roundId.HasValue ? [roundId.Value] : [],
             serverName,
             playtime,
             type,
@@ -172,8 +172,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             NoteType.Note => (await _db.GetAdminNote(id))?.ToShared(),
             NoteType.Watchlist => (await _db.GetAdminWatchlist(id))?.ToShared(),
             NoteType.Message => (await _db.GetAdminMessage(id))?.ToShared(),
-            NoteType.ServerBan => (await _db.GetServerBanAsNoteAsync(id))?.ToShared(),
-            NoteType.RoleBan => (await _db.GetServerRoleBanAsNoteAsync(id))?.ToShared(),
+            NoteType.ServerBan or NoteType.RoleBan => (await _db.GetBanAsNoteAsync(id))?.ToShared(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type")
         };
     }
@@ -200,11 +199,8 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             case NoteType.Message:
                 await _db.DeleteAdminMessage(noteId, deletedBy.UserId, deletedAt);
                 break;
-            case NoteType.ServerBan:
-                await _db.HideServerBanFromNotes(noteId, deletedBy.UserId, deletedAt);
-                break;
-            case NoteType.RoleBan:
-                await _db.HideServerRoleBanFromNotes(noteId, deletedBy.UserId, deletedAt);
+            case NoteType.ServerBan or NoteType.RoleBan:
+                await _db.HideBanFromNotes(noteId, deletedBy.UserId, deletedAt);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
@@ -280,15 +276,10 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             case NoteType.Message:
                 await _db.EditAdminMessage(noteId, message, editedBy.UserId, editedAt, expiryTime);
                 break;
-            case NoteType.ServerBan:
+            case NoteType.ServerBan or NoteType.RoleBan:
                 if (severity is null)
                     throw new ArgumentException("Severity cannot be null for a ban", nameof(severity));
-                await _db.EditServerBan(noteId, message, severity.Value, expiryTime, editedBy.UserId, editedAt);
-                break;
-            case NoteType.RoleBan:
-                if (severity is null)
-                    throw new ArgumentException("Severity cannot be null for a role ban", nameof(severity));
-                await _db.EditServerRoleBan(noteId, message, severity.Value, expiryTime, editedBy.UserId, editedAt);
+                await _db.EditBan(noteId, message, severity.Value, expiryTime, editedBy.UserId, editedAt);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");

@@ -5,7 +5,6 @@ using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
-using System.Linq;
 using Content.Shared.Damage.Components;
 
 namespace Content.Client.Overlays;
@@ -32,9 +31,13 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
     {
         base.UpdateInternal(component);
 
-        foreach (var damageContainerId in component.Components.SelectMany(x => x.DamageContainers))
+        DamageContainers.Clear();
+        foreach (var comp in component.Components)
         {
-            DamageContainers.Add(damageContainerId);
+            foreach (var damageContainerId in comp.DamageContainers)
+            {
+                DamageContainers.Add(damageContainerId);
+            }
         }
     }
 

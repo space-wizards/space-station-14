@@ -1,0 +1,337 @@
+# When adding new "weapons", also add it to id: AllToyWeaponsTable
+# File for fun weapons that aren't very dangerous
+
+## Toy guns
+
+- type: entity
+  abstract: true
+  id: BaseToyGun
+  components:
+  - type: PacifismAllowedGun # They don't hurt!
+  - type: Gun
+    clumsyProof: true # Clown proficiency
+
+- type: entity
+  parent: [ BaseItem, BaseToyGun ]
+  id: FoamCrossbow
+  name: foam crossbow
+  description: Aiming this at Security may get you filled with lead.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Foam/foam_crossbow.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/Foam/foam_crossbow.rsi
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/energycrossbow_shoot.ogg
+  - type: BallisticAmmoProvider
+    whitelist: &WhitelistFoam
+      tags:
+      - BulletFoam
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+- type: entity
+  name: Foam Force Astro Ace
+  parent: [ BaseToyGun, BaseWeaponShotgun, BaseGunWieldable ]
+  id: WeaponRifleFoam
+  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Foam/foam_rifle.rsi
+  - type: Clothing
+    sprite: Objects/Fun/Foam/foam_rifle.rsi
+  - type: Item
+    sprite: Objects/Fun/Foam/foam_rifle_inhand_64x.rsi
+    size: Normal
+    shape:
+    - 0,0,3,0
+  - type: BallisticAmmoProvider
+    whitelist: *WhitelistFoam
+    capacity: 10
+    proto: BulletFoam
+  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  parent: [ BaseItem, BaseToyGun ]
+  id: RevolverCapGun
+  name: cap gun
+  description: Looks almost like the real thing! Ages 8 and up.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/capgun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-7
+    sprite: Objects/Fun/capgun.rsi
+  - type: Tag
+    tags:
+    - Sidearm
+    - ToySidearm
+  - type: AmmoCounter
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      params:
+        volume: 2.25
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeCap
+      - SpeedLoaderCap
+    proto: CartridgeCap
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+
+- type: entity
+  parent: RevolverCapGun
+  id: RevolverCapGunFake
+  suffix: Fake
+  components:
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeCap
+      - SpeedLoaderCap
+      - CartridgeMagnum
+      - SpeedLoaderMagnum
+    proto: CartridgeMagnumAP
+
+- type: entity
+  parent: [ BaseItem, BaseToyGun ]
+  id: WeaponStickyHand
+  name: sticky hand
+  description: They're saying you're reaching. They're saying it's a stretch. You'll show them all, and you'll stick it to them.
+  components:
+  - type: GrapplingGun
+    cycleSound: /Audio/Misc/woosh.ogg
+    ropeSprite:
+      sprite: Objects/Weapons/Guns/Launchers/sticky_hand.rsi
+      state: rope
+  - type: Gun
+    soundGunshot: /Audio/Misc/stickystretch.ogg
+    fireRate: 0.5
+    soundEmpty: /Audio/Misc/boing.ogg
+  - type: BasicEntityAmmoProvider
+    proto: StickyHandPalm
+    capacity: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/sticky_hand.rsi
+    state: base
+  - type: UseDelay
+    delay: 1.5
+
+## Toy swords
+
+- type: entity
+  abstract: true
+  id: BaseToySword
+  components:
+  - type: DisarmMalus
+    malus: -0.3 # Easy to disarm for epic reversals
+  - type: StaminaDamageOnHit
+    damage: 8 # Too small for real combat, but allows for foam fights to have a conclusion
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0.3 # Not even close to real damage, but creates the red flash to give the illusion of damage
+
+- type: entity
+  parent: [ BaseItem, BaseToySword ]
+  id: FoamBlade
+  name: foamblade
+  description: It says "Sternside Changs number 1 fan" on it.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Foam/foam_blade.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    angle: 0
+    animation: WeaponArcThrust
+    wideAnimationRotation: 90
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/Foam/foam_blade.rsi
+
+- type: entity
+  parent: [ BaseItem, BaseToySword ]
+  id: FoamCutlass
+  name: foam cutlass
+  description: Cosplay as a pirate and force your friends to walk the plank.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cutlass.rsi
+    state: foam_icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.5
+    range: 2.0
+  - type: Item
+    size: Normal
+    storedSprite:
+      state: foam_storage
+      sprite: Objects/Weapons/Melee/cutlass.rsi
+    shape:
+    - 0,0,0,2
+
+- type: entity
+  parent: [ BaseItem, BaseToySword ]
+  id: ToySword
+  name: toy sword
+  description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword.rsi
+    layers:
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: EnergySword
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 2
+    color: white
+    netsync: false
+  - type: Appearance
+  - type: ToggleableVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
+  - type: ItemTogglePointLight
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 0
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        variation: 0.125
+    activatedDamage:
+      types:
+        Heat: 0.3
+
+- type: entity
+  parent: [ BaseItem, BaseToySword ]
+  id: CardSword
+  name: cardboard sword
+  description: A cardboard tube fashioned into the shape of a sword.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/card_sword.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Fun/card_sword.rsi
+    slots:
+    - Back
+    - SuitStorage
+  - type: Appearance
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.25
+    soundHit:
+      path: /Audio/Items/Toys/card_tube_bonk.ogg
+  - type: Construction
+    graph: CardSword
+    node: cardSword
+  - type: Item
+    size: Normal
+    storedSprite:
+      state: icon
+      sprite: Objects/Fun/card_sword.rsi
+    shape:
+    - 0,0,1,3
+
+- type: entity
+  parent: [ BaseItem, BaseToySword ]
+  id: ToyHammer
+  name: rubber hammer
+  description: A brightly colored hammer made of rubber.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/rubber_hammer.rsi
+    state: icon
+  - type: WeaponRandom # 1 in 100,000 to "win" the "fight"
+    damageBonus:
+      types:
+        Blunt: 1000
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/rubber_hammer.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    soundHit: &SoundRubberHammer
+      collection: RubberHammer
+      params:
+        variation: 0.03
+        volume: 3
+    soundNoDamage: *SoundRubberHammer

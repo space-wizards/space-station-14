@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 271.2.0
   forkId: ""
   forkVersion: ""
-  time: 12/08/2025 00:21:38
-  entityCount: 31169
+  time: 01/27/2026 04:05:45
+  entityCount: 31167
 maps:
 - 1
 grids:
@@ -8811,6 +8811,8 @@ entities:
       id: Oasis
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
   - uid: 21002
     components:
     - type: MetaData
@@ -10071,6 +10073,8 @@ entities:
     - type: NavMap
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 1634
@@ -15513,7 +15517,7 @@ entities:
       pos: -22.5,26.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -245515.03
+      secondsUntilStateChange: -245564.78
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16369,7 +16373,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -344343.7
+      secondsUntilStateChange: -344393.44
       state: Opening
   - uid: 6934
     components:
@@ -16381,7 +16385,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -344346.3
+      secondsUntilStateChange: -344396.06
       state: Opening
   - uid: 6935
     components:
@@ -16393,7 +16397,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -344345.16
+      secondsUntilStateChange: -344394.9
       state: Opening
   - uid: 6936
     components:
@@ -16404,7 +16408,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -344344.38
+      secondsUntilStateChange: -344394.12
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -94431,11 +94435,6 @@ entities:
     - type: Transform
       pos: -2.5,20.5
       parent: 2
-  - uid: 505
-    components:
-    - type: Transform
-      pos: -2.5,20.5
-      parent: 2
   - uid: 1036
     components:
     - type: Transform
@@ -97302,13 +97301,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -55.5,-36.5
-      parent: 2
-- proto: FigureSpawner
-  entities:
-  - uid: 23863
-    components:
-    - type: Transform
-      pos: -2.5,-62.5
       parent: 2
 - proto: filingCabinetDrawerRandom
   entities:
@@ -100361,7 +100353,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -335667.7
+      secondsUntilStateChange: -335717.44
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -147316,7 +147308,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -372499.47
+      secondsUntilStateChange: -372549.22
       state: Opening
   - uid: 5211
     components:
@@ -150480,6 +150472,13 @@ entities:
     components:
     - type: Transform
       pos: -56.05085,0.6887263
+      parent: 2
+- proto: MechFigurineSpawner50
+  entities:
+  - uid: 23863
+    components:
+    - type: Transform
+      pos: -2.5,-62.5
       parent: 2
 - proto: MedicalBed
   entities:
@@ -153886,6 +153885,34 @@ entities:
     - type: Transform
       pos: 31.976513,24.950718
       parent: 1
+- proto: PlushieSpawner50
+  entities:
+  - uid: 20680
+    components:
+    - type: Transform
+      pos: -17.5,36.5
+      parent: 2
+  - uid: 20681
+    components:
+    - type: Transform
+      pos: -18.5,35.5
+      parent: 2
+  - uid: 22268
+    components:
+    - type: Transform
+      pos: 21.5,-5.5
+      parent: 21002
+  - uid: 23048
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 14.5,6.5
+      parent: 21002
+  - uid: 23050
+    components:
+    - type: Transform
+      pos: 14.5,-7.5
+      parent: 21002
 - proto: PonderingOrb
   entities:
   - uid: 23786
@@ -173818,7 +173845,7 @@ entities:
     - type: Transform
       pos: -23.5,33.5
       parent: 2
-- proto: SpacemenFigureSpawner
+- proto: SpacemenFigurineSpawner90
   entities:
   - uid: 20677
     components:
@@ -175105,13 +175132,6 @@ entities:
     components:
     - type: Transform
       pos: 47.5,-15.5
-      parent: 2
-- proto: SpawnPointZookeeper
-  entities:
-  - uid: 20864
-    components:
-    - type: Transform
-      pos: -19.5,-3.5
       parent: 2
 - proto: SpiderWeb
   entities:
@@ -182108,34 +182128,6 @@ entities:
     - type: Transform
       pos: 35.30755,22.53226
       parent: 2
-- proto: ToySpawner
-  entities:
-  - uid: 20680
-    components:
-    - type: Transform
-      pos: -17.5,36.5
-      parent: 2
-  - uid: 20681
-    components:
-    - type: Transform
-      pos: -18.5,35.5
-      parent: 2
-  - uid: 22268
-    components:
-    - type: Transform
-      pos: 21.5,-5.5
-      parent: 21002
-  - uid: 23048
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 14.5,6.5
-      parent: 21002
-  - uid: 23050
-    components:
-    - type: Transform
-      pos: 14.5,-7.5
-      parent: 21002
 - proto: TrashBag
   entities:
   - uid: 3060
@@ -204476,7 +204468,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -717704
+      secondsUntilStateChange: -717753.75
       state: Opening
   - uid: 28863
     components:

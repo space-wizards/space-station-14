@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Humanoid;
 using Content.Shared.Administration;
+using Content.Shared.Body;
 using Content.Shared.Cloning;
 using Content.Shared.Inventory;
 using Robust.Shared.Prototypes;
@@ -11,19 +12,19 @@ namespace Content.Server.Cloning.Commands;
 [ToolshedCommand, AdminCommand(AdminFlags.Fun)]
 public sealed class CloneCommand : ToolshedCommand
 {
-    private HumanoidAppearanceSystem? _appearance;
+    private SharedVisualBodySystem? _visualBody;
     private CloningSystem? _cloning;
     private MetaDataSystem? _metadata;
 
     [CommandImplementation("humanoidappearance")]
     public IEnumerable<EntityUid> HumanoidAppearance([PipedArgument] IEnumerable<EntityUid> targets, EntityUid source, bool rename)
     {
-        _appearance ??= GetSys<HumanoidAppearanceSystem>();
+        _visualBody ??= GetSys<SharedVisualBodySystem>();
         _metadata ??= GetSys<MetaDataSystem>();
 
         foreach (var ent in targets)
         {
-            _appearance.CloneAppearance(source, ent);
+            _visualBody.CopyAppearanceFrom(source, ent);
 
             if (rename)
                 _metadata.SetEntityName(ent, MetaData(source).EntityName, raiseEvents: true);
