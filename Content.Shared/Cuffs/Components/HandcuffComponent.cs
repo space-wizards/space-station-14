@@ -62,7 +62,7 @@ public sealed partial class HandcuffComponent : Component
     ///     Valid RSI states that this specific handcuff supports.
     /// </summary>
     [DataField]
-    public HashSet<string> ValidStates;
+    public HashSet<string> ValidStates = [];
 
     /// <summary>
     /// An optional color specification for <see cref="CuffedRSI"/>
