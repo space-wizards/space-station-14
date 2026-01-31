@@ -6,6 +6,7 @@
         <controls:SwitchButton Name="ShowIFFSwitch"
                                Text="{Loc 'iff-console-show-iff-label'}"
                                OnStateText="{Loc 'iff-console-on'}"
-                               OffStateText="{Loc 'iff-console-off'}"/>
+                               OffStateText="{Loc 'iff-console-off'}"
+                               StyleClasses="highlight"/>
     </BoxContainer>
 </controls:FancyWindow>
