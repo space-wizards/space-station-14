@@ -805,7 +805,8 @@ TowelColorMaroon: null
 TowelColorSilver: null
 TowelColorMime: null
 
-# 2025-01-22
+# 2026-01-30
 CrateEmergencyInternals: CrateEmergencyEVA
 CrateEmergencyInternalsLarge: CrateEmergencyEVA
 CrateNitrogenInternals: CrateEmergencyEVA
+CrateSecurityHelmet: null

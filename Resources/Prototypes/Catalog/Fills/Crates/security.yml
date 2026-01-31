@@ -2,24 +2,14 @@
   parent: CrateSecgear
   id: CrateSecurityArmor
   name: armor crate
-  description: Contains three bulletproof vests. Requires Security access to open.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage:
-        id: ClothingOuterArmorBulletproof
-        amount: 3
-
-- type: entity
-  parent: CrateSecgear
-  id: CrateSecurityHelmet
-  name: helmet crate
-  description: Contains three standard-issue brain buckets. Requires Security access to open.
+  description: Contains three standard-issue helmets and three bulletproof vests. Requires Security access to open.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage:
         id: ClothingHeadHelmetBasic
+        amount: 3
+        id: ClothingOuterArmorBulletproof
         amount: 3
 
 - type: entity
