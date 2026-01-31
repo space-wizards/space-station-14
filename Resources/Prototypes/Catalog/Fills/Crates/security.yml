@@ -8,10 +8,10 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        id: ClothingHeadHelmetBasic
-        amount: 3
-        id: ClothingOuterArmorBulletproof
-        amount: 3
+        - id: ClothingHeadHelmetBasic
+          amount: 3
+        - id: ClothingOuterArmorBulletproof
+          amount: 3
 
 - type: entity
   parent: CrateSecgear
