@@ -1013,7 +1013,7 @@
       map: [ "tank" ]
       visible: false
   - type: PneumaticCannon
-    gasUsage: 0.28
+    gasUsage: 0.5
     throwItems: false
     allowedGases:
     - Plasma
@@ -1027,7 +1027,7 @@
     steps: 5
     zeroVisible: true
   - type: Gun
-    fireRate: 2.2
+    fireRate: 2
     selectedMode: FullAuto
     availableModes:
     - FullAuto
@@ -1095,14 +1095,14 @@
       map: [ "tank" ]
       visible: false
   - type: PneumaticCannon
-    gasUsage: 0.08
+    gasUsage: 0.5 # uses less efficient process to get higher fire rate in a smaller footprint.
     throwItems: false
     allowedGases:
     - Plasma
   - type: Item
-    size: Large
+    size: Small
     shape:
-    - 0,0,2,1
+    - 0,0,1,1
     sprite: Objects/Weapons/Guns/Battery/chem_multilaser.rsi
   - type: MagazineVisuals
     magState: mag
@@ -1113,10 +1113,10 @@
     maxAngle: -7
   - type: Gun
     minAngle: 24
-    maxAngle: 45
+    maxAngle: 40
     angleIncrease: 4
     angleDecay: 16
-    fireRate: 6
+    fireRate: 7
     selectedMode: FullAuto
     availableModes:
     - FullAuto

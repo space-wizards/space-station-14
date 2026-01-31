@@ -212,10 +212,10 @@
   - type: GasTank
     outputPressure: 101.3
     air:
-      volume: 20
+      volume: 12
       moles:
-        - 0           # oxygen
-        - 0           # nitrogen
-        - 0           # CO2
-        - 8.2055162 # plasma
+        - 0  # oxygen
+        - 0  # nitrogen
+        - 0  # CO2
+        - 12 # plasma
       temperature: 293.15

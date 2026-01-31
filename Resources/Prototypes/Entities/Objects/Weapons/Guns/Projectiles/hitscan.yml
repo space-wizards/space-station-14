@@ -210,6 +210,7 @@
     damage:
       types:
         Heat: 17
+        Caustic: 3
         Structural: 8
   - type: HitscanBasicVisuals
     muzzleFlash:
@@ -229,7 +230,8 @@
   - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 9
+        Heat: 6
+        Caustic: 2
         Structural: 5
   - type: HitscanBasicVisuals
     muzzleFlash:
