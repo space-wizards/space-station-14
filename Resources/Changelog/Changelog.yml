@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Intellicards can now be obtained from the Station AI Electronics crates.
-    type: Add
-  id: 8968
-  time: '2025-09-16T15:35:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40401
-- author: ScarKy0
-  changes:
-  - message: Intellicards now get renamed to the name of the AI stored on them.
-    type: Add
-  id: 8969
-  time: '2025-09-16T19:04:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40402
-- author: Minemoder
-  changes:
-  - message: Ion Storms no longer have a chance to roll the Drone Lawset.
-    type: Remove
-  id: 8970
-  time: '2025-09-17T17:00:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40374
-- author: IProduceWidgets
-  changes:
-  - message: Gender pins no longer shuffle when EMP'd
-    type: Fix
-  id: 8971
-  time: '2025-09-17T21:49:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40425
 - author: Errant, beck-thompson, FairlySadPanda
   changes:
   - message: Players can now be banned from enabling/taking antag roles.
@@ -3998,3 +3970,32 @@
   id: 9474
   time: '2026-01-28T11:55:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42594
+- author: SlamBamActionman
+  changes:
+  - message: Silicons now see an indicator for jobs that are considered "crew" under
+      the normal crewsimov lawset.
+    type: Add
+  id: 9475
+  time: '2026-01-29T07:13:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37038
+- author: Princess-Cheeseballs
+  changes:
+  - message: Estoc DMR is now only purchasable by Nukies
+    type: Tweak
+  id: 9476
+  time: '2026-01-29T08:11:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42698
+- author: jessicamaybe
+  changes:
+  - message: Mobs that don't need internals no longer have the internals indicator
+    type: Tweak
+  id: 9477
+  time: '2026-01-30T05:30:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42705
+- author: Thinbug0
+  changes:
+  - message: Ghosts appearances will now change depending on their cause of death
+    type: Add
+  id: 9478
+  time: '2026-01-30T23:31:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37949
