@@ -811,3 +811,4 @@ CrateEmergencyInternalsLarge: CrateEmergencyEVA
 CrateNitrogenInternals: CrateEmergencyEVA
 CrateSecurityHelmet: null
 CrateSecuritySupplies: null
+CrateMaterialTextiles: CrateMaterialCloth
