@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Antag.Mimic;
+namespace Content.Server.Antag.Components.Mimic;
 
 /// <summary>
 /// Replaces the relevant entities with mobs when the game rule is started.

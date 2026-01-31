@@ -1,0 +1,9 @@
+- type: antagLoadout
+  id: MothershipCore
+  mindRoles:
+  - MindRoleMothershipCore
+
+- type: antagLoadout
+  id: Xenoborg
+  mindRoles:
+  - MindRoleXenoborg

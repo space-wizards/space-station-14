@@ -1541,8 +1541,8 @@
   suffix: syndicate agent
   components:
     # make the player a traitor once its taken
-  - type: AutoTraitor
-    profile: TraitorReinforcement
+  - type: AutoGameRuleAntag
+    gameRule: TraitorReinforcement
 
 - type: entity
   id: MobMonkeySyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
@@ -1705,8 +1705,8 @@
   suffix: syndicate agent
   components:
     # make the player a traitor once its taken
-  - type: AutoTraitor
-    profile: TraitorReinforcement
+  - type: AutoGameRuleAntag
+    gameRule: TraitorReinforcement
 
 - type: entity
   id: MobKoboldSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink

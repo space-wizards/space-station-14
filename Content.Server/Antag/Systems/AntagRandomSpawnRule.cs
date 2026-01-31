@@ -2,7 +2,7 @@ using Content.Server.Antag.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 
-namespace Content.Server.Antag;
+namespace Content.Server.Antag.Systems;
 
 public sealed class AntagRandomSpawnSystem : GameRuleSystem<AntagRandomSpawnComponent>
 {
