@@ -60,6 +60,19 @@ namespace Content.Client.Lobby.UI
 
         private bool _isDirty;
 
+        public bool IsDirty
+        {
+            get => _isDirty;
+            set
+            {
+                if (_isDirty == value)
+                    return;
+
+                _isDirty = value;
+                UpdateSaveButton();
+            }
+        }
+
         private ISawmill _sawmill;
 
         private MarkingsViewModel _markingsModel = new();
@@ -406,19 +419,6 @@ namespace Content.Client.Lobby.UI
         {
             base.EnteredTree();
             ReloadPreview();
-        }
-
-        public bool IsDirty
-        {
-            get => _isDirty;
-            set
-            {
-                if (_isDirty == value)
-                    return;
-
-                _isDirty = value;
-                UpdateSaveButton();
-            }
         }
 
         private void UpdateSaveButton()
