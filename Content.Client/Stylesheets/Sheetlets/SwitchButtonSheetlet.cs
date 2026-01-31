@@ -120,6 +120,12 @@ public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyl
                 .PseudoDisabled()
                 .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassSymbol))
                 .Modulate(sheet.PositivePalette.Text),
+
+            // If we have the highlight styleclass, use the highlight color for the main label
+            E<SwitchButton>()
+                .Class(StyleClass.Highlight)
+                .ParentOf(E<Label>().Class(SwitchButton.StyleClassMainLabel))
+                .FontColor(sheet.HighlightPalette.Text),
         ];
     }
 }

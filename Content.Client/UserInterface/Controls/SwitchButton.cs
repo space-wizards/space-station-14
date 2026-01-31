@@ -14,6 +14,7 @@ namespace Content.Client.UserInterface.Controls
         public const string StyleClassThumbFill = "thumbFill";
         public const string StyleClassThumbOutline = "thumbOutline";
         public const string StyleClassSymbol = "symbol";
+        public const string StyleClassMainLabel = "mainLabel";
 
         public const string StylePropertySeparation = "separation";
 
@@ -79,7 +80,10 @@ namespace Content.Client.UserInterface.Controls
                 VerticalAlignment = VAlignment.Center,
             };
 
-            Label = new Label();
+            Label = new Label
+            {
+                StyleClasses = { StyleClassMainLabel },
+            };
             Label.Visible = false;
 
             OffStateLabel = new Label();
