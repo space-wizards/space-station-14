@@ -83,6 +83,21 @@
     Protein: 6
 
 - type: reaction
+  id: SulfurBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    SulfurBlood:
+      amount: 20
+  products:
+    Water: 11
+    Sulfur: 0.5
+    Sugar: 2
+    CarbonDioxide: 3
+    Protein: 4
+
+- type: reaction
   id: ZombieBloodBreakdown
   source: true
   requiredMixerCategories:
