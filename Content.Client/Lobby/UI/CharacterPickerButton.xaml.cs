@@ -30,7 +30,7 @@ public sealed partial class CharacterPickerButton : ContainerButton
         IPrototypeManager prototypeManager,
         ISharedPlayerManager playerMan,
         ButtonGroup group,
-        ICharacterProfile profile,
+        HumanoidCharacterProfile profile,
         bool isSelected)
     {
         RobustXamlLoader.Load(this);
@@ -41,15 +41,11 @@ public sealed partial class CharacterPickerButton : ContainerButton
 
         View.LoadPreview(profile);
 
-        if (profile is HumanoidCharacterProfile humanoid)
+        var highPriorityJob = profile.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+        if (highPriorityJob != default)
         {
-
-            var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
-            if (highPriorityJob != default)
-            {
-                var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
-                description = $"{description}\n{jobName}";
-            }
+            var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
+            description = $"{description}\n{jobName}";
         }
 
         Pressed = isSelected;
