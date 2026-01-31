@@ -1,4 +1,116 @@
 - type: entity
+  parent: CrateFreezer
+  id: CrateServiceBarSupply
+  name: bartending supplies crate
+  description: Extra Bar supplies, in case the clown was allowed in the bar unsupervised.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: DrinkGlass
+          amount: 5
+        - id: DrinkShotGlass
+          amount: 5
+        - id: DrinkShaker
+          amount: 2
+        - id: DrinkOrangeJuice
+          amount: 2
+        - id: DrinkLimeJuice
+          amount: 2
+        - id: DrinkTomatoJuice
+          amount: 2
+        - id: DrinkWaterBottleFull
+          amount: 2
+        - id: DrinkSodaWaterCan
+          amount: 2
+        - id: DrinkCreamCarton
+          amount: 2
+
+- type: entity
+  parent: CrateFreezer
+  id: CrateServiceCooking
+  name: kitchen supplies crate
+  description: Extra kitchen supplies, in case the botanists are absent.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ReagentContainerFlour
+          amount: 3
+        - id: ReagentContainerRice
+          amount: 3
+        - id: FoodBoxCloth
+        - id: DrinkMilkCarton
+          amount: 4
+        - id: DrinkSoyMilkCarton
+          amount: 2
+        - id: ReagentContainerSugar
+          amount: 2
+        - id: FoodCondimentPacketSalt
+          amount: 3
+        - id: FoodCondimentBottleEnzyme
+          amount: 2
+        - id: FoodContainerEgg
+          amount: 2
+
+- type: entity
+  parent: CratePlastic
+  id: CrateServiceDinnerware
+  name: kitchen dinnerware crate
+  description: Extra kitchen supplies, in case the clown was allowed in the cafeteria unsupervised.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FoodBowlBig
+          amount: 4
+        - id: FoodPlate
+          amount: 4
+        - id: FoodPlateSmall
+          amount: 4
+        - id: FoodKebabSkewer
+          amount: 4
+        - id: KitchenKnife
+        - id: DrinkGlass
+          amount: 4
+        - id: FoodPlateMuffinTin
+          amount: 4
+        - id: FoodPlateTin
+          amount: 4
+        - id: BoxUtensil
+
+- type: entity
+  parent: CrateFreezer
+  id: CrateServiceGetMore
+  name: Getmore Bakemore crate
+  description: Getmore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's Getmore machines!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FoodSnackRaisins
+          amount: 4
+        - id: FoodSnackChocolate
+          amount: 6
+        - id: FoodSnackPistachios
+          amount: 4
+        - id: ReagentContainerFlour
+          amount: 3
+        - id: ReagentContainerSugar
+          amount: 2
+        - id: FoodCondimentPacketSalt
+          amount: 3
+        - id: DrinkMilkCarton
+          amount: 2
+        - id: FoodContainerEgg
+          amount: 2
+        - id: FoodBoxCloth
+
+- type: entity
   parent: CratePlastic
   id: CrateServiceJanitorialSupplies
   name: janitorial supplies crate

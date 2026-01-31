@@ -809,6 +809,10 @@ TowelColorMime: null
 CrateEmergencyInternals: CrateEmergencyEVA
 CrateEmergencyInternalsLarge: CrateEmergencyEVA
 CrateNitrogenInternals: CrateEmergencyEVA
+CrateFoodBarSupply: CrateServiceBarSupply
+CrateFoodCooking: CrateServiceCooking
+CrateFoodDinnerware: CrateServiceDinnerware
+CrateFoodGetMore: CrateServiceGetMore
 CrateSecurityHelmet: null
 CrateSecuritySupplies: null
 CrateMaterialTextiles: CrateMaterialCloth
