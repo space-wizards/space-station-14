@@ -300,6 +300,8 @@ public partial class AtmosphereSystem
 
     /// <summary>
     /// Checks if a tile on a grid is air-blocked in the specified directions.
+    /// This only checks for if the current tile, and only the current tile, is blocking
+    /// air.
     /// </summary>
     /// <param name="gridUid">The grid to check.</param>
     /// <param name="tile">The tile on the grid to check.</param>
@@ -323,6 +325,8 @@ public partial class AtmosphereSystem
 
     /// <summary>
     /// Checks if a tile on a grid is air-blocked in the specified directions, using cached data.
+    /// This only checks for if the current tile, and only the current tile, is blocking
+    /// air.
     /// </summary>
     /// <param name="grid">The grid to check.</param>
     /// <param name="tile">The tile on the grid to check.</param>
