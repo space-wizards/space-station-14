@@ -58,6 +58,15 @@
   objectType: Item
 
 - type: construction
+  id: BoxCardboardSmall
+  name: construction-recipe-box-cardboard-small
+  graph: BoxCardboardSmall
+  startNode: start
+  targetNode: boxcardboardsmall
+  category: construction-category-storage
+  objectType: Item
+
+- type: construction
   id: ToteBase
   name: construction-recipe-box-tote
   graph: ToteBase

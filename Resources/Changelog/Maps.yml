@@ -826,4 +826,149 @@
   id: 100
   time: '2025-11-07T08:36:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41329
+- author: Blackern5000
+  changes:
+  - message: Entirely remade the meatball magnet wreck to better work as a wreck for
+      salvage.
+    type: Tweak
+  id: 101
+  time: '2025-11-27T10:28:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41589
+- author: korczoczek
+  changes:
+  - message: Added an extra pair of lateral thrusters to Elkridge Depot's cargo shuttle
+    type: Tweak
+  id: 102
+  time: '2025-11-27T10:55:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41570
+- author: Spessmann
+  changes:
+  - message: Added a new station, Snowball, a round and icy lowpop station.
+    type: Add
+  - message: Removed Amber station.
+    type: Remove
+  id: 103
+  time: '2025-12-02T07:25:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40300
+- author: Hitlinemoss
+  changes:
+  - message: On Snowball, the airlock connecting EVA Storage and the Head of Personnel's
+      office now uses Head of Personnel access rather than Externals access.
+    type: Fix
+  - message: On Snowball, the Head of Personnel's office windoors are now linked to
+      each other, like on other maps.
+    type: Fix
+  id: 104
+  time: '2025-12-02T19:16:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41675
+- author: Spessmann
+  changes:
+  - message: On Snowball, the Service access requirement on the dorms airlocks has
+      been removed
+    type: Fix
+  - message: On Snowball, more station beacons have been added to medical.
+    type: Add
+  id: 105
+  time: '2025-12-03T07:48:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41683
+- author: Hitlinemoss
+  changes:
+  - message: On Snowball, the Head of Security's hardsuit is no longer absent, and
+      now spawns in their locker.
+    type: Fix
+  id: 106
+  time: '2025-12-04T03:44:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41698
+- author: ArtisticRoomba
+  changes:
+  - message: On Bagel, atomized the LV network for Science and Chemistry.
+    type: Fix
+  id: 107
+  time: '2025-12-07T22:40:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41769
+- author: ArtisticRoomba
+  changes:
+  - message: On Box, atomized the LV network for Medbay and Telecoms.
+    type: Fix
+  id: 108
+  time: '2025-12-08T00:34:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41770
+- author: ArtisticRoomba
+  changes:
+  - message: On Central Command, beefed up the LV network for Medbay.
+    type: Fix
+  id: 109
+  time: '2025-12-08T00:35:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41771
+- author: ArtisticRoomba
+  changes:
+  - message: On Elkridge, atomized the LV network for Atmospherics.
+    type: Fix
+  id: 110
+  time: '2025-12-08T00:35:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41772
+- author: ArtisticRoomba
+  changes:
+  - message: On Fland, atomized the LV network for Atmospherics and Telecoms.
+    type: Fix
+  id: 111
+  time: '2025-12-08T00:35:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41773
+- author: ArtisticRoomba
+  changes:
+  - message: On Oasis, atomized the LV powernet for Chemistry/Medical.
+    type: Fix
+  id: 112
+  time: '2025-12-08T01:02:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41776
+- author: ArtisticRoomba
+  changes:
+  - message: On Bagel, the Theater now chooses between a few randomized styles/layouts.
+    type: Add
+  id: 113
+  time: '2025-12-08T15:26:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41787
+- author: Spessmann
+  changes:
+  - message: On Snowball, observers will now spawn correctly on the station.
+    type: Fix
+  - message: On Snowball, a youtool vending machine has been added to engineering.
+    type: Add
+  - message: On Snowball, the AI core's exterior now has lights.
+    type: Add
+  id: 114
+  time: '2025-12-09T06:54:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41806
+- author: Minemoder
+  changes:
+  - message: The Arrivals Shuttle had its powernet changed to not rely on generators
+      and become more tamper proof.
+    type: Tweak
+  id: 115
+  time: '2025-12-18T20:37:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41884
+- author: Spessmann
+  changes:
+  - message: On Snowball, salvage now has a eva tank dispenser.
+    type: Add
+  - message: On Snowball, chemistry now has a reagent grinder.
+    type: Add
+  id: 116
+  time: '2025-12-20T08:32:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41908
+- author: jessicamaybe
+  changes:
+  - message: Added botany equipment to the Marathon brig
+    type: Add
+  id: 117
+  time: '2025-12-24T00:43:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42028
+- author: EchoOfNothing
+  changes:
+  - message: On Plasma, added a second APC to telecommunications, so the APC is no
+      longer overloaded at the start of the round.
+    type: Fix
+  id: 118
+  time: '2025-12-29T04:05:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42144
 Order: 2

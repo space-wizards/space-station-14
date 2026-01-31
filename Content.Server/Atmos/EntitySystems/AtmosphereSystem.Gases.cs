@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
@@ -475,6 +476,26 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return reaction;
+        }
+
+        /// <summary>
+        /// Adds an array of moles to a <see cref="GasMixture"/>.
+        /// Guards against negative moles by clamping to zero.
+        /// </summary>
+        /// <param name="mixture">The <see cref="GasMixture"/> to add moles to.</param>
+        /// <param name="molsToAdd">The <see cref="ReadOnlySpan{T}"/> of moles to add.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of the <see cref="ReadOnlySpan{T}"/>
+        /// is not the same as the length of the <see cref="GasMixture"/> gas array.</exception>
+        [PublicAPI]
+        public static void AddMolsToMixture(GasMixture mixture, ReadOnlySpan<float> molsToAdd)
+        {
+            // Span length should be as long as the length of the gas array.
+            // Technically this is a redundant check because NumericsHelpers will do the same thing,
+            // but eh.
+            ArgumentOutOfRangeException.ThrowIfNotEqual(mixture.Moles.Length, molsToAdd.Length, nameof(mixture.Moles.Length));
+
+            NumericsHelpers.Add(mixture.Moles, molsToAdd);
+            NumericsHelpers.Max(mixture.Moles, 0f);
         }
 
         public enum GasCompareResult
