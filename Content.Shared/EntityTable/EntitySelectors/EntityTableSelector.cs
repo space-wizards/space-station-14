@@ -85,8 +85,7 @@ public abstract partial class EntityTableSelector
     }
 
     /// <summary>
-    /// Gets the spawns in a given table, ignoring the requirements for the table.
-    /// This should only be used for debugging!
+    /// Gets a list of every spawn in the table, and the odds of that spawn occuring, ignoring conditions.
     /// </summary>
     public IEnumerable<(EntProtoId spawn, double prob)> ListSpawns(IEntityManager entMan,
         IPrototypeManager proto,
@@ -99,12 +98,15 @@ public abstract partial class EntityTableSelector
         }
     }
 
+    /// <summary>
+    /// Gets a list of every spawn in the table, and the average number of occurrences, ignoring conditions.
+    /// </summary>
     public IEnumerable<(EntProtoId spawn, double prob)> AverageSpawns(IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx,
         float mod = 1f)
     {
-        foreach (var (spawn, prob) in ListSpawnsImplementation(entMan, proto, ctx))
+        foreach (var (spawn, prob) in AverageSpawnsImplementation(entMan, proto, ctx))
         {
             yield return (spawn, prob * Prob * Rolls.Average() * mod);
         }
@@ -116,6 +118,10 @@ public abstract partial class EntityTableSelector
         EntityTableContext ctx);
 
     protected abstract IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx);
+
+    protected abstract IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx);
 }

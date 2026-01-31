@@ -48,4 +48,18 @@ public sealed partial class GroupSelector : EntityTableSelector
             }
         }
     }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        var totalWeight = Children.Sum(x => x.Weight);
+
+        foreach (var child in Children)
+        {
+            var weightMod = child.Weight / totalWeight;
+            foreach (var (ent, prob) in child.AverageSpawns(entMan, proto, ctx, weightMod))
+            {
+                yield return (ent, prob);
+            }
+        }
+    }
 }

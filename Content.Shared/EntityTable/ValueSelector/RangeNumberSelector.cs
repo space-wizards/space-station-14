@@ -27,6 +27,6 @@ public sealed partial class RangeNumberSelector : NumberSelector
 
     public override float Average()
     {
-        return Range.X * Range.Y / 2f;
+        return (Range.X + Range.Y) / 2f;
     }
 }
