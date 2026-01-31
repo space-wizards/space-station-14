@@ -17,7 +17,7 @@ public sealed class RemoveActionCommand : LocalizedEntityCommands
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString(Loc.GetString("cmd-rmaction-invalid-args")));
+            shell.WriteError(Loc.GetString("cmd-rmaction-invalid-args"));
             return;
         }
 
