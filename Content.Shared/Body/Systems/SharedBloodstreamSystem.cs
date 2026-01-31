@@ -10,6 +10,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Gibbing;
 using Content.Shared.HealthExaminable;
@@ -26,7 +27,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Body.Systems;
 
-public abstract class SharedBloodstreamSystem : EntitySystem
+public sealed class SharedBloodstreamSystem : EntitySystem
 {
     public static readonly EntProtoId Bloodloss = "StatusEffectBloodloss";
 
@@ -55,6 +56,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BloodstreamComponent, MetabolismExclusionEvent>(OnMetabolismExclusion);
+        SubscribeLocalEvent<BloodstreamComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
     }
 
     public override void Update(float frameTime)
@@ -292,6 +295,56 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         {
             args.Reagents.Add(reagent);
         }
+    }
+
+    // not sure if we can move this to shared or not
+    // it would certainly help if SolutionContainer was documented
+    // but since we usually don't add the component dynamically to entities we can keep this unpredicted for now
+    private void OnComponentInit(Entity<BloodstreamComponent> entity, ref ComponentInit args)
+    {
+        if (!SolutionContainer.EnsureSolution(entity.Owner,
+                entity.Comp.BloodSolutionName,
+                out var bloodSolution) ||
+            !SolutionContainer.EnsureSolution(entity.Owner,
+                entity.Comp.BloodTemporarySolutionName,
+                out var tempSolution) ||
+            !SolutionContainer.EnsureSolution(entity.Owner,
+                entity.Comp.MetabolitesSolutionName,
+                out var metabolitesSolution))
+            return;
+
+        bloodSolution.MaxVolume = entity.Comp.BloodReferenceSolution.Volume * entity.Comp.MaxVolumeModifier;
+        metabolitesSolution.MaxVolume = bloodSolution.MaxVolume;
+        tempSolution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
+        entity.Comp.BloodReferenceSolution.SetReagentData(GetEntityBloodData((entity, entity.Comp)));
+
+        // Fill blood solution with BLOOD
+        // The DNA string might not be initialized yet, but the reagent data gets updated in the GenerateDnaEvent subscription
+        var solution = entity.Comp.BloodReferenceSolution.Clone();
+        solution.ScaleTo(entity.Comp.BloodReferenceSolution.Volume - bloodSolution.Volume);
+        bloodSolution.AddSolution(solution, PrototypeManager);
+    }
+
+    private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
+    {
+        if (!EntityManager.HasComponent<SolutionComponent>(entity.Owner))
+            return;
+
+        if (SolutionContainer.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
+        {
+            var data = NewEntityBloodData(entity);
+            entity.Comp.BloodReferenceSolution.SetReagentData(data);
+            Dirty(entity);
+
+            foreach (var reagent in bloodSolution.Contents)
+            {
+                var reagentData = reagent.Reagent.EnsureReagentData();
+                reagentData.RemoveAll(x => x is DnaData);
+                reagentData.AddRange(data);
+            }
+        }
+        else
+            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 
     /// <summary>
