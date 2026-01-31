@@ -65,7 +65,7 @@ public abstract class SharedCocoonSystem : EntitySystem
         SubscribeLocalEvent<CocoonerComponent, WrapActionEvent>(OnWrapAction);
         SubscribeLocalEvent<CocoonerComponent, WrapDoAfterEvent>(OnWrapDoAfter);
         SubscribeLocalEvent<CocoonedComponent, RemoveCocoonAlertEvent>(OnRemoveCocoonAlert);
-        SubscribeLocalEvent<CocoonedComponent, BreakFreeDoAfterEvent>(OnBreakFreeDoAfter);
+        SubscribeLocalEvent<CocoonContainerComponent, BreakFreeDoAfterEvent>(OnBreakFreeDoAfter);
         SubscribeLocalEvent<CocoonedComponent, AttackAttemptEvent>(OnCocoonedAttackAttempt);
         SubscribeLocalEvent<CocoonedComponent, GibbedBeforeDeletionEvent>(OnCocoonedVictimGibbed);
         SubscribeLocalEvent<CocoonContainerComponent, ComponentShutdown>(OnCocoonContainerShutdown);
@@ -339,20 +339,25 @@ public abstract class SharedCocoonSystem : EntitySystem
 
         var cocoonContainer = container.Owner;
 
+        // Attach DoAfter to cocoon container (visible) instead of victim (hidden in container)
+        // This makes the progress bar visible to all players
+        // Track cocoon container movement (victim can't move independently)
+        // The event will be raised on the cocoon container, which has CocoonContainerComponent
         var doAfter = new DoAfterArgs(
             EntityManager,
-            victim,
+            cocoonContainer,
             TimeSpan.FromSeconds(10.0f),
             new BreakFreeDoAfterEvent(),
-            victim,
-            target: cocoonContainer)
+            cocoonContainer) // EventTarget - event will be raised on cocoon container
         {
-            BreakOnMove = true,
+            BreakOnMove = true, // Track cocoon container movement (victim is inside, can't move independently)
             BreakOnDamage = true,
             CancelDuplicate = true,
             BlockDuplicate = true,
             DistanceThreshold = null, // Victim is inside container, so skip range check
             RequireCanInteract = false, // Victim is blocked (cocooned), so they can't interact normally
+            Hidden = false, // Make progress bar visible to all players
+            Broadcast = true, // Broadcast the event so all clients receive it
         };
 
         if (!_doAfter.TryStartDoAfter(doAfter))
@@ -535,22 +540,22 @@ public abstract class SharedCocoonSystem : EntitySystem
         args.Handled = true;
     }
 
-    protected virtual void OnBreakFreeDoAfter(Entity<CocoonedComponent> ent, ref BreakFreeDoAfterEvent args)
+    protected virtual void OnBreakFreeDoAfter(Entity<CocoonContainerComponent> ent, ref BreakFreeDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
 
-        var victim = ent.Owner;
+        var cocoonContainer = ent.Owner;
+        var component = ent.Comp;
 
-        // Find the cocoon container that contains this victim
-        if (!_container.TryGetContainingContainer(victim, out var container) ||
-            !TryComp<CocoonContainerComponent>(container.Owner, out var cocoonComp))
+        // Get the victim from the container component
+        if (component.Victim == null || !Exists(component.Victim.Value))
         {
             args.Handled = true;
             return;
         }
 
-        var cocoonContainer = container.Owner;
+        var victim = component.Victim.Value;
 
         // On client, don't manipulate entities to avoid jittering
         if (_netMan.IsClient)

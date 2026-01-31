@@ -53,3 +53,4 @@
   - type: AntiRottingContainer
   - type: BloodstreamProxyContainer
     containerId: cocoon_victim
+  - type: DoAfter
