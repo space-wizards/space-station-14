@@ -16,9 +16,9 @@ public sealed partial class EventHorizonComponent : Component
     /// <summary>
     /// The radius of the event horizon within which it will destroy all entities and tiles.
     /// If &lt; 0.0 this behavior will not be active.
-    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetRadius"/>.
+    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetRadius(Entity{EventHorizonComponent?}, float, bool)"/>.
     /// </summary>
-    [DataField("radius")]
+    [DataField]
     public float Radius;
 
     /// <summary>
@@ -35,28 +35,25 @@ public sealed partial class EventHorizonComponent : Component
 
     /// <summary>
     /// Whether the event horizon can consume/destroy the devices built to contain it.
-    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetCanBreachContainment"/>.
+    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetCanBreachContainment(Entity{EventHorizonComponent?}, bool, bool)"/>.
     /// </summary>
-    [DataField("canBreachContainment")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool CanBreachContainment = false;
 
     /// <summary>
     /// The ID of the fixture used to detect if the event horizon has collided with any physics objects.
     /// Can be set to null, in which case no such fixture is used.
-    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
+    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetConsumerFixtureId(Entity{EventHorizonComponent?}, string, bool)"/>.
     /// </summary>
-    [DataField("consumerFixtureId")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? ConsumerFixtureId = "EventHorizonConsumer";
 
     /// <summary>
     /// The ID of the fixture used to detect if the event horizon has collided with any physics objects.
     /// Can be set to null, in which case no such fixture is used.
-    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
+    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetColliderFixtureId(Entity{EventHorizonComponent?}, string, bool)"/>.
     /// </summary>
-    [DataField("colliderFixtureId")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? ColliderFixtureId = "EventHorizonCollider";
 
     /// <summary>
@@ -71,13 +68,12 @@ public sealed partial class EventHorizonComponent : Component
     /// The amount of time that should elapse between this event horizon consuming everything it overlaps with.
     /// </summary>
     [DataField("consumePeriod")]
-    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TargetConsumePeriod = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
     /// The next time at which this consumed everything it overlapped with.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField("nextConsumeWaveTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [ViewVariables(VVAccess.ReadOnly), DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextConsumeWaveTime;
 
