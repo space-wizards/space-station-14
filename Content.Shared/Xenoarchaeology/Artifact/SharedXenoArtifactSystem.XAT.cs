@@ -88,8 +88,7 @@ public abstract partial class SharedXenoArtifactSystem
 
             if (unlockingComp.TriggeredNodeIndexes.Add(index))
             {
-                var unlockableNodes = new List<Entity<XenoArtifactNodeComponent>>();
-
+                var viableUnlockFound = false;
                 var allnodes = GetAllNodes((ent, ent));
                 foreach (var nodeEnt in allnodes)
                 {
@@ -98,18 +97,13 @@ public abstract partial class SharedXenoArtifactSystem
                     var directPredecessorNodes = GetDirectPredecessorNodes((ent, ent), nodeEnt);
                     if (directPredecessorNodes.Count == 0 || directPredecessorNodes.All(x => !x.Comp.Locked))
                     {
-                        unlockableNodes.Add(nodeEnt);
-                    }
-                }
-
-                var viableUnlockFound = false;
-                foreach (var unlockable in unlockableNodes)
-                {
-                    var predecessorNodeIndices = GetPredecessorNodes((ent, ent), GetIndex(ent, unlockable));
-                    if (unlockingComp.TriggeredNodeIndexes.All(x => predecessorNodeIndices.Contains(x)))
-                    {
-                        viableUnlockFound = true; // We have found an unlockable node that is still possible to unlock - it contains all triggers in its predecessors
-                        break;
+                        // This is an unlockable node, check if is failed
+                        var predecessorNodeIndices = GetPredecessorNodes((ent, ent), GetIndex(ent, nodeEnt.Owner));
+                        if (unlockingComp.TriggeredNodeIndexes.All(x => predecessorNodeIndices.Contains(x)))
+                        {
+                            viableUnlockFound = true; // We have found an unlockable node that is still possible to unlock - it contains all triggers in its predecessors
+                            break;
+                        }
                     }
                 }
                 if (viableUnlockFound)
