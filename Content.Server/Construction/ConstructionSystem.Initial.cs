@@ -8,6 +8,7 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -215,14 +216,9 @@ namespace Content.Server.Construction
                             if (used.Contains(entity))
                                 continue;
 
-                            // Dump out any stored entities in used entity
-                            if (TryComp<StorageComponent>(entity, out var storage))
-                            {
-                                _container.EmptyContainer(storage.Container);
-                            }
-
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
+                                RaiseLocalEvent(entity, new DestructionEventArgs());
                                 if (!_container.Insert(entity, container))
                                     continue;
                             }
