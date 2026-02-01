@@ -1,5 +1,6 @@
 using Content.Server.ParticleAccelerator.Wires;
 using Content.Shared.Singularity.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.ParticleAccelerator.Components;
@@ -125,6 +126,11 @@ public sealed partial class ParticleAcceleratorControlBoxComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan CooldownDuration = TimeSpan.FromSeconds(10f);
+
+    /// <summary>
+    /// Sound to be played as the admin alarm.
+    /// </summary>
+    public readonly SoundSpecifier AdminAlarmSound = new SoundPathSpecifier("/Audio/Misc/adminlarm.ogg");
 
     /// <summary>
     /// Whether the PA can be turned on.
