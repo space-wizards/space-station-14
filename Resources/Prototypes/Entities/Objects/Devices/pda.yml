@@ -335,6 +335,10 @@
       whitelist:
         tags:
         - Write
+  - type: Ringer
+    ringerSound: /Audio/Items/bikehorn.ogg
+    tempo: 240
+    volume: -10
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -382,7 +386,7 @@
   parent: BasePDA
   id: MimePDA
   name: mime PDA
-  description: Suprisingly not on mute.
+  description: It's on mute.
   components:
   - type: Pda
     id: MimeIDCard
@@ -408,6 +412,8 @@
         - Write
       ejectSound: null
       insertSound: null
+  - type: Ringer
+    volume: -100
   - type: CartridgeLoader
     cartridgeSlot:
       ejectSound: null
@@ -438,6 +444,11 @@
   components:
   - type: Pda
     id: ChaplainIDCard
+  - type: Ringer
+    ringerSound: /Audio/Effects/holy.ogg
+    tempo: 200
+    semitoneOffset: -3
+    volume: -8
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
