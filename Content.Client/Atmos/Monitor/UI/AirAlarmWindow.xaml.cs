@@ -110,8 +110,8 @@ public sealed partial class AirAlarmWindow : FancyWindow
         {
             UpdateDeviceData(addr, dev);
         }
-        _modes.Visible = !state.PanicWireCut;
-        CModeSelectLocked.Visible = state.PanicWireCut;
+        _modes.Visible = !(state.PanicWireCut || state.IsEmagged);
+        CModeSelectLocked.Visible = state.PanicWireCut || state.IsEmagged;
     }
 
     public void UpdateModeSelector(AirAlarmMode mode)
