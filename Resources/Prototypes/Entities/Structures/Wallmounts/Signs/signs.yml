@@ -695,8 +695,8 @@
 - type: entity
   parent: BaseSign
   id: SignNews
-  name: news sign
-  description: A sign indicating where the Reporter works.
+  name: newsroom sign
+  description: A sign indicating the newsroom.
   components:
   - type: Sprite
     state: news
