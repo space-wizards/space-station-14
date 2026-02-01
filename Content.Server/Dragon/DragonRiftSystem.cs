@@ -55,9 +55,6 @@ public sealed class DragonRiftSystem : EntitySystem
         {
             if (comp.State != DragonRiftState.Finished && comp.Accumulator >= comp.MaxAccumulator)
             {
-                // TODO: When we get autocall you can buff if the rift finishes / 3 rifts are up
-                // for now they just keep 3 rifts up.
-
                 if (comp.Dragon != null)
                     _dragon.RiftCharged(comp.Dragon.Value);
 
