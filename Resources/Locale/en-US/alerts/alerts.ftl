@@ -122,3 +122,7 @@ alerts-rooted-desc = You are attached to the ground. You can't slip, but you abs
 
 alerts-stealthy-name = Pickpocketing
 alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
+
+
+alerts-heal-aura-name = Heal aura
+alerts-heal-aura-desc = It heals you!
