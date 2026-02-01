@@ -9,18 +9,18 @@
       - state: red
       - sprite: Structures/Machines/VendingMachines/random.rsi
         state: drink
-  - type: RandomSpawner
-    prototypes:
-      - VendingMachineCoffee
-      - VendingMachineCola #Robust Sofdrinks
-      - VendingMachineColaBlack #Robust Sofdrinks [Black]
-      - VendingMachineColaRed #Space Cola
-      - VendingMachineDrGibb
-      - VendingMachinePwrGame
-      - VendingMachineShamblersJuice
-      - VendingMachineSmite
-      - VendingMachineSoda #Robust Sofdrinks [Soda]
-      - VendingMachineSovietSoda #Boda
-      - VendingMachineSpaceUp
-      - VendingMachineStarkist
-    chance: 1
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: VendingMachineCoffee
+      - id: VendingMachineCola #Robust Sofdrinks
+      - id: VendingMachineColaBlack #Robust Sofdrinks [Black]
+      - id: VendingMachineColaRed #Space Cola
+      - id: VendingMachineDrGibb
+      - id: VendingMachinePwrGame
+      - id: VendingMachineShamblersJuice
+      - id: VendingMachineSmite
+      - id: VendingMachineSoda #Robust Sofdrinks [Soda]
+      - id: VendingMachineSovietSoda #Boda
+      - id: VendingMachineSpaceUp
+      - id: VendingMachineStarkist
