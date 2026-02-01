@@ -104,7 +104,7 @@ public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyl
             E<SwitchButton>()
                 .PseudoDisabled()
                 .ParentOf(E<Label>())
-                .Modulate(sheet.PrimaryPalette.TextDark),
+                .FontColor(sheet.PrimaryPalette.TextDark),
 
             // Both pressed & disabled styles
             // Note that some of the pressed-only and disabled-only styles do not conflict
@@ -120,6 +120,41 @@ public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyl
                 .PseudoDisabled()
                 .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassSymbol))
                 .Modulate(sheet.PositivePalette.Text),
+
+            // StyleClass.Highlight
+            E<SwitchButton>()
+                .PseudoDisabled()
+                .Class(StyleClass.Highlight)
+                .ParentOf(E<Label>().Class(SwitchButton.StyleClassMainLabel))
+                .FontColor(sheet.HighlightPalette.Text),
+
+            E<SwitchButton>()
+                .Class(StyleClass.Highlight)
+                .ParentOf(E<Label>().Class(SwitchButton.StyleClassMainLabel))
+                .FontColor(sheet.HighlightPalette.TextDark),
+
+            // SwitchButton.StyleClassColorStateLabels
+            E<SwitchButton>()
+                .Class(SwitchButton.StyleClassColorStateLabels)
+                .ParentOf(E<Label>().Class(SwitchButton.StyleClassOffStateLabel))
+                .FontColor(sheet.NegativePalette.Text),
+
+            E<SwitchButton>()
+                .PseudoDisabled()
+                .Class(SwitchButton.StyleClassColorStateLabels)
+                .ParentOf(E<Label>().Class(SwitchButton.StyleClassOffStateLabel))
+                .FontColor(sheet.NegativePalette.TextDark),
+
+            E<SwitchButton>()
+                .Class(SwitchButton.StyleClassColorStateLabels)
+                .ParentOf(E<Label>().Class(SwitchButton.StyleClassOnStateLabel))
+                .FontColor(sheet.PositivePalette.Text),
+
+            E<SwitchButton>()
+                .PseudoDisabled()
+                .Class(SwitchButton.StyleClassColorStateLabels)
+                .ParentOf(E<Label>().Class(SwitchButton.StyleClassOnStateLabel))
+                .FontColor(sheet.PositivePalette.TextDark),
         ];
     }
 }
