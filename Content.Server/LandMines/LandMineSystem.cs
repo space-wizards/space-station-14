@@ -37,6 +37,12 @@ public sealed class LandMineSystem : EntitySystem
                 PopupType.LargeCaution);
         }
         _audioSystem.PlayPvs(component.Sound, uid);
+
+        // Checks for InstantTrigger, and triggers when stepped on instead of off
+        if(component.InstantTrigger)
+        {
+            _trigger.Trigger(uid, args.Tripper, TriggerSystem.DefaultTriggerKey);
+        }
     }
 
     /// <summary>
@@ -45,7 +51,11 @@ public sealed class LandMineSystem : EntitySystem
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)
     {
         // TODO: Adjust to the new trigger system
-        _trigger.Trigger(uid, args.Tripper, TriggerSystem.DefaultTriggerKey);
+        // Only activates normally if InstantTrigger is false, InstantTrigger = trigger when stepped on instead of off
+        if(!component.InstantTrigger)
+        {
+            _trigger.Trigger(uid, args.Tripper, TriggerSystem.DefaultTriggerKey);
+        }
     }
 
     /// <summary>
