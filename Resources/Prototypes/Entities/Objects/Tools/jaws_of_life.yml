@@ -25,7 +25,7 @@
     useSound: /Audio/Items/jaws_pry.ogg
   - type: Prying
     speedModifier: 1.5
-    pryPowered: true
+    strength: Powered
     useSound: /Audio/Items/jaws_pry.ogg
   - type: MultipleTool
     statusShowBehavior: true
@@ -67,7 +67,7 @@
       - state: syn_inhand-right
     size: Normal
   - type: Prying
-    force: true
+    strength: Forced
     speedModifier: 3.0
   - type: MultipleTool
     entries:

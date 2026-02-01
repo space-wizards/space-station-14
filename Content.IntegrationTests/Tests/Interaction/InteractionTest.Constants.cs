@@ -7,6 +7,26 @@ namespace Content.IntegrationTests.Tests.Interaction;
 // Should make it easier to mass-change hard coded strings if prototypes get renamed.
 public abstract partial class InteractionTest
 {
+    /// <summary>
+    /// Prototype for a prying tool with strength "forced", which is used by zombies and some animals.
+    /// They can pry bolted doors.
+    /// </summary>
+    [TestPrototypes]
+    private static readonly string ForcedPryerPrototype = $"""
+        - type: entity
+          name: super jaws of life
+          id: SuperJawsOfLife
+          components:
+          - type: Item
+            size: Normal
+          - type: Tool
+            qualities:
+            - Prying
+          - type: Prying
+            speedModifier: 1.5
+            strength: Forced
+        """;
+
     // Tiles
     protected const string Floor = "FloorSteel";
     protected const string FloorItem = "FloorTileItemSteel";
@@ -17,6 +37,7 @@ public abstract partial class InteractionTest
 
     // Structures
     protected const string Airlock = "Airlock";
+    protected const string Turnstile = "Turnstile";
 
     // Tools/steps
     protected const string Wrench = "Wrench";
@@ -24,6 +45,8 @@ public abstract partial class InteractionTest
     protected const string Weld = "WelderExperimental";
     protected const string Pry = "Crowbar";
     protected const string Cut = "Wirecutter";
+    protected const string PryPowered = "JawsOfLife";
+    protected const string ForcedPryer = "SuperJawsOfLife";
 
     // Materials/stacks
     protected const string Steel = "Steel";
