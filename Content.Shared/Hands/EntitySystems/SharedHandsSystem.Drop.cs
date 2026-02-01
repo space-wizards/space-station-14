@@ -7,6 +7,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -193,17 +194,42 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path, Does a check to see if a user should bypass those checks as well.
     /// </summary>
-    private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target, EntityUid held)
+    private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target, EntityUid held, FixturesComponent? xfA = null, FixturesComponent? xfB = null)
     {
         var dropVector = target.Position - origin.Position;
         var requestedDropDistance = dropVector.Length();
         var dropLength = dropVector.Length();
+        var range = SharedInteractionSystem.InteractionRange;
+
+        if (Resolve(user, ref xfA) && xfA.FixtureCount != 0)
+        {
+            var maxRange = 0f;
+            foreach (var fixture in xfA.Fixtures.Values)
+            {
+                var newRange = fixture.Shape.Radius + SharedInteractionSystem.InteractionRange;
+                if (newRange > maxRange)
+                    maxRange = fixture.Shape.Radius;
+            }
+            range += maxRange;
+        }
+
+        if (Resolve(held, ref xfB) && xfB.FixtureCount != 0)
+        {
+            var maxRange = 0f;
+            foreach (var fixture in xfB.Fixtures.Values)
+            {
+                var newRange = fixture.Shape.Radius + SharedInteractionSystem.InteractionRange;
+                if (newRange > maxRange)
+                    maxRange = fixture.Shape.Radius;
+            }
+            range += maxRange;
+        }
 
         if (ShouldIgnoreRestrictions(user))
         {
-            if (dropVector.Length() > SharedInteractionSystem.InteractionRange)
+            if (dropVector.Length() > range)
             {
-                dropVector = dropVector.Normalized() * SharedInteractionSystem.InteractionRange;
+                dropVector = dropVector.Normalized() * range;
                 target = new MapCoordinates(origin.Position + dropVector, target.MapId);
             }
 
