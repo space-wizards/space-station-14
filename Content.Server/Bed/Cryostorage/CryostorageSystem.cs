@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.RegularExpressions;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Ghost;
@@ -7,17 +8,18 @@ using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.StationRecords;
+using Content.Shared.Storage;
 using Content.Shared.UserInterface;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
@@ -99,10 +101,20 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         {
             entity = _hands.GetHeldItem(cryoContained, args.Key);
         }
-        else
+        else if (args.Type == CryostorageRemoveItemBuiMessage.RemovalType.Inventory)
         {
             if (_inventory.TryGetSlotContainer(cryoContained, args.Key, out var slot, out _))
                 entity = slot.ContainedEntity;
+        }
+        else
+        {
+            var storage = CompOrNull<StorageComponent>(cryoContained);
+            if (storage == null)
+                return;
+
+            string prefix = "ItemsStoredInside";
+            string numberPart = args.Key.Substring(prefix.Length);
+            entity = storage.Container.ContainedEntities[int.Parse(numberPart) - 1];
         }
 
         if (entity == null)
@@ -299,6 +311,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         foreach (var contained in ent.Comp.StoredPlayers)
         {
+            if (HasComp<AttachedClothingComponent>(contained))
+                continue;
             data.Add(GetContainedData(contained));
         }
 
@@ -314,17 +328,27 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         var enumerator = _inventory.GetSlotEnumerator(uid);
         while (enumerator.NextItem(out var item, out var slotDef))
         {
-            data.ItemSlots.Add(slotDef.Name, Name(item));
+            if (HasComp<AttachedClothingComponent>(item))
+                continue;
+
+            data.ItemSlots.Add((slotDef.Name, slotDef.DisplayName, Name(item)));
         }
 
         foreach (var hand in _hands.EnumerateHands(uid))
         {
-            if (!_hands.TryGetHeldItem(uid, hand, out var heldEntity))
+            if (!_hands.TryGetHeldItem(uid, hand, out var heldEntity, true))
                 continue;
 
             data.HeldItems.Add(hand, Name(heldEntity.Value));
         }
 
+        var storage = CompOrNull<StorageComponent>(uid);
+        if (storage != null)
+        {
+            short i = 1;
+            foreach (var a in storage.Container.ContainedEntities)
+                data.ItemsStoredInsidePlayer.Add((i++, Name(a)));
+        }
         return data;
     }
 
