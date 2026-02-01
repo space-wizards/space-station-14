@@ -16,6 +16,20 @@
 
 - type: entity
   parent: BaseAction
+  id: ActionAIWarp
+  name: Warp
+  description: Open a list of crew and locations to warp to.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: warp
+  - type: InstantAction
+    event: !type:StationAiOpenWarpActionEvent
+
+- type: entity
+  parent: BaseAction
   id: ActionSurvCameraLights
   name: Toggle camera lights
   description: Enable surveillance camera lights near wherever you're viewing.
@@ -40,7 +54,6 @@
             hard: false
             layer:
             - GhostImpassable
-
 
 - type: entity
   parent: BaseMentalAction
