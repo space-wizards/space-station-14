@@ -1,13 +1,9 @@
-using System.Linq;
-using Content.Client.Body;
 using Content.Client.Guidebook;
 using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Station;
 using Content.Shared.CCVar;
-using Content.Shared.Clothing;
-using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -20,7 +16,6 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -159,34 +154,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     public void ReloadCharacterSetup()
     {
-        RefreshLobbyPreview();
+        PreviewPanel?.Refresh();
         var (characterGui, profileEditor) = EnsureGui();
         characterGui.ReloadCharacterPickers();
         profileEditor.SetProfile(
             (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter,
             _preferencesManager.Preferences?.SelectedCharacterIndex);
-    }
-
-    /// <summary>
-    /// Refreshes the character preview in the lobby chat.
-    /// </summary>
-    private void RefreshLobbyPreview()
-    {
-        if (PreviewPanel == null)
-            return;
-
-        // Get selected character, load it, then set it
-        var character = _preferencesManager.Preferences?.SelectedCharacter;
-
-        if (character is not HumanoidCharacterProfile humanoid)
-        {
-            PreviewPanel.ProfilePreviewSpriteView.ClearPreview();
-            PreviewPanel.SetSummaryText(string.Empty);
-            return;
-        }
-
-        PreviewPanel.ProfilePreviewSpriteView.LoadPreview(humanoid);
-        PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 
     private void RefreshProfileEditor()
