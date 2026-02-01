@@ -1,4 +1,36 @@
 - type: guideEntry
   id: Command
   name: guide-entry-command
-  text: "/ServerInfo/Guidebook/Command.xml"
+  text: "/ServerInfo/Guidebook/Command/Command.xml"
+  children:
+  - Captain
+  - DepartmentHeads
+
+- type: guideEntry
+  id: Captain
+  name: guide-entry-captain
+  text: "/ServerInfo/Guidebook/Command/Captain.xml"
+
+- type: guideEntry
+  id: CrisisManagement
+  name: guide-entry-crisis-management
+  text: "/ServerInfo/Guidebook/Command/CrisisManagement.xml"
+
+- type: guideEntry
+  id: DepartmentHeads
+  name: guide-entry-department-heads
+  text: "/ServerInfo/Guidebook/Command/DepartmentHeads.xml"
+  children:
+  - CrisisManagement
+  - Discipline
+  - TheChainOfCommand
+
+- type: guideEntry
+  id: Discipline
+  name: guide-entry-discipline
+  text: "/ServerInfo/Guidebook/Command/Discipline.xml"
+
+- type: guideEntry
+  id: TheChainOfCommand
+  name: guide-entry-the-chain-of-command
+  text: "/ServerInfo/Guidebook/Command/TheChainOfCommand.xml"

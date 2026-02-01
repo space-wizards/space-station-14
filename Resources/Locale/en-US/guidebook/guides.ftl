@@ -92,6 +92,11 @@ guide-entry-forensics = Forensics
 guide-entry-defusal = Large Bomb Defusal
 guide-entry-criminal-records = Criminal Records
 guide-entry-command = Command
+guide-entry-captain = The Captain
+guide-entry-crisis-management = Crisis Management
+guide-entry-department-heads = Department Heads
+guide-entry-discipline = Staff Discipline
+guide-entry-the-chain-of-command = The Chain-of-Command
 guide-entry-service = Service
 
 guide-entry-newplayer = New? Start here!
