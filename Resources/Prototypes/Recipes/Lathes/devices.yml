@@ -134,6 +134,8 @@
 - type: latheRecipe
   id: ClothingBackpackHolding
   result: ClothingBackpackHolding
+  categories:
+  - Clothing
   completetime: 5
   materials:
     Steel: 2000
@@ -159,6 +161,9 @@
 - type: latheRecipe
   id: ClothingMaskWeldingGas
   result: ClothingMaskWeldingGas
+  categories:
+  - Clothing
+  - Tools
   completetime: 3
   materials:
     Steel: 600
@@ -178,6 +183,8 @@
 - type: latheRecipe
   id: DeviceQuantumSpinInverter
   result: DeviceQuantumSpinInverter
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 700
@@ -187,6 +194,8 @@
 - type: latheRecipe
   id: DeviceDesynchronizer
   result: DeviceDesynchronizer
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 700
