@@ -1,6 +1,6 @@
-using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Forensics
@@ -25,51 +25,45 @@ namespace Content.Client.Forensics
             _window = this.CreateWindow<ForensicScannerMenu>();
             _window.Print.OnPressed += _ => Print();
             _window.Clear.OnPressed += _ => Clear();
+
+            Update();
         }
 
         private void Print()
         {
-            SendMessage(new ForensicScannerPrintMessage());
+            SendPredictedMessage(new ForensicScannerPrintMessage());
 
             if (_window != null)
                 _window.UpdatePrinterState(true);
-
-            // This UI does not require pinpoint accuracy as to when the Print
-            // button is available again, so spawning client-side timers is
-            // fine. The server will make sure the cooldown is honored.
-            Timer.Spawn(_printCooldown, () =>
-            {
-                if (_window != null)
-                    _window.UpdatePrinterState(false);
-            });
         }
 
         private void Clear()
         {
-            SendMessage(new ForensicScannerClearMessage());
+            SendPredictedMessage(new ForensicScannerClearMessage());
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        public override void Update()
         {
-            base.UpdateState(state);
+            base.Update();
 
             if (_window == null)
                 return;
 
-            if (state is not ForensicScannerBoundUserInterfaceState cast)
+            if (!EntMan.TryGetComponent(Owner, out ForensicScannerComponent? scanner))
                 return;
 
-            _printCooldown = cast.PrintCooldown;
-
-            // TODO: Fix this
-            if (cast.PrintReadyAt > _gameTiming.CurTime)
-                Timer.Spawn(cast.PrintReadyAt - _gameTiming.CurTime, () =>
+            // TODO: Fix this, by replacing Timer.Spawn
+            if (scanner.PrintReadyAt > _gameTiming.CurTime)
+            {
+                Timer.Spawn(scanner.PrintReadyAt - _gameTiming.CurTime, () =>
                 {
                     if (_window != null)
                         _window.UpdatePrinterState(false);
                 });
+            }
 
-            _window.UpdateState(cast);
+            _printCooldown = scanner.PrintCooldown;
+            _window.Update(scanner);
         }
     }
 }
