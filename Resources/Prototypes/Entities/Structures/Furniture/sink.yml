@@ -59,6 +59,11 @@
           - !type:PlaySoundBehavior
             sound:
               collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 2
   - type: AmbientSound
     enabled: false
     volume: -8

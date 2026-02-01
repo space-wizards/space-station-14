@@ -44,6 +44,16 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:PlaySoundBehavior
@@ -52,6 +62,11 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 3
   - type: ContainerContainer
     containers:
       jumpsuit: !type:ContainerSlot
