@@ -327,13 +327,61 @@
   description: alerts-piloting-desc
 
 - type: alert
+  id: Starving
+  category: Hunger
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: starving
+  alertViewEntity: AlertHungerSpriteView
+  name: alerts-starving-name
+  description: alerts-starving-desc
+
+- type: alert
   id: Peckish
   category: Hunger
   icons:
   - sprite: /Textures/Interface/Alerts/hunger.rsi
     state: peckish
+  alertViewEntity: AlertHungerSpriteView
   name: alerts-hunger-name
   description: alerts-hunger-desc
+
+- type: alert
+  id: Okay
+  category: Hunger
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: okay
+  alertViewEntity: AlertHungerSpriteView
+  name: alerts-hunger-okay-name
+  description: alerts-hunger-okay-desc
+
+- type: alert
+  id: Overfed
+  category: Hunger
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: overfed
+  alertViewEntity: AlertHungerSpriteView
+  name: alerts-overfed-name
+  description: alerts-overfed-desc
+
+- type: entity
+  id: AlertHungerSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    centerGlyph: false
+    hideLeadingZeroes: false
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/ratking_hunger_counter.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "1" ]
+      offset: 0.25, 0
+    - map: [ "10" ]
+      offset: 0.125, 0
+    - map: [ "100" ]
 
 - type: alert
   id: Stamina
@@ -357,15 +405,6 @@
   description: alerts-stamina-desc
   minSeverity: 0
   maxSeverity: 6
-
-- type: alert
-  id: Starving
-  category: Hunger
-  icons:
-  - sprite: /Textures/Interface/Alerts/hunger.rsi
-    state: starving
-  name: alerts-starving-name
-  description: alerts-starving-desc
 
 - type: alert
   id: Thirsty
