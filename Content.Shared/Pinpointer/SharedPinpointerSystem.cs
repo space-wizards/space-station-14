@@ -23,29 +23,28 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Set the target if capable
     /// </summary>
-    private void OnAfterInteract(EntityUid uid, PinpointerComponent component, AfterInteractEvent args)
+    private void OnAfterInteract(Entity<PinpointerComponent> ent, ref AfterInteractEvent args)
     {
         if (!args.CanReach || args.Target is not { } target)
             return;
 
-        if (!component.CanRetarget || component.IsActive)
+        if (!ent.Comp.CanRetarget || ent.Comp.IsActive)
             return;
 
         // TODO add doafter once the freeze is lifted
         args.Handled = true;
-        component.Target = args.Target;
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(uid):pinpointer} to {ToPrettyString(component.Target.Value):target}");
-        if (component.UpdateTargetName)
-            component.TargetName = component.Target == null ? null : Identity.Name(component.Target.Value, EntityManager);
+        ent.Comp.Target = args.Target;
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(ent):pinpointer} to {ToPrettyString(ent.Comp.Target.Value):target}");
+        if (ent.Comp.UpdateTargetName)
+            ent.Comp.TargetName = ent.Comp.Target == null ? null : Identity.Name(ent.Comp.Target.Value, EntityManager);
     }
 
     /// <summary>
     ///     Set pinpointers target to track
     /// </summary>
-    public virtual void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
+    public virtual void SetTarget(Entity<PinpointerComponent> ent, EntityUid? target)
     {
-        if (!Resolve(uid, ref pinpointer))
-            return;
+        var pinpointer = ent.Comp;
 
         if (pinpointer.Target == target)
             return;
@@ -54,38 +53,35 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (pinpointer.UpdateTargetName)
             pinpointer.TargetName = target == null ? null : Identity.Name(target.Value, EntityManager);
         if (pinpointer.IsActive)
-            UpdateDirectionToTarget(uid, pinpointer);
+            UpdateDirectionToTarget(ent);
     }
 
     /// <summary>
     ///     Update direction from pinpointer to selected target (if it was set)
     /// </summary>
-    protected virtual void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
+    protected virtual void UpdateDirectionToTarget(Entity<PinpointerComponent> ent)
     {
 
     }
 
-    private void OnExamined(EntityUid uid, PinpointerComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<PinpointerComponent> ent, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange || component.TargetName == null)
+        if (!args.IsInDetailsRange || ent.Comp.TargetName == null)
             return;
 
-        args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", component.TargetName)));
+        args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", ent.Comp.TargetName)));
     }
 
     /// <summary>
     ///     Manually set distance from pinpointer to target
     /// </summary>
-    public void SetDistance(EntityUid uid, Distance distance, PinpointerComponent? pinpointer = null)
+    public void SetDistance(Entity<PinpointerComponent> ent, Distance distance)
     {
-        if (!Resolve(uid, ref pinpointer))
+        if (distance == ent.Comp.DistanceToTarget)
             return;
 
-        if (distance == pinpointer.DistanceToTarget)
-            return;
-
-        pinpointer.DistanceToTarget = distance;
-        Dirty(uid, pinpointer);
+        ent.Comp.DistanceToTarget = distance;
+        Dirty(ent);
     }
 
     /// <summary>
@@ -93,16 +89,13 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     If difference between current angle and new angle is smaller than
     ///     pinpointer precision, new value will be ignored and it will return false.
     /// </summary>
-    public bool TrySetArrowAngle(EntityUid uid, Angle arrowAngle, PinpointerComponent? pinpointer = null)
+    public bool TrySetArrowAngle(Entity<PinpointerComponent> ent, Angle arrowAngle)
     {
-        if (!Resolve(uid, ref pinpointer))
+        if (ent.Comp.ArrowAngle.EqualsApprox(arrowAngle, ent.Comp.Precision))
             return false;
 
-        if (pinpointer.ArrowAngle.EqualsApprox(arrowAngle, pinpointer.Precision))
-            return false;
-
-        pinpointer.ArrowAngle = arrowAngle;
-        Dirty(uid, pinpointer);
+        ent.Comp.ArrowAngle = arrowAngle;
+        Dirty(ent);
 
         return true;
     }
@@ -110,15 +103,13 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Activate/deactivate pinpointer screen. If it has target it will start tracking it.
     /// </summary>
-    public void SetActive(EntityUid uid, bool isActive, PinpointerComponent? pinpointer = null)
+    public void SetActive(Entity<PinpointerComponent> ent, bool isActive)
     {
-        if (!Resolve(uid, ref pinpointer))
-            return;
-        if (isActive == pinpointer.IsActive)
+        if (isActive == ent.Comp.IsActive)
             return;
 
-        pinpointer.IsActive = isActive;
-        Dirty(uid, pinpointer);
+        ent.Comp.IsActive = isActive;
+        Dirty(ent);
     }
 
 
@@ -126,28 +117,25 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     Toggle Pinpointer screen. If it has target it will start tracking it.
     /// </summary>
     /// <returns>True if pinpointer was activated, false otherwise</returns>
-    public virtual bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
+    public virtual bool TogglePinpointer(Entity<PinpointerComponent> ent)
     {
-        if (!Resolve(uid, ref pinpointer))
-            return false;
-
-        var isActive = !pinpointer.IsActive;
-        SetActive(uid, isActive, pinpointer);
+        var isActive = !ent.Comp.IsActive;
+        SetActive(ent, isActive);
         return isActive;
     }
 
-    private void OnEmagged(EntityUid uid, PinpointerComponent component, ref GotEmaggedEvent args)
+    private void OnEmagged(Entity<PinpointerComponent> ent, ref GotEmaggedEvent args)
     {
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
             return;
 
-        if (component.CanRetarget)
+        if (ent.Comp.CanRetarget)
             return;
 
         args.Handled = true;
-        component.CanRetarget = true;
+        ent.Comp.CanRetarget = true;
     }
 }
