@@ -1,4 +1,5 @@
 ﻿using Content.Shared.FixedPoint;
+using Content.Shared.Silicons.Laws.LawFormats;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -9,9 +10,10 @@ namespace Content.Shared.Silicons.Laws;
 public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw>
 {
     /// <summary>
-    /// A locale string which is the actual text of the law.
+    /// A locale string which is the source-of-truth for the verbatim text of this law.
+    /// Its format can be modified. See <see cref="LawFormat"/>.
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
     public string LawString = string.Empty;
 
     /// <summary>
@@ -22,14 +24,21 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
     /// This is a fixedpoint2 only for the niche case of supporting laws that go between 0 and 1.
     /// Funny.
     /// </remarks>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
     public FixedPoint2 Order;
 
     /// <summary>
     /// An identifier that overrides <see cref="Order"/> in the law menu UI.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? LawIdentifierOverride;
+
+    /// <summary>
+    /// This controls how the printed law is presented to the player.
+    /// This must never affect the verbatim meaning of the law.
+    /// </summary>
+    [DataField]
+    public ProtoId<LawFormatPrototype> LawFormat = "DefaultLawFormat";
 
     public int CompareTo(SiliconLaw? other)
     {
@@ -45,7 +54,8 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
             return false;
         return LawString == other.LawString
                && Order == other.Order
-               && LawIdentifierOverride == other.LawIdentifierOverride;
+               && LawIdentifierOverride == other.LawIdentifierOverride
+               && LawFormat == other.LawFormat;
     }
 
     public override bool Equals(object? obj)
@@ -57,7 +67,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(LawString, Order, LawIdentifierOverride);
+        return HashCode.Combine(LawString, Order, LawIdentifierOverride, LawFormat);
     }
 
     /// <summary>
@@ -69,7 +79,8 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
         {
             LawString = LawString,
             Order = Order,
-            LawIdentifierOverride = LawIdentifierOverride
+            LawIdentifierOverride = LawIdentifierOverride,
+            LawFormat = LawFormat
         };
     }
 }
