@@ -275,6 +275,9 @@
   components:
   - type: Flatpack
     entity: PortableGeneratorJrPacman
+  - type: GuideHelp
+    guides:
+    - Power
 
 - type: entity
   parent: [ BaseFlatpack, BaseSyndicateContraband ]

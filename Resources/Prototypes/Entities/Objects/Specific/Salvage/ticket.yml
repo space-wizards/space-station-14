@@ -15,11 +15,12 @@
     - coin_salv
     - coin_salv_100
     - coin_salv_1000
+    - coint_salv_5000
     - coin_salv_10000
     - coin_salv_25000
     layerFunction: Threshold
   - type: StackLayerThreshold
-    thresholds: [10, 100, 1000, 10000, 25000]
+    thresholds: [10, 100, 1000, 5000, 10000, 25000]
   - type: Sprite
     sprite: Objects/Misc/coins.rsi
     state: coin_salv
@@ -71,6 +72,14 @@
   components:
   - type: Stack
     count: 1000
+
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket5000
+  suffix: 5000
+  components:
+  - type: Stack
+    count: 5000
 
 - type: entity
   parent: SalvageTicket

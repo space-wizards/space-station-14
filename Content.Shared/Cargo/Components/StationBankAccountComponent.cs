@@ -41,7 +41,7 @@ public sealed partial class StationBankAccountComponent : Component
         { "Science",     1000 },
         { "Security",    1000 },
         { "Service",     1000 },
-        { "Salvage",     0    },
+        { "Salvage",     1000 },
     };
 
     /// <summary>

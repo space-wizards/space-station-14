@@ -115,7 +115,7 @@
   parent: CrateGenericSteel
   id: CrateDoubleEmergencyTank
   name: double emergency tank crate
-  description: Contains 2 double emergency oxygen tanks and 2 double emergency nitrogen tanks
+  description: Contains 2 double emergency oxygen tanks and 2 double emergency nitrogen tanks.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -156,7 +156,7 @@
   parent: CrateGenericSteel
   id: CrateVoidJetpack
   name: void jetpack crate
-  description: Contains 2 void jetpacks for the distinguished space explorer.
+  description: Contains 2 void jetpacks for the distinguished space explorers.
   components:
   - type: EntityTableContainerFill
     containers:

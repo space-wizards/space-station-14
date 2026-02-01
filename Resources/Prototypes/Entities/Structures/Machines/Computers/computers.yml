@@ -1785,7 +1785,6 @@
   id: ComputerCargoOrdersSalvage
   name: salvage requisition console
   description: An interface for redeeming salvage tokens to request additional gear for your duties.
-               The Requisitions Fund accepts transfers from other departments, but cannot convert Tokens back to Spesos.
   components:
   - type: AccessReader
     access: [["Salvage"]]
