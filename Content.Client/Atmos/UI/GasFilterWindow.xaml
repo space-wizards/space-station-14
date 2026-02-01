@@ -3,10 +3,10 @@
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             MinSize="480 400" Title="Filter">
     <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="10">
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-filter-ui-filter-status}"/>
-            <Button Name="ToggleStatusButton"/>
-        </BoxContainer>
+        <controls:SwitchButton
+            Name="ToggleStatusButton"
+            HorizontalAlignment="Left"
+            Pressed="True" />
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-filter-ui-filter-transfer-rate}"/>

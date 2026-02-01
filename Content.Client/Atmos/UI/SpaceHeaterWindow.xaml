@@ -6,9 +6,10 @@
     <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="10" SeparationOverride="10">
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                <Button Text="{Loc comp-space-heater-ui-status-disabled}" Access="Public" Name="ToggleStatusButton"/>
-            </BoxContainer>
+            <controls:SwitchButton
+                Name="ToggleStatusButton"
+                HorizontalExpand="True"
+                Access="Public" />
             <BoxContainer Orientation="Horizontal" SeparationOverride="5">
                 <Label Text="{Loc comp-space-heater-ui-mode}"/>
                 <OptionButton Access="Public" Name="ModeSelector"/>
