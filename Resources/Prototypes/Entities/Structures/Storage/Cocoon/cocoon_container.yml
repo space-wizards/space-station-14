@@ -1,0 +1,56 @@
+# SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: CocoonContainer
+  name: cocoon
+  description: A helpless victim is tightly wrapped within.
+  components:
+  - type: Sprite
+    sprite: Mobs/Effects/cocooned.rsi
+    state: cocooned
+    noRot: true
+  - type: Transform
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: ContainerContainer
+    containers:
+      cocoon_victim: !type:Container
+  - type: CocoonContainer
+    absorbPercentage: 0.3
+  - type: RequireProjectileTarget
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 90
+  - type: Clickable
+  - type: Pullable
+  - type: InteractionOutline
+  - type: AntiRottingContainer
+  - type: BloodstreamProxyContainer
+    containerId: cocoon_victim
+  - type: DoAfter

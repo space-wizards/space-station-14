@@ -91,6 +91,10 @@
     - DoorBumpOpener
     - SpiderCraft
     - AnomalyHost
+  - type: Cocooner
+    wrapAction: ActionWrap
+    wrapDuration: 10
+    hungerCost: 30
   - type: Butcherable
     spawned:
     - id: FoodMeatSpider
