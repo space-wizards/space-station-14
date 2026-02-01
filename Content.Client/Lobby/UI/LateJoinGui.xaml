@@ -1,0 +1,23 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc 'late-join-gui-title'}"
+               SetSize="685 560">
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  VerticalExpand="True"
+                  Margin="10"
+                  SeparationOverride="5">
+
+        <!-- Left side, we stuff CharacterSelectorButtons in here -->
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="1">
+            <BoxContainer Name="CharacterList" Orientation="Vertical"/>
+        </ScrollContainer>
+
+        <!-- Vertical rule -->
+        <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
+
+        <!-- We stuff the job/join buttons in here -->
+        <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"
+                      SizeFlagsStretchRatio="1.3"/>
+    </BoxContainer>
+</controls:FancyWindow>
