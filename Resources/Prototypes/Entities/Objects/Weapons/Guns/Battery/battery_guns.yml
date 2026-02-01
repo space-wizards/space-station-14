@@ -502,11 +502,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
     layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-0
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
   - type: Item
     storedOffset: -1,-5
   - type: Clothing
