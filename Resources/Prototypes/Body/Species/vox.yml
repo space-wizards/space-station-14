@@ -174,6 +174,7 @@
       Unsexed: UnisexVox
   - type: Butcherable
     butcheringType: Spike
+  - type: Wagging
     spawned:
     - id: FoodMeatChicken
       amount: 5
