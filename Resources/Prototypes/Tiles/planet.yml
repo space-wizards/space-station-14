@@ -119,7 +119,6 @@
   isSubfloor: true
   friction: 0.05
   heatCapacity: 10000
-  weather: true
   mobAcceleration: 0.1
   indestructible: true
 
