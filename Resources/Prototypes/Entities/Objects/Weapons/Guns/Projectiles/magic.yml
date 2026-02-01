@@ -232,6 +232,7 @@
       tags:
       - Wall
 
+- type: entity
   id: ProjectileHealingBolt
   name: healing bolt
   description: I COMMAND YOU TO LIVE!
