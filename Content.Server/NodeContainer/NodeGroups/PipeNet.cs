@@ -1,13 +1,13 @@
 using System.Linq;
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Damage.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.NodeGroups
 {
@@ -54,7 +54,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         /// Calculate pressure damage for pipe. There is no damage if the pressure is below MaxPressure,
         /// and damage scales exponentially beyond that.
         /// </summary>
-        private int PressureDamage(PipeNode pipe)
+        private static int PressureDamage(PipeNode pipe)
         {
             const float tau = 10; // number of atmos ticks to break pipe at nominal overpressure
             var diff = pipe.Air.Pressure - pipe.MaxPressure;
@@ -69,7 +69,7 @@ namespace Content.Server.NodeContainer.NodeGroups
             // Check each pipe node for overpressure and apply damage if needed
             foreach (var node in Nodes)
             {
-                if (node is PipeNode pipe && pipe.MaxPressure > 0)
+                if (node is PipeNode { MaxPressure: > 0 } pipe)
                 {
                     // Prefer damaging pipes that are already damaged. This means that only one pipe
                     // fails instead of the whole pipenet bursting at the same time.
@@ -83,7 +83,7 @@ namespace Content.Server.NodeContainer.NodeGroups
                     if (_random != null && _random.Prob(1-p))
                         continue;
 
-                    int dam = PressureDamage(pipe);
+                    var dam = PressureDamage(pipe);
                     if (dam > 0)
                     {
                         var dspec = new DamageSpecifier();
