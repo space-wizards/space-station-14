@@ -364,4 +364,14 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         return msg;
     }
     #endregion
+
+    public static void AppendScanner(Entity<AnomalyComponent> anomaly, Entity<AnomalyScannerComponent> scanner)
+    {
+        anomaly.Comp.Scanners.Add(scanner);
+    }
+
+    public static void RemoveScanner(Entity<AnomalyComponent> anomaly, Entity<AnomalyScannerComponent> scanner)
+    {
+        anomaly.Comp.Scanners.Remove(scanner);
+    }
 }
