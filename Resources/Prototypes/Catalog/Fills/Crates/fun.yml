@@ -464,20 +464,19 @@
 - type: entity
   parent: CrateLivestock
   id: CrateFunScurret
-  name: hydrated scurret
-  description: Wait, what?
+  name: scurret worker crate
+  description: A crate containing a scurret temp worker from Arnold's Pizza. Employment contract included.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: MobEmotionalSupportScurret # How? Why?
-        - id: DrinkVodkaBottleFull
-        - id: DrinkWhiskeyBottleFull
-        - id: DrinkTequilaBottleFull # ...that explains it.
-        - id: DrinkShotGlass
-          amount: 2
-        - id: Spear # self defence
+        - id: MobEmotionalSupportScurret
+        - id: PaperScurretEmploymentContract # Formally certifies that the scurret is a temp (kind of an IC justification for the ghostrole being crew-aligned)
+        - !type:GroupSelector
+          children: # You'd want a drink too if you had to commute to work by wooden crate
+          - id: DrinkVodkaBottleFull
+          - id: DrinkWhiskeyBottleFull
+          - id: DrinkTequilaBottleFull
         - id: ClothingHeadHatHardhatYellow
-        - id: ClothingNeckMantleQM
-        - id: ClothingHeadsetCargo
+        - id: ClothingNeckMantleQM # TODO: replace this with a similar-looking but more generic item at some point; explicitly QM clothing should really only be given to the QM

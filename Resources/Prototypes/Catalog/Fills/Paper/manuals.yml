@@ -27,7 +27,7 @@
 - type: entity
   id: PaperAgrichemManual
   name: NT "AgriChem Is Fun" manual
-  description: The single sheet of instructions that came in the kit. 
+  description: The single sheet of instructions that came in the kit.
   parent: Paper
   components:
   - type: Paper
@@ -41,3 +41,16 @@
   components:
   - type: Paper
     content: book-text-combat-bakery-kit
+
+- type: entity
+  parent: Paper
+  id: PaperScurretEmploymentContract
+  name: scurret temporary employment contract
+  description: The employment contract of a scurret temp from Arnold's Pizza.
+  components:
+  - type: Paper
+    content: book-text-scurret-employment-contract
+    stampState: paper_stamp-trader
+    stampedBy:
+    - stampedColor: '#000000'
+      stampedName: Arnold's Pizza
