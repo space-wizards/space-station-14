@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMachinePowered
+  parent: [BaseMachinePowered, ConstructibleMachine]
   id: FaxMachineBase
   name: long range fax machine
   description: Bluespace technologies on the application of bureaucracy.
@@ -65,12 +65,38 @@
   - type: ContainerContainer
     containers:
       Paper: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: DeviceNetworkRequiresPower
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: Fax
     transmitFrequencyId: Fax
   - type: RequireProjectileTarget
+  - type: Machine
+    board: FaxMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Electronic
 
 # Special
 - type: entity
