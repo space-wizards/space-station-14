@@ -1,5 +1,6 @@
 - type: entity
   categories: [ HideSpawnMenu ]
+  save: false
   id: ExplosionLight
   name: explosion light
   components:
