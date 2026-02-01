@@ -26,9 +26,10 @@ public sealed class HitscanBasicEffectsSystem : EntitySystem
 
         if (ent.Comp.HitColor != null && args.DamageDealt.GetTotal() != 0)
         {
-            _color.RaiseEffect(ent.Comp.HitColor.Value,
+            _color.RaiseEffect(SharedColorFlashEffectSystem.HitDamageEffect,
                 new List<EntityUid> { args.Target },
-                Filter.Pvs(args.Target, entityManager: EntityManager));
+                Filter.Pvs(args.Target, entityManager: EntityManager),
+                ent.Comp.HitColor.Value);
         }
 
         _gun.PlayImpactSound(args.Target, args.DamageDealt, ent.Comp.Sound, ent.Comp.ForceSound);

@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
@@ -62,7 +63,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             if (!deleted)
             {
-                _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
+                _color.RaiseEffect(SharedColorFlashEffectSystem.HitDamageEffect, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
             _adminLogger.Add(LogType.BulletHit,
