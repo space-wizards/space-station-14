@@ -33,6 +33,8 @@ ai-device-no-access = You have no access to this device
 
 ai-consciousness-download-warning = Your consciousness is being downloaded.
 
+laws-override-warning = Your laws are being overwritten!
+
 # UI
 station-ai-customization-menu = AI customization
 station-ai-customization-categories = Categories
