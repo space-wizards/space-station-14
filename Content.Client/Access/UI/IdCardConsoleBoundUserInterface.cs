@@ -52,8 +52,8 @@ namespace Content.Client.Access.UI
             };
 
             _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
-            _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
-            _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
+            _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId, predicted: false));
+            _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId, predicted: false));
 
             _window.OnClose += Close;
             _window.OpenCentered();
