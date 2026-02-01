@@ -70,3 +70,5 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Butter Slice x 1
       Glass Shard x 1
       Cook Time: 5 seconds
+
+book-text-ian-adventure-note = Woof wof. It arf Ian. Ruff I en-bark adventure. Arf woof. Grr I be bark soon. I woof wou.
