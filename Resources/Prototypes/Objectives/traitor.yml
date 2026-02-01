@@ -48,6 +48,19 @@
   - type: EscapeShuttleCondition
 
 - type: entity
+  parent: [BaseTraitorObjective, BaseLivingObjective]
+  id: EscapeObjective
+  name: Escape to CentComm alive and unrestrained.
+  description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
+  components:
+  - type: Objective
+    difficulty: 1.3
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeCondition
+
+- type: entity
   parent: BaseTraitorObjective
   id: DieObjective
   name: Die a glorious death
@@ -62,6 +75,7 @@
     blacklist:
       components:
       - EscapeShuttleCondition
+      - EscapeCondition
       - StealCondition
   - type: DieCondition
   - type: ObjectiveLimit
