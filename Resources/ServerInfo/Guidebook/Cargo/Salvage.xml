@@ -132,20 +132,22 @@
   ### Salvage Job Board
 
   <Box>
-    <GuideEntityEmbed Entity="ComputerSalvageJobBoard"/>
+    <GuideEntityEmbed Entity="ComputerCargoOrdersSalvage"/>
+    <GuideEntityEmbed Entity="SalvageTicket1000"/>
   </Box>
 
-  The [color=cyan]Salvage Job Board[/color] is a computer located in the Salvage Bay. It serves as Salvage's version of the [color=cyan]Cargo Bounty Computer[/color], allowing Salvagers to fulfill specific jobs with Salvage-specific materials in order to earn Spesos and unlock [color=yellow]Advanced Salvage Gear[/color].
+  The [color=cyan]Salvage Requisition Console[/color] is a computer located in the Salvage Bay. It serves as Salvage's version of the [color=cyan]Cargo Request Console[/color], allowing Salvagers to turn in [color=purple] Salvage Tokens [/color] earned from processing ores and recycling scrap to request [color=yellow]Advanced Salvage Gear[/color].
 
-  Once you gather the supplies necessary to complete a job, print out a [color=cyan]Salvage Job Shipment Label[/color] and attach it to the crate or locker containing the goods. You can use your [color=cyan]Appraisal Tool[/color] to double-check that it's ready for sale. The prepared bounty can then be brought to the [color=cyan]Automated Trade Station[/color] to earn Cargo Spesos and to unlock new Salvage-specific crates in the [color=cyan]Cargo Request Computer[/color].
+  Processing Steel, Glass, and Plastic will yield a base amount of tokens, more rare materials such as Gold Ingots will earn more, with Uranium and Diamonds earning the most.
 
+  In times of need, other departments can subsidise the [color=purple]Salvage Requisitions[/color] account by transferring spesos to it from their request consoles. However funds transferred in this way cannot be transferred back.
   <Box>
     <GuideEntityEmbed Entity="Fulton1"/>
     <GuideEntityEmbed Entity="WeaponCrusher"/>
     <GuideEntityEmbed Entity="SeismicCharge"/>
   </Box>
 
-  Completing Salvage Jobs will upgrade your rank and unlock new equipment purchases in the [color=cyan]Cargo Request Computer[/color], including:
+  Useful purchases include:
 
   - [color=cyan]Fultons[/color]: Once a Fulton has been linked to a Fulton Beacon, they can be attached to unanchored structures like crates or machines to teleport them back to the Beacon after a short wait. Exceptionally useful for moving both items and people.
   - [color=cyan]Crusher Weapons[/color]: A series of upgraded melee options for Salvagers to purchase. The [color=red]Crusher Dagger[/color] is an upgrade to your Survival knife, swinging automatically and far faster than a regular knife. The [color=red]Crusher[/color] and upgraded [color=red]Crusher Glaive[/color] are gigantic polearms which can fire special projectiles when wielded. These projectiles do no damage on their own, but if a marked enemy is meleed quickly enough, you'll leech some of their life away to heal yourself. All Crusher weaponry comes with a built-in floodlamp.
