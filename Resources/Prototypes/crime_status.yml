@@ -1,0 +1,67 @@
+- type: securityStatus
+  id: SecurityStatusSuspicious
+  order: 0
+  name: criminal-records-status-sus
+  icon: SecurityIconSuspicious
+  statusSetAnnouncement: criminal-records-console-sus
+  statusUnSetAnnouncement: criminal-records-console-not-sus
+  needsReason: true
+  reasonText: criminal-records-console-sus-reason
+
+- type: securityStatus
+  id: SecurityStatusSearch
+  order: 1
+  name: criminal-records-status-search
+  icon: SecurityIconSearch
+  statusSetAnnouncement: criminal-records-console-search
+  statusUnSetAnnouncement: criminal-records-console-not-search
+  needsReason: true
+  reasonText: criminal-records-console-search-reason
+
+- type: securityStatus
+  id: SecurityStatusWanted
+  order: 2
+  name: criminal-records-status-wanted
+  icon: SecurityIconWanted
+  statusSetAnnouncement: criminal-records-console-wanted
+  statusUnSetAnnouncement: criminal-records-console-not-wanted
+  needsReason: true
+  reasonText: criminal-records-console-wanted-reason
+
+- type: securityStatus
+  id: SecurityStatusHostile
+  order: 3
+  name: criminal-records-status-hostile
+  icon: SecurityIconHostile
+  statusSetAnnouncement: criminal-records-console-hostile
+  statusUnSetAnnouncement: criminal-records-console-not-hostile
+  needsReason: true
+  reasonText: criminal-records-console-hostile-reason
+
+- type: securityStatus
+  id: SecurityStatusDetained
+  order: 4
+  name: criminal-records-status-detained
+  icon: SecurityIconIncarcerated
+  statusSetAnnouncement: criminal-records-console-detained
+  statusUnSetAnnouncement: criminal-records-console-not-detained
+  storeHistory: true
+  historyText: DETAINED
+
+- type: securityStatus
+  id: SecurityStatusEliminated
+  order: 5
+  name: criminal-records-status-eliminated
+  icon: SecurityIconEliminated
+  statusSetAnnouncement: criminal-records-console-eliminated
+  statusUnSetAnnouncement: criminal-records-console-not-eliminated
+  storeHistory: true
+  historyText: ELIMINATED
+
+- type: securityStatus
+  id: SecurityStatusDischarged
+  order: 6
+  name: criminal-records-status-discharged
+  icon: SecurityIconDischarged
+  statusSetAnnouncement: criminal-records-console-discharged
+  statusUnSetAnnouncement: criminal-records-console-not-discharged
