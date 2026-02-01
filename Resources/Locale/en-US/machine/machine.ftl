@@ -1,4 +1,6 @@
 machine-insert-item = {CAPITALIZE(THE($user))} inserted {THE($item)} into {THE($machine)}.
+machine-insert-item-amount = {CAPITALIZE(THE($user))} inserted {$amount} {$item} into {THE($machine)}.
+machine-insert-fail = {CAPITALIZE(THE($machine))} is full.
 
 machine-upgrade-examinable-verb-text = Upgrades
 machine-upgrade-examinable-verb-message = Examine the machine upgrades.
