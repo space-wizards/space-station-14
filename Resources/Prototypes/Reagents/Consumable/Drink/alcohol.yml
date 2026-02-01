@@ -1784,6 +1784,12 @@
   physicalDesc: reagent-physical-desc-creamy
   flavor: white-gilgamesh
   color: "#e5d27e"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whitegilgamesh.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   metabolisms:
     Digestion:
       metabolites:
