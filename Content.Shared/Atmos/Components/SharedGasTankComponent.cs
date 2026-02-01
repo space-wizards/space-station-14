@@ -22,3 +22,10 @@ public sealed class GasTankBoundUserInterfaceState : BoundUserInterfaceState
 {
     public float TankPressure;
 }
+
+[Serializable, NetSerializable]
+public sealed class GasTankPressureChangedEvent(NetEntity tank, float pressure) : EntityEventArgs
+{
+    public NetEntity Tank = tank;
+    public float Pressure = pressure;
+}

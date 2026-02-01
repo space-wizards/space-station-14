@@ -320,6 +320,7 @@
     - Deconstruct
   - type: LimitedCharges
     maxCharges: 30
+  - type: ChargeItemStatus
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
