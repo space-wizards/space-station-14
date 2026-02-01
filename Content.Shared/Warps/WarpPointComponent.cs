@@ -9,8 +9,12 @@ namespace Content.Shared.Warps;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class WarpPointComponent : Component
 {
+    /// <summary>
+    /// Name of the location. When null uses metadata name
+    /// LocId should be fine because linter catches all untranslated shit.
+    /// </summary>
     [DataField]
-    public string? Location;
+    public LocId? Location;
 
     /// <summary>
     /// If true, ghosts warping to this entity will begin following it.

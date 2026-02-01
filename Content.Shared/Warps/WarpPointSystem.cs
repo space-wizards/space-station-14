@@ -9,14 +9,20 @@ public sealed class WarpPointSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<WarpPointComponent, ExaminedEvent>(OnWarpPointExamine);
+        SubscribeLocalEvent<WarpPointComponent, ComponentStartup>(OnStartUp);
+    }
+
+    private void OnStartUp(Entity<WarpPointComponent> ent, ref ComponentStartup args)
+    {
+        if (ent.Comp.Location is not null && Loc.TryGetString(ent.Comp.Location, out var locloc))
+            ent.Comp.Location = locloc;
     }
 
     private void OnWarpPointExamine(EntityUid uid, WarpPointComponent component, ExaminedEvent args)
     {
-        if (!HasComp<GhostComponent>(args.Examiner))
+        if (!HasComp<GhostComponent>(args.Examiner) || string.IsNullOrEmpty(component.Location))
             return;
 
-        var loc = component.Location == null ? "<null>" : $"'{component.Location}'";
-        args.PushText(Loc.GetString("warp-point-component-on-examine-success", ("location", loc)));
+        args.PushText(Loc.GetString("warp-point-component-on-examine-success", ("location", component.Location)));
     }
 }
