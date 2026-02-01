@@ -60,14 +60,6 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier ChangeSound = new SoundPathSpecifier("/Audio/Effects/waterswirl.ogg");
-    /// <summary>
-    /// The component will repaint the sprites of the object to match the current color of the solution,
-    /// if the RandomSprite component is hung correctly.
-    /// Ideally, this should be put into a separate component, but I suffered for 4 hours,
-    /// and nothing worked out for me. So for now it will be like this.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public bool NeedRecolor = false;
 
     /// <summary>
     /// the maximum amount of reagent produced per second
