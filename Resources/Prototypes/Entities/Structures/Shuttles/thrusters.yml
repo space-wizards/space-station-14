@@ -247,7 +247,7 @@
     radius: 1.3
     energy: 0.8
     enabled: false
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
     offset: "0, 0.1" # shine from the top, not bottom of the computer
     color: "#4246b3"
