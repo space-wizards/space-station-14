@@ -1,0 +1,1 @@
+station-event-wandering-portals-announcement = Several localized spacial distortions have been detected aboard the station. Until further notice, avoid coming into contact with any objects that glow brightly or emit an electrical buzzing sound. 

@@ -1,5 +1,5 @@
-﻿using System.Linq;
 using Content.Shared.Ghost;
+using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
@@ -16,6 +16,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -33,6 +35,8 @@ public abstract class SharedPortalSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedGrapplingGunSystem _grappling = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
 
     private const string PortalFixture = "portalFixture";
@@ -94,6 +98,9 @@ public abstract class SharedPortalSystem : EntitySystem
 
         // best not.
         if (Transform(subject).Anchored)
+            return;
+
+        if (ent.Comp.IgnoreStationaryObjects && !(HasComp<MindContainerComponent>(subject) || _physics.GetMapLinearVelocity(subject) != Vector2.Zero))
             return;
 
         // break pulls before portal enter so we don't break shit
