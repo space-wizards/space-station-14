@@ -186,13 +186,7 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:EmptyContainersBehaviour
-        containers:
-        - borg_brain
-        - borg_module
-        - cell_slot
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - !type:GibBehavior
   - type: HandheldLight
     toggleOnInteract: false
     wattage: 0.2
