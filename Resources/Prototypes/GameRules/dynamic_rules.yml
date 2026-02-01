@@ -66,6 +66,8 @@
         - id: SleeperAgents
           weight: 15
           conditions:
+          - !type:OccursDuringRoundEndCondition
+            occursDuringRoundEnd: false
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:RoundDurationCondition
@@ -95,6 +97,8 @@
         - id: ZombieOutbreak
           weight: 2.5
           conditions:
+          - !type:OccursDuringRoundEndCondition
+            occursDuringRoundEnd: false
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
