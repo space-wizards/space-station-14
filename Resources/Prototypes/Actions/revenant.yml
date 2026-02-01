@@ -51,3 +51,15 @@
     useDelay: 20
   - type: InstantAction
     event: !type:RevenantMalfunctionActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRevenantGrasp
+  name: Ghostly Grasp
+  description: Toggle between a grab that drags slowly but stealthily, and a grab that drags quickly but makes you visible. Both make you vulnerable.
+  components:
+  - type: Action
+    useDelay: 1
+    icon: Clothing/Hands/Gloves/Color/black.rsi
+  - type: InstantAction
+    event: !type:RevenantGraspActionEvent
