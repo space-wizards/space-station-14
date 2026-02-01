@@ -1597,5 +1597,28 @@ Entries:
   id: 194
   time: '2026-01-13T01:02:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42370
+- author: Velken
+  changes:
+  - message: new Admin version of the Anomaly Scanner, that shows the hidden particle
+      types.
+    type: Add
+  id: 195
+  time: '2026-01-16T22:24:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42443
+- author: Samuka
+  changes:
+  - message: shuttle called and recalled logs now show who recalled or called the
+      shuttle
+    type: Fix
+  id: 196
+  time: '2026-01-24T19:15:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41557
+- author: M4rchy-S
+  changes:
+  - message: Admin logger for criminal status changes
+    type: Add
+  id: 197
+  time: '2026-01-29T06:05:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42691
 Name: Admin
 Order: 3

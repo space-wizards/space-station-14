@@ -30,7 +30,7 @@
         - id: Dropper
         # It would be cool to have special "syndicate" chemical analysis goggles
         - id: ClothingEyesGlassesChemical
-        - id: SyringeStimulants
+        - id: Syringe
         - id: VestineChemistryVial
           amount: 2
         - id: ChemistryEmptyVial
@@ -95,8 +95,8 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        - id: SyndicateMicrowaveFlatpack
         - id: WeaponCroissant
           amount: 2
         - id: WeaponBaguette
-        - id: SyndicateMicrowaveMachineCircuitboard
         - id: PaperWrittenCombatBakeryKit
