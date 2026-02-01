@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
+    <WarningsAsErrors>RA0028;RA0032;nullable</WarningsAsErrors>
   </PropertyGroup>
   <Import Project="../MSBuild/Content.props" />
   <ItemGroup>
