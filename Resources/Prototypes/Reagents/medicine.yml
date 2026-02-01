@@ -1150,6 +1150,10 @@
   group: Medicine
   desc: reagent-desc-holywater
   evaporationSpeed: 0.3
+  absorbent: true
+  friction: 0.4
+  slipData:
+    requiredSlipSpeed: 3.5
   physicalDesc: reagent-physical-desc-holy
   flavor: holy
   color: "#91C3F7"
