@@ -2,9 +2,11 @@ using Content.Shared.Actions;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Examine;
 
@@ -22,6 +24,7 @@ public sealed class DashAbilitySystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PullingSystem _pullingSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -68,6 +71,16 @@ public sealed class DashAbilitySystem : EntitySystem
             // can only dash if the destination is visible on screen
             _popup.PopupClient(Loc.GetString("dash-ability-cant-see", ("item", uid)), user, user);
             return;
+        }
+
+        if (_turf.TryGetTileRef(args.Target, out var tile))
+        {
+            if (_turf.IsTileBlocked(tile.Value, CollisionGroup.MidImpassable))
+            {
+                // Can only dash if you can stand there
+                _popup.PopupClient(Loc.GetString("dash-ability-obstructed", ("item", uid)), user, user);
+                return;
+            }
         }
 
         if (!_sharedCharges.TryUseCharge(uid))
