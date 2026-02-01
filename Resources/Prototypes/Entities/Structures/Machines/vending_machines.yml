@@ -84,6 +84,9 @@
     messageSet: SpookySpeakerMessagesGeneric
     speakChance: 0.2
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
   - type: ActiveRadio
     channels:
     - Common
@@ -106,6 +109,9 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+  - type: Tag
+    tags:
+    - SiliconEmotes
 
 - type: entity
   id: VendingMachineWallmount
@@ -171,10 +177,146 @@
     usesApcPower: true
   - type: Rotatable
 
+# Vending Machine Radio channels
+
+- type: entity
+  id: VendingMachineService
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Service
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Service
+
+- type: entity
+  id: VendingMachineSecurity
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Security
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Security
+
+- type: entity
+  id: VendingMachineMedicalRadio
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Medical
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Medical
+
+- type: entity
+  id: VendingMachineEngineering
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Engineering
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Engineering
+
+- type: entity
+  id: VendingMachineCommand
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Command
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Command
+
+- type: entity
+  id: VendingMachineScience
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Science
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Science
+
+- type: entity
+  id: VendingMachineCargo
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Supply
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Supply
+
+- type: entity
+  id: VendingMachineCentCom
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - CentCom
+  - type: ActiveRadio
+    channels:
+    - Common
+    - CentCom
+
+- type: entity
+  id: VendingMachineSyndicate
+  parent: VendingMachine
+  abstract: true
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate #Only syndie radio so it doesn't start snitching
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+
+    
 # Vending machines
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineCondiments
   name: condiment station
   description: Slather these thick gooey substances on your food for a full flavor effect.
@@ -207,7 +349,7 @@
     noRot: false
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineSecurity
   id: VendingMachineAmmo
   name: liberation station
   description: An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
@@ -233,7 +375,7 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineBooze
   name: Booze-O-Mat
   description: A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one.
@@ -299,9 +441,16 @@
     guides:
     - Bartender
     - Drinks
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate #Only syndie radio so it doesn't start snitching
+  - type: ActiveRadio
+    channels:
+    - Syndicate
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCommand
   id: VendingMachineCart
   name: PTech
   description: PTech vending! Providing a ROBUST selection of PDAs, cartridges, and anything else a dull paper pusher needs!
@@ -331,7 +480,7 @@
     access: [["HeadOfPersonnel"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineChefvend
   name: ChefVend
   description: An ingredient vendor for all your cheffin needs.
@@ -784,7 +933,7 @@
     color: "#00E645"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineDinnerware
   name: Plasteel Chef's Dinnerware Vendor
   description: A kitchen and restaurant equipment vendor.
@@ -880,7 +1029,7 @@
     color: "#6148c7"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineEngineering
   id: VendingMachineEngivend
   name: Engi-Vend
   description: Spare tool vending. What? Did you expect some witty description?
@@ -910,7 +1059,7 @@
     color: "#b89e2a"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineMedicalRadio
   id: VendingMachineMedicalBase
   name: NanoMed Civilian
   description: It's a medical drug dispenser. Natural chemicals only!
@@ -966,7 +1115,7 @@
     access: [["Medical"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineNutri
   name: NutriMax
   description: A vending machine containing nutritional substances for plants and botanical tools.
@@ -1000,7 +1149,7 @@
     color: "#326e3f"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineSecurity
   id: VendingMachineSec
   name: SecTech
   description: A vending machine containing Security equipment. A label reads SECURITY PERSONNEL ONLY.
@@ -1038,7 +1187,7 @@
     - Antagonists
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineSeedsUnlocked
   name: MegaSeed Servitor
   description: For when you need seeds fast. Hands down the best seed selection on the station!
@@ -1261,7 +1410,7 @@
   - type: RussianAccent
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineTheater
   name: AutoDrobe
   description: A vending machine containing costumes.
@@ -1297,7 +1446,7 @@
     color: "#c73434"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineScience
   id: VendingMachineVendomat
   name: Vendomat
   description: Only the finest robust equipment in space!
@@ -1329,7 +1478,7 @@
     color: "#9dc5c9"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineScience
   id: VendingMachineRobotics
   name: Robotech Deluxe
   description: All the tools you need to create your own robot army.
@@ -1366,7 +1515,7 @@
     - Robotics
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineEngineering
   id: VendingMachineYouTool
   name: YouTool
   description: "A vending machine containing standard tools. A label reads: Tools for tools."
@@ -1394,7 +1543,7 @@
     color: "#d4ab33"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineGames
   name: Good Clean Fun
   description: Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job...
@@ -1459,7 +1608,7 @@
     color: "#ffe599"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCargo
   id: VendingMachineSalvage
   name: Salvage Vendor
   description: A dwarf's best friend!
@@ -1491,7 +1640,7 @@
     - Salvage
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineSecurity
   id: VendingMachineDonut
   name: Monkin' Donuts
   description: A donut vendor provided by Robust Industries, LLC.
@@ -1526,7 +1675,7 @@
 # job clothing
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineHydrobe
   name: HyDrobe
   description: A machine with a catchy name. It dispenses botany related clothing and gear.
@@ -1558,7 +1707,7 @@
     access: [["Hydroponics"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineSecurity
   id: VendingMachineLawDrobe
   name: LawDrobe
   description: Objection! This wardrobe dispenses the rule of law... and lawyer clothing..
@@ -1586,7 +1735,7 @@
     access: [["Lawyer"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineSecurity
   id: VendingMachineSecDrobe
   name: SecDrobe
   description: A vending machine for security and security-related clothing!
@@ -1618,7 +1767,7 @@
     access: [["Security"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingBarDrobe
   name: BarDrobe
   description: A stylish vendor to dispense the most stylish bar clothing!
@@ -1646,7 +1795,7 @@
     access: [["Bar"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineChapel
   name: PietyVend
   components:
@@ -1706,7 +1855,7 @@
     access: [["Cargo"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineMedicalRadio
   id: VendingMachineMediDrobe
   name: MediDrobe
   description: A vending machine rumoured to be capable of dispensing clothing for medical personnel.
@@ -1734,7 +1883,7 @@
     access: [["Medical"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineMedicalRadio
   id: VendingMachineChemDrobe
   name: ChemDrobe
   description: A vending machine for dispensing chemistry related clothing.
@@ -1762,7 +1911,7 @@
     access: [["Chemistry"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineCuraDrobe
   name: CuraDrobe
   description: A lowstock vendor only capable of vending clothing for curators and librarians.
@@ -1790,7 +1939,7 @@
     access: [["Service"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineEngineering
   id: VendingMachineAtmosDrobe
   name: AtmosDrobe
   description: This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job.
@@ -1822,7 +1971,7 @@
     access: [["Engineering"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineEngineering
   id: VendingMachineEngiDrobe
   name: EngiDrobe
   description: A vending machine renowned for vending industrial grade clothing.
@@ -1854,7 +2003,7 @@
     access: [["Engineering"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineChefDrobe
   name: ChefDrobe
   description: This vending machine might not dispense meat, but it certainly dispenses chef related clothing.
@@ -1882,7 +2031,7 @@
     access: [["Kitchen"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineSecurity
   id: VendingMachineDetDrobe
   name: DetDrobe
   description: A machine for all your detective needs, as long as you need clothes.
@@ -1910,7 +2059,7 @@
     access: [["Detective"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineJaniDrobe
   name: JaniDrobe
   description: A self cleaning vending machine capable of dispensing clothing for janitors.
@@ -1942,7 +2091,7 @@
     access: [["Janitor"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineScience
   id: VendingMachineSciDrobe
   name: SciDrobe
   description: A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Space Cubans.
@@ -1970,7 +2119,7 @@
     access: [["Research"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineSyndicate
   id: VendingMachineSyndieDrobe
   name: SyndieDrobe
   description: Wardrobe machine encoded by the syndicate, contains elite outfits for various operations.
@@ -2002,7 +2151,7 @@
     access: [["NuclearOperative"], ["SyndicateAgent"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineScience
   id: VendingMachineRoboDrobe
   name: RoboDrobe
   description: A vending machine designed to dispense clothing known only to roboticists.
@@ -2030,7 +2179,7 @@
     access: [["Research"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineMedicalRadio
   id: VendingMachineGeneDrobe
   name: GeneDrobe
   description: A machine for dispensing clothing related to genetics.
@@ -2058,7 +2207,7 @@
     access: [["Medical"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineMedicalRadio
   id: VendingMachineViroDrobe
   name: ViroDrobe
   description: An unsterilized machine for dispending virology related clothing.
@@ -2086,7 +2235,7 @@
     access: [["Medical"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCentCom
   id: VendingMachineCentDrobe
   name: CentDrobe
   description: A one-of-a-kind vending machine for all your centcomm aesthetic needs!
@@ -2114,7 +2263,7 @@
     access: [["CentralCommand"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineHappyHonk
   name: Happy Honk Dispenser
   description: A happy honk meal box dispenser made by honk! co.
@@ -2187,7 +2336,7 @@
 # Gas Tank Dispenser
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineEngineering
   id: VendingMachineTankDispenserEVA
   suffix: EVA [O2, N2]
   name: gas tank dispenser
@@ -2200,7 +2349,7 @@
     state: dispenser
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineEngineering
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
   name: gas tank dispenser
@@ -2215,7 +2364,7 @@
     - state: dispensereng
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineMedicalRadio
   id: VendingMachineChemicals
   name: ChemVend
   description: Probably not the coffee machine.
@@ -2258,6 +2407,13 @@
     ejectDelay: 2
   - type: AccessReader
     access: [["SyndicateAgent"]]
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate #Only syndie radio so it doesn't start snitching
+  - type: ActiveRadio
+    channels:
+    - Syndicate
 
 # wallmount
 - type: entity
