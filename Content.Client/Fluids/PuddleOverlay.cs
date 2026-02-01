@@ -1,9 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Client.Stylesheets.Fonts;
 using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Client.Fluids;
@@ -13,6 +13,7 @@ public sealed class PuddleOverlay : Overlay
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IFontSelectionManager _fontSelection = default!;
     private readonly PuddleDebugOverlaySystem _debugOverlaySystem;
     private readonly SharedTransformSystem _transformSystem;
 
@@ -20,7 +21,7 @@ public sealed class PuddleOverlay : Overlay
     private readonly Color _mediumPuddle = new(0, 150, 255, 50);
     private readonly Color _lightPuddle = new(0, 50, 255, 50);
 
-    private readonly Font _font;
+    private Font _font;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace | OverlaySpace.WorldSpace;
 
@@ -28,9 +29,29 @@ public sealed class PuddleOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _debugOverlaySystem = _entitySystemManager.GetEntitySystem<PuddleDebugOverlaySystem>();
-        var cache = IoCManager.Resolve<IResourceCache>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
         _transformSystem = _entityManager.System<SharedTransformSystem>();
+
+        UpdateFont();
+        _fontSelection.OnFontChanged += OnFontChanged;
+    }
+
+    protected override void DisposeBehavior()
+    {
+        base.DisposeBehavior();
+
+        _fontSelection.OnFontChanged -= OnFontChanged;
+    }
+
+    private void OnFontChanged(StandardFontType type)
+    {
+        if (type == StandardFontType.Main)
+            UpdateFont();
+    }
+
+    [MemberNotNull(nameof(_font))]
+    private void UpdateFont()
+    {
+        _font = _fontSelection.GetFont(StandardFontType.Main, 8);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
