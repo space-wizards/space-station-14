@@ -137,9 +137,6 @@ public sealed class ClickableSystem : EntitySystem
                 return true;
         }
 
-        drawDepth = default;
-        renderOrder = default;
-        bottom = default;
         return false;
     }
 
