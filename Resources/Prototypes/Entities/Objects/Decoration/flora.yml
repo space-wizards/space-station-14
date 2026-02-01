@@ -233,6 +233,25 @@
         tree06: ""
 
 - type: entity
+  parent: FloraTree
+  id: DionaTree
+  name: tree
+  description: Yep, it's a tree. Why do you feel it looking at you?
+  components:
+  - type: Examiner # Lets polymorphed diona inspect the area around them, their "eyes" still work.
+  - type: BodyEmotes # Shhh... the trees are speaking
+    soundsId: DionaBodyEmotes
+  - type: Speech
+    speechSounds: Alto
+    speechVerb: Plant
+    allowedEmotes: ['Chirp']
+  - type: Vocal
+    sounds:
+      Male: UnisexDiona
+      Female: UnisexDiona
+      Unsexed: UnisexDiona
+
+- type: entity
   parent: BaseTreeSnow
   id: FloraTreeSnow
   name: snowy tree
