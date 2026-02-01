@@ -4,8 +4,8 @@ meta:
   engineVersion: 271.1.0
   forkId: ""
   forkVersion: ""
-  time: 01/22/2026 02:05:58
-  entityCount: 25402
+  time: 01/23/2026 14:03:35
+  entityCount: 25404
 maps:
 - 943
 grids:
@@ -11686,6 +11686,17 @@ entities:
     - type: Transform
       pos: 3.5,32.5
       parent: 60
+- proto: AirlockEVALocked
+  entities:
+  - uid: 36
+    components:
+    - type: MetaData
+      name: EVA Storage
+    - type: Transform
+      pos: 2.5,-37.5
+      parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockExternal
   entities:
   - uid: 779
@@ -12992,12 +13003,10 @@ entities:
       parent: 60
 - proto: AirlockHeadOfPersonnelLocked
   entities:
-  - uid: 36
+  - uid: 1333
     components:
-    - type: MetaData
-      name: EVA Storage
     - type: Transform
-      pos: 2.5,-37.5
+      pos: 5.5,-33.5
       parent: 60
   - uid: 1374
     components:
@@ -13006,18 +13015,15 @@ entities:
     - type: Transform
       pos: 2.5,-29.5
       parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 3500
     components:
     - type: Transform
       pos: 6.5,-31.5
       parent: 60
-  - uid: 4958
-    components:
-    - type: MetaData
-      name: EVA Storage
-    - type: Transform
-      pos: 5.5,-33.5
-      parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockHeadOfSecurityLocked
   entities:
   - uid: 1644
@@ -13057,6 +13063,15 @@ entities:
     components:
     - type: Transform
       pos: 28.5,-36.5
+      parent: 60
+- proto: AirlockLibraryLocked
+  entities:
+  - uid: 8597
+    components:
+    - type: MetaData
+      name: Librarian's Room
+    - type: Transform
+      pos: -7.5,23.5
       parent: 60
 - proto: AirlockMaint
   entities:
@@ -13150,6 +13165,16 @@ entities:
     - type: Transform
       pos: -10.5,26.5
       parent: 60
+- proto: AirlockMaintEVALocked
+  entities:
+  - uid: 1343
+    components:
+    - type: MetaData
+      name: EVA Storage Maints
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,-38.5
+      parent: 60
 - proto: AirlockMaintGlassLocked
   entities:
   - uid: 3415
@@ -13181,15 +13206,6 @@ entities:
     components:
     - type: Transform
       pos: -62.5,7.5
-      parent: 60
-- proto: AirlockMaintHOPLocked
-  entities:
-  - uid: 1343
-    components:
-    - type: MetaData
-      name: EVA Maints
-    - type: Transform
-      pos: 7.5,-38.5
       parent: 60
 - proto: AirlockMaintHydroLocked
   entities:
@@ -13499,6 +13515,17 @@ entities:
     - type: Transform
       pos: 35.5,-6.5
       parent: 60
+- proto: AirlockMaintNewsroomLocked
+  entities:
+  - uid: 4691
+    components:
+    - type: MetaData
+      name: Newsroom Maints
+    - type: Transform
+      pos: 34.5,19.5
+      parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockMaintRnDLocked
   entities:
   - uid: 9324
@@ -13536,6 +13563,8 @@ entities:
     - type: Transform
       pos: 37.5,-2.5
       parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 8987
     components:
     - type: MetaData
@@ -13543,6 +13572,8 @@ entities:
     - type: Transform
       pos: 44.5,-2.5
       parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockMaintSecLocked
   entities:
   - uid: 777
@@ -13632,6 +13663,17 @@ entities:
     - type: Transform
       pos: 48.5,-15.5
       parent: 60
+- proto: AirlockNewsroomLocked
+  entities:
+  - uid: 1457
+    components:
+    - type: MetaData
+      name: Newsroom
+    - type: Transform
+      pos: 38.5,14.5
+      parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockQuartermasterLocked
   entities:
   - uid: 1622
@@ -13641,6 +13683,8 @@ entities:
     - type: Transform
       pos: 44.5,11.5
       parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
   - uid: 13039
     components:
     - type: MetaData
@@ -13826,29 +13870,6 @@ entities:
     components:
     - type: Transform
       pos: -24.5,-1.5
-      parent: 60
-- proto: AirlockServiceLocked
-  entities:
-  - uid: 1333
-    components:
-    - type: MetaData
-      name: Reporters News Room
-    - type: Transform
-      pos: 38.5,14.5
-      parent: 60
-  - uid: 14179
-    components:
-    - type: MetaData
-      name: Librarian's Room
-    - type: Transform
-      pos: -7.5,23.5
-      parent: 60
-  - uid: 16381
-    components:
-    - type: MetaData
-      name: Reporter Maint Door
-    - type: Transform
-      pos: 34.5,19.5
       parent: 60
 - proto: AirlockShuttle
   entities:
@@ -17528,6 +17549,11 @@ entities:
     components:
     - type: Transform
       pos: -54.5,0.5
+      parent: 60
+  - uid: 8596
+    components:
+    - type: Transform
+      pos: 6.5,-33.5
       parent: 60
   - uid: 9682
     components:
@@ -62994,6 +63020,9 @@ entities:
     - type: Transform
       pos: 36.5,15.5
       parent: 60
+    - type: AccessReader
+      accessListsOriginal:
+      - - Newsroom
 - proto: ComputerMedicalRecords
   entities:
   - uid: 12358
@@ -64532,13 +64561,6 @@ entities:
     - type: Transform
       pos: -16.5,-29.5
       parent: 60
-- proto: DefaultStationBeacon
-  entities:
-  - uid: 20983
-    components:
-    - type: Transform
-      pos: 35.5,16.5
-      parent: 60
 - proto: DefaultStationBeaconAICore
   entities:
   - uid: 18703
@@ -64790,6 +64812,13 @@ entities:
     components:
     - type: Transform
       pos: 38.5,-7.5
+      parent: 60
+- proto: DefaultStationBeaconNewsroom
+  entities:
+  - uid: 4958
+    components:
+    - type: Transform
+      pos: 35.5,16.5
       parent: 60
 - proto: DefaultStationBeaconPermaBrig
   entities:
@@ -112341,6 +112370,32 @@ entities:
     - type: Transform
       pos: -112.56269,8.416946
       parent: 60
+- proto: LockableButtonCommand
+  entities:
+  - uid: 6504
+    components:
+    - type: MetaData
+      name: emergency EVA Storage access
+    - type: Transform
+      pos: 6.5,-33.5
+      parent: 60
+    - type: AccessReader
+      accessListsOriginal:
+      - - Command
+    - type: DeviceLinkSource
+      linkedPorts:
+        36:
+        - - Pressed
+          - Open
+        - - Pressed
+          - DoorBolt
+        1343:
+        - - Pressed
+          - Open
+        - - Pressed
+          - DoorBolt
+    - type: Fixtures
+      fixtures: {}
 - proto: LockableButtonEngineering
   entities:
   - uid: 14517
@@ -135370,6 +135425,8 @@ entities:
     - type: Transform
       pos: 3.5,-36.5
       parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: SuitStorageEVAAlternate
   entities:
   - uid: 6343
@@ -156975,17 +157032,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-64.5
       parent: 60
-  - uid: 14127
-    components:
-    - type: Transform
-      pos: -7.5,20.5
-      parent: 60
-  - uid: 14129
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -8.5,21.5
-      parent: 60
   - uid: 16409
     components:
     - type: Transform
@@ -157037,6 +157083,19 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 36.5,-29.5
+      parent: 60
+- proto: WindoorLibraryLocked
+  entities:
+  - uid: 8970
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -8.5,21.5
+      parent: 60
+  - uid: 9367
+    components:
+    - type: Transform
+      pos: -7.5,20.5
       parent: 60
 - proto: WindoorSecure
   entities:
@@ -157402,18 +157461,22 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,12.5
       parent: 60
+- proto: WindoorSecureEVALocked
+  entities:
+  - uid: 5955
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.5,-38.5
+      parent: 60
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: WindoorSecureHeadOfPersonnelLocked
   entities:
   - uid: 1340
     components:
     - type: Transform
       pos: 7.5,-26.5
-      parent: 60
-  - uid: 4691
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 4.5,-38.5
       parent: 60
 - proto: WindoorSecureMedicalLocked
   entities:
