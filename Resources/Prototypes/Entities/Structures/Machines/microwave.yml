@@ -16,15 +16,23 @@
         bloodyunshaded:
           True: { visible: true }
           False: { visible: false }
+      enum.MicrowaveVisualState.Broken:
+        broken:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.VisualState:
         enum.MicrowaveVisualizerLayers.Base:
           Idle: { state: "mw" }
-          Broken: { state: "mwb" }
           Cooking: { state: "mw" }
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           Idle: { state: "mw_unlit" }
-          Broken: { state: "mw_unlit" }
           Cooking: { state: "mw_running_unlit" }
+        enum.MicrowaveVisualizerLayers.BaseOff:
+          Idle: { state: "mw0" }
+          Cooking: { state: "mw0" }
+        broken:
+          Idle: { visible: false }
+          Broken: { visible: true }
         bloodyunshaded:
           Idle: { visible: false }
           Broken: { visible: false }
@@ -66,9 +74,14 @@
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: mw0
+      map: ["enum.MicrowaveVisualizerLayers.BaseOff"]
     - state: mw_unlit
-      shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+      shader: unshaded
+    - state: mwb
+      map: ["broken"]
+      visible: false
     - state: mwbloody0
       map: ["bloody"]
       visible: false
