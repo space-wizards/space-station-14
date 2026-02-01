@@ -4,7 +4,6 @@
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time. Fits in hand perfectly.
   abstract: true
-  noSpawn: true
   components:
   # Visual
   - type: Sprite

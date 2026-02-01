@@ -18,6 +18,11 @@
   name: entity-category-name-roles
   hideSpawnMenu: true
 
+- type: entityCategory
+  id: XenoArchEffects
+  name: entity-category-name-xeno-artifact-effects
+  hideSpawnMenu: true
+
 # markers, atmos fixing, etc
 - type: entityCategory
   id: Mapping
