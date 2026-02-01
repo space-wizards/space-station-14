@@ -45,13 +45,20 @@ jobs:
       run: dotnet build --configuration DebugOpt --no-restore /m
 
     - name: Run Content.Tests
-      run: dotnet test --no-build --configuration DebugOpt Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
+      run: dotnet test --no-build --configuration DebugOpt Content.Tests/Content.Tests.csproj --logger trx -- NUnit.ConsoleOut=0
 
     - name: Run Content.IntegrationTests
       shell: pwsh
       run: |
         $env:DOTNET_gcServer=1
-        dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed
+        dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj --logger trx -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed
+
+    - name: Test results
+      continue-on-error: true
+      if: always()
+      run: |
+        dotnet tool install -g dotnet-trx
+        trx
   ci-success:
     name: Build & Test Debug
     needs:
