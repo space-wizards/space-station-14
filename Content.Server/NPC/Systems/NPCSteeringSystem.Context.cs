@@ -93,13 +93,19 @@ public sealed partial class NPCSteeringSystem
         TransformComponent xform,
         Angle offsetRot,
         float moveSpeed,
+        float acceleration,
+        float friction,
         Span<float> interest,
         float frameTime,
-        ref bool forceSteer)
+        ref bool forceSteer,
+        ref float moveMultiplier)
     {
         var ourCoordinates = xform.Coordinates;
         var destinationCoordinates = steering.Coordinates;
         var inLos = true;
+
+        // check if we should ignore all pathing logic and go straight to the target coordinates
+        var directMove = steering.DirectMove;
 
         // Check if we're in LOS if that's required.
         // TODO: Need something uhh better not sure on the interaction between these.
@@ -130,10 +136,17 @@ public sealed partial class NPCSteeringSystem
             steering.ForceMove = false;
         }
 
-        // We've arrived, nothing else matters.
-        if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) &&
-            inLos &&
-            targetDistance <= steering.Range)
+        var velLen = body.LinearVelocity.Length();
+
+        var careAboutSpeed = steering.InRangeMaxSpeed != null;
+        var finalInRange = ourCoordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) && inLos && targetDistance <= steering.Range;
+        var velocityHigh = careAboutSpeed && velLen > steering.InRangeMaxSpeed!.Value;
+        // if we're in range and we care about velocity, stop trying to move if we early return
+        if (finalInRange && careAboutSpeed)
+            moveMultiplier = 0f;
+
+        // We've arrived and velocity is acceptable, nothing else matters.
+        if (finalInRange && !velocityHigh)
         {
             steering.Status = SteeringStatus.InRange;
             ResetStuck(steering, ourCoordinates);
@@ -141,7 +154,7 @@ public sealed partial class NPCSteeringSystem
         }
 
         // Grab the target position, either the next path node or our end goal..
-        var targetCoordinates = GetTargetCoordinates(steering);
+        var targetCoordinates = steering.DirectMove ? steering.Coordinates : GetTargetCoordinates(steering);
 
         if (!targetCoordinates.IsValid(EntityManager))
         {
@@ -154,7 +167,7 @@ public sealed partial class NPCSteeringSystem
         // If the next node is invalid then get new ones
         if (!targetCoordinates.IsValid(EntityManager))
         {
-            if (steering.CurrentPath.TryPeek(out var poly) &&
+            if (!directMove && steering.CurrentPath.TryPeek(out var poly) &&
                 (poly.Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0)
             {
                 steering.CurrentPath.Dequeue();
@@ -203,7 +216,7 @@ public sealed partial class NPCSteeringSystem
         if (arrived)
         {
             // Node needs some kind of special handling like access or smashing.
-            if (steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
+            if (!directMove && steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
             {
                 // Ignore stuck while handling obstacles.
                 ResetStuck(steering, ourCoordinates);
@@ -242,7 +255,7 @@ public sealed partial class NPCSteeringSystem
 
             // Distance should already be handled above.
             // It was just a node, not the target, so grab the next destination (either the target or next node).
-            if (steering.CurrentPath.Count > 0)
+            if (!directMove && steering.CurrentPath.Count > 0)
             {
                 forceSteer = true;
                 steering.CurrentPath.Dequeue();
@@ -310,18 +323,23 @@ public sealed partial class NPCSteeringSystem
         }
 
         // If not in LOS and no path then get a new one fam.
-        if ((!inLos && steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0) ||
-            (!steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0))
+        if (!directMove &&
+            ((!inLos && steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0) ||
+             (!steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0)))
         {
             needsPath = true;
         }
 
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-        CheckPath(uid, steering, xform, needsPath, targetDistance);
+        if (!directMove)
+            CheckPath(uid, steering, xform, needsPath, targetDistance);
+
+        // whether we should want to brake right now
+        var haveToBrake = finalInRange && velocityHigh;
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
-        // available but we assume there was.
-        if (steering is { Pathfind: true, CurrentPath.Count: 0 })
+        // available but we assume there was. Brake if we have to, though.
+        if (!directMove && steering is { Pathfind: true, CurrentPath.Count: 0 } && !haveToBrake)
             return true;
 
         if (moveSpeed == 0f || direction == Vector2.Zero)
@@ -330,26 +348,79 @@ public sealed partial class NPCSteeringSystem
             return false;
         }
 
-        var input = direction.Normalized();
-        var tickMovement = moveSpeed * frameTime;
+        var moveType = MovementType.MovingToTarget;
 
-        // We have the input in world terms but need to convert it back to what movercontroller is doing.
-        input = offsetRot.RotateVec(input);
-        var norm = input.Normalized();
-        var weight = MapValue(direction.Length(), tickMovement * 0.5f, tickMovement * 0.75f);
+        var realAccel = acceleration * moveSpeed;
+        var frameAccel = realAccel * frameTime;
 
-        ApplySeek(interest, norm, weight);
+        // check our tangential velocity
+        var normVel = direction * Vector2.Dot(body.LinearVelocity, direction) / direction.LengthSquared();
+        var tgVel = body.LinearVelocity - normVel;
 
-        // Prefer our current direction
-        if (weight > 0f && body.LinearVelocity.LengthSquared() > 0f)
+        // we're near final node but haven't braked, do so
+        if (haveToBrake)
         {
-            const float sameDirectionWeight = 0.1f;
-            norm = body.LinearVelocity.Normalized();
+            // how much distance we'll pass before hitting our desired max speed
+            var brakePath = (velLen - steering.InRangeMaxSpeed ?? 0f) / friction;
+            var hardBrake = brakePath > MathF.Min(0.5f, steering.Range); // hard brake if it takes more than half a tile
 
-            ApplySeek(interest, norm, sameDirectionWeight);
+            moveType = hardBrake ? MovementType.Braking : MovementType.Coasting;
+        }
+        else
+        {
+            // scary magic number but shouldn't be a datafield since what this actually does is implementation-dependent
+            const float circlingTolerance = 0.5f;
+
+            var dirLen = direction.Length();
+            // tangentially brake if we'll be spiraling outwards at our current tangential velocity
+            var tangentialBrake = !arrived && realAccel * circlingTolerance < tgVel.LengthSquared() / dirLen;
+
+            moveType = tangentialBrake ? MovementType.BrakingTangential : MovementType.MovingToTarget;
+        }
+
+        switch (moveType)
+        {
+            case MovementType.MovingToTarget:
+                moveMultiplier = 1f;
+                ApplySeek(interest, offsetRot.RotateVec(direction.Normalized()), 1f);
+                break;
+            case MovementType.Braking:
+                if (velLen > 0f)
+                {
+                    // copy our velocity and apply friction to the copy
+                    var cvel = body.LinearVelocity;
+                    _mover.Friction(0f, frameTime, friction, ref cvel);
+                    // clamp our braking to what our post-friction velocity would be
+                    // otherwise we can overbrake in this frame and reverse movement direction
+                    // TODO: a way to tell calling code that we don't want to reverse movement direction to not have to do this
+                    moveMultiplier = MapValue(cvel.Length(), 0f, frameAccel);
+                                        // brake                                 // normalise
+                    ApplySeek(interest, -offsetRot.RotateVec(body.LinearVelocity / velLen), 1f);
+                }
+                break;
+            case MovementType.BrakingTangential:
+                if (velLen > 0f)
+                {
+                    moveMultiplier = MapValue(tgVel.Length(), 0f, frameAccel);
+                                        // brake
+                    ApplySeek(interest, -offsetRot.RotateVec(tgVel.Normalized()), tgVel.Length() / velLen);
+                }
+                break;
+            case MovementType.Coasting:
+                moveMultiplier = 0f;
+                break;
         }
 
         return true;
+    }
+
+    // used in TrySeek()
+    private enum MovementType
+    {
+        MovingToTarget,
+        Braking,
+        BrakingTangential,
+        Coasting
     }
 
     private void ResetStuck(NPCSteeringComponent component, EntityCoordinates ourCoordinates)
