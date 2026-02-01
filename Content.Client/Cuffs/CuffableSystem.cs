@@ -2,8 +2,11 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Cuffs;
@@ -12,6 +15,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
 
     public override void Initialize()
     {
@@ -49,14 +53,26 @@ public sealed class CuffableSystem : SharedCuffableSystem
             return;
         _sprite.LayerSetColor((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
 
+
+        // species specific
+        var rsiString = cuffState.RSI ?? component.CurrentRSI;
+        if (rsiString == null)
+            return;
+
+        var rsi = _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / rsiString).RSI;
+
+        var state = cuffState.IconState;
+        if (TryComp(uid, out InventoryComponent? inventory) && inventory.SpeciesId != null && rsi.TryGetState($"{cuffState.IconState}-{inventory.SpeciesId}", out _))
+            state = $"{cuffState.IconState}-{inventory.SpeciesId}";
+
         if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
         {
             component.CurrentRSI = cuffState.RSI;
-            _sprite.LayerSetRsi((uid, sprite), _sprite.LayerMapGet((uid, sprite), HumanoidVisualLayers.Handcuffs), new ResPath(component.CurrentRSI), cuffState.IconState);
+            _sprite.LayerSetRsi((uid, sprite), _sprite.LayerMapGet((uid, sprite), HumanoidVisualLayers.Handcuffs), new ResPath(component.CurrentRSI), state);
         }
         else
         {
-            _sprite.LayerSetRsiState((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.IconState);
+            _sprite.LayerSetRsiState((uid, sprite), HumanoidVisualLayers.Handcuffs, state);
         }
     }
 }

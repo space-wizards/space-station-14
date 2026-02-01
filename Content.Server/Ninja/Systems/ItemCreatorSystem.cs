@@ -23,27 +23,33 @@ public sealed class ItemCreatorSystem : SharedItemCreatorSystem
 
     private void OnCreateItem(Entity<ItemCreatorComponent> ent, ref CreateItemEvent args)
     {
-        var (uid, comp) = ent;
-        if (comp.Battery is not { } battery)
+        if (ent.Comp.Battery is not {} battery)
             return;
 
         args.Handled = true;
 
         var user = args.Performer;
-        if (!_battery.TryUseCharge(battery, comp.Charge))
+
+        foreach (var entry in ent.Comp.Entries)
         {
-            _popup.PopupEntity(Loc.GetString(comp.NoPowerPopup), user, user);
-            return;
+            if (entry.ActionEntity != args.Action)
+                continue;
+
+            if (!_battery.TryUseCharge(battery, entry.Charge))
+            {
+                _popup.PopupEntity(Loc.GetString(ent.Comp.NoPowerPopup), user, user);
+                return;
+            }
+
+            var ev = new CreateItemAttemptEvent(user);
+            RaiseLocalEvent(ent, ref ev);
+            if (ev.Cancelled)
+                return;
+
+            // try to put throwing star in hand, otherwise it goes on the ground
+            var star = Spawn(entry.SpawnedPrototype, Transform(user).Coordinates);
+            _hands.TryPickupAnyHand(user, star);
         }
-
-        var ev = new CreateItemAttemptEvent(user);
-        RaiseLocalEvent(uid, ref ev);
-        if (ev.Cancelled)
-            return;
-
-        // try to put throwing star in hand, otherwise it goes on the ground
-        var star = Spawn(comp.SpawnedPrototype, Transform(user).Coordinates);
-        _hands.TryPickupAnyHand(user, star);
     }
 
     private void OnBatteryChanged(Entity<ItemCreatorComponent> ent, ref NinjaBatteryChangedEvent args)
