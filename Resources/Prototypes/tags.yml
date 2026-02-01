@@ -1342,7 +1342,7 @@
   id: SprayNozzle # Storage whitelist: ClothingBackpackWaterTank. ItemMapper: ClothingBackpackWaterTank
 
 - type: Tag
-  id: SpreaderIgnore # Used by SpreaderSystem to block spreading in a direction when a tagged airtight entity is on the same tile.
+  id: SpreaderIgnore # SpreaderSystem will ignore tagged entity on the same tile when checking for blocked directions.
 
 - type: Tag
   id: StationAi # Storage whitelist: AiHolder
