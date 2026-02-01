@@ -40,7 +40,6 @@
     Water: 4
     Nitrogen: 1
 
-
 - type: reaction
   id: SapBloodBreakdown
   source: true
@@ -91,9 +90,9 @@
     SulfurBlood:
       amount: 20
   products:
-    Water: 11
-    Sulfur: 0.5
-    Sugar: 2
+    Water: 10
+    Sulfur: 2
+    Hydrogen: 1
     CarbonDioxide: 3
     Protein: 4
 
