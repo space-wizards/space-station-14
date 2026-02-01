@@ -241,6 +241,7 @@
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
     makeOffspringInfant: false
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Chicken
@@ -276,7 +277,9 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExaminableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -409,8 +412,10 @@
     - horrible
     - terrible
     - chewy
-  - type: Hunger
-    baseDecayRate: 0.25
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: CockroachHunger
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -690,6 +695,7 @@
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
     makeOffspringInfant: false
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Duck
@@ -725,7 +731,9 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExaminableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -883,6 +891,7 @@
     - DoorBumpOpener
     - Cow
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Cow
@@ -917,10 +926,13 @@
         - ReagentId: Milk
           Quantity: 30
   - type: Udder
+    minHungerThreshold: Peckish
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
-  - type: ExaminableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1047,6 +1059,7 @@
     - DoorBumpOpener
     - Goat
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Goat
@@ -1072,11 +1085,15 @@
       wool:
         maxVol: 250
   - type: Udder
+    minHungerThreshold: Peckish
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
-  - type: ExaminableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: Wooly
+    minHungerThreshold: Peckish
   - type: Edible
     destroyOnEmpty: false
     solution: wool
@@ -1815,23 +1832,12 @@
   - type: FlavorProfile
     flavors:
     - meaty
-  - type: Thirst
-    startingThirst: 25  # spawn with Okay thirst state
-    thresholds:
-      OverHydrated: 35
-      Okay: 25
-      Thirsty: 15
-      Parched: 10
-      Dead: 0
-    baseDecayRate: 0.04
-  - type: Hunger
-    thresholds:
-      Overfed: 35
-      Okay: 25
-      Peckish: 15
-      Starving: 10
-      Dead: 0
-    baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: MouseHunger
+      Thirst:
+        prototype: MouseThirst
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -1934,11 +1940,12 @@
   # intended for swarms that eat pills so only temporary
   - type: TimedDespawn
     lifetime: 60
-  - type: Hunger
-    baseDecayRate: 10 # always hungry
-    starvingSlowdownModifier: 1
-  - type: Thirst
-    baseDecayRate: 10 # always thirsty
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: MouseAdmemeHunger
+      Thirst:
+        prototype: MouseAdmemeThirst
 
 - type: entity
   parent: MobMouse
@@ -3509,8 +3516,10 @@
   - type: FlavorProfile
     flavors:
     - meaty
-  - type: Hunger
-    baseDecayRate: 0.3
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: HamsterHunger
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -3618,6 +3627,7 @@
     - Pig
     - VimPilot
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Pig

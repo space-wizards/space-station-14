@@ -67,22 +67,13 @@ entity-effect-guidebook-smoke-area =
         *[other] create
     } large quantities of smoke
 
-entity-effect-guidebook-satiate-thirst =
+entity-effect-guidebook-satiate =
     { $chance ->
         [1] Satiates
         *[other] satiate
     } { $relative ->
-        [1] thirst averagely
-        *[other] thirst at {NATURALFIXED($relative, 3)}x the average rate
-    }
-
-entity-effect-guidebook-satiate-hunger =
-    { $chance ->
-        [1] Satiates
-        *[other] satiate
-    } { $relative ->
-        [1] hunger averagely
-        *[other] hunger at {NATURALFIXED($relative, 3)}x the average rate
+        [1] {$type} averagely
+        *[other] {$type} at {NATURALFIXED($relative, 3)}x the average rate
     }
 
 entity-effect-guidebook-health-change =
