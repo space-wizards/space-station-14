@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Fluids;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -10,13 +11,16 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
@@ -99,7 +103,15 @@ public abstract partial class SharedHandsSystem
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent, handName);
 
-        RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
+        RaiseLocalEvent(ent, new HandCountChangedEvent(ent, ent.Comp.Count));
+    }
+
+    public void RemoveActiveHand(Entity<HandsComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.ActiveHandId == null)
+            return;
+
+        RemoveHand(ent, ent.Comp.ActiveHandId);
     }
 
     /// <summary>
@@ -107,6 +119,7 @@ public abstract partial class SharedHandsSystem
     /// </summary>
     public virtual void RemoveHand(Entity<HandsComponent?> ent, string handName)
     {
+        // FirstTimePredicted is here because sometimes the client doesn't play nice with container shutdowns.
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
@@ -117,14 +130,15 @@ public abstract partial class SharedHandsSystem
         if (!ent.Comp.Hands.Remove(handName))
             return;
 
-        if (ContainerSystem.TryGetContainer(ent, handName, out var container))
+        // Don't double delete the container if we're already shutting down
+        if (MetaData(ent).EntityLifeStage < EntityLifeStage.Terminating && ContainerSystem.TryGetContainer(ent, handName, out var container))
             ContainerSystem.ShutdownContainer(container);
 
         ent.Comp.SortedHands.Remove(handName);
         if (ent.Comp.ActiveHandId == handName)
             TrySetActiveHand(ent, ent.Comp.SortedHands.FirstOrDefault());
 
-        RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
+        RaiseLocalEvent(ent, new HandCountChangedEvent(ent, ent.Comp.Count));
         Dirty(ent);
     }
 

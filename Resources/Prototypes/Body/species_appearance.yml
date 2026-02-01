@@ -61,7 +61,7 @@
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
+      state: humanoid
       visible: false
 
     - map: [ "clownedon" ] # Dynamically generated
