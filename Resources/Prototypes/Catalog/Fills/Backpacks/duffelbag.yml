@@ -376,6 +376,7 @@
         - id: PillAmbuzolPlus
         - id: PillAmbuzol
           amount: 3
+        - id: PaperWrittenSyndicateZombieBundle
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
