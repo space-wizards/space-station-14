@@ -1,12 +1,10 @@
 using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Body;
 
 public sealed partial class BodySystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     private EntityQuery<BodyComponent> _bodyQuery;
@@ -44,10 +42,6 @@ public sealed partial class BodySystem : EntitySystem
 
     private void OnBodyEntInserted(Entity<BodyComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        // Container insertion/removal gets networked twice
-        if (_timing.ApplyingState)
-            return;
-
         if (args.Container.ID != BodyComponent.ContainerID)
             return;
 
@@ -69,10 +63,6 @@ public sealed partial class BodySystem : EntitySystem
 
     private void OnBodyEntRemoved(Entity<BodyComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        // Container insertion/removal gets networked twice
-        if (_timing.ApplyingState)
-            return;
-
         if (args.Container.ID != BodyComponent.ContainerID)
             return;
 
