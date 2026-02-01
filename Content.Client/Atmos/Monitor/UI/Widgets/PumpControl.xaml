@@ -1,6 +1,7 @@
 <BoxContainer xmlns="https://spacestation14.io"
-         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         Orientation="Vertical" Margin="2 0 2 4">
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+              Orientation="Vertical" Margin="2 0 2 4">
     <Collapsible>
         <CollapsibleHeading Name="CAddress" />
         <!-- Upper row: toggle, direction, checks -->
@@ -31,7 +32,8 @@
                     </BoxContainer>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
-                    <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
+                    <controls:ConfirmButton Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}"
+                                            ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
                 </BoxContainer>
             </BoxContainer>
         </CollapsibleBody>
