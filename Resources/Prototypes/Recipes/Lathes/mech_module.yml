@@ -1,0 +1,51 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseMechModuleRecipe
+  categories:
+  - Mech
+  - MechModule
+  completetime: 10
+  materials:
+    Steel: 250
+    Glass: 250
+    Plastic: 250
+
+## Recipes
+
+- type: latheRecipe
+  parent: BaseMechModuleRecipe
+  id: MechModuleFan
+  result: MechModuleFan
+
+- type: latheRecipe
+  parent: BaseMechModuleRecipe
+  id: MechModuleAirTank
+  result: MechModuleAirTank
+
+- type: latheRecipe
+  parent: BaseMechModuleRecipe
+  id: MechModuleTeslaRelay
+  result: MechModuleTeslaRelay
+  materials:
+    Steel: 1000
+    Glass: 500
+
+- type: latheRecipe
+  parent: BaseMechModuleRecipe
+  id: MechModulePlasmaGenerator
+  result: MechModulePlasmaGenerator
+  materials:
+    Steel: 1000
+    Glass: 250
+    Plasma: 500
+    Silver: 250
+
+- type: latheRecipe
+  parent: BaseMechModuleRecipe
+  id: MechModuleHorn
+  result: MechModuleHorn
+  materials:
+    Steel: 500
+    Bananium: 250
