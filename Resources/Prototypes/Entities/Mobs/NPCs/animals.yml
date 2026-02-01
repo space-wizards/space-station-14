@@ -2573,6 +2573,10 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+  - type: NightVision
+    color: "#163247"
+    luminancethreshold: 2
+    noiseamount: 0.8
   - type: Prying # Open door from xeno.yml.
     pryPowered: true
     force: true
