@@ -91,8 +91,8 @@ public sealed partial class BatteryMenu : FancyWindow
 
         InitChargeMeter();
 
-        InBreaker.StateChanged += val => OnInBreaker?.Invoke(val);
-        OutBreaker.StateChanged += val => OnOutBreaker?.Invoke(val);
+        InBreaker.OnToggled += args => OnInBreaker?.Invoke(args.Pressed);
+        OutBreaker.OnToggled += args => OnOutBreaker?.Invoke(args.Pressed);
 
         ChargeRateSlider.OnValueChanged += _ =>
         {
@@ -160,8 +160,8 @@ public sealed partial class BatteryMenu : FancyWindow
         SetPowerLineState(DischargePowerLine, storageDelta < 0);
 
         // Update breakers.
-        InBreaker.IsOn = msg.CanCharge;
-        OutBreaker.IsOn = msg.CanDischarge;
+        InBreaker.Pressed = msg.CanCharge;
+        OutBreaker.Pressed = msg.CanDischarge;
 
         // Update various power values.
         InValue.Text = FormatPower(inValue);
