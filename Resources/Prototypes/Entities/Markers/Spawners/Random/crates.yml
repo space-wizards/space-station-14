@@ -70,7 +70,7 @@
   table: !type:GroupSelector
     children:
     - id: CrateEmergencyFire
-    - id: CrateEmergencyInternals
+    - id: CrateEmergencyEVA
     - id: CrateEmergencyInflatablewall
       weight: 0.5
 
@@ -241,7 +241,6 @@
     - CrateTrainingBombs
     - CrateTrackingImplants
     - CrateSecurityTrackingMindshieldImplants
-    - CrateSecurityHelmet
     - CrateSecurityArmor
     - CrateRestraints
     - CrateEmergencyExplosive

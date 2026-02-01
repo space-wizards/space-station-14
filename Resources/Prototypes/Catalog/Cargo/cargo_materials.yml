@@ -69,12 +69,12 @@
   group: market
 
 - type: cargoProduct
-  id: MaterialTextiles
+  id: MaterialCloth
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cloth_3
-  product: CrateMaterialTextiles
-  cost: 1500
+  product: CrateMaterialCloth
+  cost: 600
   category: cargoproduct-category-name-materials
   group: market
 

@@ -208,7 +208,7 @@
   - type: Tag
     tags:
     - Fruit # Seed of a fruit, you can yell at me
-    - Pistachios # Added tag due to CrateFoodGetMore interaction with BountyFruit.
+    - Pistachios # Added tag due to CrateServiceGetMore interaction with BountyFruit.
 
 - type: entity
   name: popcorn

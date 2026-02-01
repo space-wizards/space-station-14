@@ -480,7 +480,7 @@ PresentRandomAsh: PresentRandomCoal
 CrateCrewMonitoringBoards: CrateCrewMonitoring
 
 # 2024-11-25
-CrateSlimepersonLifeSupport: CrateNitrogenInternals
+CrateSlimepersonLifeSupport: CrateEmergencyEVA
 
 # 2024-12-01
 DungeonMasterCircuitBoard: GameMasterCircuitBoard
@@ -804,3 +804,16 @@ TowelColorYellow: null
 TowelColorMaroon: null
 TowelColorSilver: null
 TowelColorMime: null
+
+# 2026-01-30
+CrateChemistryVials: null
+CrateEmergencyInternals: CrateEmergencyEVA
+CrateEmergencyInternalsLarge: CrateEmergencyEVA
+CrateNitrogenInternals: CrateEmergencyEVA
+CrateFoodBarSupply: CrateServiceBarSupply
+CrateFoodCooking: CrateServiceCooking
+CrateFoodDinnerware: CrateServiceDinnerware
+CrateFoodGetMore: CrateServiceGetMore
+CrateSecurityHelmet: null
+CrateSecuritySupplies: null
+CrateMaterialTextiles: CrateMaterialCloth
