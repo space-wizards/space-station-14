@@ -5,34 +5,31 @@ namespace Content.Server.Traits.Assorted;
 
 public sealed class ParacusiaSystem : SharedParacusiaSystem
 {
-    public void SetSounds(EntityUid uid, SoundSpecifier sounds, ParacusiaComponent? component = null)
+    public void SetSounds(Entity<ParacusiaComponent?> ent, SoundSpecifier sounds)
     {
-        if (!Resolve(uid, ref component))
-        {
+        if (!Resolve(ent, ref ent.Comp))
             return;
-        }
-        component.Sounds = sounds;
-        Dirty(uid, component);
+
+        ent.Comp.Sounds = sounds;
+        Dirty(ent);
     }
 
-    public void SetTime(EntityUid uid, float minTime, float maxTime, ParacusiaComponent? component = null)
+    public void SetTime(Entity<ParacusiaComponent?> ent, TimeSpan minTime, TimeSpan maxTime)
     {
-        if (!Resolve(uid, ref component))
-        {
+        if (!Resolve(ent, ref ent.Comp))
             return;
-        }
-        component.MinTimeBetweenIncidents = minTime;
-        component.MaxTimeBetweenIncidents = maxTime;
-        Dirty(uid, component);
+
+        ent.Comp.MinTimeBetweenIncidents = minTime;
+        ent.Comp.MaxTimeBetweenIncidents = maxTime;
+        Dirty(ent);
     }
 
-    public void SetDistance(EntityUid uid, float maxSoundDistance, ParacusiaComponent? component = null)
+    public void SetDistance(Entity<ParacusiaComponent?> ent, float maxSoundDistance)
     {
-        if (!Resolve(uid, ref component))
-        {
+        if (!Resolve(ent, ref ent.Comp))
             return;
-        }
-        component.MaxSoundDistance = maxSoundDistance;
-        Dirty(uid, component);
+
+        ent.Comp.MaxSoundDistance = maxSoundDistance;
+        Dirty(ent);
     }
 }
