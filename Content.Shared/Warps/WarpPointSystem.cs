@@ -14,7 +14,7 @@ public sealed class WarpPointSystem : EntitySystem
 
     private void OnStartUp(Entity<WarpPointComponent> ent, ref ComponentStartup args)
     {
-        if (ent.Comp.Location is not null && Loc.TryGetString(ent.Comp.Location, out var locloc))
+        if (!string.IsNullOrEmpty(ent.Comp.Location) && Loc.TryGetString(ent.Comp.Location, out var locloc))
             ent.Comp.Location = locloc;
     }
 
