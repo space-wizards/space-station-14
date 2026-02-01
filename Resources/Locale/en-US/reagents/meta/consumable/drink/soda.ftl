@@ -25,6 +25,9 @@ reagent-desc-lemon-lime = Tangy lime and lemon soda.
 reagent-name-lemon-lime-cranberry = Smite Cranberry
 reagent-desc-lemon-lime-cranberry = Tart cranberry, Christmas, and a hint of lemon and lime.
 
+reagent-name-lemon-lime-clown-juice = Smite Clown Juice
+reagent-desc-lemon-lime-clown-juice = Funny soda with a concentrated flavor of a messed-up order. Not made with freshly squeezed clowns I hope.
+
 reagent-name-pwr-game = PWR Game
 reagent-desc-pwr-game = The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
 
