@@ -416,8 +416,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             if (tilerefs.Count == 0)
                 break;
 
-            var tileref = Random.Pick(tilerefs);
-            tilerefs.Remove(tileref);
+            var tileref = Random.PickAndTake(tilerefs);
 
             // Get the world position of the tile to calculate the distance to the anomalous object
             var tileWorldPos = _map.GridTileToWorldPos(xform.GridUid.Value, grid, tileref.GridIndices);
