@@ -18,7 +18,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat;
 
-public sealed class SuicideSystem : EntitySystem
+public sealed class SuicideSystem : SharedSuicideSystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -27,7 +27,6 @@ public sealed class SuicideSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
 
@@ -164,13 +163,13 @@ public sealed class SuicideSystem : EntitySystem
 
         if (args.DamageSpecifier != null)
         {
-            _suicide.ApplyLethalDamage(victim, args.DamageSpecifier);
+            ApplyLethalDamage(victim, args.DamageSpecifier);
             args.Handled = true;
             return;
         }
 
         args.DamageType ??= "Bloodloss";
-        _suicide.ApplyLethalDamage(victim, args.DamageType);
+        ApplyLethalDamage(victim, args.DamageType);
         args.Handled = true;
     }
 }
