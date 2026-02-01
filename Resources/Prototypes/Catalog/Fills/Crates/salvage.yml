@@ -136,7 +136,6 @@
     containers:
       entity_storage:
         id: WeaponCrusher
-        amount: 1
 
 - type: entity
   parent: CrateGenericSteel
@@ -207,36 +206,40 @@
         id: ClothingNeckCloakSalvagerSupreme
 
 - type: entity
-  id: CratePKAUpgrades
   parent: CrateScience
+  id: CratePKAUpgrades
   name: PKA upgrade kit crate
   description: Contains 1 of each PKA upgrade. An alternative for when the Science Department is understaffed.
   components:
-  - type: StorageFill
-    contents:
-      - id: PKAUpgradeDamage
-      - id: PKAUpgradeRange
-      - id: PKAUpgradeFireRate
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: PKAUpgradeDamage
+        - id: PKAUpgradeRange
+        - id: PKAUpgradeFireRate
 
 - type: entity
-  id: CrateShuttleBuild
   parent: CrateEngineering
+  id: CrateShuttleBuild
   name: shuttle construction crate
   description: Contains the bare essentials to create a questionably functional shuttle. Tools sold seperately, fuel not included.
                Nanotrasen is not responsible for any space collisions caused as a result of a sudden loss of power.
   components:
-  - type: StorageFill
-    contents:
-      - id: DrinkBeerCan # essential for drunk driving and welding fuel storage
-        amount: 2
-      - id: ThrusterFlatpack
-        amount: 4
-      - id: GyroscopeFlatpack
-      - id: PortableGeneratorJrPacmanFlatpack #total power draw 7.5kW, can provide 8kW.
-      - id: SheetGlass10
-      - id: ShuttleConsoleCircuitboard
-      - id: CableApcStack
-      - id: SheetSteel
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: DrinkBeerCan # essential for drunk driving and welding fuel storage
+          amount: 2
+        - id: ThrusterFlatpack
+          amount: 4
+        - id: GyroscopeFlatpack
+        - id: PortableGeneratorJrPacmanFlatpack #total power draw 7.5kW, can provide 8kW.
+        - id: SheetGlass10
+        - id: ShuttleConsoleCircuitboard
+        - id: CableApcStack
+        - id: SheetSteel
 
 - type: entity
   parent: CrateGenericSteel
