@@ -102,40 +102,252 @@
 ## Holsters
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltBase, ClothingSlotBase, BaseSecurityContraband]
   id: ClothingBeltHolster
   name: shoulder holster
-  description: 'A holster to carry a handgun and ammo. WARNING: Badasses only.'
+  description: 'A holster to carry a sidearm and a slot for everything else. WARNING: Badasses only.'
   components:
   - type: Sprite
     sprite: Clothing/Belt/holster.rsi
+    layers:
+      - state: icon
   - type: Clothing
     sprite: Clothing/Belt/holster.rsi
-  - type: Storage
-    grid:
-    - 0,0,3,1
+  - type: Appearance
+  - type: UseDelay
+    delay: 2
+  - type: ContainerContainer
+    containers:
+      utility_slot: !type:ContainerSlot
+      sidearm_slot: !type:ContainerSlot
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      sidearm_slot:
+        name: clothing-holster-sidearm-slot
+        ejectOnUse: true
+        priority: 2
+        whitelist:
+          tags:
+          - Sidearm
+          - ToySidearm
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
+      utility_slot:
+        name: clothing-holster-utility-slot
+        ejectOnUse: true
+        priority: 1
+        whitelist:
+          components:
+          - Stunbaton
+          tags:
+          - CombatKnife
+          - MagazinePistolAll
+          - SpeedLoaderAll
+          - PowerCell
+          - PowerCellSmall
+          - HandGrenade
+          - CigPack
+          - Radio
+          - Truncheon
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
+  - type: ItemMapper
+    mapLayers:
+      icon_knife:
+        whitelist:
+          tags:
+          - CombatKnife
+      icon_magazine_pistol:
+        whitelist:
+          tags:
+          - MagazinePistolAll
+      icon_speedloader_revolver:
+        whitelist:
+          tags:
+          - SpeedLoaderAll
+      icon_powercell:
+        whitelist:
+          tags:
+          - PowerCell
+          - PowerCellSmall
+      icon_sidearm:
+        whitelist:
+          tags:
+          - Sidearm
+          - ToySidearm
+      icon_grenade:
+        whitelist:
+          tags:
+          - HandGrenade
+      icon_pack:
+        whitelist:
+          tags:
+          - CigPack
+      icon_radio:
+        whitelist:
+          tags:
+          - Radio
+      icon_stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+      icon_truncheon:
+        whitelist:
+          tags:
+          - Truncheon
 
 - type: entity
-  parent: [ClothingBeltStorageBase, BaseSyndicateContraband]
+  parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
-  description: A deep shoulder holster capable of holding many types of ballistics.
+  description: A heavily modified deep shoulder holster capable of holding many types of ballistics. It seems to have three slots.
   components:
   - type: Sprite
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,3,3
-    whitelist:
-      components:
-      - Gun
-      - BallisticAmmoProvider
-      - CartridgeAmmo
+  - type: Appearance
+  - type: UseDelay
+    delay: 3
+  - type: ContainerContainer
+    containers:
+      upgraded_utility_slot: !type:ContainerSlot
+      upgraded_sidearm_slot: !type:ContainerSlot
+      gun_slot: !type:ContainerSlot
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      upgraded_sidearm_slot: # Move this in the middle of gun_slot & upgraded_utility_slot when all weapons that fit in gun_slot don't require wielding.
+        name: clothing-holster-upgraded-sidearm-slot
+        ejectOnUse: true
+        priority: 2
+        whitelist:
+          tags:
+          - Sidearm
+          - ToySidearm
+          - SubMachineGun
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
+      gun_slot:
+        name: clothing-holster-gun-slot
+        ejectOnUse: true
+        priority: 3
+        whitelist:
+          tags:
+          - Shotgun
+          - Rifle
+          - EnergyWeapon
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/long_gun_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/long_gun_eject.ogg
+      upgraded_utility_slot:
+        name: clothing-holster-upgraded-utility-slot
+        ejectOnUse: true
+        priority: 1
+        whitelist:
+          components:
+          - Stunbaton
+          tags:
+          - CombatKnife
+          - MagazinePistolAll
+          - MagazinePistolSubMachineGun
+          - MagazinePistolSubMachineGunTopMounted
+          - SpeedLoaderAll
+          - MagazineRifleAll
+          - MagazineShotgun
+          - PowerCell
+          - PowerCellSmall
+          - HandGrenade
+          - CigPack
+          - Radio
+          - Truncheon
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
   - type: StaticPrice
     price: 500
+  - type: ItemMapper
+    mapLayers:
+      icon_knife:
+        whitelist:
+          tags:
+          - CombatKnife
+      icon_magazine_pistol:
+        whitelist:
+          tags:
+          - MagazinePistolAll
+      icon_magazine_pistol_submachine:
+        whitelist:
+          tags:
+          - MagazinePistolSubMachineGun
+      icon_magazine_pistol_top_submachine:
+        whitelist:
+          tags:
+          - MagazinePistolSubMachineGunTopMounted
+      icon_speedloader_revolver:
+        whitelist:
+          tags:
+          - SpeedLoaderAll
+      icon_powercell:
+        whitelist:
+          tags:
+          - PowerCell
+          - PowerCellSmall
+      icon_magazine_rifle:
+        whitelist:
+          tags:
+          - MagazineRifleAll
+      icon_magazine_shotgun:
+        whitelist:
+          tags:
+          - MagazineShotgun
+      icon_grenade:
+        whitelist:
+          tags:
+          - HandGrenade
+      icon_pack:
+        whitelist:
+          tags:
+          - CigPack
+      icon_radio:
+        whitelist:
+          tags:
+          - Radio
+      icon_stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+      icon_truncheon:
+        whitelist:
+          tags:
+          - Truncheon
+      icon_sidearm:
+        whitelist:
+          tags:
+          - Sidearm
+          - ToySidearm
+      icon_shotgun:
+        whitelist:
+          tags:
+          - Shotgun
+      icon_submachine_gun:
+        whitelist:
+          tags:
+          - SubMachineGun
+      icon_rifle:
+        whitelist:
+          tags:
+          - Rifle
+      icon_energy_weapon:
+        whitelist:
+          tags:
+          - EnergyWeapon
 
 ## Webbing
 

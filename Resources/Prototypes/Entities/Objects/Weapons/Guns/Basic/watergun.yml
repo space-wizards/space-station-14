@@ -67,6 +67,9 @@
     - state: detail
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Tag
+    tags:
+    - Sidearm
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
