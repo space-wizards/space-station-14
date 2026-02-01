@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.CCVar.CVarAccess;
 using Robust.Shared.Configuration;
 
@@ -201,6 +201,14 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> GridImpulseMultiplier =
         CVarDef.Create("shuttle.grid_impulse_multiplier", 0.01f, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     Time in seconds how much to wait before ending the round, AFTER the emergency shuttle docks to Centcomm.
+    ///     Setting this to zero is undesirable - evac might not finish it's FTL.
+    ///     That can break Nukeops win conditions (disk/bomb delivery on Centcomm).
+    /// </summary>
+    public static readonly CVarDef<float> RoundEndBufferTime =
+        CVarDef.Create("shuttle.round_end_buffer_time", 1.0f, CVar.SERVERONLY);
 
     #region impacts
 
