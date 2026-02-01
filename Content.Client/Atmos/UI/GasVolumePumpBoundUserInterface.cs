@@ -38,11 +38,9 @@ namespace Content.Client.Atmos.UI
             Update();
         }
 
-        private void OnToggleStatusButtonPressed()
+        private void OnToggleStatusButtonPressed(bool status)
         {
-            if (_window is null) return;
-
-            SendPredictedMessage(new GasVolumePumpToggleStatusMessage(_window.PumpStatus));
+            SendPredictedMessage(new GasVolumePumpToggleStatusMessage(status));
         }
 
         private void OnPumpTransferRatePressed(string value)
