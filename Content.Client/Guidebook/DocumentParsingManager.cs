@@ -22,6 +22,7 @@ public sealed partial class DocumentParsingManager
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
 
     private readonly Dictionary<string, Parser<char, Control>> _tagControlParsers = new();
     private Parser<char, Control> _controlParser = default!;
@@ -56,13 +57,27 @@ public sealed partial class DocumentParsingManager
         if (!_prototype.Resolve(entryId, out var entry))
             return false;
 
-        using var file = _resourceManager.ContentFileReadText(entry.Text);
+        var path = entry.Text;
+
+        if (path.Contains("loc") && _loc.DefaultCulture is not null)
+        {
+            path = path.Replace("loc", _loc.DefaultCulture.ToString());
+        }
+
+        using var file = _resourceManager.ContentFileReadText(new ResPath(path));
         return TryAddMarkup(control, file.ReadToEnd());
     }
 
     public bool TryAddMarkup(Control control, GuideEntry entry)
     {
-        using var file = _resourceManager.ContentFileReadText(entry.Text);
+        var path = entry.Text;
+
+        if (path.Contains("loc") && _loc.DefaultCulture is not null)
+        {
+            path = path.Replace("loc", _loc.DefaultCulture.ToString());
+        }
+
+        using var file = _resourceManager.ContentFileReadText(new ResPath(path));
         return TryAddMarkup(control, file.ReadToEnd());
     }
 

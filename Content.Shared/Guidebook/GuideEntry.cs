@@ -15,7 +15,7 @@ public class GuideEntry
     /// <summary>
     ///     The file containing the contents of this guide.
     /// </summary>
-    [DataField(required: true)] public ResPath Text = default!;
+    [DataField(required: true)] public string Text = default!;
 
     /// <summary>
     ///     The unique id for this guide.
