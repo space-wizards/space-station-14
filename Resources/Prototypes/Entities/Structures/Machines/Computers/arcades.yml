@@ -225,3 +225,58 @@
     dataset: BlockGameAds
   - type: SpeakOnUIClosed
     pack: BlockGameGoodbyes
+
+- type: entity
+  id: MineGameArcade
+  name: NT mine game
+  parent: ArcadeBase
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/arcade.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: screen_minegame
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
+      visible: false
+  - type: MineGameArcade
+    minBoardSize: 10, 10
+    maxBoardSize: 100, 100
+    minMineCount: 1 # max regulated by board size
+    safeStartRadius: 2
+    boardPresets:
+      easy:
+        boardSize: 9, 9
+        mineCount: 10
+      medium:
+        boardSize: 16, 16
+        mineCount: 40
+      hard:
+        boardSize: 30, 16
+        mineCount: 99
+    gameOverSound:
+      collection: ExplosionSmall
+      params:
+        volume: -5
+        maxDistance: 4
+        variation: 0
+  - type: ActivatableUI
+    key: enum.MineGameArcadeUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: StationAiWhitelist
+  - type: UserInterface
+    interfaces:
+      enum.MineGameArcadeUiKey.Key:
+        type: MineGameBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: MineGameArcadeComputerCircuitboard
+  - type: Vocalizer
+    minVocalizeInterval: 1m
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: MineGameAds
