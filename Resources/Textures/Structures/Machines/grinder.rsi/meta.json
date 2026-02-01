@@ -12,6 +12,21 @@
         },
         {
             "name":"grinder_beaker_attached"
+        },
+        {
+          "name": "beakerSlot1"
+        },
+        {
+          "name": "beakerSlot2"
+        },
+        {
+          "name": "beakerSlot3"
+        },
+        {
+          "name": "beakerSlot4"
+        },
+        {
+          "name": "beakerSlot5"
         }
     ]
 }
