@@ -12,7 +12,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// If we have active rifts.
         /// </summary>
-        [DataField("rifts")]
+        [DataField]
         public List<EntityUid> Rifts = new();
 
         public bool Weakened => WeakenedAccumulator > 0f;
@@ -20,39 +20,58 @@ namespace Content.Server.Dragon
         /// <summary>
         /// When any rift is destroyed how long is the dragon weakened for
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("weakenedDuration")]
+        [DataField]
         public float WeakenedDuration = 120f;
 
         /// <summary>
         /// Has a rift been destroyed and the dragon in a temporary weakened state?
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("weakenedAccumulator")]
+        [DataField]
         public float WeakenedAccumulator = 0f;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("riftAccumulator")]
+        [DataField]
         public float RiftAccumulator = 0f;
+
+        /// <summary>
+        /// The time after which the dragon will receive a popup that it needs to set the Rift.
+        /// </summary>
+        [DataField]
+        public int RiftPopupAlertAccumulator = 200;
+
+        /// <summary>
+        /// The popup alert message shown to the dragon when they need to spawn a rift.
+        /// </summary>
+        [DataField]
+        public LocId RiftPopupAlert = "dragon-rift-alert";
+
+        /// <summary>
+        /// Announcement of fully charging rift
+        /// </summary>
+        [DataField]
+        public bool DragonAlerted;
 
         /// <summary>
         /// Maximum time the dragon can go without spawning a rift before they die.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("maxAccumulator")] public float RiftMaxAccumulator = 300f;
+        [DataField]
+        public float RiftMaxAccumulator = 300f;
 
-        [DataField("spawnRiftAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string SpawnRiftAction = "ActionSpawnRift";
 
         /// <summary>
         /// Spawns a rift which can summon more mobs.
         /// </summary>
-        [DataField("spawnRiftActionEntity")]
+        [DataField]
         public EntityUid? SpawnRiftActionEntity;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("riftPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string RiftPrototype = "CarpRift";
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]
+        [DataField]
         public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("soundRoar")]
+        [DataField]
         public SoundSpecifier? SoundRoar =
             new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg")
             {

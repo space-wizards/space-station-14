@@ -97,6 +97,12 @@ public sealed partial class DragonSystem : EntitySystem
             if (!_mobState.IsDead(uid))
                 comp.RiftAccumulator += frameTime;
 
+            if (comp.RiftAccumulator >= comp.RiftPopupAlertAccumulator && !comp.DragonAlerted)
+            {
+                _popup.PopupEntity(Loc.GetString(comp.RiftPopupAlert), uid, uid);
+                comp.DragonAlerted = true;
+            }
+
             // Delete it, naughty dragon!
             if (comp.RiftAccumulator >= comp.RiftMaxAccumulator)
             {
@@ -169,6 +175,7 @@ public sealed partial class DragonSystem : EntitySystem
         var carpUid = Spawn(component.RiftPrototype, _transform.GetMapCoordinates(uid, xform: xform));
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
+        component.DragonAlerted = false;
     }
 
     // TODO: just make this a move speed modifier component???
