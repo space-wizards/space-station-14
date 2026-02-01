@@ -1,0 +1,34 @@
+<TabContainer xmlns="https://spacestation14.io" >
+    <!-- Controls for sending radio announcements -->
+    <BoxContainer Orientation="Vertical" VerticalExpand="True"
+        TabContainer.TabTitle="{Loc 'comms-console-announce-tab-title'}">
+        <Label StyleClasses="StatusFieldTitle" Align="Center"
+            Text="{Loc 'comms-console-station-announcements-header'}" />
+        <PanelContainer StyleClasses="highlight"
+            Margin="6" VerticalExpand="True">
+            <PanelContainer StyleClasses="BackgroundDark" Margin="2"
+                HorizontalExpand="True" VerticalExpand="True">
+                <TextEdit Name="RadioMessageInput"
+                    Margin="2 0 0 0" MinHeight="100"
+                    HorizontalExpand="True" VerticalExpand="True" />
+            </PanelContainer>
+        </PanelContainer>
+        <Button Name="AnnounceButton" HorizontalExpand="True" Margin="6"
+            Text="{Loc 'comms-console-menu-announcement-button'}"
+            ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" />
+    </BoxContainer>
+
+    <!-- Controls for putting messages on station screens (aka broadcasting) -->
+    <BoxContainer Orientation="Vertical" VerticalExpand="True"
+        TabContainer.TabTitle="{Loc 'comms-console-broadcast-tab-title'}">
+        <Label StyleClasses="StatusFieldTitle" Align="Center" VAlign="Top"
+            VerticalExpand="True" VerticalAlignment="Top"
+            Text="{Loc 'comms-console-station-broadcast-header'}" />
+        <SpriteView Name="BroadcastEntityDisplay" Scale="8 8" />
+        <LineEdit Name="ScreenMessageInput" Margin="6 0 6 0"
+            PlaceHolder="{Loc 'comms-console-menu-broadcast-placeholder'}" />
+        <Button Name="BroadcastButton" HorizontalExpand="True" Margin="6"
+            Text="{Loc 'comms-console-menu-broadcast-button'}"
+            ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
+    </BoxContainer>
+</TabContainer>
