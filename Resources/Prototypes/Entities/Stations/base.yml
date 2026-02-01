@@ -17,6 +17,7 @@
         Science: [ ]
         Security: [ ]
         Service: [ ]
+        Salvage: [ ]
     - type: StationCargoBountyDatabase
 
 - type: entity

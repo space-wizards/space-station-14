@@ -604,6 +604,7 @@
       staticPacks:
       - OreSmelting
       - RGlassSmelting
+    - type: TicketPrinter
 
 - type: entity
   parent: OreProcessor

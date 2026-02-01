@@ -70,6 +70,8 @@
           Quantity: 9
         - ReagentId: Carbon
           Quantity: 1
+  - type: TicketValue
+    ticketValue: 10
 
 - type: entity
   parent: SheetSteel
@@ -197,6 +199,8 @@
         - ReagentId: Carbon
           Quantity: 1
         canReact: false
+  - type: TicketValue
+    ticketValue: 35
 
 - type: entity
   parent: SheetPlasteel

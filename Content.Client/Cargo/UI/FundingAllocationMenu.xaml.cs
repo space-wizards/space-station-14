@@ -133,6 +133,9 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         {
             var accountProto = _prototypeManager.Index(account);
 
+            if (accountProto.Independent == true)
+                continue;
+
             var accountNameLabel = new RichTextLabel
             {
                 Modulate = accountProto.Color,

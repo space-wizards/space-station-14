@@ -12,6 +12,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Paper;
+using Content.Shared.Stacks;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -95,7 +96,7 @@ namespace Content.Server.Cargo.Systems
 
         private void OnInteractUsing(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
         {
-            if (HasComp<CashComponent>(args.Used))
+            if (TryComp<StackComponent>(args.Used, out var stackComp) && stackComp.StackTypeId == component.CashType)
             {
                 OnInteractUsingCash(uid, component, ref args);
             }

@@ -396,6 +396,8 @@
     tags:
     - RawMaterial
     - Diamond
+  - type: TicketValue
+    ticketValue: 500
 
 - type: entity
   parent: MaterialDiamond
@@ -568,6 +570,8 @@
   - type: Appearance
   - type: Item
     heldPrefix: bananium
+  - type: TicketValue
+    ticketValue: 20
 
 - type: entity
   parent: MaterialBananium

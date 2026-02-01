@@ -804,3 +804,7 @@ TowelColorYellow: null
 TowelColorMaroon: null
 TowelColorSilver: null
 TowelColorMime: null
+
+# 2026-01-31
+SalvageJobBoardComputerCircuitboard: CargoRequestSalvageComputerCircuitboard
+ComputerSalvageJobBoard: ComputerCargoOrdersSalvage

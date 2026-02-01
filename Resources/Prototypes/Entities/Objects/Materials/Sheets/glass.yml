@@ -86,6 +86,8 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 10
+  - type: TicketValue
+    ticketValue: 10
 
 - type: entity
   parent: SheetGlass
@@ -163,6 +165,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: TicketValue
+    ticketValue: 15
 
 - type: entity
   parent: SheetRGlass
@@ -240,6 +244,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: TicketValue
+    ticketValue: 25
 
 - type: entity
   parent: SheetPGlass
@@ -306,6 +312,8 @@
         - ReagentId: Carbon
           Quantity: 0.5
         canReact: false
+  - type: TicketValue
+    ticketValue: 30
 
 - type: entity
   parent: SheetRPGlass
@@ -381,6 +389,8 @@
         - ReagentId: Uranium
           Quantity: 10
         canReact: false
+  - type: TicketValue
+    ticketValue: 30
 
 - type: entity
   parent: SheetUGlass
@@ -435,6 +445,8 @@
         - ReagentId: Carbon
           Quantity: 0.5
         canReact: false
+  - type: TicketValue
+    ticketValue: 35
 
 - type: entity
   parent: SheetRUGlass

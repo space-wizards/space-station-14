@@ -268,6 +268,18 @@
     - Chemicals
 
 - type: entity
+  parent: BaseFlatpack
+  id: PortableGeneratorJrPacmanFlatpack
+  name: J.R.P.A.C.M.A.N.-type portable generator flatpack
+  description: A flatpack used for constructing a J.R.P.A.C.M.A.N.-type portable generator
+  components:
+  - type: Flatpack
+    entity: PortableGeneratorJrPacman
+  - type: GuideHelp
+    guides:
+    - Power
+
+- type: entity
   parent: [ BaseFlatpack, BaseSyndicateContraband ]
   id: SyndicateMicrowaveFlatpack
   name: donk co. microwave flatpack
