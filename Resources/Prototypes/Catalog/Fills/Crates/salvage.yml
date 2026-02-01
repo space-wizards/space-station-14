@@ -210,7 +210,7 @@
   id: CratePKAUpgrades
   parent: CrateScience
   name: PKA upgrade kit crate
-  description: Contains 1 of each PKA upgrade. For use when the science department doesn't research armory technology again.
+  description: Contains 1 of each PKA upgrade. An alternative for when the Science Department is understaffed.
   components:
   - type: StorageFill
     contents:
@@ -237,7 +237,6 @@
       - id: ShuttleConsoleCircuitboard
       - id: CableApcStack
       - id: SheetSteel
-        amount: 2
 
 - type: entity
   parent: CrateGenericSteel

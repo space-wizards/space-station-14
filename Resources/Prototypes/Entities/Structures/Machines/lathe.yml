@@ -605,9 +605,6 @@
       - OreSmelting
       - RGlassSmelting
     - type: TicketPrinter
-      whitelist:
-        tags:
-        - SalvageScrap
 
 - type: entity
   parent: OreProcessor
