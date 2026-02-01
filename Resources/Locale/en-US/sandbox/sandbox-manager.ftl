@@ -19,3 +19,5 @@ sandbox-window-toggle-suicide-button = Suicide
 sandbox-window-show-spawns-button = Show Spawns
 sandbox-window-show-bb-button = Show BB
 sandbox-window-show-npc-button = Show NPC
+
+sandbox-spawn-rate-reached-popup = Spawning entities too fast!
