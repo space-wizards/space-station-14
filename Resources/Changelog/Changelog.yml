@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: SurrealShibe
-  changes:
-  - message: The Satanic Bible's pentagram has been turned right-side-up.
-    type: Tweak
-  - message: The Satanic Bible now has the correct left inhand sprite.
-    type: Fix
-  id: 8973
-  time: '2025-09-17T23:34:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40234
 - author: PicklOH, Archee
   changes:
   - message: Nukie Operative, Corpsman, and Commander now have unique PDAs with unique
@@ -4000,3 +3991,10 @@
   id: 9479
   time: '2026-01-31T22:38:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42706
+- author: Samuka
+  changes:
+  - message: Fax machines now add text to the paper telling where the fax is from
+    type: Tweak
+  id: 9480
+  time: '2026-02-01T18:12:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41108

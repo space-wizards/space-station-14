@@ -1628,5 +1628,13 @@ Entries:
   id: 198
   time: '2026-01-29T18:55:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42687
+- author: Samuka
+  changes:
+  - message: Central Command fax always tells admins where the fax came from instead
+      of saying "unknown" until it was refreshed
+    type: Fix
+  id: 199
+  time: '2026-02-01T18:12:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41108
 Name: Admin
 Order: 3
