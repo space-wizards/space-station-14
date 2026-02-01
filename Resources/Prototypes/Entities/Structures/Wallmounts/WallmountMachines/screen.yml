@@ -19,6 +19,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+    - trigger:
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
@@ -26,6 +35,14 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+          SheetGlass1:
+            min: 1
+            max: 1
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver
