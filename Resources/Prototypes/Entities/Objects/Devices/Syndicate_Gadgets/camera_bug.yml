@@ -26,3 +26,4 @@
   - type: SurveillanceCameraMonitor
   - type: StaticPrice
     price: 2000
+  - type: ActivatableUIRequiresVision
