@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.Clickable;
 using Content.Client.UserInterface;
 using Content.Client.Viewport;
+using Content.Shared.Administration.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Robust.Client.ComponentTrees;
@@ -88,6 +89,7 @@ namespace Content.Client.Gameplay
                 .Bind(ContentKeyFunctions.InspectEntity, new PointerInputCmdHandler(HandleInspect, outsidePrediction: true))
                 .Bind(ContentKeyFunctions.InspectServerComponent, new PointerInputCmdHandler(HandleInspectServerComponent, outsidePrediction: true))
                 .Bind(ContentKeyFunctions.InspectClientComponent, new PointerInputCmdHandler(HandleInspectClientComponent, outsidePrediction: true))
+                .Bind(ContentKeyFunctions.ControlEntity, new PointerInputCmdHandler(HandleControl, outsidePrediction: true))
                 .Register<GameplayStateBase>();
         }
 
@@ -101,6 +103,13 @@ namespace Content.Client.Gameplay
         private bool HandleInspect(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             _conHost.ExecuteCommand($"vv /c/enthover");
+            return true;
+        }
+
+        private bool HandleControl(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            var target = _entityManager.GetNetEntity(uid);
+            _entityManager.RaisePredictiveEvent(new DebugControlEntityEvent(target));
             return true;
         }
 
@@ -268,3 +277,4 @@ namespace Content.Client.Gameplay
         }
     }
 }
+
