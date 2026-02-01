@@ -24,18 +24,25 @@
   name: ice bucket
   description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
   components:
+  - type: Item
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
         - ReagentId: Ice
-          Quantity: 200
+          Quantity: 150
+  - type: Label
+    currentLabel: reagent-name-ice
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icebucket.rsi
     state: icon
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
+  - type: Tag
+    tags:
+    - DrinkBottle # Needed to fit in the soda dispenser, needs a better name
 
 - type: entity
   parent: [DrinkBaseMaterialPorcelain, DrinkBase]
