@@ -20,5 +20,5 @@ public sealed partial class HitscanNoCollideRaycastComponent : Component
     /// The collision mask the hitscan ray uses to collide with other objects. See the enum for more information
     /// </summary>
     [DataField]
-    public CollisionGroup CollisionMask = CollisionGroup.Opaque;
+    public CollisionGroup CollisionMask = CollisionGroup.AllMask;
 }
