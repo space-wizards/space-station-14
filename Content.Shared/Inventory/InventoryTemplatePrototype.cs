@@ -38,7 +38,7 @@ public sealed partial class SlotDefinition
     [DataField("dependsOnComponents")] public ComponentRegistry? DependsOnComponents { get; private set; }
 
     [DataField("displayName", required: true)]
-    public string DisplayName { get; private set; } = string.Empty;
+    public LocId DisplayName { get; private set; } = string.Empty;
 
     /// <summary>
     ///     Whether or not this slot will have its item hidden in the strip menu, and block interactions.
