@@ -184,8 +184,8 @@ uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instan
 uplink-clothing-eyes-hud-syndicate-name = Syndicate Visor
 uplink-clothing-eyes-hud-syndicate-desc = The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
 
-uplink-radio-jammer-name = Radio Jammer
-uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated.
+uplink-radio-jammer-name = Jammer
+uplink-radio-jammer-desc = This device disrupts nearby radio communications, suit sensors, and AI camera surveillance when activated. Requires a power cell.
 
 uplink-syndicate-weapon-module-name = Weapon Cyborg Module
 uplink-syndicate-weapon-module-desc = Upgrades a cyborg with both an energy dagger and an echis pistol.
