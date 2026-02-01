@@ -993,3 +993,177 @@
     fireRate: 2
     minAngle: 1
     maxAngle: 2
+
+- type: entity
+  name: Gorlex chem-laser
+  parent: [ BaseWeaponPowerCell, BaseGunWieldable, BaseSyndicateContraband ]
+  id: WeaponChemLaser
+  description: Every marauders favorite space-geneva convention breaking laser rifle. Requires plasma fuel and a cell to spark the chemical reaction.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+    - state: tank
+      map: [ "tank" ]
+      visible: false
+  - type: PneumaticCannon
+    gasUsage: 0.5
+    throwItems: false
+    allowedGases:
+    - Plasma
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,4,1
+    sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: BatteryAmmoProvider
+    proto: ChemicalLaser
+    fireCost: 25
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: ItemMapper
+    containerWhitelist: [gas_tank]
+    mapLayers:
+      tank:
+        whitelist:
+          components:
+          - GasTank
+  - type: ItemSlots
+    slots:
+      gas_tank:
+        startingItem: GorlexPlasmaCellFilled
+        name: pneumatic-cannon-component-itemslot-name
+        whitelist:
+          components:
+          - GasTank
+        insertSound:
+          path: /Audio/Weapons/click.ogg
+          params:
+            volume: -3
+      cell_slot:
+        name: Magazine
+        startingItem: PowerCellMedium
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      gas_tank: !type:ContainerSlot
+      cell_slot: !type:ContainerSlot
+
+- type: entity
+  name: Gorlex chem-multilaser
+  parent: [ BaseWeaponPowerCell, BaseGunWieldable, BaseSyndicateContraband ]
+  id: WeaponChemMultilaser
+  description: A Gorlex laser smg that couldn't hit the broad side of a bar, but very effective at suppression. Requires plasma fuel and a cell to spark the chemical reaction.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/chem_multilaser.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+    - state: tank
+      map: [ "tank" ]
+      visible: false
+  - type: PneumaticCannon
+    gasUsage: 0.5 # uses less efficient process to get higher fire rate in a smaller footprint.
+    throwItems: false
+    allowedGases:
+    - Plasma
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+    sprite: Objects/Weapons/Guns/Battery/chem_multilaser.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: GunWieldBonus
+    minAngle: -7
+    maxAngle: -7
+  - type: Gun
+    minAngle: 24
+    maxAngle: 40
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 7
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      params:
+        volume: -2
+  - type: BatteryAmmoProvider
+    proto: ChemicalMultilaser
+    fireCost: 8
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - Belt
+    - suitStorage
+  - type: ItemMapper
+    containerWhitelist: [gas_tank]
+    mapLayers:
+      tank:
+        whitelist:
+          components:
+          - GasTank
+  - type: ItemSlots
+    slots:
+      gas_tank:
+        startingItem: GorlexPlasmaCellFilled
+        name: pneumatic-cannon-component-itemslot-name
+        whitelist:
+          components:
+          - GasTank
+        insertSound:
+          path: /Audio/Weapons/click.ogg
+          params:
+            volume: -3
+      cell_slot:
+        name: Magazine
+        startingItem: PowerCellMedium
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      gas_tank: !type:ContainerSlot
+      cell_slot: !type:ContainerSlot
