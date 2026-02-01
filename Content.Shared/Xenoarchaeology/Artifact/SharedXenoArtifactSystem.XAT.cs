@@ -88,7 +88,6 @@ public abstract partial class SharedXenoArtifactSystem
 
             if (unlockingComp.TriggeredNodeIndexes.Add(index))
             {
-                var viableUnlockFound = false;
                 var allnodes = GetAllNodes((ent, ent));
                 foreach (var nodeEnt in allnodes)
                 {
@@ -101,13 +100,11 @@ public abstract partial class SharedXenoArtifactSystem
                         var predecessorNodeIndices = GetPredecessorNodes((ent, ent), GetIndex(ent, nodeEnt.Owner));
                         if (unlockingComp.TriggeredNodeIndexes.All(x => predecessorNodeIndices.Contains(x)))
                         {
-                            viableUnlockFound = true; // We have found an unlockable node that is still possible to unlock - it contains all triggers in its predecessors
+                            unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode; // We have found an unlockable node that is still possible to unlock - it contains all triggers in its predecessors
                             break;
                         }
                     }
                 }
-                if (viableUnlockFound)
-                    unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode;
             }
             Dirty(ent, unlockingComp);
         }
