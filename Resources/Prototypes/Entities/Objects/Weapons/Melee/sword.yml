@@ -133,12 +133,10 @@
 
 - type: entity
   name: energy katana
-  parent: Katana
+  parent: [ BaseHighlyIllegalContraband, Katana ]
   id: EnergyKatana
   description: A katana infused with strong energy.
   components:
-  - type: Contraband
-    severity: HighlyIllegal
   - type: Sprite
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: MeleeWeapon
