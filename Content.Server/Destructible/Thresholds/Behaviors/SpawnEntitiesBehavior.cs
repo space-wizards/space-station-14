@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Forensics;
 using Content.Server.Stack;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Forensics;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
@@ -28,6 +29,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         [DataField]
         public bool SpawnInContainer;
+
+        private static readonly ProtoId<ForensicEvidencePrototype> DNAEvidence = "dna";
+        private static readonly ProtoId<ForensicEvidencePrototype> FingerprintsEvidence = "fingerprints";
+        private static readonly ProtoId<ForensicEvidencePrototype> FibersEvidence = "fibers";
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
@@ -84,12 +89,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 return;
 
             var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
-            comp.DNAs = forensicsComponent.DNAs;
+            comp.Evidence[DNAEvidence] = forensicsComponent.Evidence[DNAEvidence];
 
             if (!system.Random.Prob(0.4f))
                 return;
-            comp.Fingerprints = forensicsComponent.Fingerprints;
-            comp.Fibers = forensicsComponent.Fibers;
+            comp.Evidence[FingerprintsEvidence] = forensicsComponent.Evidence[FingerprintsEvidence]; //TODO: These will rpboably break
+            comp.Evidence[FibersEvidence] = forensicsComponent.Evidence[FibersEvidence];
         }
     }
 }
