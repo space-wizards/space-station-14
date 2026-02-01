@@ -4,7 +4,9 @@
                       MinSize="300 400"
             SetSize="300 400"
             Resizable="False">
-    <BoxContainer Orientation="Vertical">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="8">
+        <controls:SwitchButton Name="Power"
+                Access="Public" />
         <BoxContainer Orientation="Horizontal" SeparationOverride="8">
             <Label Text="{Loc 'ui-mailing-unit-target-label'}" />
             <Label Name="Target"
@@ -15,42 +17,36 @@
                   Access="Public"
                   SelectMode="Single"
                   VerticalExpand="True"
-                  HorizontalExpand="True"
-                  Margin="0 0 0 16">
+                  HorizontalExpand="True">
         </ItemList>
         <BoxContainer Orientation="Horizontal" SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
             <Label Name="UnitState" Access="Public"
                    Text="{Loc 'ui-disposal-unit-label-status'}" />
         </BoxContainer>
-        <Control MinSize="0 5" />
         <BoxContainer Orientation="Horizontal"
                       SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-pressure'}" />
             <disposal:PressureBar Name="PressureBar"
                             Access="Public"
-                         MinSize="190 20"
-                         HorizontalAlignment="Right"
+                         HorizontalExpand="True"
                          MinValue="0"
                          MaxValue="1"
                          Page="0"
                          Value="0.5" />
         </BoxContainer>
-        <Control MinSize="0 10" />
         <BoxContainer Orientation="Horizontal">
             <Button Name="Engage"
                     Access="Public"
                     Text="{Loc 'ui-mailing-unit-button-flush'}"
                     StyleClasses="OpenRight"
-                    ToggleMode="True" />
+                    ToggleMode="True"
+                    HorizontalExpand="True" />
             <Button Name="Eject"
                     Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
-                    StyleClasses="OpenBoth" />
-            <Button Name="Power"
-                         Access="Public"
-                         Text="{Loc 'ui-disposal-unit-button-power'}"
-                         StyleClasses="OpenLeft" />
+                    StyleClasses="OpenLeft"
+                    HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
