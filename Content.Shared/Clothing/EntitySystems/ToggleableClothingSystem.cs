@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed class ToggleableClothingSystem : EntitySystem
+public sealed partial class ToggleableClothingSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netMan = default!;
@@ -140,10 +140,12 @@ public sealed class ToggleableClothingSystem : EntitySystem
             || toggleCom.Container == null)
             return;
 
+        var parent = Transform(uid).ParentUid;
         if (!_inventorySystem.TryUnequip(Transform(uid).ParentUid, toggleCom.Slot, force: true))
             return;
 
         _containerSystem.Insert(uid, toggleCom.Container);
+        TryEquipUnderClothing(parent, component);
         args.Handled = true;
     }
 
@@ -156,11 +158,16 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
+        var wasAttachedUnequipped = false;
+
         // If the attached clothing is not currently in the container, this just assumes that it is currently equipped.
         // This should maybe double check that the entity currently in the slot is actually the attached clothing, but
         // if its not, then something else has gone wrong already...
         if (component.Container != null && component.Container.ContainedEntity == null && component.ClothingUid != null)
-            _inventorySystem.TryUnequip(args.Equipee, component.Slot, force: true, triggerHandContact: true);
+            wasAttachedUnequipped = _inventorySystem.TryUnequip(args.Equipee, component.Slot, force: true, triggerHandContact: true);
+
+        if (wasAttachedUnequipped && !TryEquipUnderClothing(args.Equipee, component))
+            TryDropUnderClothing(component); // Failsafe if TryEquipUnderClothing fails
     }
 
     private void OnRemoveToggleable(EntityUid uid, ToggleableClothingComponent component, ComponentRemove args)
@@ -239,16 +246,25 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (component.Container == null || component.ClothingUid == null)
             return;
 
+        var wasAttachedUnequipped = false;
         var parent = Transform(target).ParentUid;
         if (component.Container.ContainedEntity == null)
-            _inventorySystem.TryUnequip(user, parent, component.Slot, force: true);
-        else if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing))
-        {
-            _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
-                user, user);
-        }
+            wasAttachedUnequipped = _inventorySystem.TryUnequip(user, parent, component.Slot, force: true);
         else
+        {
+            if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing)
+                && !TryStoreUnderClothing(existing.Value, component))
+            {
+                _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
+                user, user);
+                return;
+            }
+
             _inventorySystem.TryEquip(user, parent, component.ClothingUid.Value, component.Slot, triggerHandContact: true);
+        }
+
+        if (wasAttachedUnequipped && !TryEquipUnderClothing(user, parent, component))
+            TryDropUnderClothing(component); // Failsafe if TryEquipUnderClothing fails
     }
 
     private void OnGetActions(EntityUid uid, ToggleableClothingComponent component, GetItemActionsEvent args)
@@ -264,6 +280,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
     {
         component.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, component.ContainerId);
+        component.UnderClothingContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, component.UnderClothingContainerId);
     }
 
     /// <summary>
@@ -300,11 +317,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     }
 }
 
-public sealed partial class ToggleClothingEvent : InstantActionEvent
-{
-}
+public sealed partial class ToggleClothingEvent : InstantActionEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class ToggleClothingDoAfterEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class ToggleClothingDoAfterEvent : SimpleDoAfterEvent;
