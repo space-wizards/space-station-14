@@ -1491,7 +1491,7 @@
   description: Smells like postage stamps and shuttle fuel.
   components:
   - type: Pda
-    id: CargoIDCard
+    id: SeniorCourierIDCard
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
