@@ -9,6 +9,8 @@
             "type": "shell",
             "args": [
                 "build",
+                "--configuration",
+                "${input:build_configuratiotion}",
                 "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
                 "/consoleloggerparameters:'ForceNoAlign;NoSummary'" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
             ],
@@ -77,5 +79,14 @@
             },
             "problemMatcher": "$msCompile"
         }
-    ]
+    ],
+    "inputs": [
+        {
+            "id": "build_configuratiotion",
+            "description": "Dotnet build configuration",
+            "type": "pickString",
+            "options": ["Debug", "DebugOpt", "Tools", "Release"],
+            "default": "Debug"
+        },
+    ],
 }
