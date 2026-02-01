@@ -485,16 +485,6 @@
       - state: green
       - state: detective
 
-- type: entity
-  id: SpawnPointBrigmedic
-  parent: SpawnPointJobBase
-  name: brigmedic
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: brigmedic
-
 # SPECIAL
 # ERT
 - type: entity

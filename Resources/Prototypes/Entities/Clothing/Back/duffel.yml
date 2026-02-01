@@ -79,15 +79,6 @@
     sprite: Clothing/Back/Duffels/security.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseSecurityContraband]
-  id: ClothingBackpackDuffelBrigmedic
-  name: brigmedic duffel bag
-  description: A large duffel bag for holding extra medical related goods.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Duffels/brigmedic.rsi
-
-- type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelChemistry
   name: chemistry duffel bag

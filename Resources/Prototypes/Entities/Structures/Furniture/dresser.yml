@@ -343,8 +343,6 @@
       weight: 0.03
     - id: ClothingHeadHatXmasCrown
       weight: 0.02
-    - id: ClothingHeadHatBeretBrigmedic
-      weight: 0.02
     - id: ClothingHeadPyjamaSyndicatePink
       weight: 0.002
     - id: ClothingHeadHatTacticalMaidHeadband
