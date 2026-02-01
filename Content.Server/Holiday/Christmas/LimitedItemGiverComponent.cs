@@ -1,6 +1,7 @@
-﻿using Content.Shared.Storage;
+﻿using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.Holiday;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Holiday.Christmas;
 
@@ -18,24 +19,24 @@ public sealed partial class LimitedItemGiverComponent : Component
     /// <summary>
     /// Selects what entities can be given out by the giver.
     /// </summary>
-    [DataField("spawnEntries", required: true)]
-    public List<EntitySpawnEntry> SpawnEntries = default!;
+    [DataField(required: true)]
+    public EntityTableSelector Table = default!;
 
     /// <summary>
     /// The (localized) message shown upon receiving something.
     /// </summary>
-    [DataField("receivedPopup", required: true)]
-    public string ReceivedPopup = default!;
+    [DataField]
+    public LocId? ReceivedPopup;
 
     /// <summary>
     /// The (localized) message shown upon being denied.
     /// </summary>
-    [DataField("deniedPopup", required: true)]
-    public string DeniedPopup = default!;
+    [DataField]
+    public LocId? DeniedPopup;
 
     /// <summary>
-    /// The holiday required for this giver to work, if any.
+    /// The (localized) message shown when trying to get a second item.
     /// </summary>
-    [DataField("requiredHoliday", customTypeSerializer: typeof(PrototypeIdSerializer<HolidayPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string? RequiredHoliday = null;
+    [DataField]
+    public LocId? GreedPopup;
 }
