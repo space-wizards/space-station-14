@@ -27,6 +27,8 @@
     - suitStorage
     - Belt
   - type: Gun
+    angleIncrease: 2
+    angleDecay: 14
     fireRate: 6
     selectedMode: SemiAuto
     availableModes:
@@ -77,6 +79,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+  - type: Gun
+    minAngle: 2
+    maxAngle: 25
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -157,6 +162,8 @@
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
+    minAngle: 2
+    maxAngle: 17
     fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
@@ -207,6 +214,8 @@
   - type: Item
     storedOffset: 0,-2
   - type: Gun
+    minAngle: 2
+    maxAngle: 17
     fireRate: 5
     availableModes:
     - SemiAuto
@@ -230,11 +239,14 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -7
+    maxAngle: -8
   - type: Gun
-    minAngle: 1
-    maxAngle: 20
-    angleIncrease: 8
-    angleDecay: 9
+    minAngle: 9
+    maxAngle: 30
     fireRate: 4
     availableModes:
     - SemiAuto
