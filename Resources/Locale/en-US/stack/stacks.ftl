@@ -240,6 +240,7 @@ stack-astro-snow-floor = astro-snow floor
 stack-large-wood-floor = large wood floor
 stack-red-circuit-floor = red-circuit floor
 stack-asteroid-astro-sand-floor = asteroid astro-sand floor
+stack-asteroid-astro-sand-floor-borderless = borderless asteroid astro-sand floor
 stack-desert-astro-sand-floor = desert astro-sand floor
 stack-xeno-floor = xeno floor
 stack-xeno-steel = xeno steel tile
