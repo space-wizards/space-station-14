@@ -7,7 +7,7 @@ namespace Content.Shared.Silicons.Laws;
 /// Lawset data used internally.
 /// </summary>
 [DataDefinition, Serializable, NetSerializable]
-public sealed partial class SiliconLawset
+public sealed partial class SiliconLawset : IRobustCloneable<SiliconLawset>
 {
     /// <summary>
     /// List of laws in this lawset.
@@ -24,8 +24,11 @@ public sealed partial class SiliconLawset
     /// <summary>
     /// A single line used in logging laws.
     /// </summary>
-    public string LoggingString()
+    public string? LoggingString()
     {
+        if (Laws.Count == 0)
+            return null;
+
         var laws = new List<string>(Laws.Count);
         foreach (var law in Laws)
         {
@@ -68,7 +71,7 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
 
     /// <summary>
     /// The locstring of the lawset for the guidebook entry, if no name is provided, defaults to the ID
-    /// </summary>    
+    /// </summary>
     [DataField]
     public LocId? Name = null;
 

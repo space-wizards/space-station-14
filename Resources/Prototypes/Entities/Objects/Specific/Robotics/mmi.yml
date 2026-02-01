@@ -1,8 +1,9 @@
 - type: entity
   parent: BaseItem
-  id: MMI
+  id: MMINotIonStormable
   name: man-machine interface
   description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
@@ -52,11 +53,23 @@
     whitelist:
       components:
       - SecretStash
+  - type: SiliconLawProvider
+    laws: Crewsimov
+  - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
 
 - type: entity
   parent: MMI
-  id: MMIFilled
+  id: MMIFilledNotIonStormable
   suffix: Filled
+  abstract: true
   components:
   - type: MMI
     brainSlot:
@@ -68,9 +81,10 @@
 
 - type: entity
   parent: BaseItem
-  id: PositronicBrain
+  id: PositronicBrainNotIonStormable
   name: positronic brain
   description: An artificial brain capable of spontaneous neural activity.
+  abstract: true
   components:
     - type: Sprite
       sprite: Objects/Specific/Robotics/mmi.rsi
@@ -137,3 +151,125 @@
       whitelist:
         components:
         - SecretStash
+    - type: SiliconLawProvider
+      laws: Crewsimov
+    - type: SiliconLawBound
+    - type: ActionGrant
+      actions:
+      - ActionViewLaws
+    - type: UserInterface
+      interfaces:
+        enum.SiliconLawsUiKey.Key:
+          type: SiliconLawBoundUserInterface
+          requireInputValidation: false
+    - type: EmagSiliconLaw
+
+# Ion Storm Target
+- type: entity
+  parent: PositronicBrainNotIonStormable
+  id: PositronicBrain
+  components:
+  - type: IonStormTarget
+
+- type: entity
+  parent: MMINotIonStormable
+  id: MMI
+  components:
+  - type: IonStormTarget
+
+- type: entity
+  parent: MMIFilledNotIonStormable
+  id: MMIFilled
+  components:
+  - type: IonStormTarget
+
+# Derelict brains
+- type: entity
+  parent: PositronicBrain
+  id: PositronicBrainIonStormed
+  suffix: IonStormed
+  components:
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+
+- type: entity
+  parent: MMI
+  id: MMIIonStormed
+  suffix: IonStormed
+  components:
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+
+- type: entity
+  parent: MMIFilled
+  id: MMIFilledIonStormed
+  suffix: IonStormed
+  components:
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+
+- type: entity
+  parent: PositronicBrainSyndicate
+  id: PositronicBrainSyndicateIonStormed
+  suffix: "Syndicate , IonStormed"
+  components:
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+
+# Xenoborg brains
+- type: entity
+  parent: PositronicBrainNotIonStormable
+  id: PositronicBrainXeno
+  suffix: Xeno
+  components:
+  - type: SiliconLawProvider
+    laws: XenoborgLawset
+
+- type: entity
+  parent: MMINotIonStormable
+  id: MMIXeno
+  suffix: Xeno
+  components:
+  - type: SiliconLawProvider
+    laws: XenoborgLawset
+
+- type: entity
+  parent: MMIFilledNotIonStormable
+  id: MMIFilledXeno
+  suffix: Xeno
+  components:
+  - type: SiliconLawProvider
+    laws: XenoborgLawset
+
+# Syndicate brains
+- type: entity
+  parent: PositronicBrainNotIonStormable
+  id: PositronicBrainSyndicate
+  suffix: Syndicate
+  components:
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+
+- type: entity
+  parent: MMINotIonStormable
+  id: MMISyndicate
+  suffix: Syndicate
+  components:
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+
+- type: entity
+  parent: MMIFilledNotIonStormable
+  id: MMIFilledSyndicate
+  suffix: Syndicate
+  components:
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
