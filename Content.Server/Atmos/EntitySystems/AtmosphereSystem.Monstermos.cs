@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Piping.Components;
 using Content.Server.Doors.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -413,7 +414,7 @@ namespace Content.Server.Atmos.EntitySystems
                         DebugTools.Assert(otherTile.AdjacentBits.IsFlagSet(direction));
                         DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
 
-                        ConsiderFirelocks(ent, otherTile, otherTile2);
+                        ConsiderFirelocksAndDevices(ent, otherTile, otherTile2);
 
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction))
@@ -573,7 +574,15 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Clear(_depressurizeProgressionOrder, 0, Atmospherics.MonstermosHardTileLimit * 2);
         }
 
-        private void ConsiderFirelocks(
+        /// <summary>
+        /// Drops any firelocks on the <see cref="tile"/> and <see cref="other"/> indices.
+        /// Also raises an <see cref="AtmosDeviceExplosiveDepressurizationEvent"/> on any
+        /// entity with an <see cref="AtmosDeviceComponent"/>.
+        /// </summary>
+        /// <param name="ent">The entity with grid information</param>
+        /// <param name="tile">First tile we're checking for devices to operate on</param>
+        /// <param name="other">Second tile we're checking for devices to operate on</param>
+        private void ConsiderFirelocksAndDevices(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile,
             TileAtmosphere other)
@@ -585,6 +594,9 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
                     reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
+
+                var ev = new AtmosDeviceExplosiveDepressurizationEvent((ent.Owner, ent.Comp1, ent.Comp2));
+                RaiseLocalEvent(entity, ref ev);
             }
 
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
@@ -592,6 +604,9 @@ namespace Content.Server.Atmos.EntitySystems
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
                     reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
+
+            // Checking on the second tile for devices to raise events on would cause a
+            // double-check and overall be a waste, so don't do it
 
             if (!reconsiderAdjacent)
                 return;
