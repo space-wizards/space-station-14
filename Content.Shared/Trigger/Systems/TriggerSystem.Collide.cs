@@ -9,7 +9,6 @@ public sealed partial class TriggerSystem
     private void InitializeCollide()
     {
         SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredOffEvent>(OnStepTriggered);
 
         SubscribeLocalEvent<TriggerOnTimedCollideComponent, StartCollideEvent>(OnTimedCollide);
         SubscribeLocalEvent<TriggerOnTimedCollideComponent, EndCollideEvent>(OnTimedEndCollide);
@@ -33,11 +32,6 @@ public sealed partial class TriggerSystem
             }
             Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
         }
-    }
-
-    private void OnStepTriggered(Entity<TriggerOnStepTriggerComponent> ent, ref StepTriggeredOffEvent args)
-    {
-        Trigger(ent, args.Tripper, ent.Comp.KeyOut);
     }
 
     private void OnTimedCollide(Entity<TriggerOnTimedCollideComponent> ent, ref StartCollideEvent args)
