@@ -1,12 +1,18 @@
 using Content.Server.DoAfter;
+using Content.Server.Botany.Components;
 using Content.Server.Nutrition.Components;
+using Content.Server.Stack;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Destructible;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Stacks;
+using Content.Shared.Kitchen.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -14,7 +20,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Content.Shared.Destructible;
+
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -28,13 +34,13 @@ public sealed class SliceableFoodSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly StackSystem _stack = default!;
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SliceableFoodComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<SliceableFoodComponent, SliceFoodDoAfterEvent>(OnSlicedoAfter);
-        SubscribeLocalEvent<SliceableFoodComponent, ComponentStartup>(OnComponentStartup);
     }
 
     private void OnInteractUsing(Entity<SliceableFoodComponent> entity, ref InteractUsingEvent args)
@@ -43,7 +49,10 @@ public sealed class SliceableFoodSystem : EntitySystem
             return;
 
         if (!TryComp<UtensilComponent>(args.Used, out var utensil) || (utensil.Types & UtensilType.Knife) == 0)
-            return;
+        {
+            if (entity.Comp.AnySharp == false || entity.Comp.AnySharp == true && !HasComp<SharpComponent>(args.Used))
+                return;
+        }
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
@@ -69,29 +78,47 @@ public sealed class SliceableFoodSystem : EntitySystem
             args.Handled = true;
     }
 
-    private bool TrySliceFood(Entity<TransformComponent?, SliceableFoodComponent?, EdibleComponent?> entity,
+    private bool TrySliceFood(Entity<TransformComponent?, SliceableFoodComponent?, SolutionContainerManagerComponent?> entity,
         EntityUid user,
         EntityUid? usedItem)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, ref entity.Comp3) || string.IsNullOrEmpty(entity.Comp2.Slice))
             return false;
 
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp3.Solution, out var soln, out var solution))
-            return false;
-
-        if (!TryComp<UtensilComponent>(usedItem, out var utensil) || (utensil.Types & UtensilType.Knife) == 0)
-            return false;
-
-        var sliceVolume = solution.Volume / FixedPoint2.New(entity.Comp2.TotalCount);
-        for (int i = 0; i < entity.Comp2.TotalCount; i++)
+        var count = entity.Comp2.TotalCount; //avoid changing TotalCount directly because theoretically deleting the food can be cancelled
+        if (entity.Comp2.PotencyEffectsCount == true)
         {
-            var sliceUid = Slice(entity, user);
+            if (TryComp<ProduceComponent>(entity, out var prod))
+            {
+                if (prod.Seed != null) //Is seed data defined? Wouldn't be for produce not coming from a plant.
+                    count = (ushort)Math.Ceiling(entity.Comp2.TotalCount * Math.Min(prod.Seed.Potency, 100f) / 100);
+            }
+        }
 
-            var lostSolution =
-                _solutionContainer.SplitSolution(soln.Value, sliceVolume);
+        var slices = Slice(entity, count);
+        if (!HasComp<StackComponent>(slices[0]) && !slices.Contains(EntityUid.Invalid)) //stackable entities don't handle inconsistent reagent makeups well
+        {
+            TryComp<EdibleComponent>(entity, out var edible);
+            foreach (var container in entity.Comp3.Containers) //for each solution container in the entity
+            {
+                if (!_solutionContainer.TryGetSolution(entity.Owner, container, out var soln, out var solution)) //check if there's a solution to get
+                    continue;
 
-            // Fill new slice
-            FillSlice(sliceUid, lostSolution);
+                var sliceVolume = solution.Volume / FixedPoint2.New(count);
+
+                foreach (var sliceUid in slices) //for each slice
+                {
+                    TryComp<EdibleComponent>(sliceUid, out var edibleSlice);
+                    var lostSolution =
+                        _solutionContainer.SplitSolution(soln.Value, sliceVolume);
+
+                    //if both sliced and slice entities have ediblecomponent, and current container is the sliced's edible solution container, make sure it ends up in the slice's edible solution container
+                    if (edible != null && edibleSlice != null & edible.Solution == container)
+                        FillSlice(sliceUid, lostSolution, edibleSlice!.Solution); //fill specifically the EdibleComponent-linked solution container
+                    else
+                        FillSlice(sliceUid, lostSolution, lostSolution.Name!); //fill a solution container of the same name (if it exists)
+                }
+            }
         }
 
         _audio.PlayPvs(entity.Comp2.Sound, entity.Comp1.Coordinates, AudioParams.Default.WithVolume(-2));
@@ -103,15 +130,34 @@ public sealed class SliceableFoodSystem : EntitySystem
     }
 
     /// <summary>
-    /// Create a new slice in the world and returns its entity.
+    /// Create a new slices in the world, returns all slices as a list.
     /// The solutions must be set afterwards.
     /// </summary>
-    public EntityUid Slice(Entity<TransformComponent?, SliceableFoodComponent?> entity, EntityUid user)
+    public List<EntityUid> Slice(Entity<TransformComponent?, SliceableFoodComponent?> entity, int count)
+    {
+        var fail = new List<EntityUid>() { EntityUid.Invalid };
+
+        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
+            return fail;
+
+        var slices = _stack.SpawnMultipleAtPosition(entity.Comp2.Slice!.Value, count, entity.Comp1.Coordinates);
+        foreach (var sliceUid in slices)
+        {
+            if (!Place(entity, sliceUid))
+                return fail;
+        }
+
+        return slices;
+    }
+
+    /// <summary>
+    /// Adjusts the position of a spawned slice, or tries to fit it properly within a container
+    /// Returns true if all slice is positioned successfully
+    /// </summary>
+    public bool Place(Entity<TransformComponent?, SliceableFoodComponent?> entity, EntityUid sliceUid)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
-            return EntityUid.Invalid;
-
-        var sliceUid = Spawn(entity.Comp2.Slice, _transform.GetMapCoordinates((entity, entity.Comp1)));
+            return false;
 
         // try putting the slice into the container if the food being sliced is in a container!
         // this lets you do things like slice a pizza up inside of a hot food cart without making a food-everywhere mess
@@ -120,12 +166,12 @@ public sealed class SliceableFoodSystem : EntitySystem
 
         if (!_container.IsEntityOrParentInContainer(sliceUid))
         {
-            var randVect = _random.NextVector2(2.0f, 2.5f);
+            var randVect = _random.NextVector2(entity.Comp2.SpawnOffset, entity.Comp2.SpawnOffset);
             if (TryComp<PhysicsComponent>(sliceUid, out var physics))
                 _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
         }
 
-        return sliceUid;
+        return true;
     }
 
     private void DeleteFood(EntityUid uid, EntityUid user)
@@ -141,30 +187,25 @@ public sealed class SliceableFoodSystem : EntitySystem
         _destroy.DestroyEntity(uid);
     }
 
-    private void FillSlice(Entity<EdibleComponent?> slice, Solution solution)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="slice"> The slice entity </param>
+    /// <param name="solution"> portion of a solution from the sliced entity </param>
+    /// <param name="targetContainer"> target solution container </param>
+    private void FillSlice(Entity<SolutionContainerManagerComponent?> slice, Solution solution, string targetContainer)
     {
         if (!Resolve(slice, ref slice.Comp, false))
             return;
 
         // Replace all reagents on prototype not just copying poisons (example: slices of eaten pizza should have less nutrition)
-        if (!_solutionContainer.TryGetSolution(slice.Owner, slice.Comp.Solution, out var itsSoln, out var itsSolution))
+        if (!_solutionContainer.TryGetSolution(slice.Owner, targetContainer, out var itsSoln, out var itsSolution))
             return;
 
         _solutionContainer.RemoveAllSolution(itsSoln.Value);
 
         var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
         _solutionContainer.TryAddSolution(itsSoln.Value, lostSolutionPart);
-    }
-
-    private void OnComponentStartup(Entity<SliceableFoodComponent> entity, ref ComponentStartup args)
-    {
-        // TODO: When Food Component is fully kill delete this awful method
-        // This exists just to make tests fail I guess, awesome!
-        // If you're here because your test just failed, make sure that:
-        // Your food has the edible component
-        // The solution listed in the edible component exists
-        var foodComp = EnsureComp<EdibleComponent>(entity);
-        _solutionContainer.EnsureSolution(entity.Owner, foodComp.Solution, out _);
     }
 }
 
