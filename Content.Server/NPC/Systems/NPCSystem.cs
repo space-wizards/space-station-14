@@ -18,7 +18,7 @@ namespace Content.Server.NPC.Systems
     /// <summary>
     ///     Handles NPCs running every tick.
     /// </summary>
-    public sealed partial class NPCSystem : EntitySystem
+    public sealed partial class NPCSystem : SharedNPCSystem
     {
         private static readonly Gauge ActiveGauge = Metrics.CreateGauge(
             "npc_active_count",
@@ -76,6 +76,11 @@ namespace Content.Server.NPC.Systems
         public void OnNPCShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
         {
             SleepNPC(uid, component);
+        }
+
+        public override bool IsNpc(EntityUid uid)
+        {
+            return HasComp<HTNComponent>(uid);
         }
 
         /// <summary>
