@@ -40,8 +40,10 @@ public sealed partial class AtmosphereSystem
             return;
 
         // Check each pipe node for overpressure and apply damage if needed
-        foreach (var node in pipeNet.Nodes)
+        // ReSharper disable once ForCanBeConvertedToForeach
+        for (var i = 0; i < pipeNet.Nodes.Count; i++)
         {
+            var node = pipeNet.Nodes[i];
             // Node isn't a pipe or doesn't take pressure damage
             if (node is not PipeNode { MaxPressure: > 0 } pipe)
                 continue;
