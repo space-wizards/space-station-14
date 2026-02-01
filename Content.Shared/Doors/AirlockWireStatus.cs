@@ -12,5 +12,6 @@ namespace Content.Shared.Doors
         AiVisionIndicator,
         TimingIndicator,
         SafetyIndicator,
+        EmergencyAccessIndicator,
     }
 }
