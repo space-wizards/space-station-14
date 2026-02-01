@@ -30,7 +30,7 @@ public sealed partial class PayloadTriggerComponent : Component
     /// <summary>
     ///     List of components to add or remove from an entity when this trigger is (un)installed.
     /// </summary>
-    [DataField(serverOnly: true, readOnly: true)]
+    [DataField(readOnly: true)]
     public ComponentRegistry? Components = null;
 
     /// <summary>
@@ -42,6 +42,6 @@ public sealed partial class PayloadTriggerComponent : Component
     ///     when removing the component, to ensure that removal of this trigger only removes the components that it was
     ///     responsible for adding.
     /// </remarks>
-    [DataField(serverOnly: true)]
-    public HashSet<Type> GrantedComponents = new();
+    [DataField]
+    public HashSet<Type> GrantedComponents = [];
 }
