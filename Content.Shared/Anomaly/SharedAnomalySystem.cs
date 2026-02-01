@@ -417,6 +417,7 @@ public abstract class SharedAnomalySystem : EntitySystem
                 break;
 
             var tileref = Random.Pick(tilerefs);
+            tilerefs.Remove(tileref);
 
             // Get the world position of the tile to calculate the distance to the anomalous object
             var tileWorldPos = _map.GridTileToWorldPos(xform.GridUid.Value, grid, tileref.GridIndices);
@@ -425,7 +426,6 @@ public abstract class SharedAnomalySystem : EntitySystem
             //cut outer & inner circle
             if (distance > settings.MaxRange || distance < settings.MinRange)
             {
-                tilerefs.Remove(tileref);
                 continue;
             }
 
@@ -447,7 +447,6 @@ public abstract class SharedAnomalySystem : EntitySystem
                 }
                 if (!valid)
                 {
-                    tilerefs.Remove(tileref);
                     continue;
                 }
             }
