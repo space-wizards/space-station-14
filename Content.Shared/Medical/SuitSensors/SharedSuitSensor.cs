@@ -1,5 +1,7 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Roles;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.SuitSensor;
@@ -7,7 +9,7 @@ namespace Content.Shared.Medical.SuitSensor;
 [Serializable, NetSerializable]
 public sealed class SuitSensorStatus
 {
-    public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments)
+    public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, ProtoId<JobPrototype> job, string jobIcon, List<ProtoId<DepartmentPrototype>> jobDepartments)
     {
         OwnerUid = ownerUid;
         SuitSensorUid = suitSensorUid;
@@ -21,9 +23,9 @@ public sealed class SuitSensorStatus
     public NetEntity SuitSensorUid;
     public NetEntity OwnerUid;
     public string Name;
-    public string Job;
+    public ProtoId<JobPrototype> Job;
     public string JobIcon;
-    public List<string> JobDepartments;
+    public List<ProtoId<DepartmentPrototype>> JobDepartments;
     public bool IsAlive;
     public int? TotalDamage;
     public int? TotalDamageThreshold;
