@@ -26,50 +26,45 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
         var sOverlay = Server.System<GasTileOverlaySystem>();
         var sMapSys = Server.System<SharedMapSystem>();
 
-        NetEntity gridNetEnt = default;
-
         var mapId = sMapSys.GetAllMapIds().First(m => m != MapId.Nullspace);
 
         var gridComp = sMapManager.GetAllMapGrids(mapId).First();
         var gridEnt = gridComp.Owner;
-        gridNetEnt = Server.EntMan.GetNetEntity(gridEnt);
-
-        Server.EntMan.EnsureComponent<GasTileOverlayComponent>(gridEnt);
+        var gridNetEnt = Server.EntMan.GetNetEntity(gridEnt);
 
         var gridCoords = new EntityCoordinates(gridEnt, Vector2.Zero);
-
         var tileIndices = sMapSys.TileIndicesFor(gridEnt, gridComp, gridCoords);
         var mixture = SAtmos.GetTileMixture(gridEnt, null, tileIndices, true);
 
         // Get data for client side.
         var cGridEnt = CEntMan.GetEntity(gridNetEnt);
-        Assert.That(CEntMan.TryGetComponent<GasTileOverlayComponent>(cGridEnt, out var overlay),
+        Assert.That(CEntMan.TryGetComponent<GasTileOverlayComponent>(cGridEnt, out var cOverlay),
             "Client grid is missing GasTileOverlayComponent");
 
         // Check if the server actually sent the gas chunks
-        Assert.That(overlay.Chunks, Is.Not.Empty, "Gas overlay chunks are empty on the client.");
+        Assert.That(cOverlay.Chunks, Is.Not.Empty, "Gas overlay chunks are empty on the client.");
 
         //Start real tests
         await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 400f);
 
-        await CheckForInjectedGas(overlay, tileIndices, 400f);
+        await CheckForInjectedGas(cOverlay, tileIndices, 400f);
 
         await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 803f); // Rounding test
 
-        await CheckForInjectedGas(overlay, tileIndices, 800f);
+        await CheckForInjectedGas(cOverlay, tileIndices, 800f);
 
         await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 1200f); // This one hits max temperature
 
-        await CheckForInjectedGas(overlay, tileIndices, ThermalByte.TempMaximum);
+        await CheckForInjectedGas(cOverlay, tileIndices, ThermalByte.TempMaximum);
 
         await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 0);
         await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 7); // Test the networking optimisation, this should not be networked yet 
 
-        await CheckForInjectedGas(overlay, tileIndices, 0);
+        await CheckForInjectedGas(cOverlay, tileIndices, 0);
 
         await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 10); // This should
 
-        await CheckForInjectedGas(overlay, tileIndices, 8); // 10 is rounded down to 8
+        await CheckForInjectedGas(cOverlay, tileIndices, 8); // 10 is rounded down to 8
     }
 
     private async Task CheckForInjectedGas(GasTileOverlayComponent overlay, Vector2i indices, float expectedTemp)
