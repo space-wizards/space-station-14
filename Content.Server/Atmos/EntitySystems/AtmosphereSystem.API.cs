@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Diagnostics;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
@@ -279,6 +280,95 @@ public partial class AtmosphereSystem
 
         // Default to a space mixture... This is a space game, after all!
         return GasMixture.SpaceGas;
+    }
+
+    /// <summary>
+    /// Retrieves the pressures of all gas mixtures
+    /// in the given array of <see cref="TileAtmosphere"/>s, and stores the results in the
+    /// provided <paramref name="pressures"/> span.
+    /// </summary>
+    /// <param name="tiles">The tiles span to find the pressures of.</param>
+    /// <param name="pressures">The span to store the pressures to - this should be the same length
+    /// as the tile array.</param>
+    /// <exception cref="ArgumentException">Thrown when the length of the provided spans do not match.</exception>
+    /// <remarks>Note that for <see cref="TileAtmosphere"/> or <see cref="GasMixture"/>s that are null,
+    /// this method will return a value close to zero but not exactly zero.</remarks>
+    [PublicAPI]
+    public static void GetBulkTileAtmospherePressures(Span<TileAtmosphere?> tiles, Span<float> pressures)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(tiles.Length, pressures.Length);
+
+        var len = tiles.Length;
+        var arr1 = ArrayPool<GasMixture?>.Shared.Rent(len);
+
+        try
+        {
+            var mixtSpan = arr1.AsSpan(0, len);
+            for (var i = 0; i < tiles.Length; i++)
+            {
+                mixtSpan[i] = tiles[i]?.Air;
+            }
+
+            GetBulkGasMixturePressures(mixtSpan, pressures);
+        }
+        finally
+        {
+            ArrayPool<GasMixture?>.Shared.Return(arr1);
+        }
+    }
+
+    /// <summary>
+    /// Gets the pressures of a <see cref="Span{T}"/> of <see cref="GasMixture"/>s.
+    /// </summary>
+    /// <param name="mixtures">The <see cref="GasMixture"/> to get the pressures of.</param>
+    /// <param name="pressures">The <see cref="Span{T}"/> to store the pressures to - this should be the same length
+    /// as the mixtures array.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of the provided spans do not match.</exception>
+    /// <remarks>Note that for GasMixtures that are null, this method will return a value close to zero but not exactly zero.</remarks>
+    [PublicAPI]
+    public static void GetBulkGasMixturePressures(Span<GasMixture?> mixtures, Span<float> pressures)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(mixtures.Length, pressures.Length);
+
+        var len = mixtures.Length;
+
+        var arr1 = ArrayPool<float>.Shared.Rent(len);
+        var arr2 = ArrayPool<float>.Shared.Rent(len);
+        var arr3 = ArrayPool<float>.Shared.Rent(len);
+        try
+        {
+            var mixtVol = arr1.AsSpan(0, len);
+            var mixtTemp = arr2.AsSpan(0, len);
+            var mixtMoles = arr3.AsSpan(0, len);
+
+            for (var i = 0; i < len; i++)
+            {
+                if (mixtures[i] is not { } mixture)
+                {
+                    // To prevent any NaN/Div/0 errors, we just bite the bullet
+                    // and set everything to the lowest possible value.
+                    mixtVol[i] = 1;
+                    mixtTemp[i] = 1;
+                    mixtMoles[i] = float.Epsilon;
+                    continue;
+                }
+
+                mixtVol[i] = mixture.Volume;
+                mixtTemp[i] = mixture.Temperature;
+                mixtMoles[i] = mixture.TotalMoles;
+            }
+
+            // TODO NumericsHelpers need a method that substitutes NaNs with zeros. AVX-512 has one iirc but for 256/128 we need to do some masking bs
+            NumericsHelpers.Multiply(mixtMoles, Atmospherics.R);
+            NumericsHelpers.Multiply(mixtMoles, mixtTemp);
+            NumericsHelpers.Divide(mixtMoles, mixtVol, pressures);
+        }
+        finally
+        {
+            ArrayPool<float>.Shared.Return(arr1);
+            ArrayPool<float>.Shared.Return(arr2);
+            ArrayPool<float>.Shared.Return(arr3);
+        }
     }
 
     /// <summary>
