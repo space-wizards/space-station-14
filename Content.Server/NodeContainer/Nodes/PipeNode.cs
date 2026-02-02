@@ -109,10 +109,11 @@ namespace Content.Server.NodeContainer.Nodes
         private const float DefaultVolume = 200f;
 
         /// <summary>
-        ///     Pressure beyond which this pipe node starts taking damage. Set to zero for no pressure damage.
+        /// The maximum difference between the pipe's internal pressure and the exposed atmosphere
+        /// pressure the pipe can experience before it starts to take damage, in kPa.
         /// </summary>
         [DataField]
-        public float MaxPressure = 0;
+        public float MaxPressure;
 
         public override void Initialize(EntityUid owner, IEntityManager entMan)
         {
