@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
+using Content.Shared.Gibbing;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -34,7 +35,7 @@ public partial class ForensicsSystem : EntitySystem
         // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
         SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: [typeof(SharedBloodstreamSystem)]);
 
-        SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<ForensicsComponent, GibbedBeforeDeletionEvent>(OnBeingGibbed);
         SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
         SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: [typeof(SharedAbsorbentSystem),]);
@@ -55,6 +56,7 @@ public partial class ForensicsSystem : EntitySystem
         {
             comp.DNAs.Add(dna);
         }
+
         Dirty(puddle);
     }
 
@@ -81,14 +83,14 @@ public partial class ForensicsSystem : EntitySystem
         }
     }
 
-    private void OnBeingGibbed(Entity<ForensicsComponent> gibbed, ref BeingGibbedEvent args)
+    private void OnBeingGibbed(Entity<ForensicsComponent> mob, ref GibbedBeforeDeletionEvent args)
     {
         var dna = Loc.GetString("forensics-dna-unknown");
 
-        if (TryComp(gibbed, out DnaComponent? dnaComp) && dnaComp.DNA != null)
+        if (TryComp(mob, out DnaComponent? dnaComp) && dnaComp.DNA != null)
             dna = dnaComp.DNA;
 
-        foreach (EntityUid part in args.GibbedParts)
+        foreach (var part in args.Giblets)
         {
             var partComp = EnsureComp<ForensicsComponent>(part);
             partComp.DNAs.Add(dna);
@@ -194,8 +196,8 @@ public partial class ForensicsSystem : EntitySystem
         {
             Act = () => TryStartCleaning(entity, user, target),
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/bubbles.svg.192dpi.png")),
-            Text = Loc.GetString(Loc.GetString("forensics-verb-text")),
-            Message = Loc.GetString(Loc.GetString("forensics-verb-message")),
+            Text = Loc.GetString("forensics-verb-text"),
+            Message = Loc.GetString("forensics-verb-message"),
             // This is important because if its true using the cleaning device will count as touching the object.
             DoContactInteraction = false,
         };
