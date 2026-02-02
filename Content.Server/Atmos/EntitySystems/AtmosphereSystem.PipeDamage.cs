@@ -58,8 +58,19 @@ public sealed partial class AtmosphereSystem
 
             var xformGridUid = xform.GridUid.Value;
             var coords = _mapSystem.TileIndicesFor(xformGridUid, mapComp, xform.Coordinates);
-            if (IsTileAirBlockedCached(xformGridUid, coords))
-                continue;
+            var airBlocked = IsTileAirBlockedCached(xformGridUid, coords);
+            var maxPressure = pipe.MaxPressure;
+            if (airBlocked)
+            {
+                switch (pipe.AirBlockedMaxPressureIncreaseFactor)
+                {
+                    case 0:
+                        continue;
+                    case > 0:
+                        maxPressure *= pipe.AirBlockedMaxPressureIncreaseFactor;
+                        break;
+                }
+            }
 
             if (!_damageableQuery.TryComp(pipe.Owner, out var damage))
                 return;
@@ -79,7 +90,7 @@ public sealed partial class AtmosphereSystem
             if (mix == null)
                 return;
 
-            var dam = PressureDamage(pipe, mix.Pressure);
+            var dam = PressureDamage(pipe, maxPressure, mix.Pressure);
             if (dam <= 0)
                 continue;
 
@@ -94,16 +105,17 @@ public sealed partial class AtmosphereSystem
     /// and damage scales exponentially beyond that.
     /// </summary>
     /// <param name="pipe">The pipe node to calculate damage for.</param>
+    /// <param name="maxPressure">The maximum pressure the pipe can handle.</param>
     /// <param name="ambientPressure">The ambient pressure around the pipe.</param>
     /// <returns>The amount of damage to apply.</returns>
-    private static int PressureDamage(PipeNode pipe, float ambientPressure)
+    private static int PressureDamage(PipeNode pipe, float maxPressure, float ambientPressure)
     {
         const float tau = 10; // number of atmos ticks to break pipe at nominal overpressure
 
         // Consider the outer environment pressure as well when computing delta pressure.
         var deltaPressure = Math.Abs(pipe.Air.Pressure - ambientPressure);
-        var diff = deltaPressure - pipe.MaxPressure;
+        var diff = deltaPressure - maxPressure;
         const float alpha = 100 / tau;
-        return Math.Min(0, (int)(alpha * float.Exp(diff / pipe.MaxPressure)));
+        return Math.Min(0, (int)(alpha * float.Exp(diff / maxPressure)));
     }
 }

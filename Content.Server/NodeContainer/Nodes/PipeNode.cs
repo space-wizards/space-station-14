@@ -115,6 +115,14 @@ namespace Content.Server.NodeContainer.Nodes
         [DataField]
         public float MaxPressure;
 
+        /// <summary>
+        /// If there is an air-blocking entity above this pipe, the pressure increase factor to apply
+        /// to the pipe's max pressure. Set this to zero to disable pressure damage when blocked.
+        /// </summary>
+        /// <example>If the tile is air-blocked and the factor is set to 5,
+        /// then the MaxPressure is 5 times higher.</example>
+        public float AirBlockedMaxPressureIncreaseFactor = 0f;
+
         public override void Initialize(EntityUid owner, IEntityManager entMan)
         {
             base.Initialize(owner, entMan);
