@@ -5,8 +5,13 @@
   description: Toggles the visibility of your waypointers.
   components:
   - type: Action
-    icon: Markers/Waypointers/waypointer_action.rsi/action_icon_on.png
-    iconOn: Markers/Waypointers/waypointer_action.rsi/action_icon_off.png
+    toggled: true
+    icon:
+      sprite: Markers/Waypointers/waypointer_action.rsi
+      state: action_icon_off
+    iconOn:
+      sprite: Markers/Waypointers/waypointer_action.rsi
+      state: action_icon_on
     useDelay: 1
   - type: InstantAction
     event: !type:ActionToggleWaypointersEvent

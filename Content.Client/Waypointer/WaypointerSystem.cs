@@ -56,9 +56,9 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         base.OnActionToggle(mob, ref args);
 
         if (args.Action.Comp.Toggled)
-            _overlay.AddOverlay(_waypointerOverlay);
-        else
             _overlay.RemoveOverlay(_waypointerOverlay);
+        else
+            _overlay.AddOverlay(_waypointerOverlay);
     }
 
     private void OnPlayerAttached(Entity<WaypointerComponent> mob, ref LocalPlayerAttachedEvent args)
