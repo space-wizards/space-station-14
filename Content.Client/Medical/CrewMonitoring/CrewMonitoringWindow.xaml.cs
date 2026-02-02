@@ -197,8 +197,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             else
                 otherSensors.Add(sensor);
         }
-        var fuck = sortableSensors.OrderBy(kv => kv.Key, JobUIComparer.Instance).Select(kv => kv.Value).ToList();
-        departmentSensors = [.. fuck, .. otherSensors];
+        departmentSensors = [.. sortableSensors.OrderBy(kv => kv.Key, JobUIComparer.Instance).Select(kv => kv.Value).ToList(), .. otherSensors];
 
         // Populate departments
 
