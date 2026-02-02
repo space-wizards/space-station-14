@@ -148,6 +148,8 @@ public sealed partial class CCVars
     /// <para>So things like thermomachines and the TEG, which work based on heat transfer, would need to use the scaled value,
     /// whereas heat-only reactions like gas reactions and anything else that "generates" or "consumes" heat would use the unscaled value.</para>
     /// </remarks>
+    /// <example>Mechanics like the thermomachine or TEG should be affected by this CVAR change,
+    /// whereas gas reactions and heat-only interactions should stay the same.</example>
     public static readonly CVarDef<float> AtmosHeatScale =
         CVarDef.Create("atmos.heat_scale", 8f, CVar.REPLICATED | CVar.SERVER);
 
