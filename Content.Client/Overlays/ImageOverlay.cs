@@ -1,44 +1,45 @@
 using Content.Client.Resources;
+using Content.Shared.Overlays;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Overlays;
-
 /// <summary>
 /// Creates overlay image placed over user screen
 /// </summary>
-public sealed partial class ImageOverlay : Overlay
+public sealed class ImageOverlay : Overlay
 {
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public readonly List<(ShaderInstance Instance, ImageShaderValues ShaderValue)> ImageShaders = new();
+    private readonly List<(ResPath Path, Color Color)> _texturesToDraw = new();
+
     public ImageOverlay()
     {
         IoCManager.InjectDependencies(this);
     }
 
-    protected override void Draw(in OverlayDrawArgs args)
+    public void UpdateState(List<ImageOverlayComponent> components)
     {
-        foreach (var (shaderInstance, shaderValues) in ImageShaders)
+        _texturesToDraw.Clear();
+        foreach (var comp in components)
         {
-            var handle = args.WorldHandle;
-
-            shaderInstance.SetParameter("OverlayTexture", _resourceCache.GetTexture(shaderValues.PathToOverlayImage));
-            shaderInstance.SetParameter("AdditionalColor", shaderValues.AdditionalColorOverlay);
-
-            handle.UseShader(shaderInstance);
-            handle.DrawRect(args.WorldBounds, Color.White);
-            handle.UseShader(null);
+            _texturesToDraw.Add((comp.PathToOverlayImage, comp.AdditionalColorOverlay));
         }
     }
-}
 
-public struct ImageShaderValues()
-{
-    public ResPath PathToOverlayImage = default!;
-    public Color AdditionalColorOverlay = new(0, 0, 0, 0);
+    protected override void Draw(in OverlayDrawArgs args)
+    {
+        foreach (var (path, color) in _texturesToDraw)
+        {
+            var texture = _resourceCache.GetTexture(path);
+            var sc = args.ScreenHandle;
+
+            sc.DrawRect(args.ViewportBounds, color);
+            sc.DrawTextureRect(texture, args.ViewportBounds);
+        }
+    }
 }

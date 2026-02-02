@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Overlays;
 
 /// <summary>
-/// Adds a image based shader when wearing an entity with this component.
+/// Adds a image overlay on screen when wearing an entity with this component.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ImageOverlayComponent : Component

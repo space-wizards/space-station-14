@@ -1,7 +1,6 @@
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
@@ -9,13 +8,11 @@ namespace Content.Client.Overlays;
 /// <summary>
 /// Adds image overlay when wearing item with ImageOverlayComponent
 /// </summary>
-public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponent>
+public sealed class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponent>
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public static readonly ProtoId<ShaderPrototype> ImageShader = "ImageMask";
-    private ImageOverlay _overlay = new();
+    private ImageOverlay _overlay = default!;
 
     public override void Initialize()
     {
@@ -28,27 +25,22 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
     {
         base.UpdateInternal(component);
 
-        _overlay.ImageShaders.Clear();
+        _overlay.UpdateState(component.Components);
 
-        foreach (var comp in component.Components)
+        if (component.Components.Count > 0)
         {
-            var values = new ImageShaderValues
-            {
-                PathToOverlayImage = comp.PathToOverlayImage,
-                AdditionalColorOverlay = comp.AdditionalColorOverlay
-            };
-            _overlay.ImageShaders.Add((_prototypeManager.Index(ImageShader).InstanceUnique(), values));
+            _overlayMan.AddOverlay(_overlay);
         }
-
-        _overlayMan.AddOverlay(_overlay);
+        else
+        {
+            _overlayMan.RemoveOverlay(_overlay);
+        }
     }
 
     protected override void DeactivateInternal()
     {
         base.DeactivateInternal();
-
-        _overlay.ImageShaders.Clear();
-
         _overlayMan.RemoveOverlay(_overlay);
+        _overlay.UpdateState(new List<ImageOverlayComponent>());
     }
 }
