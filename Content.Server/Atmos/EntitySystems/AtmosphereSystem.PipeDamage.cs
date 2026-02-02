@@ -104,6 +104,6 @@ public sealed partial class AtmosphereSystem
         var deltaPressure = Math.Abs(pipe.Air.Pressure - ambientPressure);
         var diff = deltaPressure - pipe.MaxPressure;
         const float alpha = 100 / tau;
-        return diff > 0 ? (int)(alpha * float.Exp(diff / pipe.MaxPressure)) : 0;
+        return Math.Min(0, (int)(alpha * float.Exp(diff / pipe.MaxPressure)));
     }
 }
