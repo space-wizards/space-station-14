@@ -20,7 +20,7 @@
 
 - type: feedbackPopup
   id: UplinkFeedback
-  popupOrigin: wizden_master
+  popupOrigin: wizden
   title: "[bold]Feedback on Traitor Uplink Changes[/bold]"
   description: >-
     If you have any feedback on the changes to the Traitor Uplink, feel free to leave them in this thread on the forums!
