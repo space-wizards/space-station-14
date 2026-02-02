@@ -15,7 +15,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Roles;
 using Content.Shared.Station;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -356,6 +355,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         var userName = Loc.GetString("suit-sensor-component-unknown-name");
         var userJob = Loc.GetString("suit-sensor-component-unknown-job");
         var userJobIcon = "JobIconNoId";
+        var userJobDepartments = new List<string>();
 
         if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
         {
@@ -364,6 +364,9 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             if (card.Comp.LocalizedJobTitle != null)
                 userJob = card.Comp.LocalizedJobTitle;
             userJobIcon = card.Comp.JobIcon;
+
+            foreach (var department in card.Comp.JobDepartments)
+                userJobDepartments.Add(Loc.GetString(_proto.Index(department).Name));
         }
 
         // get health mob state
@@ -382,7 +385,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             totalDamageThreshold = critThreshold.Value.Int();
 
         // finally, form suit sensor status
-        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(ent.Owner), userName, "captain", userJob, userJobIcon, card.Comp.JobDepartments);
+        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(ent.Owner), userName, userJob, userJobIcon, userJobDepartments);
         switch (sensor.Mode)
         {
             case SuitSensorMode.SensorBinary:
@@ -432,8 +435,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         {
             [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdUpdatedState,
             [SuitSensorConstants.NET_NAME] = status.Name,
-            [SuitSensorConstants.NET_JOBID] = status.JobId,
-            [SuitSensorConstants.NET_JOBNAME] = status.JobName,
+            [SuitSensorConstants.NET_JOB] = status.Job,
             [SuitSensorConstants.NET_JOB_ICON] = status.JobIcon,
             [SuitSensorConstants.NET_JOB_DEPARTMENTS] = status.JobDepartments,
             [SuitSensorConstants.NET_IS_ALIVE] = status.IsAlive,
@@ -464,10 +466,9 @@ public abstract class SharedSuitSensorSystem : EntitySystem
 
         // check name, job and alive
         if (!payload.TryGetValue(SuitSensorConstants.NET_NAME, out string? name)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_JOBID, out string? jobid)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_JOBNAME, out string? jobname)) return null;
+        if (!payload.TryGetValue(SuitSensorConstants.NET_JOB, out string? job)) return null;
         if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_ICON, out string? jobIcon)) return null;
-        if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_DEPARTMENTS, out List<ProtoId<DepartmentPrototype>>? jobDepartments)) return null;
+        if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_DEPARTMENTS, out List<string>? jobDepartments)) return null;
         if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive)) return null;
         if (!payload.TryGetValue(SuitSensorConstants.NET_SUIT_SENSOR_UID, out NetEntity suitSensorUid)) return null;
         if (!payload.TryGetValue(SuitSensorConstants.NET_OWNER_UID, out NetEntity ownerUid)) return null;
@@ -477,7 +478,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, out int? totalDamageThreshold);
         payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
 
-        var status = new SuitSensorStatus(ownerUid, suitSensorUid, name, jobid, jobname, jobIcon, jobDepartments)
+        var status = new SuitSensorStatus(ownerUid, suitSensorUid, name, job, jobIcon, jobDepartments)
         {
             IsAlive = isAlive.Value,
             TotalDamage = totalDamage,

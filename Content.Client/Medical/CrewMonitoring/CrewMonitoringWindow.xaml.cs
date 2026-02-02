@@ -99,7 +99,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var uniqueSensors = uniqueSensorsMap.Values.ToList();
 
         // Order sensor data
-        var orderedSensors = uniqueSensors.OrderBy(n => n.Name).OrderBy(j => j.JobName);
+        var orderedSensors = uniqueSensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
         var assignedSensors = new HashSet<SuitSensorStatus>();
         var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct();
 
@@ -181,7 +181,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var jobSensors = new Dictionary<JobPrototype, SuitSensorStatus>();
 
         foreach (var sensor in departmentSensors)
-            jobSensors.Add(_prototypeManager.Index(sensor.JobId), sensor);
+            jobSensors.Add(_prototypeManager.Index(sensor.Job), sensor);
 
         departmentSensors = [.. jobSensors.OrderBy(kv => kv.Key, JobUIComparer.Instance).Select(kv => kv.Value)];
 
@@ -191,13 +191,13 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         {
             if (!string.IsNullOrEmpty(SearchLineEdit.Text)
                 && !sensor.Name.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase)
-                && !sensor.JobName.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase))
+                && !sensor.Job.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase))
                 continue;
 
             var coordinates = _entManager.GetCoordinates(sensor.Coordinates);
 
             // Add a button that will hold a username and other details
-            NavMap.LocalizedNames.TryAdd(sensor.SuitSensorUid, sensor.Name + ", " + sensor.JobName);
+            NavMap.LocalizedNames.TryAdd(sensor.SuitSensorUid, sensor.Name + ", " + sensor.Job);
 
             var sensorButton = new CrewMonitoringButton()
             {
@@ -311,7 +311,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             // Job name
             var jobLabel = new Label()
             {
-                Text = sensor.JobName,
+                Text = sensor.Job,
                 HorizontalExpand = true,
                 ClipText = true,
             };
