@@ -1,5 +1,6 @@
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
+using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Map.Components;
@@ -73,8 +74,12 @@ public sealed partial class AtmosphereSystem
             if (_random.Prob(finalChance))
                 continue;
 
-            // close but no cigar
-            var dam = PressureDamage(pipe);
+            // Retrieve the ambient pressure of the pipe in order to compute dP.
+            var mix = GetTileMixture((node.Owner, xform));
+            if (mix == null)
+                return;
+
+            var dam = PressureDamage(pipe, mix.Pressure);
             if (dam <= 0)
                 continue;
 
@@ -88,10 +93,16 @@ public sealed partial class AtmosphereSystem
     /// Calculate pressure damage for pipe. There is no damage if the pressure is below MaxPressure,
     /// and damage scales exponentially beyond that.
     /// </summary>
-    private static int PressureDamage(PipeNode pipe)
+    /// <param name="pipe">The pipe node to calculate damage for.</param>
+    /// <param name="ambientPressure">The ambient pressure around the pipe.</param>
+    /// <returns>The amount of damage to apply.</returns>
+    private static int PressureDamage(PipeNode pipe, float ambientPressure)
     {
         const float tau = 10; // number of atmos ticks to break pipe at nominal overpressure
-        var diff = pipe.Air.Pressure - pipe.MaxPressure;
+
+        // Consider the outer environment pressure as well when computing delta pressure.
+        var deltaPressure = Math.Abs(pipe.Air.Pressure - ambientPressure);
+        var diff = deltaPressure - pipe.MaxPressure;
         const float alpha = 100 / tau;
         return diff > 0 ? (int)(alpha * float.Exp(diff / pipe.MaxPressure)) : 0;
     }
