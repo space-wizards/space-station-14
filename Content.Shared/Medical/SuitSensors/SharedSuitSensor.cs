@@ -9,12 +9,13 @@ namespace Content.Shared.Medical.SuitSensor;
 [Serializable, NetSerializable]
 public sealed class SuitSensorStatus
 {
-    public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, ProtoId<JobPrototype> job, string jobIcon, List<ProtoId<DepartmentPrototype>> jobDepartments)
+    public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, ProtoId<JobPrototype> jobId, string jobName, string jobIcon, List<ProtoId<DepartmentPrototype>> jobDepartments)
     {
         OwnerUid = ownerUid;
         SuitSensorUid = suitSensorUid;
         Name = name;
-        Job = job;
+        JobId = jobId;
+        JobName = jobName;
         JobIcon = jobIcon;
         JobDepartments = jobDepartments;
     }
@@ -23,7 +24,8 @@ public sealed class SuitSensorStatus
     public NetEntity SuitSensorUid;
     public NetEntity OwnerUid;
     public string Name;
-    public ProtoId<JobPrototype> Job;
+    public ProtoId<JobPrototype> JobId;
+    public string JobName;
     public string JobIcon;
     public List<ProtoId<DepartmentPrototype>> JobDepartments;
     public bool IsAlive;
@@ -61,7 +63,8 @@ public static class SuitSensorConstants
 {
     public const string NET_OWNER_UID = "ownerUid";
     public const string NET_NAME = "name";
-    public const string NET_JOB = "job";
+    public const string NET_JOBID = "jobId";
+    public const string NET_JOBNAME = "jobName";
     public const string NET_JOB_ICON = "jobIcon";
     public const string NET_JOB_DEPARTMENTS = "jobDepartments";
     public const string NET_IS_ALIVE = "alive";
