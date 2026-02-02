@@ -1,0 +1,4 @@
+- type: soundCollection
+  id: BloodCultRitualMusic
+  files:
+    - /Audio/Ambience/Antag/tear_of_veil.ogg

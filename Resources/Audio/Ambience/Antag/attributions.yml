@@ -1,3 +1,14 @@
+# SPDX-FileCopyrightText: 2023 Bixkitts <72874643+Bixkitts@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 JoeHammad1844 <130668733+JoeHammad1844@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Flareguy <78941145+Flareguy@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 HighTechPuddle <131694215+HighTechPuddle@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Vyacheslav Titov <rincew1nd@ya.ru>
+# SPDX-FileCopyrightText: 2024 Zachary Higgs <compgeek223@gmail.com>
+# SPDX-FileCopyrightText: 2025 Samuka <47865393+Samuka-C@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Hannah Giovanna Dawson <karakkaraz@gmail.com>
+# SPDX-License-Identifier: MIT
+
 - files: ["nukeops_start.ogg, traitor_start.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station"
@@ -34,3 +45,19 @@
   license: "CC-BY-SA-3.0"
   copyright: "Made by DarkIcedCoffee (discord)"
   source: "https://github.com/space-wizards/space-station-14/pull/40042/"
+- files: ["creepyshriek.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Multiple effects taken from Paradise Station"
+  source: "https://github.com/ParadiseSS13/Paradise/tree/master/sound"
+- files: ["cultist_start.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Multiple effects taken from Paradise Station"
+  source: "https://github.com/ParadiseSS13/Paradise/tree/master/sound"
+- files: ["dimensional_rend.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Multiple effects taken from Paradise Station"
+  source: "https://github.com/ParadiseSS13/Paradise/tree/master/sound"
+- files: ["tear_of_veil.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Bolgarich for SS13 and allowed with specific attribution as the creator. >I allow you to use it when referring to me as the creator"
+  source: "https://www.youtube.com/watch?v=NqNHKfTAvcw"

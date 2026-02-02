@@ -1,0 +1,37 @@
+- type: cultAbility
+  id: StudyVeil
+  doAfterLength: 0
+  actionPrototypes:
+  - ActionCultistStudyVeil
+
+- type: cultAbility
+  id: Commune
+  doAfterLength: 0
+  actionPrototypes:
+  - ActionCultistCommune
+
+- type: cultAbility
+  id: SpellsSelect
+  doAfterLength: 0
+  actionPrototypes:
+  - ActionCultistSpellsSelect
+
+- type: cultAbility
+  id: SummonDagger
+  doAfterLength: 5
+  actionPrototypes:
+  - ActionCultistSummonDagger
+
+- type: cultAbility
+  id: SanguineDream
+  healthDrain: 10
+  doAfterLength: 5
+  actionPrototypes:
+  - ActionCultistSanguineDream
+
+- type: cultAbility
+  id: CultTwistedConstruction
+  healthDrain: 10
+  doAfterLength: 5
+  actionPrototypes:
+  - ActionCultistTwistedConstruction

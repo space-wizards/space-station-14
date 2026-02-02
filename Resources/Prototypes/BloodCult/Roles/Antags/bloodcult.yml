@@ -1,0 +1,16 @@
+- type: antag
+  id: BloodCultist
+  name: roles-antag-cult-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-cult-objective
+  # guides: [ BloodCult ] # TODO: Add BloodCult guide entry
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 36000 # 10h
+
+- type: startingGear
+  id: BloodCultistGear
+  storage:
+    back:
+    - SheetRunedGlass10

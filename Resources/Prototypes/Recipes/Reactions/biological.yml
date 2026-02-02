@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Alzore <140123969+Blackern5000@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
+# SPDX-License-Identifier: MIT
+
 - type: reaction
   id: BloodBreakdown
   source: true
@@ -94,3 +99,17 @@
     Mold: 2
     Protein: 1
     Toxin: 1
+
+- type: reaction
+  id: UnholyBloodPurification
+  reactants:
+    UnholyBlood:
+      amount: 2
+    Holywater:
+      amount: 2
+  effects:
+    - !type:AreaReactionEffect
+      prototypeId: Smoke
+      duration: 8
+      sound:
+        path: /Audio/Effects/smoke.ogg

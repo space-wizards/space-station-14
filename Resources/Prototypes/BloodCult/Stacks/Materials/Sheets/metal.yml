@@ -1,0 +1,6 @@
+- type: stack
+  id: RunedSteel
+  name: stack-runed-steel
+  icon: { sprite: /Textures/BloodCult/Sheets/metal.rsi, state: runedmetal }
+  spawn: SheetRunedSteel1
+  maxCount: 30

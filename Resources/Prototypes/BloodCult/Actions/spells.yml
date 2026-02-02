@@ -1,0 +1,172 @@
+# actions
+- type: entity
+  id: ActionCultistStudyVeil
+  name: Study Veil
+  description: Examine the state of the veil, and the strength of your cult.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: study_veil
+  - type: InstantAction
+    event: !type:EventCultistStudyVeil {}
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: study_veil
+  - type: CultistSpell
+    abilityId: StudyVeil
+    charges: 1
+    infinite: True
+    healthCost: 0
+    rechargeTime: 0
+
+- type: entity
+  id: ActionCultistCommune
+  name: Commune
+  description: Send a message to your fellow cultists. Beware - the uninitiated can see you whispering the incantation.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: commune
+  - type: InstantAction
+    event: !type:BloodCultCommuneEvent {}
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: commune
+  - type: CultistSpell
+    abilityId: Commune
+    charges: 1
+    infinite: True
+    healthCost: 0
+    rechargeTime: 0
+
+- type: entity
+  id: ActionCultistSpellsSelect
+  name: Prepare Spell
+  description: Prepare a blood spell by carving it into your body. Up to 1 spell may be prepared without standing on an empowering rune.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: spell_select
+  - type: InstantAction
+    event: !type:BloodCultSpellsEvent {}
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: spell_select
+  - type: CultistSpell
+    abilityId: SpellsSelect
+    charges: 1
+    infinite: True
+    healthCost: 0
+    rechargeTime: 0
+
+- type: entity
+  id: ActionCultistSummonDagger
+  name: Summon Dagger
+  description: Use Nar'Sie's blessing to shape a ritual dagger out of your body. As long as your heart continues to beat, She will allow you to make more.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: BloodCult/spells_cultist.rsi
+    state: summon_dagger
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: summon_dagger
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: summon_dagger
+  - type: InstantAction
+    event: !type:EventCultistSummonDagger {}
+  - type: CultistSpell
+    abilityId: SummonDagger
+    charges: 1
+    infinite: False
+    healthCost: 0
+    rechargeTime: 0
+
+- type: entity
+  id: ActionCultistSanguineDream
+  name: Sanguine Dream
+  description: A sinister spell that plunges a target into a nightmare-filled sleep. EMPs Cyborgs. Those with mindshields will be briefly stunned instead of being put to sleep.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: stun
+    iconOn:
+      sprite: BloodCult/spells_cultist.rsi
+      state: stun_selected
+  - type: Icon
+    sprite: BloodCult/spells_cultist.rsi
+    state: stun
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: stun
+  - type: TargetAction
+    targetingIndicator: true
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    event: !type:EventCultistSanguineDream {}
+  - type: CultistSpell
+    abilityId: SanguineDream
+    charges: 1
+    infinite: False
+    healthCost: 0
+    rechargeTime: 0
+    invocation: B'ad'd d'ea's!
+    castSound: !type:SoundPathSpecifier
+        path: /Audio/Magic/blink.ogg
+
+- type: entity
+  id: ActionCultistTwistedConstruction
+  name: Twisted Construction
+  description: A sinister spell used to convert steel or glass into runed steel or runed glass.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: BloodCult/spells_cultist.rsi
+      state: twisted_construction
+    iconOn:
+      sprite: BloodCult/spells_cultist.rsi
+      state: twisted_construction
+  - type: Icon
+    sprite: BloodCult/spells_cultist.rsi
+    state: twisted_construction
+  - type: Sprite
+    sprite: BloodCult/spells_cultist.rsi
+    state: twisted_construction
+  - type: TargetAction
+    targetingIndicator: true
+    checkCanAccess: false
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Stack
+    canTargetSelf: false
+    event: !type:EventCultistTwistedConstruction {}
+  - type: CultistSpell
+    abilityId: CultTwistedConstruction
+    charges: 1
+    infinite: False
+    healthCost: 0
+    rechargeTime: 0
+    invocation: Ethra p'ni dedol!
+    castSound: !type:SoundPathSpecifier
+        path: /Audio/Magic/blink.ogg
