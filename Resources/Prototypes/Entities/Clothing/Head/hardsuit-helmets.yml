@@ -211,7 +211,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - WreckWaypointer
     - NTStationWaypointer
@@ -238,7 +238,7 @@
   - type: PointLight
     radius: 7
     energy: 3
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - WreckWaypointer
     - NTStationWaypointer
@@ -304,7 +304,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - WreckWaypointer
     - NTStationWaypointer
@@ -360,7 +360,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -418,7 +418,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -440,7 +440,7 @@
     tags:
     - CorgiWearable
     - WhitelistChameleon
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -581,7 +581,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -604,7 +604,7 @@
   - type: PointLight
     radius: 7
     energy: 3
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - WreckWaypointer
     - NTStationWaypointer
@@ -881,7 +881,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -899,7 +899,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertchaplain.rsi
   - type: PointLight
     color: "#ffffff"
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -926,7 +926,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -944,7 +944,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -969,7 +969,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -987,7 +987,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer
@@ -1067,7 +1067,7 @@
         Heat: 0.80
         Radiation: 0.80
         Caustic: 0.95
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
     - TradeStationWaypointer

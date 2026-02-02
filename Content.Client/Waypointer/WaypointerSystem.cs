@@ -1,6 +1,7 @@
 ﻿using Content.Client.Actions;
-using Content.Shared.CombatMode;
 using Content.Shared.Waypointer;
+using Content.Shared.Waypointer.Components;
+using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.Timing;
@@ -14,9 +15,8 @@ namespace Content.Client.Waypointer;
 public sealed class WaypointerSystem : SharedWaypointerSystem
 {
     [Dependency] private readonly IPlayerManager  _player = default!;
-    [Dependency] private readonly IClientGameTiming _timing = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly IClientGameTiming _timing = default!;
 
     private WaypointerOverlay _waypointerOverlay = default!;
 
@@ -29,15 +29,14 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         SubscribeLocalEvent<WaypointerComponent, ComponentInit>(OnAddition);
         SubscribeLocalEvent<WaypointerComponent, ComponentRemove>(OnRemoval);
 
-        SubscribeLocalEvent<WaypointerComponent, ToggleCombatActionEvent>(OnCombatToggle);
-
         SubscribeLocalEvent<WaypointerComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<WaypointerComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
     }
 
     private void OnAddition(Entity<WaypointerComponent> mob, ref ComponentInit args)
     {
-        if (_player.LocalEntity == null || mob.Owner != _player.LocalEntity.Value)
+        if (_player.LocalEntity == null || mob.Owner != _player.LocalEntity.Value
+            || _timing.ApplyingState)
             return;
 
         _overlay.AddOverlay(_waypointerOverlay);
@@ -45,23 +44,11 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
 
     private void OnRemoval(Entity<WaypointerComponent> mob, ref ComponentRemove args)
     {
-        if (_player.LocalEntity == null || mob.Owner != _player.LocalEntity.Value)
+        if (_player.LocalEntity == null || mob.Owner != _player.LocalEntity.Value
+            || _timing.ApplyingState)
             return;
 
         _overlay.RemoveOverlay(_waypointerOverlay);
-    }
-
-    private void OnCombatToggle(Entity<WaypointerComponent> combatant, ref ToggleCombatActionEvent args)
-    {
-        if (_timing.ApplyingState)
-            return;
-
-        // Somehow, args.Toggle does not change from false to true whenever. So we are using this.
-        // When combat mode is on, turn off the overlay, so it's less distraction.
-        if (args.Action.Comp.Toggled)
-            _overlay.AddOverlay(_waypointerOverlay);
-        else
-            _overlay.RemoveOverlay(_waypointerOverlay);
     }
 
     protected override void OnActionToggle(Entity<WaypointerComponent> mob, ref ActionToggleWaypointersEvent args)

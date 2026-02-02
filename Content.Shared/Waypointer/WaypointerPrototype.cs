@@ -1,9 +1,16 @@
-﻿using Content.Shared.Whitelist;
+﻿using Content.Shared.Waypointer.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Waypointer;
 
+/// <summary>
+/// This is the prototype for a waypointer.
+/// This is stored in either <see cref="Components.WaypointerComponent"/> or <see cref="Components.ClothingShowWaypointerComponent"/>.
+/// It's responsible for defining what kind of waypointer is shown to the client.
+/// </summary>
 [Prototype]
 public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototype
 {
@@ -26,7 +33,7 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     /// The path to the rsi folder.
     /// </summary>
     [DataField(required: true)]
-    public string RsiPath = default!;
+    public ResPath RsiPath;
 
     /// <summary>
     /// This signifies how many states the waypointer has.
@@ -49,10 +56,16 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     public bool WorkOnGrid;
 
     /// <summary>
+    /// Whether the waypointer is active when the entity is in combat.
+    /// </summary>
+    [DataField]
+    public bool WorkInCombat;
+
+    /// <summary>
     /// The maximum range to where the pinpointer can track something.
     /// </summary>
     [DataField]
-    public float MaxRange = 200f;
+    public int MaxRange = 200;
 
     /// <summary>
     /// The whitelist that the entity needs to fulfill to be tracked.

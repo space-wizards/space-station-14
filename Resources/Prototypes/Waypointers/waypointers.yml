@@ -1,21 +1,6 @@
 ﻿# If you add a new waypointer, you'll need to add the "WaypointerTrackable" component to every entity that you want to be tracked EXCEPT grids.
 # Why not grids? As Todd Howard would say, they just work.
 
-## Action
-- type: entity
-  parent: BaseAction
-  id: ActionToggleWaypointers
-  name: Toggle Waypointers
-  description: Toggles the visibility of your waypointers.
-  components:
-  - type: Action
-    icon: Markers/Waypointers/action_icon_on.png
-    iconOn: Markers/Waypointers/action_icon_off.png
-    useDelay: 1
-  - type: InstantAction
-    event: !type:ActionToggleWaypointersEvent
-
-## Waypointers
 - type: waypointer
   abstract: true
   id: BaseWaypointer

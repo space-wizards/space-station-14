@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Waypointer;
+namespace Content.Shared.Waypointer.Components;
 
 /// <summary>
 /// This signifies an entity with an active waypointer trying to track something.
@@ -26,5 +26,5 @@ public sealed partial class WaypointerComponent : Component
     /// The prototype of the waypointer visible for the owner of this component.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<ProtoId<WaypointerPrototype>> WaypointerProtoIds;
+    public HashSet<ProtoId<WaypointerPrototype>>? WaypointerProtoIds;
 }

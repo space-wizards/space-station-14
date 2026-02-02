@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 using System.Numerics;
 using Content.Client.Shuttles.Systems;
 using Content.Client.Station;
+using Content.Shared.CombatMode;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Waypointer;
@@ -27,6 +28,7 @@ public sealed class WaypointerOverlay : Overlay
     [Dependency] private readonly IPlayerManager  _player = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
+    private readonly SharedCombatModeSystem _combatMode = default!;
     private readonly SharedPhysicsSystem _physics;
     private readonly SpriteSystem _sprite;
     private readonly StationSystem _station;
@@ -41,6 +43,7 @@ public sealed class WaypointerOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
+        _combatMode = _entity.System<SharedCombatModeSystem>();
         _physics = _entity.System<SharedPhysicsSystem>();
         _sprite = _entity.System<SpriteSystem>();
         _station = _entity.System<StationSystem>();
@@ -59,7 +62,9 @@ public sealed class WaypointerOverlay : Overlay
         handle.UseShader(_unshadedShader); // Waypointers are unshaded.
 
         if (_player.LocalEntity == null
-            || !_entity.TryGetComponent<WaypointerComponent>(_player.LocalEntity, out var waypointer)
+            || !_entity.TryGetComponent<Shared.Waypointer.Components.WaypointerComponent>(_player.LocalEntity, out var waypointer)
+            // Check if the Waypointer hashset is null
+            || waypointer.WaypointerProtoIds == null
             || !_entity.TryGetComponent<TransformComponent>(_player.LocalEntity, out var playerXform)
             || playerXform.MapID != args.MapId)
             return;
@@ -69,16 +74,16 @@ public sealed class WaypointerOverlay : Overlay
         foreach (var waypointerProtoId in waypointer.WaypointerProtoIds)
         {
             if (!_prototype.Resolve(waypointerProtoId, out var prototype)
-                // Check if the waypointer works on grid.
-                || !prototype.WorkOnGrid && playerXform.GridUid != null)
+                // Check if the waypointer works on grid and combat
+                || !prototype.WorkOnGrid && playerXform.GridUid != null
+                || !prototype.WorkInCombat && _combatMode.IsInCombatMode(player))
                 continue;
 
             var waypointQuery = _entity.CompRegistryQueryEnumerator(prototype.TrackedComponents);
             while (waypointQuery.MoveNext(out var target))
             {
                 // Check if the target fails/passes the whitelist/blacklist.
-                if (_whitelist.IsWhitelistFail(prototype.Whitelist, target)
-                    || _whitelist.IsWhitelistPass(prototype.Blacklist, target)
+                if (!_whitelist.CheckBoth(target, blacklist: prototype.Blacklist, whitelist: prototype.Whitelist)
                     // Check if the target has a hidden IFF.
                     || _shuttle.HasIFFFlag(target, IFFFlags.Hide))
                     continue;
@@ -100,6 +105,21 @@ public sealed class WaypointerOverlay : Overlay
 
                 _physics.TryGetDistance(player, target, out var distance, playerXform, targetXform);
 
+                // For entities without fixtures, the above method returns 0.
+                if (distance == 0)
+                {
+                    // so we need to calculate the distance ourselves.
+                    var a = _transform.GetWorldPosition(playerXform);
+                    var b = _transform.GetWorldPosition(targetXform);
+                    // This feels like a primary school child trying to do rocket science.
+                    // But we kinda just see how big number is when we subtract them from each other. It works?
+                    var xCoord = Math.Abs(Math.Pow(a.X - b.X, 2));
+                    var yCoord = Math.Abs(Math.Pow(a.Y - b.Y, 2));
+                    var squaredDistance = (float) (xCoord + yCoord);
+                    // Pythagoras the goat. I can't believe my school education was worth for something. It's all triangles.
+                    distance = (float) Math.Sqrt(squaredDistance);
+                }
+
                 if (distance > prototype.MaxRange)
                     continue;
 
@@ -109,7 +129,7 @@ public sealed class WaypointerOverlay : Overlay
                 var waypointerState = Math.Truncate(distance / increments) + 1;
                 var stateName = "marker" + waypointerState;
 
-                var rsi = new SpriteSpecifier.Rsi(new ResPath(prototype.RsiPath), stateName);
+                var rsi = new SpriteSpecifier.Rsi(prototype.RsiPath, stateName);
                 var texture = _sprite.Frame0(rsi);
 
                 var positionA = _transform.GetWorldPosition(playerXform);

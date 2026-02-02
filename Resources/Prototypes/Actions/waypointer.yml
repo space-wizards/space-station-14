@@ -1,0 +1,12 @@
+﻿- type: entity
+  parent: BaseAction
+  id: ActionToggleWaypointers
+  name: Toggle Waypointers
+  description: Toggles the visibility of your waypointers.
+  components:
+  - type: Action
+    icon: Markers/Waypointers/waypointer_action.rsi/action_icon_on.png
+    iconOn: Markers/Waypointers/waypointer_action.rsi/action_icon_off.png
+    useDelay: 1
+  - type: InstantAction
+    event: !type:ActionToggleWaypointersEvent

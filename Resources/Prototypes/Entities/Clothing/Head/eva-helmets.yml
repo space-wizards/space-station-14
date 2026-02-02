@@ -111,7 +111,7 @@
     radius: 5
     energy: 2
     color: "#00ffff"
-  - type: ShowWaypointer
+  - type: ClothingShowWaypointer
     waypointerProtoIds:
     - NTStationWaypointer
   - type: Tag
