@@ -103,7 +103,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var assignedSensors = new HashSet<SuitSensorStatus>();
         var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n).ToArray();
 
-        // Sorts departament
+        // Sorts departaments by proto weight
         var sortableDeparts = new List<DepartmentPrototype>();
         var otherDeparts = new List<string>();
         foreach (var department in departments)
