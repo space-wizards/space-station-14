@@ -16,7 +16,7 @@ role-type-team-antagonist-color = #d82000
 role-type-free-agent-color = #ffff00
 role-type-familiar-color = #6495ed
 role-type-silicon-color = #6495ed
-role-type-silicon-antagonist-color =#c832e6
+role-type-silicon-antagonist-color = #c832e6
 
 # Ideally, subtype names should be short
 role-subtype-traitor = Traitor
@@ -33,4 +33,6 @@ role-subtype-survivor = Survivor
 role-subtype-subverted = Subverted
 role-subtype-paradox-clone = Paradox
 role-subtype-wizard = Wizard
+role-subtype-xenoborg = Xenoborg
+role-subtype-xenoborg-core = Xenoborg Core
 role-subtype-changeling = Changeling

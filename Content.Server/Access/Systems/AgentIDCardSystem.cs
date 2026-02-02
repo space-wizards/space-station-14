@@ -27,6 +27,7 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly ChameleonClothingSystem _chameleon = default!;
         [Dependency] private readonly ChameleonControllerSystem _chamController = default!;
         [Dependency] private readonly LockSystem _lock = default!;
+        [Dependency] private readonly SharedJobStatusSystem _jobStatus = default!;
 
         public override void Initialize()
         {
@@ -45,7 +46,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(ent, out var idCardComp))
                 return;
 
-            _prototypeManager.TryIndex(args.Args.ChameleonOutfit.Job, out var jobProto);
+            _prototypeManager.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
 
             var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
             var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
@@ -130,13 +131,15 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
+            if (!_prototypeManager.Resolve(args.JobIconId, out var jobIcon))
                 return;
 
             _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
 
             if (TryFindJobProtoFromIcon(jobIcon, out var job))
                 _cardSystem.TryChangeJobDepartment(uid, job, idCard);
+
+            _jobStatus.UpdateStatus(Transform(uid).ParentUid);
         }
 
         private bool TryFindJobProtoFromIcon(JobIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)

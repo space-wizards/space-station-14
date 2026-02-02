@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Vox states made by Flareguy for SS14. equipped-head-dog modified from equipped-head by Sparlight (GitHub). equipped-head-light-dog modified from equipped-head-light by Sparlight (GitHub). equipped-head-unshaded-dog modified from equipped-head-unshaded by Sparlight (GitHub).",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Vox states made by Flareguy for SS14. equipped-head-dog modified from equipped-head by Sparlight (GitHub). equipped-head-light-dog modified from equipped-head-light by Sparlight (GitHub). equipped-head-unshaded-dog modified from equipped-head-unshaded by Sparlight (GitHub). Vulpkanin and Reptilian states by TiniestShark (Github).",
     "size": {
         "x": 32,
         "y": 32
@@ -41,6 +41,30 @@
         },
         {
             "name": "equipped-head-unshaded-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-reptilian",
             "directions": 4
         },
         {

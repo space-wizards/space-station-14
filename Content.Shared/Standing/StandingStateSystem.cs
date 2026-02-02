@@ -101,16 +101,6 @@ public sealed class StandingStateSystem : EntitySystem
         if (!standingState.Standing)
             return true;
 
-        // This is just to avoid most callers doing this manually saving boilerplate
-        // 99% of the time you'll want to drop items but in some scenarios (e.g. buckling) you don't want to.
-        // We do this BEFORE downing because something like buckle may be blocking downing but we want to drop hand items anyway
-        // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
-        if (dropHeldItems && hands != null)
-        {
-            var ev = new DropHandItemsEvent();
-            RaiseLocalEvent(uid, ref ev, false);
-        }
-
         if (!force)
         {
             var msg = new DownAttemptEvent();
@@ -243,22 +233,8 @@ public sealed class DownedEvent : EntityEventArgs, IInventoryRelayEvent
 }
 
 /// <summary>
-/// Raised after an entity falls down.
-/// </summary>
-public sealed class FellDownEvent : EntityEventArgs
-{
-    public EntityUid Uid { get; }
-
-    public FellDownEvent(EntityUid uid)
-    {
-        Uid = uid;
-    }
-}
-
-/// <summary>
-/// Raised on the entity being thrown due to the holder falling down.
+/// Raised on an inhand entity being held by an entity who is dropping items as part of an attempted state change to down.
+/// If cancelled the inhand entity will not be dropped.
 /// </summary>
 [ByRefEvent]
 public record struct FellDownThrowAttemptEvent(EntityUid Thrower, bool Cancelled = false);
-
-

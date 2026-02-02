@@ -15,25 +15,20 @@
   standsout: true
   physicalDesc: reagent-physical-desc-ferrous
   metabolisms:
-    Drink:
+    Digestion:
+      metabolites:
+        UncookedAnimalProteins: 0.2
       effects:
       - !type:SatiateThirst
         factor: 1.0
         conditions:
-          - !type:OrganType
-            type: Human
-            shouldHave: false
-    Food:
-      effects:
-        - !type:AdjustReagent
-          reagent: UncookedAnimalProteins
-          amount: 0.1
-    Medicine:
-      effects:
+          - !type:MetabolizerTypeCondition
+            type: [ Human ]
+            inverted: true
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Bloodsucker
+        - !type:MetabolizerTypeCondition
+          type: [ Bloodsucker ]
         damage:
           groups:
             Brute: -3
@@ -71,11 +66,20 @@
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
-    Food:
+    Digestion:
       # Delicious!
       effects:
       - !type:SatiateHunger
         factor: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Slime]
+          inverted: true
+      - !type:ModifyBloodLevel
+        amount: 0.5 # drawing 15u removes 5% blood level from a slimeperson, this will add 5% when injecting 15u
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Slime]
   footstepSound:
     collection: FootstepSlime # makes sense
     params:
@@ -94,7 +98,7 @@
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
-    Food:
+    Digestion:
       # Sweet!
       effects:
       - !type:SatiateHunger
@@ -137,18 +141,18 @@
   flavor: bitter
   color: "#2b0700"
   metabolisms:
-    Drink:
+    Digestion:
       # Disgusting!
       effects:
       - !type:SatiateThirst
         factor: -0.5
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
           types:
             Poison: 4
-      - !type:ChemVomit
+      - !type:Vomit
         probability: 0.25
 
 - type: reagent
@@ -161,22 +165,23 @@
   color: "#f4692e"
   recognizable: true
   metabolisms:
-    Drink:
+    Digestion:
       effects:
       - !type:SatiateThirst
         factor: 1.5
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
       - !type:ModifyBloodLevel
         amount: 3
+      - !type:EvenHealthChange
+        damage:
+          Burn: -3
+          Brute: -3
+          Toxin: -2
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -5
-            Brute: -5
-            Toxin: -2
           types:
-            Bloodloss: -5
-      - !type:ModifyBleedAmount
+            Bloodloss: -3
+      - !type:ModifyBleed
         amount: -1.5
   # Just in case you REALLY want to water your plants
   plantMetabolism:
@@ -212,13 +217,12 @@
     requiredSlipSpeed: 4.0 #It's not as slippery as water
   friction: 0.4
   metabolisms:
-    Drink:
+    Digestion:
+      metabolites:
+        Nutriment: 0.1
       effects:
       - !type:SatiateThirst
         factor: 0.5
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.1
   footstepSound:
     collection: FootstepBlood
     params:
@@ -233,12 +237,10 @@
   flavor: mindful
   color: "#C584B8"
   metabolisms:
-    Drink:
+    Digestion:
       effects:
       - !type:SatiateHunger
         factor: 1.5
-    Poison:
-      effects:
       - !type:HealthChange
         damage:
           types:

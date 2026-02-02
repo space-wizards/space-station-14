@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/harmonyn/-tg-station/blob/11043a07f6136d3d196b0378c31deb3dc1a9532f/icons/obj/clothing/masks.dmi. Reptilian edit by Nairod(Github).Vox edit by foboscheshir (github)", 
+  "copyright": "Taken from tgstation at commit https://github.com/harmonyn/-tg-station/blob/11043a07f6136d3d196b0378c31deb3dc1a9532f/icons/obj/clothing/masks.dmi. Reptilian edit by Nairod(Github).Vox edit by foboscheshir (github) | vulpkanin version taken from Paradise station at https://github.com/ParadiseSS13/Paradise/commit/f0fa4e1fd809482fbc104a310aa34cebf7df157d edited by Floofers",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vulpkanin",
       "directions": 4
     },
     {

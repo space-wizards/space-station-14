@@ -5,7 +5,7 @@
                 <BoxContainer Orientation="Vertical" Name="Notes" Access="Public" VerticalExpand="True"/>
             </ScrollContainer>
             <Button Name="ShowMoreButton" Text="{Loc admin-notes-show-more}" Visible="False" HorizontalAlignment="Center" />
-            <Button Name="NewNoteButton" Text="{Loc admin-notes-new-note}" Disabled="True" />
+            <Button Name="NewNoteButton" Access="Public" Text="{Loc admin-notes-new-note}" Disabled="True" />
         </BoxContainer>
     </PanelContainer>
 </Control>

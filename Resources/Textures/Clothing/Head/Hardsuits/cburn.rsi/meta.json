@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by EmoGarbage404. Vox states by Flareguy for SS14",
+  "copyright": "Made by EmoGarbage404. Vox states by Flareguy for SS14. Reptilian states by TiniestShark (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -33,6 +33,14 @@
     },
     {
       "name": "equipped-head-unshaded-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-unshaded-reptilian",
       "directions": 4
     }
   ]

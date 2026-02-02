@@ -30,7 +30,7 @@ namespace Content.Client.Cargo.UI
 
         public void SetOrders(SpriteSystem sprites, IPrototypeManager protoManager, List<CargoOrderData> orders)
         {
-            Orders.DisposeAllChildren();
+            Orders.RemoveAllChildren();
 
             foreach (var order in orders)
             {

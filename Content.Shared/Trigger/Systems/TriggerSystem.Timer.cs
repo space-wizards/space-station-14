@@ -168,7 +168,8 @@ public sealed partial class TriggerSystem
 
             if (timer.NextTrigger <= curTime)
             {
-                Trigger(uid, timer.User, timer.KeyOut);
+                var user = TerminatingOrDeleted(timer.User) ? null : timer.User;
+                Trigger(uid, user, timer.KeyOut);
                 // Remove after triggering to prevent it from starting the timer again
                 RemComp<ActiveTimerTriggerComponent>(uid);
                 if (TryComp<AppearanceComponent>(uid, out var appearance))

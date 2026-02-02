@@ -6,9 +6,14 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: StationAiWhitelist
   - type: InteractionOutline
   - type: Sprite
+    snapCardinals: true
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
     layers:
     - state: closed
@@ -37,6 +42,10 @@
       shader: unshaded
       visible: false
       map: ["enum.ElectrifiedLayers.Sparks"]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
