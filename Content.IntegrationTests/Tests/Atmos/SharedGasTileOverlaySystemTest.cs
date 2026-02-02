@@ -26,15 +26,12 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
         var sOverlay = Server.System<GasTileOverlaySystem>();
         var sMapSys = Server.System<SharedMapSystem>();
 
-        var mapId = sMapSys.GetAllMapIds().First(m => m != MapId.Nullspace);
+        var gridComp = ProcessEnt.Comp3;
+        var gridNetEnt = Server.EntMan.GetNetEntity(ProcessEnt);
 
-        var gridComp = sMapManager.GetAllMapGrids(mapId).First();
-        var gridEnt = gridComp.Owner;
-        var gridNetEnt = Server.EntMan.GetNetEntity(gridEnt);
-
-        var gridCoords = new EntityCoordinates(gridEnt, Vector2.Zero);
-        var tileIndices = sMapSys.TileIndicesFor(gridEnt, gridComp, gridCoords);
-        var mixture = SAtmos.GetTileMixture(gridEnt, null, tileIndices, true);
+        var gridCoords = new EntityCoordinates(ProcessEnt, Vector2.Zero);
+        var tileIndices = sMapSys.TileIndicesFor(ProcessEnt, gridComp, gridCoords);
+        var mixture = SAtmos.GetTileMixture(ProcessEnt, null, tileIndices, true);
 
         // Get data for client side.
         var cGridEnt = CEntMan.GetEntity(gridNetEnt);
@@ -42,29 +39,30 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
             "Client grid is missing GasTileOverlayComponent");
 
         // Check if the server actually sent the gas chunks
+        Assert.That(cOverlay, Is.Not.Null, "Gas overlay is null on the client.");
         Assert.That(cOverlay.Chunks, Is.Not.Empty, "Gas overlay chunks are empty on the client.");
 
         //Start real tests
-        await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 400f);
+        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, 400f);
 
         await CheckForInjectedGas(cOverlay, tileIndices, 400f);
 
-        await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 803f); // Rounding test
+        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, 800f + ThermalByte.TempDegreeResolution - 1); // Rounding test
 
         await CheckForInjectedGas(cOverlay, tileIndices, 800f);
 
-        await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 1200f); // This one hits max temperature
+        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, ThermalByte.TempMaximum + 200f); // This one hits max temperature
 
         await CheckForInjectedGas(cOverlay, tileIndices, ThermalByte.TempMaximum);
 
-        await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 0);
-        await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 7); // Test the networking optimisation, this should not be networked yet 
+        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum);
+        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum + (ThermalByte.TempDegreeResolution * 2) - 1); // Test the networking optimisation, this should not be networked yet 
 
-        await CheckForInjectedGas(cOverlay, tileIndices, 0);
+        await CheckForInjectedGas(cOverlay, tileIndices, ThermalByte.TempMinimum);
 
-        await InjectHotPlasma(sOverlay, gridEnt, tileIndices, mixture, 10); // This should
+        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum + (ThermalByte.TempDegreeResolution * 2)); // This should
 
-        await CheckForInjectedGas(cOverlay, tileIndices, 8); // 10 is rounded down to 8
+        await CheckForInjectedGas(cOverlay, tileIndices, ThermalByte.TempMinimum + (ThermalByte.TempDegreeResolution * 2));
     }
 
     private async Task CheckForInjectedGas(GasTileOverlayComponent overlay, Vector2i indices, float expectedTemp)
@@ -72,7 +70,9 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
         await Client.WaitPost(() =>
         {
             var chunkIndices = SharedGasTileOverlaySystem.GetGasChunkIndices(indices);
+
             Assert.That(overlay.Chunks.TryGetValue(chunkIndices, out var chunk), "Chunk not found");
+            Assert.That(chunk, Is.Not.Null, "Chunk not found");
 
             // Calculate the exact index in the TileData array
             var localX = MathHelper.Mod(indices.X, SharedGasTileOverlaySystem.ChunkSize);
@@ -82,7 +82,7 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
             var tile = chunk.TileData[tileIndex];
             tile.ByteGasTemperature.TryGetTemperature(out var actualTemp);
 
-            Assert.That(actualTemp == expectedTemp, $"Tile at {indices} had wrong temperature!");
+            Assert.That(actualTemp, Is.EqualTo(expectedTemp).Within(0.01f), $"Tile at {indices} had wrong temperature!");
         });
     }
 
