@@ -1,11 +1,11 @@
 ﻿<Document>
-  # Core Rule 5 - No sharing current round information
+  # Core Rule 5 - Do not share current round info beyond the game
   [color=SlateGray][italic]Revision A, 2025-10-11[/italic][/color]
 
-  This is a zero-tolerance rule. You must wait for the round to end before sharing round information beyond the game.
+  This is a zero-tolerance rule. You must wait for the round end summary or lobby before sharing round info beyond the game.
 
-  ## Broadcasting
-  When broadcasting a round through a stream or call, you must kick and ahelp others playing in the same round, as well as hide or delete current round information shared by others. Using a stream delay to reduce current round information leaks is highly recommended.
+  ## Live streams and voice calls
+  Hosts of live streams and voice calls must kick and report attendees who connect to the same current round as them. Hosts must also remove round info shared by connected attendees on their platform. (Hosts are recommended to use a stream delay to reduce current round info leaks and stream sniping.)
 
-  Do not view a stream or listen to a call while connected to the same round.
+  Attendees must not connect to the same current round as the host.
 </Document>
