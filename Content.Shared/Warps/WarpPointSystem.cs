@@ -9,10 +9,10 @@ public sealed class WarpPointSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<WarpPointComponent, ExaminedEvent>(OnWarpPointExamine);
-        SubscribeLocalEvent<WarpPointComponent, ComponentStartup>(OnStartUp);
+        SubscribeLocalEvent<WarpPointComponent, MapInitEvent>(OnStartUp);
     }
 
-    private void OnStartUp(Entity<WarpPointComponent> ent, ref ComponentStartup args)
+    private void OnStartUp(Entity<WarpPointComponent> ent, ref MapInitEvent args)
     {
         if (!string.IsNullOrEmpty(ent.Comp.Location) && Loc.TryGetString(ent.Comp.Location, out var locloc))
             ent.Comp.Location = locloc;
