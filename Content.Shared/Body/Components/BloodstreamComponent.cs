@@ -157,7 +157,7 @@ public sealed partial class BloodstreamComponent : Component
     /// Caches the blood data of an entity.
     /// This is modified by DNA on init so it's not savable.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public List<ReagentData>? BloodData;
 
     /// <summary>
@@ -181,7 +181,7 @@ public sealed partial class BloodstreamComponent : Component
     /// <summary>
     /// Internal solution for blood storage
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public Entity<SolutionComponent>? BloodSolution;
 
     /// <summary>
