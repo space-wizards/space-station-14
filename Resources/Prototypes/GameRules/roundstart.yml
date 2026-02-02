@@ -34,9 +34,9 @@
   - type: SubGamemodes
     rules:
     - id: Thief
-      prob: 0
+      prob: 0.5
     - id: SubXenoborgs
-      prob: 1
+      prob: 0.05
 
 - type: entity
   parent: BaseGameRule
