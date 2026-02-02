@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PicklOH, Archee
-  changes:
-  - message: Nukie Operative, Corpsman, and Commander now have unique PDAs with unique
-      IDs that can copy accesses.
-    type: Add
-  id: 8974
-  time: '2025-09-18T00:15:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37304
 - author: Kittygyat
   changes:
   - message: Updated the weapon cyborg model's uplink description to be correct
@@ -3998,3 +3990,11 @@
   id: 9480
   time: '2026-02-01T18:12:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41108
+- author: Quantum-cross
+  changes:
+  - message: Anomalies will no longer spawn multiple things on the same tile (asteroid
+      wall, etc)
+    type: Fix
+  id: 9481
+  time: '2026-02-02T12:35:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37833
