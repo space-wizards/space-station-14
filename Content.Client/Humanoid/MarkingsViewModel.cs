@@ -98,7 +98,7 @@ public sealed class MarkingsViewModel
                 kvp => kvp.Key,
                 kvp => kvp.Value.ToDictionary(
                     it => it.Key,
-                    it => it.Value.Select(marking => new Marking(marking)).ToList()));
+                    it => it.Value.ShallowClone()));
 
             MarkingsReset?.Invoke();
         }
@@ -202,8 +202,7 @@ public sealed class MarkingsViewModel
 
         var colors = _previousColors.GetValueOrDefault(markingId) ??
                      MarkingColoring.GetMarkingLayerColors(markingProto, profileData.SkinColor, profileData.EyeColor, layerMarkings);
-        var newMarking = new Marking(markingId, colors);
-        newMarking.Forced = AnyEnforcementsLifted;
+        var newMarking = new Marking(markingId, colors) { Forced = AnyEnforcementsLifted };
 
         var limits = groupPrototype.Limits.GetValueOrDefault(layer);
         if (limits is null || !EnforceLimits)
@@ -292,10 +291,10 @@ public sealed class MarkingsViewModel
         if (!markingSet.TryGetValue(layer, out var markings))
             return;
 
-        if (markings.FirstOrDefault(it => it.MarkingId == markingId) is not { } marking)
+        if (markings.FindIndex(it => it.MarkingId == markingId) is var markingIdx && markingIdx >= 0)
             return;
 
-        marking.SetColor(colorIndex, color);
+        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, color);
         MarkingsChanged?.Invoke(organ, layer);
     }
 
