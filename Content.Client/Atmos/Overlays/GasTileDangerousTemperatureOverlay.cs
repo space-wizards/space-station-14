@@ -37,7 +37,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
     public GasTileDangerousTemperatureOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _xformSys = _entManager.System<SharedTransformSystem>(); 
+        _xformSys = _entManager.System<SharedTransformSystem>();
 
         _overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 

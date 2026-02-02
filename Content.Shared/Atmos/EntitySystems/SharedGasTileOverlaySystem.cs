@@ -218,7 +218,7 @@ public struct ThermalByte : IEquatable<ThermalByte>
             return false;
         }
 
-        temperature = (_coreValue * TempToByteFactor) + TempMinimum;
+        temperature = (_coreValue * TempDegreeResolution) + TempMinimum;
         return true;
     }
 
