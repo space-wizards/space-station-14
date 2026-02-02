@@ -181,7 +181,7 @@ public sealed partial class BloodstreamComponent : Component
     /// <summary>
     /// Internal solution for blood storage
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public Entity<SolutionComponent>? BloodSolution;
 
     /// <summary>
