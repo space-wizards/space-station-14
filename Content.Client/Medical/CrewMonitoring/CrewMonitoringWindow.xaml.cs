@@ -103,17 +103,17 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var assignedSensors = new HashSet<SuitSensorStatus>();
         var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n).ToArray();
 
-        var weh = new List<DepartmentPrototype>();
-        var wew = new List<string>();
-        foreach (var deps in departments)
+        var sortableDeparts = new List<DepartmentPrototype>();
+        var otherDeparts = new List<string>();
+        foreach (var department in departments)
         {
-            if (_prototypeManager.TryIndex<DepartmentPrototype>(deps, out var hew))
-                weh.Add(hew);
+            if (_prototypeManager.TryIndex<DepartmentPrototype>(department, out var hew))
+                sortableDeparts.Add(hew);
             else
-                wew.Add(deps);
+                otherDeparts.Add(department);
         }
-        weh.Sort(DepartmentUIComparer.Instance);
-        departments = [.. weh.Select(x => x.ID), .. wew];
+        sortableDeparts.Sort(DepartmentUIComparer.Instance);
+        departments = [.. sortableDeparts.Select(x => x.ID), .. otherDeparts];
 
         // Create department labels and populate lists
         foreach (var department in departments)
@@ -184,19 +184,22 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
     private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors)
     {
-        // Populate departments
+        // Sorts sensors by role weight
+        // Double foreach yahooooo
 
-        var weh = new Dictionary<JobPrototype, SuitSensorStatus>();
-        var wew = new List<SuitSensorStatus>();
-        foreach (var deps in departmentSensors)
+        var sortableSensors = new Dictionary<JobPrototype, SuitSensorStatus>();
+        var otherSensors = new List<SuitSensorStatus>();
+        foreach (var sensor in departmentSensors)
         {
-            if (_prototypeManager.TryIndex<JobPrototype>(deps.Job, out var hew))
-                weh.Add(hew, deps);
+            if (_prototypeManager.TryIndex<JobPrototype>(sensor.Job, out var hew))
+                sortableSensors.Add(hew, sensor);
             else
-                wew.Add(deps);
+                otherSensors.Add(sensor);
         }
-        var fuck = weh.OrderBy(kv => kv.Key, JobUIComparer.Instance).Select(kv => kv.Value).ToList();
-        departmentSensors = [.. fuck, .. wew];
+        var fuck = sortableSensors.OrderBy(kv => kv.Key, JobUIComparer.Instance).Select(kv => kv.Value).ToList();
+        departmentSensors = [.. fuck, .. otherSensors];
+
+        // Populate departments
 
         foreach (var sensor in departmentSensors)
         {
