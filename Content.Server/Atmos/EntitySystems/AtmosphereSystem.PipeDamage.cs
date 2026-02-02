@@ -61,14 +61,14 @@ public sealed partial class AtmosphereSystem
             if (IsTileAirBlockedCached(xformGridUid, coords))
                 continue;
 
+            if (!_damageableQuery.TryComp(pipe.Owner, out var damage))
+                return;
+
             // Prefer damaging pipes that are already damaged. This means that only one pipe
             // fails instead of the whole pipenet bursting at the same time.
             const float baseChance = 0.5f;
             var p = baseChance;
-            if (TryComp<DamageableComponent>(pipe.Owner, out var damage))
-            {
-                p += (float)damage.TotalDamage * (1 - baseChance);
-            }
+            p += (float)damage.TotalDamage * (1 - baseChance);
 
             var finalChance = Math.Clamp(1-p, 0f, 1f);
             if (_random.Prob(finalChance))

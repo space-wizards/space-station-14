@@ -92,7 +92,6 @@ public class PipeBurstingBenchmark
 
                     if (y == midY)
                     {
-                        // TODO ATMOS: these pipes arent connecting for w/e reason debug that later
                         _entMan.SpawnEntity(_gasPipe, coords);
                     }
                 }
