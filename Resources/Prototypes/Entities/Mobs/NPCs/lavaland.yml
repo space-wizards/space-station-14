@@ -50,7 +50,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 5
     baseSprintSpeed: 7
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: WatcherBolt
     fireCost: 50
   - type: BatterySelfRecharger
@@ -70,8 +70,6 @@
     successChance: 0.3
     interactSuccessString: petting-success-slimes
     interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/lizard_happy.ogg
 
 - type: entity
   id: MobWatcherLavaland
@@ -125,7 +123,7 @@
     radius: 1
     energy: 3
     color: orangered
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: WatcherBoltMagmawing
     fireCost: 50
 

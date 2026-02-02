@@ -47,7 +47,7 @@
     - type: Tag
       tags:
         - FootstepSound
-    - type: HitscanBatteryAmmoProvider
+    - type: BatteryAmmoProvider
       proto: RedLightLaser
       fireCost: 50
     - type: BatterySelfRecharger
@@ -67,8 +67,6 @@
       successChance: 0.3
       interactSuccessString: petting-success-reptile
       interactFailureString: petting-failure-generic
-      interactSuccessSound:
-        path: /Audio/Animals/lizard_happy.ogg
 
 - type: entity
   id: MobTomatoKiller
@@ -132,6 +130,9 @@
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item
+    size: Large
+    shape:
+    - 0,0,2,2
   - type: MultiHandedItem
   - type: NpcFactionMember
     factions:
@@ -142,7 +143,7 @@
   - type: NPCImprintingOnSpawnBehaviour
     whitelist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
   - type: Sprite
     sprite: Mobs/Demons/tomatokiller.rsi
     noRot: true
@@ -150,9 +151,10 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
   - type: Bloodstream
-    bloodReagent: JuiceTomato
-    bloodMaxVolume: 50
-    chemicalMaxVolume: 30
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: JuiceTomato
+        Quantity: 50
   - type: DamageStateVisuals
     states:
       Alive:

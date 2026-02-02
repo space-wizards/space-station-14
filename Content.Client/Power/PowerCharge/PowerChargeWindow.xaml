@@ -1,4 +1,4 @@
-﻿<controls:FancyWindow
+<controls:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     MinSize="320 180"
@@ -76,7 +76,7 @@
             </GridContainer>
         </BoxContainer>
         <PanelContainer
-            StyleClasses="Inset"
+            StyleClasses="BackgroundPanelDark"
             VerticalAlignment="Top">
 
             <SpriteView Name="EntityView"

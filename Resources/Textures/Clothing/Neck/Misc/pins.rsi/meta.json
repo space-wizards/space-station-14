@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Aromantic, asexual, bisexual, intersex, lesbian, lgbt, non-binary, pansexual and transgender pins by PixelTK, gay pin by BackeTako, autism pins by Terraspark, omnisexual pin by juliangiebel, genderqueer and genderfluid by centcomofficer24, ally by FairlySadPanda, aroace by momochitters, plural by CubixThree",
+  "copyright": "Aromantic, asexual, bisexual, intersex, lesbian, lgbt, non-binary, pansexual and transgender pins by PixelTK, gay pin by BackeTako, autism pins by Terraspark, omnisexual pin by juliangiebel, genderqueer and genderfluid by centcomofficer24, ally by FairlySadPanda, aroace by momochitters, plural by CubixThree, flower by toast_enjoyer1 (Discord)",
   "size": {
     "x": 32,
     "y": 32
@@ -131,6 +131,13 @@
         },
         {
             "name": "fluid-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "flower"
+        },
+        {
+            "name": "flower-equipped-NECK",
             "directions": 4
         }
     ]

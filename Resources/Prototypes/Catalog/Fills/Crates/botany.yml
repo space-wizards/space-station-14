@@ -1,105 +1,114 @@
 - type: entity
-  id: CrateHydroponicsSeedsExotic
   parent: CrateHydroSecure
+  id: CrateHydroponicsSeedsExotic
   name: exotic seeds crate
   description: Any entrepreneuring botanist's dream. Contains many different exotic seeds. Requires Hydroponics access to open.
   components:
-  - type: StorageFill
-    contents:
-      - id: EggySeeds
-        amount: 2
-      - id: TowercapSeeds
-        amount: 2
-      - id: TobaccoSeeds
-        amount: 2
-      - id: CannabisSeeds
-        amount: 2
-      - id: NettleSeeds
-        amount: 2
-      - id: FlyAmanitaSeeds
-        amount: 2
-      - id: BungoSeeds
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: EggySeeds
+          amount: 2
+        - id: TowercapSeeds
+          amount: 2
+        - id: TobaccoSeeds
+          amount: 2
+        - id: CannabisSeeds
+          amount: 2
+        - id: NettleSeeds
+          amount: 2
+        - id: FlyAmanitaSeeds
+          amount: 2
+        - id: BungoSeeds
+          amount: 2
 
 - type: entity
-  id: CrateHydroponicsSeedsMedicinal
   parent: CrateHydroSecure
+  id: CrateHydroponicsSeedsMedicinal
   name: medicinal seeds crate
   description: The wannabe chemist's dream. The power of medicine is at your fingertips! Requires Hydroponics access to open.
   components:
-  - type: StorageFill
-    contents:
-      - id: AloeSeeds
-        amount: 3
-      - id: AmbrosiaVulgarisSeeds
-        amount: 3
-      - id: GalaxythistleSeeds
-        amount: 3
-      - id: LingzhiSeeds
-        amount: 3
-      - id: PoppySeeds
-        amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: AloeSeeds
+          amount: 3
+        - id: AmbrosiaVulgarisSeeds
+          amount: 3
+        - id: GalaxythistleSeeds
+          amount: 3
+        - id: LingzhiSeeds
+          amount: 3
+        - id: PoppySeeds
+          amount: 3
 
 - type: entity
-  id: CrateHydroponicsTools
   parent: CrateHydroponics
+  id: CrateHydroponicsTools
   name: hydroponics equipment crate
   description: Supplies for growing a great garden! Contains some spray bottles of plant chemicals, a hatchet, a mini-hoe, scythe, as well as a pair of leather gloves and a botanist's apron.
   components:
-  - type: StorageFill
-    contents:
-      - id: HydroponicsToolMiniHoe
-      - id: PlantBGoneSpray
-      - id: WeedSpray
-      - id: PestSpray
-      - id: HydroponicsToolClippers
-      - id: HydroponicsToolScythe
-      - id: HydroponicsToolSpade
-      - id: HydroponicsToolHatchet
-      - id: ClothingOuterApronBotanist
-      - id: ClothingHandsGlovesLeather
-      - id: ChemistryBottleEZNutrient
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: HydroponicsToolMiniHoe
+        - id: PlantBGoneSpray
+        - id: WeedSpray
+        - id: PestSpray
+        - id: HydroponicsToolClippers
+        - id: HydroponicsToolScythe
+        - id: HydroponicsToolSpade
+        - id: HydroponicsToolHatchet
+        - id: ClothingOuterApronBotanist
+        - id: ClothingHandsGlovesLeather
+        - id: ChemistryBottleEZNutrient
+          amount: 2
 
 - type: entity
-  id: CrateHydroponicsSeeds
   parent: CrateHydroponics
+  id: CrateHydroponicsSeeds
   name: seeds crate
   description: Big things have small beginnings. Contains twenty-four different seeds.
   components:
-  - type: StorageFill
-    contents:
-      - id: ChiliSeeds
-      - id: CornSeeds
-      - id: EggplantSeeds
-      - id: TomatoSeeds
-      - id: WheatSeeds
-      - id: CarrotSeeds
-      - id: CabbageSeeds
-      - id: GarlicSeeds
-      - id: ChanterelleSeeds
-      - id: PotatoSeeds
-      - id: SugarcaneSeeds
-      - id: LemonSeeds
-      - id: LimeSeeds
-      - id: OrangeSeeds
-      - id: OatSeeds
-      - id: OnionSeeds
-      - id: OnionRedSeeds
-      - id: RiceSeeds
-      - id: SoybeanSeeds
-      - id: GrapeSeeds
-      - id: WatermelonSeeds
-      - id: PeaSeeds
-      - id: CherrySeeds
-      - id: CottonSeeds
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ChiliSeeds
+        - id: CornSeeds
+        - id: EggplantSeeds
+        - id: TomatoSeeds
+        - id: WheatSeeds
+        - id: CarrotSeeds
+        - id: CabbageSeeds
+        - id: GarlicSeeds
+        - id: ChanterelleSeeds
+        - id: PotatoSeeds
+        - id: SugarcaneSeeds
+        - id: LemonSeeds
+        - id: LimeSeeds
+        - id: OrangeSeeds
+        - id: OatSeeds
+        - id: OnionSeeds
+        - id: OnionRedSeeds
+        - id: RiceSeeds
+        - id: SoybeanSeeds
+        - id: GrapeSeeds
+        - id: WatermelonSeeds
+        - id: PeaSeeds
+        - id: CherrySeeds
+        - id: CottonSeeds
 
 - type: entity
-  id: CrateHydroponicsTray
   parent: CrateHydroponics
+  id: CrateHydroponicsTray
   name: hydroponics tray crate
   description: Contains a hydroponics tray flatpack.
   components:
-  - type: StorageFill
-    contents:
-    - id: HydroponicsTrayFlatpack
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: HydroponicsTrayFlatpack
