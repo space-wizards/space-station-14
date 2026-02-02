@@ -101,20 +101,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         // Order sensor data
         var orderedSensors = uniqueSensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
         var assignedSensors = new HashSet<SuitSensorStatus>();
-        var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n).ToArray();
+        var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct();
 
-        // Sorts departaments by proto weight
-        var sortableDeparts = new List<DepartmentPrototype>();
-        var otherDeparts = new List<string>();
-        foreach (var department in departments)
-        {
-            if (_prototypeManager.TryIndex<DepartmentPrototype>(department, out var hew))
-                sortableDeparts.Add(hew);
-            else
-                otherDeparts.Add(department);
-        }
-        sortableDeparts.Sort(DepartmentUIComparer.Instance);
-        departments = [.. sortableDeparts.Select(x => x.ID), .. otherDeparts];
+        // Sorts departments by prototype weight
+        Array.Sort([.. departments.Select(x => _prototypeManager.Index(x))], DepartmentUIComparer.Instance);
 
         // Create department labels and populate lists
         foreach (var department in departments)
@@ -188,17 +178,12 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         // Sorts sensors by role weight
         // Double foreach yahooooo
 
-        var sortableSensors = new Dictionary<JobPrototype, SuitSensorStatus>();
-        var otherSensors = new List<SuitSensorStatus>();
+        var jobSensors = new Dictionary<JobPrototype, SuitSensorStatus>();
+
         foreach (var sensor in departmentSensors)
-        {
-            if (_prototypeManager.TryIndex<JobPrototype>(sensor.Job, out var hew))
-                sortableSensors.Add(hew, sensor);
-            else
-                otherSensors.Add(sensor);
-        }
-        var fuck = sortableSensors.OrderBy(kv => kv.Key, JobUIComparer.Instance).Select(kv => kv.Value).ToList();
-        departmentSensors = [.. fuck, .. otherSensors];
+            jobSensors.Add(_prototypeManager.Index(sensor.Job), sensor);
+
+        departmentSensors = [.. jobSensors.OrderBy(kv => kv.Key, JobUIComparer.Instance).Select(kv => kv.Value)];
 
         // Populate departments
 
