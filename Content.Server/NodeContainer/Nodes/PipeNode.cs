@@ -121,7 +121,8 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         /// <example>If the tile is air-blocked and the factor is set to 5,
         /// then the MaxPressure is 5 times higher.</example>
-        public float AirBlockedMaxPressureIncreaseFactor = 0f;
+        [DataField]
+        public float AirBlockedMaxPressureIncreaseFactor;
 
         public override void Initialize(EntityUid owner, IEntityManager entMan)
         {
