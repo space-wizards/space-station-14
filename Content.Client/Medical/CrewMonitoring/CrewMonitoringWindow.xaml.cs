@@ -101,7 +101,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         // Order sensor data
         var orderedSensors = uniqueSensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
         var assignedSensors = new HashSet<SuitSensorStatus>();
-        var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n).ToArray();
+        var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct();
 
         // Sorts departaments by proto weight
         var sortableDeparts = new List<DepartmentPrototype>();
@@ -152,7 +152,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         }
 
         // Account for any non-station users
-        var remainingSensors = orderedSensors.Except(assignedSensors).ToList();
+        var remainingSensors = orderedSensors.Except(assignedSensors);
 
         if (remainingSensors.Any())
         {
