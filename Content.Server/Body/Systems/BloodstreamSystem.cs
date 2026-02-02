@@ -12,7 +12,6 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
         base.Initialize();
 
         SubscribeLocalEvent<BloodstreamComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
     }
 
     // not sure if we can move this to shared or not
@@ -41,24 +40,5 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
         var solution = entity.Comp.BloodReferenceSolution.Clone();
         solution.ScaleTo(entity.Comp.BloodReferenceSolution.Volume - bloodSolution.Volume);
         bloodSolution.AddSolution(solution, PrototypeManager);
-    }
-
-    // forensics is not predicted yet
-    private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
-    {
-        if (SolutionContainer.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
-        {
-            var data = NewEntityBloodData(entity);
-            entity.Comp.BloodReferenceSolution.SetReagentData(data);
-
-            foreach (var reagent in bloodSolution.Contents)
-            {
-                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
-                reagentData.RemoveAll(x => x is DnaData);
-                reagentData.AddRange(data);
-            }
-        }
-        else
-            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 }

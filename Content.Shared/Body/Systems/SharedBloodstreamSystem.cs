@@ -10,6 +10,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Gibbing;
 using Content.Shared.HealthExaminable;
@@ -55,6 +56,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BloodstreamComponent, MetabolismExclusionEvent>(OnMetabolismExclusion);
+        SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
     }
 
     public override void Update(float frameTime)
@@ -581,6 +583,30 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             return NewEntityBloodData(entity);
 
         return entity.Comp.BloodData ?? NewEntityBloodData(entity);
+    }
+
+    /// <summary>
+    /// Add the generated DNA to the blood of the mob.
+    /// </summary>
+    private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
+    {
+        if (SolutionContainer.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
+        {
+            var data = NewEntityBloodData(entity);
+            entity.Comp.BloodReferenceSolution.SetReagentData(data);
+
+            foreach (var reagent in bloodSolution.Contents)
+            {
+                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
+                // Remove all DNA placeholders.
+                reagentData.RemoveAll(x => x is DnaData);
+                // Add the actual DNA.
+                reagentData.AddRange(data);
+            }
+            Dirty(entity);
+        }
+        else
+            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 
     /// <summary>
