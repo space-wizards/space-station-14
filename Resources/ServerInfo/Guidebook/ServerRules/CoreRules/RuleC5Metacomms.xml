@@ -5,7 +5,7 @@
   This is a zero-tolerance rule. You must wait for the round end summary or lobby before sharing round info beyond the game.
 
   ## Live streams and voice calls
-  Hosts of live streams and voice calls must kick and report attendees who connect to the same current round as them. Hosts must also remove round info shared by connected attendees on their platform. (Hosts are recommended to use a stream delay to reduce current round info leaks and stream sniping.)
+  Hosts of live streams and voice calls must kick and report attendees who connect to the same current round. (Hosts are recommended to use a stream delay to reduce current round info leaks and stream sniping.)
 
-  Attendees must not connect to the same current round as the host.
+  Attendees must not connect to the same current round as the live stream and voice call.
 </Document>
