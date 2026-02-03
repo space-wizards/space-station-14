@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: PicklOH, Archee
-  changes:
-  - message: Nukie Operative, Corpsman, and Commander now have unique PDAs with unique
-      IDs that can copy accesses.
-    type: Add
-  id: 8974
-  time: '2025-09-18T00:15:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37304
-- author: Kittygyat
-  changes:
-  - message: Updated the weapon cyborg model's uplink description to be correct
-    type: Fix
-  id: 8975
-  time: '2025-09-18T00:25:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40429
-- author: Pixel8-dev
-  changes:
-  - message: Fixed stun runes not stunning
-    type: Fix
-  id: 8976
-  time: '2025-09-18T02:37:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40432
-- author: sowelipililimute
-  changes:
-  - message: Vulpkanin use the standard hugging emote now
-    type: Tweak
-  id: 8977
-  time: '2025-09-18T17:17:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40183
-- author: vgskye
-  changes:
-  - message: You can now get chemical analysis goggles from a ChemDrobe.
-    type: Add
-  id: 8978
-  time: '2025-09-18T17:35:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40236
 - author: Kittygyat
   changes:
   - message: Snakeskin boots are no longer free, superior no-slips.
@@ -3998,3 +3962,39 @@
   id: 9480
   time: '2026-02-01T18:12:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41108
+- author: Quantum-cross
+  changes:
+  - message: Anomalies will no longer spawn multiple things on the same tile (asteroid
+      wall, etc)
+    type: Fix
+  id: 9481
+  time: '2026-02-02T12:35:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37833
+- author: Samur7
+  changes:
+  - message: Security bio suit now hides tails again.
+    type: Fix
+  id: 9482
+  time: '2026-02-02T16:45:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42748
+- author: sowelipililimute
+  changes:
+  - message: DNA scrambling properly
+    type: Fix
+  id: 9483
+  time: '2026-02-02T23:54:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42757
+- author: sowelipililimute
+  changes:
+  - message: Dragons now heal when eating people again
+    type: Fix
+  id: 9484
+  time: '2026-02-03T00:32:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42758
+- author: sowelipililimute
+  changes:
+  - message: Zombified markings no longer persist between rounds
+    type: Fix
+  id: 9485
+  time: '2026-02-03T03:28:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42756

@@ -485,16 +485,16 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 atmosphere.DeltaPressureCursor = 0;
                 atmosphere.DeltaPressureDamageResults.Clear();
+                _deltaPressureInvalidEntityQueue.Clear();
             }
-
-            var remaining = count - atmosphere.DeltaPressureCursor;
-            var batchSize = Math.Max(50, DeltaPressureParallelProcessPerIteration);
-            var toProcess = Math.Min(batchSize, remaining);
 
             var timeCheck1 = 0;
             while (atmosphere.DeltaPressureCursor < count)
             {
-                var job = new DeltaPressureParallelJob(this,
+                var remaining = count - atmosphere.DeltaPressureCursor;
+                var toProcess = Math.Min(DeltaPressureParallelProcessPerIteration, remaining);
+
+                var job = new DeltaPressureParallelBulkJob(this,
                     atmosphere,
                     atmosphere.DeltaPressureCursor,
                     DeltaPressureParallelBatchSize);
@@ -526,6 +526,13 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     return false;
                 }
+            }
+
+            // Ents may have been invalidated (missing AirtightComp) during parallel processing.
+            // Since we can't touch the ent list during parallel processing, we queue them up here to be removed.
+            while (_deltaPressureInvalidEntityQueue.TryDequeue(out var invalidEnt))
+            {
+                TryRemoveDeltaPressureEntity(ent.AsNullable(), invalidEnt);
             }
 
             return true;
