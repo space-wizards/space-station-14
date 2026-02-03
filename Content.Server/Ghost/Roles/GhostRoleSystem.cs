@@ -6,7 +6,6 @@ using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
-using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
 using Content.Shared.Administration;
@@ -27,8 +26,6 @@ using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
-using NetCord;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
@@ -58,12 +55,11 @@ public sealed class GhostRoleSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
-    [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SubmissionObjectiveSystem _submissionObjective = default!;
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
@@ -633,25 +629,8 @@ public sealed class GhostRoleSystem : EntitySystem
 
         if (role.Minion)
         {
-            MakeMinion(mob, newMind, role.Master, role.MinionHumilityObjective);
+            _submissionObjective.MakeMinion(mob, newMind, role.Master, role.MinionSubmissionObjective);
         }
-    }
-
-    private bool MakeMinion(EntityUid player, Entity<MindComponent> mindUid, EntityUid? masterUid, EntProtoId objective)
-    {
-        if (masterUid == null)
-            return false;
-
-        var targetComp = EnsureComp<TargetOverrideComponent>(player);
-        _mindSystem.TryGetMind(masterUid.Value, out var masterMind, out var _);
-        targetComp.Target = masterMind;
-        if (_mindSystem.TryAddObjective(mindUid, mindUid.Comp, objective))
-        {
-            _antag.SendBriefing(player, Loc.GetString("objective-condition-minion-humility", ("targetName", masterMind)), null, null);
-            return true;
-        }
-
-        return false;
     }
 
     /// <summary>
@@ -958,11 +937,6 @@ public sealed class GhostRoleSystem : EntitySystem
         }
 
         SetMode(entity.Owner, ghostRoleProto, ghostRoleProto.Name, entity.Comp);
-
-        var master = _ent.GetEntity(args.Initiator);
-
-        if (master != null)
-            SetMaster(entity.Owner, master.Value);
     }
 }
 

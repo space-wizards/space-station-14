@@ -74,9 +74,6 @@ public sealed partial class GhostRoleComponent : Component
     public ProtoId<AntagLoadoutPrototype>? AntagLoadoutPrototype;
 
     [DataField]
-    public EntProtoId MinionHumilityObjective { get; set; } = "MinionHumilityObjective";
-
-    [DataField]
     public bool AllowSpeech { get; set; } = true;
 
     [DataField]
@@ -99,6 +96,12 @@ public sealed partial class GhostRoleComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Master { get; set; }
+
+    /// <summary>
+    /// The objective of submission
+    /// </summary>
+    [DataField]
+    public EntProtoId MinionSubmissionObjective { get; set; } = "MinionSubmissionObjective";
 
     /// <summary>
     /// Reregisters the ghost role when the current player ghosts.

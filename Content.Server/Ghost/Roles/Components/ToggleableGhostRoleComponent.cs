@@ -1,3 +1,4 @@
+using Content.Shared.Antag;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -52,10 +53,28 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     public string RoleRules = string.Empty;
 
     /// <summary>
-    /// A list of mind roles that will be added to the entity's mind
+    /// If not null, the player will become the antagonist
+    /// </summary>
+    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
+    public ProtoId<AntagLoadoutPrototype>? AntagLoadoutPrototype;
+
+    /// <summary>
+    /// If true, adds a goal with the obedience of a specific player. The owner is selected by other components
     /// </summary>
     [DataField]
-    public List<EntProtoId> MindRoles;
+    public bool Minion = false;
+
+    /// <summary>
+    /// Master of the minion.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public EntityUid? Master { get; set; }
+
+    /// <summary>
+    /// The objective of submission
+    /// </summary>
+    [DataField]
+    public EntProtoId MinionSubmissionObjective { get; set; } = "MinionSubmissionObjective";
 
     /// <summary>
     /// The displayed name of the verb to wipe the controlling player

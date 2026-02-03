@@ -62,3 +62,11 @@
     - Syndicate
   mindRoles:
   - MindRoleLoneops
+
+- type: antagLoadout
+  id: NuclearOperativeReinforcement
+  mindRoles:
+  - MindRoleSyndicateReinforcement
+  briefing:
+    text: roles-antag-nuclear-operative-reinforcement-objective
+    sound: /Audio/Ambience/Antag/nukeops_start.ogg

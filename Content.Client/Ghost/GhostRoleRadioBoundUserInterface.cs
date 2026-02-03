@@ -1,7 +1,6 @@
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Ghost.Roles.Components;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
@@ -10,8 +9,6 @@ namespace Content.Client.Ghost;
 public sealed class GhostRoleRadioBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
 
     private SimpleRadialMenu? _ghostRoleRadioMenu;
 
@@ -60,7 +57,6 @@ public sealed class GhostRoleRadioBoundUserInterface(EntityUid owner, Enum uiKey
 
     private void SendGhostRoleRadioMessage(ProtoId<GhostRolePrototype> protoId)
     {
-        var initiator = _playerManager.LocalSession?.AttachedEntity;
-        SendMessage(new GhostRoleRadioMessage(protoId, _entManager.GetNetEntity(initiator)));
+        SendMessage(new GhostRoleRadioMessage(protoId));
     }
 }

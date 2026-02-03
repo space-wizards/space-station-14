@@ -42,15 +42,10 @@ using Content.Shared.Temperature.Components;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
-using NetCord;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared.NPC.Prototypes;
-using Content.Shared.Roles;
-using Content.Shared.Temperature.Components;
 using Robust.Shared.Utility;
-using Robust.Shared.Toolshed.TypeParsers;
 using System.Linq;
 
 namespace Content.Server.Zombies;
@@ -79,7 +74,6 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -322,7 +316,7 @@ public sealed partial class ZombieSystem
             ghostRole.RoleName = Loc.GetString("zombie-generic");
             ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
             ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
-            _prototype.Resolve<AntagLoadoutPrototype>(ghostRole.AntagLoadoutPrototype, out var loadout);
+            _protoManager.Resolve<AntagLoadoutPrototype>(ghostRole.AntagLoadoutPrototype, out var loadout);
             if (loadout != null && loadout.MindRoles != null)
             {
                 var newMindRoles = new List<EntProtoId> { MindRoleZombie };

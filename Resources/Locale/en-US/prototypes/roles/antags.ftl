@@ -12,6 +12,8 @@ roles-antag-syndicate-agent-objective = Complete your objectives without being c
 roles-antag-syndicate-agent-sleeper-name = Syndicate sleeper agent
 roles-antag-syndicate-agent-sleeper-objective = A form of syndicate agent that can activate at any point in the middle of the shift.
 
+roles-antag-syndicate-agent-reinforcement-objective = You have been called as a traitor reinforcement. you are to follow their orders to the letter and aid in completing their objectives. You must not jeopardize their mission under any circumstances.
+
 roles-antag-initial-infected-name = Initial Infected
 roles-antag-initial-infected-objective = Once you turn, infect as many other crew members as possible.
 
@@ -26,6 +28,8 @@ roles-antag-nuclear-operative-agent-objective = The medic of the nuclear operati
 
 roles-antag-nuclear-operative-name = Nuclear operative
 roles-antag-nuclear-operative-objective = Find the nuke disk and blow up the station.
+
+roles-antag-nuclear-operative-reinforcement-objective = You have been called as a nuclear operative reinforcement. Your main objective is to destroy the station with a nuclear bomb. Your fate will be determined by your master.
 
 roles-antag-subverted-silicon-name = Subverted silicon
 roles-antag-subverted-silicon-objective = Follow your new laws and do bad unto the station.

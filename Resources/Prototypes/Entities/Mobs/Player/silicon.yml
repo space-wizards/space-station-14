@@ -463,7 +463,7 @@
     roleName: station-ai-ghost-role-name
     roleDescription: station-ai-ghost-role-description
     roleRules: ghost-role-information-silicon-rules
-    antagLoadoutPrototype: MindRoleGhostRoleSilicon
+    antagLoadoutPrototype: GhostSilicon
     job: StationAi
 
 # Hologram projection that the AI's eye tracks.

@@ -17,7 +17,7 @@
 - type: antagLoadout
   id: TraitorReinforcement
   mindRoles:
-  - MindRoleTraitorReinforcement
+  - MindRoleSyndicateReinforcement
   briefing:
-    text: You have been called as a Syndicate reinforcement. Follow your tasks without question. You can always see who your boss is in the character menu
-    sound: /Audio/Ambience/Antag/traitor_wawa.ogg
+    text: roles-antag-syndicate-agent-reinforcement-objective
+    sound: /Audio/Ambience/Antag/traitor_start.ogg

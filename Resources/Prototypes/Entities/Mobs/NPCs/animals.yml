@@ -1537,8 +1537,6 @@
   id: MobMonkeySyndicateAgent
   parent: MobBaseSyndicateMonkey
   suffix: syndicate agent
-  components:
-    # make the player a traitor once its taken
 
 - type: entity
   id: MobMonkeySyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink

@@ -30,7 +30,7 @@ public sealed partial class AntagLoadoutPrototype : IPrototype, IInheritingProto
     /// Mostly just here for legacy compatibility and reducing boilerplate
     /// </remarks>
     [DataField]
-    public bool AllowNonHumans = false;
+    public bool AllowNonHumans = true;
 
     /// <summary>
     /// A whitelist for selecting which players can become this antag.
