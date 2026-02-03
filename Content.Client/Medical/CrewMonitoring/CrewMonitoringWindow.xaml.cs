@@ -190,7 +190,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         // Right now id component that used for the original SuitSensorStatus has only job name and job id.
         // job name can be localized and also seems strange (renamed cap with passanger icon over all command roles)
         // and the job icon works +-fine and causes less sheningans
-        // TODO: MAKE RECORDINGS MORE TARGETED
+        // TODO: change it to tge job prototype when station records will be less centralised
         // Also double foreach yahooooo
 
         var sortableSensors = new List<KeyValuePair<JobPrototype, SuitSensorStatus>>();
