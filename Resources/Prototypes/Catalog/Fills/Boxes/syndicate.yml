@@ -102,22 +102,15 @@
         - id: PaperWrittenCombatBakeryKit
 
 - type: entity
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [BoxCardboardSmall, BaseSyndicateContraband]
   id: SyndimovCircuitKit
   name: syndimov circuit kit
   description: A kit containing an electronics board with the Syndimov lawset and a Syndicate ID.
   components:
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    maxItemSize: Normal
-  - type: Item
-    shape:
-    - 0,0,1,1
   - type: Sprite
     layers:
-      - state: box_of_doom
-      - state: circuit
+    - state: box_of_doom
+    - state: circuit
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
