@@ -17,6 +17,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 namespace Content.Client.HealthAnalyzer.UI;
 
@@ -26,20 +27,22 @@ namespace Content.Client.HealthAnalyzer.UI;
 [GenerateTypedNameReferences]
 public sealed partial class HealthAnalyzerControl : BoxContainer
 {
-    private readonly IEntityManager _entityManager;
-    private readonly SpriteSystem _spriteSystem;
-    private readonly IPrototypeManager _prototypes;
     private readonly IResourceCache _cache;
+    private readonly IEntityManager _entityManager;
+    private readonly IPrototypeManager _prototypes;
+    private readonly IGameTiming _timing;
+    private readonly SpriteSystem _spriteSystem;
 
     public HealthAnalyzerControl()
     {
         RobustXamlLoader.Load(this);
 
         var dependencies = IoCManager.Instance!;
-        _entityManager = dependencies.Resolve<IEntityManager>();
-        _spriteSystem = _entityManager.System<SpriteSystem>();
-        _prototypes = dependencies.Resolve<IPrototypeManager>();
         _cache = dependencies.Resolve<IResourceCache>();
+        _entityManager = dependencies.Resolve<IEntityManager>();
+        _prototypes = dependencies.Resolve<IPrototypeManager>();
+        _timing = dependencies.Resolve<IGameTiming>();
+        _spriteSystem = _entityManager.System<SpriteSystem>();
     }
 
     /// <summary>
@@ -62,6 +65,9 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     /// <param name="bleeding">Whether this entity is bleeding.</param>
     public void Populate(NetEntity? targetEntity, bool scanMode, float bloodlevel, bool unrevivable, bool bleeding)
     {
+        if (_timing.IsFirstTimePredicted)
+            return;
+
         var target = _entityManager.GetEntity(targetEntity);
 
         if (target == null || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
