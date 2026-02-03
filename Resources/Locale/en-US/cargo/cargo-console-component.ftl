@@ -1,5 +1,8 @@
 ## UI
+
 cargo-console-menu-title = Cargo request console
+cargo-console-menu-flavor-left = Order even more pizza boxes than usual!
+cargo-console-menu-flavor-right = v2.1
 cargo-console-menu-account-name-label = Account:{" "}
 cargo-console-menu-account-name-none-text = None
 cargo-console-menu-account-name-format = [bold][color={$color}]{$name}[/color][/bold] [font="Monospace"]\[{$code}\][/font]
@@ -16,11 +19,14 @@ cargo-console-menu-categories-label = Categories:{" "}
 cargo-console-menu-search-bar-placeholder = Search
 cargo-console-menu-requests-label = Requests
 cargo-console-menu-orders-label = Orders
-cargo-console-menu-order-reason-description = Reasons: {$reason}
 cargo-console-menu-populate-categories-all-text = All
-cargo-console-menu-populate-orders-cargo-order-row-product-name-text = {$productName} (x{$orderAmount}) by {$orderRequester} from [color={$accountColor}]{$account}[/color]
-cargo-console-menu-cargo-order-row-approve-button = Approve
-cargo-console-menu-cargo-order-row-cancel-button = Cancel
+cargo-console-menu-order-row-title = {$productName} (x{$orderAmount} for {$orderPrice}$)
+cargo-console-menu-populate-orders-cargo-order-row-product-name-text = Requested by: {$orderRequester} from [color={$accountColor}]{$account}[/color]
+cargo-console-menu-order-row-product-description = Reason: {$orderReason}
+cargo-console-menu-order-row-button-approve = Approve
+cargo-console-menu-order-row-button-cancel = Cancel
+cargo-console-menu-order-row-alerts-reason-absent = The reason is not specified
+cargo-console-menu-order-row-alerts-requester-unknown = Unknown
 cargo-console-menu-tab-title-orders = Orders
 cargo-console-menu-tab-title-funds = Transfers
 cargo-console-menu-account-action-transfer-limit = [bold]Transfer Limit:[/bold] ${$limit}

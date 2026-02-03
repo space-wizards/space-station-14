@@ -27,6 +27,12 @@ public sealed partial class VoiceMaskComponent : Component
     public ProtoId<SpeechVerbPrototype>? VoiceMaskSpeechVerb;
 
     /// <summary>
+    ///     If true will override the users identity with whatever <see cref="VoiceMaskName"/> is.
+    /// </summary>
+    [DataField]
+    public bool OverrideIdentity;
+
+    /// <summary>
     ///     The action that gets displayed when the voice mask is equipped.
     /// </summary>
     [DataField]
@@ -37,4 +43,17 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? ActionEntity;
+
+    /// <summary>
+    ///     If user's voice is getting changed when they speak.
+    /// </summary>
+    [DataField]
+    public bool Active = true;
+
+    /// <summary>
+    ///     If user's accent is getting hidden when they speak.
+    /// </summary>
+    [DataField]
+    public bool AccentHide = true;
 }
+

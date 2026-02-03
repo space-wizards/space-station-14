@@ -20,6 +20,7 @@ public sealed partial class GraphicsTab : Control
         RobustXamlLoader.Load(this);
 
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
+        Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
 
@@ -38,6 +39,14 @@ public sealed partial class GraphicsTab : Control
                 new OptionDropDownCVar<float>.ValueOption(2.00f, Loc.GetString("ui-options-scale-200")),
             ]);
 
+        Control.AddOptionDropDown(
+            CCVars.ViewportScalingFilterMode,
+            DropDownFilterMode,
+            [
+                new OptionDropDownCVar<string>.ValueOption("nearest", Loc.GetString("ui-options-filter-nearest")),
+                new OptionDropDownCVar<string>.ValueOption("bilinear", Loc.GetString("ui-options-filter-bilinear")),
+            ]);
+
         var vpStretch = Control.AddOptionCheckBox(CCVars.ViewportStretch, ViewportStretchCheckBox);
         var vpVertFit = Control.AddOptionCheckBox(CCVars.ViewportVerticalFit, ViewportVerticalFitCheckBox);
         Control.AddOptionSlider(
@@ -49,6 +58,7 @@ public sealed partial class GraphicsTab : Control
 
         vpStretch.ImmediateValueChanged += _ => UpdateViewportSettingsVisibility();
         vpVertFit.ImmediateValueChanged += _ => UpdateViewportSettingsVisibility();
+        IntegerScalingCheckBox.OnToggled += _ => UpdateViewportSettingsVisibility();
 
         Control.AddOptionSlider(
             CCVars.ViewportWidth,
@@ -76,6 +86,7 @@ public sealed partial class GraphicsTab : Control
         IntegerScalingCheckBox.Visible = ViewportStretchCheckBox.Pressed;
         ViewportVerticalFitCheckBox.Visible = ViewportStretchCheckBox.Pressed;
         ViewportWidthSlider.Visible = !ViewportStretchCheckBox.Pressed || !ViewportVerticalFitCheckBox.Pressed;
+        DropDownFilterMode.Visible = !IntegerScalingCheckBox.Pressed && ViewportStretchCheckBox.Pressed;
     }
 
     private void UpdateViewportWidthRange()

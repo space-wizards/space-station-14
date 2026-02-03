@@ -27,4 +27,14 @@ public sealed partial class EntSelector : EntityTableSelector
             yield return Id;
         }
     }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        yield return (Id, 1f);
+    }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        yield return (Id, Amount.Average());
+    }
 }

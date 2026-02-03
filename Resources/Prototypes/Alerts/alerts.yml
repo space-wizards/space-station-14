@@ -147,6 +147,15 @@
   description: alerts-stunned-desc
 
 - type: alert
+  id: Knockdown
+  clickEvent: !type:KnockedDownAlertEvent
+  icons:
+  - sprite: /Textures/Interface/Alerts/stunnable.rsi
+    state: knocked-down
+  name: alerts-knockdown-name
+  description: alerts-knockdown-desc
+
+- type: alert
   id: Handcuffed
   clickEvent: !type:RemoveCuffsAlertEvent
   icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
@@ -274,6 +283,7 @@
   description: alerts-battery-desc
   minSeverity: 0
   maxSeverity: 10
+  clientHandled: true # the power cell is read on the client so that we don't have to periodically network the charge
 
 - type: alert
   id: BorgBatteryNone
@@ -283,6 +293,12 @@
     state: battery-none
   name: alerts-no-battery-name
   description: alerts-no-battery-desc
+  clientHandled: true # the power cell battery is read on the client so that we don't have to periodically network the charge
+
+- type: alert
+  parent: BorgBattery
+  id: AiBattery
+  clientHandled: false # the station AI does not have a predicted battery, so we need to send the alert from the server
 
 - type: alert
   id: Internals
@@ -304,7 +320,9 @@
   id: PilotingShuttle
   category: Piloting
   clickEvent: !type:StopPilotingAlertEvent
-  icons: [ /Textures/Interface/Alerts/piloting.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/shuttle.rsi
+    state: piloting
   name: alerts-piloting-name
   description: alerts-piloting-desc
 

@@ -26,6 +26,7 @@
   - type: Spillable
     solution: absorbed
     spillWhenThrown: false
+    preventMelee: false
   - type: DrainableSolution
     solution: absorbed
   - type: Wieldable
@@ -57,7 +58,7 @@
   - type: DnaSubstanceTrace
 
 - type: entity
-  parent: BaseItem
+  parent: MopItem
   name: advanced mop
   id: AdvMopItem
   description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
@@ -69,36 +70,12 @@
       - map: ["enum.SolutionContainerLayers.Fill"]
         state: fill-2
         visible: false
-    - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 2
-      fillBaseName: fill-
-      inHandsFillBaseName: -fill-
-      inHandsMaxFillLevels: 2
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 10
-      soundHit:
-         collection: MetalThud
-    - type: Spillable
-      solution: absorbed
-      spillWhenThrown: false
-    - type: DrainableSolution
-      solution: absorbed
-    - type: Wieldable
-    - type: IncreaseDamageOnWield
-      damage:
-        types:
-          Blunt: 5
     - type: Item
-      size: Large
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
-      useAbsorberSolution: true
-    - type: UseDelay
-      delay: 1.0
     - type: SolutionRegeneration
       solution: absorbed
       generated:
@@ -110,15 +87,10 @@
       preserve:
       - Water
       quantity: 10
-    - type: SolutionContainerManager
-      solutions:
-        absorbed:
-          maxVol: 100
     - type: Tag
       tags:
         - Mop
         - MopAdv
-    - type: DnaSubstanceTrace
 
 - type: entity
   name: wet floor sign
@@ -179,24 +151,31 @@
       path: /Audio/Effects/beep_landmine.ogg
       params:
         maxDistance: 10
-  - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBomb  # normally Default and max 5 total 60
     maxIntensity: 10 # about a ~67.5 total damage
     totalIntensity: 30 # about a ~3 tile radius
     canCreateVacuum: false
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+    - trigger # directly explode from the landmine
   - type: DeleteOnTrigger
-  - type: OnUseTimerTrigger
-    useVerbInstead: true
+    keysIn:
+    - timer
+    - trigger
+  - type: TimerTrigger
     beepInterval: .25
     beepSound:
       path: /Audio/Items/Janitor/floor_sign_beep.ogg
       params:
         volume: 1
     examinable: false
+  - type: TriggerOnVerb
+    text: trigger-on-verb-detonation
   - type: Tag
     tags: # ignore "WhitelistChameleon" tag
-      - WetFloorSign
+    - WetFloorSign
 
 - type: entity
   name: plunger
@@ -238,7 +217,7 @@
       projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.1,-0.1,0.1,0.1"
+          bounds: "-0.2,-0.4,0.2,-0.1"
         hard: false
         mask:
         - Impassable
@@ -246,6 +225,7 @@
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/pop.ogg
     embedOnThrow: True
+    offset: "0,-0.1"
   - type: ThrowingAngle
     angle: 0
   - type: LandAtCursor
@@ -268,6 +248,11 @@
   parent: Plunger
   description: A plunger with a plastic suction cup coated in a thin layer of gold given as a token of appreciation for years of service. Still used to unclog drains.
   components:
+  - type: Tag # TODO change Plunger into a tool so we dont got to layer Tags like below.
+    tags:
+    - GoldenPlunger
+    - Plunger
+    - WhitelistChameleon
   - type: Sprite
     sprite: Objects/Specific/Janitorial/golden_plunger.rsi
     state: plunger
@@ -296,9 +281,10 @@
   id: PlungerLoot
   weights:
     RandomSpawner100: 56
-    SpacemenFigureSpawner: 28
+    SpacemenFigurineSpawner90: 28
     SpawnMobCockroach: 5
     MaintenanceToolSpawner: 5
+    SpawnMobMoproach: 2
 
 - type: entity
   parent: BaseItem
@@ -346,7 +332,51 @@
     - type: Tag
       tags:
         - Mop
-    - type: CleansForensics
     - type: Fiber
       fiberColor: fibers-white
     - type: DnaSubstanceTrace
+
+- type: entity
+  parent: BaseItem
+  id: WireBrush
+  name: wire brush
+  description: A bristly steel wire brush, perfect for scraping away even the toughest patches of rust.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/wirebrush.rsi
+    state: icon
+  - type: Item
+    storedSprite:
+      sprite: Objects/Specific/Janitorial/wirebrush.rsi
+      state: storage
+    size: Small
+  - type: Tag
+    tags:
+    - WireBrush
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 50
+  - type: Tool
+    qualities:
+    - Brushing
+    useSound:
+      path: /Audio/Items/wirebrushing.ogg
+  - type: StaticPrice
+    price: 22
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Piercing: 3
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"
+
+- type: entity
+  parent: WireBrush
+  id: WireBrushElectrical
+  name: electrical wire brush
+  description: A bristly steel wire brush with a moving head, allowing for a way easier time cleaning.
+  components:
+  - type: Tool
+    speedModifier: 1.5

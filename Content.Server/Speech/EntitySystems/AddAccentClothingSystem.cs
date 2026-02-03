@@ -39,7 +39,7 @@ public sealed class AddAccentClothingSystem : EntitySystem
 
         // try to remove accent
         var componentType = Factory.GetRegistration(component.Accent).Type;
-        EntityManager.RemoveComponent(args.Wearer, componentType);
+        RemComp(args.Wearer, componentType);
 
         component.IsActive = false;
     }

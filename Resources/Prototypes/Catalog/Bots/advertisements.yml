@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: MedibotAds
+  values:
+    prefix: advertisement-medibot-
+    count: 17
+
+- type: localizedDataset
+  id: FirebotAd
+  values:
+    prefix: advertisement-firebot-
+    count: 4

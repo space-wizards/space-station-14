@@ -33,3 +33,9 @@ reagent-desc-hew = Pure essence of inversed lizard plush. Makes you Hew!
 
 reagent-name-corgiessence = corgium
 reagent-desc-corgiessence = Tastes like dog food. Clearly an acquired taste.
+
+reagent-name-catessence = felinase
+reagent-desc-catessence = A type of carcinogenic enzyme known to break down proteins found within the vocal cords of most animals. Mixing is NOT recommended.
+
+reagent-name-canidessence = caninase
+reagent-desc-canidessence = A type of carcinogenic enzyme known to break down proteins found within the vocal cords of most animals. Mixing is NOT recommended.
