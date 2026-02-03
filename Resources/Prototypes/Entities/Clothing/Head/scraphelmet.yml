@@ -84,4 +84,4 @@
     graph: scraphelmet
     node: scraphelmet
   - type: ImageOverlay
-    pathToOverlayImage: "/Textures/Clothing/Head/Helmets/scrap_helmet.rsi/scrapHelmetOverlayTexture.png"
+    pathToOverlayImage: "/Textures/Clothing/Head/Helmets/scrapHelmetOverlayTexture.png"
