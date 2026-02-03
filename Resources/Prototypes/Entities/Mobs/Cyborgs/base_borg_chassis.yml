@@ -78,8 +78,6 @@
   - type: ActionGrant
     actions:
     - ActionViewLaws
-  - type: EmagSiliconLaw
-    stunTime: 5
   - type: SiliconLawBound
   - type: Inventory
     templateId: borg
@@ -364,6 +362,8 @@
     color: "#dd200b"
   - type: BypassLock
     bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
+  - type: EmagSiliconLaw
+    stunTime: 5
 
 - type: entity
   id: BaseBorgChassisDerelict
@@ -421,6 +421,8 @@
     color: "#dd200b"
   - type: BypassLock
     bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
+  - type: EmagSiliconLaw
+    stunTime: 5
 
 - type: entity
   parent: BaseBorgChassis

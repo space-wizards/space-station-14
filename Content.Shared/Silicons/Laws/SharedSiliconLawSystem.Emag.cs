@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.Laws.Components;
@@ -18,48 +19,103 @@ public abstract partial class SharedSiliconLawSystem
     private void OnChassisEmagged(Entity<BorgChassisComponent> ent, ref GotEmaggedEvent args)
     {
         // Is it the correct emag type?
-        if (!_emag.CompareFlag(args.Type, EmagType.Interaction)
-            || _emag.CheckFlag(ent, EmagType.Interaction))
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 
-        // We must be a lawbound to get emagged.
-        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawboundComp))
-            return;
+        // Determine the provider
+        EntityUid providerUid;
+        SiliconLawProviderComponent provider;
 
-        if (!CanBeEmagged(ent, args.UserUid, out var reason, out var emagLawcomp))
+        // 1. Check if chassis is provider
+        if (TryComp<SiliconLawProviderComponent>(ent, out var chassisProvider))
+        {
+            providerUid = ent.Owner;
+            provider = chassisProvider;
+        }
+        // 2. Check if brain is provider
+        else if (ent.Comp.BrainEntity is { } brain && TryComp<SiliconLawProviderComponent>(brain, out var brainProvider))
+        {
+            providerUid = brain;
+            provider = brainProvider;
+        }
+        else
+        {
+            // If no brain and chassis is not provider
+            if (ent.Comp.BrainEntity == null)
+                _popup.PopupClient(Loc.GetString("law-emag-cannot-brainless", ("entity", ent)), ent, args.UserUid);
+
+            return;
+        }
+
+        // Check if provider is already emagged
+        if (_emag.CheckFlag(providerUid, EmagType.Interaction))
+        {
+            _popup.PopupClient(Loc.GetString("law-emag-already-emagged", ("entity", providerUid)), ent, args.UserUid);
+            return;
+        }
+
+        // Check if provider has EmagSiliconLawComponent
+        // We pass the chassis to check the panel
+        if (!CanBeEmagged(providerUid, args.UserUid, out var reason, out var emagLawcomp, ent.Owner))
         {
             _popup.PopupClient(reason, ent, args.UserUid);
             return;
         }
 
-        // Laws are on the brain, so we must have a brain to emag.
-        if (ent.Comp.BrainEntity is not { } brain || !TryComp<SiliconLawProviderComponent>(brain, out var brainProvider))
+        // Check for mind on the provider (Brain or Chassis)
+        EntityUid? mindId = null;
+        if (_mind.TryGetMind(ent.Owner, out var mind, out _)) // Check chassis for a mind first.
         {
-            _popup.PopupClient(Loc.GetString("law-emag-cannot-brainless"), ent, args.UserUid);
+            mindId = mind;
+        }
+        else if (ent.Comp.BrainEntity is { } brainId && _mind.TryGetMind(brainId, out mind, out _)) // Then check the brain.
+        {
+            mindId = mind;
+        }
+
+        if (mindId == null)
+        {
+            _popup.PopupClient(Loc.GetString("law-emag-require-mind", ("entity", providerUid)), ent, args.UserUid);
             return;
         }
 
-        var newLaws = GetEmaggedLaws(lawboundComp.Lawset.Laws, args.UserUid, lawboundComp.Lawset.ObeysTo);
+        var newLaws = GetEmaggedLaws(provider.Lawset.Laws, args.UserUid, provider.Lawset.ObeysTo);
 
-        brainProvider.Subverted = true;
-        SetProviderLaws((brain, brainProvider), newLaws, cue: emagLawcomp.EmaggedSound);
-        Dirty(brain, brainProvider);
+        provider.Subverted = true;
+        SetProviderLaws((providerUid, provider), newLaws, cue: emagLawcomp.EmaggedSound);
+        Dirty(providerUid, provider);
 
         emagLawcomp.OwnerName = Name(args.UserUid);
 
-        if (_mind.TryGetMind(ent, out var mindId, out _))
-            EnsureSubvertedSiliconRole(mindId);
+        EnsureSubvertedSiliconRole(mindId.Value);
 
         _stunSystem.TryUpdateParalyzeDuration(ent, emagLawcomp.StunTime);
 
         args.Handled = true;
+
+        // If the provider is not the chassis (i.e. it's the brain), we don't want the chassis to get the EmaggedComponent.
+        // But the brain should still get it.
+        if (providerUid != ent.Owner)
+        {
+            args.Repeatable = true;
+            EnsureComp<EmaggedComponent>(providerUid, out var emaggedComp);
+            emaggedComp.EmagType |= EmagType.Interaction;
+            Dirty(providerUid, emaggedComp);
+        }
     }
 
     private void OnBrainEmagged(Entity<BorgBrainComponent> ent, ref GotEmaggedEvent args)
     {
-        if (!_emag.CompareFlag(args.Type, EmagType.Interaction)
-            || _emag.CheckFlag(ent, EmagType.Interaction))
+        // Is it the correct emag type?
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
+
+        // Check if brain is already emagged
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
+        {
+            _popup.PopupClient(Loc.GetString("law-emag-already-emagged", ("entity", ent)), ent, args.UserUid);
+            return;
+        }
 
         if (!TryComp<SiliconLawBoundComponent>(ent, out var lawboundComp)
             || !TryComp<SiliconLawProviderComponent>(ent, out var brainProvider))
@@ -71,7 +127,14 @@ public abstract partial class SharedSiliconLawSystem
             return;
         }
 
-        var newLaws = GetEmaggedLaws(lawboundComp.Lawset.Laws, args.UserUid, lawboundComp.Lawset.ObeysTo);
+        // The brain must have a mind to be emagged.
+        if (!_mind.TryGetMind(ent, out var mindId, out _))
+        {
+            _popup.PopupClient(Loc.GetString("law-emag-require-mind", ("entity", ent)), ent, args.UserUid);
+            return;
+        }
+
+        var newLaws = GetEmaggedLaws(brainProvider.Lawset.Laws, args.UserUid, brainProvider.Lawset.ObeysTo);
 
         brainProvider.Subverted = true;
         SetProviderLaws((ent, brainProvider), newLaws, cue: emagLawcomp.EmaggedSound);
@@ -79,8 +142,7 @@ public abstract partial class SharedSiliconLawSystem
 
         emagLawcomp.OwnerName = Name(args.UserUid);
 
-        if (_mind.TryGetMind(ent, out var mindId, out _))
-            EnsureSubvertedSiliconRole(mindId);
+        EnsureSubvertedSiliconRole(mindId);
 
         args.Handled = true;
     }
@@ -92,8 +154,9 @@ public abstract partial class SharedSiliconLawSystem
     /// <param name="user">The person doing the emagging.</param>
     /// <param name="reason">The reason the emagging cannot be performed.</param>
     /// <param name="emagComp">The EmagSiliconLawComponent, for convenience.</param>
+    /// <param name="chassis">The chassis entity, if any, to check for panel access.</param>
     /// <returns>True if the silicon can be emagged, false otherwise.</returns>
-    private bool CanBeEmagged(EntityUid entity, EntityUid user, [NotNullWhen(false)] out string? reason, [NotNullWhen(true)] out EmagSiliconLawComponent? emagComp)
+    private bool CanBeEmagged(EntityUid entity, EntityUid user, [NotNullWhen(false)] out string? reason, [NotNullWhen(true)] out EmagSiliconLawComponent? emagComp, EntityUid? chassis = null)
     {
         reason = null;
         emagComp = null;
@@ -110,12 +173,14 @@ public abstract partial class SharedSiliconLawSystem
             return false;
         }
 
-        if (emagLawcomp.RequireOpenPanel &&
-            TryComp<WiresPanelComponent>(entity, out var panel) &&
-            !panel.Open)
+        if (emagLawcomp.RequireOpenPanel)
         {
-            reason = Loc.GetString("law-emag-require-panel");
-            return false;
+            var targetForPanel = chassis ?? entity;
+            if (TryComp<WiresPanelComponent>(targetForPanel, out var panel) && !panel.Open)
+            {
+                reason = Loc.GetString("law-emag-require-panel");
+                return false;
+            }
         }
 
         emagComp = emagLawcomp;

@@ -64,6 +64,8 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
         requireInputValidation: false
+  - type: EmagSiliconLaw
+    stunTime: 3
 
 - type: entity
   parent: MMI
@@ -163,6 +165,7 @@
           type: SiliconLawBoundUserInterface
           requireInputValidation: false
     - type: EmagSiliconLaw
+      stunTime: 3
 
 # Ion Storm Target
 - type: entity

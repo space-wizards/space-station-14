@@ -126,6 +126,8 @@ law-emag-cannot-emag-self = You cannot use the EMAG on yourself.
 law-emag-cannot-emag-chassis-no-provider = This chassis has no brain inside.
 law-emag-cannot-not-emaggable = {CAPITALIZE($entity)} cannot be emagged.
 law-emag-cannot-brainless = {CAPITALIZE($entity)} has no brain inside.
+law-emag-already-emagged = {CAPITALIZE($entity)} is already emagged.
+law-emag-require-mind = {CAPITALIZE($entity)} is not active.
 
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
