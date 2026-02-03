@@ -1,0 +1,46 @@
+- type: entity
+  parent: [BaseMachine, BaseXenoborgContraband]
+  id: XenoborgExtractor
+  name: xenoborg extractor
+  description: Drains immense amounts of electricity from the grid ro produce some random xenoborg circuit
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite # TODO: add custom sprite
+    sprite: Structures/Power/substation.rsi
+    snapCardinals: true
+    layers:
+    - state: substation
+    - state: screen
+      shader: unshaded
+    - state: full
+      shader: unshaded
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
+  - type: ExaminableBattery
+  - type: PowerConsumer
+    voltage: Apc
+    drawRate: 10000
+  - type: VoltageToggler
+    settings:
+    - voltage: Apc
+      wattage: 10000
+      name: power-voltage-low
+    - voltage: Medium
+      wattage: 20000
+      name: power-voltage-medium
+    - voltage: High
+      wattage: 30000
+      name: power-voltage-high
