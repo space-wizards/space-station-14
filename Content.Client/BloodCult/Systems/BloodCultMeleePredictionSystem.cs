@@ -30,8 +30,9 @@ public sealed class BloodCultMeleePredictionSystem : EntitySystem
         for (var i = hitList.Count - 1; i >= 0; i--)
         {
             var target = hitList[i];
-
-            if (!HasComp<BloodCultistComponent>(target) && !HasComp<BloodCultConstructComponent>(target))
+            //Uncomment and swap below when bloodcult constructs are added
+            //if (!HasComp<BloodCultistComponent>(target) && !HasComp<BloodCultConstructComponent>(target))
+            if (!HasComp<BloodCultistComponent>(target))
                 continue;
 
             hitList.RemoveAt(i);

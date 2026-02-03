@@ -1278,6 +1278,8 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 	public void AnnounceStatus(BloodCultRuleComponent component, List<EntityUid> cultists, EntityUid? specificCultist = null)
 	{
+		//Once cult constructs are readded, uncomment the below
+		/*
 		List<EntityUid> constructs = new List<EntityUid>();
 		var constructsQuery = AllEntityQuery<BloodCultConstructComponent, MobStateComponent>();
         while (constructsQuery.MoveNext(out var uid, out var _, out _))
@@ -1285,6 +1287,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			if (_mobSystem.IsAlive(uid))
             	constructs.Add(uid);
         }
+		*/
 		if (component.CultistsWin)
 		{
 			if (specificCultist != null)
@@ -1325,8 +1328,9 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 					("location", summonLocation.Name));
 		}
 */
-		// Rise stage is complete.
-		string purpleMessage = Loc.GetString("cult-status-rise-complete"); //Delete this once the veil rune is re-added
+		//Once cult progression mechanics are re-added, uncomment the above and delete the below
+		purpleMessage = Loc.GetString("cult-status-veil-weak");
+
 		if (specificCultist != null)
 			AnnounceToCultist(purpleMessage,
 					(EntityUid)specificCultist, color:new Color(111, 80, 143, 255), fontSize:12, newlineNeeded:true);
@@ -1377,8 +1381,8 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			bloodNeeded = Math.Max(0.0, nextThreshold - currentBlood);
 		}
 		//Veil logic, to be readded when the veil is.
-		//else if (!component.VeilWeakened)
-		else
+		/*
+		else if (!component.VeilWeakened)
 		{
 			// Stage 2 complete - need to do Tear Veil ritual
 			currentPhase = "Rise";
@@ -1435,7 +1439,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			
 			return message;
 		}
-
+		*/
 		bool isComplete = bloodNeeded <= 0.05; // Account for rounding precision
 		return Loc.GetString("cult-blood-progress",
 			("bloodCollected", Math.Round(currentBlood, 1)),

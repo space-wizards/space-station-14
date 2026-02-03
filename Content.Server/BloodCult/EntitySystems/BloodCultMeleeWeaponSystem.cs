@@ -49,7 +49,8 @@ public sealed class BloodCultMeleeWeaponSystem : EntitySystem
 					blockedByChaplain = true;
 					hitList.RemoveAt(i);
 				}
-				else if (HasComp<BloodCultistComponent>(target) || HasComp<BloodCultConstructComponent>(target))
+				//else if (HasComp<BloodCultistComponent>(target) || HasComp<BloodCultConstructComponent>(target))
+				else if (HasComp<BloodCultistComponent>(target))
 				{
 					blockedByCultist = true;
 					hitList.RemoveAt(i);
