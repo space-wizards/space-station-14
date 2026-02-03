@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Snakeskin boots are no longer free, superior no-slips.
-    type: Tweak
-  id: 8979
-  time: '2025-09-18T17:39:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40201
 - author: TrixxedHeart
   changes:
   - message: The generic implanter that can be crafted in the medifab has been renamed
@@ -3998,3 +3991,10 @@
   id: 9485
   time: '2026-02-03T03:28:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42756
+- author: sowelipililimute
+  changes:
+  - message: Marking colours can now be changed again
+    type: Fix
+  id: 9486
+  time: '2026-02-03T19:00:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42771
