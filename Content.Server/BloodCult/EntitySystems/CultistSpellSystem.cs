@@ -82,7 +82,8 @@ public sealed partial class CultistSpellSystem : EntitySystem
 	private static readonly ProtoId<DamageTypePrototype> ShockDamageType = "Shock";
 	private static readonly ProtoId<DamageTypePrototype> SlashDamageType = "Slash";
 
-	private EntityQuery<EmpowerOnStandComponent> _runeQuery;
+	//When runes are re-added, uncomment this
+	//private EntityQuery<EmpowerOnStandComponent> _runeQuery; 
 
 	private static string[] AvailableDaggers = ["CultDaggerCurved", "CultDaggerSerrated", "CultDaggerStraight"];
 
@@ -90,22 +91,17 @@ public sealed partial class CultistSpellSystem : EntitySystem
 	{
 		base.Initialize();
 
-		_runeQuery = GetEntityQuery<EmpowerOnStandComponent>();
-
+		//When runes are re-added, uncomment this
+		//_runeQuery = GetEntityQuery<EmpowerOnStandComponent>();
 		SubscribeLocalEvent<BloodCultistComponent, SpellsMessage>(OnSpellSelectedMessage);
-
 		SubscribeLocalEvent<BloodCultistComponent, EventCultistSummonDagger>(OnSummonDagger);
-
 		SubscribeLocalEvent<BloodCultistComponent, EventCultistStudyVeil>(OnStudyVeil);
 		SubscribeLocalEvent<BloodCultistComponent, BloodCultCommuneSendMessage>(OnCommune);
-		SubscribeLocalEvent<JuggernautComponent, BloodCultCommuneSendMessage>(OnJuggernautCommune);
+		//When juggernauts are added, uncomment this
+		//SubscribeLocalEvent<JuggernautComponent, BloodCultCommuneSendMessage>(OnJuggernautCommune);
 		SubscribeLocalEvent<BloodCultistComponent, EventCultistSanguineDream>(OnSanguineDream);
-		//SubscribeLocalEvent<CultMarkedComponent, AttackedEvent>(OnMarkedAttacked);
-
 		SubscribeLocalEvent<BloodCultistComponent, EventCultistTwistedConstruction>(OnTwistedConstruction);
-
 		SubscribeLocalEvent<BloodCultistComponent, CarveSpellDoAfterEvent>(OnCarveSpellDoAfter);
-		//SubscribeLocalEvent<BloodCultistComponent, TwistedConstructionDoAfterEvent>(OnTwistedConstructionDoAfter);
 	}
 
 	private bool TryUseAbility(Entity<BloodCultistComponent> ent, BaseActionEvent args)
@@ -159,7 +155,8 @@ public sealed partial class CultistSpellSystem : EntitySystem
 	{
 		var data = GetSpell(id);
 
-		bool standingOnRune = IsStandingOnEmpoweringRune(uid);
+		//When runes are re-added, uncomment this
+		//bool standingOnRune = IsStandingOnEmpoweringRune(uid);
 
 		if (comp.KnownSpells.Count > 3)
 		{
@@ -168,7 +165,9 @@ public sealed partial class CultistSpellSystem : EntitySystem
 		}
 
 		// If not on an empowering rune and they have existing spells, remove the actions matching those spells
-		if (!standingOnRune && comp.KnownSpells.Count > 0)
+		//When runes are re-added, uncomment this
+		//if (!standingOnRune && comp.KnownSpells.Count > 0)
+		if (comp.KnownSpells.Count > 0)
 		{
 			RemoveActionsMatchingKnownSpells(uid, comp);
 			// Clear KnownSpells since they can only have 0 spells when not on rune
@@ -184,9 +183,13 @@ public sealed partial class CultistSpellSystem : EntitySystem
 
 		if (data.DoAfterLength > 0)
 		{
-			_popup.PopupEntity(standingOnRune ? Loc.GetString("cult-spell-carving-rune") : Loc.GetString("cult-spell-carving"), uid, uid, PopupType.MediumCaution);
-			var dargs = new DoAfterArgs(EntityManager, uid, data.DoAfterLength * (standingOnRune ? 1 : 3), new CarveSpellDoAfterEvent(
-				uid, data, recordKnownSpell, standingOnRune), uid
+			//Code for when runes are added
+			//_popup.PopupEntity(standingOnRune ? Loc.GetString("cult-spell-carving-rune") : Loc.GetString("cult-spell-carving"), uid, uid, PopupType.MediumCaution);
+			//var dargs = new DoAfterArgs(EntityManager, uid, data.DoAfterLength * (standingOnRune ? 1 : 3), new CarveSpellDoAfterEvent(
+			//	uid, data, recordKnownSpell, standingOnRune), uid
+			_popup.PopupEntity(Loc.GetString("cult-spell-carving"), uid, uid, PopupType.MediumCaution);
+			var dargs = new DoAfterArgs(EntityManager, uid, data.DoAfterLength, new CarveSpellDoAfterEvent(
+				uid, data, recordKnownSpell), uid //Placeholder code to make it work with no runes
 			)
 			{
 				BreakOnDamage = true,
@@ -220,7 +223,9 @@ public sealed partial class CultistSpellSystem : EntitySystem
 
 	public void OnCarveSpellDoAfter(Entity<BloodCultistComponent> ent, ref CarveSpellDoAfterEvent args)
 	{
-		if (ent.Comp.KnownSpells.Count > 3 || (!args.StandingOnRune && ent.Comp.KnownSpells.Count > 0))
+		//Code for when runes are added
+		//if (ent.Comp.KnownSpells.Count > 3 || (!args.StandingOnRune && ent.Comp.KnownSpells.Count > 0))
+		if (ent.Comp.KnownSpells.Count > 3 || ent.Comp.KnownSpells.Count > 0)
 		{
 			_popup.PopupEntity(Loc.GetString("cult-spell-exceeded"), ent, ent);
 			return;
@@ -230,7 +235,9 @@ public sealed partial class CultistSpellSystem : EntitySystem
 
 		DamageSpecifier appliedDamageSpecifier = new DamageSpecifier(
 			_proto.Index(SlashDamageType),
-			FixedPoint2.New(args.CultAbility.HealthDrain * (args.StandingOnRune ? 1 : 3))
+			//Code for when runes are added
+			//FixedPoint2.New(args.CultAbility.HealthDrain * (args.StandingOnRune ? 1 : 3))
+			FixedPoint2.New(args.CultAbility.HealthDrain)
 		);
 
         if (!args.Cancelled)
@@ -259,12 +266,14 @@ public sealed partial class CultistSpellSystem : EntitySystem
 				_damageableSystem.TryChangeDamage((ent, damageableForDamage), appliedDamageSpecifier, true, origin: ent);
 			}
 			_audioSystem.PlayPvs(args.CultAbility.CarveSound, ent);
+		/* Rune logic
 		if (args.StandingOnRune)
 		{
 			// Generate random chant when empowered by rune
 			var invocation = _bloodCultRules.GenerateChant(wordCount: 2);
 			_bloodCultRules.Speak(ent, invocation);
 		}
+		*/
 		}
 
         Dirty(ent, ent.Comp);
@@ -275,6 +284,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 		comp.KnownSpells.Remove(GetSpell(id));
 	}
 
+/* Rune logic, to be uncommented when runes are added
 	/// <summary>
 	/// Checks if a cultist is currently standing on an EmpoweringRune.
 	/// </summary>
@@ -297,7 +307,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 
 		return false;
 	}
-
+*/
 	/// <summary>
 	/// Removes actions that match spells in the cultist's KnownSpells list.
 	/// This is called when adding a new spell while not on an empowering rune.
@@ -337,12 +347,12 @@ public sealed partial class CultistSpellSystem : EntitySystem
 	{
 		ent.Comp.CommuningMessage = args.Message;
 	}
-
+/* Juggernauts using the commune ability, to be uncommented when juggernauts are added
 	private void OnJuggernautCommune(Entity<JuggernautComponent> ent, ref BloodCultCommuneSendMessage args)
 	{
 		ent.Comp.CommuningMessage = args.Message;
 	}
-
+*/
 	private void OnSpellSelectedMessage(Entity<BloodCultistComponent> ent, ref SpellsMessage args)
 	{
 		if (!CultistSpellComponent.ValidSpells.Contains(args.ProtoId) || ent.Comp.KnownSpells.Contains(args.ProtoId))
@@ -438,6 +448,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 				_stun.TryKnockdown((ent, crawler), TimeSpan.FromSeconds(selfStunTime), true);
 			}
 		}
+		/* Juggernaut logic, so cultists don't stun them, to be uncommented when juggernauts are added
 		else if (HasComp<JuggernautComponent>(target))
 		{
 			// Juggernauts are immune to sanguine dream (they have no bloodstream)
@@ -446,6 +457,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 				ent, ent, PopupType.MediumCaution
 			);
 		}
+		*/
 		else if (TryComp<BloodstreamComponent>(target, out var bloodstream))
 		{
 			// Stun the target - this will make them drop prone and drop items

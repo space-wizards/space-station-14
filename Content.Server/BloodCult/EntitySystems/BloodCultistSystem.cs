@@ -23,10 +23,11 @@ public sealed class BloodCultistSystem : SharedBloodCultistSystem
 
 		// Allow both blood cultists and juggernauts to use commune
 		// Check both separately to ensure variables are assigned
-		bool isCultist = TryComp<BloodCultistComponent>(ev.Performer, out var cultistComp);
-		bool isJuggernaut = TryComp<JuggernautComponent>(ev.Performer, out var juggernautComp);
+		//bool isCultist = TryComp<BloodCultistComponent>(ev.Performer, out var cultistComp);
+		//bool isJuggernaut = TryComp<JuggernautComponent>(ev.Performer, out var juggernautComp);
 		
-		if (!isCultist && !isJuggernaut)
+		//if (!isCultist && !isJuggernaut)
+		if (!TryComp<BloodCultistComponent>(ev.Performer, out var cultistComp))
 			return;
 
 		if (!_uiSystem.HasUi(ev.Performer, BloodCultistCommuneUIKey.Key))
@@ -37,11 +38,12 @@ public sealed class BloodCultistSystem : SharedBloodCultistSystem
 
 		if (_uiSystem.TryOpenUi(ev.Performer, BloodCultistCommuneUIKey.Key, ev.Performer))
 		{
-			if (isCultist && cultistComp != null)
-				UpdateCommuneUI((ev.Performer, cultistComp));
-			else if (isJuggernaut && juggernautComp != null)
-				// Juggernauts use the same UI but with empty state (no stored message)
-				_uiSystem.SetUiState(ev.Performer, BloodCultistCommuneUIKey.Key, new BloodCultCommuneBuiState(""));
+			//if (isCultist && cultistComp != null)
+			//	UpdateCommuneUI((ev.Performer, cultistComp));
+			//else if (isJuggernaut && juggernautComp != null)
+			//	// Juggernauts use the same UI but with empty state (no stored message)
+			//	_uiSystem.SetUiState(ev.Performer, BloodCultistCommuneUIKey.Key, new BloodCultCommuneBuiState(""));
+			UpdateCommuneUI((ev.Performer, cultistComp));
 		}
 
 		ev.Handled = true;
@@ -75,7 +77,7 @@ public sealed class BloodCultistSystem : SharedBloodCultistSystem
 			_uiSystem.SetUiState(entity.Owner, SpellsUiKey.Key, new BloodCultSpellsBuiState());
 	}
 	#endregion
-
+/* Rune events
 	#region RuneEvents
 	public void UseReviveRune(EntityUid target, EntityUid? user, EntityUid? used)
 	{
@@ -101,4 +103,5 @@ public sealed class BloodCultistSystem : SharedBloodCultistSystem
 		RaiseLocalEvent(user, attempt, true);
 	}
 	#endregion
+*/
 }

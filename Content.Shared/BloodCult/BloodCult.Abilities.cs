@@ -82,14 +82,18 @@ public sealed partial class CultistSpellComponent : Component
 	[NonSerialized] public EntityUid CarverUid;
 	[NonSerialized] public CultAbilityPrototype CultAbility;
 	[NonSerialized] public bool RecordKnownSpell;
-	[NonSerialized] public bool StandingOnRune;
+	//When runes are re-added, uncomment this
+	//[NonSerialized] public bool StandingOnRune;
 
-    public CarveSpellDoAfterEvent(EntityUid carverUid, CultAbilityPrototype cultAbility, bool recordKnownSpell, bool standingOnRune)
+	//When runes are re-added, uncomment this and swap with below
+    //public CarveSpellDoAfterEvent(EntityUid carverUid, CultAbilityPrototype cultAbility, bool recordKnownSpell, bool standingOnRune)
+	public CarveSpellDoAfterEvent(EntityUid carverUid, CultAbilityPrototype cultAbility, bool recordKnownSpell)
     {
 		CarverUid = carverUid;
 		CultAbility = cultAbility;
 		RecordKnownSpell = recordKnownSpell;
-		StandingOnRune = standingOnRune;
+		//When runes are re-added, uncomment this
+		//StandingOnRune = standingOnRune;
     }
 }
 

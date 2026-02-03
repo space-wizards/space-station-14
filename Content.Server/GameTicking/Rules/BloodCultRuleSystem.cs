@@ -208,10 +208,11 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 		SubscribeLocalEvent<BloodCultRuleComponent, AfterAntagEntitySelectedEvent>(AfterEntitySelected); // Funky Station
         SubscribeLocalEvent<BloodCultRoleComponent, GetBriefingEvent>(OnGetBriefing);
 
-		SubscribeLocalEvent<BloodCultistComponent, ReviveRuneAttemptEvent>(TryReviveCultist);
-		SubscribeLocalEvent<BloodCultistComponent, GhostifyRuneEvent>(TryGhostifyCultist);
-		SubscribeLocalEvent<BloodCultistComponent, SacrificeRuneEvent>(TrySacrificeVictim);
-		SubscribeLocalEvent<BloodCultistComponent, ConvertRuneEvent>(TryConvertVictim);
+		//Rune event subscriptions
+		//SubscribeLocalEvent<BloodCultistComponent, ReviveRuneAttemptEvent>(TryReviveCultist);
+		//SubscribeLocalEvent<BloodCultistComponent, GhostifyRuneEvent>(TryGhostifyCultist);
+		//SubscribeLocalEvent<BloodCultistComponent, SacrificeRuneEvent>(TrySacrificeVictim);
+		//SubscribeLocalEvent<BloodCultistComponent, ConvertRuneEvent>(TryConvertVictim);
 
 		SubscribeLocalEvent<BloodCultistComponent, MindAddedMessage>(OnMindAdded);
 		SubscribeLocalEvent<BloodCultistComponent, MindRemovedMessage>(OnMindRemoved);
@@ -342,13 +343,14 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 	private bool MakeCultist(EntityUid traitor, BloodCultRuleComponent component)
     {
+		
 		// Don't add actions to juggernauts at this stage, they get them via GrantCommuneAction
-		if (HasComp<JuggernautComponent>(traitor))
-			return false;
+		//if (HasComp<JuggernautComponent>(traitor))
+		//	return false;
 		
 		// Don't add actions to shades - they are servants, not full cultists
-		if (HasComp<ShadeComponent>(traitor))
-			return false;
+		//if (HasComp<ShadeComponent>(traitor))
+		//	return false;
 
         if (_TryAssignCultMind(traitor))
 		{
@@ -389,10 +391,11 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 			if (TryComp<BloodCultistComponent>(traitor, out var cultist))
 			{
+				//Tear veil rune logic
 				// propogate the selected Nar'Sie summon location
 				// Enable Tear Veil rune if stage 2 (HasRisen) or later has been reached
-				cultist.ShowTearVeilRune = component.HasRisen || component.VeilWeakened;
-				cultist.LocationForSummon = component.LocationForSummon;
+				//cultist.ShowTearVeilRune = component.HasRisen || component.VeilWeakened;
+				//cultist.LocationForSummon = component.LocationForSummon;
 			}
 
 			if (component.HasEyes)
@@ -455,7 +458,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			AnnounceStatus(component, cultists);
 			component.InitialReportTime = null;
 		}
-
+/* logic for later stages of cult progression, commented out as the veil and final ritual rune don't exist.
 		if (component.VeilWeakened && !component.VeilWeakenedAnnouncementPlayed)
 		{
 			AnnounceStatus(component, cultists);
@@ -518,7 +521,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				}
 			}
 		}
-
+*/
 		// Check if blood thresholds have been reached for stage progression
 		if (!component.HasEyes && component.BloodCollected >= component.BloodRequiredForEyes)
 		{
@@ -536,28 +539,12 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			CompleteRiseStage(component, cultists);
 		}
 
-		// Stage 3 (VeilWeakened) requires the Tear the Veil ritual to be completed
-		// This is handled by the TearVeilSystem and cannot be triggered by blood collection alone
-
-		// Disabled: Conversion-based progression conflicts with blood-based progression
-		// The blood system provides better gameplay and doesn't trigger prematurely with low player counts
-		// if (!component.HasEyes && GetConversionsToEyes(component, cultists) == 0)
-		// {
-		// 	component.HasEyes = true;
-		// 	EmpowerCultists(cultists);
-		// }
-		//
-		// if (!component.HasRisen && GetConversionsToRise(component, cultists) == 0)
-		// {
-		// 	component.HasRisen = true;
-		// 	RiseCultists(cultists);
-		// }
 
 		foreach (EntityUid cultistUid in cultists)
 		{
 			if (!TryComp<BloodCultistComponent>(cultistUid, out var cultist))
 				continue;
-
+/* Tear veil logic, for when the feil is tornto be added later
 			// Ensure ShowTearVeilRune is always correct based on current stage
 			bool shouldShowTearVeil = component.HasRisen || component.VeilWeakened;
 			if (cultist.ShowTearVeilRune != shouldShowTearVeil)
@@ -598,7 +585,8 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				DistributeCommune(component, cultist.CommuningMessage, cultistUid);
 				cultist.CommuningMessage = null;
 			}
-
+*/
+/* Revive and sacrifice logic, to be added with runes
 			// Apply active revives
 			if (cultist.BeingRevived)
 			{
@@ -628,7 +616,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				_ConvertOffering(convert, component, cultistUid);
 				cultist.Convert = null;
 			}
-
+*/
 			// Check for decultification
 			if (cultist.DeCultification >= 100.0f)
 			{
@@ -661,7 +649,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				component.CultVictoryEndTime = _timing.CurTime + component.CultVictoryEndDelay;
 			}
 		}
-
+/* Juggernauts using the commune ability, to be added with juggernauts
 		// Process juggernaut communes
 		var juggernauts = AllEntityQuery<JuggernautComponent>();
 		while (juggernauts.MoveNext(out var juggernautUid, out var juggernaut))
@@ -672,7 +660,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				juggernaut.CommuningMessage = null;
 			}
 		}
-
+*/
 		// End the round
 		if (component.CultistsWin && !component.CultVictoryAnnouncementPlayed && component.CultVictoryEndTime != null && _timing.CurTime >= component.CultVictoryEndTime)
 		{
@@ -776,6 +764,8 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 		args.Append(Loc.GetString("cult-briefing-targets"));
     }
 
+/* Revive and sacrifice rune logic, to be added later
+
 	public void TryReviveCultist(EntityUid uid, BloodCultistComponent comp, ref ReviveRuneAttemptEvent args)
 	{
 		comp.ReviverUid = args.User;
@@ -790,49 +780,6 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 		_rejuvenate.PerformRejuvenate(uid);
 	}
 	
-	// Don't think this is used anymore.
-	private void TryGhostifyCultist(EntityUid uid, BloodCultistComponent comp, ref GhostifyRuneEvent args)
-	{
-		if (HasComp<GhostRoleComponent>(uid) || HasComp<GhostTakeoverAvailableComponent>(uid))
-			return;
-
-		/*
-		var settings = new GhostRoleRaffleSettings()
-		{
-			InitialDuration = initial,
-			JoinExtendsDurationBy = extends,
-			MaxDuration = max
-		};
-		var ghostRoleInfo = new GhostRoleInfo//()
-		{
-			Identifier = id,
-			Name = role.RoleName,
-			Description = role.RoleDescription,
-			Rules = role.RoleRules,
-			Requirements = role.Requirements,
-			Kind = kind,
-			RafflePlayerCount = rafflePlayerCount,
-			RaffleEndTime = raffleEndTime
-		};
-		*/
-
-		GhostRoleRaffleSettings settings;
-		settings = new GhostRoleRaffleSettings()
-		{
-			InitialDuration = 20,
-			JoinExtendsDurationBy = 5,
-			MaxDuration = 30
-		};
-
-		GhostRoleComponent ghostRole = AddComp<GhostRoleComponent>(uid);
-		EnsureComp<GhostTakeoverAvailableComponent>(uid);
-		ghostRole.RoleName = Loc.GetString("cult-ghost-role-name");
-		ghostRole.RoleDescription = Loc.GetString("cult-ghost-role-desc");
-		ghostRole.RoleRules = Loc.GetString("cult-ghost-role-rules");
-		ghostRole.RaffleConfig = new GhostRoleRaffleConfig(settings);
-		Speak(args.User, Loc.GetString("cult-invocation-revive"));
-	}
-
 	public void TrySacrificeVictim(EntityUid uid, BloodCultistComponent comp, ref SacrificeRuneEvent args)
 	{
 		comp.Sacrifice = new  SacrificingData(args.Victim, args.Invokers);
@@ -1001,7 +948,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			_sleeping.TryWaking((uid, sleeping), force: true);
 		}
 	}
-
+*/
 	private void OnMindAdded(EntityUid uid, BloodCultistComponent cultist, MindAddedMessage args)
 	{
 		_TryAssignCultMind(uid);
@@ -1125,8 +1072,10 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 		if (!forceLoud)
 		{
-			if (!TryGetActiveRule(out var component) || !component.VeilWeakened)
-				chatType = InGameICChatType.Whisper;
+			//Once veil rune is added, make it so the cult abilities are whispers only if the veil hasn't been weaked (ie early in the round)
+			//if (!TryGetActiveRule(out var component) || !component.VeilWeakened)
+			chatType = InGameICChatType.Whisper;
+			
 		}
 
 		_chat.TrySendInGameICMessage(performer, speech, chatType, false);
@@ -1347,6 +1296,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			return;
 		}
 		string purpleMessage;
+/* Cult progression mechanics, commented out since Veil rune isn't added yet
 		if (!component.VeilWeakened)
 		{
 			purpleMessage = Loc.GetString("cult-status-veil-strong");
@@ -1374,6 +1324,9 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				purpleMessage += "\n" + Loc.GetString("cult-blood-progress-final-summon-location",
 					("location", summonLocation.Name));
 		}
+*/
+		// Rise stage is complete.
+		string purpleMessage = Loc.GetString("cult-status-rise-complete"); //Delete this once the veil rune is re-added
 		if (specificCultist != null)
 			AnnounceToCultist(purpleMessage,
 					(EntityUid)specificCultist, color:new Color(111, 80, 143, 255), fontSize:12, newlineNeeded:true);
@@ -1423,7 +1376,9 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			nextThreshold = component.BloodRequiredForRise;
 			bloodNeeded = Math.Max(0.0, nextThreshold - currentBlood);
 		}
-		else if (!component.VeilWeakened)
+		//Veil logic, to be readded when the veil is.
+		//else if (!component.VeilWeakened)
+		else
 		{
 			// Stage 2 complete - need to do Tear Veil ritual
 			currentPhase = "Rise";
@@ -1507,7 +1462,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 		{
 			var metaData = MetaData(sender);
 			string localSpeech;
-			
+			/* Juggernaut logic, uncomment when juggernauts are added
 			// Check if sender is a juggernaut - use juggernaut accent words instead of random chant
 			if (HasComp<JuggernautComponent>(sender))
 			{
@@ -1528,7 +1483,9 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				// Generate a random single-word chant from cult-chants.ftl
 				localSpeech = GenerateChant(wordCount: 1);
 			}
-			
+			*/
+			localSpeech = GenerateChant(wordCount: 1); //Remove when juggernauts are added
+
 			_chat.TrySendInGameICMessage(sender, localSpeech, InGameICChatType.Whisper, ChatTransmitRange.Normal);
 			_jobs.MindTryGetJob(mindId, out var prototype);
 			string job = "Crewmember";
@@ -1565,6 +1522,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 		}
 	}
 
+/* Disabled for now, veil stage doesn't exist till the veil rune does.
 	/// <summary>
 	/// Progresses the cult to stage 3 (Veil Weakened) when the Tear the Veil ritual is completed.
 	/// Sets up the final summoning ritual site.
@@ -1596,7 +1554,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			return;
 		}
 	}
-
+*/
 	/// <summary>
 	/// Sets the win condition when Nar'Sie is summoned.
 	/// </summary>

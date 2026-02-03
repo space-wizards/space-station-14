@@ -20,6 +20,7 @@ public abstract class SharedBloodCultistSystem : EntitySystem
 
 		SubscribeLocalEvent<BloodCultistComponent, ComponentGetStateAttemptEvent>(OnCultistCompGetStateAttempt);
 		SubscribeLocalEvent<BloodCultistComponent, ComponentStartup>(DirtyRevComps);
+	/* Rune logic
 		SubscribeLocalEvent<BloodCultConstructShellComponent, CanDropTargetEvent>(OnJuggernautShellCanDropTarget);
 		SubscribeLocalEvent<BloodCultConstructShellComponent, GettingInteractedWithAttemptEvent>(OnJuggernautShellGettingInteractedWith);
 		SubscribeLocalEvent<JuggernautComponent, CanDropTargetEvent>(OnJuggernautCanDropTarget);
@@ -59,6 +60,7 @@ public abstract class SharedBloodCultistSystem : EntitySystem
 		{
 			args.Cancelled = false;
 		}
+	*/
 	}
 	
 	public override void Shutdown()
@@ -127,7 +129,7 @@ public sealed class BloodCultCommuneSendMessage : BoundUserInterfaceMessage
         Message = message;
     }
 }
-
+/* Rune events
 /// <summary>
 ///    Called when a revive rune is used on the target. Revives the target if
 ///	   and only if enough revive charges remain.
@@ -201,3 +203,4 @@ public sealed class ConvertRuneEvent : CancellableEntityEventArgs
 		Invokers = invokers;
 	}
 }
+*/

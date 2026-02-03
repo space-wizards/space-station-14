@@ -13,7 +13,9 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// Component for the BloodCultRuleSystem that stores info about winning/losing, player counts required
 ///	for stuff, and other round-wide stuff.
 /// </summary>
-[RegisterComponent, Access(typeof(BloodCultRuleSystem), typeof(BloodCult.EntitySystems.BloodCultRiftSetupSystem))]
+// Rift system used to set up final summoning ritual site, to be added later
+//[RegisterComponent, Access(typeof(BloodCultRuleSystem), typeof(BloodCult.EntitySystems.BloodCultRiftSetupSystem))]
+[RegisterComponent, Access(typeof(BloodCultRuleSystem))]//Swap for the above when the rift is added
 public sealed partial class BloodCultRuleComponent : Component
 {
 	/// <summary>
