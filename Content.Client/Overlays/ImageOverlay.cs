@@ -27,8 +27,22 @@ public sealed class ImageOverlay : Overlay
         _texturesToDraw.Clear();
         foreach (var comp in components)
         {
-            _texturesToDraw.Add((comp.PathToOverlayImage, comp.AdditionalColorOverlay));
+            if (comp.Active)
+                _texturesToDraw.Add((comp.PathToOverlayImage, comp.AdditionalColorOverlay));
         }
+    }
+
+    public void OverlayActivate(ImageOverlayComponent comp, bool isActive)
+    {
+        var overlayPair = (comp.PathToOverlayImage, comp.AdditionalColorOverlay);
+        comp.Active = isActive;
+        if (isActive)
+        {
+            if (!_texturesToDraw.Contains(overlayPair))
+                _texturesToDraw.Add(overlayPair);
+        }
+        else
+            _texturesToDraw.Remove(overlayPair);
     }
 
     protected override void Draw(in OverlayDrawArgs args)

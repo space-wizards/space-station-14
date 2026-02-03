@@ -1,3 +1,4 @@
+using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
@@ -14,11 +15,17 @@ public sealed class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponen
 
     private ImageOverlay _overlay = default!;
 
+
     public override void Initialize()
     {
         base.Initialize();
-
+        SubscribeLocalEvent<ImageOverlayComponent, ItemMaskToggledEvent>(OnItemToggled);
         _overlay = new();
+    }
+
+    private void OnItemToggled(Entity<ImageOverlayComponent> ent, ref ItemMaskToggledEvent args)
+    {
+        _overlay.OverlayActivate(ent.Comp, !args.Mask.Comp.IsToggled);
     }
 
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ImageOverlayComponent> component)
