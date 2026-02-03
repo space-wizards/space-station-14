@@ -754,8 +754,7 @@
       name: ghost-role-information-syndie-soldier-teamlead-name
       description: ghost-role-information-syndie-soldier-teamlead-description
       rules: ghost-role-information-rules-team-antagonist
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
+      antagLoadoutPrototype: GhostTeamAntagonist
       raffle:
         settings: default
     - type: Loadout
@@ -774,8 +773,7 @@
       name: ghost-role-information-syndie-soldier-name
       description: ghost-role-information-syndie-soldier-description
       rules: ghost-role-information-rules-team-antagonist
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
+      antagLoadoutPrototype: GhostTeamAntagonist
       raffle:
         settings: default
     - type: Loadout
@@ -793,8 +791,7 @@
       name: ghost-role-information-syndie-disaster-victim-name
       description: ghost-role-information-syndie-disaster-victim-description
       rules: ghost-role-information-freeagent-rules
-      mindRoles:
-      - MindRoleGhostRoleFreeAgent
+      antagLoadoutPrototype: GhostFreeAgent
       raffle:
         settings: short
     - type: Loadout
@@ -812,8 +809,7 @@
       name: ghost-role-information-pirate-name
       description: ghost-role-information-pirate-description
       rules: ghost-role-information-rules-team-antagonist
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
+      antagLoadoutPrototype: GhostTeamAntagonist
       raffle:
         settings: default
     - type: Loadout
@@ -831,8 +827,7 @@
       name: ghost-role-information-pirate-captain-name
       description: ghost-role-information-pirate-captain-description
       rules: ghost-role-information-rules-team-antagonist
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
+      antagLoadoutPrototype: GhostTeamAntagonist
       raffle:
         settings: default
     - type: Loadout
@@ -849,8 +844,7 @@
       name: ghost-role-information-blackmarketeer-name
       description: ghost-role-information-blackmarketeer-description
       rules: ghost-role-information-freeagent-rules
-      mindRoles:
-      - MindRoleGhostRoleFreeAgent
+      antagLoadoutPrototype: GhostFreeAgent
       raffle:
         settings: default
     - type: Loadout
@@ -869,8 +863,7 @@
       name: ghost-role-information-cossack-name
       description: ghost-role-information-cossack-description
       rules: ghost-role-information-freeagent-rules
-      mindRoles:
-      - MindRoleGhostRoleFreeAgent
+      antagLoadoutPrototype: GhostFreeAgent
       raffle:
         settings: default
     - type: Loadout

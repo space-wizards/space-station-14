@@ -7,10 +7,12 @@ namespace Content.Shared.Ghost.Roles;
 public sealed class GhostRoleRadioMessage : BoundUserInterfaceMessage
 {
     public ProtoId<GhostRolePrototype> ProtoId;
+    public NetEntity? Initiator;
 
-    public GhostRoleRadioMessage(ProtoId<GhostRolePrototype> protoId)
+    public GhostRoleRadioMessage(ProtoId<GhostRolePrototype> protoId, NetEntity? initiator)
     {
         ProtoId = protoId;
+        Initiator = initiator;
     }
 }
 

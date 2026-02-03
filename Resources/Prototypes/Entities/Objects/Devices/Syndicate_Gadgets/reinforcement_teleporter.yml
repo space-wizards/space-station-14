@@ -23,11 +23,11 @@
   description: Call in a syndicate agent of questionable quality, instantly!
   components:
   - type: GhostRole
+    minion: true
     name: ghost-role-information-syndicate-reinforcement-spy-name
     description: ghost-role-information-syndicate-reinforcement-spy-description
     rules: ghost-role-information-syndicate-reinforcement-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: GhostTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -42,11 +42,11 @@
   suffix: NukeOps
   components:
   - type: GhostRole
+    minion: true
     name: ghost-role-information-nukeop-reinforcement-name
     description: ghost-role-information-nukeop-reinforcement-description
     rules: ghost-role-information-nukeop-reinforcement-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: GhostTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -59,11 +59,11 @@
   description: Calls in a specially trained ancestor of your choosing to assist you.
   components:
   - type: GhostRole
+    minion: true
     name: ghost-role-information-syndicate-monkey-reinforcement-name
     description: ghost-role-information-syndicate-monkey-reinforcement-description
     rules: ghost-role-information-syndicate-reinforcement-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: GhostTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -76,6 +76,7 @@
   suffix: NukeOps
   components:
   - type: GhostRole
+    minion: true
     rules: ghost-role-information-nukeop-reinforcement-rules
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgentNukeops
@@ -88,11 +89,11 @@
   description: Calls in a faithfully trained cat with a microbomb to assist you.
   components:
   - type: GhostRole
+    minion: true
     name: ghost-role-information-SyndiCat-name
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-syndicate-reinforcement-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: GhostTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -108,11 +109,11 @@
   suffix: NukeOps
   components:
     - type: GhostRole
+      minion: true
       name: ghost-role-information-syndicate-cyborg-assault-name
       description: ghost-role-information-syndicate-cyborg-description
       rules: ghost-role-information-silicon-rules
-      mindRoles:
-      - MindRoleGhostRoleSilicon
+      antagLoadoutPrototype: GhostSilicon
       raffle:
         settings: default
       job: Borg

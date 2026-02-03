@@ -24,6 +24,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
@@ -294,7 +295,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         AntagSelectionDefinition def,
         bool midround = false)
     {
-        var playerPool = GetPlayerPool(ent, pool, def);
+        if (!_prototypeManager.Resolve<AntagLoadoutPrototype>(def.AntagLoadout.Id, out var loadout))
+            return;
+
+        var playerPool = GetPlayerPool(ent, pool, def, loadout);
         var existingAntagCount = ent.Comp.PreSelectedSessions.TryGetValue(def, out var existingAntags) ? existingAntags.Count : 0;
         var count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def) - existingAntagCount;
 
@@ -368,7 +372,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (checkPref && !ValidAntagPreference(session, def.PrefRoles))
             return false;
 
-        if (!IsSessionValid(ent, session, def) || !IsEntityValid(session.AttachedEntity, def))
+        if (!_prototypeManager.Resolve<AntagLoadoutPrototype>(def.AntagLoadout.Id, out var loadout))
+            return false;
+
+        if (!IsSessionValid(ent, session, def, loadout) || !IsEntityValid(session.AttachedEntity, loadout))
             return false;
 
         if (onlyPreSelect)
@@ -376,6 +383,21 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         else
             MakeSessionAntagonist(ent, session, def);
 
+        return true;
+    }
+
+    public bool TryMakeNonGameRuleAntag(EntityUid player, AntagLoadoutPrototype antagLoadout, EntityUid initiator)
+    {
+        if (!IsEntityValid(player, antagLoadout))
+            return false;
+
+        if (!_playerManager.TryGetSessionByEntity(player, out var session))
+            return false;
+
+        if (MindHasSpecificRoles(session.GetMind(), antagLoadout.MindRoles))
+            return false;
+
+        InitializeAntag(player, session, antagLoadout, initiator, null);
         return true;
     }
 
@@ -531,7 +553,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// Initializes the antagonist status on the specified entity.
     /// Adds the needed components, loadouts, items, attaches the player and fires off an event.
     /// </summary>
-    public void InitializeAntag(EntityUid antag, ICommonSession? session, AntagLoadoutPrototype antagLoadout, EntityUid initiator, Entity<AntagSelectionComponent>? gameRule)
+    private void InitializeAntag(EntityUid antag, ICommonSession? session, AntagLoadoutPrototype antagLoadout, EntityUid initiator, Entity<AntagSelectionComponent>? gameRule)
     {
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
         EntityManager.AddComponents(antag, antagLoadout.AddComponents);
@@ -576,13 +598,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Gets an ordered player pool based on player preferences and the antagonist definition.
     /// </summary>
-    public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, IList<ICommonSession> sessions, AntagSelectionDefinition def)
+    public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, IList<ICommonSession> sessions, AntagSelectionDefinition def, AntagLoadoutPrototype loadout)
     {
         var preferredList = new List<ICommonSession>();
         var fallbackList = new List<ICommonSession>();
+
         foreach (var session in sessions)
         {
-            if (!IsSessionValid(ent, session, def) || !IsEntityValid(session.AttachedEntity, def))
+            if (!IsSessionValid(ent, session, def, loadout) || !IsEntityValid(session.AttachedEntity, loadout))
                 continue;
 
             if (ent.Comp.PreSelectedSessions.TryGetValue(def, out var preSelected) && preSelected.Contains(session))
@@ -602,10 +625,23 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         return new AntagSelectionPlayerPool(new() { preferredList, fallbackList });
     }
 
+    private bool MindHasSpecificRoles(EntityUid? mind, List<EntProtoId>? roles)
+    {
+        if (roles != null && mind != null)
+        {
+            foreach (var role in roles)
+            {
+                if (_role.MindHasSpecificRole(mind, role.Id))
+                    return true;
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// Checks if a given session is valid for an antagonist.
     /// </summary>
-    public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, EntityUid? mind = null)
+    public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, AntagLoadoutPrototype antagLoadout, EntityUid? mind = null)
     {
         // TODO ROLE TIMERS
         // Check if antag role requirements are met
@@ -621,7 +657,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         mind ??= session.GetMind();
 
-        //todo: we need some way to check that we're not getting the same role twice. (double picking thieves or zombies through midrounds)
+        if (MindHasSpecificRoles(mind, antagLoadout.MindRoles))
+            return false;
 
         switch (def.MultiAntagSetting)
         {
@@ -653,10 +690,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Checks if a given entity (mind/session not included) is valid for a given antagonist.
     /// </summary>
-    public bool IsEntityValid(EntityUid? entity, AntagSelectionDefinition def)
+    public bool IsEntityValid(EntityUid? entity, AntagLoadoutPrototype loadout)
     {
-        if (!_prototypeManager.Resolve<AntagLoadoutPrototype>(def.AntagLoadout.Id, out var loadout))
-            return false;
 
         // If the player has not spawned in as any entity (e.g., in the lobby), they can be given an antag role/entity.
         if (entity == null)

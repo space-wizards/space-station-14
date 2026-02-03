@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseTargetObjective
+  id: MinionHumilityObjective
+  description: You have to do whatever your master tells you to do, even if he tells you to commit suicide.
+  components:
+  - type: TargetObjective
+    title: objective-condition-minion-humility
+  - type: PickSpecificPerson
+  - type: Objective
+    difficulty: 0
+    issuer: Master
+    icon:
+      sprite: Objects/Misc/folders.rsi
+      state: folder-colormap
+  - type: FreeObjective
+
+- type: entity
+  parent: BaseHumilityObjective
+  id: ReinforcementsHumilityObjective
+  description: You must not jeopardize their mission under any circumstances. Above all else, you must not be captured alive.
+  components:
+  - type: TargetObjective
+    title: objective-condition-minion-reinforcement-humility

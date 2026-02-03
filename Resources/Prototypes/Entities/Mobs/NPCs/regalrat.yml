@@ -89,8 +89,7 @@
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
     rules: ghost-role-information-antagonist-rules
-    mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    antagLoadoutPrototype: GhostSoloAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

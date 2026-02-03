@@ -1,5 +1,5 @@
 - type: antagLoadout
-  id: Zombie
+  id: InitialInfected
   blacklist:
     components:
     - ZombieImmune
@@ -15,3 +15,8 @@
   - type: InitialInfected
   mindRoles:
   - MindRoleInitialInfected
+
+- type: antagLoadout
+  id: Zombie
+  mindRoles:
+  - MindRoleZombie

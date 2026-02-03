@@ -55,8 +55,7 @@
       rules: ghost-role-information-Death-Squad-rules
       raffle:
         settings: short
-      mindRoles:
-      - MindRoleGhostRoleFamiliar
+      antagLoadoutPrototype: GhostFamiliar
       job: DeathSquad
     - type: Loadout
       prototypes: [ DeathSquadGear ]

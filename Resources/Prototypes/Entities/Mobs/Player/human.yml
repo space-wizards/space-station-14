@@ -23,8 +23,6 @@
   suffix: Human, Traitor
   components:
   # make the player a traitor once its taken
-  - type: AutoGameRuleAntag
-    gameRule: TraitorReinforcement
 
 - type: entity
   parent: MobHumanSyndicateAgent

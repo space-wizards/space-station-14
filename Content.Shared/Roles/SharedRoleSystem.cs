@@ -653,6 +653,27 @@ public abstract class SharedRoleSystem : EntitySystem
         return (antagonist, exclusiveAntag);
     }
 
+    public bool MindHasSpecificRole(EntityUid? mindId, EntProtoId<MindRoleComponent> mindRole)
+    {
+        if (mindId is null)
+            return false;
+
+        return CheckMindHasSpecificRole(mindId.Value, mindRole);
+    }
+
+    private bool CheckMindHasSpecificRole(Entity<MindComponent?> mind, EntProtoId<MindRoleComponent> mindRole)
+    {
+        if (!Resolve(mind.Owner, ref mind.Comp))
+            return false;
+
+        foreach (var role in mind.Comp.MindRoleContainer.ContainedEntities)
+        {
+            if (mindRole.Id == MetaData(role).EntityPrototype?.ID)
+                return true;
+        }
+        return false;
+    }
+
     /// <summary>
     /// Play a sound for the mind, if it has a session attached.
     /// Use this for role greeting sounds.

@@ -21,6 +21,7 @@
     - prefRoles: [ Thief ]
       max: 3
       playerRatio: 20
+      multiAntagSetting: NotExclusive
       lateJoinAdditional: true
       antagLoadout: Thief
   - type: DynamicRuleCost
@@ -62,13 +63,11 @@
     - prefRoles: [ MothershipCore ]
       fallbackRoles: [ Xenoborg ]
       spawnerPrototype: SpawnPointGhostRoleMothershipCore
-      mindRoles:
-      - MindRoleMothershipCore
+      antagLoadoutPrototype: MothershipCore
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
-      mindRoles:
-      - MindRoleXenoborg
+      antagLoadoutPrototype: Xenoborg
       min: 4
       max: 4
   - type: DynamicRuleCost

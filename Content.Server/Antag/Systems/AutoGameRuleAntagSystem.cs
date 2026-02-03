@@ -19,11 +19,11 @@ public sealed class AutoGameRuleAntagSystem : EntitySystem
         SubscribeLocalEvent<AutoGameRuleAntagComponent, MindAddedMessage>(OnMindAdded);
     }
 
-    private void OnMindAdded(EntityUid uid, AutoGameRuleAntagComponent comp, MindAddedMessage args)
+    private void OnMindAdded(Entity<AutoGameRuleAntagComponent> ent, ref MindAddedMessage args)
     {
         if (!_player.TryGetSessionById(args.Mind.Comp.UserId, out var session))
             return;
 
-        _antag.ForceMakeAntag<AutoGameRuleAntagComponent>(session, comp.GameRule);
+        _antag.ForceMakeAntag<AutoGameRuleAntagComponent>(session, ent.Comp.GameRule);
     }
 }

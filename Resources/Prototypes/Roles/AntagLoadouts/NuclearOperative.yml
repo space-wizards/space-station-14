@@ -48,7 +48,7 @@
   - MindRoleNukeopsMedic
 
 - type: antagLoadout
-  id: LoneOps
+  id: Loneops
   parents: Nukeops
   addComponents:
   - type: NukeOperative

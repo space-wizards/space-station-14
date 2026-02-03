@@ -319,8 +319,7 @@
     prob: 0
     description: ghost-role-information-angry-slimes-description
     rules: ghost-role-information-angry-slimes-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: GhostTeamAntagonist
     raffle:
       settings: short
   - type: NpcFactionMember
