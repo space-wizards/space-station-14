@@ -1,4 +1,7 @@
 ﻿using Content.Server.Power.Components;
+using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.Power;
 using Content.Shared.Verbs;
 
 namespace Content.Server.Power.EntitySystems;
@@ -33,11 +36,40 @@ public sealed class VoltageTogglerSystem : EntitySystem
                     entity.Comp.SelectedVoltageLevel = currIndex;
                     Dirty(entity);
 
-                    // TODO: add stuff here
+                    ChangeVoltage(entity, setting);
                 }
             };
             args.Verbs.Add(verb);
             index++;
         }
+    }
+
+    private void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting)
+    {
+        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainerComp))
+            return;
+
+        if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumerComp))
+            return;
+
+        var newNodeGroupId = NodeGroupID.Apc;
+
+        switch (setting.Voltage)
+        {
+            case Voltage.Apc:
+                newNodeGroupId = NodeGroupID.Apc;
+                break;
+            case Voltage.Medium:
+                newNodeGroupId = NodeGroupID.MVPower;
+                break;
+            case Voltage.High:
+                newNodeGroupId = NodeGroupID.HVPower;
+                break;
+        }
+
+        nodeContainerComp.Nodes["input"].SetNodeGroupId(newNodeGroupId);
+
+        powerConsumerComp.Voltage = setting.Voltage;
+        powerConsumerComp.SetDrawRate(setting.Wattage);
     }
 }
