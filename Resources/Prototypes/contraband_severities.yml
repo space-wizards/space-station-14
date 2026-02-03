@@ -1,9 +1,5 @@
-# SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Kara <lunarautomaton6@gmail.com>
-# SPDX-FileCopyrightText: 2025 Hitlinemoss <209321380+Hitlinemoss@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 John <35928781+sporkyz@users.noreply.github.com>
-# SPDX-License-Identifier: MIT
+# Improvised weapons/gear, etc. Not departmentally restricted per se, but you shouldn't really have it around
+# as non-sec without a valid reason.
 
 - type: contrabandSeverity
   id: Minor

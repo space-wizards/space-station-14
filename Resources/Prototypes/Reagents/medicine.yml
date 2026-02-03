@@ -1,74 +1,3 @@
-# SPDX-FileCopyrightText: 2019 moneyl <8206401+Moneyl@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2020 Víctor Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2020 nuke <47336974+nuke-makes-games@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2020 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2021-2022 mirrorcult <lunarautomaton6@gmail.com>
-# SPDX-FileCopyrightText: 2021 Elijahrane <60792108+Elijahrane@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2021 xRiriq <94037592+xRiriq@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2021 DmitriyRubetskoy <75271456+DmitriyRubetskoy@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2021 Swept <sweptwastaken@protonmail.com>
-# SPDX-FileCopyrightText: 2021 SethLafuente <84478872+SethLafuente@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2021 ScalyChimp <72841710+scaly-chimp@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022-2025 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022-2023 Kevin Zheng <kevinz5000@gmail.com>
-# SPDX-FileCopyrightText: 2022-2023 Veritius <veritiusgaming@gmail.com>
-# SPDX-FileCopyrightText: 2022-2023 Interrobang01 <113810873+Interrobang01@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022-2023 Emisse <99158783+Emisse@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022-2023 Alex Evgrashin <aevgrashin@yandex.ru>
-# SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
-# SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Myctai <108953437+Myctai@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 lapatison <100279397+lapatison@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 CrudeWax <75271456+CrudeWax@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Ripmorld <60119809+UKNOWH@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Julian Giebel <juliangiebel@live.de>
-# SPDX-FileCopyrightText: 2022 EmoGarbage404 <98561806+EmoGarbage404@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Peptide90 <78795277+Peptide90@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Jack Fox <35575261+DubiousDoggo@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Sam Weaver <weaversam8@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023-2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023-2024 themias <89101928+themias@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023-2024 Scribbles0 <91828755+Scribbles0@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023-2024 Ubaser <134914314+UbaserB@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 CrigCrag <137215465+CrigCrag@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 IProduceWidgets <107586145+IProduceWidgets@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Doru991 <75124791+Doru991@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Alekshhh <44923899+Alekshhh@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Dynexust <47256242+Dynexust@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Sir Winters <7543955+Owai-Seek@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 DjfjdfofdjfjD <119279366+DjfjdfofdjfjD@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Maxtone <124747282+MagnusCrowe@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024-2025 SlamBamActionman <slambamactionman@gmail.com>
-# SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Gotimanga <127038462+Gotimanga@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 potato1234_x <79580518+potato1234x@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Ghagliiarghii <68826635+Ghagliiarghii@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
-# SPDX-FileCopyrightText: 2024 EdenTheLiznerd <138748328+Eden077@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Skye <57879983+Rainbeon@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 icekot8 <93311212+icekot8@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025-2026 Princess Cheeseballs <66055347+Princess-Cheeseballs@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 emberwinters <ivan.farias12221@gmail.com>
-# SPDX-FileCopyrightText: 2025 PJB3005 <pieterjan.briers+git@gmail.com>
-# SPDX-FileCopyrightText: 2025 Vasilis The Pikachu <vasilis@pikachu.systems>
-# SPDX-FileCopyrightText: 2025 Admiral-Obvious-001 <89495925+Admiral-Obvious-001@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Red <96445749+TheShuEd@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Errant <35878406+Errant-4@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 FrostRibbon <107171544+FrostRibbon@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Samuka-C <47865393+Samuka-C@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 OnyxTheBrave <131422822+OnyxTheBrave@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Alzore <140123969+Blackern5000@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 āda <ss.adasts@gmail.com>
-# SPDX-License-Identifier: MIT
-
 - type: reagent
   id: Cryptobiolin
   name: reagent-name-cryptobiolin
@@ -80,7 +9,7 @@
   flavor: medicine
   color: "#081a80"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectScrambled
@@ -98,7 +27,7 @@
   flavor: medicine
   color: "#3a1d8a"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -152,7 +81,7 @@
   flavor: medicine
   color: "#64ffe6"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:AdjustReagent
         reagent: Histamine
@@ -178,7 +107,7 @@
   flavor: medicine
   color: "#2d5708"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrunk
@@ -198,7 +127,7 @@
   flavor: medicine
   color: "#bd5902"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -216,7 +145,7 @@
   flavor: medicine
   color: "#ffaa00"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EvenHealthChange
         damage:
@@ -258,7 +187,7 @@
     amount: 5
   - !type:PlantCryoxadone {}
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:EvenHealthChange
           conditions:
@@ -281,7 +210,7 @@
   flavor: medicine
   color: "#32cd32"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:HealthChange
           conditions:
@@ -300,7 +229,7 @@
   flavor: medicine
   color: "#215263"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -334,7 +263,7 @@
   flavor: medicine
   color: "#0041a8"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -360,7 +289,7 @@
   flavor: medicine
   color: "#4da0bd"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -394,7 +323,7 @@
   flavor: medicine
   color: "#d2fffa"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:AdjustReagent
         conditions:
@@ -466,7 +395,7 @@
   flavor: medicine
   color: "#4cb580"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -499,7 +428,7 @@
   flavor: medicine
   color: "#422912"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:Vomit
         conditions:
@@ -517,7 +446,7 @@
   flavor: medicine
   color: "#731024"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.1 # Smaller doses stabilize critical people for longer. Gives it a specific usecase as to not be entirely outclassed by dex+
       effects:
       - !type:HealthChange
@@ -540,7 +469,7 @@
   flavor: medicine
   color: "#bf3d19"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -575,7 +504,7 @@
   flavor: medicine
   color: "#ff7db5"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -609,7 +538,7 @@
   flavor: medicine
   color: "#ff867d"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         probability: 0.3
@@ -660,7 +589,7 @@
     - !type:PlantPhalanximine
       minScale: 4
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.1
       effects:
       - !type:HealthChange
@@ -695,7 +624,7 @@
   flavor: violets
   color: "#9423FF"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -723,7 +652,7 @@
   flavor: medicine
   color: "#86caf7"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:CureZombieInfection
           conditions:
@@ -740,7 +669,7 @@
   flavor: medicine
   color: "#1274b5"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:CureZombieInfection
           innoculate: true
@@ -758,7 +687,7 @@
   flavor: medicine
   color: "#FFE774"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:ModifyBleed
         amount: -0.5
@@ -772,7 +701,7 @@
   flavor: salty
   color: "#0064C8"
   metabolisms:
-    Drink:
+    Bloodstream:
       effects:
         - !type:SatiateThirst
           factor: 6
@@ -788,7 +717,7 @@
   flavor: medicine
   color: "#f4dab8"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -803,8 +732,11 @@
   physicalDesc: reagent-physical-desc-starry
   flavor: medicine
   color: "#2b2f77"
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: -5
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -827,7 +759,7 @@
   flavor: medicine
   color: "#d49a2f"
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -854,7 +786,7 @@
   flavor: medicine
   color: "#ba7d7d"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       # Medium-large quantities can hurt you instead,
       # but still technically stop your bleeding.
@@ -878,7 +810,7 @@
   flavor: medicine
   color: "#00e5ff"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         conditions:
@@ -904,7 +836,7 @@
   flavor: medicine
   color: "#2690b5"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       # what the hell, this isn't satiating at all!!
       - !type:SatiateHunger
@@ -920,7 +852,7 @@
   flavor: medicine
   color: "#fcf7f9"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EvenHealthChange
         damage:
@@ -938,7 +870,7 @@
   flavor: medicine
   color: "#520e30"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EvenHealthChange
         conditions:
@@ -996,7 +928,7 @@
   flavor: medicine
   color: "#404040"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EyeDamage
 
@@ -1009,7 +941,7 @@
   flavor: magical
   color: "#b50ee8"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:MakeSentient
         conditions:
@@ -1026,7 +958,7 @@
   flavor: medicine
   color: "#d5d5e4"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:Jitter
       - !type:GenericStatusEffect
@@ -1056,7 +988,7 @@
   flavor: medicine
   color: "#b0abaa"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
@@ -1082,7 +1014,7 @@
   flavor: sweet
   color: "#e0a5b9"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -1142,7 +1074,7 @@
   flavor: syrupy
   color: "#283332"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -1168,7 +1100,7 @@
   flavor: fizzy
   color: "#b9bf93"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -1194,7 +1126,7 @@
   flavor: sour
   color: "#ff3636"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -1222,14 +1154,10 @@
   flavor: holy
   color: "#91C3F7"
   metabolisms:
-    Drink:
+    Digestion:
       effects:
       - !type:SatiateThirst
         factor: 3
-    Medicine:
-      effects:
-      - !type:DeCultify
-        amount: 2.5
       - !type:HealthChange
         conditions:
         - !type:TotalDamageCondition
@@ -1269,7 +1197,7 @@
   flavor: syrupy
   color: "#aa4308"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.1 # slow metabolism to not be a godly combat med, its for treating burn victims efficiently
       effects:
       - !type:HealthChange
@@ -1309,7 +1237,7 @@
   flavor: metallic
   color: "#8147ff"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       # heals shocks and removes shock chems
@@ -1357,7 +1285,7 @@
   color: "#b5e36d"
   worksOnTheDead: true
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:ReduceRotting
           seconds: 20
@@ -1378,7 +1306,7 @@
   color: "#0cbfe9"
   worksOnTheDead: true
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EvenHealthChange
         conditions:
@@ -1415,7 +1343,7 @@
     amount: 5
   - !type:PlantCryoxadone {}
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:EvenHealthChange
           conditions:
@@ -1442,7 +1370,7 @@
   color: "#89f77f"
   worksOnTheDead: true
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EvenHealthChange
         conditions:
@@ -1460,7 +1388,7 @@
   flavor: sweet
   color: "#A0A0A0"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:PopupMessage
         conditions:
@@ -1481,7 +1409,7 @@
   flavor: bitter
   color: "#07E79E"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         conditions:
@@ -1525,7 +1453,7 @@
   flavor: medicine
   color: "#baa15d"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:GenericStatusEffect
         key: RadiationProtection
@@ -1550,7 +1478,7 @@
   flavor: medicine
   color: "#27870a"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:Emote
         emote: Yawn
@@ -1604,7 +1532,7 @@
   flavor: medicine
   color: "#d0e21b"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects: # One day this could be useful for treating blood clots, if we get those
       - !type:ModifyStatusEffect
         effectProto: StatusEffectAnticoagulant

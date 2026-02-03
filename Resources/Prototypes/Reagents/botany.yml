@@ -1,28 +1,3 @@
-# SPDX-FileCopyrightText: 2021 mirrorcult <lunarautomaton6@gmail.com>
-# SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2021 Swept <sweptwastaken@protonmail.com>
-# SPDX-FileCopyrightText: 2022 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Alex Evgrashin <aevgrashin@yandex.ru>
-# SPDX-FileCopyrightText: 2022 Sam Weaver <weaversam8@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
-# SPDX-FileCopyrightText: 2023 Sailor <109166122+Equivocateur@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Doru991 <75124791+Doru991@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Maxtone <124747282+MagnusCrowe@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Alpha-Two <92269094+Alpha-Two@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Eris <eris@erisws.com>
-# SPDX-FileCopyrightText: 2024 Flesh <62557990+PolterTzi@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 IlyaElDunaev <154531074+IlyaElDunaev@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
-# SPDX-FileCopyrightText: 2025 0-Anon <cec124@case.edu>
-# SPDX-FileCopyrightText: 2025 Princess Cheeseballs <66055347+Princess-Cheeseballs@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 PJB3005 <pieterjan.briers+git@gmail.com>
-# SPDX-FileCopyrightText: 2025 Vasilis The Pikachu <vasilis@pikachu.systems>
-# SPDX-License-Identifier: MIT
-
 - type: reagent
   id: EZNutrient
   name: reagent-name-e-z-nutrient
@@ -35,7 +10,7 @@
     - !type:PlantAdjustNutrition
       amount: 2
   metabolisms:
-    Food:
+    Digestion:
       effects:
       - !type:SatiateHunger
         conditions:
@@ -59,7 +34,7 @@
       probability: 0.3
       amount: 0.4
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:SatiateHunger
         conditions:
@@ -87,7 +62,7 @@
     - !type:PlantAdjustPests
       amount: -6
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -115,7 +90,7 @@
     - !type:PlantAdjustMutationMod
       amount: 0.1
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -147,7 +122,7 @@
       amount: 1
     - !type:RobustHarvest {}
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -171,8 +146,6 @@
             Asphyxiation: 1
             Heat: 2
             Poison: 1
-    Medicine:
-      effects:
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
@@ -212,7 +185,7 @@
     - !type:PlantAdjustWeeds
       amount: -6
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -238,13 +211,13 @@
   - !type:PlantAdjustHealth
     amount: 0.5
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
           types:
             Caustic: 1
-    Gas:
+    Respiration:
       effects:
       - !type:HealthChange
         conditions:
@@ -328,7 +301,7 @@
     amount: 1
   - !type:PlantDiethylamine {}
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:

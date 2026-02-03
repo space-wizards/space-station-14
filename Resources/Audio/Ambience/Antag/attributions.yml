@@ -1,14 +1,3 @@
-# SPDX-FileCopyrightText: 2023 Bixkitts <72874643+Bixkitts@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 JoeHammad1844 <130668733+JoeHammad1844@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Flareguy <78941145+Flareguy@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 HighTechPuddle <131694215+HighTechPuddle@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2023 Vyacheslav Titov <rincew1nd@ya.ru>
-# SPDX-FileCopyrightText: 2024 Zachary Higgs <compgeek223@gmail.com>
-# SPDX-FileCopyrightText: 2025 Samuka <47865393+Samuka-C@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Hannah Giovanna Dawson <karakkaraz@gmail.com>
-# SPDX-License-Identifier: MIT
-
 - files: ["nukeops_start.ogg, traitor_start.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station"
