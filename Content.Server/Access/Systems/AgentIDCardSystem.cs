@@ -85,7 +85,7 @@ namespace Content.Server.Access.Systems
         private void OnVoiceMaskNameChanged(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<VoiceMaskNameUpdatedEvent> args)
         {
             if (!TryComp<IdCardComponent>(ent, out var idCard))
-            return;
+                return;
 
             _cardSystem.TryChangeFullName(ent, args.Args.NewName, idCard);
         }
