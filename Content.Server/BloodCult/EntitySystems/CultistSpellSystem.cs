@@ -167,7 +167,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 		// If not on an empowering rune and they have existing spells, remove the actions matching those spells
 		//When runes are re-added, uncomment this
 		//if (!standingOnRune && comp.KnownSpells.Count > 0)
-		if (comp.KnownSpells.Count > 0)
+		if (comp.KnownSpells.Count > 0) //Swap for the above when runes are re-added
 		{
 			RemoveActionsMatchingKnownSpells(uid, comp);
 			// Clear KnownSpells since they can only have 0 spells when not on rune

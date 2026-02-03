@@ -124,19 +124,19 @@
     slots:
     - back
   - type: DisarmMalus
-  - type: BloodCultRuneCarver
-    timeToCarve: 15
-  - type: UserInterface
-    interfaces:
-      enum.RunesUiKey.Key:
-        type: RunesBoundUserInterface
-  - type: ActivatableUI
-    key: enum.RunesUiKey.Key
-    inHandsOnly: true
-    singleUser: true
-    blockSpectators: true
-    verbOnly: false
-    verbText: cult-rune-select
+#  - type: BloodCultRuneCarver
+#    timeToCarve: 15
+#  - type: UserInterface
+#    interfaces:
+#      enum.RunesUiKey.Key:
+#        type: RunesBoundUserInterface
+#  - type: ActivatableUI
+#    key: enum.RunesUiKey.Key
+#    inHandsOnly: true
+#    singleUser: true
+#    blockSpectators: true
+#    verbOnly: false
+#    verbText: cult-rune-select
   - type: SolutionContainerManager
     solutions:
       melee:

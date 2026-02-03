@@ -403,7 +403,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				// Ensure AppearanceComponent exists before setting eyes visual
 				// Only enable eyes if the body has an attached head
 				var appearance = EnsureComp<AppearanceComponent>(traitor);
-				var hasHead = HasComp<HumanoidAppearanceComponent>(traitor);
+				var hasHead = HasComp<HumanoidProfileComponent>(traitor);
 				if (!hasHead && TryComp<BodyComponent>(traitor, out var body))
 				{
 					// Fallback: check if body has brain organ (non-humanoids may have heads with brains)
@@ -578,6 +578,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				AnnounceStatus(component, cultists, cultistUid);
 				cultist.StudyingVeil = false;
 			}
+*/
 
 			// Distribute cult communes
 			if (cultist.CommuningMessage != null)
@@ -585,7 +586,6 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				DistributeCommune(component, cultist.CommuningMessage, cultistUid);
 				cultist.CommuningMessage = null;
 			}
-*/
 /* Revive and sacrifice logic, to be added with runes
 			// Apply active revives
 			if (cultist.BeingRevived)
@@ -727,11 +727,13 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
         var cultistList = new List<EntityUid>();
 
         var cultists = AllEntityQuery<BloodCultistComponent, MobStateComponent>();
-		var constructs = AllEntityQuery<BloodCultConstructComponent, MobStateComponent>();
+		//Once cult constructs are readded, uncomment the below
+		//var constructs = AllEntityQuery<BloodCultConstructComponent, MobStateComponent>();
         while (cultists.MoveNext(out var uid, out var cultistComp, out _))
         {
             cultistList.Add(uid);
         }
+		/* Once cult constructs are readded, uncomment the below
 		if (includeConstructs)
 		{
 			while (constructs.MoveNext(out var uid, out var constructComp, out _))
@@ -739,7 +741,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 				cultistList.Add(uid);
 			}
 		}
-
+		*/
         return cultistList;
     }
 
@@ -983,7 +985,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 		// But only if the body has an attached head
 		if (ruleComp.HasEyes)
 		{
-			var hasHead = HasComp<HumanoidAppearanceComponent>(uid);
+			var hasHead = HasComp<HumanoidProfileComponent>(uid);
 			if (!hasHead && TryComp<BodyComponent>(uid, out var body))
 			{
 				// Fallback: check if body has brain organ (non-humanoids may have heads with brains)
@@ -1012,7 +1014,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 		// Check if body has an attached head
 		// How they got this far without a head is questionable
-		var hasHead = HasComp<HumanoidAppearanceComponent>(bodyUid);
+		var hasHead = HasComp<HumanoidProfileComponent>(bodyUid);
 		if (!hasHead && TryComp<BodyComponent>(bodyUid, out var body))
 		{
 			// Fallback: check if body has brain organ (non-humanoids may have heads with brains)
@@ -1047,6 +1049,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 		{
 			_roundEnd.RequestRoundEnd(
 				TimeSpan.FromMinutes(10),
+				null,
 				null,
 				false,
 				"cult-evac-called-announcement",
@@ -1223,7 +1226,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			if (EntityManager.TryGetComponent(cultist, out AppearanceComponent? appearance))
 			{
 				// Only enable eyes if the body has an attached head
-				var hasHead = HasComp<HumanoidAppearanceComponent>(cultist);
+				var hasHead = HasComp<HumanoidProfileComponent>(cultist);
 				if (!hasHead && TryComp<BodyComponent>(cultist, out var body))
 				{
 					// Fallback: check if body has brain organ (non-humanoids may have heads with brains)
@@ -1339,8 +1342,9 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 					color:new Color(111, 80, 143, 255), fontSize:12, newlineNeeded:true);
 
 	var totalCultists = cultists.Count;
-	var totalConstructs = constructs.Count;
-
+	//Once cult constructs are readded, uncomment the below
+	//var totalConstructs = constructs.Count;
+	var totalConstructs = 0;
 	var cultistLine = Loc.GetString("cult-status-cultdata",
 		("cultMembers", totalCultists),
 		("constructCount", totalConstructs));
@@ -1495,7 +1499,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			string job = "Crewmember";
 			if (prototype != null)
 				job = prototype.LocalizedName;
-			AnnounceToCultists(message = Loc.GetString("cult-commune-message", ("name", metaData.EntityName),
+			AnnounceToCultists(Loc.GetString("cult-commune-message", ("name", metaData.EntityName),
 				("job", job), ("message", formattedMessage)), color:new Color(166, 27, 27, 255),
 				fontSize: 12, newlineNeeded:false, includeGhosts:true);
 		}
