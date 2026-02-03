@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Vulpkanin use the standard hugging emote now
-    type: Tweak
-  id: 8977
-  time: '2025-09-18T17:17:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40183
 - author: vgskye
   changes:
   - message: You can now get chemical analysis goggles from a ChemDrobe.
@@ -3998,3 +3991,10 @@
   id: 9483
   time: '2026-02-02T23:54:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42757
+- author: sowelipililimute
+  changes:
+  - message: Dragons now heal when eating people again
+    type: Fix
+  id: 9484
+  time: '2026-02-03T00:32:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42758
