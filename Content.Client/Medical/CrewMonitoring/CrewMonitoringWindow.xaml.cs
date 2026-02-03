@@ -108,8 +108,8 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var otherDeparts = new List<string>();
         foreach (var department in departments)
         {
-            if (_prototypeManager.TryIndex<DepartmentPrototype>(department, out var hew))
-                sortableDeparts.Add(hew);
+            if (_prototypeManager.TryIndex<DepartmentPrototype>(department, out var proto))
+                sortableDeparts.Add(proto);
             else
                 otherDeparts.Add(department);
         }
