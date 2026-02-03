@@ -186,14 +186,19 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
     private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors)
     {
         // Sorts sensors by role weight
-        // Double foreach yahooooo
+        // So... Hear me out: there is no optimized way to get job prototype from entity without mind (that sucks itself)
+        // Right now id component that used for the original SuitSensorStatus has only job name and job id.
+        // job name can be localized and also seems strange (renamed cap with passanger icon over all command roles)
+        // and the job icon works +-fine and causes less sheningans
+        // TODO: MAKE RECORDINGS MORE TARGETED
+        // Also double foreach yahooooo
 
-        var sortableSensors = new Dictionary<JobPrototype, SuitSensorStatus>();
+        var sortableSensors = new List<KeyValuePair<JobPrototype, SuitSensorStatus>>();
         var otherSensors = new List<SuitSensorStatus>();
         foreach (var sensor in departmentSensors)
         {
-            if (_prototypeManager.TryIndex<JobPrototype>(sensor.Job, out var hew))
-                sortableSensors.Add(hew, sensor);
+            if (_prototypeManager.TryIndex<JobPrototype>(sensor.JobIcon.Replace("JobIcon", string.Empty), out var proto))
+                sortableSensors.Add(new KeyValuePair<JobPrototype, SuitSensorStatus>(proto, sensor));
             else
                 otherSensors.Add(sensor);
         }
