@@ -8,6 +8,7 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
 using Content.Shared.Physics;
@@ -296,6 +297,9 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
             // We want to use the instrument player's name.
             if (instrument.InstrumentPlayer is not {} playerUid)
+                continue;
+
+            if (HasComp<GhostComponent>(playerUid))
                 continue;
 
             // Maybe a bit expensive but oh well GetBands is queued and has a timer anyway.
