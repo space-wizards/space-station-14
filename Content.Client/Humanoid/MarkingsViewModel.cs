@@ -138,7 +138,7 @@ public sealed class MarkingsViewModel
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
-        return TryGetMarking(organ, layer, markingId) is not null;
+        return GetMarking(organ, layer, markingId) is not null;
     }
 
     public bool IsMarkingColorCustomizable(ProtoId<OrganCategoryPrototype> organ,
@@ -163,7 +163,7 @@ public sealed class MarkingsViewModel
         return !appearance.MatchSkin;
     }
 
-    public Marking? TryGetMarking(ProtoId<OrganCategoryPrototype> organ,
+    public Marking? GetMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
@@ -173,7 +173,7 @@ public sealed class MarkingsViewModel
         if (!markingSet.TryGetValue(layer, out var markings))
             return null;
 
-        return markings.FirstOrDefault(it => it.MarkingId == markingId);
+        return markings.FirstOrNull(it => it.MarkingId == markingId);
     }
 
     public bool TrySelectMarking(ProtoId<OrganCategoryPrototype> organ,
@@ -233,13 +233,9 @@ public sealed class MarkingsViewModel
     public List<Marking>? SelectedMarkings(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer)
     {
-        if (!_markings.TryGetValue(organ, out var organMarkings))
-            return null;
-
-        if (!organMarkings.TryGetValue(layer, out var layerMarkings))
-            return null;
-
-        return layerMarkings;
+        return !_markings.TryGetValue(organ, out var organMarkings)
+            ? null
+            : organMarkings.GetValueOrDefault(layer);
     }
 
     public bool TryDeselectMarking(ProtoId<OrganCategoryPrototype> organ,
