@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TrixxedHeart
-  changes:
-  - message: The generic implanter that can be crafted in the medifab has been renamed
-      to implant extractor to better communicate its purpose.
-    type: Tweak
-  id: 8980
-  time: '2025-09-18T17:47:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40375
 - author: aada
   changes:
   - message: Mime bags are now silent for everyone.
@@ -3998,3 +3990,13 @@
   id: 9486
   time: '2026-02-03T19:00:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42771
+- author: Minemoder
+  changes:
+  - message: The Syndi Law Circuit is now a kit containing the lawboard and and a
+      Syndicate ID.
+    type: Tweak
+  - message: The Syndicate ID now uses the Syndicate icon instead of the blank icon.
+    type: Tweak
+  id: 9487
+  time: '2026-02-03T20:12:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42764
