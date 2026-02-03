@@ -75,15 +75,18 @@ public sealed partial class AtmosphereSystem
             if (!_damageableQuery.TryComp(pipe.Owner, out var damage))
                 return;
 
-            // Prefer damaging pipes that are already damaged. This means that only one pipe
-            // fails instead of the whole pipenet bursting at the same time.
-            const float baseChance = 0.5f;
-            var p = baseChance;
-            p += (float)damage.TotalDamage * (1 - baseChance);
+            if (PipeDamageRandomness)
+            {
+                // Prefer damaging pipes that are already damaged. This means that only one pipe
+                // fails instead of the whole pipenet bursting at the same time.
+                const float baseChance = 0.5f;
+                var p = baseChance;
+                p += (float)damage.TotalDamage * (1 - baseChance);
 
-            var finalChance = Math.Clamp(1-p, 0f, 1f);
-            if (_random.Prob(finalChance))
-                continue;
+                var finalChance = Math.Clamp(1-p, 0f, 1f);
+                if (_random.Prob(finalChance))
+                    continue;
+            }
 
             // Retrieve the ambient pressure of the pipe in order to compute dP.
             var mix = GetTileMixture((node.Owner, xform));

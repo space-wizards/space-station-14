@@ -547,7 +547,9 @@ namespace Content.Server.Atmos.EntitySystems
             while (atmosphere.CurrentRunPipeNet.TryDequeue(out var pipenet))
             {
                 pipenet.Update();
-                PerformPipeDamageOnAllNodes(pipenet);
+
+                if (PipeDamage)
+                    PerformPipeDamageOnAllNodes(pipenet);
 
                 if (number++ < LagCheckIterations)
                     continue;
