@@ -1,7 +1,9 @@
+using Content.Shared.Medical.Cryogenics;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Medical.Components;
+namespace Content.Shared.Medical.HealthAnalyzer;
 
 /// <summary>
 /// After scanning, retrieves the target Uid to use with its related UI.
@@ -9,15 +11,15 @@ namespace Content.Server.Medical.Components;
 /// <remarks>
 /// Requires <c>ItemToggleComponent</c>.
 /// </remarks>
-[RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(HealthAnalyzerSystem), typeof(CryoPodSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[Access(typeof(SharedHealthAnalyzerSystem), typeof(SharedCryoPodSystem))]
 public sealed partial class HealthAnalyzerComponent : Component
 {
     /// <summary>
     /// When should the next update be sent for the patient
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
+    [AutoPausedField, AutoNetworkedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
@@ -29,8 +31,8 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// <summary>
     /// If the last state of the health analyzer was active (e.g. they are in range of the patient).
     /// </summary>
-    [DataField]
-    public bool IsAnalyzerActive = false;
+    [DataField, AutoNetworkedField]
+    public bool IsAnalyzerActive;
 
     /// <summary>
     /// How long it takes to scan someone.
@@ -41,7 +43,7 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// <summary>
     /// Which entity has been scanned, for continuous updates
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ScannedEntity;
 
     /// <summary>
