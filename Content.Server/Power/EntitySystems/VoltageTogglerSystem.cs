@@ -1,4 +1,5 @@
-﻿using Content.Server.Power.Components;
+﻿using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.Power.Components;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Power;
@@ -8,6 +9,8 @@ namespace Content.Server.Power.EntitySystems;
 
 public sealed class VoltageTogglerSystem : EntitySystem
 {
+    [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -60,7 +63,10 @@ public sealed class VoltageTogglerSystem : EntitySystem
             _ => NodeGroupID.Default,
         };
 
-        nodeContainerComp.Nodes["input"].SetNodeGroupId(newNodeGroupId);
+        var inputNode = nodeContainerComp.Nodes["input"];
+        _nodeGroupSystem.QueueNodeRemove(inputNode);
+        inputNode.SetNodeGroupId(newNodeGroupId);
+        _nodeGroupSystem.QueueReflood(inputNode);
 
         powerConsumerComp.Voltage = setting.Voltage;
         powerConsumerComp.SetDrawRate(setting.Wattage);
