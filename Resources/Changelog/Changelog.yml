@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Several reagents now have contraband levels listed in the guidebook.
-    type: Add
-  id: 8984
-  time: '2025-09-18T19:01:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40426
 - author: Shot
   changes:
   - message: The cane blade can now slice, cut and execute
@@ -4000,3 +3993,11 @@
   id: 9490
   time: '2026-02-04T19:24:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42787
+- author: ScholarNZL
+  changes:
+  - message: Rat King and Rat Servants now have partial shock resistance, preventing
+      electrified doors from stunning them while still dealing reduced damage.
+    type: Tweak
+  id: 9491
+  time: '2026-02-04T22:13:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42569
