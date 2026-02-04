@@ -191,9 +191,8 @@
         Assault (V)
       </Box>
     </ColorBox>
-    <ColorBox Color="#4d2e2e">
+    <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted Murder (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
@@ -300,7 +299,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This doesn’t include legitimate and authorized animal testing and usually doesn't extend to vermin or creatures
+        This doesn’t include legitimate and authorized animal testing, and usually doesn't extend to vermin or creatures
         that could pose a threat to the station.
       </Box>
     </ColorBox>
@@ -321,7 +320,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Any contraband which is restricted to a department other than command or security is minor contraband unless otherwise specified. The Captain or Head of Security may authorize individual use of minor contraband, and other department heads may authorize individual use of minor contraband restricted to their assigned department.
+        Items which are restricted to a specific job or department other than Command or Security are also considered minor contraband, unless otherwise specified. The Captain or Head of Security may authorize individual use of non-deparmental minor contraband; departmentally-restricted items require the authorization of the relevant department head.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -342,9 +341,9 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The difference between petty theft and grand theft is based on how crucial the stolen item is, things like
-        instruments, clothing and tools fall under petty theft. In most cases all you need to do is detain the thief,
-        return the stolen item and let them go with a warning.
+        The difference between petty theft and grand theft is based on how crucial the stolen item is; items like
+        instruments, clothing, and tools fall under petty theft. In most cases all you need to do is detain the thief,
+        return the stolen item, and let them go with a warning.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -473,7 +472,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The Captain may authorize individual use of major contraband. Any contraband which is restricted to the command or security department is major contraband unless otherwise specified.
+        Items which are restricted to Security or Command (or specific jobs within those departments) are also considered major contraband, unless otherwise specified. Only the Captain may authorize individual use of major contraband, including departmentally-restricted items.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -665,8 +664,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted murder and battery are different; a fist fight is most likely assault. A shooting is most likely an
-        attempt at murder.
+        Attempted murder and battery are different. A fist fight is most likely battery; a shooting is most likely an attempted murder.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -686,7 +684,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes manslaughter in self-defense and negligent manslaughter.
+        Includes killing in self-defense, killing by accident, and deaths resulting from negligence.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -706,7 +704,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Crimes like damage of property or battery are expected to be thrown on top of this charge. Leaders of a riot can be charged with all crimes that happen under their lead.
+        Crimes like damage of property or battery are expected to be thrown on top of this charge. Leaders of a riot can be charged with any crimes that happen under their leadership.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -718,9 +716,7 @@
 
   ## Extreme Crimes
   - The maximum sentence per extreme crime is 15 minutes.
-  - Particularly violent offenders may be placed in perma. (Attacking officers in an attempt to escape prison)
-  - Attempted murder and murder are linked crimes and cannot be stacked together.
-  - Attempted murderers should be granted a more lenient sentence than a murderer.
+  - Particularly violent offenders should typically be placed in permanent confinement.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -805,26 +801,6 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted Murder
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make an attempt to use physical force against someone with the clear intent to kill.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Make sure you've got the proof to back up the intention claims, such as proof of a lethal weapon being used.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        4-05
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Murder
       </Box>
     </ColorBox>
@@ -835,7 +811,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This only changes from attempted to full-on murder if the victim enters a state of being deceased, having to be resurrected.
+        A murder charge requires evidence of an intent to kill the victim, such as the use of a lethal weapon or a continued attack after the victim was incapacitated. Attempted murder should typically be granted a more lenient sentence than a "successful" murder.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -846,7 +822,7 @@
   </Table>
 
   ## Capital Crimes
-  - Capital crimes should usually lead to a death sentence or shift lasting detainment.
+  - Capital crimes should typically result in permanent confinement or an execution.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -940,7 +916,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Only applies when there have been multiple killings with intention.
+        Like with murder, there must be evidence of an intent to kill the victims.
       </Box>
     </ColorBox>
     <ColorBox>
