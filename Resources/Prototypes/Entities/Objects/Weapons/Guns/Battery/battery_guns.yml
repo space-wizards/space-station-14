@@ -489,7 +489,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: BatteryAmmoProvider
     proto: XrayLaser
-    fireCost: 62.5
+    fireCost: 100
   - type: MagazineVisuals
     magState: mag
     steps: 5
