@@ -91,57 +91,52 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
 
         Color resultingColor;
 
-        if (tempK < deepFreezeK)
+        switch (tempK)
         {
-            resultingColor = Color.FromHex("#330066");
-            resultingColor.A = 0.7f;
-        }
-        else if (tempK < freezeStartK)
-        {
-            // Interpolate Deep Purple -> Blue
-            // Range: 123.15 to 223.15 (Span: 100)
-            resultingColor = Color.InterpolateBetween(
-                Color.FromHex("#330066"),
-                Color.Blue,
-                (tempK - deepFreezeK) * 0.01f);
-            resultingColor.A = 0.6f;
+            case < deepFreezeK:
+                resultingColor = Color.FromHex("#330066");
+                resultingColor.A = 0.7f;
+                break;
+            case < freezeStartK:
+                // Interpolate Deep Purple -> Blue
+                // Range: 123.15 to 223.15 (Span: 100)
+                resultingColor = Color.InterpolateBetween(
+                    Color.FromHex("#330066"),
+                    Color.Blue,
+                    (tempK - deepFreezeK) * 0.01f);
+                resultingColor.A = 0.6f;
+                break;
+            case < waterFreezeK:
+                // Interpolate Blue -> Transparent
+                // Range: 223.15 to 273.15 (Span: 50)
 
-        }
-        else if (tempK < waterFreezeK)
-        {
-            // Interpolate Blue -> Transparent
-            // Range: 223.15 to 273.15 (Span: 50)
+                resultingColor = Color.InterpolateBetween(
+                    new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.6f),
+                    new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.2f),
+                    (tempK - freezeStartK) * 0.02f);
+                break;
+            case < waterBoilK:
+                // Interpolate Transparent -> Yellow
+                // Range: 323.15 to 373.15 (Span: 50)
 
-            resultingColor = Color.InterpolateBetween(
-                 new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.6f),
-                 new Color(Color.Blue.R, Color.Blue.G, Color.Blue.B, 0.2f),
-                (tempK - freezeStartK) * 0.02f);
-
-        }
-        else if (tempK < waterBoilK)
-        {
-            // Interpolate Transparent -> Yellow
-            // Range: 323.15 to 373.15 (Span: 50)
-
-            resultingColor = Color.InterpolateBetween(
-                 new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.2f),
-                 new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.6f),
-                (tempK - heatStartK) * 0.02f);
-        }
-        else if (tempK < superHeatK)
-        {
-            // Interpolate Yellow -> Red
-            // Range: 373.15 to 573.15 (Span: 200)
-            resultingColor = Color.InterpolateBetween(
-                Color.Yellow,
-                Color.Red,
-                (tempK - waterBoilK) * 0.005f);
-            resultingColor.A = 0.6f;
-        }
-        else
-        {
-            resultingColor = Color.DarkRed;
-            resultingColor.A = 0.7f;
+                resultingColor = Color.InterpolateBetween(
+                    new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.2f),
+                    new Color(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 0.6f),
+                    (tempK - heatStartK) * 0.02f);
+                break;
+            case < superHeatK:
+                // Interpolate Yellow -> Red
+                // Range: 373.15 to 573.15 (Span: 200)
+                resultingColor = Color.InterpolateBetween(
+                    Color.Yellow,
+                    Color.Red,
+                    (tempK - waterBoilK) * 0.005f);
+                resultingColor.A = 0.6f;
+                break;
+            default:
+                resultingColor = Color.DarkRed;
+                resultingColor.A = 0.7f;
+                break;
         }
 
         return resultingColor;
