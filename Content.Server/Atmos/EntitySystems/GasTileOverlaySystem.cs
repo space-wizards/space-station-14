@@ -225,9 +225,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Hotspot.Valid)
                 newByteTemp.SetTemperature(tile.Hotspot.Temperature);
             else if (!tile.Space && tile.Air?.TotalMoles <= 5f)
-            {
                 newByteTemp.SetVacuum();
-            }
             else if (!tile.Space && tile.Air != null)
                 newByteTemp = new(tile.Air.Temperature);
 
