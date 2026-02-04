@@ -818,7 +818,7 @@
   </Table>
 
   ## Capital Crimes
-  - Capital crimes should typically result in permanent confinement or an execution.
+  - Capital crimes should typically result in permanent confinement or a death sentence.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -932,7 +932,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone. If the implant fails execution is heavily recommended.
+        Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone. If the implant fails, a death sentence is heavily recommended.
       </Box>
     </ColorBox>
     <ColorBox>
