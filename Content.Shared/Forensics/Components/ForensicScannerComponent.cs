@@ -51,7 +51,7 @@ public sealed partial class ForensicScannerComponent : Component
     /// <summary>
     /// When will the scanner be ready to print again?
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan PrintReadyAt = TimeSpan.Zero;
 
     /// <summary>
