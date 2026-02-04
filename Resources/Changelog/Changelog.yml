@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Mime bags are now silent for everyone.
-    type: Tweak
-  id: 8981
-  time: '2025-09-18T17:47:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40317
 - author: Hitlinemoss
   changes:
   - message: Spider Clan gear is now considered highly illegal contraband under Space
@@ -4000,3 +3993,10 @@
   id: 9487
   time: '2026-02-03T20:12:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42764
+- author: Admiral-Obvious-001
+  changes:
+  - message: EXPERIMENTAL Removed blunt and burn based gibbing.
+    type: Remove
+  id: 9488
+  time: '2026-02-04T04:49:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42474
