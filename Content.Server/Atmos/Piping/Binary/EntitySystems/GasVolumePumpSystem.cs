@@ -8,7 +8,6 @@ using Content.Server.Power.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Binary.Systems;
 using Content.Shared.Atmos.Piping.Components;
-using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
@@ -74,13 +73,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var transferVol = pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
             var transferRatio = transferVol / inlet.Air.Volume;
 
-            // Make sure we don't pump over the pressure limit. The formula is derived from the ideal gas law and the
-            // general Richman's law, under the simplification that all the specific heat capacities are equal. The full
-            // derivation can be found at: https://github.com/space-wizards/space-station-14/pull/35211/files/a0ae787fe07a4e792570f55b49d9dd8038eb6e4d#r1961183456
-            var pressureDelta = pump.HigherThreshold - outputStartingPressure;
-            var limitMoles = (pressureDelta * outlet.Air.Volume) / (inlet.Air.Temperature * Atmospherics.R);
-            var limitRatio = limitMoles / inlet.Air.TotalMoles;
-
+            // Make sure we don't pump over the pressure limit.
+            var limitRatio = AtmosphereSystem.FractionToMaxPressure(inlet.Air, outlet.Air, pump.HigherThreshold);
 
             // This might end up negative under overclock conditions, but such cases are handled correctly by the
             // `RemoveRatio` method
