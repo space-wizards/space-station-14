@@ -21,6 +21,9 @@
     layers:
     - state: circuit-3
       map: [ "base" ]
+  - type: Tag
+    tags:
+    - XenoborgCircuitboard
 
 - type: entity
   parent: XenoborgCircuitboard
