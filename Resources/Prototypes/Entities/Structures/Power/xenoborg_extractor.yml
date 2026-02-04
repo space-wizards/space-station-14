@@ -2,7 +2,7 @@
   parent: [BaseMachine, BaseXenoborgContraband]
   id: XenoborgExtractor
   name: xenoborg extractor
-  description: Drains immense amounts of electricity from the grid ro produce some random xenoborg circuit
+  description: Drains immense amounts of electricity from the grid ro produce xenoborg circuits.
   suffix: Unanchored
   placement:
     mode: PlaceFree
