@@ -1,21 +1,39 @@
 - type: entity
-  parent: BaseItem
-  id: XenoborgAdvancedCircuitboard
+  parent: [ BaseItem, BaseXenoborgContraband ]
+  id: XenoborgCircuitboard
   name: advanced xenoborg circuitboard
   description: An electronics board used to make xenoborgs.
+  suffix: 10
   components:
+  - type: Item
+    storedRotation: 0
+  - type: Appearance
   - type: Stack
     stackType: XenoborgAdvancedCircuitboard
+    count: 10
     baseLayer: base
     layerStates:
     - circuit-1
     - circuit-2
     - circuit-3
-  - type: Item
-    storedRotation: 0
   - type: Sprite
     sprite: Objects/Misc/xenoborg_circuit.rsi
-    state: circuit-1
     layers:
-    - state: circuit-1
-      map: ["base"]
+    - state: circuit-3
+      map: [ "base" ]
+
+- type: entity
+  parent: XenoborgCircuitboard
+  id: XenoborgCircuitboard5
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: XenoborgCircuitboard
+  id: XenoborgCircuitboard1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1

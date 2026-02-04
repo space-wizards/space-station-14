@@ -55,7 +55,7 @@
       wattage: 50000 # 10 seconds to spawn one
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
-    prototype: XenoborgAdvancedCircuitboard
+    prototype: XenoborgCircuitboard1
 
 - type: entity
   parent: XenoborgExtractor
