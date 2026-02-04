@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license":"CC-BY-SA-3.0",
+  "copyright":"Made by Samuka-C (github) modified from circuit_imprinter.rsi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

@@ -12,21 +12,28 @@
   - type: Transform
     anchored: false
   - type: AnchorOnlyOnStation
-  - type: Sprite # TODO: add custom sprite
-    sprite: Structures/Power/substation.rsi
+  - type: Sprite
+    sprite: Structures/Machines/xenoborg_extractor.rsi
     snapCardinals: true
     layers:
-    - state: substation
-    - state: screen
+    - state: icon
+    - state: on
       shader: unshaded
-    - state: full
-      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: NodeContainer
     examinable: true
     nodes:
       input:
         !type:CableDeviceNode
         nodeGroupID: Apc
+  - type: LightningTarget
+    priority: 1
   - type: Battery
     maxCharge: 500000
     netsync: false
