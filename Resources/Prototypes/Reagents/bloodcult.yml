@@ -10,7 +10,7 @@
   meltingPoint: -5.0
   recognizable: true
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 0.2
       effects:
       - !type:BleedUnholyBlood
