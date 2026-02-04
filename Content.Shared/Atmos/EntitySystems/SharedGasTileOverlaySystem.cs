@@ -156,10 +156,10 @@ public struct ThermalByte : IEquatable<ThermalByte>
     public const int TempResolution = 250;
 
     public const byte ReservedFuture0 = 251;
-    public const byte ReservedFuture1 = 252;
+    public const byte StateVaccum = 252;
     public const byte ReservedFuture2 = 253;
-    public const byte StateVaccum = 254;
-    public const byte StateWall = 255;
+    public const byte ReservedFuture1 = 254;
+    public const byte AtmosImpossible = 255;
 
     public const float TempDegreeResolution = (TempMaximum - TempMinimum) / TempResolution;
     public const float TempToByteFactor = TempResolution / (TempMaximum - TempMinimum);
@@ -171,18 +171,23 @@ public struct ThermalByte : IEquatable<ThermalByte>
         SetTemperature(temperatureKelvin);
     }
 
+    public ThermalByte()
+    {
+        _coreValue = ThermalByte.AtmosImpossible;
+    }
+
     /// <summary>
     /// Set temperature of air in this in Kelvin. 
     /// </summary>
-    private void SetTemperature(float temperatureKelvin)
+    public void SetTemperature(float temperatureKelvin)
     {
         var clampedTemp = Math.Clamp(temperatureKelvin, TempMinimum, TempMaximum);
         _coreValue = (byte)((clampedTemp - TempMinimum) * TempResolution / (TempMaximum - TempMinimum));
     }
 
-    public void SetWall() => _coreValue = StateWall;
+    public void SetAtmosIsImpossible() => _coreValue = AtmosImpossible;
     public void SetVacuum() => _coreValue = StateVaccum;
-    public bool IsWall => _coreValue == StateWall;
+    public bool IsAtmosImpossible => _coreValue == AtmosImpossible; // Cold space, solid walls
     public bool IsVacuum => _coreValue == StateVaccum;
     public byte Value => _coreValue;
 
@@ -200,7 +205,7 @@ public struct ThermalByte : IEquatable<ThermalByte>
     /// </returns>
     public readonly bool TryGetTemperature(out float temperature, bool onVacuumReturnTCMB = true)
     {
-        if (_coreValue == StateWall)
+        if (_coreValue == AtmosImpossible)
         {
             temperature = 0f;
             return false;
