@@ -1,4 +1,3 @@
-using Content.Client.Atmos.UI;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping.Binary.Components;
@@ -15,7 +14,12 @@ public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
 
     private void OnPumpUpdate(Entity<GasPressurePumpComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (UserInterfaceSystem.TryGetOpenUi<GasPressurePumpBoundUserInterface>(ent.Owner, GasPressurePumpUiKey.Key, out var bui))
+        UpdateUi(ent);
+    }
+
+    protected override void UpdateUi(Entity<GasPressurePumpComponent> ent)
+    {
+        if (UserInterfaceSystem.TryGetOpenUi(ent.Owner, GasPressurePumpUiKey.Key, out var bui))
         {
             bui.Update();
         }

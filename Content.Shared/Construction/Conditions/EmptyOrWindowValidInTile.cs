@@ -13,11 +13,15 @@ namespace Content.Shared.Construction.Conditions
 
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var lookupSys = entManager.System<EntityLookupSystem>();
+
             var result = false;
 
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static))
+
+            foreach (var entity in lookupSys.GetEntitiesIntersecting(location, LookupFlags.Approximate | LookupFlags.Static))
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedCanBuildWindowOnTopComponent>(entity))
+                if (entManager.HasComponent<SharedCanBuildWindowOnTopComponent>(entity))
                     result = true;
             }
 

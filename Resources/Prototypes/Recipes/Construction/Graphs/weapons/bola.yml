@@ -11,7 +11,7 @@
                 sprite: Objects/Misc/cablecuffs.rsi
                 state: cuff
                 color: red
-              name: cuffs
+              name: construction-graph-tag-cuffs
             - material: Steel
               amount: 6
               doAfter: 2

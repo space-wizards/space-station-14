@@ -9,7 +9,7 @@ public sealed class UseDelaySystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
-    private const string DefaultId = "default";
+    public const string DefaultId = "default";
 
     public override void Initialize()
     {
@@ -88,8 +88,11 @@ public sealed class UseDelaySystem : EntitySystem
     /// <summary>
     /// Returns true if the entity has a currently active UseDelay with the specified ID.
     /// </summary>
-    public bool IsDelayed(Entity<UseDelayComponent> ent, string id = DefaultId)
+    public bool IsDelayed(Entity<UseDelayComponent?> ent, string id = DefaultId)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return false;
+
         if (!ent.Comp.Delays.TryGetValue(id, out var entry))
             return false;
 
@@ -115,8 +118,14 @@ public sealed class UseDelaySystem : EntitySystem
     /// <param name="info"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public bool TryGetDelayInfo(Entity<UseDelayComponent> ent, [NotNullWhen(true)] out UseDelayInfo? info, string id = DefaultId)
+    public bool TryGetDelayInfo(Entity<UseDelayComponent?> ent, [NotNullWhen(true)] out UseDelayInfo? info, string id = DefaultId)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+        {
+            info = null;
+            return false;
+        }
+
         return ent.Comp.Delays.TryGetValue(id, out info);
     }
 
@@ -144,7 +153,7 @@ public sealed class UseDelaySystem : EntitySystem
     /// Otherwise reset it and return true.</param>
     public bool TryResetDelay(Entity<UseDelayComponent> ent, bool checkDelayed = false, string id = DefaultId)
     {
-        if (checkDelayed && IsDelayed(ent, id))
+        if (checkDelayed && IsDelayed((ent.Owner, ent.Comp), id))
             return false;
 
         if (!ent.Comp.Delays.TryGetValue(id, out var entry))

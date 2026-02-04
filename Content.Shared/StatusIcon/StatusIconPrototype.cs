@@ -69,6 +69,12 @@ public partial class StatusIconData : IComparable<StatusIconData>
     public int Offset = 0;
 
     /// <summary>
+    /// Offset of the status icon, left and right only.
+    /// </summary>
+    [DataField]
+    public int OffsetHorizontal = 0;
+
+    /// <summary>
     /// Sets if the icon should be rendered with or without the effect of lighting.
     /// </summary>
     [DataField]
@@ -97,12 +103,12 @@ public sealed partial class JobIconPrototype : StatusIconPrototype, IInheritingP
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<JobIconPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <summary>
     /// Name of the icon used for menu tooltips.
@@ -118,6 +124,12 @@ public sealed partial class JobIconPrototype : StatusIconPrototype, IInheritingP
     /// </summary>
     [DataField]
     public bool AllowSelection = true;
+
+    /// <summary>
+    /// Should this job icon be considered a crew job for silicons?
+    /// </summary>
+    [DataField]
+    public bool IsCrewJob = true;
 }
 
 /// <summary>
@@ -128,12 +140,12 @@ public sealed partial class HealthIconPrototype : StatusIconPrototype, IInheriti
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<HealthIconPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 }
 
 /// <summary>
@@ -144,12 +156,12 @@ public sealed partial class SatiationIconPrototype : StatusIconPrototype, IInher
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<SatiationIconPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 }
 
 /// <summary>
@@ -160,12 +172,12 @@ public sealed partial class SecurityIconPrototype : StatusIconPrototype, IInheri
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<SecurityIconPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 }
 
 /// <summary>
@@ -176,12 +188,12 @@ public sealed partial class FactionIconPrototype : StatusIconPrototype, IInherit
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<FactionIconPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 }
 
 /// <summary>
@@ -192,12 +204,12 @@ public sealed partial class DebugIconPrototype : StatusIconPrototype, IInheritin
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<DebugIconPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 }
 
 /// <summary>
@@ -208,12 +220,12 @@ public sealed partial class SsdIconPrototype : StatusIconPrototype, IInheritingP
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<SsdIconPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 }
 
 [Serializable, NetSerializable]

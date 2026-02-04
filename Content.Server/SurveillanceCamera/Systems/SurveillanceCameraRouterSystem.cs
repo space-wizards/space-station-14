@@ -1,15 +1,13 @@
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -94,7 +92,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraRouterComponent component, GetVerbsEvent<AlternativeVerb> verbs)
     {
-        if (!_actionBlocker.CanInteract(verbs.User, uid))
+        if (!_actionBlocker.CanInteract(verbs.User, uid) || !_actionBlocker.CanComplexInteract(verbs.User))
         {
             return;
         }
@@ -123,7 +121,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
-        if (!_prototypeManager.TryIndex<DeviceFrequencyPrototype>(component.AvailableNetworks[args.Network],
+        if (!_prototypeManager.Resolve<DeviceFrequencyPrototype>(component.AvailableNetworks[args.Network],
                 out var frequency))
         {
             return;

@@ -1,3 +1,4 @@
+using Content.Shared.Actions.Components;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -102,7 +103,7 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
         EntityCoordinatesTarget = entityCoordinatesTarget;
     }
 
-    public RequestPerformActionEvent(NetEntity action, NetEntity entityTarget, NetCoordinates entityCoordinatesTarget)
+    public RequestPerformActionEvent(NetEntity action, NetEntity? entityTarget, NetCoordinates entityCoordinatesTarget)
     {
         Action = action;
         EntityTarget = entityTarget;
@@ -149,27 +150,12 @@ public abstract partial class WorldTargetActionEvent : BaseActionEvent
     ///     The coordinates of the location that the user targeted.
     /// </summary>
     public EntityCoordinates Target;
-}
 
-/// <summary>
-///     This is the type of event that gets raised when an <see cref="EntityWorldTargetActionComponent"/> is performed.
-///     The <see cref="BaseActionEvent.Performer"/>, <see cref="Entity"/>, and <see cref="Coords"/>
-///     fields will automatically be filled out by the <see cref="SharedActionsSystem"/>.
-/// </summary>
-/// <remarks>
-///     To define a new action for some system, you need to create an event that inherits from this class.
-/// </remarks>
-public abstract partial class EntityWorldTargetActionEvent : BaseActionEvent
-{
     /// <summary>
-    ///     The entity that the user targeted.
+    /// When combined with <see cref="EntityTargetAction"/> (and <c>Event</c> is null), the entity the client was hovering when clicked.
+    /// This can be null as the primary purpose of this event is for getting coordinates.
     /// </summary>
     public EntityUid? Entity;
-
-    /// <summary>
-    ///     The coordinates of the location that the user targeted.
-    /// </summary>
-    public EntityCoordinates? Coords;
 }
 
 /// <summary>
@@ -187,7 +173,7 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     /// <summary>
     ///     The action the event belongs to.
     /// </summary>
-    public Entity<BaseActionComponent> Action;
+    public Entity<ActionComponent> Action;
 
     /// <summary>
     /// Should we toggle the action entity?

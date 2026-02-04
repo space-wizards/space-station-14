@@ -17,10 +17,16 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_fland.yml
         - type: StationJobs
-          availableJobs:
-            #service
+          availableJobs: # 81 jobs total w/o latejoins & interns, 101 jobs total w/ latejoins & interns
+            #command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            #service (17)
             Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
@@ -29,37 +35,32 @@
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
             Reporter: [ 2, 2 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
+            #engineering (9)
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 6, 6 ]
-            TechnicalAssistant: [ 4, 4 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
+            TechnicalAssistant: [ 4, 4 ] #intern, not counted
+            #medical (11)
             Chemist: [ 3, 3 ]
             MedicalDoctor: [ 6, 6 ]
             Paramedic: [ 2, 2 ]
-            MedicalIntern: [ 4, 4 ]
-            #science
-            ResearchDirector: [ 1, 1 ]
+            MedicalIntern: [ 4, 4 ] #intern, not counted
+            #science (5)
             Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 6, 6 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
+            ResearchAssistant: [ 6, 6 ] #intern, not counted
+            #security (14)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 10, 10 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 6, 6 ]
+            SecurityCadet: [ 6, 6 ] #intern, not counted
             Lawyer: [ 2, 2 ]
-            #supply
-            Quartermaster: [ 1, 1 ]
+            #supply (9)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 6, 6 ]
-            #civilian
-            Passenger: [ -1, -1 ]
+            #civilian (3+)
+            Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #silicon
+            #silicon (6)
             StationAi: [ 1, 1 ]
             Borg: [ 5, 5 ]

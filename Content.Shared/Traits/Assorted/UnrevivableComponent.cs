@@ -15,6 +15,12 @@ public sealed partial class UnrevivableComponent : Component
     public bool Analyzable = true;
 
     /// <summary>
+    /// Can this player be cloned using a cloning pod?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Cloneable = false;
+
+    /// <summary>
     /// The loc string used to provide a reason for being unrevivable
     /// </summary>
     [DataField, AutoNetworkedField]

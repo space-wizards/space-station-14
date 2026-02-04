@@ -49,6 +49,11 @@
     price: 800
   - type: ResearchClient
   - type: TechnologyDatabase
+  - type: ApcPowerReceiver
+    powerLoad: 150
+  - type: PowerState
+    idlePowerDraw: 150
+    workingPowerDraw: 1000
 
 # a lathe that can be sped up with space lube / slowed down with glue
 - type: entity
@@ -107,11 +112,12 @@
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: MaterialStorage
-    whitelist:
+    whitelist: &StandardMaterialWhitelist
       tags:
         - Sheet
         - RawMaterial
         - Ingot
+  - type: OreSiloClient
   - type: Lathe
     idleState: icon
     runningState: building
@@ -122,6 +128,8 @@
     - PartsStatic
     - AtmosStatic
     - CablesStatic
+    - PaperworkStatic
+    - TowelsStatic
     - CargoStatic
     - MaterialsStatic
     - BasicChemistryStatic
@@ -133,6 +141,7 @@
   - type: EmagLatheRecipes
     emagStaticPacks:
     - SecurityAmmoStatic
+    - SyndicateAmmoStatic
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -179,11 +188,8 @@
   - type: Machine
     board: ProtolatheMachineCircuitboard
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+    whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
   - type: Lathe
     idleState: icon
     runningState: building
@@ -195,6 +201,7 @@
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
+    - ScienceExplosives
     - ScienceClothing
     - PowerCells
     - ScienceWeapons
@@ -205,7 +212,6 @@
     - Janitor
     - Instruments
     - Equipment
-    - FauxTiles
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityAmmo
@@ -253,7 +259,6 @@
     - CargoBoardsStatic
     - MedicalBoardsStatic
     - EngineeringBoardsStatic
-    - CircuitFloorsStatic
     dynamicPacks:
     - EngineeringBoards
     - CargoBoards
@@ -267,11 +272,8 @@
     emagDynamicPacks:
     - SecurityBoards
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+    whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
   - type: RequireProjectileTarget
 
 - type: entity
@@ -315,11 +317,8 @@
     - MechParts
     - MechEquipment
   - type: MaterialStorage
-    whitelist:
-      tags:
-      - Sheet
-      - RawMaterial
-      - Ingot
+    whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
   - type: GuideHelp
     guides:
     - Robotics
@@ -393,17 +392,22 @@
     - SecurityAmmoStatic
     - SecurityWeaponsStatic
     dynamicPacks:
+    - SalvageSecurityBoards
+    - SalvageSecurityWeapons
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives
     - SecurityAmmo
     - SecurityWeapons
+    - SecurityDisablers
+  - type: EmagLatheRecipes
+    emagStaticPacks:
+    - SyndicateAmmoStatic
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+    whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
+  - type: LatheAnnouncing
+    channels: [Security]
 
 - type: entity
   id: AmmoTechFab
@@ -431,12 +435,12 @@
       runningState: icon
       staticPacks:
       - SecurityAmmoStatic
+    - type: EmagLatheRecipes
+      emagStaticPacks:
+      - SyndicateAmmoStatic
     - type: MaterialStorage
-      whitelist:
-        tags:
-          - Sheet
-          - RawMaterial
-          - Ingot
+      whitelist: *StandardMaterialWhitelist
+    - type: OreSiloClient
 
 - type: entity
   id: MedicalTechFab
@@ -474,6 +478,9 @@
     board: MedicalTechFabCircuitboard
   - type: StealTarget
     stealGroup: MedicalTechFabCircuitboard
+  - type: OreSiloClient
+  - type: LatheAnnouncing
+    channels: [Medical]
 
 - type: entity
   parent: BaseLathe
@@ -496,6 +503,7 @@
     idleState: icon
     runningState: building
     staticPacks:
+    - TowelsStatic
     - ClothingCivilian
     - ClothingCargo
     - ClothingCommand
@@ -514,11 +522,8 @@
     - ClothingCentComm
     - ClothingSyndie
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+    whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient
 
 - type: entity
   id: Biogenerator
@@ -562,6 +567,10 @@
     staticPacks:
     - BioGenIngredientsStatic
     - BioGenMaterialsStatic
+  - type: EmagLatheRecipes
+    emagStaticPacks:
+    - BioGenEmagStatic
+    - HostileCubesStatic
 
 - type: entity
   parent: BaseLathe
@@ -638,6 +647,7 @@
       tags:
       - Raw
       - Wooden
+      - Boll
   - type: Lathe
     idleState: base_machine
     runningState: base_machine_processing
@@ -670,12 +680,16 @@
     idleState: icon
     runningState: building
     staticPacks:
-    - FloorTilesStatic
+    - FloorDarkTilesStatic
+    - FloorSteelTilesStatic
+    - FloorWhiteTilesStatic
+    - FloorMaintsTilesStatic
+    - FloorWoodTilesStatic
+    - FloorConcreteTilesStatic
+    - CircuitFloorsStatic
+    - FloorMarbleTilesStatic
+    dynamicPacks:
+    - FauxTiles
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - Metal
-        - Wooden
-        - RawMaterial
-        - Plastic
+    whitelist: *StandardMaterialWhitelist
+  - type: OreSiloClient

@@ -5,10 +5,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Procedural;
 
-[Prototype("dungeonRoom")]
+[Prototype]
 public sealed partial class DungeonRoomPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; private set; } = string.Empty;
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public List<ProtoId<TagPrototype>> Tags = new();

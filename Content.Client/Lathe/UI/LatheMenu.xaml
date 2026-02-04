@@ -1,6 +1,7 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:ui="clr-namespace:Content.Client.Materials.UI"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="550 450"
@@ -59,6 +60,7 @@
                         PlaceHolder="0"
                         Text="1"
                         HorizontalExpand="True" />
+                    <Label Name="RecipeCount" Margin="8 0 8 0" MinWidth="90" Align="Right" />
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
@@ -109,6 +111,18 @@
                             HorizontalAlignment="Left"
                             Margin="130 0 0 0">
                         </Label>
+                        <Button
+                            Name="DeleteFabricating"
+                            Margin="0"
+                            Text="✖"
+                            SetSize="38 32"
+                            HorizontalAlignment="Right"
+                            ToolTip="{Loc 'lathe-menu-delete-fabricating-tooltip'}">
+                            <Button.StyleClasses>
+                                <system:String>Caution</system:String>
+                                <system:String>OpenLeft</system:String>
+                            </Button.StyleClasses>
+                        </Button>
                     </PanelContainer>
                 </BoxContainer>
                 <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
@@ -126,12 +140,17 @@
             HorizontalExpand="True"
             Orientation="Vertical">
             <Label Text="{Loc 'lathe-menu-materials-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
-            <BoxContainer
-                Orientation="Vertical"
-                VerticalExpand="True"
-                HorizontalExpand="True">
-                <ui:MaterialStorageControl Name="MaterialsList" SizeFlagsStretchRatio="8"/>
-            </BoxContainer>
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer
+                    Orientation="Vertical"
+                    VerticalExpand="True"
+                    HorizontalExpand="True">
+                    <ui:MaterialStorageControl Name="MaterialsList" SizeFlagsStretchRatio="8"/>
+                </BoxContainer>
+            </PanelContainer>
         </BoxContainer>
         </BoxContainer>
 

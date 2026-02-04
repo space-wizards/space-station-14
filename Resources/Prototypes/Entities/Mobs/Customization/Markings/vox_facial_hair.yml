@@ -1,8 +1,8 @@
 - type: marking
   id: VoxFacialHairBeard
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
+  canBeDisplaced: false
+  groupWhitelist: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: beard_s
@@ -10,8 +10,8 @@
 - type: marking
   id: VoxFacialHairColonel
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
+  canBeDisplaced: false
+  groupWhitelist: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: colonel_s
@@ -19,8 +19,8 @@
 - type: marking
   id: VoxFacialHairFu
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
+  canBeDisplaced: false
+  groupWhitelist: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: fu_s
@@ -28,8 +28,8 @@
 - type: marking
   id: VoxFacialHairMane
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
+  canBeDisplaced: false
+  groupWhitelist: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: mane_s
@@ -37,8 +37,8 @@
 - type: marking
   id: VoxFacialHairManeSmall
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
+  canBeDisplaced: false
+  groupWhitelist: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: manesmall_s
@@ -46,8 +46,8 @@
 - type: marking
   id: VoxFacialHairNeck
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
+  canBeDisplaced: false
+  groupWhitelist: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: neck_s
@@ -55,8 +55,8 @@
 - type: marking
   id: VoxFacialHairTufts
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
+  canBeDisplaced: false
+  groupWhitelist: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
       state: tuft_s

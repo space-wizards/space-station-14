@@ -27,11 +27,10 @@ public sealed class WhistleSystem : EntitySystem
 
     public void OnUseInHand(EntityUid uid, WhistleComponent component, UseInHandEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (args.Handled || !_timing.IsFirstTimePredicted)
             return;
 
-        TryMakeLoudWhistle(uid, args.User, component);
-        args.Handled = true;
+        args.Handled = TryMakeLoudWhistle(uid, args.User, component);
     }
 
     public bool TryMakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent? component = null)
@@ -48,7 +47,7 @@ public sealed class WhistleSystem : EntitySystem
         StealthComponent? stealth = null;
 
         foreach (var iterator in
-            _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), component.Distance))
+            _entityLookup.GetEntitiesInRange<HumanoidProfileComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
             //Avoid pinging invisible entities
             if (TryComp(iterator, out stealth) && stealth.Enabled)

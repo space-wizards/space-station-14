@@ -1,0 +1,19 @@
+- type: entity
+  id: EffectDesynchronizer
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/chronofield.rsi
+      state: chronofield
+  - type: AnimationPlayer
+  - type: EffectVisuals
+  - type: TimedDespawn
+    lifetime: 0.8
+  - type: Tag
+    tags:
+    - HideContextMenu

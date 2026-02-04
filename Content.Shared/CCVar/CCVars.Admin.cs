@@ -184,9 +184,21 @@ public sealed partial class CCVars
         CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
 
     /// <summary>
+    /// Determines if we'll reject connections from clients who don't have a modern hwid.
+    /// </summary>
+    public static readonly CVarDef<bool> RequireModernHardwareId =
+        CVarDef.Create("admin.require_modern_hwid", true, CVar.SERVERONLY);
+
+    /// <summary>
     /// If true, players are allowed to connect to multiple game servers at once.
     /// If false, they will be kicked from the first when connecting to another.
     /// </summary>
     public static readonly CVarDef<bool> AdminAllowMultiServerPlay =
         CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Whether admins should gain role playtime even when playing while not de-adminned.
+    /// </summary>
+    public static readonly CVarDef<bool> GameAdminJobTracking =
+        CVarDef.Create("game.admin_job_tracking", false, CVar.SERVERONLY);
 }

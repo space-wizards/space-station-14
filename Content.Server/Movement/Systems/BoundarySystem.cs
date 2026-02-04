@@ -27,6 +27,6 @@ public sealed class BoundarySystem : EntitySystem
         // If for whatever reason you want to yeet them to the other side.
         // offset = new Angle(MathF.PI).RotateVec(offset);
 
-        _xform.SetWorldPosition(otherXform, center + offset);
+        _xform.SetWorldPosition((args.OtherEntity, otherXform), center + offset);
     }
 }

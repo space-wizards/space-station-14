@@ -29,6 +29,10 @@ namespace Content.Client.Interaction;
 /// </summary>
 public sealed class DragDropSystem : SharedDragDropSystem
 {
+    private static readonly ProtoId<ShaderPrototype> ShaderDropTargetInRange = "SelectionOutlineInrange";
+
+    private static readonly ProtoId<ShaderPrototype> ShaderDropTargetOutOfRange = "SelectionOutline";
+
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -43,6 +47,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     // how often to recheck possible targets (prevents calling expensive
     // check logic each update)
@@ -52,12 +57,6 @@ public sealed class DragDropSystem : SharedDragDropSystem
     // amount of time since the mousedown, we will "replay" the original
     // mousedown event so it can be treated like a regular click
     private const float MaxMouseDownTimeForReplayingClick = 0.85f;
-
-    [ValidatePrototypeId<ShaderPrototype>]
-    private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
-
-    [ValidatePrototypeId<ShaderPrototype>]
-    private const string ShaderDropTargetOutOfRange = "SelectionOutline";
 
     /// <summary>
     /// Current entity being dragged around.
@@ -112,8 +111,8 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         Subs.CVar(_cfgMan, CCVars.DragDropDeadZone, SetDeadZone, true);
 
-        _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
-        _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
+        _dropTargetInRangeShader = _prototypeManager.Index(ShaderDropTargetInRange).Instance();
+        _dropTargetOutOfRangeShader = _prototypeManager.Index(ShaderDropTargetOutOfRange).Instance();
         // needs to fire on mouseup and mousedown so we can detect a drag / drop
         CommandBinds.Builder
             .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true), new[] { typeof(SharedInteractionSystem) })
@@ -178,7 +177,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
     private bool OnUseMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
     {
-        if (args.Session?.AttachedEntity is not {Valid: true} dragger ||
+        if (args.Session?.AttachedEntity is not { Valid: true } dragger ||
             _combatMode.IsInCombatMode())
         {
             return false;
@@ -249,11 +248,11 @@ public sealed class DragDropSystem : SharedDragDropSystem
             var mousePos = _eyeManager.PixelToMap(screenPos);
             _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
             var dragSprite = Comp<SpriteComponent>(_dragShadow.Value);
-            dragSprite.CopyFrom(draggedSprite);
+            _sprite.CopySprite((_draggedEntity.Value, draggedSprite), (_dragShadow.Value, dragSprite));
             dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
-            dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
+            _sprite.SetColor((_dragShadow.Value, dragSprite), dragSprite.Color.WithAlpha(0.7f));
             // keep it on top of everything
-            dragSprite.DrawDepth = (int) DrawDepth.Overlays;
+            _sprite.SetDrawDepth((_dragShadow.Value, dragSprite), (int)DrawDepth.Overlays);
             if (!dragSprite.NoRotation)
             {
                 _transformSystem.SetWorldRotationNoLerp(_dragShadow.Value, _transformSystem.GetWorldRotation(_draggedEntity.Value));

@@ -22,16 +22,16 @@ namespace Content.Server.Maps;
 /// Converts the supplied map into a "planet" with defaults.
 /// </summary>
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class PlanetCommand : IConsoleCommand
+public sealed class PlanetCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
-    public string Command => "planet";
-    public string Description => Loc.GetString("cmd-planet-desc");
-    public string Help => Loc.GetString("cmd-planet-help", ("command", Command));
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "planet";
+    public override string Description => Loc.GetString("cmd-planet-desc");
+    public override string Help => Loc.GetString("cmd-planet-help", ("command", Command));
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
@@ -46,8 +46,7 @@ public sealed class PlanetCommand : IConsoleCommand
         }
 
         var mapId = new MapId(mapInt);
-
-        if (!_mapManager.MapExists(mapId))
+        if (!_map.MapExists(mapId))
         {
             shell.WriteError(Loc.GetString($"cmd-planet-map", ("map", mapId)));
             return;
@@ -60,13 +59,13 @@ public sealed class PlanetCommand : IConsoleCommand
         }
 
         var biomeSystem = _entManager.System<BiomeSystem>();
-        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var mapUid = _map.GetMapOrInvalid(mapId);
         biomeSystem.EnsurePlanet(mapUid, biomeTemplate);
 
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
             return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), "Map Id");

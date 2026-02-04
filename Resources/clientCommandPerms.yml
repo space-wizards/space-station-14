@@ -38,6 +38,7 @@
     - replay_stop
     - replay_load
     - saveconfig
+    - chatwindow
 
 - Flags: DEBUG
   Commands:
@@ -65,7 +66,6 @@
     - showemergencyshuttle
     - zoom
     - showsubfloor
-    - showsubfloorforever
     - showmarkers
     - nodevis
     - nodevisfilter
@@ -73,15 +73,27 @@
     - localdelete
     - fullstatereset
     - dumpentities
+    - showwallmounts
+    - showaccessreaders
+    - quickinspect
 
 - Flags: MAPPING
   Commands:
     - mapping
+    - mappingclientsidesetup
+    - showsubfloor
+    - showsubfloorforever
     - toggleautosave
     - toggledecals
+    - showwallmounts
+    - showaccessreaders
 
 - Flags: QUERY
   Commands:
     - uploadfile
     - loadprototype
     - uploadfolder
+
+- Flags: ADMINCHAT
+  Commands:
+    - achatwindow

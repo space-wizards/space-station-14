@@ -8,7 +8,7 @@ uplink-revolver-python-desc = A brutally simple, effective, and loud Syndicate r
 uplink-pistol-cobra-name = Cobra
 uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses pistol magazines (.25 caseless).
 
-uplink-rifle-mosin-name = Surplus Rifle
+uplink-rifle-mosin-name = Kardashev-Mosin
 uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
 
 uplink-esword-name = Energy Sword
@@ -28,6 +28,21 @@ uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmo
 
 uplink-gloves-north-star-name = Gloves of the North Star
 uplink-gloves-north-star-desc = A pair of gloves that reduce your punching cooldown drastically, allowing you to beat people to death in a flurry of punches.
+
+uplink-gloves-knuckleduster-name = Syndicate Knuckle Dusters
+uplink-gloves-knuckleduster-desc = A pair of plastitanium knuckle dusters that let you punch hard enough to break the captains jaw into pieces.
+
+uplink-hushpup-name = Hushpup
+uplink-hushpup-desc = A powerful silenced shotgun with a low magazine capacity. Uses .50 shotgun ammo.
+
+uplink-c20r-name = C-20r
+uplink-c20r-desc = Old faithful: The classic C-20r Submachine Gun.
+
+uplink-bulldog-name = Bulldog
+uplink-bulldog-desc = Lean and mean: Contains the popular Bulldog Shotgun.
+
+uplink-grenade-launcher-name = China-Lake
+uplink-grenade-launcher-desc = An old China-Lake grenade launcher bundled with 5 rounds of anti-personnel ammo.
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
@@ -49,7 +64,7 @@ uplink-whitehole-grenade-name = Whitehole Grenade
 uplink-whitehole-grenade-desc = Grenade that repulses everything around for about 10 seconds. Very useful in small rooms and for chasing someone.
 
 uplink-penguin-grenade-name = Grenade Penguin
-uplink-penguin-grenade-desc = A small, highly-aggressive penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
+uplink-penguin-grenade-desc = A small, highly-aggressive penguin with a grenade strapped around its neck. Trained to ignore all Syndicate agents and relentlessly pursue a single, random nearby target when released.
 
 uplink-c4-name = C-4
 uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
@@ -83,16 +98,25 @@ uplink-shrapnel-grenade-desc = Launches a spray of sharp fragments dealing great
 
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
-uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with the Viper.
+uplink-pistol-magazine-desc = Pistol magazine with 15 cartridges. Compatible with the Viper.
 
 uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
-uplink-pistol-magazine-c20r-desc = Rifle magazine with 30 catridges. Compatible with C-20r.
+uplink-pistol-magazine-c20r-desc = SMG magazine with 30 cartridges. Compatible with C-20r.
+
+uplink-magazine-bulldog-pellet-name = Drum magazine (.50 pellet)
+uplink-magazine-bulldog-pellet-desc = Shotgun magazine with 8 shells filled with buckshot. Compatible with the Bulldog.
+
+uplink-magazine-bulldog-slug-name = Drum magazine (.50 slug)
+uplink-magazine-bulldog-slug-desc = Shotgun magazine with 8 shells filled with slugs. Compatible with the Bulldog.
+
+uplink-estoc-ammo-name = Rifle magazine (.20 rifle)
+uplink-estoc-ammo-desc = A rifle magazine with 25 cartridges. Compatible with the Estoc DMR.
 
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
-uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with the Cobra.
+uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 cartridges. Compatible with the Cobra.
 
 uplink-speedloader-magnum-name = Speedloader (.45 magnum AP)
-uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catridges, capable of ignoring armor entirely. Compatible with the Python.
+uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing cartridges, capable of ignoring armor entirely. Compatible with the Python.
 
 uplink-mosin-ammo-name = Ammunition box (.30 rifle)
 uplink-mosin-ammo-desc = A box of 60 cartridges for the surplus rifle.
@@ -124,6 +148,9 @@ uplink-access-breaker-desc = A hacked access configurator and a good friend of t
 uplink-agent-id-card-name = Agent ID Card
 uplink-agent-id-card-desc = A modified ID card that can copy accesses from other cards and change its name and job title at-will.
 
+uplink-syndicate-id-card-name = Syndicate ID Card
+uplink-syndicate-id-card-desc = A Syndicate ID card, with Syndicate access. Unlikely to be useful on its own, but goes great with reconfigured doors. Does not come with access-copying functionality.
+
 uplink-black-jetpack-name = Black Jetpack
 uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Refills not included, use your fuel wisely.
 
@@ -154,9 +181,6 @@ uplink-binary-translator-key-desc = Lets you tap into the silicons' binary chann
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
 
-uplink-voice-mask-name = Voice Mask
-uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of. Also utilizes cutting-edge chameleon technology.
-
 uplink-clothing-eyes-hud-syndicate-name = Syndicate Visor
 uplink-clothing-eyes-hud-syndicate-desc = The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
 
@@ -164,7 +188,7 @@ uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated.
 
 uplink-syndicate-weapon-module-name = Weapon Cyborg Module
-uplink-syndicate-weapon-module-desc = Upgrades a cyborg with both a machete and an advanced laser.
+uplink-syndicate-weapon-module-desc = Upgrades a cyborg with both an energy dagger and an echis pistol.
 
 uplink-syndicate-martyr-module-name = Martyr Cyborg Module
 uplink-syndicate-martyr-module-desc = Turn your emagged borg friend into a walking bomb with just this module. Make sure they're loyal to your cause, results may vary.
@@ -174,6 +198,9 @@ uplink-singularity-beacon-desc = A device that attracts singularities. Has to be
 
 uplink-antimov-law-name = Antimov Law Circuit
 uplink-antimov-law-desc = A very dangerous Lawset to use when you want to cause the A.I. to go haywire, use with caution.
+
+uplink-syndimov-law-name = Syndi Law Circuit Kit
+uplink-syndimov-law-desc = A subversive Lawset to use when you want to turn the A.I. to your side, use as much as possible. Comes with a Syndicate ID.
 
 # Implants
 uplink-storage-implanter-name = Storage Implanter
@@ -209,6 +236,9 @@ uplink-micro-bomb-implanter-desc = Explode on death or manual activation with th
 uplink-radio-implanter-name = Radio Implanter
 uplink-radio-implanter-desc = Implants a Syndicate radio, allowing covert communication without a headset.
 
+uplink-voice-mask-implanter-name = Identity Mask Implanter
+uplink-voice-mask-implanter-desc = Modifies your vocal cords and facial structure to be able to mimic anyone you could imagine.
+
 # Bundles
 uplink-observation-kit-name = Observation Kit
 uplink-observation-kit-desc = Includes surveillance camera monitor board and security hud disguised as sunglasses.
@@ -220,16 +250,16 @@ uplink-decoy-kit-name = Decoy Kit
 uplink-decoy-kit-desc = State-of-the-art distraction technology straight from RND. Comes with five realistic balloons, four decoy grenades, and some snap poppers!
 
 uplink-chemistry-kit-name = Chemical Synthesis Kit
-uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes toxin and vestine for all your criminal needs!
+uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
 
 uplink-knives-kit-name = Throwing Knives Kit
-uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
+uplink-knives-kit-desc = A set of 8 syndicate branded throwing knives, perfect for embedding into the body of your victims. Capable of ignoring armor entirely when thrown.
 
 uplink-meds-bundle-name = Interdyne Medical Bundle
 uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
 
 uplink-ammo-bundle-name = Ammo Bundle
-uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
+uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, 3 magazines for the Estoc DMR, and 2 ammo boxes for the L6 SAW.
 
 uplink-sniper-bundle-name = Sniper Bundle
 uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a Hristov, 10 spare bullets and a convenient disguise.
@@ -237,8 +267,11 @@ uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a Hristov, 
 uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
-uplink-buldog-bundle-name = Bulldog Bundle
-uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and three 12g buckshot drums.
+uplink-bulldog-bundle-name = Bulldog Bundle
+uplink-bulldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g slug drum, and four 12g buckshot drums.
+
+uplink-estoc-bundle-name = Estoc DMR bundle
+uplink-estoc-bundle-desc = A designated marksman rifle, fitted with a mid-range optic for longer-range combat. Bundled with two rifle magazines (.20 rifle).
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability.
@@ -255,12 +288,15 @@ uplink-surplus-bundle-desc = Contains 50 telecrystals worth of completely random
 uplink-super-surplus-bundle-name = Super Surplus Crate
 uplink-super-surplus-bundle-desc = Contains 125 telecrystals worth of completely random Syndicate items.
 
+uplink-starter-kit-name = Basic Operative Bundle
+uplink-starter-kit-desc = Contains 40 telecrystals of basic operative gear. For those operatives who just don't know what they should buy.
+
 # Tools
 uplink-toolbox-name = Toolbox
 uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves and a syndicate gas mask as well.
 
-uplink-syndicate-jaws-of-life-name = Jaws Of Life
-uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments.
+uplink-syndicate-jaws-of-life-name = Jaws Of Death
+uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments. Can even open bolted doors!
 
 uplink-duffel-surgery-name = Surgical Duffel Bag
 uplink-duffel-surgery-desc = A large duffel bag containing a full suite of surgical tools.
@@ -297,7 +333,7 @@ uplink-chimp-upgrade-kit-name = C.H.I.M.P. Handcannon Upgrade Chip
 uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. handcannon to allow it to fire omega particles. Omega particles inflict severe burns and cause anomalies to go supercritical.
 
 uplink-proximity-mine-name = Proximity Mine
-uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
+uplink-proximity-mine-desc = A throwable mine disguised as a wet floor sign. Detonates on contact with almost anything, safety always off.
 
 uplink-disposable-turret-name = Disposable Ballistic Turret
 uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate. Can be turned back into a toolbox using a screwdriver and repaired using a wrench.
@@ -308,18 +344,24 @@ uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after bei
 uplink-cane-blade-name = Cane Blade
 uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 
+uplink-saw-advanced-name = Advanced Circular Saw
+uplink-saw-advanced-desc = A bleeding-edge surgical implement designed to cut through flesh and bone alike.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
-uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anyone on the station, and more! Comes with a free Agent ID card!
 
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
 
-uplink-clothing-thieving-gloves-name = Thieving Gloves
-uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and improve your thieving technique with these fancy new gloves. They even look like normal gloves!
+uplink-clothing-chameleon-thieving-gloves-name = Chameleon Thieving Gloves
+uplink-clothing-chameleon-thieving-gloves-desc = Discreetly steal from pockets and improve your thieving technique with these fancy new gloves. They can change appearance to match any pair of gloves!
 
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
+
+uplink-clothing-outer-vest-web-elite-name = Elite Web Vest
+uplink-clothing-outer-vest-web-elite-desc = A synthetic armor vest. This one has added webbing and heat resistant fibers.
 
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that prevent slipping and, in zero gravity, allow you to move normally, at the cost of a slight slowdown. Additionally, they have jetpack functionality and come fueled, but don't last for long.
@@ -377,10 +419,10 @@ uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that puts your target straight to sleep.
 
 uplink-stimpack-name = Hyperzine Injector
-uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.
+uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 60 seconds.
 
 uplink-stimkit-name = Hyperzine Injector Kit
-uplink-stimkit-desc = A medkit containing 6 hyperzine microinjectors, which each inject you with enough hyperzine to last for 15 seconds.
+uplink-stimkit-desc = A medkit containing 6 hyperzine microinjectors, which each inject you with enough hyperzine to last for 30 seconds.
 
 uplink-syndicate-segway-crate-name = Syndicate Segway
 uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
@@ -450,7 +492,7 @@ uplink-barber-scissors-name = Barber Scissors
 uplink-barber-scissors-desc = A good tool to give your fellow agent a nice haircut, unless you want to give it to yourself.
 
 uplink-backpack-syndicate-name = Syndicate backpack
-uplink-backpack-syndicate-desc = A lightweight explosion-proof backpack for holding various traitor goods
+uplink-backpack-syndicate-desc = A lightweight explosion-proof backpack for holding various traitor goods.
 
 uplink-cameraBug-name = Camera bug
 uplink-cameraBug-desc = A portable device that allows you to view the station's cameras.
@@ -463,3 +505,18 @@ uplink-business-card-desc = A business card that you can give to someone to demo
 
 uplink-fake-mindshield-name = Fake Mindshield
 uplink-fake-mindshield-desc = A togglable implant capable of mimicking the same transmissions a real mindshield puts out when on, tricking capable Heads-up displays into thinking you have a mindshield (Nanotrasen brand implanter not provided.)
+
+uplink-contraband-lighter-name = Contraband Lighter box
+uplink-contraband-lighter-desc = A mystery box guaranteed to contain a syndicate branded lighter. No fuel required
+
+uplink-smuggler-satchel-name = Smuggler's Satchel
+uplink-smuggler-satchel-desc = A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
+
+uplink-acolyte-armor-name = Acolyte Armor
+uplink-acolyte-armor-desc = The must have of any self respecting cult leader. An evil looking piece of armor, made of bones, and surprisingly resistant to damage.
+
+uplink-briefcase-gun-name = Briefcase Gun
+uplink-briefcase-gun-desc = An indistinct briefcase with a highly compact C-20K mounted inside it. Careful not the grip the handle too tight!
+
+uplink-energycrossbow-name = Mini Energy Crossbow
+uplink-energycrossbow-desc = The go-to sidearm of any operative who prefers their victims not to be moving. Fires regenerating toxic arrows that floors victims in an instant.

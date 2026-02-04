@@ -1,23 +1,28 @@
 using Content.Shared.Atmos.Prototypes;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Atmos.EntitySystems
 {
-    public abstract class SharedAtmosphereSystem : EntitySystem
+    public abstract partial class SharedAtmosphereSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedInternalsSystem _internals = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        protected readonly GasPrototype[] GasPrototypes = new GasPrototype[Atmospherics.TotalNumberOfGases];
+        private EntityQuery<InternalsComponent> _internalsQuery;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                GasPrototypes[i] = _prototypeManager.Index<GasPrototype>(i.ToString());
-            }
+            _internalsQuery = GetEntityQuery<InternalsComponent>();
+
+            InitializeBreathTool();
+            InitializeGases();
+            InitializeCVars();
         }
 
         public GasPrototype GetGas(int gasId) => GasPrototypes[gasId];

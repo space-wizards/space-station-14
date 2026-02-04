@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/39659000f380583c35fb814ee2fadab24c2f8076, additional label sprites by Vermidia",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/39659000f380583c35fb814ee2fadab24c2f8076, additional label sprites by Vermidia, bag in-hand sprites by SeamLesss (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,14 @@
   "states": [
     {
       "name": "bag"
+    },
+    {
+      "name": "bag-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bag-inhand-right",
+      "directions": 4
     },
     {
       "name": "bag_folded"

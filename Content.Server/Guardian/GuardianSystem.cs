@@ -1,19 +1,18 @@
-using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Audio;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Gibbing;
 using Content.Shared.Guardian;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -32,7 +31,7 @@ namespace Content.Server.Guardian
         [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly GibbingSystem _gibbing = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -58,6 +57,8 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianHostComponent, GuardianToggleActionEvent>(OnPerformAction);
 
             SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
+
+            SubscribeLocalEvent<GuardianHostComponent, MechPilotRelayedEvent<GettingAttackedAttemptEvent>>(OnPilotAttackAttempt);
         }
 
         private void OnGuardianShutdown(EntityUid uid, GuardianComponent component, ComponentShutdown args)
@@ -70,7 +71,6 @@ namespace Content.Server.Guardian
 
             _container.Remove(uid, hostComponent.GuardianContainer);
             hostComponent.HostedGuardian = null;
-            Dirty(host.Value, hostComponent);
             QueueDel(hostComponent.ActionEntity);
             hostComponent.ActionEntity = null;
         }
@@ -130,7 +130,7 @@ namespace Content.Server.Guardian
 
             // Ensure held items are dropped before deleting guardian.
             if (HasComp<HandsComponent>(guardian))
-                _bodySystem.GibBody(component.HostedGuardian.Value);
+                _gibbing.Gib(component.HostedGuardian.Value);
 
             QueueDel(guardian);
             QueueDel(component.ActionEntity);
@@ -145,6 +145,16 @@ namespace Content.Server.Guardian
             // why is this server side code? This should be in shared
             _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), uid, PopupType.LargeCaution);
             args.Cancel();
+        }
+
+        private void OnPilotAttackAttempt(Entity<GuardianHostComponent> uid, ref MechPilotRelayedEvent<GettingAttackedAttemptEvent> args)
+        {
+            if (args.Args.Cancelled)
+                return;
+
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), args.Args.Attacker, PopupType.LargeCaution);
+
+            args.Args.Cancelled = true;
         }
 
         public void ToggleGuardian(EntityUid user, GuardianHostComponent hostComponent)
@@ -189,7 +199,9 @@ namespace Content.Server.Guardian
             // Can only inject things with the component...
             if (!HasComp<CanHostGuardianComponent>(target))
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-invalid-target"), user, user);
+                var msg = Loc.GetString("guardian-activator-invalid-target", ("entity", Identity.Entity(target, EntityManager, user)));
+
+                _popupSystem.PopupEntity(msg, user, user);
                 return;
             }
 
@@ -200,7 +212,12 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector){BreakOnMove = true});
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
+            {
+                BreakOnMove = true,
+                NeedHand = true,
+                BreakOnHandChange = true
+            });
         }
 
         private void OnDoAfter(EntityUid uid, GuardianCreatorComponent component, DoAfterEvent args)
@@ -222,7 +239,7 @@ namespace Content.Server.Guardian
             if (TryComp<GuardianComponent>(guardian, out var guardianComp))
             {
                 guardianComp.Host = args.Args.Target.Value;
-                _audio.PlayPvs("/Audio/Effects/guardian_inject.ogg", args.Args.Target.Value);
+                _audio.PlayPvs(guardianComp.InjectSound, args.Args.Target.Value);
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), args.Args.Target.Value, args.Args.Target.Value);
                 // Exhaust the activator
                 component.Used = true;
@@ -244,15 +261,18 @@ namespace Content.Server.Guardian
             if (component.HostedGuardian == null)
                 return;
 
+            TryComp<GuardianComponent>(component.HostedGuardian, out var guardianComp);
+
             if (args.NewMobState == MobState.Critical)
             {
                 _popupSystem.PopupEntity(Loc.GetString("guardian-host-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
-                _audio.PlayPvs("/Audio/Effects/guardian_warn.ogg", component.HostedGuardian.Value);
+                if (guardianComp != null)
+                    _audio.PlayPvs(guardianComp.CriticalSound, component.HostedGuardian.Value);
             }
             else if (args.NewMobState == MobState.Dead)
             {
-                //TODO: Replace WithVariation with datafield
-                _audio.PlayPvs("/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioParams.Default.WithVariation(0.20f));
+                if (guardianComp != null)
+                    _audio.PlayPvs(guardianComp.DeathSound, uid);
                 RemComp<GuardianHostComponent>(uid);
             }
         }
@@ -265,10 +285,11 @@ namespace Content.Server.Guardian
             if (args.DamageDelta == null || component.Host == null || component.DamageShare == 0)
                 return;
 
-            _damageSystem.TryChangeDamage(
-                component.Host,
+            _damageSystem.ChangeDamage(
+                component.Host.Value,
                 args.DamageDelta * component.DamageShare,
                 origin: args.Origin,
+                ignoreResistances: true,
                 interruptsDoAfters: false);
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host.Value, component.Host.Value);
 

@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Access.Components;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState(true)]
 [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
 public sealed partial class IdCardComponent : Component
 {
@@ -35,6 +35,13 @@ public sealed partial class IdCardComponent : Component
     [DataField]
     [AutoNetworkedField]
     public ProtoId<JobIconPrototype> JobIcon = "JobIconUnknown";
+
+    /// <summary>
+    /// Holds the job prototype when the ID card has no associated station record
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public ProtoId<JobPrototype>? JobPrototype;
 
     /// <summary>
     /// The proto IDs of the departments associated with the job

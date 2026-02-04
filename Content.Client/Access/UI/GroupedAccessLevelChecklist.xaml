@@ -1,0 +1,26 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Orientation="Horizontal"
+              Margin="10 10 10 10"
+              VerticalExpand="True"
+              HorizontalExpand="True"
+              MinHeight="70">
+
+    <!-- Access groups -->
+    <BoxContainer Name="AccessGroupList" Access="Public" Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.5" Margin="0 0 10 0">
+        <!-- Populated with C# code -->
+    </BoxContainer>
+
+    <PanelContainer StyleClasses="LowDivider" VerticalExpand="True" Margin="0 0 0 0" SetWidth="2">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#FFFFFF" />
+        </PanelContainer.PanelOverride>
+    </PanelContainer>
+
+    <!-- Access levels -->
+    <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="10 0 0 0">
+        <BoxContainer Name="AccessLevelChecklist" Access="Public" Orientation="Vertical" HorizontalAlignment="Left">
+            <!-- Populated with C# code -->
+        </BoxContainer>
+    </ScrollContainer>
+</BoxContainer>

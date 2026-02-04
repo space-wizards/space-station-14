@@ -8,8 +8,8 @@ namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
-    [ValidatePrototypeId<EntityPrototype>]
-    public const string CoordinatesDisk = "CoordinatesDisk";
+    public static readonly EntProtoId CoordinatesDisk = "CoordinatesDisk";
+    public static readonly ProtoId<LocalizedDatasetPrototype> PlanetNames = "NamesBorer";
 
     private void OnSalvageClaimMessage(EntityUid uid, SalvageExpeditionConsoleComponent component, ClaimSalvageMessage args)
     {
@@ -28,7 +28,7 @@ public sealed partial class SalvageSystem
         var mission = GetMission(_prototypeManager.Index<SalvageDifficultyPrototype>(missionparams.Difficulty), missionparams.Seed);
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
 
-        _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index<LocalizedDatasetPrototype>("NamesBorer"), missionparams.Seed));
+        _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index(PlanetNames), missionparams.Seed));
         _audio.PlayPvs(component.PrintSound, uid);
 
         UpdateConsoles((station.Value, data));

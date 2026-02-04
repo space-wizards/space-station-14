@@ -10,8 +10,14 @@ namespace Content.Server.Objectives.Components;
 public sealed partial class KillPersonConditionComponent : Component
 {
     /// <summary>
-    /// Whether the target must be truly dead, ignores missing evac.
+    /// Whether the target must be dead
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool RequireDead = false;
+
+    /// <summary>
+    /// Whether the target must not be on evac
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool RequireMaroon = false;
 }

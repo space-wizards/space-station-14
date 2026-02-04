@@ -18,12 +18,23 @@ public sealed partial class EntSelector : EntityTableSelector
 
     protected override IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
-        IPrototypeManager proto)
+        IPrototypeManager proto,
+        EntityTableContext ctx)
     {
-        var num = (int) Math.Round(Amount.Get(rand, entMan, proto));
+        var num = Amount.Get(rand);
         for (var i = 0; i < num; i++)
         {
             yield return Id;
         }
+    }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        yield return (Id, 1f);
+    }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        yield return (Id, Amount.Average());
     }
 }

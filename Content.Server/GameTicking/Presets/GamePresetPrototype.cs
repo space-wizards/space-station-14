@@ -1,15 +1,13 @@
-
 using Content.Server.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.GameTicking.Presets
 {
     /// <summary>
     ///     A round-start setup preset, such as which antagonists to spawn.
     /// </summary>
-    [Prototype("gamePreset")]
+    [Prototype]
     public sealed partial class GamePresetPrototype : IPrototype
     {
         [IdDataField]
@@ -33,8 +31,8 @@ namespace Content.Server.GameTicking.Presets
         [DataField("maxPlayers")]
         public int? MaxPlayers;
 
-        [DataField("rules", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-        public IReadOnlyList<string> Rules { get; private set; } = Array.Empty<string>();
+        [DataField]
+        public IReadOnlyList<EntProtoId> Rules { get; private set; } = Array.Empty<EntProtoId>();
 
         /// <summary>
         /// If specified, the gamemode will only be run with these maps.

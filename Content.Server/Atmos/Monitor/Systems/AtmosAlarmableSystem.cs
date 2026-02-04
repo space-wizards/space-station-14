@@ -1,19 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Tag;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -84,7 +82,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     {
         if (component.IgnoreAlarms) return;
 
-        if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
+        if (!TryComp(uid, out DeviceNetworkComponent? netConn))
             return;
 
         if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
@@ -110,9 +108,9 @@ public sealed class AtmosAlarmableSystem : EntitySystem
                     break;
                 }
 
-                if (args.Data.TryGetValue(AlertTypes, out HashSet<AtmosMonitorThresholdType>? types) && component.MonitorAlertTypes != null)
+                if (args.Data.TryGetValue(AlertTypes, out AtmosMonitorThresholdTypeFlags types) && component.MonitorAlertTypes != AtmosMonitorThresholdTypeFlags.None)
                 {
-                    isValid = types.Any(type => component.MonitorAlertTypes.Contains(type));
+                    isValid = (types & component.MonitorAlertTypes) != 0;
                 }
 
                 if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))

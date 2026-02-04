@@ -82,7 +82,7 @@ public sealed partial class ElectrifiedComponent : Component
     /// Shock time multiplier for HV electrocution
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float HighVoltageTimeMultiplier = 1.5f;
+    public float HighVoltageTimeMultiplier = 2f;
 
     /// <summary>
     /// Damage multiplier for MV electrocution
@@ -94,7 +94,7 @@ public sealed partial class ElectrifiedComponent : Component
     /// Shock time multiplier for MV electrocution
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MediumVoltageTimeMultiplier = 1.25f;
+    public float MediumVoltageTimeMultiplier = 1.5f;
 
     [DataField, AutoNetworkedField]
     public float ShockDamage = 7.5f;
@@ -103,7 +103,7 @@ public sealed partial class ElectrifiedComponent : Component
     /// Shock time, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ShockTime = 8f;
+    public float ShockTime = 5f;
 
     [DataField, AutoNetworkedField]
     public float SiemensCoefficient = 1f;
@@ -112,10 +112,10 @@ public sealed partial class ElectrifiedComponent : Component
     public SoundSpecifier ShockNoises = new SoundCollectionSpecifier("sparks");
 
     [DataField, AutoNetworkedField]
-    public SoundPathSpecifier AirlockElectrifyDisabled = new("/Audio/Machines/airlock_electrify_on.ogg");
+    public SoundPathSpecifier AirlockElectrifyDisabled = new("/Audio/Machines/airlock_electrify_off.ogg");
 
     [DataField, AutoNetworkedField]
-    public SoundPathSpecifier AirlockElectrifyEnabled = new("/Audio/Machines/airlock_electrify_off.ogg");
+    public SoundPathSpecifier AirlockElectrifyEnabled = new("/Audio/Machines/airlock_electrify_on.ogg");
 
     [DataField, AutoNetworkedField]
     public bool PlaySoundOnShock = true;

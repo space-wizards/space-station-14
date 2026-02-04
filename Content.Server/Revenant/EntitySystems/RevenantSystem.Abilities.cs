@@ -3,7 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Revenant;
 using Robust.Shared.Random;
 using Content.Shared.Tag;
-using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
 using Content.Server.Light.Components;
 using Content.Server.Ghost;
 using Robust.Shared.Physics;
@@ -20,6 +20,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -29,11 +30,13 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 using Robust.Shared.Map.Components;
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem
 {
+    [Dependency] private readonly EmagSystem _emagSystem = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -43,6 +46,8 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+
+    private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
     private void InitializeAbilities()
     {
@@ -71,7 +76,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidAppearanceComponent>(target) || HasComp<RevenantComponent>(target))
+        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidProfileComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
         args.Handled = true;
@@ -208,7 +213,7 @@ public sealed partial class RevenantSystem
             return;
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Cold", damage.Value);
-        _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
+        _damage.ChangeDamage(args.Args.Target.Value, dspec, true, origin: uid);
 
         args.Handled = true;
     }
@@ -253,7 +258,7 @@ public sealed partial class RevenantSystem
         foreach (var ent in lookup)
         {
             //break windows
-            if (tags.HasComponent(ent) && _tag.HasTag(ent, "Window"))
+            if (tags.HasComponent(ent) && _tag.HasTag(ent, WindowTag))
             {
                 //hardcoded damage specifiers til i die.
                 var dspec = new DamageSpecifier();
@@ -339,11 +344,10 @@ public sealed partial class RevenantSystem
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
             if (_whitelistSystem.IsWhitelistFail(component.MalfunctionWhitelist, ent) ||
-                _whitelistSystem.IsBlacklistPass(component.MalfunctionBlacklist, ent))
+                _whitelistSystem.IsWhitelistPass(component.MalfunctionBlacklist, ent))
                 continue;
 
-            var ev = new GotEmaggedEvent(uid, EmagType.Interaction | EmagType.Access);
-            RaiseLocalEvent(ent, ref ev);
+            _emagSystem.TryEmagEffect(uid, uid, ent);
         }
     }
 }

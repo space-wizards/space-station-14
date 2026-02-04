@@ -55,7 +55,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
             if (session.AttachedEntity is not { Valid: true } entity)
                 continue;
 
-            var transform = EntityManager.GetComponent<TransformComponent>(entity);
+            var transform = Comp<TransformComponent>(entity);
 
 
             var worldBounds = Box2.CenteredAround(_transform.GetWorldPosition(transform),

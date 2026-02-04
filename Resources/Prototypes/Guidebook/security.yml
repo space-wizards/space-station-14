@@ -22,3 +22,15 @@
   id: CriminalRecords
   name: guide-entry-criminal-records
   text: "/ServerInfo/Guidebook/Security/CriminalRecords.xml"
+
+- type: guideEntry
+  id: SpaceLaw
+  name: guide-entry-rules-space-law
+  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
+  children:
+  - SpaceLawCrimeList
+
+- type: guideEntry
+  id: SpaceLawCrimeList
+  name: guide-entry-rules-sl-crime-list
+  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"

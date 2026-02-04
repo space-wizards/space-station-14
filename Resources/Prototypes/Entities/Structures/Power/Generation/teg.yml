@@ -62,6 +62,8 @@
     # It fires processing on behalf of its connected circulators.
     - type: AtmosDevice
     - type: TegGenerator
+      thermalEfficiency: 0.1
+      powerFactor: 1.75
 
     - type: DeviceNetwork
       deviceNetId: AtmosDevices
@@ -150,7 +152,6 @@
     # tags
     - type: Tag
       tags:
-        - Pipe
         - Unstackable
 
     # basic interactions

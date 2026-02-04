@@ -4,20 +4,16 @@
     children:
     - id: BoxEncryptionKeyCargo
     - id: BoxFolderQmClipboard
-    - id: CargoBountyComputerCircuitboard
-    - id: CargoRequestComputerCircuitboard
-    - id: CargoSaleComputerCircuitboard
-    - id: CargoShuttleComputerCircuitboard
-    - id: CargoShuttleConsoleCircuitboard
-    - id: SalvageMagnetMachineCircuitboard
+    - id: BoxQMCircuitboards
+    - id: BoxQMStamps
     - id: CigPackGreen
       prob: 0.50
     - id: ClothingHeadsetAltCargo
     - id: DoorRemoteCargo
-    - id: RubberStampApproved
-    - id: RubberStampDenied
-    - id: RubberStampQm
     - id: AstroNavCartridge
+    - id: ClothingHandsKnuckleDustersQM
+    - id: PlushieLizardJobQuartermaster
+      prob: 0.02
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -40,8 +36,8 @@
     - id: ClothingBeltSheathFilled
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
-    - id: CommsComputerCircuitboard
-    - id: DoorRemoteCommand
+    - id: BoxCaptainCircuitboards
+    - id: DoorRemoteCustom
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
@@ -51,6 +47,12 @@
     - id: SpaceCash1000
     - id: WeaponDisabler
     - id: ClothingEyesGlassesCommand
+    - id: OrganSkeletonPersonHead # A skull to accompany your skeleton crew
+      conditions:
+      - !type:PlayerCountCondition
+        max: 15
+    - id: PlushieLizardJobCaptain
+      prob: 0.02
 
 # No laser table + Laser table
 - type: entityTable
@@ -116,6 +118,8 @@
     - id: BoxEncryptionKeyPassenger
     - id: BoxEncryptionKeyService
     - id: BoxHeadset
+    - id: BoxHoPCircuitboards
+    - id: BoxHoPStamps
     - id: BoxID
     - id: BoxPDA
     - id: CigarGoldCase
@@ -128,12 +132,10 @@
     - id: ClothingNeckGoldmedal
     - id: DoorRemoteService
     - id: HoPIDCard
-    - id: IDComputerCircuitboard
-    - id: RubberStampApproved
-    - id: RubberStampDenied
-    - id: RubberStampHop
     - id: WeaponDisabler
     - id: ClothingEyesHudCommand
+    - id: PlushieLizardJobHeadofpersonnel
+      prob: 0.02
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -159,9 +161,13 @@
     - id: ClothingHandsGlovesColorYellow
     - id: ClothingHeadsetAltEngineering
     - id: DoorRemoteEngineering
+    - id: BoxCECircuitboards
     - id: RCD
     - id: RCDAmmo
     - id: RubberStampCE
+    - id: MetalFoamGrenade
+    - id: PlushieLizardJobChiefengineer
+      prob: 0.02
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -205,21 +211,19 @@
   id: LockerFillChiefMedicalOfficerNoHardsuit
   table: !type:AllSelector
     children:
-    - id: BoxEncryptionKeyMedical
-    - id: ClothingBackpackDuffelSurgeryFilled
-    - id: ClothingCloakCmo
     - id: ClothingEyesHudMedical
-    - id: ClothingHandsGlovesNitrile
-    - id: ClothingHeadHatBeretCmo
-    - id: ClothingHeadsetAltMedical
-    - id: ClothingMaskSterile
-    - id: DoorRemoteMedical
+    - id: ClothingBeltMedicalFilled
     - id: HandheldCrewMonitor
     - id: Hypospray
-    - id: MedicalTechFabCircuitboard
-    - id: MedkitFilled
-    - id: RubberStampCMO
     - id: MedTekCartridge
+    # Standard command gear
+    - id: RubberStampCMO
+    - id: ClothingHeadsetAltMedical
+    - id: DoorRemoteMedical
+    - id: BoxEncryptionKeyMedical
+    - id: BoxCMOCircuitboards
+    - id: PlushieLizardJobChiefmedicalofficer
+      prob: 0.02
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -263,14 +267,14 @@
     children:
     - id: Intellicard
     - id: BoxEncryptionKeyScience
-    - id: CircuitImprinterMachineCircuitboard
+    - id: BoxRDCircuitboards
     - id: ClothingBeltUtilityFilled
     - id: ClothingHeadsetAltScience
     - id: DoorRemoteResearch
     - id: HandTeleporter
-    - id: ProtolatheMachineCircuitboard
-    - id: ResearchComputerCircuitboard
     - id: RubberStampRd
+    - id: PlushieLizardJobResearchdirector
+      prob: 0.02
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -312,7 +316,7 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
-    - id: WeaponEnergyShotgun
+    - id: WeaponEnergyMagnum
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase
@@ -320,16 +324,19 @@
     - id: ClothingBeltSecurityFilled
     - id: ClothingEyesGlassesSecurity
     - id: ClothingHeadsetAltSecurity
-    - id: ClothingMaskNeckGaiter
     - id: ClothingOuterCoatHoSTrench
     - id: ClothingShoesBootsJack
+    - id: FlashlightSeclite
     - id: DoorRemoteSecurity
     - id: HoloprojectorSecurity
     - id: RubberStampHos
-    - id: SecurityTechFabCircuitboard
+    - id: BoxHoSCircuitboards
     - id: WeaponDisabler
+    - id: WeaponTaser
     - id: WantedListCartridge
     - id: DrinkHosFlask
+    - id: PlushieLizardJobHeadofsecurity
+      prob: 0.02
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -367,18 +374,24 @@
         - !type:NestedSelector
           tableId: FillHeadOfSecurityHardsuit
 
-- type: entity
-  id: LockerFreezerVaultFilled
-  suffix: Vault, Locked
-  parent: LockerFreezerBase
-  components:
-  - type: AccessReader
-    access: [ [ "Command" ] ]
-  - type: StorageFill
-    contents:
+- type: entityTable
+  id: LockerFillVault
+  table: !type:AllSelector
+    children:
     - id: WeaponRevolverDeckard
-    - id: ClothingOuterHardsuitBasic
     - id: JetpackBlue
     - id: SpaceCash1000
     - id: BeachBall
     - id: BikeHorn
+
+- type: entity
+  id: LockerFreezerVaultFilled
+  suffix: Vault, Filled
+  parent: LockerFreezerBase
+  components:
+  - type: AccessReader
+    access: [ [ "Command" ] ]
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: LockerFillVault
