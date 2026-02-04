@@ -138,6 +138,10 @@ public sealed class MetabolizerSystem : EntitySystem
 
     private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage)
     {
+        // We only do this on the server to prevent the client from reshuffling metabolism during prediction.
+        if (_net.IsClient)
+            return;
+
         if (!ent.Comp1.Solutions.TryGetValue(stage, out var solutionData))
             return;
 
@@ -158,9 +162,7 @@ public sealed class MetabolizerSystem : EntitySystem
 
         // randomize the reagent list so we don't have any weird quirks
         // like alphabetical order or insertion order mattering for processing
-        // We only do this on the server to prevent the client from reshuffling the list during prediction.
-        if (_net.IsServer)
-            _random.Shuffle(list);
+        _random.Shuffle(list);
 
         var isDead = _mobStateSystem.IsDead(solutionOwner.Value);
 
