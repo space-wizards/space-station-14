@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by samuka-C (github) modified from module.rsi/service",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "circuit-1"
+    },
+    {
+      "name": "circuit-2"
+    },
+    {
+      "name": "circuit-3"
+    }
+  ]
+}
