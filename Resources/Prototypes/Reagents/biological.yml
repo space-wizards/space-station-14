@@ -139,7 +139,7 @@
   group: Biological
   desc: reagent-desc-sulfur-blood
   flavor: bitter
-  color: "#b3b31d"
+  color: "#ccac1f"
   recognizable: true
   physicalDesc: reagent-physical-desc-strong-smelling
 
