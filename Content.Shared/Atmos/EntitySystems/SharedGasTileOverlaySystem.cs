@@ -156,9 +156,9 @@ public struct ThermalByte : IEquatable<ThermalByte>
     public const int TempResolution = 250;
 
     public const byte ReservedFuture0 = 251;
-    public const byte StateVacuum = 252;
+    public const byte ReservedFuture1 = 252;
     public const byte ReservedFuture2 = 253;
-    public const byte ReservedFuture1 = 254;
+    public const byte StateVacuum = 254;
     public const byte AtmosImpossible = 255;
 
     public const float TempDegreeResolution = (TempMaximum - TempMinimum) / TempResolution;
