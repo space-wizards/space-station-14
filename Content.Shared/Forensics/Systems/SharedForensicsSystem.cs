@@ -79,6 +79,7 @@ public sealed class SharedForensicsSystem : EntitySystem
             // If set manually (for example by cloning) we also need to inform the bloodstream of the correct DNA string so it can be updated
             var ev = new GenerateDnaEvent { Owner = dna.Owner, DNA = dna.Comp.DNA };
             RaiseLocalEvent(dna.Owner, ref ev);
+            Dirty(dna);
         }
     }
 
@@ -325,10 +326,10 @@ public sealed class SharedForensicsSystem : EntitySystem
             return;
 
         dnaOwner.Comp.DNA = GenerateDNA();
-        Dirty(dnaOwner);
 
         var ev = new GenerateDnaEvent { Owner = dnaOwner.Owner, DNA = dnaOwner.Comp.DNA };
         RaiseLocalEvent(dnaOwner.Owner, ref ev);
+        Dirty(dnaOwner);
     }
 
     public void RandomizeFingerprint(Entity<FingerprintComponent?> fingerprintOwner)
