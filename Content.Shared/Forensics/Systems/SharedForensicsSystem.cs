@@ -245,7 +245,7 @@ public sealed class SharedForensicsSystem : EntitySystem
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
 
-            var userPopupText = Loc.GetString("forensics-cleaning", ("target", target));
+            var userPopupText = Loc.GetString("forensics-cleaning-user", ("target", target));
             var othersPopupText = Loc.GetString("forensics-cleaning-others", ("user", user), ("target", target));
             _popupSystem.PopupPredicted(userPopupText, othersPopupText, user, user);
 
