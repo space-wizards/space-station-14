@@ -48,7 +48,11 @@
   - Example: A suspect has committed a 2-01 (possession: major) and a 3-01 (possession: highly illegal). The maximum sentence here would be 10 minutes due to them being linked crimes, and 3-01 is the greater crime.
   - Example 2: A suspect commits a 3-04 (Secure trespassing) and a 3-06 (manslaughter). Those crimes stack since they are not linked crimes. You could sentence for a maximum of 20 minutes, but context matters heavily, and maximum sentences should only be used for the worst offenders.
 
-  [color=#a4885c]Repeat Offenders:[/color] Repeated crimes are when someone is released for a crime and then goes to commit the same crime within the same shift. Repeated crimes can be charged with tacked-on time; first repeat: 3:00, second repeat: 6:00, third repeat: permanent confinement. It should be noted each tacked-on time is directly linked to one type of crime, so for example, if someone does their first repeat of trespass and petty theft, you can charge them with an extra 6 minutes.
+  [color=#a4885c]Repeat Offenses:[/color] Someone who is released for a crime and then commits the same crime again later in the same shift can be given an extended sentence depending on the number of repeat offenses.
+  - First repeat: +3:00
+  - Second repeat: +6:00
+  - Third repeat: Permanent confinement.
+  Repeat offenses are tracked per-crime. For example, if someone does a first repeat of both trespass and petty theft at the same time, you can extend their sentence by 3 minutes for each of those repeats for a total extension of 6 minutes.
 
   [color=#a4885c]Attempted Crimes:[/color] Someone who makes a genuine attempt to commit a crime, or who shows obvious intent to commit a crime, can be charged with that crime as if they had successfully committed it. For example, a syndicate nuclear operative arming a nuke but getting arrested before it goes off could be charged with attempted station-wide destruction.
 

@@ -525,7 +525,7 @@
 
   ## Major Crimes
   - The maximum sentence per major crime is 10 minutes.
-  - Assault and Manslaughter are linked crimes, and cannot be stacked against a suspect.
+  - Assault/Battery and Manslaughter are linked crimes, and cannot be stacked against a suspect.
   - It is recommended to not use maximum sentences for those being compliant.
   <Table Columns="4">
     <ColorBox>
@@ -601,9 +601,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The difference between petty theft and grand theft is based on how crucial the stolen item is, this mostly is
-        used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and unreplaceable
-        machine parts.
+        The difference between petty theft and grand theft is based on how crucial the stolen item is; items like Command equipment, hardsuits, jetpacks, and irreplaceable machine parts fall under grand theft.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -704,7 +702,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Crimes like damage of property or battery are expected to be thrown on top of this charge. Leaders of a riot can be charged with any crimes that happen under their leadership.
+        Crimes like damage of property or assault/battery are expected to be thrown on top of this charge. Leaders of a riot can be charged with any crimes that happen under their leadership.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -811,7 +809,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        A murder charge requires evidence of an intent to kill the victim, such as the use of a lethal weapon or a continued attack after the victim was incapacitated. An attempted murder should typically be granted a more lenient sentence than a "successful" murder.
+        A murder charge requires evidence of an intent to kill the victim, such as the use of a lethal weapon or a continued attack after the victim was incapacitated. An attempted murder should typically result in a more lenient sentence than a "successful" murder.
       </Box>
     </ColorBox>
     <ColorBox>
