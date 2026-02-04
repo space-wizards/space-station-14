@@ -334,7 +334,6 @@ public sealed class SharedBloodstreamSystem : EntitySystem
         {
             var data = NewEntityBloodData(entity);
             entity.Comp.BloodReferenceSolution.SetReagentData(data);
-            Dirty(entity);
 
             foreach (var reagent in bloodSolution.Contents)
             {
