@@ -52,20 +52,13 @@ public sealed class VoltageTogglerSystem : EntitySystem
         if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumerComp))
             return;
 
-        var newNodeGroupId = NodeGroupID.Apc;
-
-        switch (setting.Voltage)
+        var newNodeGroupId = setting.Voltage switch
         {
-            case Voltage.Apc:
-                newNodeGroupId = NodeGroupID.Apc;
-                break;
-            case Voltage.Medium:
-                newNodeGroupId = NodeGroupID.MVPower;
-                break;
-            case Voltage.High:
-                newNodeGroupId = NodeGroupID.HVPower;
-                break;
-        }
+            Voltage.Apc => NodeGroupID.Apc,
+            Voltage.Medium => NodeGroupID.MVPower,
+            Voltage.High => NodeGroupID.HVPower,
+            _ => NodeGroupID.Default,
+        };
 
         nodeContainerComp.Nodes["input"].SetNodeGroupId(newNodeGroupId);
 
