@@ -141,3 +141,12 @@
   icon: { sprite: Objects/Materials/materials.rsi, state: diamond }
   color: "#80ffff"
   price: 20 # big diamond gaslit us so hard diamonds actually became extremely rare
+
+- type: material
+  id: XenoborgCircuit
+  stackEntity: MaterialXenoborgCircuitboard1
+  name: materials-xenoborg-circuit
+  unit: materials-unit-board
+  icon: { sprite: Objects/Misc/xenoborg_circuit.rsi, state: circuit-1 }
+  color: "#8080ff"
+  price: 0.20 # $20 for 1 unit
