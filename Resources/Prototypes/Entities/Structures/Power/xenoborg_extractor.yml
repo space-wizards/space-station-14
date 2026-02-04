@@ -3,11 +3,10 @@
   id: XenoborgExtractor
   name: xenoborg extractor
   description: Drains immense amounts of electricity from the grid ro produce some random xenoborg circuit
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Transform
-    anchored: true
+    anchored: false
+  - type: AnchorOnlyOnStation
   - type: Sprite # TODO: add custom sprite
     sprite: Structures/Power/substation.rsi
     snapCardinals: true
@@ -44,3 +43,12 @@
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
     prototype: HydroponicsTrayMachineCircuitboard
+
+- type: entity
+  parent: XenoborgExtractor
+  id: XenoborgExtractorAnchored
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
