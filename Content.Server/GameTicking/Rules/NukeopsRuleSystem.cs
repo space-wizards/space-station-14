@@ -10,6 +10,7 @@ using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -21,6 +22,7 @@ using Content.Shared.Roles.Components;
 using Content.Shared.Store;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -40,6 +42,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
     private static readonly ProtoId<TagPrototype> NukeOpsUplinkTagPrototype = "NukeOpsUplink";
@@ -160,7 +163,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             if (GameTicker.IsGameRuleActive("Nukeops")) // If it's Nukeops then end the round on any detonation
             {
-                _roundEndSystem.EndRound();
+                _roundEndSystem.EndRound(TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.NukeRoundRestartTime)));
             }
             else
             { // It's a LoneOp. Only end the round if the station was destroyed
@@ -169,7 +172,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 {
                     if (cond.ToString().ToLower() == "NukeExplodedOnCorrectStation") // If this is true, then the nuke destroyed the station! It's likely everyone is very dead so keeping the round going is pointless.
                     {
-                        _roundEndSystem.EndRound(); // end the round!
+                        _roundEndSystem.EndRound(TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.NukeRoundRestartTime))); // end the round!
                         handled = true;
                         break;
                     }
@@ -421,7 +424,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         ent.Comp.WinType = type;
 
         if (endRound && (type == WinType.CrewMajor || type == WinType.OpsMajor))
-            _roundEndSystem.EndRound();
+            _roundEndSystem.EndRound(TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.NukeRoundRestartTime)));
     }
 
     private void CheckRoundShouldEnd()
