@@ -28,7 +28,7 @@ public partial class RadiationSystem
         if (!TryComp<RadioactiveRayComponent>(args.HitscanUid, out var rayComp))
             return;
 
-        args.Modifier = ent.Comp.RadResistance / rayComp.RadsPerSecondToPercentDamageDecrease;
+        args.Modifier = -(ent.Comp.RadResistance * rayComp.RadsPerSecondToPercentDamageDecrease / 100.0f);
     }
 
     private void OnInit(EntityUid uid, RadiationBlockerComponent component, ComponentInit args)

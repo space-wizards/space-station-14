@@ -27,7 +27,7 @@ public sealed class DamageModifierOnHitSystem : EntitySystem
 
         RaiseLocalEvent(args.Data.HitEntity.Value, ref evnt);
 
-        ent.Comp.DamageScaler -= evnt.Modifier;
+        ent.Comp.DamageScaler += evnt.Modifier;
 
         if (ent.Comp.DamageScaler <= 0 || MathHelper.CloseTo(ent.Comp.DamageScaler, 0))
             ent.Comp.DamageScaler = 0;
