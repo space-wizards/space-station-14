@@ -27,11 +27,7 @@
     maxCharge: 500000
     netsync: false
   - type: ExaminableBattery
-  - type: BatteryCharger
-    voltage: Apc
-  - type: PowerNetworkBattery
-    canDischarge: false
-    maxChargeRate: 50000
+  - type: PowerConsumerBatteryCharger
   - type: PowerConsumer
     voltage: Apc
     drawRate: 10000
