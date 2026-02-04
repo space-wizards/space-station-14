@@ -5,7 +5,7 @@
   description: Drains immense amounts of electricity from the grid ro produce some random xenoborg circuit
   suffix: Unanchored
   placement:
-    mode: Default
+    mode: PlaceFree
   components:
   - type: Transform
     anchored: false
