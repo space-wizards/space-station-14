@@ -24,7 +24,7 @@
       prob: 0.5
     - id: SubWizard
       prob: 0.05
-    - id: Xenoborgs
+    - id: SubXenoborgs
       prob: 0.05
 
 - type: entity
@@ -35,7 +35,7 @@
     rules:
     - id: Thief
       prob: 0.5
-    - id: Xenoborgs
+    - id: SubXenoborgs
       prob: 0.05
 
 - type: entity
@@ -421,6 +421,46 @@
       - MindRoleInitialInfected
   - type: DynamicRuleCost
     cost: 200
+
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseXenoborgsRule
+  components:
+  - type: XenoborgsRule
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/Shuttles/mothership.yml
+
+- type: entity
+  parent: BaseXenoborgsRule
+  id: Xenoborgs
+  components:
+  - type: GameRule
+    minPlayers: 30
+  - type: AntagMultipleRoleSpawner
+    antagRoleToPrototypes:
+      MothershipCore: [ MothershipCore ]
+      Xenoborg: [ XenoborgEngi, XenoborgHeavy, XenoborgScout, XenoborgStealth ]
+    pickAndTake: true
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ MothershipCore ]
+      fallbackRoles: [ Xenoborg ]
+      spawnerPrototype: SpawnPointGhostRoleMothershipCore
+      mindRoles:
+      - MindRoleMothershipCore
+    - prefRoles: [ Xenoborg ]
+      fallbackRoles: [ MothershipCore ]
+      spawnerPrototype: SpawnPointGhostRoleXenoborg
+      mindRoles:
+      - MindRoleXenoborg
+      min: 4
+      max: 4
+  - type: DynamicRuleCost
+    cost: 200
+
 
 # This rule makes the chosen players unable to get other antag rules, as a way to prevent metagaming job rolls.
 # Put this before antags assigned to station jobs, but after non-job antags (NukeOps/Wiz).
