@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: rumaks-xyz
-  changes:
-  - message: Ichor now heals damage evenly, similarly to omnizine
-    type: Tweak
-  id: 8983
-  time: '2025-09-18T18:47:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39466
 - author: SlamBamActionman
   changes:
   - message: Several reagents now have contraband levels listed in the guidebook.
@@ -3999,3 +3992,11 @@
   id: 9489
   time: '2026-02-04T10:43:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35211
+- author: 0-Anon
+  changes:
+  - message: Adjusted the Mute Toxin chemical reaction recipe to no longer require
+      uranium.
+    type: Tweak
+  id: 9490
+  time: '2026-02-04T19:24:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42787
