@@ -426,6 +426,9 @@
   - type: BatteryAmmoProvider
     proto: RedHeavyLaser
     fireCost: 40
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: Tag
     tags:
     - TurretCompatibleWeapon
