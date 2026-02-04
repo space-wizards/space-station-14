@@ -239,14 +239,18 @@ public sealed partial class AnchorableSystem : EntitySystem
         // Log anchor attempt (server only)
         _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
 
-        if (HasComp<AnchorOnlyOnStationComponent>(uid))
+        if (TryComp<AnchorOnlyOnStationComponent>(uid, out var onlyOnStationComp))
         {
             var entityParent = transform.ParentUid;
             var isOnStation = _stationSystem.GetStations()
                 .Select(stationEnt => _stationSystem.GetLargestGrid(stationEnt))
                 .Contains(entityParent);
+
             if (!isOnStation)
+            {
+                _popup.PopupClient(Loc.GetString(onlyOnStationComp.PopupMessageAnchorFail), uid, userUid);
                 return;
+            }
         }
 
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&

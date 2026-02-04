@@ -3,6 +3,7 @@
   id: XenoborgExtractor
   name: xenoborg extractor
   description: Drains immense amounts of electricity from the grid ro produce some random xenoborg circuit
+  suffix: Unanchored
   components:
   - type: Transform
     anchored: false
@@ -47,6 +48,7 @@
 - type: entity
   parent: XenoborgExtractor
   id: XenoborgExtractorAnchored
+  suffix: Anchored
   placement:
     mode: SnapgridCenter
   components:
