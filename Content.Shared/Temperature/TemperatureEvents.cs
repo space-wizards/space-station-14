@@ -2,29 +2,15 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Temperature;
 
-public sealed class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
+[ByRefEvent]
+public record struct BeforeHeatExchangeEvent(float Conductivity, bool Heating) : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
-
-    public float TemperatureDelta;
-
-    public ModifyChangedTemperatureEvent(float temperature)
-    {
-        TemperatureDelta = temperature;
-    }
 }
 
-public sealed class OnTemperatureChangeEvent : EntityEventArgs
+[ByRefEvent]
+public record struct TemperatureChangedEvent(float CurrentTemperature, float LastTemperature)
 {
-    public readonly float CurrentTemperature;
-    public readonly float LastTemperature;
-    public readonly float TemperatureDelta;
-
-    public OnTemperatureChangeEvent(float current, float last, float delta)
-    {
-        CurrentTemperature = current;
-        LastTemperature = last;
-        TemperatureDelta = delta;
-    }
+    public readonly float CurrentTemperature = CurrentTemperature;
+    public readonly float LastTemperature = LastTemperature;
 }
-

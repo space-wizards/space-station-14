@@ -88,12 +88,9 @@
     defaultTarget: cooked spaceshroom
   - type: AtmosExposed
   - type: Temperature
-    currentTemperature: 290
+    thermalConductivity: 1
   - type: TemperatureDamage
   - type: InternalTemperature
-    thickness: 0.02
-    area: 0.02
-    conductivity: 0.43
   - type: Tag
     tags:
     - Mushroom

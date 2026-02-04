@@ -52,9 +52,9 @@ public sealed partial class TemperatureSystem
 
     private void InitializeDamage()
     {
-        SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+        SubscribeLocalEvent<AlertsComponent, TemperatureChangedEvent>(ServerAlert);
 
-        SubscribeLocalEvent<TemperatureDamageComponent, OnTemperatureChangeEvent>(EnqueueDamage);
+        SubscribeLocalEvent<TemperatureDamageComponent, TemperatureChangedEvent>(EnqueueDamage);
         SubscribeLocalEvent<TemperatureDamageComponent, EntityUnpausedEvent>(OnUnpaused);
 
         // Allows overriding thresholds based on the parent's thresholds.
@@ -134,7 +134,7 @@ public sealed partial class TemperatureSystem
         }
     }
 
-    private void ServerAlert(Entity<AlertsComponent> entity, ref OnTemperatureChangeEvent args)
+    private void ServerAlert(Entity<AlertsComponent> entity, ref TemperatureChangedEvent args)
     {
         ProtoId<AlertPrototype> type;
         float threshold;
@@ -179,7 +179,7 @@ public sealed partial class TemperatureSystem
             _alerts.ClearAlertCategory(entity.AsNullable(), TemperatureAlertCategory);
     }
 
-    private void EnqueueDamage(Entity<TemperatureDamageComponent> ent, ref OnTemperatureChangeEvent args)
+    private void EnqueueDamage(Entity<TemperatureDamageComponent> ent, ref TemperatureChangedEvent args)
     {
         if (ShouldUpdateDamage.Add(ent) && !ent.Comp.TakingDamage)
             ent.Comp.LastUpdate = _gameTiming.CurTime;

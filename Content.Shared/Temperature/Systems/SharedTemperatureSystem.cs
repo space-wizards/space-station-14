@@ -3,6 +3,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.HeatContainers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -27,13 +28,22 @@ public abstract class SharedTemperatureSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TemperatureSpeedComponent, OnTemperatureChangeEvent>(OnTemperatureChanged);
+        SubscribeLocalEvent<TemperatureComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TemperatureSpeedComponent, TemperatureChangedEvent>(OnTemperatureChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
 
         TemperatureQuery = GetEntityQuery<TemperatureComponent>();
     }
 
-    private void OnTemperatureChanged(Entity<TemperatureSpeedComponent> ent, ref OnTemperatureChangeEvent args)
+    private void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)
+    {
+        var mass = CompOrNull<PhysicsComponent>(entity)?.FixturesMass ?? 1f;
+
+        // TODO: This assumes this is temperature for the whole body, but ideally we want it split into surface and internal temperature!
+        entity.Comp.HeatContainer.HeatCapacity = mass * entity.Comp.SpecificHeat;
+    }
+
+    private void OnTemperatureChanged(Entity<TemperatureSpeedComponent> ent, ref TemperatureChangedEvent args)
     {
         foreach (var (threshold, modifier) in ent.Comp.Thresholds)
         {
@@ -84,10 +94,18 @@ public abstract class SharedTemperatureSystem : EntitySystem
         }
     }
 
-    public virtual void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false, TemperatureComponent? temperature = null)
+    public float ConductHeat(Entity<TemperatureComponent?> entity, ref HeatContainer heatContainer, float conductivityMod = 1f, bool ignoreHeatResistance = false)
     {
-
+        return ConductHeat(entity, ref heatContainer, (float)_timing.TickPeriod.TotalSeconds, conductivityMod, ignoreHeatResistance);
     }
+
+    public abstract float ConductHeat(Entity<TemperatureComponent?> entity,
+        ref HeatContainer heatContainer,
+        float deltaT,
+        float conductivityMod = 1f,
+        bool ignoreHeatResistance = false);
+
+    public abstract float ChangeHeat(Entity<TemperatureComponent?> entity, float heatAmount, bool ignoreHeatResistance = false);
 
     public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
     {

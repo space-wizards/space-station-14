@@ -1,4 +1,4 @@
-using Content.Shared.Atmos;
+using Content.Shared.Temperature.HeatContainers;
 
 namespace Content.Shared.Temperature.Components;
 
@@ -12,18 +12,27 @@ public sealed partial class TemperatureComponent : Component
     /// <summary>
     /// Surface temperature which is modified by the environment.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float CurrentTemperature = Atmospherics.T20C;
+    [DataField]
+    public HeatContainer HeatContainer = new ();
 
     /// <summary>
-    /// Heat capacity per kg of mass.
+    /// Heat capacity per kg of mass. Humans are about 3kJ/kg
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float SpecificHeat = 50f;
+    public float SpecificHeat = 3000f;
 
     /// <summary>
-    /// How well does the air surrounding you merge into your body temperature?
+    /// Easy access for the current temperature of the entity.
+    /// </summary>
+    [ViewVariables]
+    public float CurrentTemperature => HeatContainer.Temperature;
+
+    /// <summary>
+    /// Thermal Conductivity in W*m/K.
+    /// Human skin is about 0.3 W/m K and the body has about 2m^2 of surface area.
+    /// Divide that by the thickness of skin of about 2mm giving us a final value of 300
+    /// Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC8953946/
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float AtmosTemperatureTransferEfficiency = 0.1f;
+    public float ThermalConductivity = 300f;
 }

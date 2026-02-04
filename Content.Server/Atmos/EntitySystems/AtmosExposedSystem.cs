@@ -14,12 +14,14 @@ namespace Content.Server.Atmos.EntitySystems
         public readonly EntityCoordinates Coordinates;
         public readonly GasMixture GasMixture;
         public readonly TransformComponent Transform;
+        public readonly float DeltaTime;
 
-        public AtmosExposedUpdateEvent(EntityCoordinates coordinates, GasMixture mixture, TransformComponent transform)
+        public AtmosExposedUpdateEvent(EntityCoordinates coordinates, GasMixture mixture, TransformComponent transform, float deltaTime)
         {
             Coordinates = coordinates;
             GasMixture = mixture;
             Transform = transform;
+            DeltaTime = deltaTime;
         }
     }
 
