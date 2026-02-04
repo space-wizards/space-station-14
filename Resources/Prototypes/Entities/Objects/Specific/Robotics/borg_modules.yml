@@ -1413,6 +1413,12 @@
           components:
           - BorgModule
     - hand:
+        emptyRepresentative: XenoborgCircuitboard
+        emptyLabel: borg-slot-circuitboards-empty
+        whitelist:
+          tags:
+          - XenoborgCircuitboard
+    - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
         whitelist:
