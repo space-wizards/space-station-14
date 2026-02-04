@@ -50,30 +50,30 @@ public sealed class SmartEquipSystem : EntitySystem
 
     private void HandleSmartEquipBackpack(ICommonSession? session)
     {
-        HandleSmartEquip(session, "back");
+        HandleSmartEquip(session, "back", Loc.GetString("inventory-slot-back"));
     }
 
     private void HandleSmartEquipBelt(ICommonSession? session)
     {
-        HandleSmartEquip(session, "belt");
+        HandleSmartEquip(session, "belt", Loc.GetString("inventory-slot-belt"));
     }
 
     private void HandleSmartEquipPocket1(ICommonSession? session)
     {
-        HandleSmartEquip(session, "pocket1");
+        HandleSmartEquip(session, "pocket1", Loc.GetString("inventory-slot-pocket1"));
     }
 
     private void HandleSmartEquipPocket2(ICommonSession? session)
     {
-        HandleSmartEquip(session, "pocket2");
+        HandleSmartEquip(session, "pocket2", Loc.GetString("inventory-slot-pocket2"));
     }
 
     private void HandleSmartEquipSuitStorage(ICommonSession? session)
     {
-        HandleSmartEquip(session, "suitstorage");
+        HandleSmartEquip(session, "suitstorage", Loc.GetString("inventory-slot-suit-storage"));
     }
 
-    private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
+    private void HandleSmartEquip(ICommonSession? session, string equipmentSlot, string equipmentName)
     {
         if (session is not { } playerSession)
             return;
@@ -93,7 +93,7 @@ public sealed class SmartEquipSystem : EntitySystem
 
         if (!TryComp<InventoryComponent>(uid, out var inventory) || !_inventory.HasSlot(uid, equipmentSlot, inventory))
         {
-            _popup.PopupClient(Loc.GetString("smart-equip-missing-equipment-slot", ("slotName", equipmentSlot)), uid, uid);
+            _popup.PopupClient(Loc.GetString("smart-equip-missing-equipment-slot", ("slotName", equipmentName)), uid, uid);
             return;
         }
 
@@ -122,7 +122,7 @@ public sealed class SmartEquipSystem : EntitySystem
         //    - without hand item: try to put the item into your hand
 
         _inventory.TryGetSlotEntity(uid, equipmentSlot, out var slotEntity);
-        var emptyEquipmentSlotString = Loc.GetString("smart-equip-empty-equipment-slot", ("slotName", equipmentSlot));
+        var emptyEquipmentSlotString = Loc.GetString("smart-equip-empty-equipment-slot", ("slotName", equipmentName));
 
         // case 1 (no slot item):
         if (slotEntity is not { } slotItem)

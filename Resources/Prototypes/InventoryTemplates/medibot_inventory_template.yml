@@ -7,5 +7,5 @@
     stripTime: 3
     uiWindowPos: 1,0
     strippingWindowPos: 0,0
-    displayName: Head
+    displayName: inventory-slot-head
     offset: 0.10, -0.35
