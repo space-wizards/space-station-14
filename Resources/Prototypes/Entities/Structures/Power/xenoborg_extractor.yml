@@ -36,7 +36,7 @@
   - type: LightningTarget
     priority: 1
   - type: Battery
-    maxCharge: 500000
+    maxCharge: 2000000
     netsync: false
   - type: ExaminableBattery
   - type: PowerConsumerBatteryCharger
@@ -46,13 +46,13 @@
   - type: VoltageToggler
     settings:
     - voltage: Apc
-      wattage: 10000 # 50 seconds to spawn one # half the overload capacity of a normal APC
+      wattage: 10000 # 200 seconds to spawn one # half the overload capacity of a normal APC
       name: power-voltage-low
     - voltage: Medium
-      wattage: 20000 # 25 seconds to spawn one
+      wattage: 50000 # 40 seconds to spawn one
       name: power-voltage-medium
     - voltage: High
-      wattage: 50000 # 10 seconds to spawn one
+      wattage: 200000 # 10 seconds to spawn one # sets off the rogue power consuming device alert!
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
     prototype: MaterialXenoborgCircuitboard1
