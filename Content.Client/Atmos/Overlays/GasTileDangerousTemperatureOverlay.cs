@@ -14,7 +14,6 @@ namespace Content.Client.Atmos.Overlays;
 /// <summary>
 /// Renders a thermal heatmap overlay for gas tiles, used for equipment like thermal glasses.
 /// /// </summary>
-
 public sealed class GasTileDangerousTemperatureOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = false;
@@ -81,7 +80,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
         // 300 C
         const float superHeatK = 573.15f;
 
-        float tempK = byteTemp * ThermalByte.TempDegreeResolution;
+        var tempK = byteTemp * ThermalByte.TempDegreeResolution;
 
         // Neutral Zone Check (0C to 50C)
         // If between 273.15K and 323.15K, it's transparent.
@@ -173,7 +172,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
         var mapId = args.MapId;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
-        bool anyGasDrawn = false;
+        var anyGasDrawn = false;
         List<Entity<MapGridComponent>> grids = new();
 
         drawHandle.RenderInRenderTarget(_temperatureTarget,
@@ -206,11 +205,13 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
                         while (enumerator.MoveNext(out var tileGas))
                         {
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
-                            if (!localBounds.Contains(tilePosition)) continue;
+                            if (!localBounds.Contains(tilePosition))
+                                continue;
 
-                            Color gasColor = _colorCache[tileGas.ByteGasTemperature.Value];
+                            var gasColor = _colorCache[tileGas.ByteGasTemperature.Value];
 
-                            if (gasColor.A <= 0f) continue;
+                            if (gasColor.A <= 0f)
+                                continue;
 
                             anyGasDrawn = true;
 

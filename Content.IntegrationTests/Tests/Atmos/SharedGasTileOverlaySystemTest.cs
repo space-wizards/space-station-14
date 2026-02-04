@@ -21,9 +21,6 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
     [Test]
     public async Task TestGasOverlayDataSync()
     {
-        var sMapManager = Server.ResolveDependency<IMapManager>();
-
-        var sOverlay = Server.System<GasTileOverlaySystem>();
         var sMapSys = Server.System<SharedMapSystem>();
 
         var gridComp = ProcessEnt.Comp3;
@@ -43,24 +40,24 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
         Assert.That(cOverlay.Chunks, Is.Not.Empty, "Gas overlay chunks are empty on the client.");
 
         //Start real tests
-        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, 400f);
+        await InjectHotPlasma(ProcessEnt, tileIndices, mixture, 400f);
 
         await CheckForInjectedGas(cOverlay, tileIndices, 400f);
 
-        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, 800f + ThermalByte.TempDegreeResolution - 1); // Rounding test
+        await InjectHotPlasma(ProcessEnt, tileIndices, mixture, 800f + ThermalByte.TempDegreeResolution - 1); // Rounding test
 
         await CheckForInjectedGas(cOverlay, tileIndices, 800f);
 
-        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, ThermalByte.TempMaximum + 200f); // This one hits max temperature
+        await InjectHotPlasma(ProcessEnt, tileIndices, mixture, ThermalByte.TempMaximum + 200f); // This one hits max temperature
 
         await CheckForInjectedGas(cOverlay, tileIndices, ThermalByte.TempMaximum);
 
-        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum);
-        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum + (ThermalByte.TempDegreeResolution * 2) - 1); // Test the networking optimisation, this should not be networked yet 
+        await InjectHotPlasma(ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum);
+        await InjectHotPlasma(ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum + (ThermalByte.TempDegreeResolution * 2) - 1); // Test the networking optimisation, this should not be networked yet
 
         await CheckForInjectedGas(cOverlay, tileIndices, ThermalByte.TempMinimum);
 
-        await InjectHotPlasma(sOverlay, ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum + (ThermalByte.TempDegreeResolution * 2)); // This should
+        await InjectHotPlasma(ProcessEnt, tileIndices, mixture, ThermalByte.TempMinimum + (ThermalByte.TempDegreeResolution * 2)); // This should
 
         await CheckForInjectedGas(cOverlay, tileIndices, ThermalByte.TempMinimum + (ThermalByte.TempDegreeResolution * 2));
     }
@@ -86,12 +83,11 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
         });
     }
 
-    private async Task InjectHotPlasma(GasTileOverlaySystem sOverlay, EntityUid gridEnt, Vector2i tileIndices, GasMixture mixture, float temperature)
+    private async Task InjectHotPlasma(EntityUid gridEnt, Vector2i tileIndices, GasMixture mixture, float temperature)
     {
         //Server makes atmos
         await Server.WaitPost(() =>
         {
-
             if (mixture != null)
             {
                 mixture.Clear();
