@@ -24,23 +24,25 @@
         !type:CableDeviceNode
         nodeGroupID: Apc
   - type: Battery
-    # Very important:
-    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
-    # This can not be done by changing the charge rate as the power supply ramps up over time.
-    # This disables prediction for this battery.
+    maxCharge: 500000
     netsync: false
   - type: ExaminableBattery
+  - type: BatteryCharger
+    voltage: Apc
+  - type: PowerNetworkBattery
+    canDischarge: false
+    maxChargeRate: 50000
   - type: PowerConsumer
     voltage: Apc
     drawRate: 10000
   - type: VoltageToggler
     settings:
     - voltage: Apc
-      wattage: 10000
+      wattage: 10000 # half the overload capacity of a normal APC
       name: power-voltage-low
     - voltage: Medium
       wattage: 20000
       name: power-voltage-medium
     - voltage: High
-      wattage: 30000
+      wattage: 50000
       name: power-voltage-high

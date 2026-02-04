@@ -49,26 +49,32 @@ public sealed class VoltageTogglerSystem : EntitySystem
 
     private void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting)
     {
-        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainerComp))
-            return;
-
-        if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumerComp))
-            return;
-
-        var newNodeGroupId = setting.Voltage switch
+        if (TryComp<NodeContainerComponent>(entity, out var nodeContainerComp))
         {
-            Voltage.Apc => NodeGroupID.Apc,
-            Voltage.Medium => NodeGroupID.MVPower,
-            Voltage.High => NodeGroupID.HVPower,
-            _ => NodeGroupID.Default,
-        };
+            var newNodeGroupId = setting.Voltage switch
+            {
+                Voltage.Apc => NodeGroupID.Apc,
+                Voltage.Medium => NodeGroupID.MVPower,
+                Voltage.High => NodeGroupID.HVPower,
+                _ => NodeGroupID.Default,
+            };
 
-        var inputNode = nodeContainerComp.Nodes["input"];
-        _nodeGroupSystem.QueueNodeRemove(inputNode);
-        inputNode.SetNodeGroupId(newNodeGroupId);
-        _nodeGroupSystem.QueueReflood(inputNode);
+            var inputNode = nodeContainerComp.Nodes["input"];
+            _nodeGroupSystem.QueueNodeRemove(inputNode);
+            inputNode.SetNodeGroupId(newNodeGroupId);
+            _nodeGroupSystem.QueueReflood(inputNode);
+        }
 
-        powerConsumerComp.Voltage = setting.Voltage;
-        powerConsumerComp.SetDrawRate(setting.Wattage);
+        if (TryComp<PowerConsumerComponent>(entity, out var powerConsumerComp))
+        {
+            powerConsumerComp.Voltage = setting.Voltage;
+            powerConsumerComp.SetDrawRate(setting.Wattage);
+        }
+
+        if (TryComp<BatteryChargerComponent>(entity, out var batteryChargerComp))
+        {
+            batteryChargerComp.Voltage = setting.Voltage;
+        }
+
     }
 }
