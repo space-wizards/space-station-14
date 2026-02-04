@@ -34,11 +34,13 @@
   - type: VoltageToggler
     settings:
     - voltage: Apc
-      wattage: 10000 # half the overload capacity of a normal APC
+      wattage: 10000 # half the overload capacity of a normal APC # 50 seconds to spawn one
       name: power-voltage-low
     - voltage: Medium
-      wattage: 20000
+      wattage: 20000 # 25 seconds to spawn one
       name: power-voltage-medium
     - voltage: High
-      wattage: 50000
+      wattage: 50000 # 10 seconds to spawn one
       name: power-voltage-high
+  - type: SpawnOnBatteryLevel
+    prototype: HydroponicsTrayMachineCircuitboard
