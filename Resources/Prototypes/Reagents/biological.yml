@@ -259,11 +259,11 @@
   meltingPoint: 0.0
   recognizable: true
   metabolisms:
-    Drink:
+    Digestion:
       effects:
       - !type:SatiateThirst
         factor: 0.5
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         conditions:
