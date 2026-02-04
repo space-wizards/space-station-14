@@ -7,6 +7,8 @@
   placement:
     mode: PlaceFree
   components:
+  - type: Physics
+    bodyType: Dynamic
   - type: Transform
     anchored: false
   - type: AnchorOnlyOnStation
@@ -54,5 +56,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Physics
+    bodyType: Static
   - type: Transform
     anchored: true
