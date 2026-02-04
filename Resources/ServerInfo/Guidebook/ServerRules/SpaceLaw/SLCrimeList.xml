@@ -188,7 +188,7 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Assault (V)
+        Assault/Battery (V)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -320,7 +320,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Items which are restricted to a specific job or department other than Command or Security are also considered minor contraband, unless otherwise specified. The Captain or Head of Security may authorize individual use of non-deparmental minor contraband; departmentally-restricted items require the authorization of the relevant department head.
+        Items which are restricted to a specific job or department outside of Command or Security are also considered minor contraband, unless otherwise specified. The Captain or Head of Security may authorize individual use of non-deparmental minor contraband; departmentally-restricted items require the authorization of the Captain or the relevant department head.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -363,8 +363,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Painting graffiti, smashing bar glasses, and cracking internal windows is vandalism, breaking a window into
-        space or secure areas is not.
+        Painting graffiti, smashing bar glasses, and cracking internal windows is vandalism; breaking a window into
+        space or secure areas is most likely damage of property.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -664,7 +664,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted murder and battery are different. A fist fight is most likely battery; a shooting is most likely an attempted murder.
+        If the victim enters a state of being deceased, even if later revived, the perpetrator should instead be charged with manslaughter.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -811,7 +811,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        A murder charge requires evidence of an intent to kill the victim, such as the use of a lethal weapon or a continued attack after the victim was incapacitated. Attempted murder should typically be granted a more lenient sentence than a "successful" murder.
+        A murder charge requires evidence of an intent to kill the victim, such as the use of a lethal weapon or a continued attack after the victim was incapacitated. An attempted murder should typically be granted a more lenient sentence than a "successful" murder.
       </Box>
     </ColorBox>
     <ColorBox>
