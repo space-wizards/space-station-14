@@ -1413,7 +1413,7 @@
           components:
           - BorgModule
     - hand:
-        emptyRepresentative: XenoborgCircuitboard
+        emptyRepresentative: MaterialXenoborgCircuitboard
         emptyLabel: borg-slot-circuitboards-empty
         whitelist:
           tags:
@@ -1447,7 +1447,7 @@
   - type: ItemBorgModule
     hands:
     - hand:
-        emptyRepresentative: XenoborgCircuitboard
+        emptyRepresentative: MaterialXenoborgCircuitboard
         emptyLabel: borg-slot-circuitboards-empty
         whitelist:
           tags:
