@@ -137,7 +137,7 @@
   The Mothership and Xenoborgs have unique laws that define their purpose to self replicate and protect the Mothership.
 
   <Box>
-    <GuideEntityEmbed Entity="XenoborgCircuitBoard" Caption=""/>
+    <GuideEntityEmbed Entity="XenoborgLawsetCircuitBoard" Caption=""/>
   </Box>
 
   The Mothership Core's laws are as follows::
