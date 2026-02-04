@@ -4,6 +4,8 @@
   name: xenoborg extractor
   description: Drains immense amounts of electricity from the grid ro produce some random xenoborg circuit
   suffix: Unanchored
+  placement:
+    mode: Default
   components:
   - type: Transform
     anchored: false
