@@ -58,6 +58,8 @@
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
+    openDrawDepth: Objects
+    closedDrawDepth: Mobs
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
