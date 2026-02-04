@@ -12,9 +12,6 @@ namespace Content.Client.Forensics
         [ViewVariables]
         private ForensicScannerMenu? _window;
 
-        [ViewVariables]
-        private TimeSpan _printCooldown;
-
         public ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
@@ -32,9 +29,6 @@ namespace Content.Client.Forensics
         private void Print()
         {
             SendPredictedMessage(new ForensicScannerPrintMessage());
-
-            if (_window != null)
-                _window.UpdatePrinterState(true);
         }
 
         private void Clear()
@@ -52,17 +46,6 @@ namespace Content.Client.Forensics
             if (!EntMan.TryGetComponent(Owner, out ForensicScannerComponent? scanner))
                 return;
 
-            // TODO: Fix this, by replacing Timer.Spawn
-            if (scanner.PrintReadyAt > _gameTiming.CurTime)
-            {
-                Timer.Spawn(scanner.PrintReadyAt - _gameTiming.CurTime, () =>
-                {
-                    if (_window != null)
-                        _window.UpdatePrinterState(false);
-                });
-            }
-
-            _printCooldown = scanner.PrintCooldown;
             _window.Update(scanner);
         }
     }
