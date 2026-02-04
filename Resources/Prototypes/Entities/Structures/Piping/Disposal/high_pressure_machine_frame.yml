@@ -15,7 +15,7 @@
         fix1:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.25,-0.4,0.25,0.4"
+            bounds: "-0.3,-0.3,0.3,0.3"
           density: 190
           mask:
           - MachineMask
@@ -46,6 +46,7 @@
               acts: [ "Destruction" ]
     - type: Sprite
       sprite: Structures/Piping/high_pressure_machine_frame.rsi
+      noRot: true
       layers:
       - state: frame
         map: [ "enum.ConstructionVisuals.Layer" ]
