@@ -131,7 +131,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             }
 
             var coords = Transform(uid).Coordinates;
-            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"Entity {ToPrettyString(uid)} gibed {ToPrettyString(ent)} at X:{coords.X} Y:{coords.Y}");
+            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"Entity {ToPrettyString(uid)} gibbed {ToPrettyString(ent)} at X:{coords.X} Y:{coords.Y}");
 
             _gibbing.Gib(ent);
             return;
