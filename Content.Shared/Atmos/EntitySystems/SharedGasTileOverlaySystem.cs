@@ -156,7 +156,7 @@ public struct ThermalByte : IEquatable<ThermalByte>
     public const int TempResolution = 250;
 
     public const byte ReservedFuture0 = 251;
-    public const byte StateVaccum = 252;
+    public const byte StateVacuum = 252;
     public const byte ReservedFuture2 = 253;
     public const byte ReservedFuture1 = 254;
     public const byte AtmosImpossible = 255;
@@ -186,9 +186,9 @@ public struct ThermalByte : IEquatable<ThermalByte>
     }
 
     public void SetAtmosIsImpossible() => _coreValue = AtmosImpossible;
-    public void SetVacuum() => _coreValue = StateVaccum;
+    public void SetVacuum() => _coreValue = StateVacuum;
     public bool IsAtmosImpossible => _coreValue == AtmosImpossible; // Cold space, solid walls
-    public bool IsVacuum => _coreValue == StateVaccum;
+    public bool IsVacuum => _coreValue == StateVacuum;
     public byte Value => _coreValue;
 
     /// <summary>
@@ -211,7 +211,7 @@ public struct ThermalByte : IEquatable<ThermalByte>
             return false;
         }
 
-        if (_coreValue == StateVaccum)
+        if (_coreValue == StateVacuum)
         {
             if (onVacuumReturnTCMB)
             {

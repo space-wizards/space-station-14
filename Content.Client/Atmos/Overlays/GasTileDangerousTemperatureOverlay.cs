@@ -45,8 +45,8 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
             _colorCache[i] = PreCalculateColor(i);
         }
 
-        _colorCache[ThermalByte.StateVaccum] = Color.Teal;
-        _colorCache[ThermalByte.StateVaccum].A = 0.6f;
+        _colorCache[ThermalByte.StateVacuum] = Color.Teal;
+        _colorCache[ThermalByte.StateVacuum].A = 0.6f;
         _colorCache[ThermalByte.AtmosImpossible] = Color.Transparent;
 
 #if DEBUG // This shouldn't happend so tell me if you see this LimeGreen on the screen
