@@ -341,9 +341,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The difference between petty theft and grand theft is based on how crucial the stolen item is; items like
-        instruments, clothing, and tools fall under petty theft. In most cases all you need to do is detain the thief,
-        return the stolen item, and let them go with a warning.
+        Mundane items like clothing, tools, and musical instruments fall under petty theft. In most cases all you need to do is detain the thief, return the stolen item, and let them go with a warning.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -601,7 +599,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The difference between petty theft and grand theft is based on how crucial the stolen item is; items like Command equipment, hardsuits, jetpacks, and irreplaceable machine parts fall under grand theft.
+        Crucial items like Command equipment, hardsuits, jetpacks, and irreplaceable machine parts fall under grand theft.
       </Box>
     </ColorBox>
     <ColorBox>
