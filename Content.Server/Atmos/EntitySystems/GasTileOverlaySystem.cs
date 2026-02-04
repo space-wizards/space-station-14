@@ -220,22 +220,16 @@ namespace Content.Server.Atmos.EntitySystems
 
             var changed = false;
 
-            ThermalByte newByteTemp;
+            ThermalByte newByteTemp = new();
 
             if (tile.Hotspot.Valid)
-                newByteTemp = new(tile.Hotspot.Temperature);
-            else if (tile.Space || tile.Air?.TotalMoles == 0f)
+                newByteTemp.SetTemperature(tile.Hotspot.Temperature);
+            else if (!tile.Space && tile.Air?.TotalMoles <= 5f)
             {
-                newByteTemp = new();
                 newByteTemp.SetVacuum();
             }
-            else if (tile.Air != null)
+            else if (!tile.Space && tile.Air != null)
                 newByteTemp = new(tile.Air.Temperature);
-            else
-            {
-                newByteTemp = new();
-                newByteTemp.SetWall();
-            }
 
             if (oldData.Equals(default))
             {
