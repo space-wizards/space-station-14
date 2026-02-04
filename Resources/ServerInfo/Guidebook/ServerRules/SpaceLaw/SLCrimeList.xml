@@ -127,7 +127,7 @@
     </ColorBox>
     <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Damage of Property (D)
+        Destruction of Property (D)
       </Box>
     </ColorBox>
     <ColorBox Color="#453a59">
@@ -308,7 +308,7 @@
         1-00
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Possession/Use of Minor Contraband
       </Box>
@@ -328,7 +328,7 @@
         1-01
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2e422e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Petty Theft
       </Box>
@@ -351,7 +351,7 @@
         1-02
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Vandalism
       </Box>
@@ -372,7 +372,7 @@
         1-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#59563a">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Trespass
       </Box>
@@ -392,7 +392,7 @@
         1-04
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#3b4354">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Disturbance
       </Box>
@@ -439,7 +439,7 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Failure to Comply
       </Box>
@@ -460,7 +460,7 @@
         2-00
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Possession/Use of Major Contraband
       </Box>
@@ -480,9 +480,9 @@
         2-01
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Damage/Destruction of Property
+        Destruction of Property
       </Box>
     </ColorBox>
     <ColorBox>
@@ -501,7 +501,7 @@
         2-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Endangerment
       </Box>
@@ -548,7 +548,7 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Breach of Arrest
       </Box>
@@ -569,7 +569,7 @@
         3-00
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Possession/Use of Highly Illegal Contraband
       </Box>
@@ -589,7 +589,7 @@
         3-01
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2e422e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Grand Theft
       </Box>
@@ -609,7 +609,7 @@
         3-02
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Destruction of Critical Property
       </Box>
@@ -630,7 +630,7 @@
         3-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#59563a">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Secure Trespass
       </Box>
@@ -650,7 +650,7 @@
         3-04
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Assault/Battery
       </Box>
@@ -670,7 +670,7 @@
         3-05
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Manslaughter
       </Box>
@@ -690,7 +690,7 @@
         3-06
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#3b4354">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Rioting
       </Box>
@@ -736,7 +736,7 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Breach of Custody
       </Box>
@@ -776,7 +776,7 @@
         4-02
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Destruction of Vital Infrastructure
       </Box>
@@ -797,7 +797,7 @@
         4-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Murder
       </Box>
@@ -842,7 +842,7 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Breach of Permanent Confinement
       </Box>
@@ -862,7 +862,7 @@
         5-00
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Station-Wide Destruction
       </Box>
@@ -882,7 +882,7 @@
         5-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Prevention of Revival
       </Box>
@@ -894,7 +894,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers gibbing, spacing, intentionally hiding a body, or other ways of preventing a body with a soul from being resurrected.
+        This covers gibbing, intentionally hiding a body, or other ways of preventing a body with a soul from being revived.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -902,7 +902,7 @@
         5-05
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Mass Murder
       </Box>
@@ -922,7 +922,7 @@
         5-06
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#3b4354">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Refusal of Mental Shielding
       </Box>
