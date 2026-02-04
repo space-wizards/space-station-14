@@ -208,8 +208,9 @@ public partial class RadiationSystem
                 return;
             }
 
-            var gridList = new List<Entity<MapGridComponent>>();
-            var nearbySources = new List<EntityUid>();
+            var gridList = RadiationSystem._gridListCache.Value!;
+            var nearbySources = RadiationSystem._nearbySourcesCache.Value!;
+            nearbySources.Clear();
             var destWorld = System._transform.GetWorldPosition(destTrs);
             var rads = 0f;
             var destMapId = destTrs.MapID;

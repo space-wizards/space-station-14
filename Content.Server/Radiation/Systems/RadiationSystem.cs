@@ -4,9 +4,11 @@ using Content.Shared.Radiation.Events;
 using Content.Shared.Stacks;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 using System.Numerics;
+using System.Threading;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -26,6 +28,11 @@ public sealed partial class RadiationSystem : EntitySystem
     private readonly B2DynamicTree<EntityUid> _sourceTree = new();
     private readonly Dictionary<EntityUid, SourceData> _sourceDataMap = new();
     private readonly List<EntityUid> _activeReceivers = new();
+
+    private static readonly ThreadLocal<List<Entity<MapGridComponent>>> _gridListCache
+        = new(() => new List<Entity<MapGridComponent>>(8));
+    private static readonly ThreadLocal<List<EntityUid>> _nearbySourcesCache
+        = new(() => new List<EntityUid>(64));
 
     private float _accumulator;
 
