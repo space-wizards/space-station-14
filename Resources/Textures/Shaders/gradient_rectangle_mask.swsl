@@ -1,0 +1,46 @@
+// Has an outer rectangle that defines the hard border to the outer alpha color. It's scaled based on a 0-zoom game view; 1.0/1.0 width/height is a rectangle at the edge of the game view when not zoomed.
+// The inner rectangle is defined via a thickness (scaled on the y-axis); 0.5 means the gradient will be fully to the middle.
+
+light_mode unshaded;
+
+uniform highp vec3 color;
+uniform highp float zoom;
+
+uniform highp float outerRectangleWidth;
+uniform highp float outerRectangleHeight;
+uniform highp float innerRectangleThickness;
+uniform highp float alphaInner;
+uniform highp float alphaOuter;
+
+// This default aspect ratio is here to account for variations in viewport width.
+// Any value would work, but this default matches the default viewport, making it easier to set the desired rectangle width/height
+const highp float defaultAspectRatio = 1344.0 / 960.0;
+
+void fragment() {
+	highp float alphaFactor;
+    if (innerRectangleThickness <= 0.0) {
+        alphaFactor = alphaInner;
+    } else {
+        highp float modifiedAspectRatio = defaultAspectRatio * (SCREEN_PIXEL_SIZE.x / SCREEN_PIXEL_SIZE.y);
+        highp vec2 pixelCenter = 1.0/(SCREEN_PIXEL_SIZE*2.0);
+
+        // Calculate the rectangles width by the height divided by the aspect ratio to ensure viewport width doesn't matter
+        highp vec2 outerRectBounds =
+            vec2(outerRectangleWidth * modifiedAspectRatio, outerRectangleHeight)/(2.0 * zoom * SCREEN_PIXEL_SIZE);
+
+        highp vec2 bottomLeft = pixelCenter - outerRectBounds;
+        highp vec2 topRight = pixelCenter + outerRectBounds;
+
+        // Here we use .y instead of the full vector to get consistent thickness across viewport widths
+        // This does mean that the thickness of the top/bottom is slightly different from the sides though which I don't love.
+        // If you make this a vec2 with innerRectangleThickness/(zoom * SCREEN_PIXEL_SIZE) it works well ignoring viewport width.
+        highp float actualThickness = innerRectangleThickness/(zoom * SCREEN_PIXEL_SIZE.y);
+
+        // This is 0 for the inside of the rectangle, in (0, 1) for its border, and 1 for outside the rectangle
+        highp vec2 alphaFactorVec = smoothstep(bottomLeft, bottomLeft + actualThickness, FRAGCOORD.xy)
+                                  - smoothstep(topRight - actualThickness, topRight, FRAGCOORD.xy);
+        // Then this is the inverse
+        alphaFactor = 1.0 - alphaFactorVec.x * alphaFactorVec.y;
+    }
+    COLOR = vec4(color, alphaInner + (alphaOuter - alphaInner) * alphaFactor);
+}
