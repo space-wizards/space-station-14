@@ -76,7 +76,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             {
                 // Make sure we don't pump over the pressure limit.
                 var limitMolesFilter =
-                    AtmosphereSystem.FractionToMaxPressure(removed, filterNode.Air, Atmospherics.MaxOutputPressure);
+                    AtmosphereSystem.MolesToMaxPressure(removed, filterNode.Air, Atmospherics.MaxOutputPressure);
 
                 var availableMoles = removed.GetMoles(filter.FilteredGas.Value);
                 var filteredMoles = Math.Max(Math.Min(limitMolesFilter, availableMoles), 0);

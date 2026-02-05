@@ -345,6 +345,26 @@ namespace Content.Server.Atmos.EntitySystems
         [PublicAPI]
         public static float FractionToMaxPressure(GasMixture mix1, GasMixture mix2, float targetPressure)
         {
+            var molesToTransfer = MolesToMaxPressure(mix1, mix2, targetPressure);
+            return molesToTransfer / mix1.TotalMoles;
+        }
+
+        /// <summary>
+        /// Determines the number of moles to be removed and transferred from a source
+        /// <see cref="GasMixture"/> to a target <see cref="GasMixture"/> to reach a target pressure
+        /// in the target <see cref="GasMixture"/>.
+        /// </summary>
+        /// <param name="mix1">The source <see cref="GasMixture"/> that gas will be removed from.
+        /// This should always be of higher pressure than the second <see cref="GasMixture"/>.</param>
+        /// <param name="mix2">The target <see cref="GasMixture"/> that will increase in pressure
+        /// to the target pressure.</param>
+        /// <param name="targetPressure">The target mixture's desired pressure to target.</param>
+        /// <returns>The difference in moles required to reach the target pressure.</returns>
+        /// <remarks>Note that this method doesn't take into account the heat capacity of the
+        /// transferred volume causing a pressure rise in the target <see cref="GasMixture"/>.</remarks>
+        [PublicAPI]
+        public static float MolesToMaxPressure(GasMixture mix1, GasMixture mix2, float targetPressure)
+        {
             /*
              Calculate the moles required to reach the target pressure.
              The formula is derived from the ideal gas law and the
@@ -388,7 +408,7 @@ namespace Content.Server.Atmos.EntitySystems
             var requiredMoles = (delta * mix2.Volume) / (mix1.Temperature * Atmospherics.R);
 
             // Return the fraction of moles to transfer.
-            return requiredMoles / mix1.TotalMoles;
+            return requiredMoles;
         }
 
         /// <summary>
