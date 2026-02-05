@@ -127,7 +127,7 @@
     - Tail
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseHighlyIllegalContraband]
+  parent: [ ClothingOuterBaseLargeInsulated, AllowSuitStorageClothing, BaseToggleClothing, BaseHighlyIllegalContraband ]
   id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
@@ -140,8 +140,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.01
   - type: Armor
     modifiers:
       coefficients:
@@ -275,16 +273,13 @@
     accent: BarkAccent
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ ClothingOuterBaseToggleable, AllowSuitStorageClothing ]
   id: ClothingOuterSuitCarp
   name: carp suit
   description: A special suit that makes you look just like a space carp, if your eyesight is bad.
   components:
-  - type: AllowSuitStorage
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
-  - type: Item
-    size: Normal
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ToggleableClothing
@@ -297,7 +292,7 @@
     - Tail
 
 - type: entity
-  parent: ClothingOuterSuitCarp
+  parent: [ ClothingOuterSuitCarp, TemperatureProtectionGreat ]
   id: ClothingOuterHardsuitCarp
   suffix: Hardsuit, DO NOT MAP
   categories: [ DoNotMap ]
@@ -305,8 +300,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.01
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCarp
   - type: StaticPrice
