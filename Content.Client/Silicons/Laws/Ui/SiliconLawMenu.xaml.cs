@@ -25,9 +25,9 @@ public sealed partial class SiliconLawMenu : FancyWindow
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    private static readonly TimeSpan AnnounceBaseCooldown = TimeSpan.FromSeconds(2);
+    private static readonly TimeSpan AnnounceBaseCooldown = TimeSpan.FromSeconds(1);
     private static readonly float MinChatCooldown = 1;
-    private static readonly float MaxChatCooldown = 3;
+    private static readonly float MaxChatCooldown = 2;
 
     private static readonly List<ChatSelectChannel> SelectableChatChannels =
         new() { ChatSelectChannel.Local, ChatSelectChannel.Whisper };
@@ -111,6 +111,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
 
         var curTime = _timing.CurTime;
         LawAnnounceButton.Disabled = curTime < _nextAllowedAnnouncePress;
+        LawChatChannelOption.Disabled = curTime < _nextAllowedAnnouncePress;
         AnnounceLaws(curTime);
     }
 
@@ -169,13 +170,11 @@ public sealed partial class SiliconLawMenu : FancyWindow
         // Radio
         else
         {
-            var radioChannelProto =
-                _selectableRadioChannels[_selectedChatChannelIdx - SelectableChatChannels.Count];
-            _chatManager.SendMessage(
-                radioChannelProto.ID == SharedChatSystem.CommonChannel
-                    ? $"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}"
-                    : $"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}",
-                ChatSelectChannel.Radio);
+            var radioChannelProto = _selectableRadioChannels[_selectedChatChannelIdx - SelectableChatChannels.Count];
+            var radioMessage = radioChannelProto.ID == SharedChatSystem.CommonChannel
+                ? $"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}"
+                : $"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}";
+            _chatManager.SendMessage(radioMessage, ChatSelectChannel.Radio);
         }
     }
 }
