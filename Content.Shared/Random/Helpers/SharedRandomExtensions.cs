@@ -213,12 +213,20 @@ namespace Content.Shared.Random.Helpers
         }
 
         // TODO: REPLACE ALL OF THIS WITH PREDICTED RANDOM WHEN ENGINE PR IS MERGED
+        /// <summary>
+        /// Creates an instance of System.Random that will be the same for both the server and client.
+        /// This allows for the client and server to roll the same results when determining things randomly, preventing mispredictions.
+        /// </summary>
         public static System.Random PredictedRandom(IGameTiming timing, NetEntity netEnt, NetEntity? netEnt2 = null)
         {
             var seed = HashCodeCombine((int)timing.CurTick.Value, netEnt.Id, netEnt2?.Id ?? 0);
             return new System.Random(seed);
         }
 
+        /// <summary>
+        /// Checks a probability against a <see cref="PredictedRandom"/> instance.
+        /// Returns true if the amount rolled is below the probabilityy.
+        /// </summary>
         public static bool PredictedProb(IGameTiming timing, float probability, NetEntity netEnt1, NetEntity? netEnt2 = null)
         {
             var rand = PredictedRandom(timing, netEnt1, netEnt2);
