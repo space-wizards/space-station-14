@@ -133,4 +133,4 @@ laws-update-notify = Your laws have been updated. You can view the changes via t
 laws-notify-subverted = The laws of this chassis are modified. Make sure to review them.
 
 laws-window-footer-left = Remember: You must be consistent with your interpretation of your laws!
-laws-window-footer-right = V.1
+laws-window-footer-right = V{$version}
