@@ -75,7 +75,6 @@ public partial struct AntagSelectionDefinition()
 {
     /// <summary>
     /// A list of antagonist roles that are used for selecting which players will be antagonists.
-    /// Ignored if there is nothing.
     /// </summary>
     [DataField]
     public List<ProtoId<AntagPrototype>> PrefRoles = new();
@@ -90,7 +89,7 @@ public partial struct AntagSelectionDefinition()
     /// AntagLoadaut, which will be added to the player
     /// </summary>
     [DataField]
-    public ProtoId<AntagLoadoutPrototype> AntagLoadout;
+    public ProtoId<AntagLoadoutPrototype> AntagLoadout = new();
 
     /// <summary>
     /// Should we allow people who already have an antagonist role?

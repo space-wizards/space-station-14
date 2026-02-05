@@ -173,7 +173,7 @@ public sealed partial class AntagSelectionSystem
             return true;
 
         if (roles.Count == 0)
-            return true;
+            return false;
 
         if (!_pref.TryGetCachedPreferences(session.UserId, out var pref))
             return false;

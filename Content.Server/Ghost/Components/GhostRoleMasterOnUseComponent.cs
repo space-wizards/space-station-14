@@ -1,7 +1,3 @@
-using Content.Server.Ghost.Roles;
-using Content.Shared.Dataset;
-using Robust.Shared.Prototypes;
-using System.Diagnostics.Metrics;
 
 namespace Content.Server.Ghost.Components;
 

@@ -75,16 +75,16 @@ public sealed partial class GhostRoleComponent : Component
     public ProtoId<AntagLoadoutPrototype>? AntagLoadoutPrototype;
 
     [DataField]
-    public bool AllowSpeech { get; set; } = true;
+    public bool AllowSpeech = true;
 
     [DataField]
-    public bool AllowMovement { get; set; }
+    public bool AllowMovement;
 
     [ViewVariables(VVAccess.ReadOnly)]
-    public bool Taken { get; set; }
+    public bool Taken;
 
     [ViewVariables]
-    public uint Identifier { get; set; }
+    public uint Identifier;
 
     /// <summary>
     /// If true, adds a goal with the obedience of a specific player. The owner is selected by other components
@@ -96,27 +96,27 @@ public sealed partial class GhostRoleComponent : Component
     /// Master of the minion.
     /// </summary>
     [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public EntityUid? Master { get; set; }
+    public EntityUid? Master;
 
     /// <summary>
     /// The objective of submission
     /// </summary>
     [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public EntProtoId MinionSubmissionObjective { get; set; } = "MinionSubmissionObjective";
+    public EntProtoId MinionSubmissionObjective = "MinionSubmissionObjective";
 
     /// <summary>
     /// Reregisters the ghost role when the current player ghosts.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("reregister")]
-    public bool ReregisterOnGhost { get; set; } = true;
+    public bool ReregisterOnGhost = true;
 
     /// <summary>
     /// If set, ghost role is raffled, otherwise it is first-come-first-serve.
     /// </summary>
     [DataField("raffle")]
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
-    public GhostRoleRaffleConfig? RaffleConfig { get; set; }
+    public GhostRoleRaffleConfig? RaffleConfig;
 
     /// <summary>
     /// Job the entity will receive after adding the mind.
