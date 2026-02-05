@@ -1,8 +1,11 @@
 <Button xmlns="https://spacestation14.io"
         xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-        Margin="0 0 0 10"
+        Margin="0 0 0 5"
         StyleClasses="ButtonSquare">
-    <PanelContainer VerticalExpand="True" StyleClasses="BackgroundDark">
+    <PanelContainer
+        VerticalExpand="True"
+        Margin="0 5"
+        StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True"
                       VerticalExpand="True"
