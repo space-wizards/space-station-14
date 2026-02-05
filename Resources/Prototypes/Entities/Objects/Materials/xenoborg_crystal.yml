@@ -2,7 +2,7 @@
   parent: [ MaterialBase, BaseXenoborgContraband ]
   id: MaterialXenoborgCrystal
   name: xenoborg crystal
-  description: A special crystal created from nuclear fusion used to make xenoborgs.
+  description: A special crystal created from nuclear fusion. It's used to make xenoborgs.
   suffix: 10
   components:
   - type: Item
