@@ -1,46 +1,64 @@
 - type: htnCompound
   id: MedibotCompound
   branches:
-    - tasks:
-        - !type:HTNCompoundTask
-          task: InjectNearbyCompound
-    - tasks:
-        - !type:HTNCompoundTask
-          task: IdleCompound
+  # Observe for targets
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: MedibotInjectable
+        returnType: EnumerableDescending
+    - !type:HTNPrimitiveTask
+      operator: !type:PickNearbyInjectableOperator
+        targetKey: Target
+        targetMoveKey: TargetCoordinates
+
+    - !type:HTNCompoundTask
+      task: MedibotGetInRange
+    - !type:HTNCompoundTask
+      task: MedibotInject
+
+  # Idle when targets not found
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
 
 - type: htnCompound
-  id: InjectNearbyCompound
+  id: MedibotGetInRange
   branches:
-    - tasks:
-        # TODO: Kill this shit
-        - !type:HTNPrimitiveTask
-          operator: !type:PickNearbyInjectableOperator
-            targetKey: InjectTarget
-            targetMoveKey: TargetCoordinates
+  # Move to target if out of range
+  - preconditions:
+    - !type:TargetInRangePrecondition
+      invert: true
+      targetKey: Target
+      rangeKey: InteractRange
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:SpeakOperator
+        speech: !type:SingleSpeakOperatorSpeech
+          line: medibot-start-inject
+        hidden: true
+        cooldownID: medibot-start-inject
+        cooldown: 5
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: false
 
-        - !type:HTNPrimitiveTask
-          operator: !type:SpeakOperator
-            speech: !type:SingleSpeakOperatorSpeech
-              line: medibot-start-inject
-            hidden: true
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:NoOperator
 
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-            pathfindInPlanning: false
+# Should be called only when in range
+- type: htnCompound
+  id: MedibotInject
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:InteractWithOperator
+        expectDoAfter: true
+        targetKey: Target
+    - !type:HTNPrimitiveTask
+      operator: !type:EnsureComponentOperator
+        targetKey: Target
+        components:
+        - type: NPCRecentlyInjected
 
-        - !type:HTNPrimitiveTask
-          operator: !type:SetFloatOperator
-            targetKey: IdleTime
-            amount: 3
-
-        - !type:HTNPrimitiveTask
-          operator: !type:WaitOperator
-            key: IdleTime
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: IdleTime
-
-        # TODO: Kill this
-        - !type:HTNPrimitiveTask
-          operator: !type:MedibotInjectOperator
-            targetKey: InjectTarget

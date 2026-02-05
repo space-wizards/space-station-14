@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: ServiceJanitorial
   icon:
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    sprite: Objects/Specific/Janitorial/spray_bottle.rsi
     state: cleaner
   product: CrateServiceJanitorialSupplies
   cost: 560

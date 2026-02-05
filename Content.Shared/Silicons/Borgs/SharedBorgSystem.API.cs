@@ -24,7 +24,7 @@ public abstract partial class SharedBorgSystem
         if (!_mind.TryGetMind(chassis.Owner, out _, out _))
             return false;
 
-        if (!_mobState.IsAlive(chassis.Owner))
+        if (_mobState.IsIncapacitated(chassis.Owner))
             return false;
 
         return true;
@@ -39,19 +39,17 @@ public abstract partial class SharedBorgSystem
         if (chassis.Comp.Active)
             return false; // Already active.
 
-        if (CanActivate(chassis))
-        {
-            SetActive(chassis, true, user);
-            return true;
-        }
+        if (!CanActivate(chassis))
+            return false;
 
-        return false;
+        SetActive(chassis, true, user);
+        return true;
+
     }
 
     /// <summary>
     /// Activates or deactivates a borg.
     /// If active the borg
-    /// - has door access,
     /// - can use modules and
     /// - has full movement speed.
     /// </summary>
@@ -68,7 +66,6 @@ public abstract partial class SharedBorgSystem
         else
             DisableAllModules(chassis.AsNullable());
 
-        _access.SetAccessEnabled(chassis.Owner, active); // Needs a player so that scientists can't drag around an empty borg for free AA.
         _powerCell.SetDrawEnabled(chassis.Owner, active);
         _movementSpeedModifier.RefreshMovementSpeedModifiers(chassis);
 

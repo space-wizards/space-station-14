@@ -1,6 +1,6 @@
 - type: entity
-  id: CrateArmorySMG
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  id: CrateArmorySMG
   name: SMG crate
   description: Contains two SMGs with four mags. Requires Armory access to open.
   components:
@@ -14,8 +14,8 @@
           amount: 4
 
 - type: entity
-  id: CrateArmoryShotgun
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  id: CrateArmoryShotgun
   name: shotgun crate
   description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Combat Shotguns, and some standard shotgun shells. Requires Armory access to open.
   components:
@@ -29,8 +29,8 @@
           amount: 4
 
 - type: entity
-  id: CrateTrackingImplants
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  id: CrateTrackingImplants
   name: tracking implants
   description: Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.
   components:
@@ -53,8 +53,8 @@
         amount: 3
 
 - type: entity
-  id: CrateArmoryLaser
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  id: CrateArmoryLaser
   name: lasers crate
   description: Contains three standard-issue laser rifles. Requires Armory access to open.
   components:
@@ -65,8 +65,8 @@
         amount: 3
 
 - type: entity
-  id: CrateArmoryPistols
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  id: CrateArmoryPistols
   name: pistols crate
   description: Contains two standard NT pistols with four mags. Requires Armory access to open.
   components:
@@ -80,8 +80,8 @@
           amount: 4
 
 - type: entity
-  id: CrateSecurityRiot
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  id: CrateSecurityRiot
   name: swat crate
   description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
   components:
@@ -101,8 +101,8 @@
           amount: 2
 
 - type: entity
-  id: CrateArmoryRifle
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  id: CrateArmoryRifle
   name: rifle crate
   description: Contains two high-powered assault rifles with four mags. Requires Armory access to open.
   components:
