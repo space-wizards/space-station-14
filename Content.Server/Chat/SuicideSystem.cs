@@ -98,7 +98,7 @@ public sealed class SuicideSystem : SharedSuicideSystem
 
         // CannotSuicide tag will allow the user to ghost, but also return to their mind
         // This is kind of weird, not sure what it applies to?
-        if (_tagSystem.HasTag(victim, CannotSuicideTag))
+        if (TagSystem.HasTag(victim, CannotSuicideTag))
             args.CanReturnToBody = true;
 
         if (_ghostSystem.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
@@ -110,7 +110,7 @@ public sealed class SuicideSystem : SharedSuicideSystem
     /// </summary>
     private void OnEnvironmentalSuicide(Entity<MobStateComponent> victim, ref SuicideEvent args)
     {
-        if (args.Handled || _mobState.IsCritical(victim))
+        if (args.Handled || MobStateSystem.IsCritical(victim))
             return;
 
         var suicideByEnvironmentEvent = new SuicideByEnvironmentEvent(victim);
