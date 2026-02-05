@@ -54,7 +54,8 @@ public sealed partial class MetabolizerComponent : Component
             SolutionName = "stomach",
             SolutionOnBody = false,
             TransferSolutionName = BloodstreamComponent.DefaultBloodSolutionName,
-            TransferEfficacy = 0.5
+            TransferEfficacy = 0.6,
+            DynamicTransferRate = 0.5
         },
         ["Bloodstream"] = new()
         {
@@ -133,6 +134,13 @@ public sealed partial class MetabolismSolutionEntry
     /// </summary>
     [DataField]
     public FixedPoint2 TransferRate = 0.25;
+
+    /// <summary>
+    /// Reagents transferred by this metabolizer will transfer either a rate of [quantity of reagent in metabolizer] * DynamicTransferRate
+    /// or at a flat TransferRate rate, depending on which is larger
+    /// </summary>
+    [DataField]
+    public FixedPoint2 DynamicTransferRate = 0;
 
     /// <summary>
     /// The percentage of transferred reagents that actually make it to the next step in metabolism if they don't have explicit metabolites
