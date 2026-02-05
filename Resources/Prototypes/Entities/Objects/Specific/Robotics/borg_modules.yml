@@ -1413,11 +1413,11 @@
           components:
           - BorgModule
     - hand:
-        emptyRepresentative: MaterialXenoborgCircuitboard
-        emptyLabel: borg-slot-circuitboards-empty
+        emptyRepresentative: MaterialXenoborgCrystal
+        emptyLabel: borg-slot-crystal-empty
         whitelist:
           tags:
-          - XenoborgCircuitboard
+          - XenoborgCrystal
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
@@ -1447,11 +1447,11 @@
   - type: ItemBorgModule
     hands:
     - hand:
-        emptyRepresentative: MaterialXenoborgCircuitboard
-        emptyLabel: borg-slot-circuitboards-empty
+        emptyRepresentative: MaterialXenoborgCrystal
+        emptyLabel: borg-slot-crystal-empty
         whitelist:
           tags:
-          - XenoborgCircuitboard
+          - XenoborgCrystal
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty

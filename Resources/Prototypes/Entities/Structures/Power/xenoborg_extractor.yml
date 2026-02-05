@@ -2,7 +2,7 @@
   parent: [BaseMachine, BaseXenoborgContraband]
   id: XenoborgExtractor
   name: xenoborg extractor
-  description: Drains electricity from the grid to produce xenoborg circuits.
+  description: Drains electricity from the grid to produce xenoborg crystals.
   suffix: Unanchored
   placement:
     mode: PlaceFree
@@ -55,7 +55,7 @@
       wattage: 200000 # 10 seconds to spawn one # sets off the rogue power consuming device alert!
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
-    prototype: MaterialXenoborgCircuitboard1
+    prototype: MaterialXenoborgCrystal1
 
 - type: entity
   parent: XenoborgExtractor

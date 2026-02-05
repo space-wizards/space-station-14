@@ -145,7 +145,7 @@
         - ConstructionMaterial
         - RawMaterial
         - Ingot
-        - XenoborgCircuitboard
+        - XenoborgCrystal
       components:
         - Circuitboard
         - Flatpack

@@ -1564,7 +1564,7 @@
 ## X ##
 
 - type: Tag
-  id: XenoborgCircuitboard # MaterialStorage whitelist: Mothership core
+  id: XenoborgCrystal # MaterialStorage whitelist: Mothership core
 
 - type: Tag
   id: XenoborgGhostrole # spawn whitelist : SpawnPointGhostRoleXenoborg

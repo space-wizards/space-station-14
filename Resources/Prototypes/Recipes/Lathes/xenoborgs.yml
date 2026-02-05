@@ -37,28 +37,28 @@
   id: XenoborgEngiRecipe
   result: XenoborgEngiPrinted
   materials:
-    XenoborgCircuit: 100
+    XenoborgCrystal: 100
 
 - type: latheRecipe
   parent: BaseXenoborgRecipe
   id: XenoborgHeavyRecipe
   result: XenoborgHeavyPrinted
   materials:
-    XenoborgCircuit: 100
+    XenoborgCrystal: 100
 
 - type: latheRecipe
   parent: BaseXenoborgRecipe
   id: XenoborgScoutRecipe
   result: XenoborgScoutPrinted
   materials:
-    XenoborgCircuit: 100
+    XenoborgCrystal: 100
 
 - type: latheRecipe
   parent: BaseXenoborgRecipe
   id: XenoborgStealthRecipe
   result: XenoborgStealthPrinted
   materials:
-    XenoborgCircuit: 100
+    XenoborgCrystal: 100
 
 # modules
 
@@ -69,7 +69,7 @@
   id: XenoborgModuleDoorControlRecipe
   result: XenoborgModuleDoorControl
   materials:
-    XenoborgCircuit: 100
+    XenoborgCrystal: 100
 
 ## heavy xenoborg modules
 
@@ -78,7 +78,7 @@
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
   materials:
-    XenoborgCircuit: 100
+    XenoborgCrystal: 100
 
 ## scout xenoborg modules
 
@@ -87,7 +87,7 @@
   id: XenoborgModuleEnergySwordRecipe
   result: XenoborgModuleEnergySword
   materials:
-    XenoborgCircuit: 100
+    XenoborgCrystal: 100
 
 ## stealth xenoborg modules
 
@@ -96,4 +96,4 @@
   id: XenoborgModuleSuperCloakDeviceRecipe
   result: XenoborgModuleSuperCloakDevice
   materials:
-    XenoborgCircuit: 100
+    XenoborgCrystal: 100

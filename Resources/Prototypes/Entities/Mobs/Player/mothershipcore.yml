@@ -47,7 +47,7 @@
   - type: MaterialStorage
     whitelist:
       tags:
-      - XenoborgCircuitboard
+      - XenoborgCrystal
       - Sheet
   - type: PointLight
     color: "#0033ff"

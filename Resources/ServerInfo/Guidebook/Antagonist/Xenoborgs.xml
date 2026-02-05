@@ -17,7 +17,7 @@
 
   Your main objective is to kill and harvest all sentient brains in the station and bring them to the mothership core. These can be both real brains, and positronic brains.
   
-  Steal power from the station using xenoborg extractors to produce xenoborg circuits to create more xenoborg bodies.
+  Steal power from the station using xenoborg extractors to produce xenoborg crystals to create more xenoborg bodies.
   
   Protect the Mothership at all costs.
 
@@ -138,14 +138,15 @@
   ## Xenoborg extractors
   <Box>
     <GuideEntityEmbed Entity="XenoborgExtractor" Caption="xenoborg extractor"/>
+    <GuideEntityEmbed Entity="MaterialXenoborgCrystal" Caption="xenoborg crystal"/>
   </Box>
-  Its a machine necessary for the xenoborgs to grow their army. It can steal power from cables connected to it and then produce xenoborg circuits.
+  Its a machine necessary for the xenoborgs to grow their army. It can steal power from cables connected to it and then produce xenoborg crystals.
 
   The mothership core can produce a xenoborg extractor flatpack for 10 steel.
 
   Once its anchored on top of a cable it needs to be set to that cable voltage to start draining power.
 
-  Once it's battery is full it will produce one xenoborg circuit.
+  Once it's battery is full it will produce one xenoborg crystal.
 
   It drains different amounts of power depending on the voltage.
   - low voltage - 10kW - 3 minutes and 20 seconds to produce one xenoborg circuit.

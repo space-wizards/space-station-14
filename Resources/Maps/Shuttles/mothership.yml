@@ -2377,7 +2377,7 @@ entities:
     - type: Transform
       pos: -2.5,-4.5
       parent: 1
-- proto: MaterialXenoborgCircuitboard
+- proto: MaterialXenoborgCrystal
   entities:
   - uid: 111
     components:

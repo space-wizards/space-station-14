@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "circuit-1"
+      "name": "crystal-1"
     },
     {
-      "name": "circuit-2"
+      "name": "crystal-2"
     },
     {
-      "name": "circuit-3"
+      "name": "crystal-3"
     }
   ]
 }
