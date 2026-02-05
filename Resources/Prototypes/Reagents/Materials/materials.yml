@@ -148,5 +148,5 @@
   name: materials-xenoborg-crystal
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/xenoborg_crystal.rsi, state: crystal-1 }
-  color: "#1010ff"
+  color: "#3d94ff"
   price: 2 # $200 for 1 unit # crystal pretty!
