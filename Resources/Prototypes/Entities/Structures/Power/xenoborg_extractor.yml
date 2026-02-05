@@ -18,21 +18,24 @@
     layers:
     - state: icon
       map: ["base"]
+    - state: running
+      map: ["running"]
     - state: light
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: running
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: ["light"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
         base:
           True: { visible: false }
           False: { visible: true }
+        running:
+          True: { visible: true }
+          False: { visible: false }
+        light:
+          True: { visible: true }
+          False: { visible: false }
   - type: Destructible
     thresholds:
     - trigger:
