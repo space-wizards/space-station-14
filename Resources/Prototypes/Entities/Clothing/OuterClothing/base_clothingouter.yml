@@ -148,9 +148,6 @@
   components:
   - type: PressureProtection
     highPressureMultiplier: 0.3
-  #- type: TemperatureProtection
-  #  heatingCoefficient: 0.01
-  #  coolingCoefficient: 0.01
   - type: ClothingSpeedModifier
     walkModifier: 0.6
     sprintModifier: 0.6
