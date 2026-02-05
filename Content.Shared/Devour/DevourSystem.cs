@@ -1,9 +1,9 @@
 using Content.Shared.Actions;
-using Content.Shared.Body.Events;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Gibbing;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
@@ -33,7 +33,7 @@ public sealed class DevourSystem : EntitySystem
         SubscribeLocalEvent<DevourerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<DevourerComponent, DevourDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<DevourerComponent, BeingGibbedEvent>(OnGibContents);
+        SubscribeLocalEvent<DevourerComponent, GibbedBeforeDeletionEvent>(OnGibContents);
     }
 
     private void OnStartup(Entity<DevourerComponent> ent, ref ComponentStartup args)
@@ -108,7 +108,7 @@ public sealed class DevourSystem : EntitySystem
         // Grant ichor if the devoured thing meets the dragon's food preference
         if (args.Args.Target != null && _whitelistSystem.IsWhitelistPassOrNull(ent.Comp.FoodPreferenceWhitelist, (EntityUid)args.Args.Target))
         {
-            _bloodstreamSystem.TryAddToChemicals(ent.Owner, ichorInjection);
+            _bloodstreamSystem.TryAddToBloodstream(ent.Owner, ichorInjection);
         }
 
         // If the devoured thing meets the stomach whitelist criteria, add it to the stomach
@@ -127,13 +127,11 @@ public sealed class DevourSystem : EntitySystem
         _audioSystem.PlayPredicted(ent.Comp.SoundDevour, ent.Owner, ent.Owner);
     }
 
-    private void OnGibContents(Entity<DevourerComponent> ent, ref BeingGibbedEvent args)
+    private void OnGibContents(Entity<DevourerComponent> ent, ref GibbedBeforeDeletionEvent args)
     {
         if (ent.Comp.StomachStorageWhitelist == null)
             return;
 
-        // For some reason we have two different systems that should handle gibbing,
-        // and for some another reason GibbingSystem, which should empty all containers, doesn't get involved in this process
         _containerSystem.EmptyContainer(ent.Comp.Stomach);
     }
 }

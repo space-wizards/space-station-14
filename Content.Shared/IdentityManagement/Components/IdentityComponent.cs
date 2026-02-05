@@ -47,10 +47,16 @@ public sealed class IdentityRepresentation
         PresumedName = presumedName;
     }
 
-    public string ToStringKnown(bool trueName)
+    /// <summary>
+    /// Get this identity as a string
+    /// </summary>
+    /// <param name="trueName">Should we show their "true" name or hide it?</param>
+    /// <param name="nameOverride">A "true name" override</param>
+    /// <returns></returns>
+    public string ToStringKnown(bool trueName, string? nameOverride)
     {
         return trueName
-            ? TrueName
+            ? nameOverride ?? TrueName
             : PresumedName ?? ToStringUnknown();
     }
 
