@@ -135,6 +135,25 @@
     <GuideEntityEmbed Entity="XenoborgModuleSuperCloakDevice" Caption="invisibility device xenoborg module"/>
   </Box>
 
+  ## Xenoborg extractors
+  <Box>
+    <GuideEntityEmbed Entity="XenoborgExtractor" Caption="xenoborg extractor"/>
+  </Box>
+  Its a machine necessary for the xenoborgs to grow their army. It can steal power from cables connected to it and then produce xenoborg circuits.
+
+  The mothership core can produce a xenoborg extractor flatpack for 10 steel.
+
+  Once its anchored on top of a cable it needs to be set to that cable voltage to start draining power.
+
+  Once it's battery is full it will produce one xenoborg circuit.
+
+  It drains different amounts of power depending on the voltage.
+  - low voltage - 10kW - 3 minutes and 20 seconds to produce one xenoborg circuit.
+  - medium voltage - 50kW - 40 seconds to produce one xenoborg circuit.
+  - high voltage - 200kW - 10 seconds to produce one xenoborg circuit.
+
+  Attention! at the highest voltage it will trigger the rogue power consuming device alert! and anyone using the power monitor device will know something is wrong.
+
   ## Preparation and Tactics
   Before FTLing near the station, make sure the IFF is off.
 
