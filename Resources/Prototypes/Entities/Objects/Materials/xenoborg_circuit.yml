@@ -9,7 +9,7 @@
     storedRotation: 0
   - type: Appearance
   - type: Stack
-    stackType: XenoborgAdvancedCircuitboard
+    stackType: XenoborgCircuit
     count: 10
     baseLayer: base
     layerStates:

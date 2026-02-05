@@ -1,6 +1,6 @@
 - type: stack
   parent: BaseSmallStack
-  id: XenoborgAdvancedCircuitboard
+  id: XenoborgCircuit
   name: stack-xenoborg-circuit
   icon: { sprite: "/Textures/Objects/Misc/xenoborg_circuit.rsi", state: circuit-3 }
-  spawn: XenoborgAdvancedCircuitboard
+  spawn: MaterialXenoborgCircuitboard1
