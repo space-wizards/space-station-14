@@ -16,7 +16,7 @@ public sealed partial class MetabolizerComponent : Component
     /// <summary>
     ///     The next time that reagents will be metabolized.
     /// </summary>
-    [DataField, AutoNetworkedField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextUpdate;
 
     /// <summary>
