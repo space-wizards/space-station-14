@@ -126,6 +126,7 @@ law-emag-cannot-emag-self = You cannot use the EMAG on yourself.
 
 laws-ui-menu-title = Silicon Laws
 laws-ui-law-header = Law {$id}
+laws-ui-state-law = State Selected Laws
 
 laws-notify = You are bound to silicon laws, which you can view via the action menu. You are required to always follow your laws.
 laws-update-notify = Your laws have been updated. You can view the changes via the action menu.
