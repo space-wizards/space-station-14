@@ -12,8 +12,6 @@ public sealed partial class GasThermomachineWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    public bool Active = true;
-
     public FloatSpinBox TemperatureSpinbox;
 
     public EntityUid Entity;
@@ -30,15 +28,7 @@ public sealed partial class GasThermomachineWindow : FancyWindow
 
     public void SetActive(bool active)
     {
-        Active = active;
-        if (active)
-        {
-            ToggleStatusButton.Text = Loc.GetString("comp-gas-thermomachine-ui-status-enabled");
-        }
-        else
-        {
-            ToggleStatusButton.Text = Loc.GetString("comp-gas-thermomachine-ui-status-disabled");
-        }
+        ToggleStatusButton.Pressed = active;
     }
 
     public void SetTemperature(float temperature)

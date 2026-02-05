@@ -58,7 +58,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
             };
             if (appearances.GetValueOrDefault(prototype.BodyPart) is { MatchSkin: true } appearance && skinColor is { } color)
             {
-                markingWithColor.SetColor(color.WithAlpha(appearance.LayerAlpha));
+                markingWithColor = markingWithColor.WithColor(color.WithAlpha(appearance.LayerAlpha));
             }
             ret.Add(markingWithColor);
         }

@@ -5,13 +5,9 @@
   components:
   - type: GridSpawnPointWhitelist
     whitelist:
-      components:
-      - Xenoborg
       tags:
       - XenoborgGhostrole
     blacklist:
-      components:
-      - MothershipCore
       tags:
       - MothershipCoreGhostrole
   - type: SpawnPoint
@@ -28,8 +24,6 @@
   components:
   - type: GridSpawnPointWhitelist
     whitelist:
-      components:
-      - MothershipCore
       tags:
       - MothershipCoreGhostrole
   - type: SpawnPoint

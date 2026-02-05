@@ -98,9 +98,9 @@ public sealed class WaggingSystem : EntitySystem
                 }
                 else
                 {
-                    if (currentMarkingId.EndsWith(ent.Comp.Suffix))
+                    if (currentMarkingId.Id.EndsWith(ent.Comp.Suffix))
                     {
-                        newMarkingId = currentMarkingId[..^ent.Comp.Suffix.Length];
+                        newMarkingId = currentMarkingId.Id[..^ent.Comp.Suffix.Length];
                     }
                     else
                     {

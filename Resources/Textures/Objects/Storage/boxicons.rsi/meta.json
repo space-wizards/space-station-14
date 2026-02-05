@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/ca674eff9d23e04357b7609ef7e07eadfc1a993f and modified by Flareguy (github), throwing_knives and vials are drawn by Ubaser, tracks made by Fazansen(https://github.com/Fazansen), modified by ps3moira (github). sechud renamed to secglasses, new sechud, sunglasses by K-Dynamic (github).",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/ca674eff9d23e04357b7609ef7e07eadfc1a993f and modified by Flareguy (github), throwing_knives and vials are drawn by Ubaser, tracks made by Fazansen(https://github.com/Fazansen), modified by ps3moira (github). sechud renamed to secglasses, new sechud, sunglasses by K-Dynamic (github), syndicate_circuit modified by Minemoder5000 (github).",
   "size": {
     "x": 32,
     "y": 32
@@ -93,6 +93,9 @@
     },
     {
       "name": "tracks"
+    },
+    {
+      "name": "syndicate_circuit"
     }
   ]
 }
