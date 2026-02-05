@@ -2,7 +2,7 @@
   parent: [ MaterialBase, BaseXenoborgContraband ]
   id: MaterialXenoborgCircuitboard
   name: advanced xenoborg circuitboard
-  description: An electronics board used to make xenoborgs.
+  description: A special eletronic circuit board used to make xenoborgs.
   suffix: 10
   components:
   - type: Item
