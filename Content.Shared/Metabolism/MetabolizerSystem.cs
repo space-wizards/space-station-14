@@ -67,7 +67,6 @@ public sealed class MetabolizerSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-
         var metabolizers = new ValueList<(EntityUid Uid, MetabolizerComponent Component)>(Count<MetabolizerComponent>());
         var query = EntityQueryEnumerator<MetabolizerComponent>();
 
