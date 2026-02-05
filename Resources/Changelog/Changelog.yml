@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Shot
-  changes:
-  - message: The cane blade can now slice, cut and execute
-    type: Tweak
-  id: 8985
-  time: '2025-09-18T19:37:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40311
 - author: Kittygyat
   changes:
   - message: Tarantulas and other spider mobs can now pull objects.
@@ -4001,3 +3994,10 @@
   id: 9491
   time: '2026-02-04T22:13:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42569
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed the Gas Filter not transferring enough mols to the filter outlet.
+    type: Fix
+  id: 9492
+  time: '2026-02-05T08:34:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42801
