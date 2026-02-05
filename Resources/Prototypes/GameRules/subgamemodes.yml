@@ -26,6 +26,8 @@
       antagLoadout: Thief
   - type: DynamicRuleCost
     cost: 75
+  - type: GameRule
+    cancelPresetOnTooFewPlayers: false
 
 # Needs testing
 - type: entity
@@ -43,15 +45,12 @@
       antagLoadout: Wizard
 
 - type: entity
-  parent: BaseGameRule
-  id: Xenoborgs
+  parent: BaseXenoborgsRule
+  id: SubXenoborgs
   components:
-  - type: XenoborgsRule
-  - type: RuleGrids
   - type: GameRule
     minPlayers: 30
-  - type: LoadMapRule
-    gridPath: /Maps/Shuttles/mothership.yml
+    cancelPresetOnTooFewPlayers: false
   - type: AntagMultipleRoleSpawner
     antagRoleToPrototypes:
       MothershipCore: [ MothershipCore ]
