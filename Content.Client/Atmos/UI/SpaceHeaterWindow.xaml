@@ -1,13 +1,15 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                MinSize="280 160" Title="{Loc comp-space-heater-ui-title}">
 
     <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                <Button Text="{Loc comp-space-heater-ui-status-disabled}" Access="Public" Name="ToggleStatusButton"/>
-            </BoxContainer>
+            <controls:SwitchButton
+                Name="ToggleStatusButton"
+                HorizontalExpand="True"
+                Access="Public" />
             <BoxContainer Orientation="Horizontal" SeparationOverride="5">
                 <Label Text="{Loc comp-space-heater-ui-mode}"/>
                 <OptionButton Access="Public" Name="ModeSelector"/>

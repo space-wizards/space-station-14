@@ -13,7 +13,6 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
-  - type: Internals
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
@@ -106,5 +105,3 @@
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
-  - type: GhostOnMove
-    mustBeDead: true
