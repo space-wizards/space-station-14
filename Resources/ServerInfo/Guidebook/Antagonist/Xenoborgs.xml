@@ -149,7 +149,7 @@
   Once it's battery is full it will produce one xenoborg crystal.
 
   It drains different amounts of power depending on the voltage.
-  - low voltage - 10kW - 3 minutes and 20 seconds to produce one xenoborg circuit.
+  - low voltage - 16kW - 2 minutes and 5 seconds to produce one xenoborg circuit.
   - medium voltage - 50kW - 40 seconds to produce one xenoborg circuit.
   - high voltage - 200kW - 10 seconds to produce one xenoborg circuit.
 

@@ -69,7 +69,7 @@
   - type: VoltageToggler
     settings:
     - voltage: Apc
-      wattage: 10000 # 200 seconds to spawn one # half the overload capacity of a normal APC
+      wattage: 16000 # 125 seconds to spawn one
       name: power-voltage-low
     - voltage: Medium
       wattage: 50000 # 40 seconds to spawn one
