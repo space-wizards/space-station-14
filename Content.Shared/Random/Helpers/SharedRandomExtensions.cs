@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Random.Helpers
 {
@@ -209,6 +210,19 @@ namespace Content.Shared.Random.Helpers
                 hash = (hash << 5) + hash + value;
             }
             return hash;
+        }
+
+        // TODO: REPLACE ALL OF THIS WITH PREDICTED RANDOM WHEN ENGINE PR IS MERGED
+        public static System.Random PredictedRandom(IGameTiming timing, NetEntity netEnt, NetEntity? netEnt2 = null)
+        {
+            var seed = HashCodeCombine((int)timing.CurTick.Value, netEnt.Id, netEnt2?.Id ?? 0);
+            return new System.Random(seed);
+        }
+
+        public static bool PredictedProb(IGameTiming timing, float probability, NetEntity netEnt1, NetEntity? netEnt2 = null)
+        {
+            var rand = PredictedRandom(timing, netEnt1, netEnt2);
+            return rand.Prob(probability);
         }
     }
 }
