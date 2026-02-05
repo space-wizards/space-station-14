@@ -71,10 +71,5 @@ public sealed class VoltageTogglerSystem : EntitySystem
             powerConsumerComp.SetDrawRate(setting.Wattage);
         }
 
-        if (TryComp<BatteryChargerComponent>(entity, out var batteryChargerComp))
-        {
-            batteryChargerComp.Voltage = setting.Voltage;
-        }
-
     }
 }
