@@ -62,6 +62,9 @@
   - type: AtmosExposed
   - type: Temperature
     thermalConductance: 1
+    heatContainer:
+      temperature: 293.15
+      heatCapacity: 15000
   - type: TemperatureDamage
   - type: InternalTemperature
 
@@ -129,4 +132,7 @@
         - ReagentId: EggCooked
           Quantity: 6
   - type: Temperature
+    heatContainer:
+      temperature: 344.0 # preserve temperature from the boiling step, TODO: Construction system that doesn't suck.
+      heatCapacity: 15000
   - type: TemperatureDamage

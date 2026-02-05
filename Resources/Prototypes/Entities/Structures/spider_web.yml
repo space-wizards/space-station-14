@@ -24,6 +24,9 @@
   - type: Damageable
     damageModifierSet: Wood
   - type: Temperature
+    heatContainer:
+      temperature: 293.15
+      heatCapacity: 13440.002
   - type: TemperatureDamage
     heatDamage:
       types:

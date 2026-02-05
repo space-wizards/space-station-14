@@ -37,7 +37,7 @@ public abstract class SharedTemperatureSystem : EntitySystem
         TemperatureQuery = GetEntityQuery<TemperatureComponent>();
     }
 
-    private void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)
+    protected virtual void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)
     {
         var mass = CompOrNull<PhysicsComponent>(entity)?.FixturesMass ?? 1f;
 

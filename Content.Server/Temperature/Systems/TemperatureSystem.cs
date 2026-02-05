@@ -30,6 +30,15 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
         InitializeDamage();
     }
 
+    protected override void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)
+    {
+        base.OnMapInit(entity, ref args);
+
+        // Force test fails for species so they don't spawn cold!
+        if (_thermalRegulatorQuery.TryComp(entity, out var comp))
+            entity.Comp.HeatContainer.Temperature = comp.NormalBodyTemperature;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

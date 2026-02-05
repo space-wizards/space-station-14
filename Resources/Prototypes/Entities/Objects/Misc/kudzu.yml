@@ -56,6 +56,9 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
+      heatContainer:
+        temperature: 293.15
+        heatCapacity: 21000
     - type: TemperatureDamage
       heatDamage:
         types:
