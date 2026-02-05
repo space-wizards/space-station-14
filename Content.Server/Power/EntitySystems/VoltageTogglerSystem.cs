@@ -70,6 +70,5 @@ public sealed class VoltageTogglerSystem : EntitySystem
             powerConsumerComp.Voltage = setting.Voltage;
             powerConsumerComp.SetDrawRate(setting.Wattage);
         }
-
     }
 }
