@@ -69,8 +69,9 @@ public sealed partial class GhostRoleComponent : Component
 
     /// <summary>
     /// If not null, the player will become the antagonist
+    /// Does not add components, StartingGear, and RoleLoadout if it is not a spawner <see cref="GhostRoleMobSpawnerComponent"/>
     /// </summary>
-    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
+    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
     public ProtoId<AntagLoadoutPrototype>? AntagLoadoutPrototype;
 
     [DataField]
@@ -88,19 +89,19 @@ public sealed partial class GhostRoleComponent : Component
     /// <summary>
     /// If true, adds a goal with the obedience of a specific player. The owner is selected by other components
     /// </summary>
-    [DataField]
+    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
     public bool Minion = false;
 
     /// <summary>
     /// Master of the minion.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
     public EntityUid? Master { get; set; }
 
     /// <summary>
     /// The objective of submission
     /// </summary>
-    [DataField]
+    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
     public EntProtoId MinionSubmissionObjective { get; set; } = "MinionSubmissionObjective";
 
     /// <summary>

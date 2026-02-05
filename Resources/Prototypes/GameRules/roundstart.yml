@@ -324,13 +324,9 @@
     - prefRoles: [ MothershipCore ]
       fallbackRoles: [ Xenoborg ]
       spawnerPrototype: SpawnPointGhostRoleMothershipCore
-      mindRoles:
-      - MindRoleMothershipCore
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
-      mindRoles:
-      - MindRoleXenoborg
       min: 4
       max: 4
   - type: DynamicRuleCost

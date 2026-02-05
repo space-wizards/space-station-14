@@ -625,12 +625,24 @@ public sealed class GhostRoleSystem : EntitySystem
         _mindSystem.TransferTo(newMind, mob);
 
         if (_prototype.Resolve<AntagLoadoutPrototype>(role.AntagLoadoutPrototype, out var loadout))
-            _antag.TryMakeNonGameRuleAntag(mob, loadout, roleUid);
+            MakeAntag(loadout, mob, roleUid);
 
         if (role.Minion)
         {
             _submissionObjective.MakeMinion(mob, newMind, role.Master, role.MinionSubmissionObjective);
         }
+    }
+
+    private bool MakeAntag(AntagLoadoutPrototype antagLoadout, EntityUid player, EntityUid ghostRole)
+    {
+        if (TryComp<GhostRoleMobSpawnerComponent>(ghostRole, out var _))
+        {
+            //So that the equipment doesn't spawn under feet every damn time someone takes on this role
+            antagLoadout.RoleLoadout = null;
+            antagLoadout.StartingGear = null;
+            antagLoadout.AddComponents = new();
+        }
+        return _antag.TryMakeNonGameRuleAntag(player, antagLoadout, ghostRole);
     }
 
     /// <summary>

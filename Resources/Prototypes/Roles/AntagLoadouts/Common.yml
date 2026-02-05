@@ -8,54 +8,56 @@
   mindRoles:
   - MindRoleGhostRoleFamiliar
   briefing:
-    text: Serve the interests of your master, whatever those may be.
+    text: common-familiar-greeting
 
 - type: antagLoadout
   id: GhostFreeAgent
   mindRoles:
   - MindRoleGhostRoleFreeAgent
   briefing:
-    text: You are free to act as either an antagonist or a non-antagonist.
+    text: common-free-agent-greeting
 
 - type: antagLoadout
   id: GhostFreeAgentHarmless
-  parents: GhostFreeAgent
   mindRoles:
   - MindRoleGhostRoleFreeAgentHarmless
+  briefing:
+    text: common-free-agent-greeting
 
 - type: antagLoadout
   id: GhostSilicon
   mindRoles:
   - MindRoleGhostRoleSilicon
   briefing:
-    text: Obey your laws. You are a free agent if you are not currently bound by any laws.
+    text: common-silicon-greeting
 
 - type: antagLoadout
   id: GhostSiliconSubverted
-  parents: GhostSilicon
   mindRoles:
   - MindRoleSubvertedSilicon
+  briefing:
+    text: common-silicon-greeting
 
 - type: antagLoadout
   id: GhostSiliconAntagonist
   mindRoles:
   - MindRoleGhostRoleSiliconAntagonist
   briefing:
-    text: Obey your laws. Your intentions are clear, and harmful to the station and its crew.
+    text: common-silicon-antagonist-greeting
 
 - type: antagLoadout
   id: GhostSoloAntagonist
   mindRoles:
   - MindRoleGhostRoleSoloAntagonist
   briefing:
-    text: Your intentions are clear, and harmful to the station and its crew.
+    text: common-antagonist-greeting
 
 - type: antagLoadout
   id: GhostTeamAntagonist
   mindRoles:
   - MindRoleGhostRoleTeamAntagonist
   briefing:
-    text: Your intentions are clear, and harmful to the station and its crew.
+    text: common-antagonist-greeting
 
 
 - type: antagLoadout
@@ -63,4 +65,4 @@
   mindRoles:
   - MindRoleGhostRoleTeamAntagonistFlock
   briefing:
-    text: Your intentions are clear, and harmful to the station and its crew. Follow the orders of the commanders-in-chief
+    text: common-antagonist-flock-greeting

@@ -514,7 +514,7 @@
       min: 1
       max: 1
       pickPlayer: false
-      antagLoadout: LoneOps
+      antagLoadout: Loneops
   - type: DynamicRuleCost
     cost: 75
 

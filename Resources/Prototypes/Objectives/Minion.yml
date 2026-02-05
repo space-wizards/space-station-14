@@ -8,10 +8,11 @@
   - type: PickSpecificPerson
   - type: Objective
     difficulty: 0
-    issuer: Master
+    issuer: objective-issuer-master
     icon:
-      sprite: Objects/Misc/folders.rsi
-      state: folder-colormap
+      sprite: Interface/objectives/Master.rsi
+      state: icon
+  # TODO: Come up with good requirements for greentext
   - type: FreeObjective
 
 - type: entity

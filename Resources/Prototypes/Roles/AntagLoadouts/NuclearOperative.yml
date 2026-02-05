@@ -17,8 +17,9 @@
 
 - type: antagLoadout
   id: NukeopsCommander
-  parents: Nukeops
   startingGear: SyndicateCommanderGearFull
+  roleLoadout:
+  - RoleSurvivalNukie
   addComponents:
   - type: NukeOperative
   - type: RandomMetadata
@@ -33,8 +34,9 @@
 
 - type: antagLoadout
   id: NukeopsMedic
-  parents: Nukeops
   startingGear: SyndicateOperativeMedicFull
+  roleLoadout:
+  - RoleSurvivalNukie
   addComponents:
   - type: NukeOperative
   - type: RandomMetadata
@@ -49,7 +51,9 @@
 
 - type: antagLoadout
   id: Loneops
-  parents: Nukeops
+  startingGear: SyndicateOperativeGearFull
+  roleLoadout:
+  - RoleSurvivalNukie
   addComponents:
   - type: NukeOperative
   - type: RandomMetadata

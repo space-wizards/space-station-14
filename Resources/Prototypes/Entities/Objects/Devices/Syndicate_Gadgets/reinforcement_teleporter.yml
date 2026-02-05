@@ -27,7 +27,7 @@
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
-    prototype: TraitorReinforcement
+    prototype: MobHumanSyndicateAgentSpy
     selectablePrototypes: ["SyndicateAgentMedic", "SyndicateAgentSpy", "SyndicateAgentThief"]
   - type: UserInterface
     interfaces:
@@ -106,7 +106,7 @@
     name: ghost-role-information-SyndiCat-name
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-syndicate-reinforcement-rules
-    antagLoadoutPrototype: TraitorReinforcement
+    antagLoadoutPrototype: GhostFamiliar
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -122,8 +122,6 @@
   suffix: NukeOps
   components:
     - type: GhostRole
-      minion: true
-      minionSubmissionObjective: ReinforcementsSubmissionObjective
       name: ghost-role-information-syndicate-cyborg-assault-name
       description: ghost-role-information-syndicate-cyborg-description
       rules: ghost-role-information-silicon-rules

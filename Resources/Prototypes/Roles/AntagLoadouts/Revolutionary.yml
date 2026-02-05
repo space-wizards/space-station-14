@@ -5,7 +5,7 @@
     color: CornflowerBlue
     sound: "/Audio/Ambience/Antag/headrev_start.ogg"
   startingGear: HeadRevGear
-  AddComponents:
+  addComponents:
   - type: Revolutionary
   - type: HeadRevolutionary
   mindRoles:

@@ -1,7 +1,6 @@
 - type: antagLoadout
   id: Thief
   allowNonHumans: true
-  multiAntagSetting: NotExclusive
   startingGear: ThiefGear
   addComponents:
   - type: Pacified

@@ -62,11 +62,11 @@
     - prefRoles: [ MothershipCore ]
       fallbackRoles: [ Xenoborg ]
       spawnerPrototype: SpawnPointGhostRoleMothershipCore
-      antagLoadoutPrototype: MothershipCore
+      antagLoadout: MothershipCore
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
-      antagLoadoutPrototype: Xenoborg
+      antagLoadout: Xenoborg
       min: 4
       max: 4
   - type: DynamicRuleCost
