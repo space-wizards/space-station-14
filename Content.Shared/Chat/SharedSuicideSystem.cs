@@ -19,9 +19,9 @@ public abstract class SharedSuicideSystem : EntitySystem
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] protected readonly TagSystem TagSystem = default!;
 
     /// <summary>
     /// Applies lethal damage spread out across the damage types given.
@@ -81,7 +81,7 @@ public abstract class SharedSuicideSystem : EntitySystem
     {
         _mindSystem.GetMind(uid, out var mind);
 
-        return mind is { PreventSuicide: false, PreventGhosting: false } && !_mobStateSystem.IsDead(uid) && !HasComp<AdminFrozenComponent>(uid) &&
-               TryComp<TagComponent>(uid, out var tag) && !_tagSystem.HasTag(tag, CannotSuicideTag);
+        return mind is { PreventSuicide: false, PreventGhosting: false } && !MobStateSystem.IsDead(uid) && !HasComp<AdminFrozenComponent>(uid) &&
+               TryComp<TagComponent>(uid, out var tag) && !TagSystem.HasTag(tag, CannotSuicideTag);
     }
 }
