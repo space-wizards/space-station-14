@@ -62,6 +62,12 @@ public sealed class MetabolizerSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        // We only do this on the server to prevent the client from reshuffling metabolism during prediction.
+        // Should just be replaced with predicted random.
+        if (_net.IsClient)
+            return;
+
+
         var metabolizers = new ValueList<(EntityUid Uid, MetabolizerComponent Component)>(Count<MetabolizerComponent>());
         var query = EntityQueryEnumerator<MetabolizerComponent>();
 
@@ -138,11 +144,6 @@ public sealed class MetabolizerSystem : EntitySystem
 
     private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage)
     {
-        // We only do this on the server to prevent the client from reshuffling metabolism during prediction.
-        // Should just be replaced with predicted random.
-        if (_net.IsClient)
-            return;
-
         if (!ent.Comp1.Solutions.TryGetValue(stage, out var solutionData))
             return;
 
