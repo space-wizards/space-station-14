@@ -57,9 +57,9 @@ public static partial class HeatContainerHelpers
     [PublicAPI]
     public static float ConductHeat<T>(ref T cA, ref T cB, float deltaTime, float g) where T : IHeatContainer
     {
-        var dQ = ConductHeatQuery(ref cA, cB.Temperature, deltaTime, g);
+        var dQ = ConductHeatQuery(ref cA, ref cB, deltaTime, g);
         AddHeat(ref cA, dQ);
-        AddHeat(ref cA, -dQ);
+        AddHeat(ref cB, -dQ);
         return dQ;
     }
 
@@ -118,7 +118,12 @@ public static partial class HeatContainerHelpers
     [PublicAPI]
     public static float ConductHeatQuery<T>(ref T c1, ref T c2, float deltaTime, float g) where T : IHeatContainer
     {
-        return ConductHeatQuery(ref c1, c2.Temperature, deltaTime, g);
+        var dQ = g * (c2.Temperature - c1.Temperature) * deltaTime;
+        var dQMax = Math.Min(Math.Abs(ConductHeatToTempQuery(ref c1, c2.Temperature)),
+            Math.Abs(ConductHeatToTempQuery(ref c2, c1.Temperature)));
+
+        // Clamp the transferred heat amount in case we are overshooting the equilibrium temperature because our time step was too large.
+        return Math.Clamp(dQ, -dQMax, dQMax);
     }
 
     /// <summary>
