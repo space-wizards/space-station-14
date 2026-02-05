@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license":"CC-BY-SA-3.0",
-  "copyright":"Made by Samuka-C (github) modified from circuit_imprinter.rsi",
+  "copyright":"Made by Samuka-C (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "on",
+      "name": "light",
       "delays": [
         [
           0.1,
@@ -22,6 +22,17 @@
           0.1,
           0.1,
           0.1
+        ]
+      ]
+    },
+    {
+      "name": "running",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
         ]
       ]
     }

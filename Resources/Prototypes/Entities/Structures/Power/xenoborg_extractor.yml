@@ -17,8 +17,11 @@
     snapCardinals: true
     layers:
     - state: icon
-    - state: on
+      map: ["base"]
+    - state: light
       shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: running
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Appearance
   - type: GenericVisualizer
@@ -27,6 +30,9 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+        base:
+          True: { visible: false }
+          False: { visible: true }
   - type: Destructible
     thresholds:
     - trigger:
