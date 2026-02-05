@@ -36,4 +36,4 @@
     entity: BorgChassisSelectable
 
   - node: derelictcyborg
-    entity: BorgChassisDerelict
+    entity: GenericBorgChassisDerelict

@@ -32,8 +32,7 @@
     - id: ClosetSkeleton
     - id: KingRatMigration
     - id: RevenantSpawn
-    - !type:NestedSelector
-      tableId: DerelictBorgEventTable
+    - id: DerelictCyborgSpawn
 
 - type: entityTable
   id: ModerateAntagEventsTable
@@ -46,25 +45,7 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: WizardSpawn
-    - !type:NestedSelector
-      tableId: DerelictBorgEventTable
-
-- type: entityTable
-  id: DerelictBorgEventTable #For Derelict Borg spawns
-  table: !type:GroupSelector
-    children:
-    - !type:GroupSelector # Standard NT Borgs
-      weight: 85
-      children:
-        - id: DerelictEngineerCyborgSpawn
-        - id: DerelictGenericCyborgSpawn
-        - id: DerelictJanitorCyborgSpawn
-        - id: DerelictMedicalCyborgSpawn
-        - id: DerelictMiningCyborgSpawn
-    - !type:GroupSelector # Other Borgs
-      weight: 15
-      children:
-        - id: DerelictSyndicateAssaultCyborgSpawn
+    - id: DerelictCyborgSpawn
 
 - type: entity
   id: BaseStationEvent
@@ -698,6 +679,41 @@
 
 - type: entity
   parent: BaseGameRule
+  id: DerelictCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 15
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagMultipleRoleSpawner
+    prototypeWeights:
+      SubvertedSilicon: DerelictCyborgWeights
+    antagRoleToPrototypes:
+      SubvertedSilicon: [ PlayerGenericBorgDerelictGhostRole, PlayerJanitorBorgDerelictGhostRole, PlayerMedicalBorgDerelictGhostRole, PlayerMiningBorgDerelictGhostRole, PlayerSyndicateAssaultBorgDerelict, PlayerEngineeringBorgDerelictGhostRole ]
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ SubvertedSilicon ]
+      spawnerPrototype: SpawnPointGhostDerelictCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: weightedRandom
+  id: DerelictCyborgWeights
+  weights:
+    PlayerGenericBorgDerelictGhostRole: 5
+    PlayerJanitorBorgDerelictGhostRole: 5
+    PlayerMedicalBorgDerelictGhostRole: 5
+    PlayerMiningBorgDerelictGhostRole: 5
+    PlayerSyndicateAssaultBorgDerelict: 5
+    PlayerEngineeringBorgDerelictGhostRole: 5
+
+- type: entity
+  parent: BaseGameRule
   id: DerelictEngineerCyborgSpawn
   components:
   - type: StationEvent
@@ -730,10 +746,10 @@
   - type: SpaceSpawnRule
     spawnDistance: 0
   - type: AntagSpawner
-    prototype: PlayerBorgDerelictGhostRole
+    prototype: PlayerGenericBorgDerelictGhostRole
   - type: AntagSelection
     definitions:
-    - spawnerPrototype: SpawnPointGhostDerelictCyborg
+    - spawnerPrototype: SpawnPointGhostDerelictGenericCyborg
       min: 1
       max: 1
       pickPlayer: false
@@ -814,7 +830,7 @@
   - type: SpaceSpawnRule
     spawnDistance: 0
   - type: AntagSpawner
-    prototype: PlayerBorgSyndicateDerelictGhostRole
+    prototype: PlayerSyndicateAssaultBorgDerelict
   - type: AntagSelection
     definitions:
     - spawnerPrototype: SpawnPointGhostDerelictSyndicateAssaultCyborg
