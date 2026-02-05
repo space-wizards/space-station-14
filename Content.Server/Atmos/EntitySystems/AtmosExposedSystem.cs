@@ -8,12 +8,30 @@ namespace Content.Server.Atmos.EntitySystems
     {}
     */
 
+    /// <summary>
+    /// Raises an event to an atmos exposed entity to have its various components respond to its current atmosphere.
+    /// </summary>
     [ByRefEvent]
     public readonly struct AtmosExposedUpdateEvent
     {
+        /// <summary>
+        /// Coordinates of this entity.
+        /// </summary>
         public readonly EntityCoordinates Coordinates;
+
+        /// <summary>
+        /// Current GasMixture the entity is in.
+        /// </summary>
         public readonly GasMixture GasMixture;
+
+        /// <summary>
+        /// TransformComponent of the entity we're updating.
+        /// </summary>
         public readonly TransformComponent Transform;
+
+        /// <summary>
+        /// Amount of time since the last AtmosExposedUpdateEvent.
+        /// </summary>
         public readonly float DeltaTime;
 
         public AtmosExposedUpdateEvent(EntityCoordinates coordinates, GasMixture mixture, TransformComponent transform, float deltaTime)

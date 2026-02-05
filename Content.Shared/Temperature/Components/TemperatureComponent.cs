@@ -16,9 +16,9 @@ public sealed partial class TemperatureComponent : Component
     public HeatContainer HeatContainer = new ();
 
     /// <summary>
-    /// Heat capacity per kg of mass. Humans are about 3kJ/kg
+    /// The specific heat capacity of this entity in J/(kg*K). Humans are about 3kJ/kg
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float SpecificHeat = 3000f;
 
     /// <summary>
@@ -28,11 +28,17 @@ public sealed partial class TemperatureComponent : Component
     public float CurrentTemperature => HeatContainer.Temperature;
 
     /// <summary>
-    /// Thermal Conductivity in W*m/K.
-    /// Human skin is about 0.3 W/m K and the body has about 2m^2 of surface area.
+    /// Easy access for the current heat capacity of the entity.
+    /// </summary>
+    [ViewVariables]
+    public float HeatCapacity => HeatContainer.HeatCapacity;
+
+    /// <summary>
+    /// Thermal Conductance in W/K.
+    /// Human skin is about 0.3 W/(m*K) and the body has about 2m^2 of surface area.
     /// Divide that by the thickness of skin of about 2mm giving us a final value of 300
     /// Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC8953946/
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ThermalConductivity = 300f;
+    [DataField]
+    public float ThermalConductance = 300f;
 }

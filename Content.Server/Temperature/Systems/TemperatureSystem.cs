@@ -44,88 +44,11 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
                 continue;
 
             // TODO: Heat containers one day. Currently not worth the effort though.
-            var dQ = ConductHeat((uid, temp), comp.Temperature, frameTime, comp.Conductivity, true);
-            comp.Temperature -= dQ / GetHeatCapacity(uid, temp);
+            var dQ = ConductHeat((uid, temp), comp.Temperature, frameTime, comp.Conductance, true);
+            comp.Temperature -= dQ / temp.HeatCapacity;
         }
 
         UpdateDamage();
-    }
-
-    public void ForceChangeTemperature(Entity<TemperatureComponent?> entity, float temp)
-    {
-        if (!TemperatureQuery.Resolve(entity, ref entity.Comp))
-            return;
-
-        var lastTemp = entity.Comp.CurrentTemperature;
-        entity.Comp.HeatContainer.Temperature = temp;
-        var changeEv = new TemperatureChangedEvent(entity.Comp.CurrentTemperature, lastTemp);
-        RaiseLocalEvent(entity, ref changeEv, broadcast: true);
-    }
-
-    public override float ConductHeat(Entity<TemperatureComponent?> entity, ref HeatContainer heatContainer, float deltaT, float conductivityMod = 1f, bool ignoreHeatResistance = false)
-    {
-        if (!TemperatureQuery.Resolve(entity, ref entity.Comp, false)
-            || MathHelper.CloseTo(entity.Comp.HeatContainer.Temperature, heatContainer.Temperature))
-            return 0f;
-
-        var conductivity = entity.Comp.ThermalConductivity;
-        if (!ignoreHeatResistance)
-        {
-            var ev = new BeforeHeatExchangeEvent(conductivity, entity.Comp.HeatContainer.Temperature < heatContainer.Temperature);
-            RaiseLocalEvent(entity, ref ev);
-            conductivity = ev.Conductivity;
-        }
-
-        var lastTemp = entity.Comp.CurrentTemperature;
-        var heatEx = entity.Comp.HeatContainer.ConductHeat(ref heatContainer, deltaT, conductivity);
-
-        var changeEv = new TemperatureChangedEvent(entity.Comp.CurrentTemperature, lastTemp);
-        RaiseLocalEvent(entity, ref changeEv, broadcast: true);
-        return heatEx;
-    }
-
-    public float ConductHeat(Entity<TemperatureComponent?> entity, float temperature, float deltaT, float conductivityMod = 1f, bool ignoreHeatResistance = false)
-    {
-        if (!TemperatureQuery.Resolve(entity, ref entity.Comp, false)
-            || MathHelper.CloseTo(entity.Comp.HeatContainer.Temperature, temperature))
-            return 0f;
-
-        var conductivity = entity.Comp.ThermalConductivity * conductivityMod;
-        if (!ignoreHeatResistance)
-        {
-            var ev = new BeforeHeatExchangeEvent(conductivity, entity.Comp.HeatContainer.Temperature < temperature);
-            RaiseLocalEvent(entity, ref ev);
-            conductivity = ev.Conductivity;
-        }
-
-        var lastTemp = entity.Comp.CurrentTemperature;
-        var heatEx = entity.Comp.HeatContainer.ConductHeat(temperature, deltaT, conductivity);
-
-        var changeEv = new TemperatureChangedEvent(entity.Comp.CurrentTemperature, lastTemp);
-        RaiseLocalEvent(entity, ref changeEv, broadcast: true);
-        return heatEx;
-    }
-
-    public override float ChangeHeat(Entity<TemperatureComponent?> entity, float heatAmount, bool ignoreHeatResistance = false)
-    {
-        if (!TemperatureQuery.Resolve(entity, ref entity.Comp, false) || heatAmount == 0f)
-            return 0f;
-
-        var conductivity = 1f;
-        if (!ignoreHeatResistance)
-        {
-            var ev = new BeforeHeatExchangeEvent(conductivity, heatAmount > 0);
-            RaiseLocalEvent(entity, ref ev );
-            heatAmount *= ev.Conductivity;
-        }
-
-        var lastTemp = entity.Comp.CurrentTemperature;
-        entity.Comp.HeatContainer.AddHeat(heatAmount);
-
-        var changeEv = new TemperatureChangedEvent(entity.Comp.CurrentTemperature, lastTemp);
-        RaiseLocalEvent(entity, ref changeEv, broadcast: true);
-
-        return heatAmount;
     }
 
     private void OnAtmosExposedUpdate(Entity<TemperatureComponent> entity, ref AtmosExposedUpdateEvent args)
@@ -152,14 +75,12 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
 
     private void OnRejuvenate(Entity<TemperatureComponent> entity, ref RejuvenateEvent args)
     {
-        ForceChangeTemperature(entity.AsNullable(), _thermalRegulatorQuery.CompOrNull(entity)?.NormalBodyTemperature ?? Atmospherics.T20C);
+        SetTemperature(entity.AsNullable(), _thermalRegulatorQuery.CompOrNull(entity)?.NormalBodyTemperature ?? Atmospherics.T20C);
     }
 
     private void OnBeforeHeatExchange(Entity<TemperatureProtectionComponent> entity, ref BeforeHeatExchangeEvent args)
     {
-        var coefficient = args.Heating ? entity.Comp.HeatingCoefficient : entity.Comp.CoolingCoefficient;
-
-        args.Conductivity *= coefficient;
+        args.Conductance *= entity.Comp.Coefficient;
     }
 
     private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)

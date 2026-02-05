@@ -56,7 +56,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
 
         // implicit heat regulation
         var tempDiff = Math.Abs(ent.Comp2.CurrentTemperature - ent.Comp1.NormalBodyTemperature);
-        var heatCapacity = _tempSys.GetHeatCapacity(ent, ent);
+        var heatCapacity = ent.Comp2.HeatCapacity;
         var targetHeat = tempDiff * heatCapacity;
         if (ent.Comp2.CurrentTemperature > ent.Comp1.NormalBodyTemperature)
         {

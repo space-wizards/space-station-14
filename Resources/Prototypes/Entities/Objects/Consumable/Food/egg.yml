@@ -61,7 +61,7 @@
   # all below are for egg cooking/exploding
   - type: AtmosExposed
   - type: Temperature
-    thermalConductivity: 1
+    thermalConductance: 1
   - type: TemperatureDamage
   - type: InternalTemperature
 

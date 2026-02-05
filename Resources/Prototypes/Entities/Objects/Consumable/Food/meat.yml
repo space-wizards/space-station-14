@@ -41,7 +41,7 @@
   # let air cook and freeze meat for cooking and preservation
   - type: AtmosExposed
   - type: Temperature
-    thermalConductivity: 1
+    thermalConductance: 1
   - type: TemperatureDamage
   # required for cooking to work
   - type: InternalTemperature

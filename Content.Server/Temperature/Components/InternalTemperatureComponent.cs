@@ -23,13 +23,13 @@ public sealed partial class InternalTemperatureComponent : Component
     public float Temperature;
 
     /// <summary>
-    /// Thermal Conductivity in W*m/K.
-    /// Precalculated by multiplying meat's thermal conductivity of about 0.4 W/m K by the total surface area of the meat,
+    /// Thermal Conductance in W/K.
+    /// Precalculated by multiplying meat's thermal conductivity of about 0.4 W/(m*K) by the total surface area of the meat,
     /// and dividing by the thickness of the meat.
     /// Then we multiply by four because we should only care about half the thickness typically, and also we're sharing a heat capacity.
     /// Yes this is stupid. I'll care when chef has content or this is used by BodySystem.
     /// No I'm not doing a custom value for each piece of meat.
     /// </summary>
     [DataField]
-    public float Conductivity = 40f;
+    public float Conductance = 40f;
 }

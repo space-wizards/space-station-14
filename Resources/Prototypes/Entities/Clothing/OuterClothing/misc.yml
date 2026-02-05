@@ -295,7 +295,7 @@
     sprite: Clothing/OuterClothing/Misc/hospitalgown.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterJacketBase
   id: ClothingOuterFlannelRed
   name: red flannel jacket
   description: An old fashioned red flannel jacket for space autumn.
@@ -327,11 +327,9 @@
         color: "#670a09"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
-  - type: TemperatureProtection
-    coolingCoefficient: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterJacketBase
   id: ClothingOuterFlannelBlue
   name: blue flannel jacket
   description: An old fashioned blue flannel jacket for space autumn.
@@ -363,11 +361,9 @@
         color: "#3232a6"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
-  - type: TemperatureProtection
-    coolingCoefficient: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterJacketBase
   id: ClothingOuterFlannelGreen
   name: green flannel jacket
   description: An old fashioned green flannel jacket for space autumn.
@@ -399,8 +395,6 @@
         color: "#164d0f"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
-  - type: TemperatureProtection
-    coolingCoefficient: 0.3
 
 - type: entity
   parent: ClothingOuterBase
