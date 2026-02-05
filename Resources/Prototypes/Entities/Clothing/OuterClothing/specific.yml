@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [ClothingOuterJacketBase, AllowSuitStorageClothingGasTanks, BaseChameleon]
+  parent: [ClothingOuterBase, TemperatureProtectionMinimal, AllowSuitStorageClothingGasTanks, BaseChameleon]
   id: ClothingOuterChameleon
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.
