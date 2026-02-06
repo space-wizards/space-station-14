@@ -89,7 +89,7 @@ public partial struct AntagSelectionDefinition()
     /// AntagLoadaut, which will be added to the player
     /// </summary>
     [DataField]
-    public ProtoId<AntagLoadoutPrototype> AntagLoadout = new();
+    public ProtoId<AntagLoadoutPrototype>? AntagLoadout;
 
     /// <summary>
     /// Should we allow people who already have an antagonist role?
