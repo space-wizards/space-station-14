@@ -28,8 +28,7 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="IHeatContainer"/> to merge.
     /// This will be modified to contain the merged result.</param>
     /// <param name="cN">The array of <see cref="IHeatContainer"/>s to merge.</param>
-    /// <param name="temp">A temporary <see cref="IHeatContainer"/> used to perform the merge.
-    /// Recommended to use a disposable <see cref="HeatContainer"/> to prevent allocations.</param>
+    /// <param name="temp">A temporary <see cref="IHeatContainer"/> used to perform the merge.</param>
     [PublicAPI]
     public static void Merge<T>(ref T cA, T[] cN, ref T temp) where T : IHeatContainer
     {
