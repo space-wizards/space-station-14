@@ -71,6 +71,7 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
         // We purposefully do not change the gas mixture's heat because it will cause vacuums to heat up to be 20x hotter than the core of the sun.
         var atmosContainer = new HeatContainer(_atmosphere.GetHeatCapacity(args.GasMixture, false), args.GasMixture.Temperature);
         ConductHeat(entity.AsNullable(), ref atmosContainer, args.DeltaTime, 1f);
+        args.GasMixture.Temperature = atmosContainer.Temperature;
     }
 
     private void OnInit(Entity<InternalTemperatureComponent> entity, ref MapInitEvent args)
