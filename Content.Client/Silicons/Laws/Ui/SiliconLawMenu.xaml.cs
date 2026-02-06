@@ -32,14 +32,12 @@ public sealed partial class SiliconLawMenu : FancyWindow
     private static readonly List<ChatSelectChannel> SelectableChatChannels =
         new() { ChatSelectChannel.Local, ChatSelectChannel.Whisper };
 
-    private TimeSpan _nextAllowedAnnouncePress = TimeSpan.Zero;
-
     private int _selectedChatChannelIdx;
-
     private readonly List<RadioChannelPrototype> _selectableRadioChannels = new();
 
     private readonly HashSet<SiliconLaw> _selectedLaws = new();
     private readonly Queue<(SiliconLaw law, TimeSpan announceTime)> _queuedLaws = new();
+    private TimeSpan _nextAllowedAnnouncePress = TimeSpan.Zero;
 
     private EntityUid _owner;
 
