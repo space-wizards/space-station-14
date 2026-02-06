@@ -15,8 +15,6 @@ using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Collections;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -32,7 +30,6 @@ public sealed class MetabolizerSystem : EntitySystem
     [Dependency] private readonly SharedEntityConditionsSystem _entityConditions = default!;
     [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     private EntityQuery<OrganComponent> _organQuery;
     private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
