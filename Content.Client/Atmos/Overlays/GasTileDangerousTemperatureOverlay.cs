@@ -10,7 +10,6 @@ using System.Numerics;
 
 namespace Content.Client.Atmos.Overlays;
 
-
 /// <summary>
 /// Renders a thermal heatmap overlay for gas tiles, used for equipment like thermal glasses.
 /// /// </summary>
@@ -148,7 +147,8 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
             return false;
 
         _gasTileOverlay ??= _entManager.System<GasTileOverlaySystem>();
-        if (_gasTileOverlay == null) return false;
+        if (_gasTileOverlay == null)
+            return false;
 
         var target = args.Viewport.RenderTarget;
 
@@ -178,8 +178,11 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
 
                 foreach (var grid in grids)
                 {
-                    if (!_overlayQuery.TryGetComponent(grid.Owner, out var comp)) continue;
+                    if (!_overlayQuery.TryGetComponent(grid.Owner, out var comp))
+                        continue;
 
+                    var gridTileSizeVec = grid.Comp.TileSizeVector;
+                    var gridTileCenterVec = grid.Comp.TileSizeHalfVector;
                     var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
 
@@ -211,7 +214,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
                             anyGasDrawn = true;
 
                             drawHandle.DrawRect(
-                                Box2.CenteredAround(tilePosition + new Vector2(0.5f, 0.5f), grid.Comp.TileSizeVector),
+                                Box2.CenteredAround(tilePosition + gridTileCenterVec, gridTileSizeVec),
                                 gasColor
                             );
                         }

@@ -62,7 +62,7 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
 
     public static Vector2i GetGasChunkIndices(Vector2i indices)
     {
-        return new((int)MathF.Floor((float)indices.X / ChunkSize), (int)MathF.Floor((float)indices.Y / ChunkSize));
+        return new Vector2i((int)MathF.Floor((float)indices.X / ChunkSize), (int)MathF.Floor((float)indices.Y / ChunkSize));
     }
 
     [Serializable, NetSerializable]
@@ -124,9 +124,9 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
 /// </summary>
 /// <remarks>
 ///     <para>
-///         This struct compresses the gas temperature into a 1-byte value (0-255). 
+///         This struct compresses the gas temperature into a 1-byte value (0-255).
 ///         It clamps the temperature to a maximum of 1000K and divides it by 4, creating a range of 0-250.
-///         This provides a resolution of 4 degrees Kelvin. 
+///         This provides a resolution of 4 degrees Kelvin.
 ///     </para>
 ///     <para>
 ///         The remaining bytes are used as special flags:
@@ -137,14 +137,14 @@ public abstract class SharedGasTileOverlaySystem : EntitySystem
 ///         </list>
 ///     </para>
 ///     <para>
-///         <b>Dirtying Logic:</b> The value is only dirtied and networked if the difference between the 
-///         networked byte and the real atmosphere byte is greater than 1. This prevents network spam 
-///         from minor temperature fluctuations (e.g., heating from 1K to 8K will not trigger an update, 
+///         <b>Dirtying Logic:</b> The value is only dirtied and networked if the difference between the
+///         networked byte and the real atmosphere byte is greater than 1. This prevents network spam
+///         from minor temperature fluctuations (e.g., heating from 1K to 8K will not trigger an update,
 ///         but hitting 9K moves the byte index enough to sync).
 ///     </para>
 ///     <para>
-///         Currently, the conversion is linear. Future improvements might involve a quadratic scale 
-///         or pre-defined resolution points to offer higher precision at room temperatures 
+///         Currently, the conversion is linear. Future improvements might involve a quadratic scale
+///         or pre-defined resolution points to offer higher precision at room temperatures
 ///         and lower precision at extreme temperatures (1000K).
 ///     </para>
 /// </remarks>
@@ -173,11 +173,11 @@ public struct ThermalByte : IEquatable<ThermalByte>
 
     public ThermalByte()
     {
-        _coreValue = ThermalByte.AtmosImpossible;
+        _coreValue = AtmosImpossible;
     }
 
     /// <summary>
-    /// Set temperature of air in this in Kelvin. 
+    /// Set temperature of air in this in Kelvin.
     /// </summary>
     public void SetTemperature(float temperatureKelvin)
     {
@@ -185,46 +185,49 @@ public struct ThermalByte : IEquatable<ThermalByte>
         _coreValue = (byte)((clampedTemp - TempMinimum) * TempResolution / (TempMaximum - TempMinimum));
     }
 
-    public void SetAtmosIsImpossible() => _coreValue = AtmosImpossible;
-    public void SetVacuum() => _coreValue = StateVacuum;
+    public void SetAtmosIsImpossible()
+    {
+        _coreValue = AtmosImpossible;
+    }
+
+    public void SetVacuum()
+    {
+        _coreValue = StateVacuum;
+    }
+
     public bool IsAtmosImpossible => _coreValue == AtmosImpossible; // Cold space, solid walls
     public bool IsVacuum => _coreValue == StateVacuum;
     public byte Value => _coreValue;
 
     /// <summary>
-    /// Attempts to get the air temperature in Kelvin. 
+    /// Attempts to get the air temperature in Kelvin.
     /// </summary>
     /// <param name="temperature">The temperature in Kelvin, if the tile has a valid temperature.</param>
-    /// <param name="onVacuumReturnTCMB">
-    /// If true and the tile is a vacuum, <paramref name="temperature"/> will be set to <see cref="Atmospherics.TCMB"/> 
+    /// <param name="onVacuumReturnTcmb">
+    /// If true and the tile is a vacuum, <paramref name="temperature"/> will be set to <see cref="Atmospherics.TCMB"/>
     /// and the method will return <see langword="true"/>.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the tile contains a valid temperature (including vacuum if <paramref name="onVacuumReturnTCMB"/> is set); 
+    /// <see langword="true"/> if the tile contains a valid temperature (including vacuum if <paramref name="onVacuumReturnTcmb"/> is set);
     /// otherwise <see langword="false"/> (e.g., walls).
     /// </returns>
-    public readonly bool TryGetTemperature(out float temperature, bool onVacuumReturnTCMB = true)
+    public readonly bool TryGetTemperature(out float temperature, bool onVacuumReturnTcmb = true)
     {
-        if (_coreValue == AtmosImpossible)
+        switch (_coreValue)
         {
-            temperature = 0f;
-            return false;
-        }
-
-        if (_coreValue == StateVacuum)
-        {
-            if (onVacuumReturnTCMB)
-            {
+            case AtmosImpossible:
+                temperature = 0f;
+                return false;
+            case StateVacuum when onVacuumReturnTcmb:
                 temperature = Atmospherics.TCMB;
                 return true;
-            }
-
-            temperature = 0f;
-            return false;
+            case StateVacuum:
+                temperature = 0f;
+                return false;
+            default:
+                temperature = (_coreValue * TempDegreeResolution) + TempMinimum;
+                return true;
         }
-
-        temperature = (_coreValue * TempDegreeResolution) + TempMinimum;
-        return true;
     }
 
     public bool Equals(ThermalByte other)
