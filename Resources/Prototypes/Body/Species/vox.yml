@@ -273,6 +273,11 @@
 - type: entity
   parent: [ OrganBaseTorso, OrganVoxExternal ]
   id: OrganVoxTorso
+  components:
+  - type: VisualOrganMarkings
+    dependentHidingLayers:
+      enum.HumanoidVisualLayers.Tail:
+      - enum.HumanoidVisualLayers.TailOverlay
 
 - type: entity
   parent: [ OrganBaseHead, OrganVoxExternal ]
