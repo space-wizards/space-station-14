@@ -26,8 +26,16 @@
 
 - type: entity
   abstract: true
-  parent: [ ClothingOuterBaseLarge, TemperatureProtectionGreat ]
+  parent: [ ClothingOuterBaseLarge, TemperatureProtectionGood ]
   id: ClothingOuterBaseLargeInsulated
+
+- type: entity
+  abstract: true
+  parent: [ ClothingOuterBaseLarge, TemperatureProtectionGreat ]
+  id: ClothingOuterBaseLargeFireproof
+  components:
+  - type: FireProtection
+    reduction: 0.65
 
 - type: entity
   abstract: true

@@ -44,7 +44,7 @@
     sprite: Clothing/OuterClothing/Suits/janitor_bombsuit.rsi
 
 - type: entity
-  parent: [ ClothingOuterBaseLargeInsulated, AllowSuitStorageClothing ]
+  parent: [ ClothingOuterBaseLargeFireproof, AllowSuitStorageClothing ]
   id: ClothingOuterSuitFire
   name: fire suit
   description: A suit that helps protect against hazardous temperatures.
@@ -55,8 +55,6 @@
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.04
-  - type: FireProtection
-    reduction: 0.65 # doesnt have a full seal so not as good
   - type: Armor
     modifiers:
       coefficients:
@@ -75,7 +73,7 @@
     - Tail
 
 - type: entity
-  parent: [ ClothingOuterEVASuitBase, AllowSuitStorageClothing ]
+  parent: [ TemperatureProtectionGreat, ClothingOuterEVASuitBase, AllowSuitStorageClothing ]
   id: ClothingOuterSuitAtmosFire
   name: atmos fire suit
   description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
@@ -292,7 +290,7 @@
     - Tail
 
 - type: entity
-  parent: [ ClothingOuterSuitCarp, TemperatureProtectionGreat ]
+  parent: [ ClothingOuterSuitCarp, TemperatureProtectionGood ]
   id: ClothingOuterHardsuitCarp
   suffix: Hardsuit, DO NOT MAP
   categories: [ DoNotMap ]

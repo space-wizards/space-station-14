@@ -142,7 +142,7 @@
 
 - type: entity
   abstract: true
-  parent: TemperatureProtectionGood
+  parent: TemperatureProtection
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
@@ -188,9 +188,8 @@
 
 - type: entity
   abstract: true
-  parent: [ TemperatureProtectionGreat, ClothingHeadHardsuitBase ]
+  parent: [ TemperatureProtection, ClothingHeadHardsuitBase ]
   id: ClothingHeadHardsuitInsulatedBase
-
 
 - type: entity
   abstract: true

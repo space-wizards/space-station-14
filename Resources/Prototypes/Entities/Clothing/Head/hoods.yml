@@ -226,7 +226,7 @@
     - Hair
 
 - type: entity
-  parent: [ ClothingHeadHatHoodCarp, TemperatureProtectionGood ]
+  parent: [ ClothingHeadHatHoodCarp, TemperatureProtection ]
   id: ClothingHeadHelmetHardsuitCarp
   categories: [ HideSpawnMenu ]
   components:

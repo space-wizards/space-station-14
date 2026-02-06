@@ -288,7 +288,7 @@
 
 #Atmos Fire Helmet
 - type: entity
-  parent: [ClothingHeadLightBase, TemperatureProtectionGood, BaseEngineeringContraband]
+  parent: [ClothingHeadLightBase, TemperatureProtection, BaseEngineeringContraband]
   id: ClothingHeadHelmetAtmosFire
   name: atmos fire helmet
   description: An atmos fire helmet, able to keep the user cool in any situation.
