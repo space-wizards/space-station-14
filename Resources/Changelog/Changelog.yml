@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Tarantulas and other spider mobs can now pull objects.
-    type: Add
-  id: 8986
-  time: '2025-09-18T19:59:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40433
 - author: 2DSiggy
   changes:
   - message: Thief can now be tasked with stealing Secoff/detective handguns, Captain's
@@ -4001,3 +3994,12 @@
   id: 9492
   time: '2026-02-05T08:34:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42801
+- author: insoPL, ArtisticRoomba
+  changes:
+  - message: Added functionality to the Optical Thermal Scanner. The eyewear will
+      now overlay tiles with a solid color corresponding to its temperature if it's
+      not room temperature, as well as if a tile is pure vacuum.
+    type: Add
+  id: 9493
+  time: '2026-02-06T10:44:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42613
