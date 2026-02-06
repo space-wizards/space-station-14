@@ -10,11 +10,9 @@ using System.Numerics;
 
 namespace Content.Client.Atmos.Overlays;
 
-
 /// <summary>
 /// Renders a thermal heatmap overlay for gas tiles, used for equipment like thermal glasses.
 /// /// </summary>
-
 public sealed class GasTileDangerousTemperatureOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = false;
