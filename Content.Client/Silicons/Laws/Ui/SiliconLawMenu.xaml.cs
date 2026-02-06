@@ -50,7 +50,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
 
         LawChatChannelOption.OnItemSelected += OnLawChatChannelSelected;
 
-        LawAnnounceButton.Text = Loc.GetString("admin-announce-button");
+        LawAnnounceButton.Text = Loc.GetString("laws-ui-state-law");
         LawAnnounceButton.OnPressed += OnLawAnnounceButtonPressed;
     }
 
@@ -60,6 +60,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
 
         state.Laws.Sort();
         LawDisplayContainer.Children.Clear();
+        Version.Text = Loc.GetString("laws-window-footer-right", ("version", state.Version));
 
         LawChatChannelOption.Clear();
         foreach (var chatChannel in SelectableChatChannels)

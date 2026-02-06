@@ -10,10 +10,13 @@
                       HorizontalExpand="True"
                       VerticalExpand="True"
                       Margin="5 5 5 5">
-            <GridContainer Columns="2">
+            <BoxContainer Orientation="Horizontal">
                 <RichTextLabel Name="LawNumberLabel" StyleClasses="LabelKeyText" />
+                <BoxContainer
+                    HorizontalExpand="True"> <!--> This is here just to seperate the two elements on the UI. I hate this. <!-->
+                </BoxContainer>
                 <TextureRect Name="LawSelectedIcon" TexturePath="/Textures/Interface/Alerts/Abilities/silenced.png" />
-            </GridContainer>
+            </BoxContainer>
             <customControls:HSeparator Margin="0 5 0 5" />
             <RichTextLabel Name="LawLabel" />
         </BoxContainer>
