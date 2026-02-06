@@ -79,7 +79,7 @@ public sealed partial class CryoPodWindow : FancyWindow
                                             ("gasName", localizedName),
                                             ("amount", $"{gas.Amount:0.##}"),
                                             ("percentage", $"{percent:0.#}"));
-                GasMixChart.AddEntry(gas.Amount, color, tooltip: tooltip);
+                GasMixChart.SetEntry(gas.Name, gas.Amount, color, tooltip: tooltip);
             }
         }
 
@@ -108,7 +108,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         var hasBeaker = (msg.Beaker != null);
 
         ChemicalsChart.Clear();
-        ChemicalsChart.Capacity = (totalBeakerCapacity < 1 ? 50 : (int)totalBeakerCapacity);
+        ChemicalsChart.Capacity = (totalBeakerCapacity == 0 ? 50 : (float)totalBeakerCapacity);
 
         var chartMaxChemsQuantity = ChemicalsChart.Capacity - injectingQuantity; // Ensure space for injection buffer
 
@@ -126,9 +126,9 @@ public sealed partial class CryoPodWindow : FancyWindow
                 var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
                 ChemicalsChart.SetEntry(
                     reagent.Prototype,
-                    reagentProto.LocalizedName,
                     (float)chartQuantity,
                     reagentProto.SubstanceColor,
+                    text: reagentProto.LocalizedName,
                     tooltip: $"{quantity}u {reagentProto.LocalizedName}"
                 );
 
@@ -147,9 +147,9 @@ public sealed partial class CryoPodWindow : FancyWindow
             var injectingText = (injectingQuantity > 1 ? $"{injectingQuantity}u" : "");
             ChemicalsChart.SetEntry(
                 "injecting",
-                injectingText,
                 (float)injectingQuantity,
                 Color.MediumSpringGreen,
+                text: injectingText,
                 tooltip: Loc.GetString("cryo-pod-window-chems-injecting-tooltip",
                                        ("quantity", injectingQuantity))
             );
