@@ -35,6 +35,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedJitteringSystem _jitter = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
+    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {
@@ -250,6 +251,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
         EnsureComp<ActiveReagentGrinderComponent>(ent);
         _jitter.AddJitter(ent, -10, 100);
+        _powerState.TrySetWorkingState(ent.Owner, true); // Not all grinders need power.
         ent.Comp.Program = program;
         ent.Comp.EndTime = _timing.CurTime + ent.Comp.WorkTime * ent.Comp.WorkTimeMultiplier;
         Dirty(ent);
@@ -275,6 +277,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         // Remove deferred to avoid modifying the component we are currently enumerating over in the update loop.
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);
         RemCompDeferred<JitteringComponent>(ent);
+        _powerState.TrySetWorkingState(ent.Owner, false);
 
         var beaker = _itemSlotsSystem.GetItemOrNull(ent.Owner, ReagentGrinderComponent.BeakerSlotId);
         if (beaker is null || !_solutionContainersSystem.TryGetFitsInDispenser(beaker.Value, out var beakerSolutionEntity, out var beakerSolution))
