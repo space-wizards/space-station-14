@@ -220,22 +220,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             var changed = false;
 
-            ThermalByte newByteTemp;
+            ThermalByte newByteTemp = new();
 
             if (tile.Hotspot.Valid)
-                newByteTemp = new(tile.Hotspot.Temperature);
-            else if (tile.Space || tile.Air?.TotalMoles == 0f)
-            {
-                newByteTemp = new();
+                newByteTemp.SetTemperature(tile.Hotspot.Temperature);
+            else if (!tile.Space && tile.Air?.TotalMoles <= 5f)
                 newByteTemp.SetVacuum();
-            }
-            else if (tile.Air != null)
+            else if (!tile.Space && tile.Air != null)
                 newByteTemp = new(tile.Air.Temperature);
-            else
-            {
-                newByteTemp = new();
-                newByteTemp.SetWall();
-            }
 
             if (oldData.Equals(default))
             {
@@ -243,7 +235,8 @@ namespace Content.Server.Atmos.EntitySystems
                 oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp);
             }
             else if (oldData.FireState != tile.Hotspot.State ||
-                     Math.Abs(oldData.ByteGasTemperature.Value - newByteTemp.Value) > 1) // Dirty Temperature when there is more then 1 byte difference. That should measure up to minimum 4 degreese difference, 6 degreese on average.
+                     Math.Abs(oldData.ByteGasTemperature.Value - newByteTemp.Value) > 1 || // Dirty Temperature when there is more then 1 byte difference. That should measure up to minimum 4 degreese difference, 6 degreese on average.
+                     (oldData.ByteGasTemperature.Value != newByteTemp.Value && newByteTemp.Value > ThermalByte.TempResolution)) // change of special ThermalByte value
             {
                 changed = true;
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);
