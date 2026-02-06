@@ -41,8 +41,8 @@
     - map: [ "id" ]
     - map: [ "outerClothing" ]
     - map: [ "back" ]
-    - map: [ "suitstorage" ]
     - map: [ "neck" ]
+    - map: [ "suitstorage" ]
 
     # Stuff that goes in front of equipment
     - map: [ "enum.HumanoidVisualLayers.SnoutCover" ]
