@@ -33,7 +33,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
 
@@ -46,7 +45,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
 
@@ -203,7 +201,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
 
@@ -217,7 +214,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
 
@@ -231,7 +227,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
 
@@ -345,7 +340,6 @@
   startNode: start
   targetNode: windowDiagonal
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -358,7 +352,6 @@
   startNode: start
   targetNode: reinforcedWindow
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -373,7 +366,6 @@
   startNode: start
   targetNode: reinforcedWindowDiagonal
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -415,7 +407,6 @@
   startNode: start
   targetNode: clockworkWindowDiagonal
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -471,7 +462,6 @@
   startNode: start
   targetNode: plasmaWindowDiagonal
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -485,7 +475,6 @@
   startNode: start
   targetNode: reinforcedPlasmaWindowDiagonal
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -592,7 +581,6 @@
   startNode: start
   targetNode: uraniumWindowDiagonal
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -606,7 +594,6 @@
   startNode: start
   targetNode: reinforcedUraniumWindowDiagonal
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -1377,7 +1364,6 @@
   startNode: start
   targetNode: shuttleWindowDiagonal
   category: construction-category-structures
-  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
