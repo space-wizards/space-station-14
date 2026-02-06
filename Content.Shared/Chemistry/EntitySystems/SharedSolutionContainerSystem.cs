@@ -459,6 +459,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
+    /// Sets whether or not the given solution entity can react and dirties it.
+    /// </summary>
+    public void SetCanReact(Entity<SolutionComponent> soln, bool canReact)
+    {
+        soln.Comp.Solution.CanReact = canReact;
+        UpdateChemicals(soln);
+    }
+
+    /// <summary>
     ///     Adds reagent of an Id to the container.
     /// </summary>
     /// <param name="targetUid"></param>
