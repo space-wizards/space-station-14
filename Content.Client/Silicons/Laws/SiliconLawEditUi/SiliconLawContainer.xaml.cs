@@ -24,6 +24,7 @@ public sealed partial class SiliconLawContainer : BoxContainer
     public SiliconLawContainer()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         MoveUp.OnPressed += _ => MoveLawUp?.Invoke(_law!);
         MoveDown.OnPressed += _ => MoveLawDown?.Invoke(_law!);
