@@ -198,6 +198,9 @@ namespace Content.Server.Sandbox
 
         private void UpdateSandboxThermalVision(MsgSandboxThermalVision message, EntitySessionEventArgs args)
         {
+            if (!IsSandboxEnabled)
+                return;
+
             var ent = args.SenderSession.AttachedEntity;
             if (ent == null) return;
             if (HasComp<ThermalSightComponent>(ent))
