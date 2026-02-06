@@ -33,8 +33,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
+  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
 
 - type: construction
   id: ReinforcedGirderDiagonal
@@ -45,8 +47,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
+  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
 
 - type: construction
   id: ClockworkGirder
@@ -201,8 +205,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
+  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
 
 - type: construction
   id: WallReinforcedDiagonal
@@ -214,8 +220,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
+  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
 
 - type: construction
   id: DiagonalShuttleWall
@@ -227,8 +235,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
+  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
 
 - type: construction
   id: ClownWall
@@ -340,9 +350,11 @@
   startNode: start
   targetNode: windowDiagonal
   category: construction-category-structures
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
+      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -352,6 +364,7 @@
   startNode: start
   targetNode: reinforcedWindow
   category: construction-category-structures
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -366,9 +379,11 @@
   startNode: start
   targetNode: reinforcedWindowDiagonal
   category: construction-category-structures
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
+      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -407,9 +422,11 @@
   startNode: start
   targetNode: clockworkWindowDiagonal
   category: construction-category-structures
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
+      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -462,9 +479,11 @@
   startNode: start
   targetNode: plasmaWindowDiagonal
   category: construction-category-structures
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
+      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -475,9 +494,11 @@
   startNode: start
   targetNode: reinforcedPlasmaWindowDiagonal
   category: construction-category-structures
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
+      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -581,9 +602,11 @@
   startNode: start
   targetNode: uraniumWindowDiagonal
   category: construction-category-structures
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
+      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -594,9 +617,11 @@
   startNode: start
   targetNode: reinforcedUraniumWindowDiagonal
   category: construction-category-structures
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
+      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -1364,9 +1389,12 @@
   startNode: start
   targetNode: shuttleWindowDiagonal
   category: construction-category-structures
+  canBuildInImpassable: true
+  placementMode: SnapgridCenter
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
+      failIfSpace: false
   objectType: Structure
   
 - type: construction
