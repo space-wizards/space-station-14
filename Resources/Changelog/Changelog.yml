@@ -1,83 +1,4 @@
 ﻿Entries:
-- author: Pixel8-dev
-  changes:
-  - message: Fixed stun runes not stunning
-    type: Fix
-  id: 8976
-  time: '2025-09-18T02:37:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40432
-- author: sowelipililimute
-  changes:
-  - message: Vulpkanin use the standard hugging emote now
-    type: Tweak
-  id: 8977
-  time: '2025-09-18T17:17:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40183
-- author: vgskye
-  changes:
-  - message: You can now get chemical analysis goggles from a ChemDrobe.
-    type: Add
-  id: 8978
-  time: '2025-09-18T17:35:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40236
-- author: Kittygyat
-  changes:
-  - message: Snakeskin boots are no longer free, superior no-slips.
-    type: Tweak
-  id: 8979
-  time: '2025-09-18T17:39:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40201
-- author: TrixxedHeart
-  changes:
-  - message: The generic implanter that can be crafted in the medifab has been renamed
-      to implant extractor to better communicate its purpose.
-    type: Tweak
-  id: 8980
-  time: '2025-09-18T17:47:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40375
-- author: aada
-  changes:
-  - message: Mime bags are now silent for everyone.
-    type: Tweak
-  id: 8981
-  time: '2025-09-18T17:47:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40317
-- author: Hitlinemoss
-  changes:
-  - message: Spider Clan gear is now considered highly illegal contraband under Space
-      Law (rather than major contraband).
-    type: Tweak
-  id: 8982
-  time: '2025-09-18T17:49:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39855
-- author: rumaks-xyz
-  changes:
-  - message: Ichor now heals damage evenly, similarly to omnizine
-    type: Tweak
-  id: 8983
-  time: '2025-09-18T18:47:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39466
-- author: SlamBamActionman
-  changes:
-  - message: Several reagents now have contraband levels listed in the guidebook.
-    type: Add
-  id: 8984
-  time: '2025-09-18T19:01:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40426
-- author: Shot
-  changes:
-  - message: The cane blade can now slice, cut and execute
-    type: Tweak
-  id: 8985
-  time: '2025-09-18T19:37:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40311
-- author: Kittygyat
-  changes:
-  - message: Tarantulas and other spider mobs can now pull objects.
-    type: Add
-  id: 8986
-  time: '2025-09-18T19:59:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40433
 - author: 2DSiggy
   changes:
   - message: Thief can now be tasked with stealing Secoff/detective handguns, Captain's
@@ -3998,3 +3919,87 @@
   id: 9482
   time: '2026-02-02T16:45:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42748
+- author: sowelipililimute
+  changes:
+  - message: DNA scrambling properly
+    type: Fix
+  id: 9483
+  time: '2026-02-02T23:54:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42757
+- author: sowelipililimute
+  changes:
+  - message: Dragons now heal when eating people again
+    type: Fix
+  id: 9484
+  time: '2026-02-03T00:32:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42758
+- author: sowelipililimute
+  changes:
+  - message: Zombified markings no longer persist between rounds
+    type: Fix
+  id: 9485
+  time: '2026-02-03T03:28:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42756
+- author: sowelipililimute
+  changes:
+  - message: Marking colours can now be changed again
+    type: Fix
+  id: 9486
+  time: '2026-02-03T19:00:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42771
+- author: Minemoder
+  changes:
+  - message: The Syndi Law Circuit is now a kit containing the lawboard and and a
+      Syndicate ID.
+    type: Tweak
+  - message: The Syndicate ID now uses the Syndicate icon instead of the blank icon.
+    type: Tweak
+  id: 9487
+  time: '2026-02-03T20:12:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42764
+- author: Admiral-Obvious-001
+  changes:
+  - message: EXPERIMENTAL Removed blunt and burn based gibbing.
+    type: Remove
+  id: 9488
+  time: '2026-02-04T04:49:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42474
+- author: veprolet
+  changes:
+  - message: Volumetric devices now respect their pressure limits more.
+    type: Fix
+  id: 9489
+  time: '2026-02-04T10:43:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35211
+- author: 0-Anon
+  changes:
+  - message: Adjusted the Mute Toxin chemical reaction recipe to no longer require
+      uranium.
+    type: Tweak
+  id: 9490
+  time: '2026-02-04T19:24:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42787
+- author: ScholarNZL
+  changes:
+  - message: Rat King and Rat Servants now have partial shock resistance, preventing
+      electrified doors from stunning them while still dealing reduced damage.
+    type: Tweak
+  id: 9491
+  time: '2026-02-04T22:13:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42569
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed the Gas Filter not transferring enough mols to the filter outlet.
+    type: Fix
+  id: 9492
+  time: '2026-02-05T08:34:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42801
+- author: insoPL, ArtisticRoomba
+  changes:
+  - message: Added functionality to the Optical Thermal Scanner. The eyewear will
+      now overlay tiles with a solid color corresponding to its temperature if it's
+      not room temperature, as well as if a tile is pure vacuum.
+    type: Add
+  id: 9493
+  time: '2026-02-06T10:44:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42613

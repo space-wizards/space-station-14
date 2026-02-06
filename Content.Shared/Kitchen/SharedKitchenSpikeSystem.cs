@@ -290,10 +290,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             PopupType.MediumCaution);
 
         // Get a random entry to spawn.
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-
+        var rand = SharedRandomExtensions.PredictedRandom(_gameTiming, GetNetEntity(ent));
         var index = rand.Next(butcherable.SpawnedEntities.Count);
         var entry = butcherable.SpawnedEntities[index];
 
