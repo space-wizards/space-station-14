@@ -116,7 +116,7 @@
   - type: StaticPrice
     price: 30
   - type: Rotatable
-    rotateWhileAnchored: true
+    rotateWhileAnchored: false
 
 - type: entity
   id: ReinforcedGirder
