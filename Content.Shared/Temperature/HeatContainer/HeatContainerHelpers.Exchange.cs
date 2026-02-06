@@ -184,7 +184,7 @@ public static partial class HeatContainerHelpers
     /// to reach thermal equilibrium.</param>
     /// <returns>The temperature of all <see cref="IHeatContainer"/>s involved after reaching thermal equilibrium.</returns>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery(this HeatContainer[] cN, out float[] dQ)
+    public static float EquilibriumTemperatureQuery<T>(this T[] cN, out float[] dQ) where T : IHeatContainer
     {
         /*
         For finding the total heat exchanged during the equalization between a group of bodies
