@@ -54,7 +54,7 @@ public sealed class MarkingsViewModel
         set
         {
             _organProfileData = value.ShallowClone();
-            OrganProfileDataChanged?.Invoke();
+            OrganProfileDataChanged?.Invoke(true);
         }
     }
 
@@ -64,7 +64,7 @@ public sealed class MarkingsViewModel
         {
             _organProfileData[organ] = data with { Sex = sex };
         }
-        OrganProfileDataChanged?.Invoke();
+        OrganProfileDataChanged?.Invoke(true);
     }
 
     public void SetOrganSkinColor(Color skinColor)
@@ -73,7 +73,7 @@ public sealed class MarkingsViewModel
         {
             _organProfileData[organ] = data with { SkinColor = skinColor };
         }
-        OrganProfileDataChanged?.Invoke();
+        OrganProfileDataChanged?.Invoke(false);
     }
 
     public void SetOrganEyeColor(Color eyeColor)
@@ -82,10 +82,10 @@ public sealed class MarkingsViewModel
         {
             _organProfileData[organ] = data with { EyeColor = eyeColor };
         }
-        OrganProfileDataChanged?.Invoke();
+        OrganProfileDataChanged?.Invoke(false);
     }
 
-    public event Action? OrganProfileDataChanged;
+    public event Action<bool>? OrganProfileDataChanged;
 
     private Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> _markings = new();
 
@@ -98,7 +98,7 @@ public sealed class MarkingsViewModel
                 kvp => kvp.Key,
                 kvp => kvp.Value.ToDictionary(
                     it => it.Key,
-                    it => it.Value.Select(marking => new Marking(marking)).ToList()));
+                    it => it.Value.ShallowClone()));
 
             MarkingsReset?.Invoke();
         }
@@ -138,7 +138,7 @@ public sealed class MarkingsViewModel
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
-        return TryGetMarking(organ, layer, markingId) is not null;
+        return GetMarking(organ, layer, markingId) is not null;
     }
 
     public bool IsMarkingColorCustomizable(ProtoId<OrganCategoryPrototype> organ,
@@ -163,7 +163,7 @@ public sealed class MarkingsViewModel
         return !appearance.MatchSkin;
     }
 
-    public Marking? TryGetMarking(ProtoId<OrganCategoryPrototype> organ,
+    public Marking? GetMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
     {
@@ -173,7 +173,7 @@ public sealed class MarkingsViewModel
         if (!markingSet.TryGetValue(layer, out var markings))
             return null;
 
-        return markings.FirstOrDefault(it => it.MarkingId == markingId);
+        return markings.FirstOrNull(it => it.MarkingId == markingId);
     }
 
     public bool TrySelectMarking(ProtoId<OrganCategoryPrototype> organ,
@@ -202,8 +202,7 @@ public sealed class MarkingsViewModel
 
         var colors = _previousColors.GetValueOrDefault(markingId) ??
                      MarkingColoring.GetMarkingLayerColors(markingProto, profileData.SkinColor, profileData.EyeColor, layerMarkings);
-        var newMarking = new Marking(markingId, colors);
-        newMarking.Forced = AnyEnforcementsLifted;
+        var newMarking = new Marking(markingId, colors) { Forced = AnyEnforcementsLifted };
 
         var limits = groupPrototype.Limits.GetValueOrDefault(layer);
         if (limits is null || !EnforceLimits)
@@ -234,13 +233,9 @@ public sealed class MarkingsViewModel
     public List<Marking>? SelectedMarkings(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer)
     {
-        if (!_markings.TryGetValue(organ, out var organMarkings))
-            return null;
-
-        if (!organMarkings.TryGetValue(layer, out var layerMarkings))
-            return null;
-
-        return layerMarkings;
+        return !_markings.TryGetValue(organ, out var organMarkings)
+            ? null
+            : organMarkings.GetValueOrDefault(layer);
     }
 
     public bool TryDeselectMarking(ProtoId<OrganCategoryPrototype> organ,
@@ -292,10 +287,11 @@ public sealed class MarkingsViewModel
         if (!markingSet.TryGetValue(layer, out var markings))
             return;
 
-        if (markings.FirstOrDefault(it => it.MarkingId == markingId) is not { } marking)
+        var markingIdx = markings.FindIndex(it => it.MarkingId == markingId);
+        if (markingIdx == -1)
             return;
 
-        marking.SetColor(colorIndex, color);
+        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, color);
         MarkingsChanged?.Invoke(organ, layer);
     }
 
