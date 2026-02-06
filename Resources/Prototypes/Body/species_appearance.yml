@@ -42,6 +42,7 @@
     - map: [ "outerClothing" ]
     - map: [ "back" ]
     - map: [ "neck" ]
+    - map: [ "suitstorage" ]
 
     # Stuff that goes in front of equipment
     - map: [ "enum.HumanoidVisualLayers.SnoutCover" ]
@@ -50,6 +51,7 @@
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
     - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
     - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "enum.HumanoidVisualLayers.TailOverlay" ]
 
     # Stuff that goes in front of stuff that goes in front of equipment
     - map: [ "mask" ]
