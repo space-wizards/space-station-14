@@ -111,6 +111,7 @@ public sealed class SegmentedBarChart : Control
         if (TryFindUpdateableEntry(uid, out var index))
         {
             _entries[index].TargetAmount = amount;
+            _entries[index].Color = color;
             _entries[index].Tooltip = tooltip;
             _entries[index].Label.Text = text;
             _nextUpdateableEntry = index + 1;
@@ -163,12 +164,11 @@ public sealed class SegmentedBarChart : Control
         return false;
     }
 
-    private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges(float? pixelWidth = null)
+    private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges(float chartWidth)
     {
-        float chartWidth = pixelWidth ?? PixelWidth;
         var xStart = 0f;
         var gapWidth = (_entries.Count > 1
-            ? GetTotalGapsWidthFraction() * chartWidth / (_entries.Count - 1)
+            ? GetTotalGapsWidthFraction(chartWidth) * chartWidth / (_entries.Count - 1)
             : 0);
 
         foreach (var entry in _entries)
@@ -182,9 +182,9 @@ public sealed class SegmentedBarChart : Control
         }
     }
 
-    private bool TryFindEntry(float x, [NotNullWhen(true)] out Entry? entry)
+    private bool TryFindEntry(float x, float chartWidth, [NotNullWhen(true)] out Entry? entry)
     {
-        foreach (var (currentEntry, xMin, xMax) in EntryRanges())
+        foreach (var (currentEntry, xMin, xMax) in EntryRanges(chartWidth))
         {
             if (x < xMin)
                 break;
@@ -210,13 +210,13 @@ public sealed class SegmentedBarChart : Control
         return MathF.Max(0.001f, amountSum);  // Make sure it's not zero (it's often used as denominator)
     }
 
-    private float GetTotalGapsWidthFraction()
+    private float GetTotalGapsWidthFraction(float chartWidth)
     {
         if (ShowRuler)
             return 0;  // ShowRuler is incompatible with Gap.
 
         var gapsWidth = (_entries.Count - 1) * Gap;
-        var gapsFraction = gapsWidth / MathF.Max(Width, 1f);
+        var gapsFraction = gapsWidth / MathF.Max(chartWidth, 1f);
 
         // We limit the gaps to cover max 25% of the chart, to make sure there's always space for entries no matter
         // how many entries you add.
@@ -224,6 +224,11 @@ public sealed class SegmentedBarChart : Control
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
+    {
+        UpdateEntries(Width, args.DeltaSeconds);
+    }
+
+    private void UpdateEntries(float chartWidth, float deltaSeconds = 0)
     {
         // Tween the amounts to their target amounts.
         const float tweenInverseHalfLife = 8;  // Half life of tween is 1/n
@@ -252,11 +257,11 @@ public sealed class SegmentedBarChart : Control
         var totalAmount = GetCapacity();
 
         // The width available for entries.
-        var totalEntriesWidthFraction = 1 - GetTotalGapsWidthFraction();
+        var totalEntriesWidthFraction = 1 - GetTotalGapsWidthFraction(chartWidth);
         // The min width of an entry can't be wider than the available space per entry.
         var maxMinWidthFraction = totalEntriesWidthFraction / MathF.Max(1, targetEntryCount);
         // Minimum width of an entry.
-        var minWidthFraction = MathF.Min(MinEntryWidth / MathF.Max(1, Width), maxMinWidthFraction);
+        var minWidthFraction = MathF.Min(MinEntryWidth / MathF.Max(1, chartWidth), maxMinWidthFraction);
         // The amount of units that `minWidthFraction` covers.
         var minWidthAmount = minWidthFraction * totalAmount;
 
@@ -296,7 +301,7 @@ public sealed class SegmentedBarChart : Control
                 entry.WidthFraction = MathHelper.Lerp(
                     entry.WidthFraction,
                     targetWidthFraction,
-                    MathHelper.Clamp01(tweenInverseHalfLife * args.DeltaSeconds)
+                    MathHelper.Clamp01(tweenInverseHalfLife * deltaSeconds)
                 );
 
                 if (MathF.Abs(entry.WidthFraction - targetWidthFraction) < 0.0001f)
@@ -309,7 +314,7 @@ public sealed class SegmentedBarChart : Control
             }
         }
 
-        _hasHadNonZeroWidth |= (Width > 0);
+        _hasHadNonZeroWidth |= (chartWidth > 0);
 
         if (!hasChanged)
             return;
@@ -333,16 +338,11 @@ public sealed class SegmentedBarChart : Control
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        // Some features require `Width` to be properly filled in, so we don't draw until it's properly filled in to
-        // make things slightly less janky. It's subtle.
-        if (!_hasHadNonZeroWidth && (Gap > 0 || MinEntryWidth > 0))
-            return;
-
         if (ShowBackground)
             handle.DrawRect(PixelSizeBox, BackgroundColor);
 
         // Draw the entry backgrounds
-        foreach (var (entry, xMin, xMax) in EntryRanges())
+        foreach (var (entry, xMin, xMax) in EntryRanges(PixelWidth))
         {
             if (xMin != xMax)
                 handle.DrawRect(new(xMin, 0, xMax, PixelHeight), entry.Color);
@@ -378,6 +378,11 @@ public sealed class SegmentedBarChart : Control
 
     protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
+        // Some features (Gap, MinEntryWidth) depend on the Control's Width. Once the Width is set and before the
+        // first draw, make sure that the entries get an opportunity to update their width properly.
+        if (!_hasHadNonZeroWidth && finalSize.X > 0)
+            UpdateEntries(finalSize.X);
+
         foreach (var (entry, xMin, xMax) in EntryRanges(finalSize.X))
         {
             entry.Label.Arrange(new((int)xMin, 0, (int)xMax, (int)finalSize.Y));
@@ -391,7 +396,7 @@ public sealed class SegmentedBarChart : Control
         var globalMousePos = UserInterfaceManager.MousePositionScaled.Position;
         var mousePos = globalMousePos - GlobalPosition;
 
-        if (!TryFindEntry(mousePos.X, out var entry) || entry.Tooltip == null)
+        if (!TryFindEntry(mousePos.X, Width, out var entry) || entry.Tooltip == null)
             return null;
 
         var msg = new FormattedMessage();
