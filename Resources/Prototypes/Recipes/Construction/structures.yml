@@ -354,7 +354,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -383,7 +382,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -426,7 +424,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -483,7 +480,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -498,7 +494,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -606,7 +601,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -621,7 +615,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-      failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -1394,7 +1387,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-      failIfSpace: false
   objectType: Structure
   
 - type: construction
