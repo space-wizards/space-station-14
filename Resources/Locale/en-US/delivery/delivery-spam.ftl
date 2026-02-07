@@ -235,7 +235,7 @@ delivery-spam-11 =  Help mom and dad!
                     if we do not get this money in 10 days then the govertment will come to take away childhood home and we will be homeless.
 
                     {"[bold]thank you and we love you,[/bold]"}
-                    {"[italic]parents[/italics]"}
+                    {"[italic]parents[/italic]"}
 
 delivery-spam-12 =  Join us on the maiden voyage!
     .desc =         Advertisement for a relaxing voyage.

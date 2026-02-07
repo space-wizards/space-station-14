@@ -1,6 +1,6 @@
 ﻿- type: entity
   save: false
-  parent: [ BaseSimpleMob, MobCombat ]
+  parent: [ BaseSimpleMob, BaseMobAnimal, MobCombat ]
   id: BaseMobArgocyte
   suffix: AI
   description: A dangerous alien found on the wrong side of planets, known for their propensity for munching on ruins.
@@ -18,8 +18,10 @@
   - type: ReplacementAccent
     accent: xeno
   - type: Bloodstream
-    bloodReagent: FerrochromicAcid
-    bloodMaxVolume: 75 #we don't want the map to become pools of blood
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: FerrochromicAcid
+        Quantity: 75 #we don't want the map to become pools of blood
     bloodlossDamage:
       types:
         Bloodloss:
@@ -36,8 +38,6 @@
     damage:
       types:
         Slash: 5
-  - type: Body
-    prototype: Animal
   - type: Flammable
     fireSpread: true
     canResistFire: true

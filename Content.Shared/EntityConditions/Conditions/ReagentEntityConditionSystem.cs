@@ -9,7 +9,7 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
 /// </summary>
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class ReagentThresholdEntityConditionSystem : EntityConditionSystem<SolutionComponent, ReagentCondition>
+public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem<SolutionComponent, ReagentCondition>
 {
     protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<ReagentCondition> args)
     {
@@ -36,8 +36,8 @@ public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondit
         if (!prototype.Resolve(Reagent, out var reagentProto))
             return String.Empty;
 
-        return Loc.GetString("reagent-effect-condition-guidebook-reagent-threshold",
-            ("reagent", reagentProto.LocalizedName ?? Loc.GetString("reagent-effect-condition-guidebook-this-reagent")),
+        return Loc.GetString("entity-condition-guidebook-reagent-threshold",
+            ("reagent", reagentProto.LocalizedName),
             ("max", Max == FixedPoint2.MaxValue ? int.MaxValue : Max.Float()),
             ("min", Min.Float()));
     }
