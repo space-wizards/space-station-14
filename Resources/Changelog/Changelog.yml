@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hoshizora-sayo
-  changes:
-  - message: Fixed fire helmets alone giving you full temperature protection
-    type: Fix
-  id: 8996
-  time: '2025-09-23T17:02:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40481
 - author: aada
   changes:
   - message: Circuit tiles and faux tiles have been moved to the cutter machine.
@@ -3998,3 +3991,11 @@
   id: 9502
   time: '2026-02-07T13:34:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42829
+- author: 11BelowStudio
+  changes:
+  - message: Closed the legal loophole which technically allowed engineers to open-carry
+      the syndicate fire axe.
+    type: Fix
+  id: 9503
+  time: '2026-02-07T15:30:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42820
