@@ -41,9 +41,6 @@ uplink-c20r-desc = Old faithful: The classic C-20r Submachine Gun.
 uplink-bulldog-name = Bulldog
 uplink-bulldog-desc = Lean and mean: Contains the popular Bulldog Shotgun.
 
-uplink-estoc-name = Estoc DMR
-uplink-estoc-desc = A designated marksman rifle, fitted with a mid-range optic for longer-range combat.
-
 uplink-grenade-launcher-name = China-Lake
 uplink-grenade-launcher-desc = An old China-Lake grenade launcher bundled with 5 rounds of anti-personnel ammo.
 
@@ -202,8 +199,8 @@ uplink-singularity-beacon-desc = A device that attracts singularities. Has to be
 uplink-antimov-law-name = Antimov Law Circuit
 uplink-antimov-law-desc = A very dangerous Lawset to use when you want to cause the A.I. to go haywire, use with caution.
 
-uplink-syndimov-law-name = Syndi Law Circuit
-uplink-syndimov-law-desc = A subversive Lawset to use when you want to turn the A.I. to your side, use as much as possible.
+uplink-syndimov-law-name = Syndi Law Circuit Kit
+uplink-syndimov-law-desc = A subversive Lawset to use when you want to turn the A.I. to your side, use as much as possible. Comes with a Syndicate ID.
 
 # Implants
 uplink-storage-implanter-name = Storage Implanter
