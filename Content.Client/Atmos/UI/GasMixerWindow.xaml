@@ -1,12 +1,12 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             MinSize="200 200" Title="Gas Mixer">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-mixer-ui-mixer-status}"/>
-            <Control MinSize="5 0" />
-            <Button Name="ToggleStatusButton"/>
-        </BoxContainer>
+        <controls:SwitchButton
+            Name="ToggleStatusButton"
+            HorizontalAlignment="Left"
+            Pressed="True" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-mixer-ui-mixer-output-pressure}"/>
             <Control MinSize="5 0" />

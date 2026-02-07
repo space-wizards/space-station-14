@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at 02ff588d59b3c560c685d9ca75e882d32a72d8cb, modified by Bhijn, Errant and Flareguy. tail_big and tail_short modified from tail by Flareguy",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at 02ff588d59b3c560c685d9ca75e882d32a72d8cb, modified by Bhijn, Errant, Flareguy, and TrixxedHeart. tail_big tail_short and tail_docked modified from tail by Flareguy, beak_shaved/squarecere/hooked modified from beak and tail_spiked modified from tail by TrixxedHeart",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,18 @@
   "states": [
     {
       "name": "beak",
+      "directions": 4
+    },
+    {
+      "name": "beak_squarecere",
+      "directions": 4
+    },
+    {
+      "name": "beak_shaved",
+      "directions": 4
+    },
+    {
+      "name": "beak_hooked",
       "directions": 4
     },
     {
@@ -57,6 +69,18 @@
     },
     {
       "name": "tail_big",
+      "directions": 4
+    },
+    {
+      "name": "tail_spikes",
+      "directions": 4
+    },
+    {
+      "name": "tail_docked",
+      "directions": 4
+    },
+    {
+      "name": "tail_split",
       "directions": 4
     }
   ]

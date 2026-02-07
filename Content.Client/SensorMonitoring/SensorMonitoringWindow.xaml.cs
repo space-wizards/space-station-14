@@ -133,13 +133,13 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
         foreach (var sensor in _sensorData.Values)
         {
-            var labelName = new Label { Text = sensor.Name, StyleClasses = { StyleBase.StyleClassLabelHeading } };
+            var labelName = new Label { Text = sensor.Name, StyleClasses = { StyleClass.LabelHeading } };
             var labelAddress = new Label
             {
                 Text = sensor.Address,
                 Margin = new Thickness(4, 0),
                 VerticalAlignment = VAlignment.Bottom,
-                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                StyleClasses = { StyleClass.LabelWeak }
             };
 
             Asdf.AddChild(new BoxContainer
@@ -163,13 +163,13 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                     Orientation = BoxContainer.LayoutOrientation.Horizontal,
                     Children =
                     {
-                        new Label { Text = stream.Name, StyleClasses = { "monospace" }, HorizontalExpand = true },
+                        new Label { Text = stream.Name, StyleClasses = { "Monospace" }, HorizontalExpand = true },
                         new Label { Text = FormatValue(stream.Unit, lastSample.Value) }
                     }
                 });
 
                 Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue * 1.1f, this) { MinHeight = 150 });
-                Asdf.AddChild(new PanelContainer { StyleClasses = { StyleBase.ClassLowDivider } });
+                Asdf.AddChild(new PanelContainer { StyleClasses = { StyleClass.LowDivider } });
             }
         }
     }

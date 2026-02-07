@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Access.Components;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState(true)]
 [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
 public sealed partial class IdCardComponent : Component
 {
@@ -41,7 +41,7 @@ public sealed partial class IdCardComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public ProtoId<AccessLevelPrototype>? JobPrototype;
+    public ProtoId<JobPrototype>? JobPrototype;
 
     /// <summary>
     /// The proto IDs of the departments associated with the job

@@ -8,7 +8,7 @@
 			</PanelContainer.PanelOverride>
 			<BoxContainer Orientation="Vertical" HorizontalExpand="True">
 			<GridContainer Margin="5" Columns="2" MinSize="600 0">
-				<Label Name="SetName" Text="Set" StyleClasses="StatusFieldTitle"></Label>
+				<Label Name="SetName" Text="Set" StyleClasses="highlight"></Label>
 				<Button Margin="0 10" Name="SetButton" Text="Select" StyleClasses="OpenRight" Access="Public" HorizontalAlignment="Right"/>
 			</GridContainer>
 			<controls:HLine Color="#404040" Thickness="1" Margin="0 5"/>

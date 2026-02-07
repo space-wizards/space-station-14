@@ -138,11 +138,20 @@ public sealed partial class CCVars
         CVarDef.Create("atmos.speedup", 8f, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Like atmos.speedup, but only for gas and reaction heat values. 64x means
-    ///     gases heat up and cool down 64x faster than real life.
+    /// Like atmos.speedup, but only for gas and reaction heat values. 64x means
+    /// gases heat up and cool down 64x faster than real life.
     /// </summary>
+    /// <remarks><para>This is only supposed to facilitate the speedup of
+    /// heat transfer between bodies by making the heat capacities appear smaller.
+    /// In the context of a heat-only reaction like gas reactions creating heat,
+    /// you shouldn't be using the scaled specific heat.</para>
+    /// <para>So things like thermomachines and the TEG, which work based on heat transfer, would need to use the scaled value,
+    /// whereas heat-only reactions like gas reactions and anything else that "generates" or "consumes" heat would use the unscaled value.</para>
+    /// </remarks>
+    /// <example>Mechanics like the thermomachine or TEG should be affected by this CVAR change,
+    /// whereas gas reactions and heat-only interactions should stay the same.</example>
     public static readonly CVarDef<float> AtmosHeatScale =
-        CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
+        CVarDef.Create("atmos.heat_scale", 8f, CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     ///     Maximum explosion radius for explosions caused by bursting a gas tank ("max caps").
@@ -150,4 +159,31 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> AtmosTankFragment =
         CVarDef.Create("atmos.max_explosion_range", 26f, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Whether atmospherics will process delta-pressure damage on entities with a DeltaPressureComponent.
+    /// Entities with this component will take damage if they are exposed to a pressure difference
+    /// above the minimum pressure threshold defined in the component.
+    /// </summary>
+    // TODO: Needs CVARs for global configuration, like min pressure, max damage, etc.
+    public static readonly CVarDef<bool> DeltaPressureDamage =
+        CVarDef.Create("atmos.delta_pressure_damage", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Number of entities to submit for parallel processing per processing run.
+    /// Low numbers may suffer from thinning out the work per job and leading to threads waiting,
+    /// or seeing a lot of threading overhead.
+    /// High numbers may cause Atmospherics to exceed its time budget per tick, as it will not
+    /// check its time often enough to know if it's exceeding it.
+    /// </summary>
+    public static readonly CVarDef<int> DeltaPressureParallelToProcessPerIteration =
+        CVarDef.Create("atmos.delta_pressure_parallel_process_per_iteration", 1000, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Number of entities to process per processing job.
+    /// Low numbers may cause Atmospherics to see high threading overhead,
+    /// high numbers may cause Atmospherics to distribute the work unevenly.
+    /// </summary>
+    public static readonly CVarDef<int> DeltaPressureParallelBatchSize =
+        CVarDef.Create("atmos.delta_pressure_parallel_batch_size", 10, CVar.SERVERONLY);
 }

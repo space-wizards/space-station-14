@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
-﻿using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Components;
+using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
@@ -29,14 +30,19 @@ public sealed class SpellbookSystem : EntitySystem
     {
         foreach (var (id, charges) in ent.Comp.SpellActions)
         {
-            var spell = _actionContainer.AddAction(ent, id);
-            if (spell == null)
+            var action = _actionContainer.AddAction(ent, id);
+            if (action is not { } spell)
                 continue;
 
             // Null means infinite charges.
             if (charges is { } count)
-                _sharedCharges.SetCharges(spell.Value, count);
-            ent.Comp.Spells.Add(spell.Value);
+            {
+                EnsureComp<LimitedChargesComponent>(spell, out var chargeComp);
+                _sharedCharges.SetMaxCharges((spell, chargeComp), count);
+                _sharedCharges.SetCharges((spell, chargeComp), count);
+            }
+
+            ent.Comp.Spells.Add(spell);
         }
     }
 
@@ -75,9 +81,13 @@ public sealed class SpellbookSystem : EntitySystem
             foreach (var (id, charges) in ent.Comp.SpellActions)
             {
                 EntityUid? actionId = null;
-                if (_actions.AddAction(args.Args.User, ref actionId, id)
-                    && charges is { } count) // Null means infinite charges
-                    _sharedCharges.SetCharges(actionId.Value, count);
+                if (!_actions.AddAction(args.Args.User, ref actionId, id)
+                    || charges is not { } count // Null means infinite charges
+                    || !TryComp<LimitedChargesComponent>(actionId, out var chargeComp))
+                    continue;
+
+                _sharedCharges.SetMaxCharges((actionId.Value, chargeComp), count);
+                _sharedCharges.SetCharges((actionId.Value, chargeComp), count);
             }
         }
 

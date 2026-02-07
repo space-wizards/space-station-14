@@ -1,6 +1,8 @@
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components;
@@ -106,16 +108,45 @@ public sealed partial class HandsComponent : Component
 public partial record struct Hand
 {
     [DataField]
-    public HandLocation Location = HandLocation.Right;
+    public HandLocation Location = HandLocation.Middle;
+
+    /// <summary>
+    /// The label to be displayed for this hand when it does not contain an entity
+    /// </summary>
+    [DataField]
+    public LocId? EmptyLabel;
+
+    /// <summary>
+    /// The prototype ID of a "representative" entity prototype for what this hand could hold, used in the UI.
+    /// It is not map-initted.
+    /// </summary>
+    [DataField]
+    public EntProtoId? EmptyRepresentative;
+
+    /// <summary>
+    /// What this hand is allowed to hold
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// What this hand is not allowed to hold
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 
     public Hand()
     {
 
     }
 
-    public Hand(HandLocation location)
+    public Hand(HandLocation location, LocId? emptyLabel = null, EntProtoId? emptyRepresentative = null, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
         Location = location;
+        EmptyLabel = emptyLabel;
+        EmptyRepresentative = emptyRepresentative;
+        Whitelist = whitelist;
+        Blacklist = blacklist;
     }
 }
 
@@ -138,43 +169,9 @@ public sealed class HandsComponentState : ComponentState
 /// <summary>
 ///     What side of the body this hand is on.
 /// </summary>
-/// <seealso cref="HandUILocation"/>
-/// <seealso cref="HandLocationExt"/>
 public enum HandLocation : byte
 {
-    Left,
+    Right,
     Middle,
-    Right
-}
-
-/// <summary>
-/// What side of the UI a hand is on.
-/// </summary>
-/// <seealso cref="HandLocationExt"/>
-/// <seealso cref="HandLocation"/>
-public enum HandUILocation : byte
-{
-    Left,
-    Right
-}
-
-/// <summary>
-/// Helper functions for working with <see cref="HandLocation"/>.
-/// </summary>
-public static class HandLocationExt
-{
-    /// <summary>
-    /// Convert a <see cref="HandLocation"/> into the appropriate <see cref="HandUILocation"/>.
-    /// This maps "middle" hands to <see cref="HandUILocation.Right"/>.
-    /// </summary>
-    public static HandUILocation GetUILocation(this HandLocation location)
-    {
-        return location switch
-        {
-            HandLocation.Left => HandUILocation.Left,
-            HandLocation.Middle => HandUILocation.Right,
-            HandLocation.Right => HandUILocation.Right,
-            _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
-        };
-    }
+    Left
 }

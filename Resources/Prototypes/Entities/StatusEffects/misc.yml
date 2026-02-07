@@ -78,3 +78,17 @@
   name: hallucinations
   components:
   - type: SeeingRainbowsStatusEffect
+
+# Causes your vision to become blurry and gives me a headache.
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWoozy
+  name: woozy
+  components:
+  - type: DrunkStatusEffect
+
+# Causes you to get drunk
+- type: entity
+  parent: [ StatusEffectWoozy, StatusEffectSlurred ]
+  id: StatusEffectDrunk
+  name: drunk

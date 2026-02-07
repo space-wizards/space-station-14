@@ -20,6 +20,14 @@
   - type: Physics
     canCollide: false
   - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 5
+        layer:
+        - DoorPassable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -351,7 +359,8 @@
     sprite: Structures/Furniture/Carpets/chapel_carpet.rsi
     state: chapel
   - type: Tag
-    tags: [ Carpet ]
+    tags:
+    - Carpet
   - type: Physics
     canCollide: false
   - type: Fixtures

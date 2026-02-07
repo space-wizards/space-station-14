@@ -10,6 +10,7 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/offset_canes/standard.rsi
+  - type: MobilityAid
 #  - type: RandomSprite # Ideally I'd rather these be their own selectable item instead of randomly picked.
 #    available:
 #    - color: "#91949C"  # standard gray

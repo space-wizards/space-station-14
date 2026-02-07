@@ -78,7 +78,7 @@ public sealed class ItemToggleSystem : EntitySystem
 
         if (ent.Comp.Activated)
         {
-            var ev = new ItemToggleActivateAttemptEvent(args.User);
+            var ev = new ItemToggleDeactivateAttemptEvent(args.User);
             RaiseLocalEvent(ent.Owner, ref ev);
 
             if (ev.Cancelled)
@@ -86,7 +86,7 @@ public sealed class ItemToggleSystem : EntitySystem
         }
         else
         {
-            var ev = new ItemToggleDeactivateAttemptEvent(args.User);
+            var ev = new ItemToggleActivateAttemptEvent(args.User);
             RaiseLocalEvent(ent.Owner, ref ev);
 
             if (ev.Cancelled)

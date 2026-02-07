@@ -31,6 +31,18 @@ public sealed partial class ThiefUndeterminedBackpackComponent : Component
     public int MaxSelectedSets = 2;
 
     /// <summary>
+    /// Title field for undetermined equipment ui.
+    /// </summary>
+    [DataField]
+    public LocId ToolName = "thief-backpack-window-title";
+
+    /// <summary>
+    /// Description field for undetermined equipment ui.
+    /// </summary>
+    [DataField]
+    public LocId ToolDesc = "thief-backpack-window-description";
+
+    /// <summary>
     /// What entity all the spawned items will appear inside of
     /// If null, will instead drop on the ground.
     /// </summary>
