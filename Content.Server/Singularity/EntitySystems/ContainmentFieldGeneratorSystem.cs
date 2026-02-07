@@ -166,7 +166,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var (uid, component) = generator;
         var anyFieldsRemoved = false;
 
-        foreach (var (direction, (otherGen, fields)) in component.Connections.ToArray())
+        foreach (var (direction, (otherGen, fields)) in component.Connections)
         {
             if (removePredicate is not null && !removePredicate(generator, otherGen))
             {
@@ -253,7 +253,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         {
             // Only remove connections if the generators on BOTH sides of the field don't have enough power.
             // Since we only run this code if we know this gen doesn't have enough power, we only have to check the other gen.
-            RemoveConnections(generator, (thisGen, otherGen) => otherGen.Comp.PowerBuffer < otherGen.Comp.PowerMinimum);
+            RemoveConnections(generator, (_, otherGen) => otherGen.Comp.PowerBuffer < otherGen.Comp.PowerMinimum);
         }
 
         ChangePowerVisualizer(power, generator);
