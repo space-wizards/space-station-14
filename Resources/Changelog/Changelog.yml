@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ToastEnjoyer
-  changes:
-  - message: Changed the description to the corpsman antagonist.
-    type: Tweak
-  id: 8993
-  time: '2025-09-21T19:27:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40486
 - author: Nyxilath
   changes:
   - message: Posters now have proper damage resistances and values, instead of acting
@@ -3999,3 +3992,11 @@
   id: 9499
   time: '2026-02-07T10:51:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39591
+- author: SuperGDPWYL
+  changes:
+  - message: Emitters now alert the Engineering radio channel if they are destroyed,
+      deconstructed, lose power or are unlocked, when powered.
+    type: Add
+  id: 9500
+  time: '2026-02-07T12:02:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39513
