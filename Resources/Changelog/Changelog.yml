@@ -3954,18 +3954,11 @@
   id: 9495
   time: '2026-02-07T01:46:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42819
-- author: Velken
-  changes:
-  - message: Plasma finally got the memo that Christmas is over.
-    type: Tweak
-  id: 9496
-  time: '2026-02-07T07:01:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42822
 - author: InsoPL
   changes:
   - message: Optical Thermal Scanners can now be found in the Engi-Vend.
     type: Add
-  id: 9497
+  id: 9496
   time: '2026-02-07T10:10:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42824
 - author: DIMMoon1
@@ -3973,7 +3966,7 @@
   - message: Firelocks now automatically re-close if they have a danger signal and
       they're powered.
     type: Fix
-  id: 9498
+  id: 9497
   time: '2026-02-07T10:35:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37523
 - author: qwerltaz
@@ -3981,7 +3974,7 @@
   - message: Ammonia and Nitrous Oxide now do more damage according to the concentration
       of gas in the atmosphere.
     type: Tweak
-  id: 9499
+  id: 9498
   time: '2026-02-07T10:51:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39591
 - author: SuperGDPWYL
@@ -3989,13 +3982,13 @@
   - message: Emitters now alert the Engineering radio channel if they are destroyed,
       deconstructed, lose power or are unlocked, when powered.
     type: Add
-  id: 9500
+  id: 9499
   time: '2026-02-07T12:02:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39513
 - author: MidZik
   changes:
   - message: Fixed containment fields dying even when one side still had power.
     type: Fix
-  id: 9501
+  id: 9500
   time: '2026-02-07T12:54:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41006
