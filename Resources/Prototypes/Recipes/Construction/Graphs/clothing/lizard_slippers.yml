@@ -9,14 +9,14 @@
             - tag: PlushieLizard #Weh!
               name: construction-graph-tag-lizard-plushie
               icon:
-                sprite: Objects/Fun/toys.rsi
-                state: plushie_lizard
+                sprite: Objects/Fun/Plushies/lizard.rsi
+                state: icon
               doAfter: 1
             - tag: PlushieLizard
               name: construction-graph-tag-lizard-plushie
               icon:
-                sprite: Objects/Fun/toys.rsi
-                state: plushie_lizard
+                sprite: Objects/Fun/Plushies/lizard.rsi
+                state: icon
               doAfter: 1
     - node: shoes
       entity: ClothingShoeSlippersLizard

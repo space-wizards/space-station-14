@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Content.Server.Chat.Managers;
+﻿using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
-using Discord.WebSocket;
+using NetCord;
+using NetCord.Gateway;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 
@@ -25,6 +25,10 @@ public sealed class DiscordChatLink : IPostInjectInit
     {
         _discordLink.OnMessageReceived += OnMessageReceived;
 
+        #if DEBUG
+        _discordLink.RegisterCommandCallback(OnDebugCommandRun, "debug");
+        #endif
+
         _configurationManager.OnValueChanged(CCVars.OocDiscordChannelId, OnOocChannelIdChanged, true);
         _configurationManager.OnValueChanged(CCVars.AdminChatDiscordChannelId, OnAdminChannelIdChanged, true);
     }
@@ -36,6 +40,14 @@ public sealed class DiscordChatLink : IPostInjectInit
         _configurationManager.UnsubValueChanged(CCVars.OocDiscordChannelId, OnOocChannelIdChanged);
         _configurationManager.UnsubValueChanged(CCVars.AdminChatDiscordChannelId, OnAdminChannelIdChanged);
     }
+
+    #if DEBUG
+    private void OnDebugCommandRun(CommandReceivedEventArgs ev)
+    {
+        var args = string.Join('\n', ev.Arguments);
+        _sawmill.Info($"Provided arguments: \n{args}");
+    }
+    #endif
 
     private void OnOocChannelIdChanged(string channelId)
     {
@@ -59,18 +71,18 @@ public sealed class DiscordChatLink : IPostInjectInit
         _adminChannelId = ulong.Parse(channelId);
     }
 
-    private void OnMessageReceived(SocketMessage message)
+    private void OnMessageReceived(Message message)
     {
         if (message.Author.IsBot)
             return;
 
         var contents = message.Content.ReplaceLineEndings(" ");
 
-        if (message.Channel.Id == _oocChannelId)
+        if (message.ChannelId == _oocChannelId)
         {
             _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Author.Username, contents));
         }
-        else if (message.Channel.Id == _adminChannelId)
+        else if (message.ChannelId == _adminChannelId)
         {
             _taskManager.RunOnMainThread(() => _chatManager.SendHookAdmin(message.Author.Username, contents));
         }

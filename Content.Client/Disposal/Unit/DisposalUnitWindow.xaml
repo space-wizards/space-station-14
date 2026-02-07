@@ -34,7 +34,7 @@
                     Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
                     StyleClasses="OpenBoth" />
-            <CheckButton Name="Power"
+            <Button Name="Power"
                          Access="Public"
                          Text="{Loc 'ui-disposal-unit-button-power'}"
                          StyleClasses="OpenLeft" />

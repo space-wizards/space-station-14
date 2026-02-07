@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-3.0",
+  "copyright": "Made by Crude Oil",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "load": {
+    "srgb": false
+  },
+  "states": [
+    {
+      "name": "ears",
+      "directions": 1
+    }
+  ]
+}

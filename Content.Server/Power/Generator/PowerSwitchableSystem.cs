@@ -1,14 +1,12 @@
-﻿using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
+﻿using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Shared.NodeContainer;
+using Content.Shared.Power;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Power.Generator;
 
@@ -25,47 +23,9 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PowerSwitchableComponent, GetVerbsEvent<InteractionVerb>>(GetVerbs);
-    }
-
-    private void GetVerbs(EntityUid uid, PowerSwitchableComponent comp, GetVerbsEvent<InteractionVerb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract)
-            return;
-
-        var voltage = VoltageColor(GetNextVoltage(uid, comp));
-        var msg = Loc.GetString("power-switchable-switch-voltage", ("voltage", voltage));
-
-        InteractionVerb verb = new()
-        {
-            Act = () =>
-            {
-                // don't need to check it again since if its disabled server wont let the verb act
-                Cycle(uid, args.User, comp);
-            },
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/zap.svg.192dpi.png")),
-            Text = msg
-        };
-
-        var ev = new SwitchPowerCheckEvent();
-        RaiseLocalEvent(uid, ref ev);
-        if (ev.DisableMessage != null)
-        {
-            verb.Message = ev.DisableMessage;
-            verb.Disabled = true;
-        }
-
-        args.Verbs.Add(verb);
-    }
-
-    /// <summary>
-    /// Cycles voltage then updates nodes and optionally power supplier to match it.
-    /// </summary>
-    public void Cycle(EntityUid uid, EntityUid user, PowerSwitchableComponent? comp = null)
+    // TODO: Prediction
+    /// <inheritdoc/>
+    public override void Cycle(EntityUid uid, EntityUid user, PowerSwitchableComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -114,10 +74,3 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
         _useDelay.TryResetDelay((uid, useDelay));
     }
 }
-
-/// <summary>
-/// Raised on a <see cref="PowerSwitchableComponent"/> to see if its verb should work.
-/// If <see cref="DisableMessage"/> is non-null, the verb is disabled with that as the message.
-/// </summary>
-[ByRefEvent]
-public record struct SwitchPowerCheckEvent(string? DisableMessage = null);

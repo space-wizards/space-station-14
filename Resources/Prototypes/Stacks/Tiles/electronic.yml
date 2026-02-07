@@ -1,0 +1,19 @@
+# electronic or computery looking tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGCircuit
+  name: stack-green-circuit-floor
+  spawn: FloorTileItemGCircuit
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileBCircuit
+  name: stack-bcircuit-floor-tile
+  spawn: FloorTileItemBCircuit
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileRCircuit
+  name: stack-red-circuit-floor
+  spawn: FloorTileItemRCircuit

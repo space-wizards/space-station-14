@@ -5,19 +5,21 @@ using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Interaction;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class TilePryCommand : IConsoleCommand
+public sealed class TilePryCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
-    public string Command => "tilepry";
-    public string Description => "Pries up all tiles in a radius around the user.";
-    public string Help => $"Usage: {Command} <radius>";
+    private readonly string _platingId = "Plating";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "tilepry";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
         if (player?.AttachedEntity is not { } attached)
@@ -33,39 +35,38 @@ public sealed class TilePryCommand : IConsoleCommand
 
         if (!int.TryParse(args[0], out var radius))
         {
-            shell.WriteError($"{args[0]} isn't a valid integer.");
+            shell.WriteError(Loc.GetString($"cmd-tilepry-arg-must-be-number", ("arg", args[0])));
             return;
         }
 
         if (radius < 0)
         {
-            shell.WriteError("Radius must be positive.");
+            shell.WriteError(Loc.GetString($"cmd-tilepry-radius-must-be-positive"));
             return;
         }
 
-        var mapSystem = _entities.System<SharedMapSystem>();
-        var xform = _entities.GetComponent<TransformComponent>(attached);
+        var xform = EntityManager.GetComponent<TransformComponent>(attached);
 
         var playerGrid = xform.GridUid;
 
-        if (!_entities.TryGetComponent<MapGridComponent>(playerGrid, out var mapGrid))
+        if (!EntityManager.TryGetComponent<MapGridComponent>(playerGrid, out var mapGrid))
             return;
 
         var playerPosition = xform.Coordinates;
-        var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
         for (var i = -radius; i <= radius; i++)
         {
             for (var j = -radius; j <= radius; j++)
             {
-                var tile = mapSystem.GetTileRef(playerGrid.Value, mapGrid, playerPosition.Offset(new Vector2(i, j)));
-                var coordinates = mapSystem.GridTileToLocal(playerGrid.Value, mapGrid, tile.GridIndices);
-                var tileDef = (ContentTileDefinition)tileDefinitionManager[tile.Tile.TypeId];
+                var tile = _mapSystem.GetTileRef(playerGrid.Value, mapGrid, playerPosition.Offset(new Vector2(i, j)));
+                var coordinates = _mapSystem.GridTileToLocal(playerGrid.Value, mapGrid, tile.GridIndices);
+                var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-                if (!tileDef.CanCrowbar) continue;
+                if (!tileDef.CanCrowbar)
+                    continue;
 
-                var plating = tileDefinitionManager["Plating"];
-                mapSystem.SetTile(playerGrid.Value, mapGrid, coordinates, new Tile(plating.TileId));
+                var plating = _tileDefinitionManager[_platingId];
+                _mapSystem.SetTile(playerGrid.Value, mapGrid, coordinates, new Tile(plating.TileId));
             }
         }
     }

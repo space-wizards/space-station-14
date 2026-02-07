@@ -1,10 +1,8 @@
 using Content.Shared.Damage.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Damage;
+namespace Content.Shared.Damage.Systems;
 
 public sealed class PassiveDamageSystem : EntitySystem
 {
@@ -47,7 +45,7 @@ public sealed class PassiveDamageSystem : EntitySystem
             foreach (var allowedState in comp.AllowedStates)
             {
                 if(allowedState == mobState.CurrentState)
-                    _damageable.TryChangeDamage(uid, comp.Damage, true, false, damage);
+                    _damageable.ChangeDamage((uid, damage), comp.Damage, true, false);
             }
         }
     }

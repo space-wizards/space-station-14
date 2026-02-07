@@ -1,0 +1,53 @@
+- type: entity
+  id: TwoWayLever
+  name: two way lever
+  description: A two way lever.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: StationAiWhitelist
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      drawdepth: FloorObjects
+      sprite: Structures/conveyor.rsi
+      layers:
+        - state: switch-off
+          map: ["enabled", "enum.TwoWayLeverState.Middle"]
+    - type: TwoWayLever
+    - type: UseDelay
+      delay: 0.2 # prevent light-toggling auto-clickers.
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TwoWayLeverVisuals.State:
+          enabled:
+            Right: { state: switch-fwd }
+            Middle: { state: switch-off }
+            Left: { state: switch-rev }
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Construction
+      graph: LeverGraph
+      node: LeverNode
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSource
+      ports:
+        - Left
+        - Right
+        - Middle
+    - type: Tag
+      tags:
+      - Structure

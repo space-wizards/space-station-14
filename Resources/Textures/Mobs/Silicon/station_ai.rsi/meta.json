@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/e2923df112df8aa025846d0764697bad6506586a/icons/mob/AI.dmi - modified by chromiumboy.",
+    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/e2923df112df8aa025846d0764697bad6506586a/icons/mob/AI.dmi - modified by chromiumboy, base modified by monotheonist.",
     "size": {
         "x": 32,
         "y": 32
@@ -196,6 +196,9 @@
             "name": "ai_dead"
         },
         {
+            "name": "ai_unpowered"
+        },
+        {
             "name": "ai_empty",
             "delays": [
                 [
@@ -205,11 +208,51 @@
             ]
         },
         {
+            "name": "ai_error",
+            "delays": [
+                [
+                    0.7,
+                    0.7
+                ]
+            ]
+        },
+        {
+            "name": "ai_fuzz",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
             "name": "default",
             "directions": 4
         },
         {
             "name": "base"
+        },
+        {
+            "name": "frame_0"
+        },
+        {
+            "name": "frame_1"
+        },
+        {
+            "name": "frame_2"
+        },
+        {
+            "name": "frame_3"
+        },
+        {
+            "name": "frame_3b"
+        },
+        {
+            "name": "frame_4"
         }
     ]
 }

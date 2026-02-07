@@ -1,14 +1,17 @@
 {
     "version": 1,
+    "copyright": "Created by EmoGarbage, inhands by TiniestShark (github), icon_open by Prole0 (GitHub)",
     "size": {
         "x": 32,
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Created by EmoGarbage, inhands by TiniestShark (github)",
     "states": [
         {
             "name": "icon"
+        },
+        {
+            "name": "icon_open"
         },
         {
             "name": "inhand-left",
