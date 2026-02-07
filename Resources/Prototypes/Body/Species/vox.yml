@@ -114,7 +114,6 @@
       Unsexed: UnisexVox
   - type: Butcherable
     butcheringType: Spike
-  - type: Wagging
     spawned:
     - id: FoodMeatChicken
       amount: 5
@@ -189,6 +188,7 @@
     damage:
       types:
         Slash: 5 # Reduce?
+  - type: Wagging
 
 - type: entity
   parent: OrganBase
