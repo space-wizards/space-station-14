@@ -17,6 +17,7 @@
             <Button
                 Name="LawSelectAllButton"
                 Text="{Loc 'laws-ui-select-all'}"
+                ToolTip="{Loc 'laws-ui-select-all-tooltip'}"
                 MaxSize="256 64"
                 StyleClasses="OpenRight" />
             <Button
@@ -52,7 +53,6 @@
             <Button
                 Name="LawAnnounceButton"
                 Text="{Loc 'laws-ui-state-law'}"
-                ToolTip="{Loc 'laws-ui-state-law-tooltip'}"
                 MaxSize="256 64"
                 StyleClasses="OpenLeft" />
         </BoxContainer>
