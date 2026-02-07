@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Nyxilath
-  changes:
-  - message: Posters now have proper damage resistances and values, instead of acting
-      like they were made out of metal.
-    type: Fix
-  id: 8994
-  time: '2025-09-21T20:40:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40489
 - author: beck-thompson
   changes:
   - message: Shuttle UI is now fixed. You won't go into pilot mode when not having
@@ -4000,3 +3992,10 @@
   id: 9500
   time: '2026-02-07T12:02:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39513
+- author: MidZik
+  changes:
+  - message: Fixed containment fields dying even when one side still had power.
+    type: Fix
+  id: 9501
+  time: '2026-02-07T12:54:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41006
