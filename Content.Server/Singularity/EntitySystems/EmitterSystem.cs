@@ -11,6 +11,7 @@ using Content.Shared.Construction;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
@@ -173,7 +174,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            AlertRadio(uid, component, "unpowered");
+            AlertRadio((uid, component), "unpowered");
 
             component.IsPowered = false;
 
@@ -296,35 +297,37 @@ namespace Content.Server.Singularity.EntitySystems
             }
         }
 
-        private void OnDestructionAttempted(EntityUid uid, EmitterComponent component, ref DestructionAttemptEvent args)
+        private void OnDestructionAttempted(Entity<EmitterComponent> ent, ref DestructionAttemptEvent args)
         {
             // warn engineering their containment engine needs IMMEDIATE repairs
             // this doesn't change much for natural loosing through emitter destruction given any meteor warning serves the same purpose
             // can also be used to scare engineering though given it broadcasts its location you need a renamed station beacon to really scare them
-            AlertRadio(uid, component, "destroyed");
+            AlertRadio(ent, "destroyed");
         }
 
-        private void OnDeconstructed(EntityUid uid, EmitterComponent component, ref MachineDeconstructedEvent args)
+        private void OnDeconstructed(Entity<EmitterComponent> ent, ref MachineDeconstructedEvent args)
         {
             // right now you don't even need to unlock the emitter to deconstruct it. that's almost certainly a bug but even without it it probably still needs an alert
-            AlertRadio(uid, component, "deconstructed");
+            AlertRadio(ent, "deconstructed");
         }
 
-        private void AlertRadio(EntityUid uid, EmitterComponent component, string type)
+        private void AlertRadio(Entity<EmitterComponent> ent, string type)
         {
-            if (!component.AlertRadio || !component.IsOn || !component.IsPowered) return; // APEs do not need to scream over engineering radio, and an emitter that is off is probably not going to be alerting radios
+            if (!ent.Comp.AlertRadio || !ent.Comp.IsOn || !ent.Comp.IsPowered)
+                return; // APEs do not need to scream over engineering radio, and an emitter that is off is probably not going to be alerting radios
 
             var message = Loc.GetString("emitter-" + type + "-broadcast",
-            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(uid)))
+            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(ent.Owner)))
             );
-            _radio.SendRadioMessage(uid, message, component.RadioChannel, uid);
+            _radio.SendRadioMessage(ent.Owner, message, ent.Comp.RadioChannel, ent.Owner);
         }
 
-        private void OnLockToggled(EntityUid uid, EmitterComponent component, ref LockToggledEvent args)
+        private void OnLockToggled(Entity<EmitterComponent> ent, ref LockToggledEvent args)
         {
-            if (args.Locked) return;
+            if (args.Locked)
+                return;
 
-            AlertRadio(uid, component, "unlocked");
+            AlertRadio(ent, "unlocked");
         }
     }
 }
