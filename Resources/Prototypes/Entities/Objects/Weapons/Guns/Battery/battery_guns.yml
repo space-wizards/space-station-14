@@ -344,7 +344,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Gun
-    selectedMode: SemiAuto
+    selectedMode: FullAuto
     fireRate: 3
     availableModes:
       - SemiAuto
