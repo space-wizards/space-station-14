@@ -217,8 +217,7 @@
 - type: marking
   id: VoxTailBigAnimated
   bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: []
+  groupWhitelist: []
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -236,8 +235,7 @@
 - type: marking
   id: VoxTailSpikesAnimated
   bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: []
+  groupWhitelist: []
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -255,8 +253,7 @@
 - type: marking
   id: VoxTailDockedAnimated
   bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: []
+  groupWhitelist: []
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -275,8 +272,7 @@
 - type: marking
   id: VoxTailSplitAnimated
   bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: []
+  groupWhitelist: []
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
