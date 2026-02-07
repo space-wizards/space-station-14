@@ -267,6 +267,10 @@ binds:
   type: State
   key: H
   mod1: Shift
+- function: SmartEquipLastInteracted
+  type: State
+  key: Q
+  mod1: Shift
 - function: OpenBackpack
   type: State
   key: V
