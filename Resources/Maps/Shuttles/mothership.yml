@@ -160,8 +160,6 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: ExplosionAirtightGrid
-    - type: TileHistory
-      chunkHistory: {}
 - proto: AirlockGlassShuttleXenoborgLocked
   entities:
   - uid: 107

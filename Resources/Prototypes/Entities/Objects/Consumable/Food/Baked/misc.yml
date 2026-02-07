@@ -811,10 +811,6 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 0 # so the damage stats icon doesn't immediately give away the syndie ones
 
 - type: entity
   parent: FoodBakedCroissant
