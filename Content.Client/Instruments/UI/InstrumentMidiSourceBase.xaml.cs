@@ -7,19 +7,36 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public abstract partial class InstrumentMidiSourceBase : BoxContainer
 {
+    /// <summary>
+    /// The string to display for the button on the left side of the instrument UI.
+    /// </summary>
     public virtual string ButtonName { get; } = Loc.GetString("instruments-component-menu-unknown-midi-source-button");
-    protected bool Enabled;
+
+    /// <summary>
+    /// Returns true if this source is currently the active one.
+    /// </summary>
+    protected bool Enabled { get; private set; }
     protected InstrumentMidiSourceBase()
     {
         RobustXamlLoader.Load(this);
     }
 
+    /// <summary>
+    /// Override if the source requires additional handling to become enabled.
+    /// i.e.: Opening MIDI-Input.
+    /// </summary>
+    [MustCallBase]
     public virtual void Enable()
     {
         Visible = true;
         Enabled = true;
     }
 
+    /// <summary>
+    /// Override if the source requires additional handling on being disabled.
+    /// i.e.: Closing MIDI-Input.
+    /// </summary>
+    [MustCallBase]
     public virtual void Disable()
     {
         Enabled = false;
