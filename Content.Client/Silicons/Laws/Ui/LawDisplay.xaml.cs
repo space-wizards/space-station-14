@@ -12,14 +12,21 @@ public sealed partial class LawDisplay : Button
     private const string LawDisplayUnselectedTexturePath = "/Textures/Interface/Alerts/Abilities/silenced.png";
     private const string LawDisplaySelectedTexturePath = "/Textures/Interface/Emotes/vocal.png";
 
+    /// <summary>
+    /// The SiliconLaw tracked by this display.
+    /// </summary>
+    public SiliconLaw Law { get; }
+
     public LawDisplay(SiliconLaw law)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
+        Law = law;
+
+        var identifier = Law.LawIdentifierOverride ?? $"{Law.Order}";
         var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
-        var lawDescription = Loc.GetString(law.LawString);
+        var lawDescription = Loc.GetString(Law.LawString);
 
         LawNumberLabel.SetMarkup(lawIdentifier);
         LawLabel.SetMessage(lawDescription);
@@ -29,8 +36,17 @@ public sealed partial class LawDisplay : Button
     /// Switches the indicator of this display depending on whether its law has been selected
     /// </summary>
     /// <param name="isSelected">Whether or not the law associated with this display is selected</param>
-    public void SetLawSelectedIcon(bool isSelected)
+    public void SetLawSelectedIndicators(bool isSelected)
     {
-        LawSelectedIcon.TexturePath = isSelected ? LawDisplaySelectedTexturePath : LawDisplayUnselectedTexturePath;
+        if (isSelected)
+        {
+            AddStyleClass("positive");
+            LawSelectedIcon.TexturePath = LawDisplaySelectedTexturePath;
+        }
+        else
+        {
+            RemoveStyleClass("positive");
+            LawSelectedIcon.TexturePath = LawDisplayUnselectedTexturePath;
+        }
     }
 }

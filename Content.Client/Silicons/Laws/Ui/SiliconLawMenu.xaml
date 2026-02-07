@@ -1,12 +1,30 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                      Title="{Loc 'laws-ui-menu-title'}"
-                      MinSize="450 225"
-                      SetSize="450 525">
-    <BoxContainer Orientation="Vertical"
-                  HorizontalExpand="True"
-                  VerticalExpand="True">
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    Title="{Loc 'laws-ui-menu-title'}"
+    MinSize="450 225"
+    SetSize="450 525">
+    <BoxContainer
+        Orientation="Vertical"
+        HorizontalExpand="True"
+        VerticalExpand="True">
+        <BoxContainer
+            Orientation="Horizontal"
+            Align="Center"
+            Margin="0 10 0 0"
+            HorizontalExpand="True">
+            <Button
+                Name="LawSelectAllButton"
+                Text="{Loc 'laws-ui-select-all'}"
+                MaxSize="256 64"
+                StyleClasses="OpenRight" />
+            <Button
+                Name="LawSelectNoneButton"
+                Text="{Loc 'laws-ui-select-none'}"
+                MaxSize="256 64"
+                StyleClasses="OpenLeft" />
+        </BoxContainer>
         <PanelContainer VerticalExpand="True" Margin="10 10 10 5">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
@@ -27,26 +45,30 @@
             Orientation="Horizontal"
             Align="Center"
             HorizontalExpand="True">
-        <OptionButton
-            Name="LawChatChannelOption"
-            MaxSize="256 64"
-            StyleClasses="OpenRight"/>
-        <Button
-            Name="LawAnnounceButton"
-            MaxSize="256 64"
-            StyleClasses="OpenLeft"/>
+            <OptionButton
+                Name="LawChatChannelOption"
+                MaxSize="256 64"
+                StyleClasses="OpenRight" />
+            <Button
+                Name="LawAnnounceButton"
+                Text="{Loc 'laws-ui-state-law'}"
+                ToolTip="{Loc 'laws-ui-state-law-tooltip'}"
+                MaxSize="256 64"
+                StyleClasses="OpenLeft" />
         </BoxContainer>
         <!-- Footer -->
         <BoxContainer Orientation="Vertical" Margin="0 5 0 0">
-        <PanelContainer/>
+            <PanelContainer />
             <PanelContainer StyleClasses="LowDivider" />
             <!--Todo: Change Logo based on Laws (Change to Syndicate Logo when Emagged)-->
             <BoxContainer Name="Footer" Orientation="Horizontal" Margin="10 0 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'laws-window-footer-left'}" StyleClasses="WindowFooterText" />
-                <Label Name="Version" Text="{Loc 'laws-window-footer-right'}" StyleClasses="WindowFooterText"
-                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
-                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+                <Label
+                    Name="Version" Text="{Loc 'laws-window-footer-right'}" StyleClasses="WindowFooterText"
+                    HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0" />
+                <TextureRect
+                    StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                    VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

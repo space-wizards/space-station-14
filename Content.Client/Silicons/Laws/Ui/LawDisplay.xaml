@@ -1,15 +1,17 @@
-<Button xmlns="https://spacestation14.io"
-        xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-        Margin="0 0 0 5"
-        StyleClasses="ButtonSquare">
+<Button
+    xmlns="https://spacestation14.io"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Margin="0 0 0 5"
+    StyleClasses="ButtonSquare">
     <PanelContainer
         VerticalExpand="True"
         Margin="0 5"
         StyleClasses="BackgroundDark">
-        <BoxContainer Orientation="Vertical"
-                      HorizontalExpand="True"
-                      VerticalExpand="True"
-                      Margin="5 5 5 5">
+        <BoxContainer
+            Orientation="Vertical"
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            Margin="5 5 5 5">
             <BoxContainer Orientation="Horizontal">
                 <RichTextLabel Name="LawNumberLabel" StyleClasses="LabelKeyText" />
                 <BoxContainer

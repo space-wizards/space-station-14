@@ -47,8 +47,8 @@ public sealed partial class SiliconLawMenu : FancyWindow
         IoCManager.InjectDependencies(this);
 
         LawChatChannelOption.OnItemSelected += OnLawChatChannelSelected;
-
-        LawAnnounceButton.Text = Loc.GetString("laws-ui-state-law");
+        LawSelectAllButton.OnPressed += _ => OnMassSelectPressed(true);
+        LawSelectNoneButton.OnPressed += _ => OnMassSelectPressed(false);
         LawAnnounceButton.OnPressed += OnLawAnnounceButtonPressed;
     }
 
@@ -88,14 +88,12 @@ public sealed partial class SiliconLawMenu : FancyWindow
                 if (_selectedLaws.Contains(law))
                 {
                     _selectedLaws.Remove(law);
-                    control.RemoveStyleClass("positive");
-                    control.SetLawSelectedIcon(false);
+                    control.SetLawSelectedIndicators(false);
                 }
                 else
                 {
                     _selectedLaws.Add(law);
-                    control.AddStyleClass("positive");
-                    control.SetLawSelectedIcon(true);
+                    control.SetLawSelectedIndicators(true);
                 }
             };
 
@@ -109,8 +107,29 @@ public sealed partial class SiliconLawMenu : FancyWindow
 
         var curTime = _timing.CurTime;
         LawAnnounceButton.Disabled = curTime < _nextAllowedAnnouncePress;
+        // Don't want to change the channel while currently announcing laws
         LawChatChannelOption.Disabled = curTime < _nextAllowedAnnouncePress;
         AnnounceLaws(curTime);
+    }
+
+    private void OnMassSelectPressed(bool isPositive)
+    {
+        foreach (var child in LawDisplayContainer.Children)
+        {
+            if (child is not LawDisplay lawDisplay)
+                continue;
+
+            if (isPositive)
+            {
+                _selectedLaws.Add(lawDisplay.Law);
+            }
+            else
+            {
+                _selectedLaws.Remove(lawDisplay.Law);
+            }
+
+            lawDisplay.SetLawSelectedIndicators(isPositive);
+        }
     }
 
     private void OnLawChatChannelSelected(OptionButton.ItemSelectedEventArgs obj)
