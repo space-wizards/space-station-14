@@ -1,5 +1,4 @@
-
-namespace Content.Server.Ghost.Components;
+namespace Content.Server.Ghost.Roles.Components;
 
 /// <summary>
 /// If an entity with this component has a <see cref="GhostRoleComponent"/>,

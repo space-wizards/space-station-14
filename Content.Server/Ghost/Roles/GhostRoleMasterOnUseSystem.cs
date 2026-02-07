@@ -1,9 +1,8 @@
-using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 
-namespace Content.Server.Ghost;
+namespace Content.Server.Ghost.Roles;
 
 public sealed class GhostRoleMasterOnUseSystem : EntitySystem
 {
