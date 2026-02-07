@@ -170,13 +170,10 @@ public abstract class SharedConveyorController : VirtualController
                 {
                     SetConveying(ent.Entity.Owner, ent.Entity.Comp1, true);
                 }
-                else
+                else if (ent.Entity.Comp1.Conveying)
                 {
-                    if (ent.Entity.Comp1.Conveying)
-                    {
-                        SetConveying(ent.Entity.Owner, ent.Entity.Comp1, false);
-                        _stack.TryMergeToContacts(ent.Entity.Owner);
-                    }
+                    SetConveying(ent.Entity.Owner, ent.Entity.Comp1, false);
+                    _stack.TryMergeToContacts(ent.Entity.Owner);
                 }
 
                 // We apply friction here so when we push items towards the center of the conveyor they don't go overspeed.
