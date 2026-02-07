@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Shuttle UI is now fixed. You won't go into pilot mode when not having
-      access
-    type: Fix
-  id: 8995
-  time: '2025-09-22T06:40:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40491
 - author: hoshizora-sayo
   changes:
   - message: Fixed fire helmets alone giving you full temperature protection
@@ -3999,3 +3991,10 @@
   id: 9501
   time: '2026-02-07T13:17:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42101
+- author: SlamBamActionman
+  changes:
+  - message: Stackables items now merge when stopping on/after a conveyor belt.
+    type: Add
+  id: 9502
+  time: '2026-02-07T13:34:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42829
