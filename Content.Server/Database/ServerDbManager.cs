@@ -43,6 +43,8 @@ namespace Content.Server.Database
 
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
 
+        Task MakeCharacterSlotLegacyAsync(NetUserId userId, int slot);
+
         Task SaveCharacterSlotAsync(NetUserId userId, HumanoidCharacterProfile? profile, int slot);
 
         Task SaveAdminOOCColorAsync(NetUserId userId, Color color);
@@ -439,6 +441,12 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.SaveSelectedCharacterIndexAsync(userId, index));
+        }
+
+        public Task MakeCharacterSlotLegacyAsync(NetUserId userId, int slot)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.MakeCharacterSlotLegacyAsync(userId, slot));
         }
 
         public Task SaveCharacterSlotAsync(NetUserId userId, HumanoidCharacterProfile? profile, int slot)

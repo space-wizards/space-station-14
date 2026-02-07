@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Content.Server.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Preferences.Loadouts.Effects;
@@ -14,6 +16,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.UnitTesting;
 
@@ -122,6 +125,53 @@ namespace Content.IntegrationTests.Tests.Preferences
         private static NetUserId NewUserId()
         {
             return new(Guid.NewGuid());
+        }
+
+        private const string InvalidSpecies = "WingusDingus";
+
+        private static bool[] _trueFalse = [true, false];
+
+        [Test]
+        [TestCaseSource(nameof(_trueFalse))]
+        public async Task InvalidSpeciesConversion(bool legacy)
+        {
+            var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var db = GetDb(pair.Server);
+
+            var proto = server.ResolveDependency<IPrototypeManager>();
+            Assert.That(!proto.HasIndex<SpeciesPrototype>(InvalidSpecies), "You should not have added a species called WingusDingus, but change it in this test to something else I guess");
+
+            var bogus = new HumanoidCharacterProfile()
+            {
+                Species = InvalidSpecies,
+            };
+
+            var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
+            await db.InitPrefsAsync(username, new HumanoidCharacterProfile());
+            await db.SaveCharacterSlotAsync(username, bogus, 0);
+            await db.SaveSelectedCharacterIndexAsync(username, 0);
+
+            if (legacy)
+                await db.MakeCharacterSlotLegacyAsync(username, 0);
+
+            await server.WaitIdleAsync();
+
+            Task<PlayerPreferences> task = null!;
+            PlayerPreferences prefs = null;
+            await server.WaitPost(() =>
+            {
+                task = db.GetPlayerPreferencesAsync(username, CancellationToken.None);
+            });
+            await pair.RunTicksSync(20);
+            Assert.DoesNotThrowAsync(async () => prefs = await task);
+
+            Assert.That(prefs, Is.Not.Null);
+            Assert.That(prefs.Characters, Has.Count.EqualTo(1));
+            Assert.That(prefs.Characters[0].Species, Is.Not.EqualTo(InvalidSpecies));
+            Assert.That(prefs.Characters[0].Species, Is.EqualTo(HumanoidCharacterProfile.DefaultSpecies));
+
+            await pair.CleanReturnAsync();
         }
     }
 }

@@ -14,6 +14,7 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
@@ -84,6 +85,30 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             await SetSelectedCharacterSlotAsync(userId, index, db.DbContext);
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Only intended for use in unit tests - drops the organ marking data from a profile in the given slot
+        /// </summary>
+        /// <param name="userId">The user whose profile to modify</param>
+        /// <param name="slot">The slot index to modify</param>
+        public async Task MakeCharacterSlotLegacyAsync(NetUserId userId, int slot)
+        {
+            await using var db = await GetDb();
+
+            var oldProfile = await db.DbContext.Profile
+                .Include(p => p.Preference)
+                .Where(p => p.Preference.UserId == userId.UserId)
+                .AsSplitQuery()
+                .SingleOrDefaultAsync(h => h.Slot == slot);
+
+            if (oldProfile == null)
+                return;
+
+            oldProfile.OrganMarkings = null;
+            oldProfile.Markings = JsonSerializer.SerializeToDocument(new List<string>());
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -236,6 +261,16 @@ namespace Content.Server.Database
             var markings =
                 new Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>();
 
+            var speciesCompletion = new TaskCompletionSource<ProtoId<SpeciesPrototype>>();
+            _task.RunOnMainThread(() =>
+            {
+                if (IoCManager.Resolve<IPrototypeManager>().HasIndex<SpeciesPrototype>(profile.Species))
+                    speciesCompletion.SetResult(profile.Species);
+                else
+                    speciesCompletion.SetResult(HumanoidCharacterProfile.DefaultSpecies);
+            });
+            var actualSpecies = await speciesCompletion.Task;
+
             if (profile.OrganMarkings?.RootElement is { } element)
             {
                 var data = element.ToDataNode();
@@ -270,7 +305,7 @@ namespace Content.Server.Database
 
                     try
                     {
-                        markings = markingManager.ConvertMarkings(markingsList, profile.Species);
+                        markings = markingManager.ConvertMarkings(markingsList, actualSpecies);
                         completion.SetResult();
                     }
                     catch (Exception ex)
@@ -308,7 +343,7 @@ namespace Content.Server.Database
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.FlavorText,
-                profile.Species,
+                actualSpecies,
                 profile.Age,
                 sex,
                 gender,
