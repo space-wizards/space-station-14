@@ -9,6 +9,7 @@ public sealed partial class BandMidiSource : InstrumentMidiSourceBase
 {
     public event Action? RefreshBandRequest;
     public event Action<EntityUid>? JoinBandRequest;
+
     public override string ButtonName => Loc.GetString("instruments-component-menu-band-midi-source-button");
 
     public BandMidiSource()

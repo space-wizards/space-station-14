@@ -32,6 +32,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     private bool IsShuffle => ShuffleButton.Pressed;
     private string CurrentFilter => FilterBar.Text;
     public override string ButtonName => Loc.GetString("instruments-component-menu-file-midi-source-button");
+
     public bool IsPlaying
     {
         get => PlayButton.Pressed;
@@ -53,18 +54,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         LoopButton.OnToggled += OnLoopButtonToggled;
         PlaybackSlider.OnValueChanged += OnPlaybackSliderValueChanged;
         PlaybackSlider.OnKeyBindUp += OnPlaybackSliderKeyBindUp;
-    }
-
-    protected override void VisibilityChanged(bool newVisible)
-    {
-        base.VisibilityChanged(newVisible);
-
-        if (newVisible)
-            return;
-
-        IsPlaying = false;
-        StopPlayingRequest?.Invoke();
-        CurrentTrackLabel.Text = _noTrackSelectedText;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -97,6 +86,15 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
                 ? $"{currentTime.Minutes:D2}:{currentTime.Seconds:D2}/{totalTime.Minutes:D2}:{totalTime.Seconds:D2}"
                 : $"{currentTime.Hours:D2}:{currentTime.Minutes:D2}:{currentTime.Seconds:D2}/{totalTime.Hours:D2}:{totalTime.Minutes:D2}:{totalTime.Seconds:D2}";
         }
+    }
+
+    public override void Disable()
+    {
+        base.Disable();
+        TrackList.ClearSelected();
+        IsPlaying = false;
+        StopPlayingRequest?.Invoke();
+        CurrentTrackLabel.Text = _noTrackSelectedText;
     }
 
     private void OnFilterBarTextChanged(LineEdit.LineEditEventArgs obj)

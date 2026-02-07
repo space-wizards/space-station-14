@@ -8,9 +8,21 @@ namespace Content.Client.Instruments.UI;
 public abstract partial class InstrumentMidiSourceBase : BoxContainer
 {
     public virtual string ButtonName { get; } = Loc.GetString("instruments-component-menu-unknown-midi-source-button");
-
+    protected bool Enabled;
     protected InstrumentMidiSourceBase()
     {
         RobustXamlLoader.Load(this);
+    }
+
+    public virtual void Enable()
+    {
+        Visible = true;
+        Enabled = true;
+    }
+
+    public virtual void Disable()
+    {
+        Enabled = false;
+        Visible = false;
     }
 }

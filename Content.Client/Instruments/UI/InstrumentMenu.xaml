@@ -1,19 +1,15 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      SetSize="500,500">
-    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="10" SeparationOverride="10">
-        <Collapsible>
-            <CollapsibleHeading MinHeight="25" Name="ConfigurationCollapsibleHeading"/>
-            <CollapsibleBody Name="Body">
-                <ScrollContainer VerticalExpand="True" HScrollEnabled="False" MinSize="0 150">
-                    <BoxContainer Name="ItemsContainer" Orientation="Vertical" HorizontalExpand="True">
-                        <!-- TODO: Re-Implement the improved channels dialog as a panel after they have been merged -->
-                    </BoxContainer>
-                </ScrollContainer>
+                      SetSize="500 500">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="10">
+        <Collapsible Name="ConfigurationCollapsible">
+            <CollapsibleHeading MinHeight="25" Name="ConfigurationCollapsibleHeading" />
+            <CollapsibleBody Name="ConfigurationCollapsibleBody" VerticalExpand="True">
+                    <BoxContainer Name="ConfigurationItemsContainer" Orientation="Vertical" HorizontalExpand="True" />
             </CollapsibleBody>
         </Collapsible>
-        <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="10">
+        <BoxContainer Name="InstrumentContainer" Orientation="Horizontal" VerticalExpand="True" SeparationOverride="10">
             <BoxContainer Orientation="Vertical" VerticalExpand="True">
                 <BoxContainer Name="MidiSourceButtonsBoxContainer" Orientation="Vertical">
                     <Label Text="{Loc 'instruments-component-menu-midi-source-button'}" />
