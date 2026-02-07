@@ -179,8 +179,7 @@
 - type: marking
   id: VoxTailAnimated
   bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [] # Intentional to keep it from showing in the customization menu
+  groupWhitelist: []
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -198,8 +197,7 @@
 - type: marking
   id: VoxTailShortAnimated
   bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: []
+  groupWhitelist: []
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
