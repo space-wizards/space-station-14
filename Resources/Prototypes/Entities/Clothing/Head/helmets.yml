@@ -44,10 +44,6 @@
       visible: false
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
-    equippedPrefix: raised
-  - type: Item
-    heldPrefix: raised
-  - type: Appearance
   - type: Tag
     tags:
     - WhitelistChameleon
