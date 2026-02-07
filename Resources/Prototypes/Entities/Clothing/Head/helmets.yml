@@ -29,44 +29,36 @@
 
 #Security Helmet
 - type: entity
-  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetArmoredBase, BaseFoldable, BaseSecurityContraband]
   id: ClothingHeadHelmetBasic
   name: security helmet
-  description: Standard security gear. Protects the head from impacts.
+  description: Standard security gear. Protects the head from impacts, and comes with a visor which can be lowered to protect the eyes.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi
     layers:
     - state: icon
+      map: [ "unfoldedLayer" ]
     - state: icon-visor
+      map: [ "foldedLayer" ]
       visible: false
-      map: [ "visor" ]
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
     equippedPrefix: raised
   - type: Item
     heldPrefix: raised
-  - type: ToggleableVisuals
-    spriteLayer: visor
-    clothingVisuals:
-      head:
-      - state: lowered-equipped-HELMET
-      head-vox:
-      - state: lowered-equipped-HELMET-vox
-    inhandVisuals:
-      left:
-      - state: lowered-inhand-left
-      right:
-      - state: lowered-inhand-right
   - type: Appearance
   - type: Tag
     tags:
     - WhitelistChameleon
     - SecurityHelmet
-  - type: ItemToggle
-    predictable: false
-    verbToggleOn: item-toggle-lower-visor
-    verbToggleOff: item-toggle-raise-visor
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-raise-visor-verb
+    foldVerbText: fold-lower-visor-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: visor
+    foldedHeldPrefix: visor
   - type: HideLayerClothing
     slots: []
     layers:
