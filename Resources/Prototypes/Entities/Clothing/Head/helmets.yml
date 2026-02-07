@@ -60,7 +60,6 @@
     foldedEquippedPrefix: visor
     foldedHeldPrefix: visor
   - type: HideLayerClothing
-    slots: []
     layers:
       Hair: HEAD
 
