@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: cmorley191
-  changes:
-  - message: Improved reliability of cleanade/grenade launcher rounds and other collision-triggered
-      devices and spells.
-    type: Fix
-  id: 8992
-  time: '2025-09-21T15:23:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40428
 - author: ToastEnjoyer
   changes:
   - message: Changed the description to the corpsman antagonist.
@@ -3999,3 +3991,11 @@
   id: 9498
   time: '2026-02-07T10:35:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37523
+- author: qwerltaz
+  changes:
+  - message: Ammonia and Nitrous Oxide now do more damage according to the concentration
+      of gas in the atmosphere.
+    type: Tweak
+  id: 9499
+  time: '2026-02-07T10:51:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39591
