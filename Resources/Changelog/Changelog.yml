@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed stuff like camera views causing your computer to melt, explode,
-      and then collapse into a black hole.
-    type: Fix
-  id: 8991
-  time: '2025-09-21T05:16:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40181
 - author: cmorley191
   changes:
   - message: Improved reliability of cleanade/grenade launcher rounds and other collision-triggered
@@ -3999,3 +3991,11 @@
   id: 9497
   time: '2026-02-07T10:10:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42824
+- author: DIMMoon1
+  changes:
+  - message: Firelocks now automatically re-close if they have a danger signal and
+      they're powered.
+    type: Fix
+  id: 9498
+  time: '2026-02-07T10:35:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37523
