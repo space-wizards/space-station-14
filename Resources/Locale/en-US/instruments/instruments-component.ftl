@@ -13,6 +13,7 @@ instruments-component-menu-play-button = Play MIDI
 instruments-component-menu-loop-button = Loop
 instruments-component-menu-channels-button = Channels
 instruments-component-menu-stop-button = Stop
+instruments-component-menu-midi-min-volume-slider-label = MIDI Input Min Volume
 instruments-component-band-menu = Choose band leader
 instrument-component-band-refresh = Refresh
 instruments-component-channels-menu = MIDI Channel Selection

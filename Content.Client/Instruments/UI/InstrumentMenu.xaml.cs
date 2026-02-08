@@ -47,8 +47,10 @@ namespace Content.Client.Instruments.UI
             StopButton.OnPressed += MidiStopButtonOnPressed;
             PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
             PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
+            MidiMinVolumeSlider.OnValueChanged += MidiMinVolumeSliderSeek;
+            MidiMinVolumeSlider.OnKeyBindUp += MidiMinVolumeSliderKeyUp;
 
-            MinSize = SetSize = new Vector2(400, 150);
+            MinSize = SetSize = new Vector2(400, 200);
         }
 
         public void SetInstrument(Entity<InstrumentComponent> entity)
@@ -61,6 +63,7 @@ namespace Content.Client.Instruments.UI
             ChannelsButton.Disabled = !component.IsRendererAlive;
             StopButton.Disabled = !component.IsMidiOpen;
             PlaybackSlider.MouseFilter = component.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
+            MidiMinVolumeSlider.Value = component.MinVolume;
         }
 
         public void RemoveInstrument(InstrumentComponent component)
@@ -71,6 +74,19 @@ namespace Content.Client.Instruments.UI
         public void SetMIDI(bool available)
         {
             UnavailableOverlay.Visible = !available;
+        }
+
+        private void SetComponentMidiMinVolume(int volume)
+        {
+            var instrument = _entManager.System<InstrumentSystem>();
+
+            if (_entManager.TryGetComponent(Entity, out InstrumentComponent? instrumentComp))
+            {
+                byte byteMinVolume = (byte)Math.Min(Math.Max(0, volume), 127);
+                instrument.SetMinVolume(Entity, byteMinVolume);
+            }
+
+            instrument.UpdateRenderer(Entity);
         }
 
         private void BandButtonOnPressed(ButtonEventArgs obj)
@@ -183,6 +199,8 @@ namespace Content.Client.Instruments.UI
                 _entManager.System<InstrumentSystem>().CloseInput(Entity, false);
                 OnCloseChannels?.Invoke();
             }
+
+            MidiMinVolumeSlider.Value = 0;
         }
 
         private bool PlayCheck()
@@ -251,6 +269,23 @@ namespace Content.Client.Instruments.UI
                 return;
 
             _entManager.System<InstrumentSystem>().SetPlayerTick(Entity, (int)Math.Ceiling(PlaybackSlider.Value));
+        }
+
+        private void MidiMinVolumeSliderSeek(Range _)
+        {
+            // Do not update while still grabbed.
+            if (MidiMinVolumeSlider.Grabbed)
+                return;
+
+            SetComponentMidiMinVolume((int)Math.Ceiling(MidiMinVolumeSlider.Value));
+        }
+
+        private void MidiMinVolumeSliderKeyUp(GUIBoundKeyEventArgs args)
+        {
+            if (args.Function != EngineKeyFunctions.UIClick)
+                return;
+
+            SetComponentMidiMinVolume((int)Math.Ceiling(MidiMinVolumeSlider.Value));
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
