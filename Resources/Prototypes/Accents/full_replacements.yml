@@ -155,6 +155,13 @@
   - accent-words-crab-6
 
 - type: accent
+  id: cow
+  fullReplacements:
+  - accent-words-cow-1
+  - accent-words-cow-2
+  - accent-words-cow-3
+
+- type: accent
   id: kobold
   fullReplacements:
   - accent-words-kobold-1
