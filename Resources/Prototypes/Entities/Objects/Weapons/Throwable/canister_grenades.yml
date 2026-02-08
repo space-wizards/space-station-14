@@ -69,8 +69,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
-  - type: TimerTrigger
-    delay: 5
   - type: SmokeOnTrigger
     keysIn:
     - timer
@@ -95,8 +93,6 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
-  - type: TimerTrigger
-    delay: 3
   - type: ReleaseGasOnTrigger
     keysIn:
     - timer
