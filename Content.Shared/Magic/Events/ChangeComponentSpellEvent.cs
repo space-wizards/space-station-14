@@ -6,7 +6,7 @@ namespace Content.Shared.Magic.Events;
 /// <summary>
 ///     Spell that uses the magic of ECS to add & remove components. Components are first removed, then added.
 /// </summary>
-public sealed partial class ChangeComponentsSpellEvent : EntityTargetActionEvent
+public abstract partial class ChangeComponentsSpellEvent : EntityTargetActionEvent
 {
     // TODO allow it to set component data-fields?
     // for now a Hackish way to do that is to remove & add, but that doesn't allow you to selectively set specific data fields.
@@ -17,6 +17,6 @@ public sealed partial class ChangeComponentsSpellEvent : EntityTargetActionEvent
 
     [DataField]
     [AlwaysPushInheritance]
-    public HashSet<string> ToRemove = new();
+    public ComponentRegistry ToRemove = new();
 
 }
