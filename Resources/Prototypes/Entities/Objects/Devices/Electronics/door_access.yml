@@ -98,6 +98,22 @@
 
 - type: entity
   parent: DoorElectronics
+  id: DoorElectronicsLibrary
+  suffix: Library, Locked
+  components:
+  - type: AccessReader
+    access: [["Library"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsNewsroom
+  suffix: Newsroom, Locked
+  components:
+  - type: AccessReader
+    access: [["Newsroom"]]
+
+- type: entity
+  parent: DoorElectronics
   id: DoorElectronicsService
   suffix: Service, Locked
   components:

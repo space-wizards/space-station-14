@@ -21,6 +21,24 @@
 
 - type: entity
   parent: AirlockServiceLocked
+  id: AirlockLibraryLocked
+  suffix: Library, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLibrary ]
+
+- type: entity
+  parent: AirlockServiceLocked
+  id: AirlockNewsroomLocked
+  suffix: Newsroom, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsNewsroom ]
+
+- type: entity
+  parent: AirlockServiceLocked
   id: AirlockTheatreLocked
   suffix: Theatre, Locked
   components:
@@ -469,6 +487,24 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsLawyer ]
+
+- type: entity
+  parent: AirlockServiceGlassLocked
+  id: AirlockLibraryGlassLocked
+  suffix: Library, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLibrary ]
+
+- type: entity
+  parent: AirlockServiceGlassLocked
+  id: AirlockNewsroomGlassLocked
+  suffix: Newsroom, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsNewsroom ]
 
 - type: entity
   parent: AirlockServiceGlassLocked
@@ -971,6 +1007,20 @@
 - type: entity
   parent: AirlockLawyerLocked
   id: AirlockMaintLawyerLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+- type: entity
+  parent: AirlockLibraryLocked
+  id: AirlockMaintLibraryLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+- type: entity
+  parent: AirlockNewsroomLocked
+  id: AirlockMaintNewsroomLocked
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi

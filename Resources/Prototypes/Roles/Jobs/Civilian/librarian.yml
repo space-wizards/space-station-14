@@ -7,8 +7,9 @@
   icon: "JobIconLibrarian"
   supervisors: job-supervisors-hop
   access:
-  - Service
+  - Library
   - Maintenance
+  - Service
 
 - type: startingGear
   id: LibrarianGear

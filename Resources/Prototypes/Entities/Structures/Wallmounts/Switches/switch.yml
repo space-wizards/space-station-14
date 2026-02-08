@@ -293,6 +293,22 @@
 
 - type: entity
   parent: LockableButton
+  id: LockableButtonLibrary
+  suffix: Library
+  components:
+  - type: AccessReader
+    access: [["Library"]]
+
+- type: entity
+  parent: LockableButton
+  id: LockableButtonNewsroom
+  suffix: Newsroom
+  components:
+  - type: AccessReader
+    access: [["Newsroom"]]
+
+- type: entity
+  parent: LockableButton
   id: LockableButtonEngineering
   suffix: Engineering
   components:
