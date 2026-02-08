@@ -365,11 +365,11 @@
     rechargeDuration: 10
 
 - type: entity
-  id: RCDXenoborg
   parent: [ RCD, BaseXenoborgContraband ]
+  id: RCDXenoborg
   name: xenoborg RCD
-  description: A modified Xenoborg Rapid Construction Device which creates compressed matter on the fly using an internal fabricator.
   suffix: AutoRecharge
+  description: A modified Xenoborg Rapid Construction Device which creates compressed matter on the fly using an internal fabricator.
   components:
   - type: LimitedCharges
     maxCharges: 20
