@@ -299,7 +299,7 @@ reagent-name-whiskey-soda = whiskey soda
 reagent-desc-whiskey-soda = For the more refined griffon.
 
 reagent-name-white-gilgamesh = White Gilgamesh
-reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you feel like you're made of wood.
+reagent-desc-white-gilgamesh = A sickening mixture of goat milk and beer. Makes you feel like you're made of wood.
 
 reagent-name-white-russian = White Russian
 reagent-desc-white-russian = That's just, like, your opinion, man...
