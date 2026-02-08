@@ -160,7 +160,7 @@ public sealed partial record PolymorphConfiguration
     public LocId? PolymorphPopup = "polymorph-popup-generic";
 
     /// <summary>
-    ///     If not null, this popup will be displayed when when being reverted from a polymorph.
+    ///     If not null, this popup will be displayed when being reverted from a polymorph.
     /// </summary>
     [DataField]
     public LocId? ExitPolymorphPopup = "polymorph-revert-popup-generic";
@@ -168,7 +168,21 @@ public sealed partial record PolymorphConfiguration
 
 public enum PolymorphInventoryChange : byte
 {
+    /// <summary>
+    /// On polymorph, no items are transferred. The original form's inventory is
+    /// stored in a paused map. On revert, the polymorph drops its inventory.
+    /// </summary>
     None,
+
+    /// <summary>
+    /// On polymorph and revert, all items are dropped.
+    /// </summary>
     Drop,
+
+    /// <summary>
+    /// On polymorph and revert, an attempt to transfer inventories will be
+    /// made. Currently, this doesn't handle dependent inventory slots like
+    /// jumpsuit pockets.
+    /// </summary>
     Transfer,
 }
