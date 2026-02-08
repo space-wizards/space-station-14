@@ -1110,6 +1110,13 @@
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
+    state: produce_green
+  - type: RandomSprite
+    available:
+      - 0:
+          produce_green: ""
+          produce_red: ""
+          produce_yellow: ""
   - type: Item
     heldPrefix: produce
   - type: Produce
