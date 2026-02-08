@@ -323,7 +323,7 @@
   components:
   - type: StationEvent
     weight: 1 # rare
-    duration: 1
+    duration: null
     earliestStart: 30
     reoccurrenceDelay: 60
     minimumPlayers: 30
