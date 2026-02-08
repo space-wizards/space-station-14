@@ -279,9 +279,9 @@
           bounds: "-1.5,-0.5,1.5,0.6"
         density: 50
         mask:
-        - LargeMobMask
+        - LargeMachineMask
         layer:
-        - WallLayer
+        - LargeMachineLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5

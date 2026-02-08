@@ -37,9 +37,9 @@
           bounds: "-1.5,-1.5,1.5,1.5"
         density: 50
         mask:
-        - LargeMobMask
+        - LargeMachineMask
         layer:
-        - WallLayer
+        - LargeMachineLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
@@ -107,9 +107,9 @@
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 3125
         mask:
-        - LargeMobMask
+        - LargeMachineMask
         layer:
-        - WallLayer
+        - LargeMachineLayer
   - type: Destructible
     thresholds:
     - trigger:
