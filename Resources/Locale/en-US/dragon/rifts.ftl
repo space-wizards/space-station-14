@@ -1,4 +1,5 @@
 carp-rift-warning = A rift is causing an unnaturally large energy flux {$location}. Stop it at all costs!
+carp-rift-max-warning = The Rift has reached its maximum power! It cannot be destroyed. Immediately focus your efforts on destroying the dragon!
 carp-rift-duplicate = Cannot have 2 charging rifts at the same time!
 carp-rift-examine = It is [color=yellow]{$percentage}%[/color] charged!
 carp-rift-max = You have reached your maximum amount of rifts
