@@ -1,0 +1,6 @@
+- type: stack
+  parent: BaseSmallStack
+  id: XenoborgCrystal
+  name: stack-xenoborg-circuit
+  icon: { sprite: "/Textures/Objects/Materials/xenoborg_crystal.rsi", state: crystal-3 }
+  spawn: MaterialXenoborgCrystal1

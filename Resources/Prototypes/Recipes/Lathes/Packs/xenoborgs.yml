@@ -1,6 +1,11 @@
 ## Static
 
 - type: latheRecipePack
+  id: XenoborgMachines
+  recipes:
+  - XenoborgExtractorRecipe
+
+- type: latheRecipePack
   id: EmptyXenoborgs
   recipes:
   - XenoborgEngiRecipe

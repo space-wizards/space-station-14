@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Examine;
 using Content.Shared.Construction.Components;
@@ -10,6 +11,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Station;
+using Content.Shared.Station.Components;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -29,6 +32,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedStationSystem _stationSystem = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -234,6 +238,20 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         // Log anchor attempt (server only)
         _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
+
+        if (TryComp<AnchorOnlyOnStationComponent>(uid, out var onlyOnStationComp))
+        {
+            var entityParent = transform.ParentUid;
+            var isOnStation = _stationSystem.GetStations()
+                .Select(stationEnt => _stationSystem.GetLargestGrid(stationEnt))
+                .Contains(entityParent);
+
+            if (!isOnStation)
+            {
+                _popup.PopupClient(Loc.GetString(onlyOnStationComp.PopupMessageAnchorFail), uid, userUid);
+                return;
+            }
+        }
 
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
             !TileFree(transform.Coordinates, anchorBody))

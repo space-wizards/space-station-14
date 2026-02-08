@@ -1413,6 +1413,12 @@
           components:
           - BorgModule
     - hand:
+        emptyRepresentative: MaterialXenoborgCrystal
+        emptyLabel: borg-slot-xenoborg-crystal-empty
+        whitelist:
+          tags:
+          - XenoborgCrystal
+    - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
         whitelist:
@@ -1440,6 +1446,12 @@
     - state: icon-xenoborg-basic
   - type: ItemBorgModule
     hands:
+    - hand:
+        emptyRepresentative: MaterialXenoborgCrystal
+        emptyLabel: borg-slot-xenoborg-crystal-empty
+        whitelist:
+          tags:
+          - XenoborgCrystal
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty

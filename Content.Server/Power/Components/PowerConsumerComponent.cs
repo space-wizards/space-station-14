@@ -30,6 +30,11 @@ namespace Content.Server.Power.Components
 
         public PowerState.Load NetworkLoad { get; } = new();
 
+        public void SetDrawRate(float wattage)
+        {
+            DrawRate = wattage;
+        }
+
         protected override void AddSelfToNet(IBasePowerNet powerNet)
         {
             powerNet.AddConsumer(this);
