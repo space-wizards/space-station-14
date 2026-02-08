@@ -102,3 +102,29 @@
         - id: WeaponLauncherChinaLake
         - id: GrenadeFrag
           amount: 2
+
+- type: entity
+  id: BriefcaseWeaponChemLaser
+  parent: BriefcaseWeapon
+  name: secure chem laser case
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponChemLaser
+        - id: PowerCellMedium
+          amount: 1
+
+- type: entity
+  id: BriefcaseWeaponMultiChemLaserFilled
+  parent: BriefcaseWeapon
+  name: secure chem multi laser case
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponChemMultilaser
+        - id: PowerCellMedium
+          amount: 1
