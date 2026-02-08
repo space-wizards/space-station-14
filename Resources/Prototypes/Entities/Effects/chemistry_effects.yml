@@ -30,6 +30,8 @@
       solutionArea:
         maxVol: 600
         canReact: false
+  - type: InvisibleToBlind
+    visible: true
 
 - type: entity
   parent: BaseFoam

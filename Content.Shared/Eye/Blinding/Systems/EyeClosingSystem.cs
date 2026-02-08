@@ -80,6 +80,9 @@ public sealed class EyeClosingSystem : EntitySystem
         if (!Resolve(eyelids, ref eyelids.Comp))
             return;
 
+        var ev = new EyelidsChangeStateEvent(value);
+        RaiseLocalEvent(eyelids.Owner, ref ev);
+
         if (eyelids.Comp.EyesClosed == value)
             return;
 
@@ -135,3 +138,9 @@ public sealed class EyeClosingSystem : EntitySystem
 }
 
 public sealed partial class ToggleEyesActionEvent : InstantActionEvent;
+
+/// <summary>
+/// Run on the entity that just closed their eyes
+/// </summary>
+[ByRefEvent]
+public readonly record struct EyelidsChangeStateEvent(bool EyelidsClosed);
