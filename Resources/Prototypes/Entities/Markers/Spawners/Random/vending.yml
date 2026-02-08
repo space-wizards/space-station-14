@@ -1,8 +1,8 @@
 - type: entity
+  parent: MarkerBase
   id: RandomVending
   name: random vending machine spawner
   suffix: Any
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
@@ -34,7 +34,6 @@
     - VendingMachineStarkist
     chance: 1
 
-
 - type: entityTable
   id: ClothingVendorTable
   table: !type:GroupSelector
@@ -49,10 +48,10 @@
       weight: 10
 
 - type: entity
+  parent: MarkerBase
   id: RandomVendingClothing
   name: random vending machine spawner
   suffix: Clothing
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
@@ -62,3 +61,31 @@
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: ClothingVendorTable
+
+- type: entityTable
+  id: MaintenanceVendorTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+        weight: 20
+        children:
+          - id: VendingMachineDrugs
+          - id: VendingMachineSovietSoda
+    - !type:NestedSelector  # Chance to not spawn a vending machine at all
+        weight: 40
+        tableId: GenericTrashItems
+
+- type: entity
+  parent: MarkerBase
+  id: RandomVendingMaintenance
+  name: random vending machine spawner
+  suffix: Maints
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Machines/VendingMachines/random.rsi
+      state: any
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+        tableId: MaintenanceVendorTable
