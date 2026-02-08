@@ -98,13 +98,21 @@
 - type: latheRecipePack
   id: MechBoards
   recipes:
-  - RipleyCentralElectronics
-  - RipleyPeripheralsElectronics
+  - ClarkeCentralElectronics
+  - ClarkePeripheralsElectronics
+  - DurandCentralElectronics
+  - DurandPeripheralsElectronics
+  - DurandTargetingElectronics
+  - GygaxCentralElectronics
+  - GygaxPeripheralsElectronics
+  - GygaxTargetingElectronics
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics
   - HonkerCentralElectronics
   - HonkerPeripheralsElectronics
   - HonkerTargetingElectronics
-  - HamtrCentralElectronics
-  - HamtrPeripheralsElectronics
+  - RipleyCentralElectronics
+  - RipleyPeripheralsElectronics
 
 - type: latheRecipePack
   id: ShuttleBoards

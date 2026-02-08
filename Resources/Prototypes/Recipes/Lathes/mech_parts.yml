@@ -7,41 +7,128 @@
   - Mech
   completetime: 10
 
+### Base Ripley
 - type: latheRecipe
   abstract: true
   parent: BaseMechPartRecipe
+  id: BaseRipleyPartRecipe
+  categories:
+  - Mech
+  - Ripley
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseRipleyPartRecipe
   id: BaseRipleyLimbRecipe
   materials:
     Steel: 1000
     Glass: 750
 
+### Base Clarke
 - type: latheRecipe
   abstract: true
   parent: BaseMechPartRecipe
+  id: BaseClarkePartRecipe
+  categories:
+  - Mech
+  - Clarke
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseClarkePartRecipe
+  id: BaseClarkeLimbRecipe
+  materials:
+    Steel: 1000
+    Glass: 500
+
+### Base Gygax
+- type: latheRecipe
+  abstract: true
+  parent: BaseMechPartRecipe
+  id: BaseGygaxPartRecipe
+  categories:
+  - Mech
+  - Gygax
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseGygaxPartRecipe
+  id: BaseGygaxLimbRecipe
+  materials:
+    Steel: 1000
+
+### Base Durand
+- type: latheRecipe
+  abstract: true
+  parent: BaseMechPartRecipe
+  id: BaseDurandPartRecipe
+  categories:
+  - Mech
+  - Durand
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseDurandPartRecipe
+  id: BaseDurandLimbRecipe
+  materials:
+    Steel: 1000
+    Silver: 250
+
+### Base Honker
+- type: latheRecipe
+  abstract: true
+  parent: BaseMechPartRecipe
+  id: BaseHonkerPartRecipe
+  categories:
+  - Mech
+  - Honker
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseHonkerPartRecipe
   id: BaseHonkerLimbRecipe
   materials:
     Steel: 2000
     Glass: 750
     Bananium: 250
 
+### Base Hamptr
 - type: latheRecipe
   abstract: true
   parent: BaseMechPartRecipe
+  id: BaseHamptrPartRecipe
+  categories:
+  - Mech
+  - Hamptr
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseHamptrPartRecipe
   id: BaseHamtrLimbRecipe
   materials:
-    Steel: 800
-    Glass: 600
+    Steel: 750
+    Glass: 500
+
+### Base Vim
+- type: latheRecipe
+  abstract: true
+  parent: BaseMechPartRecipe
+  id: BaseVimPartRecipe
+  categories:
+  - Mech
+  - Vim
+
 
 ## Recipes
 
 # Ripley
 - type: latheRecipe
-  parent: BaseMechPartRecipe
+  parent: BaseRipleyPartRecipe
   id: RipleyHarness
   result: RipleyHarness
   materials:
     Steel: 1500
-    Glass: 1200
+    Glass: 1000
 
 - type: latheRecipe
   parent: BaseRipleyLimbRecipe
@@ -63,14 +150,163 @@
   id: RipleyRArm
   result: RipleyRArm
 
-# H.O.N.K.
+# Ripley MK-II
 - type: latheRecipe
   parent: BaseMechPartRecipe
+  id: RipleyMKIIHarness
+  result: RipleyMKIIHarness
+  categories:
+  - Mech
+  - RipleyMKII
+  materials:
+    Steel: 1500
+    Glass: 1000
+
+- type: latheRecipe
+  parent: BaseMechPartRecipe
+  id: RipleyUpgradeKit
+  result: RipleyUpgradeKit
+  categories:
+  - Mech
+  - RipleyMKII
+  materials:
+    Steel: 1500
+
+# Clarke
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeHarness
+  result: ClarkeHarness
+  materials:
+    Steel: 2500
+    Glass: 1000
+
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeHead
+  result: ClarkeHead
+  materials:
+    Steel: 2000
+    Glass: 1000
+
+- type: latheRecipe
+  parent: BaseClarkeLimbRecipe
+  id: ClarkeLArm
+  result: ClarkeLArm
+
+- type: latheRecipe
+  parent: BaseClarkeLimbRecipe
+  id: ClarkeRArm
+  result: ClarkeRArm
+
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeTreads
+  result: ClarkeTreads
+  materials:
+    Steel: 1000
+
+# Gygax
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxHarness
+  result: GygaxHarness
+  materials:
+    Steel: 2000
+    Glass: 2000
+
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxArmor
+  result: GygaxArmorPlate
+  materials:
+    Steel: 3000
+
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxHead
+  result: GygaxHead
+  materials:
+    Steel: 2000
+    Glass: 2000
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseGygaxLimbRecipe
+  id: GygaxLArm
+  result: GygaxLArm
+
+- type: latheRecipe
+  parent: BaseGygaxLimbRecipe
+  id: GygaxLLeg
+  result: GygaxLLeg
+
+- type: latheRecipe
+  parent: BaseGygaxLimbRecipe
+  id: GygaxRLeg
+  result: GygaxRLeg
+
+- type: latheRecipe
+  parent: BaseGygaxLimbRecipe
+  id: GygaxRArm
+  result: GygaxRArm
+
+# Durand
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandHarness
+  result: DurandHarness
+  materials:
+    Steel: 2000
+    Glass: 2000
+    Silver: 1500
+
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandArmor
+  result: DurandArmorPlate
+  materials:
+    Steel: 3000
+    Silver: 1000
+
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandHead
+  result: DurandHead
+  materials:
+    Steel: 2000
+    Glass: 2000
+    Silver: 250
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseDurandLimbRecipe
+  id: DurandLArm
+  result: DurandLArm
+
+- type: latheRecipe
+  parent: BaseDurandLimbRecipe
+  id: DurandLLeg
+  result: DurandLLeg
+
+- type: latheRecipe
+  parent: BaseDurandLimbRecipe
+  id: DurandRLeg
+  result: DurandRLeg
+
+- type: latheRecipe
+  parent: BaseDurandLimbRecipe
+  id: DurandRArm
+  result: DurandRArm
+
+# H.O.N.K.
+- type: latheRecipe
+  parent: BaseHonkerPartRecipe
   id: HonkerHarness
   result: HonkerHarness
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 2000
+    Glass: 1000
     Bananium: 500
 
 - type: latheRecipe
@@ -95,11 +331,11 @@
 
 # HAMTR
 - type: latheRecipe
-  parent: BaseMechPartRecipe
+  parent: BaseHamptrPartRecipe
   id: HamtrHarness
   result: HamtrHarness
   materials:
-    Steel: 1200
+    Steel: 1000
     Glass: 1000
 
 - type: latheRecipe
@@ -124,10 +360,10 @@
 
 # Vim
 - type: latheRecipe
-  parent: BaseMechPartRecipe
+  parent: BaseVimPartRecipe
   id: VimHarness
   result: VimHarness
   completetime: 5
   materials:
     Steel: 500
-    Glass: 200
+    Bananium: 200

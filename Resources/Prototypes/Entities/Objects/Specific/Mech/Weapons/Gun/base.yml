@@ -1,0 +1,18 @@
+- type: entity
+  abstract: true
+  parent: BaseMechEquipment
+  id: BaseMechWeaponRange
+  components:
+  - type: Battery
+    maxCharge: 1000 # Battery is charged by mech
+    startingCharge: 1000
+  - type: Appearance
+  - type: StaticPrice
+    price: 1
+  - type: Item
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: ClothingSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: HeldSpeedModifier

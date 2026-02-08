@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, Honker Inhands by TiniestShark (Github), Mech Fan by Pok27 (GitHub)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "inhand-left-honk",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-honk",
+      "directions": 4
+    },
+    {
+      "name": "mecha_air_tank"
+    },
+    {
+      "name": "mecha_analyzer"
+    },
+    {
+      "name": "mecha_camera"
+    },
+    {
+      "name": "mecha_fan"
+    },
+    {
+      "name": "mecha_honker"
+    },
+    {
+      "name": "mecha_radio"
+    },
+    {
+      "name": "mecha_sleeper"
+    },
+    {
+      "name": "mecha_teleport"
+    },
+    {
+      "name": "repair_droid"
+    },
+    {
+      "name": "repair_droid_a",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "tesla"
+    },
+    {
+      "name": "thrusters"
+    }
+  ]
+}

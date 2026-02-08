@@ -13,6 +13,20 @@
       - MechRipleyBattery
 
 - type: entity
+  name: Ripley APLU MK-II Spawner
+  id: SpawnMechRipley2
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: ripleymkii
+  - type: ConditionalSpawner
+    prototypes:
+      - MechRipley2Battery
+
+- type: entity
   name: H.O.N.K. Spawner
   id: SpawnMechHonker
   parent: MarkerBase
@@ -25,3 +39,176 @@
   - type: ConditionalSpawner
     prototypes:
       - MechHonkerBattery
+
+- type: entity
+  name: H.O.N.K. Spawner
+  suffix: Filled
+  id: SpawnMechHonkerFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: honker
+  - type: ConditionalSpawner
+    prototypes:
+      - MechHonkerFilled
+
+- type: entity
+  name: Clarke Spawner
+  id: SpawnMechClarke
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: clarke
+  - type: ConditionalSpawner
+    prototypes:
+      - MechClarkeBattery
+
+- type: entity
+  name: Gygax Spawner
+  id: SpawnMechGygax
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: gygax
+  - type: ConditionalSpawner
+    prototypes:
+      - MechGygaxBattery
+
+- type: entity
+  name: Durand Spawner
+  id: SpawnMechDurand
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: durand
+  - type: ConditionalSpawner
+    prototypes:
+      - MechDurandBattery
+      
+- type: entity
+  name: Marauder Spawner
+  id: SpawnMechMarauder
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: marauder
+  - type: ConditionalSpawner
+    prototypes:
+      - MechMarauderBattery
+
+- type: entity
+  name: Marauder Spawner
+  suffix: Filled
+  id: SpawnMechMarauderFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: marauder
+  - type: ConditionalSpawner
+    prototypes:
+      - MechMarauderFilled
+
+- type: entity
+  name: Seraph Spawner
+  id: SpawnMechSeraph
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: seraph
+  - type: ConditionalSpawner
+    prototypes:
+      - MechSeraphBattery
+
+- type: entity
+  name: Seraph Spawner
+  suffix: Filled
+  id: SpawnMechSeraphFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: seraph
+  - type: ConditionalSpawner
+    prototypes:
+      - MechSeraphFilled
+
+- type: entity
+  name: Dark Gygax Spawner
+  id: SpawnMechGygaxSyndie
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: darkgygax
+  - type: ConditionalSpawner
+    prototypes:
+      - MechGygaxSyndieBattery
+
+- type: entity
+  name: Dark Gygax Spawner
+  suffix: Filled
+  id: SpawnMechGygaxSyndieFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: darkgygax
+  - type: ConditionalSpawner
+    prototypes:
+      - MechGygaxSyndieFilled
+
+- type: entity
+  name: Mauler Spawner
+  id: SpawnMechMaulerSyndie
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: mauler
+  - type: ConditionalSpawner
+    prototypes:
+      - MechMaulerSyndieBattery
+
+- type: entity
+  name: Mauler Spawner
+  suffix: Filled
+  id: SpawnMechMaulerSyndieFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: mauler
+  - type: ConditionalSpawner
+    prototypes:
+      - MechMaulerSyndieFilled

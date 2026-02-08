@@ -7,7 +7,7 @@ namespace Content.Shared.Mech;
 public enum MechVisuals : byte
 {
     Open, //whether or not it's open and has a rider
-    Broken //if it broke and no longer works.
+    Broken //if it's in broken state
 }
 
 [Serializable, NetSerializable]
@@ -23,7 +23,7 @@ public enum MechVisualLayers : byte
 }
 
 /// <summary>
-/// Event raised on equipment when it is inserted into a mech
+/// Raised on equipment when it is inserted into a mech
 /// </summary>
 [ByRefEvent]
 public readonly record struct MechEquipmentInsertedEvent(EntityUid Mech)
@@ -32,7 +32,7 @@ public readonly record struct MechEquipmentInsertedEvent(EntityUid Mech)
 }
 
 /// <summary>
-/// Event raised on equipment when it is removed from a mech
+/// Raised on equipment when it is removed from a mech
 /// </summary>
 [ByRefEvent]
 public readonly record struct MechEquipmentRemovedEvent(EntityUid Mech)
@@ -49,14 +49,25 @@ public record struct AttemptRemoveMechEquipmentEvent()
     public bool Cancelled = false;
 }
 
-public sealed partial class MechToggleEquipmentEvent : InstantActionEvent
+/// <summary>
+/// Raised on module when it is inserted into a mech
+/// </summary>
+[ByRefEvent]
+public readonly record struct MechModuleInsertedEvent(EntityUid Mech)
 {
+    public readonly EntityUid Mech = Mech;
 }
 
-public sealed partial class MechOpenUiEvent : InstantActionEvent
-{
-}
+public sealed partial class MechToggleEquipmentEvent : InstantActionEvent;
 
-public sealed partial class MechEjectPilotEvent : InstantActionEvent
+public sealed class MechOpenEquipmentRadialEvent : EntityEventArgs;
+
+public sealed partial class MechOpenUiEvent : InstantActionEvent;
+
+public sealed partial class MechEjectPilotEvent : InstantActionEvent;
+
+[Serializable, NetSerializable]
+public sealed class RequestMechEquipmentSelectEvent : EntityEventArgs
 {
+    public NetEntity? Equipment;
 }
