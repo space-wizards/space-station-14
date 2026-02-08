@@ -1,8 +1,8 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             MinSize="480 400" Title="Filter">
-    <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="10">
         <controls:SwitchButton
             Name="ToggleStatusButton"
             HorizontalAlignment="Left"
@@ -25,4 +25,4 @@
             <Button Name="SelectGasButton" Text="{Loc comp-gas-filter-ui-filter-gas-confirm}" HorizontalExpand="True" Disabled="True" />
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
