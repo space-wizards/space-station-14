@@ -28,6 +28,7 @@
       - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be wrapped or not.
   - type: LimitedCharges
     maxCharges: 30
+  - type: ChargeItemStatus
 
 - type: entity
   parent: ParcelWrap

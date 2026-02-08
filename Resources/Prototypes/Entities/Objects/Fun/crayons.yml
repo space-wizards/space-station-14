@@ -27,6 +27,7 @@
     selectedState: like
   - type: LimitedCharges
     maxCharges: 25
+  - type: ChargeItemStatus
   - type: StaticPrice
     price: 5
 
@@ -85,6 +86,7 @@
     selectableColor: true
   - type: LimitedCharges
     maxCharges: 30
+  - type: ChargeItemStatus
 
 - type: entity
   parent: CrayonRainbow

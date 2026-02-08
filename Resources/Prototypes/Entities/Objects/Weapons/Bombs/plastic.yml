@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BasePlasticExplosive
   parent: BaseItem
   abstract: true

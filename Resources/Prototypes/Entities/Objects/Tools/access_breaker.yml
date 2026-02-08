@@ -8,6 +8,7 @@
   - type: Emag
     emagImmuneTag: AccessBreakerImmune
     emagType: Access
+  - type: ChargeItemStatus
   - type: Sprite
     sprite: Objects/Tools/access_breaker.rsi
     state: icon

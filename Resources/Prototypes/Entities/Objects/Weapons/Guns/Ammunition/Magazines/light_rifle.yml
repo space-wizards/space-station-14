@@ -31,6 +31,7 @@
     magState: mag
     steps: 2
     zeroVisible: false
+  - type: MagazineItemStatus
   - type: Appearance
 
 # Magazines
