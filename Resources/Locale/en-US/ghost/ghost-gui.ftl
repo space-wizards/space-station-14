@@ -3,6 +3,7 @@ ghost-gui-ghost-warp-button = Ghost Warp
 ghost-gui-ghost-roles-button = Ghost Roles ({$count})
 ghost-gui-toggle-ghost-visibility-popup-on = Enabled visibility of ghosts.
 ghost-gui-toggle-ghost-visibility-popup-off = Disabled visibility of ghosts.
+ghost-gui-toggle-all-ghosts-visibility-popup-off = Disabled visibility of all ghosts (including yours).
 ghost-gui-toggle-lighting-manager-popup-normal = Lighting normal.
 ghost-gui-toggle-lighting-manager-popup-personal-light = Enabled personal light.
 ghost-gui-toggle-lighting-manager-popup-fullbright = Fullbright mode.
