@@ -54,6 +54,7 @@ public sealed class ResistLockerSystem : EntitySystem
             BreakOnMove = true,
             BreakOnDamage = true,
             NeedHand = false, //No hands 'cause we be kickin'
+            MovementThreshold = 0.1f,
         };
 
         // Make sure the do after is able to start
@@ -61,7 +62,11 @@ public sealed class ResistLockerSystem : EntitySystem
             return;
 
         resistLockerComponent.IsResisting = true;
-        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
+
+        var kickerPopupText = Loc.GetString("resist-locker-component-start-resisting", ("user", user));
+        var targetPopupText = Loc.GetString("resist-locker-component-start-resisting-other", ("target", target));
+
+        _popupSystem.PopupPredicted(kickerPopupText, targetPopupText, user, user, PopupType.Large);
     }
 
     private void OnDoAfter(Entity<ResistLockerComponent> ent, ref ResistLockerDoAfterEvent args)
