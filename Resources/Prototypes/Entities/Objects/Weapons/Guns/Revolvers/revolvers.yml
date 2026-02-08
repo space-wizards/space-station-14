@@ -24,6 +24,8 @@
     - Belt
   - type: AmmoCounter
   - type: Gun
+    angleIncrease: 1
+    angleDecrease: 10
     selectedMode: SemiAuto
     fireRate: 1.5
     availableModes:
@@ -65,7 +67,11 @@
     - state: mag-unshaded-3
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Wieldable
+    unwieldOnUse: false
   - type: Gun
+    minAngle: 2
+    maxAngle: 20
     fireRate: 2
   - type: RevolverAmmoProvider
     capacity: 5
@@ -85,6 +91,10 @@
   id: WeaponRevolverInspector
   description: A double-action revolver manufactured by various companies. It is readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
   components:
+  - type: Gun
+    projectileSpeed: 30
+    minAngle: 2
+    maxAngle: 20
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Clothing
@@ -137,6 +147,8 @@
     storedOffset: 0,-2
   - type: Gun
     selectedMode: SemiAuto
+    minAngle: 2
+    maxAngle: 20
     fireRate: 2
     availableModes:
     - SemiAuto

@@ -18,12 +18,12 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
+    angleIncrease: 3
+    angleDecay: 16
     minAngle: 2
     maxAngle: 16
     fireRate: 8
     burstFireRate: 8
-    angleIncrease: 3
-    angleDecay: 16
     selectedMode: FullAuto
     availableModes:
     - SemiAuto
@@ -100,11 +100,11 @@
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
-    minAngle: -19
-    maxAngle: -16
+    minAngle: -20
+    maxAngle: -18
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
+    minAngle: 22
+    maxAngle: 35
     shotsPerBurst: 5
     availableModes:
     - Burst
@@ -183,10 +183,10 @@
       unwieldOnUse: false
     - type: GunWieldBonus
       minAngle: -19
-      maxAngle: -16
+      maxAngle: -22
     - type: Gun
-      minAngle: 21
-      maxAngle: 32
+      minAngle: 20
+      maxAngle: 35
       fireRate: 6
       burstFireRate: 18
       soundGunshot:
@@ -245,12 +245,15 @@
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -14
+    maxAngle: -16
   - type: Gun
     fireRate: 5.5
-    minAngle: 1
-    maxAngle: 6
-    angleIncrease: 1.5
-    angleDecay: 6
+    minAngle: 16
+    maxAngle: 25
     selectedMode: FullAuto
     shotsPerBurst: 5
     burstCooldown: 0.2
@@ -310,8 +313,8 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Gun
     fireRate: 9
-    minAngle: 25
-    maxAngle: 32
+    minAngle: 22
+    maxAngle: 30
     availableModes:
     - FullAuto
     soundGunshot:

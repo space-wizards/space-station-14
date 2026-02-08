@@ -18,6 +18,8 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
+    angleIncrease: 2
+    angleDecay: 12
     fireRate: 5
     selectedMode: FullAuto
     availableModes:
@@ -66,7 +68,12 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
+  - type: GunWieldBonus
+    minAngle: -26
+    maxAngle: -20
   - type: Gun
+    minAngle: 28
+    maxAngle: 37
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
@@ -158,7 +165,12 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+  - type: GunWieldBonus
+    minAngle: -23
+    maxAngle: -23
   - type: Gun
+    minAngle: 25
+    maxAngle: 33
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
   - type: ItemSlots
@@ -238,7 +250,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
     minAngle: 30
-    maxAngle: 43
+    maxAngle: 40
     shotsPerBurst: 3
     selectedMode: Burst
     availableModes:
@@ -247,7 +259,7 @@
     burstFireRate: 14
   - type: GunWieldBonus
     minAngle: -28
-    maxAngle: -25
+    maxAngle: -23
   - type: ItemSlots
     slots:
       gun_magazine:
