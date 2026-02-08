@@ -1,0 +1,9 @@
+﻿minegame-menu-title = Nanotrasen Mine Game
+minegame-menu-button-easy = Easy
+minegame-menu-button-medium = Med
+minegame-menu-button-hard = Hard
+minegame-menu-button-custom-menu = Custom
+minegame-menu-field-custom-width = Width
+minegame-menu-field-custom-height = Height
+minegame-menu-field-custom-mines = Mines
+minegame-menu-button-custom-apply = Apply
