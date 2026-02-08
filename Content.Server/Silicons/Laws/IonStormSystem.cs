@@ -111,7 +111,7 @@ public sealed class IonStormSystem : EntitySystem
             {
                 LawString = newLaw,
                 Order = -1,
-                LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10)))
+                LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(3, 10)))
             });
         }
 
