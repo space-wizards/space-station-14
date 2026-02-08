@@ -1,0 +1,7 @@
+<ui:BandMidiSource xmlns="https://spacestation14.io"
+                                xmlns:ui="clr-namespace:Content.Client.Instruments.UI"
+                                Orientation="Vertical">
+    <Label Text="{Loc 'instruments-component-band-title-label'}"></Label>
+    <ItemList Name="BandList" SelectMode="Button" HorizontalExpand="True" VerticalExpand="True" />
+    <Button Name="RefreshButton" Text="{Loc 'instruments-component-band-refresh'}" HorizontalExpand="True" />
+</ui:BandMidiSource>
