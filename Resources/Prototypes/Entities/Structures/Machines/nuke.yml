@@ -112,7 +112,7 @@
     - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    location: nuclear bomb
+    location: warp-point-bomb
     blacklist:
       tags:
       - GhostOnlyWarp

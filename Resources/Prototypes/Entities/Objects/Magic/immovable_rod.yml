@@ -34,7 +34,7 @@
         - Opaque
   - type: WarpPoint
     follow: true
-    location: immovable rod
+    location: warp-point-rod
     blacklist:
       tags:
       - GhostOnlyWarp

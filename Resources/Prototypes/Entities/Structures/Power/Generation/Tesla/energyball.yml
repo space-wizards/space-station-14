@@ -94,7 +94,7 @@
     - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    location: tesla ball
+    location: warp-point-tesla
     blacklist:
       tags:
       - GhostOnlyWarp
