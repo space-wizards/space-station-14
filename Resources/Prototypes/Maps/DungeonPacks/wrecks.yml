@@ -1,0 +1,8 @@
+- type: dungeonPack
+  id: DefaultWreckDungeonPack
+  dungeonConfigs:
+    - ChunkDebrisSmall
+    - ChunkDebrisSmall
+    - ChunkDebrisSmall
+    - ChunkDebrisSmall
+    - ChunkDebris
