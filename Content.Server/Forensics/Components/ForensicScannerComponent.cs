@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Shared.Forensics;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -11,34 +12,16 @@ namespace Content.Server.Forensics
         public CancellationTokenSource? CancelToken;
 
         /// <summary>
-        /// A list of fingerprint GUIDs that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("fingerprints")]
-        public List<string> Fingerprints = new();
-
-        /// <summary>
-        /// A list of glove fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("fibers")]
-        public List<string> Fibers = new();
-
-        /// <summary>
-        /// DNA that the forensic scanner found from the <see cref="DNAComponent"/> on an entity.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("dnas")]
-        public List<string> TouchDNAs = new();
-
-        /// <summary>
-        /// DNA that the forensic scanner found from the solution containers in an entity.
+        /// A dictionary of types of evidence to strings for it.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly), DataField]
-        public List<string> SolutionDNAs = new();
+        public Dictionary<ProtoId<ForensicEvidencePrototype>, List<string>> Evidence = [];
 
         /// <summary>
-        /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
+        /// Cleaning agents that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("residues")]
-        public List<string> Residues = new();
+        [ViewVariables(VVAccess.ReadOnly), DataField]
+        public List<string> CleaningAgents = [];
 
         /// <summary>
         /// What is the name of the entity that was scanned last?

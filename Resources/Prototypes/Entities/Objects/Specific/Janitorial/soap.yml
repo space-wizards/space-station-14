@@ -66,8 +66,7 @@
     solution: soap
   - type: BadFood
   - type: CleansForensics
-  - type: Residue
-    residueAdjective: residue-slippery
+    agentAdjective: cleaning-agent-slippery
 
 - type: entity
   parent: BaseSoap
@@ -78,8 +77,8 @@
     layers:
     - state: soap-4
       map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Residue
-    residueColor: residue-green
+  - type: CleansForensics
+    agentColor: cleaning-agent-green
 
 - type: entity
   parent: BaseSoap
@@ -101,8 +100,8 @@
         reagents:
         - ReagentId: SoapReagent
           Quantity: 100
-  - type: Residue
-    residueColor: residue-grey
+  - type: CleansForensics
+    agentColor: cleaning-agent-grey
 
 - type: entity
   parent: BaseSoap
@@ -117,8 +116,8 @@
     fillBaseName: deluxe-
   - type: Item
     heldPrefix: deluxe
-  - type: Residue
-    residueColor: residue-brown
+  - type: CleansForensics
+    agentColor: cleaning-agent-brown
 
 - type: entity
   parent: [BaseSoap, BaseSyndicateContraband]
@@ -144,8 +143,7 @@
       - punishment
   - type: CleansForensics
     cleanDelay: 8.0
-  - type: Residue
-    residueColor: residue-red
+    agentColor: cleaning-agent-red
   - type: StaticPrice
     price: 500
 
@@ -219,8 +217,8 @@
     flavors:
       - clean
       - meaty
-  - type: Residue
-    residueColor: residue-red
+  - type: CleansForensics
+    agentColor: cleaning-agent-red
 
 - type: entity
   parent: BaseSoap
@@ -248,5 +246,5 @@
         reagents:
         - ReagentId: SoapReagent
           Quantity: 240
-  - type: Residue
-    residueColor: residue-blue
+  - type: CleansForensics
+    agentColor: cleaning-agent-blue

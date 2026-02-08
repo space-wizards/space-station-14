@@ -1,0 +1,11 @@
+- type: forensicEvidence
+  id: fingerprints
+  title: forensic-scanner-interface-fingerprints
+
+- type: forensicEvidence
+  id: dna
+  title: forensic-scanner-interface-dnas
+
+- type: forensicEvidence
+  id: fibers
+  title: forensic-scanner-interface-fibers

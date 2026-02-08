@@ -17,6 +17,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 // todo: remove this stinky LINQy
 
 namespace Content.Server.Forensics
@@ -33,8 +34,12 @@ namespace Content.Server.Forensics
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
         [Dependency] private readonly TagSystem _tag = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";
+        private static readonly ProtoId<ForensicEvidencePrototype> DNAEvidence = "dna";
+        private static readonly ProtoId<ForensicEvidencePrototype> FingerprintsEvidence = "fingerprints";
+        private static readonly ProtoId<ForensicEvidencePrototype> FibersEvidence = "fibers";
 
         public override void Initialize()
         {
@@ -52,11 +57,8 @@ namespace Content.Server.Forensics
         private void UpdateUserInterface(EntityUid uid, ForensicScannerComponent component)
         {
             var state = new ForensicScannerBoundUserInterfaceState(
-                component.Fingerprints,
-                component.Fibers,
-                component.TouchDNAs,
-                component.SolutionDNAs,
-                component.Residues,
+                component.Evidence,
+                component.CleaningAgents,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -74,27 +76,26 @@ namespace Content.Server.Forensics
 
             if (args.Args.Target != null)
             {
-                if (!TryComp<ForensicsComponent>(args.Args.Target, out var forensics))
+                scanner.Evidence.Clear();
+                if (TryComp<ForensicsComponent>(args.Args.Target, out var forensics))
                 {
-                    scanner.Fingerprints = new();
-                    scanner.Fibers = new();
-                    scanner.TouchDNAs = new();
-                    scanner.Residues = new();
-                }
-                else
-                {
-                    scanner.Fingerprints = forensics.Fingerprints.ToList();
-                    scanner.Fibers = forensics.Fibers.ToList();
-                    scanner.TouchDNAs = forensics.DNAs.ToList();
-                    scanner.Residues = forensics.Residues.ToList();
+                    foreach (var (protoId, evidence) in forensics.Evidence)
+                    {
+                        scanner.Evidence[protoId] = [.. evidence];
+                    }
+
+                    scanner.CleaningAgents = [.. forensics.CleaningAgents];
                 }
 
                 if (_tag.HasTag(args.Args.Target.Value, DNASolutionScannableTag))
                 {
-                    scanner.SolutionDNAs = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
-                } else
-                {
-                    scanner.SolutionDNAs = new();
+                    var solutionDna = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
+                    var evidence = scanner.Evidence.GetOrNew(DNAEvidence);
+                    foreach (var dna in solutionDna)
+                    {
+                        if (!evidence.Contains(dna))
+                            evidence.Add(dna);
+                    }
                 }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
@@ -149,23 +150,29 @@ namespace Content.Server.Forensics
             if (!TryComp<ForensicPadComponent>(args.Used, out var pad))
                 return;
 
-            foreach (var fiber in component.Fibers)
+            if (component.Evidence.TryGetValue(FibersEvidence, out var fibers))
             {
-                if (fiber == pad.Sample)
+                foreach (var fiber in fibers)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid);
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
-                    return;
+                    if (fiber == pad.Sample)
+                    {
+                        _audioSystem.PlayPvs(component.SoundMatch, uid);
+                        _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
+                        return;
+                    }
                 }
             }
 
-            foreach (var fingerprint in component.Fingerprints)
+            if (component.Evidence.TryGetValue(FingerprintsEvidence, out var fingerprints))
             {
-                if (fingerprint == pad.Sample)
+                foreach (var fingerprint in fingerprints)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid);
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
-                    return;
+                    if (fingerprint == pad.Sample)
+                    {
+                        _audioSystem.PlayPvs(component.SoundMatch, uid);
+                        _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
+                        return;
+                    }
                 }
             }
 
@@ -210,36 +217,25 @@ namespace Content.Server.Forensics
             _metaData.SetEntityName(printed, Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName)));
 
             var text = new StringBuilder();
+            foreach (var (protoId, evidence) in component.Evidence)
+            {
+                var proto = _prototypeManager.Index(protoId);
+                text.AppendLine(Loc.GetString(proto.Title));
+                foreach (var item in evidence)
+                {
+                    text.AppendLine(item);
+                }
+                text.AppendLine();
+            }
 
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in component.Fingerprints)
+            if (component.CleaningAgents.Count > 0)
             {
-                text.AppendLine(fingerprint);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in component.Fibers)
-            {
-                text.AppendLine(fiber);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in component.TouchDNAs)
-            {
-                text.AppendLine(dna);
-            }
-            foreach (var dna in component.SolutionDNAs)
-            {
-                Log.Debug(dna);
-                if (component.TouchDNAs.Contains(dna))
-                    continue;
-                text.AppendLine(dna);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in component.Residues)
-            {
-                text.AppendLine(residue);
+                text.AppendLine(Loc.GetString("forensic-scanner-interface-cleaning-agents"));
+                foreach (var item in component.CleaningAgents)
+                {
+                    text.AppendLine(item);
+                }
+                text.AppendLine();
             }
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
@@ -255,10 +251,7 @@ namespace Content.Server.Forensics
 
         private void OnClear(EntityUid uid, ForensicScannerComponent component, ForensicScannerClearMessage args)
         {
-            component.Fingerprints = new();
-            component.Fibers = new();
-            component.TouchDNAs = new();
-            component.SolutionDNAs = new();
+            component.Evidence.Clear();
             component.LastScannedName = string.Empty;
 
             UpdateUserInterface(uid, component);

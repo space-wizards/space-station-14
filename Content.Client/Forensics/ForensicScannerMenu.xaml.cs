@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Content.Shared.Forensics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Forensics
 {
@@ -11,6 +12,7 @@ namespace Content.Client.Forensics
     public sealed partial class ForensicScannerMenu : DefaultWindow
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public ForensicScannerMenu()
         {
@@ -25,12 +27,14 @@ namespace Content.Client.Forensics
 
         public void UpdateState(ForensicScannerBoundUserInterfaceState msg)
         {
+            Diagnostics.Children.Clear();
+            EmptyDiagnostics.Visible = true;
+
             if (string.IsNullOrEmpty(msg.LastScannedName))
             {
                 Print.Disabled = true;
                 Clear.Disabled = true;
                 NameLabel.Text = string.Empty;
-                Diagnostics.Text = string.Empty;
                 return;
             }
 
@@ -39,38 +43,28 @@ namespace Content.Client.Forensics
 
             NameLabel.Text = msg.LastScannedName;
 
-            var text = new StringBuilder();
+            if (msg.Evidence.Count > 0)
+            {
+                EmptyDiagnostics.Visible = false;
+                foreach (var (protoId, evidence) in msg.Evidence)
+                {
+                    var proto = _prototypeManager.Index(protoId);
+                    Diagnostics.AddChild(new ForensicEvidenceEntry(
+                        Loc.GetString(proto.Title),
+                        evidence)
+                    );
+                }
+            }
 
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in msg.Fingerprints)
+            if (msg.CleaningAgents.Count > 0)
             {
-                text.AppendLine(fingerprint);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in msg.Fibers)
-            {
-                text.AppendLine(fiber);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in msg.TouchDNAs)
-            {
-                text.AppendLine(dna);
-            }
-            foreach (var dna in msg.SolutionDNAs)
-            {
-                if (msg.TouchDNAs.Contains(dna))
-                    continue;
-                text.AppendLine(dna);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in msg.Residues)
-            {
-                text.AppendLine(residue);
-            }
-            Diagnostics.Text = text.ToString();
+                EmptyDiagnostics.Visible = false;
+
+                Diagnostics.AddChild(new ForensicEvidenceEntry(
+                    Loc.GetString($"forensic-scanner-interface-cleaning-agents"),
+                    msg.CleaningAgents)
+                );
+           }
         }
     }
 }
