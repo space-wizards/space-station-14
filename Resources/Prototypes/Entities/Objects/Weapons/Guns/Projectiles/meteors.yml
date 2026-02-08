@@ -323,6 +323,7 @@
   id: MeteorPotato
   name: Space potato
   description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
+  suffix: Meteor
   components:
   - type: Sprite
     state: potato
@@ -350,4 +351,70 @@
           FoodMealFries:
             min: 1
             max: 5
+      - !type:ExplodeBehavior
+
+# Flesh Meteor
+- type: entity
+  parent: BaseMeteor
+  id: MeteorFlesh
+  name: flesh meteor
+  description: A meteor covered in tendons.
+  components:
+  - type: Sprite
+    state: tendons
+  - type: Explosive
+    totalIntensity: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnFleshMonstersTable"
+        minSpawn: 1
+        maxSpawn: 3
+        spawnOffset: 1
+        spawnAfter: 0.5
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnFleshTendonsTable"
+        minSpawn: 1
+        maxSpawn: 3
+        spawnOffset: 1
+        spawnAfter: 0.5
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnFleshFleshBlockerTable"
+        minSpawn: 0
+        maxSpawn: 2
+        spawnOffset: 2
+        spawnAfter: 0.5
+      - !type:ExplodeBehavior
+
+# Kudzu Meteor
+- type: entity
+  parent: BaseMeteor
+  id: MeteorKudzu
+  name: kudzu meteor
+  description: A meteor overgrown with kudzu.
+  components:
+  - type: Sprite
+    state: kudzu
+  - type: Explosive
+    totalIntensity: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnKudzuTable"
+        minSpawn: 1
+        maxSpawn: 3
+        spawnOffset: 1
+        spawnAfter: 0.5
       - !type:ExplodeBehavior
