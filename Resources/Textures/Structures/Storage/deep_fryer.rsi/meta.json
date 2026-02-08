@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "All deep fryer sprites created by Digital Thaumaturge.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "deep_fryer_closed",
+      "directions": 4
+    },
+    {
+      "name": "deep_fryer_closed_big",
+      "directions": 4
+    },
+    {
+      "name": "deep_fryer_open",
+      "directions": 4
+    }
+  ]
+}

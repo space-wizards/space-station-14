@@ -28,6 +28,7 @@ flavor-base-minty = minty
 flavor-base-nutty = nutty
 flavor-base-chalky = chalky
 flavor-base-oily = oily
+flavor-base-fried = fried
 flavor-base-peppery = peppery
 flavor-base-slimy = slimy
 flavor-base-magical = magical
