@@ -20,21 +20,25 @@
   id: DetectiveJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetective
+  groupBy: "base"
 
 - type: loadout
   id: DetectiveJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtDetective
+  groupBy: "base"
 
 - type: loadout
   id: NoirJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetectiveGrey
+  groupBy: "grey"
 
 - type: loadout
   id: NoirJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtDetectiveGrey
+  groupBy: "grey"
 
 # OuterClothing
 - type: loadout
