@@ -1,97 +1,101 @@
 - type: entity
+  parent: MarkerBase
   id: RandomFoodMeal
   name: random food spawner
   suffix: Meal
-  parent: MarkerBase
   placement:
     mode: AlignTileAny
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Food/meals.rsi
-        state: cornedbeef
-  - type: RandomSpawner
-    prototypes:
-      - FoodMealPotatoLoaded
-      - FoodMealFries
-      - FoodMealFriesCheesy
-      - FoodMealFriesCarrot
-      - FoodMealNachos
-      - FoodMealNachosCheesy
-      - FoodMealNachosCuban
-      - FoodMealEggplantParm
-      - FoodMealPotatoYaki
-      - FoodMealCubancarp
-      - FoodMealCornedbeef
-      - FoodMealPigblanket
-      - FoodMealRibs
-      - FoodMealEggsbenedict
-      - FoodMealOmelette
-      - FoodMealFriedegg
-      - FoodMealQueso
-      - FoodMealSashimi
-      - FoodMealEnchiladas
-      - FoodNoodlesChowmein
-      - FoodNoodlesSpesslaw
-      - FoodNoodlesMeatball
-      - FoodNoodlesBoiled
-      - FoodNoodles
-      - FoodNoodlesButter
-      - FoodMealHappyHonkClown
-      - FoodSoupPea
-      - FoodSaladHerb
-      - FoodSaladValid
-      - FoodSaladFruit
-      - FoodSaladJungle
-      - FoodSaladCitrus
-      - FoodSaladCaesar
-      - FoodSaladColeslaw
-      - FoodSaladKimchi
-      - FoodSaladWatermelonFruitBowl
-      - FoodRiceBoiled
-      - FoodRiceEgg
-      - FoodRicePork
-      - FoodRicePudding
-      - FoodRiceGumbo
-      - FoodOatmeal
-      - FoodSoupMeatball
-      - FoodSoupVegetable
-      - FoodSoupNettle
-      - FoodSoupChiliHot
-      - FoodSoupChiliCold
-      - FoodSoupTomato
-      - FoodSoupMiso
-      - FoodSoupMushroom
-      - FoodSoupBeet
-      - FoodSoupBeetRed
-      - FoodSoupPotato
-      - FoodSoupOnion
-      - FoodSoupBisque
-      - FoodSoupBungo
-      - FoodMealCornInButter
-      - FoodSoupStew
-    chance: 0.8
+    - state: red
+    - sprite: Objects/Consumable/Food/meals.rsi
+      state: cornedbeef
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.8
+        children:
+        - id: FoodMealPotatoLoaded
+        - id: FoodMealFries
+        - id: FoodMealFriesCheesy
+        - id: FoodMealFriesCarrot
+        - id: FoodMealNachos
+        - id: FoodMealNachosCheesy
+        - id: FoodMealNachosCuban
+        - id: FoodMealEggplantParm
+        - id: FoodMealPotatoYaki
+        - id: FoodMealCubancarp
+        - id: FoodMealCornedbeef
+        - id: FoodMealPigblanket
+        - id: FoodMealRibs
+        - id: FoodMealEggsbenedict
+        - id: FoodMealOmelette
+        - id: FoodMealFriedegg
+        - id: FoodMealQueso
+        - id: FoodMealSashimi
+        - id: FoodMealEnchiladas
+        - id: FoodNoodlesChowmein
+        - id: FoodNoodlesSpesslaw
+        - id: FoodNoodlesMeatball
+        - id: FoodNoodlesBoiled
+        - id: FoodNoodles
+        - id: FoodNoodlesButter
+        - id: FoodMealHappyHonkClown
+        - id: FoodSoupPea
+        - id: FoodSaladHerb
+        - id: FoodSaladValid
+        - id: FoodSaladFruit
+        - id: FoodSaladJungle
+        - id: FoodSaladCitrus
+        - id: FoodSaladCaesar
+        - id: FoodSaladColeslaw
+        - id: FoodSaladKimchi
+        - id: FoodSaladWatermelonFruitBowl
+        - id: FoodRiceBoiled
+        - id: FoodRiceEgg
+        - id: FoodRicePork
+        - id: FoodRicePudding
+        - id: FoodRiceGumbo
+        - id: FoodOatmeal
+        - id: FoodSoupMeatball
+        - id: FoodSoupVegetable
+        - id: FoodSoupNettle
+        - id: FoodSoupChiliHot
+        - id: FoodSoupChiliCold
+        - id: FoodSoupTomato
+        - id: FoodSoupMiso
+        - id: FoodSoupMushroom
+        - id: FoodSoupBeet
+        - id: FoodSoupBeetRed
+        - id: FoodSoupPotato
+        - id: FoodSoupOnion
+        - id: FoodSoupBisque
+        - id: FoodSoupBungo
+        - id: FoodMealCornInButter
+        - id: FoodSoupStew
+      - !type:GroupSelector #rare
+        weight: 0.05
+        children:
+        - id: FoodMealMint
+        - id: FoodMealBearsteak
+        - id: FoodMealMilkape
+        - id: DisgustingSweptSoup
+        - id: FoodMealMemoryleek
+        - id: FoodSaladAesir
+        - id: FoodSaladEden
+        - id: FoodJellyDuff
+        - id: FoodJellyAmanita
+        - id: FoodSoupSlime
+        - id: FoodSoupTomatoBlood
+        - id: FoodSoupWingFangChu
+        - id: FoodSoupClown
+        - id: FoodSoupMystery
+        - id: FoodSoupChiliClown
+        - id: FoodSoupMonkey
+        - id: FoodSoupEyeball
+        - id: FoodSoupElectron
+        - id: FoodNoodlesCopy
     offset: 0.0
-    #rare
-    rarePrototypes:
-      - FoodMealMint
-      - FoodMealBearsteak
-      - FoodMealMilkape
-      - DisgustingSweptSoup
-      - FoodMealMemoryleek
-      - FoodSaladAesir
-      - FoodSaladEden
-      - FoodJellyDuff
-      - FoodJellyAmanita
-      - FoodSoupSlime
-      - FoodSoupTomatoBlood
-      - FoodSoupWingFangChu
-      - FoodSoupClown
-      - FoodSoupMystery
-      - FoodSoupChiliClown
-      - FoodSoupMonkey
-      - FoodSoupEyeball
-      - FoodSoupElectron
-      - FoodNoodlesCopy
-    rareChance: 0.05

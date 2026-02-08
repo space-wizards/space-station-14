@@ -9,14 +9,14 @@
       - state: red
       - sprite: Structures/Machines/VendingMachines/random.rsi
         state: snack
-  - type: RandomSpawner
-    prototypes:
-      - VendingMachineDiscount
-      - VendingMachineSnack
-      - VendingMachineSnackBlue
-      - VendingMachineSnackGreen
-      - VendingMachineSnackOrange
-      - VendingMachineSnackTeal
-      - VendingMachineChang
-      - VendingMachineDonut
-    chance: 1
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: VendingMachineDiscount
+      - id: VendingMachineSnack
+      - id: VendingMachineSnackBlue
+      - id: VendingMachineSnackGreen
+      - id: VendingMachineSnackOrange
+      - id: VendingMachineSnackTeal
+      - id: VendingMachineChang
+      - id: VendingMachineDonut
