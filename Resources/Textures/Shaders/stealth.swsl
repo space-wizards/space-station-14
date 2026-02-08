@@ -2,6 +2,7 @@ light_mode unshaded;
 
 uniform sampler2D SCREEN_TEXTURE;
 uniform highp float visibility; // number between -1 and 1
+uniform highp float shimmer_frequency;
 uniform mediump vec2 reference;
 
 const mediump float time_scale = 0.25;
@@ -17,7 +18,8 @@ void fragment() {
 
     // get distortion magnitude. hand crafted from a random jumble of trig functions
     highp vec2 coords = (FRAGCOORD.xy + reference) * distance_scale;
-    highp float w = sin(TIME + (coords.x + coords.y + 2.0*sin(TIME*time_scale) * sin(TIME*time_scale + coords.x - coords.y)) );
+    highp float t = TIME * shimmer_frequency;
+    highp float w = sin(t + (coords.x + coords.y + 2.0*sin(t*time_scale) * sin(t*time_scale + coords.x - coords.y)) );
 
     // visualize distortion via:
     // COLOR = vec4(w,w,w,1.0);

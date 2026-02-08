@@ -69,6 +69,7 @@
       quiet: true
     - type: Stealth
       hadOutline: true
+      shimmerFrequency: 0.05
     - type: StealthOnMove
       passiveVisibilityRate: -1 # very useful for going around the station concealed, if you start jitterstrafing you get seen
       movementVisibilityRate: 0.20
