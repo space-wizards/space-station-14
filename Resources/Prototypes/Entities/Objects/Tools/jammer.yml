@@ -1,18 +1,20 @@
 - type: entity
-  abstract: true
-  parent: BaseItem
-  id: BaseJammer
-  name: radio jammer
-  description: This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated.
+  name: jammer
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: RadioJammer
+  description: This device will disrupt any nearby outgoing radio communication, suit sensors, and AI camera surveillance when activated.
   components:
   - type: Sprite
     sprite: Objects/Devices/jammer.rsi
     layers:
-    - state: jammer
-    - state: jammer_high_charge
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-      shader: unshaded
-      visible: false
+        - state: jammer
+        - state: jammer_high_charge
+          map: ["enum.RadioJammerLayers.LED"]
+          shader: unshaded
+          visible: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
   - type: RadioJammer
     settings:
     - wattage: 2
@@ -60,7 +62,7 @@
 - type: entity
   parent: [BaseJammer, BaseXenoborgContraband]
   id: XenoborgRadioJammer
-  name: xenoborg radio jammer
+  name: xenoborg jammer
   components:
   - type: RadioJammer
     frequenciesExcluded:
