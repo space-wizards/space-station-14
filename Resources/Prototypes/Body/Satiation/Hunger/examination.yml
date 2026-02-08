@@ -1,0 +1,9 @@
+- type: satiationExamination
+  id: HungerExamination
+  descriptions:
+    Dead: "examinable-satiation-component-examine-hunger-desperate"
+    Starving: "examinable-satiation-component-examine-hunger-desperate"
+    Peckish: "examinable-satiation-component-examine-hunger-concerned"
+    Okay: "examinable-satiation-component-examine-hunger-okay"
+    Overfed: "examinable-satiation-component-examine-hunger-full"
+  notApplicable: "examinable-satiation-component-examine-hunger-none"

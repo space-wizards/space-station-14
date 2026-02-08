@@ -172,8 +172,12 @@
   id: BaseSpeciesMobOrganic
   save: false
   components:
-  - type: Hunger
-  - type: Thirst
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: NormalSatiationHunger
+      Thirst:
+        prototype: NormalSatiationThirst
   - type: Barotrauma
     damage:
       types:

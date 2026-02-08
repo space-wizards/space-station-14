@@ -1,0 +1,98 @@
+- type: satiation
+  id: NormalSatiationHunger
+  baseDecayRate: 0.01666666666
+  maximumValue: 200
+  keys:
+    Overfed: 200
+    Okay: 150
+    Peckish: 100
+    Starving: 50
+    Dead: 0
+  startingValueMinimum: Peckish
+  startingValueMaximum: Okay
+  decayModifiers:
+    Overfed: 1.2
+    Okay: 1.0
+    Peckish: 0.8
+    Starving: 0.6
+  speedModifiers:
+    Peckish: 0.75
+  alertCategory: Hunger
+  alerts:
+    Peckish: Peckish
+    Starving: Starving
+  icons:
+    Overfed: HungerIconOverfed
+    Okay: null
+    Peckish: HungerIconPeckish
+    Starving: HungerIconStarving
+
+- type: satiation
+  id: SimpleMobBaseHunger
+  parent: NormalSatiationHunger
+  keys: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
+    Overfed: 100
+    Okay: 50
+    Peckish: 25
+    Starving: 10
+  baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
+  maximumValue: 100
+
+- type: satiation
+  id: SnailHunger
+  parent: SimpleMobBaseHunger
+  keys:
+    Overfed: 35
+    Okay: 25
+    Peckish: 15
+    Starving: 10
+  baseDecayRate: 0.1
+  maximumValue: 35
+
+- type: satiation
+  id: CockroachHunger
+  parent: SimpleMobBaseHunger
+  baseDecayRate: 0.25
+
+- type: satiation
+  id: MouseHunger
+  parent: SimpleMobBaseHunger
+  keys:
+    Overfed: 35
+    Okay: 25
+    Peckish: 15
+    Starving: 10
+  baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
+  maximumValue: 35
+
+- type: satiation
+  id: MouseAdmemeHunger
+  parent: MouseHunger
+  baseDecayRate: 10 # always hungry
+  speedModifiers: {}
+
+- type: satiation
+  id: HamsterHunger
+  parent: SimpleMobBaseHunger
+  baseDecayRate: 0.3
+
+- type: satiation
+  id: RegalRatHunger
+  parent: SimpleMobBaseHunger
+  keys:
+    Overfed: 200
+    Okay: 150
+    Peckish: 100
+    Starving: 50
+  baseDecayRate: 0.01666666666
+  maximumValue: 200
+
+- type: satiation
+  id: ScurretHunger
+  parent: SimpleMobBaseHunger
+  baseDecayRate: 0.05 # They get a lil' hungy
+
+- type: satiation
+  id: DionaHunger
+  parent: NormalSatiationHunger
+  baseDecayRate: 0.0083

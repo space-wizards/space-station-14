@@ -1,0 +1,8 @@
+- type: satiationExamination
+  id: ThirstExamination
+  descriptions:
+    Parched: "examinable-satiation-component-examine-thirst-desperate"
+    Thirsty: "examinable-satiation-component-examine-thirst-concerned"
+    Okay: "examinable-satiation-component-examine-thirst-okay"
+    Overhydrated: "examinable-satiation-component-examine-thirst-full"
+  notApplicable: "examinable-satiation-component-examine-thirst-none"
