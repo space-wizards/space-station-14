@@ -1,3 +1,4 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 
@@ -5,6 +6,8 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedSpriteMovementSystem : EntitySystem
 {
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -14,10 +17,11 @@ public abstract class SharedSpriteMovementSystem : EntitySystem
 
     private void OnSpriteMoveInput(Entity<SpriteMovementComponent> ent, ref SpriteMoveEvent args)
     {
-        if (ent.Comp.IsMoving == args.IsMoving)
+        var isMoving = args.IsMoving && _actionBlocker.CanMove(ent);
+        if (ent.Comp.IsMoving == isMoving)
             return;
 
-        ent.Comp.IsMoving = args.IsMoving;
+        ent.Comp.IsMoving = isMoving;
         Dirty(ent);
     }
 }
