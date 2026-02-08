@@ -418,6 +418,24 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
+    /// Determines if a grid tile is true space (not lattice).
+    /// </summary>
+    /// <param name="grid">The grid whose tile coordinates are checked.</param>
+    /// <param name="tile">The tile to check.</param>
+    /// <returns>A bool whether a tile is true space or not. Returns false if the grid is null.</returns>
+    public bool IsTileNoGrid(Entity<GridAtmosphereComponent?>? grid,
+        Vector2i tile)
+    {
+        if (grid is { } gridEnt && _atmosQuery.Resolve(gridEnt, ref gridEnt.Comp, false)
+                                && gridEnt.Comp.Tiles.TryGetValue(tile, out var tileAtmos))
+        {
+            return tileAtmos.NoGridTile;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Gets the heat capacity of the gas mixture on a tile.
     /// </summary>
     /// <param name="grid">The grid to check.</param>
