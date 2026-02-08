@@ -1,9 +1,76 @@
 - type: entity
+  id: TurnstileAssembly
+  name: turnstile assembly
+  description: A mechanical door that permits one-way access and prevents tailgating.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Doors/turnstile.rsi
+    granularLayersRendering: true
+    noRot: true # The assembly itself has no rotation
+    layers:
+      - state: turnstile
+      - state: assembly
+        map: [ "enum.ConstructionVisuals.Layer" ]
+      - state: arrow
+        renderingStrategy: Default # Arrow will rotate
+        color: "#FFFFFF60"
+        map: [ "arrow" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: assembly }
+          wired: { state: wired }
+          electronics: { state: panel_open }
+        "arrow": # Only show the arrow on the first step
+          assembly: { visible: true }
+          wired: { visible: false }
+          electronics: { visible: false }
+  - type: Appearance
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: # Use a circle so you can fit it between walls
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 110
+        mask:
+        - FullTileMask
+        layer:
+        - HumanoidBlockLayer
+  - type: Anchorable
+    delay: 2
+  - type: Pullable
+  - type: Rotatable
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Turnstile
+    node: assembly
+
+- type: entity
   id: Turnstile
   parent: BaseStructure
   name: turnstile
   description: A mechanical door that permits one-way access and prevents tailgating.
   components:
+  - type: Icon
+    sprite: Structures/Doors/turnstile.rsi
+    state: turnstile_map
   - type: Sprite
     sprite: Structures/Doors/turnstile.rsi
     snapCardinals: true
@@ -11,6 +78,17 @@
     layers:
     - state: turnstile
       map: [ "enum.TurnstileVisualLayers.Base" ]
+    - state: turnstile_idle
+      map: [ "enum.TurnstileVisualLayers.Spinner" ]
+    - map: [ "enum.TurnstileVisualLayers.Indicators" ]
+      shader: unshaded
+    - state: panel_open
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
@@ -43,6 +121,29 @@
       components:
       - MobState # no mobs
       - Pullable # no dragging things in
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
+  - type: WiresVisuals
+  - type: Electrified
+    enabled: false
+    highVoltageNode: high
+    mediumVoltageNode: medium
+    lowVoltageNode: low
+  - type: NodeContainer
+    nodes:
+      high:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      medium:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+      low:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
   - type: Appearance
   - type: Damageable
     damageContainer: Inorganic
@@ -55,10 +156,28 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
   - type: AccessReader
+    containerAccessProvider: board
   - type: Construction
     graph: Turnstile
     node: turnstile
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-turnstile
+    layoutId: Turnstile
+  - type: WiresPanelSecurity
+  - type: UserInterface
+    interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - # Spawned by the client-side turnstile examine code to indicate the direction to pass through.
   type: entity
@@ -84,13 +203,19 @@
   parent: Turnstile
   suffix: Genpop Enter
   components:
-  - type: AccessReader
-    access: [["GenpopEnter"], ["Security"]]
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsGenpopEnter ]
+  - type: Wires
+    layoutId: TurnstileGenpop
 
 - type: entity
   id: TurnstileGenpopLeave
   parent: Turnstile
   suffix: Genpop Leave
   components:
-  - type: AccessReader
-    access: [["GenpopLeave"], ["Security"]]
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsGenpopLeave ]
+  - type: Wires
+    layoutId: TurnstileGenpop
