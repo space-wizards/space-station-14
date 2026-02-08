@@ -90,6 +90,63 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
     }
 
+    private bool IsGroupEscaping(List<EntityUid> list)
+    {
+        foreach (var entity in list)
+        {
+            if (_emergencyShuttle.IsTargetEscaping(entity) && !(TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private string GetWinType()
+    {
+        if (IsGroupDetainedOrDead(GetHeadRevList(), false, false, false))
+            return "rev-crew-major";
+
+        var isCommandEscaping = IsGroupEscaping(GetCommandList(false));
+        if (GetRevolutionaryPercentage(GetCommandList()) >= 0.5 && !isCommandEscaping)
+            return "rev-major";
+
+        var revsMinor = false;
+        var crewMinor = false;
+
+        if (!isCommandEscaping)
+            revsMinor = true;
+
+        if (!IsGroupEscaping(GetHeadRevList()))
+            crewMinor = true;
+
+        if (revsMinor && !crewMinor)
+            return "rev-minor";
+        if (!revsMinor && crewMinor)
+            return "rev-crew-minor";
+
+        return "rev-draw";
+    }
+
+    /// <summary>
+    /// Returns the number of entities in a list that are escaping to Central Command alive and unrestrained.
+    /// </summary>
+    /// <param name="list">The list to get the number of escapees from.</param>
+    /// <returns></returns>
+    private int GetEscapeCount(List<EntityUid> list)
+    {
+        var escapes = 0;
+        foreach (var entity in list)
+        {
+            if (_emergencyShuttle.IsTargetEscaping(entity) && !(TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0))
+            {
+                escapes++;
+            }
+        }
+
+        return escapes;
+    }
+
     protected override void AppendRoundEndText(EntityUid uid,
         RevolutionaryRuleComponent component,
         GameRuleComponent gameRule,
@@ -97,14 +154,35 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         base.AppendRoundEndText(uid, component, gameRule, ref args);
 
-        var revsLost = CheckRevsLose();
-        var commandLost = CheckCommandLose();
-        // This is (revsLost, commandsLost) concatted together
-        // (moony wrote this comment idk what it means)
-        var index = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
-        args.AddLine(Loc.GetString(Outcomes[index]));
+        var winType = GetWinType();
+        args.AddLine(Loc.GetString(winType));
 
         var sessionData = _antag.GetAntagIdentifiers(uid);
+
+        if (winType == "rev-crew-major")
+            args.AddLine(Loc.GetString("all-revs-failed"));
+        else
+        {
+            var escapedHeadRevs = GetEscapeCount(GetHeadRevList());
+            var commandRevPercent = GetRevolutionaryPercentage(GetCommandList());
+            args.AddLine(Loc.GetString("rev-crew-percentage",
+            ("percentage", GetRevolutionaryPercentage(GetCrewList()) * 100),
+            ("color", winType == "crew-minor" ? "green" : "yellow")
+            ));
+            args.AddLine(Loc.GetString("rev-command-percentage",
+            ("percentage", commandRevPercent * 100),
+            ("color", commandRevPercent >= 0.5 || winType == "rev-crew-minor" ? "green" : "red")
+            ));
+            args.AddLine(Loc.GetString(GetEscapeCount(GetCommandList(false)) == 1 ? "rev-loyal-command-singular" : "rev-loyal-command",
+            ("count", GetEscapeCount(GetCommandList(false))),
+            ("color", winType == "rev-crew-minor" ? "green" : "red")
+            ));
+            args.AddLine(Loc.GetString(GetEscapeCount(GetHeadRevList()) == 1 ? "headrev-escapes-singular" : "headrev-escapes",
+            ("count", escapedHeadRevs),
+            ("color", winType == "rev-crew-minor" || escapedHeadRevs == 0 ? "red" : "green")
+            ));
+        }
+
         args.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", sessionData.Count)));
         foreach (var (mind, data, name) in sessionData)
         {
@@ -189,17 +267,42 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Checks if all of command is dead and if so will remove all sec and command jobs if there were any left.
     /// </summary>
+    /// is it supposed to remove all sec and command jobs because it doesn't and it didn't pre-rework either
     private bool CheckCommandLose()
+    {
+        return IsGroupDetainedOrDead(GetCommandList(), true, true, true);
+    }
+
+    /// <summary>
+    /// Returns a list of all humanoid player-controlled entities, with the exception of Nuclear Operatives, Space Ninjas and Wizards.
+    /// </summary>
+    /// <returns></returns>
+    private List<EntityUid> GetCrewList()
+    {
+        var crewList = new List<EntityUid>();
+        var players = AllEntityQuery<HumanoidAppearanceComponent, ActorComponent>();
+        while (players.MoveNext(out var uid, out _, out _))
+        {
+            if (HasComp<NukeopsRoleComponent>(uid) || HasComp<NinjaRoleComponent>(uid) || HasComp<WizardRoleComponent>(uid))
+                continue;
+            crewList.Add(uid);
+        }
+
+        return crewList;
+    }
+    private List<EntityUid> GetCommandList(bool countRevs = true)
     {
         var commandList = new List<EntityUid>();
 
         var heads = AllEntityQuery<CommandStaffComponent>();
         while (heads.MoveNext(out var id, out _))
         {
+            if (!countRevs && (HasComp<RevolutionaryComponent>(id) || HasComp<HeadRevolutionaryComponent>(id)))
+                continue;
             commandList.Add(id);
         }
 
-        return IsGroupDetainedOrDead(commandList, true, true, true);
+        return commandList;
     }
 
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
@@ -208,12 +311,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             CheckRevsLose();
     }
 
-    /// <summary>
-    /// Checks if all the Head Revs are dead and if so will deconvert all regular revs.
-    /// </summary>
-    private bool CheckRevsLose()
+    private List<EntityUid> GetHeadRevList()
     {
-        var stunTime = TimeSpan.FromSeconds(4);
         var headRevList = new List<EntityUid>();
 
         var headRevs = AllEntityQuery<HeadRevolutionaryComponent, MobStateComponent>();
@@ -221,6 +320,17 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             headRevList.Add(uid);
         }
+
+        return headRevList;
+    }
+
+    /// <summary>
+    /// Checks if all the Head Revs are dead and if so will deconvert all regular revs.
+    /// </summary>
+    private bool CheckRevsLose()
+    {
+        var stunTime = TimeSpan.FromSeconds(4);
+        var headRevList = GetHeadRevList();
 
         // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
         // Cuffing Head Revs is not enough - they must be killed.
@@ -306,15 +416,21 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         return gone == list.Count || list.Count == 0;
     }
 
-    private static readonly string[] Outcomes =
+    /// <summary>
+    /// Returns the percentage of a group that are either revolutionaries or head revolutionaries.
+    /// </summary>
+    /// <param name="list">The list to get the rev percentage of.</param>
+    /// <returns></returns>
+    private float GetRevolutionaryPercentage(List<EntityUid> list)
     {
-        // revs survived and heads survived... how
-        "rev-reverse-stalemate",
-        // revs won and heads died
-        "rev-won",
-        // revs lost and heads survived
-        "rev-lost",
-        // revs lost and heads died
-        "rev-stalemate"
-    };
+        var revs = 0;
+        foreach (var entity in list)
+        {
+            if (HasComp<RevolutionaryComponent>(entity) || HasComp<HeadRevolutionaryComponent>(entity))
+                revs++;
+        }
+
+        if (list.Count == 0) return 0f;
+        return revs / list.Count;
+    }
 }

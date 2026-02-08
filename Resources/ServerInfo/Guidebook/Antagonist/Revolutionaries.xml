@@ -50,4 +50,24 @@
   A [color=red]Revolutionary[/color] is a crew member that has been converted by a [bold][color=#5e9cff]Head Revolutionary[/color][/bold].
 
   [bold][color=red]Revolutionaries[/color] can't convert people themselves,[/bold] but they're more than capable of doing dirty work and carrying out orders.
+
+  ## Winning Conditions
+
+  The [color=#00ff00]victor[/color] of the round is announced on the round end screen, as well as the scale of their victory.
+
+  [bold][color=#5e9cff]Revolution Major Victory![/color][/bold]
+  - No loyal Command escape to Central Command alive and unrestrained [bold]and[/bold] at least [color=cyan]50%[/color] of Command are [color=red]revolutionaries[/color].
+
+  [bold][color=#5e9cff]Revolution Minor Victory[/color][/bold]
+  - No loyal Command escape to Central Command alive and unrestrained, but less than 50% of Command are [color=red]revolutionaries[/color].
+
+  [bold][color=#999999]Neutral Victory[/color][/bold]
+  - Both of the minor victory criteria are met.
+  - Neither of the minor victory criteria are met.
+
+  [bold][color=green]Crew Minor Victory[/color][/bold]
+  - No [color=#5e9cff]head revolutionaries[/color] escape to Central Command alive and unrestrained.
+
+  [bold][color=green]Crew Major Victory![/color][/bold]
+  - All [color=red]revolutionaries[/color] and [color=#5e9cff]head revolutionaries[/color] either die or are deconverted.
 </Document>
