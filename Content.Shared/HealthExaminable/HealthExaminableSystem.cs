@@ -2,6 +2,9 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -10,6 +13,7 @@ namespace Content.Shared.HealthExaminable;
 public sealed class HealthExaminableSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
 
     public override void Initialize()
     {
@@ -22,8 +26,19 @@ public sealed class HealthExaminableSystem : EntitySystem
     {
         if (!TryComp<DamageableComponent>(uid, out var damage))
             return;
+        if (!TryComp<MobThresholdsComponent>(uid, out var thresholds))
+            return;
 
         var detailsRange = _examineSystem.IsInDetailsRange(args.User, uid);
+
+        // get correct icon
+        string icon = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png"; // default
+        if (detailsRange) // only show specifics when in detail range, otherwise show generic icon
+        {
+            if (thresholds.CurrentThresholdState == MobState.Dead) icon = "/Textures/Interface/VerbIcons/rejuvenate-dead.svg.192dpi.png"; // dead
+            else if (thresholds.CurrentThresholdState == MobState.Critical) icon = "/Textures/Interface/VerbIcons/rejuvenate-crit.svg.192dpi.png"; // crit
+        }
+
 
         var verb = new ExamineVerb()
         {
@@ -36,7 +51,7 @@ public sealed class HealthExaminableSystem : EntitySystem
             Category = VerbCategory.Examine,
             Disabled = !detailsRange,
             Message = detailsRange ? null : Loc.GetString("health-examinable-verb-disabled"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png"))
+            Icon = new SpriteSpecifier.Texture(new (icon)) // change icon depending on state
         };
 
         args.Verbs.Add(verb);
