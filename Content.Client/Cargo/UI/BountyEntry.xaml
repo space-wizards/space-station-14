@@ -10,6 +10,8 @@
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <RichTextLabel Name="RewardLabel"/>
                     <RichTextLabel Name="ManifestLabel"/>
+                    <RichTextLabel Name="ClaimedBylabel"/>
+                    <RichTextLabel Name="StatusLabel"/>
                 </BoxContainer>
                 <Control MinWidth="10"/>
                 <BoxContainer Orientation="Vertical" MinWidth="120">
@@ -17,13 +19,21 @@
                         <Button Name="PrintButton"
                                 Text="{Loc 'bounty-console-label-button-text'}"
                                 HorizontalExpand="False"
-                                HorizontalAlignment="Right"
-                                StyleClasses="OpenRight"/>
+                                StyleClasses="OpenBoth"/>
                         <Button Name="SkipButton"
                                 Text="{Loc 'bounty-console-skip-button-text'}"
-                                HorizontalExpand="False"
-                                HorizontalAlignment="Right"
+                                HorizontalExpand="True"
                                 StyleClasses="OpenLeft"/>
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" MinWidth="120">
+                        <Button Name="ClaimButton"
+                                Text= "{Loc 'bounty-console-claim-button-text'}"
+                                HorizontalExpand="False"
+                                StyleClasses="OpenRight"/>
+                        <OptionButton Name="BountyStatusSelector"
+                                      Access="Public"
+                                      StyleClasses="OpenBoth"
+                                      HorizontalExpand="True"/>
                     </BoxContainer>
                     <RichTextLabel Name="IdLabel" HorizontalAlignment="Right" Margin="0 0 5 0"/>
                 </BoxContainer>
