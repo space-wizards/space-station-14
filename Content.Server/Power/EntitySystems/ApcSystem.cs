@@ -87,6 +87,11 @@ public sealed class ApcSystem : EntitySystem
     // Change the APC's state only when the battery state changes, or when it's first created.
     private void OnBatteryChargeChanged(EntityUid uid, ApcComponent component, ref ChargeChangedEvent args)
     {
+        if (component.NeedStateUpdate) {
+            // Let the Update loop handle the first update to prevent race condition.
+            // Otherwise it breaks what OnApcStartup is intended for.
+            return;
+        }
         UpdateApcState(uid, component);
     }
 
