@@ -66,6 +66,12 @@
       Peckish: 100
       Starving: 50
       Dead: 0
+    hungerThresholdAlerts:
+      Overfed: Overfed
+      Okay: Okay
+      Peckish: Peckish
+      Starving: Starving
+      Dead: Starving
     baseDecayRate: 0.01666666666
   - type: Thirst
     thresholds:
