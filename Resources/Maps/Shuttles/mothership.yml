@@ -3113,7 +3113,7 @@ entities:
           - Open
         - - Middle
           - Close
-- proto: WallXenoborg
+- proto: WallShuttleXenoborg
   entities:
   - uid: 2
     components:
@@ -3478,7 +3478,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,-1.5
       parent: 1
-- proto: WallXenoborgDiagonal
+- proto: WallShuttleXenoborgDiagonal
   entities:
   - uid: 88
     components:
@@ -3606,7 +3606,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,2.5
       parent: 1
-- proto: XenoborgWindow
+- proto: ShuttleXenoborgWindow
   entities:
   - uid: 3
     components:

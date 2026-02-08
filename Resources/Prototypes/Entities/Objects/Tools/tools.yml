@@ -365,6 +365,38 @@
     rechargeDuration: 10
 
 - type: entity
+  parent: [ RCD, BaseXenoborgContraband ]
+  id: RCDXenoborg
+  name: xenoborg RCD
+  suffix: AutoRecharge
+  description: A modified Xenoborg Rapid Construction Device which creates compressed matter on the fly using an internal fabricator.
+  components:
+  - type: LimitedCharges
+    maxCharges: 20
+  - type: AutoRecharge
+    rechargeDuration: 10
+  - type: RCD
+    availablePrototypes:
+    - WallXenoborg
+    - FloorXenoborg
+    - FloorXenoborgBlueCircuit
+    - XenoborgPlating
+    - XenoborgGrille
+    - XenoborgWindow
+    - AirlockXenoborgLocked
+    - TubeLight
+    - PoweredlightBlue
+    - BulbLight
+    - LVCable
+    - MVCable
+    - HVCable
+    - CableTerminal
+    - Deconstruct
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: xenoborg
+
+- type: entity
   id: RCDExperimental
   parent: RCD
   suffix: Admeme

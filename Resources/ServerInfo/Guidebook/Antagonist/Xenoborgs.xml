@@ -61,7 +61,7 @@
   [bold]Starting exclusive modules:[/bold]
   <Box>
     <GuideEntityEmbed Entity="XenoborgModuleAccessBreaker" Caption="access breaker xenoborg module"/>
-    <GuideEntityEmbed Entity="XenoborgModuleFireExtinguisher" Caption="fire extinguisher xenoborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleRCD" Caption="xenoborg RCD module"/>
   </Box>
 
   [bold]The Engineer Xenoborg also starts with some engineering modules, such as:[/bold]
