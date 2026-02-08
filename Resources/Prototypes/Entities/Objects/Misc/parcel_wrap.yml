@@ -130,6 +130,9 @@
       visible: false
       sprite: Objects/Misc/ParcelWrap/paper_labels.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Tag
+    tags:
+    - Parcel
 
 - type: entity
   parent: BaseWrappedParcel
