@@ -71,12 +71,17 @@ namespace Content.Client.Actions
         public override void UpdateAction(Entity<ActionComponent> ent)
         {
             // TODO: Decouple this.
-            ent.Comp.IconColor = _sharedCharges.GetCurrentCharges(ent.Owner) == 0 ? ent.Comp.DisabledIconColor : ent.Comp.OriginalIconColor;
+            ent.Comp.IconColor = _sharedCharges.GetCurrentCharges(ent.Owner) == 0
+                ? ent.Comp.DisabledIconColor
+                : ent.Comp.OriginalIconColor;
+
             base.UpdateAction(ent);
-            if (_playerManager.LocalEntity != ent.Comp.AttachedEntity)
+
+            if (_playerManager.LocalEntity is not { } local)
                 return;
 
-            ActionsUpdated?.Invoke();
+            if (TryComp<ActionsComponent>(local, out var acts) && acts.Actions.Contains(ent.Owner))
+                ActionsUpdated?.Invoke();
         }
 
         private void OnHandleState(Entity<ActionsComponent> ent, ref ComponentHandleState args)

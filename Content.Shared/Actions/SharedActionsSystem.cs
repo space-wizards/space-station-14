@@ -103,7 +103,16 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private void OnGetState(Entity<ActionsComponent> ent, ref ComponentGetState args)
     {
-        args.State = new ActionsComponentState(GetNetEntitySet(ent.Comp.Actions));
+        // Relay: union of local actions and relayed source actions (if any) for display on the attached entity.
+        var netSet = GetNetEntitySet(ent.Comp.Actions);
+        if (TryComp<ActionsDisplayRelayComponent>(ent.Owner, out var relay) && relay.Source is { } src &&
+            _actionsQuery.TryComp(src, out var srcComp))
+        {
+            foreach (var net in GetNetEntitySet(srcComp.Actions))
+                netSet.Add(net);
+        }
+
+        args.State = new ActionsComponentState(netSet);
     }
 
     /// <summary>
@@ -287,8 +296,20 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         var name = Name(actionEnt, metaData);
 
+        var hasAction = component.Actions.Contains(actionEnt);
+
+        // Relay: check if the action via relay, and set hasAction if found through relay
+        if (!hasAction)
+        {
+            if (TryComp<ActionsDisplayRelayComponent>(user, out var relay) && relay.Source is { } src &&
+                _actionsQuery.TryComp(src, out var relayActions) && relayActions.Actions.Contains(actionEnt))
+            {
+                hasAction = true;
+            }
+        }
+
         // Does the user actually have the requested action?
-        if (!component.Actions.Contains(actionEnt))
+        if (!hasAction)
         {
             _adminLogger.Add(LogType.Action,
                 $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {name}.");
@@ -298,7 +319,6 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (GetAction(actionEnt) is not {} action)
             return false;
 
-        DebugTools.Assert(action.Comp.AttachedEntity == user);
         if (!action.Comp.Enabled)
             return false;
 
@@ -312,12 +332,20 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (attemptEv.Cancelled)
             return false;
 
+        // Relay: determine performer for validation/usage.
+        var performer = user;
+        if (action.Comp.AttachedEntity is { } attached && action.Comp.AttachedEntity != user &&
+            TryComp<ActionsDisplayRelayComponent>(user, out var relayUser) && relayUser.Source == attached && relayUser.InteractAsSource)
+        {
+            performer = attached;
+        }
+
         // Validate request by checking action blockers and the like
-        var provider = action.Comp.Container ?? user;
+        var provider = action.Comp.Container ?? performer;
         var validateEv = new ActionValidateEvent()
         {
             Input = ev,
-            User = user,
+            User = performer,
             Provider = provider
         };
         RaiseLocalEvent(action, ref validateEv);
@@ -330,7 +358,11 @@ public abstract partial class SharedActionsSystem : EntitySystem
         }
 
         // All checks passed. Perform the action!
-        PerformAction((user, component), action);
+        if (!_actionsQuery.TryComp(performer, out var performerActions))
+            return false;
+
+        var playPredicted = performer == user;
+        PerformAction((performer, performerActions), action, null, playPredicted);
         return true;
     }
 
@@ -552,8 +584,12 @@ public abstract partial class SharedActionsSystem : EntitySystem
         // Note that attached entity and attached container are allowed to be null here.
         if (action.Comp.AttachedEntity != null && action.Comp.AttachedEntity != performer)
         {
-            Log.Error($"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(action)} that is attached to another entity {ToPrettyString(action.Comp.AttachedEntity)}");
-            return;
+            // Allow action execution if performer has ActionsDisplayRelayComponent.
+            if (!TryComp<ActionsDisplayRelayComponent>(performer, out var relay) || relay.Source != action.Comp.AttachedEntity)
+            {
+                Log.Error($"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(action)} that is attached to another entity {ToPrettyString(action.Comp.AttachedEntity)}");
+                return;
+            }
         }
 
         actionEvent ??= GetEvent(action);
@@ -692,7 +728,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         ent.Comp.AttachedEntity = performer;
         DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
         performer.Comp.Actions.Add(ent);
-        Dirty(performer, performer.Comp);
+        OnActionsDirty(performer, performer.Comp);
         ActionAdded((performer, performer.Comp), (ent, ent.Comp));
         return true;
     }
@@ -847,7 +883,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         }
 
         performer.Comp.Actions.Remove(ent.Owner);
-        Dirty(performer, performer.Comp);
+        OnActionsDirty(performer, performer.Comp);
         ent.Comp.AttachedEntity = null;
         DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
         ActionRemoved((performer, performer.Comp), ent);
@@ -1054,5 +1090,21 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         ent.Comp.Temporary = temporary;
         Dirty(ent);
+    }
+
+    private void OnActionsDirty(EntityUid uid, ActionsComponent component)
+    {
+        Dirty(uid, component);
+
+        // Relay: dirty for all connected relays.
+        var relayQuery = EntityQueryEnumerator<ActionsDisplayRelayComponent>();
+        while (relayQuery.MoveNext(out var relayUid, out var relayComp))
+        {
+            if (relayComp.Source == uid)
+            {
+                if (TryComp<ActionsComponent>(relayUid, out var relayActionComp))
+                    Dirty(relayUid, relayActionComp);
+            }
+        }
     }
 }
