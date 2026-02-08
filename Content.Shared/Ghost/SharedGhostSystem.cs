@@ -178,7 +178,20 @@ namespace Content.Shared.Ghost
     /// A client to server request for their ghost to be warped to the most followed entity.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class GhostnadoRequestEvent : EntityEventArgs;
+    public sealed class GhostnadoRequestEvent(bool warp = false) : EntityEventArgs
+    {
+        public bool Warp { get; } = warp;
+    }
+
+    /// <summary>
+    /// A server to client response for <see cref="GhostnadoRequestEvent"/>.
+    /// </summary>
+    /// <param name="entityFound">Whether Any entity to warp to was found.</param>
+    [Serializable, NetSerializable]
+    public sealed class GhostnadoResponseEvent(bool entityFound) : EntityEventArgs
+    {
+        public bool EntityFound { get; } = entityFound;
+    }
 
     /// <summary>
     /// A client to server request for their ghost to return to body
