@@ -321,7 +321,7 @@
     - NamesBorg
   - type: NpcFactionMember
     factions:
-    - NanoTrasen
+    - SiliconNT
   - type: Access
     groups:
     - AllAccess
@@ -342,7 +342,7 @@
   components:
   - type: NpcFactionMember
     factions:
-    - Syndicate
+    - SiliconSyndicate
   - type: Access
     tags:
     - NuclearOperative
@@ -409,7 +409,7 @@
   - type: ShowCrewIcons
   - type: NpcFactionMember # They're still syndicate even if they can't listen to the radio or see icons
     factions:
-    - Syndicate
+    - SiliconSyndicate
   - type: Access
     tags:
     - NuclearOperative
