@@ -14,19 +14,19 @@ public sealed partial class EmagSiliconLawComponent : Component
     /// <summary>
     /// The name of the person who emagged this law provider.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? OwnerName;
 
     /// <summary>
     /// Does the panel need to be open to EMAG this law provider.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool RequireOpenPanel = true;
 
     /// <summary>
     /// How long the borg is stunned when it's emagged. Setting to 0 will disable it.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan StunTime = TimeSpan.Zero;
 
     /// <summary>
@@ -35,5 +35,4 @@ public sealed partial class EmagSiliconLawComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier EmaggedSound = new SoundPathSpecifier("/Audio/Ambience/Antag/emagged_borg.ogg");
-
 }

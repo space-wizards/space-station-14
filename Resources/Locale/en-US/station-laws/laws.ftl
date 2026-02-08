@@ -123,6 +123,11 @@ law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.
 law-emag-require-panel = The panel must be open to use the EMAG.
 law-emag-cannot-emag-self = You cannot use the EMAG on yourself.
+law-emag-cannot-emag-chassis-no-provider = This chassis has no brain inside.
+law-emag-cannot-not-emaggable = {CAPITALIZE($entity)} cannot be emagged.
+law-emag-cannot-brainless = {CAPITALIZE($entity)} has no brain inside.
+law-emag-already-emagged = {CAPITALIZE($entity)} is already emagged.
+law-emag-require-mind = {CAPITALIZE($entity)} is not active.
 
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}

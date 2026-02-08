@@ -1,6 +1,6 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
-  id: BaseBorgChassisNotIonStormable
+  id: BaseBorgChassis
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
   save: false
@@ -75,14 +75,10 @@
         type: BorgSelectTypeUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
-  - type: SiliconLawBound
   - type: ActionGrant
     actions:
     - ActionViewLaws
-  - type: EmagSiliconLaw
-    stunTime: 5
-  - type: SiliconLawProvider
-    laws: Crewsimov
+  - type: SiliconLawBound
   - type: Inventory
     templateId: borg
   - type: Hands
@@ -255,13 +251,6 @@
 
 - type: entity
   abstract: true
-  parent: BaseBorgChassisNotIonStormable
-  id: BaseBorgChassis
-  components:
-  - type: IonStormTarget
-
-- type: entity
-  abstract: true
   id: BaseBorgTransponder
   components:
   - type: BorgTransponder
@@ -373,6 +362,8 @@
     color: "#dd200b"
   - type: BypassLock
     bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
+  - type: EmagSiliconLaw
+    stunTime: 5
 
 - type: entity
   id: BaseBorgChassisDerelict
@@ -387,10 +378,6 @@
     - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
     access: [["Command"], ["Research"]]
-  - type: StartIonStormed
-    ionStormAmount: 3
-  - type: IonStormTarget
-    chance: 1
   - type: ShowJobIcons
   - type: ShowCrewIcons
 
@@ -401,7 +388,7 @@
   components:
   - type: SiliconLawProvider
     laws: SyndicateStatic #Non-subverted version so they can still be changed
-  - type: StartIonStormed
+  - type: StartIonStormed #The chassis and the brain will have different ion storm laws, this is intended, since it can be the provider too
     ionStormAmount: 3
   - type: IonStormTarget
     chance: 1
@@ -434,9 +421,11 @@
     color: "#dd200b"
   - type: BypassLock
     bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
+  - type: EmagSiliconLaw
+    stunTime: 5
 
 - type: entity
-  parent: BaseBorgChassisNotIonStormable
+  parent: BaseBorgChassis
   id: BaseXenoborgChassis
   name: xenoborg
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army.

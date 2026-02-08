@@ -21,6 +21,7 @@ borg-ui-no-brain = No brain present
 borg-ui-remove-battery = Remove
 borg-ui-modules-label = Modules:
 borg-ui-module-counter = {$actual}/{$max}
+borg-ui-self-provider-warning = [color=crimson]This chassis overrides brain laws![/color]
 
 # Transponder
 borg-transponder-disabled-popup = A brain shoots out the top of {$name}!

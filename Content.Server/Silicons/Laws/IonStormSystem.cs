@@ -1,9 +1,7 @@
-using Content.Server.StationEvents.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
-using Content.Shared.GameTicking.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
@@ -44,14 +42,15 @@ public sealed class IonStormSystem : EntitySystem
     /// <summary>
     /// Randomly alters the laws of an individual silicon.
     /// </summary>
-    public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent, bool adminlog = true)
+    public void IonStormTarget(Entity<SiliconLawProviderComponent, IonStormTargetComponent> ent, bool adminlog = true)
     {
         var lawBound = ent.Comp1;
         var target = ent.Comp2;
+
         if (!_robustRandom.Prob(target.Chance))
             return;
 
-        var laws = _siliconLaw.GetLaws(ent, lawBound);
+        var laws = _siliconLaw.GetProviderLaws(ent.Owner);
         if (laws.Laws.Count == 0)
             return;
 
@@ -137,8 +136,6 @@ public sealed class IonStormSystem : EntitySystem
         if (adminlog)
             _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
 
-        // laws unique to this silicon, dont use station laws anymore
-        EnsureComp<SiliconLawProviderComponent>(ent);
         var ev = new IonStormLawsEvent(laws);
         RaiseLocalEvent(ent, ref ev);
     }

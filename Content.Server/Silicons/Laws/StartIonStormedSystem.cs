@@ -21,8 +21,9 @@ public sealed class StartIonStormedSystem : EntitySystem
 
     private void OnMapInit(Entity<StartIonStormedComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<SiliconLawBoundComponent>(ent.Owner, out var lawBound))
+        if (!TryComp<SiliconLawProviderComponent>(ent.Owner, out var lawBound))
             return;
+
         if (!TryComp<IonStormTargetComponent>(ent.Owner, out var target))
             return;
 
@@ -31,7 +32,7 @@ public sealed class StartIonStormedSystem : EntitySystem
             _ionStorm.IonStormTarget((ent.Owner, lawBound, target), false);
         }
 
-        var laws = _siliconLaw.GetLaws(ent.Owner, lawBound);
+        var laws = _siliconLaw.GetProviderLaws(ent.Owner);
         _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent.Owner):silicon} spawned with ion stormed laws: {laws.LoggingString()}");
     }
 }

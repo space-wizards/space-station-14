@@ -1,11 +1,14 @@
 ﻿using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Radio.Components;
+using Content.Shared.Radio.EntitySystems;
 
 namespace Content.Server.Implants;
 
 public sealed class RadioImplantSystem : EntitySystem
 {
+    [Dependency] private readonly SharedRadioSystem _radio = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -31,7 +34,7 @@ public sealed class RadioImplantSystem : EntitySystem
         var intrinsicRadioTransmitter = EnsureComp<IntrinsicRadioTransmitterComponent>(args.Implanted);
         foreach (var channel in ent.Comp.RadioChannels)
         {
-            if (intrinsicRadioTransmitter.Channels.Add(channel))
+            if (_radio.AddIntrinsicTransmitterChannel((args.Implanted, intrinsicRadioTransmitter), channel))
                 ent.Comp.TransmitterAddedChannels.Add(channel);
         }
     }
@@ -60,7 +63,7 @@ public sealed class RadioImplantSystem : EntitySystem
 
         foreach (var channel in ent.Comp.TransmitterAddedChannels)
         {
-            radioTransmitterComponent.Channels.Remove(channel);
+            _radio.RemoveIntrinsicTransmitterChannel((args.Implanted, radioTransmitterComponent), channel);
         }
         ent.Comp.TransmitterAddedChannels.Clear();
 

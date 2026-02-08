@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Alert;
+using Content.Shared.Silicons.Laws;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -15,7 +16,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// for borg logic.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedBorgSystem))]
+[Access(typeof(SharedBorgSystem), typeof(SharedSiliconLawSystem))]
 public sealed partial class BorgChassisComponent : Component
 {
     /// <summary>
@@ -146,6 +147,21 @@ public sealed partial class BorgChassisComponent : Component
     /// </summary>
     [DataField]
     public bool CanOpenSelfUi;
+
+    /// <summary>
+    /// Whether this chassis provides laws to itself.
+    /// Only affects a warning inside of the UI.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool SelfProvider;
+
+    /// <summary>
+    /// Whether this chassis should attempt to resync its laws when a brain is inserted/removed.
+    /// If false, the provider will not be updated.
+    /// Should only be used if you want to prevent the chassis from changing providers for whatever reason.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ResyncLawsWithBrain = true;
 }
 
 [Serializable, NetSerializable]
