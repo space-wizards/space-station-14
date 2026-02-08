@@ -1,7 +1,9 @@
+using Content.Shared.Administration;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Robust.Shared.Serialization;
 
@@ -13,6 +15,7 @@ namespace Content.Shared.Ghost
     /// </summary>
     public abstract class SharedGhostSystem : EntitySystem
     {
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
         public override void Initialize()
@@ -99,6 +102,12 @@ namespace Content.Shared.Ghost
 
             entity.Comp.CanGhostInteract = value;
             Dirty(entity);
+        }
+
+        public bool CanGhost(EntityUid uid)
+        {
+            _mindSystem.GetMind(uid, out var mind);
+            return mind is { PreventSuicide: false, PreventGhosting: false } && !HasComp<AdminFrozenComponent>(uid);
         }
     }
 

@@ -197,6 +197,17 @@ public sealed partial class CCVars
         CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
 
     /// <summary>
+    /// Sets the message displayed in the 'abandon character' window. Useful for informing
+    /// players of any rules that may be broken by continuing.
+    /// </summary>
+    public static readonly CVarDef<string> AbandonCharacterWindowMessage =
+        CVarDef.Create("admin.abandon_character_window_message",
+            "Revival or cloning will not bring you back to your body if you abandon your character!\n" +
+            "In some circumstances, abandoning your character constitutes a breach of the rules.\n" +
+            "You should enter cryogenic storage if your intention is to leave the round.",
+            CVar.REPLICATED | CVar.SERVER);
+
+    /// <summary>
     /// Whether admins should gain role playtime even when playing while not de-adminned.
     /// </summary>
     public static readonly CVarDef<bool> GameAdminJobTracking =
