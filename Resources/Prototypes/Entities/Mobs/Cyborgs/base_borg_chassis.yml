@@ -389,6 +389,7 @@
     access: [["Command"], ["Research"]]
   - type: StartIonStormed
     ionStormAmount: 3
+    corruptedLawFormattings: IonStormDefaultCorruptedLawFormattings
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons
@@ -403,6 +404,7 @@
     laws: SyndicateStatic #Non-subverted version so they can still be changed
   - type: StartIonStormed
     ionStormAmount: 3
+    corruptedLawFormattings: IonStormDefaultCorruptedLawFormattings
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons

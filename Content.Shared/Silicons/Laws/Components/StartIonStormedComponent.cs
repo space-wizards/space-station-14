@@ -1,3 +1,4 @@
+using Content.Shared.Random;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -14,4 +15,10 @@ public sealed partial class StartIonStormedComponent : Component
     /// </summary>
     [DataField]
     public int IonStormAmount = 1;
+
+    /// <summary>
+    /// Which formats (and with what weights) will be applied to newly generated corrupted laws.
+    /// </summary>
+    [DataField]
+    public ProtoId<WeightedRandomPrototype>? CorruptedLawFormattings;
 }
