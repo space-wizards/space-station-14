@@ -16,6 +16,7 @@
   - type: Storage
     grid:
     - 0,0,6,3
+    animation: true
     maxItemSize: Huge
   - type: ContainerContainer
     containers:
@@ -34,6 +35,7 @@
     tags:
     - WhitelistChameleon
     - Backpack
+  - type: AnimationPlayer
 
 - type: entity
   parent: ClothingBackpack

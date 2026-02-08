@@ -4,7 +4,11 @@ using Content.Client.Animations;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.Events;
+using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Animations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -16,6 +20,7 @@ public sealed class StorageSystem : SharedStorageSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
+    [Dependency] private readonly AnimationPlayerSystem _animations = default!;
 
     private Dictionary<EntityUid, ItemStorageLocation> _oldStoredItems = new();
 
@@ -27,6 +32,7 @@ public sealed class StorageSystem : SharedStorageSystem
 
         SubscribeLocalEvent<StorageComponent, ComponentHandleState>(OnStorageHandleState);
         SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
+        SubscribeNetworkEvent<StorageAnimationEvent>(HandleStorageAnimation);
         SubscribeAllEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
     }
 
@@ -120,6 +126,40 @@ public sealed class StorageSystem : SharedStorageSystem
         PickupAnimation(uid, initialCoordinates, finalCoordinates, initialRotation);
     }
 
+    /// <inheritdoc/>
+    public override void PlayStorageAnimation(EntityUid uid, Vector2 scale, EntityUid? user = null)
+    {
+        if (!_timing.IsFirstTimePredicted || // Checks that this doesn't plays twice because of prediction.
+            !TryComp<AnimationPlayerComponent>(uid, out var animations) || // Gets Animation player component.
+            !TryComp<SpriteComponent>(uid, out var sprite) || // Gets sprite component.
+            _animations.HasRunningAnimation(uid, "storage_animation_bounce")) // Checks that animation doesn't plays twice (that can cause very big problems).
+            return;
+
+        _animations.Play(new Entity<AnimationPlayerComponent>(uid, animations), new Animation
+        {
+            Length = TimeSpan.FromMilliseconds(400),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Scale),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        // I suppose InQuad is the most fine solution here, its not really fast/slow or too much chaotic, but adds some noise.
+                        // Biggest part of easing don't really different because animation is pretty short so I don't see really big issues with usage of just quad.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0, Easings.InQuad), // Start frame with start scale.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale * scale, 0.1f, Easings.InQuad), // Here we decraise thickness and increaise height of sprite.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.2f, Easings.InQuad), // Here we return start scale, but because of some sheningans its cursed (like a 1.23132131 height) so there is two additional keyframes.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.3f, Easings.InQuad),
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.4f, Easings.InQuad),
+                    }
+                },
+            }
+        }, "storage_animation_bounce");
+    }
+
     private void HandlePickupAnimation(PickupAnimationEvent msg)
     {
         PickupAnimation(GetEntity(msg.ItemUid), GetCoordinates(msg.InitialPosition), GetCoordinates(msg.FinalPosition), msg.InitialAngle);
@@ -140,6 +180,11 @@ public sealed class StorageSystem : SharedStorageSystem
         var finalPos = Vector2.Transform(finalMapPos, TransformSystem.GetInvWorldMatrix(initialCoords.EntityId));
 
         _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
+    }
+
+    public void HandleStorageAnimation(StorageAnimationEvent msg)
+    {
+        PlayStorageAnimation(GetEntity(msg.Uid), msg.Scale);
     }
 
     /// <summary>
