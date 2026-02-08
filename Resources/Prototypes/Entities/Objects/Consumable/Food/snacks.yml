@@ -439,7 +439,7 @@
   parent: BaseItem
   id: FoodSnackNutribrick
   name: nutribrick
-  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume, with a synthetic-cotton wrapper. Tastes like shit.
   components:
   - type: Item
     size: Small
@@ -488,7 +488,7 @@
   parent: BaseItem
   id: FoodSnackMREBrownie
   name: brownie
-  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  description: A military-grade brownie made to withstand blunt trauma and harsh conditions, with a synthetic-cotton wrapper. Tastes like shit.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
@@ -512,7 +512,7 @@
   id: FoodSnackMREBrownieOpen
   name: brownie
   suffix: MRE
-  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  description: A military-grade brownie made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
   - type: FlavorProfile
     flavors:
@@ -857,7 +857,7 @@
   parent: FoodPacketTrash
   id: FoodPacketMRETrash
   name: MRE wrapper
-  description: A general purpose wrapper for a variety of military food goods.
+  description: A general-purpose, synthetic-cotton wrapper used to preserve and protect military-grade rations. Inedible by most species' standards, and only technically edible by moth standards.
   components:
   - type: Edible
     requiresSpecialDigestion: true
@@ -872,6 +872,9 @@
     tags:
     - ClothMade
     - Trash
+  - type: FlavorProfile
+    flavors:
+      - mrewrapper
   - type: Sprite
     state: mre-wrapper
   - type: Item
