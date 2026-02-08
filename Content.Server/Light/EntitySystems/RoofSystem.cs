@@ -25,7 +25,7 @@ public sealed class RoofSystem : SharedRoofSystem
         if (_gridQuery.TryComp(xform.GridUid, out var grid))
         {
             var index = _maps.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
-            SetRoof((xform.GridUid.Value, grid, null), index, ent.Comp.Value);
+            SetRoof((xform.GridUid.Value, grid, null), index, ent.Comp.Value, ent.Comp.BlockWeather);
         }
 
         QueueDel(ent.Owner);
