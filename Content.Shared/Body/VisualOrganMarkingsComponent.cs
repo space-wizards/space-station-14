@@ -6,18 +6,21 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body;
 
+/// <summary>
+/// Defines an organ that applies markings on top of the layer specified in <see cref="VisualOrganComponent" />
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true)]
 [Access(typeof(SharedVisualBodySystem))]
 public sealed partial class VisualOrganMarkingsComponent : Component
 {
     /// <summary>
-    /// What markings this organ can take
+    /// Defines the type of markings this organ can take
     /// </summary>
     [DataField(required: true), AlwaysPushInheritance]
     public OrganMarkingData MarkingData = default!;
 
     /// <summary>
-    /// The list of markings to apply to the entity
+    /// The list of markings this organ is currently providing to the entity
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<HumanoidVisualLayers, List<Marking>> Markings = new();
