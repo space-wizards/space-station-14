@@ -366,7 +366,7 @@
   parent: DrinkCanBaseFull
   id: DrinkDrGibbCan
   name: Dr. Gibb can
-  description: A delicious blend of 42 different flavours.
+  description: A delicious blend of 42 different flavours. (Dr. Gibb claims no responsibility for any abrupt deaths caused while consuming this drink)
   components:
   - type: SolutionContainerManager
     solutions:
