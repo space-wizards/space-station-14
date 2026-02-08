@@ -28,6 +28,20 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
         }
 
+        public override float GetMass(GasMixture mix)
+        {
+            return GetMass(mix.Moles);
+        }
+
+        public override float GetMass(float[] moles)
+        {
+            Span<float> tmp = stackalloc float[moles.Length];
+            NumericsHelpers.Multiply(moles, GasMolarMasses, tmp);
+
+            // Conversion of grams to kilograms.
+            return NumericsHelpers.HorizontalAdd(tmp) / 1000f;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override float GetHeatCapacityCalculation(float[] moles, bool space)
         {

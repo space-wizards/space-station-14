@@ -26,8 +26,9 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private const float TimerDelay = 0.5f;
-        private float _timer = 0f;
+        private float _timer;
         private const float MinimumSoundValvePressure = 10.0f;
+        // TODO: FIX THIS
         private float _maxExplosionRange;
 
         public override void Initialize()
@@ -36,21 +37,17 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, EntParentChangedMessage>(OnParentChange);
             SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
-            Subs.CVar(_cfg, CCVars.AtmosTankFragment, UpdateMaxRange, true);
-        }
-
-        private void UpdateMaxRange(float value)
-        {
-            _maxExplosionRange = value;
+            Subs.CVar(_cfg, CCVars.AtmosTankFragment, value => _maxExplosionRange = value, true);
         }
 
         public override void UpdateUserInterface(Entity<GasTankComponent> ent)
         {
             var (owner, component) = ent;
-            _ui.SetUiState(owner, SharedGasTankUiKey.Key,
+            _ui.SetUiState(owner,
+                SharedGasTankUiKey.Key,
                 new GasTankBoundUserInterfaceState
                 {
-                    TankPressure = component.Air?.Pressure ?? 0,
+                    TankPressure = component.Air.Pressure
                 });
         }
 
@@ -77,10 +74,15 @@ namespace Content.Server.Atmos.EntitySystems
             while (query.MoveNext(out var uid, out var comp))
             {
                 var gasTank = (uid, comp);
-                if (comp.IsValveOpen && !comp.IsLowPressure && comp.OutputPressure > 0)
-                {
+
+                // If our gas tank is about to explode, continue
+                // We do this step first to ensure that when we hit zero integrity we explode on the next tick, before we lose pressure
+                if (!CheckStatus(gasTank))
+                    continue;
+
+                // Release gas if valve is open or as an emergency safety measure.
+                if (comp.IsValveOpen || comp.Air.Pressure > comp.TankLeakPressure)
                     ReleaseGas(gasTank);
-                }
 
                 if (comp.CheckUser)
                 {
@@ -88,16 +90,10 @@ namespace Content.Server.Atmos.EntitySystems
                     if (Transform(uid).ParentUid != comp.User)
                     {
                         DisconnectFromInternals(gasTank);
-                        continue;
                     }
                 }
 
-                if (comp.Air != null)
-                {
-                    _atmosphereSystem.React(comp.Air, comp);
-                }
-
-                CheckStatus(gasTank);
+                _atmosphereSystem.React(comp.Air, comp);
 
                 if ((comp.IsConnected || comp.IsValveOpen) && _ui.IsUiOpen(uid, SharedGasTankUiKey.Key))
                 {
@@ -106,44 +102,70 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private void ReleaseGas(Entity<GasTankComponent> gasTank)
+        /// <summary>
+        /// Tries to release gas through the pressure release valve.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        private void ReleaseGas(Entity<GasTankComponent> entity)
         {
-            var removed = RemoveAirVolume(gasTank, gasTank.Comp.ValveOutputRate * TimerDelay);
-            var environment = _atmosphereSystem.GetContainingMixture(gasTank.Owner, false, true);
+            if (entity.Comp.IsLowPressure)
+                return;
+
+            var environment = _atmosphereSystem.GetContainingMixture(entity.Owner, false, true);
+
+            var deltaP = environment == null
+                ? entity.Comp.Air.Pressure
+                : entity.Comp.Air.Pressure - environment.Pressure;
+
+            if (deltaP <= 0)
+                return;
+
+            // Turn deltaP into a more useful pressure value.
+            var output = entity.Comp.Air.Pressure > entity.Comp.TankLeakPressure ? entity.Comp.MaxOutputPressure : entity.Comp.OutputPressure;
+            deltaP = Math.Min(output, deltaP);
+            var removed = RemoveAirPressure(entity, deltaP);
+
             if (environment != null)
-            {
                 _atmosphereSystem.Merge(environment, removed);
-            }
-            var strength = removed.TotalMoles * MathF.Sqrt(removed.Temperature);
+
+            var strength = removed.Pressure * removed.Volume * Atmospherics.kPaToKg_m2;
             var dir = _random.NextAngle().ToWorldVec();
-            _throwing.TryThrow(gasTank, dir * strength, strength);
-            if (gasTank.Comp.OutputPressure >= MinimumSoundValvePressure)
-                _audioSys.PlayPvs(gasTank.Comp.RuptureSound, gasTank);
+            _throwing.TryThrow(entity, dir * strength, strength);
+
+            if (deltaP >= MinimumSoundValvePressure)
+                _audioSys.PlayPvs(entity.Comp.RuptureSound, entity);
         }
 
-        public GasMixture? RemoveAir(Entity<GasTankComponent> gasTank, float amount)
+        public double DischargeVolume(Entity<GasTankComponent> entity, float deltaP)
         {
-            var gas = gasTank.Comp.Air?.Remove(amount);
-            CheckStatus(gasTank);
-            return gas;
+            return TimerDelay * _atmosphereSystem.GetFlowVolume(entity.Comp.Air, deltaP, 0.01f);
         }
 
-        public GasMixture RemoveAirVolume(Entity<GasTankComponent> gasTank, float volume)
+        public GasMixture RemoveAirPressure(Entity<GasTankComponent> gasTank, float pressure)
         {
-            var component = gasTank.Comp;
-            if (component.Air == null)
-                return new GasMixture(volume);
+            return RemoveAirAtPressure(gasTank, pressure, (float)DischargeVolume(gasTank, pressure));
+        }
 
-            var molesNeeded = component.OutputPressure * volume / (Atmospherics.R * component.Air.Temperature);
+        public GasMixture RemoveAirAtPressure(Entity<GasTankComponent> gasTank, float pressure, float volume)
+        {
+            var molesNeeded = pressure * volume / (Atmospherics.R * gasTank.Comp.Air.Temperature);
 
-            var air = RemoveAir(gasTank, molesNeeded);
+            return RemoveAir(gasTank, molesNeeded);
+        }
 
-            if (air != null)
-                air.Volume = volume;
-            else
-                return new GasMixture(volume);
+        public GasMixture RemoveAirOutput(Entity<GasTankComponent> gasTank, float volume)
+        {
+            var mixture = RemoveAirAtPressure(gasTank, gasTank.Comp.OutputPressure, volume);
+            // We resize the volume because lungs breathe in volume rather than being pressure based atm.
+            // If we don't do this, they won't consume all of the outputted gas or will consume way too much.
+            mixture.Volume = volume;
+            return mixture;
+        }
 
-            return air;
+        public GasMixture RemoveAir(Entity<GasTankComponent> gasTank, float amount)
+        {
+            return gasTank.Comp.Air.Remove(amount);
         }
 
         public void AssumeAir(Entity<GasTankComponent> ent, GasMixture giver)
@@ -152,73 +174,48 @@ namespace Content.Server.Atmos.EntitySystems
             CheckStatus(ent);
         }
 
-        public void CheckStatus(Entity<GasTankComponent> ent)
+        public bool CheckStatus(Entity<GasTankComponent> ent)
         {
-            var (owner, component) = ent;
-            if (component.Air == null)
-                return;
-
-            var pressure = component.Air.Pressure;
-
-            if (pressure > component.TankFragmentPressure && _maxExplosionRange > 0)
+            var pressure = ent.Comp.Air.Pressure;
+            if (ent.Comp.Integrity < 0)
             {
                 // Give the gas a chance to build up more pressure.
                 for (var i = 0; i < 3; i++)
                 {
-                    _atmosphereSystem.React(component.Air, component);
+                    _atmosphereSystem.React(ent.Comp.Air, ent.Comp);
                 }
 
-                pressure = component.Air.Pressure;
-                var range = MathF.Sqrt((pressure - component.TankFragmentPressure) / component.TankFragmentScale);
+                var environment = _atmosphereSystem.GetContainingMixture(ent.Owner, false, true);
+                var deltaP = pressure;
+                if (environment != null)
+                {
+                    _atmosphereSystem.Merge(environment, ent.Comp.Air);
+                    deltaP = Math.Max(0f, pressure - environment.Pressure);
+                }
 
-                // Let's cap the explosion, yeah?
-                // !1984
-                range = Math.Min(Math.Min(range, GasTankComponent.MaxExplosionRange), _maxExplosionRange);
+                _audioSys.PlayPvs(ent.Comp.RuptureSound, Transform(ent).Coordinates, AudioParams.Default.WithVariation(0.125f));
 
-                _explosions.TriggerExplosive(owner, radius: range);
+                QueueDel(ent);
 
-                return;
+                // TODO: Put the magic number somewhere, maybe slow down the explosion by raising integrity and having
+                _explosions.TriggerExplosive(ent, totalIntensity: deltaP * ent.Comp.Air.Volume / 100f);
+
+                return false;
             }
 
-            if (pressure > component.TankRupturePressure)
+            // Gas tank begins to fail.
+            if (pressure > ent.Comp.TankLeakPressure)
             {
-                if (component.Integrity <= 0)
-                {
-                    var environment = _atmosphereSystem.GetContainingMixture(owner, false, true);
-                    if (environment != null)
-                        _atmosphereSystem.Merge(environment, component.Air);
-
-                    _audioSys.PlayPvs(component.RuptureSound, Transform(owner).Coordinates, AudioParams.Default.WithVariation(0.125f));
-
-                    QueueDel(owner);
-                    return;
-                }
-
-                component.Integrity--;
-                return;
+                ent.Comp.Integrity--;
+                Dirty(ent);
             }
-
-            if (pressure > component.TankLeakPressure)
+            else if (ent.Comp.Integrity < 4)
             {
-                if (component.Integrity <= 0)
-                {
-                    var environment = _atmosphereSystem.GetContainingMixture(owner, false, true);
-                    if (environment == null)
-                        return;
-
-                    var leakedGas = component.Air.RemoveRatio(0.25f);
-                    _atmosphereSystem.Merge(environment, leakedGas);
-                }
-                else
-                {
-                    component.Integrity--;
-                }
-
-                return;
+                ent.Comp.Integrity++;
+                Dirty(ent);
             }
 
-            if (component.Integrity < 3)
-                component.Integrity++;
+            return true;
         }
 
         /// <summary>

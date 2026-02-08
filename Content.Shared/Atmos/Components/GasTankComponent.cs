@@ -7,11 +7,10 @@ namespace Content.Shared.Atmos.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class GasTankComponent : Component, IGasMixtureHolder
 {
-    public const float MaxExplosionRange = 26f;
+    //public const float MaxExplosionRange = 26f;
     private const float DefaultLowPressure = 0f;
     private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
-    public int Integrity = 3;
     public bool IsLowPressure => Air.Pressure <= TankLowPressure;
 
     [DataField]
@@ -73,25 +72,26 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     ///     Pressure at which tanks start leaking.
     /// </summary>
     [DataField]
-    public float TankLeakPressure = 30 * Atmospherics.OneAtmosphere;
+    public float TankLeakPressure = 20 * Atmospherics.OneAtmosphere;
 
     /// <summary>
-    ///     Pressure at which tank spills all contents into atmosphere.
+    ///     How many over-pressures until this gas tank detonates.
+    ///     An overpressure is defined as pressure exceeding <see cref="TankLeakPressure"/>
     /// </summary>
-    [DataField]
-    public float TankRupturePressure = 40 * Atmospherics.OneAtmosphere;
-
-    /// <summary>
-    ///     Base 3x3 explosion.
-    /// </summary>
-    [DataField]
-    public float TankFragmentPressure = 50 * Atmospherics.OneAtmosphere;
+    [DataField, AutoNetworkedField]
+    public int Integrity = 10;
 
     /// <summary>
     ///     Increases explosion for each scale kPa above threshold.
     /// </summary>
     [DataField]
     public float TankFragmentScale = 2.25f * Atmospherics.OneAtmosphere;
+
+    /// <summary>
+    /// The debris entity that is created when this gas canister is destroyed.
+    /// </summary>
+    [DataField]
+    public EntProtoId Debris;
 
     [DataField]
     public EntProtoId ToggleAction = "ActionToggleInternals";

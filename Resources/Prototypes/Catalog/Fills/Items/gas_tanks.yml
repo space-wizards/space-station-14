@@ -202,3 +202,17 @@
       moles:
         Plasma: 2.051379050
       temperature: 293.15
+
+- type: entity
+  id: MaxCap
+  parent: AirTank
+  suffix: Max Cap
+  components:
+  - type: GasTank
+    outputPressure: 0
+    air:
+      volume: 5
+      moles:
+        Oxygen: 1.0
+        Tritium: 1.0
+      temperature: 373.149

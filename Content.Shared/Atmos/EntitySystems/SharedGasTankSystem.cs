@@ -93,22 +93,37 @@ public abstract class SharedGasTankSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnGetAlternativeVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetAlternativeVerb(Entity<GasTankComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
+        var user = args.User;
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = component.IsValveOpen ? Loc.GetString("comp-gas-tank-close-valve") : Loc.GetString("comp-gas-tank-open-valve"),
+            Text = entity.Comp.IsValveOpen ? Loc.GetString("comp-gas-tank-close-valve") : Loc.GetString("comp-gas-tank-open-valve"),
             Act = () =>
             {
-                component.IsValveOpen = !component.IsValveOpen;
-                _audio.PlayPredicted(component.ValveSound, uid, args.User);
-                Dirty(uid, component);
+                ToggleValve(entity, user: user);
             },
-            Disabled = component.IsConnected,
+            Disabled = entity.Comp.IsConnected,
         });
+    }
+
+    public void ToggleValve(Entity<GasTankComponent> entity, EntityUid? user = null)
+    {
+        ToggleValve(entity, !entity.Comp.IsValveOpen, user);
+    }
+
+    public void ToggleValve(Entity<GasTankComponent> entity, bool open, EntityUid? user = null)
+    {
+        // Don't dirty if we don't have to! Don't play the sound if we're already open!
+        if (entity.Comp.IsValveOpen == open)
+            return;
+
+        entity.Comp.IsValveOpen = open;
+        _audio.PlayPredicted(entity.Comp.ValveSound, entity, user);
+        Dirty(entity);
     }
 
     public bool CanConnectToInternals(Entity<GasTankComponent> ent)
