@@ -229,6 +229,8 @@
     damage:
       types:
         Slash: 5 # Reduce?
+  - type: Cuffable
+    state: vox
 
 - type: entity
   parent: OrganBase
