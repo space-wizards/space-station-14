@@ -1,0 +1,7 @@
+- type: alert
+  id: DragonFullPower
+  icons:
+  - sprite: /Textures/Interface/Alerts/dragon_full_power.rsi
+    state: full-power
+  name: alerts-dragon-full-power-name
+  description: alerts-dragon-full-power-desc

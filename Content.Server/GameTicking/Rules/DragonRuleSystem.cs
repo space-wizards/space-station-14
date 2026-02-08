@@ -32,7 +32,7 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
         if(ent is null)
             return;
 
-        args.Append(MakeBriefing(ent.Value));
+        args.Append(StationNavigator(ent.Value));
     }
 
     private void AfterAntagEntitySelected(Entity<DragonRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
@@ -45,10 +45,10 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
         if(dragonRole is null)
             return;
 
-        _antag.SendBriefing(args.EntityUid, MakeBriefing(args.EntityUid), null, null);
+        _antag.SendBriefing(args.EntityUid, StationNavigator(args.EntityUid), null, null);
     }
 
-    private string MakeBriefing(EntityUid dragon)
+    private string StationNavigator(EntityUid dragon)
     {
         var direction = string.Empty;
 
@@ -67,7 +67,7 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
             direction = ContentLocalizationManager.FormatDirection(vectorToStation.GetDir());
         }
 
-        var briefing = Loc.GetString("dragon-role-briefing", ("direction", direction));
+        var briefing = Loc.GetString("dragon-station-navigator", ("direction", direction));
 
         return briefing;
     }

@@ -175,6 +175,25 @@
   components:
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
+    fullPowerEffects:
+    - !type:AdjustAlert
+      alertType: DragonFullPower
+      clear: false
+    fullPowerComponents:
+    - type: PassiveDamage
+      allowedStates:
+      - Alive
+      damage:
+        types:
+          Bloodloss: -2
+        groups:
+          Brute: -3
+          Toxin: -3
+          Burn: -3
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 4
+      baseSprintSpeed: 6
+      baseWeightlessModifier: 2
   - type: GhostRole
     mindRoles:
     - MindRoleDragon

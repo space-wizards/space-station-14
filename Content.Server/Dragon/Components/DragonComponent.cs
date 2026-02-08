@@ -1,7 +1,11 @@
+using Content.Server.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Text.Json.Serialization;
+using static Content.Shared.Fax.AdminFaxEuiMsg;
 
 namespace Content.Server.Dragon
 {
@@ -15,10 +19,40 @@ namespace Content.Server.Dragon
         [DataField("rifts")]
         public List<EntityUid> Rifts = new();
 
+        /// <summary>
+        /// The number of charged rifts.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly), DataField]
+        public int ChargedRifts = 0;
+
+        /// <summary>
+        /// The maximum number of rifts that a dragon can create.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly), DataField]
+        public int MaxRifts = 3;
+
+        /// <summary>
+        /// The effects that appear on the dragon when the maximum possible number of rifts is fully charged.
+        /// </summary>
+        [DataField]
+        public EntityEffect[] FullPowerEffects = default!;
+
+        /// <summary>
+        /// The list of components that will be added if the dragon when the maximum possible number of rifts is fully charged.
+        /// </summary>
+        [DataField(required: true)]
+        public ComponentRegistry FullPowerComponents = new();
+
+        /// <summary>
+        /// Text of the alert when calling the evacuation shuttle if the dragon fully charges 3 rifts.
+        /// </summary>
+        [DataField]
+        public LocId RoundEndText = "dragon-round-end";
+
         public bool Weakened => WeakenedAccumulator > 0f;
 
         /// <summary>
-        /// When any rift is destroyed how long is the dragon weakened for
+        /// When any rift is destroyed how long is the dragon weakened for.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("weakenedDuration")]
         public float WeakenedDuration = 120f;
