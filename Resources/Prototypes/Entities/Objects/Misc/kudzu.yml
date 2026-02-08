@@ -1,317 +1,327 @@
 - type: entity
-  id: BaseKudzu
   abstract: true
+  id: BaseKudzu
   placement:
     mode: SnapgridCenter
     snap:
-      - Wall
+    - Wall
   components:
-    - type: Appearance
-    - type: Transform
-      anchored: true
-    - type: Physics
-    - type: Kudzu
-    - type: GrowingKudzu
-    - type: ActiveEdgeSpreader
-    - type: EdgeSpreader
-      id: Kudzu
-    - type: SpeedModifierContacts
-      affectAirborne: true
+  - type: Appearance
+  - type: Transform
+    anchored: true
+  - type: Physics
+  - type: Kudzu
+  - type: GrowingKudzu
+  - type: ActiveEdgeSpreader
+  - type: EdgeSpreader
+    id: Kudzu
+  - type: SpeedModifierContacts
+    affectAirborne: true
 
 - type: entity
+  parent: BaseKudzu
   id: Kudzu
   name: kudzu
-  parent: BaseKudzu
   description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
   components:
-    - type: MeleeSound
-      soundGroups:
-        Brute:
-          path:
-            "/Audio/Weapons/slash.ogg"
-    - type: Sprite
-      sprite: Objects/Misc/kudzu.rsi
-      state: kudzu_11
-      drawdepth: Overdoors
-    - type: KudzuVisuals
-    - type: Clickable
-    - type: Fixtures
-      fixtures:
-        fix1:
-          hard: false
-          density: 7
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          layer:
-          - MidImpassable
-    - type: Damageable
-      damageModifierSet: Wood
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - type: Temperature
-    - type: TemperatureDamage
-      heatDamage:
-        types:
-          Heat: 5
-      coldDamage: {}
-      coldDamageThreshold: 0
-    - type: Flammable
-      fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
-      damage:
-        types:
-          Heat: 3
-    - type: Reactive
-      groups:
-        Flammable: [Touch]
-        Extinguish: [Touch]
-      reactions:
-      - reagents: [WeedKiller, PlantBGone]
-        methods: [Touch]
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Heat: 0.5
-    - type: AtmosExposed
-    - type: Kudzu
-      growthTickChance: 0.3
-      spreadChance: 0.4
-    - type: SpeedModifierContacts
-      walkSpeedModifier: 0.2
-      sprintSpeedModifier: 0.2
-      ignoreWhitelist:
-        components:
-        - IgnoreKudzu
-    - type: Edible
-      requiresSpecialDigestion: true
-      delay: 0.5
-    - type: FlavorProfile
-      flavors:
-      - fiber
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          reagents:
-          - ReagentId: Nutriment
-            Quantity: 0.1
-    - type: Tag
-      tags:
-      - Ruminant
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Sprite
+    sprite: Objects/Misc/kudzu.rsi
+    state: kudzu_11
+    drawdepth: Overdoors
+  - type: KudzuVisuals
+  - type: Clickable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Temperature
+  - type: TemperatureDamage
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    coldDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
+    damage:
+      types:
+        Heat: 3
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+    reactions:
+    - reagents: [WeedKiller, PlantBGone]
+      methods: [Touch]
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 0.5
+  - type: AtmosExposed
+  - type: Kudzu
+    growthTickChance: 0.3
+    spreadChance: 0.4
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.2
+    sprintSpeedModifier: 0.2
+    ignoreWhitelist:
+      components:
+      - IgnoreKudzu
+  - type: Edible
+    requiresSpecialDigestion: true
+    delay: 0.5
+  - type: FlavorProfile
+    flavors:
+    - fiber
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 0.1
+  - type: Tag
+    tags:
+    - Ruminant
 
 - type: entity
-  id: WeakKudzu
   parent: Kudzu
+  id: WeakKudzu
   suffix: Weak
   components:
-    - type: Kudzu
-      spreadChance: 0.3
+  - type: Kudzu
+    spreadChance: 0.3
+
+- type: entityTable
+  id: kudzuStructureTable
+  table: !type:GroupSelector
+    children:
+    - id: LightTree
+      weight: 6
+    - id: CrystalCyan
 
 - type: entity
+  parent: Kudzu
   id: KudzuFlowerFriendly
   name: floral carpet
-  suffix: Friendly, Floral Anomaly
   description: A colorful carpet of flowers sprawling in every direction. You're not sure whether to take it down or leave it up.
-  parent: Kudzu
+  suffix: Friendly, Floral Anomaly
   components:
-    - type: Sprite
-      drawdepth: HighFloorObjects
-      sprite: Objects/Misc/kudzuflower.rsi
-      state: kudzu_11
-    - type: Kudzu
-      spriteVariants: 5
-      spreadChance: 0.01
-    - type: SpeedModifierContacts
-      walkSpeedModifier: 0.8
-      sprintSpeedModifier: 0.8
-      ignoreWhitelist:
-        components:
-        - IgnoreKudzu
-    - type: RandomSpawner
-      deleteSpawnerAfterSpawn: false
-      rareChance: 0.15
-      offset: 0.2
-      chance: 0.05
-      prototypes:
-      - LightTree #TODO: transform into EntityTable with weight
-      - LightTree
-      - LightTree
-      - LightTree
-      - LightTree
-      - LightTree
-      - CrystalCyan
-      rarePrototypes:
-      - AnomalyFloraBulb
-    - type: Tag
-      tags:
-      - Ruminant
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: Objects/Misc/kudzuflower.rsi
+    state: kudzu_11
+  - type: Kudzu
+    spriteVariants: 5
+    spreadChance: 0.01
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.8
+    sprintSpeedModifier: 0.8
+    ignoreWhitelist:
+      components:
+      - IgnoreKudzu
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: AnomalyFloraBulb
+        weight: 0.15
+      - !type:NestedSelector
+        tableId: kudzuStructureTable
+        weight: 0.85
+        prob: 0.05
+    deleteSpawnerAfterSpawn: false
+    offset: 0.2
+  - type: Tag
+    tags:
+    - Ruminant
 
 - type: entity
+  parent: KudzuFlowerFriendly
   id: KudzuFlowerAngry
   suffix: Angry, Floral Anomaly
-  parent: KudzuFlowerFriendly
   components:
-    - type: Kudzu
-      spreadChance: 0.2
-    - type: RandomSpawner
-      chance: 0.05
-      rarePrototypes:
-      - AnomalyFloraBulb
-      - AnomalyFloraBulb
-      - MobLuminousEntity
-      - MobLuminousObject
-      - MobLuminousPerson
+  - type: Kudzu
+    spreadChance: 0.2
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: kudzuStructureTable
+        weight: 0.85
+        prob: 0.05
+      - !type:GroupSelector
+        weight: 0.15
+        children:
+        - id: AnomalyFloraBulb
+          weight: 2
+        - id: MobLuminousEntity
+        - id: MobLuminousObject
+        - id: MobLuminousPerson
 
 - type: entity
+  parent: BaseKudzu
   id: FleshKudzu
   name: tendons
-  parent: BaseKudzu
   description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
-  placement:
-    mode: SnapgridCenter
-    snap:
-      - Wall
   components:
-    - type: MeleeSound
-      soundGroups:
-        Brute:
-          path:
-            "/Audio/Weapons/slash.ogg"
-    - type: Sprite
-      sprite: Objects/Misc/fleshkudzu.rsi
-      state: kudzu_11
-      drawdepth: Overdoors
-    - type: KudzuVisuals
-    - type: Clickable
-    - type: Fixtures
-      fixtures:
-        fix1:
-          hard: false
-          density: 7
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          layer:
-          - MidImpassable
-    - type: Damageable
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 40
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - type: DamageContacts
-      damage:
-        types:
-          Slash: 1.5
-          Piercing: 1.5
-      ignoreWhitelist:
-        tags:
-        - Flesh
-    - type: Kudzu
-      growthTickChance: 0.1
-      spreadChance: 0.4
-      # Heals each time it manages to do a growth tick:
-      damageRecovery:
-        types:
-          Slash: -0.5
-          Heat: -1.0
-          Cold: -1.0
-          Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
-    - type: Temperature
-    - type: TemperatureDamage
-      heatDamage:
-        types:
-          Heat: 10
-      coldDamage:
-        types:
-          Cold: 5 #per second, scales with temperature & other constants
-    - type: Barotrauma
-      damage:
-        types:
-          Blunt: 0.10 #per second, scales with pressure and other constants.
-    - type: Flammable
-      fireSpread: true
-      damage:
-       types:
-         Heat: 3
-    - type: AtmosExposed
-    - type: Edible # delightfully devilish !
-      delay: 0.5
-    - type: SpeedModifierContacts
-      walkSpeedModifier: 0.3
-      sprintSpeedModifier: 0.3
-      ignoreWhitelist:
-        tags:
-        - Flesh
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          reagents:
-          - ReagentId: Razorium
-            Quantity: 2
-          - ReagentId: Protein
-            Quantity: 1
-    - type: AutoEmote # Meat Kudzu used to have respirator, but couldn't breathe so all it would do is gasp.
-      emotes:
-      - MeatGasp
-    - type: Tag
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Sprite
+    sprite: Objects/Misc/fleshkudzu.rsi
+    state: kudzu_11
+    drawdepth: Overdoors
+  - type: KudzuVisuals
+  - type: Clickable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageContacts
+    damage:
+      types:
+        Slash: 1.5
+        Piercing: 1.5
+    ignoreWhitelist:
       tags:
-      - Meat
-      - Ruminant
+      - Flesh
+  - type: Kudzu
+    growthTickChance: 0.1
+    spreadChance: 0.4
+    # Heals each time it manages to do a growth tick:
+    damageRecovery:
+      types:
+        Slash: -0.5
+        Heat: -1.0
+        Cold: -1.0
+        Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
+  - type: Temperature
+  - type: TemperatureDamage
+    heatDamage:
+      types:
+        Heat: 10
+    coldDamage:
+      types:
+        Cold: 5 #per second, scales with temperature & other constants
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.10 #per second, scales with pressure and other constants.
+  - type: Flammable
+    fireSpread: true
+    damage:
+     types:
+       Heat: 3
+  - type: AtmosExposed
+  - type: Edible # delightfully devilish !
+    delay: 0.5
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.3
+    sprintSpeedModifier: 0.3
+    ignoreWhitelist:
+      tags:
+      - Flesh
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Razorium
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 1
+  - type: AutoEmote # Meat Kudzu used to have respirator, but couldn't breathe so all it would do is gasp.
+    emotes:
+    - MeatGasp
+  - type: Tag
+    tags:
+    - Meat
+    - Ruminant
 
 - type: entity
-  name: dark haze
-  id: ShadowKudzu
   parent: [ BaseKudzu, BaseShadow ]
+  id: ShadowKudzu
+  name: dark haze
   components:
-    - type: Physics
-      canCollide: false
-    - type: Occluder
-    - type: Sprite
-      drawdepth: Effects
-      sprite: Effects/spookysmoke.rsi
-      layers:
-      - state: spookysmoke
-        color: "#793a80dd"
-        map: [base]
-    - type: Kudzu
-      growthTickChance: 0.2
-      spreadChance: 0.99
-    - type: RandomSpawner
-      deleteSpawnerAfterSpawn: false
-      rareChance: 0.05
-      offset: 0.2
-      chance: 0.45
-      prototypes:
-      - ShadowBasaltRandom
-      rarePrototypes:
-      - ShadowPortal
-      - ShadowKudzuLootSpawner
-    - type: Tag
-      tags:
-        - HideContextMenu
-        - SpookyFog
-    - type: OptionsVisualizer
-      visuals:
-        base:
-        - options: Default
-          data: { state: spookysmoke }
-        - options: ReducedMotion
-          data: { state: spookysmoke_static }
+  - type: Physics
+    canCollide: false
+  - type: Occluder
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Effects/spookysmoke.rsi
+    layers:
+    - state: spookysmoke
+      color: "#793a80dd"
+      map: [base]
+  - type: Kudzu
+    growthTickChance: 0.2
+    spreadChance: 0.99
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: ShadowBasaltRandom
+        weight: 0.95
+        prob: 0.45
+      - !type:GroupSelector
+        weight: 0.05
+        children:
+        - id: ShadowPortal
+        - id: ShadowKudzuLootSpawner # Also has its own offset
+    deleteSpawnerAfterSpawn: false
+    offset: 0.2
+  - type: Tag
+    tags:
+    - HideContextMenu
+    - SpookyFog
+  - type: OptionsVisualizer
+    visuals:
+      base:
+      - options: Default
+        data: { state: spookysmoke }
+      - options: ReducedMotion
+        data: { state: spookysmoke_static }
 
 - type: entity
-  name: haze
-  id: ShadowKudzuWeak
   parent: ShadowKudzu
+  id: ShadowKudzuWeak
+  name: haze
   components:
-    - type: Kudzu
-      spreadChance: 0 #appears during pulsation. It shouldnt spreading.
+  - type: Kudzu
+    spreadChance: 0 #appears during pulsation. It shouldnt spreading.
