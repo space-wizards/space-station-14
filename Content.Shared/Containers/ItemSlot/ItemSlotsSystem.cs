@@ -248,9 +248,15 @@ namespace Content.Shared.Containers.ItemSlots
                 //
                 // doing a check to make sure that they're all the same or something is probably frivolous
                 if (lockedFailPopup != null)
-                    _popupSystem.PopupClient(Loc.GetString(lockedFailPopup), uid, args.User);
+                    _popupSystem.PopupClient(
+                        Loc.GetString(lockedFailPopup, ("inserted", args.Used), ("container", uid)),
+                        uid,
+                        args.User);
                 else if (whitelistFailPopup != null)
-                    _popupSystem.PopupClient(Loc.GetString(whitelistFailPopup), uid, args.User);
+                    _popupSystem.PopupClient(
+                        Loc.GetString(whitelistFailPopup, ("inserted", args.Used), ("container", uid)),
+                        uid,
+                        args.User);
                 return;
             }
 
