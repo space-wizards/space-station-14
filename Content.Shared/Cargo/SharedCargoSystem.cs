@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using JetBrains.Annotations;
@@ -26,63 +27,79 @@ public abstract class SharedCargoSystem : EntitySystem
     }
 
     /// <summary>
-    /// For a given station, retrieves the balance in a specific account.
-    /// </summary>
-    public int GetBalanceFromAccount(Entity<StationBankAccountComponent?> station, ProtoId<CargoAccountPrototype> account)
-    {
-        if (!Resolve(station, ref station.Comp))
-            return 0;
-
-        return station.Comp.Accounts.GetValueOrDefault(account);
-    }
-
-    /// <summary>
     /// For a station, creates a distribution between one the bank's account and the other accounts.
     /// The primary account receives the majority percentage listed on the bank account, with the remaining
-    /// funds distributed to all accounts based on <see cref="StationBankAccountComponent.RevenueDistribution"/>
+    /// funds distributed to all accounts based on <see cref="StationBankAccountComponent.Accounts"/>
     /// </summary>
-    public Dictionary<ProtoId<CargoAccountPrototype>, double> CreateAccountDistribution(Entity<StationBankAccountComponent> stationBank)
+    /// <remarks>
+    /// includePrimaryAccount should only be false when you don't want to factor in the primary cut, and only want to get the revenue distribution in <see cref="StationBankAccountComponent.Accounts"/>.
+    /// </remarks>
+    public Dictionary<ProtoId<CargoAccountPrototype>, double> CreateAccountDistribution(Entity<StationBankAccountComponent> stationBank, bool includePrimaryAccount = true)
     {
-        var distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
-        {
-            { stationBank.Comp.PrimaryAccount, stationBank.Comp.PrimaryCut }
-        };
-        var remaining = 1.0 - stationBank.Comp.PrimaryCut;
+        var distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double> { };
+        var remaining = 1.0;
 
-        foreach (var (account, percentage) in stationBank.Comp.RevenueDistribution)
+        if(includePrimaryAccount)
+        {
+            distribution.GetOrNew(stationBank.Comp.PrimaryAccount);
+            distribution[stationBank.Comp.PrimaryAccount] = stationBank.Comp.PrimaryCut;
+            remaining -= stationBank.Comp.PrimaryCut;
+        }
+
+        foreach (var (account, data) in stationBank.Comp.Accounts)
         {
             var existing = distribution.GetOrNew(account);
-            distribution[account] = existing + remaining * percentage;
+            distribution[account] = existing + remaining * data.RevenueDistribution;
         }
         return distribution;
     }
 
     /// <summary>
-    /// Returns information about the given bank account.
+    /// Returns data about the given bank account.
     /// </summary>
     /// <param name="station">Station to get bank account info from.</param>
     /// <param name="accountPrototypeId">Bank account prototype ID to get info for.</param>
-    /// <param name="money">The amount of money in the account</param>
+    /// <param name="accountData">The account data.</param>
     /// <returns>Whether or not the bank account exists.</returns>
-    public bool TryGetAccount(Entity<StationBankAccountComponent?> station, ProtoId<CargoAccountPrototype> accountPrototypeId, out int money)
+    public bool TryGetAccount(Entity<StationBankAccountComponent?> station, ProtoId<CargoAccountPrototype> accountPrototypeId, [NotNullWhen(true)] out CargoAccountData? accountData)
     {
-        money = 0;
+        accountData = null;
 
         if (!Resolve(station, ref station.Comp))
             return false;
 
-        return station.Comp.Accounts.TryGetValue(accountPrototypeId, out money);
+        return station.Comp.Accounts.TryGetValue(accountPrototypeId, out accountData);
     }
 
     /// <summary>
-    /// Returns a readonly dictionary of all accounts and their money info.
+    /// Returns the balance of the given bank account.
+    /// </summary>
+    /// <param name="station">Station to get bank account info from.</param>
+    /// <param name="accountPrototypeId">Bank account prototype ID to get info for.</param>
+    /// <param name="balance">The account balance.</param>
+    /// <returns>Whether or not the bank account exists.</returns>
+    public bool TryGetAccountBalance(Entity<StationBankAccountComponent?> station,
+        ProtoId<CargoAccountPrototype> accountPrototypeId,
+        out int balance)
+    {
+        balance = 0;
+
+        if (!TryGetAccount(station, accountPrototypeId, out var accountData))
+            return false;
+
+        balance = accountData.Balance;
+        return true;
+    }
+
+    /// <summary>
+    /// Returns a readonly dictionary of all accounts and their data.
     /// </summary>
     /// <param name="station">Station to get bank account info from.</param>
     /// <returns>Whether or not the bank account exists.</returns>
-    public IReadOnlyDictionary<ProtoId<CargoAccountPrototype>, int> GetAccounts(Entity<StationBankAccountComponent?> station)
+    public IReadOnlyDictionary<ProtoId<CargoAccountPrototype>, CargoAccountData> GetAccounts(Entity<StationBankAccountComponent?> station)
     {
         if (!Resolve(station, ref station.Comp))
-            return new Dictionary<ProtoId<CargoAccountPrototype>, int>();
+            return new Dictionary<ProtoId<CargoAccountPrototype>, CargoAccountData>();
 
         return station.Comp.Accounts;
     }
@@ -111,7 +128,7 @@ public abstract class SharedCargoSystem : EntitySystem
         if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
             return false;
 
-        accounts[accountPrototypeId] += money;
+        accounts[accountPrototypeId].Balance += money;
         var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
         RaiseLocalEvent(station, ref ev, true);
 
@@ -146,7 +163,7 @@ public abstract class SharedCargoSystem : EntitySystem
         if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
             return false;
 
-        accounts[accountPrototypeId] = money;
+        accounts[accountPrototypeId].Balance = money;
         var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
         RaiseLocalEvent(station, ref ev, true);
 
@@ -190,7 +207,7 @@ public abstract class SharedCargoSystem : EntitySystem
         foreach (var (account, percent) in accountDistribution)
         {
             var accountBalancedAdded = (int) Math.Round(percent * balanceAdded);
-            ent.Comp.Accounts[account] += accountBalancedAdded;
+            ent.Comp.Accounts[account].Balance += accountBalancedAdded;
         }
 
         var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
