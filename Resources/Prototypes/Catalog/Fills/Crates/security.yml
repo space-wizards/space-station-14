@@ -2,25 +2,16 @@
   parent: CrateSecgear
   id: CrateSecurityArmor
   name: armor crate
-  description: Contains three bulletproof vests. Requires Security access to open.
+  description: Contains three standard-issue helmets and three bulletproof vests. Requires Security access to open.
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage:
-        id: ClothingOuterArmorBulletproof
-        amount: 3
-
-- type: entity
-  parent: CrateSecgear
-  id: CrateSecurityHelmet
-  name: helmet crate
-  description: Contains three standard-issue brain buckets. Requires Security access to open.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage:
-        id: ClothingHeadHelmetBasic
-        amount: 3
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingHeadHelmetBasic
+          amount: 3
+        - id: ClothingOuterArmorBulletproof
+          amount: 3
 
 - type: entity
   parent: CrateSecgear
@@ -41,22 +32,6 @@
           amount: 3
 #        - Pepperspray
 #        - GrenadeTeargas
-
-- type: entity
-  parent: CrateSecgear
-  id: CrateSecuritySupplies
-  name: security supplies crate
-  description: Contains various supplies for the station's Security team. Requires Security access to open.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: BoxHandcuff
-        - id: BoxSechud
-#        - SecBelt
-#        - SecGasmask
-#        - SpacelawBook
 
 - type: entity
   parent: CrateSecgear
