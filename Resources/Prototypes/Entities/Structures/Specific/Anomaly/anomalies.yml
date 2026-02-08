@@ -117,6 +117,15 @@
     damage:
       types:
         Heat: 10
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: pyroclastic anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyGravity
@@ -152,6 +161,15 @@
   - type: SingularityDistortion
     intensity: 1000
     falloffPower: 2.7
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: gravity anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyElectricity
@@ -177,6 +195,15 @@
     castShadows: false
   - type: ElectricityAnomaly
   - type: Electrified
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: electric anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyFlesh
@@ -272,6 +299,15 @@
       - MobFleshClamp
       - MobFleshLover
       - FleshKudzu
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: flesh anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyBluespace
@@ -321,6 +357,15 @@
       collection: RadiationPulse
       params:
         volume: 5
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: bluespace anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyIce
@@ -377,6 +422,15 @@
     damage:
       types:
         Cold: 10
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: ice anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyRockBase
@@ -417,6 +471,15 @@
         maxAmount: 50
         maxRange: 12
       floor: FloorAsteroidTile
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: rock anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyRockUranium
@@ -825,6 +888,15 @@
         maxRange: 6
       spawns:
       - KudzuFlowerAngry
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: flora anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyFloraBulb
@@ -988,6 +1060,15 @@
     solution: anomaly
   - type: InjectableSolution
     solution: beaker
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: liquid anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyShadow
@@ -1042,7 +1123,8 @@
     departureSound: /Audio/Items/hiss.ogg
   - type: Tag
     tags:
-      - SpookyFog
+    - GhostOnlyWarp
+    - SpookyFog
   - type: DamageOnInteract
     damage:
       types:
@@ -1052,6 +1134,12 @@
     damage:
       types:
         Cold: 10
+  - type: WarpPoint
+    follow: true
+    location: shadow anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyTech
@@ -1087,6 +1175,15 @@
     ports:
       - Pulse
       - Timer
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: tech anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: AnomalyTechBeam
@@ -1167,3 +1264,12 @@
     projectilePrototype: DrinkLemonLimeCranberryCan
     minProjectiles: 1
     maxProjectiles: 3
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    location: santa anomaly
+    blacklist:
+      tags:
+      - GhostOnlyWarp
