@@ -21,6 +21,17 @@
                 <Label Text="{Loc 'ui-options-accessability-header-content'}"
                        StyleClasses="LabelKeyText"/>
                 <CheckBox Name="CensorNudityCheckBox" Text="{Loc 'ui-options-censor-nudity'}" />
+                <Label Text="{Loc 'ui-options-accessability-header-interface'}"
+                       StyleClasses="LabelKeyText"/>
+
+                <ui:OptionFontSelector Name="MainFontSelector" StandardType="Main"
+                                       Title="{Loc 'ui-options-main-font'}" />
+                <ui:OptionFontSelector Name="TitleFontSelector" StandardType="Title"
+                                       Title="{Loc 'ui-options-title-font'}" />
+                <ui:OptionFontSelector Name="MachineTitleFontSelector" StandardType="MachineTitle"
+                                       Title="{Loc 'ui-options-machine-title-font'}" />
+                <ui:OptionFontSelector Name="MonospaceFontSelector" StandardType="Monospace"
+                                       Title="{Loc 'ui-options-monospace-font'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

@@ -14,11 +14,11 @@ public sealed class ItemStatusSheetlet : Sheetlet<PalettedStylesheet>
         [
             E()
                 .Class(StyleClass.ItemStatus)
-                .Prop("font", sheet.BaseFont.GetFont(10)),
+                .Prop("font", sheet.Fonts.GetFont(StandardFontType.Main, 10)),
 
             E()
                 .Class(StyleClass.ItemStatusNotHeld)
-                .Prop("font", sheet.BaseFont.GetFont(10, FontKind.Italic))
+                .Prop("font", sheet.Fonts.GetFont(StandardFontType.Main, 10, FontKind.Italic))
                 .Prop("font-color", Color.Gray),
 
             E<RichTextLabel>()

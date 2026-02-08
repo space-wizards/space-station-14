@@ -95,6 +95,7 @@ public partial class MapGridControl : LayoutContainer
         ActualRadarRange = range;
 
         var cache = IoCManager.Resolve<IResourceCache>();
+        // TODO: Move fonts to stylesheets, respect user font preferences.
         _largerFont = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 16);
     }
 

@@ -47,6 +47,7 @@ public partial class BaseShuttleControl : MapGridControl
     {
         RobustXamlLoader.Load(this);
         Maps = EntManager.System<SharedMapSystem>();
+        // TODO: Move fonts to stylesheets, respect user font preferences.
         Font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
 
         _drawJob = new GridDrawJob()

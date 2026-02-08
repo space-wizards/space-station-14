@@ -20,19 +20,19 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
         [
             E<Label>()
                 .Class(StyleClass.LabelHeading)
-                .Font(sheet.BaseFont.GetFont(16, FontKind.Bold))
+                .Font(sheet.Fonts.GetFont(StandardFontType.Title, 16, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelHeadingBigger)
-                .Font(sheet.BaseFont.GetFont(20, FontKind.Bold))
+                .Font(sheet.Fonts.GetFont(StandardFontType.Title, 20, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelSubText)
-                .Font(sheet.BaseFont.GetFont(10))
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 10))
                 .FontColor(Color.DarkGray),
             E<Label>()
                 .Class(StyleClass.LabelKeyText)
-                .Font(sheet.BaseFont.GetFont(12, FontKind.Bold))
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 12, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelWeak)

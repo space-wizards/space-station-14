@@ -8,6 +8,11 @@ namespace Content.Client.Stylesheets;
 [PublicAPI]
 public abstract partial class PalettedStylesheet : BaseStylesheet
 {
+    protected PalettedStylesheet(object config, IDependencyCollection deps) : base(config, deps)
+    {
+    }
+
+    [Obsolete("Pass in IDependencyCollection directly")]
     protected PalettedStylesheet(object config) : base(config)
     {
     }

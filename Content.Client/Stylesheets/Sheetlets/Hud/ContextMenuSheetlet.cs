@@ -53,16 +53,16 @@ public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
             // Context Menu Labels
             E<RichTextLabel>()
                 .Class(InteractionVerb.DefaultTextStyleClass)
-                .Font(sheet.BaseFont.GetFont(12, FontKind.BoldItalic)),
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 12, FontKind.BoldItalic)),
             E<RichTextLabel>()
                 .Class(ActivationVerb.DefaultTextStyleClass)
-                .Font(sheet.BaseFont.GetFont(12, FontKind.Bold)),
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 12, FontKind.Bold)),
             E<RichTextLabel>()
                 .Class(AlternativeVerb.DefaultTextStyleClass)
-                .Font(sheet.BaseFont.GetFont(12, FontKind.Italic)),
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 12, FontKind.Italic)),
             E<RichTextLabel>()
                 .Class(Verb.DefaultTextStyleClass)
-                .Font(sheet.BaseFont.GetFont(12)),
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 12)),
             E<TextureRect>()
                 .Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
                 .Prop(TextureRect.StylePropertyTexture, contextMenuExpansionTexture),

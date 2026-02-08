@@ -22,6 +22,7 @@ public sealed partial class ReplayMainMenuControl : Control
         LayoutContainer.SetMarginTop(VBox, 30);
         LayoutContainer.SetGrowHorizontal(VBox, LayoutContainer.GrowDirection.Begin);
 
+        // TODO: Move fonts to stylesheets, respect user font preferences.
         Subtext.FontOverride = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 24);
         var logoTexture = resCache.GetResource<TextureResource>("/Textures/Logo/logo.png");
         Logo.Texture = logoTexture;

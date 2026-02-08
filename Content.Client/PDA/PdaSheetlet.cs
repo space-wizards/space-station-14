@@ -1,5 +1,6 @@
 using Content.Client.PDA;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Sheetlets;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
@@ -80,12 +81,12 @@ public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
             //PDA - Text
             E<Label>()
                 .Class("PdaContentFooterText")
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(10))
+                .Prop(Label.StylePropertyFont, sheet.Fonts.GetFont(StandardFontType.Main, 10))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
 
             E<Label>()
                 .Class("PdaWindowFooterText")
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(10))
+                .Prop(Label.StylePropertyFont, sheet.Fonts.GetFont(StandardFontType.Main, 10))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
         ];
     }
