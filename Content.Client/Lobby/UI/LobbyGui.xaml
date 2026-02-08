@@ -25,15 +25,15 @@
                             <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="800">
                                 <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center"
                                                  Margin="3 3 3 3" />
-                                <controls:StripeBack>
-                                    <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
+                                <controls:StripeBack Name="JoinRoundStripeBack">
+                                    <BoxContainer Orientation="Horizontal" Name="JoinRoundPanel" SeparationOverride="6"
+                                                  Margin="3 3 3 3">
                                         <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public"
                                                             Text="{Loc 'ui-lobby-observe-button'}"
                                                             StyleClasses="ButtonBig"
                                                             WindowType="{x:Type lobbyUi:ObserveWarningWindow}" />
                                         <Label Name="StartTime"
                                                Access="Public"
-                                               Align="Left"
                                                FontColorOverride="{x:Static maths:Color.DarkGray}"
                                                StyleClasses="LabelBig" HorizontalExpand="True" />
                                         <Button Name="ReadyButton" Access="Public" ToggleMode="True"
