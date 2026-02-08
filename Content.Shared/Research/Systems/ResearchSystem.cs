@@ -1,62 +1,143 @@
-using System.Linq;
+using Content.Shared.Access.Systems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Lathe;
+using Content.Shared.Popups;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.Research.Systems;
 
-public abstract class SharedResearchSystem : EntitySystem
+public sealed partial class ResearchSystem : EntitySystem
 {
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedLatheSystem _lathe = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        InitializeClient();
+        InitializeConsole();
+        InitializeSource();
+        InitializeServer();
 
         SubscribeLocalEvent<TechnologyDatabaseComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchRegistrationChangedEvent>(OnDatabaseRegistrationChanged);
     }
 
-    private void OnMapInit(EntityUid uid, TechnologyDatabaseComponent component, MapInitEvent args)
+    /// <summary>
+    /// Gets a server based on its unique numeric id.
+    /// </summary>
+    /// <param name="client"></param>
+    /// <param name="id"></param>
+    /// <returns>A duple containing server EntityUid and ResearchServerComponent.</returns>
+    public bool TryGetServerById(EntityUid client, int id, [NotNullWhen(true)] out Entity<ResearchServerComponent>? server)
     {
-        UpdateTechnologyCards(uid, component);
+        server = null;
+
+        var query = GetServers(client);
+        foreach (var ent in query)
+        {
+            if (ent.Comp.Id != id)
+                continue;
+            server = ent;
+            return true;
+        }
+        return false;
     }
 
-    public void UpdateTechnologyCards(EntityUid uid, TechnologyDatabaseComponent? component = null)
+    /// <summary>
+    /// Gets the names of all the servers.
+    /// </summary>
+    /// <returns></returns>
+    public string[] GetServerNames(EntityUid client)
     {
-        if (!Resolve(uid, ref component))
+        return GetServers(client).Select(x => x.Comp.ServerName).ToArray();
+    }
+
+    /// <summary>
+    /// Gets the ids of all the servers
+    /// </summary>
+    /// <returns></returns>
+    public int[] GetServerIds(EntityUid client)
+    {
+        return GetServers(client).Select(x => x.Comp.Id).ToArray();
+    }
+
+    public HashSet<Entity<ResearchServerComponent>> GetServers(EntityUid client)
+    {
+        var clientXform = Transform(client);
+        if (clientXform.GridUid is not { } grid)
+            return [];
+
+        var set = new HashSet<Entity<ResearchServerComponent>>();
+        _lookup.GetGridEntities(grid, set);
+        return set;
+    }
+
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<ResearchServerComponent>();
+        while (query.MoveNext(out var uid, out var server))
+        {
+            if (server.NextUpdateTime > _timing.CurTime)
+                continue;
+            server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
+
+            UpdateServer((uid, server), (int)server.ResearchConsoleUpdateTime.TotalSeconds);
+        }
+    }
+
+    private void OnMapInit(Entity<TechnologyDatabaseComponent> ent, ref MapInitEvent args)
+    {
+        UpdateTechnologyCards(ent.AsNullable());
+    }
+
+    public void UpdateTechnologyCards(Entity<TechnologyDatabaseComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        var availableTechnology = GetAvailableTechnologies(uid, component);
+        var availableTechnology = GetAvailableTechnologies(ent);
         _random.Shuffle(availableTechnology);
 
-        component.CurrentTechnologyCards.Clear();
-        foreach (var discipline in component.SupportedDisciplines)
+        ent.Comp.CurrentTechnologyCards.Clear();
+        foreach (var discipline in ent.Comp.SupportedDisciplines)
         {
             var selected = availableTechnology.FirstOrDefault(p => p.Discipline == discipline);
             if (selected == null)
                 continue;
 
-            component.CurrentTechnologyCards.Add(selected.ID);
+            ent.Comp.CurrentTechnologyCards.Add(selected.ID);
         }
-        Dirty(uid, component);
+        Dirty(ent);
     }
 
-    public List<TechnologyPrototype> GetAvailableTechnologies(EntityUid uid, TechnologyDatabaseComponent? component = null)
+    public List<TechnologyPrototype> GetAvailableTechnologies(Entity<TechnologyDatabaseComponent?> ent)
     {
-        if (!Resolve(uid, ref component, false))
-            return new List<TechnologyPrototype>();
+        if (!Resolve(ent, ref ent.Comp, false))
+            return [];
 
         var availableTechnologies = new List<TechnologyPrototype>();
-        var disciplineTiers = GetDisciplineTiers(component);
-        foreach (var tech in PrototypeManager.EnumeratePrototypes<TechnologyPrototype>())
+        var disciplineTiers = GetDisciplineTiers(ent.Comp);
+        foreach (var tech in _proto.EnumeratePrototypes<TechnologyPrototype>())
         {
-            if (IsTechnologyAvailable(component, tech, disciplineTiers))
+            if (IsTechnologyAvailable(ent.Comp, tech, disciplineTiers))
                 availableTechnologies.Add(tech);
         }
 
@@ -101,17 +182,17 @@ public abstract class SharedResearchSystem : EntitySystem
 
     public int GetHighestDisciplineTier(TechnologyDatabaseComponent component, string disciplineId)
     {
-        return GetHighestDisciplineTier(component, PrototypeManager.Index<TechDisciplinePrototype>(disciplineId));
+        return GetHighestDisciplineTier(component, _proto.Index<TechDisciplinePrototype>(disciplineId));
     }
 
     public int GetHighestDisciplineTier(TechnologyDatabaseComponent component, TechDisciplinePrototype techDiscipline)
     {
-        var allTech = PrototypeManager.EnumeratePrototypes<TechnologyPrototype>()
+        var allTech = _proto.EnumeratePrototypes<TechnologyPrototype>()
             .Where(p => p.Discipline == techDiscipline.ID && !p.Hidden).ToList();
         var allUnlocked = new List<TechnologyPrototype>();
         foreach (var recipe in component.UnlockedTechnologies)
         {
-            var proto = PrototypeManager.Index<TechnologyPrototype>(recipe);
+            var proto = _proto.Index<TechnologyPrototype>(recipe);
             if (proto.Discipline != techDiscipline.ID)
                 continue;
             allUnlocked.Add(proto);
@@ -132,7 +213,7 @@ public abstract class SharedResearchSystem : EntitySystem
             if (allTierTech.Count == 0)
                 break;
 
-            var percent = (float) unlockedTierTech.Count / allTierTech.Count;
+            var percent = (float)unlockedTierTech.Count / allTierTech.Count;
             if (percent < techDiscipline.TierPrerequisites[tier])
                 break;
 
@@ -156,7 +237,7 @@ public abstract class SharedResearchSystem : EntitySystem
         var description = new FormattedMessage();
         if (includeTier)
         {
-            disciplinePrototype ??= PrototypeManager.Index(technology.Discipline);
+            disciplinePrototype ??= _proto.Index(technology.Discipline);
             description.AddMarkupOrThrow(Loc.GetString("research-console-tier-discipline-info",
                 ("tier", technology.Tier), ("color", disciplinePrototype.Color), ("discipline", Loc.GetString(disciplinePrototype.Name))));
             description.PushNewline();
@@ -173,7 +254,7 @@ public abstract class SharedResearchSystem : EntitySystem
             description.AddMarkupOrThrow(Loc.GetString("research-console-prereqs-list-start"));
             foreach (var recipe in technology.TechnologyPrerequisites)
             {
-                var techProto = PrototypeManager.Index(recipe);
+                var techProto = _proto.Index(recipe);
                 description.PushNewline();
                 description.AddMarkupOrThrow(Loc.GetString("research-console-prereqs-list-entry",
                     ("text", Loc.GetString(techProto.Name))));
@@ -184,7 +265,7 @@ public abstract class SharedResearchSystem : EntitySystem
         description.AddMarkupOrThrow(Loc.GetString("research-console-unlocks-list-start"));
         foreach (var recipe in technology.RecipeUnlocks)
         {
-            var recipeProto = PrototypeManager.Index(recipe);
+            var recipeProto = _proto.Index(recipe);
             description.PushNewline();
             description.AddMarkupOrThrow(Loc.GetString("research-console-unlocks-list-entry",
                 ("name", _lathe.GetRecipeName(recipeProto))));
@@ -222,7 +303,7 @@ public abstract class SharedResearchSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var discipline = PrototypeManager.Index(prototype.Discipline);
+        var discipline = _proto.Index(prototype.Discipline);
         if (prototype.Tier < discipline.LockoutTier)
             return;
         component.MainDiscipline = prototype.Discipline;
@@ -237,7 +318,7 @@ public abstract class SharedResearchSystem : EntitySystem
     /// </summary>
     public bool TryRemoveTechnology(Entity<TechnologyDatabaseComponent> entity, ProtoId<TechnologyPrototype> tech)
     {
-        return TryRemoveTechnology(entity, PrototypeManager.Index(tech));
+        return TryRemoveTechnology(entity, _proto.Index(tech));
     }
 
     /// <summary>
@@ -257,7 +338,7 @@ public abstract class SharedResearchSystem : EntitySystem
             var hasTechElsewhere = false;
             foreach (var unlockedTech in entity.Comp.UnlockedTechnologies)
             {
-                var unlockedTechProto = PrototypeManager.Index<TechnologyPrototype>(unlockedTech);
+                var unlockedTechProto = _proto.Index(unlockedTech);
 
                 if (!unlockedTechProto.RecipeUnlocks.Contains(recipe))
                     continue;
@@ -268,8 +349,8 @@ public abstract class SharedResearchSystem : EntitySystem
             if (!hasTechElsewhere)
                 entity.Comp.UnlockedRecipes.Remove(recipe);
         }
-        Dirty(entity, entity.Comp);
-        UpdateTechnologyCards(entity, entity);
+        Dirty(entity);
+        UpdateTechnologyCards(entity.AsNullable());
         return true;
     }
 
@@ -277,31 +358,31 @@ public abstract class SharedResearchSystem : EntitySystem
     /// Clear all unlocked technologies from the database.
     /// </summary>
     [PublicAPI]
-    public void ClearTechs(EntityUid uid, TechnologyDatabaseComponent? comp = null)
+    public void ClearTechs(Entity<TechnologyDatabaseComponent?> ent)
     {
-        if (!Resolve(uid, ref comp) || comp.UnlockedTechnologies.Count == 0)
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.UnlockedTechnologies.Count == 0)
             return;
 
-        comp.UnlockedTechnologies.Clear();
-        Dirty(uid, comp);
+        ent.Comp.UnlockedTechnologies.Clear();
+        Dirty(ent);
     }
 
     /// <summary>
     /// Adds a lathe recipe to the specified technology database
     /// without checking if it can be unlocked.
     /// </summary>
-    public void AddLatheRecipe(EntityUid uid, string recipe, TechnologyDatabaseComponent? component = null)
+    public void AddLatheRecipe(Entity<TechnologyDatabaseComponent?> ent, string recipe)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (component.UnlockedRecipes.Contains(recipe))
+        if (ent.Comp.UnlockedRecipes.Contains(recipe))
             return;
 
-        component.UnlockedRecipes.Add(recipe);
-        Dirty(uid, component);
+        ent.Comp.UnlockedRecipes.Add(recipe);
+        Dirty(ent);
 
         var ev = new TechnologyDatabaseModifiedEvent(new List<string> { recipe });
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent, ref ev);
     }
 }
