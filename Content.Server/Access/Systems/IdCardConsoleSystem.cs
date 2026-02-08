@@ -102,9 +102,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             var targetAccessComponent = Comp<AccessComponent>(targetId);
 
             var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<JobPrototype>(string.Empty);
-            if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
-                && keyStorage.Key is { } key
-                && _record.TryGetRecord<GeneralStationRecord>(key, out var record))
+            if (TryComp<StationRecordInfoStorageComponent>(targetId, out var keyStorage)
+                && keyStorage.Record is { } record)
             {
                 jobProto = record.JobPrototype;
             }
@@ -154,9 +153,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
 
         UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
-        if ((!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
-            || keyStorage.Key is not { } key
-            || !_record.TryGetRecord<GeneralStationRecord>(key, out _))
+        if ((!TryComp<StationRecordInfoStorageComponent>(targetId, out var keyStorage)
+            || keyStorage.Key is not { }
+            || keyStorage.Record is not { })
             && newJobProto != string.Empty)
         {
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
@@ -211,9 +210,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
     private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string newFullName, ProtoId<AccessLevelPrototype> newJobTitle, JobPrototype? newJobProto)
     {
-        if (!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
+        if (!TryComp<StationRecordInfoStorageComponent>(targetId, out var keyStorage)
             || keyStorage.Key is not { } key
-            || !_record.TryGetRecord<GeneralStationRecord>(key, out var record))
+            || keyStorage.Record is not { } record)
         {
             return;
         }
