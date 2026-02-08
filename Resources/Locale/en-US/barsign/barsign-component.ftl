@@ -107,5 +107,9 @@ barsign-prototype-description-whiskeyechoes = An elite bar for elite oper-wait, 
 ## EmpBarSign
 barsign-prototype-description-empbarsign = Something has gone very wrong.
 
+## Sylph
+barsign-prototype-name-sylph = Cyber Sylph
+barsign-prototype-description-sylph = Aw, looks like we've ended up in the wrong bar...
+
 ## SignOff
 barsign-prototype-description-sign-off = This sign doesn't seem to be on.
