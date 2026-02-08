@@ -186,6 +186,20 @@
     node: done
     containers:
     - entity_storage
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 200
+        mask:
+        - WallmountMask
+        layer:
+        - WallmountLayer
   - type: Paintable
     group: WallCloset
 
