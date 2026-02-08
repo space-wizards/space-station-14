@@ -3,6 +3,7 @@ using Content.Server.NodeContainer;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
@@ -57,7 +58,7 @@ public sealed class PowerSensorSystem : EntitySystem
 
     private void OnInit(EntityUid uid, PowerSensorComponent comp, ComponentInit args)
     {
-        _deviceLink.EnsureSourcePorts(uid, comp.ChargingPort, comp.DischargingPort);
+        _deviceLink.EnsureSourcePorts(uid, comp.ChargingPort, comp.DischargingPort, comp.AbovePort, comp.BelowPort);
     }
 
     private void OnExamined(EntityUid uid, PowerSensorComponent comp, ExaminedEvent args)
@@ -92,6 +93,11 @@ public sealed class PowerSensorSystem : EntitySystem
 
     private void UpdateOutputs(EntityUid uid, PowerSensorComponent comp)
     {
+        // Get current threshold
+        if (!TryComp<PowerThresholdComponent>(uid, out var thresholdComp))
+            return;
+        comp.ThresholdAmount = thresholdComp.ThresholdAmount;
+        
         // get power stats on the power network that's been switched to
         var powerSwitchable = Comp<PowerSwitchableComponent>(uid);
         var cable = powerSwitchable.Cables[powerSwitchable.ActiveIndex];
@@ -111,6 +117,8 @@ public sealed class PowerSensorSystem : EntitySystem
         var charge = comp.Output ? stats.OutStorageCurrent : stats.InStorageCurrent;
         var chargingState = charge > comp.LastCharge;
         var dischargingState = charge < comp.LastCharge;
+        var aboveState = charge >= comp.ThresholdAmount;
+        var belowState = charge < comp.ThresholdAmount;
 
         comp.LastCharge = charge;
 
@@ -125,6 +133,24 @@ public sealed class PowerSensorSystem : EntitySystem
         {
             comp.DischargingState = dischargingState;
             _deviceLink.SendSignal(uid, comp.DischargingPort, dischargingState);
+        }
+
+        if (comp.AboveState != aboveState)
+        {
+            comp.AboveState = aboveState;
+            if (aboveState)
+            {
+                _deviceLink.SendSignal(uid, comp.AbovePort, aboveState);
+            }
+        }
+
+        if (comp.BelowState != belowState)
+        {
+            comp.BelowState = belowState;
+            if (belowState)
+            {
+                _deviceLink.SendSignal(uid, comp.BelowPort, belowState);
+            }
         }
     }
 }

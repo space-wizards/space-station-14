@@ -2,6 +2,7 @@ using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Power.Generator;
 using Content.Shared.Tools;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -50,6 +51,18 @@ public sealed partial class PowerSensorComponent : Component
     public ProtoId<SourcePortPrototype> DischargingPort = "PowerDischarging";
 
     /// <summary>
+    /// Name of the port set when the network is above the threshold.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<SourcePortPrototype> AbovePort = "AboveThreshold";
+
+    /// <summary>
+    /// Name of the port set when the network is below the threshold.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<SourcePortPrototype> BelowPort = "BelowThreshold";
+
+    /// <summary>
     /// How long to wait before checking the power network.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -68,10 +81,34 @@ public sealed partial class PowerSensorComponent : Component
     [DataField]
     public float LastCharge;
 
+    /// <summary>
+    /// Charge threshold to compare against.
+    /// </summary>
+    [DataField]
+    public int ThresholdAmount = 100;
+
+    /// <summary>
+    /// True when charging.
+    /// </summary>
     // Initial state
     [DataField]
     public bool ChargingState;
 
+    /// <summary>
+    /// True when discharging.
+    /// </summary>
     [DataField]
     public bool DischargingState;
+
+    /// <summary>
+    /// True when above threshold.
+    /// </summary>
+    [DataField]
+    public bool AboveState;
+
+    /// <summary>
+    /// True when below threshold.
+    /// </summary>
+    [DataField]
+    public bool BelowState;
 }
