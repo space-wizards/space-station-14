@@ -34,3 +34,19 @@
   license: "CC-BY-SA-3.0"
   copyright: "Made by DarkIcedCoffee (discord)"
   source: "https://github.com/space-wizards/space-station-14/pull/40042/"
+- files: ["creepyshriek.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Multiple effects taken from Paradise Station"
+  source: "https://github.com/ParadiseSS13/Paradise/tree/master/sound"
+- files: ["cultist_start.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Multiple effects taken from Paradise Station"
+  source: "https://github.com/ParadiseSS13/Paradise/tree/master/sound"
+- files: ["dimensional_rend.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Multiple effects taken from Paradise Station"
+  source: "https://github.com/ParadiseSS13/Paradise/tree/master/sound"
+- files: ["tear_of_veil.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Bolgarich for SS13 and allowed with specific attribution as the creator. >I allow you to use it when referring to me as the creator"
+  source: "https://www.youtube.com/watch?v=NqNHKfTAvcw"

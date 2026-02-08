@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by Tea(d.d.tea on Discord, @teasq.bsky.social) and zergologst (discord) for Funky",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "runedmetal"
+    },
+    {
+      "name": "runedmetal_2"
+    },
+    {
+      "name": "runedmetal_3"
+    },
+    {
+      "name": "runedmetal-unshaded"
+    },
+    {
+      "name": "runedmetal_2-unshaded"
+    },
+    {
+      "name": "runedmetal_3-unshaded"
+    },
+    {
+      "name": "runedmetal-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "runedmetal-inhand-right",
+      "directions": 4
+    }
+  ]
+}

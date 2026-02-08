@@ -1,0 +1,10 @@
+- type: npcFaction
+  id: BloodCultist
+  hostile:
+  - NanoTrasen
+  - Syndicate
+  - Zombie
+  - Revolutionary
+  - SimpleHostile # Salvage mobs (Goliaths, Hivelords, etc.)
+  - Xeno # Salvage mobs (Xenos)
+  - Dragon # Salvage mobs (Dragons)

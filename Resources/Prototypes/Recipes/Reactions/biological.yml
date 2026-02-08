@@ -94,3 +94,17 @@
     Mold: 2
     Protein: 1
     Toxin: 1
+
+- type: reaction
+  id: UnholyBloodPurification
+  reactants:
+    UnholyBlood:
+      amount: 2
+    Holywater:
+      amount: 2
+  effects:
+    - !type:AreaReactionEffect
+      prototypeId: Smoke
+      duration: 8
+      sound:
+        path: /Audio/Effects/smoke.ogg

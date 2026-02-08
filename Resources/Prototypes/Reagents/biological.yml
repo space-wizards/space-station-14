@@ -245,3 +245,35 @@
         damage:
           types:
             Cellular: 2
+
+- type: reagent
+  parent: Blood
+  id: UnholyBlood
+  name: reagent-name-unholy-blood
+  group: Biological
+  desc: reagent-desc-unholy-blood
+  physicalDesc: reagent-physical-desc-profane
+  flavor: forbidden
+  color: "#660000"
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  recognizable: true
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.5
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Bloodsucker ]
+          inverted: true
+        damage:
+          types:
+            Poison: 2
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
