@@ -42,6 +42,10 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.InspectClientComponent);
             common.AddFunction(ContentKeyFunctions.ToggleRoundEndSummaryWindow);
 
+            common.AddFunction(ContentKeyFunctions.CommandSay);
+            common.AddFunction(ContentKeyFunctions.CommandEmote);
+            common.AddFunction(ContentKeyFunctions.CommandCommand);
+
             // Not in engine, because engine cannot check for sanbox/admin status before starting placement.
             common.AddFunction(ContentKeyFunctions.EditorCopyObject);
 
@@ -131,6 +135,11 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
             common.AddFunction(ContentKeyFunctions.OpenGuidebook);
+
+            foreach (var customFunction in ContentKeyFunctions.GetCustomCommandKeys())
+            {
+                common.AddFunction(customFunction);
+            }
         }
     }
 }
