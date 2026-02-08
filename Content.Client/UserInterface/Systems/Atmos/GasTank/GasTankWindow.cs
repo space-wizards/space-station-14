@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Message;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Timing;
@@ -23,8 +24,7 @@ public sealed class GasTankWindow
 
     private readonly RichTextLabel _lblPressure;
     private readonly FloatSpinBox _spbPressure;
-    private readonly RichTextLabel _lblInternals;
-    private readonly Button _btnInternals;
+    private readonly SwitchButton _btnInternals;
     private readonly Label _topLabel;
 
     public EntityUid Entity;
@@ -148,17 +148,17 @@ public sealed class GasTankWindow
         contentContainer.AddChild(_lblPressure);
 
         //internals
-        _lblInternals = new RichTextLabel
-            { MinSize = new Vector2(200, 0), VerticalAlignment = VAlignment.Center };
-        _btnInternals = new Button { Text = Loc.GetString("gas-tank-window-internals-toggle-button") };
+        _btnInternals = new SwitchButton
+        {
+            Text = Loc.GetString("gas-tank-window-internal-text"),
+            OffStateText = Loc.GetString("gas-tank-window-internal-disconnected"),
+            OnStateText = Loc.GetString("gas-tank-window-internal-connected"),
+            StyleClasses = { SwitchButton.StyleClassColorStateLabels },
+            MinSize = new Vector2(200, 0),
+            Margin = new Thickness(0, 7, 0, 0),
+        };
 
-        contentContainer.AddChild(
-            new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Margin = new Thickness(0, 7, 0, 0),
-                Children = { _lblInternals, _btnInternals }
-            });
+        contentContainer.AddChild(_btnInternals);
 
         // Separator
         contentContainer.AddChild(new Control
@@ -205,8 +205,7 @@ public sealed class GasTankWindow
     public void Update(bool canConnectInternals, bool internalsConnected, float outputPressure)
     {
         _btnInternals.Disabled = !canConnectInternals;
-        _lblInternals.SetMarkup(Loc.GetString("gas-tank-window-internal-text",
-            ("status", Loc.GetString(internalsConnected ? "gas-tank-window-internal-connected" : "gas-tank-window-internal-disconnected"))));
+        _btnInternals.Pressed = internalsConnected;
         if (!_spbPressure.HasKeyboardFocus())
             // Don't update release pressure if we're currently editing it
             _spbPressure.Value = outputPressure;
