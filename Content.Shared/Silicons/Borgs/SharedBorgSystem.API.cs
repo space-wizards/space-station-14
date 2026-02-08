@@ -119,6 +119,7 @@ public abstract partial class SharedBorgSystem
     /// it looks like what the player would expect to happen, so it's fine.
     /// (The brain is inserted into the chassis, then gets ejected from it a moment later.)
     /// </remarks>
+    // TODO If anything, it should be ensured that it will still appear like this even if it gets correctly predicted.
     public virtual bool CanPlayerBeBorged(ICommonSession session, out string reason)
     {
         reason = string.Empty;
