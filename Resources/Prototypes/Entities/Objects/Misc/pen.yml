@@ -56,6 +56,16 @@
     damage:
       types:
         Piercing: 3
+  - type: Extractable
+    grindableSolutionName: pen
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 2
+        - ReagentId: Iodine
+          Quantity: 1
 
 #TODO: I want the luxury pen to write a cool font like Merriweather in the future.
 
