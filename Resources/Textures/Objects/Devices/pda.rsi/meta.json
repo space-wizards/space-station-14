@@ -14,10 +14,6 @@
             "name": "id_overlay_wide"
         },
         {
-            "name": "equipped-BELT",
-            "directions": 4
-        },
-        {
             "name": "inhand-left",
             "directions": 4
         },
@@ -254,10 +250,6 @@
                     0.3
                 ]
             ]
-        },
-        {
-            "name": "equipped-IDCARD",
-            "directions": 4
         }
     ]
 }
