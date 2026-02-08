@@ -1,6 +1,6 @@
 - type: entity
   name: BaseWeaponLauncher
-  parent: [ BaseItem, BaseGunWieldable ]
+  parent: [ BaseItem, BaseGunWieldable, BaseGunMeleeLarge ]
   id: BaseWeaponLauncher
   description: A rooty tooty point and shooty.
   abstract: true
@@ -297,7 +297,7 @@
 
 - type: entity
   name: grappling gun
-  parent: BaseItem
+  parent: [BaseItem, BaseGunMeleeSmall]
   id: WeaponGrapplingGun
   components:
     - type: Item

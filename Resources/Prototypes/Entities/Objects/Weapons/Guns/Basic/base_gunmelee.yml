@@ -1,0 +1,113 @@
+- type: entity
+  id: BaseGunMeleeSmall #one handed pistol-like weapons
+  abstract: true
+  components:
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+    angle: 60
+    attackRate: 1.25
+    wideAnimationRotation: -90
+    animation: WeaponArcThrust
+    soundHit:
+      collection: MetalThud
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2
+
+- type: entity
+  id: BaseGunMeleeSmallHarmless #pistol-shaped toys
+  parent: BaseGunMeleeSmall
+  abstract: true
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
+    soundHit:
+      collection: BoxingHit
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 0
+
+- type: entity
+  id: BaseGunMeleeMedium # one-handed SMG-like weapons, some can be wielded and get a small bonus for doing so.
+  abstract: true
+  components:
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+    angle: 60
+    attackRate: 1
+    wideAnimationRotation: 45
+    animation: WeaponArcThrust
+    soundHit:
+      collection: MetalThud
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 4
+
+- type: entity
+  id: BaseGunMeleeLarge #wieldable rifle and shotgun-like weapons
+  abstract: true
+  components:
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: MeleeWeapon
+    damage:
+      types:
+       Blunt: 12
+    angle: 0
+    attackRate: 1
+    wideAnimationRotation: 45
+    animation: WeaponArcThrust
+    soundHit:
+      collection: MetalThud
+  - type: MeleeRequiresWield #This gets ignored if the gun isn't wieldable
+
+- type: entity
+  id: BaseGunMeleeLargeHarmless #rifle-shaped toys
+  parent: BaseGunMeleeLarge
+  abstract: true
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
+    soundHit:
+      collection: BoxingHit
+
+- type: entity
+  id: BaseGunMeleeHeavy #wieldable massive weapons, like LMG's
+  abstract: true
+  components:
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: MeleeWeapon
+    damage:
+      types:
+       Blunt: 14
+    angle: 60
+    attackRate: 0.75
+    wideAnimationRotation: -45
+    animation: WeaponArcThrust
+    soundHit:
+      collection: MetalThud
+  - type: MeleeRequiresWield #This gets ignored if the gun isn't wieldable
+
+- type: entity
+  id: BaseGunMeleeDisarm #Honestly just to mess with people, DS Pulse Weapons get this and nothing else should.
+  abstract: true
+  components:
+  - type: AltFireMelee
+    attackType: Disarm
+  - type: MeleeRequiresWield #This gets ignored if the gun isn't wieldable

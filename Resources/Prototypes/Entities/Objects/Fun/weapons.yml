@@ -5,6 +5,7 @@
 
 - type: entity
   abstract: true
+  parent: BaseGunMeleeSmallHarmless
   id: BaseToyGun
   components:
   - type: PacifismAllowedGun # They don't hurt!
@@ -44,7 +45,7 @@
 
 - type: entity
   name: Foam Force Astro Ace
-  parent: [ BaseToyGun, BaseWeaponShotgun, BaseGunWieldable ]
+  parent: [ BaseToyGun, BaseWeaponShotgun, BaseGunWieldable, BaseGunMeleeLargeHarmless ]
   id: WeaponRifleFoam
   description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
   components:
@@ -119,6 +120,9 @@
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
+  - type: MeleeWeapon
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   parent: RevolverCapGun
