@@ -79,6 +79,26 @@ public sealed partial class RevenantComponent : Component
     public float MaxEssenceUpgradeAmount = 10;
     #endregion
 
+    ///<summary>
+    /// Allows you to become corporeal so you can get crew members' attention better.
+    /// They can hear you when you talk even when not corporeal, but have to be looking at their chat log and this lets you RP with people a whole lot easier.
+    /// </summary>
+    #region Appear Ability
+    /// <summary>
+    /// The amount of essence that is needed to use the ability.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 AppearCost = 0;
+
+    /// <summary>
+    /// The status effects applied after the ability
+    /// the first float corresponds to amount of time the entity is stunned.
+    /// the second corresponds to the amount of time the entity is made solid.
+    /// </summary>
+    [DataField]
+    public Vector2 AppearDebuffs = new(0, 5);
+    #endregion
+
     //In the nearby radius, causes various objects to be thrown, messed with, and containers opened
     //Generally just causes a mess
     #region Defile Ability
@@ -114,6 +134,16 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("defileEffectChance")]
     public float DefileEffectChance = 0.5f;
+    #endregion
+
+    //Revenants actually have a good reason to flash the lights and spook the crew now, at the cost of showing themselves briefly
+    //Clicking a light flashes it as if a spectator ghost is using it's haunt ability (existing behavior). Now, it also gives them an essence point
+    #region Flash Lights Ability
+    ///<summary>
+    /// The amount that is given to the revenant each time it flashes a light
+    ///</summary>
+    [DataField]
+    public float LightFlashEssenceAmount = 1;
     #endregion
 
     #region Overload Lights Ability

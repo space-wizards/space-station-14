@@ -55,6 +55,7 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, SoulEvent>(OnSoulSearch);
         SubscribeLocalEvent<RevenantComponent, HarvestEvent>(OnHarvest);
 
+        SubscribeLocalEvent<RevenantComponent, RevenantAppearActionEvent>(OnAppearAction);
         SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
@@ -73,7 +74,13 @@ public sealed partial class RevenantSystem
         if (HasComp<PoweredLightComponent>(target))
         {
             args.Handled = _ghost.DoGhostBooEvent(target);
-            return;
+            if (!args.Handled || component.Essence >= component.EssenceRegenCap)
+                return;
+            else
+            {
+                ChangeEssenceAmount(uid, component.LightFlashEssenceAmount, component);
+                return;
+            }
         }
 
         if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidProfileComponent>(target) || HasComp<RevenantComponent>(target))
@@ -131,7 +138,7 @@ public sealed partial class RevenantSystem
                 break;
         }
         _popup.PopupEntity(Loc.GetString(message, ("target", args.Args.Target)), args.Args.Target.Value, uid, PopupType.Medium);
-
+        _popup.PopupEntity(Loc.GetString("revenant-spine-chill", ("target", args.Args.Target)), args.Args.Target.Value, args.Args.Target.Value, PopupType.Small);
         args.Handled = true;
     }
 
@@ -218,6 +225,17 @@ public sealed partial class RevenantSystem
         args.Handled = true;
     }
 
+    private void OnAppearAction(Entity<RevenantComponent> ent, ref RevenantAppearActionEvent args)
+    {
+        if (args.Handled)
+            return;
+        var component = ent.Comp;
+        if (!TryUseAbility(ent.Owner, component, component.AppearCost, component.AppearDebuffs))
+            return;
+
+        args.Handled = true;
+    }
+
     private void OnDefileAction(EntityUid uid, RevenantComponent component, RevenantDefileActionEvent args)
     {
         if (args.Handled)
@@ -249,7 +267,7 @@ public sealed partial class RevenantSystem
             _tile.PryTile(value);
         }
 
-        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Static);
+        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Sundries);
         var tags = GetEntityQuery<TagComponent>();
         var entityStorage = GetEntityQuery<EntityStorageComponent>();
         var items = GetEntityQuery<ItemComponent>();
