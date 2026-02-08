@@ -29,14 +29,14 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(StyleClass.LabelSubText)
                 .Font(sheet.BaseFont.GetFont(10))
-                .FontColor(Color.DarkGray),
+                .FontColor(Palettes.White.BackgroundLight),
             E<Label>()
                 .Class(StyleClass.LabelKeyText)
                 .Font(sheet.BaseFont.GetFont(12, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelWeak)
-                .FontColor(Color.DarkGray), // TODO: you know the drill by now
+                .FontColor(Palettes.White.BackgroundLight),
 
             E<Label>()
                 .Class(StyleClass.Positive)
