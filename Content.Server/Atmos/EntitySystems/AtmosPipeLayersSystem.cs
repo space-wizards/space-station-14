@@ -59,7 +59,7 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         }
 
         // If a user wasn't responsible for unanchoring the pipe, leave it be
-        if (user == null || used == null)
+        if (user == null)
             return;
 
         // Unanchor the pipe if its new layer overlaps with another pipe
@@ -68,9 +68,9 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         if (!HasComp<PipeRestrictOverlapComponent>(ent) || !_pipeRestrictOverlap.CheckOverlap((ent, nodeContainer, xform)))
             return;
 
-        RaiseLocalEvent(ent, new BeforeUnanchoredEvent(user.Value, used.Value));
+        RaiseLocalEvent(ent, new BeforeUnanchoredEvent(user.Value, used));
         _xform.Unanchor(ent, xform);
-        RaiseLocalEvent(ent, new UserUnanchoredEvent(user.Value, used.Value));
+        RaiseLocalEvent(ent, new UserUnanchoredEvent(user.Value, used));
 
         _popup.PopupEntity(Loc.GetString("pipe-restrict-overlap-popup-blocked", ("pipe", ent)), ent, user.Value);
     }
