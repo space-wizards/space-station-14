@@ -4,6 +4,8 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Shared.Guidebook;
+using Robust.Shared.Utility;
+using Robust.Shared.Localization;
 
 namespace Content.IntegrationTests.Tests.Guidebook;
 
@@ -20,6 +22,7 @@ public sealed class GuideEntryPrototypeTests
         var client = pair.Client;
         await client.WaitIdleAsync();
         var protoMan = client.ResolveDependency<IPrototypeManager>();
+        var loc = client.ResolveDependency<ILocalizationManager>();
         var resMan = client.ResolveDependency<IResourceManager>();
         var parser = client.ResolveDependency<DocumentParsingManager>();
         var prototypes = protoMan.EnumeratePrototypes<GuideEntryPrototype>().ToList();
@@ -28,7 +31,14 @@ public sealed class GuideEntryPrototypeTests
         {
             await client.WaitAssertion(() =>
             {
-                using var reader = resMan.ContentFileReadText(proto.Text);
+                var path = proto.Text;
+
+                if (path.Contains("loc") && loc.DefaultCulture is not null)
+                {
+                    path = path.Replace("loc", loc.DefaultCulture.ToString());
+                }
+
+                using var reader = resMan.ContentFileReadText(new ResPath(proto.Text));
                 var text = reader.ReadToEnd();
                 Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse guidebook: {proto.Id}");
             });

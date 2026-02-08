@@ -2,7 +2,7 @@
   id: SS14
   name: guide-entry-ss14
   priority: 20
-  text: "/ServerInfo/Guidebook/SpaceStation14.xml"
+  text: "/Locale/loc/server-info/guidebook/space-station14.xml"
   children:
   - Jobs
   - Survival
