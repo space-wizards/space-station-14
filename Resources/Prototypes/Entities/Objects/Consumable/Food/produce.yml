@@ -2868,3 +2868,90 @@
         - MobMask
         layer:
         - MobLayer
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodAloeIgnis
+  name: aloe ignis leaf
+  description: A jagged leaf. It's uncomfortably warm to the touch and smells like ozone and spice.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+    state: produce
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+    heldPrefix: produce
+  - type: Produce
+    seedId: aloeIgnis
+  - type: Tag
+    tags:
+    - Fruit
+  - type: PotencyVisuals
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - medicinal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        canReact: true
+        reagents:
+        - ReagentId: Ignisol
+          Quantity: 8
+        - ReagentId: Carbon
+          Quantity: 4
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: FoodSequenceElement
+    entries:
+      Taco: AloeIgnis
+      Burger: AloeIgnisBurger
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodDragonTail
+  name: dragon's tail fruit
+  description: A long, spiraling fruit that glows with a soft emerald light. It feels perfectly temperate.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+    state: produce
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+    heldPrefix: produce
+  - type: Produce
+    seedId: dragonTail
+  - type: FlavorProfile
+    flavors:
+    - minty
+    - sweet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Equiline
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 2
+  - type: Extractable
+    grindableSolutionName: food
+  - type: FoodSequenceElement
+    entries:
+      Taco: DragonTail
+      Burger: DragonTailBurger

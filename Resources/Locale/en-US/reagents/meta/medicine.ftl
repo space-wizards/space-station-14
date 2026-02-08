@@ -156,3 +156,9 @@ reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Re
 
 reagent-name-heparin = heparin
 reagent-desc-heparin = Commonly used as an anticoagulant medication. Causes blood to have difficulty forming clots. Can cause internal bleeding when overdosed.
+
+reagent-name-ignisol = ignisol
+reagent-desc-ignisol = A volatile medicinal extract that treats frostbite by rapidly raising body temperature. Highly flammable and causes minor heat damage upon consumption.
+
+reagent-name-equiline = equiline
+reagent-desc-equiline = An advanced homeostatic agent. It heals thermal damage and stabilizes body temperature exactly to 36.6°C.
