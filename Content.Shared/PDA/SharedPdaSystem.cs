@@ -49,6 +49,11 @@ namespace Content.Shared.PDA
 
             UpdatePdaAppearance(uid, pda);
             UpdateJobStatus(uid);
+
+            if (args.Container.ID == PdaComponent.PdaIdSlotId || args.Container.ID == PdaComponent.PdaPaiSlotId)
+            {
+                NotifyPaiAccessChanged(uid);
+            }
         }
 
         protected virtual void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
@@ -57,7 +62,25 @@ namespace Content.Shared.PDA
                 pda.ContainedId = null;
 
             UpdatePdaAppearance(uid, pda);
+
+            if (args.Container.ID == PdaComponent.PdaIdSlotId || args.Container.ID == PdaComponent.PdaPaiSlotId)
+            {
+                NotifyPaiAccessChanged(uid);
+            }
             UpdateJobStatus(uid);
+        }
+
+        private void NotifyPaiAccessChanged(EntityUid uid)
+        {
+            var containerSystem = EntityManager.System<SharedContainerSystem>();
+            if (!containerSystem.TryGetContainer(uid, PdaComponent.PdaPaiSlotId, out var paiContainer))
+                return;
+
+            foreach (var pai in paiContainer.ContainedEntities)
+            {
+                if (HasComp<Content.Shared.PAI.PAIComponent>(pai))
+                    RaiseLocalEvent(pai, new Content.Shared.Access.Systems.PAIAccessChangedEvent());
+            }
         }
 
         private void OnGetAdditionalAccess(EntityUid uid, PdaComponent component, ref GetAdditionalAccessEvent args)

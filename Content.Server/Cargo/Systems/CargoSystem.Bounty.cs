@@ -70,7 +70,10 @@ public sealed partial class CargoSystem
         if (!TryGetBountyFromId(station, args.BountyId, out var bounty))
             return;
 
-        var label = Spawn(component.BountyLabelId, Transform(uid).Coordinates);
+        // if we use GetMoverCoordinates instead of Transform(uid).Coordinates the printing works for handheld or pAI versions
+        var coords = _transformSystem.GetMoverCoordinates(uid);
+
+        var label = Spawn(component.BountyLabelId, coords);
         component.NextPrintTime = Timing.CurTime + component.PrintDelay;
         SetupBountyLabel(label, station, bounty.Value);
         _audio.PlayPvs(component.PrintSound, uid);

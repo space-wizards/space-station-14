@@ -17,6 +17,21 @@
         type: StoreBoundUserInterface
         requireInputValidation: false
       # available in pai shop
+      enum.CargoConsoleUiKey.Bounty:
+        type: CargoBountyConsoleBoundUserInterface
+        requireInputValidation: false
+      enum.AtmosAlertsComputerUiKey.Key:
+        type: AtmosAlertsComputerBoundUserInterface
+        requireInputValidation: false
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+        requireInputValidation: false
+      enum.GeneralStationRecordConsoleKey.Key:
+        type: GeneralStationRecordConsoleBoundUserInterface
+        requireInputValidation: false
+      enum.ResearchConsoleUiKey.Key:
+        type: ResearchConsoleBoundUserInterface
+        requireInputValidation: false
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
         requireInputValidation: false
@@ -36,6 +51,15 @@
   - type: Input
     context: "human"
   - type: PAI
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: StationLimitedNetwork
+  - type: CargoBountyConsole
+  - type: AtmosAlertsComputer
+  - type: GeneralStationRecordConsole
+  - type: TechnologyDatabase
+  - type: ResearchClient
+  - type: ResearchConsole
   - type: BlockMovement
   - type: ToggleableGhostRole
     examineTextMindPresent: pai-system-pai-installed
@@ -91,6 +115,9 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: TrayScanner
+    enabled: false
+    disableContained: true
   - type: ChangeVoiceInContainer
     whitelist:
       components:
@@ -234,3 +261,81 @@
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.StationMapUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIAtmosphericAlertsMonitor
+  name: Open Atmospheric Alerts Monitor
+  description: Open your atmospheric alerts monitor interface and help your owner do their job.
+  components:
+  - type: ActionAccessRequirement
+    whitelist:
+    - Engineering
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: air_alarm_monitor }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.AtmosAlertsComputerUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAITrayScanner
+  name: Activate T-Ray Scanner
+  description: Activate your t-ray scanner and help your owner do their job.
+  components:
+  - type: Action
+    useDelay: 1
+    icon: { sprite: Objects/Tools/t-ray.rsi, state: tray-off }
+    iconOn: { sprite: Objects/Tools/t-ray.rsi, state: tray-on }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:TrayScannerActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAICargoBounty
+  name: Open Cargo Bounty Interface
+  description: Open your cargo bounty interface and help your owner do their job.
+  components:
+  - type: ActionAccessRequirement
+    whitelist:
+    - Cargo
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: cargo_bounty }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.CargoConsoleUiKey.Bounty
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIStationRecords
+  name: Open Station Records Interface
+  description: Open your station records interface and help your owner do their job.
+  components:
+  - type: ActionAccessRequirement
+    whitelist:
+    - Security
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: station_records }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.GeneralStationRecordConsoleKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIResearchAndDevelopment
+  name: Open Research and Development Interface
+  description: Open your research and development interface and help your owner do their job.
+  components:
+  - type: ActionAccessRequirement
+    whitelist:
+    - Research
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: research_and_development }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.ResearchConsoleUiKey.Key

@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-	"copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/c473a8bcc28fbd80827dfca5660d81ca6e833e2c/icons/hud/screen_ai.dmi , some sprites updated by ScarKy0(Discord), door actions by ScarKy0(Discord) and @Max_tanuki(Twitter)",
+	"copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/c473a8bcc28fbd80827dfca5660d81ca6e833e2c/icons/hud/screen_ai.dmi , some sprites updated by ScarKy0(Discord), door actions by ScarKy0(Discord) and @Max_tanuki(Twitter) , research_and_development, cargo_bounty and air_alarm_monitor by Velken",
 	"size": {
 		"x": 32,
 		"y": 32
@@ -26,10 +26,19 @@
 			"name": "station_records"
 		},
 		{
+			"name": "research_and_development"
+		},
+		{
 			"name": "mass_scanner"
 		},
 		{
 			"name": "comms_console"
+		},
+		{
+		    "name": "air_alarm_monitor"
+		},
+		{
+			"name": "cargo_bounty"
 		},
 		{
 			"name": "emergency_off"
