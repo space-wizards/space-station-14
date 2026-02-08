@@ -1,0 +1,12 @@
+- type: lightMask
+  id: ConeSingle
+  maskPath: /Textures/Effects/LightMasks/cone.png
+  lightCones:
+    - { direction: 0,  innerWidth: 30, outerWidth: 60 }
+
+- type: lightMask
+  id: ConeDouble
+  maskPath: /Textures/Effects/LightMasks/double_cone.png
+  lightCones:
+    - { direction: 0,  innerWidth: 30, outerWidth: 60 }
+    - { direction: 180, innerWidth: 30, outerWidth: 60 }
