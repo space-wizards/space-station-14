@@ -207,6 +207,8 @@
         - ItemMask
   - type: Appearance
   - type: VaporVisuals
+  - type: TileFrictionModifier
+    modifier: 0
 
 - type: entity
   parent: Vapor
