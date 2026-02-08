@@ -149,8 +149,11 @@ public sealed class LoadoutSystem : EntitySystem
         List<ProtoId<RoleLoadoutPrototype>>? loadoutGroups)
     {
         // First, randomly pick a startingGear profile from those specified, and equip it.
-        if (startingGear != null && startingGear.Count > 0)
-            _station.EquipStartingGear(uid, _random.Pick(startingGear), false);
+        if (startingGear != null && startingGear.Count > 0 && _protoMan.Resolve(_random.Pick(startingGear), out var gearproto))
+        {
+           _station.EquipStartingGear(uid, gearproto, false);
+        }
+
 
         if (loadoutGroups == null)
         {
