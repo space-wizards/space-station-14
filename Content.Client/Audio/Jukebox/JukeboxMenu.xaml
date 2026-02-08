@@ -1,17 +1,67 @@
-<ui:FancyWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-                SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
+<ui:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    SetSize="450 500"
+    MinSize="450 300"
+    Title="{Loc 'jukebox-menu-title'}">
     <BoxContainer Margin="4 0" Orientation="Vertical">
-        <ItemList Name="MusicList" SelectMode="Button" Margin="3 3 3 3"
-        HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="8"/>
+        <BoxContainer
+        Orientation="Horizontal"
+        VerticalExpand="True"
+        HorizontalExpand="True"
+        SeparationOverride="5">
+            <!-- Left Col-->
+            <BoxContainer
+                Orientation="Vertical"
+                VerticalExpand="True"
+                HorizontalExpand="True"
+                SizeFlagsStretchRatio="1">
+                <Label Text="{Loc 'jukebox-menu-library-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+                <LineEdit
+                    Name="SearchBar"
+                    PlaceHolder="{Loc 'jukebox-menu-search-tracks'}"
+                    HorizontalExpand="True">
+                </LineEdit>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer
+                        Name="TrackList"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        RectClipContent="True">
+                    </BoxContainer>
+                </ScrollContainer>
+            </BoxContainer>
+            <!-- Right Col-->
+            <BoxContainer
+                Orientation="Vertical"
+                VerticalExpand="True"
+                HorizontalExpand="True"
+                SizeFlagsStretchRatio="1.5">
+                <Label Text="{Loc 'jukebox-menu-playlist-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+                <BoxContainer
+                    Name="CurrentlyPlaying"
+                    HorizontalExpand="True"/>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Margin="5 5 5 5">
+                    <BoxContainer
+                        Name="QueueList"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        RectClipContent="True">
+                    </BoxContainer>
+                </ScrollContainer>
+            </BoxContainer>
+        </BoxContainer>
         <BoxContainer Orientation="Vertical">
-            <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong'}" />
-            <Label Name="SongName" Text="---" />
             <Slider Name="PlaybackSlider" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True"
         VerticalExpand="False" SizeFlagsStretchRatio="1">
             <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
             <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
+            <Button Name="RepeatButton" Text="{Loc 'jukebox-menu-buttonrepeat'}" ToggleMode="True"/>
+            <Button Name="ShuffleButton" Text="{Loc 'jukebox-menu-buttonshuffle'}" ToggleMode="True"/>
             <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
