@@ -8,6 +8,7 @@ gun-set-fire-mode-examine = Set to [color=yellow]{$mode}[/color].
 gun-set-fire-mode-popup = Changed to {$mode}
 gun-magazine-whitelist-fail = That won't fit into the gun!
 gun-magazine-fired-empty = No ammo left!
+gun-insertion-too-fast = Inserting ammo too fast!
 
 # SelectiveFire
 gun-SemiAuto = semi-auto
