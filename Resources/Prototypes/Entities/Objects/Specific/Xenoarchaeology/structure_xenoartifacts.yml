@@ -3,7 +3,6 @@
   id: BaseXenoArtifactStructure
   name: artifact
   abstract: true
-  noSpawn: true
   components:
   # Visual
   - type: Sprite
