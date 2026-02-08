@@ -39,10 +39,9 @@
       - XenoborgModuleBasic
       - BorgModuleAdvancedTool
       - BorgModuleConstruction
-      - BorgModuleRCD
+      - XenoborgModuleRCD
       - BorgModuleCable
       - XenoborgModuleAccessBreaker
-      - XenoborgModuleFireExtinguisher
   - type: ShowElectrocutionHUD
   - type: ShowHealthBars
     damageContainers:
@@ -269,10 +268,9 @@
       - XenoborgModuleBasic
       - BorgModuleAdvancedTool
       - BorgModuleConstruction
-      - BorgModuleRCD
+      - XenoborgModuleRCD
       - BorgModuleCable
       - XenoborgModuleAccessBreaker
-      - XenoborgModuleFireExtinguisher
   - type: ItemSlots
     slots:
       cell_slot:

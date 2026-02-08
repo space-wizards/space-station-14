@@ -128,9 +128,6 @@
             "name": "icon-xenoborg-cloak2"
         },
         {
-            "name": "icon-xenoborg-fire-extinguisher"
-        },
-        {
             "name": "icon-xenoborg-hypo"
         },
         {
@@ -144,6 +141,9 @@
         },
         {
             "name": "icon-xenoborg-projector"
+        },
+        {
+            "name": "icon-xenoborg-rcd"
         },
         {
             "name": "icon-xenoborg-space-movement"

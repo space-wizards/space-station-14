@@ -732,6 +732,20 @@
   - type: RadiationBlocker
     resistance: 5
 
+- type: entity
+  parent: WallSolid
+  id: WallXenoborg
+  name: xenoborg wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/xenoborg.rsi
+  - type: WallReplacementMarker
+  - type: Icon
+    sprite: Structures/Walls/xenoborg.rsi
+  - type: IconSmooth
+    key: walls
+    base: xenoborg
+
 # Riveting
 - type: entity
   parent: BaseWall
@@ -1197,29 +1211,29 @@
 
 - type: entity
   parent: WallPlastitanium
-  id: WallXenoborg
-  name: xenoborg wall
+  id: WallShuttleXenoborg
+  name: xenoborg shuttle wall
   components:
   - type: Sprite
-    sprite: Structures/Walls/xenoborg.rsi
+    sprite: Structures/Walls/shuttle_xenoborg.rsi
   - type: Icon
-    sprite: Structures/Walls/xenoborg.rsi
+    sprite: Structures/Walls/shuttle_xenoborg.rsi
   - type: IconSmooth
     key: walls
-    base: xenoborg
+    base: shuttle_xenoborg
 
 - type: entity
   parent: WallPlastitaniumDiagonal
-  id: WallXenoborgDiagonal
-  name: xenoborg wall
+  id: WallShuttleXenoborgDiagonal
+  name: xenoborg shuttle wall
   suffix: diagonal
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    sprite: Structures/Walls/shuttle_xenoborg_diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    sprite: Structures/Walls/shuttle_xenoborg_diagonal.rsi
     state: state0
 
 - type: entity

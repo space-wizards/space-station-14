@@ -1,6 +1,6 @@
 - type: entity
   id: XenoborgWindow
-  parent: PlastitaniumWindow
+  parent: ReinforcedWindow
   name: xenoborg window
   components:
   - type: Sprite
@@ -12,3 +12,18 @@
   - type: IconSmooth
     key: windows
     base: xenoborg
+
+- type: entity
+  id: ShuttleXenoborgWindow
+  parent: PlastitaniumWindow
+  name: xenoborg shuttle window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/shuttle_xenoborg.rsi
+  - type: Icon
+    sprite: Structures/Windows/shuttle_xenoborg.rsi
+    state: full
+  - type: IconSmooth
+    key: windows
+    base: shuttle_xenoborg
