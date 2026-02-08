@@ -86,6 +86,8 @@
       solution: absorbed
       preserve:
       - Water
+      - Holywater
+      - SpaceCleaner
       quantity: 10
     - type: Tag
       tags:
