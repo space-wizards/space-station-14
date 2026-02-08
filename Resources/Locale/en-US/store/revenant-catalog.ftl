@@ -9,3 +9,6 @@ revenant-blight-desc = Infects all nearby organisms with an infectious disease t
 
 revenant-malfunction-name = Malfunction
 revenant-malfunction-desc = Makes nearby electronics stop working properly. Using it leaves you vulnerable to attacks for a long period of time.
+
+revenant-grasp-name = Ghostly Grasp
+revenant-grasp-desc = Allows you to grab and pull objects and people. Swap between a grab that drags slowly but stealthily, and a grab that drags quickly but makes you visible. You are vulnerable to attacks while grabbing.

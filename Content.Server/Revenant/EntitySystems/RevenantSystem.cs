@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Actions;
 using Content.Server.GameTicking;
 using Content.Server.Store.Systems;
@@ -11,8 +10,11 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Content.Shared.StatusEffect;
@@ -20,7 +22,11 @@ using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
+using System.Numerics;
+using System.Linq;
+using Content.Shared.Movement.Pulling.Events;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -43,6 +49,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly PullingSystem _pull = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -56,6 +63,10 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
 
         SubscribeLocalEvent<RevenantComponent, GetVisMaskEvent>(OnRevenantGetVis);
+
+        SubscribeLocalEvent<RevenantComponent, RevenantGraspBuyEvent>(OnBuyCheck);
+        SubscribeLocalEvent<RevenantComponent, PullAttemptEvent>(OnPull);
+        SubscribeLocalEvent<RevenantComponent, AttemptStopPullingEvent>(CancelPull);
 
         InitializeAbilities();
     }
@@ -186,6 +197,73 @@ public sealed partial class RevenantSystem : EntitySystem
             }
             _visibility.RefreshVisibility(uid, vis);
         }
+    }
+
+    /// <summary>
+    /// Gives the revenant the ability to grab when they buy it
+    /// </summary>
+    public void OnBuyCheck(Entity<RevenantComponent> ent, ref RevenantGraspBuyEvent args)
+    {
+        var pull = AddComp<PullerComponent>(ent);
+        _pull.SetNeedHands((ent, pull), false);
+    }
+
+    /// <summary>
+    /// Blocks the revenant from pulling from inside a solid object, makes the revenant solid, and makes the revenant visible
+    /// + more dense if they are using the fast grab
+    /// </summary>
+    public void OnPull(Entity<RevenantComponent> ent, ref PullAttemptEvent args)
+    {
+        if (args.Cancelled || args.PullerUid != ent.Owner)
+            return;
+
+        var tileref = _turf.GetTileRef(Transform(ent.Owner).Coordinates);
+        if (tileref != null)
+        {
+            if (_physics.GetEntitiesIntersectingBody(ent.Owner, (int)CollisionGroup.Impassable).Count > 0)
+            {
+                _popup.PopupEntity(Loc.GetString("revenant-in-solid"), ent.Owner, ent.Owner);
+                args.Cancelled = true;
+                return;
+            }
+        }
+
+        if (TryComp<FixturesComponent>(ent.Owner, out var fixtures) && fixtures.FixtureCount >= 1)
+        {
+            var fixture = fixtures.Fixtures.First();
+
+            _physics.SetCollisionMask(ent.Owner, fixture.Key, fixture.Value, (int)(CollisionGroup.SmallMobMask | CollisionGroup.GhostImpassable), fixtures);
+            _physics.SetCollisionLayer(ent.Owner, fixture.Key, fixture.Value, (int)CollisionGroup.SmallMobLayer, fixtures);
+            if (ent.Comp.IsGrabFast)
+                _physics.SetDensity(ent.Owner, fixture.Key, fixture.Value, ent.Comp.FastDensity);
+        }
+
+        if (ent.Comp.IsGrabFast)
+        {
+            _appearance.SetData(ent.Owner, RevenantVisuals.Corporeal, true);
+            MakeVisible(true);
+        }
+    }
+
+    /// <summary>
+    /// Resets the revenant to normal when they release a grab
+    /// </summary>
+    public void CancelPull(Entity<RevenantComponent> ent, ref AttemptStopPullingEvent args)
+    {
+        if (args.Cancelled || args.User != ent.Owner)
+            return;
+
+        if (TryComp<FixturesComponent>(ent.Owner, out var fixtures) && fixtures.FixtureCount >= 1)
+        {
+            var fixture = fixtures.Fixtures.First();
+
+            _physics.SetCollisionMask(ent.Owner, fixture.Key, fixture.Value, (int)CollisionGroup.GhostImpassable, fixtures);
+            _physics.SetCollisionLayer(ent.Owner, fixture.Key, fixture.Value, 0, fixtures);
+            _physics.SetDensity(ent.Owner, fixture.Key, fixture.Value, ent.Comp.SlowDensity);
+        }
+
+        _appearance.SetData(ent.Owner, RevenantVisuals.Corporeal, false);
+        MakeVisible(false);
     }
 
     public override void Update(float frameTime)

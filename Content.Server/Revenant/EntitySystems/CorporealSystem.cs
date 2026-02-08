@@ -27,11 +27,15 @@ public sealed class CorporealSystem : SharedCorporealSystem
     {
         base.OnShutdown(uid, component, args);
 
-        if (TryComp<VisibilityComponent>(uid, out var visibility) && _ticker.RunLevel != GameRunLevel.PostRound)
+        if (!pulling.IsPulling(uid))
         {
-            _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
-            _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
-            _visibilitySystem.RefreshVisibility(uid, visibility);
+
+            if (TryComp<VisibilityComponent>(uid, out var visibility) && _ticker.RunLevel != GameRunLevel.PostRound)
+            {
+                _visibilitySystem.AddLayer((uid, visibility), (int)VisibilityFlags.Ghost, false);
+                _visibilitySystem.RemoveLayer((uid, visibility), (int)VisibilityFlags.Normal, false);
+                _visibilitySystem.RefreshVisibility(uid, visibility);
+            }
         }
     }
 }
