@@ -242,23 +242,6 @@
     sprite: Clothing/Ears/Headsets/security.rsi
 
 - type: entity
-  parent: [ClothingHeadset, BaseSecurityContraband]
-  id: ClothingHeadsetBrigmedic
-  name: brigmedic headset
-  description: A headset that helps to hear the death cries.
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyMedical
-      - EncryptionKeySecurity
-      - EncryptionKeyCommon
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/Ears/Headsets/brigmedic.rsi
-
-- type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetService
   name: service headset

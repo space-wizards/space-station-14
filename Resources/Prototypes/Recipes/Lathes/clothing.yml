@@ -570,18 +570,6 @@
   id: ClothingUniformJumpskirtSec
   result: ClothingUniformJumpskirtSec
 
-## Brigmedic
-
-- type: latheRecipe
-  parent: BaseJumpsuitRecipe
-  id: ClothingUniformJumpsuitBrigmedic
-  result: ClothingUniformJumpsuitBrigmedic
-
-- type: latheRecipe
-  parent: BaseJumpsuitRecipe
-  id: ClothingUniformJumpskirtBrigmedic
-  result: ClothingUniformJumpskirtBrigmedic
-
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSyndieFormal
@@ -861,11 +849,6 @@
   parent: BaseHatRecipe
   id: ClothingHeadHatBeretMedic
   result: ClothingHeadHatBeretMedic
-
-- type: latheRecipe
-  parent: BaseHatRecipe
-  id: ClothingHeadHatBeretBrigmedic
-  result: ClothingHeadHatBeretBrigmedic
 
 - type: latheRecipe
   parent: BaseHatRecipe

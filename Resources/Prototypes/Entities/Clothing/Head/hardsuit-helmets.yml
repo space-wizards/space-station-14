@@ -350,32 +350,6 @@
     - CorgiWearable
     - WhitelistChameleon
 
-#Brigmedic Hardsuit
-- type: entity
-  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
-  id: ClothingHeadHelmetHardsuitBrigmedic
-  name: brigmedic hardsuit helmet
-  description: The lightweight helmet of the brigmedic hardsuit. Protects against viruses, and clowns.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
-  - type: PointLight
-    color: "#00FFFF"
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.95
-        Radiation: 0.90
-        Caustic: 0.90
-  - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 1000
-
 #Warden's Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
