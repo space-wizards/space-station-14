@@ -1,0 +1,18 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:ui="clr-namespace:Content.Client.Options.UI">
+    <BoxContainer Orientation="Vertical" >
+        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+            <Label Text="{Loc 'ui-options-net-warning'}" FontColorOverride="#fbf236" />
+            <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
+                <CheckBox Name="NetPredictCheckBox" Text="{Loc 'ui-options-net-predict'}" />
+                <ui:OptionSlider Name="NetInterpRatioSlider" Title="{Loc 'ui-options-net-interp-ratio'}"/>
+                <ui:OptionSlider Name="NetPredictTickBiasSlider" Title="{Loc 'ui-options-net-predict-tick-bias'}"/>
+                <ui:OptionSlider Name="NetPvsSpawnSlider" Title="{Loc 'ui-options-net-pvs-spawn'}"/>
+                <ui:OptionSlider Name="NetPvsEntrySlider" Title="{Loc 'ui-options-net-pvs-entry'}"/>
+                <ui:OptionSlider Name="NetPvsLeaveSlider" Title="{Loc 'ui-options-net-pvs-leave'}"/>
+            </BoxContainer>
+        </BoxContainer>
+        <ui:OptionsTabControlRow Name="Control" Access="Public" />
+    </BoxContainer>
+</Control>
