@@ -5,7 +5,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
     <NoWarn>1998</NoWarn>
-    <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
+    <WarningsAsErrors>RA0028;RA0032;nullable</WarningsAsErrors>
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
   <Import Project="../MSBuild/Content.props" />
