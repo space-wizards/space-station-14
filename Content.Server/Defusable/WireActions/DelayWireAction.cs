@@ -1,16 +1,8 @@
-using Content.Server.Defusable.Components;
-using Content.Server.Defusable.Systems;
-using Content.Server.Doors.Systems;
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.Popups;
 using Content.Server.Wires;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Defusable;
-using Content.Shared.Doors;
-using Content.Shared.Doors.Components;
+using Content.Shared.Defusable.Components;
+using Content.Shared.Defusable.Systems;
 using Content.Shared.Wires;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Defusable.WireActions;
 
@@ -39,6 +31,6 @@ public sealed partial class DelayWireAction : ComponentWireAction<DefusableCompo
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        EntityManager.System<DefusableSystem>().DelayWirePulse(user, wire, comp);
+        EntityManager.System<DefusableSystem>().DelayWirePulse(user, (wire.Owner, comp));
     }
 }
