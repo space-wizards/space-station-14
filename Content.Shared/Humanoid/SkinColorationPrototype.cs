@@ -300,3 +300,66 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
         return Color.FromHsl(hsl);
     }
 }
+
+/// <summary>
+/// Unary coloration strategy that clamps the color within the Oklch colorspace
+/// </summary>
+[DataDefinition]
+[Serializable, NetSerializable]
+public sealed partial class ClampedOklchColoration : ISkinColorationStrategy
+{
+    /// <summary>
+    /// The (min, max) of the hue channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Hue;
+
+    /// <summary>
+    /// The maximum value of the chroma channel.
+    /// </summary>
+    /// <remarks>
+    /// Minimum saturation is unsupported due to technical limitations with gamut clipping.
+    /// </remarks>
+    [DataField]
+    public float? Chroma;
+
+    /// <summary>
+    /// The (min, max) of the lightness channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Lightness;
+
+    public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
+
+    public bool VerifySkinColor(Color color)
+    {
+        var oklch = color.ToColors().ToLinear().ToOklab().ToOklch();
+
+        if (Hue is (var minHue, var maxHue) && (oklch.H < minHue || oklch.H > maxHue))
+            return false;
+
+        if (Chroma is { } maxChroma && oklch.C > maxChroma)
+            return false;
+
+        if (Lightness is (var minValue, var maxValue) && (oklch.Lr < minValue || oklch.Lr > maxValue))
+            return false;
+
+        return true;
+    }
+
+    public Color ClosestSkinColor(Color color)
+    {
+        var oklch = color.ToColors().ToLinear().ToOklab().ToOklch();
+
+        if (Hue is (var minHue, var maxHue))
+            oklch.H = Math.Clamp(oklch.H, minHue, maxHue);
+
+        if (Chroma is { } maxChroma)
+            oklch.C = Math.Min(oklch.C, maxChroma);
+
+        if (Lightness is (var minValue, var maxValue) && (oklch.Lr < minValue || oklch.Lr > maxValue))
+            oklch.Lr = Math.Clamp(oklch.Lr, minValue, maxValue);
+
+        return oklch.ToOklab().GamutClipPreserveChroma().ToLinear().ToSrgb().ToColor();
+    }
+}
