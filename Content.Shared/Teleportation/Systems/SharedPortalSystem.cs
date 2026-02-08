@@ -97,16 +97,10 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
 
         // break pulls before portal enter so we don't break shit
-        if (TryComp<PullableComponent>(subject, out var pullable) && pullable.BeingPulled)
-        {
-            _pulling.TryStopPull(subject, pullable);
-        }
+        _pulling.TryStopPull(subject);
 
-        if (TryComp<PullerComponent>(subject, out var pullerComp)
-            && TryComp<PullableComponent>(pullerComp.Pulling, out var subjectPulling))
-        {
-            _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
-        }
+        if (TryComp<PullerComponent>(subject, out var pullerComp))
+            _pulling.TryStopPull(pullerComp.Pulling);
 
         // also break grapple joints
         _joints.RemoveJoint(subject, SharedGrapplingGunSystem.GrapplingJoint);
