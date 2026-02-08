@@ -149,7 +149,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
 
         if (TryComp<WiresPanelComponent>(uid, out var wiresPanelComponent))
-            _wiresSystem.TogglePanel(uid, wiresPanelComponent, false);
+            _wiresSystem.TogglePanel((uid, wiresPanelComponent), false);
     }
 
     public void TryDetonateBomb(EntityUid uid, EntityUid detonator, DefusableComponent comp)

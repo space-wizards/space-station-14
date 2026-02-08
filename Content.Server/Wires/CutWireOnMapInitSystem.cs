@@ -1,3 +1,4 @@
+using Content.Shared.Wires;
 using Robust.Shared.Random;
 
 namespace Content.Server.Wires;

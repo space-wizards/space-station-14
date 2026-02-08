@@ -125,7 +125,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("entitySpell");
             _prototypeManager.RegisterIgnore("instantSpell");
             _prototypeManager.RegisterIgnore("roundAnnouncement");
-            _prototypeManager.RegisterIgnore("wireLayout");
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
             _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
