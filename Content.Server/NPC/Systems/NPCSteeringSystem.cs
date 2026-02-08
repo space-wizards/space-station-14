@@ -2,13 +2,17 @@ using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Destructible;
 using Content.Server.DoAfter;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.CombatMode;
+using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
@@ -54,6 +58,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -73,6 +78,10 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     private EntityQuery<NpcFactionMemberComponent> _factionQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+    // For obstacle detection:
+    private EntityQuery<DoorComponent> _doorQuery;
+    private EntityQuery<ClimbableComponent> _climbableQuery;
+    private EntityQuery<DestructibleComponent> _destructibleQuery;
 
     private ObjectPool<HashSet<EntityUid>> _entSetPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>());
@@ -90,8 +99,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
     private readonly HashSet<ICommonSession> _subscribedSessions = new();
 
-    private object _obstacles = new();
-
     private int _activeSteeringCount;
 
     public override void Initialize()
@@ -104,6 +111,9 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         _factionQuery = GetEntityQuery<NpcFactionMemberComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+        _doorQuery = GetEntityQuery<DoorComponent>();
+        _climbableQuery = GetEntityQuery<ClimbableComponent>();
+        _destructibleQuery = GetEntityQuery<DestructibleComponent>();
 
         for (var i = 0; i < InterestDirections; i++)
         {
@@ -356,6 +366,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         var ev = new NPCSteeringEvent(steering, xform, worldPos, offsetRot);
         RaiseLocalEvent(uid, ref ev);
         // If seek has arrived at the target node for example then immediately re-steer.
+        // Note: this seems like it's always true? Not sure when it should be false...
         var forceSteer = true;
 
         if (steering.CanSeek && !TrySeek(uid, mover, steering, body, xform, offsetRot, moveSpeed, interest, frameTime, ref forceSteer))
@@ -378,7 +389,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         }
 
         // Avoid static objects like walls
-        CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, layer, mask, xform, danger);
+        CollisionAvoidance(uid, steering, offsetRot, worldPos, agentRadius, layer, mask, xform, danger);
         DebugTools.Assert(!float.IsNaN(danger[0]));
 
         Separation(uid, offsetRot, worldPos, agentRadius, layer, mask, body, xform, danger);
