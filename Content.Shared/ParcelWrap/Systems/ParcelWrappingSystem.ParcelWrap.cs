@@ -100,6 +100,9 @@ public sealed partial class ParcelWrappingSystem
     /// <param name="target">The entity being wrapped.</param>
     private void WrapInternal(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
     {
+        if (_buckle.IsBuckled(target))
+            _buckle.TryUnbuckle(target, user);
+
         // Consume a `use` on the wrapper, and delete the wrapper if it's empty.
         _charges.TryUseCharges(wrapper.Owner, 1);
         if (_charges.IsEmpty(wrapper.Owner))
