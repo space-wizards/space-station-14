@@ -741,6 +741,9 @@ ToySkeleton: ToyFigurineSkeleton
 # 2025-10-28
 DrinkKiraSpecial: DrinkOrangeLimeSodaGlass
 
+# 2025-12-02
+GhostWarpPoint: null
+
 # 2025-11-08
 DebugSMES: SMESBasicEmpty
 DebugSubstation: SubstationBasicEmpty

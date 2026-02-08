@@ -627,10 +627,6 @@
 - type: Tag
   id: GeigerCounter # Storage whitelist: BaseClothingBeltEngineering
 
-# Used for warps
-- type: Tag
-  id: GhostOnlyWarp
-
 - type: Tag
   id: GenderPin #  Chameleon key for ClothingGenderPinBase.
 
@@ -990,8 +986,12 @@
   id: Mushroom  # ConstructionGraph: Soil
 
 ## N ##
+
 - type: Tag
-  id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
+  id: NinjaBombingTarget # Ninjas will target this warp point
+
+- type: Tag
+  id: NinjaBombingTargetBlacklist # Ninjas will not target this warp point
 
 - type: Tag
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
@@ -1403,6 +1403,12 @@
 - type: Tag
   id: Taser # Storage whitelist: ClothingBeltSecurity
 
+- type: Tag
+  id: TeleportScrollWarp
+
+- type: Tag
+  id: TeleportScrollWarpBlacklist
+  
 - type: Tag
   id: TheaterBagel # used for Bagel Station's randomized theater
 
