@@ -188,7 +188,7 @@ public sealed partial class AntagSelectionSystem
 
             if (character.AntagPreferences.Contains(role)
                 && !_ban.IsRoleBanned(session, list)
-                && _playTime.IsAllowed(session, list))
+                && _roleReq.IsAllowed(session, list))
                 valid = true;
         }
 
