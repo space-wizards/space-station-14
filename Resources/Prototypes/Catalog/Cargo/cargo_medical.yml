@@ -147,3 +147,13 @@
   cost: 750
   category: cargoproduct-category-name-medical
   group: market
+
+- type: cargoProduct
+  id: MedicalImplantExtractors
+  icon:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  product: CrateImplantExtractors
+  cost: 1500
+  category: cargoproduct-category-name-medical
+  group: market
