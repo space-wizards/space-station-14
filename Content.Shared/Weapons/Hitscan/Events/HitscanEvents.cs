@@ -95,6 +95,31 @@ public struct HitscanRaycastFiredEvent
     public HitscanRaycastFiredData Data;
 }
 
+/// <summary>
+/// Raised before an entity is delt damage by a hitscan weapon using the <see cref="HitscanBasicDamageComponent"/>
+/// </summary>
+[ByRefEvent]
+public record struct BeforeHitscanDamageDealtEvent
+{
+    /// <summary>
+    /// Target that was dealt damage.
+    /// </summary>
+    public EntityUid Target;
+
+    /// <summary>
+    /// The amount of damage that will be dealt.
+    /// </summary>
+    public DamageSpecifier DamageToDeal;
+
+    /// <summary>
+    /// If the damage should not be done.
+    /// </summary>
+    public bool Canceled;
+}
+
+/// <summary>
+/// Raised after an entity has taken damage from a hitscan using the <see cref="HitscanBasicDamageComponent"/>
+/// </summary>
 [ByRefEvent]
 public record struct HitscanDamageDealtEvent
 {
@@ -107,4 +132,22 @@ public record struct HitscanDamageDealtEvent
     /// The amount of damage that the target was dealt.
     /// </summary>
     public DamageSpecifier DamageDealt;
+}
+
+
+/// <summary>
+/// Raised on a hit entity to see how much it should modify the damage of a hitscan by.
+/// </summary>
+[ByRefEvent]
+public record struct HitscanDamageModifierEvent
+{
+    /// <summary>
+    /// The hitscan entity.
+    /// </summary>
+    public EntityUid HitscanUid;
+
+    /// <summary>
+    /// The current modifier.
+    /// </summary>
+    public float Modifier;
 }
