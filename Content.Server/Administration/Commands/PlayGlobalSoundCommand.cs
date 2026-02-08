@@ -7,6 +7,7 @@ using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands;
 
@@ -88,7 +89,10 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
         }
 
         audio = audio.AddVolume(-8);
-        _entManager.System<ServerGlobalSoundSystem>().PlayAdminGlobal(filter, args[0], audio, replay);
+
+        // TODO Sanitize the path
+        var specifier = new ResolvedPathSpecifier(args[0]);
+        _entManager.System<ServerGlobalSoundSystem>().PlayAdminGlobal(filter, specifier, audio, replay);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

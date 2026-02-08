@@ -10,6 +10,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 
 namespace Content.Server.Audio;
@@ -22,7 +23,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private SoundCollectionPrototype? _lobbyMusicCollection = default!;
-    private string[]? _lobbyPlaylist;
+    private ResPath[]? _lobbyPlaylist;
 
     public override void Initialize()
     {
@@ -94,7 +95,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
         RaiseNetworkEvent(new LobbyPlaylistChangedEvent(_lobbyPlaylist));
     }
 
-    private string[] ShuffleLobbyPlaylist()
+    private ResPath[] ShuffleLobbyPlaylist()
     {
         if (_lobbyMusicCollection == null)
         {
@@ -102,7 +103,6 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
         }
 
         var playlist = _lobbyMusicCollection.PickFiles
-                                            .Select(x => x.ToString())
                                             .ToArray();
         _robustRandom.Shuffle(playlist);
 
