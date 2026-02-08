@@ -130,7 +130,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.VerbOnly)
             return;
 
-        if (component.RequiredItems != null)
+        if (component.RequiredItems != null && !component.AllowUseInHandIfHasRequiredItems)
             return;
 
         args.Handled = InteractUI(args.User, uid, component);
@@ -147,7 +147,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.RequiredItems != null)
             return;
 
-        args.Handled = InteractUI(args.User, uid, component);
+        args.Handled = InteractUI(args.User, uid, component, component.InteractionModeOnUseInHand);
     }
 
     private void OnInteractUsing(EntityUid uid, ActivatableUIComponent component, InteractUsingEvent args)
@@ -158,13 +158,10 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.VerbOnly)
             return;
 
-        if (component.RequiredItems == null)
+        if (_whitelistSystem.IsWhitelistFailOrNull(component.RequiredItems, args.Used))
             return;
 
-        if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Used))
-            return;
-
-        args.Handled = InteractUI(args.User, uid, component);
+        args.Handled = InteractUI(args.User, uid, component, component.InteractionModeOnInteractUsing);
     }
 
     private void OnUIClose(EntityUid uid, ActivatableUIComponent component, BoundUIClosedEvent args)
@@ -180,12 +177,12 @@ public sealed partial class ActivatableUISystem : EntitySystem
         SetCurrentSingleUser(uid, null, component);
     }
 
-    private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui)
+    private bool InteractUI(EntityUid user, EntityUid uiEntity, ActivatableUIComponent aui, InteractionMode interactionMode = InteractionMode.ToggleUI)
     {
         if (aui.Key == null || !_uiSystem.HasUi(uiEntity, aui.Key))
             return false;
 
-        if (_uiSystem.IsUiOpen(uiEntity, aui.Key, user))
+        if (interactionMode == InteractionMode.ToggleUI && _uiSystem.IsUiOpen(uiEntity, aui.Key, user))
         {
             _uiSystem.CloseUi(uiEntity, aui.Key, user);
             return true;

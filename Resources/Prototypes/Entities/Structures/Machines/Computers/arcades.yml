@@ -225,3 +225,4 @@
     dataset: BlockGameAds
   - type: SpeakOnUIClosed
     pack: BlockGameGoodbyes
+  - type: ActivatableUIRequiresVision
