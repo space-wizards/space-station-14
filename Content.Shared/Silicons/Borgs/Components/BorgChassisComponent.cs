@@ -84,6 +84,14 @@ public sealed partial class BorgChassisComponent : Component
     public EntityWhitelist? ModuleWhitelist;
 
     /// <summary>
+    /// A list of requirements as set by the borg type.
+    /// </summary>
+    /// <seealso cref="CyborgModuleRequirement"/>
+    /// <seealso cref="BorgTypePrototype.RequiredModules"/>
+    [DataField, AutoNetworkedField]
+    public CyborgModuleRequirement[] ModuleRequirements = [];
+
+    /// <summary>
     /// How many modules can be installed in this borg?
     /// </summary>
     [DataField, AutoNetworkedField]
