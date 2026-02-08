@@ -169,5 +169,19 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             identity.CurrentIdentity = targetIdentity;
             Dirty(ent.Owner, identity);
         }
+		// Notify other systems (server-side) that the changeling has finished transforming.
+		// Used e.g. to restore special states like zombification visuals/factions after cloning.
+		var postEv = new ChangelingPostTransformEvent(targetIdentity);
+		RaiseLocalEvent(ent.Owner, postEv);
+    }
+}
+
+public sealed class ChangelingPostTransformEvent : EntityEventArgs
+{
+    public readonly EntityUid TargetIdentity;
+
+    public ChangelingPostTransformEvent(EntityUid targetIdentity)
+    {
+            TargetIdentity = targetIdentity;
     }
 }
