@@ -166,7 +166,7 @@ public sealed class RootableSystem : EntitySystem
             return false;
 
         ent.Comp.Rooted = !ent.Comp.Rooted;
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(ent);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(ent.Owner);
         _gravity.RefreshWeightless(ent.Owner);
 
         if (ent.Comp.Rooted)

@@ -373,6 +373,7 @@
   - type: HeldSpeedModifier #slowdown is what balances this compared to a dsword
     walkModifier: 0.6
     sprintModifier: 0.6
+    weightlessAcceleration: 0.6
   - type: UseDelay
     delay: 1.5
   - type: Sprite

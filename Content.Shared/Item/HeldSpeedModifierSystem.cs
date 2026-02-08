@@ -1,5 +1,6 @@
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Item;
@@ -17,16 +18,17 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotUnequippedHandEvent>(OnGotUnequippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshMovementSpeedModifiers);
+        SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshWeightlessModifiersEvent>>(OnRefreshWeightlessModifiers);
     }
 
     private void OnGotEquippedHand(Entity<HeldSpeedModifierComponent> ent, ref GotEquippedHandEvent args)
     {
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshMovementModifiers(args.User);
     }
 
     private void OnGotUnequippedHand(Entity<HeldSpeedModifierComponent> ent, ref GotUnequippedHandEvent args)
     {
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshMovementModifiers(args.User);
     }
 
     public (float,float) GetHeldMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component)
@@ -46,5 +48,10 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
     {
         var (walkMod, sprintMod) = GetHeldMovementSpeedModifiers(uid, component);
         args.Args.ModifySpeed(walkMod, sprintMod);
+    }
+
+    private void OnRefreshWeightlessModifiers(Entity<HeldSpeedModifierComponent> ent, ref HeldRelayedEvent<RefreshWeightlessModifiersEvent> args)
+    {
+        args.Args.ModifyAcceleration(ent.Comp.WeightlessAcceleration);
     }
 }
