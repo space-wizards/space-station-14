@@ -37,7 +37,7 @@ namespace Content.Client.Nuke
 
             _menu.EjectButton.OnPressed += _ =>
             {
-                SendMessage(new ItemSlotButtonPressedEvent(SharedNukeComponent.NukeDiskSlotId));
+                SendMessage(new ItemSlotButtonPressedEvent(SharedNukeComponent.NukeDiskSlotId, predicted: false));
             };
             _menu.AnchorButton.OnPressed += _ =>
             {
