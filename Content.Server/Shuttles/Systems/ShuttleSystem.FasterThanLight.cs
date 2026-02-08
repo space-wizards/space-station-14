@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
@@ -478,12 +479,28 @@ public sealed partial class ShuttleSystem
 
         if (!Exists(entity.Comp1.TargetCoordinates.EntityId))
         {
-            // Uhh good luck
-            // Pick earliest map?
-            var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
-            var map = maps.Min(o => o.GetHashCode());
+            // Fallback time.
+            // Try to find a map with a station. Otherwise just find /any/ map.
+            // It's possible for stations to have no grids so we also have to
+            // check for that. Stations don't inherently have a map they
+            // "belong" to.
+            var currentMap = Transform(entity).MapID;
+            var fallback = _station.GetStations()
+                .Select(station => _station.GetLargestGrid(Comp<StationDataComponent>(station)))
+                .Where(grid => grid is not null)
+                .Select(grid => Transform(grid!.Value).MapID) // above .Where justifies the !
+                .Where(map => map != currentMap) // Exclude ftl map
+                .FirstOrNull();
+            fallback ??= EntityQuery<MapComponent>().MinBy(map => map.MapId)?.MapId;
 
-            mapId = new MapId(map);
+            if (fallback is null)
+            {
+                // There's no maps soooooo. Yeah that's really sucks for you.
+                Log.Error($"Couldn't find a fallback map to warp to for {ToPrettyString(entity)}!");
+                return;
+            }
+
+            mapId = fallback.Value;
             TryFTLProximity(uid, _mapSystem.GetMap(mapId));
         }
         // Docking FTL

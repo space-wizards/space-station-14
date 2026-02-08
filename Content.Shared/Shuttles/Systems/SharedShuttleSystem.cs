@@ -59,11 +59,13 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     {
         var mapUid = Maps.GetMapOrInvalid(targetMap);
         var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
+        TryComp<FTLDestinationComponent>(mapUid, out var destination);
 
-        if (shuttleMap == targetMap)
+        // Allow coordinate ('repositioning') jumps if no FTLDestination
+        if (shuttleMap == targetMap && destination?.DisallowCoordinateFTLJumps == false)
             return true;
 
-        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) || !destination.Enabled)
+        if (destination?.Enabled != true)
             return false;
 
         if (destination.RequireCoordinateDisk)
