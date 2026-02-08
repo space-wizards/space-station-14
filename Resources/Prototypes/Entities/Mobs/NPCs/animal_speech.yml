@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: ExceptionSpeechDataset
+  values:
+    prefix: exception-censored-
+    count: 11
