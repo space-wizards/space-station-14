@@ -39,6 +39,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     [ViewVariables]
@@ -606,6 +607,20 @@ public abstract partial class SharedMindSystem : EntitySystem
         return allHumans;
     }
 
+    /// <summary>
+    /// Get all minds on the same Map as the Refrence
+    /// </summary>>
+    public IEnumerable<Entity<MindComponent>> GetAliveHumansOnMap(EntityUid? map)
+    {
+        foreach (var candidateMind in GetAliveHumans())
+        {
+            if (candidateMind.Comp.CurrentEntity is not { } candidateEntity ||
+               _transform.GetMap(candidateEntity) != map)
+            {
+                yield return candidateMind;
+            }
+        }
+    }
     /// <summary>
     /// Adds to a hashset every living humanoid player's minds, except for a single one which is exluded.
     /// </summary>
