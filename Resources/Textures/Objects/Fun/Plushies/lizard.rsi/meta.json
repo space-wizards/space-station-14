@@ -66,6 +66,22 @@
         {
             "name": "plushielizardinversed-equipped-HELMET",
             "directions": 4
+        },
+
+         {
+            "name": "plushie_evillizard"
+        },
+        {
+            "name": "evillizard-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "evillizard-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "evillizard-equipped-HELMET",
+            "directions": 4
         }
     ]
 }
