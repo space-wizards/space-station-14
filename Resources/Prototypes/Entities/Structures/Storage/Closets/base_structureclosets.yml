@@ -45,6 +45,11 @@
         layer:
         - MachineLayer
   - type: EntityStorage
+    whitelist:
+      components:
+        - MobState
+        - Item
+        - GhostRoleAntagSpawner
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
