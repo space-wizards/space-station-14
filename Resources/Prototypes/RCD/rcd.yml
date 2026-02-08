@@ -331,8 +331,8 @@
 
 - type: rcd
   id: FloorXenoborg
-  name: rcd-component-floor-xenoborg
   category: XenoborgWallsAndFlooring
+  name: rcd-component-floor-xenoborg
   sprite: /Textures/Interface/Radial/RCD/xenoborg_tile.png
   mode: ConstructTile
   prototype: FloorXenoborg
@@ -345,8 +345,8 @@
 
 - type: rcd
   id: FloorXenoborgBlueCircuit #again, it's just blue circuit floor
-  name: rcd-component-floor-blue-circuit
   category: XenoborgWallsAndFlooring
+  name: rcd-component-floor-blue-circuit
   sprite: /Textures/Interface/Radial/RCD/blue_circuit_tile.png
   mode: ConstructTile
   prototype: FloorBlueCircuit
@@ -359,8 +359,8 @@
 
 - type: rcd
   id: XenoborgPlating # . . .
-  name: rcd-component-plating
   category: XenoborgWallsAndFlooring
+  name: rcd-component-plating
   sprite: /Textures/Interface/Radial/RCD/plating.png
   mode: ConstructTile
   prototype: PlatingRCD
