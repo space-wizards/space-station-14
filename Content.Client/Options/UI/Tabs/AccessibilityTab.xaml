@@ -20,6 +20,7 @@
                     Example="{Loc 'ui-options-highlights-color-example'}"/>
                 <Label Text="{Loc 'ui-options-accessability-header-content'}"
                        StyleClasses="LabelKeyText"/>
+                <CheckBox Name="PointerHighlightCheckBox" Text="{Loc 'ui-options-pointer-highlights'}" />
                 <CheckBox Name="CensorNudityCheckBox" Text="{Loc 'ui-options-censor-nudity'}" />
             </BoxContainer>
         </ScrollContainer>
