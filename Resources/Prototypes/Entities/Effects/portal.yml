@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BasePortal
   abstract: true
   name: bluespace portal
@@ -123,3 +123,82 @@
     volume: -3
     sound:
       path: /Audio/Ambience/anomaly_scary.ogg
+
+- type: entity
+  id: WanderingPortal
+  suffix: AI
+  parent: BaseMob
+  name: wandering portal
+  description: Where did it come from? And where does it go?
+  components:
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+    sleepingAllowed: false
+  - type: CanMoveInAir
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: SkyBlue
+    layers:
+    - state: wandering-portal
+  - type: PointLight
+    color: SkyBlue
+    radius: 5
+    energy: 2
+    netsync: false
+  - type: AmbientSound
+    volume: 1
+    range: 15
+    sound:
+      path: /Audio/Effects/tesla.ogg
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.75
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.37
+        mask:
+        - Impassable
+        layer:
+        - None
+  - type: Portal
+    arrivalSound: /Audio/Items/hiss.ogg
+    departureSound: /Audio/Items/hiss.ogg
+    ignoreStationaryObjects: true
+  - type: ChaoticJump
+    jumpMinInterval: 15
+    jumpMaxInterval: 30
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 2.5
+  - type: HTN
+    constantlyReplan: false
+    rootTask:
+      task: IdleCompound
+    blackboard:
+      IdleRange: !type:Single
+        500
+      PathLimit: !type:Single
+        500
+      MinimumIdleTime: !type:Single
+        0
+      MaximumIdleTime: !type:Single
+        7
+
+- type: entity
+  id: TemporaryWanderingPortal
+  suffix: AI, temporary
+  parent: WanderingPortal
+  components:
+  - type: TimedDespawn
+    lifetime: 300
