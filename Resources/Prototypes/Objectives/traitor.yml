@@ -30,7 +30,7 @@
   - type: Objective
     difficulty: 2.75
   - type: ObjectiveLimit
-    limit: 2 # there is usually only 1 of each steal objective, have 2 max for drama
+    limit: 1 # there is usually only 1 of each steal objective and there is no current way for a traitor to find where an object has ended up, so setting this to 1 to prevent traitors / sleeper agents being unable to interact with objectives due to another traitor previously taking it.
 
 # state
 
@@ -299,7 +299,7 @@
   - type: NotJobRequirement
     jobs: [ HeadOfPersonnel ]
   - type: ObjectiveLimit
-    limit: 3 # ian only has 2 slices, 3 obj for drama
+    limit: 2 # ian has 2 slices, so putting this at 2 so traitors can potentially cooperate to get ian away from hop
   - type: StealCondition
     stealGroup: FoodMeatCorgi
     owner: objective-condition-steal-Ian
@@ -321,6 +321,8 @@
   parent: BaseCaptainObjective
   id: CaptainIDStealObjective
   components:
+  - type: ObjectiveLimit
+    limit: 2 # captain's spare ID works for this objective, and putting this at 2 allows for there to be either cooperation from traitors to secure both IDs or conflict if one ID is taken and one of them tries to bail / betray
   - type: StealCondition
     stealGroup: CaptainIDCard
 
