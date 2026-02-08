@@ -53,6 +53,11 @@
   copyright: "Taken from Citadel Station 13"
   source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
 
+- files: ["war_alert.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from BlueMoon-Station 13"
+  source: "https://github.com/BlueMoon-Labs/BlueMoon-Station/commit/954e8ca034e259b87899b5a799bc06b7cfc6e6c0#diff-7c93ced12d60a2468190f267ccd792394ef91b9c86c7f1e7f33f1ec805cf5160"
+
 - files: ["woosh.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from SciFiSounds via freesound.org, edit by august-sun(GitHub)/augustsun(Discord)"

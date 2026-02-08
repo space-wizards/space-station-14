@@ -1,3 +1,4 @@
+using Content.Server.AlertLevel;
 using Content.Server.Antag;
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
@@ -9,6 +10,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Server.Store.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs;
@@ -18,16 +20,18 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
 using Content.Shared.Roles.Components;
+using Content.Shared.Station.Components;
 using Content.Shared.Store;
+using Content.Shared.Store.Components;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Shared.Station.Components;
-using Content.Shared.Store.Components;
-using Robust.Shared.Prototypes;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -40,6 +44,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
     private static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
     private static readonly ProtoId<TagPrototype> NukeOpsUplinkTagPrototype = "NukeOpsUplink";
@@ -67,6 +74,29 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<NukeopsRuleComponent, RuleLoadedGridsEvent>(OnRuleLoadedGrids);
     }
 
+    // To change the alert level after declaring war
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<NukeopsRuleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.CanChangeAlertLevel)
+            {
+                if (_gameTiming.CurTime < comp.AlertlevelTime)
+                    return;
+
+                if (comp.SetAlertlevel == null)
+                    continue;
+
+                if (comp.TargetStation == null)
+                    continue;
+
+                _alertLevelSystem.SetLevel(comp.TargetStation.Value, comp.SetAlertlevel, true, true, true, true);
+
+                comp.CanChangeAlertLevel = false;
+            }
+        }
+    }
     protected override void Started(EntityUid uid,
         NukeopsRuleComponent component,
         GameRuleComponent gameRule,
@@ -367,6 +397,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 nukeops.WarDeclaredTime = Timing.CurTime;
                 var timeRemain = nukeops.WarNukieArriveDelay + Timing.CurTime;
                 ev.DeclaratorEntity.Comp.ShuttleDisabledTime = timeRemain;
+                nukeops.AlertlevelTime = Timing.CurTime + TimeSpan.FromSeconds(nukeops.AlertlevelDelay);
+                nukeops.CanChangeAlertLevel = true;
 
                 DistributeExtraTc((uid, nukeops));
             }
@@ -380,14 +412,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// </summary>
     public WarConditionStatus GetWarCondition(NukeopsRuleComponent nukieRule, WarConditionStatus? oldStatus)
     {
-        if (!nukieRule.CanEnableWarOps)
-            return WarConditionStatus.NoWarUnknown;
+        //if (!nukieRule.CanEnableWarOps)
+        //    return WarConditionStatus.NoWarUnknown;
 
-        if (EntityQuery<NukeopsRoleComponent>().Count() < nukieRule.WarDeclarationMinOps)
-            return WarConditionStatus.NoWarSmallCrew;
+        //if (EntityQuery<NukeopsRoleComponent>().Count() < nukieRule.WarDeclarationMinOps)
+        //    return WarConditionStatus.NoWarSmallCrew;
 
-        if (nukieRule.LeftOutpost)
-            return WarConditionStatus.NoWarShuttleDeparted;
+        //if (nukieRule.LeftOutpost)
+        //    return WarConditionStatus.NoWarShuttleDeparted;
 
         if (oldStatus == WarConditionStatus.YesWar)
             return WarConditionStatus.WarReady;
