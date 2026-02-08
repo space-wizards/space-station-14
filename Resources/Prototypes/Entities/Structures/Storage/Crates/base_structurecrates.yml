@@ -32,7 +32,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+          bounds: "-0.3,-0.3,0.3,0.3"
         density: 50
         mask:
         - CrateMask #this is so they can go under plastic flaps
@@ -58,6 +58,8 @@
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
+    openDrawDepth: Objects
+    closedDrawDepth: Mobs
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
