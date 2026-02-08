@@ -272,7 +272,7 @@
 
 - type: entity
   parent: MindRoleTraitor
-  id: MindRoleTraitorReinforcement
+  id: MindRoleSyndicateReinforcement
   name: Syndicate Reinforcement Role
   components:
   - type: MindRole

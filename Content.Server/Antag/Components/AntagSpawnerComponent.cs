@@ -1,4 +1,4 @@
-using Content.Server.Antag;
+using Content.Server.Antag.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag.Components;

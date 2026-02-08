@@ -18,8 +18,7 @@
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-information-space-dragon-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: GhostTeamAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -176,8 +175,7 @@
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
   - type: GhostRole
-    mindRoles:
-    - MindRoleDragon
+    antagLoadoutPrototype: Dragon
   - type: ActionGun
     action: ActionDragonsBreath
     gunProto: DragonsBreathGun

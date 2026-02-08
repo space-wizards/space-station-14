@@ -45,8 +45,8 @@
     roleName: pai-system-role-name
     roleDescription: pai-system-role-description
     roleRules: ghost-role-information-familiar-rules
-    mindRoles:
-    - MindRoleGhostRoleFamiliar
+    antagLoadoutPrototype: GhostFamiliar
+    minion: true
     wipeVerbText: pai-system-wipe-device-verb-text
     wipeVerbPopup: pai-system-wiped-device
     stopSearchVerbText: pai-system-stop-searching-verb-text
@@ -120,8 +120,8 @@
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
     roleRules: ghost-role-information-familiar-rules
-    mindRoles:
-    - MindRoleGhostRoleFamiliar
+    antagLoadoutPrototype: GhostFamiliar
+    minion: true
   - type: IntrinsicRadioTransmitter
     channels:
     - Syndicate
@@ -174,8 +174,8 @@
     roleName: pai-system-role-name-potato
     roleDescription: pai-system-role-description-potato
     roleRules: ghost-role-information-familiar-rules
-    mindRoles:
-    - MindRoleGhostRoleFamiliar
+    antagLoadoutPrototype: GhostFamiliar
+    minion: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:

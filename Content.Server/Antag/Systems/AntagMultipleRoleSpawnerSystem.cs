@@ -1,7 +1,7 @@
 using Content.Server.Antag.Components;
 using Robust.Shared.Random;
 
-namespace Content.Server.Antag;
+namespace Content.Server.Antag.Systems;
 
 public sealed class AntagMultipleRoleSpawnerSystem : EntitySystem
 {

@@ -1,4 +1,4 @@
-﻿# Be careful with these as they get removed on shutdown too!
+# Be careful with these as they get removed on shutdown too!
 - type: entity
   id: AiHeld
   description: Components added / removed from an entity that gets inserted into an AI core.
@@ -463,8 +463,7 @@
     roleName: station-ai-ghost-role-name
     roleDescription: station-ai-ghost-role-description
     roleRules: ghost-role-information-silicon-rules
-    mindRoles:
-    - MindRoleGhostRoleSilicon
+    antagLoadoutPrototype: GhostSilicon
     job: StationAi
 
 # Hologram projection that the AI's eye tracks.

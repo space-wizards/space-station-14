@@ -1,27 +1,34 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Antag;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
-using Content.Shared.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Objectives.Systems;
+using Content.Server.Popups;
 using Content.Shared.Administration;
+using Content.Shared.Antag;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Raffles;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Players;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -30,11 +37,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.Popups;
-using Content.Shared.Verbs;
-using Robust.Shared.Collections;
-using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Roles.Components;
+using System.Linq;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -53,8 +56,10 @@ public sealed class GhostRoleSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SubmissionObjectiveSystem _submissionObjective = default!;
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
@@ -530,21 +535,26 @@ public sealed class GhostRoleSystem : EntitySystem
 
 
         // If there is no mind, check the mindRole prototypes
-        foreach (var proto in roleEnt.Comp.MindRoles)
+
+        _prototype.Resolve<AntagLoadoutPrototype>(roleEnt.Comp.AntagLoadoutPrototype, out var loadout);
+
+        if (loadout != null && loadout.MindRoles != null)
         {
-            if (!_prototype.TryIndex(proto, out var indexed)
-                || !indexed.TryGetComponent<MindRoleComponent>(out var comp, _ent.ComponentFactory))
-                continue;
-            var roleComp = (MindRoleComponent)comp;
+            foreach (var proto in loadout.MindRoles)
+            {
+                if (!_prototype.TryIndex(proto, out var indexed)
+                    || !indexed.TryGetComponent<MindRoleComponent>(out var comp, _ent.ComponentFactory))
+                    continue;
+                var roleComp = (MindRoleComponent)comp;
 
-            if (roleComp.JobPrototype is not null)
-                jobs.Add(roleComp.JobPrototype.Value);
-            else if (roleComp.AntagPrototype is not null)
-                antags.Add(roleComp.AntagPrototype.Value);
-            else
-                Log.Debug($"Mind role '{proto}' of '{roleEnt.Comp.RoleName}' has neither a job or antag prototype specified");
+                if (roleComp.JobPrototype is not null)
+                    jobs.Add(roleComp.JobPrototype.Value);
+                else if (roleComp.AntagPrototype is not null)
+                    antags.Add(roleComp.AntagPrototype.Value);
+                else
+                    Log.Debug($"Mind role '{proto}' of '{roleEnt.Comp.RoleName}' has neither a job or antag prototype specified");
+            }
         }
-
         return antags.Count > 0 || jobs.Count > 0;
     }
 
@@ -605,7 +615,7 @@ public sealed class GhostRoleSystem : EntitySystem
 
         // After taking a ghost role, the player cannot return to the original body, so wipe the player's current mind
         // unless it is a visiting mind
-        if(_mindSystem.TryGetMind(player.UserId, out _, out var mind) && !mind.IsVisitingEntity)
+        if (_mindSystem.TryGetMind(player.UserId, out _, out var mind) && !mind.IsVisitingEntity)
             _mindSystem.WipeMind(player);
 
         var newMind = _mindSystem.CreateMind(player.UserId,
@@ -614,7 +624,25 @@ public sealed class GhostRoleSystem : EntitySystem
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);
 
-        _roleSystem.MindAddRoles(newMind.Owner, role.MindRoles, newMind.Comp);
+        if (_prototype.Resolve<AntagLoadoutPrototype>(role.AntagLoadoutPrototype, out var loadout))
+            MakeAntag(loadout, mob, roleUid);
+
+        if (role.Minion)
+        {
+            _submissionObjective.MakeMinion(mob, newMind, role.Master, role.MinionSubmissionObjective);
+        }
+    }
+
+    private bool MakeAntag(AntagLoadoutPrototype antagLoadout, EntityUid player, EntityUid ghostRole)
+    {
+        if (TryComp<GhostRoleMobSpawnerComponent>(ghostRole, out var _))
+        {
+            //So that the equipment doesn't spawn under feet every damn time someone takes on this role
+            antagLoadout.RoleLoadout = null;
+            antagLoadout.StartingGear = null;
+            antagLoadout.AddComponents = new();
+        }
+        return _antag.TryMakeNonGameRuleAntag(player, antagLoadout, ghostRole);
     }
 
     /// <summary>
@@ -900,6 +928,12 @@ public sealed class GhostRoleSystem : EntitySystem
             var msg = Loc.GetString("ghostrole-spawner-select", ("mode", verbText));
             _popupSystem.PopupEntity(msg, uid, userUid.Value);
         }
+    }
+
+    public void SetMaster(EntityUid uid, EntityUid masterUid)
+    {
+        var ghostrolecomp = EnsureComp<GhostRoleComponent>(uid);
+        ghostrolecomp.Master = masterUid;
     }
 
     public void OnGhostRoleRadioMessage(Entity<GhostRoleMobSpawnerComponent> entity, ref GhostRoleRadioMessage args)

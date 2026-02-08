@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
@@ -12,40 +11,42 @@ using Content.Server.Mind;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
-using Content.Server.StationEvents.Components;
 using Content.Server.Speech.Components;
+using Content.Server.StationEvents.Components;
+using Content.Shared.Antag;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Prying.Components;
+using Content.Shared.Roles;
+using Content.Shared.Tag;
+using Content.Shared.Temperature.Components;
+using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
-using Content.Shared.Prying.Components;
-using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Humanoid.Markings;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared.NPC.Prototypes;
-using Content.Shared.Roles;
-using Content.Shared.Temperature.Components;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Zombies;
 
@@ -315,7 +316,18 @@ public sealed partial class ZombieSystem
             ghostRole.RoleName = Loc.GetString("zombie-generic");
             ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
             ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
-            ghostRole.MindRoles.Add(MindRoleZombie);
+            _protoManager.Resolve<AntagLoadoutPrototype>(ghostRole.AntagLoadoutPrototype, out var loadout);
+            if (loadout != null && loadout.MindRoles != null)
+            {
+                var newMindRoles = new List<EntProtoId> { MindRoleZombie };
+                loadout.MindRoles = newMindRoles;
+            }
+            else
+            {
+                ghostRole.AntagLoadoutPrototype = new ProtoId<AntagLoadoutPrototype>("Zombie");
+            }
+
+
         }
 
         if (TryComp<HandsComponent>(target, out var handsComp))

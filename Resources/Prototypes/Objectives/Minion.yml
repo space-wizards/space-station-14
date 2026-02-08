@@ -1,0 +1,33 @@
+- type: entity
+  parent: BaseTargetObjective
+  id: MinionSubmissionObjective
+  description: You have to do whatever your master tells you to do, even if he tells you to commit suicide.
+  components:
+  - type: TargetObjective
+    title: objective-condition-minion-submission
+  - type: PickSpecificPerson
+  - type: Objective
+    difficulty: 0
+    issuer: objective-issuer-master
+    icon:
+      sprite: Interface/objectives/Master.rsi
+      state: icon
+  # TODO: Come up with good requirements for greentext
+  - type: FreeObjective
+
+- type: entity
+  parent: MinionSubmissionObjective
+  id: ReinforcementsTraitorSubmissionObjective
+  description: You must not jeopardize their mission under any circumstances. Above all else, you must not be captured alive.
+  components:
+  - type: TargetObjective
+    title: objective-condition-minion-traitor-reinforcement-submission
+
+
+- type: entity
+  parent: MinionSubmissionObjective
+  id: ReinforcementsNuclearOperativeSubmissionObjective
+  description: Obey your master, whatever orders he gives you.
+  components:
+  - type: TargetObjective
+    title: objective-condition-minion-nuclear-operative-reinforcement-submission

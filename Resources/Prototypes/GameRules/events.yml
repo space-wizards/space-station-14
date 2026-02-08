@@ -210,8 +210,7 @@
       min: 1
       max: 1
       pickPlayer: false
-      mindRoles:
-      - MindRoleDragon
+      antagLoadout: Dragon
   - type: DynamicRuleCost
     cost: 75
 
@@ -242,28 +241,7 @@
       min: 1
       max: 1
       pickPlayer: false
-      startingGear: SpaceNinjaGear
-      roleLoadout:
-      - RoleSurvivalSpaceNinja
-      briefing:
-        text: ninja-role-greeting
-        color: Green
-        sound: /Audio/Misc/ninja_greeting.ogg
-      components:
-      - type: SpaceNinja
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      - type: AutoImplant
-        implants:
-        - DeathAcidifierImplant
-      - type: RandomMetadata
-        nameSegments:
-        - NamesNinjaTitle
-        - NamesNinja
-        nameFormat: name-format-ninja
-      mindRoles:
-      - MindRoleNinja
+      antagLoadout: Ninja
   - type: DynamicRuleCost
     cost: 75
 
@@ -293,15 +271,7 @@
       min: 1
       max: 1
       pickPlayer: false
-      startingGear: ParadoxCloneGear
-      roleLoadout:
-      - RoleSurvivalVoxTank # give vox something to breath in case they don't get a copy
-      briefing:
-        text: paradox-clone-role-greeting
-        color: lightblue
-        sound: /Audio/Misc/paradox_clone_greeting.ogg
-      mindRoles:
-      - MindRoleParadoxClone
+      antagLoadout: ParadoxClone
   - type: DynamicRuleCost
     cost: 50
 
@@ -335,26 +305,7 @@
       max: 1
       playerRatio: 1
       pickPlayer: false
-      startingGear: WizardBlueGear
-      roleLoadout:
-      - RoleSurvivalExtended
-      briefing:
-        text: wizard-role-greeting
-        color: Turquoise
-        # TODO: Need Wizard Start sound
-        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
-      # TODO: WizardComp as needed
-      components:
-      - type: NpcFactionMember
-        factions:
-        - Wizard
-      - type: RandomMetadata
-        nameSegments:
-        - NamesWizardFirst
-        - NamesWizardLast
-        nameFormat: name-format-wizard
-      mindRoles:
-      - MindRoleWizard
+      antagLoadout: Wizard
 
 # disabled until event is rewritten to be more interesting
 #- type: entity
@@ -539,23 +490,7 @@
     - prefRoles: [ InitialInfected ]
       max: 3
       playerRatio: 10
-      blacklist:
-        components:
-        - ZombieImmune
-        - AntagImmune
-      briefing:
-        text: zombie-patientzero-role-greeting
-        color: Plum
-        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
-      components:
-      - type: PendingZombie #less time to prepare than normal
-        minInitialInfectedGrace: 300
-        maxInitialInfectedGrace: 450
-      - type: ZombifyOnDeath
-      - type: IncurableZombie
-      - type: InitialInfected
-      mindRoles:
-      - MindRoleInitialInfected
+      antagLoadout: Zombie
   - type: DynamicRuleCost
     cost: 200
 
@@ -579,21 +514,7 @@
       min: 1
       max: 1
       pickPlayer: false
-      startingGear: SyndicateLoneOperativeGearFull
-      roleLoadout:
-      - RoleSurvivalNukie
-      components:
-      - type: NukeOperative
-      - type: RandomMetadata
-        nameSegments:
-        - NamesSyndicatePrefix
-        - NamesSyndicateNormal
-        nameFormat: name-format-nukie-generic
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      mindRoles:
-      - MindRoleLoneops
+      antagLoadout: Loneops
   - type: DynamicRuleCost
     cost: 75
 
@@ -619,11 +540,7 @@
       min: 1
       max: 2
       playerRatio: 10
-      blacklist:
-        components:
-        - AntagImmune
-      mindRoles:
-      - MindRoleTraitorSleeper
+      antagLoadout: TraitorSleeper
 
 - type: entity
   id: MassHallucinations

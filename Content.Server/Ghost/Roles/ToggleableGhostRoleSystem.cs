@@ -47,6 +47,11 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         }
         _popup.PopupEntity(Loc.GetString(component.BeginSearchingText), uid, args.User);
 
+        if (component.Minion)
+        {
+            component.Master = args.User;
+        }
+
         UpdateAppearance(uid, ToggleableGhostRoleStatus.Searching);
 
         ActivateGhostRole((uid, component));
@@ -65,7 +70,10 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         ghostRole.RoleDescription = Loc.GetString(ent.Comp.RoleDescription);
         ghostRole.RoleRules = Loc.GetString(ent.Comp.RoleRules);
         ghostRole.JobProto = ent.Comp.JobProto;
-        ghostRole.MindRoles = ent.Comp.MindRoles;
+        ghostRole.AntagLoadoutPrototype = ent.Comp.AntagLoadoutPrototype;
+        ghostRole.Minion = ent.Comp.Minion;
+        ghostRole.Master = ent.Comp.Master;
+        ghostRole.MinionSubmissionObjective = ent.Comp.MinionSubmissionObjective;
     }
 
     private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)

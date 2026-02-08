@@ -1,0 +1,29 @@
+- type: antagLoadout
+  id: Changeling
+  briefing:
+    text: changeling-role-greeting
+    color: Red
+    sound: /Audio/Ambience/Antag/changeling_start.ogg
+  addComponents:
+  - type: ChangelingDevour
+  - type: ChangelingIdentity
+  - type: ChangelingTransform
+  - type: ActionGrant
+    actions:
+    - ActionChangelingStore
+  # TODO: Make it so the changeling gamerule changeling can inherit from the changeling store preset somehow
+  - type: Store
+    name: store-preset-name-changeling
+    categories:
+    - ChangelingAbilities
+    currencyWhitelist:
+    - ChangelingDNA
+    balance:
+      ChangelingDNA: 50
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+        requireInputValidation: false
+  mindRoles:
+  - MindRoleChangeling

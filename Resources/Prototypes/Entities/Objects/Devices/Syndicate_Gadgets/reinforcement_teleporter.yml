@@ -5,10 +5,30 @@
   name: syndicate reinforcement radio
   description: Call in a syndicate agent of questionable quality, instantly! Only basic equipment provided.
   components:
+  - type: GhostRoleMasterOnUse
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     layers:
     - state: old-radio
+
+- type: entity
+  parent: ReinforcementRadio
+  id: ReinforcementRadioSyndicate
+  name: syndicate reinforcement radio
+  description: Call in a syndicate agent of questionable quality, instantly!
+  components:
+  - type: GhostRole
+    minion: true
+    minionSubmissionObjective: ReinforcementsTraitorSubmissionObjective
+    name: ghost-role-information-syndicate-reinforcement-spy-name
+    description: ghost-role-information-syndicate-reinforcement-spy-description
+    rules: ghost-role-information-syndicate-reinforcement-rules
+    antagLoadoutPrototype: TraitorReinforcement
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSyndicateAgentSpy
+    selectablePrototypes: ["SyndicateAgentMedic", "SyndicateAgentSpy", "SyndicateAgentThief"]
   - type: UserInterface
     interfaces:
       enum.GhostRoleRadioUiKey.Key:
@@ -18,35 +38,18 @@
 
 - type: entity
   parent: ReinforcementRadio
-  id: ReinforcementRadioSyndicate
-  name: syndicate reinforcement radio
-  description: Call in a syndicate agent of questionable quality, instantly!
-  components:
-  - type: GhostRole
-    name: ghost-role-information-syndicate-reinforcement-spy-name
-    description: ghost-role-information-syndicate-reinforcement-spy-description
-    rules: ghost-role-information-syndicate-reinforcement-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
-    raffle:
-      settings: default
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanSyndicateAgentSpy
-    selectablePrototypes: ["SyndicateAgentMedic", "SyndicateAgentSpy", "SyndicateAgentThief"]
-
-- type: entity
-  parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateNukeops # Reinforcement radio exclusive to nukeops uplink
   name: nuclear operative radio
   description: Call in a nuclear operative of questionable quality, instantly! Basic nukeop equipment provided.
   suffix: NukeOps
   components:
   - type: GhostRole
+    minion: true
+    minionSubmissionObjective: ReinforcementsNuclearOperativeSubmissionObjective
     name: ghost-role-information-nukeop-reinforcement-name
     description: ghost-role-information-nukeop-reinforcement-description
     rules: ghost-role-information-nukeop-reinforcement-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: NuclearOperativeReinforcement
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -59,16 +62,23 @@
   description: Calls in a specially trained ancestor of your choosing to assist you.
   components:
   - type: GhostRole
+    minion: true
+    minionSubmissionObjective: ReinforcementsTraitorSubmissionObjective
     name: ghost-role-information-syndicate-monkey-reinforcement-name
     description: ghost-role-information-syndicate-monkey-reinforcement-description
     rules: ghost-role-information-syndicate-reinforcement-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: TraitorReinforcement
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
     selectablePrototypes: ["SyndicateMonkey", "SyndicateKobold"]
+  - type: UserInterface
+    interfaces:
+      enum.GhostRoleRadioUiKey.Key:
+        type: GhostRoleRadioBoundUserInterface
+  - type: ActivatableUI
+    key: enum.GhostRoleRadioUiKey.Key
 
 - type: entity
   parent: ReinforcementRadioSyndicateAncestor
@@ -76,7 +86,10 @@
   suffix: NukeOps
   components:
   - type: GhostRole
+    minion: true
+    minionSubmissionObjective: ReinforcementsNuclearOperativeSubmissionObjective
     rules: ghost-role-information-nukeop-reinforcement-rules
+    antagLoadoutPrototype: NuclearOperativeReinforcement
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgentNukeops
     selectablePrototypes: ["SyndicateMonkeyNukeops", "SyndicateKoboldNukeops"]
@@ -88,11 +101,12 @@
   description: Calls in a faithfully trained cat with a microbomb to assist you.
   components:
   - type: GhostRole
+    minion: true
+    minionSubmissionObjective: ReinforcementsTraitorSubmissionObjective
     name: ghost-role-information-SyndiCat-name
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-syndicate-reinforcement-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    antagLoadoutPrototype: GhostFamiliar
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -111,8 +125,7 @@
       name: ghost-role-information-syndicate-cyborg-assault-name
       description: ghost-role-information-syndicate-cyborg-description
       rules: ghost-role-information-silicon-rules
-      mindRoles:
-      - MindRoleGhostRoleSilicon
+      antagLoadoutPrototype: GhostSilicon
       raffle:
         settings: default
       job: Borg

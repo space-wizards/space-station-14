@@ -365,8 +365,7 @@
       rules: ghost-role-information-freeagent-rules
       raffle:
         settings: default
-      mindRoles:
-      - MindRoleGhostRoleFreeAgent
+      antagLoadoutPrototype: GhostFreeAgent
     - type: GhostTakeoverAvailable
 
 - type: entity

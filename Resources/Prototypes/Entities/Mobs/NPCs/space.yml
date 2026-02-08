@@ -397,8 +397,7 @@
     name: ghost-role-information-snail-name
     description: ghost-role-information-snail-description
     rules: ghost-role-information-freeagent-rules
-    mindRoles:
-    - MindRoleGhostRoleFreeAgentHarmless
+    antagLoadoutPrototype: GhostFreeAgentHarmless
   - type: GhostTakeoverAvailable
   - type: Emoting
   - type: Sprite
@@ -537,8 +536,7 @@
   suffix: Smite
   components:
   - type: GhostRole
-    mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    antagLoadoutPrototype: GhostFreeAgent
   - type: MobStateActions
     actions:
       Alive:

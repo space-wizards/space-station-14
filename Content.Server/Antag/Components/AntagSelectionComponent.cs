@@ -47,7 +47,7 @@ public sealed partial class AntagSelectionComponent : Component
     /// Cached sessions of antag definitions and selected players. Players in this dict are not guaranteed to have been assigned the role yet.
     /// </summary>
     [DataField]
-    public Dictionary<AntagSelectionDefinition, HashSet<ICommonSession>>PreSelectedSessions = new();
+    public Dictionary<AntagSelectionDefinition, HashSet<ICommonSession>> PreSelectedSessions = new();
 
     /// <summary>
     /// Cached sessions of players who are chosen. Used so we don't have to rebuild the pool multiple times in a tick.
@@ -84,6 +84,12 @@ public partial struct AntagSelectionDefinition()
     /// </summary>
     [DataField]
     public List<ProtoId<AntagPrototype>> FallbackRoles = new();
+
+    /// <summary>
+    /// AntagLoadaut, which will be added to the player
+    /// </summary>
+    [DataField]
+    public ProtoId<AntagLoadoutPrototype>? AntagLoadout;
 
     /// <summary>
     /// Should we allow people who already have an antagonist role?
@@ -134,64 +140,6 @@ public partial struct AntagSelectionDefinition()
     [DataField]
     public bool LateJoinAdditional = false;
 
-    //todo: find out how to do this with minimal boilerplate: filler department, maybe?
-    //public HashSet<ProtoId<JobPrototype>> JobBlacklist = new()
-
-    /// <remarks>
-    /// Mostly just here for legacy compatibility and reducing boilerplate
-    /// </remarks>
-    [DataField]
-    public bool AllowNonHumans = false;
-
-    /// <summary>
-    /// A whitelist for selecting which players can become this antag.
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? Whitelist;
-
-    /// <summary>
-    /// A blacklist for selecting which players can become this antag.
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? Blacklist;
-
-    /// <summary>
-    /// Components added to the player.
-    /// </summary>
-    [DataField]
-    public ComponentRegistry Components = new();
-
-    /// <summary>
-    /// Components added to the player's mind.
-    /// Do NOT use this to add role-type components. Add those as MindRoles instead
-    /// </summary>
-    [DataField]
-    public ComponentRegistry MindComponents = new();
-
-    /// <summary>
-    /// List of Mind Role Prototypes to be added to the player's mind.
-    /// </summary>
-    [DataField]
-    public List<EntProtoId>? MindRoles;
-
-    /// <summary>
-    /// A set of starting gear that's equipped to the player.
-    /// </summary>
-    [DataField]
-    public ProtoId<StartingGearPrototype>? StartingGear;
-
-    /// <summary>
-    /// A list of role loadouts, from which a randomly selected one will be equipped.
-    /// </summary>
-    [DataField]
-    public List<ProtoId<RoleLoadoutPrototype>>? RoleLoadout;
-
-    /// <summary>
-    /// A briefing shown to the player.
-    /// </summary>
-    [DataField]
-    public BriefingData? Briefing;
-
     /// <summary>
     /// A spawner used to defer the selection of this particular definition.
     /// </summary>
@@ -201,29 +149,4 @@ public partial struct AntagSelectionDefinition()
     /// </remarks>
     [DataField]
     public EntProtoId? SpawnerPrototype;
-}
-
-/// <summary>
-/// Contains data used to generate a briefing.
-/// </summary>
-[DataDefinition]
-public partial struct BriefingData
-{
-    /// <summary>
-    /// The text shown
-    /// </summary>
-    [DataField]
-    public LocId? Text;
-
-    /// <summary>
-    /// The color of the text.
-    /// </summary>
-    [DataField]
-    public Color? Color;
-
-    /// <summary>
-    /// The sound played.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? Sound;
 }

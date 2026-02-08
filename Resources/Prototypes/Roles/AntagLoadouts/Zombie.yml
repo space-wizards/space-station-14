@@ -1,0 +1,22 @@
+- type: antagLoadout
+  id: InitialInfected
+  blacklist:
+    components:
+    - ZombieImmune
+    - AntagImmune
+  briefing:
+    text: zombie-patientzero-role-greeting
+    color: Plum
+    sound: "/Audio/Ambience/Antag/zombie_start.ogg"
+  addComponents:
+  - type: PendingZombie
+  - type: ZombifyOnDeath
+  - type: IncurableZombie
+  - type: InitialInfected
+  mindRoles:
+  - MindRoleInitialInfected
+
+- type: antagLoadout
+  id: Zombie
+  mindRoles:
+  - MindRoleZombie

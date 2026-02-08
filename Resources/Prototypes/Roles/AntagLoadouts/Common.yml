@@ -1,0 +1,68 @@
+- type: antagLoadout
+  id: GhostNeutral
+  mindRoles:
+  - MindRoleGhostRoleNeutral
+
+- type: antagLoadout
+  id: GhostFamiliar
+  mindRoles:
+  - MindRoleGhostRoleFamiliar
+  briefing:
+    text: common-familiar-greeting
+
+- type: antagLoadout
+  id: GhostFreeAgent
+  mindRoles:
+  - MindRoleGhostRoleFreeAgent
+  briefing:
+    text: common-free-agent-greeting
+
+- type: antagLoadout
+  id: GhostFreeAgentHarmless
+  mindRoles:
+  - MindRoleGhostRoleFreeAgentHarmless
+  briefing:
+    text: common-free-agent-greeting
+
+- type: antagLoadout
+  id: GhostSilicon
+  mindRoles:
+  - MindRoleGhostRoleSilicon
+  briefing:
+    text: common-silicon-greeting
+
+- type: antagLoadout
+  id: GhostSiliconSubverted
+  mindRoles:
+  - MindRoleSubvertedSilicon
+  briefing:
+    text: common-silicon-greeting
+
+- type: antagLoadout
+  id: GhostSiliconAntagonist
+  mindRoles:
+  - MindRoleGhostRoleSiliconAntagonist
+  briefing:
+    text: common-silicon-antagonist-greeting
+
+- type: antagLoadout
+  id: GhostSoloAntagonist
+  mindRoles:
+  - MindRoleGhostRoleSoloAntagonist
+  briefing:
+    text: common-antagonist-greeting
+
+- type: antagLoadout
+  id: GhostTeamAntagonist
+  mindRoles:
+  - MindRoleGhostRoleTeamAntagonist
+  briefing:
+    text: common-antagonist-greeting
+
+
+- type: antagLoadout
+  id: GhostTeamAntagonistFlock
+  mindRoles:
+  - MindRoleGhostRoleTeamAntagonistFlock
+  briefing:
+    text: common-antagonist-flock-greeting
