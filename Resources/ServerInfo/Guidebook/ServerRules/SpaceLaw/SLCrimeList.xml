@@ -127,7 +127,7 @@
     </ColorBox>
     <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Damage of Property (D)
+        Destruction of Property (D)
       </Box>
     </ColorBox>
     <ColorBox Color="#453a59">
@@ -188,12 +188,11 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Assault (V)
+        Assault/Battery (V)
       </Box>
     </ColorBox>
-    <ColorBox Color="#4d2e2e">
+    <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted Murder (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
@@ -300,7 +299,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This doesn’t include legitimate and authorized animal testing and usually doesn't extend to vermin or creatures
+        This doesn’t include legitimate and authorized animal testing, and usually doesn't extend to vermin or creatures
         that could pose a threat to the station.
       </Box>
     </ColorBox>
@@ -309,7 +308,7 @@
         1-00
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Possession/Use of Minor Contraband
       </Box>
@@ -321,7 +320,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Any contraband which is restricted to a department other than command or security is minor contraband unless otherwise specified. The Captain or Head of Security may authorize individual use of minor contraband, and other department heads may authorize individual use of minor contraband restricted to their assigned department.
+        Items which are restricted to a specific job or department outside of Command or Security are also considered minor contraband, unless otherwise specified. The Captain or Head of Security may authorize individual use of non-deparmental minor contraband; departmentally-restricted items require the authorization of the Captain or the relevant department head.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -329,7 +328,7 @@
         1-01
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2e422e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Petty Theft
       </Box>
@@ -342,9 +341,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The difference between petty theft and grand theft is based on how crucial the stolen item is, things like
-        instruments, clothing and tools fall under petty theft. In most cases all you need to do is detain the thief,
-        return the stolen item and let them go with a warning.
+        Mundane items like clothing, tools, and musical instruments fall under petty theft. In most cases all you need to do is detain the thief, return the stolen item, and let them go with a warning.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -352,7 +349,7 @@
         1-02
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Vandalism
       </Box>
@@ -364,8 +361,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Painting graffiti, smashing bar glasses, and cracking internal windows is vandalism, breaking a window into
-        space or secure areas is not.
+        Painting graffiti, smashing bar glasses, and cracking internal windows is vandalism; breaking a window into
+        space or secure areas is most likely damage of property.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -373,7 +370,7 @@
         1-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#59563a">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Trespass
       </Box>
@@ -393,7 +390,7 @@
         1-04
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#3b4354">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Disturbance
       </Box>
@@ -440,7 +437,7 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Failure to Comply
       </Box>
@@ -461,7 +458,7 @@
         2-00
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Possession/Use of Major Contraband
       </Box>
@@ -473,7 +470,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The Captain may authorize individual use of major contraband. Any contraband which is restricted to the command or security department is major contraband unless otherwise specified.
+        Items which are restricted to Security or Command (or specific jobs within those departments) are also considered major contraband, unless otherwise specified. Only the Captain may authorize individual use of major contraband, including departmentally-restricted items.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -481,9 +478,9 @@
         2-01
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Damage/Destruction of Property
+        Destruction of Property
       </Box>
     </ColorBox>
     <ColorBox>
@@ -502,7 +499,7 @@
         2-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Endangerment
       </Box>
@@ -526,7 +523,7 @@
 
   ## Major Crimes
   - The maximum sentence per major crime is 10 minutes.
-  - Assault and Manslaughter are linked crimes, and cannot be stacked against a suspect.
+  - Assault/Battery and Manslaughter are linked crimes, and cannot be stacked against a suspect.
   - It is recommended to not use maximum sentences for those being compliant.
   <Table Columns="4">
     <ColorBox>
@@ -549,7 +546,7 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Breach of Arrest
       </Box>
@@ -570,7 +567,7 @@
         3-00
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Possession/Use of Highly Illegal Contraband
       </Box>
@@ -590,7 +587,7 @@
         3-01
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#2e422e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Grand Theft
       </Box>
@@ -602,9 +599,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The difference between petty theft and grand theft is based on how crucial the stolen item is, this mostly is
-        used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and unreplaceable
-        machine parts.
+        Crucial items like Command equipment, hardsuits, jetpacks, and irreplaceable machine parts fall under grand theft.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -612,7 +607,7 @@
         3-02
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Destruction of Critical Property
       </Box>
@@ -633,7 +628,7 @@
         3-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#59563a">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Secure Trespass
       </Box>
@@ -653,7 +648,7 @@
         3-04
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Assault/Battery
       </Box>
@@ -665,8 +660,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted murder and battery are different; a fist fight is most likely assault. A shooting is most likely an
-        attempt at murder.
+        If the victim enters a state of being deceased, even if later revived, the perpetrator should instead be charged with manslaughter.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -674,7 +668,7 @@
         3-05
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Manslaughter
       </Box>
@@ -686,7 +680,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes manslaughter in self-defense and negligent manslaughter.
+        Includes killing in self-defense, killing by accident, and deaths resulting from negligence.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -694,7 +688,7 @@
         3-06
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#3b4354">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Rioting
       </Box>
@@ -706,7 +700,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Crimes like damage of property or battery are expected to be thrown on top of this charge. Leaders of a riot can be charged with all crimes that happen under their lead.
+        Crimes like damage of property or assault/battery are expected to be thrown on top of this charge. Leaders of a riot can be charged with any crimes that happen under their leadership.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -718,9 +712,7 @@
 
   ## Extreme Crimes
   - The maximum sentence per extreme crime is 15 minutes.
-  - Particularly violent offenders may be placed in perma. (Attacking officers in an attempt to escape prison)
-  - Attempted murder and murder are linked crimes and cannot be stacked together.
-  - Attempted murderers should be granted a more lenient sentence than a murderer.
+  - Particularly violent offenders should typically be placed in permanent confinement.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -742,7 +734,7 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Breach of Custody
       </Box>
@@ -782,7 +774,7 @@
         4-02
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Destruction of Vital Infrastructure
       </Box>
@@ -803,27 +795,7 @@
         4-03
       </Box>
     </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted Murder
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make an attempt to use physical force against someone with the clear intent to kill.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Make sure you've got the proof to back up the intention claims, such as proof of a lethal weapon being used.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        4-05
-      </Box>
-    </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Murder
       </Box>
@@ -835,7 +807,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This only changes from attempted to full-on murder if the victim enters a state of being deceased, having to be resurrected.
+        A murder charge requires evidence of an intent to kill the victim, such as the use of a lethal weapon or a continued attack after the victim was incapacitated. An attempted murder should typically result in a more lenient sentence than a "successful" murder.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -846,7 +818,7 @@
   </Table>
 
   ## Capital Crimes
-  - Capital crimes should usually lead to a death sentence or shift lasting detainment.
+  - Capital crimes should typically result in permanent confinement or a death sentence.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -868,7 +840,7 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Breach of Permanent Confinement
       </Box>
@@ -888,7 +860,7 @@
         5-00
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Station-Wide Destruction
       </Box>
@@ -908,7 +880,7 @@
         5-03
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Prevention of Revival
       </Box>
@@ -920,7 +892,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers gibbing, spacing, intentionally hiding a body, or other ways of preventing a body with a soul from being resurrected.
+        This covers gibbing, intentionally hiding a body, or other ways of preventing a body with a soul from being revived.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -928,7 +900,7 @@
         5-05
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Mass Murder
       </Box>
@@ -940,7 +912,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Only applies when there have been multiple killings with intention.
+        Like with murder, there must be evidence of an intent to kill the victims.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -948,7 +920,7 @@
         5-06
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#3b4354">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Refusal of Mental Shielding
       </Box>
@@ -960,7 +932,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone. If the implant fails execution is heavily recommended.
+        Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone. If the implant fails, a death sentence is heavily recommended.
       </Box>
     </ColorBox>
     <ColorBox>
