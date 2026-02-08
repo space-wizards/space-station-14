@@ -1,26 +1,41 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, edited by Emisse for SS14. Vox state by Flareguy for SS14. Vulpkanin states by TiniestShark (Github)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, edited by Emisse for SS14. Vox state by Flareguy for SS14. Vulpkanin states by TiniestShark (Github)",
+    "size": {
+      "x": 32,
+      "y": 32
     },
-    {
-      "name": "equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "equipped-HELMET-vox",
-      "directions": 4
-    },
-    {
-      "name": "equipped-HELMET-vulpkanin",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-unshaded"
+        },
+        {
+            "name": "equipped-head",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-vulpkanin",
+            "directions": 4
+        }
+    ]
 }

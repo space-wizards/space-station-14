@@ -270,8 +270,20 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/firehelmet.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-helmet-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-helmet-light-vox
+        shader: unshaded
   - type: Clothing
-    sprite: Clothing/Head/Helmets/firehelmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+      head-vox:
+      - state: equipped-helmet-vox
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
@@ -288,6 +300,12 @@
     layers:
       Hair: HEAD
       Snout: HEAD
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 #Atmos Fire Helmet
 - type: entity
@@ -298,9 +316,27 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-helmet-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-helmet-light-vox
+        shader: unshaded
+      head-dog:
+      - state: equipped-helmet-light-dog
+        shader: unshaded
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     quickEquip: true
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+      head-vox:
+      - state: equipped-helmet-vox
+      head-dog:
+      - state: equipped-helmet-dog
   - type: IngestionBlocker
   - type: TemperatureProtection
     heatingCoefficient: 0.3
@@ -321,6 +357,12 @@
       Hair: HEAD
       Snout: HEAD
   - type: BreathMask
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 #Chitinous Helmet
 - type: entity

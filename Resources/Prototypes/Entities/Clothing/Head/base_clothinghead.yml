@@ -64,6 +64,13 @@
     size: Normal
   - type: ToggleableVisuals
     spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
   - type: ItemTogglePointLight
   - type: PointLight
     enabled: false
@@ -206,8 +213,11 @@
   - type: Sprite
     layers:
     - state: icon
-    - state: icon-flash
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
       visible: false
+      shader: unshaded
       map: [ "light" ]
   - type: Clothing
     equippedPrefix: off

@@ -80,6 +80,12 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/paramedhelm.rsi
+    layers:
+    - state: icon
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableVisuals
@@ -87,10 +93,13 @@
     clothingVisuals:
       head:
       - state: equipped-head-light
+        shader: unshaded
       head-vox:
       - state: equipped-head-light-vox
+        shader: unshaded
       head-dog:
       - state: equipped-head-light-dog
+        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
