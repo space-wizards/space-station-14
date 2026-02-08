@@ -3,6 +3,7 @@
 - type: latheRecipePack
   id: ToolsStatic
   recipes:
+  - PressurePlate
   - VoiceSensor
   - Wirecutter
   - Screwdriver
