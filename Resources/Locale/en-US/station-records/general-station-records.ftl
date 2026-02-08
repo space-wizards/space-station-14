@@ -19,3 +19,12 @@ general-station-record-dna-filter = DNA
 general-station-record-console-search-records = Search
 general-station-record-console-reset-filters = Reset
 general-station-record-console-delete = Delete
+general-station-record-console-add = Add Record
+
+general-station-record-console-age-label = Age
+general-station-record-console-name-label = Name
+general-station-record-console-job-label = Job
+general-station-record-console-species-label = Species
+general-station-record-console-gender-label = Gender
+general-station-record-console-fingerprint-label = Fingerprint
+general-station-record-console-dna-label = DNA

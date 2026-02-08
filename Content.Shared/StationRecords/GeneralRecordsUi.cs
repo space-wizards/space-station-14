@@ -8,6 +8,12 @@ public enum GeneralStationRecordConsoleKey : byte
     Key
 }
 
+[Serializable, NetSerializable]
+public enum AddGeneralStationRecordKey : byte
+{
+    Key,
+}
+
 /// <summary>
 ///     General station records console state. There are a few states:
 ///     - SelectedKey null, Record null, RecordListing null
@@ -27,37 +33,29 @@ public enum GeneralStationRecordConsoleKey : byte
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
+public sealed class GeneralStationRecordConsoleState(
+    uint? key,
+    GeneralStationRecord? record,
+    Dictionary<uint, string>? recordListing,
+    StationRecordsFilter? newFilter,
+    bool canModifyEntries) : BoundUserInterfaceState
 {
     /// <summary>
     /// Current selected key.
     /// Station is always the station that owns the console.
     /// </summary>
-    public readonly uint? SelectedKey;
-    public readonly GeneralStationRecord? Record;
-    public readonly Dictionary<uint, string>? RecordListing;
-    public readonly StationRecordsFilter? Filter;
-    public readonly bool CanDeleteEntries;
+    public readonly uint? SelectedKey = key;
 
-    public GeneralStationRecordConsoleState(uint? key,
-        GeneralStationRecord? record,
-        Dictionary<uint, string>? recordListing,
-        StationRecordsFilter? newFilter,
-        bool canDeleteEntries)
-    {
-        SelectedKey = key;
-        Record = record;
-        RecordListing = recordListing;
-        Filter = newFilter;
-        CanDeleteEntries = canDeleteEntries;
-    }
+    public readonly GeneralStationRecord? Record = record;
+    public readonly Dictionary<uint, string>? RecordListing = recordListing;
+    public readonly StationRecordsFilter? Filter = newFilter;
+    public readonly bool CanModifyEntries = canModifyEntries;
 
     public GeneralStationRecordConsoleState() : this(null, null, null, null, false)
     {
     }
 
-    public bool IsEmpty() => SelectedKey == null
-        && Record == null && RecordListing == null;
+    public bool IsEmpty() => SelectedKey == null && Record == null && RecordListing == null;
 }
 
 /// <summary>
@@ -75,7 +73,6 @@ public sealed class SelectStationRecord : BoundUserInterfaceMessage
     }
 }
 
-
 [Serializable, NetSerializable]
 public sealed class DeleteStationRecord : BoundUserInterfaceMessage
 {
@@ -85,4 +82,13 @@ public sealed class DeleteStationRecord : BoundUserInterfaceMessage
     }
 
     public readonly uint Id;
+}
+
+[Serializable, NetSerializable]
+public sealed class ShowAddStationRecord : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
+public sealed class AddStationRecordMessage(GeneralStationRecord record) : BoundUserInterfaceMessage
+{
+    public readonly GeneralStationRecord Record = record;
 }
