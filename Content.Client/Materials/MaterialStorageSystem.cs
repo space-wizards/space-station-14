@@ -6,7 +6,6 @@ namespace Content.Client.Materials;
 public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
@@ -39,19 +38,6 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         {
             _sprite.LayerSetVisible((uid, args.Sprite), layer, false);
         }
-    }
-
-    public override bool TryInsertMaterialEntity(EntityUid user,
-        EntityUid toInsert,
-        EntityUid receiver,
-        MaterialStorageComponent? storage = null,
-        MaterialComponent? material = null,
-        PhysicalCompositionComponent? composition = null)
-    {
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
-            return false;
-        _transform.DetachEntity(toInsert, Transform(toInsert));
-        return true;
     }
 }
 
