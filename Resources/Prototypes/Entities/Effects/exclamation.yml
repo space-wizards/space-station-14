@@ -23,6 +23,7 @@
   id: WhistleExclamation
   name: exclamation
   categories: [ HideSpawnMenu ]
+  save: false
   components:
     - type: Sprite
       sprite: Structures/Storage/closet.rsi
