@@ -101,17 +101,28 @@ public sealed class ClientClothingSystem : ClothingSystem
             return;
 
         List<PrototypeLayerData>? layers = null;
+        List<PrototypeLayerData>? specifiedLayers = null;
+
 
         // first attempt to get species specific data.
         if (inventory.SpeciesId != null)
             item.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
 
-        // if that returned nothing, attempt to find generic data
-        if (layers == null && !item.ClothingVisuals.TryGetValue(args.Slot, out layers))
+        if (layers == null && !item.ClothingVisuals.TryGetValue(args.Slot, out _))
         {
-            // No generic data either. Attempt to generate defaults from the item's RSI & item-prefixes
+            // If that returned nothing and there was not a speficied state in the yaml, attempt to generate defaults from the item's RSI & item-prefixes
             if (!TryGetDefaultVisuals(uid, item, args.Slot, inventory.SpeciesId, out layers))
                 return;
+        }
+        else if (item.ClothingVisuals.TryGetValue(args.Slot, out specifiedLayers))
+        {
+            //even if a state was specified we still need to check for species specific variant
+            if (!TryGetSpeciesVariant(uid, item, inventory.SpeciesId, specifiedLayers, out layers)) //This will always return true since specifiedLayers is used as a fallback if species variant isnt found, and that value is not null
+                return;
+        }
+        else
+        {
+            return;
         }
 
         // add each layer to the visuals
@@ -128,6 +139,63 @@ public sealed class ClientClothingSystem : ClothingSystem
 
             item.MappedLayer = key;
             args.Layers.Add((key, layer));
+        }
+    }
+
+    private bool TryGetSpeciesVariant(EntityUid uid, ClothingComponent clothing, string? speciesId, List<PrototypeLayerData> specifiedLayers,
+        [NotNullWhen(true)] out List<PrototypeLayerData>? layers)
+    {
+        if (speciesId != null)
+        {
+            layers = null;
+
+            //even if a state was specified we still need to check for species specific variant
+            foreach (var specifiedLayer in specifiedLayers)
+            {
+                RSI? rsi = null;
+
+                //It would be better if this derived the RSI from the specifiedLayer so that custom sprites can use more than one RSI, but I wasnt able to figure out how to do that
+                if (TryComp(uid, out SpriteComponent? sprite))
+                    rsi = sprite.BaseRSI;
+
+                if (rsi == null)
+                {
+                    continue;
+                }
+
+                var layer = new PrototypeLayerData();
+
+                //Its possible that additional layer properties will need to be added here to make the species variant use them
+                layer.RsiPath = rsi.Path.ToString();
+                layer.Color = specifiedLayer.Color;
+                layer.Shader = specifiedLayer.Shader;
+
+                // Species specific state is used if one exists, otherwise fall back to the specified state
+                if (rsi.TryGetState($"{specifiedLayer.State}-{speciesId}", out _))
+                    layer.State = $"{specifiedLayer.State}-{speciesId}";
+                else
+                    layer.State = specifiedLayer.State;
+
+                if (layers == null)
+                {
+                    layers = new() { layer };
+                }
+                else
+                {
+                    layers.Add(layer);
+                }
+
+            }
+
+            if (layers != null)
+                return true;
+            else
+                return false;
+        }
+        else
+        {
+            layers = specifiedLayers;
+            return true;
         }
     }
 
