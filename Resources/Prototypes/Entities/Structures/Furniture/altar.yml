@@ -31,7 +31,7 @@
 - type: entity
   id: AltarNanotrasen
   parent: AltarBase
-  name: nanotrasen altar
+  name: Nanotrasen altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi

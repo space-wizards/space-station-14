@@ -64,8 +64,8 @@
 - type: entity
   parent: OffsetCane
   id: OffsetCaneNT
-  name: nanotrasen offset cane
-  description: A nanotrasen standard issue offset cane with the NT logo, favored by those who prefer a more corporate look.
+  name: Nanotrasen offset cane
+  description: A Nanotrasen standard issue offset cane with the NT logo, favored by those who prefer a more corporate look.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/offset_canes/nanotrasen.rsi
