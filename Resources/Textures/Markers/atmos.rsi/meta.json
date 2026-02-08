@@ -11,7 +11,19 @@
             "name": "base"
         },
         {
+            "name": "base-cold"
+        },
+        {
             "name": "base-hot"
+        },
+        {
+            "name": "atm-fire"
+        },
+        {
+            "name": "atm-freeze"
+        },
+        {
+            "name": "atm-miner"
         },
         {
             "name": "vacuum"
@@ -27,12 +39,6 @@
         },
         {
             "name": "watervapour"
-        },
-        {
-            "name": "fire"
-        },
-        {
-            "name": "freeze"
         },
         {
             "name": "air"
