@@ -115,11 +115,14 @@ public abstract partial class SharedBorgSystem
     /// Always true on the client.
     /// </summary>
     /// <remarks>
-    /// TODO: This currently causes mispredicts, but we have no way of knowing on the client if a player is banned.
-    /// Maybe solve this by giving banned players an unborgable trait instead?
+    /// This technically mispredicts, but even with the misprediction
+    /// it looks like what the player would expect to happen, so it's fine.
+    /// (The brain is inserted into the chassis, then gets ejected from it a moment later.)
     /// </remarks>
-    public virtual bool CanPlayerBeBorged(ICommonSession session)
+    // TODO If anything, it should be ensured that it will still appear like this even if it gets correctly predicted.
+    public virtual bool CanPlayerBeBorged(ICommonSession session, out string reason)
     {
+        reason = string.Empty;
         return true;
     }
 

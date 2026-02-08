@@ -110,6 +110,13 @@ public sealed partial class CCVars
         GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     If true, all brains inserted into a borg chassis will be checked against default borg job playtime requirements
+    /// </summary>
+    /// TODO convert this into a per-chassis datafield. See BorgSystem.CanPlayerBeBorged()
+    public static readonly CVarDef<bool>
+        BorgingRequirementsCheck = CVarDef.Create("game.borging_requirement_check", false, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     /// If role loadout items should be restricted based on time.
     /// </summary>
     public static readonly CVarDef<bool>
