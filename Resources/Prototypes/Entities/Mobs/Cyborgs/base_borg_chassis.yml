@@ -186,6 +186,10 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:DamageContainerContentsBehavior
+        containers:
+        - borg_brain
+        ignoreResistances: true
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain
