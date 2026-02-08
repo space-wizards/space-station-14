@@ -115,6 +115,20 @@ public sealed partial class CCVars
         CVarDef.Create("shuttle.mass_limit", 300f, CVar.SERVERONLY);
 
     /// <summary>
+    ///     Multiplier applied to the base FTL range for shuttles.
+    ///     Allows game code to define per-shuttle FTL ranges while this CVar provides global balance control.
+    /// </summary>
+    [CVarControl(AdminFlags.Debug, min: 0f, max: 10f)]
+    public static readonly CVarDef<float> ShuttleFTLRangeMultiplier = CVarDef.Create("shuttle.ftl_range_multiplier", 1f, CVar.REPLICATED);
+
+    /// <summary>
+    ///     Multiplier applied to the base FTL buffer range calculation.
+    ///     The base buffer is calculated from the shuttle's grid size, and this multiplier allows global balance control.
+    /// </summary>
+    [CVarControl(AdminFlags.Debug, min: 0f, max: 10f)]
+    public static readonly CVarDef<float> ShuttleFTLBufferRangeMultiplier = CVarDef.Create("shuttle.ftl_buffer_range_multiplier", 1f, CVar.REPLICATED);
+
+    /// <summary>
     ///     How long to knock down entities for if they aren't buckled when FTL starts and stops.
     /// </summary>
     public static readonly CVarDef<float> HyperspaceKnockdownTime =
