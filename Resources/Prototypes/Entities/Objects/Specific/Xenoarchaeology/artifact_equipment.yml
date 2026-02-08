@@ -142,10 +142,24 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+      - trigger:
+          !type:DamageTrigger
           damage: 50
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalCrunch
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 1
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
