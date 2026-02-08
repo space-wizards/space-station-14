@@ -51,10 +51,10 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
         _menu.OpenOverMouseScreenPosition();
     }
 
-    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
+    private List<RadialMenuOptionBase> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
     {
-        Dictionary<string, List<RadialMenuActionOptionBase>> buttonsByCategory = new();
-        ValueList<RadialMenuActionOptionBase> topLevelActions = new();
+        Dictionary<string, List<RadialMenuOptionBase>> buttonsByCategory = new();
+        ValueList<RadialMenuOptionBase> topLevelActions = new();
         foreach (var protoId in prototypes)
         {
             var prototype = _prototypeManager.Index(protoId);
@@ -74,7 +74,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
             if (!buttonsByCategory.TryGetValue(prototype.Category, out var list))
             {
-                list = new List<RadialMenuActionOptionBase>();
+                list = new List<RadialMenuOptionBase>();
                 buttonsByCategory.Add(prototype.Category, list);
             }
 
@@ -86,23 +86,21 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             list.Add(actionOption);
         }
 
-        var models = new RadialMenuOptionBase[buttonsByCategory.Count + topLevelActions.Count];
-        var i = 0;
+        var models = new List<RadialMenuOptionBase>(buttonsByCategory.Count + topLevelActions.Count);
         foreach (var (key, list) in buttonsByCategory)
         {
             var groupInfo = PrototypesGroupingInfo[key];
-            models[i] = new RadialMenuNestedLayerOption(list)
+            var groupingOption = new RadialMenuNestedLayerOption(list)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(groupInfo.Sprite),
                 ToolTip = Loc.GetString(groupInfo.Tooltip)
             };
-            i++;
+            models.Add(groupingOption);
         }
 
         foreach (var action in topLevelActions)
         {
-            models[i] = action;
-            i++;
+            models.Add(action);
         }
 
         return models;

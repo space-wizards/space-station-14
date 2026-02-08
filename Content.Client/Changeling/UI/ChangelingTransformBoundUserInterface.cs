@@ -37,7 +37,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         _menu.SetButtons(models);
     }
 
-    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(
+    private List<RadialMenuOptionBase> ConvertToButtons(
         IEnumerable<EntityUid> identities,
         EntityUid? currentIdentity
     )

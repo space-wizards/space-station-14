@@ -29,7 +29,7 @@ public sealed class GhostRoleRadioBoundUserInterface(EntityUid owner, Enum uiKey
         _ghostRoleRadioMenu.SetButtons(list);
     }
 
-    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(List<ProtoId<GhostRolePrototype>> protoIds)
+    private List<RadialMenuOptionBase> ConvertToButtons(List<ProtoId<GhostRolePrototype>> protoIds)
     {
         var list = new List<RadialMenuOptionBase>();
         foreach (var ghostRoleProtoId in protoIds)
