@@ -78,8 +78,7 @@ public sealed class BeamSystem : SharedBeamSystem
         string shader = "unshaded")
     {
         var beamSpawnPos = beamStartPos;
-        var ent = Spawn(prototype, beamSpawnPos);
-        _transform.SetWorldRotation(ent, userAngle);
+        var ent = Spawn(prototype, beamSpawnPos, rotation: userAngle);
         var shape = new EdgeShape(distanceCorrection, new Vector2(0, 0));
 
         if (!TryComp<PhysicsComponent>(ent, out var physics) || !TryComp<BeamComponent>(ent, out var beam))
