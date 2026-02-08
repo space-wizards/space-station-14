@@ -185,12 +185,13 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (TryComp<InteractionPopupComponent>(uid, out var interactionPopup))
             _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid);
 
-        var xform = Transform(uid);
+        if (!_transform.TryGetMapOrGridCoordinates(uid, out var spawnPosition))
+            return;
+
         var spawns = EntitySpawnCollection.GetSpawns(component.Offspring, _random);
         foreach (var spawn in spawns)
         {
-            var offspring = Spawn(spawn, xform.Coordinates.Offset(_random.NextVector2(0.3f)));
-            _transform.AttachToGridOrMap(offspring);
+            var offspring = Spawn(spawn, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
             if (component.MakeOffspringInfant)
             {
                 var infant = AddComp<InfantComponent>(offspring);
