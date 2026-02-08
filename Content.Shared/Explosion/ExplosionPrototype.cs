@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -97,9 +98,11 @@ public sealed partial class ExplosionPrototype : IPrototype
     public SoundSpecifier SmallSound = new SoundCollectionSpecifier("ExplosionSmall");
 
     [DataField("soundFar")]
+    [AllowStereo]
     public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
 
     [DataField("smallSoundFar")]
+    [AllowStereo]
     public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
 
     [DataField("texturePath")]
