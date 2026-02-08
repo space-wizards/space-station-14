@@ -90,13 +90,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, GasMixture? tile, PipeNode outlet)
         {
-            Scrub(timeDelta, scrubber.TransferRate*_atmosphereSystem.PumpSpeedup(), scrubber.PumpDirection, scrubber.FilterGases, tile, outlet.Air);
+            Scrub(timeDelta, scrubber.TransferRate*_atmosphereSystem.PumpSpeedup(), scrubber.TargetPressure, scrubber.PumpDirection, scrubber.FilterGases, scrubber.OverflowGases, tile, outlet.Air);
         }
 
         /// <summary>
         /// True if we were able to scrub, false if we were not.
         /// </summary>
-        public bool Scrub(float timeDelta, float transferRate, ScrubberPumpDirection mode, HashSet<Gas> filterGases, GasMixture? tile, GasMixture destination)
+        public bool Scrub(float timeDelta, float transferRate, float targetPressure, ScrubberPumpDirection mode, HashSet<Gas> filterGases, HashSet<Gas> overflowGases, GasMixture? tile, GasMixture destination)
         {
             // Cannot scrub if tile is null or air-blocked.
             if (tile == null
@@ -106,6 +106,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             // Take a gas sample.
+            var aboveTarget = tile.Pressure > targetPressure;
             var ratio = MathF.Min(1f, timeDelta * transferRate / tile.Volume);
             var removed = tile.RemoveRatio(ratio);
 
@@ -115,6 +116,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (mode == ScrubberPumpDirection.Scrubbing)
             {
+                if (aboveTarget)
+                {
+                    _atmosphereSystem.ScrubInto(removed, destination, overflowGases, 0.5f);
+                }
                 _atmosphereSystem.ScrubInto(removed, destination, filterGases);
 
                 // Remix the gases.
