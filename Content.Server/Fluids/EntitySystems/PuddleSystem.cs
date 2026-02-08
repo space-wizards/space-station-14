@@ -444,8 +444,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 PopupType.SmallCaution);
         }
 
-        _color.RaiseEffect(spilled.GetColor(_prototypeManager), targets,
-            Filter.Pvs(entity, entityManager: EntityManager));
+        _color.RaiseEffect("HitFluid",
+            targets,
+            Filter.Pvs(entity, entityManager: EntityManager),
+            solution.GetColor(_prototypeManager));
 
         return TrySpillAt(coordinates, spilled, out puddleUid, sound);
     }

@@ -338,7 +338,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         if (visual)
         {
-            _color.RaiseEffect(Color.Aqua, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
+            _color.RaiseEffect(SharedColorFlashEffectSystem.HitStaminaEffect, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
         }
 
         if (_net.IsServer)
