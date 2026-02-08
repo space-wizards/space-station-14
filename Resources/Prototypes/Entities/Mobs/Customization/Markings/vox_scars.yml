@@ -37,6 +37,46 @@
   sprites:
   - sprite: Mobs/Customization/vox_scars.rsi
     state: vox_scar_chest
+    
+- type: marking
+  id: VoxScarSternotomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_sternotomy
+    
+- type: marking
+  id: VoxScarHepatectomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_hepatectomy
+    
+- type: marking
+  id: VoxScarLaparotomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_laparotomy
+    
+- type: marking
+  id: VoxScarNephrectomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_nephrectomy
 
 - type: marking
   id: VoxScarNeck
