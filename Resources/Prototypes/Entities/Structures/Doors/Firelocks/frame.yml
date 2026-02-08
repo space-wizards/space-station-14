@@ -37,6 +37,21 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalCrunch
+          params:
+            volume: -4
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "FirelockFrameDestructionSpawnTable"
+        minSpawn: 1
+        maxSpawn: 1
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
@@ -52,3 +67,10 @@
         layer:
         - HighImpassable
         - MidImpassable
+
+- type: weightedRandomEntity
+  id: FirelockFrameDestructionSpawnTable
+  weights:
+    ScrapFirelock1: 1
+    ScrapFirelock2: 1
+    ScrapFirelock3: 1

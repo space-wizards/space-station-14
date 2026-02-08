@@ -84,10 +84,31 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1:
+            min: 2
+            max: 4
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -169,10 +190,31 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1:
+            min: 2
+            max: 4
   - type: Physics
     bodyType: Static
   - type: Fixtures

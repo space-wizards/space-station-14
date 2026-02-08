@@ -139,7 +139,12 @@
           acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound:
-            collection: MetalBreak
+            collection: MetalSlam
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetPlasteel1:
+              min: 5
+              max: 10
   - type: Fixtures
     fixtures:
       fix1:
