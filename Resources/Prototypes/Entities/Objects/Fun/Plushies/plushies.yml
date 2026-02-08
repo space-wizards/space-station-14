@@ -551,6 +551,7 @@
     slots:
     - HEAD
     quickEquip: false
+    equippedPrefix: evillizard
     clothingVisuals:
       head:
       - state: evillizard-equipped-HELMET
