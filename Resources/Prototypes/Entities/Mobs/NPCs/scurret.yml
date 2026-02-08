@@ -2,17 +2,17 @@
 # Although based on MobBaseAncestor, this species does not have a "developed" playable species it is an ancestor to.
 
 - type: entity
-  name: scurret
-  id: MobBaseScurret
-  parent: MobBaseAncestor
   abstract: true
+  parent: MobBaseAncestor
+  id: MobBaseScurret
+  name: scurret
   components:
   # Custom names
   - type: ReplacementAccent
     accent: scurret
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -137,7 +137,6 @@
         32:
           sprite: Mobs/Animals/scurret/displacement.rsi
           state: hand
-
   - type: InventorySlots
   - type: Edible # Why? I'm not sure but I also am afraid of the answer.
   - type: Hunger
@@ -154,13 +153,11 @@
     - VimPilot
     - AnomalyHost
 
-# Spawnable scurrets have a random name and colour.
-
 - type: entity
-  name: scurret
-  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce".
-  id: MobScurret
   parent: MobBaseScurret
+  id: MobScurret
+  name: scurret
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these alien critters are often hired as couriers by Arnold's Pizza.
   components:
   # The have a rich culture
   - type: RandomMetadata
@@ -182,14 +179,13 @@
   - type: NameIdentifier
     group: null
 
-# Emotional Support Scurrets have a ghost role and equipment. At the moment, these are intended to be used for admemes, but
-# feel free to hook them into random content.
-
+# Emotional Support Scurrets are a ghost role, and spawn with equipment.
 - type: entity
-  name: Emotional Support Scurret
-  id: MobBaseEmotionalSupportScurret
-  parent: MobBaseScurret
   abstract: true
+  parent: MobBaseScurret
+  id: MobBaseEmotionalSupportScurret
+  name: Emotional Support Scurret
+  suffix: Ghost role
   components:
     - type: Loadout
       prototypes: [ EmotionalSupportScurretGear ]
@@ -205,10 +201,8 @@
         settings: default
     - type: GhostTakeoverAvailable
 
-# Spawnable ESS have a ghost role, equipment, a random name and a random colour.
-
+# Spawnable Emotional Support Scurrets parent from MobScurret too (despite MobBaseEmotionalSupportScurret parenting from MobBaseScurret already) in order to inherit the name/color/gender stuff.
 - type: entity
-  name: Emotional Support Scurret
+  parent: [ MobScurret, MobBaseEmotionalSupportScurret ]
   id: MobEmotionalSupportScurret
-  parent: [MobScurret, MobBaseEmotionalSupportScurret]
-  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnold's Pizza's "loyal workforce". This one is here as a temp.
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these alien critters are often hired as couriers by Arnold's Pizza. This one is here as a temp.
