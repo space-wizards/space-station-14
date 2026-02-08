@@ -99,3 +99,48 @@
           steps:
             - tool: Prying
               doAfter: 2
+
+- type: constructionGraph
+  id: BarbedWire
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: prebarbedwire
+      steps:
+        - material: WoodPlank
+          amount: 4
+          doAfter: 4
+
+  - node: prebarbedwire
+    entity: PreBarbedWire
+    edges:
+      - to: barbedwire
+        steps:
+          - material: Cable
+            amount: 30
+            doAfter: 10
+          - material: MetalRod
+            amount: 8
+            doAfter: 3
+      - to: start
+        steps:
+        - tool: Prying
+          doAfter: 15
+        completed:
+        - !type:SpawnPrototype
+          prototype: MaterialWoodPlank1
+          amount: 4
+        - !type:DeleteEntity { }
+
+  - node: barbedwire
+    entity: BarbedWire
+    edges:
+      - to: prebarbedwire
+        steps:
+        - tool: Cutting
+          doAfter: 10
+        completed:
+        - !type:SpawnPrototype #Only get the cables back...
+          prototype: CableApcStack1
+          amount: 30
