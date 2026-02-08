@@ -172,7 +172,8 @@ namespace Content.Server.Construction
                 // Edge finished!
                 PerformActions(uid, user, edge.Completed);
 
-                if (construction.Deleted)
+                // Actions should be queueing deletion—see also ChangeNode.
+                if (EntityManager.IsQueuedForDeletion(uid) || construction.Deleted)
                     return HandleResult.True;
 
                 construction.TargetEdgeIndex = null;
@@ -469,7 +470,7 @@ namespace Content.Server.Construction
             foreach (var action in actions)
             {
                 // If an action deletes the entity, we stop performing the rest of actions.
-                if (!Exists(uid))
+                if (EntityManager.IsQueuedForDeletion(uid) || !Exists(uid))
                     break;
 
                 action.PerformAction(uid, userUid, EntityManager);
