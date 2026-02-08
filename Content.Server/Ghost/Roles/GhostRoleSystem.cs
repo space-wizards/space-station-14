@@ -722,6 +722,9 @@ public sealed class GhostRoleSystem : EntitySystem
         if (!ghostRole.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
             return;
 
+        if (args.Mind.Comp.IsVisitingEntity)
+            return;
+
         ghostRole.Taken = false;
         RegisterGhostRole((uid, ghostRole));
     }

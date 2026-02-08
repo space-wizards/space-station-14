@@ -255,7 +255,15 @@ public abstract partial class SharedMindSystem : EntitySystem
         return false;
     }
 
-    public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
+    /// <summary>
+    /// Visits a mind to another entity, granting control over it.
+    /// If the visited entity gets deleted, the mind is transferred back to the owned entity.
+    /// </summary>
+    /// <param name="mindId">The mind visiting.</param>
+    /// <param name="entity">The entity to visit.</param>
+    /// <param name="mind">MindComponent of the mind.</param>
+    /// <param name="persistent">Whether the mind should persist with the visited entity after it's owned entity gets deleted.</param>
+    public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null, bool persistent = true)
     {
     }
 

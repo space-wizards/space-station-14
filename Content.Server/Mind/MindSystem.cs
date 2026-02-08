@@ -54,8 +54,10 @@ public sealed class MindSystem : SharedMindSystem
             return;
 
         // If the player is currently visiting some other entity, simply attach to that entity.
+        // But only if the mind is supposed to persist.
         if (mind.VisitingEntity is {Valid: true} visiting
             && visiting != uid
+            && HasComp<PersistentVisitorComponent>(mindId)
             && !Deleted(visiting)
             && !Terminating(visiting))
         {
@@ -106,7 +108,15 @@ public sealed class MindSystem : SharedMindSystem
         }
     }
 
-    public override void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
+    /// <summary>
+    /// Visits a mind to another entity, granting control over it.
+    /// If the visited entity gets deleted, the mind is transferred back to the owned entity.
+    /// </summary>
+    /// <param name="mindId">The mind visiting.</param>
+    /// <param name="entity">The entity to visit.</param>
+    /// <param name="mind">MindComponent of the mind.</param>
+    /// <param name="persistent">Whether the mind should persist with the visited entity after it's owned entity gets deleted.</param>
+    public override void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null, bool persistent = true)
     {
         base.Visit(mindId, entity, mind);
 
@@ -115,8 +125,8 @@ public sealed class MindSystem : SharedMindSystem
 
         if (mind.VisitingEntity != null)
         {
-            Log.Error($"Attempted to visit an entity ({ToPrettyString(entity)}) while already visiting another ({ToPrettyString(mind.VisitingEntity.Value)}).");
-            return;
+            // If already visiting, return to original body first.
+            UnVisit(mindId, mind);
         }
 
         if (HasComp<VisitingMindComponent>(entity))
@@ -130,6 +140,10 @@ public sealed class MindSystem : SharedMindSystem
         // EnsureComp instead of AddComp to deal with deferred deletions.
         var comp = EnsureComp<VisitingMindComponent>(entity);
         comp.MindId = mindId;
+
+        // If the mind is supposed to persist to the visited entity when the original entity gets deleted, mark it as such
+        if (persistent)
+            EnsureComp<PersistentVisitorComponent>(mindId);
 
         // Do this AFTER the entity changes above as this will fire off a player-detached event
         // which will run ghosting twice.
@@ -156,6 +170,8 @@ public sealed class MindSystem : SharedMindSystem
 
         if (session.AttachedEntity == mind.VisitingEntity)
             return;
+
+        RemComp<PersistentVisitorComponent>(mindId);
 
         var owned = mind.OwnedEntity;
         _players.SetAttachedEntity(session, owned);
