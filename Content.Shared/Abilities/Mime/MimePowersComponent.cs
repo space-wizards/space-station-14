@@ -8,7 +8,7 @@ namespace Content.Shared.Abilities.Mime;
 /// <summary>
 /// Lets its owner entity use mime powers, like placing invisible walls.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent(restriction: StateRestriction.OwnerOnly), AutoGenerateComponentState]
 [AutoGenerateComponentPause]
 public sealed partial class MimePowersComponent : Component
 {
@@ -71,6 +71,4 @@ public sealed partial class MimePowersComponent : Component
     /// </summary>
     [DataField]
     public LocId FailWriteMessage = "paper-component-illiterate-mime";
-
-    public override bool SendOnlyToOwner => true;
 }

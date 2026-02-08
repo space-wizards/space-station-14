@@ -8,7 +8,7 @@ namespace Content.Shared.Changeling.Components;
 /// The storage component for Changelings, it handles the link between a changeling and its consumed identities
 /// that exist on a paused map.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
+[RegisterComponent, NetworkedComponent(restriction: StateRestriction.OwnerOnly), AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class ChangelingIdentityComponent : Component
 {
     /// <summary>
@@ -31,6 +31,4 @@ public sealed partial class ChangelingIdentityComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<CloningSettingsPrototype> IdentityCloningSettings = "ChangelingCloningSettings";
-
-    public override bool SendOnlyToOwner => true;
 }
