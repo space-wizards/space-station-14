@@ -40,6 +40,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.InspectEntity);
             common.AddFunction(ContentKeyFunctions.InspectServerComponent);
             common.AddFunction(ContentKeyFunctions.InspectClientComponent);
+            common.AddFunction(ContentKeyFunctions.ControlEntity);
             common.AddFunction(ContentKeyFunctions.ToggleRoundEndSummaryWindow);
 
             // Not in engine, because engine cannot check for sanbox/admin status before starting placement.
