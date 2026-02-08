@@ -653,6 +653,7 @@
   color: "#86caf7"
   metabolisms:
     Bloodstream:
+      metabolismRate: 0.3
       effects:
         - !type:CureZombieInfection
           conditions:
@@ -670,6 +671,7 @@
   color: "#1274b5"
   metabolisms:
     Bloodstream:
+      metabolismRate: 0.3
       effects:
         - !type:CureZombieInfection
           innoculate: true

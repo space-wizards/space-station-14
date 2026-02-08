@@ -179,7 +179,8 @@ public sealed class MetabolizerSystem : EntitySystem
 
             if (proto.Metabolisms is null || !proto.Metabolisms.Metabolisms.TryGetValue(stage, out var entry))
             {
-                var mostToTransfer = FixedPoint2.Clamp(solutionData.TransferRate, 0, quantity);
+                var transferRate = FixedPoint2.Max(solutionData.TransferRate, solutionData.DynamicTransferRate * quantity);
+                var mostToTransfer = FixedPoint2.Clamp(transferRate, 0, quantity);
 
                 if (transferSolution is not null)
                 {
