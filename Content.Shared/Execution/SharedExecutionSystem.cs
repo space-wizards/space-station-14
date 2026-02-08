@@ -71,6 +71,15 @@ public sealed class SharedExecutionSystem : EntitySystem
         if (!CanBeExecuted(victim, attacker))
             return;
 
+        var ev = new ExecutionStartedEvent(attacker, weapon);
+        RaiseLocalEvent(victim, ref ev);
+        if (ev.CancelExecution)
+        {
+            if (ev.CancelMessage != null)
+                _popup.PopupPredicted(ev.CancelMessage, victim, null, PopupType.MediumCaution);
+            return;
+        }
+
         if (attacker == victim)
         {
             ShowExecutionInternalPopup(comp.InternalSelfExecutionMessage, attacker, victim, weapon);

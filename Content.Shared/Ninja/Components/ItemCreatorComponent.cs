@@ -3,6 +3,7 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -19,13 +20,27 @@ public sealed partial class ItemCreatorComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? Battery;
 
+    [DataField]
+    public List<ItemCreatorEntry> Entries;
+
+    /// <summary>
+    /// Popup shown to the user when there isn't enough power to create an item.
+    /// </summary>
+    [DataField(required: true)]
+    public LocId NoPowerPopup = string.Empty;
+}
+
+[DataDefinition]
+[Serializable]
+public sealed partial class ItemCreatorEntry
+{
     /// <summary>
     /// The action id for creating an item.
     /// </summary>
     [DataField(required: true)]
     public EntProtoId<InstantActionComponent> Action;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public EntityUid? ActionEntity;
 
     /// <summary>
@@ -39,12 +54,6 @@ public sealed partial class ItemCreatorComponent : Component
     /// </summary>
     [DataField(required: true)]
     public EntProtoId SpawnedPrototype = string.Empty;
-
-    /// <summary>
-    /// Popup shown to the user when there isn't enough power to create an item.
-    /// </summary>
-    [DataField(required: true)]
-    public LocId NoPowerPopup = string.Empty;
 }
 
 /// <summary>

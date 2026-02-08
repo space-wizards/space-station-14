@@ -1,6 +1,6 @@
 <Document>
   # Space Ninja
-  
+
   <Box>
     [color=#999999][italic]"Spider of the night, silent is my bite."[/italic][/color]
   </Box>
@@ -18,9 +18,9 @@
     <GuideEntityEmbed Entity="JetpackBlack"/>
     <GuideEntityEmbed Entity="PinpointerStation"/>
   </Box>
-  
+
   ## Your Suit
-  
+
   <Box>
     <GuideEntityEmbed Entity="ClothingEyesVisorNinja" Caption="your visor"/>
     <GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Caption="your suit"/>
@@ -62,12 +62,25 @@
 
   While in hand you may also [color=cyan]teleport[/color] to anywhere that you can see, [bold]including through windows[/bold]. The charges required to do this regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
 
+  ## Summonable Weapons
+
+  <Box>
+    <GuideEntityEmbed Entity="ThrowingStar"/>
+    <GuideEntityEmbed Entity="Nanostraps"/>
+  </Box>
+
+  Your suit's power can be used to materialize temporary weaponry.
+
+  The [color=cyan]throwing star[/color] can be thrown for reliable ranged damage, with [bold]multiple hits able to stun targets[/bold]. Great at a distance or when your gloves' shock are on cooldown. Lasts for 30 seconds.
+
+  The [color=cyan]nanostraps[/color] allow for fast restraints at any time, especially against [bold]stunned targets[/bold]. They are however very brittle; if enough damage is dealt to a cuffed victim or if you try executing them with your sword, [bold]the nanostraps will break[/bold]. Lasts for 60 seconds.
+
   ## Spider Clan Charge
-  
+
   <Box>
     <GuideEntityEmbed Entity="SpiderCharge"/>
   </Box>
-  
+
   This is a [color=cyan]modified C-4 explosive[/color] which can be found in your pocket. Creates a large explosion but [bold]must be armed in your target area[/bold] as it is one of your objectives.
 
   It can't be activated manually, so simply plant it on a wall near your assigned target. Choose wisely, it can't be unstuck once planted.
