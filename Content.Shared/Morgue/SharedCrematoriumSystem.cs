@@ -64,7 +64,15 @@ public abstract class SharedCrematoriumSystem : EntitySystem
 
     private void OnAttemptOpen(Entity<ActiveCrematoriumComponent> ent, ref StorageOpenAttemptEvent args)
     {
-        args.Cancelled = true;
+        _appearance.SetData(ent, CrematoriumVisuals.Burning, false);
+
+        // We can't have the cremation sound UID on the Active comp because
+        // as far as I can tell there's no way to avoid it getting bulldozed
+        // by the predicted AddComp, and non-FirstTimePredicted ticks can't
+        // use PlayPredicted. Very silly.
+        if (_timing.IsFirstTimePredicted && TryComp<CrematoriumComponent>(ent, out var comp))
+            comp.CrematingSoundUid = _audio.Stop(comp.CrematingSoundUid);
+        RemCompDeferred<ActiveCrematoriumComponent>(ent);
     }
 
     private void AddCremateVerb(EntityUid uid, CrematoriumComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -100,8 +108,11 @@ public abstract class SharedCrematoriumSystem : EntitySystem
             return false;
 
         _audio.PlayPredicted(ent.Comp.CremateStartSound, ent.Owner, user);
-        _audio.PlayPredicted(ent.Comp.CrematingSound, ent.Owner, user);
+        var sound = _audio.PlayPredicted(ent.Comp.CrematingSound, ent.Owner, user);
         _appearance.SetData(ent.Owner, CrematoriumVisuals.Burning, true);
+
+        if (_timing.IsFirstTimePredicted)
+            ent.Comp.CrematingSoundUid = sound?.Entity;
 
         AddComp<ActiveCrematoriumComponent>(ent);
         ent.Comp.ActiveUntil = _timing.CurTime + ent.Comp.CookTime;
