@@ -1850,8 +1850,8 @@
       PotencyDivisor: 5
     Vitamin:
       Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      Max: 10
+      PotencyDivisor: 7
 
 - type: seed
   id: bluePumpkin
@@ -1870,6 +1870,14 @@
   idealHeat: 288
   growthStages: 3
   chemicals:
+    Nutriment:
+      Min: 2
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 7
     Ammonia:
       Min: 1
       Max: 15
@@ -1878,10 +1886,10 @@
       Min: 1
       Max: 5
       PotencyDivisor: 5
-    Vitamin:
+    PumpkinFlesh:
       Min: 1
-      Max: 10
-      PotencyDivisor: 3
+      Max: 20
+      PotencyDivisor: 5
 
 - type: seed
   id: cotton
