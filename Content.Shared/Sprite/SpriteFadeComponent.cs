@@ -8,5 +8,9 @@ namespace Content.Shared.Sprite;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SpriteFadeComponent : Component
 {
-
+    /// <summary>
+    ///     If true, fades the item even if there is nothing else clickable behind the hovered point.
+    /// </summary>
+    [DataField]
+    public bool IgnoreClickableRestriction = false;
 }
