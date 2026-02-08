@@ -32,11 +32,12 @@
       damage:
         types:
           Heat: 40
+      idlePower: 0
+      activePower: 1500
     - type: InteractionOutline
     - type: Sprite
     - type: Appearance
     - type: ApcPowerReceiver
-      powerLoad: 1500
     - type: ExtensionCableReceiver
     - type: Damageable
       damageContainer: StructuralInorganic

@@ -27,6 +27,18 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public bool IsOn;
 
+        /// <summary>
+        /// Baseline power that this thruster consumes.
+        /// </summary>
+        [DataField("idlePower")]
+        public float IdlePowerUse { get; set; }
+
+        /// <summary>
+        /// Power consumed when the thruster is enabled.
+        /// </summary>
+        [DataField("activePower")]
+        public float ActivePowerUse { get; set; }
+
         // Need to serialize this because RefreshParts isn't called on Init and this will break post-mapinit maps!
         [ViewVariables(VVAccess.ReadWrite), DataField("thrust")]
         public float Thrust = 100f;
