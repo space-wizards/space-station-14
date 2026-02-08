@@ -162,6 +162,11 @@
     - NamesDragon
     - NamesDragonTitle
     nameFormat: name-format-dragon
+  - type: Grammar
+    attributes:
+      proper: true
+  - type: NameIdentifier
+    group: null  # Strips the numeric identifier from the dragon's name, since they already have randomly-generated names anyway
   - type: Prying
     pryPowered: true
     force: true

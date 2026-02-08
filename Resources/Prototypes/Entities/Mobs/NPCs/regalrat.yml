@@ -119,12 +119,15 @@
     - NamesRegalratKingdom
     - NamesRegalratTitle
     nameFormat: name-format-regal-rat
+  - type: NameIdentifier
+    group: null  # Strips the numeric identifier from the rat king's name, since they already have randomly-generated names anyway
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
   - type: GuideHelp
     guides:
     - MinorAntagonists
-  - type: Grammar
-    attributes:
-      gender: male
   - type: Sharp
 
 - type: entity
@@ -203,7 +206,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
-
   - type: SpriteMovement
     movementLayers:
       movement:
