@@ -130,14 +130,14 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        var (entity, job, objectives, briefing, entityName) = data;
+        var (entity, objectives, briefing, jobId, entityName) = data;
 
         _window.SpriteView.SetEntity(entity);
 
         UpdateRoleType();
-
+        var job = _prototypeManager.Index(jobId);
         _window.NameLabel.Text = entityName;
-        _window.SubText.Text = job;
+        _window.SubText.Text = job?.Name;
         _window.Objectives.RemoveAllChildren();
         _window.ObjectivesLabel.Visible = objectives.Any();
 
