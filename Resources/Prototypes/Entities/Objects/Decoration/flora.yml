@@ -295,6 +295,24 @@
         treeconifer03: ""
 
 - type: entity
+  parent: BaseTree
+  id: FloraTreePalm
+  suffix: palm tree 1
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treespalm.rsi
+    state: palm1
+
+- type: entity
+  parent: FloraTreePalm
+  id: FloraTreePalm2
+  suffix: palm tree 2
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treespalm.rsi
+    state: palm2
+
+- type: entity
   parent: BaseTreeConifer
   id: FloraTreeChristmas01
   name: christmas tree
@@ -421,3 +439,37 @@
           MobLuminousObject:
             min: 0
             max: 1
+
+# Large Bushes
+- type: entity
+  id: LargeBush1
+  suffix: large bush 1
+  components:
+  - type: SpriteFade
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Decoration/Flora/flora_large_bush.rsi
+    state: bush1
+    drawdepth: Overdoors
+  - type: Physics
+    canCollide: False
+    bodyType: Static
+  - type: Clickable
+
+- type: entity
+  parent: LargeBush1
+  id: LargeBush2
+  suffix: large bush 2
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_large_bush.rsi
+    state: bush2
+
+- type: entity
+  parent: LargeBush1
+  id: LargeBush3
+  suffix: large bush 3
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_large_bush.rsi
+    state: bush3
