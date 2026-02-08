@@ -13,7 +13,7 @@ namespace Content.Client.SSDIndicator;
 /// <summary>
 ///     Handles displaying SSD indicator as status icon
 /// </summary>
-public sealed class SSDIndicatorSystem : EntitySystem
+public sealed class SSDIndicatorSystem : SharedSSDIndicatorSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
