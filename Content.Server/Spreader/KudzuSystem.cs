@@ -15,6 +15,7 @@ public sealed class KudzuSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly OccluderSystem _occluder = default!;
 
     private static readonly ProtoId<EdgeSpreaderPrototype> KudzuGroup = "Kudzu";
 
@@ -29,17 +30,22 @@ public sealed class KudzuSystem : EntitySystem
     private void OnDamageChanged(EntityUid uid, KudzuComponent component, DamageChangedEvent args)
     {
         // Every time we take any damage, we reduce growth depending on all damage over the growth impact
-        //   So the kudzu gets slower growing the more it is hurt.
+        // So the kudzu gets slower growing the more it is hurt.
         var growthDamage = (int) (args.Damageable.TotalDamage / component.GrowthHealth);
         if (growthDamage > 0)
         {
             if (!EnsureComp<GrowingKudzuComponent>(uid, out _))
                 component.GrowthLevel = 3;
 
+            var oldLevel = component.GrowthLevel;
             component.GrowthLevel = Math.Max(1, component.GrowthLevel - growthDamage);
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
+
+            if (oldLevel != component.GrowthLevel)
             {
-                _appearance.SetData(uid, KudzuVisuals.GrowthLevel, component.GrowthLevel, appearance);
+                if (TryComp<AppearanceComponent>(uid, out var appearance))
+                    _appearance.SetData(uid, KudzuVisuals.GrowthLevel, component.GrowthLevel, appearance);
+
+                UpdateOcclusion(uid, component);
             }
         }
     }
@@ -87,6 +93,21 @@ public sealed class KudzuSystem : EntitySystem
 
         _appearance.SetData(uid, KudzuVisuals.Variant, _robustRandom.Next(1, component.SpriteVariants), appearance);
         _appearance.SetData(uid, KudzuVisuals.GrowthLevel, 1, appearance);
+
+        UpdateOcclusion(uid, component);
+    }
+
+    private void UpdateOcclusion(EntityUid uid, KudzuComponent component)
+    {
+        if (!component.BlockVisionAtLevel.HasValue)
+            return;
+
+        if (!TryComp<OccluderComponent>(uid, out var occluder))
+            return;
+
+        var shouldBlock = component.GrowthLevel >= component.BlockVisionAtLevel.Value;
+
+        _occluder.SetEnabled(uid, shouldBlock, occluder);
     }
 
     /// <inheritdoc/>
@@ -122,7 +143,7 @@ public sealed class KudzuSystem : EntitySystem
                 {
                     if (kudzu.DamageRecovery != null)
                     {
-                        // This kudzu features healing, so Gradually heal
+                        // This kudzu features healing, so gradually heal
                         _damageable.TryChangeDamage(uid, kudzu.DamageRecovery, true);
                     }
                     if (damage.TotalDamage >= kudzu.GrowthBlock)
@@ -148,6 +169,8 @@ public sealed class KudzuSystem : EntitySystem
             {
                 _appearance.SetData(uid, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel, appearance);
             }
+
+            UpdateOcclusion(uid, kudzu);
         }
     }
 }
