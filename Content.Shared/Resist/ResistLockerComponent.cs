@@ -1,8 +1,8 @@
-using System.Threading;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Resist;
+namespace Content.Shared.Resist;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(ResistLockerSystem))]
 public sealed partial class ResistLockerComponent : Component
 {
@@ -15,6 +15,6 @@ public sealed partial class ResistLockerComponent : Component
     /// <summary>
     /// For quick exit if the player attempts to move while already resisting
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public bool IsResisting = false;
 }

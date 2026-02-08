@@ -1,22 +1,20 @@
-using Content.Server.Popups;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
-using Content.Shared.Resist;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Storage.EntitySystems;
 
-namespace Content.Server.Resist;
+namespace Content.Shared.Resist;
 
 public sealed class ResistLockerSystem : EntitySystem
 {
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -28,20 +26,21 @@ public sealed class ResistLockerSystem : EntitySystem
         SubscribeLocalEvent<ResistLockerComponent, ResistLockerDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, ref ContainerRelayMovementEntityEvent args)
+    private void OnRelayMovement(Entity<ResistLockerComponent> ent, ref ContainerRelayMovementEntityEvent args)
     {
-        if (component.IsResisting)
+        if (ent.Comp.IsResisting)
             return;
 
-        if (!TryComp(uid, out EntityStorageComponent? storageComponent))
+        if (!TryComp(ent, out EntityStorageComponent? storageComponent))
             return;
 
         if (!_actionBlocker.CanMove(args.Entity))
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(uid))
+        if (TryComp<LockComponent>(ent, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(ent))
         {
-            AttemptResist(args.Entity, uid, storageComponent, component);
+            AttemptResist(args.Entity, ent, storageComponent, ent.Comp);
+            Dirty(ent);
         }
     }
 
@@ -65,30 +64,30 @@ public sealed class ResistLockerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
     }
 
-    private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
+    private void OnDoAfter(Entity<ResistLockerComponent> ent, ref ResistLockerDoAfterEvent args)
     {
         if (args.Cancelled)
         {
-            component.IsResisting = false;
-            _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
+            ent.Comp.IsResisting = false;
+            _popupSystem.PopupClient(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
             return;
         }
 
         if (args.Handled || args.Args.Target == null)
             return;
 
-        component.IsResisting = false;
+        ent.Comp.IsResisting = false;
 
-        if (HasComp<EntityStorageComponent>(uid))
+        if (HasComp<EntityStorageComponent>(ent))
         {
             WeldableComponent? weldable = null;
-            if (_weldable.IsWelded(uid, weldable))
-                _weldable.SetWeldedState(uid, false, weldable);
+            if (_weldable.IsWelded(ent, weldable))
+                _weldable.SetWeldedState(ent, false, weldable);
 
             if (TryComp<LockComponent>(args.Args.Target.Value, out var lockComponent))
-                _lockSystem.Unlock(uid, args.Args.User, lockComponent);
+                _lockSystem.Unlock(ent, args.Args.User, lockComponent);
 
-            _entityStorage.TryOpenStorage(args.Args.User, uid);
+            _entityStorage.TryOpenStorage(args.Args.User, ent);
         }
 
         args.Handled = true;

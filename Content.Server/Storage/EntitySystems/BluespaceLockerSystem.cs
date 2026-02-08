@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Resist;
 using Content.Server.Storage.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -17,6 +16,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Resist;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Storage.EntitySystems;
