@@ -96,6 +96,10 @@
     airBlockedDirection:
     - South
     - East
+  - type: Construction
+    graph: WindowDiagonal
+    node: shuttleWindowDiagonal
   - type: DamageVisuals
     damageOverlay:
       sprite: Structures/Windows/cracks_diagonal.rsi
+

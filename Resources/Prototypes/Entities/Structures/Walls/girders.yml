@@ -56,6 +56,69 @@
     price: 30
 
 - type: entity
+  id: GirderDiagonal
+  parent: BaseStructureDynamic
+  name: girder 
+  suffix: diagonal
+  description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
+  components:
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - GlassAirlockLayer
+  - type: InteractionOutline
+  - type: Construction
+    graph: GirderDiagonal
+    node: girderDiagonal
+  - type: Sprite
+    sprite: Structures/Walls/solid_diagonal.rsi
+    state: wall_girder
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 30
+  - type: Rotatable
+    rotateWhileAnchored: false
+
+- type: entity
   id: ReinforcedGirder
   parent: Girder
   name: reinforced girder
@@ -67,6 +130,50 @@
     - type: Construction
       graph: Girder
       node: reinforcedGirder
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 1
+                SheetPlasteel1:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+    - type: StaticPrice
+      price: 130
+
+- type: entity
+  id: ReinforcedGirderDiagonal
+  parent: GirderDiagonal
+  name: reinforced girder
+  suffix: diagonal
+  description: A large structural assembly made out of metal and plasteel; It requires a layer of plasteel before it can be considered a reinforced wall.
+  components:
+    - type: Sprite
+      sprite: Structures/Walls/solid_diagonal.rsi
+      state: reinforced_wall_girder
+    - type: Construction
+      graph: GirderDiagonal
+      node: reinforcedGirderDiagonal
     - type: Destructible
       thresholds:
         - trigger:
