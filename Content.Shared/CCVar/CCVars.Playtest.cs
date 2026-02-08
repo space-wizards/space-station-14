@@ -91,4 +91,17 @@ public sealed partial class CCVars
         public static readonly CVarDef<float> PlaytestStaminaDamageModifier =
             CVarDef.Create("playtest.stamina_damage_modifier", 1f, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        ///     Sets it so nuke codes are generated globally, and all nukes by default use the same code.
+        /// </summary>
+        [CVarControl(AdminFlags.VarEdit)]
+        public static readonly CVarDef<bool> PlaytestGlobalNukeCodes =
+            CVarDef.Create("playtest.global_nuke_codes", false, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        ///     Length of global nuke codes that are generated
+        /// </summary>
+        [CVarControl(AdminFlags.VarEdit)]
+        public static readonly CVarDef<int> PlaytestGlobalNukeCodeLength =
+            CVarDef.Create("playtest.global_nuke_code_length", 6, CVar.SERVER | CVar.REPLICATED);
 }
