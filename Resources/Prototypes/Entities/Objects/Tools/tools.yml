@@ -366,7 +366,7 @@
 
 - type: entity
   id: RCDXenoborg
-  parent: [ RCD, ]
+  parent: [ RCD, BaseXenoborgContraband ]
   name: xenoborg RCD
   description: A modified Xenoborg Rapid Construction Device which creates compressed matter on the fly using an internal fabricator.
   suffix: AutoRecharge
@@ -383,7 +383,7 @@
     - XenoborgPlating
     - XenoborgGrille
     - XenoborgWindow
-    - AirlockXenoborg
+    - AirlockXenoborgLocked
     - TubeLight
     - PoweredlightBlue
     - BulbLight
