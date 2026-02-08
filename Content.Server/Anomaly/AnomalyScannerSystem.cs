@@ -34,6 +34,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
             return;
 
         scannerComp.ScannedAnomaly = anomaly;
+        AnomalySystem.AppendScanner(new Entity<AnomalyComponent>(anomaly, anomalyComp), new Entity<AnomalyScannerComponent>(scanner, scannerComp));
         UpdateScannerUi(scanner, scannerComp);
 
         TryComp<AppearanceComponent>(scanner, out var appearanceComp);
@@ -175,11 +176,15 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
         var rounded = Math.Max(0, (int)Math.Ceiling(secondsUntilNextPulse));
 
-        var scannerQuery = EntityQueryEnumerator<AnomalyScannerComponent>();
-        while (scannerQuery.MoveNext(out var scannerUid, out var scanner))
+        foreach (var scannerUid in anomalyEnt.Comp.Scanners)
         {
-            if (scanner.ScannedAnomaly != anomalyEnt)
+            var scannerComponent = Comp<AnomalyScannerComponent>(scannerUid);
+
+            if (scannerComponent.LifeStage == ComponentLifeStage.Deleted || scannerComponent.ScannedAnomaly != anomalyEnt)
+            {
+                AnomalySystem.RemoveScanner(anomalyEnt, new Entity<AnomalyScannerComponent>(scannerUid, scannerComponent));
                 continue;
+            }
 
             Appearance.SetData(scannerUid, AnomalyScannerVisuals.AnomalyNextPulse, rounded);
         }
