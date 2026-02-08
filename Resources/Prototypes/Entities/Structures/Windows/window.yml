@@ -242,6 +242,9 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
+  - type: Construction
+    graph: WindowDirectional
+    node: frostedWindowDirectional
   - type: StaticPrice
     price: 35
 
