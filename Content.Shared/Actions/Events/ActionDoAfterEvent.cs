@@ -22,9 +22,9 @@ public sealed partial class ActionDoAfterEvent : DoAfterEvent
     /// <summary>
     /// The original request, for validating
     /// </summary>
-    public readonly RequestPerformActionEvent Input;
+    public readonly ActionArgs Input;
 
-    public ActionDoAfterEvent(NetEntity performer, TimeSpan? originalUseDelay, RequestPerformActionEvent input)
+    public ActionDoAfterEvent(NetEntity performer, TimeSpan? originalUseDelay, ActionArgs input)
     {
         Performer = performer;
         OriginalUseDelay = originalUseDelay;

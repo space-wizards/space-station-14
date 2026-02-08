@@ -81,7 +81,8 @@
       NavSmash: !type:Bool
         true
   - type: NPCUseActionOnTarget
-    actionId: ActionGoliathTentacle
+    actions:
+    - actionId: ActionGoliathTentacle
   - type: Tag
     tags:
     - CannotSuicide
@@ -94,6 +95,18 @@
       amount: 3
     - id: MaterialGoliathHide1
       amount: 3
+
+- type: entity
+  parent: MobGoliath
+  id: MobGoliathDebug
+  suffix: Smite
+  components:
+  - type: NPCUseActionOnTarget
+    actions:
+    - actionId: ActionGoliathTentacle
+    - actionId: ActionSmiteNoReq
+  - type: Godmode
+  - type: MovementAlwaysTouching
 
 - type: entity
   parent: BaseAction
