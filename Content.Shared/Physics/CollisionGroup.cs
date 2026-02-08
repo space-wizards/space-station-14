@@ -24,6 +24,8 @@ public enum CollisionGroup
     InteractImpassable = 1 << 7, // 128 Blocks interaction/InRangeUnobstructed
     // Y dis door passable when all the others impassable / collision.
     DoorPassable       = 1 << 8, // 256 Allows door to close over top, Like blast doors over conveyors for disposals rooms/cargo.
+    MobPassable        = 1 << 9, // 512 Can collide with each other and obstacles but not block players and mobs.
+
 
     MapGrid = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
@@ -51,6 +53,10 @@ public enum CollisionGroup
     MachineMask = Impassable | MidImpassable | LowImpassable,
     MachineLayer = Opaque | MidImpassable | LowImpassable | BulletImpassable,
     ConveyorMask = Impassable | MidImpassable | LowImpassable | DoorPassable,
+
+    // Hydroponics trays, ect
+    TrayMask = Impassable | MidImpassable | LowImpassable | MobPassable,
+    TrayLayer = BulletImpassable | MobPassable,
 
     // Crates
     CrateMask = Impassable | HighImpassable | LowImpassable,
