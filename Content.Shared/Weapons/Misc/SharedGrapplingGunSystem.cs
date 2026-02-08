@@ -10,6 +10,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -32,6 +33,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedPvsOverrideSystem _pvs = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
@@ -74,6 +76,10 @@ public abstract class SharedGrapplingGunSystem : VirtualController
             visuals.Sprite = component.RopeSprite;
             visuals.Target = uid;
             Dirty(shotUid.Value, visuals);
+
+            // Prevent the grapple's rope from disappearing once it leaves PVS.
+            // Global instead of per-session to allow other players to also see the rope.
+            _pvs.AddGlobalOverride(shotUid.Value);
         }
 
         TryComp<AppearanceComponent>(uid, out var appearance);
