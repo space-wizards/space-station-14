@@ -1,0 +1,155 @@
+# X - Taken space.
+# . - Empty space.
+
+# .XX
+# XX.
+# .X.
+- type: blockGamePiece
+  id: BlockGamePieceF
+  dimensions: 3,3
+  piece: [
+    false, true, true,
+    true, true, false,
+    false, true, false
+  ]
+
+# X
+# X
+# X
+# X
+# X
+- type: blockGamePiece
+  id: BlockGamePieceI
+  dimensions: 1,5
+  piece: [
+    true,
+    true,
+    true,
+    true,
+    true
+  ]
+
+# X.
+# X.
+# X.
+# XX
+- type: blockGamePiece
+  id: BlockGamePieceL
+  dimensions: 2,4
+  piece: [
+    true, false,
+    true, false,
+    true, false,
+    true, true
+  ]
+
+# .X
+# .X
+# XX
+# X.
+- type: blockGamePiece
+  id: BlockGamePieceN
+  dimensions: 2,4
+  piece: [
+    false, true,
+    false, true,
+    true, true,
+    true, false]
+
+
+# XX
+# XX
+# X.
+- type: blockGamePiece
+  id: BlockGamePieceP
+  dimensions: 2,3
+  piece: [
+    true, true,
+    true, true,
+    false, true
+  ]
+
+# XXX
+# .X.
+# .X.
+- type: blockGamePiece
+  id: BlockGamePieceT
+  dimensions: 3,3
+  piece: [
+    true, true, true,
+    false, true, false,
+    false, true, false
+  ]
+
+# X.X
+# XXX
+- type: blockGamePiece
+  id: BlockGamePieceU
+  dimensions: 3,2
+  piece: [
+    true, false,
+    true, true,
+    true, true
+  ]
+
+# ..X
+# ..X
+# XXX
+- type: blockGamePiece
+  id: BlockGamePieceV
+  dimensions: 3,3
+  piece: [
+    false, false, true,
+    false, false, true,
+    true, true, true
+  ]
+
+# ..X
+# .XX
+# XX.
+- type: blockGamePiece
+  id: BlockGamePieceW
+  dimensions: 3,3
+  piece: [
+    false, false, true,
+    false, true, true,
+    true, true, false
+  ]
+
+# .X.
+# XXX
+# .X.
+- type: blockGamePiece
+  id: BlockGamePieceX
+  dimensions: 3,3
+  piece: [
+    false, true, false,
+    true, true, true,
+    false, true, false
+  ]
+
+# .X
+# XX
+# .X
+# .X
+- type: blockGamePiece
+  id: BlockGamePieceY
+  dimensions: 2,4
+  piece: [
+    false, true,
+    true, true,
+    false, true,
+    false, true
+  ]
+
+# XX.
+# .X.
+# .XX
+- type: blockGamePiece
+  id: BlockGamePieceZ
+  dimensions: 3,3
+  piece: [
+    true, true, false,
+    false, true, false,
+    false, true, true
+  ]
