@@ -33,7 +33,7 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupState
   weights:
-    EscapeShuttleObjective: 1
+    EscapeObjective: 1
     DieObjective: 0.2
     #HijackShuttleObjective: 0.02
 
@@ -118,5 +118,5 @@
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape
   weights:
-    EscapeThiefShuttleObjective: 1
+    EscapeThiefObjective: 1
 #Changeling, crew, wizard, when you code it...
