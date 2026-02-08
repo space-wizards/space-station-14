@@ -7,7 +7,10 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
@@ -33,6 +36,7 @@ namespace Content.Shared.Containers.ItemSlots
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+        [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
 
         public override void Initialize()
         {
@@ -223,8 +227,30 @@ namespace Content.Shared.Containers.ItemSlots
             string? lockedFailPopup = null;
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!slot.InsertOnInteract)
+                if (!slot.InsertOnInteract && slot.DeepInsertList == null)
                     continue;
+
+                // Check for deep insert first (if slot has item and deepInsertList)
+                if (slot.Item != null && slot.DeepInsertList != null)
+                {
+                    // Check if deep insert will succeed BEFORE dropping the item
+                    var slotId = slot.ID;
+                    if (slotId != null && CanDeepInsert(uid, slotId, args.Used, args.User))
+                    {
+                        if (_handsSystem.TryDrop(args.User, args.Used))
+                        {
+                            if (TryDeepInsert(uid, slotId, args.Used, args.User))
+                            {
+                                args.Handled = true;
+                                return;
+                            }
+
+                            args.Handled = true;
+                            return;
+                        }
+                    }
+                    continue;
+                }
 
                 if (CanInsert(uid, args.Used, args.User, slot, slot.Swap))
                 {
@@ -362,6 +388,78 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             return TryInsert(uid, slot, item, user, excludeUserAudio: excludeUserAudio);
+        }
+
+        /// <summary>
+        ///     Checks if a deep insert will succeed without actually performing it.
+        ///     This validates all conditions that TryDeepInsert checks.
+        /// </summary>
+        public bool CanDeepInsert(EntityUid outerEntityUid,
+            string slotId,
+            EntityUid itemToInsert,
+            EntityUid? user)
+        {
+            if (!TryComp<ItemSlotsComponent>(outerEntityUid, out var itemSlots))
+                return false;
+
+            if (!itemSlots.Slots.TryGetValue(slotId, out var outerSlot))
+                return false;
+
+            if (outerSlot.Item == null)
+                return false;
+
+            var innerItemUid = outerSlot.Item.Value;
+
+            // Check if deep insert is allowed via whitelist on the outer slot
+            if (outerSlot.DeepInsertList != null &&
+                _whitelistSystem.IsWhitelistFail(outerSlot.DeepInsertList, itemToInsert))
+                return false;
+
+            // Inner item must have StorageComponent (e.g., trash bag)
+            if (!TryComp<StorageComponent>(innerItemUid, out var storageComp))
+                return false;
+
+            if (!TryComp<ItemComponent>(itemToInsert, out var itemComp))
+                return false;
+
+            return _storageSystem.CanInsert(innerItemUid, itemToInsert, out _, storageComp);
+        }
+
+        /// <summary>
+        ///     Tries to deep insert an item into the storage of an item that's already in another item's slot.
+        /// </summary>
+        /// <remarks>
+        ///     This will be helpful for items that have a storage component, such as trash bags.
+        /// </remarks>
+        public bool TryDeepInsert(EntityUid uid,
+            string slotId,
+            EntityUid itemToInsert,
+            EntityUid? user)
+        {
+            if (!TryComp<ItemSlotsComponent>(uid, out var itemSlots))
+                return false;
+
+            if (!itemSlots.Slots.TryGetValue(slotId, out var outerSlot))
+                return false;
+
+            if (outerSlot.Item == null)
+                return false;
+
+            var innerItemUid = outerSlot.Item.Value;
+
+            // Check if deep insert is allowed via whitelist on the outer slot
+            if (outerSlot.DeepInsertList != null &&
+                _whitelistSystem.IsWhitelistFail(outerSlot.DeepInsertList, itemToInsert))
+                return false;
+
+            // Inner item must have StorageComponent (e.g., trash bag)
+            if (!TryComp<StorageComponent>(innerItemUid, out var storageComp))
+                return false;
+
+            if (!TryComp<ItemComponent>(itemToInsert, out var itemComp))
+                return false;
+
+            return _storageSystem.Insert(innerItemUid, itemToInsert, out _, user: user, storageComp: storageComp);
         }
 
         /// <summary>

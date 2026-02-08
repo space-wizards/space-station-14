@@ -131,6 +131,10 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField]
         public bool InsertOnInteract = true;
 
+        [DataField]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
+        public EntityWhitelist? DeepInsertList;
+
         /// <summary>
         ///     Whether the item slots system will attempt to eject this item to the user's hands when interacted with.
         /// </summary>
