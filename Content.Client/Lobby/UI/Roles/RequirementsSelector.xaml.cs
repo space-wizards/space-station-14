@@ -19,6 +19,7 @@ public sealed partial class RequirementsSelector : BoxContainer
 {
     private readonly RadioOptions<int> _options;
     private readonly StripeBack _lockStripe;
+    private readonly RichTextLabel _requirementsLabel;
     private List<ProtoId<GuideEntryPrototype>>? _guides;
 
     public event Action<int>? OnSelected;
@@ -45,13 +46,13 @@ public sealed partial class RequirementsSelector : BoxContainer
             OnSelected?.Invoke(args.Id);
         };
 
-        var requirementsLabel = new Label()
+        _requirementsLabel = new RichTextLabel()
         {
-            Text = Loc.GetString("role-timer-locked"),
             Visible = true,
             HorizontalAlignment = HAlignment.Center,
             StyleClasses = {StyleClass.LabelSubText},
         };
+        _requirementsLabel.SetMessage(FormattedMessage.FromUnformatted(Loc.GetString("role-timer-locked")));
 
         _lockStripe = new StripeBack()
         {
@@ -61,7 +62,7 @@ public sealed partial class RequirementsSelector : BoxContainer
             MouseFilter = MouseFilterMode.Stop,
             Children =
             {
-                requirementsLabel
+                _requirementsLabel
             }
         };
 
@@ -105,10 +106,33 @@ public sealed partial class RequirementsSelector : BoxContainer
         OptionsContainer.AddChild(_lockStripe);
     }
 
-    public void LockRequirements(FormattedMessage requirements)
+    public void LockRequirements(
+        FormattedMessage requirements,
+        FormattedMessage? requiremenets_short = null)
     {
         var tooltip = new Tooltip();
         tooltip.SetMessage(requirements);
+        if (requiremenets_short == null)
+        {
+            requiremenets_short = FormattedMessage.Empty;
+            if (requirements.Count > 0)
+            {
+                var firstNode = requirements[0];
+                var nodeLen = requirements.Count;
+                var idx = 0;
+                foreach (var i in requirements)
+                {
+                    requiremenets_short.PushTag(i);
+                    if (firstNode.Name == i.Name && i.Closing)
+                        break;
+                    idx++;
+                }
+                if (idx < nodeLen - 1)
+                    requiremenets_short.PushTag(new MarkupNode(".."));
+            }
+        }
+        if (requiremenets_short.Count > 0)
+            _requirementsLabel.SetMessage(requiremenets_short);
         _lockStripe.TooltipSupplier = _ => tooltip;
         _lockStripe.Visible = true;
         _options.Visible = false;
