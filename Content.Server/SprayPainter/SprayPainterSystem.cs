@@ -81,7 +81,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             // Offset painting for adding decals
             position = position.Offset(new(-0.5f));
 
-            if (!_decals.TryAddDecal(ent.Comp.SelectedDecal, position, out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, false))
+            if (!_decals.TryAddDecal(new Decal(ent.Comp.SelectedDecal).WithColor(ent.Comp.SelectedDecalColor).WithRotation(Angle.FromDegrees(ent.Comp.SelectedDecalAngle)).WithZIndex(0).WithCleanable(false), position, out _))
                 return;
         }
         else
@@ -102,7 +102,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
             foreach (var decal in decals)
             {
-                _decals.RemoveDecal(grid, decal.Index, decalGridComp);
+                _decals.RemoveDecal((grid, decalGridComp), decal.Index, out var _);
             }
         }
 

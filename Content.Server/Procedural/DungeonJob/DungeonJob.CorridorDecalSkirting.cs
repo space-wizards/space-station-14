@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Shared.Doors.Components;
 using Content.Shared.Procedural;
+using Content.Shared.Decals;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Collections;
 using Robust.Shared.Physics.Components;
@@ -83,7 +84,7 @@ public sealed partial class DungeonJob
                     {
                         // Decals not being centered biting my ass again
                         var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile).Offset(offset);
-                        _decals.TryAddDecal(cDir, gridPos, out _, color: decks.Color);
+                        _decals.TryAddDecal(new Decal(cDir).WithColor(decks.Color), gridPos, out _);
                     }
                 }
 
@@ -96,7 +97,7 @@ public sealed partial class DungeonJob
                 {
                     // Decals not being centered biting my ass again
                     var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile).Offset(offset);
-                    _decals.TryAddDecal(cDir, gridPos, out _, color: decks.Color);
+                    _decals.TryAddDecal(new Decal(cDir).WithColor(decks.Color), gridPos, out _);
                 }
 
                 continue;
@@ -111,7 +112,7 @@ public sealed partial class DungeonJob
                 if (decks.CornerDecals.TryGetValue(dirFlag, out var cDir))
                 {
                     var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile).Offset(offset);
-                    _decals.TryAddDecal(cDir, gridPos, out _, color: decks.Color);
+                    _decals.TryAddDecal(new Decal(cDir).WithColor(decks.Color), gridPos, out _);
                 }
             }
         }

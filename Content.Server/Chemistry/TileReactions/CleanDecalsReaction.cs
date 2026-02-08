@@ -50,7 +50,7 @@ public sealed partial class CleanDecalsReaction : ITileReaction
             if (amount + CleanCost > reactVolume)
                 break;
 
-            decalSystem.RemoveDecal(tile.GridUid, decal.Index, decalGrid);
+            decalSystem.RemoveDecal((tile.GridUid, decalGrid), decal.Index, out var _);
             amount += CleanCost;
         }
 
