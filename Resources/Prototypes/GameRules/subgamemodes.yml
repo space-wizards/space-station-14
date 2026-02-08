@@ -36,6 +36,8 @@
         sound: "/Audio/Misc/thief_greeting.ogg"
   - type: DynamicRuleCost
     cost: 75
+  - type: GameRule
+    cancelPresetOnTooFewPlayers: false
 
 # Needs testing
 - type: entity
@@ -70,17 +72,16 @@
         nameFormat: name-format-wizard
       mindRoles:
       - MindRoleWizard
+  - type: GameRule
+    cancelPresetOnTooFewPlayers: false
 
 - type: entity
-  parent: BaseGameRule
-  id: Xenoborgs
+  parent: BaseXenoborgsRule
+  id: SubXenoborgs
   components:
-  - type: XenoborgsRule
-  - type: RuleGrids
   - type: GameRule
-    minPlayers: 40
-  - type: LoadMapRule
-    gridPath: /Maps/Shuttles/mothership.yml
+    minPlayers: 30
+    cancelPresetOnTooFewPlayers: false
   - type: AntagMultipleRoleSpawner
     antagRoleToPrototypes:
       MothershipCore: [ MothershipCore ]

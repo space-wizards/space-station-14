@@ -371,3 +371,12 @@
         Piercing: 3
     soundHit:
       path: "/Audio/Weapons/bladeslice.ogg"
+
+- type: entity
+  parent: WireBrush
+  id: WireBrushElectrical
+  name: electrical wire brush
+  description: A bristly steel wire brush with a moving head, allowing for a way easier time cleaning.
+  components:
+  - type: Tool
+    speedModifier: 1.5

@@ -10,7 +10,7 @@
     - !type:PlantAdjustNutrition
       amount: 2
   metabolisms:
-    Food:
+    Digestion:
       effects:
       - !type:SatiateHunger
         conditions:
@@ -34,7 +34,7 @@
       probability: 0.3
       amount: 0.4
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:SatiateHunger
         conditions:
@@ -62,7 +62,7 @@
     - !type:PlantAdjustPests
       amount: -6
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -90,7 +90,7 @@
     - !type:PlantAdjustMutationMod
       amount: 0.1
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -122,7 +122,7 @@
       amount: 1
     - !type:RobustHarvest {}
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -146,8 +146,6 @@
             Asphyxiation: 1
             Heat: 2
             Poison: 1
-    Medicine:
-      effects:
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
@@ -187,7 +185,7 @@
     - !type:PlantAdjustWeeds
       amount: -6
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -213,13 +211,13 @@
   - !type:PlantAdjustHealth
     amount: 0.5
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
           types:
             Caustic: 1
-    Gas:
+    Respiration:
       effects:
       - !type:HealthChange
         conditions:
@@ -230,9 +228,10 @@
           reagent: Ammonia
           min: 1
         ignoreResistances: true
+        scaling: true
         damage:
           types:
-            Poison: 0.25
+            Poison: 1
       - !type:Vomit
         probability: 0.12
         conditions:
@@ -265,6 +264,14 @@
             Burn: -2.5
           types:
             Bloodloss: -5
+      - !type:ModifyBloodLevel
+        amount: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Rat ]
+        - !type:ReagentCondition
+          reagent: Ammonia
+          min: 1
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
         - !type:MetabolizerTypeCondition
@@ -295,7 +302,7 @@
     amount: 1
   - !type:PlantDiethylamine {}
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:

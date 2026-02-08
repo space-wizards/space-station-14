@@ -13,8 +13,6 @@
   categories:
   - Modules
   completetime: 2
-  materials:
-    Glass: 3000
 
 # xenoborgs
 
@@ -67,6 +65,9 @@
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
+  materials:
+    Steel: 1500
+    Glass: 1500
 
 ## scout xenoborg modules
 
@@ -74,6 +75,9 @@
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleEnergySwordRecipe
   result: XenoborgModuleEnergySword
+  materials:
+    Steel: 1500
+    Glass: 1500
 
 ## stealth xenoborg modules
 
@@ -81,3 +85,5 @@
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleSuperCloakDeviceRecipe
   result: XenoborgModuleSuperCloakDevice
+  materials:
+    Glass: 3000
