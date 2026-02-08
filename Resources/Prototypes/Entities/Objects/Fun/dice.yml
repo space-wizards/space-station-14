@@ -3,16 +3,16 @@
   parent: BaseItem
   id: BaseDice
   components:
-  - type: Dice
-  - type: UseDelay
-  - type: Sprite
-    sprite: Objects/Fun/dice.rsi
-    noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
-  - type: Tag
-    tags:
-    - Dice
-  - type: Item
-    size: Tiny
+    - type: Dice
+    - type: UseDelay
+    - type: Sprite
+      sprite: Objects/Fun/dice.rsi
+      noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
+    - type: Tag
+      tags:
+        - Dice
+    - type: Item
+      size: Tiny
 
 - type: entity
   parent: BaseDice
@@ -20,81 +20,88 @@
   name: percentile die
   description: A die with ten sides. Works better for d100 rolls than a golf ball.
   components:
-  - type: Dice
-    sides: 10
-    multiplier: 10
-    offset: 1 # first side is a 0
-    currentValue: 0
-  - type: Sprite
-    state: percentile_0
+    - type: PercentileDie #Added component for die type
+    - type: Dice
+      sides: 10
+      multiplier: 10
+      offset: 1 # first side is a 0
+      currentValue: 0
+    - type: Sprite
+      state: percentile_0
 
 - type: entity
   parent: BaseDice
   id: d20Dice
-  name: d20
+  name: D20 die
   description: A die with twenty sides. The preferred die to throw at the GM.
   components:
-  - type: Dice
-    sides: 20
-    currentValue: 20
-  - type: Sprite
-    state: d20_20
+    - type: D20Die #Added component for die type
+    - type: Dice
+      sides: 20
+      currentValue: 20
+    - type: Sprite
+      state: d20_20
 
 - type: entity
   parent: BaseDice
   id: d12Dice
-  name: d12
+  name: D12 die
   description: A die with twelve sides. There's an air of neglect about it.
   components:
-  - type: Dice
-    sides: 12
-    currentValue: 12
-  - type: Sprite
-    state: d12_12
+    - type: D12Die #Added component for die type
+    - type: Dice
+      sides: 12
+      currentValue: 12
+    - type: Sprite
+      state: d12_12
 
 - type: entity
   parent: BaseDice
   id: d10Dice
-  name: d10
+  name: D10 die
   description: A die with ten sides. Useful for percentages.
   components:
-  - type: Dice
-    sides: 10
-    offset: 1
-    currentValue: 0
-  - type: Sprite
-    state: d10_0
+    - type: D10Die #Added component for die type
+    - type: Dice
+      sides: 10
+      offset: 1
+      currentValue: 0
+    - type: Sprite
+      state: d10_0
 
 - type: entity
   parent: BaseDice
   id: d8Dice
-  name: d8
+  name: D8 die
   description: A die with eight sides. It feels... lucky.
   components:
-  - type: Dice
-    sides: 8
-    currentValue: 8
-  - type: Sprite
-    state: d8_8
+    - type: D8Die #Added component for die type
+    - type: Dice
+      sides: 8
+      currentValue: 8
+    - type: Sprite
+      state: d8_8
 
 - type: entity
   parent: BaseDice
   id: d6Dice
-  name: d6
+  name: D6 die
   description: A die with six sides. Basic and serviceable.
   components:
-  - type: Dice
-    sides: 6
-    currentValue: 6
-  - type: Sprite
-    state: d6_6
+    - type: D6Die #Added component for die type
+    - type: Dice
+      sides: 6
+      currentValue: 6
+    - type: Sprite
+      state: d6_6
 
 - type: entity
   parent: BaseDice
   id: d4Dice
-  name: d4
+  name: D4 die
   description: A die with four sides. The nerd's caltrop.
   components:
+  - type: D4Die #Added component for die type
   - type: Dice
     sides: 4
     currentValue: 4

@@ -1,0 +1,162 @@
+- type: constructionGraph
+  id: RngDevice
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: empty
+          steps:
+            - material: Steel
+              amount: 3
+              doAfter: 1
+            - material: Cable
+              amount: 2
+              doAfter: 1
+    - node: empty
+      entity: RngEmptyCircuit
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 3
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+            - !type:DeleteEntity {}
+        - to: rng_device_d2
+          steps:
+            - component: PercentileDie
+              name: percentile-die
+              icon:
+                sprite: Objects/Fun/dice.rsi
+                state: percentile_50
+              doAfter: 1
+        - to: rng_device_d4
+          steps:
+            - component: D4Die
+              name: d4
+              icon:
+                sprite: Objects/Fun/dice.rsi
+                state: d4_4
+              doAfter: 1
+        - to: rng_device_d6
+          steps:
+            - component: D6Die
+              name: d6
+              icon:
+                sprite: Objects/Fun/dice.rsi
+                state: d6_6
+              doAfter: 1
+        - to: rng_device_d8
+          steps:
+            - component: D8Die
+              name: d8
+              icon:
+                sprite: Objects/Fun/dice.rsi
+                state: d8_8
+              doAfter: 1
+        - to: rng_device_d10
+          steps:
+            - component: D10Die
+              name: d10
+              icon:
+                sprite: Objects/Fun/dice.rsi
+                state: d10_0
+              doAfter: 1
+        - to: rng_device_d12
+          steps:
+            - component: D12Die
+              name: d12
+              icon:
+                sprite: Objects/Fun/dice.rsi
+                state: d12_12
+              doAfter: 1
+        - to: rng_device_d20
+          steps:
+            - component: D20Die
+              name: d20
+              icon:
+                sprite: Objects/Fun/dice.rsi
+                state: d20_20
+              doAfter: 1
+    - node: rng_device_d2
+      entity: RngDeviceD2
+      edges:
+        - to: empty
+          steps:
+            - tool: Prying
+              doAfter: 1
+          completed:
+            - !type:SpawnPrototype
+              prototype: PercentileDie
+              amount: 1
+    - node: rng_device_d4
+      entity: RngDeviceD4
+      edges:
+        - to: empty
+          steps:
+            - tool: Prying
+              doAfter: 1
+          completed:
+            - !type:SpawnPrototype
+              prototype: d4Dice
+              amount: 1
+    - node: rng_device_d6
+      entity: RngDeviceD6
+      edges:
+        - to: empty
+          steps:
+            - tool: Prying
+              doAfter: 1
+          completed:
+            - !type:SpawnPrototype
+              prototype: d6Dice
+              amount: 1
+    - node: rng_device_d8
+      entity: RngDeviceD8
+      edges:
+        - to: empty
+          steps:
+            - tool: Prying
+              doAfter: 1
+          completed:
+            - !type:SpawnPrototype
+              prototype: d8Dice
+              amount: 1
+    - node: rng_device_d10
+      entity: RngDeviceD10
+      edges:
+        - to: empty
+          steps:
+            - tool: Prying
+              doAfter: 1
+          completed:
+            - !type:SpawnPrototype
+              prototype: d10Dice
+              amount: 1
+    - node: rng_device_d12
+      entity: RngDeviceD12
+      edges:
+        - to: empty
+          steps:
+            - tool: Prying
+              doAfter: 1
+          completed:
+            - !type:SpawnPrototype
+              prototype: d12Dice
+              amount: 1
+    - node: rng_device_d20
+      entity: RngDeviceD20
+      edges:
+        - to: empty
+          steps:
+            - tool: Prying
+              doAfter: 1
+          completed:
+            - !type:SpawnPrototype
+              prototype: d20Dice
+              amount: 1
