@@ -360,6 +360,8 @@
     solutions:
       beaker:
         maxVol: 1000
+  - type: SolutionItemStatus
+    locControlVolume: "solution-status-volume-short"
 
 - type: entity
   name: dropper
