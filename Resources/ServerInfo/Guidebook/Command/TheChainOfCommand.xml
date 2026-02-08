@@ -1,0 +1,27 @@
+<Document>
+# The Chain-of-Command
+
+Being a Department Head means you're part of the station's command-and-control structure that reports, via the [color=#1b67a5]Captain[/color], to Central Command. It is vitally important that you, in the conduct of your duties, [color=#a4885c]do not oppose the will of Centcomm![/color] This will lead to unfortunate consequences for your career.
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHeadHelmetHardsuitDeathsquad" Caption="Picture unrelated."/>
+  </Box>
+
+In normal operations, Department Heads should come to a general consensus on the best actions to take to manage their departments and the station more widely, with the Captain providing a final say if no consensus can be reached.
+
+In times of crisis, the station [italic]can[/italic] operate under a formal chain-of-command to facilitate rapid response and a continuation of leadership in the event the Captain is suddenly unavailable, such as when consumed by a horrible monster, blown up by a wizard, or beaten to death by an angry mob.
+
+One common chain-of-command on Space Station 14 is as follows:
+
+- Firstly the [color=#1b67a5]Captain[/color],
+- Then the [color=#9fed58]Head of Personnel[/color],
+- And finally the [color=#cb0000]Head of Security[/color].
+
+This prioritizes the Department Heads with most access to control the station's access authorization systems. However, depending on the type of emergency, different Department Heads may need to be part of the chain. For example, the CMO would be an appropriate Department Head to step up to manage the station in the event of a viral outbreak, and the Chief Engineer is the right Head to rely on if the atmospherics system is compromised. It's good to agree on the chain-of-command early in the shift, so that, should the worst happen, the station can continue to have leadership.
+
+Should the chain-of-command run out of members, remaining surviving Department Heads should, by consensus, agree to appoint one of their own as acting Captain, or, if no consensus is reachable and the station is in crisis, act to orderly evacuate the station to Centcomm.
+
+If the chain-of-command has completely failed, with all Department Heads missing or dead, the station's AI should act to orderly evacuate the station to Centcomm.
+
+The Captain or, holder of the chain-of-command, can second their authority to an appropriate Department Head on a temporary basis. For example, the Captain may second their authority to the CMO in the event of a viral outbreak.
+</Document>
