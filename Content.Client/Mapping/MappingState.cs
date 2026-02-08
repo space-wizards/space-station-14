@@ -556,7 +556,7 @@ public sealed class MappingState : GameplayStateBase
 
                 var placement = new PlacementInformation
                 {
-                    PlacementOption = placementId > 0 ? EntitySpawnWindow.InitOpts[placementId] : entity.PlacementMode,
+                    PlacementOption = placementId > 0 ? _placement.AllModeNames[placementId] : entity.PlacementMode,
                     EntityType = entity.ID,
                     IsTile = false
                 };
@@ -655,7 +655,7 @@ public sealed class MappingState : GameplayStateBase
         {
             var placement = new PlacementInformation
             {
-                PlacementOption = EntitySpawnWindow.InitOpts[args.Id],
+                PlacementOption = _placement.AllModeNames[args.Id],
                 EntityType = _placement.CurrentPermission!.EntityType,
                 TileType = _placement.CurrentPermission.TileType,
                 Range = 2,
