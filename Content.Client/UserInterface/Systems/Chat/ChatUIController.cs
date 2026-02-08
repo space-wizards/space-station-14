@@ -821,11 +821,18 @@ public sealed partial class ChatUIController : UIController
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
         // color the name unless it's something like "the old man"
-        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
+        if ((msg.Channel & ChatChannel.ChatNameColoringWhitelist) != 0 && _chatNameColorsEnabled)
         {
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
-            if (grammar != null && grammar.ProperNoun == true)
-                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
+            if (grammar is { ProperNoun: true }
+                || (msg.Channel & ChatChannel.CorporealSpeech) == 0
+                || msg.Channel is ChatChannel.Radio)
+            {
+                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg,
+                    "Name",
+                    "color",
+                    GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
+            }
         }
 
         // Color any words chosen by the client.
