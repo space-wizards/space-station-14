@@ -41,6 +41,11 @@
                 collection: MetalGlassBreak
                 params:
                   volume: -4
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 2
 
 - type: entity
   parent: ExtinguisherCabinet
