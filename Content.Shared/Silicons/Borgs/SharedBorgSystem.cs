@@ -21,6 +21,7 @@ using Content.Shared.Popups;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
@@ -176,6 +177,9 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind))
         {
             _mind.TransferTo(mindId, chassis.Owner, mind: mind);
+
+            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
+                _roles.MindAddRole(mindId, SiliconBrainRole, silent: true);
         }
     }
 
@@ -190,6 +194,9 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(chassis.Owner, out var mindId, out var mind))
         {
             _mind.TransferTo(mindId, args.Entity, mind: mind);
+
+            if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId) && !HasComp<MMIComponent>(args.Entity))
+                _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
         }
     }
 
