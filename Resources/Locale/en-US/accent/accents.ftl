@@ -100,6 +100,12 @@ accent-words-slimes-5 = Blabl blump!
 # Mothroach
 accent-words-mothroach-1 = Chirp!
 
+# Bee
+accent-words-bee-1 = Bzzz
+accent-words-bee-2 = Zzzzzz
+accent-words-bee-3 = Bzzzzzzz
+accent-words-bee-4 = BzzzZZZZzz
+
 # Crab
 accent-words-crab-1 = Click.
 accent-words-crab-2 = Click-clack!
@@ -107,6 +113,60 @@ accent-words-crab-3 = Clack?
 accent-words-crab-4 = Tipi-tap!
 accent-words-crab-5 = Clik-tap.
 accent-words-crab-6 = Cliliick.
+
+# Cow
+accent-words-cow-1 = Moo
+accent-words-cow-2 = Moo!
+accent-words-cow-3 = Mooooo!
+accent-words-cow-4 = Mooooooooo!
+
+# Ferret
+accent-words-ferret-1 = Dook
+accent-words-ferret-2 = Ekekekek!
+accent-words-ferret-3 = Prrrr
+
+# Fox
+accent-words-fox-1 = Eeeeeeh!
+accent-words-fox-2 = Yip?
+accent-words-fox-3 = Bark!
+accent-words-fox-4 = Eh
+
+# Frog
+accent-words-frog-1 = Ribbit!
+accent-words-frog-2 = Croak!
+accent-words-frog-3 = Croooaaaaaak!
+
+# Goat
+accent-words-goat-1 = Baaa!
+accent-words-goat-2 = Ba!
+accent-words-goat-3 = Bwaaa!
+accent-words-goat-4 = Bleaaat!
+accent-words-goat-5 = Maaaaa!
+
+# Gorilla
+accent-words-gorilla-1 = Oomf!
+accent-words-gorilla-2 = Oog.
+accent-words-gorilla-3 = Ung!
+accent-words-gorilla-4 = Oof!
+accent-words-gorilla-5 = Mph!
+
+# Goose
+accent-words-goose-1 = Honk!
+accent-words-goose-2 = Honk.
+accent-words-goose-3 = Honk honk!
+accent-words-goose-4 = Hooooooonk!
+accent-words-goose-5 = Hiss!
+
+# Penguin
+accent-words-penguin-1 = Eeeeeee!
+accent-words-penguin-2 = Squawk!
+accent-words-penguin-3 = Prrrreeee!
+
+# Raccoon
+accent-words-raccoon-1 = Prrrrr!
+accent-words-raccoon-2 = Preeee!
+accent-words-raccoon-3 = Squeak!
+accent-words-raccoon-4 = Trrrrr!
 
 # Kobold
 accent-words-kobold-1 = Yip!

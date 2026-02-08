@@ -34,4 +34,10 @@ public sealed partial class VocalizerComponent : Component
     /// </summary>
     [DataField]
     public bool HideChat;
+
+    /// <summary>
+    /// If set to true, will continue to vocalize even when an entity is controlled by a player
+    /// </summary>
+    [DataField]
+    public bool VocalizePlayerControlled;
 }

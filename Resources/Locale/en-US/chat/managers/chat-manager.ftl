@@ -79,6 +79,29 @@ chat-speech-verb-insect-1 = chitters
 chat-speech-verb-insect-2 = chirps
 chat-speech-verb-insect-3 = clicks
 
+chat-speech-verb-name-bee = Bee
+chat-speech-verb-bee-1 = buzzes
+chat-speech-verb-bee-2 = zooms
+
+chat-speech-verb-name-chicken = Chicken
+chat-speech-verb-chicken-1 = clucks
+chat-speech-verb-chicken-2 = bawks
+
+chat-speech-verb-name-duck = Duck
+chat-speech-verb-duck-1 = quacks
+
+chat-speech-verb-name-cow = Cow
+chat-speech-verb-cow-1 = moos
+
+chat-speech-verb-name-frog = Frog
+chat-speech-verb-frog-1 = croaks
+chat-speech-verb-frog-2 = growls
+
+chat-speech-verb-name-goose = Goose
+chat-speech-verb-goose-1 = honks
+chat-speech-verb-goose-2 = screeches
+chat-speech-verb-goose-3 = hisses
+
 chat-speech-verb-name-moth = Moth
 chat-speech-verb-winged-1 = flutters
 chat-speech-verb-winged-2 = flaps
@@ -89,10 +112,18 @@ chat-speech-verb-slime-1 = sloshes
 chat-speech-verb-slime-2 = burbles
 chat-speech-verb-slime-3 = oozes
 
+chat-speech-verb-name-snake = Snake
+chat-speech-verb-snake-1 = hisses
+
 chat-speech-verb-name-plant = Diona
 chat-speech-verb-plant-1 = rustles
 chat-speech-verb-plant-2 = sways
 chat-speech-verb-plant-3 = creaks
+
+chat-speech-verb-name-raccoon = Raccoon
+chat-speech-verb-raccoon-1 = chitters
+chat-speech-verb-raccoon-2 = squeaks
+chat-speech-verb-raccoon-3 = trills
 
 chat-speech-verb-name-robotic = Robotic
 chat-speech-verb-robotic-1 = states
@@ -136,13 +167,12 @@ chat-speech-verb-name-monkey = Monkey
 chat-speech-verb-monkey-1 = chimpers
 chat-speech-verb-monkey-2 = screeches
 
-chat-speech-verb-name-cluwne = Cluwne
-
 chat-speech-verb-name-parrot = Parrot
 chat-speech-verb-parrot-1 = squawks
 chat-speech-verb-parrot-2 = tweets
 chat-speech-verb-parrot-3 = chirps
 
+chat-speech-verb-name-cluwne = Cluwne
 chat-speech-verb-cluwne-1 = giggles
 chat-speech-verb-cluwne-2 = guffaws
 chat-speech-verb-cluwne-3 = laughs

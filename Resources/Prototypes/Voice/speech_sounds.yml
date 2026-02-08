@@ -125,6 +125,15 @@
     path: /Audio/Voice/Talk/slime_exclaim.ogg
 
 - type: speechSounds
+  id: Sloth
+  saySound:
+    path: /Audio/Animals/sloth_squeak.ogg
+  askSound:
+    path: /Audio/Animals/sloth_squeak.ogg
+  exclaimSound:
+    path: /Audio/Animals/sloth_squeak.ogg
+
+- type: speechSounds
   id: Vox
   saySound:
     path: /Audio/Voice/Talk/vox.ogg
@@ -143,6 +152,15 @@
     path: /Audio/Voice/Talk/arachnid_exclaim.ogg
 
 - type: speechSounds
+  id: Bear
+  saySound:
+    path: /Audio/Animals/bear.ogg
+  askSound:
+    path: /Audio/Animals/bear.ogg
+  exclaimSound:
+    path: /Audio/Animals/bear.ogg
+
+- type: speechSounds
   id: Cat
   saySound:
     path: /Audio/Animals/cat_meow2.ogg
@@ -150,15 +168,6 @@
     path: /Audio/Animals/cat_meow.ogg
   exclaimSound:
     path: /Audio/Animals/cat_meow.ogg
-
-- type: speechSounds
-  id: Dog
-  saySound:
-    path: /Audio/Animals/dog_bark1.ogg
-  askSound:
-    path: /Audio/Animals/dog_bark3.ogg
-  exclaimSound:
-    path: /Audio/Animals/dog_bark2.ogg
 
 - type: speechSounds
   id: Cluck
@@ -170,6 +179,42 @@
     path: /Audio/Animals/chicken_cluck_happy.ogg
 
 - type: speechSounds
+  id: Dog
+  saySound:
+    path: /Audio/Animals/dog_bark1.ogg
+  askSound:
+    path: /Audio/Animals/dog_bark3.ogg
+  exclaimSound:
+    path: /Audio/Animals/dog_bark2.ogg
+
+- type: speechSounds
+  id: Ferret
+  saySound:
+    path: /Audio/Animals/ferret_happy.ogg
+  askSound:
+    path: /Audio/Animals/ferret_happy.ogg
+  exclaimSound:
+    path: /Audio/Animals/ferret_happy.ogg
+
+- type: speechSounds
+  id: Fox
+  saySound:
+    path: /Audio/Animals/fox12.ogg
+  askSound:
+    path: /Audio/Animals/fox9.ogg
+  exclaimSound:
+    path: /Audio/Animals/fox11.ogg
+
+- type: speechSounds
+  id: Frog
+  saySound:
+    path: /Audio/Animals/frog_ribbit.ogg
+  askSound:
+    path: /Audio/Animals/frog_ribbit.ogg
+  exclaimSound:
+    path: /Audio/Animals/frog_ribbit.ogg
+
+- type: speechSounds
   id: Goat
   saySound:
     path: /Audio/Animals/goat_bah.ogg
@@ -177,6 +222,69 @@
     path: /Audio/Animals/goat_bah.ogg
   exclaimSound:
     path: /Audio/Animals/goat_bah.ogg
+
+- type: speechSounds
+  id: Goose
+  saySound:
+    path: /Audio/Animals/goose_honk.ogg
+  askSound:
+    path: /Audio/Animals/goose_honk.ogg
+  exclaimSound:
+    path: /Audio/Animals/goose_honk.ogg
+
+- type: speechSounds
+  id: Kangaroo
+  saySound:
+    path: /Audio/Animals/kangaroo_grunt.ogg
+  askSound:
+    path: /Audio/Animals/kangaroo_grunt.ogg
+  exclaimSound:
+    path: /Audio/Animals/kangaroo_grunt.ogg
+
+- type: speechSounds
+  id: Moo
+  saySound:
+    path: /Audio/Animals/cow_moo.ogg
+  askSound:
+    path: /Audio/Animals/cow_moo.ogg
+  exclaimSound:
+    path: /Audio/Animals/cow_moo.ogg
+
+- type: speechSounds
+  id: Penguin
+  saySound:
+    path: /Audio/Animals/penguin_squawk.ogg
+  askSound:
+    path: /Audio/Animals/penguin_squawk.ogg
+  exclaimSound:
+    path: /Audio/Animals/penguin_squawk.ogg
+
+- type: speechSounds
+  id: Pig
+  saySound:
+    path: /Audio/Animals/pig_oink.ogg
+  askSound:
+    path: /Audio/Animals/pig_oink.ogg
+  exclaimSound:
+    path: /Audio/Animals/pig_oink.ogg
+
+- type: speechSounds
+  id: Raccoon
+  saySound:
+    path: /Audio/Animals/raccoon_chatter.ogg
+  askSound:
+    path: /Audio/Animals/raccoon_chatter.ogg
+  exclaimSound:
+    path: /Audio/Animals/raccoon_chatter.ogg
+
+- type: speechSounds
+  id: Snake
+  saySound:
+    path: /Audio/Animals/snake_hiss.ogg
+  askSound:
+    path: /Audio/Animals/snake_hiss.ogg
+  exclaimSound:
+    path: /Audio/Animals/snake_hiss.ogg
 
 - type: speechSounds
   id: Vulpkanin
@@ -195,3 +303,12 @@
     path: /Audio/Animals/wawa_question.ogg
   exclaimSound:
     path: /Audio/Animals/wawa_exclaim.ogg
+
+- type: speechSounds
+  id: Quack
+  saySound:
+    path: /Audio/Animals/duck_quack_happy.ogg
+  askSound:
+    path: /Audio/Animals/duck_quack_happy.ogg
+  exclaimSound:
+    path: /Audio/Animals/duck_quack_happy.ogg
