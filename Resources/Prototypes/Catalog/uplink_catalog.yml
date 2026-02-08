@@ -625,6 +625,19 @@
   - UplinkAmmo
 
 - type: listing
+  id: UplinkHristovAmmoHollow
+  name: uplink-sniper-ammo-hollow-name
+  description: uplink-sniper-ammo-hollow-desc
+  productEntity: MagazineBoxHristovHollowPoint
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkAmmo
+
+- type: listing
   id: UplinkAmmoBundle
   name: uplink-ammo-bundle-name
   description: uplink-ammo-bundle-desc
