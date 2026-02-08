@@ -14,6 +14,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Robust.Shared.Threading;
 
@@ -48,6 +49,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery;
     private EntityQuery<AirtightComponent> _airtightQuery;
     private EntityQuery<FirelockComponent> _firelockQuery;
+    private EntityQuery<DamageableComponent> _damageableQuery;
     private HashSet<EntityUid> _entSet = new();
 
     private string[] _burntDecals = [];
@@ -63,11 +65,13 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeCVars();
         InitializeGridAtmosphere();
         InitializeMap();
+        InitializePipeDamage();
 
         _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
         _mapAtmosQuery = GetEntityQuery<MapAtmosphereComponent>();
         _airtightQuery = GetEntityQuery<AirtightComponent>();
         _firelockQuery = GetEntityQuery<FirelockComponent>();
+        _damageableQuery = GetEntityQuery<DamageableComponent>();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);

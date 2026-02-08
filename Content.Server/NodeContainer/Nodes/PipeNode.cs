@@ -108,6 +108,22 @@ namespace Content.Server.NodeContainer.Nodes
 
         private const float DefaultVolume = 200f;
 
+        /// <summary>
+        /// The maximum difference between the pipe's internal pressure and the exposed atmosphere
+        /// pressure the pipe can experience before it starts to take damage, in kPa.
+        /// </summary>
+        [DataField]
+        public float MaxPressure;
+
+        /// <summary>
+        /// If there is an air-blocking entity above this pipe, the pressure increase factor to apply
+        /// to the pipe's max pressure. Set this to zero to disable pressure damage when blocked.
+        /// </summary>
+        /// <example>If the tile is air-blocked and the factor is set to 5,
+        /// then the MaxPressure is 5 times higher.</example>
+        [DataField]
+        public float AirBlockedMaxPressureIncreaseFactor;
+
         public override void Initialize(EntityUid owner, IEntityManager entMan)
         {
             base.Initialize(owner, entMan);
