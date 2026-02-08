@@ -12,6 +12,7 @@
   id: XenoborgUpgradeModules
   recipes:
   # engi xenoborg
+  - XenoborgModuleBorgingRecipe
   - XenoborgModuleDoorControlRecipe
   # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
