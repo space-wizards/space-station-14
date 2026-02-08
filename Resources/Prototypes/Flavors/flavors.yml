@@ -650,6 +650,36 @@
   description: flavor-complex-white-russian
 
 - type: flavor
+  id: cosmicalaska
+  flavorType: Complex
+  description: flavor-complex-cosmic-alaska
+
+- type: flavor
+  id: coconutsakecolada
+  flavorType: Complex
+  description: flavor-complex-coconut-sake-colada
+
+- type: flavor
+  id: bruisedmelon
+  flavorType: Complex
+  description: flavor-complex-bruised-melon
+
+- type: flavor
+  id: blackjapan
+  flavorType: Complex
+  description: flavor-complex-black-japan
+
+- type: flavor
+  id: horsesneck
+  flavorType: Complex
+  description: flavor-complex-horses-neck
+
+- type: flavor
+  id: ransomnote
+  flavorType: Complex
+  description: flavor-complex-ransom-note
+
+- type: flavor
   id: moonshine
   flavorType: Complex
   description: flavor-complex-moonshine

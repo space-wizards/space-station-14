@@ -653,6 +653,21 @@
   fizziness: 0.3
 
 - type: reagent
+  id: BlackJapan
+  name: reagent-name-black-japan
+  parent: BaseAlcohol
+  desc: reagent-desc-black-japan
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: blackjapan
+  color: "#091405"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/blackjapan.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
   id: BlackRussian
   name: reagent-name-black-russian
   parent: BaseAlcohol
@@ -736,6 +751,21 @@
   metamorphicChangeColor: false
 
 - type: reagent
+  id: BruisedMelon
+  name: reagent-name-bruised-melon
+  parent: BaseAlcohol
+  desc: reagent-desc-bruised-melon
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: bruisedmelon
+  color: "#86e63c"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bruisedmelon.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
   id: CoconutRum
   name: reagent-name-coconut-rum
   parent: BaseAlcohol
@@ -753,6 +783,36 @@
     Digestion:
       metabolites:
         Ethanol: 0.4
+
+- type: reagent
+  id: CoconutSakeColada
+  name: reagent-name-coconut-sake-colada
+  parent: BaseAlcohol
+  desc: reagent-desc-coconut-sake-colada
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: coconutsakecolada
+  color: "#e2e8a3"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/coconutsakecolada.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: CosmicAlaska
+  name: reagent-name-cosmic-alaska
+  parent: BaseAlcohol
+  desc: reagent-desc-cosmic-alaska
+  physicalDesc: reagent-physical-desc-starry
+  flavor: cosmicalaska
+  color: "#8ee62c"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cosmicalaska.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Cosmopolitan
@@ -1057,6 +1117,21 @@
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+
+- type: reagent
+  id: HorsesNeck
+  name: reagent-name-horses-neck
+  parent: BaseAlcohol
+  desc: reagent-desc-horses-neck
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: horsesneck
+  color: "#ffd76b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/horsesneck.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Hooch
@@ -1466,6 +1541,21 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+
+- type: reagent
+  id: RansomNote
+  name: reagent-name-ransom-note
+  parent: BaseAlcohol
+  desc: reagent-desc-ransom-note
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: ransomnote
+  color: "#bbdc7b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ransomnote.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Sbiten
