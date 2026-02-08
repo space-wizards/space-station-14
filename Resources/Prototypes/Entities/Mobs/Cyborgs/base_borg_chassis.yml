@@ -87,6 +87,10 @@
     templateId: borg
   - type: Hands
     showInHands: false
+    # Borgs cannot throw items because their robotic arms are not very mobile and are clunky in the way they interact with things.
+    # If they do need to shoot something as a weapon it should use some sort of cannon module instead.
+    # This is important to prevent them from throwing explosive CLF3 beakers or similar.
+    canThrow: false
     disableExplosionRecursion: true
     canBeStripped: false
   - type: ComplexInteraction

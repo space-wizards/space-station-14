@@ -42,6 +42,12 @@ public sealed partial class HandsComponent : Component
     public bool DisableExplosionRecursion;
 
     /// <summary>
+    ///     Can this mob throw held items?
+    /// </summary>
+    [DataField]
+    public bool CanThrow = true;
+
+    /// <summary>
     ///     Modifies the speed at which items are thrown.
     /// </summary>
     [DataField]
