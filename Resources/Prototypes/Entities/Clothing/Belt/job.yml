@@ -155,6 +155,19 @@
         whitelist:
           tags:
           - Wrench
+  - type: ItemSlots
+    slots:
+      trashbag_slot:
+        name: janitorial-trolley-slot-component-slot-name-trashbag
+        whitelist:
+          tags:
+          - TrashBag
+        insertOnInteract: false
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: [ ]
+      trashbag_slot: !type:ContainerSlot { }
   - type: Appearance
 
 - type: entity
