@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.EntityConditions;
 
@@ -14,8 +15,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="conditions">Conditions we're checking</param>
+    /// <param name="source">Entity that initiated the check, it is passed to <paramref name="conditions"/> of optional
+    /// use. </param>
     /// <returns>Returns true if all conditions return true, false if any fail</returns>
-    public bool TryConditions(EntityUid target, EntityCondition[]? conditions)
+    public bool TryConditions(EntityUid target, EntityCondition[]? conditions, EntityUid? source = null)
     {
         // If there's no conditions we can't fail any of them...
         if (conditions == null)
@@ -23,7 +26,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
 
         foreach (var condition in conditions)
         {
-            if (!TryCondition(target, condition))
+            if (!TryCondition(target, condition, out var result, source))
+                continue;
+
+            if (!result.Value)
                 return false;
         }
 
@@ -35,8 +41,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="conditions">Conditions we're checking</param>
+    /// <param name="source">Entity that initiated the check, it is passed to <paramref name="conditions"/> of optional
+    /// use. </param>
     /// <returns>Returns true if any conditions return true</returns>
-    public bool TryAnyCondition(EntityUid target, EntityCondition[]? conditions)
+    public bool TryAnyCondition(EntityUid target, EntityCondition[]? conditions, EntityUid? source = null)
     {
         // If there's no conditions we can't meet any of them...
         if (conditions == null)
@@ -44,7 +52,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
 
         foreach (var condition in conditions)
         {
-            if (TryCondition(target, condition))
+            if (!TryCondition(target, condition, out var result, source))
+                continue;
+
+            if (result.Value)
                 return true;
         }
 
@@ -56,18 +67,46 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="condition">Condition we're checking</param>
+    /// <param name="source">Entity that initiated the check, it is passed to <paramref name="conditions"/> of optional
+    /// use. </param>
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
-    public bool TryCondition(EntityUid target, EntityCondition condition)
+    public bool TryCondition(EntityUid target, EntityCondition condition, EntityUid? source = null)
     {
-        return condition.Inverted != condition.RaiseEvent(target, this);
+        // If condition can't be applied, condition was not failed
+        if (!TryCondition(target, condition, out var result, source))
+            return true;
+
+        return result.Value;
+    }
+
+    /// <summary>
+    /// Checks a single <see cref="EntityCondition"/> on an entity, while providing information if check
+    /// could even be properly performed.
+    /// </summary>
+    /// <param name="target">Target entity we're checking conditions on</param>
+    /// <param name="condition">Condition we're checking</param>
+    /// <param name="result">The result of condition check</param>
+    /// <param name="source">Entity that initiated the check, it is passed to <paramref name="conditions"/> of optional
+    /// use. </param>
+    /// arguments</param>
+    /// <returns>Returns true if we meet the condition was valid for provided <paramref name="parameters"/></returns>
+    public bool TryCondition(EntityUid target, EntityCondition condition, [NotNullWhen(true)] out bool? result, EntityUid? source = null)
+    {
+        result = false;
+
+        if (!condition.TryRaiseEvent(target, this, out var conditionResult, source))
+            return false;
+
+        result = condition.Inverted != conditionResult;
+        return true;
     }
 
     /// <summary>
     /// Raises a condition to an entity. You should not be calling this unless you know what you're doing.
     /// </summary>
-    public bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>
+    public bool RaiseConditionEvent<T>(EntityUid target, T effect, EntityUid? source = null) where T : EntityConditionBase<T>
     {
-        var effectEv = new EntityConditionEvent<T>(effect);
+        var effectEv = new EntityConditionEvent<T>(effect, source);
         RaiseLocalEvent(target, ref effectEv);
         return effectEv.Result;
     }
@@ -93,7 +132,7 @@ public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem wher
 /// </summary>
 public interface IEntityConditionRaiser
 {
-    bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>;
+    bool RaiseConditionEvent<T>(EntityUid target, T effect, EntityUid? source = null) where T : EntityConditionBase<T>;
 }
 
 /// <summary>
@@ -102,13 +141,19 @@ public interface IEntityConditionRaiser
 /// <typeparam name="T">The Condition wer are raising.</typeparam>
 public abstract partial class EntityConditionBase<T> : EntityCondition where T : EntityConditionBase<T>
 {
-    public override bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser)
+    public override bool TryRaiseEvent(EntityUid target, IEntityConditionRaiser raiser, [NotNullWhen(true)] out bool? result, EntityUid? source = null)
     {
+        result = false;
+
         if (this is not T type)
             return false;
 
+        if (RequiresParameterSource && source == null)
+            return false;
+
         // If the result of the event matches the result we're looking for then we pass.
-        return raiser.RaiseConditionEvent(target, type);
+        result = raiser.RaiseConditionEvent(target, type, source);
+        return true;
     }
 }
 
@@ -118,7 +163,8 @@ public abstract partial class EntityConditionBase<T> : EntityCondition where T :
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class EntityCondition
 {
-    public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
+    public abstract bool TryRaiseEvent(EntityUid target, IEntityConditionRaiser raiser, [NotNullWhen(true)] out bool? result, EntityUid? source = null);
+    public virtual bool RequiresParameterSource => false;
 
     /// <summary>
     /// If true, invert the result. So false returns true and true returns false!
@@ -137,7 +183,7 @@ public abstract partial class EntityCondition
 /// </summary>
 /// <param name="Condition">The Condition we're checking</param>
 [ByRefEvent]
-public record struct EntityConditionEvent<T>(T Condition) where T : EntityConditionBase<T>
+public record struct EntityConditionEvent<T>(T Condition, EntityUid? Source = null) where T : EntityConditionBase<T>
 {
     /// <summary>
     /// The result of our check, defaults to false if nothing handles it.
@@ -149,4 +195,10 @@ public record struct EntityConditionEvent<T>(T Condition) where T : EntityCondit
     /// The Condition being raised in this event
     /// </summary>
     public readonly T Condition = Condition;
+
+    /// <summary>
+    /// Parameter passed to <paramref name="Condition"/> containing
+    /// entity that is performing the check.
+    /// </summary>
+    public EntityUid? Source = Source;
 }
