@@ -109,7 +109,7 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
 
                 break;
             case OperatingMode.ToggleEmergencyAccess:
-                if (airlockComp != null)
+                if (airlockComp is { EmergencyAccessWireCut: false })
                 {
                     _airlock.SetEmergencyAccess((args.Target.Value, airlockComp), !airlockComp.EmergencyAccess, user: args.User, predicted: true);
                     _adminLogger.Add(LogType.Action,

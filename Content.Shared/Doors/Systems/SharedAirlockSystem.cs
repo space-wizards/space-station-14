@@ -161,6 +161,12 @@ public abstract class SharedAirlockSystem : EntitySystem
             Audio.PlayPvs(sound, ent);
     }
 
+    public void SetEmergencyAccessWireCut(Entity<AirlockComponent> ent, bool value)
+    {
+        ent.Comp.EmergencyAccessWireCut = value;
+        Dirty(ent, ent.Comp);
+    }
+
     public void SetAutoCloseDelayModifier(AirlockComponent component, float value)
     {
         if (component.AutoCloseDelayModifier.Equals(value))
