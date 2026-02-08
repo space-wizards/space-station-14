@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.RCD.Components;
+using Content.Shared.Stacks;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.RCD.Systems;
@@ -13,6 +14,7 @@ public sealed class RCDAmmoSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedStackSystem _stack = default!;
 
     public override void Initialize()
     {
@@ -27,7 +29,7 @@ public sealed class RCDAmmoSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var examineMessage = Loc.GetString("rcd-ammo-component-on-examine", ("charges", comp.Charges));
+        var examineMessage = Loc.GetString("rcd-ammo-component-on-examine", ("charges", comp.Charges * _stack.GetCount(uid)));
         args.PushText(examineMessage);
     }
 
@@ -44,7 +46,8 @@ public sealed class RCDAmmoSystem : EntitySystem
         var current = _sharedCharges.GetCurrentCharges((target, charges));
         var user = args.User;
         args.Handled = true;
-        var count = Math.Min(charges.MaxCharges - current, comp.Charges);
+        var count = Math.Min(charges.MaxCharges - current, comp.Charges * _stack.GetCount(uid));
+
         if (count <= 0)
         {
             _popup.PopupClient(Loc.GetString("rcd-ammo-component-after-interact-full"), target, user);
@@ -53,11 +56,12 @@ public sealed class RCDAmmoSystem : EntitySystem
 
         _popup.PopupClient(Loc.GetString("rcd-ammo-component-after-interact-refilled"), target, user);
         _sharedCharges.AddCharges(target, count);
-        comp.Charges -= count;
+        if (!_stack.TryUse(uid, count / comp.Charges))
+            comp.Charges -= count;
         Dirty(uid, comp);
 
         // prevent having useless ammo with 0 charges
         if (comp.Charges <= 0)
-            QueueDel(uid);
+            PredictedQueueDel(uid);
     }
 }

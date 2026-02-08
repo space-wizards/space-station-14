@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.RCD.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -48,7 +49,7 @@ public sealed class FloorTileSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<FloorTileComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<FloorTileComponent, AfterInteractEvent>(OnAfterInteract, after: [typeof(RCDAmmoSystem)]);
     }
 
     private void OnAfterInteract(EntityUid uid, FloorTileComponent component, AfterInteractEvent args)
