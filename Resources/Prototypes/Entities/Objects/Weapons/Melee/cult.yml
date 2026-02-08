@@ -1,6 +1,6 @@
 - type: entity
   name: ritual dagger
-  parent: BaseItem
+  parent: [BaseItem, SlashExecution]
   id: RitualDagger
   description: A strange dagger used by sinister groups for rituals and sacrifices.
   components:
@@ -24,7 +24,7 @@
 
 - type: entity
   name: eldritch blade
-  parent: BaseItem
+  parent: [BaseItem, SlashExecution]
   id: EldritchBlade
   description: A sword humming with unholy energy.
   components:
@@ -48,7 +48,7 @@
 
 - type: entity
   name: unholy halberd
-  parent: BaseItem
+  parent: [BaseItem, SlashExecution]
   id: UnholyHalberd
   description: A poleaxe that seems to be linked to its wielder.
   components:

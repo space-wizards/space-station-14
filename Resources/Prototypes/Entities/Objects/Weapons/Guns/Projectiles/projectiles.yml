@@ -128,6 +128,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: practice
+  - type: ForbidExecutionInstakill
   - type: Projectile
     damage:
       types:

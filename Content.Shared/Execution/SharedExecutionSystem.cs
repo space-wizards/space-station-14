@@ -1,7 +1,8 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
-using Content.Shared.CombatMode;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -9,18 +10,18 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee;
-using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Item.ItemToggle.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Execution;
 
 /// <summary>
 ///     Verb for violently murdering cuffed creatures.
 /// </summary>
-public sealed class SharedExecutionSystem : EntitySystem
+public sealed partial class SharedExecutionSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -28,74 +29,44 @@ public sealed class SharedExecutionSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly SharedExecutionSystem _execution = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private readonly DamageableSystem _damage = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+        InitialiseMelee();
+        InitialiseGun();
 
+        SubscribeLocalEvent<ItemToggleExecutionComponent, ItemToggledEvent>(OnItemToggleExecution);
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
-        SubscribeLocalEvent<ExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-        SubscribeLocalEvent<ExecutionComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
         SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
     }
 
-    private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
+    /// <summary>
+    /// Enable/Disable execution on a toggleable weapon (like an esword).
+    /// </summary>
+    private void OnItemToggleExecution(Entity<ItemToggleExecutionComponent> entityWithToggle, ref ItemToggledEvent args)
     {
-        if (args.Hands == null || args.Using == null || !args.CanAccess || !args.CanInteract)
+        Entity<ExecutionComponent?> entityWithExecution = entityWithToggle.Owner;
+        if (!Resolve(entityWithExecution.Owner, ref entityWithExecution.Comp))
             return;
 
-        var attacker = args.User;
-        var weapon = args.Using.Value;
-        var victim = args.Target;
-
-        if (!CanBeExecuted(victim, attacker))
-            return;
-
-        UtilityVerb verb = new()
-        {
-            Act = () => TryStartExecutionDoAfter(weapon, victim, attacker, comp),
-            Impact = LogImpact.High,
-            Text = Loc.GetString("execution-verb-name"),
-            Message = Loc.GetString("execution-verb-message"),
-        };
-
-        args.Verbs.Add(verb);
+        entityWithExecution.Comp.Enabled = args.Activated;
+        DirtyField(entityWithExecution, nameof(ExecutionComponent.Enabled));
     }
 
-    private void TryStartExecutionDoAfter(EntityUid weapon, EntityUid victim, EntityUid attacker, ExecutionComponent comp)
+    /// <summary>
+    /// Answers the question of: can this attacker execute this victim with this weapon?
+    /// This method stops you from executing already-dead people, executing unrestrained people, executing someone with a retracted esword, e.c.t.
+    /// </summary>
+    public bool CanBeExecuted(EntityUid victim, EntityUid attacker, Entity<ExecutionComponent> weapon)
     {
-        if (!CanBeExecuted(victim, attacker))
-            return;
+        // Can't execute something if the component says No!
+        if (!weapon.Comp.Enabled)
+            return false;
 
-        if (attacker == victim)
-        {
-            ShowExecutionInternalPopup(comp.InternalSelfExecutionMessage, attacker, victim, weapon);
-            ShowExecutionExternalPopup(comp.ExternalSelfExecutionMessage, attacker, victim, weapon);
-        }
-        else
-        {
-            ShowExecutionInternalPopup(comp.InternalMeleeExecutionMessage, attacker, victim, weapon);
-            ShowExecutionExternalPopup(comp.ExternalMeleeExecutionMessage, attacker, victim, weapon);
-        }
-
-        var doAfter =
-            new DoAfterArgs(EntityManager, attacker, comp.DoAfterDuration, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
-            {
-                BreakOnMove = true,
-                BreakOnDamage = true,
-                NeedHand = true
-            };
-
-        _doAfter.TryStartDoAfter(doAfter);
-
-    }
-
-    public bool CanBeExecuted(EntityUid victim, EntityUid attacker)
-    {
         // No point executing someone if they can't take damage
         if (!HasComp<DamageableComponent>(victim))
             return false;
@@ -120,113 +91,164 @@ public sealed class SharedExecutionSystem : EntitySystem
         return true;
     }
 
-    private void OnGetMeleeDamage(Entity<ExecutionComponent> entity, ref GetMeleeDamageEvent args)
+    /// <summary>
+    /// Fetch the execute verb.
+    /// <see cref="UtilityVerb"/> is a verb that is raised on an item held by an entity while examining another entity.
+    /// So the verb is raised on the weapon you are going to use to execute someone.
+    /// </summary>
+    private void OnGetInteractionsVerbs(Entity<ExecutionComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
-        if (!TryComp<MeleeWeaponComponent>(entity, out var melee) || !entity.Comp.Executing)
-        {
-            return;
-        }
-
-        var bonus = melee.Damage * entity.Comp.DamageMultiplier - melee.Damage;
-        args.Damage += bonus;
-        args.ResistanceBypass = true;
-    }
-
-    private void OnSuicideByEnvironment(Entity<ExecutionComponent> entity, ref SuicideByEnvironmentEvent args)
-    {
-        if (!TryComp<MeleeWeaponComponent>(entity, out var melee))
+        if (args.Hands == null || args.Using == null || !args.CanAccess || !args.CanInteract)
             return;
 
-        string? internalMsg = entity.Comp.CompleteInternalSelfExecutionMessage;
-        string? externalMsg = entity.Comp.CompleteExternalSelfExecutionMessage;
+        var attacker = args.User;
+        var victim = args.Target;
 
-        if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
+        if (!CanBeExecuted(victim, attacker, entity))
             return;
 
-        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, entity, false);
-        ShowExecutionExternalPopup(externalMsg, args.Victim, args.Victim, entity);
-        _audio.PlayPredicted(melee.HitSound, args.Victim, args.Victim);
-        _suicide.ApplyLethalDamage((args.Victim, damageableComponent), melee.Damage);
-        args.Handled = true;
+        UtilityVerb verb = new()
+        {
+            Act = () => TryStartExecutionDoAfter(victim, attacker, entity),
+            Impact = LogImpact.High, // automatically makes an admin log
+            Text = Loc.GetString("execution-verb-name"),
+            Message = Loc.GetString("execution-verb-message"),
+        };
+
+        args.Verbs.Add(verb);
     }
 
-    private void ShowExecutionInternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon, bool predict = true)
+    /// <summary>
+    /// Start the Do-After to execute.
+    /// </summary>
+    private void TryStartExecutionDoAfter(EntityUid victim, EntityUid attacker, Entity<ExecutionComponent> weapon)
     {
-        if (predict)
+        if (!CanBeExecuted(victim, attacker, weapon))
+            return;
+
+        var internalMessage = weapon.Comp.InternalMeleeExecutionMessage;
+        var externalMessage = weapon.Comp.ExternalMeleeExecutionMessage;
+        if (attacker == victim)
         {
-            _popup.PopupClient(
-               Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
-               attacker,
-               attacker,
-               PopupType.MediumCaution
-               );
+            internalMessage = weapon.Comp.InternalSelfExecutionMessage;
+            externalMessage = weapon.Comp.ExternalSelfExecutionMessage;
         }
-        else
-        {
-            _popup.PopupEntity(
-               Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
-               attacker,
-               attacker,
-               PopupType.MediumCaution
-               );
-        }
+        ShowPopups(internalMessage, externalMessage, attacker, victim, weapon);
+
+        var doAfter =
+            new DoAfterArgs(EntityManager, attacker, weapon.Comp.DoAfterDuration, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
+            {
+                BreakOnMove = true,
+                BreakOnDamage = true,
+                NeedHand = true
+            };
+
+        _doAfter.TryStartDoAfter(doAfter);
     }
 
-    private void ShowExecutionExternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
+    /// <summary>
+    /// Simple helper method to create predicted popups.
+    /// Why not use <see cref="SharedPopupSystem.PopupPredicted"/>? That shows the same message to everyone.
+    /// We specifically need to show a different message to the person doing it and the people watching.
+    /// </summary>
+    private void ShowPopups(string internalMessage, string externalMessage, EntityUid attacker, EntityUid victim, EntityUid weapon)
     {
+        // popup for self
+        _popup.PopupClient(
+            Loc.GetString(internalMessage, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
+            attacker,
+            PopupType.MediumCaution
+        );
+
+        // popup for others
         _popup.PopupEntity(
-            Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
+            Loc.GetString(externalMessage, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
             attacker,
             Filter.PvsExcept(attacker),
             true,
             PopupType.MediumCaution
-            );
+        );
     }
 
+    /// <summary>
+    /// Actually do the execution and kill the person.
+    /// </summary>
     private void OnExecutionDoAfter(Entity<ExecutionComponent> entity, ref ExecutionDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
             return;
 
-        if (!TryComp<MeleeWeaponComponent>(entity, out var meleeWeaponComp))
+        // can never be too careful
+        if (!CanBeExecuted(args.Target.Value, args.User, entity))
             return;
 
-        var attacker = args.User;
-        var victim = args.Target.Value;
-        var weapon = args.Used.Value;
+        var ev = new BeforeExecutionEvent(args.User, args.Target.Value);
+        RaiseLocalEvent(entity.Owner, ref ev);
 
-        if (!_execution.CanBeExecuted(victim, attacker))
+        if (!ev.Handled)
             return;
 
-        // This is needed so the melee system does not stop it.
-        var prev = _combat.IsInCombatMode(attacker);
-        _combat.SetInCombatMode(attacker, true);
-        entity.Comp.Executing = true;
-
-        var internalMsg = entity.Comp.CompleteInternalMeleeExecutionMessage;
-        var externalMsg = entity.Comp.CompleteExternalMeleeExecutionMessage;
-
-        if (attacker == victim)
-        {
-            var suicideEvent = new SuicideEvent(victim);
-            RaiseLocalEvent(victim, suicideEvent);
-
-            var suicideGhostEvent = new SuicideGhostEvent(victim);
-            RaiseLocalEvent(victim, suicideGhostEvent);
-        }
-        else
-        {
-            _melee.AttemptLightAttack(attacker, weapon, meleeWeaponComp, victim);
-        }
-
-        _combat.SetInCombatMode(attacker, prev);
-        entity.Comp.Executing = false;
         args.Handled = true;
 
-        if (attacker != victim)
+        // if there is a harmless gun (like hos energy magnum set to disabler) it will play sound but do no damage
+        if (ev.Sound is not null)
+            _audio.PlayPredicted(ev.Sound, args.Target.Value, args.User);
+
+        if (ev.Damage is null)
+            return;
+
+        // if it does stam damage then do a 100 stamina damage
+        if (ev.Stamcrit)
+            _stamina.TakeStaminaDamage(args.Target.Value, 100);
+
+        if (ev.Damage.GetTotal() == 0)
+            return;
+
+        if (!TryComp<DamageableComponent>(args.Target.Value, out var damageable))
+            return;
+
+        // if we don't instakill (like practice round) just damage a bit and return early
+        // no point showing the scary popups if they aren't going to die
+        if (!ev.Instakill)
         {
-            _execution.ShowExecutionInternalPopup(internalMsg, attacker, victim, entity);
-            _execution.ShowExecutionExternalPopup(externalMsg, attacker, victim, entity);
+            _damage.ChangeDamage(args.Target.Value, ev.Damage);
+            return;
         }
+
+        // this method does all the magic
+        // it doesn't round-remove, it just multiplies the input damage specifier to be enough to kill the target
+        _suicide.ApplyLethalDamage((args.Target.Value, damageable), ev.Damage);
+
+        var internalMessage = entity.Comp.CompleteInternalMeleeExecutionMessage;
+        var externalMessage = entity.Comp.CompleteExternalMeleeExecutionMessage;
+        if (args.User == args.Target) // special messages for self-execution
+        {
+            internalMessage = entity.Comp.CompleteInternalSelfExecutionMessage;
+            externalMessage = entity.Comp.CompleteExternalSelfExecutionMessage;
+        }
+        ShowPopups(internalMessage, externalMessage, args.User, args.Target.Value, entity.Owner);
     }
 }
+
+[Serializable, NetSerializable]
+public sealed partial class ExecutionDoAfterEvent : SimpleDoAfterEvent
+{
+}
+
+/// <summary>
+/// Event called on the execution weapon before the execution occurs.
+/// </summary>
+/// <param name="Sound">Optional parameter, leave as null for the execution to be silent.</param>
+/// The damage types the weapon deals. The actual numeric values don't matter, only the types; the victim will always die regardless.
+/// If it is left null then the execution will fail and it will use the fail messages instead. If you include a sound that sound will still play but the victim won't be harmed.
+/// Used for firing an empty revolver.
+[ByRefEvent]
+public record struct BeforeExecutionEvent(
+    EntityUid Attacker,
+    EntityUid Victim,
+    bool Handled = false,
+    SoundSpecifier? Sound = null,
+    DamageSpecifier? Damage = null,
+    bool Stamcrit = false,
+    bool Instakill = true
+);

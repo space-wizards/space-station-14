@@ -1,0 +1,55 @@
+- type: entity
+  id: SlashExecution
+  abstract: true
+  components:
+  - type: Execution
+    internalMeleeExecutionMessage: execution-popup-melee-slash-initial-internal
+    externalMeleeExecutionMessage: execution-popup-melee-slash-initial-external
+    completeInternalMeleeExecutionMessage: execution-popup-melee-slash-complete-internal
+    completeExternalMeleeExecutionMessage: execution-popup-melee-slash-complete-external
+    internalSelfExecutionMessage: execution-popup-melee-slash-self-initial-internal
+    externalSelfExecutionMessage: execution-popup-melee-slash-self-initial-external
+    completeInternalSelfExecutionMessage: execution-popup-melee-slash-self-complete-internal
+    completeExternalSelfExecutionMessage: execution-popup-melee-slash-self-complete-external
+
+- type: entity
+  id: PierceExecution
+  abstract: true
+  components:
+  - type: Execution
+    internalMeleeExecutionMessage: execution-popup-melee-pierce-initial-internal
+    externalMeleeExecutionMessage: execution-popup-melee-pierce-initial-external
+    completeInternalMeleeExecutionMessage: execution-popup-melee-pierce-complete-internal
+    completeExternalMeleeExecutionMessage: execution-popup-melee-pierce-complete-external
+    internalSelfExecutionMessage: execution-popup-melee-pierce-self-initial-internal
+    externalSelfExecutionMessage: execution-popup-melee-pierce-self-initial-external
+    completeInternalSelfExecutionMessage: execution-popup-melee-pierce-self-complete-internal
+    completeExternalSelfExecutionMessage: execution-popup-melee-pierce-self-complete-external
+
+- type: entity
+  id: LaserExecution
+  abstract: true
+  components:
+  - type: Execution
+    internalMeleeExecutionMessage: execution-popup-gun-laser-initial-internal
+    externalMeleeExecutionMessage: execution-popup-gun-laser-initial-external
+    completeInternalMeleeExecutionMessage: execution-popup-gun-laser-complete-internal
+    completeExternalMeleeExecutionMessage: execution-popup-gun-laser-complete-external
+    internalSelfExecutionMessage: execution-popup-gun-laser-self-initial-internal
+    externalSelfExecutionMessage: execution-popup-gun-laser-self-initial-external
+    completeInternalSelfExecutionMessage: execution-popup-gun-laser-self-complete-internal
+    completeExternalSelfExecutionMessage: execution-popup-gun-laser-self-complete-external
+
+- type: entity
+  id: BallisticExecution
+  abstract: true
+  components:
+  - type: Execution
+    internalMeleeExecutionMessage: execution-popup-gun-ballistic-initial-internal
+    externalMeleeExecutionMessage: execution-popup-gun-ballistic-initial-external
+    completeInternalMeleeExecutionMessage: execution-popup-gun-ballistic-complete-internal
+    completeExternalMeleeExecutionMessage: execution-popup-gun-ballistic-complete-external
+    internalSelfExecutionMessage: execution-popup-gun-ballistic-self-initial-internal
+    externalSelfExecutionMessage: execution-popup-gun-ballistic-self-initial-external
+    completeInternalSelfExecutionMessage: execution-popup-gun-ballistic-self-complete-internal
+    completeExternalSelfExecutionMessage: execution-popup-gun-ballistic-self-complete-external

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, SlashExecution]
   id: BaseKnife
   abstract: true
   components:
@@ -7,8 +7,6 @@
     tags:
     - Knife
   - type: Sharp
-  - type: Execution
-    doAfterDuration: 4.0
   - type: Utensil
     types:
       - Knife
@@ -388,8 +386,6 @@
   - type: Appearance
   - type: ComponentToggler
     components:
-    - type: Execution
-      doAfterDuration: 4.0
     - type: Sharp
     - type: Utensil
       types:

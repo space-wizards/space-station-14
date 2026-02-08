@@ -1,6 +1,6 @@
 - type: entity
   name: BaseWeaponRevolver
-  parent: BaseItem
+  parent: [BaseItem, BallisticExecution]
   id: BaseWeaponRevolver
   description: A rooty tooty point and shooty.
   abstract: true
