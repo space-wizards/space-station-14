@@ -531,7 +531,6 @@
   - type: Tag
     tags:
     - PetWearable
-    - CorgiWearable
     - ClothMade
     - WhitelistChameleon
 
@@ -736,7 +735,6 @@
   - type: Tag
     tags:
     - PetWearable
-    - CorgiWearable
     - ClothMade
     - WhitelistChameleon
 
@@ -771,7 +769,6 @@
   - type: Tag
     tags:
     - PetWearable
-    - CorgiWearable
     - WhitelistChameleon
     - ClothMade
     - Recyclable
