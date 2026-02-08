@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "portfiend",
+    "size": {
+        "x": 352,
+        "y": 256
+    },
+    "states": [
+        {
+            "name": "rect"
+        },
+        {
+            "name": "label"
+        }
+    ]
+}
