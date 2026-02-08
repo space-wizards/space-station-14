@@ -4,18 +4,24 @@
 # Intended to service GDPR data requests or what have you.
 
 import argparse
+import json
 import os
 import psycopg2
 from uuid import UUID
 
 LATEST_DB_MIGRATION = "20260120200503_BanRefactor"
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("output", help="Directory to output data dumps into.")
     parser.add_argument("user", help="User name/ID to dump data into.")
     parser.add_argument("--ignore-schema-mismatch", action="store_true")
-    parser.add_argument("--connection-string", required=True, help="Database connection string to use. See https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING")
+    parser.add_argument(
+        "--connection-string",
+        required=True,
+        help="Database connection string to use. See https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING",
+    )
 
     args = parser.parse_args()
 
@@ -49,14 +55,18 @@ def main():
 
 
 def check_schema_version(cur: "psycopg2.cursor", ignore_mismatch: bool):
-    cur.execute('SELECT "MigrationId" FROM "__EFMigrationsHistory" ORDER BY "__EFMigrationsHistory" DESC LIMIT 1')
+    cur.execute(
+        'SELECT "MigrationId" FROM "__EFMigrationsHistory" ORDER BY "__EFMigrationsHistory" DESC LIMIT 1'
+    )
     schema_version = cur.fetchone()
-    if schema_version == None:
+    if schema_version is None:
         print("Unable to read database schema version.")
         exit(1)
 
     if schema_version[0] != LATEST_DB_MIGRATION:
-        print(f"Unsupport schema version of DB: '{schema_version[0]}'. Supported: {LATEST_DB_MIGRATION}")
+        print(
+            f"Unsupport schema version of DB: '{schema_version[0]}'. Supported: {LATEST_DB_MIGRATION}"
+        )
         if ignore_mismatch:
             return
         exit(1)
@@ -69,9 +79,12 @@ def normalize_user_id(cur: "psycopg2.cursor", name_or_uid: str) -> str:
         # Must be a name, get UUID from DB.
         pass
 
-    cur.execute("SELECT user_id FROM player WHERE last_seen_user_name = %s ORDER BY last_seen_time DESC LIMIT 1", (name_or_uid,))
+    cur.execute(
+        "SELECT user_id FROM player WHERE last_seen_user_name = %s ORDER BY last_seen_time DESC LIMIT 1",
+        (name_or_uid,),
+    )
     row = cur.fetchone()
-    if row == None:
+    if row is None:
         print(f"Unable to find user '{name_or_uid}' in DB.")
         exit(1)
 
@@ -79,14 +92,36 @@ def normalize_user_id(cur: "psycopg2.cursor", name_or_uid: str) -> str:
     return row[0]
 
 
+def write_json_array(cur: "psycopg2.cursor", out_path: str):
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("[")
+        first = True
+        while True:
+            rows = cur.fetchmany(500)
+            if not rows:
+                break
+            for (val,) in rows:
+                if val is None:
+                    continue
+                if not first:
+                    f.write(",")
+                if isinstance(val, str):
+                    f.write(val)
+                else:
+                    f.write(json.dumps(val))
+                first = False
+        f.write("]")
+
+
 def dump_admin(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping admin...")
 
     # #>> '{}' is to turn it into a string.
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_jsonb(data) - 'admin_rank_id'), '[]') #>> '{}'
+    to_jsonb(data) - 'admin_rank_id'
 FROM (
     SELECT
         *,
@@ -103,20 +138,20 @@ FROM (
     WHERE
         user_id = %s
 ) as data
-""", (user_id, user_id))
+""",
+        (user_id, user_id),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "admin.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "admin.json"))
 
 
 def dump_admin_log(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping admin_log...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_jsonb(data) - 'admin_log_id'), '[]') #>> '{}'
+    to_jsonb(data) - 'admin_log_id'
 FROM (
     SELECT
         *
@@ -129,20 +164,20 @@ FROM (
     WHERE
         player_user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "admin_log.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "admin_log.json"))
 
 
 def dump_admin_notes(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping admin_notes...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -151,20 +186,20 @@ FROM (
     WHERE
         player_user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "admin_notes.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "admin_notes.json"))
 
 
 def dump_connection_log(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping connection_log...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_jsonb(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *,
@@ -177,20 +212,20 @@ FROM (
     WHERE
         user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "connection_log.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "connection_log.json"))
 
 
 def dump_play_time(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping play_time...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_jsonb(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -199,20 +234,20 @@ FROM (
     WHERE
         player_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "play_time.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "play_time.json"))
 
 
 def dump_player(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping player...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_jsonb(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *,
@@ -225,22 +260,23 @@ FROM (
     WHERE
         user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "player.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "player.json"))
 
 
 def dump_preference(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping preference...")
 
     # God have mercy on my soul.
+    # No.
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_jsonb(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *,
@@ -292,20 +328,20 @@ FROM (
     WHERE
         user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "preference.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "preference.json"))
 
 
 def dump_ban(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping server_ban...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *,
@@ -338,20 +374,20 @@ FROM (
     WHERE
         ban_id IN (SELECT bp.ban_id FROM ban_player bp WHERE bp.user_id = %s)
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "ban.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "ban.json"))
 
 
 def dump_server_ban_exemption(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping server_ban_exemption...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -360,20 +396,20 @@ FROM (
     WHERE
         user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "server_ban_exemption.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "server_ban_exemption.json"))
 
 
 def dump_server_role_ban(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping server_role_ban...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *,
@@ -386,20 +422,20 @@ FROM (
     WHERE
         player_user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "server_role_ban.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "server_role_ban.json"))
 
 
 def dump_uploaded_resource_log(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping uploaded_resource_log...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -408,20 +444,20 @@ FROM (
     WHERE
         user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "uploaded_resource_log.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "uploaded_resource_log.json"))
 
 
 def dump_whitelist(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping whitelist...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -430,20 +466,20 @@ FROM (
     WHERE
         user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "whitelist.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "whitelist.json"))
 
 
 def dump_blacklist(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping blacklist...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -452,19 +488,20 @@ FROM (
     WHERE
         user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
+    write_json_array(cur, os.path.join(outdir, "blacklist.json"))
 
-    with open(os.path.join(outdir, "blacklist.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
 
 def dump_role_whitelists(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping role_whitelists...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -473,20 +510,20 @@ FROM (
     WHERE
         player_user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "role_whitelists.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "role_whitelists.json"))
 
 
 def dump_admin_messages(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping admin_messages...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -495,20 +532,20 @@ FROM (
     WHERE
         player_user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "admin_messages.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "admin_messages.json"))
 
 
 def dump_admin_watchlists(cur: "psycopg2.cursor", user_id: str, outdir: str):
     print("Dumping admin_watchlists...")
 
-    cur.execute("""
+    cur.execute(
+        """
 SELECT
-    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+    row_to_json(data)
 FROM (
     SELECT
         *
@@ -517,15 +554,13 @@ FROM (
     WHERE
         player_user_id = %s
 ) as data
-""", (user_id,))
+""",
+        (user_id,),
+    )
 
-    json_data = cur.fetchall()[0][0]
-
-    with open(os.path.join(outdir, "admin_watchlists.json"), "w", encoding="utf-8") as f:
-        f.write(json_data)
+    write_json_array(cur, os.path.join(outdir, "admin_watchlists.json"))
 
 
 main()
 
 # "I'm surprised you managed to write this entire Python file without spamming the word 'sus' everywhere." - Remie
-
