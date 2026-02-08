@@ -1,6 +1,6 @@
 - type: entity
-  id: XenoborgWindow
   parent: ReinforcedWindow
+  id: XenoborgWindow
   name: xenoborg window
   components:
   - type: Sprite
@@ -14,8 +14,8 @@
     base: xenoborg
 
 - type: entity
-  id: ShuttleXenoborgWindow
   parent: PlastitaniumWindow
+  id: ShuttleXenoborgWindow
   name: xenoborg shuttle window
   components:
   - type: Sprite
