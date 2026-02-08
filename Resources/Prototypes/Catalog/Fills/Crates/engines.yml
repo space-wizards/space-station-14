@@ -140,7 +140,7 @@
         - id: SolarAssemblyFlatpack
           amount: 10
         - id: SheetGlass10
-          amount: 2
+          amount: 1
 
 - type: entity
   parent: CrateEngineeringSecure
