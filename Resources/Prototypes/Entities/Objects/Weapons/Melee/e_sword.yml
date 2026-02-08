@@ -410,8 +410,28 @@
   suffix: One-Handed, For Borgs
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. Specially designed for syndicate cyborgs.
   components: # could add energy-draining like the L6C
-  - type: Wieldable
-    freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 12
+        Heat: 12
+        Structural: 15
+  - type: MeleeWeapon
+    attackRate: 1.5
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    layers:
+    - state: e_sword_double
+    - state: e_sword_double_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: Item
+    sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
+  - type: Reflect
+    reflectProb: .75
+    spread: 75
 
 - type: entity
   parent: [ EnergyDaggerLoud, BaseXenoborgContraband ]
