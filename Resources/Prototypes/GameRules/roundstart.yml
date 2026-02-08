@@ -585,3 +585,4 @@
     - id: BasicDecalDirtMonospaceVariationPass
       prob: 0.50
       orGroup: monospaceDecals
+    - id: EntityMisplacementVariationPass
