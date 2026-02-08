@@ -486,7 +486,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         MindContainerComponent? container = null,
         VisitingMindComponent? visitingmind = null)
     {
-        mindId = default;
+        mindId = default; // TODO: Make this nullable instead of an invalid uid
         mind = null;
 
         if (!Resolve(uid, ref container, false))
