@@ -1,116 +1,48 @@
-using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Kitchen
+namespace Content.Shared.Kitchen;
+
+[Serializable, NetSerializable]
+public sealed class ReagentGrinderToggleAutoModeMessage() : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
+public sealed class ReagentGrinderStartMessage(GrinderProgram program) : BoundUserInterfaceMessage
 {
-    public sealed class SharedReagentGrinder
-    {
-        public static string BeakerSlotId = "beakerSlot";
+    public GrinderProgram Program = program;
+}
 
-        public static string InputContainerId = "inputContainer";
-    }
+[Serializable, NetSerializable]
+public sealed class ReagentGrinderEjectChamberAllMessage() : BoundUserInterfaceMessage;
 
-    [Serializable, NetSerializable]
-    public sealed class ReagentGrinderToggleAutoModeMessage : BoundUserInterfaceMessage
-    {
-        public ReagentGrinderToggleAutoModeMessage() { }
-    }
+[Serializable, NetSerializable]
+public sealed class ReagentGrinderEjectChamberContentMessage(NetEntity entityId) : BoundUserInterfaceMessage
+{
+    public NetEntity EntityId = entityId;
+}
 
-    [Serializable, NetSerializable]
-    public sealed class ReagentGrinderStartMessage : BoundUserInterfaceMessage
-    {
-        public readonly GrinderProgram Program;
-        public ReagentGrinderStartMessage(GrinderProgram program)
-        {
-            Program = program;
-        }
-    }
+[Serializable, NetSerializable]
+public enum ReagentGrinderVisualState : byte
+{
+    BeakerAttached
+}
 
-    [Serializable, NetSerializable]
-    public sealed class ReagentGrinderEjectChamberAllMessage : BoundUserInterfaceMessage
-    {
-        public ReagentGrinderEjectChamberAllMessage()
-        {
-        }
-    }
+[Serializable, NetSerializable]
+public enum GrinderProgram : byte
+{
+    Grind,
+    Juice
+}
 
-    [Serializable, NetSerializable]
-    public sealed class ReagentGrinderEjectChamberContentMessage : BoundUserInterfaceMessage
-    {
-        public NetEntity EntityId;
-        public ReagentGrinderEjectChamberContentMessage(NetEntity entityId)
-        {
-            EntityId = entityId;
-        }
-    }
+[NetSerializable, Serializable]
+public enum ReagentGrinderUiKey : byte
+{
+    Key
+}
 
-    [Serializable, NetSerializable]
-    public sealed class ReagentGrinderWorkStartedMessage : BoundUserInterfaceMessage
-    {
-        public GrinderProgram GrinderProgram;
-        public ReagentGrinderWorkStartedMessage(GrinderProgram grinderProgram)
-        {
-            GrinderProgram = grinderProgram;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class ReagentGrinderWorkCompleteMessage : BoundUserInterfaceMessage
-    {
-        public ReagentGrinderWorkCompleteMessage()
-        {
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public enum ReagentGrinderVisualState : byte
-    {
-        BeakerAttached
-    }
-
-    [Serializable, NetSerializable]
-    public enum GrinderProgram : byte
-    {
-        Grind,
-        Juice
-    }
-
-    [NetSerializable, Serializable]
-    public enum ReagentGrinderUiKey : byte
-    {
-        Key
-    }
-
-    [Serializable, NetSerializable]
-    public enum GrinderAutoMode : byte
-    {
-        Off,
-        Grind,
-        Juice
-    }
-
-    [NetSerializable, Serializable]
-    public sealed class ReagentGrinderInterfaceState : BoundUserInterfaceState
-    {
-        public bool IsBusy;
-        public bool HasBeakerIn;
-        public bool Powered;
-        public bool CanJuice;
-        public bool CanGrind;
-        public NetEntity[] ChamberContents;
-        public ReagentQuantity[]? ReagentQuantities;
-        public GrinderAutoMode AutoMode;
-
-        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, GrinderAutoMode autoMode, NetEntity[] chamberContents, ReagentQuantity[]? heldBeakerContents)
-        {
-            IsBusy = isBusy;
-            HasBeakerIn = hasBeaker;
-            Powered = powered;
-            CanJuice = canJuice;
-            CanGrind = canGrind;
-            AutoMode = autoMode;
-            ChamberContents = chamberContents;
-            ReagentQuantities = heldBeakerContents;
-        }
-    }
+[NetSerializable, Serializable]
+public enum GrinderAutoMode : byte
+{
+    Off,
+    Grind,
+    Juice
 }
