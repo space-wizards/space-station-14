@@ -19,6 +19,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
     public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
     public event Action<IAtmosDeviceData>? AtmosDeviceDataCopied;
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
+    public event Action<string, AtmosSensorData>? AtmosAlarmThresholdsToggled;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
     public event Action<bool>? AutoModeChanged;
     public event Action? ResyncAllRequested;
@@ -164,6 +165,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                     var control = new SensorInfo(sensor, addr);
                     control.OnThresholdUpdate += AtmosAlarmThresholdChanged;
                     control.SensorDataCopied += AtmosDeviceDataCopied;
+                    control.OnToggleThresholds += AtmosAlarmThresholdsToggled;
                     _sensors.Add(addr, control);
                     CSensorContainer.AddChild(control);
                 }
