@@ -119,6 +119,14 @@
   name: intercom assembly
   description: An intercom. It doesn't seem very helpful right now.
   components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: WallMount
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
