@@ -229,6 +229,7 @@
     damage:
       types:
         Slash: 5 # Reduce?
+  - type: Wagging
 
 - type: entity
   parent: OrganBase
