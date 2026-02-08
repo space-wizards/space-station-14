@@ -1,0 +1,197 @@
+# Tools and Wearables
+- type: cargoProduct
+  id: SalvDoubleEmergencyTank
+  icon:
+    sprite: Objects/Tanks/emergency_double.rsi
+    state: icon
+  product: CrateDoubleEmergencyTank
+  cost: 2000
+  category: cargoproduct-category-name-salv-equipment
+  group: salvage
+
+- type: cargoProduct
+  id: SalvSeismicCharge
+  icon:
+    sprite: Objects/Weapons/Bombs/seismic.rsi
+    state: icon
+  product: CrateSeismicCharge
+  cost: 2000
+  category: cargoproduct-category-name-salv-equipment
+  group: salvage
+
+- type: cargoProduct
+  id: SalvFulton
+  icon:
+    sprite: /Textures/Objects/Tools/fulton.rsi
+    state: extraction_pack
+  product: CrateFulton
+  cost: 2000
+  category: cargoproduct-category-name-salv-equipment
+  group: salvage
+
+- type: cargoProduct
+  id: SalvVoidJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/void.rsi
+    state: icon
+  product: CrateVoidJetpack
+  cost: 3000
+  category: cargoproduct-category-name-salv-equipment
+  group: salvage
+
+- type: cargoProduct
+  id: SalvMiniJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+    state: icon
+  product: CrateEngineeringMiniJetpack
+  cost: 750
+  category: cargoproduct-category-name-salv-equipment
+  group: salvage
+
+- type: cargoProduct
+  id: SalvPKAResearch
+  icon:
+    sprite: /Textures/Objects/Tools/upgrade.rsi
+    state: display
+  product: CratePKAUpgrades
+  cost: 1500
+  category: cargoproduct-category-name-salv-equipment
+  group: salvage
+
+# Weapons
+- type: cargoProduct
+  id: SalvCrusherDagger
+  icon:
+    sprite: Objects/Weapons/Melee/crusher_dagger.rsi
+    state: icon
+  product: CrateCrusherDagger
+  cost: 1500
+  category: cargoproduct-category-name-salv-weapons
+  group: salvage
+
+- type: cargoProduct
+  id: SalvCrusher
+  icon:
+    sprite: Objects/Weapons/Melee/crusher.rsi
+    state: icon
+  product: CrateCrusher
+  cost: 4000
+  category: cargoproduct-category-name-salv-weapons
+  group: salvage
+
+- type: cargoProduct
+  id: SalvCrusherGlaive
+  icon:
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+    state: icon
+  product: CrateCrusherGlaive
+  cost: 4000
+  category: cargoproduct-category-name-salv-weapons
+  group: salvage
+
+# Hardsuits
+- type: cargoProduct
+  id: SalvLuxuryHardsuit
+  description: Gilded with but a fraction of the wealth you've brought to the station, wear it with pride.
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/luxury.rsi
+    state: icon
+  product: CrateCargoLuxuryHardsuit
+  cost: 10000
+  category: cargoproduct-category-name-salv-hardsuits
+  group: salvage
+
+- type: cargoProduct
+  id: SalvEquipment
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+    state: icon
+  product: CrateSalvageEquipment
+  cost: 5000
+  category: cargoproduct-category-name-salv-hardsuits
+  group: salvage
+
+- type: cargoProduct
+  id: SalvStarter
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+    state: icon
+  product: CrateSalvageHardsuit
+  cost: 2500
+  category: cargoproduct-category-name-salv-hardsuits
+  group: salvage
+
+# Other
+- type: cargoProduct
+  id: SalvOreBox
+  icon:
+    sprite:  /Textures/Structures/Storage/orebox.rsi
+    state: orebox
+  product: OreBox
+  cost: 500
+  category: cargoproduct-category-name-salv-other
+  group: salvage
+
+- type: cargoProduct
+  id: SalvShuttleBuild
+  description: Reclaim the stars, for they are rightfully yours.
+  icon:
+    sprite: /Textures/Structures/Shuttles/gyroscope.rsi
+    state: base
+  product: CrateShuttleBuild
+  cost: 8000
+  category: cargoproduct-category-name-salv-other
+  group: salvage
+
+- type: cargoProduct
+  id: SalvServiceSmokeables
+  icon:
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    state: icon
+  product: CrateServiceSmokeables
+  cost: 1000
+  category: cargoproduct-category-name-salv-other
+  group: salvage
+
+- type: cargoProduct
+  id: SalvFoodMRE
+  icon:
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: nutribrick
+  product: CrateFoodMRE
+  cost: 1400
+  category: cargoproduct-category-name-salv-other
+  group: salvage
+
+# Fun (AKA, overpriced token wasters for when you've bought everything else)
+- type: cargoProduct
+  id: SalvSupremeSalvagerCloak
+  icon:
+    sprite: Clothing/Neck/Cloaks/miner.rsi
+    state: icon
+  product: CrateSupremeSalvagerCloak
+  cost: 25000
+  category: cargoproduct-category-name-fun
+  group: salvage
+
+- type: cargoProduct
+  id: SalvHydratedScurret
+  description: Contains a furry friend with lots of experience exploring dilapidated ruins.
+  icon:
+    sprite: Structures/Wallmounts/posters.rsi
+    state: poster55_legit
+  product: CrateFunScurret
+  cost: 25000
+  category: cargoproduct-category-name-fun
+  group: salvage
+
+- type: cargoProduct
+  id: SalvFunCrateGambling
+  icon:
+    sprite: Objects/Economy/cash.rsi
+    state: cash_1000000
+  product: CrateCargoGambling
+  cost: 10000
+  category: cargoproduct-category-name-fun
+  group: salvage

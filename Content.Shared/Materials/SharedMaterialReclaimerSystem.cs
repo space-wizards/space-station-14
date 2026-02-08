@@ -257,3 +257,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
 [ByRefEvent]
 public record struct GotReclaimedEvent(EntityCoordinates ReclaimerCoordinates);
+
+/// <summary>
+/// Event raised on a reclaimer when it finishes reclaiming an entity.
+/// </summary>
+[ByRefEvent]
+public record struct ReclaimFinishedEvent(EntityUid Item);

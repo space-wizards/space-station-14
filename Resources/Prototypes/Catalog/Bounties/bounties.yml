@@ -760,3 +760,73 @@
     whitelist:
       tags:
       - Ring
+
+- type: cargoBounty
+  id: BountyTeethSpaceCarp
+  reward: 9000
+  description: bounty-description-tooth-space-carp
+  sprite:
+    sprite: Mobs/Aliens/Carps/space.rsi
+    state: icon
+  entries:
+  - name: bounty-item-tooth-space-carp
+    amount: 9
+    whitelist:
+      tags:
+      - ToothSpaceCarp
+
+- type: cargoBounty
+  id: BountySalvageOre
+  reward: 9000
+  description: bounty-description-ore
+  sprite:
+    sprite: Objects/Materials/ore.rsi
+    state: iron
+  entries:
+  - name: bounty-item-ore
+    amount: 45
+    whitelist:
+      tags:
+      - Ore
+
+- type: cargoBounty
+  id: BountyTeethSharkminnow
+  reward: 12000
+  description: bounty-description-tooth-sharkminnow
+  sprite:
+    sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+    state: icon
+  entries:
+  - name: bounty-item-tooth-sharkminnow
+    amount: 3
+    whitelist:
+      tags:
+      - ToothSharkminnow
+
+- type: cargoBounty
+  id: BountyHivelordRemains
+  reward: 10000
+  description: bounty-description-hivelord-remains
+  sprite:
+    sprite: Mobs/Aliens/Asteroid/hivelord.rsi
+    state: hivelord
+  entries:
+  - name: bounty-item-hivelord-remains
+    amount: 1
+    whitelist:
+      tags:
+      - HivelordRemains
+
+- type: cargoBounty
+  id: BountySalvageDiamond
+  reward: 15000
+  description: bounty-description-diamond
+  sprite:
+    sprite: Objects/Materials/materials.rsi
+    state: diamond
+  entries:
+  - name: bounty-item-diamond
+    amount: 2
+    whitelist:
+      tags:
+      - Diamond

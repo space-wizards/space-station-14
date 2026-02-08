@@ -41,6 +41,7 @@ public sealed partial class StationBankAccountComponent : Component
         { "Science",     1000 },
         { "Security",    1000 },
         { "Service",     1000 },
+        { "Salvage",     1000 },
     };
 
     /// <summary>
@@ -55,6 +56,7 @@ public sealed partial class StationBankAccountComponent : Component
         { "Science",     0.20 },
         { "Security",    0.20 },
         { "Service",     0.20 },
+        { "Salvage",     0    },
     };
 
     /// <summary>

@@ -286,6 +286,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateCargoSecure
+  name: secure cargo crate
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/secure.rsi
+    - type: Sprite
+      sprite: Structures/Storage/Crates/secure.rsi
+    - type: AccessReader
+      access: [["Cargo"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CrateHydroSecure
   name: secure hydroponics crate
   components:

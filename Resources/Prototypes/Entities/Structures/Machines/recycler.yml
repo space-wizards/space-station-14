@@ -115,3 +115,7 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: SyndieBorg
+  - type: TicketPrinter
+    whitelist:
+      tags:
+      - SalvageScrap

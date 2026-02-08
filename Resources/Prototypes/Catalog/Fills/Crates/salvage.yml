@@ -1,27 +1,19 @@
 - type: entity
-  parent: CrateGenericSteel
+  parent: CrateCargoSecure
   id: CrateSalvageEquipment
-  name: "salvage equipment crate"
+  name: mining equipment crate
   suffix: Filled
-  description: For the daring.
+  description: For the daring. Contains a Mining Hardsuit and the tools to more effectively extract minerals within dangerous environments.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
         - id: ClothingOuterHardsuitSalvage
-        - id: ClothingMaskBreath
         - id: OxygenTankFilled
-        - id: FireExtinguisher
-        - id: ClothingShoesBootsMag
-        - id: HandHeldMassScanner
-        - id: Pickaxe
-        - id: Welder
-        - id: Wrench
-        - id: Screwdriver
-        - id: Crowbar
-        - id: Wirecutter
-        - id: ClothingBeltUtility
+        - id: NitrogenTankFilled
+        - id: MiningDrill
+        - id: MineralScanner
         - id: OreBag
         - id: ClothingBeltSalvageWebbing
 
@@ -95,20 +87,20 @@
           prob: 0.0001
 
 - type: entity
-  parent: CrateGenericSteel
+  parent: CrateCargoSecure
   id: CrateCrusherDagger
   name: crusher dagger crate
-  description: Contains 4 crusher daggers for use by salvage.
+  description: Contains 3 crusher daggers for use by salvage.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage:
         id: WeaponCrusherDagger
-        amount: 4
+        amount: 3
 
 # Salvage rewards
 - type: entity
-  parent: CrateGenericSteel
+  parent: CrateCargoSecure
   id: CrateSeismicCharge
   name: seismic charge crate
   description: Contains 6 seismic charges for use by salvage.
@@ -123,7 +115,7 @@
   parent: CrateGenericSteel
   id: CrateDoubleEmergencyTank
   name: double emergency tank crate
-  description: Contains 2 double emergency oxygen tanks and 2 double emergency nitrogen tanks
+  description: Contains 2 double emergency oxygen tanks and 2 double emergency nitrogen tanks.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -135,22 +127,21 @@
           amount: 2
 
 - type: entity
-  parent: CrateGenericSteel
+  parent: CrateCargoSecure
   id: CrateCrusher
   name: crusher crate
-  description: Contains 2 crushers for use by salvage.
+  description: Contains a crusher for use by salvage.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage:
         id: WeaponCrusher
-        amount: 2
 
 - type: entity
   parent: CrateGenericSteel
   id: CrateFulton
   name: fulton crate
-  description: Contains a fulton beacon and 8 fultons.
+  description: Contains a fulton beacon and 10 fultons.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -158,35 +149,42 @@
         children:
         - id: FultonBeacon
         - id: Fulton
-          amount: 8
+          amount: 10
 
 - type: entity
   parent: CrateGenericSteel
   id: CrateVoidJetpack
   name: void jetpack crate
-  description: Contains a single void jetpack.
+  description: Contains 2 void jetpacks for the distinguished space explorers.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage:
         id: JetpackVoidFilled
+        amount: 2
 
 - type: entity
-  parent: CrateGenericSteel
+  parent: CrateCargoSecure
   id: CrateSalvageHardsuit
-  name: salvage hardsuit crate
-  description: Contains a salvage hardsuit, breath mask, and oxygen tank.
+  name: salvage basics crate
+  description: Contains a salvage hardsuit, along with all the other basics an newly recruited salvager would need.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
         - id: ClothingOuterHardsuitSalvage
-        - id: ClothingMaskBreath
+        - id: ClothingMaskGasExplorer
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
+        - id: ClothingBeltUtilityFilled
+        - id: ClothingShoesBootsSalvage
+        - id: FireExtinguisher
+        - id: Pickaxe
+        - id: SurvivalKnife
 
 - type: entity
-  parent: CrateGenericSteel
+  parent: CrateCargoSecure
   id: CrateCrusherGlaive
   name: crusher glaive crate
   description: Contains a crusher glaive for use by salvage.
@@ -197,7 +195,7 @@
         id: WeaponCrusherGlaive
 
 - type: entity
-  parent: CrateGenericSteel
+  parent: CratePrivateSecure
   id: CrateSupremeSalvagerCloak
   name: supreme salvager cloak crate
   description: Contains a cloak only to be worn by supreme salvagers. Wearing it undeservedly will result in your doom.
@@ -206,6 +204,42 @@
     containers:
       entity_storage:
         id: ClothingNeckCloakSalvagerSupreme
+
+- type: entity
+  parent: CrateScience
+  id: CratePKAUpgrades
+  name: PKA upgrade kit crate
+  description: Contains 1 of each PKA upgrade. An alternative for when the Science Department is understaffed.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: PKAUpgradeDamage
+        - id: PKAUpgradeRange
+        - id: PKAUpgradeFireRate
+
+- type: entity
+  parent: CrateEngineering
+  id: CrateShuttleBuild
+  name: shuttle construction crate
+  description: Contains the bare essentials to create a questionably functional shuttle. Tools sold seperately, fuel not included.
+               Nanotrasen is not responsible for any space collisions caused as a result of a sudden loss of power.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: DrinkBeerCan # essential for drunk driving and welding fuel storage
+          amount: 2
+        - id: ThrusterFlatpack
+          amount: 4
+        - id: GyroscopeFlatpack
+        - id: PortableGeneratorJrPacmanFlatpack #total power draw 7.5kW, can provide 8kW.
+        - id: SheetGlass10
+        - id: ShuttleConsoleCircuitboard
+        - id: CableApcStack
+        - id: SheetSteel
 
 - type: entity
   parent: CrateGenericSteel

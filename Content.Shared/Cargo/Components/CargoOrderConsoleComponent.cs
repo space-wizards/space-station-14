@@ -69,7 +69,7 @@ public sealed partial class CargoOrderConsoleComponent : Component
     public TimeSpan UnboundedAccountActionDelay = TimeSpan.FromSeconds(10);
 
     /// <summary>
-    /// The stack representing cash dispensed on withdrawals.
+    /// The stack prototype accepted by the console as cash and dispensed on withdrawals.
     /// </summary>
     [DataField]
     public ProtoId<StackPrototype> CashType = "Credit";
@@ -81,9 +81,6 @@ public sealed partial class CargoOrderConsoleComponent : Component
     public List<ProtoId<CargoMarketPrototype>> AllowedGroups = new()
     {
         "market",
-        "SalvageJobReward2",
-        "SalvageJobReward3",
-        "SalvageJobRewardMAX",
     };
 
     /// <summary>

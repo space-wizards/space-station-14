@@ -42,4 +42,10 @@ public sealed partial class CargoAccountPrototype : IPrototype
     /// </summary>
     [DataField]
     public EntProtoId AcquisitionSlip;
+
+    /// <summary>
+    /// Whether the account is Independently operated, and so should not appear within the funding allocation console
+    /// </summary>
+    [DataField]
+    public bool Independent = false;
 }
