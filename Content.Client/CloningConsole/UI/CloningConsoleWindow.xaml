@@ -8,7 +8,7 @@
                       VerticalExpand="True"
                       HorizontalExpand="True"
                       MinSize="100 150">
-            <PanelContainer VerticalExpand="True" StyleClasses="Inset">
+            <PanelContainer VerticalExpand="True" StyleClasses="BackgroundPanelDark">
                 <BoxContainer Name="GeneticScannerContents" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                     <Label HorizontalAlignment="Center" Text="{Loc 'cloning-console-window-scanner-details-label'}" />
                     <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
@@ -35,7 +35,7 @@
                 </BoxContainer>
             </PanelContainer>
             <Control MinSize="50 5" />
-            <PanelContainer VerticalExpand="True" StyleClasses="Inset">
+            <PanelContainer VerticalExpand="True" StyleClasses="BackgroundPanelDark">
                 <BoxContainer Name="CloningPodContents" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                     <Label HorizontalAlignment="Center" Text="{Loc 'cloning-console-window-pod-details-label'}" />
                     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
