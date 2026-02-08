@@ -1,6 +1,5 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Events;
-using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Serialization;
 
@@ -19,14 +18,9 @@ namespace Content.Shared.Shuttles.Systems
         }
 
         [Serializable, NetSerializable]
-        protected sealed class PilotComponentState : ComponentState
+        protected sealed class PilotComponentState(NetEntity? uid) : ComponentState
         {
-            public NetEntity? Console { get; }
-
-            public PilotComponentState(NetEntity? uid)
-            {
-                Console = uid;
-            }
+            public NetEntity? Console { get; } = uid;
         }
 
         protected virtual void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)

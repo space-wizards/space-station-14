@@ -25,7 +25,7 @@ public sealed partial class FTLComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float StartupTime = 0f;
 
-    // Because of sphagetti, actual travel time is Math.Max(TravelTime, DefaultArrivalTime)
+    // Because of spaghetti, actual travel time is Math.Max(TravelTime, DefaultArrivalTime)
     [ViewVariables(VVAccess.ReadWrite)]
     public float TravelTime = 0f;
 
