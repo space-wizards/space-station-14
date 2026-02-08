@@ -228,11 +228,29 @@ namespace Content.Server.Atmos.EntitySystems
             // Get the average of both entity's firestacks * mass
             // Then for each entity, we divide the average by their mass and set their firestacks to that value
             // An entity with a higher mass will lose some fire and transfer it to the one with lower mass.
-            var avg = (flammable.FireStacks * mass1 + otherFlammable.FireStacks * mass2) / 2f;
+            var sum = flammable.FireStacks * mass1 + otherFlammable.FireStacks * mass2;
+
+            // Ensure that no entity loses more firestacks than the other one can contain.
+            /*
+             * We calculate by doing the following:
+             * For each entity, get their firestacks times mass,
+             * then we get the difference between maximum firestacks and current firestacks of the other entity
+             * multiply that difference by the mass of the other entity.
+             * This gives us the maximum amount the other entity can take before hitting max firestacks.
+             * Subtract this value from the firestacks * mass we calculated earlier
+             * Algebraically this resolves to the equation: sum - massOther * other.MaximumFireStacks, then get the max.
+             * y = (uid1.mass * uid1.FireStacks - (uid2.mass (uid2.MaximumFireStacks - uid2.FireStacks)))
+             * y = (uid1.mass * uid1.FireStacks - (uid2.mass * uid2.MaximumFireStacks - uid2.mass * uid2.FireStacks))
+             * y = (uid1.mass * uid1.FireStacks - uid2.mass * uid2.MaximumFireStacks + uid2.mass * uid2.FireStacks)
+             * y = (uid1.mass * uid1.FireStacks + uid2.mass * uid2.FireStacks - uid2.mass * uid2.MaximumFireStacks)
+             * y = (sum - uid2.mass * uid2.MaximumFireStacks)
+             */
+            // Get the weighted average as explained above with all that math.
+            var weightedAvg = Math.Max(sum / 2f, Math.Max(sum - mass2 * otherFlammable.MaximumFireStacks, sum - mass1 * flammable.MaximumFireStacks));
 
             // bring each entity to the same firestack mass, firestack amount is scaled by the inverse of the entity's mass
-            SetFireStacks(uid, avg / mass1, flammable, ignite: true);
-            SetFireStacks(otherUid, avg / mass2, otherFlammable, ignite: true);
+            SetFireStacks(uid, weightedAvg / mass1, flammable, ignite: true);
+            SetFireStacks(otherUid, weightedAvg / mass2, otherFlammable, ignite: true);
         }
 
         private void OnIsHot(EntityUid uid, FlammableComponent flammable, IsHotEvent args)
