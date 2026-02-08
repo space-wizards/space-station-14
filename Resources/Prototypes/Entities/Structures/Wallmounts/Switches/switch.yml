@@ -429,6 +429,14 @@
 
 - type: entity
   parent: LockableButton
+  id: LockableButtonEVA
+  suffix: EVA
+  components:
+  - type: AccessReader
+    access: [["External"], ["Command"]]
+
+- type: entity
+  parent: LockableButton
   id: LockableButtonCentcomm
   suffix: CentComm
   components:

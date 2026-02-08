@@ -321,6 +321,14 @@
 
 - type: entity
   parent: DoorElectronics
+  id: DoorElectronicsEVA
+  suffix: EVA, Locked
+  components:
+  - type: AccessReader
+    access: [["External"], ["Command"]]
+
+- type: entity
+  parent: DoorElectronics
   id: DoorElectronicsXenoborg
   suffix: Xenoborg, Locked
   components:
