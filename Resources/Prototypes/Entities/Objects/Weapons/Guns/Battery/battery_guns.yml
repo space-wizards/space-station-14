@@ -60,6 +60,7 @@
   - type: Tag
     tags:
     - LaserWeapon
+    - EnergyWeapon
 
 - type: entity
   id: BaseWeaponPowerCell
@@ -246,6 +247,9 @@
       - state: mag-unshaded-4
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
+  - type: Tag
+    tags:
+    - EnergyWeapon
   - type: Gun
     projectileSpeed: 10
     soundGunshot:
@@ -336,6 +340,9 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Tag
+    tags:
+    - EnergyWeapon
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -376,6 +383,9 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Tag
+    tags:
+    - EnergyWeapon
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -429,6 +439,7 @@
   - type: Tag
     tags:
     - TurretCompatibleWeapon
+    - EnergyWeapon
 
 - type: entity
   name: portable particle decelerator
@@ -479,6 +490,9 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Tag
+    tags:
+    - EnergyWeapon
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: Gun
@@ -577,6 +591,7 @@
   - type: Tag
     tags:
       - Taser
+      - SubMachineGun
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
     layers:
@@ -852,6 +867,9 @@
       - state: mag-unshaded-4
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
+  - type: Tag
+    tags:
+    - EnergyWeapon
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -943,6 +961,9 @@
     - state: mag-unshaded-1
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Tag
+    tags:
+    - EnergyWeapon
   - type: Appearance
   - type: Item
     size: Large

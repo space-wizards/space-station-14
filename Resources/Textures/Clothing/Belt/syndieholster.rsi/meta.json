@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/94daddb1ac6625e2a7f7a88d62235ee44a480b5e",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/94daddb1ac6625e2a7f7a88d62235ee44a480b5e, modified icon/equipped-BELT & all icon/equipped-BELT variations by Prole0 (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,60 @@
   "states": [
     {
       "name": "icon"
+    },
+    {
+      "name": "icon_knife"
+    },
+    {
+      "name": "icon_magazine_pistol"
+    },
+    {
+      "name": "icon_magazine_pistol_submachine"
+    },
+    {
+      "name": "icon_magazine_pistol_top_submachine"
+    },
+    {
+      "name": "icon_speedloader_revolver"
+    },
+    {
+      "name": "icon_powercell"
+    },
+    {
+      "name": "icon_magazine_rifle"
+    },
+    {
+      "name": "icon_magazine_shotgun"
+    },
+    {
+      "name": "icon_grenade"
+    },
+    {
+      "name": "icon_pack"
+    },
+    {
+      "name": "icon_radio"
+    },
+    {
+      "name": "icon_stunbaton"
+    },
+    {
+      "name": "icon_truncheon"
+    },
+    {
+      "name": "icon_sidearm"
+    },
+    {
+      "name": "icon_shotgun"
+    },
+    {
+      "name": "icon_submachine_gun"
+    },
+    {
+      "name": "icon_rifle"
+    },
+    {
+      "name": "icon_energy_weapon"
     },
     {
       "name": "equipped-BELT",

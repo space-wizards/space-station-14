@@ -322,6 +322,9 @@
         - state: base-unshaded
           map: [ "unshaded" ]
           visible: true
+    - type: Tag
+      tags:
+      - Sidearm
     - type: UseDelay
       delay: 1.5
     - type: Appearance

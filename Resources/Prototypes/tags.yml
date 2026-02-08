@@ -540,6 +540,9 @@
   id: EncryptionService # ItemMapper: TelecomServer
 
 - type: Tag
+  id: EnergyWeapon # Storage whitelist: ClothingBeltSyndieHolster
+
+- type: Tag
   id: Enzyme # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
@@ -889,6 +892,9 @@
   id: MagazinePistol # WeaponPistolMk58, WeaponPistolViper, ClothingBeltSecurity
 
 - type: Tag
+  id: MagazinePistolAll # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
+
+- type: Tag
   id: MagazinePistolCaselessRifle # WeaponPistolCobra
 
 - type: Tag
@@ -902,6 +908,9 @@
 
 - type: Tag
   id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
+
+- type: Tag
+  id: MagazineRifleAll # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: MagazineShotgun # WeaponShotgunBulldog
@@ -1146,13 +1155,15 @@
 - type: Tag
   id: PowerCage # Storage whitelist: PowerCageRecharger, ShuttleGunPerforator
 
-- type: Tag
-  id: PowerCell # Storage whitelist: BountyLaserGun, ClothingOuterSuitSpaceNinja, BaseWeaponPowerCell, PowerCellRecharger, WeaponCapacitorRecharger,
-                # TurboItemRecharger, ShuttleGunSvalinnMachineGun. ConstructionGraph: WallmountSubstation
-                # Could potentially be replaced by whitelisting PowerCellComponent.
 
 - type: Tag
-  id: PowerCellSmall # Storage whitelist: BaseWeaponPowerCell, PowerCellRecharger, ShuttleGunSvalinnMachineGun.
+  id: PowerCell # Storage whitelist: BountyLaserGun, ClothingBeltHolster, ClothingBeltSyndieHolster, ClothingOuterSuitSpaceNinja, BaseWeaponPowerCell, PowerCellRecharger, WeaponCapacitorRecharger,
+                # TurboItemRecharger, ShuttleGunSvalinnMachineGun. ConstructionGraph: WallmountSubstation.
+                # ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster.
+                # Could potentially be replaced by whitelisting PowerCellComponent.
+- type: Tag
+  id: PowerCellSmall # Storage whitelist: BaseWeaponPowerCell, ClothingBeltHolster, ClothingBeltSyndieHolster, PowerCellRecharger, ShuttleGunSvalinnMachineGun.
+                     # ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster.
                      # ConstructionGraph: WallmountSubstation, makeshiftstunprod
 
 - type: Tag
@@ -1196,6 +1207,9 @@
 
 - type: Tag
   id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
+
+- type: Tag
+  id: Rifle # Storage whitelist: ClothingBeltSyndieHolster
 
 - type: Tag
   id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
@@ -1278,7 +1292,10 @@
   id: Shiv # CargoBounty: BountyShiv
 
 - type: Tag
-  id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase
+  id: Shotgun # Storage whitelist: ClothingBeltSyndieHolster
+
+- type: Tag
+  id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase, ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: SignalTrigger # ConstructionGraph: GlassBox
@@ -1321,6 +1338,9 @@
 
 - type: Tag
   id: Spear # CargoBounty: BountySpear
+
+- type: Tag
+  id: SpeedLoaderAll # # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: SpeedLoaderCap # Ammo: RevolverCapGun, RevolverCapGunFake
@@ -1367,6 +1387,9 @@
 
 - type: Tag
   id: SubdermalImplant # Storage whitelist: BaseImplanter
+
+- type: Tag
+  id: SubMachineGun # Storage whitelist: ClothingBeltSyndieHolster
 
 - type: Tag
   id: SuitEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit
@@ -1434,7 +1457,8 @@
   id: ToyRubberDuck # ConstructionGraph: ClothingShoeSlippersDuck
 
 - type: Tag
-  id: ToySidearm # Storage whitelist: ClothingShoesClownBase
+  id: ToySidearm # Storage whitelist: ClothingShoesClownBase, ClothingBeltHolster, ClothingBeltSyndieHolster
+                 # ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: Trash # Tagged entities are generic garbage. They fit inside TrashBag and are destroyed by Recycler.
