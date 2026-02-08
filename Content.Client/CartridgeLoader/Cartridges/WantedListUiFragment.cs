@@ -40,7 +40,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
         var found = !String.IsNullOrWhiteSpace(args.Text)
             ? _wantedRecords.FindAll(r =>
                 r.TargetInfo.Name.Contains(args.Text) ||
-                r.Status.ToString().Contains(args.Text, StringComparison.OrdinalIgnoreCase))
+                Loc.GetString(_prototypeManager.Index(r.Status)!.Name).Contains(args.Text, StringComparison.OrdinalIgnoreCase))
             : _wantedRecords;
 
         UpdateState(found, false);
@@ -120,7 +120,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
         // Set status
         PersonState.SetMessage(GetLoc(
             "wanted-list-status-label",
-            ("status", record.Status.ToString().ToLower())
+            ("status", Loc.GetString(_prototypeManager.Index(record.Status)!.Name).ToLower())
         ));
 
         // Set initiator
@@ -207,13 +207,10 @@ public sealed partial class WantedListUiFragment : BoxContainer
             Margin = new(0f, 0f, 6f, 0f),
         };
 
-        if (record.Status is not SecurityStatus.None)
+        if (record.Status is not null)
         {
-            var proto = "SecurityIcon" + record.Status switch
-            {
-                SecurityStatus.Detained => "Incarcerated",
-                _ => record.Status.ToString(),
-            };
+            var statusProto = _prototypeManager.Index(record.Status);
+            var proto = statusProto.Icon;
 
             if (_prototypeManager.TryIndex<SecurityIconPrototype>(proto, out var prototype))
             {

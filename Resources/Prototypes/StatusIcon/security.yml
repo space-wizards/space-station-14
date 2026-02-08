@@ -22,18 +22,18 @@
 
 - type: securityIcon
   parent: SecurityIcon
-  id: SecurityIconParoled
+  id: SecurityIconSearch
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
-    state: hud_paroled
+    state: hud_search
 
 - type: securityIcon
   parent: SecurityIcon
-  id: SecurityIconSuspected
+  id: SecurityIconSuspicious
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_suspected
-  
+
 - type: securityIcon
   parent: SecurityIcon
   id: SecurityIconHostile
