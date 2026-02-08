@@ -111,6 +111,12 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float GasMinMoles = 0.00000005f;
 
+        /// <summary>
+        /// Minimum volume that a <see cref="GasMixture"/> must have to perform reactions.
+        /// Prevents div/0 issues.
+        /// </summary>
+        public const float GasMinVolumeForReactions = 0.0001f;
+
         public const float OpenHeatTransferCoefficient = 0.4f;
 
         /// <summary>
@@ -276,16 +282,6 @@ namespace Content.Shared.Atmos
         ///     1 / X of the tritium is converted into Frezon each tick
         /// </summary>
         public const float FrezonProductionConversionRate = 50f;
-
-        /// <summary>
-        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
-        /// </summary>
-        public const float N2ODecompositionRate = 2f;
-
-        /// <summary>
-        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
-        /// </summary>
-        public const float AmmoniaOxygenReactionRate = 10f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
