@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 271.1.0
   forkId: ""
   forkVersion: ""
-  time: 12/27/2025 23:30:45
-  entityCount: 18260
+  time: 01/23/2026 15:25:17
+  entityCount: 18262
 maps:
 - 1793
 grids:
@@ -6647,6 +6647,8 @@ entities:
     - type: RadiationGridResistance
     - type: NavMap
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
   - uid: 1793
     components:
     - type: MetaData
@@ -9219,7 +9221,7 @@ entities:
   - uid: 15165
     components:
     - type: MetaData
-      name: eva storage glass airlock
+      name: EVA storage glass airlock
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 28.5,56.5
@@ -9227,7 +9229,7 @@ entities:
   - uid: 15166
     components:
     - type: MetaData
-      name: eva storage glass airlock
+      name: EVA storage glass airlock
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 28.5,57.5
@@ -10139,14 +10141,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 16.5,59.5
       parent: 1
-  - uid: 15170
-    components:
-    - type: MetaData
-      name: eva storage airlock
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 37.5,56.5
-      parent: 1
 - proto: AirlockMaintDetectiveLocked
   entities:
   - uid: 14705
@@ -10209,6 +10203,15 @@ entities:
     - type: Transform
       pos: 67.5,80.5
       parent: 1
+- proto: AirlockMaintEVALocked
+  entities:
+  - uid: 9748
+    components:
+    - type: MetaData
+      name: EVA storage airlock
+    - type: Transform
+      pos: 37.5,56.5
+      parent: 1
 - proto: AirlockMaintHOPLocked
   entities:
   - uid: 12837
@@ -10267,6 +10270,16 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 35.5,103.5
+      parent: 1
+- proto: AirlockMaintLibraryLocked
+  entities:
+  - uid: 9836
+    components:
+    - type: MetaData
+      name: library maintenance access
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 84.5,36.5
       parent: 1
 - proto: AirlockMaintLocked
   entities:
@@ -10333,13 +10346,6 @@ entities:
       name: chapel maintenance access
     - type: Transform
       pos: 81.5,50.5
-      parent: 1
-  - uid: 9836
-    components:
-    - type: MetaData
-      name: library maintenance access
-    - type: Transform
-      pos: 84.5,36.5
       parent: 1
   - uid: 9847
     components:
@@ -13916,6 +13922,12 @@ entities:
     components:
     - type: Transform
       pos: 47.5,106.5
+      parent: 1
+  - uid: 18262
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 37.5,57.5
       parent: 1
 - proto: ButtonFrameExit
   entities:
@@ -84824,6 +84836,35 @@ entities:
     - type: Transform
       pos: 66.77355,17.569683
       parent: 1
+- proto: LockableButtonCommand
+  entities:
+  - uid: 18261
+    components:
+    - type: MetaData
+      name: emergency EVA Storage access
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 37.5,57.5
+      parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        9748:
+        - - Pressed
+          - Open
+        - - Pressed
+          - DoorBolt
+        15166:
+        - - Pressed
+          - Open
+        - - Pressed
+          - DoorBolt
+        15165:
+        - - Pressed
+          - Open
+        - - Pressed
+          - DoorBolt
+    - type: Fixtures
+      fixtures: {}
 - proto: LockableButtonJanitor
   entities:
   - uid: 4458
@@ -117168,12 +117209,6 @@ entities:
       parent: 1
 - proto: Windoor
   entities:
-  - uid: 9748
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 83.5,38.5
-      parent: 1
   - uid: 13938
     components:
     - type: Transform
@@ -117298,6 +117333,14 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 49.5,77.5
+      parent: 1
+- proto: WindoorLibraryLocked
+  entities:
+  - uid: 15168
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 83.5,38.5
       parent: 1
 - proto: WindoorSecure
   entities:
@@ -117432,15 +117475,15 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 73.5,88.5
       parent: 1
-- proto: WindoorSecureExternalLocked
+- proto: WindoorSecureEVALocked
   entities:
-  - uid: 15168
+  - uid: 15169
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 36.5,55.5
       parent: 1
-  - uid: 15169
+  - uid: 15170
     components:
     - type: Transform
       pos: 36.5,58.5
