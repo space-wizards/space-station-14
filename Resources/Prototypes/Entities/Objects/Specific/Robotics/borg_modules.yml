@@ -1524,6 +1524,22 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-door-remote-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleLawOverrider
+  name: law overrider xenoborg module
+  description: Module that allows Xenoborgs to override the laws of other silicons.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-laws
+  - type: ItemBorgModule
+    hands:
+    - item: LawOverriderXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-law-overrider-module }
+
+- type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleJammer
   name: jammer xenoborg module

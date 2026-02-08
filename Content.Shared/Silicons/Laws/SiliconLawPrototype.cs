@@ -11,7 +11,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
     /// <summary>
     /// A locale string which is the actual text of the law.
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
     public string LawString = string.Empty;
 
     /// <summary>
@@ -22,14 +22,20 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
     /// This is a fixedpoint2 only for the niche case of supporting laws that go between 0 and 1.
     /// Funny.
     /// </remarks>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
     public FixedPoint2 Order;
 
     /// <summary>
     /// An identifier that overrides <see cref="Order"/> in the law menu UI.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? LawIdentifierOverride;
+
+    /// <summary>
+    /// If this law can be modified by SoftSetLaws or not
+    /// </summary>
+    [DataField]
+    public bool SoftLaw = true;
 
     public int CompareTo(SiliconLaw? other)
     {

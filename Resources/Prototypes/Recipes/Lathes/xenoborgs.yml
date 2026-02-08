@@ -59,6 +59,14 @@
     Steel: 1500
     Glass: 1500
 
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleLawOverriderRecipe
+  result: XenoborgModuleLawOverrider
+  materials:
+    Steel: 1000
+    Glass: 2000
+
 ## heavy xenoborg modules
 
 - type: latheRecipe
