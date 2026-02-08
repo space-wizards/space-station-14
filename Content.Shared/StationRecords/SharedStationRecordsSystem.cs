@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Random;
 
 namespace Content.Shared.StationRecords;
 
 public abstract class SharedStationRecordsSystem : EntitySystem
 {
+    [Dependency] protected readonly IRobustRandom Random = default!;
     public StationRecordKey? Convert((NetEntity, uint)? input)
     {
         return input == null ? null : Convert(input.Value);
@@ -97,5 +99,27 @@ public abstract class SharedStationRecordsSystem : EntitySystem
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Gets a random record from the station's record entries.
+    /// </summary>
+    /// <param name="ent">The EntityId of the station from which you want to get the record.</param>
+    /// <param name="entry">The resulting entry.</param>
+    /// <typeparam name="T">Type to get from the record set.</typeparam>
+    /// <returns>True if a record was obtained. False otherwise.</returns>
+    public bool TryGetRandomRecord<T>(Entity<StationRecordsComponent?> ent, [NotNullWhen(true)] out T? entry)
+    {
+        entry = default;
+
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (ent.Comp.Records.Keys.Count == 0)
+            return false;
+
+        var key = Random.Pick(ent.Comp.Records.Keys);
+
+        return ent.Comp.Records.TryGetRecordEntry(key, out entry);
     }
 }
