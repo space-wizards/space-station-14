@@ -137,6 +137,7 @@ public sealed partial class FancyTree : Control
         {
             item.Padding.MinWidth = parent.Padding.MinWidth + Indentation;
             parent.Body.AddChild(item);
+            item.ParentItem = parent;
         }
 
         item.UpdateIcon();
