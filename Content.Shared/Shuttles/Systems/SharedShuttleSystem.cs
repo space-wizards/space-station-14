@@ -1,5 +1,4 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Content.Shared.Whitelist;
@@ -195,7 +194,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
             return false;
         }
 
-        // Just checks if any grids inside of a buffer range at the target position.
+        // Just checks if any grids inside a buffer range at the target position.
         _grids.Clear();
         var mapCoordinates = XformSystem.ToMapCoordinates(coordinates);
 

@@ -6,12 +6,7 @@ namespace Content.Shared.Shuttles.BUIStates;
 /// Wrapper around <see cref="NavInterfaceState"/>
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class NavBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class NavBoundUserInterfaceState(NavInterfaceState state) : BoundUserInterfaceState
 {
-    public NavInterfaceState State;
-
-    public NavBoundUserInterfaceState(NavInterfaceState state)
-    {
-        State = state;
-    }
+    public NavInterfaceState State = state;
 }
