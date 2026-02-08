@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by brainfood1183 (github), transparency tweaked by Ubaser.",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/70ecda50f8b84dfe0ff6230e722c0af44560367e/icons/turf/walls/shuttle_wall.dmi, Edited by Flareguy (github)",
     "states": [
         {
             "name": "state0"
