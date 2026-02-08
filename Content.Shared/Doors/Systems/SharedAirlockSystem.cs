@@ -126,15 +126,14 @@ public abstract class SharedAirlockSystem : EntitySystem
 
     private void OnBeforePry(EntityUid uid, AirlockComponent component, ref BeforePryEvent args)
     {
-        if (args.Cancelled)
+        if (!args.CanPry)
             return;
 
-        if (!component.Powered || args.PryPowered)
+        if (!component.Powered || args.Strength >= PryStrength.Powered)
             return;
 
-        args.Message = "airlock-component-cannot-pry-is-powered-message";
-
-        args.Cancelled = true;
+        args.Message = Loc.GetString("pryable-component-cannot-pry-is-powered-message");
+        args.CanPry = false;
     }
 
     public void UpdateEmergencyLightStatus(EntityUid uid, AirlockComponent component)

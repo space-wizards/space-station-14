@@ -20,7 +20,6 @@
     openTimeTwo: 0.4
     openingAnimationTime: 1.0
     closingAnimationTime: 1.0
-    canPry: false
     crushDamage:
       types:
         Blunt: 25 # yowch
@@ -128,7 +127,6 @@
     openTimeTwo: 0.7
     openingAnimationTime: 1.1
     closingAnimationTime: 1.0
-    canPry: false
     crushDamage:
       types:
         Blunt: 25 # yowch
@@ -213,7 +211,6 @@
     openTimeTwo: 0.7
     openingAnimationTime: 1.1
     closingAnimationTime: 1.0
-    canPry: false
     crushDamage:
       types:
         Blunt: 25 # yowch
