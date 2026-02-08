@@ -201,6 +201,32 @@
     entity: IngotSilver1
 
 - type: reaction
+  id: SolidifyUranium
+  impact: Low
+  quantized: true
+  reactants:
+    Uranium:
+      amount: 10
+    FrostOil:
+      amount: 10
+  effects:
+  - !type:SpawnEntity
+    entity: SheetUranium1
+
+- type: reaction
+  id: SolidifyPlasma
+  impact: Low
+  quantized: true
+  reactants:
+    Plasma:
+      amount: 10
+    Fresium:
+      amount: 2
+  effects:
+  - !type:SpawnEntity
+    entity: SheetPlasma1
+
+- type: reaction
   id: WehHewExplosion
   impact: High
   priority: 20
