@@ -2,26 +2,62 @@
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
     xmlns:profile="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls">
     <BoxContainer Name="VBox" Orientation="Vertical">
-        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}">
 
-        </controls:NanoHeading>
+        <!-- Header -->
+        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
+
+        <!-- This is the main bit, only shows once we have preferences from the server -->
         <BoxContainer Name="Loaded" Orientation="Vertical"
-                      Visible="False">
-            <Label Name="Summary" HorizontalAlignment="Center" Margin="3 3"/>
-            <BoxContainer Name="ViewBox" Orientation="Horizontal" HorizontalAlignment="Center">
+                      Visible="False"
+                      SeparationOverride="8">
+            <!-- Character summary text, character setup button, and character preview -->
+            <BoxContainer Orientation="Horizontal" Align="Center" SeparationOverride="30">
+                <BoxContainer Orientation="Vertical" Align="Center" SeparationOverride="25">
+                    <Label Name="Summary" />
+                    <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
+                            HorizontalAlignment="Center"/>
+                </BoxContainer>
                 <profile:ProfilePreviewSpriteView Name="ProfilePreviewSpriteView"
                                                   OverrideDirection="South"
-                                                  Scale="4 4"
-                                                  MaxSize="112 112"
+                                                  Scale="3 3"
+                                                  MaxSize="96 96"
                                                   Stretch="Fill"
+                                                  HorizontalAlignment="Center"
                                                   Access="Public" />
             </BoxContainer>
-            <controls:VSpacer/>
-            <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
-                    HorizontalAlignment="Center"
-                    Margin="0 5 0 0"/>
+
+            <!-- Where we show ALL the jobs, separated into priorities -->
+            <BoxContainer Name="JobGrid"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          HorizontalAlignment="Center"
+                          SeparationOverride="6">
+
+                <!-- Jobs with "Never" priority -->
+                <ui:DraggableJobTarget Name="NeverBox" Priority="Never" />
+
+                <!-- Vertical rule -->
+                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
+
+                <!-- Jobs with "Low" priority -->
+                <ui:DraggableJobTarget Name="LowBox" Priority="Low" />
+
+                <!-- Vertical rule -->
+                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
+
+                <!-- Jobs with "Medium" priority -->
+                <ui:DraggableJobTarget Name="MediumBox" Priority="Medium" />
+
+                <!-- Vertical rule -->
+                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
+
+                <!-- THE job with "HIGH" priority -->
+                <ui:DraggableJobTarget Name="HighBox" Priority="High" />
+
+            </BoxContainer> <!-- End job grids -->
         </BoxContainer>
         <Label Name="Unloaded" Text="{Loc 'lobby-character-preview-panel-unloaded-preferences-label'}"/>
     </BoxContainer>
