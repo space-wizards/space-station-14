@@ -1,6 +1,8 @@
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
+using Lidgren.Network;
 using Content.Shared.Standing;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
@@ -44,13 +46,13 @@ namespace Content.Shared.Movement.Systems
 
         private void OnDowned(Entity<MovementSpeedModifierComponent> entity, ref DownedEvent args)
         {
-            RefreshFrictionModifiers(entity);
+            RefreshFrictionModifiers(entity!);
             RefreshMovementSpeedModifiers(entity);
         }
 
         private void OnStand(Entity<MovementSpeedModifierComponent> entity, ref StoodEvent args)
         {
-            RefreshFrictionModifiers(entity);
+            RefreshFrictionModifiers(entity!);
             RefreshMovementSpeedModifiers(entity);
         }
 
@@ -105,6 +107,30 @@ namespace Content.Shared.Movement.Systems
             Dirty(uid, move);
         }
 
+        public void ChangeBaseWeightlessModifier(Entity<MovementSpeedModifierComponent?> entity, float speed)
+        {
+            if (!Resolve(entity, ref entity.Comp, false))
+                return;
+
+            entity.Comp.BaseWeightlessModifier = speed;
+            Dirty(entity);
+        }
+
+        public void ChangeBaseWeightlessFriction(Entity<MovementSpeedModifierComponent?> entity, float friction, float acceleration)
+        {
+            if (!Resolve(entity, ref entity.Comp, false))
+                return;
+
+            entity.Comp.BaseWeightlessFriction = friction;
+            entity.Comp.BaseWeightlessAcceleration = acceleration;
+            Dirty(entity);
+        }
+
+        public void ChangeBaseWeightlessFriction(Entity<MovementSpeedModifierComponent?> entity, float friction)
+        {
+            ChangeBaseWeightlessFriction(entity, friction, friction);
+        }
+
         public void RefreshMovementSpeedModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
         {
             if (!Resolve(uid, ref move, false))
@@ -136,9 +162,9 @@ namespace Content.Shared.Movement.Systems
             Dirty(uid, move);
         }
 
-        public void RefreshFrictionModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
+        public void RefreshFrictionModifiers(Entity<MovementSpeedModifierComponent?> entity)
         {
-            if (!Resolve(uid, ref move, false))
+            if (!Resolve(entity, ref entity.Comp, false))
                 return;
 
             if (_timing.ApplyingState)
@@ -146,33 +172,49 @@ namespace Content.Shared.Movement.Systems
 
             var ev = new RefreshFrictionModifiersEvent()
             {
-                Friction = move.BaseFriction,
-                FrictionNoInput = move.BaseFriction,
-                Acceleration = move.BaseAcceleration,
+                Friction = entity.Comp.BaseFriction,
+                FrictionNoInput = entity.Comp.BaseFriction,
+                Acceleration = entity.Comp.BaseAcceleration,
             };
-            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(entity, ref ev);
 
-            if (MathHelper.CloseTo(ev.Friction, move.Friction)
-                && MathHelper.CloseTo(ev.FrictionNoInput, move.FrictionNoInput)
-                && MathHelper.CloseTo(ev.Acceleration, move.Acceleration))
+            if (MathHelper.CloseTo(ev.Friction, entity.Comp.Friction)
+                && MathHelper.CloseTo(ev.FrictionNoInput, entity.Comp.FrictionNoInput)
+                && MathHelper.CloseTo(ev.Acceleration, entity.Comp.Acceleration))
                 return;
 
-            move.Friction = _frictionModifier * ev.Friction;
-            move.FrictionNoInput = _frictionModifier * ev.FrictionNoInput;
-            move.Acceleration = ev.Acceleration;
+            entity.Comp.Friction = _frictionModifier * ev.Friction;
+            entity.Comp.FrictionNoInput = _frictionModifier * ev.FrictionNoInput;
+            entity.Comp.Acceleration = ev.Acceleration;
 
-            Dirty(uid, move);
+            Dirty(entity);
         }
 
-        public void ChangeBaseFriction(EntityUid uid, float friction, float frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
+        public void ChangeBaseFriction(Entity<MovementSpeedModifierComponent?> entity, float friction, float frictionNoInput, float acceleration)
         {
-            if (!Resolve(uid, ref move, false))
+            if (!Resolve(entity, ref entity.Comp, false))
                 return;
 
-            move.BaseFriction = friction;
-            move.FrictionNoInput = frictionNoInput;
-            move.BaseAcceleration = acceleration;
-            Dirty(uid, move);
+            entity.Comp.BaseFriction = friction;
+            entity.Comp.FrictionNoInput = frictionNoInput;
+            entity.Comp.BaseAcceleration = acceleration;
+            Dirty(entity);
+        }
+
+        public void ChangeBaseFriction(Entity<MovementSpeedModifierComponent?> entity, float friction, float acceleration)
+        {
+            ChangeBaseFriction(entity, friction, friction, acceleration);
+        }
+
+        public void ChangeBaseFriction(Entity<MovementSpeedModifierComponent?> entity, float friction)
+        {
+            ChangeBaseFriction(entity, friction, friction, friction);
+        }
+
+        public void ChangeAllFriction(Entity<MovementSpeedModifierComponent?> entity, float friction)
+        {
+            ChangeBaseFriction(entity, 0);
+            ChangeBaseWeightlessFriction(entity, 0);
         }
     }
 
