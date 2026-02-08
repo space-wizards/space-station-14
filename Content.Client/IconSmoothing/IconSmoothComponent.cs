@@ -77,6 +77,11 @@ namespace Content.Client.IconSmoothing
         Diagonal,
 
         /// <summary>
+        ///     8 states sprites as entities can be connected in the form of a “snake” pointing in a certain direction. Think about Minecraft stairs.
+        /// </summary>
+        SnakeDirectional,
+
+        /// <summary>
         ///     Where this component contributes to our neighbors being calculated but we do not update our own sprite.
         /// </summary>
         NoSprite,

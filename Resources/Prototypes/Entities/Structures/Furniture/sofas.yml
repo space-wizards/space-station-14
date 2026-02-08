@@ -1,0 +1,67 @@
+- type: entity
+  parent: SeatBase
+  id: SofaBase
+  abstract: true
+  name: sofa
+  description: Looks comfy.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    noRot: false
+    state: state0
+  - type: Icon
+    state: state0
+  - type: PlacementReplacement
+    key: sofa
+  - type: IconSmooth
+    key: sofa
+    base: state
+    mode: SnakeDirectional
+  - type: Anchorable
+  - type: Rotatable
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - SlipLayer
+        density: 150
+        hard: false
+
+- type: entity
+  id: SofaDark
+  parent: SofaBase
+  name: dark sofa
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Sofas/dark.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Sofas/dark.rsi
+
+- type: entity
+  id: SofaWhite
+  parent: SofaBase
+  name: white sofa
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Sofas/white.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Sofas/white.rsi
+
+- type: entity
+  id: SofaWooden
+  parent: SofaBase
+  name: wooden sofa
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Sofas/wooden.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Sofas/wooden.rsi
