@@ -118,3 +118,12 @@
     intensity: 10
     falloffPower: 1.5
 
+- type: entity
+  id: AdminInstantEffectLightning
+  suffix: Lightning
+  parent: AdminInstantEffectBase
+  components:
+  - type: LightningArcShooter
+    instant: true
+    shootMinInterval: 6 # larger than the timed despawn so that we only shoot once
+    shootMaxInterval: 7
