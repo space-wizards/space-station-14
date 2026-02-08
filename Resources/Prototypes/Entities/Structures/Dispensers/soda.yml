@@ -40,7 +40,8 @@
         - id: DrinkDrGibbJug
         - id: DrinkEnergyDrinkJug
         - id: DrinkGreenTeaJug
-        - id: DrinkIceJug
+        - id: DrinkGrenadineBottleFull
+        - id: DrinkIceBucket
         - id: DrinkJuiceLimeCartonXL
         - id: DrinkJuiceOrangeCartonXL
         - id: DrinkLemonLimeJug
