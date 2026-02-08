@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Player;
 
-namespace Content.Server.Ghost.Roles.Components;
+namespace Content.Shared.Ghost.Roles.Components;
 
 [ByRefEvent]
 public record struct TakeGhostRoleEvent(ICommonSession Player)
