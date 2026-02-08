@@ -13,7 +13,7 @@
   id: AirAlarmElectronics # ConstructionGraph: AirAlarm
 
 - type: Tag
-  id: Airlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks.
+  id: Airlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, external, glass external and highsec airlocks.
 
 - type: Tag
   id: AirSensor # Used by AtmosAlarmableComponent for syncing devices.
@@ -545,6 +545,9 @@
 - type: Tag
   id: ExCable # Placement blacklist on CableDetStack. Placement whitelist on WiredDetonator
 
+- type: Tag
+  id: External # Used in ConstructionGraph "Airlock" to navigate between regular, glass, external, glass external and highsec airlocks.
+
 ## F ##
 
 - type: Tag
@@ -635,10 +638,13 @@
   id: GenderPin #  Chameleon key for ClothingGenderPinBase.
 
 - type: Tag
-  id: GlassAirlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks.
+  id: GlassAirlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, external, glass external and highsec airlocks.
 
 - type: Tag
   id: GlassBeaker # This tag is used as a common ingredient in the construction of various machines.
+
+- type: Tag
+  id: GlassExternal # Used in ConstructionGraph "Airlock" to navigate between regular, glass, external, glass external and highsec airlocks.
 
 - type: Tag
   id: GlassShard # ConstructionGraph: BladedFlatcapBrown, BladedFlatcapGrey, ImprovisedArrow, ImprovisedShotgunShellGraph, Shiv, Spear
@@ -740,7 +746,7 @@
                    # Used by EventHorizonSystem to send an admin alert.
 
 - type: Tag
-  id: HighSecDoor # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks.
+  id: HighSecDoor # Used in ConstructionGraph "Airlock" to navigate between regular, glass, external, glass external and highsec airlocks.
 
 - type: Tag
   id: HivelordRemains # CargoBounty: BountyHivelordRemains

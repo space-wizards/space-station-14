@@ -20,6 +20,13 @@
     layoutId: AirlockExternal
   - type: Paintable
     group: null
+  - type: Tag
+    tags:
+    - External
+      # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
+  - type: Construction
+    graph: Airlock
+    node: external
 
 - type: entity
   parent: AirlockExternal
@@ -43,3 +50,10 @@
         - FullTileMask
         layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer
+  - type: Tag
+    tags:
+    - GlassExternal
+      # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
+  - type: Construction
+    graph: Airlock
+    node: glassExternal
