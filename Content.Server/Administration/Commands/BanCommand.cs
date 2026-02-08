@@ -27,12 +27,7 @@ public sealed class BanCommand : LocalizedCommands
         string target;
         string reason;
         uint minutes;
-        if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), out NoteSeverity severity))
-        {
-            _logManager.GetSawmill("admin.server_ban")
-                .Warning("Server ban severity could not be parsed from config! Defaulting to high.");
-            severity = NoteSeverity.High;
-        }
+        var severity = _bans.GetServerBanSeverity();
 
         switch (args.Length)
         {
@@ -114,15 +109,7 @@ public sealed class BanCommand : LocalizedCommands
 
         if (args.Length == 3)
         {
-            var durations = new CompletionOption[]
-            {
-                new("0", LocalizationManager.GetString("cmd-ban-hint-duration-1")),
-                new("1440", LocalizationManager.GetString("cmd-ban-hint-duration-2")),
-                new("4320", LocalizationManager.GetString("cmd-ban-hint-duration-3")),
-                new("10080", LocalizationManager.GetString("cmd-ban-hint-duration-4")),
-                new("20160", LocalizationManager.GetString("cmd-ban-hint-duration-5")),
-                new("43800", LocalizationManager.GetString("cmd-ban-hint-duration-6")),
-            };
+            var durations = _bans.BanDurations;
 
             return CompletionResult.FromHintOptions(durations, LocalizationManager.GetString("cmd-ban-hint-duration"));
         }
