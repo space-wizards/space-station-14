@@ -1,6 +1,8 @@
 - type: latheRecipe
   id: MopItem
   result: MopItem
+  categories:
+  - Tools
   completetime: 2
   materials:
     Plastic: 100
@@ -8,6 +10,8 @@
 - type: latheRecipe
   id: MopBucket
   result: MopBucket
+  categories:
+  - Containers
   completetime: 2
   materials:
     Steel: 100
@@ -16,6 +20,9 @@
 - type: latheRecipe
   id: Bucket
   result: Bucket
+  categories:
+  - Containers
+  - Clothing
   completetime: 2
   materials:
     Plastic: 100
@@ -23,6 +30,8 @@
 - type: latheRecipe
   id: WetFloorSign
   result: WetFloorSign
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Plastic: 100
@@ -30,6 +39,8 @@
 - type: latheRecipe
   id: MegaSprayBottle
   result: MegaSprayBottle
+  categories:
+  - Tools
   completetime: 3
   materials:
     Plastic: 250
@@ -37,6 +48,8 @@
 - type: latheRecipe
   id: SprayBottle
   result: SprayBottle
+  categories:
+  - Tools
   completetime: 2
   materials:
     Plastic: 100
@@ -44,6 +57,8 @@
 - type: latheRecipe
   id: TrashBag
   result: TrashBag
+  categories:
+  - Containers
   completetime: 1.2
   materials:
     Plastic: 100
@@ -51,6 +66,9 @@
 - type: latheRecipe
   id: LightReplacer
   result: LightReplacerEmpty
+  categories:
+  - Lights
+  - Tools
   completetime: 2.4
   materials:
     Steel: 100
@@ -67,6 +85,8 @@
 - type: latheRecipe
   id: Holoprojector
   result: HoloprojectorEmpty
+  categories:
+  - Tools
   completetime: 3
   materials:
     Plastic: 250
@@ -75,6 +95,8 @@
 - type: latheRecipe
   id: AdvMopItem
   result: AdvMopItem
+  categories:
+  - Tools
   completetime: 2
   materials:
     Plastic: 400
@@ -84,6 +106,8 @@
 - type: latheRecipe
   id: Plunger
   result: Plunger
+  categories:
+  - Tools
   completetime: 2
   materials:
     Plastic: 50
@@ -92,6 +116,8 @@
 - type: latheRecipe
   id: WeaponSprayNozzle
   result: WeaponSprayNozzle
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 1500
@@ -100,6 +126,8 @@
 - type: latheRecipe
   id: ClothingBackpackWaterTank
   result: ClothingBackpackWaterTank
+  categories:
+  - Clothing
   completetime: 4
   materials:
     Steel: 250
@@ -108,6 +136,8 @@
 - type: latheRecipe
   id: WireBrush
   result: WireBrush
+  categories:
+  - Tools
   completetime: 2
   materials:
     Steel: 100

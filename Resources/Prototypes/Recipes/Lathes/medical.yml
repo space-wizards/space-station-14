@@ -4,6 +4,9 @@
   abstract: true
   parent: BaseToolRecipe
   id: BaseSurgicalRecipe
+  categories:
+  - Tools
+  - Surgical
   materials:
     Steel: 200
 
@@ -25,7 +28,7 @@
   result: Cautery
 
 - type: latheRecipe
-  parent: BaseToolRecipe
+  parent: BaseSurgicalRecipe
   id: Drill
   result: Drill
   materials:
@@ -45,6 +48,8 @@
 - type: latheRecipe
   id: BodyBag
   result: BodyBagFolded
+  categories:
+  - Containers
   completetime: 2
   materials:
     Plastic: 300
@@ -52,6 +57,8 @@
 - type: latheRecipe
   id: Brutepack
   result: Brutepack1
+  categories:
+  - Medicinal
   completetime: 1
   materials:
     Steel: 25
@@ -60,6 +67,8 @@
 - type: latheRecipe
   id: Ointment
   result: Ointment1
+  categories:
+  - Medicinal
   completetime: 1
   materials:
     Glass: 25
@@ -68,6 +77,8 @@
 - type: latheRecipe
   id: Gauze
   result: Gauze1
+  categories:
+  - Medicinal
   completetime: 1
   materials:
     Cloth: 100 # lathe more efficient than handcrafting
@@ -85,6 +96,8 @@
 - type: latheRecipe
   id: ClothingHandsGlovesLatex
   result: ClothingHandsGlovesLatex
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Plastic: 300
@@ -92,6 +105,8 @@
 - type: latheRecipe
   id: ClothingHandsGlovesNitrile
   result: ClothingHandsGlovesNitrile
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Plastic: 100
@@ -100,6 +115,8 @@
 - type: latheRecipe
   id: ClothingMaskSterile
   result: ClothingMaskSterile
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Plastic: 50
@@ -115,6 +132,8 @@
 - type: latheRecipe
   id: Implanter
   result: Implanter
+  categories:
+  - Tools
   completetime: 1
   materials:
     Glass: 500
@@ -123,6 +142,8 @@
 - type: latheRecipe
   id: Defibrillator
   result: DefibrillatorEmpty
+  categories:
+  - Tools
   completetime: 2
   materials:
     Steel: 300
@@ -130,6 +151,8 @@
 - type: latheRecipe
   id: Medkit
   result: Medkit
+  categories:
+  - Containers
   name: lathe-recipe-Medkit-name
   completetime: 2
   materials:
@@ -187,6 +210,8 @@
 - type: latheRecipe
   id: Jug
   result: Jug
+  categories:
+  - Containers
   completetime: 4
   materials:
     Plastic: 400
@@ -212,23 +237,22 @@
 - type: latheRecipe
   id: WhiteCane
   result: WhiteCane
+  categories:
+  - Medicinal
   completetime: 2
   materials:
     Steel: 100
     Plastic: 100
 
 - type: latheRecipe
+  parent: WhiteCane
   id: OffsetCane
   result: OffsetCane
-  completetime: 2
-  materials:
-    Steel: 100
-    Plastic: 100
 
 - type: latheRecipe
+  parent: WhiteCane
   id: OffsetCaneWood
   result: OffsetCaneWood
-  completetime: 2
   materials:
     Steel: 100
     Wood: 100
@@ -236,6 +260,8 @@
 - type: latheRecipe
   id: LauncherSyringe
   result: LauncherSyringe
+  categories:
+  - Weapons
   completetime: 10
   materials:
     Silver: 200
@@ -246,6 +272,8 @@
 - type: latheRecipe
   id: MiniSyringe
   result: MiniSyringe
+  categories:
+  - Weapons
   completetime: 2
   materials:
     Steel: 200

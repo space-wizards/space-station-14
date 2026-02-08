@@ -70,6 +70,9 @@
   parent: BaseLightRecipe
   id: FlashlightLantern
   result: EmptyFlashlightLantern
+  categories:
+  - Lights
+  - Tools
   materials:
     Steel: 100
     Glass: 100
@@ -101,6 +104,8 @@
 - type: latheRecipe
   id: PushHorn
   result: PushHorn
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 500
@@ -118,6 +123,8 @@
 - type: latheRecipe
   id: AirTank
   result: AirTank
+  categories:
+  - Containers
   completetime: 4
   materials:
     Steel: 400
@@ -125,6 +132,8 @@
 - type: latheRecipe
   id: DoubleEmergencyOxygenTank
   result: DoubleEmergencyOxygenTank
+  categories:
+  - Containers
   completetime: 4
   materials:
     Steel: 250
@@ -132,6 +141,8 @@
 - type: latheRecipe
   id: DoubleEmergencyNitrogenTank
   result: DoubleEmergencyNitrogenTank
+  categories:
+  - Containers
   completetime: 4
   materials:
     Steel: 250
@@ -139,6 +150,8 @@
 - type: latheRecipe
   id: ClothingShoesBootsMagSci
   result: ClothingShoesBootsMagSci
+  categories:
+  - Clothing
   completetime: 10
   materials:
     Steel: 1000
@@ -147,6 +160,8 @@
 - type: latheRecipe
   id: ClothingShoesBootsMoon
   result: ClothingShoesBootsMoon
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Steel: 600
@@ -154,6 +169,8 @@
 - type: latheRecipe
   id: ClothingShoesBootsSpeed
   result: ClothingShoesBootsSpeed
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Steel: 1500
@@ -163,6 +180,8 @@
 - type: latheRecipe
   id: ClothingShoesBootsJump
   result: ClothingShoesBootsJump
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Steel: 1400
@@ -173,6 +192,8 @@
 - type: latheRecipe
   id: ModularReceiver
   result: ModularReceiver
+  categories:
+  - Parts
   completetime: 12
   materials:
     Steel: 750
@@ -181,6 +202,8 @@
 - type: latheRecipe
   id: HandheldStationMap
   result: HandheldStationMapEmpty
+  categories:
+  - Tools
   completetime: 2
   materials:
     Steel: 300
@@ -189,6 +212,9 @@
 - type: latheRecipe
   id: ClothingHeadHatWelding
   result: ClothingHeadHatWelding
+  categories:
+  - Clothing
+  - Tools
   completetime: 2
   materials:
     Steel: 400
@@ -197,6 +223,8 @@
 - type: latheRecipe
   id: ClothingHeadHatCone
   result: ClothingHeadHatCone
+  categories:
+  - Clothing
   completetime: 3
   materials:
     Plastic: 200
@@ -204,6 +232,8 @@
 - type: latheRecipe
   id: ClothingOuterVestTank
   result: ClothingOuterVestTank
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Cloth: 100
