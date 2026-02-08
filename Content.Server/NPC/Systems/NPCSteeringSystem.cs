@@ -29,6 +29,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Prying.Systems;
+using Content.Shared.Teleportation.Systems;
 using Microsoft.Extensions.ObjectPool;
 using Prometheus;
 
@@ -115,7 +116,13 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         Subs.CVar(_configManager, CCVars.NPCPathfinding, SetNPCPathfinding, true);
 
         SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
+        SubscribeLocalEvent<NPCSteeringComponent, TeleportedEvent>(OnTeleported);
         SubscribeNetworkEvent<RequestNPCSteeringDebugEvent>(OnDebugRequest);
+    }
+
+    private void OnTeleported(Entity<NPCSteeringComponent> ent, ref TeleportedEvent args)
+    {
+        ent.Comp.CurrentPath.Clear();
     }
 
     private void SetNPCEnabled(bool obj)
