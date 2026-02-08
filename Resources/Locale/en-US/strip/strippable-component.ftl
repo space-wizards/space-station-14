@@ -13,6 +13,7 @@ strippable-component-alert-owner-insert-hand = {CAPITALIZE(THE($user))} is putti
 
 # generic warning for when a user interacts with your equipped items.
 strippable-component-alert-owner-interact = {CAPITALIZE(THE($user))} is fumbling around with your {$item}!
+strippable-component-alert-owner-interact-item = {CAPITALIZE(THE($user))} is fumbling around with your {$targetItem} using {INDEFINITE($userItem)} {$userItem}!
 
 # StripVerb
 strip-verb-get-data-text = Strip
