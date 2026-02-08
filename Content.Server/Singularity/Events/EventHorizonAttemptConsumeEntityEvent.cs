@@ -3,30 +3,16 @@ using Content.Shared.Singularity.Components;
 namespace Content.Server.Singularity.Events;
 
 /// <summary>
-/// Event raised on the target entity whenever an event horizon attempts to consume an entity.
-/// Can be cancelled to prevent the target entity from being consumed.
+/// A by-ref event raised on an <paramref name="Entity"/> when an <paramref name="EventHorizon"/> attempts to consume it.
+/// Can be cancelled to prevent the target <paramref name="Entity"/> from being consumed.
 /// </summary>
+/// <param name="EventHorizon">The event horizon that is attempting to consume the <paramref name="Entity"/>.</param>
+/// <param name="Entity">The entity that the <paramref name="EventHorizon"/> is attempting to consume.</param>
 [ByRefEvent]
-public record struct EventHorizonAttemptConsumeEntityEvent
-(EntityUid entity, EntityUid eventHorizonUid, EventHorizonComponent eventHorizon)
+public record struct EventHorizonAttemptConsumeEntityEvent(Entity<EventHorizonComponent> EventHorizon, EntityUid Entity)
 {
     /// <summary>
-    /// The entity that the event horizon is attempting to consume.
-    /// </summary>
-    public readonly EntityUid Entity = entity;
-
-    /// <summary>
-    /// The uid of the event horizon consuming the entity.
-    /// </summary>
-    public readonly EntityUid EventHorizonUid = eventHorizonUid;
-
-    /// <summary>
-    /// The event horizon consuming the target entity.
-    /// </summary>
-    public readonly EventHorizonComponent EventHorizon = eventHorizon;
-
-    /// <summary>
-    /// Whether the event horizon has been prevented from consuming the target entity.
+    /// May be set to <see langword="true"/> by handlers to prevent <see cref="Entity"/> from being consumed by <see cref="EventHorizon"/>.
     /// </summary>
     public bool Cancelled = false;
 }
