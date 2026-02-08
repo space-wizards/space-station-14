@@ -91,6 +91,7 @@ public abstract partial class SharedMindSystem : EntitySystem
 
         Log.Error($"Encountered a user {component.UserId} that is already assigned to a mind while initializing mind {ToPrettyString(uid)}. Ignoring user field.");
         component.UserId = null;
+        Dirty(uid, component);
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
