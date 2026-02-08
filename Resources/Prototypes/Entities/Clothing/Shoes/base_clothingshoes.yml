@@ -25,6 +25,7 @@
     - Recyclable
     - WhitelistChameleon
   - type: ProtectedFromStepTriggers
+  - type: TriggerProtectedFromStepTriggers
 
 - type: entity
   abstract: true

@@ -359,6 +359,8 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -431,6 +433,8 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
@@ -460,6 +464,8 @@
     node: armor
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
@@ -480,6 +486,8 @@
         Heat: 0.5
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
 - type: entity

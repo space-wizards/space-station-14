@@ -27,6 +27,8 @@
     - WhitelistChameleon
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
   - type: HideLayerClothing
     slots:
       - Tail
@@ -73,6 +75,8 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
   - type: HideLayerClothing
     slots:
     - Tail
@@ -108,6 +112,8 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
   - type: Tag
     tags:
     - CorgiWearable
@@ -139,6 +145,8 @@
     containers:
       toggleable-clothing: !type:ContainerSlot {}
   - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
     slots: WITHOUT_POCKET
   - type: HideLayerClothing
     slots:
@@ -225,6 +233,8 @@
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase
@@ -263,6 +273,8 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
 
 - type: entity
   parent: ClothingOuterBase
@@ -285,6 +297,8 @@
     graph: ClothingOuterSuitIan
     node: suit
   - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: TriggerProtectedFromStepTriggers
     slots: WITHOUT_POCKET
   - type: Tag
     tags:
