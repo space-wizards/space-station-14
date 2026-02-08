@@ -256,6 +256,8 @@
       - Syringe
       - CigPack
       - Dropper
+      - Swab
+      - SwabApplicator
       components:
       - Seed
       - Smokable

@@ -1381,6 +1381,12 @@
   id: SurveillanceCameraMonitorCircuitboard # ConstructionGraph: WallmountTelescreen
 
 - type: Tag
+  id: Swab # Storage Whitelist: Swab, what can be placed within a swab applicator.
+
+- type: Tag
+  id: SwabApplicator # Storage Whitelist: SwabApplicator
+
+- type: Tag
   id: Syndicate # FTLDestination whitelist in nukieplanet.yml. Tag exists on ComputerShuttleSyndie and infiltrator.yml
 
 - type: Tag

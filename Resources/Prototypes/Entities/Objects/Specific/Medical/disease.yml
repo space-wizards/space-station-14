@@ -13,12 +13,72 @@
     tags:
     - Recyclable
     - Trash
+    - Swab
   - type: BotanySwab
   - type: GuideHelp
     guides:
   # - Virology (when it's back)
     - Botany
     - Chemicals
+
+- type: entity
+  parent: DiseaseSwab
+  id: SyntheticSwab
+  name: synthetic swab
+  description: This swab holds samples on a glass surface, making it easy to clean.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/mouth_swab.rsi
+    state: iconsynth
+  - type: BotanySwab
+    cleanable: true
+
+- type: entity
+  parent: BaseItem
+  id: SwabApplicator
+  name: swab applicator
+  description: A device that can hold a single swab, able to apply pollen without risk of cross-contamination.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/swab_applicator.rsi
+    layers:
+    - state: swab_applicator
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/swab_applicator.rsi
+    heldPrefix: swab_applicator
+    size: Small
+    storedRotation: 270
+  - type: ItemSlots
+    slots:
+      swab:
+        name: Swab
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 1
+        whitelist:
+          tags:
+          - Swab
+        whitelistFailPopup: swab-applicator-whitelist-fail
+        ejectOnUse: true
+  - type: ContainerContainer
+    containers:
+      swab: !type:ContainerSlot
+  - type: ItemMapper
+    mapLayers:
+      swab:
+        whitelist:
+          tags:
+            - Swab
+    sprite: Objects/Specific/Hydroponics/swab_applicator.rsi
+  - type: Appearance
+  - type: BotanySwab
+    swabDelay: 0.75
+    usableIfClean: false
+    contaminate: false
+  - type: Tag
+    tags:
+    - SwabApplicator
+
 
 - type: entity
   parent: BaseAmmoProvider # this is for cycling swabs out and not spawning 30 entities, trust
