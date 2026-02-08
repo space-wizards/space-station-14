@@ -495,6 +495,12 @@ entity-effect-guidebook-plant-phalanximine =
         *[other] restore
     } viability to a plant rendered nonviable by a mutation
 
+entity-effect-guidebook-plant-plantbgone =
+    { $chance ->
+        [1] Removes
+        *[other] remove
+    } fast and thin weeds from a plant
+
 entity-effect-guidebook-plant-diethylamine =
     { $chance ->
         [1] Increases

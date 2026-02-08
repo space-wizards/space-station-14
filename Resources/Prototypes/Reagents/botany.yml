@@ -89,6 +89,7 @@
       amount: -20
     - !type:PlantAdjustMutationMod
       amount: 0.1
+    - !type:PlantPlantBGone
   metabolisms:
     Bloodstream:
       effects:
