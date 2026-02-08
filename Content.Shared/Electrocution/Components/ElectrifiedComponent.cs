@@ -43,6 +43,12 @@ public sealed partial class ElectrifiedComponent : Component
     public bool OnInteractUsing = true;
 
     /// <summary>
+    /// Whether the entity should electrocute on activation in world.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool OnActivateInWorld = true;
+
+    /// <summary>
     /// Indicates if the entity requires power to function
     /// </summary>
     [DataField, AutoNetworkedField]
