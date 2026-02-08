@@ -1,4 +1,3 @@
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.Traits.Assorted;
 using Content.Shared.GameTicking.Components;
@@ -20,14 +19,14 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
         var query = EntityQueryEnumerator<MindContainerComponent, HumanoidProfileComponent>();
         while (query.MoveNext(out var ent, out _, out _))
         {
-            if (!EnsureComp<ParacusiaComponent>(ent, out var paracusia))
-            {
-                _paracusia.SetSounds(ent, component.Sounds, paracusia);
-                _paracusia.SetTime(ent, component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents, paracusia);
-                _paracusia.SetDistance(ent, component.MaxSoundDistance);
+            // People who already have paracusia (usually via trait) strangely don't hear mass hallucinations :)
+            if (EnsureComp<ParacusiaComponent>(ent, out var paracusia))
+                continue;
+            _paracusia.SetSounds((ent, paracusia), component.Sounds);
+            _paracusia.SetTime((ent, paracusia), component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents);
+            _paracusia.SetDistance((ent, paracusia), component.MaxSoundDistance);
 
-                component.AffectedEntities.Add(ent);
-            }
+            component.AffectedEntities.Add(ent);
         }
     }
 
