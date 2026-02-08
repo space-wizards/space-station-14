@@ -30,7 +30,7 @@ public sealed partial class CCVars
     /// </remarks>
     public static readonly CVarDef<string> ReplayAutoRecordName =
         CVarDef.Create("replay.auto_record_name",
-            "{year}_{month}_{day}-{hour}_{minute}-round_{round}.zip",
+            "{year}_{month}_{day}-{hour}_{minute}-round_{round}.rtreplay",
             CVar.SERVERONLY);
 
     /// <summary>
