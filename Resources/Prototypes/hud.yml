@@ -5,10 +5,10 @@
   order: -1
 
 - type: hudTheme
-  id: SS14PlasmafireTheme
-  name: ui-options-hud-theme-plasmafire
-  path: Plasmafire
-  order: 3
+  id: SS14MinimalistTheme
+  name: ui-options-hud-theme-minimalist
+  path: Minimalist
+  order: 1
 
 - type: hudTheme
   id: SS14SlimecoreTheme
@@ -17,10 +17,22 @@
   order: 2
 
 - type: hudTheme
+  id: SS14PlasmafireTheme
+  name: ui-options-hud-theme-plasmafire
+  path: Plasmafire
+  order: 3
+
+- type: hudTheme
   id: SS14ClockworkTheme
   name: ui-options-hud-theme-clockwork
   path: Clockwork
   order: 4
+
+- type: hudTheme
+  id: SS14AshenTheme
+  name: ui-options-hud-theme-ashen
+  path: Ashen
+  order: 5
 
 - type: hudTheme
   id: SS14RetroTheme
@@ -29,13 +41,13 @@
   order: 6
 
 - type: hudTheme
-  id: SS14MinimalistTheme
-  name: ui-options-hud-theme-minimalist
-  path: Minimalist
-  order: 1
+  id: SS14NanotrasenTheme
+  name: ui-options-hud-theme-nanotrasen
+  path: Nanotrasen
+  order: 7
 
 - type: hudTheme
-  id: SS14AshenTheme
-  name: ui-options-hud-theme-ashen
-  path: Ashen
-  order: 5
+  id: SS14SyndicateTheme
+  name: ui-options-hud-theme-syndicate
+  path: Syndicate
+  order: 8
