@@ -42,7 +42,7 @@ namespace Content.Server.Mind.Commands
 
             foreach (var role in _roles.MindGetAllRoleInfo(mindId))
             {
-                builder.AppendFormat("{0} ", role.Name);
+                builder.AppendFormat("{0} ", Loc.GetString(role.Name));
             }
 
             shell.WriteLine(builder.ToString());

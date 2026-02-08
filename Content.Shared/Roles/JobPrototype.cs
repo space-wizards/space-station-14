@@ -30,18 +30,18 @@ namespace Content.Shared.Roles
         ///     The name of this job as displayed to players.
         /// </summary>
         [DataField]
-        public string Name { get; private set; } = string.Empty;
+        public LocId Name= "generic-unknown-title";
 
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), Obsolete("Use Loc.GetString(JobPrototype.Name) instead")]
         public string LocalizedName => Loc.GetString(Name);
 
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
         [DataField]
-        public string? Description { get; private set; }
+        public LocId? Description;
 
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), Obsolete("Use Loc.GetString(JobPrototype.Description) instead")]
         public string? LocalizedDescription => Description is null ? null : Loc.GetString(Description);
 
         /// <summary>

@@ -23,25 +23,25 @@ public sealed partial class AntagPrototype : IPrototype
     /// <summary>
     ///     The name of this antag as displayed to players.
     /// </summary>
-    [DataField("name")]
-    public string Name { get; private set; } = "";
+    [DataField(required: true)]
+    public LocId Name { get; private set; } = "";
 
     /// <summary>
     ///     The antag's objective, shown in a tooltip in the antag preference menu or as a ghost role description.
     /// </summary>
-    [DataField("objective", required: true)]
-    public string Objective { get; private set; } = "";
+    [DataField(required: true)]
+    public LocId Objective { get; private set; } = "";
 
     /// <summary>
     ///     Whether or not the antag role is one of the bad guys.
     /// </summary>
-    [DataField("antagonist")]
+    [DataField]
     public bool Antagonist { get; private set; }
 
     /// <summary>
     ///     Whether or not the player can set the antag role in antag preferences.
     /// </summary>
-    [DataField("setPreference")]
+    [DataField]
     public bool SetPreference { get; private set; }
 
     /// <summary>
