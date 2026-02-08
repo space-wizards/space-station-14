@@ -17,6 +17,21 @@
       id: Kudzu
     - type: SpeedModifierContacts
       affectAirborne: true
+    - type: Fixtures
+      fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - MidImpassable
+    - type: Temperature
+      heatContainer:
+        temperature: 293.15
+        heatCapacity: 21000
+
 
 - type: entity
   id: Kudzu
@@ -35,16 +50,6 @@
       drawdepth: Overdoors
     - type: KudzuVisuals
     - type: Clickable
-    - type: Fixtures
-      fixtures:
-        fix1:
-          hard: false
-          density: 7
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          layer:
-          - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible
@@ -55,7 +60,6 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-    - type: Temperature
     - type: TemperatureDamage
       heatDamage:
         types:
@@ -226,7 +230,6 @@
           Heat: -1.0
           Cold: -1.0
           Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
-    - type: Temperature
     - type: TemperatureDamage
       heatDamage:
         types:

@@ -44,7 +44,7 @@
     sprite: Clothing/OuterClothing/Suits/janitor_bombsuit.rsi
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  parent: [ ClothingOuterBaseLargeFireproof, AllowSuitStorageClothing ]
   id: ClothingOuterSuitFire
   name: fire suit
   description: A suit that helps protect against hazardous temperatures.
@@ -55,11 +55,6 @@
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.04
-  - type: TemperatureProtection
-    heatingCoefficient: 0.005
-    coolingCoefficient: 0.05
-  - type: FireProtection
-    reduction: 0.65 # doesnt have a full seal so not as good
   - type: Armor
     modifiers:
       coefficients:
@@ -78,7 +73,7 @@
     - Tail
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  parent: [ TemperatureProtectionGreat, ClothingOuterEVASuitBase, AllowSuitStorageClothing ]
   id: ClothingOuterSuitAtmosFire
   name: atmos fire suit
   description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
@@ -87,12 +82,6 @@
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.02
-    lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.05
   - type: FireProtection
     reduction: 0.8 # atmos firesuit offers best protection, hardsuits are a little vulnerable
   - type: Armor
@@ -101,20 +90,11 @@
         Slash: 0.9
         Heat: 0.8
         Cold: 0.8
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: HeldSpeedModifier
   - type: GroupExamine
-  - type: ProtectedFromStepTriggers
-    slots: WITHOUT_POCKET
   - type: Tag
     tags:
     - CorgiWearable
     - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Tail
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing, AllowSuitStorageClothing]
@@ -145,7 +125,7 @@
     - Tail
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseHighlyIllegalContraband]
+  parent: [ ClothingOuterBaseLargeInsulated, AllowSuitStorageClothing, BaseToggleClothing, BaseHighlyIllegalContraband ]
   id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
@@ -158,9 +138,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.01
-    coolingCoefficient: 0.01
   - type: Armor
     modifiers:
       coefficients:
@@ -294,16 +271,13 @@
     accent: BarkAccent
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ ClothingOuterBaseToggleable, AllowSuitStorageClothing ]
   id: ClothingOuterSuitCarp
   name: carp suit
   description: A special suit that makes you look just like a space carp, if your eyesight is bad.
   components:
-  - type: AllowSuitStorage
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
-  - type: Item
-    size: Normal
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ToggleableClothing
@@ -316,7 +290,7 @@
     - Tail
 
 - type: entity
-  parent: ClothingOuterSuitCarp
+  parent: [ ClothingOuterSuitCarp, TemperatureProtectionGood ]
   id: ClothingOuterHardsuitCarp
   suffix: Hardsuit, DO NOT MAP
   categories: [ DoNotMap ]
@@ -324,9 +298,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.01
-    coolingCoefficient: 0.01
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCarp
   - type: StaticPrice

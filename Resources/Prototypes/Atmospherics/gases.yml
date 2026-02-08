@@ -1,7 +1,7 @@
 ﻿- type: gas
   id: Oxygen
   name: gases-oxygen
-  specificHeat: 20
+  specificHeat: 29
   heatCapacityRatio: 1.4
   molarMass: 32
   color: 2887E8
@@ -11,7 +11,7 @@
 - type: gas
   id: Nitrogen
   name: gases-nitrogen
-  specificHeat: 30
+  specificHeat: 29
   heatCapacityRatio: 1.4
   molarMass: 28
   color: DA1010
@@ -21,7 +21,7 @@
 - type: gas
   id: CarbonDioxide
   name: gases-co2
-  specificHeat: 30
+  specificHeat: 40
   heatCapacityRatio: 1.3
   molarMass: 44
   color: 4e4e4e

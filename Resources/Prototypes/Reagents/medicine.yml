@@ -189,17 +189,19 @@
   metabolisms:
     Bloodstream:
       effects:
-        - !type:EvenHealthChange
-          conditions:
-          - !type:TemperatureCondition
-            # this is a little arbitrary but they gotta be pretty cold
-            max: 213.0
-          damage:
-          # todo scale with temp like SS13
-            Airloss: -3
-            Brute: -2
-            Burn: -2
-            Toxin: -2
+      - !type:AdjustTemperature
+        amount: 80000 # Heats you up as it metabolizes necessitating constant cooling.
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TemperatureCondition
+          # taken from tg, must be below freezing.
+          max: 273.15
+        damage:
+        # todo scale with temp like SS13
+          Airloss: -3
+          Brute: -2
+          Burn: -2
+          Toxin: -2
 
 - type: reagent
   id: Doxarubixadone
@@ -215,7 +217,7 @@
         - !type:HealthChange
           conditions:
           - !type:TemperatureCondition
-            max: 213.0
+            max: 273.15
           damage:
             types:
              Cellular: -2
@@ -514,12 +516,12 @@
         conditions:
         - !type:TemperatureCondition
           max: 293.15
-        amount: 100000 # thermal energy, not temperature!
+        amount: 1000000 # thermal energy, not temperature!
       - !type:AdjustTemperature
         conditions:
         - !type:TemperatureCondition
           min: 293.15
-        amount: -10000
+        amount: -1000000
       - !type:PopupMessage
         type: Local
         visualType: Medium
@@ -1308,10 +1310,12 @@
   metabolisms:
     Bloodstream:
       effects:
+      - !type:AdjustTemperature
+        amount: 80000 # Heats you up as it metabolizes necessitating constant cooling.
       - !type:EvenHealthChange
         conditions:
         - !type:TemperatureCondition
-          max: 213.0
+          max: 273.15
         - !type:TotalDamageCondition
           min: 199.9
         damage:
@@ -1320,7 +1324,7 @@
       - !type:EvenHealthChange
         conditions:
         - !type:TemperatureCondition
-          max: 213.0
+          max: 273.15
         - !type:TotalDamageCondition
           min: 500
         damage:
@@ -1345,20 +1349,22 @@
   metabolisms:
     Bloodstream:
       effects:
-        - !type:EvenHealthChange
-          conditions:
-          - !type:TemperatureCondition
-            max: 213.0
-          damage:
-            Brute: -2
-            Burn: -2
-        - !type:HealthChange
-          conditions:
-          - !type:TemperatureCondition
-            max: 213.0
-          damage:
-            types:
-              Poison: -2
+      - !type:AdjustTemperature
+        amount: 80000 # Heats you up as it metabolizes necessitating constant cooling.
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 273.15
+        damage:
+          Brute: -2
+          Burn: -2
+      - !type:HealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 273.15
+        damage:
+          types:
+            Poison: -2
 
 - type: reagent
   id : Aloxadone

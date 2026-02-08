@@ -181,7 +181,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         }
 
         // Status checklist
-        const float fallbackTemperatureRequirement = 213;
+        const float fallbackTemperatureRequirement = 273;
         var hasTemperatureCheck = (hasGas && hasCorrectTemperature
                 && (lowestTempRequirement != null || msg.GasMix.Temperature < fallbackTemperatureRequirement));
         var hasChemicals = (hasBeaker && !isBeakerEmpty);

@@ -26,6 +26,19 @@
 
 - type: entity
   abstract: true
+  parent: [ ClothingOuterBaseLarge, TemperatureProtectionGood ]
+  id: ClothingOuterBaseLargeInsulated
+
+- type: entity
+  abstract: true
+  parent: [ ClothingOuterBaseLarge, TemperatureProtectionGreat ]
+  id: ClothingOuterBaseLargeFireproof
+  components:
+  - type: FireProtection
+    reduction: 0.65
+
+- type: entity
+  abstract: true
   parent: ClothingOuterBase
   id: ClothingOuterStorageBase
   components:
@@ -47,6 +60,11 @@
         type: StorageBoundUserInterface
   - type: StaticPrice
     price: 70
+
+- type: entity
+  abstract: true
+  parent: [ ClothingOuterStorageBase, TemperatureProtectionMinimal]
+  id: ClothingOuterJacketBase
 
 - type: entity
   abstract: true
@@ -92,8 +110,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterStorageBase
-  id: ClothingOuterStorageToggleableBase
+  parent: ClothingOuterJacketBase
+  id: ClothingOuterJacketToggleableBase
   components:
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterDefault
@@ -106,23 +124,41 @@
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing]
-  id: ClothingOuterHardsuitBase
-  name: base hardsuit
+  parent: [ClothingOuterBaseLargeInsulated, AllowSuitStorageClothing]
+  id: ClothingOuterEVASuitBase
+  name: base EVA Suit
   components:
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
 #    slots: [innerclothing, feet]
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.01
-    coolingCoefficient: 0.01
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10 # the average lightbulb only does around four damage!
+    slots: OUTERCLOTHING
+  - type: HideLayerClothing
+    slots:
+    - Tail
+
+- type: entity
+  abstract: true
+  parent: [ ClothingOuterEVASuitBase, GeigerCounterClothing ]
+  id: ClothingOuterHardsuitBase
+  name: base hardsuit
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
   - type: ClothingSpeedModifier
     walkModifier: 0.6
     sprintModifier: 0.6
-  - type: HeldSpeedModifier
   - type: Item
     size: Ginormous
   - type: Armor
@@ -143,54 +179,12 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
-  - type: ProtectedFromStepTriggers
-    slots: WITHOUT_POCKET
-  - type: DamageOnInteractProtection
-    damageProtection:
-      flatReductions:
-        Heat: 10 # the average lightbulb only does around four damage!
-    slots: OUTERCLOTHING
-  - type: HideLayerClothing
-    slots:
-    - Tail
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterBase, AllowSuitStorageClothing]
-  id: ClothingOuterEVASuitBase
-  name: base EVA Suit
-  components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [innerclothing, feet]
-  - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.01 # Not complete protection from fire
-    coolingCoefficient: 0.01
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: HeldSpeedModifier
-  - type: Item
-    size: Huge
-  - type: ProtectedFromStepTriggers
-    slots: WITHOUT_POCKET
-  - type: DamageOnInteractProtection
-    damageProtection:
-      flatReductions:
-        Heat: 10 # the average lightbulb only does around four damage!
-    slots: OUTERCLOTHING
-  - type: HideLayerClothing
-    slots:
-    - Tail
-
-- type: entity
   parent: ClothingOuterBase
   id: ClothingOuterBaseToggleable
   name: hoodie with hood
-  abstract: True
   components:
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterDefault

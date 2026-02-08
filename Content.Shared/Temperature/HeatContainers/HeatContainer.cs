@@ -1,17 +1,18 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Temperature.Systems;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Temperature.HeatContainer;
+namespace Content.Shared.Temperature.HeatContainers;
 
 /// <summary>
 /// A general-purpose container for heat energy.
-/// Any object that contains, stores, or transfers heat should use a <see cref="HeatContainer"/>
+/// Any object that contains, stores, or transfers heat should use a HeatContainer
 /// instead of implementing its own system.
 /// This allows for consistent heat transfer mechanics across different objects and systems.
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
-[Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem))]
+[Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem), typeof(SharedTemperatureSystem))]
 public partial struct HeatContainer : IRobustCloneable<HeatContainer>
 {
     /// <summary>
@@ -47,6 +48,11 @@ public partial struct HeatContainer : IRobustCloneable<HeatContainer>
     {
         HeatCapacity = heatCapacity;
         Temperature = temperature;
+    }
+
+    public HeatContainer(float heatCapacity)
+    {
+        HeatCapacity = heatCapacity;
     }
 
     /// <summary>

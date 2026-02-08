@@ -166,8 +166,6 @@
       types:
         Piercing: 2
         Slash: 3
-  - type: Temperature # Same as moth temperatures until below is solved.
-    specificHeat: 44
   - type: TemperatureDamage
     heatDamageThreshold: 320 # TODO: 315 when there is a way to make the temperature alert not blink to the side of the screen and disappear when you "sweat" at 39C.
     coldDamageThreshold: 230 # TODO: 220 when the above is solved.
@@ -179,9 +177,6 @@
         Heat: 2.5 # Per second, scales with temperature & other constants
   # - type: Wagging TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
   #   action: ActionToggleWaggingVulpkanin
-  - type: TemperatureProtection
-    heatingCoefficient: 1.2
-    coolingCoefficient: 0.3
   - type: JumpAbility
     action: ActionVulpkaninGravityJump
     canCollide: true

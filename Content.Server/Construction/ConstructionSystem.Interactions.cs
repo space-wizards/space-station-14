@@ -42,7 +42,7 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent,
                 new []{typeof(AnchorableSystem), typeof(PryingSystem), typeof(WeldableSystem)},
                 new []{typeof(EncryptionKeySystem)});
-            SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
+            SubscribeLocalEvent<ConstructionComponent, TemperatureChangedEvent>(EnqueueRefEvent);
             SubscribeLocalEvent<ConstructionComponent, PartAssemblyPartInsertedEvent>(EnqueueEvent);
         }
 
@@ -382,7 +382,7 @@ namespace Content.Server.Construction
 
                 case TemperatureConstructionGraphStep temperatureChangeStep:
                 {
-                    if (ev is not OnTemperatureChangeEvent)
+                    if (ev is not TemperatureChangedEvent)
                         break;
 
                     // Some things, like microwaves, might need to block the temperature construction step from kicking in, or override it entirely.
@@ -543,6 +543,13 @@ namespace Content.Server.Construction
         }
 
         #region Event Handlers
+
+        // Why does this system have you subscribe to an event,
+        // and then pass it through 5 layers of bullshit into a switch statement which tries to guess what event got passed?
+        private void EnqueueRefEvent<T>(Entity<ConstructionComponent> entity, ref T args) where T : struct
+        {
+            EnqueueEvent(entity, entity.Comp, args);
+        }
 
         /// <summary>
         ///     Queues a directed event to be handled by construction on the next update tick.

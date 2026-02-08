@@ -114,7 +114,7 @@
   - type: Climbable # so that ejected bodies don't get stuck
     vaultable: false
   - type: ContainerTemperature
-    coldDamageThreshold: 10
+    coldDamageThreshold: 213
   - type: GuideHelp
     guides:
     - Cryogenics
