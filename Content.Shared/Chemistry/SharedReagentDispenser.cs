@@ -95,6 +95,9 @@ namespace Content.Shared.Chemistry
 
     }
 
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserInsertStorageMessage : BoundUserInterfaceMessage;
+
     public enum ReagentDispenserDispenseAmount
     {
         U1 = 1,

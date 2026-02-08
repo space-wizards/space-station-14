@@ -44,7 +44,9 @@ namespace Content.Client.Kitchen.UI
 
         public void UpdateState(ReagentGrinderInterfaceState state)
         {
-            BeakerContentBox.EjectButton.Disabled = !state.HasBeakerIn;
+            BeakerContentBox.EjectButton.Text = state.HasBeakerIn ?
+                Loc.GetString("grinder-menu-beaker-content-box-eject") :
+                Loc.GetString("grinder-menu-beaker-content-box-insert");
             ChamberContentBox.EjectButton.Disabled = state.ChamberContents.Length <= 0;
             GrindButton.Disabled = !state.CanGrind || !state.Powered;
             JuiceButton.Disabled = !state.CanJuice || !state.Powered;
