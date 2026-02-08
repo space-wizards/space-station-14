@@ -5,11 +5,11 @@
     MaxHeight="525"
     MinWidth="300">
     <ScrollContainer
+        Name="Container"
+        Visible="False"
         Margin="5 5 5 5"
         ReturnMeasure="True"
         VerticalExpand="True">
-
-        <ui:HealthAnalyzerControl
-            Name="HealthAnalyzer"/>
+        <ui:HealthAnalyzerControl Name="HealthAnalyzer"/>
     </ScrollContainer>
 </controls:FancyWindow>

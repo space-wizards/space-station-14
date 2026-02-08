@@ -17,6 +17,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 namespace Content.Client.HealthAnalyzer.UI;
 
@@ -26,49 +27,66 @@ namespace Content.Client.HealthAnalyzer.UI;
 [GenerateTypedNameReferences]
 public sealed partial class HealthAnalyzerControl : BoxContainer
 {
-    private readonly IEntityManager _entityManager;
-    private readonly SpriteSystem _spriteSystem;
-    private readonly IPrototypeManager _prototypes;
     private readonly IResourceCache _cache;
+    private readonly IEntityManager _entityManager;
+    private readonly IPrototypeManager _prototypes;
+    private readonly IGameTiming _timing;
+    private readonly SpriteSystem _spriteSystem;
 
     public HealthAnalyzerControl()
     {
         RobustXamlLoader.Load(this);
 
         var dependencies = IoCManager.Instance!;
-        _entityManager = dependencies.Resolve<IEntityManager>();
-        _spriteSystem = _entityManager.System<SpriteSystem>();
-        _prototypes = dependencies.Resolve<IPrototypeManager>();
         _cache = dependencies.Resolve<IResourceCache>();
+        _entityManager = dependencies.Resolve<IEntityManager>();
+        _prototypes = dependencies.Resolve<IPrototypeManager>();
+        _timing = dependencies.Resolve<IGameTiming>();
+        _spriteSystem = _entityManager.System<SpriteSystem>();
     }
 
+    /// <summary>
+    /// Populate the UI via a state.
+    /// </summary>
+    /// <param name="state">The state that carries the information about the patient.</param>
     public void Populate(HealthAnalyzerUiState state)
     {
-        var target = _entityManager.GetEntity(state.TargetEntity);
+        Populate(state.TargetEntity, state.ScanMode, state.BloodLevel, state.Unrevivable, state.Bleeding);
+        PopulateTemperature(state.Temperature);
+    }
 
-        if (target == null
-            || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
+    /// <summary>
+    /// Populates the UI directly.
+    /// </summary>
+    /// <param name="targetEntity">The entity being analyzed.</param>
+    /// <param name="scanMode">The current scanmode of the analyzer.</param>
+    /// <param name="bloodlevel">The bloodlevel of the entity.</param>
+    /// <param name="unrevivable">Whether this entity is revivable.</param>
+    /// <param name="bleeding">Whether this entity is bleeding.</param>
+    public void Populate(NetEntity? targetEntity, bool scanMode, float bloodlevel, bool unrevivable, bool bleeding)
+    {
+        if (_timing.IsFirstTimePredicted)
+            return;
+
+        var target = _entityManager.GetEntity(targetEntity);
+
+        if (target == null || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
         {
             NoPatientDataText.Visible = true;
             return;
         }
-
         NoPatientDataText.Visible = false;
 
         // Scan Mode
+        ScanModeLabel.Text = scanMode
+            ? Loc.GetString("health-analyzer-window-scan-mode-active")
+            : Loc.GetString("health-analyzer-window-scan-mode-inactive");
 
-        ScanModeLabel.Text = state.ScanMode.HasValue
-            ? state.ScanMode.Value
-                ? Loc.GetString("health-analyzer-window-scan-mode-active")
-                : Loc.GetString("health-analyzer-window-scan-mode-inactive")
-            : Loc.GetString("health-analyzer-window-entity-unknown-text");
-
-        ScanModeLabel.FontColorOverride = state.ScanMode.HasValue && state.ScanMode.Value ? Color.Green : Color.Red;
+        ScanModeLabel.FontColorOverride = scanMode ? Color.Green : Color.Red;
 
         // Patient Information
-
         SpriteView.SetEntity(target.Value);
-        SpriteView.Visible = state.ScanMode.HasValue && state.ScanMode.Value;
+        SpriteView.Visible = scanMode;
         NoDataTex.Visible = !SpriteView.Visible;
 
         var name = new FormattedMessage();
@@ -76,6 +94,11 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         name.AddText(_entityManager.HasComponent<MetaDataComponent>(target.Value)
             ? Identity.Name(target.Value, _entityManager)
             : Loc.GetString("health-analyzer-window-entity-unknown-text"));
+
+        // If the scanned entity was changed, we need to reset the temperature label.
+        if (name.ToMarkup() != NameLabel.Text)
+            TemperatureLabel.Text = Loc.GetString("health-analyzer-window-entity-unknown-temperature-text");
+
         NameLabel.SetMessage(name);
 
         SpeciesLabel.Text =
@@ -85,13 +108,8 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
                 : Loc.GetString("health-analyzer-window-entity-unknown-species-text");
 
         // Basic Diagnostic
-
-        TemperatureLabel.Text = !float.IsNaN(state.Temperature)
-            ? $"{state.Temperature - Atmospherics.T0C:F1} °C ({state.Temperature:F1} K)"
-            : Loc.GetString("health-analyzer-window-entity-unknown-value-text");
-
-        BloodLabel.Text = !float.IsNaN(state.BloodLevel)
-            ? $"{state.BloodLevel * 100:F1} %"
+        BloodLabel.Text = !float.IsNaN(bloodlevel)
+            ? $"{bloodlevel * 100:F1} %"
             : Loc.GetString("health-analyzer-window-entity-unknown-value-text");
 
         StatusLabel.Text =
@@ -100,12 +118,10 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
                 : Loc.GetString("health-analyzer-window-entity-unknown-text");
 
         // Total Damage
-
         DamageLabel.Text = damageable.TotalDamage.ToString();
 
         // Alerts
-
-        var showAlerts = state.Unrevivable == true || state.Bleeding == true;
+        var showAlerts = unrevivable || bleeding;
 
         AlertsDivider.Visible = showAlerts;
         AlertsContainer.Visible = showAlerts;
@@ -113,7 +129,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         if (showAlerts)
             AlertsContainer.RemoveAllChildren();
 
-        if (state.Unrevivable == true)
+        if (unrevivable)
             AlertsContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("health-analyzer-window-entity-unrevivable-text"),
@@ -121,7 +137,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
                 MaxWidth = 300
             });
 
-        if (state.Bleeding == true)
+        if (bleeding)
             AlertsContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("health-analyzer-window-entity-bleeding-text"),
@@ -130,7 +146,6 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             });
 
         // Damage Groups
-
         var damageSortedGroups =
             damageable.DamagePerGroup.OrderByDescending(damage => damage.Value)
                 .ToDictionary(x => x.Key, x => x.Value);
@@ -138,6 +153,19 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
 
         DrawDiagnosticGroups(damageSortedGroups, damagePerType);
+    }
+
+    /// <summary>
+    /// Populate the temperature label.
+    /// </summary>
+    /// <remarks>
+    /// This has been isolated in a method due to temperature not being predicted, while the rest is.
+    /// </remarks>
+    private void PopulateTemperature(float temperature)
+    {
+        TemperatureLabel.Text = !float.IsNaN(temperature)
+            ? $"{temperature - Atmospherics.T0C:F1} °C ({temperature:F1} K)"
+            : Loc.GetString("health-analyzer-window-entity-unknown-temperature-text");
     }
 
     private static string GetStatus(MobState mobState)
