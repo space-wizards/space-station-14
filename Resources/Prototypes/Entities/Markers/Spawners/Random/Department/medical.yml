@@ -1,65 +1,73 @@
 # Minor medical loot spawner
 # Use case: Common areas that aren't medical
 - type: entity
-  name: healing supplies spawner
-  id: LootSpawnerMedicalMinor
   parent: MarkerBase
+  id: LootSpawnerMedicalMinor
+  name: healing supplies spawner
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Specific/Medical/medical.rsi
-          state: brutepack
-    - type: RandomSpawner
-      rarePrototypes:
-        - MedkitFilled
-      rareChance: 0.1
-      prototypes:
-        - Syringe #you win some you lose some
-        - Brutepack
-        - Ointment
-        - Gauze
-        - EmergencyMedipen
-        - PillCanisterIron
-      chance: 0.9
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Medical/medical.rsi
+      state: brutepack
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MedkitFilled
+        weight: 0.1
+      - !type:GroupSelector
+        weight: 0.9
+        prob: 0.9
+        children:
+        - id: Syringe #you win some you lose some
+        - id: Brutepack
+        - id: Ointment
+        - id: Gauze
+        - id: EmergencyMedipen
+        - id: PillCanisterIron
+    offset: 0.0
 
 # Proper medical loot spawner, contains things like beakers and better meds.
 - type: entity
-  name: medical loot spawner
-  id: LootSpawnerMedicalClassy
   parent: MarkerBase
+  id: LootSpawnerMedicalClassy
+  name: medical loot spawner
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Specific/Medical/firstaidkits.rsi
-          state: firstaid
-    - type: RandomSpawner
-      rarePrototypes:
-        - PillCanisterDermaline
-        - PillCanisterDylovene
-        - PillCanisterBicaridine
-        - PillCanisterKelotane
-        - PillCanisterDexalin
-        - HandheldHealthAnalyzer
-        - ClothingHandsGlovesLatex
-      rareChance: 0.1
-      prototypes:
-        - Syringe
-        - Dropper
-        - Beaker
-        - LargeBeaker
-        - Brutepack
-        - Ointment
-        - Gauze
-        - EmergencyMedipen
-        - ChemistryBottleEpinephrine
-        - PillCanisterTricordrazine
-        - PillCanisterCharcoal
-        - PillCanisterHyronalin
-        - PillCanisterIron
-        - Bloodpack
-        - MedkitFilled
-      chance: 0.9
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Medical/firstaidkits.rsi
+      state: firstaid
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.9
+        prob: 0.9
+        children:
+        - id: Syringe
+        - id: Dropper
+        - id: Beaker
+        - id: LargeBeaker
+        - id: Brutepack
+        - id: Ointment
+        - id: Gauze
+        - id: EmergencyMedipen
+        - id: ChemistryBottleEpinephrine
+        - id: PillCanisterTricordrazine
+        - id: PillCanisterCharcoal
+        - id: PillCanisterHyronalin
+        - id: PillCanisterIron
+        - id: Bloodpack
+        - id: MedkitFilled
+      - !type:GroupSelector
+        weight: 0.1
+        children:
+        - id: PillCanisterDermaline
+        - id: PillCanisterDylovene
+        - id: PillCanisterBicaridine
+        - id: PillCanisterKelotane
+        - id: PillCanisterDexalin
+        - id: HandheldHealthAnalyzer
+        - id: ClothingHandsGlovesLatex
+    offset: 0.0

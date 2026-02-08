@@ -1,148 +1,171 @@
 # Security 
 - type: entity
+  parent: MarkerBase
+  id: LootSpawnerSecurityBasic
   name: security loot spawner
   suffix: Gear, Simple
-  id: LootSpawnerSecurityBasic
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Weapons/Melee/flash.rsi
-          state: flash
-    - type: RandomSpawner
-      rarePrototypes:
-        - ClothingEyesGlassesSunglasses
-        - BoxHandcuff
-      rareChance: 0.05
-      prototypes:
-        - Flash
-        - Handcuffs
-        - Zipties
-        - FlashlightSeclite
-        - Tourniquet
-      chance: 0.85
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Weapons/Melee/flash.rsi
+      state: flash
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.85
+        children:
+        - id: Flash
+        - id: Handcuffs
+        - id: Zipties
+        - id: FlashlightSeclite
+        - id: Tourniquet
+      - !type:GroupSelector
+        weight: 0.05
+        children:
+        - id: ClothingEyesGlassesSunglasses
+        - id: BoxHandcuff
 
 - type: entity
+  parent: MarkerBase
+  id: LootSpawnerSecurity
   name: security loot spawner
   suffix: Gear, Better
-  id: LootSpawnerSecurity
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Weapons/Melee/flash.rsi
-          state: flash
-    - type: RandomSpawner
-      rarePrototypes:
-        - ClothingEyesGlassesSunglasses
-        - BoxHandcuff
-        - BoxFlashbang
-        - TearGasGrenade
-        - WeaponDisabler
-        - Stunbaton
-      rareChance: 0.05
-      prototypes:
-        - Flash
-        - Handcuffs
-        - Zipties
-        - FlashlightSeclite
-        - GrenadeFlashBang
-        - SecurityWhistle
-        - Tourniquet
-      chance: 0.85
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Weapons/Melee/flash.rsi
+      state: flash
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.85
+        children:
+        - id: Flash
+        - id: Handcuffs
+        - id: Zipties
+        - id: FlashlightSeclite
+        - id: GrenadeFlashBang
+        - id: SecurityWhistle
+        - id: Tourniquet
+      - !type:GroupSelector
+        weight: 0.05
+        children:
+        - id: ClothingEyesGlassesSunglasses
+        - id: BoxHandcuff
+        - id: BoxFlashbang
+        - id: TearGasGrenade
+        - id: WeaponDisabler
+        - id: Stunbaton
  
 # Armory loot spawner
 # Automatics are a complete mess right now, so the AK-MS And WT-550 have been commented out for consistency's sake. I have no idea what role these guns are supposed to fufill.
 - type: entity
+  parent: MarkerBase
+  id: LootSpawnerArmory
   name: armory loot spawner
   suffix: Guns, Armor
-  id: LootSpawnerArmory
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Clothing/OuterClothing/Armor/security.rsi
-          state: icon
-        - sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - ClothingHeadHelmetSwat
-        - WeaponShotgunEnforcer
-#        - WeaponRifleAk
-      rareChance: 0.05
-      prototypes:
-        - RiotShield
-        - RiotBulletShield
-        - RiotLaserShield
-        - ClothingHeadHelmetBasic
-        - ClothingHeadHelmetRiot
-        - ClothingOuterArmorBasic
-        - ClothingOuterArmorRiot
-        - ClothingOuterArmorBulletproof
-#        - WeaponSubMachineGunWt550
-        - WeaponDisabler
-        - WeaponPistolMk58
-        - WeaponRifleLecter
-        - WeaponSubMachineGunDrozd
-        - WeaponLaserCarbine
-        - WeaponShotgunKammerer
-      chance: 0.95
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Clothing/OuterClothing/Armor/security.rsi
+      state: icon
+    - sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.95
+        children:
+        - id: RiotShield
+        - id: RiotBulletShield
+        - id: RiotLaserShield
+        - id: ClothingHeadHelmetBasic
+        - id: ClothingHeadHelmetRiot
+        - id: ClothingOuterArmorBasic
+        - id: ClothingOuterArmorRiot
+        - id: ClothingOuterArmorBulletproof
+#        - id: WeaponSubMachineGunWt550
+        - id: WeaponDisabler
+        - id: WeaponPistolMk58
+        - id: WeaponRifleLecter
+        - id: WeaponSubMachineGunDrozd
+        - id: WeaponLaserCarbine
+        - id: WeaponShotgunKammerer
+      - !type:GroupSelector
+        weight: 0.05
+        children:
+        - id: ClothingHeadHelmetSwat
+        - id: WeaponShotgunEnforcer
+#        - id: WeaponRifleAk
+    offset: 0.0
 
 - type: entity
+  parent: MarkerBase
+  id: LootSpawnerArmoryGunsOnly
   name: armory loot spawner
   suffix: Guns
-  id: LootSpawnerArmoryGunsOnly
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - WeaponShotgunEnforcer
-#        - WeaponRifleAk
-      rareChance: 0.05
-      prototypes:
-#        - WeaponSubMachineGunWt550
-        - WeaponDisabler
-        - WeaponPistolMk58
-        - WeaponRifleLecter
-        - WeaponSubMachineGunDrozd
-        - WeaponLaserCarbine
-        - WeaponShotgunKammerer
-      chance: 0.95
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.95
+        children:
+#        - id: WeaponSubMachineGunWt550
+        - id: WeaponDisabler
+        - id: WeaponPistolMk58
+        - id: WeaponRifleLecter
+        - id: WeaponSubMachineGunDrozd
+        - id: WeaponLaserCarbine
+        - id: WeaponShotgunKammerer
+      - !type:GroupSelector
+        weight: 0.05
+        children:
+        - id: WeaponShotgunEnforcer
+#        - id: WeaponRifleAk
+    offset: 0.0
 
 - type: entity
+  parent: MarkerBase
+  id: LootSpawnerArmoryArmorOnly
   name: armory loot spawner
   suffix: Armor
-  id: LootSpawnerArmoryArmorOnly
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Clothing/OuterClothing/Armor/security.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - ClothingHeadHelmetSwat
-      rareChance: 0.05
-      prototypes:
-        - RiotShield
-        - RiotBulletShield
-        - RiotLaserShield
-        - ClothingHeadHelmetBasic
-        - ClothingHeadHelmetRiot
-        - ClothingOuterArmorBasic
-        - ClothingOuterArmorRiot
-        - ClothingOuterArmorBulletproof
-      chance: 0.95
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Clothing/OuterClothing/Armor/security.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: ClothingHeadHelmetSwat
+        weight: 0.05
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.95
+        children:
+        - id: RiotShield
+        - id: RiotBulletShield
+        - id: RiotLaserShield
+        - id: ClothingHeadHelmetBasic
+        - id: ClothingHeadHelmetRiot
+        - id: ClothingOuterArmorBasic
+        - id: ClothingOuterArmorRiot
+        - id: ClothingOuterArmorBulletproof
+    offset: 0.0
