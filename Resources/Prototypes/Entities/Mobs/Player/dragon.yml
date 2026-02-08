@@ -168,6 +168,10 @@
     speedModifier: 2.5 # fast because dragon strong
     useSound:
       path: /Audio/Items/crowbar.ogg
+  - type: InnateWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - DragonRiftWaypointer
 
 - type: entity
   parent: BaseMobDragon

@@ -1,0 +1,45 @@
+﻿# If you add a new waypointer, you'll need to add the "WaypointerTrackable" component to every entity that you want to be tracked EXCEPT grids.
+# Why not grids? As Todd Howard would say, they just work.
+
+- type: waypointer
+  abstract: true
+  id: BaseWaypointer
+  rsiPath: Markers/Waypointers/waypointer.rsi
+  waypointerStates: 5
+  color: White
+
+- type: waypointer
+  parent: BaseWaypointer
+  id: NTStationWaypointer
+  trackedComponents:
+  - type: StationData
+  color: Blue
+
+- type: waypointer
+  parent: BaseWaypointer
+  id: TradeStationWaypointer
+  trackedComponents:
+  - type: TradeStation
+  color: Green
+
+- type: waypointer
+  parent: BaseWaypointer
+  id: WreckWaypointer
+  trackedComponents:
+  - type: MapGrid
+  blacklist:
+    components:
+    - StationData
+    - TradeStation
+    - EscapePod
+  color: Orange
+  maxRange: 50
+
+- type: waypointer
+  parent: BaseWaypointer
+  id: DragonRiftWaypointer
+  trackedComponents:
+  - type: DragonRift
+  workOnGrid: true
+  color: Red
+  maxRange: 50

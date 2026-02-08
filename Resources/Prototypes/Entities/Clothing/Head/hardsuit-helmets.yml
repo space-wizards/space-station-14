@@ -211,6 +211,11 @@
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - WreckWaypointer
+    - NTStationWaypointer
+    - TradeStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -233,6 +238,11 @@
   - type: PointLight
     radius: 7
     energy: 3
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - WreckWaypointer
+    - NTStationWaypointer
+    - TradeStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -294,6 +304,11 @@
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - WreckWaypointer
+    - NTStationWaypointer
+    - TradeStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -345,6 +360,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
   - type: Tag
     tags:
     - CorgiWearable
@@ -399,7 +418,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 #Captain's Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
@@ -418,6 +440,10 @@
     tags:
     - CorgiWearable
     - WhitelistChameleon
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -555,6 +581,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -574,6 +604,11 @@
   - type: PointLight
     radius: 7
     energy: 3
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - WreckWaypointer
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -846,6 +881,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Chaplain Hardsuit
 - type: entity
@@ -860,6 +899,10 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertchaplain.rsi
   - type: PointLight
     color: "#ffffff"
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Engineer Hardsuit
 - type: entity
@@ -883,6 +926,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Medical Hardsuit
 - type: entity
@@ -897,6 +944,10 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Security Hardsuit
 - type: entity
@@ -918,6 +969,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #ERT Janitor Hardsuit
 - type: entity
@@ -932,6 +987,10 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #CBURN Hardsuit
 - type: entity
@@ -1008,6 +1067,10 @@
         Heat: 0.80
         Radiation: 0.80
         Caustic: 0.95
+  - type: ClothingShowWaypointer
+    waypointerProtoIds:
+    - NTStationWaypointer
+    - TradeStationWaypointer
 
 #MISC. HARDSUITS
 #Clown Hardsuit

@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "SirWarock on Github",
+    "states": [
+        {
+            "name": "marker1"
+        },
+        {
+            "name": "marker2"
+        },
+        {
+            "name": "marker3"
+        },
+        {
+            "name": "marker4"
+        },
+        {
+            "name": "marker5"
+        }
+    ]
+}
