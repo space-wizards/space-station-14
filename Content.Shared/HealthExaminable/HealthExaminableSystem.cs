@@ -15,7 +15,13 @@ public sealed class HealthExaminableSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<HealthExaminableComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HealthExaminableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+    }
+
+    private void OnComponentInit(Entity<HealthExaminableComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.Thresholds.Sort();
     }
 
     private void OnGetExamineVerbs(EntityUid uid, HealthExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -55,26 +61,18 @@ public sealed class HealthExaminableSystem : EntitySystem
             if (dmg == FixedPoint2.Zero)
                 continue;
 
-            FixedPoint2 closest = FixedPoint2.Zero;
-
-            string chosenLocStr = string.Empty;
-            foreach (var threshold in component.Thresholds)
+            var chosenLocStr = string.Empty;
+            for (var i = 0; i < component.Thresholds.Length; i++)
             {
-                var str = $"health-examinable-{component.LocPrefix}-{type}-{threshold}";
-                var tempLocStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", ("target", Identity.Entity(uid, EntityManager)));
+                if (component.Thresholds[i] > dmg)
+                    break;
 
-                // i.e., this string doesn't exist, because theres nothing for that threshold
-                if (tempLocStr == str)
-                    continue;
-
-                if (dmg > threshold && threshold > closest)
-                {
-                    chosenLocStr = tempLocStr;
-                    closest = threshold;
-                }
+                if (Loc.TryGetString($"health-examinable-{component.LocPrefix}-{type}-{i}", out var locStr, ("target", Identity.Entity(uid, EntityManager))))
+                    chosenLocStr = locStr;
             }
 
-            if (closest == FixedPoint2.Zero)
+            // No threshold string was found
+            if (string.IsNullOrEmpty(chosenLocStr))
                 continue;
 
             if (!first)
