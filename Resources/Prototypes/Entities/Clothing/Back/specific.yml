@@ -127,7 +127,7 @@
   parent: ClothingBackpack
   id: XenoborgMaterialBag
   name: silicon storage square
-  description: A knockoff version of a bluespace bag, can vacumn up select materials, unfit for use by humanoids due to harmful emissions.
+  description: A knockoff version of a bluespace bag, can vacuum up select materials, unfit for use by humanoids due to harmful emissions.
   components:
   - type: Sprite
     sprite: Objects/Specific/Robotics/silicon_storage_cube.rsi
@@ -137,8 +137,6 @@
   - type: Storage
     grid:
     - 0,0,7,3
-    quickInsert: true
-    areaInsert: true
     whitelist:
       tags:
         - Sheet
@@ -152,3 +150,5 @@
     blacklist:
       components:
       - SiliconLawProvider
+  - type: QuickPickup
+  - type: AreaPickup
