@@ -52,3 +52,37 @@
   id: HandheldStationMapUnpowered
   parent: BaseHandheldStationMap
   suffix: Handheld, Always Powered
+
+- type: entity
+  parent: HandheldStationMap
+  id: HandheldStationMapStatic
+  suffix: Handheld, Works Off-Station
+  components:
+  - type: StationMap
+    initializeWithStation: true
+
+- type: entity
+  parent: HandheldStationMap
+  id: HandheldStationMapNukeops
+  name: target station map
+  suffix: Handheld, NukeOps
+  description: Displays a readout of the target station.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/tablets.rsi
+    layers:
+    - state: tablet
+    - state: syndie
+      shader: unshaded
+  - type: Item
+    sprite: Objects/Devices/tablets.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left-syndie
+      right:
+      - state: inhand-right-syndie
+  - type: StationMap
+    showLocation: false
+    initializeWithStation: true
+  - type: NukeopsStationMap
+

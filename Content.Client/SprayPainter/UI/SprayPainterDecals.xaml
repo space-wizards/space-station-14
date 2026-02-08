@@ -2,15 +2,26 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.SprayPainter.UI">
     <BoxContainer Orientation="Vertical">
-        <Label Text="{Loc 'spray-painter-selected-decals'}" />
+        <BoxContainer>
+            <Label Text="{Loc 'spray-painter-selected-decals'}" />
+            <Label Name="SelectedDecalName" StyleClasses="Italic" Margin="4 0" />
+        </BoxContainer>
         <ScrollContainer VerticalExpand="True">
             <GridContainer Columns="7" Name="DecalsGrid">
                 <!-- populated by code -->
             </GridContainer>
         </ScrollContainer>
 
+        <PanelContainer StyleClasses="LowDivider" />
         <BoxContainer Orientation="Vertical">
-            <ColorSelectorSliders Name="ColorSelector" IsAlphaVisible="True" />
+            <ColorSelectorSliders Name="ColorSelector" IsAlphaVisible="True">
+                <BoxContainer HorizontalAlignment="Right" VerticalAlignment="Top" SetHeight="29">
+                    <Button Name="ColorPalette" Text="Palette" />
+                    <Button Name="ColorPicker" ToggleMode="True">
+                        <TextureRect TexturePath="/Textures/Interface/eyedropper.svg.png" Stretch="KeepAspectCentered" SetSize="16 16" />
+                    </Button>
+                </BoxContainer>
+            </ColorSelectorSliders>
             <CheckBox Name="UseCustomColorCheckBox" Text="{Loc 'spray-painter-use-custom-color'}" />
             <CheckBox Name="SnapToTileCheckBox" Text="{Loc 'spray-painter-use-snap-to-tile'}" />
         </BoxContainer>
@@ -18,9 +29,13 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'spray-painter-angle-rotation'}" />
             <SpinBox Name="AngleSpinBox" HorizontalExpand="True" />
-            <Button Text="{Loc 'spray-painter-angle-rotation-90-sub'}" Name="SubAngleButton" />
+            <Button Name="AddAngleButton" ToolTip="{Loc 'spray-painter-angle-rotation-90-add'}" SetSize="48 32">
+                <TextureRect TexturePath="/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png" Stretch="KeepAspectCentered" SetSize="32 32" />
+            </Button>
             <Button Text="{Loc 'spray-painter-angle-rotation-reset'}" Name="SetZeroAngleButton" />
-            <Button Text="{Loc 'spray-painter-angle-rotation-90-add'}" Name="AddAngleButton" />
+            <Button Name="SubAngleButton" ToolTip="{Loc 'spray-painter-angle-rotation-90-sub'}" SetSize="48 32">
+                <TextureRect TexturePath="/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png" Stretch="KeepAspectCentered" SetSize="32 32" />
+            </Button>
         </BoxContainer>
     </BoxContainer>
 </controls:SprayPainterDecals>
