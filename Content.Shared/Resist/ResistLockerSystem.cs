@@ -71,6 +71,8 @@ public sealed class ResistLockerSystem : EntitySystem
 
     private void OnDoAfter(Entity<ResistLockerComponent> ent, ref ResistLockerDoAfterEvent args)
     {
+        Dirty(ent);
+
         if (args.Cancelled)
         {
             ent.Comp.IsResisting = false;
