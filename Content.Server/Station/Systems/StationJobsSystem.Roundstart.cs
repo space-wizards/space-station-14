@@ -63,23 +63,22 @@ public sealed partial class StationJobsSystem
         if (profiles.Count == 0)
             return new();
 
-        // We need to modify this collection later, so make a copy of it.
-        profiles = profiles.ShallowClone();
+        var unassignedProfiles = profiles.ShallowClone();
 
         // Player <-> (job, station)
-        var assigned = new Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)>(profiles.Count);
+        var assigned = new Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)>(unassignedProfiles.Count);
 
         // The jobs left on the stations. This collection is modified as jobs are assigned to track what's available.
-        var stationJobs = new Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>>();
+        var remainingStationJobs = new Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>>();
         foreach (var station in stations)
         {
             if (useRoundStartJobs)
             {
-                stationJobs.Add(station, GetRoundStartJobs(station).ToDictionary(x => x.Key, x => x.Value));
+                remainingStationJobs.Add(station, GetRoundStartJobs(station).ToDictionary(x => x.Key, x => x.Value));
             }
             else
             {
-                stationJobs.Add(station, GetJobs(station).ToDictionary(x => x.Key, x => x.Value));
+                remainingStationJobs.Add(station, GetJobs(station).ToDictionary(x => x.Key, x => x.Value));
             }
         }
 
@@ -90,15 +89,15 @@ public sealed partial class StationJobsSystem
         {
             for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
             {
-                if (profiles.Count == 0)
+                if (unassignedProfiles.Count == 0)
                     goto endFunc;
 
-                var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles);
+                var candidates = GetPlayersJobCandidates(weight, selectedPriority, unassignedProfiles);
 
-                var optionsRemaining = 0;
+                var candidatesRemaining = 0;
 
                 // Tracks what players are available for a given job in the current iteration of selection.
-                var jobPlayerOptions = new Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>>();
+                var jobCandidates = new Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>>();
 
                 // Goes through every candidate, and adds them to jobPlayerOptions, so that the candidate players
                 // have an index sorted by job. We use this (much) later when actually assigning people to randomly
@@ -107,13 +106,13 @@ public sealed partial class StationJobsSystem
                 {
                     foreach (var job in jobs)
                     {
-                        if (!jobPlayerOptions.ContainsKey(job))
-                            jobPlayerOptions.Add(job, new HashSet<NetUserId>());
+                        if (!jobCandidates.ContainsKey(job))
+                            jobCandidates.Add(job, new HashSet<NetUserId>());
 
-                        jobPlayerOptions[job].Add(user);
+                        jobCandidates[job].Add(user);
                     }
 
-                    optionsRemaining++;
+                    candidatesRemaining++;
                 }
 
                 // The jobs we're currently trying to select players for.
@@ -125,7 +124,7 @@ public sealed partial class StationJobsSystem
                     var slots = new Dictionary<ProtoId<JobPrototype>, int?>();
 
                     // Get all of the jobs in the selected weight category.
-                    foreach (var (job, slot) in stationJobs[station])
+                    foreach (var (job, slot) in remainingStationJobs[station])
                     {
                         if (_jobsByWeight[weight].Contains(job))
                             slots.Add(job, slot);
@@ -209,18 +208,18 @@ public sealed partial class StationJobsSystem
                             if (currStationSelectingJobs[job] != null && currStationSelectingJobs[job] == 0)
                                 continue; // Can't assign this job.
 
-                            if (!jobPlayerOptions.ContainsKey(job))
+                            if (!jobCandidates.ContainsKey(job))
                                 continue;
 
                             // Picking players it finds that have the job set.
-                            var player = _random.Pick(jobPlayerOptions[job]);
-                            AssignPlayer(player, job, station, jobPlayerOptions, stationJobs, profiles, assigned, ref optionsRemaining);
+                            var player = _random.Pick(jobCandidates[job]);
+                            AssignPlayer(player, job, station, jobCandidates, remainingStationJobs, unassignedProfiles, assigned, ref candidatesRemaining);
                             stationShares[station]--;
 
                             if (currStationSelectingJobs[job] != null)
                                 currStationSelectingJobs[job]--;
 
-                            if (optionsRemaining == 0)
+                            if (candidatesRemaining == 0)
                                 goto done;
                         }
                     } while (priorCount != stationShares[station]);
@@ -240,7 +239,7 @@ public sealed partial class StationJobsSystem
         EntityUid station,
         Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>> jobPlayerOptions,
         Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>> stationJobs,
-        Dictionary<NetUserId, HumanoidCharacterProfile> profiles,
+        Dictionary<NetUserId, HumanoidCharacterProfile> unassignedProfiles,
         Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> assigned,
         ref int optionsRemaining
         )
@@ -254,7 +253,7 @@ public sealed partial class StationJobsSystem
         }
 
         stationJobs[station][job]--;
-        profiles.Remove(player);
+        unassignedProfiles.Remove(player);
         assigned.Add(player, (job, station));
 
         optionsRemaining--;
