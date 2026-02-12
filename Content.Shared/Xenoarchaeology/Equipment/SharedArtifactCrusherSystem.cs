@@ -34,7 +34,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArtifactCrusherComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<ArtifactCrusherComponent, StorageAfterOpenEvent>(OnStorageAfterOpen);
+        SubscribeLocalEvent<ArtifactCrusherComponent, StorageBeforeOpenEvent>(OnStorageBeforeOpen);
         SubscribeLocalEvent<ArtifactCrusherComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<ArtifactCrusherComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ArtifactCrusherComponent, GotEmaggedEvent>(OnEmagged);
@@ -47,7 +47,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         ent.Comp.OutputContainer = ContainerSystem.EnsureContainer<Container>(ent, ent.Comp.OutputContainerName);
     }
 
-    private void OnStorageAfterOpen(Entity<ArtifactCrusherComponent> ent, ref StorageAfterOpenEvent args)
+    private void OnStorageBeforeOpen(Entity<ArtifactCrusherComponent> ent, ref StorageBeforeOpenEvent args)
     {
         StopCrushing(ent);
         ContainerSystem.EmptyContainer(ent.Comp.OutputContainer);
@@ -140,11 +140,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
             ent.Comp.CrushingSoundEntity = AudioSystem.Stop(ent.Comp.CrushingSoundEntity);
 
         if (TryComp<EntityStorageComponent>(ent, out var storageComp))
-        {
-            // FIXME: We do not have access to the storage in StorageAfterOpenEvent,
-            // so this is not getting called except when power is out.
             UnmarkCrusherTarget(storageComp.Contents.ContainedEntities);
-        }
 
         Dirty(ent, ent.Comp);
     }
