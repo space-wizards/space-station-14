@@ -8,7 +8,7 @@ namespace Content.Shared.Security;
 /// The old `SecurityStatus.None` is gone and instead `null` is used for places storing a status.
 /// </summary>
 [Prototype]
-public sealed class SecurityStatusPrototype: IPrototype
+public sealed partial class SecurityStatusPrototype: IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
