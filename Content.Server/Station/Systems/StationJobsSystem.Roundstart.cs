@@ -141,39 +141,8 @@ public sealed partial class StationJobsSystem
                     stationTotalSlots.Add(station, slots);
                 }
 
-                var totalSlots = 0;
-
-                // LINQ moment.
-                // totalSlots = stationTotalSlots.Sum(x => x.Value);
-                foreach (var (_, slot) in stationTotalSlots)
-                {
-                    totalSlots += slot;
-                }
-
-                if (totalSlots == 0)
-                    continue; // No slots so just move to the next iteration.
-
                 // The share of the players each station gets in the current iteration of job selection.
-                var stationShares = new Dictionary<EntityUid, int>(stations.Count);
-
-                // How many players we've distributed so far. Used to grant any remaining slots if we have leftovers.
-                var distributed = 0;
-
-                // Goes through each station and figures out how many players we should give it for the current iteration.
-                foreach (var station in stations)
-                {
-                    // Calculates the percent share then multiplies.
-                    stationShares[station] = (int)Math.Floor(((float)stationTotalSlots[station] / totalSlots) * candidates.Count);
-                    distributed += stationShares[station];
-                }
-
-                // Avoids the fair share problem where if there's two stations and one player neither gets one.
-                // We do this by simply selecting a station randomly and giving it the remaining share(s).
-                if (distributed < candidates.Count)
-                {
-                    var choice = _random.Pick(stations);
-                    stationShares[choice] += candidates.Count - distributed;
-                }
+                var stationShares = CalculateStationShares(stationTotalSlots, candidatesRemaining);
 
                 // Actual meat, goes through each station and shakes the tree until everyone has a job.
                 foreach (var station in stations)
@@ -254,6 +223,45 @@ public sealed partial class StationJobsSystem
         assigned.Add(player, (job, station));
 
         optionsRemaining--;
+    }
+
+    /// <summary>
+    /// Assign each station a maximum share of the candidates for the current iteration
+    /// of job assigning, proportional to the number of job slots it has for said iteration.
+    /// </summary>
+    /// <param name="stationSlots">How many job slots each station has for this iteration</param>
+    /// <param name="candidateCount">How many job candidates there are for this iteration</param>
+    /// <returns></returns>
+    private Dictionary<EntityUid, int> CalculateStationShares(Dictionary<EntityUid, int> stationSlots, int candidateCount)
+    {
+        // The share of the candidates each station gets.
+        var stationShares = new Dictionary<EntityUid, int>(stationSlots.Count);
+
+        var totalSlots = stationSlots.Values.Sum();
+
+        if (totalSlots == 0)
+            return stationShares; // No station wants any of the candidates
+
+        // How many players we've distributed so far. Used to grant any remaining slots if we have leftovers.
+        var distributed = 0;
+
+        // Goes through each station and figures out how many players we should give it.
+        foreach (var (station, slots) in stationSlots)
+        {
+            // Calculates the percent share then multiplies.
+            stationShares[station] = (int)Math.Floor(((float)slots / totalSlots) * candidateCount);
+            distributed += stationShares[station];
+        }
+
+        // Avoids the fair share problem where if there's two stations and one player neither gets one.
+        // We do this by simply selecting a station randomly and giving it the remaining share(s).
+        if (distributed < candidateCount)
+        {
+            var choice = _random.Pick(stationShares.Keys);
+            stationShares[choice] += candidateCount - distributed;
+        }
+
+        return stationShares;
     }
 
     /// <summary>
