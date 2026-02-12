@@ -115,7 +115,7 @@ namespace Content.Client.Lobby.UI
                 var jobList = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    Margin = new Thickness(0, 0, 5f, 0),
+                    Margin = new Thickness(10),
                 };
 
                 var collapseButton = new ContainerButton()
@@ -136,6 +136,7 @@ namespace Content.Client.Lobby.UI
 
                 JobList.AddChild(new StripeBack()
                 {
+                    HasTopEdge = false,
                     Children =
                     {
                         new PanelContainer()

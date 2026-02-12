@@ -4,13 +4,11 @@
                SetSize="685 560">
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True"
-                  VerticalExpand="True"
-                  Margin="10"
-                  SeparationOverride="5">
+                  VerticalExpand="True">
 
         <!-- Left side, we stuff CharacterSelectorButtons in here -->
         <ScrollContainer VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="3">
-            <BoxContainer Name="CharacterList" Orientation="Vertical"/>
+            <BoxContainer Name="CharacterList" Orientation="Vertical" Margin="10"/>
         </ScrollContainer>
 
         <!-- Vertical rule -->
