@@ -83,22 +83,6 @@ public sealed partial class StationJobsSystem
             }
         }
 
-
-        // We reuse this collection. It tracks what jobs we're currently trying to select players for.
-        var currentlySelectingJobs = new Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>>(stations.Count);
-        foreach (var station in stations)
-        {
-            currentlySelectingJobs.Add(station, new Dictionary<ProtoId<JobPrototype>, int?>());
-        }
-
-        // And these.
-        // Tracks what players are available for a given job in the current iteration of selection.
-        var jobPlayerOptions = new Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>>();
-        // Tracks the total number of slots for the given stations in the current iteration of selection.
-        var stationTotalSlots = new Dictionary<EntityUid, int>(stations.Count);
-        // The share of the players each station gets in the current iteration of job selection.
-        var stationShares = new Dictionary<EntityUid, int>(stations.Count);
-
         // Ok so the general algorithm:
         // We start with the highest weight jobs and work our way down. We filter jobs by weight when selecting as well.
         // Weight > Priority > Station.
@@ -113,7 +97,8 @@ public sealed partial class StationJobsSystem
 
                 var optionsRemaining = 0;
 
-                jobPlayerOptions.Clear(); // We reuse this collection.
+                // Tracks what players are available for a given job in the current iteration of selection.
+                var jobPlayerOptions = new Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>>();
 
                 // Goes through every candidate, and adds them to jobPlayerOptions, so that the candidate players
                 // have an index sorted by job. We use this (much) later when actually assigning people to randomly
@@ -131,16 +116,13 @@ public sealed partial class StationJobsSystem
                     optionsRemaining++;
                 }
 
-                // We reuse this collection, so clear it's children.
-                foreach (var slots in currentlySelectingJobs)
-                {
-                    slots.Value.Clear();
-                }
+                // The jobs we're currently trying to select players for.
+                var currentlySelectingJobs = new Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>>(stations.Count);
 
                 // Go through every station..
                 foreach (var station in stations)
                 {
-                    var slots = currentlySelectingJobs[station];
+                    var slots = new Dictionary<ProtoId<JobPrototype>, int?>();
 
                     // Get all of the jobs in the selected weight category.
                     foreach (var (job, slot) in stationJobs[station])
@@ -148,11 +130,12 @@ public sealed partial class StationJobsSystem
                         if (_jobsByWeight[weight].Contains(job))
                             slots.Add(job, slot);
                     }
+
+                    currentlySelectingJobs.Add(station, slots);
                 }
 
-
-                // Clear for reuse.
-                stationTotalSlots.Clear();
+                // Total number of slots for the given stations for the jobs in the current iteration of selection.
+                var stationTotalSlots = new Dictionary<EntityUid, int>(stations.Count);
 
                 // Intentionally discounts the value of uncapped slots! They're only a single slot when deciding a station's share.
                 foreach (var (station, jobs) in currentlySelectingJobs)
@@ -175,8 +158,8 @@ public sealed partial class StationJobsSystem
                 if (totalSlots == 0)
                     continue; // No slots so just move to the next iteration.
 
-                // Clear for reuse.
-                stationShares.Clear();
+                // The share of the players each station gets in the current iteration of job selection.
+                var stationShares = new Dictionary<EntityUid, int>(stations.Count);
 
                 // How many players we've distributed so far. Used to grant any remaining slots if we have leftovers.
                 var distributed = 0;
