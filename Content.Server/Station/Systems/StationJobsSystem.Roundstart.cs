@@ -188,17 +188,21 @@ public sealed partial class StationJobsSystem
                     // The jobs we're selecting from for the current station.
                     var currStationSelectingJobs = currentlySelectingJobs[station];
                     // We only need this list because we need to go through this in a random order.
-                    // Oh the misery, another allocation.
                     var allJobs = currStationSelectingJobs.Keys.ToList();
                     _random.Shuffle(allJobs);
-                    // And iterates through all it's jobs in a random order until the count settles.
+                    // And iterates through all its jobs in a random order until it can't assign any more
+                    // jobs, either because all the job slots are filled, because there are no candidates
+                    // for the job slots that aren't filled, or because the station's share of players this
+                    // iteration has been reached.
                     // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
                     // as you do but it's what seems to be the absolute best option here.
                     // It doesn't seem to show up on the chart, perf-wise, anyway, so it's likely fine.
-                    int priorCount;
+                    var stillAssigningJobs = true;
                     do
                     {
-                        priorCount = stationShares[station];
+                        // this will get set back to true if we successfully assign at least one job in
+                        // the inner loop
+                        stillAssigningJobs = false;
 
                         foreach (var job in allJobs)
                         {
@@ -215,6 +219,7 @@ public sealed partial class StationJobsSystem
                             var player = _random.Pick(jobCandidates[job]);
                             AssignPlayer(player, job, station, jobCandidates, remainingStationJobs, unassignedProfiles, assigned, ref candidatesRemaining);
                             stationShares[station]--;
+                            stillAssigningJobs = true;
 
                             if (currStationSelectingJobs[job] != null)
                                 currStationSelectingJobs[job]--;
@@ -222,7 +227,7 @@ public sealed partial class StationJobsSystem
                             if (candidatesRemaining == 0)
                                 goto done;
                         }
-                    } while (priorCount != stationShares[station]);
+                    } while (stillAssigningJobs);
                 }
                 done: ;
             }
