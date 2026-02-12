@@ -184,8 +184,8 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
     {
         foreach (var target in targets)
         {
-            var target = EnsureComp<ArtifactCrusherTargetComponent>(target);
-            target.Crusher = uid;
+            var crusherTarget = EnsureComp<ArtifactCrusherTargetComponent>(target);
+            crusherTarget.Crusher = uid;
         }
     }
 
