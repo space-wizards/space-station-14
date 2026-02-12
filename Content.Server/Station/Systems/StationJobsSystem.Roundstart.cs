@@ -72,14 +72,8 @@ public sealed partial class StationJobsSystem
         var remainingStationJobs = new Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>>();
         foreach (var station in stations)
         {
-            if (useRoundStartJobs)
-            {
-                remainingStationJobs.Add(station, GetRoundStartJobs(station).ToDictionary());
-            }
-            else
-            {
-                remainingStationJobs.Add(station, GetJobs(station).ToDictionary());
-            }
+            var readOnlyJobs = useRoundStartJobs ? GetRoundStartJobs(station) : GetJobs(station);
+            remainingStationJobs.Add(station, readOnlyJobs.ToDictionary());
         }
 
         // Ok so the general algorithm:
