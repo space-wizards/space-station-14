@@ -983,6 +983,21 @@
           - ReagentId: Ambuzol
             Quantity: 15
 
+- type: entity #todo: remove after #42774 is fixed
+  suffix: ambuzol
+  parent: PrefilledSyringe
+  id: SyringeAmbuzolPartial
+  components:
+  - type: Label
+    currentLabel: reagent-name-ambuzol
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+          - ReagentId: Ambuzol
+            Quantity: 10
+
 - type: entity
   suffix: sigynate
   parent: PrefilledSyringe

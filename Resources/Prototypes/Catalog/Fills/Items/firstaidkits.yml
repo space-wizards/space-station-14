@@ -139,5 +139,5 @@
         - id: Brutepack
         - id: Gauze
         - id: Bloodpack
-        - id: PillAmbuzol
+        - id: SyringeAmbuzolPartial # todo: replace with PillAmbuzol after #42774 is fixed
         - id: PillCanisterDylovene
