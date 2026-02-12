@@ -7,6 +7,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid.Markings;
 
+/// <summary>
+/// Manager responsible for sharing the logic of markings between in-simulation bodies and out-of-simulation profile editing
+/// </summary>
 public sealed class MarkingManager
 {
     [Dependency] private readonly IComponentFactory _component = default!;
@@ -81,6 +84,12 @@ public sealed class MarkingManager
         return res;
     }
 
+    /// <summary>
+    /// Gets the marking prototype associated with the marking.
+    /// </summary>
+    /// <param name="marking">The marking to look up</param>
+    /// <param name="markingResult">When this method returns; will contain the marking prototype corresponding to the one specified by the marking if it exists.</param>
+    /// <returns>Whether a marking prototype exists for the given marking</returns>
     public bool TryGetMarking(Marking marking, [NotNullWhen(true)] out MarkingPrototype? markingResult)
     {
         return _markings.TryGetValue(marking.MarkingId, out markingResult);
@@ -92,7 +101,13 @@ public sealed class MarkingManager
             CachePrototypes();
     }
 
-
+    /// <summary>
+    /// Determines if a marking prototype can be applied to something with the given markings group and sex.
+    /// </summary>
+    /// <param name="group">The markings group to test</param>
+    /// <param name="sex">The sex to test</param>
+    /// <param name="prototype">The prototype to reference against</param>
+    /// <returns>True if a marking with the prototype could be applied</returns>
     public bool CanBeApplied(ProtoId<MarkingsGroupPrototype> group, Sex sex, MarkingPrototype prototype)
     {
         var groupProto = _prototype.Index(group);
@@ -223,6 +238,11 @@ public sealed class MarkingManager
         }
     }
 
+    /// <summary>
+    /// Returns the expected set of organs for a species to have.
+    /// </summary>
+    /// <param name="species">The species to look up.</param>
+    /// <returns>A dictionary of organ categories to their usual organs within a species.</returns>
     public Dictionary<ProtoId<OrganCategoryPrototype>, EntProtoId<OrganComponent>> GetOrgans(ProtoId<SpeciesPrototype> species)
     {
         var speciesPrototype = _prototype.Index(species);
@@ -234,6 +254,11 @@ public sealed class MarkingManager
         return initialBody.Organs;
     }
 
+    /// <summary>
+    /// Looks up the expected set of <see cref="OrganMarkingData" /> for the species to have
+    /// </summary>
+    /// <param name="species">The species to look up the usual organs of.</param>
+    /// <returns>A dictionary of organ categories to their usual organ marking data within a species.</returns>
     public Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData> GetMarkingData(ProtoId<SpeciesPrototype> species)
     {
         var ret = new Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData>();
@@ -249,6 +274,15 @@ public sealed class MarkingManager
         return ret;
     }
 
+    /// <summary>
+    /// Expands the provided profile data into all the categories for a species.
+    /// </summary>
+    /// <param name="species">The species the returned dictionary should be comprehensive for.</param>
+    /// <param name="sex">The sex to apply to all organs</param>
+    /// <param name="skinColor">The skin color to apply to all organs</param>
+    /// <param name="eyeColor">The eye color to apply to all organs</param>
+    /// <returns></returns>
+    /// <seealso cref="OrganProfileData" />
     public Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData> GetProfileData(ProtoId<SpeciesPrototype> species,
         Sex sex,
         Color skinColor,
@@ -269,6 +303,12 @@ public sealed class MarkingManager
         return ret;
     }
 
+    /// <summary>
+    /// Gets the <see cref="OrganMarkingData" /> for the entity prototype corresponding to an organ
+    /// </summary>
+    /// <param name="organ">The ID of the organ entity prototype to look up</param>
+    /// <param name="organData">The marking data for the organ if it exists</param>
+    /// <returns>Whether the provided entity prototype ID corresponded to organ marking data that could be returned</returns>
     public bool TryGetMarkingData(EntProtoId organ, [NotNullWhen(true)] out OrganMarkingData? organData)
     {
         organData = null;
@@ -284,6 +324,12 @@ public sealed class MarkingManager
         return true;
     }
 
+    /// <summary>
+    /// Converts a legacy flat list of markings to a structured markings dictionary for a given species
+    /// </summary>
+    /// <param name="markings">A flat list of markings</param>
+    /// <param name="species">The species to convert the markings for</param>
+    /// <returns>A dictionary with the provided markings categorized appropriately for the species</returns>
     public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> ConvertMarkings(List<Marking> markings,
         ProtoId<SpeciesPrototype> species)
     {

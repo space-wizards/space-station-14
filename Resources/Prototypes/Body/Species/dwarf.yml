@@ -42,7 +42,7 @@
   - AppearanceDwarf
   - MobHuman
   id: MobDwarf
-  name: Urist McHands The Dwarf
+  name: Urist McHands the Dwarf
   components:
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.

@@ -1643,5 +1643,22 @@ Entries:
   id: 200
   time: '2026-02-01T22:01:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42736
+- author: M4rchy-S
+  changes:
+  - message: logging immovablerodsystem collisions for admin panel
+    type: Add
+  id: 201
+  time: '2026-02-04T07:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42769
+- author: Hitlinemoss
+  changes:
+  - message: Names for the diona, reptilian, and vox Urists have been tweaked to be
+      more consistent with other Urists.
+    type: Tweak
+  - message: The skeleton Urist is now named "Urist McBones".
+    type: Tweak
+  id: 202
+  time: '2026-02-09T13:31:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42791
 Name: Admin
 Order: 3

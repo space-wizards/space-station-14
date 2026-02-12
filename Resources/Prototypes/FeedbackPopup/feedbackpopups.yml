@@ -19,10 +19,10 @@
   showRoundEnd: false
 
 - type: feedbackPopup
-  id: UplinkFeedback
-  popupOrigin: wizden
-  title: "[bold]Feedback on Traitor Uplink Changes[/bold]"
+  id: GibbingFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Feedback on Gibbing Removal[/bold]"
   description: >-
-    If you have any feedback on the changes to the Traitor Uplink, feel free to leave them in this thread on the forums!
-  responseType: "Forum Thread"
-  responseLink: "https://forum.spacestation14.com/t/uplink-feedback/26178"
+    We're testing out the removal of gibbing to see how it affects the game. Please leave feedback on how your experience was removed/worsened so we can account for it!
+  responseType: "Experimental Feedback"
+  responseLink: "https://forum.spacestation14.com/t/gibbing-removal-feedback/26320"
