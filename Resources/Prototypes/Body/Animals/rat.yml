@@ -1,0 +1,22 @@
+- type: entity
+  parent: OrganAnimalLungs
+  id: OrganRatLungs
+  suffix: Rat
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Rat ]
+
+- type: entity
+  id: BaseMobRat
+  abstract: true
+  components:
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganRatLungs
+        - id: OrganAnimalHeart
+        - id: OrganAnimalStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalKidneys

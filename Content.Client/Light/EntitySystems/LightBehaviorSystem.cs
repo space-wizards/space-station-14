@@ -1,5 +1,7 @@
+using System.ComponentModel.Design;
 using System.Linq;
 using Content.Client.Light.Components;
+using Content.Shared.Trigger.Components.Effects;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
 using Robust.Shared.Random;
@@ -36,6 +38,10 @@ public sealed class LightBehaviorSystem : EntitySystem
             container.LightBehaviour.UpdatePlaybackValues(container.Animation);
             _player.Play(uid, container.Animation, container.FullKey);
         }
+        else
+        {
+            StopLightBehaviour((uid, component), container.LightBehaviour.ID, resetToOriginalSettings: true);
+        }
     }
 
     private void OnLightStartup(Entity<LightBehaviourComponent> entity, ref ComponentStartup args)
@@ -53,7 +59,7 @@ public sealed class LightBehaviorSystem : EntitySystem
         {
             if (container.LightBehaviour.Enabled)
             {
-                StartLightBehaviour(entity, container.LightBehaviour.ID);
+                StartLightBehaviour((entity, entity), container.LightBehaviour.ID);
             }
         }
     }
@@ -82,12 +88,13 @@ public sealed class LightBehaviorSystem : EntitySystem
     /// If specified light behaviours are already animating, calling this does nothing.
     /// Multiple light behaviours can have the same ID.
     /// </summary>
-    public void StartLightBehaviour(Entity<LightBehaviourComponent> entity, string id = "")
+    public void StartLightBehaviour(Entity<LightBehaviourComponent?> entity, string id = "")
     {
-        if (!TryComp(entity, out AnimationPlayerComponent? animation))
-        {
+        if (!Resolve(entity, ref entity.Comp))
             return;
-        }
+
+        if (!TryComp(entity, out AnimationPlayerComponent? animation))
+            return;
 
         foreach (var container in entity.Comp.Animations)
         {
@@ -95,7 +102,7 @@ public sealed class LightBehaviorSystem : EntitySystem
             {
                 if (!_player.HasRunningAnimation(entity, animation, LightBehaviourComponent.KeyPrefix + container.Key))
                 {
-                    CopyLightSettings(entity, container.LightBehaviour.Property);
+                    CopyLightSettings((entity, entity.Comp), container.LightBehaviour.Property);
                     container.LightBehaviour.UpdatePlaybackValues(container.Animation);
                     _player.Play(entity, container.Animation, LightBehaviourComponent.KeyPrefix + container.Key);
                 }
@@ -118,11 +125,9 @@ public sealed class LightBehaviorSystem : EntitySystem
             return;
         }
 
-        var comp = entity.Comp;
-
         var toRemove = new List<LightBehaviourComponent.AnimationContainer>();
 
-        foreach (var container in comp.Animations)
+        foreach (var container in entity.Comp.Animations)
         {
             if (container.LightBehaviour.ID == id || id == string.Empty)
             {
@@ -140,18 +145,24 @@ public sealed class LightBehaviorSystem : EntitySystem
 
         foreach (var container in toRemove)
         {
-            comp.Animations.Remove(container);
+            entity.Comp.Animations.Remove(container);
         }
 
-        if (resetToOriginalSettings && TryComp(entity, out PointLightComponent? light))
+        if (resetToOriginalSettings)
+            ResetToOriginalSettings(entity);
+
+        entity.Comp.OriginalPropertyValues.Clear();
+    }
+
+    private void ResetToOriginalSettings(Entity<LightBehaviourComponent, PointLightComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp2))
+            return;
+
+        foreach (var (property, value) in entity.Comp1.OriginalPropertyValues)
         {
-            foreach (var (property, value) in comp.OriginalPropertyValues)
-            {
-                AnimationHelper.SetAnimatableProperty(light, property, value);
-            }
+            AnimationHelper.SetAnimatableProperty(entity.Comp2, property, value);
         }
-
-        comp.OriginalPropertyValues.Clear();
     }
 
     /// <summary>
@@ -194,7 +205,7 @@ public sealed class LightBehaviorSystem : EntitySystem
 
         if (playImmediately)
         {
-            StartLightBehaviour(entity, behaviour.ID);
+            StartLightBehaviour((entity, entity), behaviour.ID);
         }
     }
 }

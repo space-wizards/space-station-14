@@ -1,0 +1,34 @@
+- type: entity
+  id: SpawnPointXenoborg
+  parent: MarkerBase
+  name: xenoborgs
+  components:
+  - type: GridSpawnPointWhitelist
+    whitelist:
+      tags:
+      - XenoborgGhostrole
+    blacklist:
+      tags:
+      - MothershipCoreGhostrole
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_heavy
+
+- type: entity
+  id: SpawnPointMothershipCore
+  parent: MarkerBase
+  name: mothership core
+  components:
+  - type: GridSpawnPointWhitelist
+    whitelist:
+      tags:
+      - MothershipCoreGhostrole
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/mothership_core.rsi
+      state: core-idle

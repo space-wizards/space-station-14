@@ -29,6 +29,8 @@ public abstract class SharedEmergencyShuttleSystem : EntitySystem
             return;
 
         args.Cancel();
-        Popup.PopupClient(Loc.GetString("emergency-shuttle-console-no-early-launches"), ent, args.User);
+
+        if (!args.Silent)
+            Popup.PopupClient(Loc.GetString("emergency-shuttle-console-no-early-launches"), ent, args.User);
     }
 }

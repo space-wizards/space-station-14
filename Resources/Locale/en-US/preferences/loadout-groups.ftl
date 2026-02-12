@@ -13,6 +13,7 @@ loadout-group-survival-clown = Clown Survival Box
 loadout-group-survival-medical = Medical Survival Box
 loadout-group-survival-security = Security Survival Box
 loadout-group-survival-syndicate = Github is forcing me to write text that is literally twice-impossible for the player to ever see, send help
+loadout-group-survival-military = See line 14, no one will ever see this so :3
 loadout-group-breath-tool = Species-dependent breath tools
 loadout-group-tank-harness = Species-specific survival equipment
 loadout-group-EVA-tank = Species-specific gas tank
@@ -174,7 +175,6 @@ loadout-group-security-cadet-jumpsuit = Security cadet jumpsuit
 loadout-group-security-star = Security Star
 
 # Medical
-loadout-group-medical-gloves = Medical gloves
 loadout-group-medical-mask = Medical mask
 
 loadout-group-chief-medical-officer-head = Chief Medical Officer head
@@ -201,12 +201,7 @@ loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
 loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-shoes = Paramedic shoes
 
-loadout-group-medical-glasses = Medical glasses
-
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit
 
 loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
-
-loadout-group-boxer-jumpsuit = Boxer jumpsuit
-loadout-group-boxer-gloves = Boxer gloves

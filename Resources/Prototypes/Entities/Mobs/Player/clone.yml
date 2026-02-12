@@ -16,14 +16,12 @@
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
-  - Hemophilia
   - ImpairedMobility
   # - LegsParalyzed (you get healed)
   - LightweightDrunk
   - Muted
   - Narcolepsy
   - Pacified
-  - PainNumbness
   - Paracusia
   - PermanentBlindness
   - Snoring
@@ -83,7 +81,7 @@
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
-    - HumanoidAppearance # will cause problems for downstream felinids getting cloned as Urists
+    - HumanoidProfile # will cause problems for downstream felinids getting cloned as Urists
     - Implanter # they will spawn full again, but you already get the implant. And we can't do item slot copying yet
     - VirtualItem
 
@@ -100,6 +98,8 @@
 - type: cloningSettings
   id: ParadoxCloningSettings
   parent: [BaseClone, Antag]
+  components:
+  - Forensics # This is so hugging data is copied to the clone, so you can't hug metagame them
 
 # changeling identity copying
 - type: cloningSettings

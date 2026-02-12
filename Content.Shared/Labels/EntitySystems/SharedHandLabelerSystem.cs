@@ -59,64 +59,77 @@ public abstract class SharedHandLabelerSystem : EntitySystem
     {
     }
 
-    private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)
+    private void AddLabelTo(Entity<HandLabelerComponent> ent, EntityUid user, EntityUid target)
     {
-        if (!Resolve(uid, ref handLabeler))
+        if (ent.Comp.AssignedLabel == string.Empty)
         {
-            result = null;
+            RemoveLabelFrom(ent, user, target);
             return;
         }
 
-        if (handLabeler.AssignedLabel == string.Empty)
-        {
-            if (_netManager.IsServer)
-                _labelSystem.Label(target, null);
-            result = Loc.GetString("hand-labeler-successfully-removed");
-            return;
-        }
         if (_netManager.IsServer)
-            _labelSystem.Label(target, handLabeler.AssignedLabel);
-        result = Loc.GetString("hand-labeler-successfully-applied");
-    }
+            _labelSystem.Label(target, ent.Comp.AssignedLabel);
 
-    private void OnUtilityVerb(EntityUid uid, HandLabelerComponent handLabeler, GetVerbsEvent<UtilityVerb> args)
-    {
-        if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(handLabeler.Whitelist, target) || !args.CanAccess)
-            return;
-
-        var labelerText = handLabeler.AssignedLabel == string.Empty ? Loc.GetString("hand-labeler-remove-label-text") : Loc.GetString("hand-labeler-add-label-text");
-
-        var verb = new UtilityVerb()
-        {
-            Act = () =>
-            {
-                Labeling(uid, target, args.User, handLabeler);
-            },
-            Text = labelerText
-        };
-
-        args.Verbs.Add(verb);
-    }
-
-    private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
-    {
-        if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(handLabeler.Whitelist, target) || !args.CanReach)
-            return;
-
-        Labeling(uid, target, args.User, handLabeler);
-    }
-
-    private void Labeling(EntityUid uid, EntityUid target, EntityUid User, HandLabelerComponent handLabeler)
-    {
-        AddLabelTo(uid, handLabeler, target, out var result);
-        if (result == null)
-            return;
-
-        _popupSystem.PopupClient(result, User, User);
+        _popupSystem.PopupClient(Loc.GetString("hand-labeler-successfully-applied"), user, user);
 
         // Log labeling
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(User):user} labeled {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
+            $"{ToPrettyString(user):user} labeled {ToPrettyString(target):target} with {ToPrettyString(ent):labeler}");
+    }
+
+    private void RemoveLabelFrom(EntityUid uid, EntityUid user, EntityUid target)
+    {
+        if (_netManager.IsServer)
+            _labelSystem.Label(target, null);
+
+        _popupSystem.PopupClient(Loc.GetString("hand-labeler-successfully-removed"), user, user);
+
+        // Log labeling
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
+            $"{ToPrettyString(user):user} removed label from {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
+    }
+
+    private void OnUtilityVerb(Entity<HandLabelerComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
+    {
+        if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, target) || !args.CanAccess)
+            return;
+
+        var user = args.User;   // can't use ref parameter in lambdas
+
+        if (ent.Comp.AssignedLabel != string.Empty)
+        {
+            var labelVerb = new UtilityVerb()
+            {
+                Act = () =>
+                {
+                    AddLabelTo(ent, user, target);
+                },
+                Text = Loc.GetString("hand-labeler-add-label-text")
+            };
+
+            args.Verbs.Add(labelVerb);
+        }
+
+        // add the unlabel verb to the menu even when the labeler has text
+        var unLabelVerb = new UtilityVerb()
+        {
+            Act = () =>
+            {
+                RemoveLabelFrom(ent, user, target);
+            },
+            Text = Loc.GetString("hand-labeler-remove-label-text"),
+            Priority = -1,
+        };
+
+        args.Verbs.Add(unLabelVerb);
+    }
+
+    private void AfterInteractOn(Entity<HandLabelerComponent> ent, ref AfterInteractEvent args)
+    {
+        if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, target) || !args.CanReach)
+            return;
+
+        AddLabelTo(ent, args.User, target);
     }
 
     private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
