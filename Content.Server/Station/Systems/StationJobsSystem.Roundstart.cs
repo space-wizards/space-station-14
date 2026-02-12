@@ -113,24 +113,6 @@ public sealed partial class StationJobsSystem
 
                 var optionsRemaining = 0;
 
-                // Assigns a player to the given station, updating all the bookkeeping while at it.
-                void AssignPlayer(NetUserId player, ProtoId<JobPrototype> job, EntityUid station)
-                {
-                    // Remove the player from all possible jobs as that's faster than actually checking what they have selected.
-                    foreach (var (k, players) in jobPlayerOptions)
-                    {
-                        players.Remove(player);
-                        if (players.Count == 0)
-                            jobPlayerOptions.Remove(k);
-                    }
-
-                    stationJobs[station][job]--;
-                    profiles.Remove(player);
-                    assigned.Add(player, (job, station));
-
-                    optionsRemaining--;
-                }
-
                 jobPlayerOptions.Clear(); // We reuse this collection.
 
                 // Goes through every candidate, and adds them to jobPlayerOptions, so that the candidate players
@@ -249,7 +231,7 @@ public sealed partial class StationJobsSystem
 
                             // Picking players it finds that have the job set.
                             var player = _random.Pick(jobPlayerOptions[job]);
-                            AssignPlayer(player, job, station);
+                            AssignPlayer(player, job, station, jobPlayerOptions, stationJobs, profiles, assigned, ref optionsRemaining);
                             stationShares[station]--;
 
                             if (currStationSelectingJobs[job] != null)
@@ -266,6 +248,33 @@ public sealed partial class StationJobsSystem
 
         endFunc:
         return assigned;
+    }
+
+    // Assigns a player to the given station, and updates all the bookkeeping
+    private void AssignPlayer(
+        NetUserId player,
+        ProtoId<JobPrototype> job,
+        EntityUid station,
+        Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>> jobPlayerOptions,
+        Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>> stationJobs,
+        Dictionary<NetUserId, HumanoidCharacterProfile> profiles,
+        Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> assigned,
+        ref int optionsRemaining
+        )
+    {
+        // Remove the player from all possible jobs as that's faster than actually checking what they have selected.
+        foreach (var (k, players) in jobPlayerOptions)
+        {
+            players.Remove(player);
+            if (players.Count == 0)
+                jobPlayerOptions.Remove(k);
+        }
+
+        stationJobs[station][job]--;
+        profiles.Remove(player);
+        assigned.Add(player, (job, station));
+
+        optionsRemaining--;
     }
 
     /// <summary>
