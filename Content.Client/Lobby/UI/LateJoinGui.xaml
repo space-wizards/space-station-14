@@ -9,7 +9,7 @@
                   SeparationOverride="5">
 
         <!-- Left side, we stuff CharacterSelectorButtons in here -->
-        <ScrollContainer VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="1">
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="3">
             <BoxContainer Name="CharacterList" Orientation="Vertical"/>
         </ScrollContainer>
 
@@ -18,6 +18,6 @@
 
         <!-- We stuff the job/join buttons in here -->
         <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"
-                      SizeFlagsStretchRatio="1.3"/>
+                      SizeFlagsStretchRatio="4"/>
     </BoxContainer>
 </controls:FancyWindow>
