@@ -74,11 +74,11 @@ public sealed partial class StationJobsSystem
         {
             if (useRoundStartJobs)
             {
-                remainingStationJobs.Add(station, GetRoundStartJobs(station).ToDictionary(x => x.Key, x => x.Value));
+                remainingStationJobs.Add(station, GetRoundStartJobs(station).ToDictionary());
             }
             else
             {
-                remainingStationJobs.Add(station, GetJobs(station).ToDictionary(x => x.Key, x => x.Value));
+                remainingStationJobs.Add(station, GetJobs(station).ToDictionary());
             }
         }
 
