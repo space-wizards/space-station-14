@@ -110,13 +110,15 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
     public void StartCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent, EntityUid? user = null)
     {
-        var (uid, crusher, _) = ent;
+        var (uid, crusher, storage) = ent;
 
         if (crusher.Crushing)
             return;
 
         if (crusher.AutoLock)
             _popup.PopupPredicted(Loc.GetString("artifact-crusher-autolocks-enable"), uid, user);
+
+        MarkCrusherTarget(storage.Contents.ContainedEntities, uid);
 
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
@@ -136,6 +138,13 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
         if (early)
             ent.Comp.CrushingSoundEntity = AudioSystem.Stop(ent.Comp.CrushingSoundEntity);
+
+        if (TryComp<EntityStorageComponent>(ent, out var storageComp))
+        {
+            // FIXME: We do not have access to the storage in StorageAfterOpenEvent,
+            // so this is not getting called except when power is out.
+            UnmarkCrusherTarget(storageComp.Contents.ContainedEntities);
+        }
 
         Dirty(ent, ent.Comp);
     }
@@ -165,6 +174,29 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
             if (crusher.CrushEndTime < _timing.CurTime)
                 FinishCrushing((uid, crusher, storage));
+        }
+    }
+
+    /// <summary>
+    /// Helper method to apply <see cref="ArtifactCrusherTargetComponent" /> to targets.
+    /// </summary>
+    private void MarkCrusherTarget(IEnumerable<EntityUid> targets, EntityUid uid)
+    {
+        foreach (var target in targets)
+        {
+            var target = EnsureComp<ArtifactCrusherTargetComponent>(target);
+            target.Crusher = uid;
+        }
+    }
+
+    /// <summary>
+    /// Helper method to remove <see cref="ArtifactCrusherTargetComponent" /> from targets.
+    /// </summary>
+    private void UnmarkCrusherTarget(IEnumerable<EntityUid> targets)
+    {
+        foreach (var target in targets)
+        {
+            RemCompDeferred<ArtifactCrusherTargetComponent>(target);
         }
     }
 }

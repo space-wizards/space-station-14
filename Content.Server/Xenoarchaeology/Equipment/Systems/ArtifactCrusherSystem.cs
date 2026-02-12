@@ -20,7 +20,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
     // TODO: Move to shared once StackSystem spawning is in Shared and we have RandomPredicted
     public override void FinishCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)
     {
-        var (_, crusher, storage) = ent;
+        var (uid, crusher, storage) = ent;
         StopCrushing((ent, ent.Comp1), false);
         AudioSystem.PlayPvs(crusher.CrushingCompleteSound, ent);
         crusher.CrushingSoundEntity = null;
@@ -39,6 +39,13 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
                     ContainerSystem.Insert((stack, null, null, null), crusher.OutputContainer);
                 }
             }
+
+            // Skip if this item is not marked as a crusher target.
+            if (!TryComp<ArtifactCrusherTargetComponent>(contained, out var crusherTargetComp) ||
+                crusherTargetComp.Crusher != uid)
+                continue;
+
+            RemCompDeferred<ArtifactCrusherTargetComponent>(contained);
 
             var gibs = _gibbing.Gib(contained);
             foreach (var gib in gibs)
