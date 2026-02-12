@@ -9,7 +9,7 @@
     - to: CableMV
       steps:
       - material: Cable
-        amount: 3
+        amount: 2
 
   - node: CableMV
     entity: CableMVStack1
@@ -24,7 +24,7 @@
     - to: CableHV
       steps:
       - material: CableMV
-        amount: 3
+        amount: 2
       - material: MetalRod
 
   - node: CableHV
