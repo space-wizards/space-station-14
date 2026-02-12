@@ -57,7 +57,6 @@ bounty-item-food = Meat food
 bounty-item-fruit = Fruit
 bounty-item-vegetable = Vegetable
 bounty-item-chili = Bowl of chili
-bounty-item-rollerskates = Roller skates
 bounty-item-bedsheet = Bedsheet
 bounty-item-bandana = Bandana
 bounty-item-steak = Steak
