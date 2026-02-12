@@ -40,6 +40,7 @@ namespace Content.Client.Lobby.UI
         private readonly SpriteSystem _sprites;
         private readonly CrewManifestSystem _crewManifest;
         private readonly ISawmill _sawmill;
+        private readonly LobbyUIController _lobbyController;
 
         private readonly Dictionary<NetEntity, Dictionary<string, List<JobButton>>> _jobButtons = new();
         private readonly Dictionary<NetEntity, Dictionary<string, BoxContainer>> _jobCategories = new();
@@ -53,10 +54,12 @@ namespace Content.Client.Lobby.UI
             _crewManifest = _entitySystem.GetEntitySystem<CrewManifestSystem>();
             _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
             _sawmill = _logManager.GetSawmill("latejoin.panel");
+            _lobbyController = UserInterfaceManager.GetUIController<LobbyUIController>();
 
             Title = Loc.GetString("late-join-gui-title");
 
             _jobRequirements.Updated += RebuildUI;
+            _lobbyController.CharacterSetupChanged += RebuildUI;
             RebuildUI();
 
             SelectedId += x =>
@@ -92,8 +95,7 @@ namespace Content.Client.Lobby.UI
                 characterPickerButton.OnPressed += _ =>
                 {
                     _preferencesManager.SelectCharacter(slot);
-                    UserInterfaceManager.GetUIController<LobbyUIController>().ReloadCharacterSetup();
-                    RebuildJobList();
+                    _lobbyController.ReloadCharacterSetup();
                 };
             }
         }
@@ -358,6 +360,7 @@ namespace Content.Client.Lobby.UI
             if (disposing)
             {
                 _jobRequirements.Updated -= RebuildUI;
+                _lobbyController.CharacterSetupChanged -= RebuildUI;
                 _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
                 _jobButtons.Clear();
                 _jobCategories.Clear();
