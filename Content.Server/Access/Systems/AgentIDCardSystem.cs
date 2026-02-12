@@ -11,8 +11,8 @@ using Content.Shared.Roles;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Clothing.Systems;
 using Content.Server.Implants;
+using Content.Server.VoiceMask;
 using Content.Shared.Implants;
-using Content.Shared.Implants.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.PDA;
@@ -88,8 +88,10 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(ent, out var idCard))
                 return;
 
-            //prevents the voice mask item from changing your agent id name
-            if (!HasComp<SubdermalImplantComponent>(args.Args.VoiceMaskUid))
+            if(!TryComp<VoiceMaskComponent>(args.Args.VoiceMaskUid, out var maskEntity))
+                return;
+
+            if(!maskEntity.ChangeIDName)
                 return;
 
             _cardSystem.TryChangeFullName(ent, args.Args.NewName, idCard);

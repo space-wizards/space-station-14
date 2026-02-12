@@ -55,5 +55,11 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public bool AccentHide = true;
+
+    /// <summary>
+    ///     If user's equipped agent id name is getting changed.
+    /// </summary>
+    [DataField]
+    public bool ChangeIDName = false;
 }
 
