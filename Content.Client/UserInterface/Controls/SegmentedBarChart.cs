@@ -228,7 +228,7 @@ public sealed class SegmentedBarChart : Control
         UpdateEntries(Width, args.DeltaSeconds);
     }
 
-    private void UpdateEntries(float chartWidth, float deltaSeconds = 0)
+    private void UpdateEntries(float chartWidth, float deltaSeconds)
     {
         // Tween the amounts to their target amounts.
         const float tweenInverseHalfLife = 8;  // Half life of tween is 1/n
@@ -383,7 +383,7 @@ public sealed class SegmentedBarChart : Control
         // Some features (Gap, MinEntryWidth) depend on the Control's Width. Once the Width is set and before the
         // first draw, make sure that the entries get an opportunity to update their width properly.
         if (!_hasHadNonZeroWidth && finalSize.X > 0)
-            UpdateEntries(finalSize.X);
+            UpdateEntries(finalSize.X, 0);
 
         foreach (var (entry, xMin, xMax) in EntryRanges(finalSize.X))
         {
