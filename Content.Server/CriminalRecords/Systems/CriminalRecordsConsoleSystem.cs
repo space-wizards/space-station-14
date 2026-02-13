@@ -213,7 +213,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         var listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
         // filter the listing by the selected criminal record status
-        //if NONE, dont filter by status, just show all crew
+        // if null, dont filter by status, just show all crew
         if (console.FilterStatus is not null)
         {
             listing = listing
