@@ -56,6 +56,11 @@
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
 
+- files: ["flap.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from mothroach.png by Pgriha"
+  source: "https://github.com/Pgriha"
+
 - files: ["hew.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing weh emote image (weh.png) by ArtisticRoomba"

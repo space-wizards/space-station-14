@@ -480,6 +480,33 @@
     - chirped
     - chirping
 
+- type: emote 
+  id: Flap
+  name: chat-emote-name-flap
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/flap.png
+  whitelist:
+    components:
+      - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-flap"]
+  chatTriggers:
+   - flap
+   - flaps
+   - flapped
+   - flapping
+   - flap wings
+   - flaps wings
+   - flapped wings
+   - flapping wings
+   - flaps his wings
+   - flaps her wings
+   - flaps their wings
+   - flaps its wings
+
 # Machine Emotes
 - type: emote
   id: Beep

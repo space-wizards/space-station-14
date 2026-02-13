@@ -7,3 +7,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/BeeStation/BeeStation-Hornet/commit/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d"
   source: "https://github.com/BeeStation/BeeStation-Hornet/blob/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d/sound/emotes/"
+
+- files: ["moth_flap.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from https://freesound.org/people/Godowan/sounds/240476/"
+  source: "https://freesound.org/people/Godowan/sounds/240476/"
