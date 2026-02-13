@@ -69,7 +69,7 @@
   - AppearanceDiona
   - BaseSpeciesMobOrganic
   id: MobDiona
-  name: McUrist Plants
+  name: Urist McPlants
   components:
   - type: Respirator
     damage:
@@ -278,14 +278,7 @@
   components:
   - type: Metabolizer
     maxReagents: 6
-    removeEmpty: true
-    groups:
-    - id: Food
-    - id: Drink
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
-    - id: Alcohol
+    stages: [ Digestion, Bloodstream, Metabolites ]
 
 - type: entity
   parent: OrganDionaBrain
@@ -293,6 +286,7 @@
   id: OrganDionaBrainNymphing
   components:
   - type: Nymph
+    transferMind: true
     entityPrototype: OrganDionaNymphBrain
 
 - type: entity

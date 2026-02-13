@@ -805,6 +805,12 @@ TowelColorMaroon: null
 TowelColorSilver: null
 TowelColorMime: null
 
-# 2026-01-22
+# 2026-02-11
+MobDwarf: MobHuman
+OrganDwarfHeart: OrganHumanHeart
+OrganDwarfStomach: OrganHumanStomach
+OrganDwarfLiver: OrganHumanLiver
+
+# 2026-02-13
 DrinkIceJug: DrinkIceBucket
 DrinkMeadJug: null
