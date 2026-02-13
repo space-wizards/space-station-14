@@ -342,8 +342,10 @@ public sealed class SegmentedBarChart : Control
             handle.DrawRect(PixelSizeBox, BackgroundColor);
 
         // Draw the entry backgrounds
-        foreach (var (entry, xMin, xMax) in EntryRanges(PixelWidth))
+        foreach (var (entry, xMinUI, xMaxUI) in EntryRanges(Width))
         {
+            var xMin = UIScale * xMinUI;
+            var xMax = UIScale * xMaxUI;
             if (xMin != xMax)
                 handle.DrawRect(new(xMin, 0, xMax, PixelHeight), entry.Color);
         }
