@@ -24,6 +24,13 @@
       steps:
       - tool: Welding
         doAfter: 2
+        completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 5
+        - !type:SpawnPrototype
+          prototype: CableApcStack1
+        - !type:DeleteEntity
     - to: caseWithTrigger
       steps:
       - component: PayloadTrigger
