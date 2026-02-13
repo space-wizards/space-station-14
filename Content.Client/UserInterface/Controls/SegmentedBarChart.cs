@@ -262,10 +262,10 @@ public sealed class SegmentedBarChart : Control
 
         // The width available for entries.
         var totalEntriesWidthFraction = 1 - GetTotalGapsWidthFraction(chartWidth);
-        // The min width of an entry can't be wider than the available space per entry.
-        var maxMinWidthFraction = totalEntriesWidthFraction / MathF.Max(1, targetEntryCount);
+        // The min width for all entries can't be wider than the available space per entry.
+        var spacePerEntry = totalEntriesWidthFraction / MathF.Max(1, targetEntryCount);
         // Minimum width of an entry.
-        var minWidthFraction = MathF.Min(MinEntryWidth / MathF.Max(1, chartWidth), maxMinWidthFraction);
+        var minWidthFraction = MathF.Min(spacePerEntry, MinEntryWidth / MathF.Max(1, chartWidth));
         // The amount of units that `minWidthFraction` covers.
         var minWidthAmount = minWidthFraction * totalAmount;
 
