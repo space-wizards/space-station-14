@@ -105,8 +105,7 @@
 
 - files: ["lizard_happy.ogg"]
   license: "CC-BY-NC-SA-4.0"
-  copyright: "Created specifically for this project using free samples. Provided by DaturoDewitt"
-  source: ""
+  copyright: "Provided by DaturoDewitt. Created using transformed and layered samples bundled with Logic Pro X"
 
 - files: ["bear.ogg"]
   license: "CC-BY-3.0"
