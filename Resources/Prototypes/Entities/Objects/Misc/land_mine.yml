@@ -87,7 +87,7 @@
   - type: PayloadCase
   - type: Construction
     graph: ModularMineGraph
-    node: emptyCase
+    node: wiredCase
 
 - type: entity
   id: LandMineModular

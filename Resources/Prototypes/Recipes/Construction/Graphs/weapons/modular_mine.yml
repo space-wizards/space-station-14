@@ -5,17 +5,11 @@
 
   - node: start
     edges:
-    - to: emptyCase
+    - to: wiredCase
       steps:
       - material: Steel
         amount: 5
         doAfter: 1
-
-  - node: emptyCase
-    entity: LandMineModularUnarmed
-    edges:
-    - to: wiredCase
-      steps:
       - material: Cable
         doAfter: 0.5
       - tag: ProximitySensor
@@ -23,15 +17,6 @@
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon
         name: construction-graph-tag-proximity-sensor
-    - to: start
-      completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 5
-      - !type:DeleteEntity
-      steps:
-      - tool: Welding
-        doAfter: 2
 
   - node: wiredCase
     entity: LandMineModularUnarmed
@@ -39,15 +24,19 @@
     - !type:PlaySound
       sound: /Audio/Machines/button.ogg
     edges:
-    - to: emptyCase
+    - to: start
       steps:
-      - tool: Cutting
-        doAfter: 0.5
+      - tool: Welding
+        doAfter: 2
         completed:
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 5
         - !type:SpawnPrototype
           prototype: CableApcStack1
         - !type:SpawnPrototype
           prototype: ProximitySensor
+        - !type:DeleteEntity
     - to: mine
       steps:
       - tag: Payload
