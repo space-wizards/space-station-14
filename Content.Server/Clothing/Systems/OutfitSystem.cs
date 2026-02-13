@@ -90,8 +90,8 @@ public sealed class OutfitSystem : EntitySystem
                 break;
 
             // Don't require a player, so this works on Urists
-            profile ??= EntityManager.TryGetComponent<HumanoidAppearanceComponent>(target, out var comp)
-                ? HumanoidCharacterProfile.DefaultWithSpecies(comp.Species)
+            profile ??= EntityManager.TryGetComponent<HumanoidProfileComponent>(target, out var comp)
+                ? HumanoidCharacterProfile.DefaultWithSpecies(comp.Species, comp.Sex)
                 : new HumanoidCharacterProfile();
             // Try to get the user's existing loadout for the role
             profile.Loadouts.TryGetValue(jobProtoId, out var roleLoadout);
