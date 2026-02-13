@@ -37,7 +37,7 @@ chat-emote-name-snarl = Snarl
 chat-emote-name-whine = Whine
 chat-emote-name-howl = Howl
 chat-emote-name-growl = Growl
-chat-emote-name-flap = Flap
+chat-emote-name-flap = Flap Wings
 
 # Message
 chat-emote-msg-scream = screams!
