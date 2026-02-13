@@ -18,7 +18,6 @@
       completed:
       - !type:GivePrototype
         prototype: CableApcStack1
-        amount: 2
       steps:
       - material: CableMV
     - to: CableHV
@@ -34,7 +33,6 @@
       completed:
       - !type:GivePrototype
         prototype: CableMVStack1
-        amount: 2
       - !type:GivePrototype
         prototype: PartRodMetal1
       steps:
