@@ -33,7 +33,7 @@ public sealed class SegmentedBarChart : Control
 
     /// <summary>
     /// When Gap is greater than zero, all segments are separated by empty space. Gap is measured in UI units.
-    /// This is incompatible with ShowRuler, so if ShowRuler is enabled, Gap will be ignored.
+    /// This is incompatible with ShowRuler. If ShowRuler is enabled, Gap is ignored.
     /// </summary>
     public float Gap { get; set; } = 0;
 
@@ -43,8 +43,8 @@ public sealed class SegmentedBarChart : Control
     public float MinEntryWidth { get; set; } = 0;
 
     /// <summary>
-    /// How much "Amount" fits into this chart. For example, when Capacity is 50, an entry with an amount of 5 will take
-    /// up 10% of the chart. If this is -1, the capacity is flexible.
+    /// How many units of "Amount" fit into this chart. For example, when Capacity is 50, an entry with an amount of 5
+    /// will take up 10% of the chart. If this is -1, the capacity is flexible and equal to the sum of the entries.
     /// </summary>
     public float Capacity { get; set; } = -1;
 
@@ -61,7 +61,7 @@ public sealed class SegmentedBarChart : Control
 
     // For the cryo pod UI, when we have a very large beaker (i.e. bluespace beaker) we might need to increase the
     // distance between notches. When the distance between notches is less than MinSmallNotchScreenDistance in UI units,
-    // the distance is (repeatedly) increased by a factor of 10.
+    // the distance is increased by a factor of 10 (repeated as often as necessary).
     public int MinSmallNotchScreenDistance { get; set; } = 2;
 
     public float SmallNotchHeight { get; set; } = 0.1f;
@@ -86,6 +86,10 @@ public sealed class SegmentedBarChart : Control
         TooltipSupplier = SupplyTooltip;
     }
 
+    /// <summary>
+    /// Makes the current entries disappear (usually in an animated way, so it takes a while for them to be gone).
+    /// An entry won't disappear if a SetEntry call (after the Clear) gives the entry a non-zero `amount`.
+    /// </summary>
     public void Clear()
     {
         foreach (var entry in _entries)
