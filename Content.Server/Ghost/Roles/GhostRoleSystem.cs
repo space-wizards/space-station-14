@@ -623,7 +623,10 @@ public sealed class GhostRoleSystem : EntitySystem
     public int GetGhostRoleCount()
     {
         var metaQuery = GetEntityQuery<MetaDataComponent>();
-        return _ghostRoles.Count(pair => metaQuery.GetComponent(pair.Value.Owner).EntityPaused == false);
+        return _ghostRoles.Count(pair =>
+                metaQuery.TryGetComponent(pair.Value.Owner, out var meta)
+                && meta.EntityPaused == false
+        );
     }
 
     /// <summary>
@@ -639,7 +642,7 @@ public sealed class GhostRoleSystem : EntitySystem
 
         foreach (var (id, (uid, role)) in _ghostRoles)
         {
-            if (metaQuery.GetComponent(uid).EntityPaused)
+            if (!metaQuery.TryGetComponent(uid, out var meta) || meta.EntityPaused)
                 continue;
 
 
