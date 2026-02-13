@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SurrealShibe
-  changes:
-  - message: Vulpkanin now audibly gasp.
-    type: Fix
-  id: 9014
-  time: '2025-09-28T03:25:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40579
 - author: keronshb
   changes:
   - message: Tasers can now be used by Pacifists.
@@ -3992,3 +3985,11 @@
   id: 9520
   time: '2026-02-13T00:31:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42882
+- author: bnuuy
+  changes:
+  - message: The fake mindshield action button now correctly shows your mindshield
+      status when using the chameleon controller.
+    type: Fix
+  id: 9521
+  time: '2026-02-13T05:25:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42900
