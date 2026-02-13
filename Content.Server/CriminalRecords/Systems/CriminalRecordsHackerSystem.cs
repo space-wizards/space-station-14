@@ -21,6 +21,8 @@ public sealed class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSys
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
 
+    private readonly ProtoId<SecurityStatusPrototype> _wantedStatus = "SecurityStatusWanted";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -40,7 +42,7 @@ public sealed class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSys
         foreach (var (key, record) in _records.GetRecordsOfType<CriminalRecord>(station))
         {
             var reason = _random.Pick(reasons);
-            _criminalRecords.OverwriteStatus(new StationRecordKey(key, station), record, "SecurityStatusWanted", reason);
+            _criminalRecords.OverwriteStatus(new StationRecordKey(key, station), record, _wantedStatus, reason);
             // no radio message since spam
             // no history since lazy and its easy to remove anyway
             // main damage with this is existing arrest warrants are lost and to anger beepsky
