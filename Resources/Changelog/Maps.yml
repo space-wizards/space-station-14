@@ -994,4 +994,11 @@
   id: 121
   time: '2026-01-14T20:19:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42385
+- author: Velken
+  changes:
+  - message: Plasma finally got the memo that Christmas is over.
+    type: Tweak
+  id: 122
+  time: '2026-02-07T07:01:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42822
 Order: 2
