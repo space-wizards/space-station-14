@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: keronshb
-  changes:
-  - message: 'EXPERIMENTAL: Tasers, a short-ranged gun capable of causing targets
-      to become prone, are now added into Warden, HoS, and Security locker fills.'
-    type: Add
-  id: 9013
-  time: '2025-09-27T21:21:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39087
 - author: SurrealShibe
   changes:
   - message: Vulpkanin now audibly gasp.
@@ -3993,3 +3985,10 @@
   id: 9519
   time: '2026-02-12T14:42:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42880
+- author: PJB3005
+  changes:
+  - message: Dwarves have been removed.
+    type: Remove
+  id: 9520
+  time: '2026-02-13T00:31:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42882
