@@ -216,7 +216,7 @@ public sealed partial class CryoPodWindow : FancyWindow
 
         float? result = null;
 
-        foreach (var (_, metabolism) in reagentProto.Metabolisms)
+        foreach (var (_, metabolism) in reagentProto.Metabolisms.Metabolisms)
         {
             foreach (var effect in metabolism.Effects)
             {

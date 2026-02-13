@@ -177,8 +177,8 @@
     heatDamage:
       types:
         Heat: 2.5 # Per second, scales with temperature & other constants
-  # - type: Wagging TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
-  #   action: ActionToggleWaggingVulpkanin
+  - type: Wagging
+    action: ActionToggleWaggingVulpkanin
   - type: TemperatureProtection
     heatingCoefficient: 1.2
     coolingCoefficient: 0.3

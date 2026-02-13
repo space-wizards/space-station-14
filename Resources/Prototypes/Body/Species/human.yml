@@ -38,6 +38,12 @@
     enum.HumanoidVisualLayers.RFoot:
       limit: 1
       required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Special:
+      limit: 0
+      required: false
 
 - type: entity
   parent: BaseSpeciesAppearance
