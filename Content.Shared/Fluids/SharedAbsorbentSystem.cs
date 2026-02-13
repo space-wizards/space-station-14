@@ -75,7 +75,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
             ent.Comp.Progress[otherColor] = other.Float();
 
         if (solution.AvailableVolume > FixedPoint2.Zero)
-            ent.Comp.Progress[Color.DarkGray] = solution.AvailableVolume.Float();
+            ent.Comp.Progress[Color.Transparent] = solution.AvailableVolume.Float();
 
         Dirty(ent);
         _item.VisualsChanged(ent);
