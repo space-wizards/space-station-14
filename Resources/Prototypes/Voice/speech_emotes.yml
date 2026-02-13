@@ -483,25 +483,29 @@
 - type: emote 
   id: Flap
   name: chat-emote-name-flap
-  category: Vocal
+  category: Hands # Not really "hands", but how far it to vocal? (moth mims want to flap too!)
   available: false
   icon: Interface/Emotes/flap.png
   whitelist:
     components:
-      - Vocal
+    - Hands
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-flap"]
   chatTriggers:
    - flap
    - flaps
    - flapped
    - flapping
+   - flutter
+   - flutters
+   - fluttering
+   - fluttered
    - flap wings
    - flaps wings
-   - flapped wings
-   - flapping wings
+   - flutter wings
+   - flutters wings
    - flaps his wings
    - flaps her wings
    - flaps their wings
