@@ -88,10 +88,10 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(ent, out var idCard))
                 return;
 
-            if(!TryComp<VoiceMaskComponent>(args.Args.VoiceMaskUid, out var maskEntity))
+            if (!TryComp<VoiceMaskComponent>(args.Args.VoiceMaskUid, out var maskEntity))
                 return;
 
-            if(!maskEntity.ChangeIDName)
+            if (!maskEntity.ChangeIDName)
                 return;
 
             _cardSystem.TryChangeFullName(ent, args.Args.NewName, idCard);

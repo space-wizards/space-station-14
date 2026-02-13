@@ -14,11 +14,7 @@ public sealed partial class VoiceMaskSetNameEvent : InstantActionEvent
 /// <param name="OldName">The old name</param>
 /// <param name="NewName">The new name</param>
 [ByRefEvent]
-public readonly record struct VoiceMaskNameUpdatedEvent(
-    EntityUid VoiceMaskUid,
-    string? OldName,
-    string NewName
-) : IInventoryRelayEvent
+public readonly record struct VoiceMaskNameUpdatedEvent(EntityUid VoiceMaskUid, string? OldName, string NewName) : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
 }
