@@ -365,8 +365,8 @@
     price: 75
 
 - type: entity
-  name: EMP grenade
-  description: A grenade designed to wreak havoc on electronic systems.
+  name: impact EMP grenade
+  description: A grenade designed to wreak havoc on electronic systems. Explodes on impact.
   parent: [ImpactGrenadeBase, BaseSyndicateContraband]
   id: EmpGrenade
   components:
