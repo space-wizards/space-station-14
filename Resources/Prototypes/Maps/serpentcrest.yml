@@ -2,7 +2,7 @@
   id: Serpentcrest
   mapName: 'Serpentcrest'
   mapPath: /Maps/serpentcrest.yml
-  minPlayers: 40
+  minPlayers: 50
   stations:
     Serpentcrest:
       stationProto: StandardNanotrasenStation
