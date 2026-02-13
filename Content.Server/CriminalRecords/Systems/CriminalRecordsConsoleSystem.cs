@@ -122,8 +122,10 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         if (statusProto?.StoreHistory ?? false)
         {
             var oldReason = record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason");
-            var historyText = statusProto.HistoryText;
-            var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason), ("text", historyText));
+            var historyText = statusProto.HistoryText!.Value;
+            var history = Loc.GetString("criminal-records-console-auto-history",
+                ("reason", oldReason),
+                ("text", Loc.GetString(historyText)));
             _criminalRecords.TryAddHistory(key.Value, history, officer);
         }
 
@@ -145,23 +147,29 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
         (string, object)[] args;
         if (reason != null)
-            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason), ("job", jobName) };
+            args = new (string, object)[]
+                { ("name", name), ("officer", officer), ("reason", reason), ("job", jobName) };
         else
             args = new (string, object)[] { ("name", name), ("officer", officer), ("job", jobName) };
 
         // figure out which radio message to send depending on transition
-        var statusString = "not_wanted";
-        if (statusProto is not null)
+        LocId? statusString = null;
+        if (statusProto is not null && statusProto.StatusSetAnnouncement is not null)
         {
             statusString = statusProto.StatusSetAnnouncement;
         }
-        else if (msg.Status is null && oldStatusProto is not null)
+        else if (msg.Status is null && oldStatusProto is not null && oldStatusProto.StatusUnSetAnnouncement is not null)
         {
             statusString = oldStatusProto.StatusUnSetAnnouncement;
         }
 
-        _radio.SendRadioMessage(ent, Loc.GetString(statusString, args),
-            ent.Comp.SecurityChannel, ent);
+        if (statusString is not null)
+        {
+            _radio.SendRadioMessage(ent,
+                Loc.GetString(statusString, args),
+                ent.Comp.SecurityChannel,
+                ent);
+        }
 
         UpdateUserInterface(ent);
     }

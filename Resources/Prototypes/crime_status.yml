@@ -44,9 +44,8 @@
   name: criminal-records-status-detained
   icon: SecurityIconIncarcerated
   statusSetAnnouncement: criminal-records-console-detained
-  statusUnSetAnnouncement: criminal-records-console-not-detained
   storeHistory: true
-  historyText: DETAINED
+  historyText: criminal-records-console-history-detained
 
 - type: securityStatus
   id: SecurityStatusEliminated
@@ -56,7 +55,7 @@
   statusSetAnnouncement: criminal-records-console-eliminated
   statusUnSetAnnouncement: criminal-records-console-not-eliminated
   storeHistory: true
-  historyText: ELIMINATED
+  historyText: criminal-records-console-history-eliminated
 
 - type: securityStatus
   id: SecurityStatusDischarged
@@ -64,4 +63,3 @@
   name: criminal-records-status-discharged
   icon: SecurityIconDischarged
   statusSetAnnouncement: criminal-records-console-discharged
-  statusUnSetAnnouncement: criminal-records-console-not-discharged

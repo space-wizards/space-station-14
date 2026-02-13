@@ -29,13 +29,13 @@ public sealed partial class SecurityStatusPrototype: IPrototype
     /// A localised string which is announced on sec radio when someone has their status set to this.
     /// </summary>
     [DataField]
-    public LocId StatusSetAnnouncement = string.Empty;
+    public LocId? StatusSetAnnouncement;
 
     /// <summary>
     /// A localised string which is announced on sec radio when someone had this status but it was set to `null`.
     /// </summary>
     [DataField]
-    public LocId StatusUnSetAnnouncement = string.Empty;
+    public LocId? StatusUnSetAnnouncement;
 
     /// <summary>
     /// Does this status need an accompanying reason?
@@ -62,7 +62,7 @@ public sealed partial class SecurityStatusPrototype: IPrototype
     /// For example, `Detained` will prepend the string `DETAINED: ...` to any automatically generated crime history.
     /// </summary>
     [DataField]
-    public LocId HistoryText = string.Empty;
+    public LocId? HistoryText;
 
     /// <summary>
     /// What order should all the statuses appear in the drop down in the criminal records console?

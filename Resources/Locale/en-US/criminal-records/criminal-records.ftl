@@ -45,7 +45,7 @@ criminal-records-console-not-wanted = {$officer} cleared the wanted status of {$
 criminal-records-console-search = {$officer} has requested a search of {$name} ({$job}) because of: {$reason}.
 criminal-records-console-not-search = {$officer} has searched {$name} ({$job}).
 criminal-records-console-detained = {$name} ({$job}) has been detained by {$officer}.
-criminal-records-console-released = {$name} ({$job}) has been released by {$officer}.
+criminal-records-console-discharged = {$name} ({$job}) has been released by {$officer}.
 criminal-records-console-hostile = {$name} ({$job}) was marked as hostile by {$officer} for: {$reason}.
 criminal-records-console-not-hostile = {$name} ({$job}) no longer marked as hostile by {$officer}.
 criminal-records-console-eliminated = {$name} ({$job}) was marked as eliminated by {$officer}.
@@ -63,4 +63,6 @@ criminal-records-species-filter = Species
 
 ## Arrest auto history lines
 criminal-records-console-auto-history = {$text}: {$reason}
+criminal-records-console-history-detained = DETAINED
+criminal-records-console-history-eliminated = ELIMINATED
 criminal-records-console-unspecified-reason = <unspecified reason>
