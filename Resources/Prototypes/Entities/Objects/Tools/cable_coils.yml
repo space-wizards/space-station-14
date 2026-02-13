@@ -20,8 +20,6 @@
     sprite: Objects/Tools/cable-coils.rsi
     size: Small
     storedRotation: -90
-  - type: Construction
-    graph: Cable
   - type: CablePlacer
   - type: Clickable
   - type: StaticPrice
