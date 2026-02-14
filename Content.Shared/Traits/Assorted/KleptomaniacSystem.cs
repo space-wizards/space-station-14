@@ -2,11 +2,11 @@
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Robust.Server.Containers;
+using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Traits.Assorted;
+namespace Content.Shared.Traits.Assorted;
 
 public sealed class KleptomaniacSystem : EntitySystem
 {
@@ -16,7 +16,7 @@ public sealed class KleptomaniacSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public const float StealRange = SharedInteractionSystem.InteractionRange;
 

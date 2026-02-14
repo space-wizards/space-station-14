@@ -31,7 +31,5 @@
   name: trait-kleptomaniac-name
   description: trait-kleptomaniac-desc
   category: Quirks
-  specials:
-  - !type:ApplyStatusEffectSpecial
-    statusEffects:
-    - StatusEffectKleptomaniacTrait
+  components:
+  - type: Kleptomaniac
