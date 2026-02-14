@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: GravityGenerator
-  parent: [ BaseMachinePowered , CriticalMachine ]
+  parent: BaseMachinePowered
   name: gravity generator
   description: It's what keeps you to the floor.
   placement:
@@ -27,6 +27,11 @@
   - type: ApcPowerReceiver
     powerLoad: 2500
   - type: ExtensionCableReceiver
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    usesApcPower: true
   - type: Physics
     bodyType: Static
   - type: Fixtures

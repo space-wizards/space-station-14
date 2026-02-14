@@ -79,13 +79,3 @@
   id: SmallConstructibleMachine
   components:
     - type: RequireProjectileTarget
-
-- type: entity
-  abstract: true
-  id: CriticalMachine
-  components:
-  - type: Electrified
-    onHandInteract: false
-    onInteractUsing: false
-    onBump: false
-    usesApcPower: true
