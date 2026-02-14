@@ -21,7 +21,7 @@ public sealed class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSys
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
 
-    private readonly ProtoId<SecurityStatusPrototype> WantedStatus = "SecurityStatusWanted";
+    private static readonly ProtoId<SecurityStatusPrototype> WantedStatus = "SecurityStatusWanted";
 
     public override void Initialize()
     {
