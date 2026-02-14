@@ -160,8 +160,11 @@ public sealed partial class StationJobsSystem
 
                         foreach (var job in currStationSelectingJobs)
                         {
-                            if (stationShares[station] == 0)
+                            if (stationShares[station] == 0 || jobCandidates.Count == 0)
+                            {
+                                stillAssigningJobs = false;
                                 break;
+                            }
 
                             // null indicates an uncapped job here
                             if (remainingStationJobs[station][job] != null && remainingStationJobs[station][job] == 0)
@@ -175,13 +178,9 @@ public sealed partial class StationJobsSystem
                             AssignPlayer(player, job, station, jobCandidates, remainingStationJobs, unassignedProfiles, assigned);
                             stationShares[station]--;
                             stillAssigningJobs = true;
-
-                            if (jobCandidates.Count == 0)
-                                goto done;
                         }
                     } while (stillAssigningJobs);
                 }
-                done: ;
             }
         }
 
