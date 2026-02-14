@@ -4,7 +4,7 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 01/22/2026 20:39:40
+  time: 02/14/2026 15:29:01
   entityCount: 11607
 maps:
 - 1
@@ -579,25 +579,28 @@ entities:
           4,5:
             0: 30591
           4,6:
-            0: 57351
+            0: 7
+            2: 57344
           4,7:
-            2: 61152
+            2: 61166
           5,5:
             0: 15
             1: 60928
           5,6:
-            0: 61440
+            2: 61440
             1: 238
           5,7:
-            0: 61182
+            2: 65535
           6,5:
             0: 52239
             1: 4352
           6,6:
             1: 17
-            0: 63692
+            2: 12288
+            0: 51404
           6,7:
-            0: 49151
+            2: 13107
+            0: 36044
           7,5:
             0: 30479
           7,6:
@@ -1374,14 +1377,14 @@ entities:
             2: 2176
           3,-16:
             1: 65331
-            3: 8
+            4: 8
           3,-15:
-            4: 544
+            3: 544
             1: 2184
           3,-17:
             1: 12014
           4,-16:
-            3: 3
+            4: 3
             1: 62216
           4,-15:
             1: 819
@@ -1550,11 +1553,11 @@ entities:
             Oxygen: 6666.982
         - volume: 2500
           temperature: 293.15
-          moles: {}
-        - volume: 2500
-          temperature: 293.15
           moles:
             Nitrogen: 6666.982
+        - volume: 2500
+          temperature: 293.15
+          moles: {}
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
@@ -2782,7 +2785,7 @@ entities:
       pos: 36.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -25703.549
+      secondsUntilStateChange: -25738.658
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -73949,7 +73952,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -252469.94
+      secondsUntilStateChange: -252505.05
       state: Opening
     - type: Airlock
       autoClose: False
