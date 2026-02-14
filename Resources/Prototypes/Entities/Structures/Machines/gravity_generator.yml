@@ -27,11 +27,6 @@
   - type: ApcPowerReceiver
     powerLoad: 2500
   - type: ExtensionCableReceiver
-  - type: Electrified
-    onHandInteract: false
-    onInteractUsing: false
-    onBump: false
-    usesApcPower: true
   - type: Physics
     bodyType: Static
   - type: Fixtures

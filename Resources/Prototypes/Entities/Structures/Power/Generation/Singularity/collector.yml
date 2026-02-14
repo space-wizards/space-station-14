@@ -64,11 +64,6 @@
         reactantBreakdownRate: 0.0001
   - type: RadiationReceiver
   - type: PowerSupplier
-  - type: Electrified
-    onHandInteract: false
-    onInteractUsing: false
-    onBump: false
-    highVoltageNode: input
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
