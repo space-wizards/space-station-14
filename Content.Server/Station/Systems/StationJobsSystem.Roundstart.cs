@@ -88,8 +88,6 @@ public sealed partial class StationJobsSystem
 
                 var candidates = GetPlayersJobCandidates(weight, selectedPriority, unassignedProfiles);
 
-                var candidatesRemaining = 0;
-
                 // Tracks what players are available for a given job in the current iteration of selection.
                 var jobCandidates = new Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>>();
 
@@ -105,8 +103,6 @@ public sealed partial class StationJobsSystem
 
                         jobCandidates[job].Add(user);
                     }
-
-                    candidatesRemaining++;
                 }
 
                 // The jobs we're currently trying to select players for.
@@ -136,7 +132,7 @@ public sealed partial class StationJobsSystem
                 }
 
                 // The share of the players each station gets in the current iteration of job selection.
-                var stationShares = CalculateStationShares(stationTotalSlots, candidatesRemaining);
+                var stationShares = CalculateStationShares(stationTotalSlots, candidates.Count);
 
                 // Actual meat, goes through each station and shakes the tree until everyone has a job.
                 foreach (var station in stations)
@@ -175,11 +171,11 @@ public sealed partial class StationJobsSystem
 
                             // Picking players it finds that have the job set.
                             var player = _random.Pick(jobCandidates[job]);
-                            AssignPlayer(player, job, station, jobCandidates, remainingStationJobs, unassignedProfiles, assigned, ref candidatesRemaining);
+                            AssignPlayer(player, job, station, jobCandidates, remainingStationJobs, unassignedProfiles, assigned);
                             stationShares[station]--;
                             stillAssigningJobs = true;
 
-                            if (candidatesRemaining == 0)
+                            if (jobCandidates.Count == 0)
                                 goto done;
                         }
                     } while (stillAssigningJobs);
@@ -200,8 +196,7 @@ public sealed partial class StationJobsSystem
         Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>> jobPlayerOptions,
         Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>> stationJobs,
         Dictionary<NetUserId, HumanoidCharacterProfile> unassignedProfiles,
-        Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> assigned,
-        ref int optionsRemaining
+        Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> assigned
         )
     {
         // Remove the player from all possible jobs as that's faster than actually checking what they have selected.
@@ -215,8 +210,6 @@ public sealed partial class StationJobsSystem
         stationJobs[station][job]--;
         unassignedProfiles.Remove(player);
         assigned.Add(player, (job, station));
-
-        optionsRemaining--;
     }
 
     /// <summary>
