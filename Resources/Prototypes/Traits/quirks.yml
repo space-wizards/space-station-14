@@ -1,4 +1,5 @@
 # If you add a new trait, make sure to add the corresponding component to the whitelist in \Resources\Prototypes\Entities\Mobs\Player\clone.yml so it gets copied to clones correctly!
+# TODO qwer: this ^^^
 
 - type: trait
   id: Pacifist
@@ -24,3 +25,13 @@
   category: Quirks
   components:
   - type: Snoring
+
+- type: trait
+  id: Kleptomaniac
+  name: trait-kleptomaniac-name
+  description: trait-kleptomaniac-desc
+  category: Quirks
+  specials:
+  - !type:ApplyStatusEffectSpecial
+    statusEffects:
+    - StatusEffectKleptomaniacTrait
