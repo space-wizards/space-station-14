@@ -151,7 +151,7 @@ public sealed partial class StationJobsSystem
                     // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
                     // as you do but it's what seems to be the absolute best option here.
                     // It doesn't seem to show up on the chart, perf-wise, anyway, so it's likely fine.
-                    var stillAssigningJobs = true;
+                    bool stillAssigningJobs;
                     do
                     {
                         // this will get set back to true if we successfully assign at least one job in
