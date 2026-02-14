@@ -163,6 +163,7 @@ public sealed partial class StationJobsSystem
                             if (stationShares[station] == 0)
                                 break;
 
+                            // null indicates an uncapped job here
                             if (remainingStationJobs[station][job] != null && remainingStationJobs[station][job] == 0)
                                 continue; // Can't assign this job.
 
