@@ -253,6 +253,8 @@
       path: /Audio/Voice/Diona/diona_scream.ogg
     Laugh:
       collection: DionaLaugh
+    Sneeze:
+      path: /Audio/Voice/Diona/diona_sneeze.ogg
     Chirp:
       path: /Audio/Animals/nymph_chirp.ogg
     Honk:
@@ -391,7 +393,7 @@
     Laugh:
       collection: MaleLaugh
     Sneeze:
-      collection: MaleSneezes
+      path: /Audio/Voice/Vulpkanin/vulp_sneeze.ogg
     Cough:
       collection: MaleCoughs
     Whistle:
@@ -433,7 +435,7 @@
     Laugh:
       collection: FemaleLaugh
     Sneeze:
-      collection: FemaleSneezes
+      path: /Audio/Voice/Vulpkanin/vulp_sneeze.ogg
     Cough:
       collection: FemaleCoughs
     Whistle:
