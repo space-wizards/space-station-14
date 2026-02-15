@@ -138,7 +138,7 @@ public sealed partial class StationJobsSystem
 
                     // Loop through the jobs repeatedly until one of the following happens:
                     // * The station has its share of players for the current weight & priority
-                    // * All the players in jobCandidates have been assigned jobs
+                    // * All the players who were in jobCandidates have been assigned jobs
                     // * None of the remaining jobCandidates can be assigned to any of the jobs in currentJobs, due
                     //   to the jobs being full and/or the players not matching the remaining jobs
                     var stillAssigningJobs = true;
@@ -152,7 +152,7 @@ public sealed partial class StationJobsSystem
                         foreach (var job in currentJobs)
                         {
                             if (stationShares[station] == 0 // The station has its share of players for the current weight & priority
-                                || jobCandidates.Count == 0) // All the players in jobCandidates have been assigned jobs
+                                || jobCandidates.Count == 0) // All the players who were in jobCandidates have been assigned jobs
                             {
                                 stillAssigningJobs = false;
                                 break;
