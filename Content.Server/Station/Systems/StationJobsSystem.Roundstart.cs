@@ -81,6 +81,24 @@ public sealed partial class StationJobsSystem
         // Weight > Priority > Station.
         foreach (var weight in _orderedWeights)
         {
+            // The jobs we're currently trying to select players for.
+            var currentWeightJobs = new Dictionary<EntityUid, List<ProtoId<JobPrototype>>>(stations.Count);
+
+            // Go through every station..
+            foreach (var station in stations)
+            {
+                var jobs = new List<ProtoId<JobPrototype>>();
+
+                // Get all of the jobs in the selected weight category.
+                foreach (var (job, slot) in remainingStationJobs[station])
+                {
+                    if (_jobsByWeight[weight].Contains(job))
+                        jobs.Add(job);
+                }
+
+                currentWeightJobs.Add(station, jobs);
+            }
+
             for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
             {
                 if (unassignedProfiles.Count == 0)
@@ -105,34 +123,8 @@ public sealed partial class StationJobsSystem
                     }
                 }
 
-                // The jobs we're currently trying to select players for.
-                var currentlySelectingJobs = new Dictionary<EntityUid, List<ProtoId<JobPrototype>>>(stations.Count);
-                // Total number of slots for the given stations for the jobs in the current iteration of selection.
-                var stationTotalSlots = new Dictionary<EntityUid, int>(stations.Count);
-
-                // Go through every station..
-                foreach (var station in stations)
-                {
-                    var jobs = new List<ProtoId<JobPrototype>>();
-                    var slots = 0;
-
-                    // Get all of the jobs in the selected weight category.
-                    foreach (var (job, slot) in remainingStationJobs[station])
-                    {
-                        if (_jobsByWeight[weight].Contains(job))
-                            jobs.Add(job);
-
-                        // Intentionally discounts the value of uncapped slots! They're only a single slot when
-                        // deciding a station's share.
-                        slots += slot ?? 1;
-                    }
-
-                    currentlySelectingJobs.Add(station, jobs);
-                    stationTotalSlots.Add(station, slots);
-                }
-
                 // The share of the players each station gets in the current iteration of job selection.
-                var stationShares = CalculateStationShares(stationTotalSlots, candidates.Count);
+                var stationShares = CalculateStationShares(currentWeightJobs, remainingStationJobs, candidates.Count);
 
                 // Actual meat, goes through each station and shakes the tree until everyone has a job.
                 foreach (var station in stations)
@@ -141,7 +133,7 @@ public sealed partial class StationJobsSystem
                         continue;
 
                     // The jobs we're selecting from for the current station.
-                    var currStationSelectingJobs = currentlySelectingJobs[station];
+                    var currStationSelectingJobs = currentWeightJobs[station];
                     // We don't use this anywhere else so we can just shuffle it in place.
                     _random.Shuffle(currStationSelectingJobs);
                     // And iterates through all its jobs in a random order until it can't assign any more
@@ -216,18 +208,31 @@ public sealed partial class StationJobsSystem
     /// Assign each station a maximum share of the candidates for the current iteration
     /// of job assigning, proportional to the number of job slots it has for said iteration.
     /// </summary>
-    /// <param name="stationSlots">How many job slots each station has for this iteration</param>
+    /// <param name="currentWeightJobs">What jobs each station has for this iteration</param>
+    /// <param name="remainingStationJobSlots">How many job slots each station has remaining</param>
     /// <param name="candidateCount">How many job candidates there are for this iteration</param>
     /// <returns></returns>
-    private Dictionary<EntityUid, int> CalculateStationShares(Dictionary<EntityUid, int> stationSlots, int candidateCount)
+    private Dictionary<EntityUid, int> CalculateStationShares(
+        Dictionary<EntityUid, List<ProtoId<JobPrototype>>> currentWeightJobs,
+        Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>> remainingStationJobSlots,
+        int candidateCount
+        )
     {
         // The share of the candidates each station gets.
-        var stationShares = new Dictionary<EntityUid, int>(stationSlots.Count);
+        var stationShares = new Dictionary<EntityUid, int>(currentWeightJobs.Count);
+
+        var stationSlots = currentWeightJobs.ToDictionary(x => x.Key, x => 0);
+        foreach (var (station, jobs) in currentWeightJobs)
+        {
+            // Intentionally discounts the value of uncapped slots! They're only a single slot when
+            // deciding a station's share.
+            stationSlots[station] = jobs.Sum(job => remainingStationJobSlots[station][job] ?? 1);
+        }
 
         var totalSlots = stationSlots.Values.Sum();
 
         if (totalSlots == 0)
-            return stationShares; // No station wants any of the candidates
+            return currentWeightJobs.ToDictionary(x => x.Key, x => 0); // No station wants any of the candidates
 
         // How many players we've distributed so far. Used to grant any remaining slots if we have leftovers.
         var distributed = 0;
