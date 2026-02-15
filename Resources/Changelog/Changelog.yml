@@ -3978,13 +3978,6 @@
   id: 9487
   time: '2026-02-03T20:12:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42764
-- author: Admiral-Obvious-001
-  changes:
-  - message: EXPERIMENTAL Removed blunt and burn based gibbing.
-    type: Remove
-  id: 9488
-  time: '2026-02-04T04:49:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42474
 - author: veprolet
   changes:
   - message: Volumetric devices now respect their pressure limits more.
