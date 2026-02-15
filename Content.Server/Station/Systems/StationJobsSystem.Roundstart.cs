@@ -80,6 +80,9 @@ public sealed partial class StationJobsSystem
         // Weight > Priority > Station.
         foreach (var weight in _orderedWeights)
         {
+            if (unassignedProfiles.Count == 0)
+                break;
+
             // The jobs we're currently trying to select players for. Open slot counts will be updated
             // here as jobs are assigned.
             var currentWeightJobSlots =
@@ -103,7 +106,7 @@ public sealed partial class StationJobsSystem
             for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
             {
                 if (unassignedProfiles.Count == 0)
-                    goto endFunc;
+                    break;
 
                 var candidates = GetPlayersJobCandidates(weight, selectedPriority, unassignedProfiles);
 
@@ -177,7 +180,6 @@ public sealed partial class StationJobsSystem
             }
         }
 
-        endFunc:
         return assigned;
     }
 
