@@ -61,6 +61,7 @@
   - type: Item
     size: Tiny
   - type: PhysicalComposition
+  - type: StationAiWhitelist
 
 - type: entity
   name: paper
@@ -467,3 +468,4 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StationAiWhitelist
