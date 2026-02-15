@@ -47,12 +47,10 @@ public sealed partial class StationJobsSystem
     /// </summary>
     /// <param name="profiles">The profiles to use for selection.</param>
     /// <param name="stations">List of stations to assign for.</param>
-    /// <param name="useRoundStartJobs">Whether or not to use the round-start jobs for the stations instead of their current jobs.</param>
+    /// <param name="useRoundStartJobs">Whether or not to use the round-start jobs for the stations instead of their
+    /// current jobs. Set to false if using this mid-round.</param>
     /// <returns>List of players and their assigned jobs.</returns>
     /// <remarks>
-    /// You probably shouldn't use useRoundStartJobs mid-round if the station has been available to join,
-    /// as there may end up being more round-start slots than available slots, which can cause weird behavior.
-    /// A warning to all who enter ye cursed lands: This function is long and mildly incomprehensible. Best used without touching.
     /// </remarks>
     public Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
@@ -68,16 +66,14 @@ public sealed partial class StationJobsSystem
         // Player <-> (job, station)
         var assigned = new Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)>(unassignedProfiles.Count);
 
-        // The jobs left on the stations.
+        // The jobs on the stations.
         var allStationsJobs = new Dictionary<EntityUid, IReadOnlyDictionary<ProtoId<JobPrototype>, int?>>();
         foreach (var station in stations)
         {
             allStationsJobs.Add(station, useRoundStartJobs ? GetRoundStartJobs(station) : GetJobs(station));
         }
 
-        // Ok so the general algorithm:
-        // We start with the highest weight jobs and work our way down. We filter jobs by weight when selecting as well.
-        // Weight > Priority > Station.
+        // Assign all jobs of the same weight in one batch. Start with the highest weight and work down to the lowest.
         foreach (var weight in _orderedWeights)
         {
             if (unassignedProfiles.Count == 0)
@@ -88,12 +84,10 @@ public sealed partial class StationJobsSystem
             var currentWeightJobSlots =
                 new Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>>(stations.Count);
 
-            // Go through every station..
             foreach (var station in stations)
             {
                 var jobs = new Dictionary<ProtoId<JobPrototype>, int?>();
 
-                // Get all of the jobs in the selected weight category.
                 foreach (var (job, slot) in allStationsJobs[station])
                 {
                     if (_jobsByWeight[weight].Contains(job))
@@ -103,19 +97,19 @@ public sealed partial class StationJobsSystem
                 currentWeightJobSlots.Add(station, jobs);
             }
 
+            // Try to assign the currentWeightJobSlots to players who have them at high priority, then medium on the
+            // next iteration, then low on the third & final iteration.
             for (var currentPriority = JobPriority.High; currentPriority > JobPriority.Never; currentPriority--)
             {
                 if (unassignedProfiles.Count == 0)
                     break;
 
+                // Find the unassigned players who have one or more of the current weight jobs at currentPriority
                 var candidates = GetPlayersJobCandidates(weight, currentPriority, unassignedProfiles);
 
-                // Tracks what players are available for a given job in the current iteration of selection.
+                // Tracks the players by job so it's easy to pick a random player for a specific job later
                 var jobCandidates = new Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>>();
 
-                // Goes through every candidate, and adds them to jobPlayerOptions, so that the candidate players
-                // have an index sorted by job. We use this (much) later when actually assigning people to randomly
-                // pick from the list of candidates for the job.
                 foreach (var (user, jobs) in candidates)
                 {
                     foreach (var job in jobs)
@@ -127,10 +121,10 @@ public sealed partial class StationJobsSystem
                     }
                 }
 
-                // The share of the players each station gets in the current iteration of job selection.
+                // The share of the players each station can have for this iteration
                 var stationShares = CalculateStationShares(currentWeightJobSlots, candidates.Count);
 
-                // Actual meat, goes through each station and shakes the tree until everyone has a job.
+                // Actually assign jobs for one station at a time
                 foreach (var station in stations)
                 {
                     if (stationShares[station] == 0)
@@ -138,25 +132,27 @@ public sealed partial class StationJobsSystem
 
                     // The jobs we're selecting from for the current station.
                     var currentJobs = currentWeightJobSlots[station].Keys.ToList();
+
                     // We want to go through them in random order.
                     _random.Shuffle(currentJobs);
-                    // And iterates through all its jobs in a random order until it can't assign any more
-                    // jobs, either because all the job slots are filled, because there are no candidates
-                    // for the job slots that aren't filled, or because the station's share of players this
-                    // iteration has been reached.
-                    // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
-                    // as you do but it's what seems to be the absolute best option here.
-                    // It doesn't seem to show up on the chart, perf-wise, anyway, so it's likely fine.
+
+                    // Loop through the jobs repeatedly until one of the following happens:
+                    // * The station has its share of players for the current weight & priority
+                    // * All the players in jobCandidates have been assigned jobs
+                    // * None of the remaining jobCandidates can be assigned to any of the jobs in currentJobs, due
+                    //   to the jobs being full and/or the players not matching the remaining jobs
                     var stillAssigningJobs = true;
                     while (stillAssigningJobs)
                     {
-                        // This will get set back to true in the inner loop if we successfully assign someone to at least one
-                        // of the jobs in currentJobs
+                        // This will get set back to true in the inner loop when a player is assigned to a job.
+                        // If no players get assigned to jobs in the inner loop, then the jobs are full and/or
+                        // the players don't match the remaining jobs.
                         stillAssigningJobs = false;
 
                         foreach (var job in currentJobs)
                         {
-                            if (stationShares[station] == 0 || jobCandidates.Count == 0)
+                            if (stationShares[station] == 0 // The station has its share of players for the current weight & priority
+                                || jobCandidates.Count == 0) // All the players in jobCandidates have been assigned jobs
                             {
                                 stillAssigningJobs = false;
                                 break;
@@ -169,13 +165,17 @@ public sealed partial class StationJobsSystem
                             if (!jobCandidates.ContainsKey(job))
                                 continue;
 
-                            // Picking players it finds that have the job set.
+                            // Pick one of the job's candidates at random
                             var player = _random.Pick(jobCandidates[job]);
                             assigned.Add(player, (job, station));
+
+                            // Update various bookkeeping data
                             unassignedProfiles.Remove(player);
                             currentWeightJobSlots[station][job]--;
                             stationShares[station]--;
                             RemoveJobCandidate(jobCandidates, player);
+
+                            // There was now at least one job assigned on this loop over the jobs
                             stillAssigningJobs = true;
                         }
                     }
@@ -202,7 +202,7 @@ public sealed partial class StationJobsSystem
     /// Assign each station a maximum share of the candidates for the current iteration
     /// of job assigning, proportional to the number of job slots it has for said iteration.
     /// </summary>
-    /// <param name="currentWeightJobs">Job slots each station has for this iteration</param>
+    /// <param name="currentWeightJobs">Job slots for this iteration</param>
     /// <param name="candidateCount">How many job candidates there are for this iteration</param>
     /// <returns></returns>
     private Dictionary<EntityUid, int> CalculateStationShares(
@@ -249,7 +249,8 @@ public sealed partial class StationJobsSystem
     }
 
     /// <summary>
-    /// Attempts to assign overflow jobs to any player in allPlayersToAssign that is not in assignedJobs.
+    /// Attempts to assign an overflow job (eg Passenger) to any player in allPlayersToAssign that
+    /// is not in assignedJobs.
     /// </summary>
     /// <param name="assignedJobs">All assigned jobs.</param>
     /// <param name="allPlayersToAssign">All players that might need an overflow assigned.</param>
