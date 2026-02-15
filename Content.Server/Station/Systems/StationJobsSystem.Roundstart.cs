@@ -103,12 +103,12 @@ public sealed partial class StationJobsSystem
                 currentWeightJobSlots.Add(station, jobs);
             }
 
-            for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
+            for (var currentPriority = JobPriority.High; currentPriority > JobPriority.Never; currentPriority--)
             {
                 if (unassignedProfiles.Count == 0)
                     break;
 
-                var candidates = GetPlayersJobCandidates(weight, selectedPriority, unassignedProfiles);
+                var candidates = GetPlayersJobCandidates(weight, currentPriority, unassignedProfiles);
 
                 // Tracks what players are available for a given job in the current iteration of selection.
                 var jobCandidates = new Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>>();
@@ -137,9 +137,9 @@ public sealed partial class StationJobsSystem
                         continue;
 
                     // The jobs we're selecting from for the current station.
-                    var currStationSelectingJobs = currentWeightJobSlots[station].Keys.ToList();
+                    var currentJobs = currentWeightJobSlots[station].Keys.ToList();
                     // We want to go through them in random order.
-                    _random.Shuffle(currStationSelectingJobs);
+                    _random.Shuffle(currentJobs);
                     // And iterates through all its jobs in a random order until it can't assign any more
                     // jobs, either because all the job slots are filled, because there are no candidates
                     // for the job slots that aren't filled, or because the station's share of players this
@@ -147,14 +147,14 @@ public sealed partial class StationJobsSystem
                     // No, AFAIK it cannot be done any saner than this. I hate "shaking" collections as much
                     // as you do but it's what seems to be the absolute best option here.
                     // It doesn't seem to show up on the chart, perf-wise, anyway, so it's likely fine.
-                    bool stillAssigningJobs;
-                    do
+                    var stillAssigningJobs = true;
+                    while (stillAssigningJobs)
                     {
-                        // this will get set back to true if we successfully assign at least one job in
-                        // the inner loop
+                        // This will get set back to true in the inner loop if we successfully assign someone to at least one
+                        // of the jobs in currentJobs
                         stillAssigningJobs = false;
 
-                        foreach (var job in currStationSelectingJobs)
+                        foreach (var job in currentJobs)
                         {
                             if (stationShares[station] == 0 || jobCandidates.Count == 0)
                             {
@@ -171,11 +171,14 @@ public sealed partial class StationJobsSystem
 
                             // Picking players it finds that have the job set.
                             var player = _random.Pick(jobCandidates[job]);
-                            AssignPlayer(player, job, station, jobCandidates, currentWeightJobSlots, unassignedProfiles, assigned);
+                            assigned.Add(player, (job, station));
+                            unassignedProfiles.Remove(player);
+                            currentWeightJobSlots[station][job]--;
                             stationShares[station]--;
+                            RemoveJobCandidate(jobCandidates, player);
                             stillAssigningJobs = true;
                         }
-                    } while (stillAssigningJobs);
+                    }
                 }
             }
         }
@@ -183,28 +186,16 @@ public sealed partial class StationJobsSystem
         return assigned;
     }
 
-    // Assigns a player to the given station, and updates all the bookkeeping
-    private void AssignPlayer(
-        NetUserId player,
-        ProtoId<JobPrototype> job,
-        EntityUid station,
-        Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>> jobPlayerOptions,
-        Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>> stationJobs,
-        Dictionary<NetUserId, HumanoidCharacterProfile> unassignedProfiles,
-        Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> assigned
-        )
+    private static void RemoveJobCandidate(Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>> jobCandidates,
+        NetUserId candidateToRemove)
     {
         // Remove the player from all possible jobs as that's faster than actually checking what they have selected.
-        foreach (var (k, players) in jobPlayerOptions)
+        foreach (var (k, players) in jobCandidates)
         {
-            players.Remove(player);
+            players.Remove(candidateToRemove);
             if (players.Count == 0)
-                jobPlayerOptions.Remove(k);
+                jobCandidates.Remove(k);
         }
-
-        stationJobs[station][job]--;
-        unassignedProfiles.Remove(player);
-        assigned.Add(player, (job, station));
     }
 
     /// <summary>
