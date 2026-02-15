@@ -76,14 +76,16 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             {
                 // Make sure we don't pump over the pressure limit.
                 var limitMolesFilter =
-                    AtmosphereSystem.FractionToMaxPressure(removed, filterNode.Air, Atmospherics.MaxOutputPressure);
+                    AtmosphereSystem.MolesToMaxPressure(removed, filterNode.Air, Atmospherics.MaxOutputPressure);
 
                 var availableMoles = removed.GetMoles(filter.FilteredGas.Value);
                 var filteredMoles = Math.Max(Math.Min(limitMolesFilter, availableMoles), 0);
+                var filteredGasMixture = new GasMixture { Temperature = removed.Temperature };
 
-                filterNode.Air.AdjustMoles(filter.FilteredGas.Value, filteredMoles);
-                removed.SetMoles(filter.FilteredGas.Value, 0f);
-                inletNode.Air.AdjustMoles(filter.FilteredGas.Value, availableMoles - filteredMoles);
+                filteredGasMixture.SetMoles(filter.FilteredGas.Value, filteredMoles);
+                removed.AdjustMoles(filter.FilteredGas.Value, -filteredMoles);
+
+                _atmosphereSystem.Merge(filterNode.Air, filteredGasMixture);
 
                 _ambientSoundSystem.SetAmbience(uid, filteredMoles > 0f);
             }
