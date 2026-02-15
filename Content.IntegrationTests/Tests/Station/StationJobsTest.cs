@@ -122,7 +122,7 @@ public sealed class StationJobsTest
                 .WithPlayers(
                     new Dictionary<NetUserId, HumanoidCharacterProfile>()
                     .AddJob("TCaptain", JobPriority.High, CaptainCount)
-                ) ;
+                );
             Assert.That(fakePlayers, Is.Not.Empty);
 
             var start = new Stopwatch();
