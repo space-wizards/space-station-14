@@ -222,6 +222,8 @@
       path: /Audio/Voice/Vox/shriek1.ogg
     Laugh:
       path: /Audio/Voice/Vox/vox_laugh.ogg
+    Sneeze:
+      path: /Audio/Voice/Vox/vox_sneeze.ogg
     Cough:
       path: /Audio/Voice/Vox/vox_cough.ogg
     Sigh:
@@ -254,7 +256,7 @@
     Laugh:
       collection: DionaLaugh
     Sneeze:
-      path: /Audio/Voice/Diona/diona_sneeze.ogg
+      collection: DionaSneeze
     Chirp:
       path: /Audio/Animals/nymph_chirp.ogg
     Honk:
@@ -393,7 +395,7 @@
     Laugh:
       collection: MaleLaugh
     Sneeze:
-      path: /Audio/Voice/Vulpkanin/vulp_sneeze.ogg
+      collection: VulpkaninSneeze
     Cough:
       collection: MaleCoughs
     Whistle:
@@ -435,7 +437,7 @@
     Laugh:
       collection: FemaleLaugh
     Sneeze:
-      path: /Audio/Voice/Vulpkanin/vulp_sneeze.ogg
+      collection: VulpkaninSneeze
     Cough:
       collection: FemaleCoughs
     Whistle:
