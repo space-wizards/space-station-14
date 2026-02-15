@@ -78,7 +78,7 @@
     - Tail
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing,]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
   id: ClothingOuterSuitAtmosFire
   name: atmos fire suit
   description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
