@@ -288,4 +288,87 @@
   sprites:
   - sprite: Mobs/Customization/undergarments.rsi
     state: tanktop_vulpkanin
-    
+
+- type: marking
+  id: UndergarmentBottomBoxersDwarf
+  bodyPart: UndergarmentBottom
+  groupWhitelist: [Dwarf]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: Mobs/Customization/undergarments.rsi
+      state: boxers_dwarf
+
+- type: marking
+  id: UndergarmentBottomBriefsDwarf
+  bodyPart: UndergarmentBottom
+  groupWhitelist: [Dwarf]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: Mobs/Customization/undergarments.rsi
+      state: briefs_dwarf
+
+- type: marking
+  id: UndergarmentBottomSatinDwarf
+  bodyPart: UndergarmentBottom
+  groupWhitelist: [Dwarf]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: Mobs/Customization/undergarments.rsi
+      state: satin_dwarf
+
+- type: marking
+  id: UndergarmentTopBraDwarf
+  bodyPart: UndergarmentTop
+  groupWhitelist: [Dwarf]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: Mobs/Customization/undergarments.rsi
+      state: classic_dwarf
+
+- type: marking
+  id: UndergarmentTopSportsbraDwarf
+  bodyPart: UndergarmentTop
+  groupWhitelist: [Dwarf]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: Mobs/Customization/undergarments.rsi
+      state: sports_dwarf
+
+- type: marking
+  id: UndergarmentTopBinderDwarf
+  bodyPart: UndergarmentTop
+  groupWhitelist: [Dwarf]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: Mobs/Customization/undergarments.rsi
+      state: binder_dwarf
+
+- type: marking
+  id: UndergarmentTopTanktopDwarf
+  bodyPart: UndergarmentTop
+  groupWhitelist: [Dwarf]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: Mobs/Customization/undergarments.rsi
+      state: tanktop_dwarf

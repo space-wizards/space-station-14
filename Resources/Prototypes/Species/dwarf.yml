@@ -1,8 +1,8 @@
 - type: species
   id: Dwarf
-  name: species-name-human # TP14 - Was dwarf, but dwarfism is now a trait
-  roundStart: false #true #false # TP14 - Hides it from the menu
-  prototype: MobHuman
+  name: species-name-dwarf  #species-name-human # TP14 - Was dwarf, but dwarfism is now a trait
+  roundStart: true #false # TP14 - Hides it from the menu
+  prototype: MobDwarf
   sprites: TP14SpritesMobDwarf # TP14 - NEW DORF
   #markingLimits: MobHumanMarkingLimits
   dollPrototype: AppearanceDwarf

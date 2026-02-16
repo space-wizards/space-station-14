@@ -1,15 +1,81 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Dwarf
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Special:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentTopTanktopDwarf ]
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+      nudityDefault: [ UndergarmentBottomBoxersDwarf ]
+
 - type: entity
   parent: AppearanceHuman
   id: AppearanceDwarf
   name: dwarf appearance
   components:
   - type: Inventory
+    speciesId: dwarf
     femaleDisplacements:
       jumpsuit:
         sizeMaps:
           32:
             sprite: Mobs/Species/Dwarf/displacement.rsi
             state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: shoes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: hand
     displacements:
       jumpsuit:
         sizeMaps:
@@ -26,16 +92,26 @@
           32:
             sprite: Mobs/Species/Dwarf/displacement.rsi
             state: shoes
-      enum.HumanoidVisualLayers.UndergarmentBottom:
+      gloves:
         sizeMaps:
           32:
             sprite: Mobs/Species/Dwarf/displacement.rsi
-            state: jumpsuit
-      enum.HumanoidVisualLayers.UndergarmentTop:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Dwarf/displacement.rsi
-            state: jumpsuit
+            state: hand
+      #belt:
+      #  sizeMaps:
+      #    32:
+      #      sprite: Mobs/Species/Dwarf/displacement.rsi
+      #      state: belt
+      #enum.HumanoidVisualLayers.UndergarmentBottom:
+      #  sizeMaps:
+      #    32:
+      #      sprite: Mobs/Species/Dwarf/displacement.rsi
+      #      state: jumpsuit
+      #enum.HumanoidVisualLayers.UndergarmentTop:
+      #  sizeMaps:
+      #    32:
+      #      sprite: Mobs/Species/Dwarf/displacement.rsi
+       #     state: jumpsuit
   - type: InitialBody
     organs:
       Torso: OrganDwarfTorso

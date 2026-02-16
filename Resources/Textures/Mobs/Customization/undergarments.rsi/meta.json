@@ -102,6 +102,34 @@
     {
       "name": "binder_vulpkanin",
       "directions": 4
+    },
+    {
+      "name": "briefs_dwarf",
+      "directions": 4
+    },
+    {
+      "name": "satin_dwarf",
+      "directions": 4
+    },
+    {
+      "name": "boxers_dwarf",
+      "directions": 4
+    },
+    {
+      "name": "classic_dwarf",
+      "directions": 4
+    },
+    {
+      "name": "sports_dwarf",
+      "directions": 4
+    },
+    {
+      "name": "binder_dwarf",
+      "directions": 4
+    },
+    {
+      "name": "tanktop_dwarf",
+      "directions": 4
     }
   ]
 }

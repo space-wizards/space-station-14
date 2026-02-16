@@ -35,13 +35,23 @@
     - Human
   components:
   - type: Inventory
-    speciesId: Dwarf
+    speciesId: dwarf
     femaleDisplacements:
       jumpsuit:
         sizeMaps:
           32:
             sprite: Mobs/Species/Dwarf/displacement.rsi
             state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: shoes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: hand
     displacements:
       jumpsuit:
         sizeMaps:
@@ -58,6 +68,16 @@
           32:
             sprite: Mobs/Species/Dwarf/displacement.rsi
             state: shoes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: hand
+      #belt:
+      #  sizeMaps:
+      #    32:
+      #      sprite: Mobs/Species/Dwarf/displacement.rsi
+      #      state: belt
   - type: Fixtures
     fixtures:
       fix1:
