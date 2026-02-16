@@ -3986,3 +3986,12 @@
   id: 9526
   time: '2026-02-15T11:16:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42927
+- author: ScarKy0
+  changes:
+  - message: Drinking blood as non-animal species makes you sick again.
+    type: Fix
+  - message: Injecting someone else's blood is now slightly poisonous.
+    type: Add
+  id: 9527
+  time: '2026-02-16T17:25:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42942
