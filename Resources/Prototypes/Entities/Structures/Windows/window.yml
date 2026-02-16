@@ -241,6 +241,9 @@
         - FullTileMask
         layer:
         - GlassLayer
+  - type: Construction
+    graph: WindowDirectionalCorner
+    node: windowDirectionalCorner
   - type: DamageVisuals
     thresholds: [5, 10, 20]
     trackAllDamage: true
