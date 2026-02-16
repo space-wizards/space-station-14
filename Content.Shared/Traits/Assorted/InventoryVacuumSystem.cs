@@ -6,7 +6,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Traits.Assorted;
@@ -35,9 +34,10 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 continue;
             }
 
+            inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
+
             if (!SharedRandomExtensions.PredictedProb(_gameTiming, inventoryVacuum.StealChance, GetNetEntity(uid)))
             {
-                inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
                 continue;
             }
 
@@ -63,7 +63,6 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 var stolenItem = TrySteal((uid, inventoryVacuum), target);
                 if (stolenItem is not null)
                 {
-                    inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
                         $"{ToPrettyString(uid):actor} stole item {ToPrettyString(stolenItem):item} from {ToPrettyString(target):subject} due to having inventory vacuum");
