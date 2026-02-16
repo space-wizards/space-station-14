@@ -42,7 +42,6 @@ public sealed class InventoryVacuumSystem : EntitySystem
             var transform = Transform(uid);
             var stealTargets =
                 _lookupSystem.GetEntitiesInRange<InventoryComponent>(transform.Coordinates, inventoryVacuum.StealRange);
-            EntityUid? stolenItem = null;
             foreach (var target in stealTargets)
             {
                 if ((EntityUid)target == uid)
@@ -50,7 +49,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
                     continue;
                 }
 
-                stolenItem = TrySteal(uid, target, inventoryVacuum, stolenItem);
+                var stolenItem = TrySteal(uid, target, inventoryVacuum);
                 if (stolenItem is not null)
                 {
                     inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
@@ -63,31 +62,33 @@ public sealed class InventoryVacuumSystem : EntitySystem
     private EntityUid? TrySteal(
         EntityUid uid,
         Entity<InventoryComponent> target,
-        InventoryVacuumComponent inventoryVacuum,
-        EntityUid? stolenItem)
+        InventoryVacuumComponent inventoryVacuum)
     {
         var targetInventory = _inventorySystem.GetHandOrInventoryEntities(target.Owner);
         foreach (var targetInventoryItem in targetInventory)
         {
             _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
+            // Steal from the inventory steal whitelist or hands.
             if (slot is null
                 || inventoryVacuum.StealSlotWhitelist.Contains(slot.Name)
                 || inventoryVacuum.StealSlotWhitelist.Count == 0)
             {
-                if (
-                    (
-                        _inventorySystem.TryGetSlotEntity(uid, "back", out var uidBackpack)
-                        && _containerSystem.Insert(targetInventoryItem,
-                            _containerSystem.GetAllContainers(uidBackpack.Value).First())
-                    )
-                    || _handsSystem.TryPickupAnyHand(uid, targetInventoryItem))
+                if (_inventorySystem.TryGetSlotEntity(uid, "back", out var uidBackpack))
                 {
-                    stolenItem = targetInventoryItem;
-                    break;
+                    var containers = _containerSystem.GetAllContainers(uidBackpack.Value);
+                    if (containers.Any() && _containerSystem.Insert(targetInventoryItem, containers.First()))
+                    {
+                        return targetInventoryItem;
+                    }
+                }
+
+                if (_handsSystem.TryPickupAnyHand(uid, targetInventoryItem))
+                {
+                    return targetInventoryItem;
                 }
             }
         }
 
-        return stolenItem;
+        return null;
     }
 }
