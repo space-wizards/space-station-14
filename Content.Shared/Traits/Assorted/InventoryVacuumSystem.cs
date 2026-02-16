@@ -63,7 +63,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
                     continue;
                 }
 
-                var stolenItem = TrySteal(uid, target, inventoryVacuum);
+                var stolenItem = TrySteal((uid, inventoryVacuum), target);
                 if (stolenItem is not null)
                 {
                     inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
@@ -77,9 +77,8 @@ public sealed class InventoryVacuumSystem : EntitySystem
     }
 
     private EntityUid? TrySteal(
-        EntityUid uid,
-        Entity<InventoryComponent> target,
-        InventoryVacuumComponent inventoryVacuum)
+        Entity<InventoryVacuumComponent> ent,
+        Entity<InventoryComponent> target)
     {
         var targetInventory = _inventorySystem.GetHandOrInventoryEntities(target.Owner);
         foreach (var targetInventoryItem in targetInventory)
@@ -87,10 +86,10 @@ public sealed class InventoryVacuumSystem : EntitySystem
             _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
             // Steal from the inventory steal whitelist or hands.
             if (slot is null
-                || inventoryVacuum.StealSlotWhitelist.Contains(slot.Name)
-                || inventoryVacuum.StealSlotWhitelist.Count == 0)
+                || ent.Comp.StealSlotWhitelist.Contains(slot.Name)
+                || ent.Comp.StealSlotWhitelist.Count == 0)
             {
-                if (_inventorySystem.TryGetSlotEntity(uid, "back", out var uidBackpack))
+                if (_inventorySystem.TryGetSlotEntity(ent, "back", out var uidBackpack))
                 {
                     var containers = _containerSystem.GetAllContainers(uidBackpack.Value);
                     if (containers.Any() && _containerSystem.Insert(targetInventoryItem, containers.First()))
@@ -99,7 +98,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
                     }
                 }
 
-                if (_handsSystem.TryPickupAnyHand(uid, targetInventoryItem))
+                if (_handsSystem.TryPickupAnyHand(ent, targetInventoryItem))
                 {
                     return targetInventoryItem;
                 }
