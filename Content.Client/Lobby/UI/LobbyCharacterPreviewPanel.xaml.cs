@@ -15,6 +15,8 @@ namespace Content.Client.Lobby.UI;
 [GenerateTypedNameReferences]
 public sealed partial class LobbyCharacterPreviewPanel : Control
 {
+    public const string StyleIdentifierLobbyCollapsibleSubsection = "lobbyCollapsibleSubsection";
+
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     [Dependency] private readonly IClientPreferencesManager _preferences = default!;

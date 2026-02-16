@@ -30,34 +30,41 @@
             </BoxContainer>
 
             <!-- Where we show ALL the jobs, separated into priorities -->
-            <BoxContainer Name="JobGrid"
-                          VerticalExpand="True"
-                          HorizontalExpand="True"
-                          HorizontalAlignment="Center"
-                          SeparationOverride="6">
+            <Collapsible StyleIdentifier="lobbyCollapsibleSubsection" BodyVisible="True">
+                <CollapsibleHeading Title="{Loc 'lobby-character-preview-panel-jobs-heading'}"/>
+                <CollapsibleBody>
+                    <PanelContainer StyleClasses="BackgroundPanelDark">
+                        <BoxContainer VerticalExpand="True"
+                                      HorizontalExpand="True"
+                                      HorizontalAlignment="Center"
+                                      SeparationOverride="6"
+                                      Margin="5">
 
-                <!-- Jobs with "Never" priority -->
-                <ui:DraggableJobTarget Name="NeverBox" Priority="Never" />
+                            <!-- Jobs with "Never" priority -->
+                            <ui:DraggableJobTarget Name="NeverBox" Priority="Never" />
 
-                <!-- Vertical rule -->
-                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
+                            <!-- Vertical rule -->
+                            <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
-                <!-- Jobs with "Low" priority -->
-                <ui:DraggableJobTarget Name="LowBox" Priority="Low" />
+                            <!-- Jobs with "Low" priority -->
+                            <ui:DraggableJobTarget Name="LowBox" Priority="Low" />
 
-                <!-- Vertical rule -->
-                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
+                            <!-- Vertical rule -->
+                            <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
-                <!-- Jobs with "Medium" priority -->
-                <ui:DraggableJobTarget Name="MediumBox" Priority="Medium" />
+                            <!-- Jobs with "Medium" priority -->
+                            <ui:DraggableJobTarget Name="MediumBox" Priority="Medium" />
 
-                <!-- Vertical rule -->
-                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
+                            <!-- Vertical rule -->
+                            <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
-                <!-- THE job with "HIGH" priority -->
-                <ui:DraggableJobTarget Name="HighBox" Priority="High" />
+                            <!-- THE job with "HIGH" priority -->
+                            <ui:DraggableJobTarget Name="HighBox" Priority="High" />
 
-            </BoxContainer> <!-- End job grids -->
+                        </BoxContainer>
+                    </PanelContainer> <!-- End job grids -->
+                </CollapsibleBody>
+            </Collapsible>
         </BoxContainer>
         <Label Name="Unloaded" Text="{Loc 'lobby-character-preview-panel-unloaded-preferences-label'}"/>
     </BoxContainer>

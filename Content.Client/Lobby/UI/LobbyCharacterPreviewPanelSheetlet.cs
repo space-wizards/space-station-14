@@ -1,5 +1,6 @@
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Fonts;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -24,6 +25,18 @@ public sealed class LobbyCharacterPreviewPanelSheetlet : Sheetlet<PalettedStyles
                 .Pseudo(DraggableJobTarget.StylePseudoClassActive)
                 .ParentOf(E<PanelContainer>())
                 .Prop(PanelContainer.StylePropertyPanel, activePanel),
+            E<Collapsible>()
+                .Identifier("lobbyCollapsibleSubsection")
+                .ParentOf(E<CollapsibleHeading>())
+                .ParentOf(E<BoxContainer>())
+                .Prop(BoxContainer.StylePropertySeparation, 5),
+            E<Collapsible>()
+                .Identifier("lobbyCollapsibleSubsection")
+                .ParentOf(E<CollapsibleHeading>())
+                .ParentOf(E<BoxContainer>())
+                .ParentOf(E<Label>())
+                .FontColor(sheet.HighlightPalette.Text)
+                .Font(sheet.BaseFont.GetFont(12, FontKind.Bold)),
         ];
     }
 }
