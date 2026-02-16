@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -17,6 +19,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Update(float frameTime)
     {
@@ -64,6 +67,9 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 if (stolenItem is not null)
                 {
                     inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
+                    _adminLogger.Add(LogType.Action,
+                        LogImpact.Medium,
+                        $"{ToPrettyString(uid):actor} stole item {ToPrettyString(stolenItem):item} from {ToPrettyString(target):subject} due to having inventory vacuum");
                     break;
                 }
             }
