@@ -478,6 +478,19 @@
   placementMode: SnapgridCenter
 
 - type: construction
+  id: WindowReinforcedDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: windowReinforcedDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   id: WindowClockworkDirectional
   graph: WindowDirectional
   startNode: start

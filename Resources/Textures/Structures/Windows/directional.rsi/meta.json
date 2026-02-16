@@ -20,6 +20,10 @@
       "directions": 4
     },
     {
+      "name": "reinforced_window_corner",
+      "directions": 4
+    },
+    {
       "name": "tinted_window",
       "directions": 4
     },

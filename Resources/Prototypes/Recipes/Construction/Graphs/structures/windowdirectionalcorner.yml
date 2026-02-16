@@ -11,11 +11,11 @@
               amount: 1
               doAfter: 2
 
-#         - to: windowReinforcedDirectional
-#           steps:
-#             - material: ReinforcedGlass
-#               amount: 1
-#               doAfter: 3
+        - to: windowReinforcedDirectionalCorner
+          steps:
+            - material: ReinforcedGlass
+              amount: 1
+              doAfter: 3
 
 #         - to: plasmaWindowDirectional
 #           steps:
@@ -61,24 +61,24 @@
             - tool: Anchoring
               doAfter: 2
 
-#     - node: windowReinforcedDirectional
-#       entity: WindowReinforcedDirectional
-#       edges:
-#         - to: start
-#           completed:
-#             - !type:GivePrototype
-#               prototype: SheetRGlass1
-#               amount: 1
-#             - !type:DeleteEntity {}
-#           steps:
-#             - tool: Screwing
-#               doAfter: 1
-#             - tool: Prying
-#               doAfter: 2
-#             - tool: Screwing
-#               doAfter: 1
-#             - tool: Anchoring
-#               doAfter: 2
+    - node: windowReinforcedDirectionalCorner
+      entity: WindowReinforcedDirectionalCorner
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetRGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
 
 #     - node: plasmaWindowDirectional
 #       entity: PlasmaWindowDirectional
