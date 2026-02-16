@@ -18,8 +18,6 @@ public sealed class InventoryVacuumSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
-    public const float StealRange = SharedInteractionSystem.InteractionRange;
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -41,7 +39,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
             }
 
             var transform = Transform(uid);
-            var stealTargets = _lookupSystem.GetEntitiesInRange<InventoryComponent>(transform.Coordinates, StealRange);
+            var stealTargets = _lookupSystem.GetEntitiesInRange<InventoryComponent>(transform.Coordinates, inventoryVacuum.StealRange);
             EntityUid? stolenItem = null;
             foreach (var target in stealTargets)
             {
@@ -51,12 +49,6 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 }
 
                 if ((EntityUid)target == uid)
-                {
-                    continue;
-                }
-
-                var targetTransform = Transform(target);
-                if (!_interactionSystem.InRangeUnobstructed((uid, transform), (target, targetTransform), StealRange))
                 {
                     continue;
                 }

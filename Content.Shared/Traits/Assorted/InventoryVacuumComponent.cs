@@ -11,6 +11,12 @@ namespace Content.Shared.Traits.Assorted;
 public sealed partial class InventoryVacuumComponent : Component
 {
     /// <summary>
+    /// The maximum range at which the vacuum can steal items.
+    /// </summary>
+    [DataField]
+    public float StealRange = SharedInteractionSystem.InteractionRange;
+
+    /// <summary>
     /// Chance to steal an item. Attempted once every <see cref="StealAttemptCooldown"/>.
     /// </summary>
     [DataField]
