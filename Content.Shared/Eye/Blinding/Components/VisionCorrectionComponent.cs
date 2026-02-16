@@ -13,7 +13,7 @@ public sealed partial class VisionCorrectionComponent : Component
     /// Amount of effective eye damage to add when this item is worn
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("visionBonus"), AutoNetworkedField]
-    public float VisionBonus = 0f;
+    public float VisionBonus = -3f;
 
     /// <summary>
     /// Controls the exponent of the blur effect when worn
