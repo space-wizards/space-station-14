@@ -52,9 +52,16 @@ public sealed class VomitSystem : EntitySystem
 
     private void TryVomitSolution(Entity<StomachComponent> ent, ref BodyRelayedEvent<TryVomitEvent> args)
     {
-        if (_solutionContainer.ResolveSolution(ent.Owner, StomachSystem.DefaultSolutionName, ref ent.Comp.Solution, out var sol))
-            _solutionContainer.TryTransferSolution(ent.Comp.Solution.Value, args.Args.Sol, sol.AvailableVolume);
+        if (!_solutionContainer.ResolveSolution(ent.Owner,
+                StomachSystem.DefaultSolutionName,
+                ref ent.Comp.Solution,
+                out var sol))
+            return;
 
+        args.Args.Sol.AddSolution(sol, _proto);
+
+        // Remind the stomach that it's empty.
+        _solutionContainer.UpdateChemicals(ent.Comp.Solution.Value);
         args.Args = args.Args with { Handled = true };
     }
 
