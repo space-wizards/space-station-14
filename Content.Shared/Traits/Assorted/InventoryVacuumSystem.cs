@@ -14,7 +14,6 @@ namespace Content.Shared.Traits.Assorted;
 public sealed class InventoryVacuumSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -36,7 +35,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 continue;
             }
 
-            if (SharedRandomExtensions.PredictedProb(_gameTiming, inventoryVacuum.StealChance, GetNetEntity(uid)))
+            if (!SharedRandomExtensions.PredictedProb(_gameTiming, inventoryVacuum.StealChance, GetNetEntity(uid)))
             {
                 inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
                 continue;
@@ -79,7 +78,10 @@ public sealed class InventoryVacuumSystem : EntitySystem
         Entity<InventoryComponent> target)
     {
         var targetInventory = _inventorySystem.GetHandOrInventoryEntities(target.Owner).ToArray();
-        _random.Shuffle(targetInventory);
+
+        var rand = SharedRandomExtensions.PredictedRandom(_gameTiming, GetNetEntity(ent), GetNetEntity(target));
+        rand.Shuffle(targetInventory);
+
         foreach (var targetInventoryItem in targetInventory)
         {
             _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
