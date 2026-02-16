@@ -12,7 +12,6 @@
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
-  - Security
   - Brig
   - Maintenance
   - Detective
