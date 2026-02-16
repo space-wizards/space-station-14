@@ -6,7 +6,7 @@ namespace Content.Shared.Traits.Assorted;
 /// <summary>
 /// Allows an entity with an inventory or hands to steal items from nearby entities.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InventoryVacuumComponent : Component
 {
     /// <summary>
@@ -27,19 +27,19 @@ public sealed partial class InventoryVacuumComponent : Component
     [DataField]
     public TimeSpan StealAttemptCooldown = TimeSpan.FromMinutes(1);
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan NextStealAttempt = TimeSpan.Zero;
 
     /// <summary>
     /// A whitelist of inventory slots that the vacuum can steal from. If empty, it can steal from any slot.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public HashSet<string> StealSlotWhitelist = ["hand", "pocket1", "pocket2", "id"];
 
     /// <summary>
     /// Whether the vacuum should check line of sight before stealing.
     /// If true, the entity will only steal from entities that it can see and access.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool ShouldCheckLineOfSight = true;
 }
