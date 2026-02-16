@@ -35,10 +35,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 continue;
             }
 
-            // TODO: Replace with RandomPredicted once the engine PR is merged (#5849)
-            var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(uid).Id);
-            var rand = new System.Random(seed);
-            if (rand.NextFloat() > inventoryVacuum.StealChance)
+            if (SharedRandomExtensions.PredictedProb(_gameTiming, inventoryVacuum.StealChance, GetNetEntity(uid)))
             {
                 inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
                 continue;
