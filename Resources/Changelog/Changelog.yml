@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: SignalSender
-  changes:
-  - message: Musicians now have a Stage Name
-    type: Tweak
-  id: 9020
-  time: '2025-10-01T11:46:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40640
-- author: Velcroboy
-  changes:
-  - message: Shutters, blast doors, and lights can now be linked using the "Link Defaults"
-      button.
-    type: Tweak
-  id: 9021
-  time: '2025-10-01T20:22:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37690
 - author: YoungThugSS14
   changes:
   - message: The Prisoner Eva Suit now has the same stats as an emergency eva suit.
@@ -3986,3 +3971,27 @@
   id: 9526
   time: '2026-02-15T11:16:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42927
+- author: ScarKy0
+  changes:
+  - message: Drinking blood as non-animal species makes you sick again.
+    type: Fix
+  - message: Injecting someone else's blood is now slightly poisonous.
+    type: Add
+  id: 9527
+  time: '2026-02-16T17:25:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42942
+- author: Synthestra
+  changes:
+  - message: Thieves' "Steal the HUDs" objective can now be completed with the thieving
+      beacon
+    type: Fix
+  id: 9528
+  time: '2026-02-16T20:43:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42945
+- author: Steel
+  changes:
+  - message: Jetpacks now turn off when another jetpack is activated.
+    type: Fix
+  id: 9529
+  time: '2026-02-16T22:03:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42689
