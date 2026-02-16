@@ -504,6 +504,19 @@
   placementMode: SnapgridCenter
 
 - type: construction
+  id: WindowClockworkDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: windowClockworkDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   id: PlasmaWindowDirectional
   graph: WindowDirectional
   startNode: start

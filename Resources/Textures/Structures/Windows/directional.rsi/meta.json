@@ -44,6 +44,10 @@
       "directions": 4
     },
     {
+      "name": "clock_window_corner",
+      "directions": 4
+    },
+    {
       "name": "plasma_window",
       "directions": 4
     },
