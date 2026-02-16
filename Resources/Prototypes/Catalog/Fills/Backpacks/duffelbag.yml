@@ -450,7 +450,7 @@
         - id: WeaponSubMachineGunC20r
         - id: MagazinePistolSubMachineGun
           amount: 3
-        - id: MagazinePistol
+        - id: MagazinePistolHighCapacity
         - id: SyndicateJawsOfLife
         - id: C4
           amount: 2

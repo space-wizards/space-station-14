@@ -133,6 +133,17 @@
   physicalDesc: reagent-physical-desc-pungent
 
 - type: reagent
+  parent: Blood
+  id: SulfurBlood
+  name: reagent-name-sulfur-blood
+  group: Biological
+  desc: reagent-desc-sulfur-blood
+  flavor: bitter
+  color: "#ccac1f"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-strong-smelling
+
+- type: reagent
   id: ZombieBlood
   name: reagent-name-zombie-blood
   group: Biological
