@@ -384,6 +384,8 @@ uplink-hardsuit-syndieelite-desc = An elite version of the blood-red hardsuit, w
 uplink-clothing-outer-hardsuit-juggernaut-name = Cybersun Juggernaut Suit
 uplink-clothing-outer-hardsuit-juggernaut-desc = Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
 
+uplink-hardsuit-syndieshield-name = Cybersun Shield Hardsuit
+uplink-hardsuit-syndieshield-desc = A cutting-edge hardsuit developed at the Tau chromosphere facility, capable of projecting an energy shield that absorbs most damage directed at the user, but it can only be toggled on for 15 seconds before needing to recharge for 30 seconds.
 # Misc
 uplink-cyberpen-name = Cybersun Pen
 uplink-cyberpen-desc = Cybersun's legal department pen, invaluable for forging documents and escaping prisons. Smells vaguely of hard-light and war profiteering.

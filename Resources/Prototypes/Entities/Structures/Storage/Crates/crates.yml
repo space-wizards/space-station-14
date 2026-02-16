@@ -843,6 +843,18 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/syndicate.rsi
 
+# syndicate crate but with added blue accents (cybersun shield hardsuit's bundle crate)
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSyndicateBlue
+  name: blue syndicate crate
+  description: A dark steel crate with red-blue bands and a letter S embossed on the front.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/syndicateblue.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/syndicateblue.rsi
+
 - type: entity
   parent: [StructureWheeled, CrateBaseWeldable]
   id: CrateTrashCart

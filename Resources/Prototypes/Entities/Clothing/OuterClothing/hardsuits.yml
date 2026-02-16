@@ -726,6 +726,51 @@
     - Hardsuit
     - WhitelistChameleon
 
+#Cybersun Shield Hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseSyndicateContraband ]
+  id: ClothingOuterHardsuitSyndieShield
+  name: cybersun shield hardsuit
+  description: An experimental suit made by the cutting edge R&D department at cybersun, fitted with a built in energy shield that absorbs heavy damage when online.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndicateshield.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndicateshield.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.75
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Heat: 0.65
+        Radiation: 0.65
+        Caustic: 0.65
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieShield
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - Hardsuit
+    - WhitelistChameleon
+    - CorgiWearable
+    - ScurretWearable
+  - type: StaticPrice
+    price: 7500
+
 #Wizard Hardsuit
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseMagicalContraband ]

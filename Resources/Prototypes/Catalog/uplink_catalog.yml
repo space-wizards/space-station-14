@@ -1767,6 +1767,22 @@
       - NukeOpsUplink
 
 - type: listing
+  id: UplinkClothingOuterHardsuitShield
+  name: uplink-hardsuit-syndieshield-name
+  description: uplink-hardsuit-syndieshield-desc
+  icon: { sprite: /Textures/Structures/Storage/Crates/syndicateblue.rsi, state: icon }
+  productEntity: CrateCybersunShieldSuitBundle
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkWearables
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
   id: UplinkClothingEyesHudSyndicate
   name: uplink-clothing-eyes-hud-syndicate-name
   description: uplink-clothing-eyes-hud-syndicate-desc

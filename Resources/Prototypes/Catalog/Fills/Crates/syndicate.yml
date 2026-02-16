@@ -23,6 +23,21 @@
           tableId: SyndicateHardsuitExtrasEntityTable
 
 - type: entity
+  parent: CrateSyndicateBlue
+  id: CrateCybersunShieldSuitBundle
+  name: Cybersun Shield Hardsuit bundle
+  suffix: Filled
+  description: Contains a cutting edge energy shielded hardsuit.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingOuterHardsuitSyndieShield
+        - !type:NestedSelector
+          tableId: SyndicateHardsuitExtrasEntityTable
+
+- type: entity
   parent: [ CrateSyndicate, StorePresetUplink, BaseSyndicateContraband ]
   id: CrateSyndicateSuperSurplusBundle
   name: Syndicate super surplus crate
