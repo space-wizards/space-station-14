@@ -52,9 +52,10 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 }
 
                 var targetTransform = Transform(target);
-                if (!_interactionSystem.InRangeAndAccessible((uid, transform),
+                if (inventoryVacuum.ShouldCheckLineOfSight
+                    && !_interactionSystem.InRangeAndAccessible((uid, transform),
                         (target, targetTransform),
-                      inventoryVacuum.StealRange))
+                        inventoryVacuum.StealRange))
                 {
                     continue;
                 }

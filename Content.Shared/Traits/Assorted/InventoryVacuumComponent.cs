@@ -35,4 +35,11 @@ public sealed partial class InventoryVacuumComponent : Component
     /// </summary>
     [DataField]
     public HashSet<string> StealSlotWhitelist = ["hand", "pocket1", "pocket2", "id"];
+
+    /// <summary>
+    /// Whether the vacuum should check line of sight before stealing.
+    /// If true, the entity will only steal from entities that it can see and access.
+    /// </summary>
+    [DataField]
+    public bool ShouldCheckLineOfSight = true;
 }
