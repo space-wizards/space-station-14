@@ -517,10 +517,36 @@
   placementMode: SnapgridCenter
 
 - type: construction
+  id: PlasmaWindowDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: plasmaWindowDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   id: PlasmaReinforcedWindowDirectional
   graph: WindowDirectional
   startNode: start
   targetNode: plasmaReinforcedWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: PlasmaReinforcedWindowDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: plasmaReinforcedWindowDirectionalCorner
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:

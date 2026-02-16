@@ -140,7 +140,7 @@
         layer:
         - GlassLayer
   - type: Construction
-    graph: WindowReinforcedDirectionalCorner
+    graph: WindowDirectionalCorner
     node: windowReinforcedDirectionalCorner
   - type: DamageVisuals
     thresholds: [5, 10, 20]

@@ -112,6 +112,38 @@
     resistance: 2.5
 
 - type: entity
+  parent: UraniumReinforcedWindowDirectional
+  id: UraniumReinforcedWindowDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Construction
+    graph: WindowDirectionalCorner
+    node: uraniumReinforcedWindowDirectionalCorner
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
+
+- type: entity
   parent: ReinforcedUraniumWindow
   id: ReinforcedUraniumWindowDiagonal
   suffix: diagonal
