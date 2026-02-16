@@ -57,7 +57,9 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 foreach (var targetInventoryItem in targetInventory)
                 {
                     _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
-                    if (slot is null || slot.Name is "hand" or "pocket1" or "pocket2")
+                    if (slot is null
+                        || inventoryVacuum.StealSlotWhitelist.Contains(slot.Name)
+                        || inventoryVacuum.StealSlotWhitelist.Count == 0)
                     {
                         if (
                             (

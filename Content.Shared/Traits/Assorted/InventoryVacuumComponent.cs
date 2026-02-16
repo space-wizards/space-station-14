@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Interaction;
-using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Traits.Assorted;
@@ -30,4 +29,10 @@ public sealed partial class InventoryVacuumComponent : Component
 
     [DataField]
     public TimeSpan NextStealAttempt = TimeSpan.Zero;
+
+    /// <summary>
+    /// A whitelist of inventory slots that the vacuum can steal from. If empty, it can steal from any slot.
+    /// </summary>
+    [DataField]
+    public HashSet<string> StealSlotWhitelist = ["hand", "pocket1", "pocket2", "id"];
 }
