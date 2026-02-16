@@ -28,7 +28,15 @@
       "directions": 4
     },
     {
+      "name": "tinted_window_corner",
+      "directions": 4
+    },
+    {
       "name": "frosted_window",
+      "directions": 4
+    },
+    {
+      "name": "frosted_window_corner",
       "directions": 4
     },
     {
@@ -40,7 +48,15 @@
       "directions": 4
     },
     {
+      "name": "plasma_window_corner",
+      "directions": 4
+    },
+    {
       "name": "plasma_reinforced_window",
+      "directions": 4
+    },
+    {
+      "name": "plasma_reinforced_window_corner",
       "directions": 4
     },
     {
@@ -48,7 +64,15 @@
       "directions": 4
     },
     {
+      "name": "uranium_window_corner",
+      "directions": 4
+    },
+    {
       "name": "uranium_reinforced_window",
+      "directions": 4
+    },
+    {
+      "name": "uranium_reinforced_window_corner",
       "directions": 4
     }
   ]
