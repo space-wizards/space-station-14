@@ -4,14 +4,15 @@ using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Traits.Assorted;
+namespace Content.Server.Traits.Assorted;
 
 public sealed class InventoryVacuumSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -36,7 +37,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
 
             inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
 
-            if (!SharedRandomExtensions.PredictedProb(_gameTiming, inventoryVacuum.StealChance, GetNetEntity(uid)))
+            if (!_random.Prob(inventoryVacuum.StealChance))
             {
                 continue;
             }
@@ -77,14 +78,12 @@ public sealed class InventoryVacuumSystem : EntitySystem
         Entity<InventoryComponent> target)
     {
         var targetInventory = _inventorySystem.GetHandOrInventoryEntities(target.Owner).ToArray();
-
-        var rand = SharedRandomExtensions.PredictedRandom(_gameTiming, GetNetEntity(ent), GetNetEntity(target));
-        rand.Shuffle(targetInventory);
+        _random.Shuffle(targetInventory);
 
         foreach (var targetInventoryItem in targetInventory)
         {
             _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
-            // Steal from the inventory steal whitelist or hands.
+            // Steal from the inventory steal whitelist or from hands.
             if (slot is null
                 || ent.Comp.StealSlotWhitelist.Contains(slot.Name)
                 || ent.Comp.StealSlotWhitelist.Count == 0)
