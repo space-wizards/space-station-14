@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SignalSender
-  changes:
-  - message: Musicians now have a Stage Name
-    type: Tweak
-  id: 9020
-  time: '2025-10-01T11:46:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40640
 - author: Velcroboy
   changes:
   - message: Shutters, blast doors, and lights can now be linked using the "Link Defaults"
@@ -3995,3 +3988,11 @@
   id: 9527
   time: '2026-02-16T17:25:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42942
+- author: Synthestra
+  changes:
+  - message: Thieves' "Steal the HUDs" objective can now be completed with the thieving
+      beacon
+    type: Fix
+  id: 9528
+  time: '2026-02-16T20:43:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42945
