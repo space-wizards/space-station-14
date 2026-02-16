@@ -1,0 +1,180 @@
+- type: entity
+  parent: AppearanceHuman
+  id: AppearanceDwarf
+  name: dwarf appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: InitialBody
+    organs:
+      Torso: OrganHumanTorso
+      Head: OrganHumanHead
+      ArmLeft: OrganDwarfArmLeft
+      ArmRight: OrganDwarfArmRight
+      HandRight: OrganDwarfHandRight
+      HandLeft: OrganDwarfHandLeft
+      LegLeft: OrganDwarfLegLeft
+      LegRight: OrganDwarfLegRight
+      FootLeft: OrganDwarfFootLeft
+      FootRight: OrganDwarfFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganDwarfHeart
+      Stomach: OrganDwarfStomach
+      Liver: OrganDwarfLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: Dwarf
+
+- type: entity
+  parent:
+  - AppearanceDwarf
+  - MobHuman
+  id: MobDwarf
+  name: Urist McHands the Dwarf
+  components:
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        # they r smaller
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Vocal
+    sounds:
+      Male: UnisexDwarf
+      Female: FemaleDwarf
+      Unsexed: UnisexDwarf
+  - type: Speech
+    speechSounds: Bass
+
+- type: entity
+  parent: OrganBase
+  id: OrganDwarf
+  abstract: true
+  suffix: Dwarf
+
+- type: entity
+  id: OrganDwarfMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Dwarf ]
+
+- type: entity
+  parent: [ OrganDwarfMetabolizer, OrganHumanStomach ]
+  id: OrganDwarfStomach
+  components:
+  - type: Metabolizer
+    maxReagents: 5
+
+- type: entity
+  parent: [ OrganDwarfMetabolizer, OrganHumanLiver ]
+  id: OrganDwarfLiver
+
+- type: entity
+  parent: [ OrganDwarfMetabolizer, OrganHumanHeart ]
+  id: OrganDwarfHeart
+
+
+- type: entity
+  parent: OrganHumanExternal
+  id: OrganDwarfExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Dwarf/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Human
+
+
+- type: entity
+  id: OrganDwarfArmLeft
+  name: left dwarf arm
+  parent: [ OrganBaseArmLeft, OrganDwarfExternal]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+    state: l_arm
+
+- type: entity
+  id: OrganDwarfArmRight
+  name: right dwarf arm
+  parent: [ OrganBaseArmRight, OrganDwarfExternal]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+    state: r_arm
+
+- type: entity
+  id: OrganDwarfHandLeft
+  name: left dwarf hand
+  parent: [OrganBaseHandLeft, OrganDwarfExternal]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+    state: l_hand
+
+- type: entity
+  id: OrganDwarfHandRight
+  name: right dwarf hand
+  parent: [OrganBaseHandRight, OrganDwarfExternal ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+    state: r_hand
+
+- type: entity
+  id: OrganDwarfLegLeft
+  name: left dwarf leg
+  parent: [OrganBaseLegLeft, OrganDwarfExternal]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+    state: l_leg
+
+- type: entity
+  id: OrganDwarfLegRight
+  name: right dwarf leg
+  parent: [OrganBaseLegRight, OrganDwarfExternal]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+    state: r_leg
+
+- type: entity
+  id: OrganDwarfFootLeft
+  name: left dwarf foot
+  parent: [OrganBaseFootLeft, OrganDwarfExternal]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+    state: l_foot
+
+- type: entity
+  id: OrganDwarfFootRight
+  name: right dwarf foot
+  parent: [OrganBaseFootRight, OrganDwarfExternal]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+    state: r_foot

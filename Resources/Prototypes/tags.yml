@@ -788,6 +788,9 @@
   id: HudSecurity # ConstructionGraph: HudMedSec, GlassesSecHUD
 
 - type: Tag
+  id: Human # human species has this tag, currently just used by Traits/quirks.yml as a whitelist for the 'dwarfism' trait.
+
+- type: Tag
   id: Hypospray # ItemMapper: ClothingBeltMedical
 
 ## I ##

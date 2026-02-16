@@ -26,10 +26,41 @@
   - type: Snoring
 
 - type: trait
-  id: Short
-  name: trait-short-name
-  description: trait-short-desc
+  id: Dwarfism
+  name: trait-dwarfism-name
+  description: trait-dwarfism-desc
   category: Quirks
+  whitelist:
+    tags:
+    - Human
   components:
-  - type: ScaleVisuals
-    scale: 1, 0.8
+  - type: Inventory
+    newSpecies: Dwarf
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: outerclothing
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: shoes
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
