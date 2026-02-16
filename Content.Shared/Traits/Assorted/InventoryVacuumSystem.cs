@@ -14,6 +14,7 @@ namespace Content.Shared.Traits.Assorted;
 public sealed class InventoryVacuumSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -77,7 +78,8 @@ public sealed class InventoryVacuumSystem : EntitySystem
         Entity<InventoryVacuumComponent> ent,
         Entity<InventoryComponent> target)
     {
-        var targetInventory = _inventorySystem.GetHandOrInventoryEntities(target.Owner);
+        var targetInventory = _inventorySystem.GetHandOrInventoryEntities(target.Owner).ToArray();
+        _random.Shuffle(targetInventory);
         foreach (var targetInventoryItem in targetInventory)
         {
             _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
