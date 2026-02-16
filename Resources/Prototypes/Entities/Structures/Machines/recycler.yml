@@ -146,6 +146,7 @@
     enabled: false
     scaleProcessSpeed: false
     minimumProcessDuration: 0
+    efficiency: 0.1
     # whitelist: # SLAM-TODO: Ya you gotta figure out this whole thing
     blacklist:
       components:
