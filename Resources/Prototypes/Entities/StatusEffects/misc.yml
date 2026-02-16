@@ -95,6 +95,6 @@
 
 - type: entity
   parent: MobStatusEffectBase
-  id: StatusEffectKleptomaniac
+  id: StatusEffectInventoryVacuum
   components:
-  - type: Kleptomaniac
+  - type: InventoryVacuum

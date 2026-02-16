@@ -32,4 +32,4 @@
   description: trait-kleptomaniac-desc
   category: Quirks
   components:
-  - type: Kleptomaniac
+  - type: InventoryVacuum

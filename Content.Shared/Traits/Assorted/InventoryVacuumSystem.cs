@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Traits.Assorted;
 
-public sealed class KleptomaniacSystem : EntitySystem
+public sealed class InventoryVacuumSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -26,17 +26,17 @@ public sealed class KleptomaniacSystem : EntitySystem
 
         var now = _timing.CurTime;
 
-        var query = EntityQueryEnumerator<KleptomaniacComponent>();
-        while (query.MoveNext(out var uid, out var klepto))
+        var query = EntityQueryEnumerator<InventoryVacuumComponent>();
+        while (query.MoveNext(out var uid, out var inventoryVacuum))
         {
-            if (now < klepto.NextStealAttempt)
+            if (now < inventoryVacuum.NextStealAttempt)
             {
                 continue;
             }
 
-            if (_random.NextFloat() > klepto.StealChance)
+            if (_random.NextFloat() > inventoryVacuum.StealChance)
             {
-                klepto.NextStealAttempt = now + klepto.StealAttemptCooldown;
+                inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
                 continue;
             }
 
@@ -75,7 +75,7 @@ public sealed class KleptomaniacSystem : EntitySystem
                             )
                             || _handsSystem.TryPickupAnyHand(uid, targetInventoryItem))
                         {
-                            klepto.NextStealAttempt = now + klepto.StealAttemptCooldown;
+                            inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
                             stolenItem = targetInventoryItem;
                             break;
                         }
