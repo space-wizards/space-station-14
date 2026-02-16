@@ -8,12 +8,38 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Human/displacement.rsi
+            sprite: Mobs/Species/Dwarf/displacement.rsi
             state: jumpsuit-female
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: outerclothing
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: shoes
+      enum.HumanoidVisualLayers.UndergarmentBottom:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: jumpsuit
+      enum.HumanoidVisualLayers.UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarf/displacement.rsi
+            state: jumpsuit
   - type: InitialBody
     organs:
-      Torso: OrganHumanTorso
-      Head: OrganHumanHead
+      Torso: OrganDwarfTorso
+      Head: OrganDwarfHead
       ArmLeft: OrganDwarfArmLeft
       ArmRight: OrganDwarfArmRight
       HandRight: OrganDwarfHandRight
@@ -106,6 +132,23 @@
     markingData:
       group: Human
 
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganDwarfExternal ]
+  name: dwarf torso
+  id: OrganDwarfTorso
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Dwarf/parts.rsi
+
+- type: entity
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganDwarfExternal ]
+  id: OrganDwarfHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
 
 - type: entity
   id: OrganDwarfArmLeft
