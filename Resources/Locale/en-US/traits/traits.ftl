@@ -59,3 +59,6 @@ trait-hemophilia-desc = Your body fails to make blood clots.
 
 trait-impaired-mobility-name = Impaired Mobility
 trait-impaired-mobility-desc = You have difficulty moving without a mobility aid.
+
+trait-kleptomaniac-name = Kleptomaniac
+trait-kleptomaniac-desc = You have an irresistible urge to steal things. You sometimes wonder, "How did this nuclear disk end up in my backpack?".
