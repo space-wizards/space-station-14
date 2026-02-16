@@ -88,7 +88,7 @@ public sealed class StationJobsTest
 
     private const int StationCount = 10;
     private const int CaptainCount = StationCount;
-    private const int PlayerCount = 209;
+    private const int PlayerCount = 209;    // Test handling of player count that doesn't divide evenly
     private const int TotalPlayers = PlayerCount + CaptainCount;
 
     [Test]
