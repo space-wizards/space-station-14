@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
@@ -13,6 +14,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
@@ -45,6 +47,14 @@ public sealed class InventoryVacuumSystem : EntitySystem
             foreach (var target in stealTargets)
             {
                 if ((EntityUid)target == uid)
+                {
+                    continue;
+                }
+
+                var targetTransform = Transform(target);
+                if (!_interactionSystem.InRangeAndAccessible((uid, transform),
+                        (target, targetTransform),
+                      inventoryVacuum.StealRange))
                 {
                     continue;
                 }
