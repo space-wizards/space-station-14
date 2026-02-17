@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Atmos;
 /// Tests for asserting that various gas specific heat operations agree with each other and do not deviate
 /// across client and server.
 /// </summary>
-[TestOf(nameof(SharedAtmosphereSystem)), NonParallelizable]
+[TestOf(nameof(SharedAtmosphereSystem)), FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public sealed class SharedGasSpecificHeatsTest
 {
     private IConfigurationManager _sConfig;
