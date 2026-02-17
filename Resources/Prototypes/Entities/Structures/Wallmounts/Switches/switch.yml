@@ -466,6 +466,8 @@
               collection: MetalBreak
               params:
                 volume: -8
+  - type: Construction
+    graph: ButtonFrameGraph
 
 - type: entity
   parent: BaseButtonFrame
@@ -477,7 +479,6 @@
   - type: Sprite
     state: grey
   - type: Construction
-    graph: ButtonFrameGreyGraph
     node: ButtonFrameGreyNode
 
 - type: entity
@@ -490,7 +491,6 @@
   - type: Sprite
     state: caution
   - type: Construction
-    graph: ButtonFrameCautionGraph
     node: ButtonFrameCautionNode
 
 - type: entity
@@ -503,7 +503,6 @@
   - type: Sprite
     state: caution_security
   - type: Construction
-    graph: ButtonFrameCautionSecurityGraph
     node: ButtonFrameCautionSecurityNode
 
 - type: entity
@@ -516,7 +515,6 @@
   - type: Sprite
     state: exit
   - type: Construction
-    graph: ButtonFrameExitGraph
     node: ButtonFrameExitNode
 
 - type: entity
@@ -529,5 +527,4 @@
   - type: Sprite
     state: janitor
   - type: Construction
-    graph: ButtonFrameJanitorGraph
     node: ButtonFrameJanitorNode
