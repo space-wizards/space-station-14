@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -27,36 +28,36 @@ public sealed class InventoryVacuumSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var now = _gameTiming.CurTime;
+        var timeNow = _gameTiming.CurTime;
 
-        var query = EntityQueryEnumerator<InventoryVacuumComponent>();
-        while (query.MoveNext(out var uid, out var inventoryVacuum))
+        var inventoryVacuumQuery = EntityQueryEnumerator<InventoryVacuumComponent>();
+        while (inventoryVacuumQuery.MoveNext(out var uid, out var inventoryVacuum))
         {
-            if (now < inventoryVacuum.NextStealAttempt)
+            if (timeNow < inventoryVacuum.NextStealAttempt)
             {
                 continue;
             }
 
-            inventoryVacuum.NextStealAttempt = now + inventoryVacuum.StealAttemptCooldown;
+            inventoryVacuum.NextStealAttempt = timeNow + inventoryVacuum.StealAttemptCooldown;
 
             if (!_random.Prob(inventoryVacuum.StealChance))
             {
                 continue;
             }
 
-            var transform = Transform(uid);
+            var uidTransform = Transform(uid);
             var stealTargets =
-                _lookupSystem.GetEntitiesInRange<InventoryComponent>(transform.Coordinates, inventoryVacuum.StealRange);
+                _lookupSystem.GetEntitiesInRange<InventoryComponent>(uidTransform.Coordinates, inventoryVacuum.StealRange);
             foreach (var target in stealTargets)
             {
-                if ((EntityUid)target == uid)
+                if (target.Owner == uid)
                 {
                     continue;
                 }
 
                 var targetTransform = Transform(target);
                 if (inventoryVacuum.ShouldCheckLineOfSight
-                    && !_interactionSystem.InRangeAndAccessible((uid, transform),
+                    && !_interactionSystem.InRangeAndAccessible((uid, uidTransform),
                         (target, targetTransform),
                         inventoryVacuum.StealRange))
                 {
