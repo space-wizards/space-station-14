@@ -46,7 +46,8 @@ public sealed class InventoryVacuumSystem : EntitySystem
 
             var uidTransform = Transform(uid);
             var stealTargets =
-                _lookupSystem.GetEntitiesInRange<InventoryComponent>(uidTransform.Coordinates, inventoryVacuum.StealRange);
+                _lookupSystem.GetEntitiesInRange<InventoryComponent>(uidTransform.Coordinates,
+                    inventoryVacuum.StealRange);
             foreach (var target in stealTargets)
             {
                 if (target.Owner == uid)
@@ -86,14 +87,15 @@ public sealed class InventoryVacuumSystem : EntitySystem
         {
             _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
             // Steal from the inventory steal whitelist or from hands, into backpack or our hand.
-            if (slot is null
-                || ent.Comp.StealSlotWhitelist.Contains(slot.Name)
+            if (_handsSystem.IsHolding(target.Owner, targetInventoryItem)
+                || (slot is not null && ent.Comp.StealSlotWhitelist.Contains(slot.Name))
                 || ent.Comp.StealSlotWhitelist.Count == 0)
             {
                 if (_inventorySystem.TryGetSlotEntity(ent, StolenItemHideContainerSlot, out var hideItemInto))
                 {
                     var containerHideInto = _containerSystem.GetAllContainers(hideItemInto.Value);
-                    if (containerHideInto.Any() && _containerSystem.Insert(targetInventoryItem, containerHideInto.First()))
+                    if (containerHideInto.Any() &&
+                        _containerSystem.Insert(targetInventoryItem, containerHideInto.First()))
                     {
                         return targetInventoryItem;
                     }
