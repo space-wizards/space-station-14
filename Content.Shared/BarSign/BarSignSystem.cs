@@ -26,6 +26,7 @@ public sealed class BarSignSystem : EntitySystem
         });
 
         SubscribeLocalEvent<BarSignComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<BarSignComponent, BoundUserInterfaceMessageAttempt>(OnBoundUIAttempt);
     }
 
     private void OnMapInit(Entity<BarSignComponent> ent, ref MapInitEvent args)
@@ -55,9 +56,6 @@ public sealed class BarSignSystem : EntitySystem
         SetBarSign(ent, signPrototype);
     }
 
-    /// <summary>
-    /// Set the sprite, name and description of the bar sign to a given <see cref="BarSignPrototype"/>.
-    /// </summary>
     private void OnEmpPulse(Entity<BarSignComponent> ent, ref EmpPulseEvent args)
     {
         if (!_prototypeManager.Resolve(ent.Comp.Emped, out var empedPrototype))
@@ -66,6 +64,12 @@ public sealed class BarSignSystem : EntitySystem
         SetBarSign(ent, empedPrototype);
         args.Affected = true;
         args.Disabled = true;
+    }
+
+    private void OnBoundUIAttempt(Entity<BarSignComponent> ent, ref BoundUserInterfaceMessageAttempt args)
+    {
+        if (HasComp<EmpDisabledComponent>(ent))
+            args.Cancel();
     }
 
     /// <summary>
