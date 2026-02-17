@@ -526,7 +526,7 @@
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitQMFormal
   name: quartermasters's formal suit
-  description: Inspired by the quartermasters of military's past, the perfect outfit for supplying a formal occasion.
+  description: Inspired by the quartermasters of militaries past, the perfect outfit for supplying a formal occasion.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/qmformal.rsi
