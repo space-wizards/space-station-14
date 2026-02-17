@@ -11,7 +11,6 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization.Manager;
@@ -39,9 +38,8 @@ namespace Content.Server.Database
             IConfigurationManager cfg,
             bool synchronous,
             ISawmill opsLog,
-            ITaskManager taskManager,
             ISerializationManager serialization)
-            : base(opsLog, taskManager, serialization)
+            : base(opsLog, serialization)
         {
             _options = options;
 

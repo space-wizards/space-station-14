@@ -14,6 +14,11 @@ public static partial class PoolManager
     public const string TestMap = "Empty";
 
     /// <summary>
+    /// Designated load bearing station. Sometimes you need a station for a test.
+    /// </summary>
+    public const string TestStation = "Saltern";
+
+    /// <summary>
     /// Runs a server, or a client until a condition is true
     /// </summary>
     /// <param name="instance">The server or client</param>
