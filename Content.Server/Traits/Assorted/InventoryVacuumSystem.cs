@@ -21,7 +21,18 @@ public sealed class InventoryVacuumSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
+    /// <summary>
+    /// Where we try to insert the stolen item.
+    /// </summary>
     private const string StolenItemHideContainerSlot = "back";
+
+    /// <summary>
+    /// Whitelist of slots where the item is a container, and we want to grab from inside the item
+    /// instead of grabbing the item itself. This makes us steal from inside backpacks and belts,
+    /// but not radio keys from headsets, paper from paper trays, etc.
+    /// </summary>
+    private static readonly HashSet<string> TargetItemContainerSlotWhitelist = ["back", "belt"];
+
 
     public override void Update(float frameTime)
     {
@@ -83,11 +94,26 @@ public sealed class InventoryVacuumSystem : EntitySystem
         var targetInventory = _inventorySystem.GetHandOrInventoryEntities(target.Owner).ToArray();
         _random.Shuffle(targetInventory);
 
-        foreach (var targetInventoryItem in targetInventory)
+        EntityUid? targetItem;
+        foreach (var targetItemCandidate in targetInventory)
         {
-            _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
+            _inventorySystem.TryGetContainingSlot(targetItemCandidate, out var slot);
+
+            var targetItemContainers = _containerSystem.GetAllContainers(targetItemCandidate);
+            if (slot is not null
+                && TargetItemContainerSlotWhitelist.Contains(slot.Name)
+                && targetItemContainers.Any())
+            {
+                var candidateContainer = targetItemContainers.First();
+                targetItem = _random.Pick(candidateContainer.ContainedEntities);
+            }
+            else
+            {
+                targetItem = targetItemCandidate;
+            }
+
             // Steal from the inventory steal whitelist or from hands, into backpack or our hand.
-            if (_handsSystem.IsHolding(target.Owner, targetInventoryItem)
+            if (_handsSystem.IsHolding(target.Owner, targetItemCandidate)
                 || (slot is not null && ent.Comp.StealSlotWhitelist.Contains(slot.Name))
                 || ent.Comp.StealSlotWhitelist.Count == 0)
             {
@@ -95,15 +121,15 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 {
                     var containerHideInto = _containerSystem.GetAllContainers(hideItemInto.Value);
                     if (containerHideInto.Any() &&
-                        _containerSystem.Insert(targetInventoryItem, containerHideInto.First()))
+                        _containerSystem.Insert(targetItem.Value, containerHideInto.First()))
                     {
-                        return targetInventoryItem;
+                        return targetItem;
                     }
                 }
 
-                if (_handsSystem.TryPickupAnyHand(ent, targetInventoryItem))
+                if (_handsSystem.TryPickupAnyHand(ent, targetItem.Value))
                 {
-                    return targetInventoryItem;
+                    return targetItem;
                 }
             }
         }
