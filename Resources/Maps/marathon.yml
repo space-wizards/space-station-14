@@ -72779,8 +72779,6 @@ entities:
       pos: 31.5,40.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 22127
       - 22043
@@ -73692,8 +73690,6 @@ entities:
       pos: 34.5,35.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 22127
       - 22043
@@ -73704,8 +73700,6 @@ entities:
       pos: 28.5,37.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 22127
       - 22043
@@ -73716,8 +73710,6 @@ entities:
       pos: 28.5,36.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 22127
       - 22043
