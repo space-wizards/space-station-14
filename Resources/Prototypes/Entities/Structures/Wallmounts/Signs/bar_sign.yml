@@ -10,7 +10,7 @@
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
   - type: BarSign
-    empFallback: EmpBarSign
+    emped: EmpBarSign
   - type: AccessReader
     access: [["Bar"]]
   - type: ActivatableUIRequiresPower

@@ -60,11 +60,10 @@ public sealed class BarSignSystem : EntitySystem
     /// </summary>
     private void OnEmpPulse(Entity<BarSignComponent> ent, ref EmpPulseEvent args)
     {
-        //AppearanceSystem.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component);
-        if (!_prototypeManager.Resolve(ent.Comp.EmpFallback, out var empFallbackPrototype))
+        if (!_prototypeManager.Resolve(ent.Comp.Emped, out var empedPrototype))
             return;
 
-        SetBarSign(ent, empFallbackPrototype);
+        SetBarSign(ent, empedPrototype);
         args.Affected = true;
         args.Disabled = true;
     }

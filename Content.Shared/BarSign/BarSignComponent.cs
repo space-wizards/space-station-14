@@ -21,7 +21,7 @@ public sealed partial class BarSignComponent : Component
     /// The bar sign fallback state upon being EMPed.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<BarSignPrototype>? EmpFallback;
+    public ProtoId<BarSignPrototype>? Emped = "EmpBarSign";
 }
 
 /// <summary>
