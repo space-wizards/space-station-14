@@ -21,6 +21,8 @@ public sealed class InventoryVacuumSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
+    private const string StolenItemHideContainerSlot = "back";
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -83,15 +85,15 @@ public sealed class InventoryVacuumSystem : EntitySystem
         foreach (var targetInventoryItem in targetInventory)
         {
             _inventorySystem.TryGetContainingSlot(targetInventoryItem, out var slot);
-            // Steal from the inventory steal whitelist or from hands.
+            // Steal from the inventory steal whitelist or from hands, into backpack or our hand.
             if (slot is null
                 || ent.Comp.StealSlotWhitelist.Contains(slot.Name)
                 || ent.Comp.StealSlotWhitelist.Count == 0)
             {
-                if (_inventorySystem.TryGetSlotEntity(ent, "back", out var uidBackpack))
+                if (_inventorySystem.TryGetSlotEntity(ent, StolenItemHideContainerSlot, out var hideItemInto))
                 {
-                    var containers = _containerSystem.GetAllContainers(uidBackpack.Value);
-                    if (containers.Any() && _containerSystem.Insert(targetInventoryItem, containers.First()))
+                    var containerHideInto = _containerSystem.GetAllContainers(hideItemInto.Value);
+                    if (containerHideInto.Any() && _containerSystem.Insert(targetInventoryItem, containerHideInto.First()))
                     {
                         return targetInventoryItem;
                     }
