@@ -4,8 +4,8 @@ meta:
   engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 02/17/2026 12:34:52
-  entityCount: 15976
+  time: 02/17/2026 18:18:48
+  entityCount: 15978
 maps:
 - 126
 grids:
@@ -23940,6 +23940,16 @@ entities:
     - type: Transform
       pos: 22.5,-20.5
       parent: 2
+  - uid: 15977
+    components:
+    - type: Transform
+      pos: 12.5,-16.5
+      parent: 2
+  - uid: 15978
+    components:
+    - type: Transform
+      pos: 12.5,-18.5
+      parent: 2
 - proto: CableApcStack
   entities:
   - uid: 5627
@@ -43430,7 +43440,7 @@ entities:
       pos: 59.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -18218.084
+      secondsUntilStateChange: -18326.117
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -49286,7 +49296,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -65511.87
+      secondsUntilStateChange: -65619.91
       state: Closing
   - uid: 9362
     components:
@@ -72259,7 +72269,7 @@ entities:
       pos: 12.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -3683.8188
+      secondsUntilStateChange: -3791.852
       state: Closing
   - uid: 5750
     components:
