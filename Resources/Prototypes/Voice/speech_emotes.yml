@@ -355,15 +355,15 @@
 - type: emote
   id: Thump
   name: chat-emote-name-thump
-  category: General # # TODO: Made this emote depends on limb system (tail)
+  category: Hands
   available: false
   icon: Interface/Emotes/tailslap.png
+  whitelist:
+    components:
+    - Hands
   blacklist:
     tags:
     - SiliconEmotes
-  whitelist:
-    components:
-    - MobState
   chatMessages: ["chat-emote-msg-thump"]
   chatTriggers:
     - thump
@@ -483,15 +483,15 @@
 - type: emote
   id: Flap
   name: chat-emote-name-flap
-  category: General # TODO: Made this emote depends on limb system (wings)
+  category: Hands # Not really "hands", but how far it to vocal? (moth mimes want to flap too!)
   available: false
   icon: Interface/Emotes/flap.png
+  whitelist:
+    components:
+    - Hands
   blacklist:
     tags:
     - SiliconEmotes
-  whitelist:
-    components:
-    - MobState
   chatMessages: ["chat-emote-msg-flap"]
   chatTriggers:
    - flap
