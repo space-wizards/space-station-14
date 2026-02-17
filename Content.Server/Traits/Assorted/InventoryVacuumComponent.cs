@@ -31,9 +31,10 @@ public sealed partial class InventoryVacuumComponent : Component
 
     /// <summary>
     /// A whitelist of inventory slots that the vacuum can steal from. If empty, it can steal from any slot.
+    /// Also implicitly includes hands.
     /// </summary>
     [DataField]
-    public HashSet<string> StealSlotWhitelist = ["hand", "pocket1", "pocket2", "id"];
+    public HashSet<string> StealSlotWhitelist = ["pocket1", "pocket2", "id"];
 
     /// <summary>
     /// Whether the vacuum should check line of sight before stealing.
