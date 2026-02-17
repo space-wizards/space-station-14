@@ -92,9 +92,3 @@
   parent: [ StatusEffectWoozy, StatusEffectSlurred ]
   id: StatusEffectDrunk
   name: drunk
-
-- type: entity
-  parent: MobStatusEffectBase
-  id: StatusEffectInventoryVacuum
-  components:
-  - type: InventoryVacuum
