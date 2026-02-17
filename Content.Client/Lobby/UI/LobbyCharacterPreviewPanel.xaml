@@ -36,24 +36,33 @@
                     <PanelContainer StyleClasses="BackgroundPanelDark">
                         <BoxContainer VerticalExpand="True"
                                       HorizontalExpand="True"
-                                      HorizontalAlignment="Center"
+                                      HorizontalAlignment="Stretch"
                                       SeparationOverride="6"
                                       Margin="5">
 
                             <!-- Jobs with "Never" priority -->
-                            <ui:DraggableJobTarget Name="NeverBox" Priority="Never" />
+                            <ui:DraggableJobTarget Name="NeverBox"
+                                                   Priority="Never"
+                                                   HorizontalExpand="True"
+                                                   SizeFlagsStretchRatio="1" />
 
                             <!-- Vertical rule -->
                             <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
                             <!-- Jobs with "Low" priority -->
-                            <ui:DraggableJobTarget Name="LowBox" Priority="Low" />
+                            <ui:DraggableJobTarget Name="LowBox"
+                                                   Priority="Low"
+                                                   HorizontalExpand="True"
+                                                   SizeFlagsStretchRatio="1" />
 
                             <!-- Vertical rule -->
                             <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
                             <!-- Jobs with "Medium" priority -->
-                            <ui:DraggableJobTarget Name="MediumBox" Priority="Medium" />
+                            <ui:DraggableJobTarget Name="MediumBox"
+                                                   Priority="Medium"
+                                                   HorizontalExpand="True"
+                                                   SizeFlagsStretchRatio="1" />
 
                             <!-- Vertical rule -->
                             <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
