@@ -41,13 +41,5 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
         if (_prototype.Resolve(signComp.Current, out var signPrototype))
             _menu?.UpdateState(signPrototype);
     }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _menu?.Dispose();
-    }
 }
 
