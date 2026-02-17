@@ -353,7 +353,7 @@
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtQMTurtleneck
   name: quartermaster's turtleneck
-  description: A sharp turtleneck made for the hardy work environment of supply.
+  description: A sharp turtleneck made for the hardy work environment of cargo.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi
