@@ -136,8 +136,6 @@
       Male: MaleReptilian
       Female: FemaleReptilian
       Unsexed: MaleReptilian
-  - type: BodyEmotes
-    soundsId: ReptilianBodyEmotes
   - type: Damageable
     damageModifierSet: Scale
   - type: MeleeWeapon
