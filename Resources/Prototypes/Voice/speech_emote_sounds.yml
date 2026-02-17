@@ -90,10 +90,6 @@
   sounds:
     Scream:
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-    Thump:
-      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
-      params:
-        variation: 0.125
     Honk:
       collection: BikeHorn
     Whistle:
@@ -116,10 +112,6 @@
   sounds:
     Scream:
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-    Thump:
-      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
-      params:
-        variation: 0.125
     Honk:
       collection: BikeHorn
     Whistle:
@@ -508,6 +500,24 @@
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
+
+- type: emoteSounds
+  id: ReptilianBodyEmotes
+  sounds:
+    Thump:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+      params:
+        variation: 0.125
+    Clap:
+      collection: Claps
+    ClapSingle:
+      collection: ClapSingle
+    Snap:
+      collection: Snaps
+      params:
+        volume: -6
+    Salute:
+      collection: Salutes
 
 # mobs
 - type: emoteSounds
