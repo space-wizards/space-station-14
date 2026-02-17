@@ -438,73 +438,96 @@
 # button frames
 
 - type: entity
-  id: ButtonFrame
-  name: button frame
-  categories: [ HideSpawnMenu ]
-  description: It's a frame to help distinguish switches visually.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
+  parent: BaseWallmountMetallic
+  id: BaseButtonFrame
+  abstract: true
   components:
-  - type: Clickable
   - type: WallMount
     arc: 360
-  - type: Physics
-    canCollide: false
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch_frame.rsi
-    state: grey
-  - type: Rotatable
-  - type: Fixtures
+  - type: Destructible # Like for buttons, but 50%
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+              params:
+                volume: -8
 
 - type: entity
+  parent: BaseButtonFrame
   id: ButtonFrameGrey
-  parent: ButtonFrame
+  name: grey button frame
+  description: It's a frame to help distinguish switches visually. Grey means... Something boring.
   suffix: grey
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
+  - type: Construction
+    graph: ButtonFrameGreyGraph
+    node: ButtonFrameGreyNode
 
 - type: entity
+  parent: BaseButtonFrame
   id: ButtonFrameCaution
-  parent: ButtonFrame
+  name: yellow button frame
+  description: It's a frame to help distinguish switches visually. Yellow means something dangerous, be careful!
   suffix: caution
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: caution
+  - type: Construction
+    graph: ButtonFrameCautionGraph
+    node: ButtonFrameCautionNode
 
 - type: entity
+  parent: BaseButtonFrame
   id: ButtonFrameCautionSecurity
-  parent: ButtonFrame
+  name: red button frame
+  description: It's a frame to help distinguish switches visually. Red means something really dangerous, be very careful!
   suffix: caution
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: caution_security
+  - type: Construction
+    graph: ButtonFrameCautionSecurityGraph
+    node: ButtonFrameCautionSecurityNode
 
 - type: entity
+  parent: BaseButtonFrame
   id: ButtonFrameExit
-  parent: ButtonFrame
+  name: exit button frame
+  description: It's a frame to help distinguish switches visually. Exit means exit.
   suffix: exit
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: exit
+  - type: Construction
+    graph: ButtonFrameExitGraph
+    node: ButtonFrameExitNode
 
 - type: entity
+  parent: BaseButtonFrame
   id: ButtonFrameJanitor
-  parent: ButtonFrame
+  name: janitor button frame
+  description: It's a frame to help distinguish switches visually. Purple means something janitorial.
   suffix: janitor
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: janitor
+  - type: Construction
+    graph: ButtonFrameJanitorGraph
+    node: ButtonFrameJanitorNode
