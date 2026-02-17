@@ -60,18 +60,17 @@ public sealed class HealthExaminableSystem : EntitySystem
             string chosenLocStr = string.Empty;
             foreach (var threshold in component.Thresholds)
             {
-                var str = $"health-examinable-{component.LocPrefix}-{type}-{threshold}";
-                var tempLocStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", ("target", Identity.Entity(uid, EntityManager)));
+                Loc.TryGetString(
+                    $"health-examinable-{component.LocPrefix}-{type}-{threshold}",
+                    out var tempLocStr,
+                    ("target", Identity.Entity(uid, EntityManager)));
 
                 // i.e., this string doesn't exist, because theres nothing for that threshold
-                if (tempLocStr == str)
+                if (tempLocStr == null || dmg <= threshold || threshold <= closest)
                     continue;
 
-                if (dmg > threshold && threshold > closest)
-                {
-                    chosenLocStr = tempLocStr;
-                    closest = threshold;
-                }
+                chosenLocStr = tempLocStr;
+                closest = threshold;
             }
 
             if (closest == FixedPoint2.Zero)
