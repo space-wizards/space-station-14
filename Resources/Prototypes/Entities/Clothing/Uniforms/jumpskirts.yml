@@ -363,7 +363,7 @@
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtQMFormalDress
-  name: quartermaster's formal dress
+  name: quartermaster's formal dres
   description: Inspired by the quartermasters of militaries past, the perfect dress for supplying a formal occasion.
   components:
     - type: Sprite
