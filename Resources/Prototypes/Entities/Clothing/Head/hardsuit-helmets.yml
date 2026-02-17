@@ -715,12 +715,12 @@
     - CorgiWearable
     - WhitelistChameleon
 
-#Blood-red Hardsuit
+#Cybersun Shield Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSyndieShield
   name: cybersun shield hardsuit helmet
-  description: Surprisingly, its just an ordinary helmet identical to the blood-red hardsuit helmet.
+  description: Surprisingly, its just an ordinary helmet.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndicateshield.rsi
