@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Buckle.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
@@ -24,12 +25,21 @@ public sealed class LegsParalyzedSystem : EntitySystem
     private void OnStartup(EntityUid uid, LegsParalyzedComponent component, ComponentStartup args)
     {
         // TODO: In future probably must be surgery related wound
+        if (!TryComp<MovementSpeedModifierComponent>(uid, out var movementSpeedModifierComponent))
+            return;
+
+        component.BaseWalkSpeed = movementSpeedModifierComponent.BaseWalkSpeed;
+        component.BaseSprintSpeed = movementSpeedModifierComponent.BaseSprintSpeed;
+        component.Acceleration = movementSpeedModifierComponent.Acceleration;
+
         _movementSpeedModifierSystem.ChangeBaseSpeed(uid, 0, 0, 20);
     }
 
     private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
     {
         _standingSystem.Stand(uid);
+
+        _movementSpeedModifierSystem.ChangeBaseSpeed(uid, component.BaseWalkSpeed, component.BaseSprintSpeed, component.Acceleration);
     }
 
     private void OnBuckled(EntityUid uid, LegsParalyzedComponent component, ref BuckledEvent args)
