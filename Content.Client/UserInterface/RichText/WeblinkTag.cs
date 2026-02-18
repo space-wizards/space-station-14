@@ -7,8 +7,11 @@ using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Content.Client.Guidebook.RichText;
 
-namespace Content.Client._Starlight.UserInterface.RichText;
+namespace Content.Client.UserInterface.RichText;
 
+/// <summary>
+/// Assigns a link that opens a web address in the user's default browser when clicked.
+/// </summary>
 [UsedImplicitly]
 public sealed class WebLinkTag : IMarkupTagHandler
 {
