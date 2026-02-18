@@ -18,13 +18,12 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IClientGameTiming _timing = default!;
 
-    private WaypointerOverlay _waypointerOverlay = default!;
+    private WaypointerOverlay? _waypointerOverlay;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _waypointerOverlay = new WaypointerOverlay();
 
         SubscribeLocalEvent<WaypointerComponent, ComponentInit>(OnAddition);
         SubscribeLocalEvent<WaypointerComponent, ComponentRemove>(OnRemoval);
@@ -39,7 +38,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
             || _timing.ApplyingState)
             return;
 
-        _overlay.AddOverlay(_waypointerOverlay);
+        _overlay.AddOverlay(_waypointerOverlay ??= new WaypointerOverlay());
     }
 
     private void OnRemoval(Entity<WaypointerComponent> mob, ref ComponentRemove args)
@@ -48,12 +47,14 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
             || _timing.ApplyingState)
             return;
 
-        _overlay.RemoveOverlay(_waypointerOverlay);
+        _overlay.RemoveOverlay(_waypointerOverlay ??= new WaypointerOverlay());
     }
 
     protected override void OnActionToggle(Entity<WaypointerComponent> mob, ref ActionToggleWaypointersEvent args)
     {
         base.OnActionToggle(mob, ref args);
+
+        _waypointerOverlay ??= new WaypointerOverlay();
 
         if (args.Action.Comp.Toggled)
             _overlay.RemoveOverlay(_waypointerOverlay);
@@ -66,7 +67,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         if (args.Entity != _player.LocalEntity)
             return;
 
-        _overlay.AddOverlay(_waypointerOverlay);
+        _overlay.AddOverlay(_waypointerOverlay ??= new WaypointerOverlay());
     }
 
     private void OnPlayerDetached(Entity<WaypointerComponent> mob, ref LocalPlayerDetachedEvent args)
@@ -74,6 +75,6 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         if (args.Entity != _player.LocalEntity)
             return;
 
-        _overlay.RemoveOverlay(_waypointerOverlay);
+        _overlay.RemoveOverlay(_waypointerOverlay ??= new WaypointerOverlay());
     }
 }

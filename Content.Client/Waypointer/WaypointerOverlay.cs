@@ -9,9 +9,11 @@ using Content.Shared.CombatMode;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Waypointer;
+using Content.Shared.Waypointer.Components;
 using Content.Shared.Whitelist;
 using Robust.Client.Player;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
@@ -37,6 +39,10 @@ public sealed class WaypointerOverlay : Overlay
     private readonly ShuttleSystem _shuttle;
     private readonly EntityWhitelistSystem _whitelist;
 
+    // This is used to check if a prototype is tracking the station grid.
+    private readonly string _stationCompName = "StationData";
+    // Caching the Uid for the station grid.
+    private readonly EntityUid? _mainStationGrid;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     internal WaypointerOverlay()
@@ -51,6 +57,8 @@ public sealed class WaypointerOverlay : Overlay
         _unshadedShader = _prototype.Index(UnshadedShader).Instance();
         _shuttle = _entity.System<ShuttleSystem>();
         _whitelist = _entity.System<EntityWhitelistSystem>();
+
+        _mainStationGrid = GetStationGrid();
     }
 
     /// <summary>
@@ -62,7 +70,7 @@ public sealed class WaypointerOverlay : Overlay
         handle.UseShader(_unshadedShader); // Waypointers are unshaded.
 
         if (_player.LocalEntity == null
-            || !_entity.TryGetComponent<Shared.Waypointer.Components.WaypointerComponent>(_player.LocalEntity, out var waypointer)
+            || !_entity.TryGetComponent<WaypointerComponent>(_player.LocalEntity, out var waypointer)
             // Check if the Waypointer hashset is null
             || waypointer.WaypointerProtoIds == null
             || !_entity.TryGetComponent<TransformComponent>(_player.LocalEntity, out var playerXform)
@@ -85,20 +93,11 @@ public sealed class WaypointerOverlay : Overlay
                 // Check if the target fails/passes the whitelist/blacklist.
                 if (!_whitelist.CheckBoth(target, blacklist: prototype.Blacklist, whitelist: prototype.Whitelist)
                     // Check if the target has a hidden IFF.
-                    || _shuttle.HasIFFFlag(target, IFFFlags.Hide))
-                    continue;
-
-                // We need to check for StationData specifically, because the station entity is in the nullsphere.
-                if (_entity.TryGetComponent<StationDataComponent>(target, out var station))
-                {
-                    // Then we get the largest grid, which is in the actual map.
-                    var mainGrid = _station.GetLargestGrid((target, station));
-                    if (mainGrid is not null)
-                        target = mainGrid.Value;
-                }
-
-                // Check if it has the Transform Component
-                if (!_entity.TryGetComponent<TransformComponent>(target, out var targetXform)
+                    || _shuttle.HasIFFFlag(target, IFFFlags.Hide)
+                    // The station grid cannot be tracked directly due to being in nullspace
+                    || CheckForStation(ref target, prototype)
+                    // Check if it has the Transform Component
+                    || !_entity.TryGetComponent<TransformComponent>(target, out var targetXform)
                     // Check if the target is even on the same map.
                     || targetXform.MapID != args.MapId)
                     continue;
@@ -106,7 +105,8 @@ public sealed class WaypointerOverlay : Overlay
                 _physics.TryGetDistance(player, target, out var distance, playerXform, targetXform);
 
                 // For entities without fixtures, the above method returns 0.
-                if (distance == 0)
+                if (!_entity.TryGetComponent<FixturesComponent>(target, out var fixComp)
+                    || fixComp.FixtureCount == 0)
                 {
                     // so we need to calculate the distance ourselves.
                     var a = _transform.GetWorldPosition(playerXform);
@@ -158,5 +158,46 @@ public sealed class WaypointerOverlay : Overlay
             }
             handle.SetTransform(Matrix3x2.Identity);
         }
+    }
+
+    /// <summary>
+    /// This checks if the target is the station grid and if it should be tracking that.
+    /// The station grid is a weird exception - Tracking it directly with StationDataComponent does not work.
+    /// It'll result in tracking an Entity in nullspace. The grid itself does NOT have StationDataComponent.
+    /// That also carries the issue of blacklists not working against the station grid, because it doesn't have the components.
+    /// So, we need to check if the station grid is being tracked, or if we wrongly tracked the station grid when we were just tracking ordinary grids.
+    /// </summary>
+    /// <param name="target">The target being tracked</param>
+    /// <param name="prototype">The waypointer prototype</param>
+    /// <returns>
+    /// Returns true if the target is the station grid, otherwise false.
+    /// The parameter target will be changed to the station grid Uid if the prototype is tracking the station grid.
+    /// </returns>
+    private bool CheckForStation(ref EntityUid target, WaypointerPrototype prototype)
+    {
+        // If we are tracking the station via StationDataComponent, we will NEVER get the mainStationGrid.
+        // So if we somehow DID get the station grid, it's because we are tracking something else and it bypassed the blacklist.
+        if (target == _mainStationGrid)
+            return true;
+
+        // If we are supposed to track the station grid, but are tracking the station entity in nullspace, replace it.
+        if (prototype.TrackedComponents.ContainsKey(_stationCompName) && _mainStationGrid.HasValue)
+            target = _mainStationGrid.Value;
+
+        return false;
+    }
+
+    /// <summary>
+    /// Get the station grid that's on the playable map.
+    /// </summary>
+    /// <returns>The Uid for the station grid.</returns>
+    private EntityUid? GetStationGrid()
+    {
+        var stationQuery = _entity.AllEntityQueryEnumerator<StationDataComponent>();
+
+        if (!stationQuery.MoveNext(out var station, out var comp))
+            return null;
+
+        return _station.GetLargestGrid((station, comp));
     }
 }
