@@ -42,7 +42,7 @@ public sealed partial class ArcadeSystem
             : null;
 
         var placement = new HighScorePlacement(globalPlacement, localPlacement);
-        // TODO: Send client an update message here
+        // TODO: Send client an update message here?
     }
 
     /// <summary>
@@ -103,6 +103,7 @@ public sealed partial class ArcadeSystem
     {
         // Maximum number of entries.
         // We can just add the score to the list and return its placement.
+        // TODO: Un-hardcode max scoreboard count
         if (highScoreEntries.Count < 5)
         {
             highScoreEntries.Add(entry);
