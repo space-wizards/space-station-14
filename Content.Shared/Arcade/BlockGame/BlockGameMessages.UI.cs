@@ -77,11 +77,18 @@ public sealed class BlockGameHighScoreUpdateMessage : BoundUserInterfaceMessage
 {
     public List<ArcadeHighScoreEntry> LocalHighscores;
     public List<ArcadeHighScoreEntry>? GlobalHighscores;
+    public int MaxLocalScores;
+    public int? MaxGlobalScores;
 
-    public BlockGameHighScoreUpdateMessage(List<ArcadeHighScoreEntry> localHighscores, List<ArcadeHighScoreEntry>? globalHighscores)
+    public BlockGameHighScoreUpdateMessage(List<ArcadeHighScoreEntry> localHighscores,
+        List<ArcadeHighScoreEntry>? globalHighscores,
+        int maxLocalScores,
+        int? maxGlobalScores)
     {
         LocalHighscores = localHighscores;
         GlobalHighscores = globalHighscores;
+        MaxLocalScores = maxLocalScores;
+        MaxGlobalScores = maxGlobalScores;
     }
 }
 

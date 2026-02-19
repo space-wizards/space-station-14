@@ -51,7 +51,9 @@ public sealed class BlockGameBoundUserInterface : BoundUserInterface
                 break;
             case BlockGameHighScoreUpdateMessage highScoreUpdateMessage:
                 _menu?.UpdateHighscores(highScoreUpdateMessage.LocalHighscores,
-                    highScoreUpdateMessage.GlobalHighscores);
+                    highScoreUpdateMessage.GlobalHighscores,
+                    highScoreUpdateMessage.MaxLocalScores,
+                    highScoreUpdateMessage.MaxGlobalScores);
                 break;
             case BlockGameLevelUpdateMessage levelUpdateMessage:
                 _menu?.UpdateLevel(levelUpdateMessage.Level);

@@ -10,7 +10,7 @@ namespace Content.Server.Arcade.Systems;
 public sealed partial class ArcadeSystem : SharedArcadeSystem
 {
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
-    [Dependency] private readonly PrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {

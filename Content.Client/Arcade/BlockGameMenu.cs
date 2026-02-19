@@ -554,24 +554,38 @@ public sealed class BlockGameMenu : DefaultWindow
     }
 
     public void UpdateHighscores(List<ArcadeHighScoreEntry> localHighscores,
-        List<ArcadeHighScoreEntry> globalHighscores)
+        List<ArcadeHighScoreEntry>? globalHighscores,
+        int maxLocalScores,
+        int? maxGlobalScores)
     {
-        var localHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-station") + "\n");
-        var globalHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-nanotrasen") + "\n");
+        var localHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-machine") + "\n");
+        var globalHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-station") + "\n");
 
-        for (var i = 0; i < 5; i++)
-        {
-            localHighscoreText.AppendLine(localHighscores.Count > i
-                ? $"#{i + 1}: {localHighscores[i].Name} - {localHighscores[i].Score}"
-                : $"#{i + 1}: ??? - 0");
-
-            globalHighscoreText.AppendLine(globalHighscores.Count > i
-                ? $"#{i + 1}: {globalHighscores[i].Name} - {globalHighscores[i].Score}"
-                : $"#{i + 1}: ??? - 0");
-        }
+        GetHighScoreText(ref localHighscoreText, localHighscores, maxLocalScores);
+        GetHighScoreText(ref globalHighscoreText, globalHighscores, maxGlobalScores);
 
         _localHighscoresLabel.Text = localHighscoreText.ToString();
         _globalHighscoresLabel.Text = globalHighscoreText.ToString();
+    }
+
+    private static void GetHighScoreText(ref StringBuilder builder, List<ArcadeHighScoreEntry>? scores, int? maxScores)
+    {
+        if (scores == null || maxScores == null)
+        {
+            builder.AppendLine(Loc.GetString("blockgame-menu-text-no-scores"));
+            return;
+        }
+
+        var scoreCount = scores.Count;
+        for (var i = 0; i < maxScores.Value; i++)
+        {
+            var placement = i + 1;
+            var line = scoreCount > i
+                ? $"#{placement}: {scores[i].Name} - {scores[i].Score}"
+                : $"#{placement}: ??? - 0";
+
+            builder.AppendLine(line);
+        }
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)

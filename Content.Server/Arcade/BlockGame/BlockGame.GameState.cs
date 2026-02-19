@@ -157,7 +157,7 @@ public sealed partial class BlockGame
     /// <summary>
     /// Where the current game has placed amongst the leaderboard.
     /// </summary>
-    private ArcadeSystem.HighScorePlacement? _highScorePlacement = null;
+    private HighScorePlacement? _highScorePlacement = null;
 
     /// <summary>
     /// Gets a random piece from the pool of pickable pieces. (<see cref="_blockGamePiecesBuffer"/>)

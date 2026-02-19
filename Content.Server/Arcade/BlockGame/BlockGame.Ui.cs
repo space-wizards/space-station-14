@@ -365,9 +365,9 @@ public sealed partial class BlockGame
         if (!_entityManager.TryGetComponent<ArcadeScoreboardComponent>(_owner, out var scoreboard))
             return null;
 
-        var localScores = ArcadeSystem.GetSortedLocalScores((_owner, scoreboard));
-        _arcadeSystem.TryGetSortedGlobalScores((_owner, scoreboard), out var globalScores);
-        var message = new BlockGameHighScoreUpdateMessage(localScores, globalScores);
+        var localScores = ArcadeSystem.GetSortedLocalScores((_owner, scoreboard), out var maxLocal);
+        _arcadeSystem.TryGetSortedGlobalScores((_owner, scoreboard), out var globalScores, out var maxGlobal);
+        var message = new BlockGameHighScoreUpdateMessage(localScores, globalScores, maxLocal, maxGlobal);
 
         return message;
     }

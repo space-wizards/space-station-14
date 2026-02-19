@@ -23,4 +23,5 @@ blockgame-menu-button-back = Back
 blockgame-menu-label-next = Next
 blockgame-menu-label-hold = Hold
 blockgame-menu-text-station = Station
-blockgame-menu-text-nanotrasen = Nanotrasen
+blockgame-menu-text-machine = Machine
+blockgame-menu-text-no-scores = ERROR: OUT OF ORDER

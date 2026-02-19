@@ -14,7 +14,7 @@ public sealed partial class ArcadeSystem
 {
     private Dictionary<ProtoId<ArcadeScoreboardPrototype>, List<ArcadeHighScoreEntry>> _globalScoreboard = new();
 
-    private void OnRoundStarting(ref RoundStartingEvent args)
+    private void OnRoundStarting(RoundStartingEvent args)
     {
         InitializeScoreboards();
     }
@@ -55,8 +55,10 @@ public sealed partial class ArcadeSystem
     /// <param name="ent">The arcade machine with a scoreboard.</param>
     /// <returns>The top local scores of this arcade machine in descending order.</returns>
     [PublicAPI]
-    public static List<ArcadeHighScoreEntry> GetSortedLocalScores(Entity<ArcadeScoreboardComponent> ent)
+    public static List<ArcadeHighScoreEntry> GetSortedLocalScores(Entity<ArcadeScoreboardComponent> ent,
+        out int maxScores)
     {
+        maxScores = ent.Comp.MaxEntries;
         return GetSortedHighscores(ent.Comp.Scoreboard);
     }
 
@@ -71,17 +73,23 @@ public sealed partial class ArcadeSystem
     /// <returns>Whether or not the global scores were successfully fetched.</returns>
     [PublicAPI]
     public bool TryGetSortedGlobalScores(Entity<ArcadeScoreboardComponent> ent,
-        [NotNullWhen(true)] out List<ArcadeHighScoreEntry>? highScoreEntries)
+        [NotNullWhen(true)] out List<ArcadeHighScoreEntry>? highScoreEntries,
+        [NotNullWhen(true)] out int? maxScores)
     {
         highScoreEntries = null;
+        maxScores = null;
 
         if (ent.Comp.GlobalScoreboard == null)
+            return false;
+
+        if (!_prototypeManager.TryIndex(ent.Comp.GlobalScoreboard.Value, out var scoreboard))
             return false;
 
         if (!_globalScoreboard.TryGetValue(ent.Comp.GlobalScoreboard.Value, out var scores))
             return false;
 
         highScoreEntries = GetSortedHighscores(scores);
+        maxScores = scoreboard.MaxEntries;
         return true;
     }
 
