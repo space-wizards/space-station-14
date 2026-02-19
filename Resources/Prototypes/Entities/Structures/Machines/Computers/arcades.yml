@@ -126,6 +126,8 @@
       state: panel
       visible: false
   - type: BlockGameArcade
+  - type: ArcadeScoreboard
+    globalScoreboard: BlockGame
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
   - type: ActivatableUIRequiresPower
