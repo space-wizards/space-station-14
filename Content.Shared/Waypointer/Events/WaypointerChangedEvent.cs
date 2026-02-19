@@ -1,8 +1,7 @@
-﻿
-using Content.Shared.Inventory;
+﻿using Content.Shared.Inventory;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Waypointer;
+namespace Content.Shared.Waypointer.Events;
 
 /// <summary>
 /// Whenever a clothing that shows waypointers is equipped.

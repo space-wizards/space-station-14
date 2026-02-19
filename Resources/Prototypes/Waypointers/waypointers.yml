@@ -11,20 +11,25 @@
 - type: waypointer
   parent: BaseWaypointer
   id: NTStationWaypointer
+  name: Station Waypointer
   trackedComponents:
   - type: StationData
   color: Blue
+  radialMenuIconPath: Markers/Waypointers/station_waypointer.rsi
 
 - type: waypointer
   parent: BaseWaypointer
   id: TradeStationWaypointer
+  name: Trade Station Waypointer
   trackedComponents:
   - type: TradeStation
   color: Green
+  radialMenuIconPath: Markers/Waypointers/trade_station_waypointer.rsi
 
 - type: waypointer
   parent: BaseWaypointer
   id: WreckWaypointer
+  name: Wreck Waypointer
   trackedComponents:
   - type: MapGrid
   blacklist:
@@ -34,12 +39,15 @@
     - EscapePod
   color: Orange
   maxRange: 50
+  radialMenuIconPath: Markers/Waypointers/wreck_waypointer.rsi
 
 - type: waypointer
   parent: BaseWaypointer
   id: DragonRiftWaypointer
+  name: Rift Waypointer
   trackedComponents:
   - type: DragonRift
   workOnGrid: true
   color: Red
   maxRange: 50
+  radialMenuIconPath: Markers/Waypointers/rift_waypointer.rsi

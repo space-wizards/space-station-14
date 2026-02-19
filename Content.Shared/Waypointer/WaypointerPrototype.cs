@@ -8,7 +8,7 @@ namespace Content.Shared.Waypointer;
 
 /// <summary>
 /// This is the prototype for a waypointer.
-/// This is stored in either <see cref="Components.WaypointerComponent"/> or <see cref="Components.ClothingShowWaypointerComponent"/>.
+/// This is stored in either <see cref="ActiveWaypointerComponent"/> or <see cref="Components.ClothingShowWaypointerComponent"/>.
 /// It's responsible for defining what kind of waypointer is shown to the client.
 /// </summary>
 [Prototype]
@@ -26,6 +26,16 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     [AbstractDataField, NeverPushInheritance]
     public bool Abstract { get; private set; }
 
+    /// <summary>
+    /// The name of the waypointer prototype.
+    /// This is player facing, so it's different than ID
+    /// </summary>
+    [DataField(required: true)]
+    public required string Name;
+
+    /// <summary>
+    /// The components that decide which entities will be tracked by this waypointer.
+    /// </summary>
     [DataField(required: true)]
     public ComponentRegistry TrackedComponents = default!;
 
@@ -38,7 +48,11 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     /// <summary>
     /// This signifies how many states the waypointer has.
     /// These are used to show distance to the tracked target.
+    /// Each rsi state needs to be named "marker" + number.
     /// </summary>
+    /// <example>
+    /// The NTStationWaypointer has 5 states: marker1, marker2, marker3, marker4, marker5.
+    /// </example>
     [DataField]
     public float WaypointerStates = 1f;
 
@@ -78,4 +92,16 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// The RSI path to the icons for the radial menu.
+    /// It requires both an on and off state.
+    /// The off state needs to be named "disable" and the on state "enable
+    /// </summary>
+    /// <remarks>
+    /// For ease of adding more, there is a example cross picture in waypointer_action.rsi.
+    /// You can copy and paste that over new enable icons to make a disable icon.
+    /// </remarks>
+    [DataField(required: true)]
+    public ResPath RadialMenuIconPath;
 }

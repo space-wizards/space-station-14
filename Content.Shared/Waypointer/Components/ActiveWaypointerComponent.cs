@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Waypointer.Components;
 
@@ -8,7 +9,7 @@ namespace Content.Shared.Waypointer.Components;
 /// This is NOT a pinpointer.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class WaypointerComponent : Component
+public sealed partial class ActiveWaypointerComponent : Component
 {
     /// <summary>
     /// The actual UID for the action entity. It'll be saved here when the component is initialized.
@@ -20,11 +21,24 @@ public sealed partial class WaypointerComponent : Component
     /// The prototype ID for the action.
     /// </summary>
     [DataField]
-    public EntProtoId ActionProtoId = "ActionToggleWaypointers";
+    public EntProtoId ActionProtoId = "ActionManageWaypointers";
 
     /// <summary>
     /// The prototype of the waypointer visible for the owner of this component.
+    /// The bool value determines whether the corresponding waypointer is active.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<ProtoId<WaypointerPrototype>>? WaypointerProtoIds;
+    public Dictionary<ProtoId<WaypointerPrototype>, bool>? WaypointerProtoIds;
+
+    /// <summary>
+    /// Whether the waypointer system is enabled or not.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Active = true;
+
+    /// <summary>
+    /// The resource path for the "Disable/Enable all waypointers" menu option.
+    /// </summary>
+    [DataField]
+    public ResPath RadialMenuIconPath = new("Markers/Waypointers/waypointer_action.rsi");
 }

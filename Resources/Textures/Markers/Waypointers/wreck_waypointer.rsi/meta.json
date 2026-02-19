@@ -8,13 +8,10 @@
     "copyright": "SirWarock on Github",
     "states": [
         {
-            "name": "action_icon_off"
+            "name": "enable"
         },
         {
-            "name": "action_icon_on"
-        },
-        {
-            "name": "cross"
+            "name": "disable"
         }
     ]
 }

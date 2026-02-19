@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Server.Actions;
 using Content.Shared.Waypointer;
 using Content.Shared.Waypointer.Components;
 using Content.Shared.Whitelist;
@@ -20,7 +19,6 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly ActionsSystem  _actions = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
@@ -28,23 +26,23 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WaypointerComponent, ComponentInit>(OnAddition);
-        SubscribeLocalEvent<WaypointerComponent, ComponentRemove>(OnRemoval);
+        SubscribeLocalEvent<ActiveWaypointerComponent, ComponentInit>(OnAddition);
+        SubscribeLocalEvent<ActiveWaypointerComponent, ComponentRemove>(OnRemoval);
 
         SubscribeLocalEvent<WaypointerTrackableComponent, ComponentInit>(OnTrackableInit);
 
-        SubscribeLocalEvent<WaypointerComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<WaypointerComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<ActiveWaypointerComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<ActiveWaypointerComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
-        SubscribeLocalEvent<WaypointerComponent, MapUidChangedEvent>(OnMapChanged);
+        SubscribeLocalEvent<ActiveWaypointerComponent, MapUidChangedEvent>(OnMapChanged);
     }
 
-    private void OnAddition(Entity<WaypointerComponent> player, ref ComponentInit args)
+    private void OnAddition(Entity<ActiveWaypointerComponent> player, ref ComponentInit args)
     {
         _actions.AddAction(player, ref player.Comp.ActionEntity, player.Comp.ActionProtoId);
     }
 
-    private void OnRemoval(Entity<WaypointerComponent> player, ref ComponentRemove args)
+    private void OnRemoval(Entity<ActiveWaypointerComponent> player, ref ComponentRemove args)
     {
         _actions.RemoveAction(player.Owner, player.Comp.ActionEntity);
     }
@@ -80,7 +78,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         var trackXform = Transform(trackable);
 
         // Now we get every entity that has an active waypointer
-        var waypointerQuery = EntityQueryEnumerator<WaypointerComponent, ActorComponent>();
+        var waypointerQuery = AllEntityQuery<ActiveWaypointerComponent, ActorComponent>();
         // We iterate through them
         while (waypointerQuery.MoveNext(out var player, out var waypointerComp, out var actorComp))
         {
@@ -89,7 +87,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
                 continue;
 
             // Then we iterate through every waypointer they have access to
-            foreach (var waypointer in waypointerComp.WaypointerProtoIds)
+            foreach (var waypointer in waypointerComp.WaypointerProtoIds.Keys)
             {
                 // We check if they have any waypointer that can track the new trackable entity.
                 if (!waypointersToOverride.Contains(waypointer))
@@ -107,23 +105,23 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         }
     }
 
-    private void OnPlayerAttached(Entity<WaypointerComponent> player, ref PlayerAttachedEvent args)
+    private void OnPlayerAttached(Entity<ActiveWaypointerComponent> player, ref PlayerAttachedEvent args)
     {
         if (player.Comp.WaypointerProtoIds == null)
             return;
 
-        AddOverrides(player, player.Comp.WaypointerProtoIds);
+        AddOverrides(player, player.Comp.WaypointerProtoIds.Keys.ToHashSet());
     }
 
-    private void OnPlayerDetached(Entity<WaypointerComponent> player, ref PlayerDetachedEvent args)
+    private void OnPlayerDetached(Entity<ActiveWaypointerComponent> player, ref PlayerDetachedEvent args)
     {
         if (player.Comp.WaypointerProtoIds == null)
             return;
 
-        RemoveOverrides(player, player.Comp.WaypointerProtoIds);
+        RemoveOverrides(player, player.Comp.WaypointerProtoIds.Keys.ToHashSet());
     }
 
-    private void OnMapChanged(Entity<WaypointerComponent> player, ref MapUidChangedEvent args)
+    private void OnMapChanged(Entity<ActiveWaypointerComponent> player, ref MapUidChangedEvent args)
     {
         // Since we only override PVS on entities on the same map, if the person switches maps, they'll need new overrides.
         RefreshOverrides(player);
@@ -134,13 +132,13 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
     /// </summary>
     /// <param name="player">The entity to have their overrides refreshed.</param>
     [PublicAPI]
-    public void RefreshOverrides(Entity<WaypointerComponent> player)
+    public void RefreshOverrides(Entity<ActiveWaypointerComponent> player)
     {
         if (player.Comp.WaypointerProtoIds == null)
             return;
 
-        RemoveOverrides(player, player.Comp.WaypointerProtoIds);
-        AddOverrides(player, player.Comp.WaypointerProtoIds);
+        RemoveOverrides(player, player.Comp.WaypointerProtoIds.Keys.ToHashSet());
+        AddOverrides(player, player.Comp.WaypointerProtoIds.Keys.ToHashSet());
     }
 
     protected override void AddOverrides(EntityUid player, HashSet<ProtoId<WaypointerPrototype>> waypointers)
@@ -159,11 +157,10 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
             while (waypointQuery.MoveNext(out var target))
             {
                 // Check if the target fails/passes the whitelist/blacklist.
-                if (_whitelist.IsWhitelistFail(prototype.Whitelist, target)
-                    || _whitelist.IsWhitelistPass(prototype.Blacklist, target))
+                if (_whitelist.CheckBoth(target, whitelist: prototype.Whitelist, blacklist: prototype.Blacklist))
                     continue;
 
-                // Entities with Mapgrids somehow already work, so we exclude them. No idea why. But I fear messing with them.
+                // Grids somehow already work, so we exclude them. No idea why. But I fear messing with them.
                 if (HasComp<MapGridComponent>(target))
                     continue;
 
@@ -189,7 +186,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
             var waypointQuery = _entity.CompRegistryQueryEnumerator(prototype.TrackedComponents);
             while (waypointQuery.MoveNext(out var target))
             {
-                // Entities with Mapgrids somehow already work, so we exclude them. No idea why. But I fear messing with them.
+                // Grids somehow already work, so we exclude them. No idea why. But I fear messing with them.
                 if (HasComp<MapGridComponent>(target))
                     continue;
 

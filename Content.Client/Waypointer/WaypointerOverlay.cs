@@ -70,7 +70,7 @@ public sealed class WaypointerOverlay : Overlay
         handle.UseShader(_unshadedShader); // Waypointers are unshaded.
 
         if (_player.LocalEntity == null
-            || !_entity.TryGetComponent<WaypointerComponent>(_player.LocalEntity, out var waypointer)
+            || !_entity.TryGetComponent<ActiveWaypointerComponent>(_player.LocalEntity, out var waypointer)
             // Check if the Waypointer hashset is null
             || waypointer.WaypointerProtoIds == null
             || !_entity.TryGetComponent<TransformComponent>(_player.LocalEntity, out var playerXform)
@@ -79,9 +79,13 @@ public sealed class WaypointerOverlay : Overlay
 
         var player = _player.LocalEntity.Value;
 
-        foreach (var waypointerProtoId in waypointer.WaypointerProtoIds)
+        foreach (var waypointerPair in waypointer.WaypointerProtoIds)
         {
-            if (!_prototype.Resolve(waypointerProtoId, out var prototype)
+            // The boolean in the dictionary describes if the waypointer is active
+            if (!waypointerPair.Value)
+                continue;
+
+            if (!_prototype.Resolve(waypointerPair.Key, out var prototype)
                 // Check if the waypointer works on grid and combat
                 || !prototype.WorkOnGrid && playerXform.GridUid != null
                 || !prototype.WorkInCombat && _combatMode.IsInCombatMode(player))
