@@ -164,7 +164,7 @@
     - id: FoamBlade
     - id: FoamCutlass
     - id: Football
-    - id: GlowstickGreen #green
+    - id: GlowstickGreen
     - id: GlowstickBlue
     - id: GlowstickYellow
     - id: GlowstickPurple
