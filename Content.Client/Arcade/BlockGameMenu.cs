@@ -6,6 +6,7 @@ using System.Text;
 using Content.Client.Arcade.UI;
 using Content.Client.Resources;
 using Content.Shared.Arcade.BlockGame;
+using Content.Shared.Arcade.Systems;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -552,8 +553,8 @@ public sealed class BlockGameMenu : DefaultWindow
         _levelLabel.Text = Loc.GetString("blockgame-menu-label-level", ("level", level + 1));
     }
 
-    public void UpdateHighscores(List<BlockGameHighScoreEntry> localHighscores,
-        List<BlockGameHighScoreEntry> globalHighscores)
+    public void UpdateHighscores(List<ArcadeHighScoreEntry> localHighscores,
+        List<ArcadeHighScoreEntry> globalHighscores)
     {
         var localHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-station") + "\n");
         var globalHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-nanotrasen") + "\n");

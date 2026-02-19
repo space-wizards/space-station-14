@@ -3,7 +3,7 @@ using System.Linq;
 using Content.Server.Arcade.Components;
 using Content.Server.Arcade.Prototypes;
 using Content.Server.GameTicking.Events;
-using Content.Shared.Arcade.BlockGame;
+using Content.Shared.Arcade.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -12,7 +12,7 @@ namespace Content.Server.Arcade.Systems;
 
 public sealed partial class ArcadeSystem
 {
-    private Dictionary<ProtoId<ArcadeScoreboardPrototype>, List<BlockGameHighScoreEntry>> _globalScoreboard = new();
+    private Dictionary<ProtoId<ArcadeScoreboardPrototype>, List<ArcadeHighScoreEntry>> _globalScoreboard = new();
 
     private void OnRoundStarting(ref RoundStartingEvent args)
     {
@@ -35,7 +35,7 @@ public sealed partial class ArcadeSystem
             return;
 
         var name = MetaData(args.Player.Value).EntityName;
-        var entry = new BlockGameHighScoreEntry(name, args.Score.Value);
+        var entry = new ArcadeHighScoreEntry(name, args.Score.Value);
         var localPlacement = TryInsertIntoList(ent.Comp.Scoreboard, entry);
         var globalPlacement = ent.Comp.GlobalScoreboard != null
             ? GetGlobalPlacement(ent.Comp.GlobalScoreboard.Value, entry)
@@ -54,7 +54,7 @@ public sealed partial class ArcadeSystem
     /// <param name="ent">The arcade machine with a scoreboard.</param>
     /// <returns>The top local scores of this arcade machine in descending order.</returns>
     [PublicAPI]
-    public static List<BlockGameHighScoreEntry> GetSortedLocalScores(Entity<ArcadeScoreboardComponent> ent)
+    public static List<ArcadeHighScoreEntry> GetSortedLocalScores(Entity<ArcadeScoreboardComponent> ent)
     {
         return GetSortedHighscores(ent.Comp.Scoreboard);
     }
@@ -70,7 +70,7 @@ public sealed partial class ArcadeSystem
     /// <returns>Whether or not the global scores were successfully fetched.</returns>
     [PublicAPI]
     public bool TryGetSortedGlobalScores(Entity<ArcadeScoreboardComponent> ent,
-        [NotNullWhen(true)] out List<BlockGameHighScoreEntry>? highScoreEntries)
+        [NotNullWhen(true)] out List<ArcadeHighScoreEntry>? highScoreEntries)
     {
         highScoreEntries = null;
 
@@ -84,7 +84,7 @@ public sealed partial class ArcadeSystem
         return true;
     }
 
-    private int? GetGlobalPlacement(ProtoId<ArcadeScoreboardPrototype> scoreboard, BlockGameHighScoreEntry entry)
+    private int? GetGlobalPlacement(ProtoId<ArcadeScoreboardPrototype> scoreboard, ArcadeHighScoreEntry entry)
     {
         if (!_globalScoreboard.TryGetValue(scoreboard, out var scores))
             return null;
@@ -92,14 +92,14 @@ public sealed partial class ArcadeSystem
         return TryInsertIntoList(scores, entry);
     }
 
-    private static List<BlockGameHighScoreEntry> GetSortedHighscores(List<BlockGameHighScoreEntry> highScoreEntries)
+    private static List<ArcadeHighScoreEntry> GetSortedHighscores(List<ArcadeHighScoreEntry> highScoreEntries)
     {
         var result = highScoreEntries.ShallowClone();
         result.Sort((p1, p2) => p2.Score.CompareTo(p1.Score));
         return result;
     }
 
-    private static int? TryInsertIntoList(List<BlockGameHighScoreEntry> highScoreEntries, BlockGameHighScoreEntry entry)
+    private static int? TryInsertIntoList(List<ArcadeHighScoreEntry> highScoreEntries, ArcadeHighScoreEntry entry)
     {
         // Maximum number of entries.
         // We can just add the score to the list and return its placement.
@@ -123,7 +123,7 @@ public sealed partial class ArcadeSystem
         return GetPlacement(highScoreEntries, entry);
     }
 
-    private static int? GetPlacement(List<BlockGameHighScoreEntry> highScoreEntries, BlockGameHighScoreEntry entry)
+    private static int? GetPlacement(List<ArcadeHighScoreEntry> highScoreEntries, ArcadeHighScoreEntry entry)
     {
         int? placement = null;
         if (highScoreEntries.Contains(entry))

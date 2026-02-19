@@ -1,3 +1,4 @@
+using Content.Shared.Arcade.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Arcade.BlockGame;
@@ -74,10 +75,10 @@ public sealed class BlockGameGameOverScreenMessage : BlockGameSetScreenMessage
 [Serializable, NetSerializable]
 public sealed class BlockGameHighScoreUpdateMessage : BoundUserInterfaceMessage
 {
-    public List<BlockGameHighScoreEntry> LocalHighscores;
-    public List<BlockGameHighScoreEntry>? GlobalHighscores;
+    public List<ArcadeHighScoreEntry> LocalHighscores;
+    public List<ArcadeHighScoreEntry>? GlobalHighscores;
 
-    public BlockGameHighScoreUpdateMessage(List<BlockGameHighScoreEntry> localHighscores, List<BlockGameHighScoreEntry>? globalHighscores)
+    public BlockGameHighScoreUpdateMessage(List<ArcadeHighScoreEntry> localHighscores, List<ArcadeHighScoreEntry>? globalHighscores)
     {
         LocalHighscores = localHighscores;
         GlobalHighscores = globalHighscores;
