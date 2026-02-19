@@ -75,9 +75,9 @@ public sealed class BlockGameGameOverScreenMessage : BlockGameSetScreenMessage
 public sealed class BlockGameHighScoreUpdateMessage : BoundUserInterfaceMessage
 {
     public List<BlockGameHighScoreEntry> LocalHighscores;
-    public List<BlockGameHighScoreEntry> GlobalHighscores;
+    public List<BlockGameHighScoreEntry>? GlobalHighscores;
 
-    public BlockGameHighScoreUpdateMessage(List<BlockGameHighScoreEntry> localHighscores, List<BlockGameHighScoreEntry> globalHighscores)
+    public BlockGameHighScoreUpdateMessage(List<BlockGameHighScoreEntry> localHighscores, List<BlockGameHighScoreEntry>? globalHighscores)
     {
         LocalHighscores = localHighscores;
         GlobalHighscores = globalHighscores;

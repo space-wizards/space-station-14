@@ -1,6 +1,8 @@
 using System.Linq;
 using Robust.Shared.Player;
 using Content.Shared.Arcade.BlockGame;
+using Content.Server.Arcade.Systems;
+using Content.Server.Arcade.Components;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -343,7 +345,9 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendHighscoreUpdate()
     {
-        SendMessage(new BlockGameHighScoreUpdateMessage(_arcadeSystem.GetLocalHighscores(), _arcadeSystem.GetGlobalHighscores()));
+        var message = GetHighScoreUpdateMessage();
+        if (message != null)
+            SendMessage(message);
     }
 
     /// <summary>
@@ -351,6 +355,20 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendHighscoreUpdate(EntityUid actor)
     {
-        SendMessage(new BlockGameHighScoreUpdateMessage(_arcadeSystem.GetLocalHighscores(), _arcadeSystem.GetGlobalHighscores()), actor);
+        var message = GetHighScoreUpdateMessage();
+        if (message != null)
+            SendMessage(message, actor);
+    }
+
+    private BlockGameHighScoreUpdateMessage? GetHighScoreUpdateMessage()
+    {
+        if (!_entityManager.TryGetComponent<ArcadeScoreboardComponent>(_owner, out var scoreboard))
+            return null;
+
+        var localScores = ArcadeSystem.GetSortedLocalScores((_owner, scoreboard));
+        _arcadeSystem.TryGetSortedGlobalScores((_owner, scoreboard), out var globalScores);
+        var message = new BlockGameHighScoreUpdateMessage(localScores, globalScores);
+
+        return message;
     }
 }
