@@ -1,0 +1,157 @@
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceGingerbread
+  name: gingerbread appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: InitialBody
+    organs:
+      Torso: OrganGingerbreadTorso
+      Head: OrganGingerbreadHead
+      ArmLeft: OrganGingerbreadArmLeft
+      ArmRight: OrganGingerbreadArmRight
+      HandRight: OrganGingerbreadHandRight
+      HandLeft: OrganGingerbreadHandLeft
+      LegLeft: OrganGingerbreadLegLeft
+      LegRight: OrganGingerbreadLegRight
+      FootLeft: OrganGingerbreadFootLeft
+      FootRight: OrganGingerbreadFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: Gingerbread
+
+- type: entity
+  parent:
+  - AppearanceGingerbread
+  - BaseSpeciesMobOrganic
+  id: MobGingerbread
+  name: Urist McCookie
+  components:
+  - type: Butcherable
+    spawned:
+    - id: FoodBakedCookie
+      amount: 5
+  - type: Damageable
+    damageModifierSet: Gingerbread
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#896e55"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 100
+      - ReagentId: Butter
+        Quantity: 200
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 100 #fairly light
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: TypingIndicator
+    proto: gingerbread
+
+- type: entity
+  parent: OrganBase
+  id: OrganGingerbread
+  abstract: true
+  suffix: gingerbread
+
+- type: entity
+  parent: OrganGingerbread
+  id: OrganGingerbreadExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: None
+
+- type: entity
+  parent: [ OrganBaseTorso, OrganGingerbreadExternal ]
+  id: OrganGingerbreadTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganGingerbreadExternal ]
+  id: OrganGingerbreadHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganGingerbreadExternal ]
+  id: OrganGingerbreadArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganGingerbreadExternal ]
+  id: OrganGingerbreadArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganGingerbreadExternal ]
+  id: OrganGingerbreadHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganGingerbreadExternal ]
+  id: OrganGingerbreadHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganGingerbreadExternal ]
+  id: OrganGingerbreadLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganGingerbreadExternal ]
+  id: OrganGingerbreadLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganGingerbreadExternal ]
+  id: OrganGingerbreadFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganGingerbreadExternal ]
+  id: OrganGingerbreadFootRight
+
+- type: entity
+  name: gingerbread man
+  id: MobGingerbreadAI
+  parent: [ MobGingerbread, MobCombat ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-gingerbread-name
+    description: ghost-role-information-gingerbread-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: NPCRetaliation
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound

@@ -138,7 +138,15 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalCrunch # TODO a plastic break collection
+          params:
+            volume: -4
       - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 0
+            max: 1
+        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PhysicalComposition

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Armor;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Gibbing;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -43,6 +44,8 @@ public abstract partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
+
+        SubscribeLocalEvent<InventoryComponent, BeingGibbedEvent>(OnBeingGibbed);
     }
 
     private void OnEntRemoved(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
@@ -168,7 +171,7 @@ public abstract partial class InventorySystem
                 target,
                 itemUid)
             {
-                BreakOnMove = true,
+                BreakOnMove = !clothing.EquipWhileMoving,
                 NeedHand = true,
             };
 
@@ -275,7 +278,7 @@ public abstract partial class InventorySystem
         }
 
         if (_whitelistSystem.IsWhitelistFail(slotDefinition.Whitelist, itemUid) ||
-            _whitelistSystem.IsBlacklistPass(slotDefinition.Blacklist, itemUid))
+            _whitelistSystem.IsWhitelistPass(slotDefinition.Blacklist, itemUid))
         {
             reason = "inventory-component-can-equip-does-not-fit";
             return false;
@@ -439,7 +442,7 @@ public abstract partial class InventorySystem
                 target,
                 removedItem.Value)
             {
-                BreakOnMove = true,
+                BreakOnMove = !clothing.EquipWhileMoving,
                 NeedHand = true,
             };
 
@@ -560,6 +563,17 @@ public abstract partial class InventorySystem
         foreach (var item in _handsSystem.EnumerateHeld(uid))
         {
             _interactionSystem.DoContactInteraction(uid, item);
+        }
+    }
+
+    private void OnBeingGibbed(Entity<InventoryComponent> ent, ref BeingGibbedEvent args)
+    {
+        foreach (var item in GetHandOrInventoryEntities((ent, null, ent)))
+        {
+            // Give me liberty, give me death
+            // TODO: Give me an API that can tell the difference between a virtual item and an electropak being removed.
+            if (!HasComp<AttachedClothingComponent>(item))
+                args.Giblets.Add(item);
         }
     }
 }

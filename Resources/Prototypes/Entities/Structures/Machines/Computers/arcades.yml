@@ -5,12 +5,10 @@
   name: arcade
   parent: BaseComputer
   components:
-  - type: ApcPowerReceiver
-    powerLoad: 350
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.8
-    energy: 1.6
+    energy: 3.0
     color: "#3db83b"
   - type: LitOnPowered
   - type: Sprite
@@ -75,8 +73,93 @@
   - type: ArcadeReward
     rewardMinAmount: 0
     rewardMaxAmount: 0
+<<<<<<< HEAD
     possibleRewards: !type:NestedSelector
       tableId: ArcadeRewardsTable
+=======
+    possibleRewards:
+    - Basketball
+    - BalloonNT
+    - BalloonCorgi
+    - BoxDonkSoftBox
+    - BoxCartridgeCap
+    - BeachBall
+    - CandyBucket
+    - CrayonBox
+    - ClothingHeadHatCowboyRed
+    - FoamCrossbow
+    - FoamBlade
+    - FoamCutlass
+    - Football
+    - GlowstickGreen
+    - GlowstickBlue
+    - GlowstickYellow
+    - GlowstickPurple
+    - GlowstickRed
+    - HarmonicaInstrument
+    - OcarinaInstrument
+    - RecorderInstrument
+    - GunpetInstrument
+    - BirdToyInstrument
+    - MysteryFigureBox
+    - PlushieHampter
+    - PlushieLizard
+    - PlushieRainbowLizard
+    - PlushieAtmosian
+    - PlushieSpaceLizard
+    - PlushieNuke
+    - PlushieCarp
+    - PlushieMagicarp
+    - PlushieHolocarp
+    - PlushieRainbowCarp
+    - PlushieRatvar
+    - PlushieNar
+    - PlushieSnake
+    - PlushieArachind
+    - PlushieMoth
+    - PlushieVulp
+    - PlushieHampter
+    - PlushiePenguin
+    - PlushieHuman
+    - PlushieRouny
+    - PlushieBee
+    - PlushieSlime
+    - PlushieGhost
+    - PlushieDiona
+    - PlushieSharkBlue
+    - PlushieVox
+    - PlushieXeno
+    - PlasticBanana
+    - RevolverCapGun
+    - SnapPopBox
+    - TennisBall
+    - ToyMouse
+    - ToyAi
+    - ToyNuke
+    - ToyFigurineGriffin
+    - ToyHonk
+    - ToyIan
+    - ToyMarauder
+    - ToyMauler
+    - ToyGygax
+    - ToyOdysseus
+    - ToyFigurineOwlman
+    - ToyDeathRipley
+    - ToyPhazon
+    - ToyFireRipley
+    - ToyReticence
+    - ToyRipley
+    - ToySeraph
+    - ToyDurand
+    - ToyFigurineSkeleton
+    - ToySword
+    - ToyAmongPequeno
+    - ToyRubberDuck
+    - ToyHammer
+    - WeaponWaterPistol
+    - WhoopieCushion
+    - Whistle
+>>>>>>> wizden/master
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade

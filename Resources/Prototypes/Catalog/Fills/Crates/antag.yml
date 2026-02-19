@@ -1,31 +1,35 @@
 - type: entity
+  parent: CratePirate
   id: CratePirateChestCaptain
   name: captains pirate chest
   suffix: Filled
-  parent: CratePirate
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingNeckCloakPirateCap
-      - id: EnergyCutlass
-      - id: MicroBombImplanter
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingNeckCloakPirateCap
+        - id: EnergyCutlass
+        - id: MicroBombImplanter
 
 - type: entity
+  parent: CratePirate
   id: CratePirateChest
   name: crews pirate chest
   suffix: Filled
-  parent: CratePirate
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponLauncherPirateCannon
-        amount: 2
-      - id: ClothingOuterCoatGentle
-      - id: Cutlass
-        amount: 2
-      - id: CannonBall
-        amount: 2
-      - id: WeaponPistolFlintlock
-        amount: 4
-      - id: WeaponShotgunBlunderbuss
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: WeaponLauncherPirateCannon
+          amount: 2
+        - id: ClothingOuterCoatGentle
+        - id: Cutlass
+          amount: 2
+        - id: CannonBall
+          amount: 2
+        - id: WeaponPistolFlintlock
+          amount: 4
+        - id: WeaponShotgunBlunderbuss
+          amount: 2

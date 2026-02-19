@@ -25,7 +25,7 @@ public sealed class CutWireVariationPassSystem : VariationPassSystem<CutWireVari
                 continue;
 
             // Check against blacklist
-            if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, uid))
+            if (_whitelistSystem.IsWhitelistPass(ent.Comp.Blacklist, uid))
                 continue;
 
             if (Random.Prob(ent.Comp.WireCutChance))
