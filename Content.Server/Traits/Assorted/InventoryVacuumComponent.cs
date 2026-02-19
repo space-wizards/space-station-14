@@ -1,11 +1,12 @@
 ﻿using Content.Shared.Interaction;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Traits.Assorted;
 
 /// <summary>
 /// Allows an entity with an inventory or hands to steal items from nearby entities.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class InventoryVacuumComponent : Component
 {
     /// <summary>
@@ -26,7 +27,7 @@ public sealed partial class InventoryVacuumComponent : Component
     [DataField]
     public TimeSpan StealAttemptCooldown = TimeSpan.FromMinutes(1);
 
-    [DataField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextStealAttempt = TimeSpan.Zero;
 
     /// <summary>
