@@ -13,7 +13,6 @@ using Content.Shared.Waypointer.Components;
 using Content.Shared.Whitelist;
 using Robust.Client.Player;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
@@ -106,28 +105,26 @@ public sealed class WaypointerOverlay : Overlay
                     || targetXform.MapID != args.MapId)
                     continue;
 
-                _physics.TryGetDistance(player, target, out var distance, playerXform, targetXform);
+                var positionA = _transform.GetWorldPosition(playerXform);
+                var positionAndRotationB = _transform.GetWorldPositionRotation(targetXform);
+                var positionB = positionAndRotationB.WorldPosition;
 
-                // For entities without fixtures, the above method returns 0.
-                if (!_entity.TryGetComponent<FixturesComponent>(target, out var fixComp)
-                    || fixComp.FixtureCount == 0)
+                float distance;
+                if (_entity.TryGetComponent<MapGridComponent>(target, out var map))
                 {
-                    // so we need to calculate the distance ourselves.
-                    var a = _transform.GetWorldPosition(playerXform);
-                    var b = _transform.GetWorldPosition(targetXform);
-                    // This feels like a primary school child trying to do rocket science.
-                    // But we kinda just see how big number is when we subtract them from each other. It works?
-                    var xCoord = Math.Abs(Math.Pow(a.X - b.X, 2));
-                    var yCoord = Math.Abs(Math.Pow(a.Y - b.Y, 2));
-                    var squaredDistance = (float) (xCoord + yCoord);
-                    // Pythagoras the goat. I can't believe my school education was worth for something. It's all triangles.
-                    distance = (float) Math.Sqrt(squaredDistance);
+                    // Grids take a little more work - This calculates the distance to the closest part of the grid.
+                    _physics.TryGetDistance(player, target, out distance, playerXform, targetXform);
+                    // And then we also want to point towards the center of the grid - Not where the entity actually is.
+                    positionB += positionAndRotationB.WorldRotation.RotateVec(map.LocalAABB.Center);
                 }
+                else
+                    // Else we simply get the distance through this.
+                    distance = (positionA - positionB).Length();
 
                 if (distance > prototype.MaxRange)
                     continue;
 
-                // The NTStationWaypointer has 5 stages and 20 range. With calculations, it'll check if it's either in:
+                // The NTStationWaypointer has 5 stages and a range of 200. With calculations, it'll check if it's either in:
                 // 0-39, 40-89, 80-119, 120-159, 160-200 range and use the respective waypointer sprite for it.
                 var increments = prototype.MaxRange / prototype.WaypointerStates;
                 var waypointerState = Math.Truncate(distance / increments) + 1;
@@ -136,27 +133,12 @@ public sealed class WaypointerOverlay : Overlay
                 var rsi = new SpriteSpecifier.Rsi(prototype.RsiPath, stateName);
                 var texture = _sprite.Frame0(rsi);
 
-                var positionA = _transform.GetWorldPosition(playerXform);
-                Vector2 positionB;
-
-                // Check if it's a grid.
-                if (_entity.TryGetComponent<MapGridComponent>(target, out var map))
-                {
-                    var gridData = _transform.GetWorldPositionRotation(targetXform);
-                    // Adding the centerVector will get the position of the center from the grid.
-                    positionB = gridData.WorldPosition + gridData.WorldRotation.RotateVec(map.LocalAABB.Center);
-                }
-                else
-                {
-                    // Else use the current world position.
-                    positionB = _transform.GetWorldPosition(targetXform);
-                }
-
-                var dir = positionA - positionB;
-                var angle = dir.ToWorldAngle();
-
                 // This is to draw the Waypointer sprites directly ontop of the entity sprite.
-                var offset = new Vector2(texture.Height / 2, texture.Width / 2) / EyeManager.PixelsPerMeter;
+                var offset = new Vector2(texture.Height * 0.5f, texture.Width * 0.5f) / EyeManager.PixelsPerMeter;
+
+                // This calculates the angle to rotate the waypointer sprite towards the tracked entity.
+                var direction = positionA - positionB;
+                var angle = direction.ToWorldAngle();
 
                 handle.DrawTexture(texture, positionA - offset, angle, prototype.Color);
             }
