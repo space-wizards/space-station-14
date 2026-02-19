@@ -10,5 +10,11 @@ public sealed partial class ArcadeScoreboardComponent : Component
     [DataField]
     public ProtoId<ArcadeScoreboardPrototype>? GlobalScoreboard = null;
 
+    /// <summary>
+    /// The maximum amount of top scores to keep track of for this scoreboard.
+    /// </summary>
+    [DataField]
+    public int MaxEntries = 5;
+
     public List<ArcadeHighScoreEntry> Scoreboard = new();
 }

@@ -36,7 +36,7 @@ public sealed partial class ArcadeSystem
 
         var name = MetaData(args.Player.Value).EntityName;
         var entry = new ArcadeHighScoreEntry(name, args.Score.Value);
-        var localPlacement = TryInsertIntoList(ent.Comp.Scoreboard, entry);
+        var localPlacement = TryInsertIntoList(ent.Comp.Scoreboard, entry, ent.Comp.MaxEntries);
         var globalPlacement = ent.Comp.GlobalScoreboard != null
             ? GetGlobalPlacement(ent.Comp.GlobalScoreboard.Value, entry)
             : null;
@@ -87,10 +87,11 @@ public sealed partial class ArcadeSystem
 
     private int? GetGlobalPlacement(ProtoId<ArcadeScoreboardPrototype> scoreboard, ArcadeHighScoreEntry entry)
     {
-        if (!_globalScoreboard.TryGetValue(scoreboard, out var scores))
+        if (!_prototypeManager.TryIndex(scoreboard, out var proto)
+            || !_globalScoreboard.TryGetValue(scoreboard, out var scores))
             return null;
 
-        return TryInsertIntoList(scores, entry);
+        return TryInsertIntoList(scores, entry, proto.MaxEntries);
     }
 
     private static List<ArcadeHighScoreEntry> GetSortedHighscores(List<ArcadeHighScoreEntry> highScoreEntries)
@@ -100,21 +101,22 @@ public sealed partial class ArcadeSystem
         return result;
     }
 
-    private static int? TryInsertIntoList(List<ArcadeHighScoreEntry> highScoreEntries, ArcadeHighScoreEntry entry)
+    private static int? TryInsertIntoList(List<ArcadeHighScoreEntry> highScoreEntries,
+        ArcadeHighScoreEntry entry,
+        int maxEntries = 5)
     {
         // Maximum number of entries.
         // We can just add the score to the list and return its placement.
-        // TODO: Un-hardcode max scoreboard count
-        if (highScoreEntries.Count < 5)
+        if (highScoreEntries.Count < maxEntries)
         {
             highScoreEntries.Add(entry);
             return GetPlacement(highScoreEntries, entry);
         }
 
-        // Otherwise: If the score is lower than the top 5, it does not have a placement.
+        // Otherwise: If the score is lower than the lowest top entry, it does not have a placement.
         if (highScoreEntries.Min(e => e.Score) >= entry.Score) return null;
 
-        // If this is a new top-5 score, then we add it to the list, then remove the new lowest score from the list.
+        // If this is a new top score, then we add it to the list, then remove the new lowest score from the list.
         var lowestHighscore = highScoreEntries.Min();
         if (lowestHighscore == null)
             return null;

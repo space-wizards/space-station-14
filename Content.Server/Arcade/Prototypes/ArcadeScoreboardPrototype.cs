@@ -12,4 +12,10 @@ public sealed partial class ArcadeScoreboardPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    /// <summary>
+    /// The maximum amount of top scores to keep track of for this scoreboard.
+    /// </summary>
+    [DataField]
+    public int MaxEntries = 5;
 }
