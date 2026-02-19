@@ -73,7 +73,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
     private void OnComponentInit(EntityUid uid, SpaceVillainArcadeComponent component, ComponentInit args)
     {
         // Random amount of prizes
-        component.RewardAmount = new Random().Next(component.RewardMinAmount, component.RewardMaxAmount + 1);
+        component.RewardAmount = _random.Next(component.RewardMinAmount, component.RewardMaxAmount + 1);
     }
 
     private void OnSVPlayerAction(EntityUid uid, SpaceVillainArcadeComponent component, SharedSpaceVillainArcadeComponent.SpaceVillainArcadePlayerActionMessage msg)

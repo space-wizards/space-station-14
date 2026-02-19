@@ -56,7 +56,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
         //pick one
         ent.Comp.Recipes = [];
-        ent.Comp.Recipes.Add(_random.Pick(techs));
+        ent.Comp.Recipes.Add(_random.PickSlow(techs));
         Dirty(ent);
         _nameModifier.RefreshNameModifiers(ent.Owner);
     }

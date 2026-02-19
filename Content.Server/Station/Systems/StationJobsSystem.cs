@@ -468,7 +468,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (overflows.Count == 0)
             return null;
 
-        return _random.Pick(overflows);
+        return _random.PickSlow(overflows);
     }
 
     #endregion Public API

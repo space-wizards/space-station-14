@@ -27,11 +27,11 @@ public sealed class OrbitVisualsSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, OrbitVisualsComponent component, ComponentInit args)
     {
-        _robustRandom.SetSeed((int)_timing.CurTime.TotalMilliseconds);
+        IRobustRandom rng = new RobustRandom((int)_timing.CurTime.TotalMilliseconds);
         component.OrbitDistance =
-            _robustRandom.NextFloat(0.75f * component.OrbitDistance, 1.25f * component.OrbitDistance);
+            rng.NextFloat(0.75f * component.OrbitDistance, 1.25f * component.OrbitDistance);
 
-        component.OrbitLength = _robustRandom.NextFloat(0.5f * component.OrbitLength, 1.5f * component.OrbitLength);
+        component.OrbitLength = rng.NextFloat(0.5f * component.OrbitLength, 1.5f * component.OrbitLength);
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {

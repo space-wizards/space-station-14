@@ -127,7 +127,7 @@ public abstract class SharedPortalSystem : EntitySystem
                 return;
 
             // pick a target and teleport there
-            var target = _random.Pick(link.LinkedEntities);
+            var target = _random.PickSlow(link.LinkedEntities);
 
             if (HasComp<PortalComponent>(target))
             {

@@ -22,7 +22,7 @@ public sealed class TileSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
@@ -105,22 +105,13 @@ public sealed class TileSystem : EntitySystem
     /// </summary>
     public byte PickVariant(ContentTileDefinition tile)
     {
-        return PickVariant(tile, _robustRandom.GetRandom());
+        return PickVariant(tile, _random);
     }
 
     /// <summary>
     ///     Returns a weighted pick of a tile variant.
     /// </summary>
-    public byte PickVariant(ContentTileDefinition tile, int seed)
-    {
-        var rand = new System.Random(seed);
-        return PickVariant(tile, rand);
-    }
-
-    /// <summary>
-    ///     Returns a weighted pick of a tile variant.
-    /// </summary>
-    public byte PickVariant(ContentTileDefinition tile, System.Random random)
+    public byte PickVariant(ContentTileDefinition tile, IRobustRandom random)
     {
         var variants = tile.PlacementVariants;
 
@@ -143,18 +134,9 @@ public sealed class TileSystem : EntitySystem
     /// <summary>
     ///     Returns a tile with a weighted random variant.
     /// </summary>
-    public Tile GetVariantTile(ContentTileDefinition tile, System.Random random)
+    public Tile GetVariantTile(ContentTileDefinition tile, IRobustRandom random)
     {
         return new Tile(tile.TileId, variant: PickVariant(tile, random));
-    }
-
-    /// <summary>
-    ///     Returns a tile with a weighted random variant.
-    /// </summary>
-    public Tile GetVariantTile(ContentTileDefinition tile, int seed)
-    {
-        var rand = new System.Random(seed);
-        return new Tile(tile.TileId, variant: PickVariant(tile, rand));
     }
 
     public bool PryTile(Vector2i indices, EntityUid gridId)
@@ -268,8 +250,8 @@ public sealed class TileSystem : EntitySystem
         var indices = tileRef.GridIndices;
         var coordinates = _maps.GridTileToLocal(gridUid, mapGrid, indices)
             .Offset(new Vector2(
-                (_robustRandom.NextFloat() - 0.5f) * bounds,
-                (_robustRandom.NextFloat() - 0.5f) * bounds));
+                (_random.NextFloat() - 0.5f) * bounds,
+                (_random.NextFloat() - 0.5f) * bounds));
 
         var historyComp = EnsureComp<TileHistoryComponent>(gridUid);
         ProtoId<ContentTileDefinition> previousTileId;
@@ -308,7 +290,7 @@ public sealed class TileSystem : EntitySystem
         {
             //Actually spawn the relevant tile item at the right position and give it some random offset.
             var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
-            Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
+            Transform(tileItem).LocalRotation = _random.NextDouble() * Math.Tau;
         }
 
         //Destroy any decals on the tile

@@ -30,9 +30,13 @@ public sealed partial class StoryGeneratorSystem : EntitySystem
             return false;
         }
 
+        IRobustRandom rng;
+
         // If given a seed, use it
         if (seed != null)
-            _random.SetSeed(seed.Value);
+            rng = new RobustRandom(seed.Value);
+        else
+            rng = _random;
 
         // Pick values for all of the variables in the template
         var variables = new ValueList<(string, object)>(templateProto.Variables.Count);
@@ -43,7 +47,7 @@ public sealed partial class StoryGeneratorSystem : EntitySystem
                 continue; // Missed one, but keep going with the rest of the story
 
             // Pick a random word from the dataset and localize it
-            var chosenWord = Loc.GetString(_random.Pick(listProto.Values));
+            var chosenWord = Loc.GetString(rng.Pick(listProto.Values));
             variables.Add((name, chosenWord));
         }
 

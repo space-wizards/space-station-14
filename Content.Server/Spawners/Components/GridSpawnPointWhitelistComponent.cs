@@ -1,3 +1,4 @@
+using Content.Server.GameTicking.Rules;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Spawners.Components;

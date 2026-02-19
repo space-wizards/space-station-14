@@ -72,7 +72,7 @@ public sealed class ProjectileAnomalySystem : EntitySystem
             Log.Debug($"{projectileCount}");
             var target = priority.Count > 0
                 ? _random.PickAndTake(priority)
-                : _random.Pick(_inRange);
+                : _random.PickSlow(_inRange);
 
             var targetXForm= _xFormQuery.GetComponent(target);
             var targetCoords = targetXForm.Coordinates.Offset(_random.NextVector2(0.5f));

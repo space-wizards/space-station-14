@@ -47,14 +47,14 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
             {
                 Color? color = null;
 
-                var selectedState = _random.Pick(layer.Value);
+                var selectedState = _random.PickSlow(layer.Value);
                 if (!string.IsNullOrEmpty(selectedState.Value))
                 {
                     if (selectedState.Value == $"Inherit")
                         color = previousColor;
                     else
                     {
-                        color = _random.Pick(_prototype.Index<ColorPalettePrototype>(selectedState.Value).Colors.Values);
+                        color = _random.PickSlow(_prototype.Index<ColorPalettePrototype>(selectedState.Value).Colors.Values);
                         previousColor = color;
                     }
                 }

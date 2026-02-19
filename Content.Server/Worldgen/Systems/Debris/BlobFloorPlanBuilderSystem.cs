@@ -67,7 +67,7 @@ public sealed class BlobFloorPlanBuilderSystem : BaseWorldSystem
 
         for (var i = 0; i < comp.FloorPlacements; i++)
         {
-            var point = _random.Pick(spawnPoints);
+            var point = _random.PickSlow(spawnPoints);
             PlaceTile(point);
 
             if (comp.BlobDrawProb > 0.0f)

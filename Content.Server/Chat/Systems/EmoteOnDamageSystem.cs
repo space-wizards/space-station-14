@@ -38,7 +38,7 @@ public sealed class EmoteOnDamageSystem : EntitySystem
         if (!_random.Prob(emoteOnDamage.EmoteChance))
             return;
 
-        var emote = _random.Pick(emoteOnDamage.Emotes);
+        var emote = _random.PickSlow(emoteOnDamage.Emotes);
         if (emoteOnDamage.WithChat)
         {
             _chatSystem.TryEmoteWithChat(uid, emote, emoteOnDamage.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);

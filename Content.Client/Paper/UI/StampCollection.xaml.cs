@@ -40,7 +40,7 @@ public sealed partial class StampCollection : Container
 
     protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
-        var random = new Random(PlacementSeed);
+        var random = new RobustRandom(PlacementSeed);
         var r = (finalSize * 0.5f).Length();
         var dtheta = -MathHelper.DegreesToRadians(90);
         var theta0 = random.Next(0, 3) * dtheta;

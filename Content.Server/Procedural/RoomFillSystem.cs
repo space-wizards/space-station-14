@@ -1,4 +1,5 @@
 using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural;
 
@@ -6,6 +7,7 @@ public sealed class RoomFillSystem : EntitySystem
 {
     [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -19,7 +21,9 @@ public sealed class RoomFillSystem : EntitySystem
 
         if (xform.GridUid != null)
         {
-            var random = new Random();
+            var random = new RobustRandom(_random); // Dungeon thread shenanigans.
+                                                    // TODO(Kaylie): Seperate IRobustRandom into its own little thing as a "this is global" marker.
+                                                    //               Then using the global rng by mistake is impossible.
             var room = _dungeon.GetRoomPrototype(random, component.RoomWhitelist, component.MinSize, component.MaxSize);
 
             if (room != null)

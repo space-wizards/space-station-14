@@ -33,7 +33,7 @@ public sealed class ClericalErrorRule : StationEventSystem<ClericalErrorRuleComp
         var keys = new List<uint>();
         for (var i = 0; i < toRemove; i++)
         {
-            keys.Add(RobustRandom.Pick(stationRecords.Records.Keys));
+            keys.Add(RobustRandom.PickSlow(stationRecords.Records.Keys));
         }
 
         foreach (var id in keys)

@@ -88,7 +88,7 @@ public sealed class UnpoweredFlashlightSystem : EntitySystem
 
         if (_prototypeManager.Resolve(component.EmaggedColorsPrototype, out var possibleColors))
         {
-            var pick = _random.Pick(possibleColors.Colors.Values);
+            var pick = _random.PickSlow(possibleColors.Colors.Values);
             _light.SetColor(uid, pick, light);
         }
 

@@ -69,15 +69,15 @@ public sealed class TechAnomalySystem : EntitySystem
 
         for (var i = 0; i < count; i++)
         {
-            var device = _random.Pick(devices);
+            var device = _random.PickSlow(devices);
             CreateNewLink(tech, (tech, sourceComp), device);
         }
     }
 
     private void CreateNewLink(Entity<TechAnomalyComponent> tech, Entity<DeviceLinkSourceComponent> source, Entity<DeviceLinkSinkComponent> target)
     {
-        var sourcePort = _random.Pick(source.Comp.Ports);
-        var sinkPort = _random.Pick(target.Comp.Ports);
+        var sourcePort = _random.PickSlow(source.Comp.Ports);
+        var sinkPort = _random.PickSlow(target.Comp.Ports);
 
         _signal.SaveLinks(null, source, target,new()
         {
@@ -107,10 +107,10 @@ public sealed class TechAnomalySystem : EntitySystem
             if (sinks.Count < 1)
                 return;
 
-            var source = _random.Pick(sources);
+            var source = _random.PickSlow(sources);
             sources.Remove(source);
 
-            var sink = _random.Pick(sinks);
+            var sink = _random.PickSlow(sinks);
             sinks.Remove(sink);
 
             if (_random.Prob(tech.Comp.EmagSupercritProbability))

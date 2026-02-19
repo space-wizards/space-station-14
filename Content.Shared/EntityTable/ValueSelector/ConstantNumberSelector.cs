@@ -1,3 +1,5 @@
+using Robust.Shared.Random;
+
 namespace Content.Shared.EntityTable.ValueSelector;
 
 /// <summary>
@@ -13,7 +15,7 @@ public sealed partial class ConstantNumberSelector : NumberSelector
         Value = value;
     }
 
-    public override int Get(System.Random rand)
+    public override int Get(IRobustRandom rand)
     {
         return Value;
     }

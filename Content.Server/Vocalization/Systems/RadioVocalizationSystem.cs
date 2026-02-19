@@ -62,7 +62,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
             return false;
         }
 
-        channel = _random.Pick(potentialChannels);
+        channel = _random.PickSlow(potentialChannels);
 
         return true;
     }

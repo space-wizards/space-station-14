@@ -69,7 +69,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
             }
 
             // pick a random player
-            var randomHumanoidMind = _random.Pick(allAliveHumanoids);
+            var randomHumanoidMind = _random.PickSlow(allAliveHumanoids);
             ent.Comp.OriginalMind = randomHumanoidMind;
             ent.Comp.OriginalBody = randomHumanoidMind.Comp.OwnedEntity;
 

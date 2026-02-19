@@ -11,6 +11,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Animations;
 using Robust.Shared.Input;
+using Robust.Shared.Random;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
@@ -237,7 +238,7 @@ namespace Content.Client.Wires.UI
             _serialLabel.Text = state.SerialNumber;
 
             _wiresHBox.RemoveAllChildren();
-            var random = new Random(state.WireSeed);
+            var random = new RobustRandom(state.WireSeed);
             foreach (var wire in state.WiresList)
             {
                 var mirror = random.Next(2) == 0;

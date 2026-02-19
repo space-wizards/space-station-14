@@ -13,7 +13,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="ExteriorDunGen"/>
     /// </summary>
-    private async Task<List<Dungeon>> GenerateExteriorDungen(Vector2i position, ExteriorDunGen dungen, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task<List<Dungeon>> GenerateExteriorDungen(Vector2i position, ExteriorDunGen dungen, HashSet<Vector2i> reservedTiles, IRobustRandom random)
     {
         DebugTools.Assert(_grid.ChunkCount > 0);
 
@@ -49,7 +49,8 @@ public sealed partial class DungeonJob
 
         var config = _prototype.Index(dungen.Proto);
         var nextSeed = random.Next();
-        var dungeons = await GetDungeons(dungeonSpawn.Value, config, config.Layers, reservedTiles, nextSeed, new Random(nextSeed));
+        var rng = new RobustRandom(nextSeed);
+        var dungeons = await GetDungeons(dungeonSpawn.Value, config, config.Layers, reservedTiles, nextSeed, rng);
 
         return dungeons;
     }

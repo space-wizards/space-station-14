@@ -1,6 +1,7 @@
 using System.Text;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.RichText;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -29,7 +30,9 @@ public sealed class ScrambleTag : IMarkupTagHandler
             return string.Empty;
 
         var seed = (int) (_timing.CurTime.TotalMilliseconds / rate);
-        var rand = new Random(seed + node.GetHashCode());
+        // TODO(Kaylie): Using GetHashCode here is really sus and not documented. Is this meant to be consistently
+        //               different for every player?
+        var rand = new RobustRandom(seed + node.GetHashCode());
         var charOptions = chars.ToCharArray();
         var realLength = MathF.Min(length.Value, MaxScrambleLength);
         var sb = new StringBuilder();

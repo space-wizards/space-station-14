@@ -19,7 +19,7 @@ public sealed partial class DungeonJob
     private async Task PostGen(
         MobsDunGen gen,
         Dungeon dungeon,
-        Random random)
+        IRobustRandom random)
     {
         var availableRooms = new ValueList<DungeonRoom>();
         availableRooms.AddRange(dungeon.Rooms);

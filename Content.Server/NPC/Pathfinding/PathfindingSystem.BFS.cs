@@ -104,7 +104,7 @@ public sealed partial class PathfindingSystem
         }
 
         // Pick a random node to use?
-        (currentNode, _) = random.Pick(request.CostSoFar);
+        (currentNode, _) = random.PickSlow(request.CostSoFar);
 
         var route = ReconstructPath(request.CameFrom, currentNode);
         var path = new Queue<EntityCoordinates>(route.Count);

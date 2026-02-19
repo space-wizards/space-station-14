@@ -67,7 +67,7 @@ public sealed class ChasingWalkSystem : VirtualController
         //We find our coordinates and calculate the radius of the target search.
         var xform = Transform(uid);
         var range = component.MaxChaseRadius;
-        var compType = _random.Pick(component.ChasingComponent.Values).Component.GetType();
+        var compType = _random.PickSlow(component.ChasingComponent.Values).Component.GetType();
         _potentialChaseTargets.Clear();
         _lookup.GetEntitiesInRange(compType, _transform.GetMapCoordinates(xform), range, _potentialChaseTargets, LookupFlags.Uncontained);
 
@@ -76,7 +76,7 @@ public sealed class ChasingWalkSystem : VirtualController
             return;
 
         //In the case of finding required components, we choose a random one of them and remember its uid.
-        component.ChasingEntity = _random.Pick(_potentialChaseTargets).Owner;
+        component.ChasingEntity = _random.PickSlow(_potentialChaseTargets).Owner;
         component.Speed = _random.NextFloat(component.MinSpeed, component.MaxSpeed);
     }
 

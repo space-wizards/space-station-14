@@ -12,7 +12,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="CorridorClutterDunGen"/>
     /// </summary>
-    private async Task PostGen(CorridorClutterDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(CorridorClutterDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, IRobustRandom random)
     {
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
         var count = (int) Math.Ceiling(dungeon.CorridorTiles.Count * gen.Chance);
@@ -20,7 +20,7 @@ public sealed partial class DungeonJob
 
         while (count > 0)
         {
-            var tile = random.Pick(dungeon.CorridorTiles);
+            var tile = random.PickSlow(dungeon.CorridorTiles);
 
             var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
             var blocked = false;

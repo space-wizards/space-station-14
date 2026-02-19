@@ -6,6 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
@@ -179,7 +180,8 @@ public abstract class SharedBiomeSystem : EntitySystem
         if (variantCount > 1)
         {
             var variantValue = (noise.GetNoise(indices.X * 8, indices.Y * 8, variantCount) + 1f) * 100;
-            variant = _tile.PickVariant(tileDef, (int)variantValue);
+            var rng = new RobustRandom((int)variantValue);
+            variant = _tile.PickVariant(tileDef, rng);
         }
 
         tile = new Tile(tileDef.TileId, variant);

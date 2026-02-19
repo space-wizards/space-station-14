@@ -29,7 +29,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))
                 return;
 
-            var randomInventory = system.Random.Pick(packagecomp.CanRestock);
+            var randomInventory = system.Random.PickSlow(packagecomp.CanRestock);
 
             if (!system.PrototypeManager.TryIndex(randomInventory, out VendingMachineInventoryPrototype? packPrototype))
                 return;

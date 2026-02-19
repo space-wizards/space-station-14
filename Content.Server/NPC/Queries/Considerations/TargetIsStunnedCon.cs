@@ -1,3 +1,5 @@
+using Content.Shared.Stunnable;
+
 namespace Content.Server.NPC.Queries.Considerations;
 
 /// <summary>

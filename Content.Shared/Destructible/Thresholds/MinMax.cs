@@ -21,9 +21,4 @@ public partial struct MinMax
     {
         return random.Next(Min, Max + 1);
     }
-
-    public readonly int Next(System.Random random)
-    {
-        return random.Next(Min, Max + 1);
-    }
 }
