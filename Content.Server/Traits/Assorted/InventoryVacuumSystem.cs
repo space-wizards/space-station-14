@@ -48,7 +48,7 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 continue;
             }
 
-            inventoryVacuum.NextStealAttempt = timeNow + inventoryVacuum.StealAttemptCooldown;
+            inventoryVacuum.NextStealAttempt += inventoryVacuum.StealAttemptCooldown;
 
             if (!_random.Prob(inventoryVacuum.StealChance))
             {
