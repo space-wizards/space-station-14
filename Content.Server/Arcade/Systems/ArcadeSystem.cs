@@ -1,13 +1,16 @@
 using Content.Server.Arcade.Components;
+using Content.Server.GameTicking.Events;
 using Content.Shared.Arcade.Systems;
 using Content.Shared.EntityTable;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Arcade.Systems;
 
 public sealed partial class ArcadeSystem : SharedArcadeSystem
 {
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private readonly PrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -15,6 +18,9 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
 
         SubscribeLocalEvent<ArcadeRewardComponent, ComponentInit>(OnArcadeRewardComponentInit);
         SubscribeLocalEvent<ArcadeRewardComponent, ArcadeGameEndedEvent>(OnArcadeRewardGameEnded);
+
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
+        SubscribeLocalEvent<ArcadeScoreboardComponent, ArcadeGameEndedEvent>(OnArcadeScoreboardGameEnded);
     }
 
     /// <summary>
@@ -23,9 +29,9 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     /// <param name="player">The entity playing the game.</param>
     /// <param name="machine">The arcade machine entity.</param>
     [PublicAPI]
-    public void WinGame(EntityUid? player, EntityUid machine)
+    public void WinGame(EntityUid? player, EntityUid machine, int? score = null)
     {
-        FinishGame(player, machine, ArcadeGameResult.Win);
+        FinishGame(player, machine, ArcadeGameResult.Win, score);
     }
 
     /// <summary>
@@ -34,9 +40,9 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     /// <param name="player">The entity playing the game.</param>
     /// <param name="machine">The arcade machine entity.</param>
     [PublicAPI]
-    public void LoseGame(EntityUid? player, EntityUid machine)
+    public void LoseGame(EntityUid? player, EntityUid machine, int? score = null)
     {
-        FinishGame(player, machine, ArcadeGameResult.Fail);
+        FinishGame(player, machine, ArcadeGameResult.Fail, score);
     }
 
     /// <summary>
@@ -45,9 +51,9 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     /// <param name="player">The entity playing the game.</param>
     /// <param name="machine">The arcade machine entity.</param>
     [PublicAPI]
-    public void LeaveGame(EntityUid? player, EntityUid machine)
+    public void LeaveGame(EntityUid? player, EntityUid machine, int? score = null)
     {
-        FinishGame(player, machine, ArcadeGameResult.Forfeit);
+        FinishGame(player, machine, ArcadeGameResult.Forfeit, score);
     }
 
     /// <summary>
@@ -56,15 +62,15 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     /// <param name="player">The entity playing the game.</param>
     /// <param name="machine">The arcade machine entity.</param>
     [PublicAPI]
-    public void DrawGame(EntityUid? player, EntityUid machine)
+    public void DrawGame(EntityUid? player, EntityUid machine, int? score = null)
     {
-        FinishGame(player, machine, ArcadeGameResult.Draw);
+        FinishGame(player, machine, ArcadeGameResult.Draw, score);
     }
 
-    private void FinishGame(EntityUid? player, EntityUid machine, ArcadeGameResult result)
+    private void FinishGame(EntityUid? player, EntityUid machine, ArcadeGameResult result, int? score = null)
     {
-        var endedEvent = new ArcadeGameEndedEvent(player, result);
-        var finishEvent = new FinishedArcadeGameEvent(result);
+        var endedEvent = new ArcadeGameEndedEvent(player, result, score);
+        var finishEvent = new FinishedArcadeGameEvent(result, score);
 
         RaiseLocalEvent(machine, endedEvent);
         if (player != null)
@@ -78,20 +84,23 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
 /// <param name="player">The entity playing the arcade game.</param>
 /// <param name="result">The result of the game.</param>
 public sealed class ArcadeGameEndedEvent(EntityUid? player,
-    ArcadeGameResult result = ArcadeGameResult.Forfeit)
+    ArcadeGameResult result = ArcadeGameResult.Forfeit,
+    int? score = null)
     : EntityEventArgs
 {
     public EntityUid? Player = player;
     public ArcadeGameResult Result = result;
+    public int? Score = score;
 }
 
 /// <summary>
 ///     Called on the arcade game player entity when they finish an arcade game for any reason.
 /// </summary>
 /// <param name="result">The result of the game.</param>
-public sealed class FinishedArcadeGameEvent(ArcadeGameResult result) : EntityEventArgs
+public sealed class FinishedArcadeGameEvent(ArcadeGameResult result, int? score = null) : EntityEventArgs
 {
     public ArcadeGameResult Result = result;
+    public int? Score = score;
 }
 
 public enum ArcadeGameResult
