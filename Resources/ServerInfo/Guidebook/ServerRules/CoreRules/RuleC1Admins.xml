@@ -1,34 +1,41 @@
 ﻿<Document>
-  # Core Rule 1 - Listen to admins and report issues
+  # Core Rule 1 - Admins have final say
   [color=SlateGray][italic]Revision A, 2025-10-11[/italic][/color]
 
-  Admin help (ahelp) is a system for admins to communicate with players, report issues, and intervene in-game. All ahelps are privately relayed to admin channels in the Wizard's Den Discord.
+  Admins may intervene in-game, finalize rule interpretations, and override rules within admin and ban policies to improve community experience.
+  - Admin policy https://docs.spacestation14.com/en/community/admin/wizards-den-admin-policy.html
+  - Ban policy https://docs.spacestation14.com/en/community/admin/wizards-den-banning-policy.html
 
-  Admins have the final say, and players must listen to admins without debates. Admins may intervene in-game, make rule interpretations, and override rules to improve overall community experience.
+  Do not dispute final rulings and actions. If you believe an admin has misruled on an issue or breached the admin and ban policies, you may begin the formal complaint process at https://forum.spacestation14.com/w/complaint-wizard
 
-  If you believe an admin has breached the Wizard's Den admin policy, you may submit a staff complaint on the forums at https://forum.spacestation14.com/w/complaint-wizard
+  ## When and how to contact admins
+  You should report bugs, rule breaches, and raiders as soon as you spot them. You may also ask rule clarifications and gameplay questions. (Helpful admin messages state what and where the issue is, who the issue involves, and when the issue took place.)
+  - For current round issues, use ahelp [keybind="OpenAHelp"/].
+  - For current round raiders, mention the Wizard's Den Discord role '@Game Admin (Ping for Raiders)'.
+  - For past round issues, use the Wizard's Den Forum Game Admin Message https://forum.spacestation14.com/w/game-admin-message/
+  - For rule clarifications, use the Wizard's Den Discord channel #admin-questions https://discord.com/channels/310555209753690112/1125299494066597888 and the Wizard's Den Forum Rule Clarifications category https://forum.spacestation14.com/c/rule-clarifications/13
+  - For non-issues or admemes, use in-game prayers, faxes, phone calls, and the dead chat channel.
 
-  ## What and when should I ahelp?
-  Ahelp as soon as you believe there is a bug or rule break, as it is better to misreport than to wait or not report at all. (Players often avoid ahelp thinking they save admin time and workload. However, it takes only seconds for admins to check issues, and ahelp delays prolong admin response times.)
+  If you are unsure, contact an admin anyway. (Since misreports are better than missed reports, you are not penalized without warning. Players believe not reporting issues reduces admin workload, yet admins take only seconds to investigate issues that spiral without their attention.)
 
-  Ahelps must state what the issue is at minimum. Ideal ahelps details events leading up to the issue and who was involved. You will not be punished for misusing ahelp without prior notice.
+  Do not make false reports or abuse admins.
 
-  During an ahelp session, do not ignore messages or disconnect without notice. Admins may not always respond if they are offline or have resolved the issue. Do not discuss ahelps with other players.
+  When using ahelp, do not disconnect or ignore messages without resolving the issue or notifying admins. (Admins are not obligated to respond to admin messages.)
 
-  When requesting non-issue in-game interventions, characters and ghosts must use in-character (IC) methods and the death channel respectively to contact admins.
-
-  You are highly encouraged to ahelp to free up slots if command crew are SSD without cryosleeping or a team antagonist is SSD.
+  Do not discuss admin messages with other players. Do not discuss staff complaints with other players or staff. (Ahelps, forum admin messages, and staff complaints are not publicized without permission or redaction of named parties.)
 
   ## Examples
   [color=#449944]Appropriate:[/color]
-  - Reporting players breaking rules.
-  - Requesting rule clarification or exemption.
-  - Reporting a bug or requesting assistance due to a bug.
-  - Requesting in-game interventions through prayers, faxes, and phones.
-  - Notifying admins that you are disconnecting as a nuclear operative commander.
+  - Reporting rule breaches.
+  - Arguing before a ruling.
+  - Requesting rule exemption.
+  - Requesting an admeme through in-game fax.
 
   [color=#994444]Prohibited:[/color]
-  - Checking for admins by sending unclear messages such as "hello."
-  - Acting ignorant, hostile, or dishonest during ahelp.
-  - Requesting in-game interventions over non-issues through ahelp.
+  - Checking for admins with unclear messages like "hello."
+  - Stating that you have reported someone.
+  - Arguing after a ruling.
+  - Acting hostile or immature towards admins.
+  - Discussing staff complaints through ahelp.
+  - Requesting an admeme through ahelp.
 </Document>
