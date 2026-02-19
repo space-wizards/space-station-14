@@ -42,7 +42,7 @@ public sealed partial class ArcadeSystem
             : null;
 
         var placement = new HighScorePlacement(globalPlacement, localPlacement);
-        var placementEvent = new ArcadeGamePlacementSubmittedEvent(args.Player.Value, args.Score.Value, placement);
+        var placementEvent = new ArcadeScorePlacementSubmittedEvent(args.Player.Value, args.Score.Value, placement);
         RaiseLocalEvent(ent.Owner, placementEvent);
     }
 
