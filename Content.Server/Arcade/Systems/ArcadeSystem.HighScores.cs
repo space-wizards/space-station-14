@@ -19,6 +19,7 @@ public sealed partial class ArcadeSystem
     private void InitializeScoreboards()
     {
         _globalScoreboard = new();
+        _localScoreboard = new();
         FillMissingScoreboards();
     }
 
