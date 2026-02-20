@@ -191,7 +191,8 @@ public sealed partial class StationJobsSystem
     private static void RemoveJobCandidate(Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>> jobCandidates,
         NetUserId candidateToRemove)
     {
-        // Remove the player from all possible jobs as that's faster than actually checking what they have selected.
+        // Remove the player from all possible jobs as that's simpler than actually checking what they have selected
+        // and inconsequential.
         foreach (var (k, players) in jobCandidates)
         {
             players.Remove(candidateToRemove);
