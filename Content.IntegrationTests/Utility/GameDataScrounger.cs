@@ -79,6 +79,9 @@ public static partial class GameDataScrounger
     /// </summary>
     public static string[] PrototypesOfKind(string kind)
     {
+        if (NoScrounging)
+            return Array.Empty<string>();
+
         lock (DataLock)
         {
             Scrounge();
@@ -89,6 +92,9 @@ public static partial class GameDataScrounger
 
     public static string[] EntitiesWithComponent(string componentId)
     {
+        if (NoScrounging)
+            return Array.Empty<string>();
+
         lock (DataLock)
         {
             if (_entitiesWithComponentIndex is { } index)
