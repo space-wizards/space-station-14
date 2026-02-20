@@ -48,7 +48,8 @@ public sealed partial class StationJobsSystem
     /// <param name="profiles">The profiles to use for selection.</param>
     /// <param name="stations">List of stations to assign for.</param>
     /// <param name="useRoundStartJobs">Whether or not to use the round-start jobs for the stations instead of their
-    /// current jobs. Set to false if using this mid-round.</param>
+    /// current jobs. Set to false if using this for a station that already has some players, as it may have more
+    /// round-start slots than available slots, so using the round-start slots could cause weird behavior.</param>
     /// <returns>List of players and their assigned jobs.</returns>
     /// <remarks>
     /// </remarks>
