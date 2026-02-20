@@ -208,9 +208,11 @@ namespace Content.IntegrationTests.Tests
             {
                 isV7Map = true;
             }
-
-            var postMapInit = meta["postmapinit"].AsBool();
-            Assert.That(postMapInit, Is.False, $"Map {map.Filename} was saved postmapinit");
+            else
+            {
+                var postMapInit = meta["postmapinit"].AsBool();
+                Assert.That(postMapInit, Is.False, $"Map {map.Filename} was saved postmapinit");
+            }
 
             var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
             var ev = new BeforeEntityReadEvent();
@@ -219,7 +221,6 @@ namespace Content.IntegrationTests.Tests
             if (isV7Map)
             {
                 Assert.That(IsPreInit(map, loader, deps, ev.RenamedPrototypes, ev.DeletedPrototypes));
-                return; // Fancy new map, so all we gotta do.
             }
 
             // Check that the test actually does manage to catch post-init maps and isn't just blindly passing everything.
