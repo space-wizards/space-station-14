@@ -4,6 +4,7 @@ using Content.Shared.Advertise.Components;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Content.Shared.Arcade.BlockGame;
+using Content.Server.Arcade.Systems;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -19,6 +20,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         SubscribeLocalEvent<BlockGameArcadeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BlockGameArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
         SubscribeLocalEvent<BlockGameArcadeComponent, PowerChangedEvent>(OnBlockPowerChanged);
+        SubscribeLocalEvent<BlockGameArcadeComponent, ArcadeScorePlacementSubmittedEvent>(OnPlacementSubmitted);
 
         Subs.BuiEvents<BlockGameArcadeComponent>(BlockGameUiKey.Key, subs =>
         {
@@ -88,6 +90,16 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         _uiSystem.CloseUi(uid, BlockGameUiKey.Key);
         component.Player = null;
         component.Spectators.Clear();
+    }
+
+    private void OnPlacementSubmitted(Entity<BlockGameArcadeComponent> ent, ref ArcadeScorePlacementSubmittedEvent args)
+    {
+        if (ent.Comp.Game == null)
+            return;
+
+        var game = ent.Comp.Game;
+        var placement = args.Placements;
+        game.SetPlacement(placement);
     }
 
     private void OnPlayerAction(EntityUid uid, BlockGameArcadeComponent component, BlockGamePlayerActionMessage msg)

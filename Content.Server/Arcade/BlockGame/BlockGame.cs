@@ -74,6 +74,11 @@ public sealed partial class BlockGame
         _gameOver = false;
     }
 
+    public void SetPlacement(HighScorePlacement placement)
+    {
+        _highScorePlacement = placement;
+    }
+
     /// <summary>
     /// Handles ending the game and updating the high scores.
     /// </summary>
