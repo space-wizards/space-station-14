@@ -217,7 +217,10 @@ namespace Content.IntegrationTests.Tests
             server.EntMan.EventBus.RaiseEvent(EventSource.Local, ev);
 
             if (isV7Map)
+            {
                 Assert.That(IsPreInit(map, loader, deps, ev.RenamedPrototypes, ev.DeletedPrototypes));
+                return; // Fancy new map, so all we gotta do.
+            }
 
             // Check that the test actually does manage to catch post-init maps and isn't just blindly passing everything.
             // To that end, create a new post-init map and try verify it.

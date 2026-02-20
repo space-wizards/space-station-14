@@ -19,8 +19,6 @@ namespace Content.IntegrationTests.Utility;
 /// <remarks>
 ///     This does not include engine prototypes, nor anything generated at runtime, as it's made to be simple and fast
 ///     for usage during test framework startup where we cannot afford to initialize all of <see cref="ISerializationManager"/>.
-///
-///     Similarly, this does not respect ignored prototypes.
 /// </remarks>
 /// <example>
 /// <code>
