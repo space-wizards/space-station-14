@@ -163,7 +163,7 @@ public static class GameDataScrounger
 
             foreach (var entry in node.Children)
             {
-                Assert.That(entry, Is.AssignableTo<YamlScalarNode>());
+                Assert.That(entry, Is.AssignableTo<YamlMappingNode>());
                 var entryMapping = (YamlMappingNode)entry;
 
                 var id = entryMapping[IdNode];
