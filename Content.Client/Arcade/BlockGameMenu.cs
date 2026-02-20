@@ -559,7 +559,7 @@ public sealed class BlockGameMenu : DefaultWindow
         int? maxGlobalScores)
     {
         var localHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-machine") + "\n");
-        var globalHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-station") + "\n");
+        var globalHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-global") + "\n");
 
         GetHighScoreText(ref localHighscoreText, localHighscores, maxLocalScores);
         GetHighScoreText(ref globalHighscoreText, globalHighscores, maxGlobalScores);
