@@ -34,5 +34,6 @@ public sealed class ScroungerTests
         Assert.That(files, Is.Not.Empty);
 
         Assert.That(files[0].IsRooted, Is.True);
+        Assert.That(files[0].ToString(), Does.StartWith("/Maps/"));
     }
 }

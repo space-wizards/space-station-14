@@ -98,11 +98,12 @@ public static class GameDataScrounger
     public static ResPath[] FilesInDirectoryInVfs(string location, string? pattern, bool recursive = true)
     {
         var path = GetContentPathOnDisk(location.TrimEnd('/'));
+        var resBasePath = ContentResources();
 
         return Directory.EnumerateFiles(path,
                 pattern ?? "*",
                 recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-            .Select(x => new ResPath(x.Remove(0, path.Length)))
+            .Select(x => new ResPath(x.Remove(0, resBasePath.Length)))
             .ToArray();
     }
 
