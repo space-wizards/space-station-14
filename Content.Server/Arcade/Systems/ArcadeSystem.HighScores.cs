@@ -14,11 +14,6 @@ public sealed partial class ArcadeSystem
 {
     private Dictionary<ProtoId<ArcadeScoreboardPrototype>, List<ArcadeHighScoreEntry>> _globalScoreboard = new();
 
-    private void OnRoundStarting(RoundStartingEvent args)
-    {
-        InitializeScoreboards();
-    }
-
     private void InitializeScoreboards()
     {
         _globalScoreboard = new();

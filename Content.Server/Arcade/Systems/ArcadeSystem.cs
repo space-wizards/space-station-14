@@ -25,6 +25,11 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
     }
 
+    private void OnRoundStarting(RoundStartingEvent args)
+    {
+        InitializeScoreboards();
+    }
+
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (args.WasModified<ArcadeScoreboardPrototype>())
