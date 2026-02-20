@@ -16,5 +16,9 @@ public sealed partial class ArcadeScoreboardComponent : Component
     [DataField]
     public int MaxEntries = 5;
 
+    /// <summary>
+    /// A list of all score entries for this scoreboard.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     public List<ArcadeHighScoreEntry> Scoreboard = new();
 }
