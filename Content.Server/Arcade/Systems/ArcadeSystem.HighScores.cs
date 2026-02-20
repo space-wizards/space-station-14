@@ -2,8 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Arcade.Components;
 using Content.Server.Arcade.Prototypes;
-using Content.Server.GameTicking.Events;
 using Content.Shared.Arcade.Systems;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -12,7 +12,9 @@ namespace Content.Server.Arcade.Systems;
 
 public sealed partial class ArcadeSystem
 {
+    // TODO: Implement persistence for the global scoreboard. This needs database work.
     private Dictionary<ProtoId<ArcadeScoreboardPrototype>, List<ArcadeHighScoreEntry>> _globalScoreboard = new();
+    private Dictionary<ProtoId<ArcadeScoreboardPrototype>, List<ArcadeHighScoreEntry>> _localScoreboard = new();
 
     private void InitializeScoreboards()
     {
@@ -24,10 +26,11 @@ public sealed partial class ArcadeSystem
     {
         foreach (var scoreboard in _prototypeManager.EnumeratePrototypes<ArcadeScoreboardPrototype>())
         {
-            if (_globalScoreboard.ContainsKey(scoreboard.ID))
-                continue;
+            if (!_globalScoreboard.ContainsKey(scoreboard.ID))
+                _globalScoreboard.Add(scoreboard.ID, new());
 
-            _globalScoreboard.Add(scoreboard.ID, new());
+            if (!_localScoreboard.ContainsKey(scoreboard.ID))
+                _localScoreboard.Add(scoreboard.ID, new());
         }
     }
 
@@ -38,29 +41,37 @@ public sealed partial class ArcadeSystem
 
         var name = MetaData(args.Player.Value).EntityName;
         var entry = new ArcadeHighScoreEntry(name, args.Score.Value);
-        var localPlacement = TryInsertIntoList(ent.Comp.Scoreboard, entry, ent.Comp.MaxEntries);
-        var globalPlacement = ent.Comp.GlobalScoreboard != null
-            ? GetGlobalPlacement(ent.Comp.GlobalScoreboard.Value, entry)
-            : null;
 
-        var placement = new HighScorePlacement(globalPlacement, localPlacement);
-        var placementEvent = new ArcadeScorePlacementSubmittedEvent(args.Player.Value, args.Score.Value, placement);
+        SubmitScore(ent, entry, args.Player.Value);
+    }
+
+    private void SubmitScore(Entity<ArcadeScoreboardComponent> ent, ArcadeHighScoreEntry entry, EntityUid player)
+    {
+        var serverScoreboard = ent.Comp.ServerScoreboard;
+
+        var globalPlacement = GetServerPlacement(_globalScoreboard, serverScoreboard, entry);
+        var localPlacement = GetServerPlacement(_localScoreboard, serverScoreboard, entry);
+        var machinePlacement = TryInsertIntoList(ent.Comp.Scoreboard, entry, GetMaxEntries(ent));
+
+        var placement = new HighScorePlacement(globalPlacement, localPlacement, machinePlacement);
+        var placementEvent = new ArcadeScorePlacementSubmittedEvent(player, entry.Score, placement);
+
         RaiseLocalEvent(ent.Owner, placementEvent);
     }
 
     /// <summary>
-    /// Gets the local top scores of an arcade machine in descending order.
+    /// Gets the machine top scores of a specific arcade machine in descending order.
     /// </summary>
     /// <remarks>
-    /// Local scores are per-machine, as opposed to global scores, which are per-round.
+    /// Global scores are all-time scores. Local scores are per-session scores. Machine scores are per-entity scores.
     /// </remarks>
     /// <param name="ent">The arcade machine with a scoreboard.</param>
-    /// <returns>The top local scores of this arcade machine in descending order.</returns>
+    /// <returns>The top machine scores of this arcade machine in descending order.</returns>
     [PublicAPI]
-    public static List<ArcadeHighScoreEntry> GetSortedLocalScores(Entity<ArcadeScoreboardComponent> ent,
+    public List<ArcadeHighScoreEntry> GetSortedMachineScores(Entity<ArcadeScoreboardComponent> ent,
         out int maxScores)
     {
-        maxScores = ent.Comp.MaxEntries;
+        maxScores = GetMaxEntries(ent);
         return GetSortedHighscores(ent.Comp.Scoreboard);
     }
 
@@ -68,7 +79,7 @@ public sealed partial class ArcadeSystem
     /// Gets the global top scores of an arcade game in descending order.
     /// </summary>
     /// <remarks>
-    /// Global scores are per-round, as opposed to local scores, which are per-machine.
+    /// Global scores are all-time scores. Local scores are per-session scores. Machine scores are per-entity scores.
     /// </remarks>
     /// <param name="ent">The arcade machine with a scoreboard.</param>
     /// <param name="highScoreEntries">The global high scores for the game, if there is a global scoreboard.</param>
@@ -78,30 +89,69 @@ public sealed partial class ArcadeSystem
         [NotNullWhen(true)] out List<ArcadeHighScoreEntry>? highScoreEntries,
         [NotNullWhen(true)] out int? maxScores)
     {
+        return TryGetSortedServerScores(_globalScoreboard, ent, out highScoreEntries, out maxScores);
+    }
+
+    /// <summary>
+    /// Gets the local top scores of an arcade game in descending order.
+    /// </summary>
+    /// <remarks>
+    /// Global scores are all-time scores. Local scores are per-session scores. Machine scores are per-entity scores.
+    /// </remarks>
+    /// <param name="ent">The arcade machine with a scoreboard.</param>
+    /// <param name="highScoreEntries">The local high scores for the game, if there is a local scoreboard.</param>
+    /// <returns>Whether or not the local scores were successfully fetched.</returns>
+    [PublicAPI]
+    public bool TryGetSortedLocalScores(Entity<ArcadeScoreboardComponent> ent,
+        [NotNullWhen(true)] out List<ArcadeHighScoreEntry>? highScoreEntries,
+        [NotNullWhen(true)] out int? maxScores)
+    {
+        return TryGetSortedServerScores(_localScoreboard, ent, out highScoreEntries, out maxScores);
+    }
+
+    private bool TryGetSortedServerScores(
+        Dictionary<ProtoId<ArcadeScoreboardPrototype>, List<ArcadeHighScoreEntry>> serverScores,
+        Entity<ArcadeScoreboardComponent> ent,
+        [NotNullWhen(true)] out List<ArcadeHighScoreEntry>? highScoreEntries,
+        [NotNullWhen(true)] out int? maxScores)
+    {
         highScoreEntries = null;
         maxScores = null;
 
-        if (ent.Comp.GlobalScoreboard == null)
+        if (ent.Comp.ServerScoreboard == null)
             return false;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.GlobalScoreboard.Value, out var scoreboard))
-            return false;
-
-        if (!_globalScoreboard.TryGetValue(ent.Comp.GlobalScoreboard.Value, out var scores))
+        if (!serverScores.TryGetValue(ent.Comp.ServerScoreboard.Value, out var scores))
             return false;
 
         highScoreEntries = GetSortedHighscores(scores);
-        maxScores = scoreboard.MaxEntries;
+        maxScores = GetMaxEntries(ent.Comp.ServerScoreboard.Value);
         return true;
     }
 
-    private int? GetGlobalPlacement(ProtoId<ArcadeScoreboardPrototype> scoreboard, ArcadeHighScoreEntry entry)
+    private int? GetServerPlacement(
+        Dictionary<ProtoId<ArcadeScoreboardPrototype>, List<ArcadeHighScoreEntry>> serverScores,
+        ProtoId<ArcadeScoreboardPrototype>? scoreboard,
+        ArcadeHighScoreEntry entry)
     {
-        if (!_prototypeManager.TryIndex(scoreboard, out var proto)
-            || !_globalScoreboard.TryGetValue(scoreboard, out var scores))
+        if (scoreboard == null || !serverScores.TryGetValue(scoreboard.Value, out var scores))
             return null;
 
-        return TryInsertIntoList(scores, entry, proto.MaxEntries);
+        return TryInsertIntoList(scores, entry, GetMaxEntries(scoreboard));
+    }
+
+    private int GetMaxEntries(Entity<ArcadeScoreboardComponent> ent)
+    {
+        return ent.Comp.MaxEntriesOverride
+            ?? GetMaxEntries(ent.Comp.ServerScoreboard);
+    }
+
+    private int GetMaxEntries(ProtoId<ArcadeScoreboardPrototype>? protoId)
+    {
+        _prototypeManager.TryIndex(protoId, out var scoreboard);
+
+        return scoreboard?.MaxEntries
+            ?? _config.GetCVar(CCVars.FallbackScoreboardEntriesCount);
     }
 
     private static List<ArcadeHighScoreEntry> GetSortedHighscores(List<ArcadeHighScoreEntry> highScoreEntries)
@@ -113,7 +163,7 @@ public sealed partial class ArcadeSystem
 
     private static int? TryInsertIntoList(List<ArcadeHighScoreEntry> highScoreEntries,
         ArcadeHighScoreEntry entry,
-        int maxEntries = 5)
+        int maxEntries)
     {
         // Maximum number of entries.
         // We can just add the score to the list and return its placement.
@@ -124,7 +174,8 @@ public sealed partial class ArcadeSystem
         }
 
         // Otherwise: If the score is lower than the lowest top entry, it does not have a placement.
-        if (highScoreEntries.Min(e => e.Score) >= entry.Score) return null;
+        if (highScoreEntries.Min(e => e.Score) >= entry.Score)
+            return null;
 
         // If this is a new top score, then we add it to the list, then remove the new lowest score from the list.
         var lowestHighscore = highScoreEntries.Min();
@@ -133,6 +184,7 @@ public sealed partial class ArcadeSystem
 
         highScoreEntries.Remove(lowestHighscore);
         highScoreEntries.Add(entry);
+
         return GetPlacement(highScoreEntries, entry);
     }
 
@@ -149,15 +201,34 @@ public sealed partial class ArcadeSystem
     }
 }
 
+/// <summary>
+/// A struct representing the leaderboard placements for a submitted score.
+/// </summary>
+/// <remarks>
+/// Placements only have int values if they are "top scores"; otherwise, it will be null.
+/// </remarks>
 public readonly struct HighScorePlacement
 {
+    /// <summary>
+    /// The score's placement across all rounds.
+    /// </summary>
     public readonly int? GlobalPlacement;
+
+    /// <summary>
+    /// The score's placement for this round.
+    /// </summary>
     public readonly int? LocalPlacement;
 
-    public HighScorePlacement(int? globalPlacement, int? localPlacement)
+    /// <summary>
+    /// The score's placement for this specific arcade machine.
+    /// </summary>
+    public readonly int? MachinePlacement;
+
+    public HighScorePlacement(int? globalPlacement, int? localPlacement, int? machinePlacement)
     {
         GlobalPlacement = globalPlacement;
         LocalPlacement = localPlacement;
+        MachinePlacement = machinePlacement;
     }
 }
 
@@ -169,7 +240,18 @@ public readonly struct HighScorePlacement
 public sealed class ArcadeScorePlacementSubmittedEvent(EntityUid player, int score, HighScorePlacement placements)
     : EntityEventArgs
 {
+    /// <summary>
+    /// The entity that submitted this score.
+    /// </summary>
     public EntityUid Player = player;
+
+    /// <summary>
+    /// The score submitted by the player.
+    /// </summary>
     public int Score = score;
+
+    /// <summary>
+    /// How this player's score ranks in the scoreboards for this machine.
+    /// </summary>
     public HighScorePlacement Placements = placements;
 }

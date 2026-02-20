@@ -127,7 +127,7 @@
       visible: false
   - type: BlockGameArcade
   - type: ArcadeScoreboard
-    globalScoreboard: BlockGame
+    serverScoreboard: BlockGame
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
   - type: ActivatableUIRequiresPower

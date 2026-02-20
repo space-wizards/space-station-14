@@ -553,13 +553,13 @@ public sealed class BlockGameMenu : DefaultWindow
         _levelLabel.Text = Loc.GetString("blockgame-menu-label-level", ("level", level + 1));
     }
 
-    public void UpdateHighscores(List<ArcadeHighScoreEntry> localHighscores,
+    public void UpdateHighscores(List<ArcadeHighScoreEntry>? localHighscores,
         List<ArcadeHighScoreEntry>? globalHighscores,
-        int maxLocalScores,
+        int? maxLocalScores,
         int? maxGlobalScores)
     {
-        var localHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-machine") + "\n");
-        var globalHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-global") + "\n");
+        var localHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-station") + "\n");
+        var globalHighscoreText = new StringBuilder(Loc.GetString("blockgame-menu-text-nanotrasen") + "\n");
 
         GetHighScoreText(ref localHighscoreText, localHighscores, maxLocalScores);
         GetHighScoreText(ref globalHighscoreText, globalHighscores, maxGlobalScores);

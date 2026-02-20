@@ -1,15 +1,16 @@
 using Content.Server.Arcade.Components;
 using Content.Server.Arcade.Prototypes;
-using Content.Server.GameTicking.Events;
 using Content.Shared.Arcade.Systems;
 using Content.Shared.EntityTable;
 using JetBrains.Annotations;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Arcade.Systems;
 
 public sealed partial class ArcadeSystem : SharedArcadeSystem
 {
+    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -21,12 +22,7 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
         SubscribeLocalEvent<ArcadeRewardComponent, ArcadeGameEndedEvent>(OnArcadeRewardGameEnded);
         SubscribeLocalEvent<ArcadeScoreboardComponent, ArcadeGameEndedEvent>(OnArcadeScoreboardGameEnded);
 
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
-    }
-
-    private void OnRoundStarting(RoundStartingEvent args)
-    {
         InitializeScoreboards();
     }
 

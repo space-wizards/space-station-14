@@ -75,14 +75,14 @@ public sealed class BlockGameGameOverScreenMessage : BlockGameSetScreenMessage
 [Serializable, NetSerializable]
 public sealed class BlockGameHighScoreUpdateMessage : BoundUserInterfaceMessage
 {
-    public List<ArcadeHighScoreEntry> LocalHighscores;
+    public List<ArcadeHighScoreEntry>? LocalHighscores;
     public List<ArcadeHighScoreEntry>? GlobalHighscores;
-    public int MaxLocalScores;
+    public int? MaxLocalScores;
     public int? MaxGlobalScores;
 
-    public BlockGameHighScoreUpdateMessage(List<ArcadeHighScoreEntry> localHighscores,
+    public BlockGameHighScoreUpdateMessage(List<ArcadeHighScoreEntry>? localHighscores,
         List<ArcadeHighScoreEntry>? globalHighscores,
-        int maxLocalScores,
+        int? maxLocalScores,
         int? maxGlobalScores)
     {
         LocalHighscores = localHighscores;
