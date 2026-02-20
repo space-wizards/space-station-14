@@ -132,9 +132,10 @@ public sealed partial class StationJobsSystem
                         continue;
 
                     // The jobs we're selecting from for the current station.
-                    var currentJobs = currentWeightJobSlots[station].Keys.ToList();
+                    var currentStationJobSlots = currentWeightJobSlots[station];
 
                     // We want to go through them in random order.
+                    var currentJobs = currentStationJobSlots.Keys.ToList();
                     _random.Shuffle(currentJobs);
 
                     // Loop through the jobs repeatedly until one of the following happens:
@@ -160,7 +161,7 @@ public sealed partial class StationJobsSystem
                             }
 
                             // null indicates an uncapped job here
-                            if (currentWeightJobSlots[station][job] != null && currentWeightJobSlots[station][job] == 0)
+                            if (currentStationJobSlots[job] != null && currentStationJobSlots[job] == 0)
                                 continue; // Can't assign this job.
 
                             if (!jobCandidates.ContainsKey(job))
@@ -172,7 +173,7 @@ public sealed partial class StationJobsSystem
 
                             // Update various bookkeeping data
                             unassignedProfiles.Remove(player);
-                            currentWeightJobSlots[station][job]--;
+                            currentStationJobSlots[job]--;
                             stationShares[station]--;
                             RemoveJobCandidate(jobCandidates, player);
 
