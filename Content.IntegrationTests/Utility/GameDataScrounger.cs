@@ -14,7 +14,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.IntegrationTests.Utility;
 
 /// <summary>
-///     A helper class for when you need prototype data particularly early, like for test lists.
+///     A helper class for when you need prototype or VFS data particularly early, like for test source lists.
 /// </summary>
 /// <remarks>
 ///     This does not include engine prototypes, nor anything generated at runtime, as it's made to be simple and fast
@@ -24,7 +24,7 @@ namespace Content.IntegrationTests.Utility;
 /// </remarks>
 /// <example>
 /// <code>
-///     public static readonly string[]
+///     public static readonly string[] Maps = GameDataScrounger.PrototypesOfKind&lt;GameMapPrototype&gt;();
 /// </code>
 /// </example>
 public static class GameDataScrounger
