@@ -1,0 +1,14 @@
+- type: species
+  id: scurret
+  name: species-name-scurret
+  prototype: MobBaseScurret
+  defaultSkinTone: "#FFFFFF"
+  dollPrototype: AppearanceScurret
+  skinColoration: Hues
+  maleFirstNames: NamesFirstScurret
+  femaleFirstNames: NamesFirstScurret
+  lastNames: NamesLastScurret
+  sexes:
+  - Male
+  - Female
+  - Unsexed
