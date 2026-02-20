@@ -36,4 +36,13 @@ public sealed class ScroungerTests
         Assert.That(files[0].IsRooted, Is.True);
         Assert.That(files[0].ToString(), Does.StartWith("/Maps/"));
     }
+
+    [Test]
+    [Description("Assert that the data scrounger finds entities by component successfully.")]
+    public void ScroungeByComponent()
+    {
+        var items = GameDataScrounger.EntitiesWithComponent("Item");
+
+        Assert.That(items, Is.Not.Empty);
+    }
 }

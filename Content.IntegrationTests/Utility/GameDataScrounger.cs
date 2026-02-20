@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
@@ -25,12 +24,38 @@ namespace Content.IntegrationTests.Utility;
 ///     public static readonly string[] Maps = GameDataScrounger.PrototypesOfKind&lt;GameMapPrototype&gt;();
 /// </code>
 /// </example>
-public static class GameDataScrounger
+public static partial class GameDataScrounger
 {
+    // YAML Linter, for Reasons, depends on the entirety of the test suite.
+    // As such, scrounging erroring out due to bad YAML can make the linter fail spectacularly.
+    // We do not want that, so the linter sets this, and we refuse to do any yaml-ing ourselves so the nicer set of
+    // errors get to it.
+    //
+    // Also, this means obviously bad YAML causes the main test suite to exit early. This is probably a pro, honestly.
+    public static bool NoScrounging = false;
+
     /// <summary>
     ///     Prototype type to ID index.
     /// </summary>
     private static Dictionary<string, List<string>>? _prototypeIndex = null;
+
+    /// <summary>
+    ///     Component type to prototype ID index.
+    /// </summary>
+    private static Dictionary<string, List<string>>? _entitiesWithComponentIndex = null;
+
+    /// <summary>
+    ///     Entity proto to metadata index.
+    /// </summary>
+    private static Dictionary<string, EntityMetadata>? _entitiesMetaIndex = null;
+
+    private sealed class EntityMetadata
+    {
+        public required string Id;
+        public required HashSet<string> Components;
+        public required List<string> Parents;
+        public required bool Abstract;
+    }
 
     /// <summary>
     ///     Lock used to synchronize access to the prototype index.
@@ -56,60 +81,44 @@ public static class GameDataScrounger
     {
         lock (DataLock)
         {
-            if (_prototypeIndex is { } index)
+            Scrounge();
+
+            return _prototypeIndex[kind].ToArray();
+        }
+    }
+
+    public static string[] EntitiesWithComponent(string componentId)
+    {
+        lock (DataLock)
+        {
+            if (_entitiesWithComponentIndex is { } index)
             {
-                return index[kind].ToArray();
+                return index[componentId].ToArray();
             }
             else
             {
                 Scrounge();
 
-                return _prototypeIndex[kind].ToArray();
+                return _entitiesWithComponentIndex[componentId].ToArray();
             }
         }
     }
 
-    /// <summary>
-    ///     Returns all files in a given content location that match a pattern.
-    /// </summary>
-    /// <param name="location"></param>
-    /// <param name="pattern"></param>
-    /// <param name="recursive"></param>
-    /// <returns></returns>
-    public static string[] FilesInDirectory(string location, string? pattern, bool recursive = true)
-    {
-        var path = GetContentPathOnDisk(location);
-
-        return Directory.EnumerateFiles(path,
-            pattern ?? "*",
-            recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-            .ToArray();
-    }
-
-    /// <summary>
-    ///     Returns all files in a given content location that match a pattern, as their VFS paths.
-    /// </summary>
-    /// <param name="location"></param>
-    /// <param name="pattern"></param>
-    /// <param name="recursive"></param>
-    /// <returns></returns>
-    public static ResPath[] FilesInDirectoryInVfs(string location, string? pattern, bool recursive = true)
-    {
-        var path = GetContentPathOnDisk(location.TrimEnd('/'));
-        var resBasePath = ContentResources();
-
-        return Directory.EnumerateFiles(path,
-                pattern ?? "*",
-                recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-            .Select(x => new ResPath(x.Remove(0, resBasePath.Length)))
-            .ToArray();
-    }
-
-
     [MemberNotNull(nameof(_prototypeIndex))]
+    [MemberNotNull(nameof(_entitiesWithComponentIndex))]
+    [MemberNotNull(nameof(_entitiesMetaIndex))]
     private static void Scrounge()
     {
+        if (_prototypeIndex is not null && _entitiesWithComponentIndex is not null && _entitiesMetaIndex is not null)
+            return;
+
         _prototypeIndex = new();
+        _entitiesWithComponentIndex = new();
+        _entitiesMetaIndex = new();
+
+        if (NoScrounging)
+            return;
+
         var resDir = ContentResources();
         Assert.That(Directory.Exists($"{resDir}/Prototypes"));
 
@@ -144,6 +153,8 @@ public static class GameDataScrounger
                 }
             }
         }
+
+        PushInheritanceAndIndex();
     }
 
     private static readonly YamlScalarNode IdNode = new("id");
@@ -167,20 +178,99 @@ public static class GameDataScrounger
 
                 var id = entryMapping[IdNode];
                 var type = entryMapping[TypeNode];
-                if (entryMapping.TryGetNode("abstract", out YamlScalarNode? @abstract))
+                var @abstract = false;
+                if (entryMapping.TryGetNode("abstract", out YamlScalarNode? abstractNode))
                 {
                     // TODO: This technically will exclude prototypes that use the abstract field for their own stuff,
                     //       and not for parenting. However no such prototype exists in the game as of writing and solving
                     //       this is mildly nontrivial.
 
                     // We use exact equality to match what serialization does.
-                    if (@abstract.Value == "true")
-                        continue;
+                    if (abstractNode.Value == "true")
+                        @abstract = true;
+                }
+
+                if (!@abstract)
+                    yield return (((YamlScalarNode)type).Value!, ((YamlScalarNode)id).Value!);
+
+                // If we're an entity prototype..
+                if (type is not YamlScalarNode { Value: "entity" })
+                    continue;
+
+                // then do some metadata indexing that's feasible w/o serializationmanager.
+
+                entryMapping.TryGetNode("components", out YamlSequenceNode? components);
+
+                var parents = new List<string>();
+
+                if (entryMapping.TryGetNode("parent", out var parentNode))
+                {
+                    switch (parentNode)
+                    {
+                        case YamlScalarNode scalar:
+                        {
+                            parents.Add(scalar.Value!);
+                            break;
+                        }
+                        case YamlSequenceNode seq:
+                        {
+                            parents.AddRange(seq.Children.Select(x => x.AsString()));
+                            break;
+                        }
+                    }
                 }
 
 
-                yield return (((YamlScalarNode)type).Value!, ((YamlScalarNode)id).Value!);
+                // Assemble metadata for this entity prototype w/o needing serializationmanager.
+                var entity = new EntityMetadata()
+                {
+                    Abstract = @abstract,
+                    Components = components?.Children.Select(x => x["type"].ToString()).ToHashSet() ?? new(),
+                    Parents = parents,
+                    Id = id.AsString(),
+                };
+
+                _entitiesMetaIndex![id.AsString()] = entity;
             }
+        }
+    }
+
+    private static void PushInheritanceAndIndex()
+    {
+        var visitedEntities = new HashSet<string>();
+
+        foreach (var entity in _entitiesMetaIndex!.Values)
+        {
+            VisitEntity(entity, visitedEntities);
+
+            if (entity.Abstract)
+                continue; // We don't index abstract entities here.
+
+            foreach (var component in entity.Components)
+            {
+                if (!_entitiesWithComponentIndex!.TryGetValue(component, out var list))
+                {
+                    list = new();
+                    _entitiesWithComponentIndex[component] = list;
+                }
+
+                list.Add(entity.Id);
+            }
+        }
+    }
+
+    private static void VisitEntity(EntityMetadata entity, HashSet<string> visitedEntities)
+    {
+        // Return if we've visited already.
+        if (!visitedEntities.Add(entity.Id))
+            return;
+
+        foreach (var parent in entity.Parents)
+        {
+            var parentMeta = _entitiesMetaIndex![parent];
+            VisitEntity(parentMeta, visitedEntities);
+
+            entity.Components.UnionWith(parentMeta.Components);
         }
     }
 
@@ -188,50 +278,6 @@ public static class GameDataScrounger
     // from content? Makes sense, but ough. So this is unfortunately copy-pasted from engine.
     // I don't think it's worth it to add an API for this to engine due to the security implications for sandboxed
     // content.
-
-    /// <summary>
-    ///     Get the full directory path that the executable is located in.
-    /// </summary>
-    private static string GetExecutableDirectory()
-    {
-        // TODO: remove this shitty hack, either through making it less hardcoded into shared,
-        //   or by making our file structure less spaghetti somehow.
-        var assembly = typeof(IResourceManager).Assembly;
-        var location = assembly.Location;
-        if (location == string.Empty)
-        {
-            // See https://docs.microsoft.com/en-us/dotnet/api/system.reflection.assembly.location?view=net-5.0#remarks
-            // This doesn't apply to us really because we don't do that kind of publishing, but whatever.
-            throw new InvalidOperationException("Cannot find path of executable.");
-        }
-
-        return Path.GetDirectoryName(location)!;
-    }
-
-    /// <summary>
-    ///     Turns a relative path from the executable directory into a full path.
-    /// </summary>
-    private static string ExecutableRelativeFile(string file)
-    {
-        return Path.GetFullPath(Path.Combine(GetExecutableDirectory(), file));
-    }
-
-    private static string FindContentRootDir()
-    {
-        return "../../";
-    }
-
-    private static string ContentResources()
-    {
-        return ExecutableRelativeFile($"{FindContentRootDir()}Resources");
-    }
-
-    public static string GetContentPathOnDisk(string path)
-    {
-        Assert.That(path, Does.StartWith("/"), "Path must be rooted.");
-
-        return $"{ContentResources()}{path.ToString()}";
-    }
 
     // This is indeed, unfortunately, a replica of Content.Shared/Entry/EntryPoint.cs:129
     // That code relies on engine tools we can't use here, because we can't even spin up engine.
