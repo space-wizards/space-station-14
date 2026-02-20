@@ -22,9 +22,16 @@ public sealed partial class ArcadeSystem
     private void InitializeScoreboards()
     {
         _globalScoreboard = new();
+        FillMissingScoreboards();
+    }
 
+    private void FillMissingScoreboards()
+    {
         foreach (var scoreboard in _prototypeManager.EnumeratePrototypes<ArcadeScoreboardPrototype>())
         {
+            if (_globalScoreboard.ContainsKey(scoreboard.ID))
+                continue;
+
             _globalScoreboard.Add(scoreboard.ID, new());
         }
     }

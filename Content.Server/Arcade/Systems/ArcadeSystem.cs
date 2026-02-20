@@ -1,4 +1,5 @@
 using Content.Server.Arcade.Components;
+using Content.Server.Arcade.Prototypes;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Arcade.Systems;
 using Content.Shared.EntityTable;
@@ -18,9 +19,16 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
 
         SubscribeLocalEvent<ArcadeRewardComponent, ComponentInit>(OnArcadeRewardComponentInit);
         SubscribeLocalEvent<ArcadeRewardComponent, ArcadeGameEndedEvent>(OnArcadeRewardGameEnded);
+        SubscribeLocalEvent<ArcadeScoreboardComponent, ArcadeGameEndedEvent>(OnArcadeScoreboardGameEnded);
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
-        SubscribeLocalEvent<ArcadeScoreboardComponent, ArcadeGameEndedEvent>(OnArcadeScoreboardGameEnded);
+        _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<ArcadeScoreboardPrototype>())
+            FillMissingScoreboards();
     }
 
     /// <summary>
