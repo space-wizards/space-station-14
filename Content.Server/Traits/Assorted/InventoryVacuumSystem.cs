@@ -120,8 +120,9 @@ public sealed class InventoryVacuumSystem : EntitySystem
                 if (_inventorySystem.TryGetSlotEntity(ent, StolenItemHideContainerSlot, out var hideItemInto))
                 {
                     var containerHideInto = _containerSystem.GetAllContainers(hideItemInto.Value);
-                    if (containerHideInto.Any() &&
-                        _containerSystem.Insert(targetItem.Value, containerHideInto.First()))
+                    if (containerHideInto.Any()
+                        && _handsSystem.CanPickupAnyHand(ent, targetItem.Value)
+                        && _containerSystem.Insert(targetItem.Value, containerHideInto.First()))
                     {
                         return targetItem;
                     }
