@@ -415,8 +415,8 @@ public sealed class GhostRoleSystem : EntitySystem
         if (raffle.AllMembers.Add(player) && raffle.AllMembers.Count > 1
             && raffle.CumulativeTime.Add(raffle.JoinExtendsDurationBy) <= raffle.MaxDuration)
         {
-                raffle.Countdown += raffle.JoinExtendsDurationBy;
-                raffle.CumulativeTime += raffle.JoinExtendsDurationBy;
+            raffle.Countdown += raffle.JoinExtendsDurationBy;
+            raffle.CumulativeTime += raffle.JoinExtendsDurationBy;
         }
 
         UpdateAllEui();
@@ -640,7 +640,7 @@ public sealed class GhostRoleSystem : EntitySystem
             //So that the equipment doesn't spawn under feet every damn time someone takes on this role
             antagLoadout.RoleLoadout = null;
             antagLoadout.StartingGear = null;
-            antagLoadout.AddComponents = new();
+            antagLoadout.AddComponents.Clear();
         }
         return _antag.TryMakeNonGameRuleAntag(player, antagLoadout, ghostRole);
     }
