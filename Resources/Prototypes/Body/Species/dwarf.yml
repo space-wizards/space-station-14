@@ -1,51 +1,11 @@
 - type: entity
-  parent: AppearanceHuman
-  id: AppearanceDwarf
-  name: dwarf appearance
-  components:
-  - type: Inventory
-    femaleDisplacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female
-  - type: InitialBody
-    organs:
-      Torso: OrganHumanTorso
-      Head: OrganHumanHead
-      ArmLeft: OrganHumanArmLeft
-      ArmRight: OrganHumanArmRight
-      HandRight: OrganHumanHandRight
-      HandLeft: OrganHumanHandLeft
-      LegLeft: OrganHumanLegLeft
-      LegRight: OrganHumanLegRight
-      FootLeft: OrganHumanFootLeft
-      FootRight: OrganHumanFootRight
-      Brain: OrganHumanBrain
-      Eyes: OrganHumanEyes
-      Tongue: OrganHumanTongue
-      Appendix: OrganHumanAppendix
-      Ears: OrganHumanEars
-      Lungs: OrganHumanLungs
-      Heart: OrganDwarfHeart
-      Stomach: OrganDwarfStomach
-      Liver: OrganDwarfLiver
-      Kidneys: OrganHumanKidneys
-  - type: HumanoidProfile
-    species: Dwarf
-  - type: ScaleVisuals
-    scale: 1, 0.8
-
-- type: entity
-  parent:
-  - AppearanceDwarf
-  - MobHuman
-  id: MobDwarf
-  name: Urist McHands The Dwarf
+  save: false
+  parent: BaseSpeciesMobOrganic
+  id: BaseMobDwarf
+  abstract: true
   components:
   - type: Fixtures
-    fixtures: # TODO: This needs a second fixture just for mob collisions.
+    fixtures:
       fix1:
         shape:
           !type:PhysShapeCircle
@@ -62,35 +22,59 @@
       Male: UnisexDwarf
       Female: FemaleDwarf
       Unsexed: UnisexDwarf
-  - type: ReplacementAccent
-    accent: dwarf
   - type: Speech
     speechSounds: Bass
 
-- type: entity
-  parent: OrganBase
-  id: OrganDwarf
-  abstract: true
-  suffix: Dwarf
+  - type: HumanoidAppearance
+    species: Dwarf
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+    markingsDisplacement:
+      Tail:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: tail
+  - type: Inventory
+    speciesId: dwarf
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: outerclothing
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: shoes
 
 - type: entity
-  id: OrganDwarfMetabolizer
-  abstract: true
+  parent: BaseSpeciesDummy
+  id: MobDwarfDummy
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Metabolizer
-    metabolizerTypes: [ Dwarf ]
-
-- type: entity
-  parent: [ OrganDwarfMetabolizer, OrganHumanStomach ]
-  id: OrganDwarfStomach
-  components:
-  - type: Metabolizer
-    maxReagents: 5
-
-- type: entity
-  parent: [ OrganDwarfMetabolizer, OrganHumanLiver ]
-  id: OrganDwarfLiver
-
-- type: entity
-  parent: [ OrganDwarfMetabolizer, OrganHumanHeart ]
-  id: OrganDwarfHeart
+  - type: Inventory
+    speciesId: dwarf
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: outerclothing
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Dwarves/displacement.rsi
+            state: shoes
