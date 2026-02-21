@@ -290,6 +290,7 @@ public abstract partial class SharedChatSystem : EntitySystem
 
         return rawmsg;
     }
+
     /// <summary>
     /// Injects a tag around all found instances of a specific string in a ChatMessage.
     /// Excludes strings inside other tags and brackets.
