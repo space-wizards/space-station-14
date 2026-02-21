@@ -264,8 +264,7 @@ public sealed class SegmentedBarChart : Control
 
     private float GetTotalGapsWidthFraction(float chartWidth)
     {
-        var showRuler = ShowRuler ?? StylePropertyDefault(StylePropertyShowRuler, true);
-        if (showRuler)
+        if (_showRuler)
             return 0;  // ShowRuler is incompatible with Gap.
 
         var gapsWidth = (_entries.Count - 1) * _gap;
