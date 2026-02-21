@@ -49,6 +49,6 @@ public sealed class RulesManager
         var date = DateTime.UtcNow;
         await _dbManager.SetLastReadRules(message.MsgChannel.UserId, date);
         if (message.FuckRules && _player.TryGetSessionById(message.MsgChannel.UserId, out var session))
-            _adminLog.Add(LogType.Connection, LogImpact.High, $"Player {session} used the fuckrules command.");
+            _adminLog.Add(LogType.Connection, LogImpact.Extreme, $"Player {session} used the fuckrules command.");
     }
 }
