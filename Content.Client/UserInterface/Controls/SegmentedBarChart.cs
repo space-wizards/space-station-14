@@ -102,19 +102,19 @@ public sealed class SegmentedBarChart : Control
 
     // Most properties can either be provided by the stylesheet or overriden through a property.
     // These helper computed properties make the bulk of the code a little less ugly.
-    private Color _backgroundColor => TryGetStyleProperty(StylePropertyBackgroundColor, out Color found) ? found : new Color(0.1f, 0.1f, 0.1f);
-    private Color _notchColor => TryGetStyleProperty(StylePropertyNotchColor, out Color found) ? found : new Color(0.1f, 0.1f, 0.1f);
-    private float _gap => GetOverrideableStyleProperty(Gap, StylePropertyGap, 0);
-    private float _minEntryWidth => GetOverrideableStyleProperty(MinEntryWidth, StylePropertyMinEntryWidth, 0);
-    private bool _animated => GetOverrideableStyleProperty(Animated, StylePropertyAnimated, false);
-    private bool _showRuler => GetOverrideableStyleProperty(ShowRuler, StylePropertyShowRuler, false);
-    private bool _showBackground => GetOverrideableStyleProperty(ShowBackground, StylePropertyShowBackground, false);
-    private float _mediumNotchInterval => GetOverrideableStyleProperty(MediumNotchInterval, StylePropertyMediumNotchInterval, 5);
-    private float _bigNotchInterval => GetOverrideableStyleProperty(BigNotchInterval, StylePropertyBigNotchInterval, 10);
-    private float _minSmallNotchScreenDistance => GetOverrideableStyleProperty(MinSmallNotchScreenDistance, StylePropertyMinSmallNotchScreenDistance, 2);
-    private float _smallNotchHeight => GetOverrideableStyleProperty(SmallNotchHeight, StylePropertySmallNotchHeight, 0.1f);
-    private float _mediumNotchHeight => GetOverrideableStyleProperty(MediumNotchHeight, StylePropertyMediumNotchHeight, 0.25f);
-    private float _bigNotchHeight => GetOverrideableStyleProperty(BigNotchHeight, StylePropertyBigNotchHeight, 1f);
+    private Color _backgroundColor => StylePropertyDefault(StylePropertyBackgroundColor, new Color(0.1f, 0.1f, 0.1f));
+    private Color _notchColor => StylePropertyDefault(StylePropertyNotchColor, new Color(0.1f, 0.1f, 0.1f));
+    private float _gap => Gap ?? StylePropertyDefault<float>(StylePropertyGap, 0);
+    private float _minEntryWidth => MinEntryWidth ?? StylePropertyDefault<float>(StylePropertyMinEntryWidth, 0);
+    private bool _animated => Animated ?? StylePropertyDefault(StylePropertyAnimated, false);
+    private bool _showRuler => ShowRuler ?? StylePropertyDefault(StylePropertyShowRuler, false);
+    private bool _showBackground => ShowBackground ?? StylePropertyDefault(StylePropertyShowBackground, false);
+    private float _mediumNotchInterval => MediumNotchInterval ?? StylePropertyDefault(StylePropertyMediumNotchInterval, 5);
+    private float _bigNotchInterval => BigNotchInterval ?? StylePropertyDefault(StylePropertyBigNotchInterval, 10);
+    private float _minSmallNotchScreenDistance => MinSmallNotchScreenDistance ?? StylePropertyDefault(StylePropertyMinSmallNotchScreenDistance, 2);
+    private float _smallNotchHeight => SmallNotchHeight ?? StylePropertyDefault(StylePropertySmallNotchHeight, 0.1f);
+    private float _mediumNotchHeight => MediumNotchHeight ?? StylePropertyDefault(StylePropertyMediumNotchHeight, 0.25f);
+    private float _bigNotchHeight => BigNotchHeight ?? StylePropertyDefault(StylePropertyBigNotchHeight, 1f);
 
     // We don't animate new entries until this control has had at least one update where its width was non-zero.
     private bool _hasHadNonZeroWidth = false;
@@ -264,7 +264,7 @@ public sealed class SegmentedBarChart : Control
 
     private float GetTotalGapsWidthFraction(float chartWidth)
     {
-        var showRuler = GetOverrideableStyleProperty(ShowRuler, StylePropertyShowRuler, true);
+        var showRuler = ShowRuler ?? StylePropertyDefault(StylePropertyShowRuler, true);
         if (showRuler)
             return 0;  // ShowRuler is incompatible with Gap.
 
@@ -469,12 +469,5 @@ public sealed class SegmentedBarChart : Control
         var tooltip = new Tooltip();
         tooltip.SetMessage(msg);
         return tooltip;
-    }
-
-    private T GetOverrideableStyleProperty<T>(T? optionalOverride, string propertyName, T fallback) where T : struct
-    {
-        if (optionalOverride.HasValue)
-            return optionalOverride.Value;
-        return StylePropertyDefault(propertyName, fallback);
     }
 }
