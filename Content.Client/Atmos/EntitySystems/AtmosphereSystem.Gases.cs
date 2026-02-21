@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Reactions;
 
 namespace Content.Client.Atmos.EntitySystems;
 
@@ -12,6 +13,12 @@ public sealed partial class AtmosphereSystem
      code that would escape sandbox. As such these methods are overridden here with a safe
      implementation.
      */
+
+    public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+    {
+        // Reactions don't work on client so don't even try.
+        throw new NotImplementedException();
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override float GetHeatCapacityCalculation(float[] moles, bool space)

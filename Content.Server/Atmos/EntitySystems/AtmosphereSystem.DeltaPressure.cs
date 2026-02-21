@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Damage;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
@@ -320,18 +321,6 @@ public sealed partial class AtmosphereSystem
             system.ProcessDeltaPressureEntityBulk(atmosphere, start + startIndex, end + startIndex);
         }
     }
-
-    /// <summary>
-    /// Struct that holds the result of delta pressure damage processing for an entity.
-    /// This is only created and enqueued when the entity needs to take damage.
-    /// </summary>
-    /// <param name="Ent">The entity to deal damage to.</param>
-    /// <param name="Pressure">The current absolute pressure the entity is experiencing.</param>
-    /// <param name="DeltaPressure">The current delta pressure the entity is experiencing.</param>
-    public readonly record struct DeltaPressureDamageResult(
-        Entity<DeltaPressureComponent> Ent,
-        float Pressure,
-        float DeltaPressure);
 
     /// <summary>
     /// Does damage to an entity depending on the pressure experienced by it, based on the

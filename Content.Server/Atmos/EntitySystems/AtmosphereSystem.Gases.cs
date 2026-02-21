@@ -495,7 +495,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Performs reactions for a given gas mixture on an optional holder.
         /// </summary>
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+        public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
         {
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;

@@ -1,8 +1,6 @@
-using Content.Shared.Atmos;
-using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 
-namespace Content.Server.Atmos.Components;
+namespace Content.Shared.Atmos.Components;
 
 /// <summary>
 ///     Component that defines the default GasMixture for a map.

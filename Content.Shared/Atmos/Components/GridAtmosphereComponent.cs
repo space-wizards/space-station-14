@@ -1,27 +1,26 @@
 using System.Collections.Concurrent;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Serialization;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Atmos.Piping.Components;
+using Content.Shared.Atmos.Serialization;
+using Content.Shared.NodeContainer.NodeGroups;
 
-namespace Content.Server.Atmos.Components
+namespace Content.Shared.Atmos.Components
 {
     /// <summary>
-    ///     Internal Atmos class. Use <see cref="AtmosphereSystem"/> to interact with atmos instead.
+    ///     Internal Atmos class. Use <see cref="SharedAtmosphereSystem"/> to interact with atmos instead.
     /// </summary>
     [RegisterComponent, Serializable,
-     Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
+     Access(typeof(SharedAtmosphereSystem), typeof(SharedGasTileOverlaySystem), typeof(SharedAtmosDebugOverlaySystem))]
     public sealed partial class GridAtmosphereComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Simulated { get; set; } = true;
 
         [ViewVariables]
-        public bool ProcessingPaused { get; set; } = false;
+        public bool ProcessingPaused { get; set; }
 
         [ViewVariables]
-        public float Timer { get; set; } = 0f;
+        public float Timer { get; set; }
 
         [ViewVariables]
         public int UpdateCounter { get; set; } = 1; // DO NOT SET TO ZERO BY DEFAULT! It will break roundstart atmos...
@@ -74,14 +73,14 @@ namespace Content.Server.Atmos.Components
         /// use the API methods in the Atmospherics API.</remarks>
         [ViewVariables]
         public readonly List<Entity<DeltaPressureComponent>> DeltaPressureEntities =
-            new(AtmosphereSystem.DeltaPressurePreAllocateLength);
+            new(SharedAtmosphereSystem.DeltaPressurePreAllocateLength);
 
         /// <summary>
         /// An index lookup for the <see cref="DeltaPressureEntities"/> list.
         /// Used for add/remove/find operations to speed up processing.
         /// </summary>
         public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup =
-            new(AtmosphereSystem.DeltaPressurePreAllocateLength);
+            new(SharedAtmosphereSystem.DeltaPressurePreAllocateLength);
 
         /// <summary>
         /// Integer that indicates the current position in the
@@ -94,7 +93,7 @@ namespace Content.Server.Atmos.Components
         /// Queue of entities that need to have damage applied to them.
         /// </summary>
         [ViewVariables]
-        public readonly ConcurrentQueue<AtmosphereSystem.DeltaPressureDamageResult> DeltaPressureDamageResults = new();
+        public readonly ConcurrentQueue<DeltaPressureDamageResult> DeltaPressureDamageResults = new();
 
         [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();

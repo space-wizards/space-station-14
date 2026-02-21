@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.Prototypes;
+using Content.Shared.Atmos.Reactions;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 
@@ -29,7 +30,7 @@ public abstract partial class SharedAtmosphereSystem
         {
             var idx = (int)gas;
             // Log an error if the corresponding prototype isn't found
-            if (!_prototypeManager.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
+            if (!ProtoMan.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
             {
                 Log.Error($"Failed to find corresponding {nameof(GasPrototype)} for gas ID {(int)gas} ({gas}) with expected ID \"{gas.ToString()}\". Is your prototype named correctly?");
                 continue;
@@ -71,6 +72,50 @@ public abstract partial class SharedAtmosphereSystem
         // So if we want the un-scaled heat capacity, we have to multiply by the scale.
         return applyScaling ? scale : scale * HeatScale;
     }
+
+    /// <summary>
+    ///     Calculates the thermal energy for a gas mixture.
+    /// </summary>
+    public float GetThermalEnergy(GasMixture mixture)
+    {
+        return mixture.Temperature * GetHeatCapacity(mixture);
+    }
+
+    /// <summary>
+    ///     Calculates the thermal energy for a gas mixture, using a cached heat capacity value.
+    /// </summary>
+    public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
+    {
+        return mixture.Temperature * cachedHeatCapacity;
+    }
+
+    /// <summary>
+    ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
+    ///     The <see cref="giver"/> gas mixture is not modified by this method.
+    /// </summary>
+    public void Merge(GasMixture receiver, GasMixture giver)
+    {
+        if (receiver.Immutable) return;
+
+        if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
+        {
+            var receiverHeatCapacity = GetHeatCapacity(receiver);
+            var giverHeatCapacity = GetHeatCapacity(giver);
+            var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
+            if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
+            {
+                receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
+            }
+        }
+
+        NumericsHelpers.Add(receiver.Moles, giver.Moles);
+    }
+
+    /// <summary>
+    ///     Performs reactions for a given gas mixture on an optional holder.
+    /// </summary>
+    [PublicAPI]
+    public abstract ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder);
 
     /// <summary>
     /// Gets the heat capacity for a <see cref="GasMixture"/>.
