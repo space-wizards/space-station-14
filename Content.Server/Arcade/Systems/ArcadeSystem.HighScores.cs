@@ -57,7 +57,7 @@ public sealed partial class ArcadeSystem
         var placement = new HighScorePlacement(globalPlacement, localPlacement, machinePlacement);
         var placementEvent = new ArcadeScorePlacementSubmittedEvent(player, entry.Score, placement);
 
-        RaiseLocalEvent(ent.Owner, placementEvent);
+        RaiseLocalEvent(ent.Owner, ref placementEvent);
     }
 
     /// <summary>
@@ -236,23 +236,23 @@ public readonly struct HighScorePlacement
 /// <summary>
 /// Called on the arcade machine when a high score placement is submitted.
 /// </summary>
-/// <param name="player">The entity playing the machine.</param>
-/// <param name="placements">The local and global placements of the player's score</param>
-public sealed class ArcadeScorePlacementSubmittedEvent(EntityUid player, int score, HighScorePlacement placements)
-    : EntityEventArgs
+/// <param name="Player">The entity playing the machine.</param>
+/// <param name="Placements">The local and global placements of the player's score</param>
+[ByRefEvent]
+public record struct ArcadeScorePlacementSubmittedEvent(EntityUid Player, int Score, HighScorePlacement Placements)
 {
     /// <summary>
     /// The entity that submitted this score.
     /// </summary>
-    public EntityUid Player = player;
+    public EntityUid Player = Player;
 
     /// <summary>
     /// The score submitted by the player.
     /// </summary>
-    public int Score = score;
+    public int Score = Score;
 
     /// <summary>
     /// How this player's score ranks in the scoreboards for this machine.
     /// </summary>
-    public HighScorePlacement Placements = placements;
+    public HighScorePlacement Placements = Placements;
 }

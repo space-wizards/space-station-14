@@ -81,35 +81,36 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
         var endedEvent = new ArcadeGameEndedEvent(player, result, score);
         var finishEvent = new FinishedArcadeGameEvent(result, score);
 
-        RaiseLocalEvent(machine, endedEvent);
+        RaiseLocalEvent(machine, ref endedEvent);
         if (player != null)
-            RaiseLocalEvent(player.Value, finishEvent);
+            RaiseLocalEvent(player.Value, ref finishEvent);
     }
 }
 
 /// <summary>
 ///     Called on the arcade machine entity when a game ends for any reason.
 /// </summary>
-/// <param name="player">The entity playing the arcade game.</param>
-/// <param name="result">The result of the game.</param>
-public sealed class ArcadeGameEndedEvent(EntityUid? player,
-    ArcadeGameResult result = ArcadeGameResult.Forfeit,
-    int? score = null)
-    : EntityEventArgs
+/// <param name="Player">The entity playing the arcade game.</param>
+/// <param name="Result">The result of the game.</param>
+[ByRefEvent]
+public record struct ArcadeGameEndedEvent(EntityUid? Player,
+    ArcadeGameResult Result = ArcadeGameResult.Forfeit,
+    int? Score = null)
 {
-    public EntityUid? Player = player;
-    public ArcadeGameResult Result = result;
-    public int? Score = score;
+    public EntityUid? Player = Player;
+    public ArcadeGameResult Result = Result;
+    public int? Score = Score;
 }
 
 /// <summary>
 ///     Called on the arcade game player entity when they finish an arcade game for any reason.
 /// </summary>
 /// <param name="result">The result of the game.</param>
-public sealed class FinishedArcadeGameEvent(ArcadeGameResult result, int? score = null) : EntityEventArgs
+[ByRefEvent]
+public record struct FinishedArcadeGameEvent(ArcadeGameResult Result, int? Score = null)
 {
-    public ArcadeGameResult Result = result;
-    public int? Score = score;
+    public ArcadeGameResult Result = Result;
+    public int? Score = Score;
 }
 
 public enum ArcadeGameResult
