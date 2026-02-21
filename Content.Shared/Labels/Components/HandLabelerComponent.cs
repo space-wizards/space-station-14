@@ -21,13 +21,13 @@ public sealed partial class HandLabelerComponent : Component
     /// Blacklist for entities that can be labeled.
     /// </summary>
     [DataField]
-    public EntityWhitelist Whitelist = new();
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Blacklist for entities that cannot be labeled.
     /// </summary>
     [DataField]
-    public EntityWhitelist Blacklist = new();
+    public EntityWhitelist? Blacklist;
 }
 
 [Serializable, NetSerializable]
