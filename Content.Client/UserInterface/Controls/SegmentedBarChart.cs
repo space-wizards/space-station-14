@@ -475,8 +475,6 @@ public sealed class SegmentedBarChart : Control
     {
         if (optionalOverride.HasValue)
             return optionalOverride.Value;
-        if (TryGetStyleProperty<T>(propertyName, out var result))
-            return result;
-        return fallback;
+        return StylePropertyDefault(propertyName, fallback);
     }
 }
