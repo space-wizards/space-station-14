@@ -60,7 +60,6 @@ names-xenoborg-dataset-59 = Aggrobot
 names-xenoborg-dataset-60 = Backstabber
 names-xenoborg-dataset-61 = Kill.exe
 names-xenoborg-dataset-62 = Fatal Firmware
-names-xenoborg-dataset-62 = steel_slayer
 names-xenoborg-dataset-63 = W.A.R unit
 names-xenoborg-dataset-64 = Toaster of doom
 names-xenoborg-dataset-65 = Griller
