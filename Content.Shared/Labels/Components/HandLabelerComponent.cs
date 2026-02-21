@@ -19,6 +19,9 @@ public sealed partial class HandLabelerComponent : Component
 
     [DataField]
     public EntityWhitelist Whitelist = new();
+
+    [DataField]
+    public EntityWhitelist Blacklist = new();
 }
 
 [Serializable, NetSerializable]
