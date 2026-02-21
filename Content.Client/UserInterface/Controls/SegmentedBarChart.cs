@@ -362,7 +362,7 @@ public sealed class SegmentedBarChart : Control
 
             // This math ensures the distance between notches is not less than `MinSmallNotchScreenDistance`.
             // We make sure that `unitsPerNotch` is always a power of ten (normally 1, 10 or 100).
-            var maxNotches = PixelWidth / MinSmallNotchScreenDistance;
+            var maxNotches = Width / MinSmallNotchScreenDistance;
             var exp = MathF.Floor(MathF.Log10(maxNotches / capacity));
             var unitsPerNotch = 1f / MathF.Min(1, MathF.Pow(10, exp));
 
