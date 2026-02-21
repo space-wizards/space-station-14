@@ -31,16 +31,35 @@ public sealed class SegmentedBarChart : Control
         }
     }
 
+    public const string StyleClassClassicSplitBar = "ClassicSplitBar";
+
+    public const string StylePropertyAnimated = "animated";
+    public const string StylePropertyShowRuler = "showRuler";
+    public const string StylePropertyShowBackground = "showBackground";
+
+    public const string StylePropertyNotchColor = "notchColor";
+    public const string StylePropertyBackgroundColor = "backgroundColor";
+
+    public const string StylePropertyGap = "gap";
+    public const string StylePropertyMinEntryWidth = "minEntryWidth";
+
+    public const string StylePropertySmallNotchHeight = "smallNotchHeight";
+    public const string StylePropertyMediumNotchHeight = "mediumNotchHeight";
+    public const string StylePropertyBigNotchHeight = "bigNotchHeight";
+    public const string StylePropertyMediumNotchInterval = "mediumNotchInterval";
+    public const string StylePropertyBigNotchInterval = "bigNotchInterval";
+    public const string StylePropertyMinSmallNotchScreenDistance = "minSmallNotchScreenDistance";
+
     /// <summary>
     /// When Gap is greater than zero, all segments are separated by empty space. Gap is measured in UI units.
     /// This is incompatible with ShowRuler. If ShowRuler is enabled, Gap is ignored.
     /// </summary>
-    public float Gap { get; set; } = 0;
+    public float? Gap { get; set; } = null;
 
     /// <summary>
     /// The minimum width of a segment in UI units.
     /// </summary>
-    public float MinEntryWidth { get; set; } = 0;
+    public float? MinEntryWidth { get; set; } = null;
 
     /// <summary>
     /// How many units of "Amount" fit into this chart. For example, when Capacity is 50, an entry with an amount of 5
@@ -48,25 +67,54 @@ public sealed class SegmentedBarChart : Control
     /// </summary>
     public float Capacity { get; set; } = -1;
 
-    public bool Animated { get; set; } = true;
-    public bool ShowRuler { get; set; } = false;
-    public bool ShowBackground { get; set; } = false;
+    /// <summary>
+    /// Whether this chart is animated.
+    /// </summary>
+    public bool? Animated { get; set; } = null;
 
-    public Color NotchColor { get; set; } = new(1, 1, 1, 0.25f);
-    public Color BackgroundColor { get; set; } = new(0.1f, 0.1f, 0.1f);
+    /// <summary>
+    /// Whether the ruler is drawn. Check the cryo pod UI to see what the ruler looks like.
+    /// The ruler can be further configured through the various "Notch" properties.
+    /// </summary>
+    public bool? ShowRuler { get; set; } = null;
+
+    /// <summary>
+    /// Whether a background will be drawn behind the chart. The background is a simple rectangle and does not have
+    /// gaps when Gap is non-zero. The color of the background is determined by the style property "backgroundColor".
+    /// </summary>
+    public bool? ShowBackground { get; set; } = null;
 
     // Every `Notch` variable is related to the ruler.
-    public int MediumNotchInterval { get; set; } = 5;
-    public int BigNotchInterval { get; set; } = 10;
+    public int? MediumNotchInterval { get; set; } = null;
+    public int? BigNotchInterval { get; set; } = null;
 
-    // For the cryo pod UI, when we have a very large beaker (i.e. bluespace beaker) we might need to increase the
-    // distance between notches. When the distance between notches is less than MinSmallNotchScreenDistance in UI units,
-    // the distance is increased by a factor of 10 (repeated as often as necessary).
-    public int MinSmallNotchScreenDistance { get; set; } = 2;
+    /// <summary>
+    /// For the cryo pod UI, when we have a very large beaker (e.g. a bluespace beaker) we might need to increase the
+    /// distance between notches to prevent all the notches from turning into a solid rectangle. When the distance
+    /// between notches is less than MinSmallNotchScreenDistance in UI units, the distance is increased by a factor of
+    /// ten (repeated as often as necessary).
+    /// </summary>
+    public int? MinSmallNotchScreenDistance { get; set; } = null;
 
-    public float SmallNotchHeight { get; set; } = 0.1f;
-    public float MediumNotchHeight { get; set; } = 0.25f;
-    public float BigNotchHeight { get; set; } = 1f;
+    public float? SmallNotchHeight { get; set; } = null;
+    public float? MediumNotchHeight { get; set; } = null;
+    public float? BigNotchHeight { get; set; } = null;
+
+    // Most properties can either be provided by the stylesheet or overriden through a property.
+    // These helper computed properties make the bulk of the code a little less ugly.
+    private Color _backgroundColor => TryGetStyleProperty(StylePropertyBackgroundColor, out Color found) ? found : new Color(0.1f, 0.1f, 0.1f);
+    private Color _notchColor => TryGetStyleProperty(StylePropertyNotchColor, out Color found) ? found : new Color(0.1f, 0.1f, 0.1f);
+    private float _gap => GetOverrideableStyleProperty(Gap, StylePropertyGap, 0);
+    private float _minEntryWidth => GetOverrideableStyleProperty(MinEntryWidth, StylePropertyMinEntryWidth, 0);
+    private bool _animated => GetOverrideableStyleProperty(Animated, StylePropertyAnimated, false);
+    private bool _showRuler => GetOverrideableStyleProperty(ShowRuler, StylePropertyShowRuler, false);
+    private bool _showBackground => GetOverrideableStyleProperty(ShowBackground, StylePropertyShowBackground, false);
+    private float _mediumNotchInterval => GetOverrideableStyleProperty(MediumNotchInterval, StylePropertyMediumNotchInterval, 5);
+    private float _bigNotchInterval => GetOverrideableStyleProperty(BigNotchInterval, StylePropertyBigNotchInterval, 10);
+    private float _minSmallNotchScreenDistance => GetOverrideableStyleProperty(MinSmallNotchScreenDistance, StylePropertyMinSmallNotchScreenDistance, 2);
+    private float _smallNotchHeight => GetOverrideableStyleProperty(SmallNotchHeight, StylePropertySmallNotchHeight, 0.1f);
+    private float _mediumNotchHeight => GetOverrideableStyleProperty(MediumNotchHeight, StylePropertyMediumNotchHeight, 0.25f);
+    private float _bigNotchHeight => GetOverrideableStyleProperty(BigNotchHeight, StylePropertyBigNotchHeight, 1f);
 
     // We don't animate new entries until this control has had at least one update where its width was non-zero.
     private bool _hasHadNonZeroWidth = false;
@@ -216,10 +264,11 @@ public sealed class SegmentedBarChart : Control
 
     private float GetTotalGapsWidthFraction(float chartWidth)
     {
-        if (ShowRuler)
+        var showRuler = GetOverrideableStyleProperty(ShowRuler, StylePropertyShowRuler, true);
+        if (showRuler)
             return 0;  // ShowRuler is incompatible with Gap.
 
-        var gapsWidth = (_entries.Count - 1) * Gap;
+        var gapsWidth = (_entries.Count - 1) * _gap;
         var gapsFraction = gapsWidth / MathF.Max(chartWidth, 1f);
 
         // We limit the gaps to cover max 25% of the chart, to make sure there's always space for entries no matter
@@ -237,6 +286,7 @@ public sealed class SegmentedBarChart : Control
         // Tween the amounts to their target amounts.
         const float tweenInverseHalfLife = 8;  // Half life of tween is 1/n
         var hasChanged = false;
+        var animated = _animated;
 
         // This next series of calculations is somewhat complicated. We're trying to calculate the desired width for
         // each entry, but there's a couple of complicating factors: Gap, MinEntryWidth and constant/flexible capacities
@@ -265,7 +315,7 @@ public sealed class SegmentedBarChart : Control
         // The min width for all entries can't be wider than the available space per entry.
         var spacePerEntry = totalEntriesWidthFraction / MathF.Max(1, targetEntryCount);
         // Minimum width of an entry.
-        var minWidthFraction = MathF.Min(spacePerEntry, MinEntryWidth / MathF.Max(1, chartWidth));
+        var minWidthFraction = MathF.Min(spacePerEntry, _minEntryWidth / MathF.Max(1, chartWidth));
         // The amount of units that `minWidthFraction` covers.
         var minWidthAmount = minWidthFraction * totalAmount;
 
@@ -299,7 +349,7 @@ public sealed class SegmentedBarChart : Control
             // Move the entry's width towards its target width.
             hasChanged = true;
 
-            if (Animated && _hasHadNonZeroWidth)
+            if (animated && _hasHadNonZeroWidth)
             {
                 // Tween with lerp abuse interpolation
                 entry.WidthFraction = MathHelper.Lerp(
@@ -342,8 +392,8 @@ public sealed class SegmentedBarChart : Control
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        if (ShowBackground)
-            handle.DrawRect(PixelSizeBox, BackgroundColor);
+        if (_showBackground)
+            handle.DrawRect(PixelSizeBox, _backgroundColor);
 
         // Draw the entry backgrounds
         foreach (var (entry, xMinUI, xMaxUI) in EntryRanges(Width))
@@ -355,14 +405,22 @@ public sealed class SegmentedBarChart : Control
         }
 
         // Draw the ruler
-        if (ShowRuler)
+        if (_showRuler)
         {
+            // These computed properties are used in the loop. Compute them only once.
+            var bigNotchInterval = _bigNotchInterval;
+            var mediumNotchInterval = _mediumNotchInterval;
+            var bigNotchHeight = _bigNotchHeight;
+            var mediumNotchHeight = _mediumNotchHeight;
+            var smallNotchHeight = _smallNotchHeight;
+            var notchColor = _notchColor;
+
             var capacity = GetCapacity();
             var unitWidth = PixelWidth / capacity;
 
             // This math ensures the distance between notches is not less than `MinSmallNotchScreenDistance`.
             // We make sure that `unitsPerNotch` is always a power of ten (normally 1, 10 or 100).
-            var maxNotches = Width / MinSmallNotchScreenDistance;
+            var maxNotches = Width / _minSmallNotchScreenDistance;
             var exp = MathF.Floor(MathF.Log10(maxNotches / capacity));
             var unitsPerNotch = 1f / MathF.Min(1, MathF.Pow(10, exp));
 
@@ -372,12 +430,12 @@ public sealed class SegmentedBarChart : Control
             for (int i = 0; i <= notchCount; i++)
             {
                 var x = i * notchDistance;
-                var height = (i % BigNotchInterval    == 0 ? BigNotchHeight :
-                              i % MediumNotchInterval == 0 ? MediumNotchHeight :
-                                                             SmallNotchHeight) * PixelHeight;
+                var height = (i % bigNotchInterval    == 0 ? bigNotchHeight :
+                              i % mediumNotchInterval == 0 ? mediumNotchHeight :
+                                                             smallNotchHeight) * PixelHeight;
                 var start = new Vector2(x, PixelHeight);
                 var end = new Vector2(x, PixelHeight - height);
-                handle.DrawLine(start, end, NotchColor);
+                handle.DrawLine(start, end, notchColor);
             }
         }
     }
@@ -411,5 +469,14 @@ public sealed class SegmentedBarChart : Control
         var tooltip = new Tooltip();
         tooltip.SetMessage(msg);
         return tooltip;
+    }
+
+    private T GetOverrideableStyleProperty<T>(T? optionalOverride, string propertyName, T fallback) where T : struct
+    {
+        if (optionalOverride.HasValue)
+            return optionalOverride.Value;
+        if (TryGetStyleProperty<T>(propertyName, out var result))
+            return result;
+        return fallback;
     }
 }

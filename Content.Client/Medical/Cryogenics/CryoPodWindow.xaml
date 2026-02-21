@@ -63,11 +63,9 @@
             <Control Margin="0 0 0 22">
                 <controls:SegmentedBarChart
                     Name="GasMixChart"
+                    StyleClasses="ClassicSplitBar"
                     MinHeight="8"
-                    MaxHeight="8"
-                    Gap="5"
-                    MinEntryWidth="12"
-                    Animated="True"/>
+                    MaxHeight="8"/>
             </Control>
 
             <!-- Warnings & status -->

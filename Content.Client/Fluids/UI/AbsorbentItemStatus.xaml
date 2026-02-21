@@ -4,7 +4,5 @@
         HorizontalExpand="True"
         VerticalExpand="True"
         Name="Bar"
-        ShowRuler="True"
-        ShowBackground="True"
         MinHeight="20"/>
 </Control>

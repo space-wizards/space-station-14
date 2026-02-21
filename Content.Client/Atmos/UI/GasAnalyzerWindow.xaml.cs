@@ -300,6 +300,7 @@ namespace Content.Client.Atmos.UI
             var height = 30;
             var gasBar = new SegmentedBarChart
             {
+                StyleClasses = { SegmentedBarChart.StyleClassClassicSplitBar },
                 MinHeight = height,
                 MinEntryWidth = 12,
                 Gap = 3
