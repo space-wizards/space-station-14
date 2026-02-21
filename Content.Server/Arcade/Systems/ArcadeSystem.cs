@@ -37,6 +37,7 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     /// </summary>
     /// <param name="player">The entity playing the game.</param>
     /// <param name="machine">The arcade machine entity.</param>
+    /// <param name="score">The (optional) final score associated with this game session.</param>
     [PublicAPI]
     public void WinGame(EntityUid? player, EntityUid machine, int? score = null)
     {
@@ -48,6 +49,7 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     /// </summary>
     /// <param name="player">The entity playing the game.</param>
     /// <param name="machine">The arcade machine entity.</param>
+    /// <param name="score">The (optional) final score associated with this game session.</param>
     [PublicAPI]
     public void LoseGame(EntityUid? player, EntityUid machine, int? score = null)
     {
@@ -59,6 +61,7 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     /// </summary>
     /// <param name="player">The entity playing the game.</param>
     /// <param name="machine">The arcade machine entity.</param>
+    /// <param name="score">The (optional) final score associated with this game session.</param>
     [PublicAPI]
     public void LeaveGame(EntityUid? player, EntityUid machine, int? score = null)
     {
@@ -70,6 +73,7 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     /// </summary>
     /// <param name="player">The entity playing the game.</param>
     /// <param name="machine">The arcade machine entity.</param>
+    /// <param name="score">The (optional) final score associated with this game session.</param>
     [PublicAPI]
     public void DrawGame(EntityUid? player, EntityUid machine, int? score = null)
     {
@@ -92,6 +96,7 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
 /// </summary>
 /// <param name="Player">The entity playing the arcade game.</param>
 /// <param name="Result">The result of the game.</param>
+/// <param name="Score">The (optional) final score associated with this game session.</param>
 [ByRefEvent]
 public record struct ArcadeGameEndedEvent(EntityUid? Player,
     ArcadeGameResult Result = ArcadeGameResult.Forfeit,
@@ -105,7 +110,8 @@ public record struct ArcadeGameEndedEvent(EntityUid? Player,
 /// <summary>
 ///     Called on the arcade game player entity when they finish an arcade game for any reason.
 /// </summary>
-/// <param name="result">The result of the game.</param>
+/// <param name="Result">The result of the game.</param>
+/// <param name="Score">The (optional) final score associated with this game session.</param>
 [ByRefEvent]
 public record struct FinishedArcadeGameEvent(ArcadeGameResult Result, int? Score = null)
 {
@@ -113,6 +119,12 @@ public record struct FinishedArcadeGameEvent(ArcadeGameResult Result, int? Score
     public int? Score = Score;
 }
 
+/// <summary>
+/// The outcome of a completed arcade game session.
+/// </summary>
+/// <remarks>
+/// Entity systems may use this result to perform certain logic - for example, only dispensing a prize if the game is won.
+/// </remarks>
 public enum ArcadeGameResult
 {
     /// <summary>
