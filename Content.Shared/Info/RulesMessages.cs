@@ -37,7 +37,7 @@ public sealed class RulesAcceptedMessage : NetMessage
 {
     /// <summary>
     /// Whether or not the player used the "fuckrules" command to skip the rules window countdown.
-    /// If true this will create an admin log and a warning in chat if they are a new player.
+    /// If true this will create an admin log and a warning the for the admins to see.
     /// </summary>
     public bool FuckRules;
 
