@@ -53,7 +53,7 @@ public sealed partial class ArcadeSystem : SharedArcadeSystem
     [PublicAPI]
     public void LoseGame(EntityUid? player, EntityUid machine, int? score = null)
     {
-        FinishGame(player, machine, ArcadeGameResult.Fail, score);
+        FinishGame(player, machine, ArcadeGameResult.Loss, score);
     }
 
     /// <summary>
@@ -145,5 +145,5 @@ public enum ArcadeGameResult
     /// <summary>
     /// The player lost the game.
     /// </summary>
-    Fail,
+    Loss,
 }
