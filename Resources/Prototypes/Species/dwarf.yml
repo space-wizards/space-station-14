@@ -1,7 +1,7 @@
 - type: species
   id: Dwarf
   name: species-name-dwarf
-  roundStart: false
-  prototype: MobHuman
-  dollPrototype: MobHumanDummy
+  roundStart: true
+  prototype: MobDwarf
+  dollPrototype: AppearanceDwarf
   skinColoration: HumanToned
