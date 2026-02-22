@@ -57,6 +57,7 @@
     damage:
       types:
         Heat: 14
+  - type: HitscanIgnite
 
 - type: entity
   parent: BasicHitscan
