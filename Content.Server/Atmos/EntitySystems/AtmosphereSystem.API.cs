@@ -1,11 +1,8 @@
 using System.Diagnostics;
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
@@ -101,6 +98,69 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
+    /// Gets the gas mixture for a specific tile that an entity is on.
+    /// </summary>
+    /// <param name="entity">The entity to get the tile mixture for.</param>
+    /// <param name="excite">Whether to mark the tile as active for atmosphere processing.</param>
+    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    /// <remarks>This does not return the <see cref="GasMixture"/> that the entity
+    /// may be contained in, ex. if the entity is currently in a locker/crate with its own
+    /// <see cref="GasMixture"/>.</remarks>
+    [PublicAPI]
+    public GasMixture? GetTileMixture(Entity<TransformComponent?> entity, bool excite = false)
+    {
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return null;
+
+        var indices = XformSystem.GetGridTilePositionOrDefault(entity);
+        return GetTileMixture(entity.Comp.GridUid, entity.Comp.MapUid, indices, excite);
+    }
+
+    /// <summary>
+    /// Gets the <see cref="GasMixture"/> that an entity is contained within.
+    /// </summary>
+    /// <param name="ent">The entity to get the mixture for.</param>
+    /// <param name="ignoreExposed">If true, will ignore mixtures that the entity is contained in
+    /// (ex. lockers and cryopods) and just get the tile mixture.</param>
+    /// <param name="excite">If true, will mark the tile as active for atmosphere processing.</param>
+    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    [PublicAPI]
+    public GasMixture? GetContainingMixture(Entity<TransformComponent?> ent, bool ignoreExposed = false, bool excite = false)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        return GetContainingMixture(ent, ent.Comp.GridUid, ent.Comp.MapUid, ignoreExposed, excite);
+    }
+
+    /// <summary>
+    /// Gets the <see cref="GasMixture"/> that an entity is contained within.
+    /// </summary>
+    /// <param name="ent">The entity to get the mixture for.</param>
+    /// <param name="grid">The grid that the entity may be on.</param>
+    /// <param name="map">The map that the entity may be on.</param>
+    /// <param name="ignoreExposed">If true, will ignore mixtures that the entity is contained in
+    /// (ex. lockers and cryopods) and just get the tile mixture.</param>
+    /// <param name="excite">If true, will mark the tile as active for atmosphere processing.</param>
+    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    [PublicAPI]
+    public GasMixture? GetContainingMixture(Entity<TransformComponent?> ent,
+        Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
+        Entity<MapAtmosphereComponent?>? map,
+        bool ignoreExposed = false,
+        bool excite = false)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        if (!ignoreExposed && TryGetExposedMixture(ent, out var mixture))
+            return mixture;
+
+        var position = XformSystem.GetGridTilePositionOrDefault((ent, ent.Comp));
+        return GetTileMixture(grid, map, position, excite);
+    }
+
+    /// <summary>
     /// Gets the gas mixtures for a list of tiles on a grid or map.
     /// </summary>
     /// <param name="grid">The grid to get mixtures from.</param>
@@ -174,7 +234,7 @@ public partial class AtmosphereSystem
     }
 
     [PublicAPI]
-    public override GasMixture? GetTileMixture(
+    public GasMixture? GetTileMixture(
         Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
         Entity<MapAtmosphereComponent?>? map,
         Vector2i gridTile,
@@ -199,6 +259,34 @@ public partial class AtmosphereSystem
 
         // Default to a space mixture... This is a space game, after all!
         return GasMixture.SpaceGas;
+    }
+
+    public override void MergeContainingMixture(Entity<TransformComponent?> entity, GasMixture mixture, bool ignoreExposed = false, bool excite = false)
+    {
+        if (GetContainingMixture(entity, ignoreExposed, excite) is not { } containingMixture)
+            return;
+
+        Merge(containingMixture, mixture);
+    }
+
+    [PublicAPI]
+    public override void MergeTileMixture(Entity<TransformComponent?> entity, GasMixture mixture, bool excite = false)
+    {
+        if (GetTileMixture(entity, excite) is not { } tileMixture)
+            return;
+
+        Merge(tileMixture, mixture);
+    }
+
+    public override void AdjustContainingMixture(Entity<TransformComponent?> entity, Gas gas, float mols, bool ignoreExposed = false, bool excite = false)
+    {
+        GetContainingMixture(entity, ignoreExposed, excite)?.AdjustMoles(gas, mols);
+    }
+
+    [PublicAPI]
+    public override void AdjustTileMixture(Entity<TransformComponent?> entity, Gas gas, float mols, bool excite = false)
+    {
+        GetTileMixture(entity, excite)?.AdjustMoles(gas, mols);
     }
 
     /// <summary>

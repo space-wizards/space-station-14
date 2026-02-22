@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Components;
+﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Atmos.EntitySystems;
@@ -6,94 +6,77 @@ namespace Content.Shared.Atmos.EntitySystems;
 public abstract partial class SharedAtmosphereSystem
 {
     /// <summary>
-    /// Gets the <see cref="GasMixture"/> that an entity is contained within.
+    /// Merges a given gas mixture into this entity's containing mixture.
     /// </summary>
-    /// <param name="ent">The entity to get the mixture for.</param>
-    /// <param name="ignoreExposed">If true, will ignore mixtures that the entity is contained in
-    /// (ex. lockers and cryopods) and just get the tile mixture.</param>
-    /// <param name="excite">If true, will mark the tile as active for atmosphere processing.</param>
-    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    /// <param name="entity">Entity who's containing mixture we're merging a given mixture into.</param>
+    /// <param name="mixture">The gas mixture we're merging into the containing mixture</param>
+    /// <param name="ignoreExposed">Whether we should ignore non-tile mixtures.</param>
+    /// <param name="excite">Whether we should excite the gas upon merging.</param>
     [PublicAPI]
-    public GasMixture? GetContainingMixture(Entity<TransformComponent?> ent, bool ignoreExposed = false, bool excite = false)
+    public virtual void MergeContainingMixture(Entity<TransformComponent?> entity, GasMixture mixture, bool ignoreExposed = false, bool excite = false)
     {
-        if (!Resolve(ent, ref ent.Comp))
-            return null;
-
-        return GetContainingMixture(ent, ent.Comp.GridUid, ent.Comp.MapUid, ignoreExposed, excite);
+        // Handled by server
     }
 
     /// <summary>
-    /// Gets the <see cref="GasMixture"/> that an entity is contained within.
+    /// Merges a given gas mixture into this entity's tile mixture.
     /// </summary>
-    /// <param name="ent">The entity to get the mixture for.</param>
-    /// <param name="grid">The grid that the entity may be on.</param>
-    /// <param name="map">The map that the entity may be on.</param>
-    /// <param name="ignoreExposed">If true, will ignore mixtures that the entity is contained in
-    /// (ex. lockers and cryopods) and just get the tile mixture.</param>
-    /// <param name="excite">If true, will mark the tile as active for atmosphere processing.</param>
-    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    /// <param name="entity">Entity who's containing mixture we're merging a given mixture into.</param>
+    /// <param name="mixture">The gas mixture we're merging into the containing mixture</param>
+    /// <param name="excite">Whether we should excite the gas upon merging.</param>
     [PublicAPI]
-    public GasMixture? GetContainingMixture(
-        Entity<TransformComponent?> ent,
-        Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
-        Entity<MapAtmosphereComponent?>? map,
-        bool ignoreExposed = false,
-        bool excite = false)
+    public virtual void MergeTileMixture(Entity<TransformComponent?> entity, GasMixture mixture, bool excite = false)
     {
-        if (!Resolve(ent, ref ent.Comp))
-            return null;
-
-        if (!ignoreExposed && !ent.Comp.Anchored)
-        {
-            // Used for things like disposals/cryo to change which air people are exposed to.
-            var ev = new AtmosExposedGetAirEvent((ent, ent.Comp), excite);
-            RaiseLocalEvent(ent, ref ev);
-            if (ev.Handled)
-                return ev.Gas;
-
-            // TODO ATMOS: recursively iterate up through parents
-            // This really needs recursive InContainer metadata flag for performance
-            // And ideally some fast way to get the innermost airtight container.
-        }
-
-        var position = XformSystem.GetGridTilePositionOrDefault((ent, ent.Comp));
-        return GetTileMixture(grid, map, position, excite);
+        // Handled by server
     }
 
     /// <summary>
-    /// Gets the gas mixture for a specific tile that an entity is on.
+    /// Adjusts a given gas in this entity's containing mixture.
     /// </summary>
-    /// <param name="entity">The entity to get the tile mixture for.</param>
-    /// <param name="excite">Whether to mark the tile as active for atmosphere processing.</param>
-    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
-    /// <remarks>This does not return the <see cref="GasMixture"/> that the entity
-    /// may be contained in, ex. if the entity is currently in a locker/crate with its own
-    /// <see cref="GasMixture"/>.</remarks>
+    /// <param name="entity">Entity who's containing mixture we're merging a given mixture into.</param>
+    /// <param name="gas">The gas in our given mixture we're adjusting the mols of.</param>
+    /// <param name="mols">The amount of mols we're adjusting the gas by.</param>
+    /// <param name="ignoreExposed">Whether we should ignore non-tile mixtures.</param>
+    /// <param name="excite">Whether we should excite the gas upon merging.</param>
     [PublicAPI]
-    public GasMixture? GetTileMixture(Entity<TransformComponent?> entity, bool excite = false)
+    public virtual void AdjustContainingMixture(Entity<TransformComponent?> entity, Gas gas, float mols, bool ignoreExposed = false, bool excite = false)
     {
-        if (!Resolve(entity.Owner, ref entity.Comp))
-            return null;
-
-        var indices = XformSystem.GetGridTilePositionOrDefault(entity);
-        return GetTileMixture(entity.Comp.GridUid, entity.Comp.MapUid, indices, excite);
+        // Handled by server
     }
 
     /// <summary>
-    /// Gets the gas mixture for a specific tile on a grid or map.
+    /// Adjusts a given gas in this entity's tile mixture.
     /// </summary>
-    /// <param name="grid">The grid to get the mixture from.</param>
-    /// <param name="map">The map to get the mixture from.</param>
-    /// <param name="gridTile">The tile to get the mixture from.</param>
-    /// <param name="excite">Whether to mark the tile as active for atmosphere processing.</param>
-    /// <returns>>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    /// <param name="entity">Entity who's containing mixture we're merging a given mixture into.</param>
+    /// <param name="gas">The gas in our given mixture we're adjusting the mols of.</param>
+    /// <param name="mols">The amount of mols we're adjusting the gas by.</param>
+    /// <param name="excite">Whether we should excite the gas upon merging.</param>
     [PublicAPI]
-    public virtual GasMixture? GetTileMixture(
-        Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
-        Entity<MapAtmosphereComponent?>? map,
-        Vector2i gridTile,
-        bool excite = false)
+    public virtual void AdjustTileMixture(Entity<TransformComponent?> entity, Gas gas, float mols, bool excite = false)
     {
-        return GasMixture.SpaceGas;
+        // Handled by server
+    }
+
+    /// <summary>
+    /// Tries to get the mixture of a containing entity (ex. lockers and cryopods), does not return tile mixtures.
+    /// </summary>
+    /// <param name="entity">Exposed entity that is in some gas mixture.</param>
+    /// <param name="mixture">The found gas mixture.</param>
+    /// <returns>Returns true if this entity is in an exposed mixture, false otherwise.</returns>
+    [PublicAPI]
+    public bool TryGetExposedMixture(Entity<TransformComponent?> entity, [NotNullWhen(true)] out GasMixture? mixture)
+    {
+        mixture = null;
+        if (!Resolve(entity, ref entity.Comp) || entity.Comp.Anchored)
+            return false;
+
+        // TODO ATMOS: recursively iterate up through parents
+        // This really needs recursive InContainer metadata flag for performance
+        // And ideally some fast way to get the innermost airtight container.
+        var ev = new AtmosExposedGetAirEvent((entity, entity.Comp));
+        RaiseLocalEvent(entity, ref ev);
+        mixture = ev.Gas;
+
+        return ev.Handled;
     }
 }
