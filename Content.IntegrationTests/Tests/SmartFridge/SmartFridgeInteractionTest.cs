@@ -17,19 +17,21 @@ public sealed class SmartFridgeInteractionTest : InteractionTest
   parent: PillCanister
   id: {SampleDumpableAndInsertableId}
   components:
-  - type: StorageFill
-    contents:
-    - id: PillCopper
-      amount: 5
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: PillCopper
+        amount: 5
 
 - type: entity
   parent: ChemBag
   id: {SampleDumpableId}
   components:
-  - type: StorageFill
-    contents:
-    - id: PillCopper
-      amount: 5
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: PillCopper
+        amount: 5
 ";
 
     [Test]

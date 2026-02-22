@@ -6,5 +6,5 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 public sealed partial class BreathingCondition : EntityConditionBase<BreathingCondition>
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-breathing", ("isBreathing", !Inverted));
+        Loc.GetString("entity-condition-guidebook-breathing", ("isBreathing", !Inverted));
 }

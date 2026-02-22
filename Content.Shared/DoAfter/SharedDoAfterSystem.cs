@@ -2,7 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -34,6 +36,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+        SubscribeLocalEvent<GetInteractingEntitiesEvent>(OnGetInteractingEntities);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)
@@ -128,6 +131,25 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             RemCompDeferred<ActiveDoAfterComponent>(uid);
         else
             EnsureComp<ActiveDoAfterComponent>(uid);
+    }
+
+    /// <summary>
+    /// Adds entities which have an active DoAfter matching the target.
+    /// </summary>
+    private void OnGetInteractingEntities(ref GetInteractingEntitiesEvent args)
+    {
+        var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
+        while (enumerator.MoveNext(out _, out var comp))
+        {
+            foreach (var doAfter in comp.DoAfters.Values)
+            {
+                if (doAfter.Cancelled || doAfter.Completed)
+                    continue;
+
+                if (doAfter.Args.Target == args.Target)
+                    args.InteractingEntities.Add(doAfter.Args.User);
+            }
+        }
     }
 
     #region Creation
