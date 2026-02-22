@@ -74,6 +74,14 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeList.GenerateItem = GenerateRecipeItemControl;
     }
 
+    protected override void Opened()
+    {
+        base.Opened();
+        // Give the search bar keyboard focus, since that's probably
+        // the first thing the user is going to want to do with this UI
+        SearchBar.GrabKeyboardFocus();
+    }
+
     public void SetEntity(EntityUid uid)
     {
         Entity = uid;
