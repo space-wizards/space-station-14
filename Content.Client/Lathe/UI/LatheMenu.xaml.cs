@@ -25,6 +25,8 @@ public sealed partial class LatheMenu : DefaultWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
     private readonly MaterialStorageSystem _materialStorage;
+    /// Map from RecipeListData to the control for any controls created so far
+    private readonly Dictionary<RecipeListData, RecipeControl> _dataToControls = new();
 
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
@@ -64,7 +66,7 @@ public sealed partial class LatheMenu : DefaultWindow
                     AmountLineEdit.Text = "0";
             }
 
-            PopulateRecipes();
+            UpdateCanProduce();
         };
 
         FilterOption.OnItemSelected += OnItemSelected;
@@ -136,14 +138,28 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeCount.Text = Loc.GetString("lathe-menu-recipe-count", ("count", recipesToShow.Count));
 
         var sortedRecipesToShow = recipesToShow.OrderBy(x => _lathe.GetRecipeName(x.recipe));
+        _dataToControls.Clear();
         RecipeList.PopulateList(sortedRecipesToShow.ToList());
+    }
+
+    private void UpdateCanProduce()
+    {
+        if (!_entityManager.TryGetComponent(Entity, out LatheComponent? lathe))
+        {
+            return;
+        }
+
+        foreach (KeyValuePair<RecipeListData, RecipeControl> pair in _dataToControls)
+        {
+            var canProduce = _lathe.CanProduce(Entity, pair.Key.recipe, GetQuantity(), component: lathe);
+            pair.Value.SetCanProduce(canProduce);
+        }
     }
 
     private void GenerateRecipeItemControl(ListData data, ListContainerButton button)
     {
         if (data is not RecipeListData recipeData)
             return;
-
 
         var prototype = recipeData.recipe;
         var tooltipFunction = () => GenerateTooltipText(prototype);
@@ -155,6 +171,7 @@ public sealed partial class LatheMenu : DefaultWindow
             RecipeQueueAction?.Invoke(s, GetQuantity());
         };
         button.AddChild(control);
+        _dataToControls[recipeData] = control;
     }
 
     private string GenerateTooltipText(LatheRecipePrototype prototype)
