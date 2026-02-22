@@ -211,7 +211,7 @@ public sealed class MetabolizerSystem : EntitySystem
                 if (scale < effect.MinScale)
                     continue;
 
-                if (rand.NextFloat() < effect.Probability)
+                if (rand.NextFloat() > effect.Probability)
                     continue;
 
                 // See if conditions apply
