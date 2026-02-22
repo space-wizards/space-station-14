@@ -55,11 +55,27 @@ public sealed partial class AnchorableSystem : EntitySystem
         SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
         SubscribeLocalEvent<AnchorableComponent, ComponentStartup>(OnAnchorStartup);
         SubscribeLocalEvent<AnchorableComponent, AnchorStateChangedEvent>(OnAnchorStateChange);
+
+        SubscribeLocalEvent<AnchorOnlyOnStationComponent, AnchorAttemptEvent>(OnAnchorOnStation);
     }
 
     private void OnAnchorStartup(EntityUid uid, AnchorableComponent comp, ComponentStartup args)
     {
         _appearance.SetData(uid, AnchorVisuals.Anchored, Transform(uid).Anchored);
+    }
+
+    private void OnAnchorOnStation(Entity<AnchorOnlyOnStationComponent> ent, ref AnchorAttemptEvent args)
+    {
+        var entityParent = Comp<TransformComponent>(ent).ParentUid;
+        var isOnStation = _stationSystem.GetStations()
+            .Select(stationEnt => _stationSystem.GetLargestGrid(stationEnt))
+            .Contains(entityParent);
+
+        if (isOnStation)
+            return;
+
+        _popup.PopupClient(Loc.GetString(ent.Comp.PopupMessageAnchorFail), ent, args.User);
+        args.Cancel();
     }
 
     private void OnAnchorStateChange(EntityUid uid, AnchorableComponent comp, AnchorStateChangedEvent args)
@@ -238,20 +254,6 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         // Log anchor attempt (server only)
         _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
-
-        if (TryComp<AnchorOnlyOnStationComponent>(uid, out var onlyOnStationComp))
-        {
-            var entityParent = transform.ParentUid;
-            var isOnStation = _stationSystem.GetStations()
-                .Select(stationEnt => _stationSystem.GetLargestGrid(stationEnt))
-                .Contains(entityParent);
-
-            if (!isOnStation)
-            {
-                _popup.PopupClient(Loc.GetString(onlyOnStationComp.PopupMessageAnchorFail), uid, userUid);
-                return;
-            }
-        }
 
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
             !TileFree(transform.Coordinates, anchorBody))
