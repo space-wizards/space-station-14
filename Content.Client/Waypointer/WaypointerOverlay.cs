@@ -41,7 +41,7 @@ public sealed class WaypointerOverlay : Overlay
     // This is used to check if a prototype is tracking the station grid.
     private readonly string _stationCompName = "StationData";
     // Caching the Uid for the station grid.
-    private readonly EntityUid? _mainStationGrid;
+    private EntityUid? _mainStationGrid;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     internal WaypointerOverlay()
@@ -56,8 +56,6 @@ public sealed class WaypointerOverlay : Overlay
         _unshadedShader = _prototype.Index(UnshadedShader).Instance();
         _shuttle = _entity.System<ShuttleSystem>();
         _whitelist = _entity.System<EntityWhitelistSystem>();
-
-        _mainStationGrid = GetStationGrid();
     }
 
     /// <summary>
@@ -65,6 +63,9 @@ public sealed class WaypointerOverlay : Overlay
     /// </summary>
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (_mainStationGrid == null)
+            _mainStationGrid = GetStationGrid();
+
         var handle = args.WorldHandle;
         handle.UseShader(_unshadedShader); // Waypointers are unshaded.
 

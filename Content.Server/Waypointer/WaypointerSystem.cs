@@ -156,12 +156,12 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
             var waypointQuery = _entity.CompRegistryQueryEnumerator(prototype.TrackedComponents);
             while (waypointQuery.MoveNext(out var target))
             {
-                // Check if the target fails/passes the whitelist/blacklist.
-                if (_whitelist.CheckBoth(target, whitelist: prototype.Whitelist, blacklist: prototype.Blacklist))
-                    continue;
-
                 // Grids somehow already work, so we exclude them. No idea why. But I fear messing with them.
-                if (HasComp<MapGridComponent>(target))
+                if (HasComp<MapGridComponent>(target)
+                    // If it doesn't have the trackable component either, it doesn't work.
+                    || HasComp<WaypointerTrackableComponent>(target)
+                    // Check if the target fails/passes the whitelist/blacklist.
+                    || _whitelist.CheckBoth(target, whitelist: prototype.Whitelist, blacklist: prototype.Blacklist))
                     continue;
 
                 var targetXform = Transform(target);
