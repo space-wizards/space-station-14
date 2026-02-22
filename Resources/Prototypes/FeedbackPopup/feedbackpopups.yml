@@ -17,12 +17,3 @@
   responseType: "General Feedback"
   responseLink: "https://forum.spacestation14.com/c/development/feedback/51"
   showRoundEnd: false
-
-- type: feedbackPopup
-  id: GibbingFeedback
-  popupOrigin: wizden_master
-  title: "[bold]Feedback on Gibbing Removal[/bold]"
-  description: >-
-    We're testing out the removal of gibbing to see how it affects the game. Please leave feedback on how your experience was removed/worsened so we can account for it!
-  responseType: "Experimental Feedback"
-  responseLink: "https://forum.spacestation14.com/t/gibbing-removal-feedback/26320"
