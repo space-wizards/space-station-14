@@ -211,9 +211,7 @@ public sealed class MetabolizerSystem : EntitySystem
                 if (scale < effect.MinScale)
                     continue;
 
-                var fard = rand.NextFloat();
-                Log.Debug($"Random rolled: {fard}");
-                if (effect.Probability < 1.0f && fard < effect.Probability)
+                if (rand.NextFloat() < effect.Probability)
                     continue;
 
                 // See if conditions apply
