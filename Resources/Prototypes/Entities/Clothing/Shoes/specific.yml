@@ -203,7 +203,7 @@
 - type: entity
   parent: ClothingShoesChameleon
   id: ClothingShoesChameleonNoSlips
-  name: black shoes #actual name and description in uplink_catalog.yml
+  name: black shoes #actual name and description in wearables.yml
   suffix: No-slip, Chameleon
   description: Stylish black shoes.
   components:
