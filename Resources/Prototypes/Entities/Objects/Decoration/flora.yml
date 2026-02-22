@@ -233,13 +233,28 @@
         tree06: ""
 
 - type: entity
-  parent: FloraTree
+  parent: FloraTree # We cannot also inherit from BaseControllable, because that would also inherit GravityAffected, thus causing the tree to be pullable.
   id: DionaTree
   name: tree
   description: Yep, it's a tree. Why do you feel it looking at you?
   components:
-  - type: Examiner # Lets polymorphed diona inspect the area around them, their "eyes" still work.
+  - type: Actions
+  - type: Alerts
   - type: BodyEmotes # Shhh... the trees are speaking
+  - type: BlockMovement # They should never be moving!
+    blockInteraction: false
+    blockUse: false
+  - type: Clickable
+  - type: ComplexInteraction
+  - type: DoAfter
+  - type: Examiner # Lets polymorphed diona inspect the surrounding area, their "eyes" still work.
+  - type: Input
+    context: "human"
+  - type: Puller # Imagine vine-tentacles made out of biomass
+    needsHands: false
+  - type: Transform # Don't move even when pulling stuff
+    anchored: true
+  - type: MindContainer
     soundsId: DionaBodyEmotes
   - type: Speech
     speechSounds: Alto
