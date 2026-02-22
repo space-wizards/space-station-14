@@ -68,7 +68,7 @@ public sealed class VoltageTogglerSystem : EntitySystem
         if (TryComp<PowerConsumerComponent>(entity, out var powerConsumerComp))
         {
             powerConsumerComp.Voltage = setting.Voltage;
-            powerConsumerComp.SetDrawRate(setting.Wattage);
+            powerConsumerComp.DrawRate = setting.Wattage;
         }
     }
 }
