@@ -69,7 +69,7 @@ public sealed partial class LatheMenu : DefaultWindow
             UpdateCanProduce();
         };
 
-        FilterOption.OnItemSelected += OnItemSelected;
+        FilterOption.OnItemSelected += OnFilterSelected;
 
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
         DeleteFabricating.OnPressed += _ => DeleteFabricatingAction?.Invoke();
@@ -347,7 +347,7 @@ public sealed partial class LatheMenu : DefaultWindow
         return new Control();
     }
 
-    private void OnItemSelected(OptionButton.ItemSelectedEventArgs obj)
+    private void OnFilterSelected(OptionButton.ItemSelectedEventArgs obj)
     {
         FilterOption.SelectId(obj.Id);
         if (obj.Id == -1)
