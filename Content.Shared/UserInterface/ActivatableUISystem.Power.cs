@@ -16,7 +16,7 @@ public sealed partial class ActivatableUISystem
         SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, ItemToggledEvent>(OnToggled);
         SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, BoundUIOpenedEvent>(OnBatteryOpened);
         SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, BoundUIClosedEvent>(OnBatteryClosed);
-        SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, PredictedBatteryStateChangedEvent>(OnBatteryStateChanged);
+        SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, BatteryStateChangedEvent>(OnBatteryStateChanged);
         SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, ActivatableUIOpenAttemptEvent>(OnBatteryOpenAttempt);
     }
 
@@ -57,7 +57,7 @@ public sealed partial class ActivatableUISystem
             _toggle.TryDeactivate(uid);
     }
 
-    private void OnBatteryStateChanged(Entity<ActivatableUIRequiresPowerCellComponent> ent, ref PredictedBatteryStateChangedEvent args)
+    private void OnBatteryStateChanged(Entity<ActivatableUIRequiresPowerCellComponent> ent, ref BatteryStateChangedEvent args)
     {
         // Deactivate when empty.
         if (args.NewState != BatteryState.Empty)
@@ -74,8 +74,9 @@ public sealed partial class ActivatableUISystem
             return;
 
         // Check if we have the appropriate drawrate / userate to even open it.
-        if (!_cell.HasActivatableCharge(uid, user: args.User, predicted: true) ||
-            !_cell.HasDrawCharge(uid, user: args.User, predicted: true))
+        // Don't pass in the user for the popup if silent.
+        if (!_cell.HasActivatableCharge(uid, user: args.Silent ? null : args.User, predicted: true) ||
+            !_cell.HasDrawCharge(uid, user: args.Silent ? null : args.User, predicted: true))
         {
             args.Cancel();
         }

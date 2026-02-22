@@ -1,7 +1,7 @@
 - type: entity
-  id: BoxBase
-  parent: BaseStorageItem
   abstract: true
+  parent: BaseStorageItem
+  id: BoxBase
   components:
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
@@ -17,21 +17,28 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-  - type: Construction
-    graph: BoxCardboard
-    node: boxcardboard
-    containers:
-      - storagebase
-  - type: PhysicalComposition
-    materialComposition:
-      Cardboard: 100
   - type: StaticPrice
     price: 10
 
 - type: entity
-  name: circuit tote
-  id: ToteBase
+  abstract: true
   parent: BoxBase
+  id: BoxBaseSmall
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Storage
+    grid:
+    - 0,0,1,1
+  - type: StaticPrice # Half of the "regular" box
+    price: 5
+
+- type: entity
+  parent: BoxBase
+  id: ToteBase
+  name: circuit tote
   description: A large tote for carrying circuit boards.
   components:
   - type: Sprite

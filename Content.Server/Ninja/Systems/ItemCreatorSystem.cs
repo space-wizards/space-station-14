@@ -9,7 +9,7 @@ namespace Content.Server.Ninja.Systems;
 
 public sealed class ItemCreatorSystem : SharedItemCreatorSystem
 {
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 

@@ -1,5 +1,4 @@
 using Content.Server.Administration;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
@@ -10,8 +9,7 @@ namespace Content.Server.Power
     [AdminCommand(AdminFlags.Debug)]
     public sealed class SetBatteryPercentCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly BatterySystem _batterySystem = default!;
-        [Dependency] private readonly PredictedBatterySystem _predictedBatterySystem = default!;
+        [Dependency] private readonly SharedBatterySystem _batterySystem = default!;
 
         public override string Command => "setbatterypercent";
 
@@ -39,8 +37,6 @@ namespace Content.Server.Power
 
             if (EntityManager.TryGetComponent<BatteryComponent>(id, out var battery))
                 _batterySystem.SetCharge((id.Value, battery), battery.MaxCharge * percent / 100);
-            else if (EntityManager.TryGetComponent<PredictedBatteryComponent>(id, out var pBattery))
-                _predictedBatterySystem.SetCharge((id.Value, pBattery), pBattery.MaxCharge * percent / 100);
             else
             {
                 shell.WriteLine(Loc.GetString($"cmd-setbatterypercent-battery-not-found", ("id", id)));

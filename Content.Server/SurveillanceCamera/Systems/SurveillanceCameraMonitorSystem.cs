@@ -185,7 +185,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         // there would be a null check here, but honestly
         // whichever one is the "latest" switch message gets to
         // do the switch
-        TrySwitchCameraByAddress(uid, message.Address, component);
+        TrySwitchCameraByAddress(uid, message.Address, message.CameraSubnet, component);
     }
 
     private void OnPowerChanged(EntityUid uid, SurveillanceCameraMonitorComponent component, ref PowerChangedEvent args)
@@ -426,15 +426,18 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         UpdateUserInterface(uid, monitor);
     }
 
-    private void TrySwitchCameraByAddress(EntityUid uid, string address,
-        SurveillanceCameraMonitorComponent? monitor = null)
+    private void TrySwitchCameraByAddress(EntityUid uid, string address, string? cameraSubnet = null, SurveillanceCameraMonitorComponent? monitor = null)
     {
-        if (!Resolve(uid, ref monitor)
-            || string.IsNullOrEmpty(monitor.ActiveSubnet)
-            || !monitor.KnownSubnets.TryGetValue(monitor.ActiveSubnet, out var subnetAddress))
-        {
+        if (!Resolve(uid, ref monitor))
             return;
-        }
+
+        if (cameraSubnet != null && cameraSubnet != monitor.ActiveSubnet)
+            SetActiveSubnet(uid, cameraSubnet, monitor);
+
+        var activeSubnet = monitor.ActiveSubnet;
+
+        if (string.IsNullOrEmpty(activeSubnet) || !monitor.KnownSubnets.TryGetValue(activeSubnet, out var subnetAddress))
+            return;
 
         var payload = new NetworkPayload()
         {

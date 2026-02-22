@@ -1,0 +1,12 @@
+﻿<Project>
+  <!--
+  Content specific properties
+  Import *before* Robust.Properties.targets
+  -->
+
+  <PropertyGroup>
+    <LangVersion Condition="'$(LangVersion)' == ''">14</LangVersion>
+    <IsPackable Condition="'$(IsPackable)' == ''">false</IsPackable>
+    <Nullable Condition="'$(Nullable)' == ''">enable</Nullable>
+  </PropertyGroup>
+</Project>

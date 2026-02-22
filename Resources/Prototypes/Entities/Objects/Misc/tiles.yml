@@ -190,6 +190,48 @@
     stackType: FloorTileDarkPavementVertical
 
 - type: entity
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkSlatsContinuous
+  name: dark steel continuous slat tile
+  components:
+  - type: Sprite
+    state: dark-vertical-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkSlatsContinuous
+  - type: Stack
+    stackType: FloorTileDarkSlatsContinuous
+
+- type: entity
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkVerticalSlatsBordered
+  name: dark steel bordered vertical slat tile
+  components:
+  - type: Sprite
+    state: dark-vertical-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkVerticalSlatsBordered
+  - type: Stack
+    stackType: FloorTileDarkVerticalSlatsBordered
+
+- type: entity
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkHorizontalSlatsBordered
+  name: dark steel bordered horizontal slat tile
+  components:
+  - type: Sprite
+    state: dark-horizontal-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkHorizontalSlatsBordered
+  - type: Stack
+    stackType: FloorTileDarkHorizontalSlatsBordered
+
+- type: entity
   name: offset dark steel tile
   parent: FloorTileItemDark
   id: FloorTileItemDarkOffset
@@ -263,6 +305,48 @@
       - FloorSteelDiagonal
   - type: Stack
     stackType: FloorTileSteelDiagonal
+
+- type: entity
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelSlatsContinuous
+  name: steel continuous slat tile
+  components:
+  - type: Sprite
+    state: steel-vertical-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorSteelSlatsContinuous
+  - type: Stack
+    stackType: FloorTileSteelSlatsContinuous
+
+- type: entity
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelVerticalSlatsBordered
+  name: steel vertical bordered slat tile
+  components:
+  - type: Sprite
+    state: steel-vertical-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorSteelVerticalSlatsBordered
+  - type: Stack
+    stackType: FloorTileSteelVerticalSlatsBordered
+
+- type: entity
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelHorizontalSlatsBordered
+  name: steel horizontal bordered slat tile
+  components:
+  - type: Sprite
+    state: steel-horizontal-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorSteelHorizontalSlatsBordered
+  - type: Stack
+    stackType: FloorTileSteelHorizontalSlatsBordered
 
 - type: entity
   name: steel herringbone
@@ -464,6 +548,48 @@
       - FloorWhitePavementVertical
   - type: Stack
     stackType: FloorTileWhitePavementVertical
+
+- type: entity
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteVerticalSlatsBordered
+  name: white steel vertical bordered slat tile
+  components:
+  - type: Sprite
+    state: white-vertical-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhiteVerticalSlatsBordered
+  - type: Stack
+    stackType: FloorTileWhiteVerticalSlatsBordered
+
+- type: entity
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteSlatsContinuous
+  name: white steel continuous slat tile
+  components:
+  - type: Sprite
+    state: white-vertical-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhiteSlatsContinuous
+  - type: Stack
+    stackType: FloorTileWhiteSlatsContinuous
+
+- type: entity
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteHorizontalSlatsBordered
+  name: white steel horizontal bordered slat tile
+  components:
+  - type: Sprite
+    state: white-horizontal-slats
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhiteHorizontalSlatsBordered
+  - type: Stack
+    stackType: FloorTileWhiteHorizontalSlatsBordered
 
 - type: entity
   name: steel tile
@@ -996,6 +1122,50 @@
       - FloorOldConcreteSmooth
   - type: Stack
     stackType: FloorTileOldConcreteSmooth
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemIronsandConcrete
+  name: iron sand concrete tile
+  components:
+  - type: Sprite
+    state: ironsandconcrete
+  - type: Item
+    heldPrefix: ironsandconcrete
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorIronsandConcrete
+  - type: Stack
+    stackType: FloorTileIronsandConcrete
+
+- type: entity
+  parent: FloorTileItemIronsandConcrete
+  id: FloorTileItemIronsandConcreteMono
+  name: iron sand concrete mono tile
+  components:
+  - type: Sprite
+    state: ironsandconcrete-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorIronsandConcreteMono
+  - type: Stack
+    stackType: FloorTileIronsandConcreteMono
+
+- type: entity
+  parent: FloorTileItemIronsandConcrete
+  id: FloorTileItemIronsandConcreteSmooth
+  name: iron sand concrete smooth
+  components:
+  - type: Sprite
+    state: ironsandconcrete-smooth
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorIronsandConcreteSmooth
+  - type: Stack
+    stackType: FloorTileIronsandConcreteSmooth
 
 # Carpets
 - type: entity
@@ -1608,6 +1778,40 @@
     - FloorAstroAsteroidSandBorderless
   - type: Stack
     stackType: FloorTileAstroAsteroidSand
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemAstroIronsand
+  name: astro-ironsand
+  description: Fake red sand. Imported from fake Mars.
+  components:
+  - type: Sprite
+    state: astro-ironsand
+  - type: Item
+    heldPrefix: ironsand
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroIronsand
+  - type: Stack
+    stackType: FloorTileAstroIronsand
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemAstroIronsandBorderless
+  name: borderless astro-ironsand
+  description: Fake red sand. Imported from fake Mars.
+  components:
+  - type: Sprite
+    state: ironsand
+  - type: Item
+    heldPrefix: ironsand
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroIronsandBorderless
+  - type: Stack
+    stackType: FloorTileAstroIronsandBorderless
 
 - type: entity
   parent: FloorTileItemBase
