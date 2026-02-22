@@ -1,7 +1,6 @@
-using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.GameStates;
 
-namespace Content.Server.Explosion.Components;
+namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Sends a trigger when the entity starts to rot.
