@@ -3965,14 +3965,6 @@
   id: 9535
   time: '2026-02-18T21:10:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42930
-- author: slarticodefast
-  changes:
-  - message: Using the "fuckrules" command will now create an admin log and alert
-      the admins via chat.
-    type: Add
-  id: 9536
-  time: '2026-02-21T20:22:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42988
 - author: Samuka
   changes:
   - message: Added more xenoborg names!
