@@ -11,10 +11,12 @@ using Content.Shared.Roles;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Clothing.Systems;
 using Content.Server.Implants;
+using Content.Server.VoiceMask;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.PDA;
+using Content.Shared.VoiceMask;
 
 namespace Content.Server.Access.Systems
 {
@@ -39,6 +41,7 @@ namespace Content.Server.Access.Systems
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
             SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(OnChameleonControllerOutfitChangedItem);
+            SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<VoiceMaskNameUpdatedEvent>>(OnVoiceMaskNameChanged);
         }
 
         private void OnChameleonControllerOutfitChangedItem(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
@@ -78,6 +81,17 @@ namespace Content.Server.Access.Systems
                 return;
 
             _chameleon.SetSelectedPrototype(ent, comp.IdCard);
+        }
+
+        private void OnVoiceMaskNameChanged(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<VoiceMaskNameUpdatedEvent> args)
+        {
+            if (!TryComp<IdCardComponent>(ent, out var idCard))
+                return;
+
+            if (!args.Args.VoiceMask.Comp.ChangeIDName)
+                return;
+
+            _cardSystem.TryChangeFullName(ent, args.Args.NewName, idCard);
         }
 
         private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
