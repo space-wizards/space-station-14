@@ -95,7 +95,8 @@ public abstract partial class SharedAtmosphereSystem
     /// </summary>
     public void Merge(GasMixture receiver, GasMixture giver)
     {
-        if (receiver.Immutable) return;
+        if (receiver.Immutable)
+            return;
 
         if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
         {

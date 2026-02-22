@@ -32,9 +32,15 @@ public abstract partial class SharedAtmosphereSystem : EntitySystem
         InitializeCVars();
     }
 
-    public GasPrototype GetGas(int gasId) => GasPrototypes[gasId];
+    public GasPrototype GetGas(int gasId)
+    {
+        return GasPrototypes[gasId];
+    }
 
-    public GasPrototype GetGas(Gas gasId) => GasPrototypes[(int) gasId];
+    public GasPrototype GetGas(Gas gasId)
+    {
+        return GasPrototypes[(int)gasId];
+    }
 
     public IEnumerable<GasPrototype> Gases => GasPrototypes;
 }
@@ -57,7 +63,7 @@ public enum AtmosphereProcessingState : byte
 /// <summary>
 /// Data on the airtightness of a <see cref="TileAtmosphere"/>.
 /// Cached on the <see cref="TileAtmosphere"/> and updated during
-/// <see cref="AtmosphereSystem.ProcessRevalidate"/> if it was invalidated.
+/// <see cref="AtmosphereProcessingState.Revalidate"/> if it was invalidated.
 /// </summary>
 /// <param name="BlockedDirections">The current directions blocked on this tile.
 /// This is where air cannot flow to.</param>
