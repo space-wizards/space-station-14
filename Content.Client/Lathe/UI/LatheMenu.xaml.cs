@@ -153,6 +153,7 @@ public sealed partial class LatheMenu : DefaultWindow
     {
         StringBuilder sb = new();
         var multiplier = _entityManager.GetComponent<LatheComponent>(Entity).MaterialUseMultiplier;
+        multiplier *= GetQuantity();
 
         foreach (var (id, amount) in prototype.Materials)
         {
