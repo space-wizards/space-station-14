@@ -43,8 +43,7 @@ namespace Content.Client.Fluids.UI
 
             foreach (var (key, value) in absorbent.Progress)
             {
-                var uid = $"{key.RByte},{key.GByte},{key.AByte}";
-                Bar.SetEntry(uid, value, key);
+                Bar.SetEntry(key.ToString(), value, key);
             }
         }
     }
