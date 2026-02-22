@@ -23,25 +23,11 @@ public sealed class SpawnOnBatteryLevelSystem : EntitySystem
         if (!TryComp(entity, out TransformComponent? xform))
             return;
 
-        var spawnFlag = false;
-        var powerToConsume = 0f;
-
-        if (entity.Comp.Level != null)
-        {
-            spawnFlag = battery.LastCharge / battery.MaxCharge >= entity.Comp.Level;
-            powerToConsume = (entity.Comp.Level * battery.MaxCharge).Value;
-        }
-        else if (entity.Comp.Charge != null)
-        {
-            spawnFlag = battery.LastCharge >= entity.Comp.Charge;
-            powerToConsume = entity.Comp.Charge.Value;
-        }
-
-        if (spawnFlag)
+        if (battery.LastCharge >= entity.Comp.Charge)
         {
             Spawn(entity.Comp.Prototype, xform.Coordinates);
 
-            _battery.ChangeCharge((entity, battery), -powerToConsume);
+            _battery.ChangeCharge((entity, battery), -entity.Comp.Charge);
         }
 
     }

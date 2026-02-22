@@ -16,14 +16,8 @@ public sealed partial class SpawnOnBatteryLevelComponent : Component
     public EntProtoId Prototype = string.Empty;
 
     /// <summary>
-    /// Percentage of the battery to spawn entity
-    /// </summary>
-    [DataField]
-    public float? Level = 1f;
-
-    /// <summary>
     /// Amount of power in the battery (in joules) to spawn entity
     /// </summary>
     [DataField]
-    public float? Charge;
+    public float Charge;
 }

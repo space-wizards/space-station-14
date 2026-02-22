@@ -96,6 +96,7 @@
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
     prototype: MaterialXenoborgCrystal1
+    charge: 2000000 # 2MJ
 
 - type: entity
   parent: XenoborgExtractor
