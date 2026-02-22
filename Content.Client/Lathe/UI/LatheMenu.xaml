@@ -87,7 +87,8 @@
                     Name="FabricatingContainer"
                     Orientation="Horizontal"
                     HorizontalExpand="True"
-                    SizeFlagsStretchRatio="2">
+                    SizeFlagsStretchRatio="2"
+                    Visible="False">
                     <PanelContainer
                         VerticalExpand="True"
                         HorizontalExpand="True"

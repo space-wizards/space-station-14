@@ -142,7 +142,7 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeList.PopulateList(sortedRecipesToShow.ToList());
     }
 
-    private void UpdateCanProduce()
+    public void UpdateCanProduce()
     {
         if (!_entityManager.TryGetComponent(Entity, out LatheComponent? lathe))
         {
