@@ -6,7 +6,7 @@ namespace Content.Server.Power.Components;
 /// <summary>
 ///     Changes the voltage of a device with <see cref="PowerConsumerComponent"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class VoltageTogglerComponent : Component
 {
     /// <summary>
