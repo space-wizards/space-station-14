@@ -1,0 +1,11 @@
+- type: antagLoadout
+  id: ParadoxClone
+  startingGear: ParadoxCloneGear
+  roleLoadout:
+  - RoleSurvivalVoxTank # give vox something to breath in case they don't get a copy
+  briefing:
+    text: paradox-clone-role-greeting
+    color: lightblue
+    sound: /Audio/Misc/paradox_clone_greeting.ogg
+  mindRoles:
+  - MindRoleParadoxClone

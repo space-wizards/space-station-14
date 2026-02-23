@@ -1,0 +1,23 @@
+- type: antagLoadout
+  id: Ninja
+  startingGear: SpaceNinjaGear
+  roleLoadout:
+  - RoleSurvivalSpaceNinja
+  briefing:
+    text: ninja-role-greeting
+    color: Green
+    sound: /Audio/Misc/ninja_greeting.ogg
+  addComponents:
+  - type: SpaceNinja
+  - type: AutoImplant
+    implants:
+    - DeathAcidifierImplant
+  - type: RandomMetadata
+    nameSegments:
+    - NamesNinjaTitle
+    - NamesNinja
+    nameFormat: name-format-ninja
+  factions: 
+  - Syndicate
+  mindRoles:
+  - MindRoleNinja

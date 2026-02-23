@@ -1,0 +1,23 @@
+- type: antagLoadout
+  id: Traitor
+  blacklist:
+    components:
+    - AntagImmune
+  mindRoles:
+  - MindRoleTraitor
+
+- type: antagLoadout
+  id: TraitorSleeper
+  blacklist:
+    components:
+    - AntagImmune
+  mindRoles:
+  - MindRoleTraitorSleeper
+
+- type: antagLoadout
+  id: TraitorReinforcement
+  mindRoles:
+  - MindRoleSyndicateReinforcement
+  briefing:
+    text: roles-antag-syndicate-agent-reinforcement-objective
+    sound: /Audio/Ambience/Antag/traitor_start.ogg

@@ -23,5 +23,11 @@ public sealed partial class HeadRevolutionaryComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
 
+    /// <summary>
+    /// Loadout given to revolutionaries after conversion
+    /// </summary>
+    [DataField]
+    public ProtoId<AntagLoadoutPrototype> RevolutionaryLoadout = "Revolutionary";
+
     public override bool SessionSpecific => true;
 }

@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Antag;
@@ -13,6 +11,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.Antag;
 
@@ -330,6 +331,20 @@ public sealed partial class AntagSelectionSystem
             _chat.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel,
                 briefingColor);
         }
+    }
+
+
+
+    public AntagData CreateAntagData(AntagLoadoutPrototype antag, EntityUid player)
+    {
+        var playerComponents = new ComponentRegistry();
+        foreach (var (name, entry) in antag.AddComponents)
+        {
+            var compType = entry.Component.GetType();
+            if (_ent.HasComponent(player, type: compType))
+                playerComponents.Add(name, entry);
+        }
+        return new AntagData { MindRoles = antag.MindRoles, AntagComponents = antag.AddComponents, PlayerComponents = playerComponents, AntagEntity = player, Factions = antag.Factions };
     }
 
     /// <summary>

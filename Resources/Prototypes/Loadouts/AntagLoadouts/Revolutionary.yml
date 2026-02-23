@@ -1,0 +1,33 @@
+- type: antagLoadout
+  id: HeadRevolutionary
+  briefing:
+    text: head-rev-role-greeting
+    color: CornflowerBlue
+    sound: "/Audio/Ambience/Antag/headrev_start.ogg"
+  startingGear: HeadRevGear
+  allowNonHumans: false
+  factions: 
+  - Revolutionary
+  addComponents:
+  - type: Revolutionary
+  - type: HeadRevolutionary
+  mindRoles:
+  - MindRoleHeadRevolutionary
+
+- type: antagLoadout
+  id: Revolutionary
+  briefing:
+    text: rev-role-greeting
+    color: Red
+    sound: "/Audio/Ambience/Antag/headrev_start.ogg"
+  factions: 
+  - Revolutionary
+  blackList: 
+    components:
+    - Revolutionary
+    - MindShield
+    - Zombie
+  addComponents:
+  - type: Revolutionary
+  mindRoles:
+  - MindRoleRevolutionary
