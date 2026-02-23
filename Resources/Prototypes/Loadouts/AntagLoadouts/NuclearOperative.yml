@@ -9,8 +9,10 @@
     nameSegments:
     - NamesSyndicateNormal
     nameFormat: name-format-nukie-operator
-  factions: 
+  addFactions: 
   - Syndicate
+  removeFactions:
+  - NanoTrasen
   mindRoles:
   - MindRoleNukeops
 
@@ -25,8 +27,10 @@
     nameSegments:
     - NamesSyndicateElite
     nameFormat: name-format-nukie-commander
-  factions: 
+  addFactions: 
   - Syndicate
+  removeFactions:
+  - NanoTrasen
   mindRoles:
   - MindRoleNukeopsCommander
 
@@ -41,8 +45,10 @@
     nameSegments:
     - NamesSyndicateNormal
     nameFormat: name-format-nukie-agent
-  factions: 
+  addFactions: 
   - Syndicate
+  removeFactions:
+  - NanoTrasen
   mindRoles:
   - MindRoleNukeopsMedic
 
@@ -58,7 +64,9 @@
     - NamesSyndicatePrefix
     - NamesSyndicateNormal
     nameFormat: name-format-nukie-generic
-  factions: 
+  addFactions: 
   - Syndicate
+  removeFactions:
+  - NanoTrasen
   mindRoles:
   - MindRoleLoneops

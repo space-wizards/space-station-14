@@ -53,6 +53,12 @@ public sealed partial class AntagLoadoutPrototype : IPrototype, IInheritingProto
     public ComponentRegistry AddComponents = new();
 
     /// <summary>
+    /// Components removed to the player.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry RemoveComponents = new();
+
+    /// <summary>
     /// Components added to the player's mind.
     /// Do NOT use this to add role-type components. Add those as MindRoles instead
     /// </summary>
@@ -81,7 +87,13 @@ public sealed partial class AntagLoadoutPrototype : IPrototype, IInheritingProto
     /// NPCFactions added to the player.
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<NpcFactionPrototype>> Factions = new();
+    public HashSet<ProtoId<NpcFactionPrototype>> AddFactions = new();
+
+    /// <summary>
+    /// NPCFactions removed to the player.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<NpcFactionPrototype>> RemoveFactions = new();
 
     /// <summary>
     /// A briefing shown to the player.

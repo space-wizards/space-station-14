@@ -437,14 +437,16 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (playerMind.Comp.OwnedEntity == antagData.AntagEntity && removeAntagComponents)
         {
-            _ent.RemoveComponents(antagData.AntagEntity, antagData.AntagComponents);
+            _ent.RemoveComponents(antagData.AntagEntity, antagData.AddAntagComponents);
 
             _ent.AddComponents(antagData.AntagEntity, antagData.PlayerComponents);
 
-            foreach (var faction in antagData.Factions)
+            foreach (var faction in antagData.AddFactions)
             {
                 _npcFaction.RemoveFaction(antagData.AntagEntity, faction.Id);
             }
+
+            _npcFaction.AddFactions(antagData.AntagEntity, antagData.RemoveFactions);
         }
 
         return true;
@@ -630,7 +632,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
         _ent.AddComponents(antag, loadout.AddComponents);
 
-        _npcFaction.AddFactions(antag, loadout.Factions);
+        _ent.RemoveComponents(antag, loadout.RemoveComponents);
+
+        _npcFaction.AddFactions(antag, loadout.AddFactions);
+
+        foreach (var faction in antagData.RemoveFactions)
+        {
+            _npcFaction.RemoveFaction(antagData.AntagEntity, faction.Id);
+        }
 
         // Equip the entity's RoleLoadout and LoadoutGroup
         List<ProtoId<StartingGearPrototype>> gear = new();

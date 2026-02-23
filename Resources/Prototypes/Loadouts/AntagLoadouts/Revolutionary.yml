@@ -6,7 +6,7 @@
     sound: "/Audio/Ambience/Antag/headrev_start.ogg"
   startingGear: HeadRevGear
   allowNonHumans: false
-  factions: 
+  addfactions: 
   - Revolutionary
   addComponents:
   - type: Revolutionary
@@ -20,7 +20,7 @@
     text: rev-role-greeting
     color: Red
     sound: "/Audio/Ambience/Antag/headrev_start.ogg"
-  factions: 
+  addfactions: 
   - Revolutionary
   blacklist: 
     components:

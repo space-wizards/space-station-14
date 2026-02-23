@@ -15,7 +15,9 @@
     - NamesWizardFirst
     - NamesWizardLast
     nameFormat: name-format-wizard
-  factions:
+  addFactions:
   - Wizard
+  removeFactions:
+  - NanoTrasen
   mindRoles:
   - MindRoleWizard
