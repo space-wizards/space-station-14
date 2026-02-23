@@ -31,7 +31,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
     {
         SubscribeLocalEvent<SlurredAccentComponent, AccentGetEvent>(OnAccent);
         SubscribeLocalEvent<SlurredAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>(OnAccentRelayed);
-        SubscribeLocalEvent<SlurredAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args), before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
+        SubscribeLocalEvent<SlurredAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args));
 
     }
 
