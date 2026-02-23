@@ -1,0 +1,61 @@
+# When adding new balloons, also add it to id: AllMiscToysTable
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseBalloon
+  components:
+  - type: Sprite
+    noRot: true
+  - type: Item
+    size: Small
+  - type: EmitSoundOnCollide
+    sound: &SoundBalloonHit
+      path: /Audio/Effects/balloon_hits.ogg
+  - type: EmitSoundOnLand
+    sound: *SoundBalloonHit
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: TileFrictionModifier
+    modifier: 0.3
+  - type: Tag
+    tags:
+    - Balloon
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonSyn
+  name: syndie balloon
+  description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/syndicate.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/syndicate.rsi
+  - type: StaticPrice
+    price: 100 # Entertainment.
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonNT
+  name: nanotrasen balloon
+  description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/nanotrasen.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/nanotrasen.rsi
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonCorgi
+  name: corgi balloon
+  description: Just like owning a real dog - but a lot floatier.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/corgi.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/corgi.rsi

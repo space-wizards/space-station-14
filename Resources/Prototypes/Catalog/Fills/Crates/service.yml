@@ -8,13 +8,14 @@
     containers:
       entity_storage: !type:AllSelector
         children:
+        - !type:NestedSelector
+          tableId: AllSoapsTable
         - id: MopItem
         - id: MopBucketCubeWrapped
         - id: Bucket
           amount: 3
         - id: WetFloorSign
           amount: 2
-        - id: Soap
         - id: SprayBottleSpaceCleaner
           amount: 2
         - id: TrashBag
@@ -124,24 +125,37 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: ClothingUniformJumpskirtPerformer
-        - id: ClothingShoesBootsPerformer
-        - id: ClothingHeadPerformerWig
+        - id: BarberScissors
         - id: ClothingOuterSuitMonkey
         - id: ClothingHeadHatAnimalMonkey
-        - id: ClothingNeckCloakMoth
-        - id: ClothingMaskClown
-        - id: ClothingMaskMime
-        - id: ClothingShoesClown
         - id: ClothingUniformJumpskirtJanimaid
-        - id: ClothingNeckCloakVoid
-        - id: RevolverCapGun
-        - id: BarberScissors
         - id: ClothingUniformJumpskirtOldDress
-        - id: BikeHorn
-        - id: ClownRecorder
-        - id: ClothingBeltSuspendersRed
-        - id: ClothingBeltSuspendersBlack
+        - id: ClothingHeadHatMagician
+        - !type:AllSelector # Cloaks
+          children:
+          - id: ClothingNeckCloakMoth
+          - id: ClothingNeckCloakVoid
+        - !type:AllSelector # Clown starter kit
+          children:
+          - id: ClothingMaskClown
+          - id: ClownRecorder
+          - !type:GroupSelector
+            children:
+            - id: ClothingShoesClown
+            - id: ClothingShoesClownLarge
+              weight: 0.1
+          - !type:NestedSelector
+            tableId: RandomBikeHornTable
+        - !type:AllSelector # Mime starter kit
+          children:
+          - id: ClothingMaskMime
+          - id: ClothingBeltSuspendersRed
+          - id: ClothingBeltSuspendersBlack
+        - !type:AllSelector # Performer starter kit
+          children:
+          - id: ClothingUniformJumpskirtPerformer
+          - id: ClothingShoesBootsPerformer
+          - id: ClothingHeadPerformerWig
 
 - type: entity
   parent: CrateGenericSteel

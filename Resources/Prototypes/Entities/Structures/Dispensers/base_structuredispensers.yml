@@ -74,8 +74,6 @@
       machine_parts: !type:Container
       beakerSlot: !type:ContainerSlot
       storagebase: !type:Container
-  - type: StaticPrice
-    price: 1000
   - type: WiresPanel
   - type: EmptyOnMachineDeconstruct
     containers:

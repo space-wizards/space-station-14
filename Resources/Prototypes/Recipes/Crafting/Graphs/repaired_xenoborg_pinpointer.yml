@@ -1,0 +1,34 @@
+- type: constructionGraph
+  id: RepairMothershipPinpointer
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: repairedPinpointer
+      steps:
+      - tag: MothershipPinpointerPiece
+        name: construction-graph-tag-core-pinpointer-piece
+        icon:
+          sprite: Objects/Devices/pinpointer.rsi
+          state: pinpointer-xenoborg-piece-1
+        doAfter: 4
+      - tag: MothershipPinpointerPiece
+        name: construction-graph-tag-core-pinpointer-piece
+        icon:
+          sprite: Objects/Devices/pinpointer.rsi
+          state: pinpointer-xenoborg-piece-1
+        doAfter: 4
+      - tag: MothershipPinpointerPiece
+        name: construction-graph-tag-core-pinpointer-piece
+        icon:
+          sprite: Objects/Devices/pinpointer.rsi
+          state: pinpointer-xenoborg-piece-1
+        doAfter: 4
+      - tag: MothershipPinpointerPiece
+        name: construction-graph-tag-core-pinpointer-piece
+        icon:
+          sprite: Objects/Devices/pinpointer.rsi
+          state: pinpointer-xenoborg-piece-1
+        doAfter: 4
+  - node: repairedPinpointer
+    entity: PinpointerMothershipRepaired

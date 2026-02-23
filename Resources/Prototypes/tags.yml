@@ -295,7 +295,7 @@
   id: ChefPilot # Tagged entity can control someone wearing a Chef's hat if inside their hat.
 
 - type: Tag
-  id: ChemDispensable # Storage whitelist: ChemDispenserEmpty, SmartFridge, BorgModuleAdvancedChemical
+  id: ChemDispensable # Storage whitelist: ChemDispenserEmpty, SmartFridge, BorgModuleChemical
 
 - type: Tag
   id: Chicken # Reproductive partner key. MetamorphRecipe: FoodBurgerChicken
@@ -356,6 +356,9 @@
 
 - type: Tag
   id: ConveyorAssembly # ConstructionGraph: ConveyorGraph
+
+- type: Tag
+  id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
 
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
@@ -440,6 +443,9 @@
 
 - type: Tag
   id: CubanCarp # CargoBounty: BountyCubanCarp
+
+- type: Tag
+  id: Cutlet # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerDuck
 
 ## D ##
 
@@ -712,7 +718,7 @@
   id: HardsuitSpatio # ConstructionGraph: HardsuitGoliath
 
 - type: Tag # Used on DungeonRoom prototypes.
-  id: Haunted # Unused. Exists on various DungeonRoomPrototypes in haunted.yml, presumably for an unimplemented PrefabDunGen whitelist.
+  id: Haunted # PrefabDunGen whitelist on Haunted DungeonConfig.
 
 - type: Tag
   id: Head # ConstructionGraph: RitualSeat
@@ -780,6 +786,9 @@
 
 - type: Tag
   id: HudSecurity # ConstructionGraph: HudMedSec, GlassesSecHUD
+
+- type: Tag
+  id: Hypospray # ItemMapper: ClothingBeltMedical
 
 ## I ##
 
@@ -862,16 +871,10 @@
 # Tagged entities always have BallisticAmmoProviderComponent.
 
 - type: Tag
-  id: MagazineCaselessRifle # Unused (Exists on BaseMagazineCaselessRifle)
-
-- type: Tag
   id: MagazineDebug # WeaponPistolDebug
 
 - type: Tag
   id: MagazineGrenade # ShuttleGunDuster
-
-- type: Tag
-  id: MagazineHeavyRifle # Unused (Exists on BaseMagazineHeavyRifle)
 
 - type: Tag
   id: MagazineLightRifle # WeaponRifleAk
@@ -973,6 +976,9 @@
 
 - type: Tag
   id: MothershipModule # Cyborg module category for evil xenoborg core
+
+- type: Tag
+  id: MothershipPinpointerPiece # ConstructionGraph: RepairMothershipPinpointer
 
 - type: Tag
   id: Mouse # CargoBounty: BountyMouse
@@ -1173,6 +1179,9 @@
             # CargoBounty: BountyRadio. ConstructionGraph: HudMedSec
 
 - type: Tag
+  id: Raw # MaterialStorage whitelist: Sheetifier
+
+- type: Tag
   id: RawMaterial # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
@@ -1320,12 +1329,6 @@
   id: SpeedLoaderMagnum # Ammo: BaseWeaponRevolver, XenoArtifactGun
 
 - type: Tag
-  id: SpeedLoaderPistol # Unused (Exists on BaseSpeedLoaderPistol)
-
-- type: Tag
-  id: SpeedLoaderRifle # Unused (Exists on SpeedLoaderLightRifle)
-
-- type: Tag
   id: SpiderCraft # Used on various ConstructionPrototypes to create exclusive recipes for tagged entity.
 
 - type: Tag
@@ -1355,6 +1358,9 @@
 
 - type: Tag
   id: StringInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
+
+- type: Tag
+  id: Structure # # Targeting whitelist: HandLabeler
 
 - type: Tag
   id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.
@@ -1396,6 +1402,9 @@
 
 - type: Tag
   id: Taser # Storage whitelist: ClothingBeltSecurity
+
+- type: Tag
+  id: TheaterBagel # used for Bagel Station's randomized theater
 
 - type: Tag
   id: TimerBrigElectronics # ConstructionGraph: Timer
