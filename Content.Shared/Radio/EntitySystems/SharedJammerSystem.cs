@@ -29,7 +29,7 @@ public abstract class SharedJammerSystem : EntitySystem
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnItemToggle(Entity<RadioJammerComponent> entity, ref ItemToggledEvent args)
+    protected virtual void OnItemToggle(Entity<RadioJammerComponent> entity, ref ItemToggledEvent args)
     {
         if (args.Activated)
         {
@@ -92,7 +92,7 @@ public abstract class SharedJammerSystem : EntitySystem
                     // The range should be updated when it turns on again!
                     _jammer.TrySetRange(entity.Owner, GetCurrentRange(entity));
 
-                    Popup.PopupClient(Loc.GetString(setting.Message), user, user);
+                    _popup.PopupClient(Loc.GetString(setting.Message), user, user);
 
                     // Raise event so server-side JammerSystem can update fixture
                     if (oldLevel != currIndex)
