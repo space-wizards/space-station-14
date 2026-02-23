@@ -3,6 +3,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Events;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Gibbing;
 using Content.Shared.Temperature.Components;
 using Robust.Server.Containers;
 using Robust.Shared.Physics.Components;
@@ -21,12 +22,12 @@ public sealed class RottingSystem : SharedRottingSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RottingComponent, BeingGibbedEvent>(OnGibbed);
+        SubscribeLocalEvent<RottingComponent, GibbedBeforeDeletionEvent>(OnGibbed);
 
         SubscribeLocalEvent<TemperatureComponent, IsRottingEvent>(OnTempIsRotting);
     }
 
-    private void OnGibbed(EntityUid uid, RottingComponent component, BeingGibbedEvent args)
+    private void OnGibbed(EntityUid uid, RottingComponent component, GibbedBeforeDeletionEvent args)
     {
         if (!TryComp<PhysicsComponent>(uid, out var physics))
             return;

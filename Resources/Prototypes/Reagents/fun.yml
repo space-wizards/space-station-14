@@ -12,7 +12,7 @@
     maxOnTileWhitelist:
       tags: [ Carpet ]
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:PopupMessage
         type: Local
@@ -35,7 +35,7 @@
   flavor: fiber
   color: "#808080"
   metabolisms:
-    Food:
+    Digestion:
       effects:
       - !type:SatiateHunger
         conditions:
@@ -62,7 +62,7 @@
   - !type:CleanTileReaction # Bees are extremely obsessive about cleanliness within what they consider their hive.
     cleanCost: 0 # Consume absolutely zero bees. Buzz buzz.
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:PopupMessage
         type: Local
@@ -163,10 +163,12 @@
   flavor: shocking
   color: "#FDD023"
   metabolisms:
-    Poison:
+    Bloodstream:
+      metabolismRate: 2.0
       effects:
       - !type:Electrocute
-        probability: 0.35
+        siemensCoefficient: 0.5
+        probability: 0.5
 
 - type: reagent
   id: Razorium
@@ -191,7 +193,7 @@
         emote: Scream
         probability: 0.7
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate : 3.00
       effects:
       - !type:HealthChange
@@ -246,7 +248,7 @@
       effects:
       - !type:Extinguish # cold
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate : 0.45
       effects:
       - !type:HealthChange
@@ -312,7 +314,7 @@
   slipData:
     requiredSlipSpeed: 3.5 #clown juice gotta slip
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:Emote
         emote: Laugh
@@ -333,7 +335,7 @@
   flavor: weh
   color: "#59b23a"
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:Emote
@@ -368,7 +370,7 @@
   flavor: hew
   color: "#a64dc5"
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:Emote
@@ -403,7 +405,7 @@
   flavor: dogfood
   color: "#ed9715"
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 0.2
       effects:
       - !type:HealthChange
@@ -437,7 +439,7 @@
   flavor: cannedtuna
   color: "#d8bed8"
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 0.2
       effects:
       - !type:HealthChange
@@ -488,7 +490,7 @@
   flavor: dogfood
   color: "#b87333"
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 0.2
       effects:
       - !type:HealthChange
