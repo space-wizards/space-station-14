@@ -303,9 +303,15 @@ namespace Content.Shared.Hands
     {
         public string HandName { get; }
 
-        public RequestHandInteractUsingEvent(string handName)
+        /// <summary>
+        /// Whether this interaction will use the utility interaction.
+        /// </summary>
+        public bool UtilityInteraction { get; }
+
+        public RequestHandInteractUsingEvent(string handName, bool utilityInteraction)
         {
             HandName = handName;
+            UtilityInteraction = utilityInteraction;
         }
     }
 

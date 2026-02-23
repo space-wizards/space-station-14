@@ -31,12 +31,9 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -53,38 +50,39 @@ namespace Content.Shared.Interaction
     [UsedImplicitly]
     public abstract partial class SharedInteractionSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ISharedChatManager _chat = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedPhysicsSystem _broadphase = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
-        [Dependency] private readonly PullingSystem _pullSystem = default!;
-        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedMapSystem _map = default!;
-        [Dependency] private readonly SharedPhysicsSystem _broadphase = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-        [Dependency] private readonly SharedStrippableSystem _strippable = default!;
+        [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly SharedPlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly SharedStrippableSystem _strippable = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
-        private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
+        private EntityQuery<CombatModeComponent> _combatQuery;
+        private EntityQuery<UseDelayComponent> _delayQuery;
         private EntityQuery<FixturesComponent> _fixtureQuery;
+        private EntityQuery<HandsComponent> _handsQuery;
+        private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
         private EntityQuery<ItemComponent> _itemQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
-        private EntityQuery<HandsComponent> _handsQuery;
         private EntityQuery<InteractionRelayComponent> _relayQuery;
-        private EntityQuery<CombatModeComponent> _combatQuery;
-        private EntityQuery<WallMountComponent> _wallMountQuery;
-        private EntityQuery<UseDelayComponent> _delayQuery;
         private EntityQuery<ActivatableUIComponent> _uiQuery;
+        private EntityQuery<WallMountComponent> _wallMountQuery;
 
         /// <summary>
         /// The collision mask used by default for
@@ -103,18 +101,19 @@ namespace Content.Shared.Interaction
 
         public override void Initialize()
         {
-            _ignoreUiRangeQuery = GetEntityQuery<IgnoreUIRangeComponent>();
+            _combatQuery = GetEntityQuery<CombatModeComponent>();
+            _delayQuery = GetEntityQuery<UseDelayComponent>();
             _fixtureQuery = GetEntityQuery<FixturesComponent>();
+            _handsQuery = GetEntityQuery<HandsComponent>();
+            _ignoreUiRangeQuery = GetEntityQuery<IgnoreUIRangeComponent>();
             _itemQuery = GetEntityQuery<ItemComponent>();
             _physicsQuery = GetEntityQuery<PhysicsComponent>();
-            _handsQuery = GetEntityQuery<HandsComponent>();
             _relayQuery = GetEntityQuery<InteractionRelayComponent>();
-            _combatQuery = GetEntityQuery<CombatModeComponent>();
-            _wallMountQuery = GetEntityQuery<WallMountComponent>();
-            _delayQuery = GetEntityQuery<UseDelayComponent>();
             _uiQuery = GetEntityQuery<ActivatableUIComponent>();
+            _wallMountQuery = GetEntityQuery<WallMountComponent>();
 
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
+            SubscribeAllEvent<InteractionRequestEvent>(HandleUseInteraction);
 
             // TODO make this a broadcast event subscription again when engine has updated.
             SubscribeLocalEvent<UserInterfaceComponent, BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
@@ -129,8 +128,6 @@ namespace Content.Shared.Interaction
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.AltActivateItemInWorld,
                     new PointerInputCmdHandler(HandleAltUseInteraction))
-                .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUseInteraction))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
                     new PointerInputCmdHandler(HandleActivateItemInWorld))
                 .Bind(ContentKeyFunctions.TryPullObject,
@@ -330,18 +327,22 @@ namespace Content.Shared.Interaction
             return false;
         }
 
-        public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public void HandleUseInteraction(InteractionRequestEvent args)
         {
+            var target = GetEntity(args.Target);
+            // These need to be reconstructed as they are not serializable.
+            var coords = new EntityCoordinates(GetEntity(args.Source), args.Vector);
+            if (!_playerManager.TryGetSessionByEntity(GetEntity(args.User), out var session))
+                return;
+
             // client sanitization
-            if (!ValidateClientInput(session, coords, uid, out var userEntity))
+            if (!ValidateClientInput(session, coords, target, out var userEntity))
             {
                 Log.Info($"Use input validation failed");
-                return true;
+                return;
             }
 
-            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null, checkAccess: ShouldCheckAccess(userEntity.Value));
-
-            return false;
+            UserInteraction(userEntity.Value, coords, !Deleted(target) ? target : null, checkAccess: ShouldCheckAccess(userEntity.Value), utilityInteraction: args.UtilityInteraction);
         }
 
         private bool ShouldCheckAccess(EntityUid user)
@@ -396,7 +397,8 @@ namespace Content.Shared.Interaction
             bool altInteract = false,
             bool checkCanInteract = true,
             bool checkAccess = true,
-            bool checkCanUse = true)
+            bool checkCanUse = true,
+            bool utilityInteraction = false)
         {
             if (_relayQuery.TryComp(user, out var relay) && relay.RelayEntity is not null)
             {
@@ -471,7 +473,8 @@ namespace Content.Shared.Interaction
                     target.Value,
                     coordinates,
                     checkCanInteract: false,
-                    checkCanUse: false);
+                    checkCanUse: false,
+                    utilityInteraction: utilityInteraction);
 
                 return;
             }
@@ -1042,7 +1045,8 @@ namespace Content.Shared.Interaction
             EntityUid target,
             EntityCoordinates clickLocation,
             bool checkCanInteract = true,
-            bool checkCanUse = true)
+            bool checkCanUse = true,
+            bool utilityInteraction = false)
         {
             if (IsDeleted(user) || IsDeleted(used) || IsDeleted(target))
                 return false;
@@ -1063,6 +1067,10 @@ namespace Content.Shared.Interaction
 
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(used) && !IsDeleted(target));
             // all interactions should only happen when in range / unobstructed, so no range check is needed
+            // Check first if it was a utility interaction (holding down the interaction key) before continuing.
+            if (utilityInteraction && UtilityInteract(user, target))
+                return true;
+
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(target, interactUsingEvent, true);
 
@@ -1263,6 +1271,25 @@ namespace Content.Shared.Interaction
         {
             // Get list of alt-interact verbs
             var verbs = _verbSystem.GetLocalVerbs(target, user, typeof(AlternativeVerb));
+
+            if (verbs.Count == 0)
+                return false;
+
+            _verbSystem.ExecuteVerb(verbs.First(), user, target);
+            return true;
+        }
+
+        /// <summary>
+        /// Utility interactions on an entity.
+        /// </summary>
+        /// <remarks>
+        /// Uses the context menu verb list, and acts out the highest priority utility interaction verb.
+        /// </remarks>
+        /// <returns>True if the interaction was handled, false otherwise.</returns>
+        public bool UtilityInteract(EntityUid user, EntityUid target)
+        {
+            // Get list of alt-interact verbs
+            var verbs = _verbSystem.GetLocalVerbs(target, user, typeof(UtilityVerb));
 
             if (verbs.Count == 0)
                 return false;

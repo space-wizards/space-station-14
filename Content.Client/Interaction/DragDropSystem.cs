@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
+using Content.Client.Interactable;
 using Content.Client.Outline;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
@@ -115,7 +116,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         _dropTargetOutOfRangeShader = _prototypeManager.Index(ShaderDropTargetOutOfRange).Instance();
         // needs to fire on mouseup and mousedown so we can detect a drag / drop
         CommandBinds.Builder
-            .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true), new[] { typeof(SharedInteractionSystem) })
+            .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true), typeof(InteractionSystem))
             .Register<DragDropSystem>();
     }
 

@@ -90,8 +90,11 @@ public abstract partial class InventorySystem
         // attempt to perform some interaction
         if (held != null && itemUid != null)
         {
-            _interactionSystem.InteractUsing(actor, held.Value, itemUid.Value,
-                Transform(itemUid.Value).Coordinates);
+            _interactionSystem.InteractUsing(actor,
+                held.Value,
+                itemUid.Value,
+                Transform(itemUid.Value).Coordinates,
+                utilityInteraction: ev.UtilityInteraction);
             return;
         }
 

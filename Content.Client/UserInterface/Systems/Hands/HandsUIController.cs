@@ -21,6 +21,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 {
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
     [UISystemDependency] private readonly UseDelaySystem _useDelay = default!;
@@ -35,6 +36,15 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     // ("middle" hands are hardcoded as right, whatever)
     private HandButton? _statusHandLeft;
     private HandButton? _statusHandRight;
+
+    // This timespan will be added onto the time of a buttonpress to determine when it turns into a held button press.
+    private readonly TimeSpan RequiredButtonHeldTime = TimeSpan.FromMilliseconds(500);
+    // This is the threshold that will hold the above value.
+    private TimeSpan _threshold;
+    // These values act as storage for when the click is finalized.
+    private string _pressedSlot = default!;
+    private Entity<HandsComponent>? _usedHand;
+    private bool _useKeyPressed;
 
     private HotbarGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
 
@@ -83,10 +93,37 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     {
         if (!_handsSystem.TryGetPlayerHands(out var hands))
             return;
-
-        if (args.Function == EngineKeyFunctions.UIClick)
+        // Save the time when it counts as a utility interaction.
+        _threshold = _timing.CurTime + RequiredButtonHeldTime;
+        // If they Use key was used, we want to see how long they'll press it.
+        if (args.Function == EngineKeyFunctions.Use)
         {
-            _handsSystem.UIHandClick(hands.Value, hand.SlotName);
+            _pressedSlot = hand.SlotName;
+            _useKeyPressed = true;
+            _usedHand = hands;
+
+            args.Handle();
+            return;
+        }
+        // For anything that isn't the use key, run the click as normal.
+        HandUnpressed(args, hand);
+    }
+
+    private void HandUnpressed(GUIBoundKeyEventArgs args, SlotControl hand)
+    {
+        if (args.State == BoundKeyState.Up && !_useKeyPressed)
+        {
+            args.Handle();
+            return;
+        }
+
+        if (!_handsSystem.TryGetPlayerHands(out var hands))
+            return;
+
+        if (args.Function == EngineKeyFunctions.Use)
+        {
+            _handsSystem.UIHandUse(hands.Value, hand.SlotName);
+            _useKeyPressed = false;
             args.Handle();
         }
         else if (args.Function == EngineKeyFunctions.UseSecondary)
@@ -285,6 +322,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         var button = new HandButton(handName, hand.Location);
         button.StoragePressed += StorageActivate;
         button.Pressed += HandPressed;
+        button.Unpressed += HandUnpressed;
 
         HandsGui?.HandContainer.TryAddButton(button);
 
@@ -378,6 +416,14 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             hand.CooldownDisplay.Visible = true;
             hand.CooldownDisplay.FromTime(delay.StartTime, delay.EndTime);
         }
+        // This is for holding the use input on hands.
+        // When the timer reaches the threshold for holding the input, it'll automatically fire off the event.
+        if (!_useKeyPressed || !_timing.IsFirstTimePredicted || _timing.CurTime < _threshold || !_usedHand.HasValue)
+            return;
+
+        DebugTools.Assert(!string.IsNullOrEmpty(_pressedSlot),"HandSlot name was not set when reaching the held interaction threshold.");
+        _handsSystem.UIHandUse(_usedHand.Value, _pressedSlot, true);
+        _useKeyPressed = false;
     }
 
     private void UpdateHandStatus(HandButton hand, EntityUid? entity, Hand? handData)

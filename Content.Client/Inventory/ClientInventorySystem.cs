@@ -194,9 +194,9 @@ namespace Content.Client.Inventory
             return true;
         }
 
-        public void UIInventoryActivate(string slot)
+        public void UIInventoryActivate(string slot, bool heldInteraction = false)
         {
-            RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
+            RaisePredictiveEvent(new UseSlotNetworkMessage(slot, heldInteraction));
         }
 
         public void UIInventoryStorageActivate(string slot)

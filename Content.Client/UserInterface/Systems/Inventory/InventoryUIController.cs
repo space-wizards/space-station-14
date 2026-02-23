@@ -21,6 +21,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 
@@ -30,10 +31,11 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     IOnSystemChanged<ClientInventorySystem>, IOnSystemChanged<HandsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
-    [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
     [UISystemDependency] private readonly ContainerSystem _container = default!;
+    [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
     private EntityUid? _playerUid;
@@ -43,6 +45,14 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     private StrippingWindow? _strippingWindow;
     private ItemSlotButtonContainer? _inventoryHotbar;
     private SlotButton? _inventoryButton;
+
+    // This timespan will be added onto the time of a buttonpress to determine when it turns into a held button press.
+    private readonly TimeSpan RequiredButtonHeldTime = TimeSpan.FromMilliseconds(500);
+    // This is the threshold that will hold the above value.
+    private TimeSpan _threshold;
+    // These values act as storage for when the click is finalized.
+    private string _pressedSlot = default!;
+    private bool _useKeyPressed;
 
     private SlotControl? _lastHovered;
 
@@ -95,6 +105,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         var button = new SlotButton(data);
         button.Pressed += ItemPressed;
+        button.Unpressed += ItemUnpressed;
         button.StoragePressed += StoragePressed;
         button.Hover += SlotButtonHovered;
 
@@ -273,11 +284,35 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void ItemPressed(GUIBoundKeyEventArgs args, SlotControl control)
     {
+        // Save the time when it counts as a utility interaction.
+        _threshold = _timing.CurTime + RequiredButtonHeldTime;
+        // If they Use key was used, we want to see how long they'll press it.
+        if (args.Function == EngineKeyFunctions.Use)
+        {
+            _pressedSlot = control.SlotName;
+            _useKeyPressed = true;
+
+            args.Handle();
+            return;
+        }
+        // For anything that isn't the use key, run the click as normal.
+        ItemUnpressed(args, control);
+    }
+
+    private void ItemUnpressed(GUIBoundKeyEventArgs args, SlotControl control)
+    {
+        if (args.State == BoundKeyState.Up && !_useKeyPressed)
+        {
+            args.Handle();
+            return;
+        }
+
         var slot = control.SlotName;
 
-        if (args.Function == EngineKeyFunctions.UIClick)
+        if (args.Function == EngineKeyFunctions.Use)
         {
             _inventorySystem.UIInventoryActivate(control.SlotName);
+            _useKeyPressed = false;
             args.Handle();
             return;
         }
@@ -493,5 +528,17 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         if (_lastHovered != null)
             UpdateHover(_lastHovered);
+    }
+
+    public override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+        // When the timer reaches the threshold for holding the input, it'll automatically fire off the event.
+        if (!_useKeyPressed || !_timing.IsFirstTimePredicted || _timing.CurTime < _threshold)
+            return;
+
+        DebugTools.Assert(!string.IsNullOrEmpty(_pressedSlot),"ItemSlot name was not set when reaching the held interaction threshold.");
+        _inventorySystem.UIInventoryActivate(_pressedSlot, true);
+        _useKeyPressed = false;
     }
 }

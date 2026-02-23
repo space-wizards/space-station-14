@@ -120,9 +120,9 @@ namespace Content.Client.Hands.Systems
         }
 
         /// <summary>
-        ///     Called when a user clicked on their hands GUI
+        ///     Called when a user used the use key on their hands GUI
         /// </summary>
-        public void UIHandClick(Entity<HandsComponent> ent, string handName)
+        public void UIHandUse(Entity<HandsComponent> ent, string handName, bool utilityInteraction = false)
         {
             var hands = ent.Comp;
             if (hands.ActiveHandId == null)
@@ -149,7 +149,7 @@ namespace Content.Client.Hands.Systems
             if (handName != hands.ActiveHandId && pressedEntity != null && activeEntity != null)
             {
                 // use active item on held item
-                RaisePredictiveEvent(new RequestHandInteractUsingEvent(handName));
+                RaisePredictiveEvent(new RequestHandInteractUsingEvent(handName, utilityInteraction));
                 return;
             }
 

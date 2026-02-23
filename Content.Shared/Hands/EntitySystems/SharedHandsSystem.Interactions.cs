@@ -70,7 +70,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     private void HandleInteractUsingInHand(RequestHandInteractUsingEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity != null)
-            TryInteractHandWithActiveHand(args.SenderSession.AttachedEntity.Value, msg.HandName);
+            TryInteractHandWithActiveHand(args.SenderSession.AttachedEntity.Value, msg.HandName, utilityInteraction: msg.UtilityInteraction);
     }
 
     private void HandleHandAltInteract(RequestHandAltInteractEvent msg, EntitySessionEventArgs args)
@@ -132,7 +132,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return _interactionSystem.InteractionActivate(uid, held.Value);
     }
 
-    public bool TryInteractHandWithActiveHand(EntityUid uid, string handName, HandsComponent? handsComp = null)
+    public bool TryInteractHandWithActiveHand(EntityUid uid, string handName, HandsComponent? handsComp = null, bool utilityInteraction = false)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -143,7 +143,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!TryGetHeldItem((uid, handsComp), handName, out var held))
             return false;
 
-        _interactionSystem.InteractUsing(uid, activeHeldItem.Value, held.Value, Transform(held.Value).Coordinates);
+        _interactionSystem.InteractUsing(uid, activeHeldItem.Value, held.Value, Transform(held.Value).Coordinates, utilityInteraction: utilityInteraction);
         return true;
     }
 
