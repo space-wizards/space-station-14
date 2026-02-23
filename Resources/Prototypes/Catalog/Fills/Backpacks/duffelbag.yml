@@ -450,14 +450,13 @@
         - id: WeaponSubMachineGunC20r
         - id: MagazinePistolSubMachineGun
           amount: 3
-        - id: MagazinePistol
+        - id: EnergySword
         - id: SyndicateJawsOfLife
         - id: C4
           amount: 2
         - id: MedkitCombatFilled
         - id: EmpImplanter
         - id: ClothingShoesBootsMagSyndie
-        - id: AgentIDCard
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
