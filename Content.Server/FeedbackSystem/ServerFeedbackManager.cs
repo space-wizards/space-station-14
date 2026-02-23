@@ -9,13 +9,16 @@ namespace Content.Server.FeedbackSystem;
 public sealed class ServerFeedbackManager : SharedFeedbackManager
 {
     [Dependency] private readonly ISharedPlayerManager _player = null!;
-    [Dependency] private readonly GameTicker _gameTicker = null!;
+    [Dependency] private readonly IEntitySystemManager _sysMan = null!;
+    private GameTicker _gameTicker = null!;
 
     public override void Initialize()
     {
         base.Initialize();
         NetManager.RegisterNetMessage<FeedbackPopupMessage>();
         NetManager.RegisterNetMessage<OpenFeedbackPopupMessage>();
+
+        _gameTicker = _sysMan.GetEntitySystem<GameTicker>();
     }
 
     /// <inheritdoc />
