@@ -1,16 +1,19 @@
 using System.Text;
 using System.Text.RegularExpressions;
+using Content.Shared.Inventory;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.EntitySystems;
 
+// TODO: Slam: This system is partially Shared, and as such I am not adding it to BaseAccentSystem at this time. It should be possible to integrate it when all accents are moved to Shared.
 public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly Shared.StatusEffect.StatusEffectsSystem _statusEffects = default!;
 
     private static readonly ProtoId<StatusEffectPrototype> RatvarianKey = "RatvarianLanguage";
 
@@ -42,6 +45,14 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
     {
         // Activate before other modifications so translation works properly
         SubscribeLocalEvent<RatvarianLanguageComponent, AccentGetEvent>(OnAccent, before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
+        SubscribeLocalEvent<RatvarianLanguageComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args), before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
+        SubscribeLocalEvent<RatvarianLanguageComponent, StatusEffectRelayedEvent<AccentGetEvent>>((e, c, ev) =>
+        {
+            var accentGetEvent = ev.Args;
+            OnAccent((e, c), ref accentGetEvent);
+        },
+            before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
+
     }
 
     public override void DoRatvarian(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
@@ -52,7 +63,7 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
         _statusEffects.TryAddStatusEffect<RatvarianLanguageComponent>(uid, RatvarianKey, time, refresh, status);
     }
 
-    private void OnAccent(EntityUid uid, RatvarianLanguageComponent component, AccentGetEvent args)
+    private void OnAccent(Entity<RatvarianLanguageComponent> entity, ref AccentGetEvent args)
     {
         args.Message = Translate(args.Message);
     }

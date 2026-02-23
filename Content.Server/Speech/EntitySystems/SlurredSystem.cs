@@ -1,6 +1,7 @@
 using System.Text;
 using Content.Server.Speech.Components;
 using Content.Shared.Drunk;
+using Content.Shared.Inventory;
 using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew;
@@ -9,6 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Speech.EntitySystems;
 
+// TODO: Slam: This system is partially Shared, and as such I am not adding it to BaseAccentSystem at this time. It should be possible to integrate it when all accents are moved to Shared.
 public sealed class SlurredSystem : SharedSlurredSystem
 {
     [Dependency] private readonly StatusEffectsSystem _status = default!;
@@ -28,8 +30,9 @@ public sealed class SlurredSystem : SharedSlurredSystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SlurredAccentComponent, AccentGetEvent>(OnAccent);
-
         SubscribeLocalEvent<SlurredAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>(OnAccentRelayed);
+        SubscribeLocalEvent<SlurredAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args), before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
+
     }
 
     /// <summary>

@@ -4,7 +4,7 @@ using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class SouthernAccentSystem : EntitySystem
+public sealed class SouthernAccentSystem : BaseAccentSystem<SouthernAccentComponent>
 {
     private static readonly Regex RegexLowerIng = new(@"ing\b");
     private static readonly Regex RegexUpperIng = new(@"ING\b");
@@ -15,16 +15,8 @@ public sealed class SouthernAccentSystem : EntitySystem
 
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
-    public override void Initialize()
+    public override string Accentuate(string message, Entity<SouthernAccentComponent>? _)
     {
-        base.Initialize();
-        SubscribeLocalEvent<SouthernAccentComponent, AccentGetEvent>(OnAccent);
-    }
-
-    private void OnAccent(EntityUid uid, SouthernAccentComponent component, AccentGetEvent args)
-    {
-        var message = args.Message;
-
         message = _replacement.ApplyReplacements(message, "southern");
 
         //They shoulda started runnin' an' hidin' from me!
@@ -34,6 +26,6 @@ public sealed class SouthernAccentSystem : EntitySystem
         message = RegexUpperAnd.Replace(message, "AN'");
         message = RegexLowerDve.Replace(message, "da");
         message = RegexUpperDve.Replace(message, "DA");
-        args.Message = message;
+        return message;
     }
 };

@@ -1,33 +1,25 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
-using Content.Shared.Speech;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed partial class ParrotAccentSystem : EntitySystem
+public sealed class ParrotAccentSystem : BaseAccentSystem<ParrotAccentComponent>
 {
     private static readonly Regex WordCleanupRegex = new Regex("[^A-Za-z0-9 -]");
 
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
 
-        SubscribeLocalEvent<ParrotAccentComponent, AccentGetEvent>(OnAccentGet);
-    }
-
-    private void OnAccentGet(Entity<ParrotAccentComponent> entity, ref AccentGetEvent args)
+    public override string Accentuate(string message, Entity<ParrotAccentComponent>? entity)
     {
-        args.Message = Accentuate(entity, args.Message);
-    }
+        // TODO: Make this accent possible to apply without an entity with the component.
+        if (entity == null)
+            return message;
 
-    public string Accentuate(Entity<ParrotAccentComponent> entity, string message)
-    {
         // Sometimes repeat the longest word at the end of the message, after a squawk! SQUAWK! Sometimes!
-        if (_random.Prob(entity.Comp.LongestWordRepeatChance))
+        if (_random.Prob(entity.Value.Comp.LongestWordRepeatChance))
         {
             // Don't count non-alphanumeric characters as parts of words
             var cleaned = WordCleanupRegex.Replace(message, string.Empty);
@@ -35,28 +27,28 @@ public sealed partial class ParrotAccentSystem : EntitySystem
             var words = cleaned.Split(null).Reverse();
             // Find longest word
             var longest = words.MaxBy(word => word.Length);
-            if (longest?.Length >= entity.Comp.LongestWordMinLength)
+            if (longest?.Length >= entity.Value.Comp.LongestWordMinLength)
             {
                 message = EnsurePunctuation(message);
 
                 // Capitalize the first letter of the repeated word
                 longest = string.Concat(longest[0].ToString().ToUpper(), longest.AsSpan(1));
 
-                message = string.Format("{0} {1} {2}!", message, GetRandomSquawk(entity), longest);
+                message = string.Format("{0} {1} {2}!", message, GetRandomSquawk(entity.Value), longest);
                 return message; // No more changes, or it's too much
             }
         }
 
-        if (_random.Prob(entity.Comp.SquawkPrefixChance))
+        if (_random.Prob(entity.Value.Comp.SquawkPrefixChance))
         {
             // AWWK! Sometimes add a squawk at the begining of the message
-            message = string.Format("{0} {1}", GetRandomSquawk(entity), message);
+            message = string.Format("{0} {1}", GetRandomSquawk(entity.Value), message);
         }
         else
         {
             // Otherwise add a squawk at the end of the message! RAWWK!
             message = EnsurePunctuation(message);
-            message = string.Format("{0} {1}", message, GetRandomSquawk(entity));
+            message = string.Format("{0} {1}", message, GetRandomSquawk(entity.Value));
         }
 
         return message;

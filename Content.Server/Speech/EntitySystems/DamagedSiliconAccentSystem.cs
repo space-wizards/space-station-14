@@ -3,14 +3,16 @@ using Content.Server.Destructible;
 using Content.Shared.Speech.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Content.Shared.Speech;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class DamagedSiliconAccentSystem : EntitySystem
+public sealed class DamagedSiliconAccentSystem : BaseAccentSystem<DamagedSiliconAccentComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
@@ -19,11 +21,17 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
         SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent, after: [typeof(ReplacementAccentSystem)]);
+        SubscribeLocalEvent<DamagedSiliconAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args), after: [typeof(ReplacementAccentSystem)]);
+        SubscribeLocalEvent<DamagedSiliconAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>((e, c, ev) =>
+        {
+            var accentGetEvent = ev.Args;
+            OnAccent((e, c), ref accentGetEvent);
+        },
+            after: [typeof(ReplacementAccentSystem)]);
     }
 
-    private void OnAccent(Entity<DamagedSiliconAccentComponent> ent, ref AccentGetEvent args)
+    protected override void OnAccent(Entity<DamagedSiliconAccentComponent> ent, ref AccentGetEvent args)
     {
         var uid = ent.Owner;
 

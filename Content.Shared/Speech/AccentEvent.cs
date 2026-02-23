@@ -1,7 +1,12 @@
-﻿namespace Content.Shared.Speech;
+﻿using Content.Shared.Inventory;
 
-public sealed class AccentGetEvent : EntityEventArgs
+namespace Content.Shared.Speech;
+
+[ByRefEvent]
+public sealed class AccentGetEvent : EntityEventArgs, IInventoryRelayEvent
 {
+    public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
+
     /// <summary>
     ///     The entity to apply the accent to.
     /// </summary>
