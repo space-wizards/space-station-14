@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Shuttles.Components;
@@ -26,15 +27,19 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly TurfSystem _turf = default!;
 
     /// <summary>
-    /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
+    /// Maps prototype ID to its index in <see cref="_prototypeMaxUpdates"/> and per-grid update arrays.
     /// </summary>
-    private Dictionary<string, int> _prototypeUpdates = default!;
+    private Dictionary<string, int> _prototypeNameToIndex = [];
+
+    /// <summary>
+    /// Cached maximum number of updates per spreader prototype. Index corresponds to <see cref="_prototypeNameToIndex"/>.
+    /// </summary>
+    private int[] _prototypeMaxUpdates = [];
 
     /// <summary>
     /// Remaining number of updates per grid & prototype.
     /// </summary>
-    // TODO PERFORMANCE Assign each prototype to an index and convert dictionary to array
-    private readonly Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = [];
+    private readonly Dictionary<EntityUid, int[]> _gridUpdates = [];
 
     private EntityQuery<EdgeSpreaderComponent> _query;
 
@@ -58,15 +63,23 @@ public sealed class SpreaderSystem : EntitySystem
     private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
         if (obj.WasModified<EdgeSpreaderPrototype>())
+        {
             SetupPrototypes();
+            _gridUpdates.Clear();
+        }
     }
 
     private void SetupPrototypes()
     {
-        _prototypeUpdates = [];
-        foreach (var proto in _prototype.EnumeratePrototypes<EdgeSpreaderPrototype>())
+        var prototypes = _prototype.EnumeratePrototypes<EdgeSpreaderPrototype>().ToList();
+        _prototypeNameToIndex.Clear();
+        _prototypeMaxUpdates = new int[prototypes.Count];
+
+        for (var i = 0; i < prototypes.Count; i++)
         {
-            _prototypeUpdates.Add(proto.ID, proto.UpdatesPerSecond);
+            var proto = prototypes[i];
+            _prototypeNameToIndex[proto.ID] = i;
+            _prototypeMaxUpdates[i] = proto.UpdatesPerSecond;
         }
     }
 
@@ -98,7 +111,7 @@ public sealed class SpreaderSystem : EntitySystem
             if (grid.UpdateAccumulator > 0)
                 continue;
 
-            _gridUpdates[uid] = _prototypeUpdates.ShallowClone();
+            _gridUpdates[uid] = (int[])_prototypeMaxUpdates.Clone();
             grid.UpdateAccumulator += SpreadCooldownSeconds;
         }
 
@@ -142,18 +155,17 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
             }
 
-            if (!groupUpdates.TryGetValue(spreader.Id, out var updates) || updates < 1)
+            if (!_prototypeNameToIndex.TryGetValue(spreader.Id, out var index))
+                continue;
+
+            ref var updates = ref groupUpdates[index];
+            if (updates < 1)
                 continue;
 
             // Edge detection logic is to be handled
             // by the subscribing system, see KudzuSystem
             // for a simple example
             Spread(uid, xform, spreader.Id, ref updates);
-
-            if (updates < 1)
-                groupUpdates.Remove(spreader.Id);
-            else
-                groupUpdates[spreader.Id] = updates;
         }
     }
 
@@ -233,7 +245,7 @@ public sealed class SpreaderSystem : EntitySystem
         // Add the normal neighbors.
         for (var i = 0; i < 4; i++)
         {
-            var atmosDir = (AtmosDirection) (1 << i);
+            var atmosDir = (AtmosDirection)(1 << i);
             var neighborPos = tile.Offset(atmosDir);
             neighborTiles.Add((comp.GridUid.Value, grid, neighborPos, atmosDir, i.ToOppositeDir()));
         }
@@ -332,7 +344,7 @@ public sealed class SpreaderSystem : EntitySystem
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
-            var direction = (AtmosDirection) (1 << i);
+            var direction = (AtmosDirection)(1 << i);
             var adjacentTile = SharedMapSystem.GetDirection(tile, direction.ToDirection());
             anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, gridComp, adjacentTile);
 
