@@ -59,7 +59,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             _popup.PopupEntity(
                 ent.Comp.Target == args.Actor
                     ? Loc.GetString("magic-mirror-blocked-by-hat-self")
-                    : Loc.GetString("magic-mirror-blocked-by-hat-self-target", ("target", Identity.Entity(args.Actor, EntityManager))),
+                    : Loc.GetString("magic-mirror-blocked-by-hat-self-target", ("target", Identity.Entity(target, EntityManager))),
                 args.Actor,
                 args.Actor,
                 PopupType.Medium);

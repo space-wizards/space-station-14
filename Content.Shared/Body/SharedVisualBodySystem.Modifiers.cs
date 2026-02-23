@@ -6,6 +6,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -45,6 +46,26 @@ public abstract partial class SharedVisualBodySystem
                 _userInterface.OpenUi(ent.Owner, HumanoidMarkingModifierKey.Key, user);
             }
         });
+    }
+
+    /// <summary>
+    /// Copies the appearance of organs from one body to another
+    /// </summary>
+    /// <param name="source">The body whose organs to copy the appearance from</param>
+    /// <param name="target">The body whose organs to copy the appearance to</param>
+    [PublicAPI]
+    public void CopyAppearanceFrom(Entity<BodyComponent?> source, Entity<BodyComponent?> target)
+    {
+        if (!Resolve(source, ref source.Comp) || !Resolve(target, ref target.Comp))
+            return;
+
+        var sourceOrgans = _container.EnsureContainer<Container>(source, BodyComponent.ContainerID);
+
+        foreach (var sourceOrgan in sourceOrgans.ContainedEntities)
+        {
+            var evt = new OrganCopyAppearanceEvent(sourceOrgan);
+            RaiseLocalEvent(target, ref evt);
+        }
     }
 
     /// <summary>
@@ -111,6 +132,12 @@ public abstract partial class SharedVisualBodySystem
         RaiseLocalEvent(ent, ref markingsEvt);
     }
 
+    /// <summary>
+    /// Applies the given set of markings to the body.
+    /// </summary>
+    /// <param name="ent">The body whose organs to apply markings to.</param>
+    /// <param name="markings">A dictionary of organ categories to markings information. Organs not included in this dictionary will remain unaffected.</param>
+    [PublicAPI]
     public void ApplyMarkings(EntityUid ent, Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings)
     {
         var markingsEvt = new ApplyOrganMarkingsEvent(markings);
@@ -134,17 +161,37 @@ public abstract partial class SharedVisualBodySystem
         RaiseLocalEvent(ent, ref markingsEvt);
     }
 
+    /// <summary>
+    /// Applies the information contained with a <see cref="HumanoidCharacterProfile"/> to a visual body's appearance.
+    /// This sets the profile data and markings of all organs contained within the profile.
+    /// </summary>
+    /// <param name="ent">The body to apply the profile to</param>
+    /// <param name="profile">The profile to apply</param>
+    [PublicAPI]
     public void ApplyProfileTo(Entity<VisualBodyComponent?> ent, HumanoidCharacterProfile profile)
     {
         ApplyAppearanceTo(ent, profile.Appearance, profile.Sex);
     }
 
+    /// <summary>
+    /// Applies profile data to all visual organs within the body.
+    /// </summary>
+    /// <param name="ent">The body to apply the organ profile to</param>
+    /// <param name="profile">The profile to apply</param>
+    [PublicAPI]
     public void ApplyProfile(EntityUid ent, OrganProfileData profile)
     {
         var profileEvt = new ApplyOrganProfileDataEvent(profile, null);
         RaiseLocalEvent(ent, ref profileEvt);
     }
 
+    /// <summary>
+    /// Applies profile data to the specified visual organs within the body.
+    /// Organs not specified are left unchanged.
+    /// </summary>
+    /// <param name="ent">The body to apply the organ profiles to.</param>
+    /// <param name="profiles">The profiles to apply.</param>
+    [PublicAPI]
     public void ApplyProfiles(EntityUid ent, Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData> profiles)
     {
         var profileEvt = new ApplyOrganProfileDataEvent(null, profiles);

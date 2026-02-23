@@ -3,6 +3,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Body;
 
+/// <summary>
+/// Marks an entity as being able to be inserted into an entity with <seealso cref="BodyComponent" />.
+/// </summary>
+/// <seealso cref="BodySystem" />
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(BodySystem))]
 public sealed partial class OrganComponent : Component

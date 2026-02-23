@@ -5,7 +5,6 @@
   children:
   - Arachnid
   - Diona
-  - Dwarf
   - Human
   - Moth
   - Reptilian
@@ -22,11 +21,6 @@
   id: Diona
   name: species-name-diona
   text: "/ServerInfo/Guidebook/Mobs/Diona.xml"
-
-- type: guideEntry
-  id: Dwarf
-  name: species-name-dwarf
-  text: "/ServerInfo/Guidebook/Mobs/Dwarf.xml"
 
 - type: guideEntry
   id: Human

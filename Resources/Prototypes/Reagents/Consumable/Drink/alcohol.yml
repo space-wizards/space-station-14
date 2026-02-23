@@ -150,43 +150,15 @@
         - !type:ReagentCondition
           reagent: Ethanol
           min: 15
-        - !type:MetabolizerTypeCondition
-          type: [ Dwarf ]
-          inverted: true
         damage:
           types:
             Poison: 0.1
-      # dwarves take less toxin damage and heal a marginal amount of brute
-      - !type:HealthChange
-        conditions:
-        - !type:ReagentCondition
-          reagent: Ethanol
-          min: 15
-        - !type:MetabolizerTypeCondition
-          type: [ Dwarf ]
-        damage:
-          types:
-            Poison: 0.02
-      - !type:HealthChange
-        conditions:
-        - !type:ReagentCondition
-          reagent: Ethanol
-          min: 15
-        - !type:MetabolizerTypeCondition
-          type: [ Dwarf ]
-        damage:
-          groups:
-            Brute: -0.1
       - !type:Vomit
         probability: 0.04
         conditions:
         - !type:ReagentCondition
           reagent: Ethanol
           min: 12
-        # dwarves immune to vomiting from alcohol
-        - !type:MetabolizerTypeCondition
-          type: [ Dwarf ]
-          inverted: true
       - !type:Drunk
         boozePower: 2
 
@@ -2272,28 +2244,12 @@
         - !type:ReagentCondition
           reagent: BacchusBlessing
           min: 6
-        - !type:MetabolizerTypeCondition
-          type: [Dwarf]
-          inverted: true
         damage:
           types:
             Poison: 0.2 # TODO: Figure out poison amount. Ethanol does 0.1, this does 0.2 but also metabolises almost 3 to 4 times as fast as ethanol. This would be more Liver damage when that time arrives.
-      - !type:HealthChange
-        conditions:
-        - !type:ReagentCondition
-          reagent: BacchusBlessing
-          min: 6
-        - !type:MetabolizerTypeCondition
-          type: [Dwarf]
-        damage:
-          types:
-            Poison: 0.04 # TODO: Might increase this, even though it's just double of ethanol from 0.02 to 0.04
       - !type:Vomit
         probability: 0.1 #TODO: Tweak vomit probability, maybe make this more violent and poisonous but the body aggressively purges it...
         conditions:
         - !type:ReagentCondition
           reagent: BacchusBlessing
           min: 8
-        - !type:MetabolizerTypeCondition
-          type: [Dwarf]
-          inverted: true

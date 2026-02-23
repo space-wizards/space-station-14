@@ -20,10 +20,10 @@ public sealed class MarkingTestAttribute : TestAttribute, IWrapTestMethod
     {
         public override TestResult Execute(TestExecutionContext context)
         {
-            var fixture = inner.Test.Fixture as MarkingsViewModelTests;
+            var fixture = innerCommand.Test.Fixture as MarkingsViewModelTests;
             fixture!.Client.WaitAssertion(() =>
                 {
-                    context.CurrentResult = inner.Execute(context);
+                    context.CurrentResult = innerCommand.Execute(context);
                 })
                 .Wait();
             return context.CurrentResult;

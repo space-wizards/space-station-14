@@ -186,3 +186,24 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
     soundEmpty:
       path: /Audio/Items/Lighters/lighter_off.ogg
+
+- type: entity
+  id: MobLuminousPersonSalvage
+  parent: MobLuminousPerson
+  suffix: "Salvage Ruleset"
+  components:
+  - type: SalvageMobRestrictions #So they don't linger after a wreck despawns
+
+- type: entity
+  id: MobLuminousObjectSalvage
+  parent: MobLuminousObject
+  suffix: "Salvage Ruleset"
+  components:
+  - type: SalvageMobRestrictions #So they don't linger after a wreck despawns
+
+- type: entity
+  id: MobLuminousEntitySalvage
+  parent: MobLuminousEntity
+  suffix: "Salvage Ruleset"
+  components:
+  - type: SalvageMobRestrictions #So they don't linger after a wreck despawns

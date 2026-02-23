@@ -7,6 +7,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Humanoid;
 
+/// <summary>
+/// View model for UIs manipulating a set of markings, responsible for applying markings logic and keeping state synchronized.
+/// </summary>
 public sealed class MarkingsViewModel
 {
     [Dependency] private readonly MarkingManager _marking = default!;
@@ -14,6 +17,10 @@ public sealed class MarkingsViewModel
 
     private bool _enforceLimits = true;
 
+    /// <summary>
+    /// Whether the markings view model will enforce limitations on how many markings an organ can have
+    /// </summary>
+    /// <seealso cref="EnforcementsChanged" />
     public bool EnforceLimits
     {
         get => _enforceLimits;
@@ -29,6 +36,10 @@ public sealed class MarkingsViewModel
 
     private bool _enforceGroupAndSexRestrictions = true;
 
+    /// <summary>
+    /// Whether the markings view model will enforce restrictions on the group and sex of markings for an organ
+    /// </summary>
+    /// <seealso cref="EnforcementsChanged" />
     public bool EnforceGroupAndSexRestrictions
     {
         get => _enforceGroupAndSexRestrictions;
@@ -44,10 +55,18 @@ public sealed class MarkingsViewModel
 
     private bool AnyEnforcementsLifted => !_enforceLimits || !_enforceGroupAndSexRestrictions;
 
+    /// <summary>
+    /// Raised whenever the view model is enforcing a different set of constraints on possible markings than before
+    /// </summary>
+    /// <seealso cref="EnforceLimits" />
+    /// <seealso cref="EnforceGroupAndSexRestrictions" />
     public event Action? EnforcementsChanged;
 
     private Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData> _organProfileData = new();
 
+    /// <summary>
+    /// The organ profile data this view model is concerned with.
+    /// </summary>
     public Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData> OrganProfileData
     {
         get => _organProfileData;
@@ -58,6 +77,10 @@ public sealed class MarkingsViewModel
         }
     }
 
+    /// <summary>
+    /// Sets the sex of all organ profiles in the view model.
+    /// </summary>
+    /// <param name="sex">The new sex</param>
     public void SetOrganSexes(Sex sex)
     {
         foreach (var (organ, data) in _organProfileData)
@@ -67,6 +90,10 @@ public sealed class MarkingsViewModel
         OrganProfileDataChanged?.Invoke(true);
     }
 
+    /// <summary>
+    /// Sets the skin color of all organ profiles in the view model.
+    /// </summary>
+    /// <param name="skinColor">The new skin color</param>
     public void SetOrganSkinColor(Color skinColor)
     {
         foreach (var (organ, data) in _organProfileData)
@@ -76,6 +103,10 @@ public sealed class MarkingsViewModel
         OrganProfileDataChanged?.Invoke(false);
     }
 
+    /// <summary>
+    /// Sets the eye color of all organ profiles in the view model.
+    /// </summary>
+    /// <param name="eyeColor">The new eye color</param>
     public void SetOrganEyeColor(Color eyeColor)
     {
         foreach (var (organ, data) in _organProfileData)
@@ -85,10 +116,21 @@ public sealed class MarkingsViewModel
         OrganProfileDataChanged?.Invoke(false);
     }
 
+    /// <summary>
+    /// Raised whenever the organ profile data changes.
+    /// The boolean value represents whether the set of possible markings may have changed.
+    /// </summary>
+    /// <seealso cref="OrganProfileData" />
+    /// <seealso cref="SetOrganSexes" />
+    /// <seealso cref="SetOrganSkinColor" />
+    /// <seealso cref="SetOrganEyeColor" />
     public event Action<bool>? OrganProfileDataChanged;
 
     private Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> _markings = new();
 
+    /// <summary>
+    /// The currently applied set of markings
+    /// </summary>
     public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> Markings
     {
         get => _markings;
@@ -104,12 +146,21 @@ public sealed class MarkingsViewModel
         }
     }
 
+    /// <summary>
+    /// Raised whenever the set of markings has fully changed and requires a UI reload
+    /// </summary>
     public event Action? MarkingsReset;
 
+    /// <summary>
+    /// Raised whenever a specific layer's markings have changed
+    /// </summary>
     public event Action<ProtoId<OrganCategoryPrototype>, HumanoidVisualLayers>? MarkingsChanged;
 
     private Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData> _organData = new();
 
+    /// <summary>
+    /// The organ marking data the view model is concerned with.
+    /// </summary>
     public Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData>
         OrganData
     {
@@ -125,15 +176,25 @@ public sealed class MarkingsViewModel
         }
     }
 
+    /// <summary>
+    /// Raised whenever the organ data within the view model is changed.
+    /// </summary>
     public event Action? OrganDataChanged;
 
-    private Dictionary<ProtoId<MarkingPrototype>, List<Color>> _previousColors = new();
+    private readonly Dictionary<ProtoId<MarkingPrototype>, List<Color>> _previousColors = new();
 
     public MarkingsViewModel()
     {
         IoCManager.InjectDependencies(this);
     }
 
+    /// <summary>
+    /// Returns whether the given marking is currently selected in the model
+    /// </summary>
+    /// <param name="organ">The organ to check for the marking within</param>
+    /// <param name="layer">The layer within the organ to check for the marking within</param>
+    /// <param name="markingId">The marking ID to check for</param>
+    /// <returns>Whether the marking is currently present within the set of selected markings</returns>
     public bool IsMarkingSelected(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
@@ -141,6 +202,11 @@ public sealed class MarkingsViewModel
         return GetMarking(organ, layer, markingId) is not null;
     }
 
+    /// <summary>
+    /// Returns whether the marking at the given location can have its color customized by the user
+    /// </summary>
+    /// <inheritdoc cref="IsMarkingSelected" path="param" />
+    /// <returns>Whether the marking is capable of having its color customized by the user</returns>
     public bool IsMarkingColorCustomizable(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
@@ -163,6 +229,11 @@ public sealed class MarkingsViewModel
         return !appearance.MatchSkin;
     }
 
+    /// <summary>
+    /// Returns the currently applied marking by its ID, if it exists
+    /// </summary>
+    /// <inheritdoc cref="IsMarkingSelected" path="param" />
+    /// <returns>The marking currently applied if it exists, otherwise null</returns>
     public Marking? GetMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
@@ -176,6 +247,11 @@ public sealed class MarkingsViewModel
         return markings.FirstOrNull(it => it.MarkingId == markingId);
     }
 
+    /// <summary>
+    /// Attempts to add a marking to the current set of markings
+    /// </summary>
+    /// <inheritdoc cref="IsMarkingSelected" path="param" />
+    /// <returns>Whether the marking was successfully added to the set of markings</returns>
     public bool TrySelectMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
@@ -230,6 +306,12 @@ public sealed class MarkingsViewModel
         return false;
     }
 
+    /// <summary>
+    /// Returns the list of currently selected markings for the layer on the given organ
+    /// </summary>
+    /// <param name="organ">The organ to look up the layer within</param>
+    /// <param name="layer">The layer within the organ to look up</param>
+    /// <returns>The set of markings for the provided organ if it has any, or null</returns>
     public List<Marking>? SelectedMarkings(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer)
     {
@@ -238,6 +320,11 @@ public sealed class MarkingsViewModel
             : organMarkings.GetValueOrDefault(layer);
     }
 
+    /// <summary>
+    /// Attempts to remove a marking from the current set of markings
+    /// </summary>
+    /// <inheritdoc cref="IsMarkingSelected" path="param" />
+    /// <returns>Whether the marking was successfully removed from the set of markings</returns>
     public bool TryDeselectMarking(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId)
@@ -275,6 +362,12 @@ public sealed class MarkingsViewModel
         return true;
     }
 
+    /// <summary>
+    /// Attempts to set the color of the specified marking at the given index
+    /// </summary>
+    /// <inheritdoc cref="IsMarkingSelected" path="param" />
+    /// <param name="colorIndex">The index within the marking's color array to set</param>
+    /// <param name="color">The new color to set</param>
     public void TrySetMarkingColor(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId,
@@ -295,6 +388,9 @@ public sealed class MarkingsViewModel
         MarkingsChanged?.Invoke(organ, layer);
     }
 
+    /// <summary>
+    /// Ensures the markings within the model are valid.
+    /// </summary>
     public void ValidateMarkings()
     {
         foreach (var (organ, organData) in _organData)
@@ -318,6 +414,14 @@ public sealed class MarkingsViewModel
         MarkingsReset?.Invoke();
     }
 
+    /// <summary>
+    /// Gets the count data for an organ layer.
+    /// </summary>
+    /// <param name="organ">The organ to look up count data for</param>
+    /// <param name="layer">The layer within the organ to look up count data for</param>
+    /// <param name="isRequired">Whether this layer requires at least one marking to be selected</param>
+    /// <param name="count">The maximum amount of markings that can be selected for this layer</param>
+    /// <param name="selected">The currently selected amount of markings</param>
     public void GetMarkingCounts(ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer, out bool isRequired, out int count, out int selected)
     {
         isRequired = false;
@@ -348,6 +452,14 @@ public sealed class MarkingsViewModel
         selected = layerMarkings.Count;
     }
 
+    /// <summary>
+    /// Reorders the specified marking ID to the index and position relative to its index
+    /// </summary>
+    /// <param name="organ">The organ to reorder the markings of</param>
+    /// <param name="layer">The layer to reorder the markings of</param>
+    /// <param name="markingId">The marking to reorder</param>
+    /// <param name="position">Whether the marking should be moved to before or after the given index</param>
+    /// <param name="positionIndex">The new position index of the marking</param>
     public void ChangeMarkingOrder(ProtoId<OrganCategoryPrototype> organ,
         HumanoidVisualLayers layer,
         ProtoId<MarkingPrototype> markingId,
@@ -381,6 +493,9 @@ public sealed class MarkingsViewModel
     }
 }
 
+/// <summary>
+/// Specifies whether an item in a list will be moved to before or after a corresponding index
+/// </summary>
 public enum CandidatePosition
 {
     Before,

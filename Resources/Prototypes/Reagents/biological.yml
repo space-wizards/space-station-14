@@ -33,6 +33,12 @@
           groups:
             Brute: -3
             Burn: -1.25
+    Bloodstream: # Don't inject someone else's blood into yourself! Your own blood won't actually metabolise.
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.2
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5
@@ -133,6 +139,17 @@
   physicalDesc: reagent-physical-desc-pungent
 
 - type: reagent
+  parent: Blood
+  id: SulfurBlood
+  name: reagent-name-sulfur-blood
+  group: Biological
+  desc: reagent-desc-sulfur-blood
+  flavor: bitter
+  color: "#ccac1f"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-strong-smelling
+
+- type: reagent
   id: ZombieBlood
   name: reagent-name-zombie-blood
   group: Biological
@@ -164,7 +181,7 @@
   flavor: metallic
   color: "#f4692e"
   recognizable: true
-  metabolisms:        
+  metabolisms:
     Bloodstream:
       effects:
       - !type:SatiateThirst

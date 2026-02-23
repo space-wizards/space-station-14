@@ -40,7 +40,7 @@ public sealed class LightBehaviorSystem : EntitySystem
         }
         else
         {
-            StopLightBehaviour((uid, component), container.LightBehaviour.ID, resetToOriginalSettings: true);
+            StopLightBehaviour((uid, component), container.LightBehaviour.ID);
         }
     }
 

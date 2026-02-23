@@ -53,3 +53,21 @@
   id: FloorTileSteelPavementVertical
   name: stack-steel-vertical-pavement
   spawn: FloorTileItemSteelPavementVertical
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelVerticalSlatsBordered
+  name: stack-steel-vertical-slats-tile-bordered
+  spawn: FloorTileItemSteelVerticalSlatsBordered
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelSlatsContinuous
+  name: stack-steel-slats-tile-continuous
+  spawn: FloorTileItemSteelSlatsContinuous
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelHorizontalSlatsBordered
+  name: stack-steel-horizontal-slats-tile-bordered
+  spawn: FloorTileItemSteelHorizontalSlatsBordered

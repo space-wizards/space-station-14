@@ -115,6 +115,7 @@
           False: { visible: false }
 
 - type: entity
+  parent: BaseWallmountMetallic
   id: IntercomAssembly
   name: intercom assembly
   description: An intercom. It doesn't seem very helpful right now.
