@@ -132,7 +132,6 @@ public sealed partial class StationJobsSystem
                     // The jobs we're selecting from for the current station.
                     var currentStationJobSlots = currentWeightJobSlots[station];
 
-                    // We want to go through them in random order.
                     var currentJobs = currentStationJobSlots.Keys.ToList();
 
                     // Loop through the jobs repeatedly until one of the following happens:
@@ -146,6 +145,8 @@ public sealed partial class StationJobsSystem
                     {
                         priorCount = stationShares[station];
 
+                        // Go through jobs in an order that ensures we don't overfill any department while leaving
+                        // others empty.
                         foreach (var job in OrderJobs(currentJobs, currentStationJobSlots))
                         {
                             if (stationShares[station] ==
