@@ -37,6 +37,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 
@@ -46,6 +47,7 @@ namespace Content.Shared.Cuffs
 // TODO remove all the IsServer() checks.
     public abstract partial class SharedCuffableSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -163,12 +165,14 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
         {
+            if (_timing.ApplyingState)
+                return;
+
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             if (args.Container.ID != component.Container?.ID)
                 return;
 
             _virtualItem.DeleteInHandsMatching(uid, args.Entity);
-
 
             var evCuffs = new CuffsRemovedEvent(uid);
             RaiseLocalEvent(args.Entity, ref evCuffs);
@@ -320,6 +324,9 @@ namespace Content.Shared.Cuffs
 
         private void OnDamage(Entity<CuffableComponent> ent, ref DamageChangedEvent args)
         {
+            if (_timing.ApplyingState)
+                return;
+
             if (args.DamageDelta == null || !args.DamageIncreased || !IsCuffed(ent))
                 return;
 
