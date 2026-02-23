@@ -1,0 +1,595 @@
+- type: entity
+  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsAll ]
+  id: Jug
+  name: jug
+  description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/jug.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Specific/Chemistry/jug.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 200
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    inHandsMaxFillLevels: 5
+  - type: ExaminableSolution
+    exactVolume: true # Chemistry item
+  - type: StaticPrice
+    price: 60
+  - type: Tag
+    tags:
+    - ChemDispensable
+
+- type: entity
+  parent: Jug
+  id: JugPunctTranex
+  suffix: punct & tranex
+  components:
+  - type: Label
+    currentLabel: reagent-name-puncturase-tranexamic
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Puncturase
+          Quantity: 160
+        - ReagentId: TranexamicAcid
+          Quantity: 40
+
+- type: entity
+  parent: Jug
+  id: JugPyraDerma
+  suffix: pyra & derma
+  components:
+  - type: Label
+    currentLabel: reagent-name-pyrazine-dermaline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Pyrazine
+          Quantity: 50
+        - ReagentId: Dermaline
+          Quantity: 150
+
+- type: entity
+  parent: Jug
+  id: JugDexPlusSaline
+  suffix: dex+ & saline
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin-plus-saline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 100
+        - ReagentId: Saline
+          Quantity: 100
+
+- type: entity
+  parent: Jug
+  id: JugTrico
+  suffix: tricordrazine
+  components:
+  - type: Label
+    currentLabel: reagent-name-tricordrazine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Tricordrazine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  id: JugBlood
+  suffix: blood
+  components:
+  - type: Label
+    currentLabel: reagent-name-blood
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Blood
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  id: JugWater
+  suffix: water
+  components:
+  - type: Label
+    currentLabel: reagent-name-water
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: carbon
+  id: JugCarbon
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-carbon
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: iodine
+  id: JugIodine
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-iodine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Iodine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: fluorine
+  id: JugFluorine
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-fluorine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Fluorine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: chlorine
+  id: JugChlorine
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-chlorine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Chlorine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: aluminium
+  id: JugAluminium
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-aluminium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: phosphorus
+  id: JugPhosphorus
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-phosphorus
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Phosphorus
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: sulfur
+  id: JugSulfur
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-sulfur
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Sulfur
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: silicon
+  id: JugSilicon
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-silicon
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: hydrogen
+  id: JugHydrogen
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-hydrogen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Hydrogen
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: lithium
+  id: JugLithium
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-lithium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Lithium
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: sodium
+  id: JugSodium
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-sodium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Sodium
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: potassium
+  id: JugPotassium
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-potassium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: radium
+  id: JugRadium
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-radium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Radium
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: iron
+  id: JugIron
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-iron
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: copper
+  id: JugCopper
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-copper
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Copper
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: gold
+  id: JugGold
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-gold
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Gold
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: mercury
+  id: JugMercury
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-mercury
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: silver
+  id: JugSilver
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-silver
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Silver
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: ethanol
+  id: JugEthanol
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-ethanol
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Ethanol
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: sugar
+  id: JugSugar
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-sugar
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: nitrogen
+  id: JugNitrogen
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Nitrogen
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: oxygen
+  id: JugOxygen
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-oxygen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Oxygen
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: Plant-B-Gone
+  id: JugPlantBGone
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-plant-b-gone
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: PlantBGone
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: welding fuel
+  id: JugWeldingFuel
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-welding-fuel
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: bicaridine
+  id: JugBicaridine
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-bicaridine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: puncturase
+  id: JugPuncturase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-puncturase
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Puncturase
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dermaline
+  id: JugDermaline
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-dermaline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dylovene
+  id: JugDylovene
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-dylovene
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Dylovene
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: tranexamic acid
+  id: JugTranexamicAcid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-tranexamic-acid
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: TranexamicAcid
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: hyronalin
+  id: JugHyronalin
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-hyronalin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Hyronalin
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: saline
+  id: JugSaline
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-saline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Saline
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dexalin plus
+  id: JugDexalinPlus
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin-plus
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 200

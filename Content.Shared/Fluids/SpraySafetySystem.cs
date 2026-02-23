@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Item.ItemToggle;
-using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Fluids;
@@ -10,7 +9,6 @@ public sealed class SpraySafetySystem : EntitySystem
 {
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

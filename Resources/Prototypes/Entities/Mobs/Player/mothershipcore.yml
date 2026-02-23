@@ -5,9 +5,9 @@
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
   components:
   - type: InputMover # needs this to pilot the mothership
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 0 # shouldn't move
-    baseSprintSpeed : 0 # shouldn't move
+  - type: BlockMovement # They should never be moving!
+    blockInteraction: false
+    blockUse: false
   - type: Appearance
   - type: WiresVisuals
   - type: Damageable
