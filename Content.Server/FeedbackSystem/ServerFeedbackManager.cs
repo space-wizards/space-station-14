@@ -1,4 +1,5 @@
-﻿using Content.Shared.FeedbackSystem;
+﻿using Content.Server.GameTicking;
+using Content.Shared.FeedbackSystem;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -8,6 +9,7 @@ namespace Content.Server.FeedbackSystem;
 public sealed class ServerFeedbackManager : SharedFeedbackManager
 {
     [Dependency] private readonly ISharedPlayerManager _player = null!;
+    [Dependency] private readonly GameTicker _gameTicker = null!;
 
     public override void Initialize()
     {
@@ -74,5 +76,14 @@ public sealed class ServerFeedbackManager : SharedFeedbackManager
 
         var msg = new OpenFeedbackPopupMessage();
         NetManager.ServerSendToAll(msg);
+    }
+
+    /// <inheritdoc />
+    public override bool CheckRule(string? ruleId)
+    {
+        if (ruleId == null)
+            return true;
+
+        return _gameTicker.IsGameRuleAdded(ruleId);
     }
 }
