@@ -22,7 +22,7 @@
     sound: "/Audio/Ambience/Antag/headrev_start.ogg"
   factions: 
   - Revolutionary
-  blackList: 
+  blacklist: 
     components:
     - Revolutionary
     - MindShield

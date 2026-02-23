@@ -18,6 +18,3 @@
   id: TraitorReinforcement
   mindRoles:
   - MindRoleSyndicateReinforcement
-  briefing:
-    text: roles-antag-syndicate-agent-reinforcement-objective
-    sound: /Audio/Ambience/Antag/traitor_start.ogg
