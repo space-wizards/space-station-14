@@ -133,7 +133,7 @@
     forced: true
     transferName: true
     revertOnDeath: true
-    inventory: Drop
+    inventory: Transfer
     cooldown: 30
 
 - type: polymorph

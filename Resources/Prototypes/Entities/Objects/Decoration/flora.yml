@@ -233,7 +233,7 @@
         tree06: ""
 
 - type: entity
-  parent: FloraTree # We cannot also inherit from BaseControllable, because that would also inherit GravityAffected, thus causing the tree to be pullable.
+  parent: [BaseControllable, FloraTree] # We cannot also inherit from BaseControllable, because that would also inherit GravityAffected, thus causing the tree to be pullable.
   id: DionaTree
   name: tree
   description: Yep, it's a tree. Why do you feel it looking at you?
@@ -248,8 +248,19 @@
   - type: ComplexInteraction
   - type: DoAfter
   - type: Examiner # Lets polymorphed diona inspect the surrounding area, their "eyes" still work.
+  - type: Hands
+    showInHands: false
+    disableExplosionRecursion: true
+    canBeStripped: false
+    activeHandId: Hand
+    hands:
+      Hand:
+        location: Left
   - type: Input
     context: "human"
+  - type: Inventory
+    templateId: dionaTree
+  - type: InventorySlots
   - type: Puller # Imagine vine-tentacles made out of biomass
     needsHands: false
   - type: Transform # Don't move even when pulling stuff
