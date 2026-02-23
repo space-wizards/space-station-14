@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AwareFoxy
-  changes:
-  - message: Added Pride-O-Mat to marathon!
-    type: Add
-  id: 9032
-  time: '2025-10-04T16:50:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40696
 - author: Moomoobeef
   changes:
   - message: Evac directional signs now glow in the dark!
@@ -3985,3 +3978,11 @@
   id: 9540
   time: '2026-02-22T23:20:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42953
+- author: ketufaispikinut
+  changes:
+  - message: Changed the EMP Implanter's uplink icon so it is less easily confused
+      with the Scram Implanter's.
+    type: Tweak
+  id: 9541
+  time: '2026-02-23T01:24:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42998

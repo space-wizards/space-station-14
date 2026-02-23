@@ -1029,4 +1029,11 @@
   id: 125
   time: '2026-02-22T23:20:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42994
+- author: TytosB
+  changes:
+  - message: On Serpentcrest, tweaked Atmospherics and Security.
+    type: Tweak
+  id: 126
+  time: '2026-02-23T05:48:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42905
 Order: 2
