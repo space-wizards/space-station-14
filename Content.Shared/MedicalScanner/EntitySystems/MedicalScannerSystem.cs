@@ -1,5 +1,5 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Body.Components;
+using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Cloning;
 using Content.Shared.Destructible;
