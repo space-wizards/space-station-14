@@ -1,4 +1,4 @@
-﻿using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Controls;
@@ -131,6 +131,8 @@ public sealed class ConfirmButton : Button
                 Disabled = true;
                 break;
             case true:
+                _nextCooldown = null;
+                _nextReset = null;
                 OnPressed?.Invoke(buttonEvent);
                 break;
         }
