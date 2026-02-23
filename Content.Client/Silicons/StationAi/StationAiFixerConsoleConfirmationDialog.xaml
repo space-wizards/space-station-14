@@ -1,6 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                       Title="{Loc 'station-ai-fixer-console-window-purge-warning-title'}"
                       Resizable="False">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" SetWidth="400">
@@ -19,4 +17,4 @@
                     Margin="0 10 20 10"/>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

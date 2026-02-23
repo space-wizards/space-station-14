@@ -1,6 +1,4 @@
-<ui:FancyWindow xmlns="https://spacestation14.io"
-            xmlns:x="http://schemas.microsoft.com/winfx/2007/xaml"
-            xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             MinSize="500 500" Resizable="True" Title="{Loc air-alarm-ui-title}">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
@@ -76,12 +74,12 @@
             <Label Text="{Loc 'air-alarm-ui-window-mode-label'}" Margin="0 0 2 0" />
             <Control HorizontalExpand="True">
                 <OptionButton Name="CModeButton" />
-                <ui:StripeBack Name="CModeSelectLocked">
+                <StripeBack Name="CModeSelectLocked">
                     <RichTextLabel Text="{Loc 'air-alarm-ui-window-mode-select-locked-label'}"
                                    HorizontalAlignment="Center" />
-                </ui:StripeBack>
+                </StripeBack>
             </Control>
             <CheckBox Name="AutoModeCheckBox" Text="{Loc 'air-alarm-ui-window-auto-mode-label'}" />
         </BoxContainer>
     </BoxContainer>
-</ui:FancyWindow>
+</FancyWindow>

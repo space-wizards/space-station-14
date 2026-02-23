@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
             SetSize="300 150"
             MinSize="300 150"
                       Title="{Loc 'cargo-pallet-console-menu-title'}">
@@ -22,4 +21,4 @@
                 Text="{Loc 'cargo-pallet-sell-button'}"/>
         <TextureButton VerticalExpand="True" />
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

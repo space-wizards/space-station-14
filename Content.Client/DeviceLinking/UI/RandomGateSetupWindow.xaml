@@ -1,6 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
             Title="{Loc 'random-gate-menu-setup'}"
             MinSize="260 115">
     <BoxContainer Orientation="Vertical" Margin="5" SeparationOverride="10">
@@ -16,4 +14,4 @@
                     HorizontalAlignment="Right" />
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

@@ -1,7 +1,5 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
+<FancyWindow xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-                xmlns:fancyTree="clr-namespace:Content.Client.UserInterface.Controls.FancyTree"
-                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 SetSize="900 700"
                 MinSize="100 200"
                 Resizable="True"
@@ -9,7 +7,7 @@
     <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
         <!-- Guide select -->
         <BoxContainer Orientation="Horizontal" Name="TreeBox">
-            <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
+            <FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
             <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
@@ -36,4 +34,4 @@
             </ScrollContainer>
         </BoxContainer>
     </SplitContainer>
-</controls:FancyWindow>
+</FancyWindow>

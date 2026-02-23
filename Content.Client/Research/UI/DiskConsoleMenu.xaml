@@ -1,5 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+﻿<FancyWindow xmlns="https://spacestation14.io"
                      xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                      Title="{Loc 'tech-disk-ui-name'}"
                      MinSize="400 260"
@@ -33,4 +32,4 @@
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

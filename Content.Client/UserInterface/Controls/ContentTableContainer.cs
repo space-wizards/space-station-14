@@ -20,7 +20,7 @@ namespace Content.Client.UserInterface.Controls;
 /// The first control is in the top left, laid out per row from there.
 /// </remarks>
 [Virtual]
-public class TableContainer : Container
+public class ContentTableContainer : Container
 {
     private int _columns = 1;
 

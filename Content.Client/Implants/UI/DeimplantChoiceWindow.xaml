@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                Title="{Loc 'implanter-set-draw-window'}"
                MinSize="5 30">
     <BoxContainer Orientation="Vertical" Margin="10 5">
@@ -9,4 +8,4 @@
             <OptionButton Name="ImplantSelector"/> <!-- Populated in LoadVerbs -->
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

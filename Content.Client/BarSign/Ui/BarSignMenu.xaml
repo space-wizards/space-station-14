@@ -1,6 +1,5 @@
-<controls:FancyWindow
+<FancyWindow
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     Title="{Loc 'barsign-ui-menu'}"
     MinSize="280 180"
@@ -14,6 +13,6 @@
             <OptionButton Name="SignOptions" HorizontalAlignment="Center" VerticalAlignment="Center" MinSize="175 60" Margin="0 0 0 20"/>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>
 
 
