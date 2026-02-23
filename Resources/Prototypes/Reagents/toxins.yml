@@ -597,7 +597,11 @@
         damage:
           types:
             Poison: 0.06
-
+      - !type:ConvertToClown
+        conditions:
+        - !type:ReagentCondition
+          reagent: Honk
+          min: 20
 
 - type: reagent
   id: Lead

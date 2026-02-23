@@ -392,6 +392,12 @@
   description: alerts-muted-desc
 
 - type: alert
+  id: Silenced
+  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
+  name: alerts-silenced-name
+  description: alerts-silenced-desc
+
+- type: alert
   id: VowOfSilence
   icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
   name: alerts-vow-silence-name
