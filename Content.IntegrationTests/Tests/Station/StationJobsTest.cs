@@ -17,10 +17,14 @@ namespace Content.IntegrationTests.Tests.Station;
 [TestOf(typeof(StationJobsSystem))]
 public sealed class StationJobsTest
 {
-    private const string StationMapId = "FooStation";
+    private const string StationMapId = "TFooStation";
+    private const string PidgeonStationMapId = "TBarStation";
 
     [TestPrototypes]
     private const string Prototypes = $@"
+- type: playTimeTracker
+  id: PlayTimeDummyFoogly
+
 - type: playTimeTracker
   id: PlayTimeDummyAssistant
 
@@ -56,6 +60,26 @@ public sealed class StationJobsTest
             TCaptain: [5, 5]
             TClown: [5, 6]
             TLibrarian: [1, 1]
+
+- type: gameMap
+  id: {PidgeonStationMapId}
+  minPlayers: 0
+  mapName: {PidgeonStationMapId}
+  mapPath: /Maps/Test/empty.yml
+  stations:
+    Station:
+      mapNameTemplate: {PidgeonStationMapId}
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationJobs
+          availableJobs:
+            TAssistant: [10, 10]
+            TChaplain: [10, 10]
+            TFoogly: [10, 10]
+
+- type: job
+  id: TFoogly
+  playTimeTracker: PlayTimeDummyFoogly
 
 - type: job
   id: TAssistant
@@ -271,6 +295,7 @@ public sealed class StationJobsTest
         });
         await pair.CleanReturnAsync();
     }
+
     [Test]
     public async Task AssignJobsInsufficientSlotsTest()
     {
@@ -411,6 +436,55 @@ public sealed class StationJobsTest
                 }
             });
         });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    [Description("Ensures that job selection adheres to the pidgeonhole principle, evenly distributing between job options.")]
+    public async Task PidgeonHoleTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var barStationProto = prototypeManager.Index<GameMapPrototype>(PidgeonStationMapId);
+        var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+
+        EntityUid station = EntityUid.Invalid;
+        await server.WaitPost(() =>
+        {
+            station = stationSystem.InitializeNewStation(barStationProto.Stations["Station"], null, $"Bar {StationCount}");
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            // 4 players, for 3 jobs.
+            const int playerCount = 4;
+
+            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
+                .AddJob("TChaplain", JobPriority.Low, playerCount)
+                .AddPreference("TAssistant", JobPriority.Low)
+                .AddPreference("TFoogly", JobPriority.Low);
+
+            var assigned = stationJobs.AssignJobs(fakePlayers, [station]);
+
+            Assert.Multiple(() =>
+            {
+                // If the result is a superset of this, then every slot got at least one player.
+                Assert.That(
+                    assigned.Values,
+                    Is.SupersetOf(
+                        [
+                            (new ProtoId<JobPrototype>("TFoogly"), station),
+                            (new ProtoId<JobPrototype>("TAssistant"), station),
+                            (new ProtoId<JobPrototype>("TChaplain"), station)
+                        ])
+                );
+            });
+        });
+
         await pair.CleanReturnAsync();
     }
 }

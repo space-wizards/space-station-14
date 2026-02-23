@@ -43,7 +43,7 @@ public sealed partial class StationJobsSystem
 
     /// <summary>
     /// Assigns jobs based on the given preferences and list of stations to assign for.
-    /// This does NOT change the slots on the station, only figures out where each player should go.
+    /// This does not mutate the game state, just compute where to assign players.
     /// </summary>
     /// <param name="profiles">The profiles to use for selection.</param>
     /// <param name="stations">List of stations to assign for.</param>
@@ -51,8 +51,6 @@ public sealed partial class StationJobsSystem
     /// current jobs. Set to false if using this for a station that already has some players, as it may have more
     /// round-start slots than available slots, so using the round-start slots could cause weird behavior.</param>
     /// <returns>List of players and their assigned jobs.</returns>
-    /// <remarks>
-    /// </remarks>
     public Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
@@ -136,56 +134,60 @@ public sealed partial class StationJobsSystem
 
                     // We want to go through them in random order.
                     var currentJobs = currentStationJobSlots.Keys.ToList();
-                    _random.Shuffle(currentJobs);
 
                     // Loop through the jobs repeatedly until one of the following happens:
                     // * The station has its share of players for the current weight & priority
                     // * All the players who were in jobCandidates have been assigned jobs
-                    // * None of the remaining jobCandidates can be assigned to any of the jobs in currentJobs, due
-                    //   to the jobs being full and/or the players not matching the remaining jobs
-                    var stillAssigningJobs = true;
-                    while (stillAssigningJobs)
-                    {
-                        // This will get set back to true in the inner loop when a player is assigned to a job.
-                        // If no players get assigned to jobs in the inner loop, then the jobs are full and/or
-                        // the players don't match the remaining jobs.
-                        stillAssigningJobs = false;
+                    // * We fail to assign any jobs during an iteration, i.e. stationShares is unchanging.
 
-                        foreach (var job in currentJobs)
+                    int priorCount; // How many jobs were available last run of the loop.
+
+                    do
+                    {
+                        priorCount = stationShares[station];
+
+                        foreach (var job in OrderJobs(currentJobs, currentStationJobSlots))
                         {
-                            if (stationShares[station] == 0 // The station has its share of players for the current weight & priority
-                                || jobCandidates.Count == 0) // All the players who were in jobCandidates have been assigned jobs
-                            {
-                                stillAssigningJobs = false;
-                                break;
-                            }
+                            if (stationShares[station] ==
+                                0 // The station has its share of players for the current weight & priority
+                                || jobCandidates.Count ==
+                                0) // All the players who were in jobCandidates have been assigned jobs
+                                break; // Then leave, nothing to assign.
 
                             // null indicates an uncapped job here
                             if (currentStationJobSlots[job] != null && currentStationJobSlots[job] == 0)
                                 continue; // Can't assign this job.
 
-                            if (!jobCandidates.ContainsKey(job))
+                            if (!jobCandidates.TryGetValue(job, out var candidate))
                                 continue;
 
-                            // Pick one of the job's candidates at random
-                            var player = _random.Pick(jobCandidates[job]);
+                            // Pick one of the job's candidates at random.
+                            var player = _random.Pick(candidate);
                             assigned.Add(player, (job, station));
 
-                            // Update various bookkeeping data
+                            // Remove the player we assigned from our books.
                             unassignedProfiles.Remove(player);
                             currentStationJobSlots[job]--;
                             stationShares[station]--;
                             RemoveJobCandidate(jobCandidates, player);
-
-                            // There was now at least one job assigned on this loop over the jobs
-                            stillAssigningJobs = true;
                         }
-                    }
+                    } while (priorCount != stationShares[station]);
                 }
             }
         }
 
         return assigned;
+    }
+
+    /// <summary>
+    ///     Orders jobs in such a way that we prefer to assign jobs that haven't been assigned first.
+    /// </summary>
+    private IOrderedEnumerable<ProtoId<JobPrototype>> OrderJobs(List<ProtoId<JobPrototype>> jobs, Dictionary<ProtoId<JobPrototype>, int?> assigned)
+    {
+        // Order by how many assigned, putting infinite slots last, and then within those rankings order randomly.
+        return jobs
+            .OrderBy(x => assigned[x] ?? int.MaxValue)
+            .ThenBy(_ => _random.Next()); // In any other language this would be a terrible idea.
     }
 
     private static void RemoveJobCandidate(Dictionary<ProtoId<JobPrototype>, HashSet<NetUserId>> jobCandidates,
