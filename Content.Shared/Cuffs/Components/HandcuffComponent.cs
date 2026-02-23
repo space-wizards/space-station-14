@@ -52,7 +52,7 @@ public sealed partial class HandcuffComponent : Component
     public FixedPoint2? BreakOnDamageThreshold;
 
     /// <summary>
-    ///     If set, the cuffs will break if the cuffed entity takes total damage over the threshold.
+    ///     Tracks the damage the wearer have taken while wearing the cuffs so far.
     /// </summary>
     [DataField]
     public FixedPoint2 DamageWhileWorn;

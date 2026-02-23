@@ -182,15 +182,15 @@
     drawRate: 1.8 # 200 seconds on the default cell
   - type: ToggleCellDraw
   # throwing star & nanocuff ability
-  - type: ItemCreator
-    entries:
-    - action: ActionCreateThrowingStar
-      charge: 14.4
-      spawnedPrototype: ThrowingStarNinja
-    - action: ActionCreateNanostraps
-      charge: 14.4
-      spawnedPrototype: NanostrapsNinja
-    noPowerPopup: ninja-no-power
+  - type: ActionGrant
+    actions:
+    - ActionCreateThrowingStar
+    - ActionCreateNanostraps
+  - type: ItemActionGrant
+    actions:
+    - ActionCreateThrowingStar
+    - ActionCreateNanostraps
+    activeIfWorn: true
   # core ninja suit stuff
   - type: NinjaSuit
   - type: EmpResistance

@@ -22,8 +22,12 @@
       state: icon
     itemIconStyle: NoItem
     priority: -10
+  - type: ChargeCostAction
+    charge: 14.4
+    noPowerPopup: ninja-no-power
   - type: InstantAction
-    event: !type:CreateItemEvent {}
+    event: !type:CreateItemEvent
+      protoId: ThrowingStarNinja
 
 - type: entity
   parent: BaseAction
@@ -82,8 +86,12 @@
       state: nanocuff
     itemIconStyle: NoItem
     priority: -14
+  - type: ChargeCostAction
+    charge: 14.4
+    noPowerPopup: ninja-no-power
   - type: InstantAction
-    event: !type:CreateItemEvent {}
+    event: !type:CreateItemEvent
+      protoId: NanostrapsNinja
 
 # katana
 - type: entity
