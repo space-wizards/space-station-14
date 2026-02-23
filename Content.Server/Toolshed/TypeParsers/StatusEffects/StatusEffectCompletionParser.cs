@@ -11,6 +11,6 @@ public sealed class StatusEffectCompletionParser : CustomCompletionParser<EntPro
 {
     public override CompletionResult? TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
-        return CompletionResult.FromHintOptions(StatusEffectsSystem.StatusEffectPrototypes, GetArgHint(arg));
+        return CompletionResult.FromHintOptions(IoCManager.Resolve<StatusEffectsSystem>().StatusEffectPrototypes, GetArgHint(arg));
     }
 }
