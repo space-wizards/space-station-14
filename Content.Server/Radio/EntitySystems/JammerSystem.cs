@@ -1,17 +1,11 @@
-using System.Linq;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Physics;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Radio.EntitySystems;
@@ -20,8 +14,6 @@ public sealed class JammerSystem : SharedJammerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
-    [Dependency] private readonly FixtureSystem _fixture = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -31,9 +23,7 @@ public sealed class JammerSystem : SharedJammerSystem
 
         SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
         SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
-        SubscribeLocalEvent<RadioJammerFixtureComponent, StartCollideEvent>(OnJammerStartCollide);
-        SubscribeLocalEvent<RadioJammerFixtureComponent, EndCollideEvent>(OnJammerEndCollide);
-        SubscribeLocalEvent<RadioJammerFixtureComponent, ComponentShutdown>(OnFixtureShutdown);
+        SubscribeLocalEvent<RadioJammerFixtureComponent, ComponentShutdown>(OnTrackerShutdown);
         SubscribeLocalEvent<RadioJammerFixtureComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<RadioJammerComponent, RadioJammerPowerLevelChangedEvent>(OnPowerLevelChanged);
     }
@@ -44,21 +34,17 @@ public sealed class JammerSystem : SharedJammerSystem
 
         if (args.Activated)
         {
-            var fixtureComp = EnsureComp<RadioJammerFixtureComponent>(ent);
-            CreateJammerFixture(ent, GetCurrentRange(ent), fixtureComp);
-
-            if (TryComp<TransformComponent>(ent, out var xform))
-            {
-                UpdateJammedCameras((ent.Owner, fixtureComp, ent.Comp, xform));
-                fixtureComp.LastPosition = _transform.GetMapCoordinates(ent.Owner, xform);
-                fixtureComp.NextUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(0.1);
-            }
+            var tracker = EnsureComp<RadioJammerFixtureComponent>(ent);
+            var xform = Transform(ent.Owner);
+            UpdateJammedCameras((ent.Owner, tracker, ent.Comp, xform));
+            tracker.LastPosition = _transform.GetMapCoordinates(ent.Owner, xform);
+            tracker.NextUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(0.1);
         }
         else
         {
-            if (TryComp<RadioJammerFixtureComponent>(ent, out var fixtureComp))
+            if (TryComp<RadioJammerFixtureComponent>(ent, out var tracker))
             {
-                DestroyJammerFixture(ent, fixtureComp);
+                CleanupJammedCameras(ent.Owner, tracker);
                 RemComp<RadioJammerFixtureComponent>(ent);
             }
         }
@@ -78,53 +64,31 @@ public sealed class JammerSystem : SharedJammerSystem
 
     private bool ShouldCancel(EntityUid sourceUid, int frequency)
     {
-        var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, RadioJammerFixtureComponent>();
+        var sourcePos = _transform.GetMapCoordinates(sourceUid);
+        if (sourcePos.MapId == MapId.Nullspace)
+            return false;
 
-        while (query.MoveNext(out _, out _, out var jam, out var fixture))
+        var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent>();
+        while (query.MoveNext(out var jammerUid, out _, out var jam))
         {
             if (jam.FrequenciesExcluded.Contains(frequency))
                 continue;
 
-            if (fixture.CollidingEntities.ContainsKey(sourceUid))
+            var jammerPos = _transform.GetMapCoordinates(jammerUid);
+            if (jammerPos.MapId != sourcePos.MapId)
+                continue;
+
+            var range = GetCurrentRange((jammerUid, jam));
+            if ((jammerPos.Position - sourcePos.Position).LengthSquared() <= range * range)
                 return true;
         }
 
         return false;
     }
 
-    private void CreateJammerFixture(
-        Entity<RadioJammerComponent> ent,
-        float range,
-        RadioJammerFixtureComponent fixtureComp)
+    private void CleanupJammedCameras(EntityUid uid, RadioJammerFixtureComponent tracker)
     {
-        if (!TryComp<PhysicsComponent>(ent, out var body))
-            return;
-
-        var shape = new PhysShapeCircle(range);
-
-        _fixture.TryCreateFixture(
-            ent.Owner,
-            shape,
-            RadioJammerFixtureComponent.FixtureID,
-            hard: false,
-            body: body,
-            collisionLayer: (int)CollisionGroup.Opaque,
-            collisionMask: (int)CollisionGroup.Opaque);
-
-        _physics.RegenerateContacts((ent.Owner, body));
-    }
-
-    private void DestroyJammerFixture(
-        EntityUid uid,
-        RadioJammerFixtureComponent fixtureComp)
-    {
-        if (!TryComp<FixturesComponent>(uid, out var fixtures))
-            return;
-
-        if (fixtures.Fixtures.TryGetValue(RadioJammerFixtureComponent.FixtureID, out var fixture))
-            _fixture.DestroyFixture(uid, RadioJammerFixtureComponent.FixtureID, fixture, manager: fixtures);
-
-        foreach (var camera in fixtureComp.JammedCameras.ToList())
+        foreach (var camera in tracker.JammedCameras)
         {
             if (TryComp<AiCameraJammedComponent>(camera, out var jammedComp))
             {
@@ -135,63 +99,20 @@ public sealed class JammerSystem : SharedJammerSystem
                     Dirty(camera, jammedComp);
             }
         }
-
-        fixtureComp.CollidingEntities.Clear();
-        fixtureComp.JammedCameras.Clear();
+        tracker.JammedCameras.Clear();
     }
 
-    private void OnJammerStartCollide(
-        Entity<RadioJammerFixtureComponent> ent,
-        ref StartCollideEvent args)
+    private void OnTrackerShutdown(Entity<RadioJammerFixtureComponent> ent, ref ComponentShutdown _)
     {
-        if (args.OurFixtureId != RadioJammerFixtureComponent.FixtureID)
-            return;
-
-        ent.Comp.CollidingEntities[args.OtherEntity] = args.OtherBody;
-
-        if (HasComp<StationAiVisionComponent>(args.OtherEntity))
-        {
-            ent.Comp.JammedCameras.Add(args.OtherEntity);
-            var jammedComp = EnsureComp<AiCameraJammedComponent>(args.OtherEntity);
-            jammedComp.JammingSources.Add(ent.Owner);
-            Dirty(args.OtherEntity, jammedComp);
-        }
-    }
-
-    private void OnJammerEndCollide(
-        Entity<RadioJammerFixtureComponent> ent,
-        ref EndCollideEvent args)
-    {
-        if (args.OurFixtureId != RadioJammerFixtureComponent.FixtureID)
-            return;
-
-        ent.Comp.CollidingEntities.Remove(args.OtherEntity);
-
-        if (ent.Comp.JammedCameras.Remove(args.OtherEntity))
-        {
-            if (TryComp<AiCameraJammedComponent>(args.OtherEntity, out var jammedComp))
-            {
-                jammedComp.JammingSources.Remove(ent.Owner);
-
-                if (jammedComp.JammingSources.Count == 0)
-                    RemComp<AiCameraJammedComponent>(args.OtherEntity);
-                else
-                    Dirty(args.OtherEntity, jammedComp);
-            }
-        }
-    }
-
-    private void OnFixtureShutdown(Entity<RadioJammerFixtureComponent> ent, ref ComponentShutdown args)
-    {
-        DestroyJammerFixture(ent.Owner, ent.Comp);
+        CleanupJammedCameras(ent.Owner, ent.Comp);
     }
 
     private void OnParentChanged(Entity<RadioJammerFixtureComponent> ent, ref EntParentChangedMessage args)
     {
-        if (!TryComp<RadioJammerComponent>(ent, out var jammer) ||
-            !TryComp<TransformComponent>(ent, out var xform))
+        if (!TryComp<RadioJammerComponent>(ent, out var jammer))
             return;
 
+        var xform = Transform(ent.Owner);
         UpdateJammedCameras((ent.Owner, ent.Comp, jammer, xform));
         ent.Comp.LastPosition = _transform.GetMapCoordinates(ent.Owner, xform);
     }
@@ -203,28 +124,28 @@ public sealed class JammerSystem : SharedJammerSystem
         var curTime = _timing.CurTime;
         var query = EntityQueryEnumerator<RadioJammerFixtureComponent, RadioJammerComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var fixture, out var jammer, out var xform))
+        while (query.MoveNext(out var uid, out var tracker, out var jammer, out var xform))
         {
-            if (curTime < fixture.NextUpdateTime)
+            if (curTime < tracker.NextUpdateTime)
                 continue;
 
             var currentPos = _transform.GetMapCoordinates(uid, xform);
 
-            if (fixture.LastPosition == null ||
-                fixture.LastPosition.Value.MapId != currentPos.MapId ||
-                !fixture.LastPosition.Value.Position.EqualsApprox(currentPos.Position, 0.01f))
+            if (tracker.LastPosition == null ||
+                tracker.LastPosition.Value.MapId != currentPos.MapId ||
+                !tracker.LastPosition.Value.Position.EqualsApprox(currentPos.Position, 0.01f))
             {
-                UpdateJammedCameras((uid, fixture, jammer, xform));
-                fixture.LastPosition = currentPos;
+                UpdateJammedCameras((uid, tracker, jammer, xform));
+                tracker.LastPosition = currentPos;
             }
 
-            fixture.NextUpdateTime = curTime + TimeSpan.FromSeconds(0.1);
+            tracker.NextUpdateTime = curTime + TimeSpan.FromSeconds(0.1);
         }
     }
 
     /// <summary>
     /// Updates which cameras are jammed based on current position using EntityLookup.
-    /// This handles the case when the jammer is held/carried and collision doesn't fire.
+    /// Works regardless of whether the jammer is on the floor, held, or inside a container.
     /// </summary>
     private void UpdateJammedCameras(Entity<RadioJammerFixtureComponent, RadioJammerComponent, TransformComponent> jammer)
     {
@@ -271,18 +192,12 @@ public sealed class JammerSystem : SharedJammerSystem
 
     private void OnPowerLevelChanged(Entity<RadioJammerComponent> ent, ref RadioJammerPowerLevelChangedEvent args)
     {
-        if (!TryComp<RadioJammerFixtureComponent>(ent, out var fixtureComp))
+        if (!TryComp<RadioJammerFixtureComponent>(ent, out var tracker))
             return;
 
-        // Recreate fixture with updated range
-        DestroyJammerFixture(ent, fixtureComp);
-        CreateJammerFixture(ent, GetCurrentRange(ent), fixtureComp);
-
-        if (TryComp<TransformComponent>(ent, out var xform))
-        {
-            UpdateJammedCameras((ent.Owner, fixtureComp, ent.Comp, xform));
-            fixtureComp.LastPosition = _transform.GetMapCoordinates(ent.Owner, xform);
-        }
+        var xform = Transform(ent.Owner);
+        UpdateJammedCameras((ent.Owner, tracker, ent.Comp, xform));
+        tracker.LastPosition = _transform.GetMapCoordinates(ent.Owner, xform);
 
         if (TryComp<DeviceNetworkJammerComponent>(ent, out var jammingComp))
             _jammer.SetRange((ent, jammingComp), GetCurrentRange(ent));
