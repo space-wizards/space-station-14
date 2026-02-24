@@ -67,6 +67,8 @@
       successChance: 0.3
       interactSuccessString: petting-success-reptile
       interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Animals/lizard_happy.ogg
 
 - type: entity
   id: MobTomatoKiller

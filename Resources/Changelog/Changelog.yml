@@ -1,48 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: You can stuff the nuke disk in plushies now.
-    type: Tweak
-  id: 9028
-  time: '2025-10-03T09:53:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40674
-- author: Crude Oil
-  changes:
-  - message: Returned PDA lights to original brightness
-    type: Fix
-  id: 9029
-  time: '2025-10-03T20:33:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40687
-- author: NoreUhh
-  changes:
-  - message: The Syndicate Cyborg Martyr Module can now be used multiple times.
-    type: Tweak
-  id: 9030
-  time: '2025-10-03T23:35:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40224
-- author: K-Dynamic
-  changes:
-  - message: Adds smart equip function to pocket 1, pocket 2, and suit storage slots.
-      Default binds are Shift+F and Shift+G for first and second pocket, Shift+H for
-      suit storage.
-    type: Add
-  id: 9031
-  time: '2025-10-04T01:44:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37975
-- author: AwareFoxy
-  changes:
-  - message: Added Pride-O-Mat to marathon!
-    type: Add
-  id: 9032
-  time: '2025-10-04T16:50:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40696
-- author: Moomoobeef
-  changes:
-  - message: Evac directional signs now glow in the dark!
-    type: Tweak
-  id: 9033
-  time: '2025-10-04T20:27:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38545
 - author: NoreUhh
   changes:
   - message: The Ian suit makes you bark now. Woof!
@@ -3986,3 +3942,47 @@
   id: 9535
   time: '2026-02-18T21:10:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42930
+- author: Samuka
+  changes:
+  - message: Added more xenoborg names!
+    type: Add
+  id: 9537
+  time: '2026-02-21T23:54:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42984
+- author: lyxcaster
+  changes:
+  - message: Made glasses actually correct short-sighted vision!
+    type: Tweak
+  id: 9538
+  time: '2026-02-22T00:07:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42990
+- author: SlamBamActionman
+  changes:
+  - message: Added unlockable press hat and press vest for the Reporter job.
+    type: Add
+  id: 9539
+  time: '2026-02-22T22:52:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41079
+- author: 11BelowStudio
+  changes:
+  - message: Added an extra APC to the comms room in Packed, to stop it from getting
+      overloaded at round start.
+    type: Fix
+  id: 9540
+  time: '2026-02-22T23:20:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42953
+- author: ketufaispikinut
+  changes:
+  - message: Changed the EMP Implanter's uplink icon so it is less easily confused
+      with the Scram Implanter's.
+    type: Tweak
+  id: 9541
+  time: '2026-02-23T01:24:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42998
+- author: DaturoDewitt
+  changes:
+  - message: Lizards can laugh again!
+    type: Add
+  id: 9542
+  time: '2026-02-23T23:07:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42915
