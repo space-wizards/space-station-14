@@ -1,7 +1,6 @@
 # Second-hand (worn/damaged) SMG variants for the Second Hand uplink tab.
 
-# Worn C-20r: reduced fire rate, worse unwielded spread, and less wield benefit.
-# The bolt carrier group is worn and the gas system is partially clogged.
+# Worn C-20r: worn bolt carrier, clogged gas system, less wield benefit.
 - type: entity
   name: worn C-20r
   parent: WeaponSubMachineGunC20r
@@ -9,6 +8,7 @@
   suffix: Second Hand
   description: A C-20r that's been through a few too many engagements. The receiver has hairline cracks and the barrel is slightly warped. Still fires, but don't expect much precision.
   components:
+  - type: RandomDefects
   - type: Gun
     fireRate: 5
     minAngle: 28
@@ -24,4 +24,5 @@
     minAngle: -10
     maxAngle: -10
   - type: GunJam
+    prob: 0.6
     jamChance: 0.02

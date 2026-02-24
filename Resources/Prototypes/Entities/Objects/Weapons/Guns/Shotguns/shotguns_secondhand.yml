@@ -1,7 +1,6 @@
 # Second-hand (worn/damaged) shotgun variants for the Second Hand uplink tab.
 
-# Worn Bulldog: half the fire rate, worse spread.
-# The bolt carrier group is worn and the feed ramp is bent.
+# Worn Bulldog: worn bolt carrier, bent feed ramp, half fire rate.
 - type: entity
   name: worn bulldog
   parent: WeaponShotgunBulldog
@@ -9,6 +8,7 @@
   suffix: Second Hand
   description: A Bulldog whose bolt carrier can't keep pace anymore. Still full-auto, just at half speed. The bent feed ramp occasionally misfeeds but not often enough to save anyone from it.
   components:
+  - type: RandomDefects
   - type: Gun
     fireRate: 1
     minAngle: 8
@@ -18,11 +18,14 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+  - type: GunWieldBonus
+    minAngle: -4
+    maxAngle: -8
   - type: GunJam
+    prob: 0.75
     jamChance: 0.18
 
-# Worn Hushpup: half the fire rate, doubled spread modifier.
-# The muffler baffles are blown and the action is gummed up.
+# Worn Hushpup: blown suppressor baffles, gummed action, doubled spread.
 - type: entity
   name: worn hushpup
   parent: WeaponShotgunHushpup
@@ -30,9 +33,11 @@
   suffix: Second Hand
   description: A Hushpup with a dying suppressor and a gummed-up action. Still quieter than most guns. The pattern opens up badly past close range. Uses .50 shotgun shells.
   components:
+  - type: RandomDefects
   - type: Gun
     fireRate: 1
   - type: GunSpreadModifier
     spread: 2.4
   - type: GunJam
+    prob: 0.7
     jamChance: 0.18

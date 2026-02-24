@@ -1,13 +1,5 @@
 # Second-hand (incomplete) kit variants for the Second Hand uplink tab.
-# Uses EntityTableContainerFill with per-item Prob values to randomise which
-# items are present each time the entity is spawned. Core items are always
-# included; accessories and high-value items spawn probabilistically.
 
-# Incomplete Chameleon Kit
-# - Jumpsuit and outer coat: always present (kit is useless without them)
-# - Accessories (neck, mask, hat, gloves, eyes, headset, shoes): 65% each
-# - Agent PDA: 50%
-# - Controller implanter: 35%
 - type: entity
   parent: ClothingBackpackChameleon
   id: ClothingBackpackChameleonFillAgentWorn

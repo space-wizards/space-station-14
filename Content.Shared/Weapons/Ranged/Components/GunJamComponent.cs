@@ -1,3 +1,4 @@
+using Content.Shared.Defects.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weapons.Ranged.Components;
@@ -7,7 +8,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// racks the slide (Z / Use In Hand), which instantly clears the jam.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class GunJamComponent : Component
+public sealed partial class GunJamComponent : DefectComponent
 {
     /// <summary>
     /// Whether the gun is currently jammed.
@@ -16,7 +17,7 @@ public sealed partial class GunJamComponent : Component
     public bool IsJammed;
 
     /// <summary>
-    /// Probability (0–1) of jamming after each successful shot.
+    /// Per-shot probability (0–1) of jamming after a successful shot.
     /// </summary>
     [DataField]
     public float JamChance = 0.05f;
