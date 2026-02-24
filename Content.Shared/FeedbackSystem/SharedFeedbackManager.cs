@@ -128,12 +128,6 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     /// <inheritdoc />
     public virtual void OpenForAllSessions() {}
 
-    /// <inheritdoc />
-    public virtual bool CheckRule(string? ruleId)
-    {
-        return true;
-    }
-
     /// <summary>
     /// Get a list of feedback prototypes that match the current valid origins.
     /// </summary>
