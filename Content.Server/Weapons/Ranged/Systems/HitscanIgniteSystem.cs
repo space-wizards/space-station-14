@@ -1,4 +1,5 @@
 ﻿using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.IgnitionSource;
 using Content.Shared.Random.Helpers;
@@ -38,6 +39,13 @@ public sealed class HitscanIgniteSystem : EntitySystem
             return;
 
         //If the roll succeeds, the target is set on fire.
-        flammable.OnFire = true;
+        var target = args.Data.HitEntity;
+        var stackAmount = 1;
+
+        if (target == null)
+            return;
+
+        _flammable.AdjustFireStacks(target.Value, stackAmount, null, true);
+
     }
 }
