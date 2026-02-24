@@ -13,9 +13,6 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
       shader: unshaded
       visible: false
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
   - type: RadioJammer
     settings:
     - wattage: 2
