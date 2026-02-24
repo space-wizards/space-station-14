@@ -33,7 +33,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public sealed class FlammableSystem : SharedFlammableSystem
+    public sealed class FlammableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;

@@ -7,4 +7,7 @@ public sealed partial class HitscanIgniteComponent : Component
 {
     [DataField,AutoNetworkedField]
     public float IgniteChance = 0.25f;
+
+    [DataField]
+    public float FireStacks { get; set; }
 }
