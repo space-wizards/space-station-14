@@ -1,5 +1,4 @@
-using Content.Server.Explosion.Components;
-using Content.Shared.Throwing;
+using Content.Shared.Atmos.Rotting;
 using Content.Shared.Trigger.Components.Triggers;
 
 namespace Content.Shared.Trigger.Systems;
