@@ -18,6 +18,8 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+  - type: GunJam
+    jamChance: 0.18
 
 # Worn Hushpup: half the fire rate, doubled spread modifier.
 # The muffler baffles are blown and the action is gummed up.
@@ -32,3 +34,5 @@
     fireRate: 1
   - type: GunSpreadModifier
     spread: 2.4
+  - type: GunJam
+    jamChance: 0.18

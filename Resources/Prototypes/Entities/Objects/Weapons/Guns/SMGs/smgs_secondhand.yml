@@ -23,3 +23,5 @@
   - type: GunWieldBonus
     minAngle: -10
     maxAngle: -10
+  - type: GunJam
+    jamChance: 0.02

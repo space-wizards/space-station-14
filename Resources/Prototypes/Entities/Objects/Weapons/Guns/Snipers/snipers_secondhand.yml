@@ -1,0 +1,33 @@
+# Second-hand (worn/damaged) sniper rifle variants for the Second Hand uplink tab.
+
+# Worn Hristov: reduced fire rate, drifted sights.
+# Stress fractures in the receiver and a bent bipod have made an already-slow gun slower.
+- type: entity
+  name: worn Hristov
+  parent: WeaponSniperHristov
+  id: WeaponSniperHristovWorn
+  suffix: Second Hand
+  description: A Hristov with stress fractures in the receiver and a bipod that collapsed on one side. Fires even slower than usual and the sights have drifted. The round is still the round. Uses .60 anti-materiel ammo.
+  components:
+  - type: Gun
+    fireRate: 0.3
+    minAngle: 2
+    maxAngle: 6
+  - type: GunJam
+    jamChance: 0.10
+
+# Worn Mosin: reduced fire rate, sticky bolt.
+# The action is gummed up with old cosmoline and the stock has a hairline crack.
+- type: entity
+  name: worn Mosin
+  parent: WeaponSniperMosin
+  id: WeaponSniperMosinWorn
+  suffix: Second Hand
+  description: A Kardashev-Mosin that's somehow in worse shape than usual, which is saying something. The bolt is sticky and the stock is cracked. Still shoots. Still has a bayonet. Some things are eternal. Loads .30 rifle rounds.
+  components:
+  - type: Gun
+    fireRate: 0.5
+    minAngle: 1
+    maxAngle: 4
+  - type: GunJam
+    jamChance: 0.05

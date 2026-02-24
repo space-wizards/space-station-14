@@ -17,6 +17,18 @@ uplink-second-hand-hushpup-worn-desc = A Hushpup with a suppressor that's lost m
 uplink-second-hand-bulldog-worn-name = Worn Bulldog
 uplink-second-hand-bulldog-worn-desc = A Bulldog auto-shotgun hobbled into semi-auto by a broken cycling mechanism. Someone bypassed the selector — you get one shot at a time from a full-auto platform. Still takes 12-gauge drum magazines.
 
+uplink-second-hand-hristov-worn-name = Worn Hristov
+uplink-second-hand-hristov-worn-desc = A Hristov with stress fractures in the receiver and a bipod that collapsed on one side. Fires even slower than usual and the sights have drifted. The round is still the round — it just takes longer to get there. Uses .60 anti-materiel ammo.
+
+uplink-second-hand-mosin-worn-name = Worn Mosin
+uplink-second-hand-mosin-worn-desc = A Kardashev-Mosin that's somehow in worse shape than usual, which is saying something. The bolt is sticky, the stock is cracked, and it takes its time between shots. Still has the bayonet. Some things are eternal. Loads .30 rifle rounds.
+
+uplink-second-hand-estoc-worn-name = Worn Estoc DMR
+uplink-second-hand-estoc-worn-desc = An Estoc whose burst mechanism has seized up — semi-auto only now. The barrel has heat discoloration and the weld feel has gone soft. Pace your shots and it'll still reach out and touch someone. Feeds from .20 rifle magazines.
+
+uplink-second-hand-l6-saw-worn-name = Worn L6 SAW
+uplink-second-hand-l6-saw-worn-desc = An L6 SAW with a worn bolt carrier and a barrel that's seen too many sustained bursts. Rate of fire is down and the spread opens up faster under fire. Still an L6 SAW. Feeds from .30 ammo belts.
+
 # Ammo
 uplink-second-hand-magazine-viper-worn-name = Worn Viper Magazine (.35 auto)
 uplink-second-hand-magazine-viper-worn-desc = A 15-round Viper magazine with a damaged spring and bent feed lips. Only reliable for 7 rounds before the feed becomes erratic. Better than nothing if you're desperate.

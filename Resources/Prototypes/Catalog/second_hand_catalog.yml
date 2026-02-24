@@ -53,6 +53,46 @@
   cost:
     Telecrystal: 4
 
+- type: listing
+  id: UplinkSecondHandHristovWorn
+  name: uplink-second-hand-hristov-worn-name
+  description: uplink-second-hand-hristov-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: icon }
+  productEntity: WeaponSniperHristovWorn
+  secondHandCategory: veryRareSecondHand
+  cost:
+    Telecrystal: 6
+
+- type: listing
+  id: UplinkSecondHandMosinWorn
+  name: uplink-second-hand-mosin-worn-name
+  description: uplink-second-hand-mosin-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi, state: icon }
+  productEntity: WeaponSniperMosinWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandEstocWorn
+  name: uplink-second-hand-estoc-worn-name
+  description: uplink-second-hand-estoc-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Rifles/estoc.rsi, state: icon }
+  productEntity: WeaponRifleEstocWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 4
+
+- type: listing
+  id: UplinkSecondHandL6SawWorn
+  name: uplink-second-hand-l6-saw-worn-name
+  description: uplink-second-hand-l6-saw-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
+  productEntity: WeaponLightMachineGunL6Worn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 6
+
 # --- AMMO ---
 
 - type: listing
