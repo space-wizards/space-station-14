@@ -93,6 +93,28 @@
   cost:
     Telecrystal: 6
 
+# --- MELEE ---
+
+- type: listing
+  id: UplinkSecondHandEnergySwordWorn
+  name: uplink-second-hand-esword-worn-name
+  description: uplink-second-hand-esword-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon }
+  productEntity: EnergySwordWorn
+  secondHandCategory: veryRareSecondHand
+  cost:
+    Telecrystal: 4
+
+- type: listing
+  id: UplinkSecondHandEnergyDaggerWorn
+  name: uplink-second-hand-edagger-worn-name
+  description: uplink-second-hand-edagger-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
+  productEntity: EnergyDaggerWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 1
+
 # --- AMMO ---
 
 - type: listing

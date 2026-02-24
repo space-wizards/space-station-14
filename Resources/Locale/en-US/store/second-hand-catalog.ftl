@@ -29,6 +29,14 @@ uplink-second-hand-estoc-worn-desc = An Estoc whose burst mechanism has seized u
 uplink-second-hand-l6-saw-worn-name = Worn L6 SAW
 uplink-second-hand-l6-saw-worn-desc = An L6 SAW with a worn bolt carrier and a barrel that's seen too many sustained bursts. Rate of fire is down and the spread opens up faster under fire. Still an L6 SAW. Feeds from .30 ammo belts.
 
+# Melee
+
+uplink-second-hand-esword-worn-name = Worn Energy Sword
+uplink-second-hand-esword-worn-desc = An energy sword with a loose power connector rattling around in the hilt. Ignites fine, cuts just as hard — until the connector loses contact mid-swing and the blade dies. Expect it about once every seven swings.
+
+uplink-second-hand-edagger-worn-name = Worn Energy Dagger (Pen)
+uplink-second-hand-edagger-worn-desc = A dark ink pen with a loose power connector. The disguise is intact. The damage is intact. The reliability is not. Same odds of cutting out per swing as its bigger cousin.
+
 # Ammo
 uplink-second-hand-magazine-viper-worn-name = Worn Viper Magazine (.35 auto)
 uplink-second-hand-magazine-viper-worn-desc = A 15-round Viper magazine with a damaged spring and bent feed lips. Only reliable for 7 rounds before the feed becomes erratic. Better than nothing if you're desperate.
