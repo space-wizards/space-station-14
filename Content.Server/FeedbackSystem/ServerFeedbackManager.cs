@@ -80,10 +80,4 @@ public sealed class ServerFeedbackManager : SharedFeedbackManager
         var msg = new OpenFeedbackPopupMessage();
         NetManager.ServerSendToAll(msg);
     }
-
-    /// <inheritdoc />
-    public override bool CheckRule(string? ruleId)
-    {
-        return ruleId == null || _gameTicker.IsGameRuleAdded(ruleId);
-    }
 }

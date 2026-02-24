@@ -79,17 +79,6 @@ public interface ISharedFeedbackManager
     /// </summary>
     /// <remarks>This does nothing on the client.</remarks>
     void OpenForAllSessions() {}
-
-    /// <summary>
-    /// Checks if a rule is present in the round
-    /// </summary>
-    /// <param name="ruleId">String id of the rule prototype.</param>
-    /// <returns>Returns true if the rule was added in the round, otherwise false.</returns>
-    /// <remarks>This does nothing on the client.</remarks>
-    bool CheckRule(string? ruleId)
-    {
-        return true;
-    }
 }
 
 /// <inheritdoc cref="ISharedFeedbackManager" />
@@ -153,7 +142,7 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     public List<ProtoId<FeedbackPopupPrototype>> GetOriginFeedbackPrototypes(bool roundEndOnly)
     {
         var feedbackProtypes = _proto.EnumeratePrototypes<FeedbackPopupPrototype>()
-            .Where(x => (!roundEndOnly || x.ShowRoundEnd && CheckRule(x.RuleId)) && _validOrigins.Contains(x.PopupOrigin))
+            .Where(x => (!roundEndOnly || x.ShowRoundEnd) && _validOrigins.Contains(x.PopupOrigin))
             .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
             .OrderBy(x => x.Id)
             .ToList();
