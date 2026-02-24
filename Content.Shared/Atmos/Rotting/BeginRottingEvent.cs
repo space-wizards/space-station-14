@@ -1,6 +1,5 @@
 /// <summary>
 /// Raised when an entity starts to rot.
 /// </summary>
-public sealed partial class BeginRottingEvent : EntityEventArgs
-{
-}
+[ByRefEvent]
+public record struct BeginRottingEvent;
