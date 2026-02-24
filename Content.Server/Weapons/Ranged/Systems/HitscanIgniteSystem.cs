@@ -12,6 +12,7 @@ namespace Content.Shared.Weapons.Hitscan.Systems;
 
 public sealed class HitscanIgniteSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SharedIgnitionSourceSystem _ignitionSourceSystem = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -23,24 +24,17 @@ public sealed class HitscanIgniteSystem : EntitySystem
 
         SubscribeLocalEvent<HitscanIgniteComponent, HitscanRaycastFiredEvent>(OnHitscanHit);
     }
-
+    //The hitscan has hit the target, rolls a chance to ignite and ignite if it succeeds.
     private void OnHitscanHit(Entity<HitscanIgniteComponent> ent, ref HitscanRaycastFiredEvent args)
     {
-        //If the target is not flammable, the hit does not ignite.
-        if (!TryComp<FlammableComponent>(ent, out var flammable))
-            return;
 
-        //Rolls a random chance when the target is hit.
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(args.Data.Gun).Id);
-        var rand = new System.Random(seed);
-
-        //If the random roll fails, it doesn't ignite.
-        if (!rand.Prob(ent.Comp.IgniteChance))
+        //Rolls a chance for the laser to ignite the target. Cancels if it fails.
+        if (!_robustRandom.Prob(ent.Comp.IgniteChance))
             return;
 
         //If the roll succeeds, the target is set on fire.
         var target = args.Data.HitEntity;
-        var stackAmount = 1;
+        var stackAmount = ent.Comp.FireStacks;
 
         if (target == null)
             return;
