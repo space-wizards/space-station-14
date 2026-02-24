@@ -10,9 +10,6 @@ namespace Content.Shared.Gravity
     public sealed partial class GravityComponent : Component
     {
         [DataField, AutoNetworkedField]
-        public SoundSpecifier GravityShakeSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/alert.ogg");
-
-        [DataField, AutoNetworkedField]
         public bool Enabled;
 
         /// <summary>
