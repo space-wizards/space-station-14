@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from Paradise SS13 at commit https://github.com/ParadiseSS13/Paradise/commit/a67c929b7394f78e7787114457ba42f4df6cc3a1. Vox state by Flareguy for SS14. monkey state made by MercerBray for Ss14. equipped-HELMET-dog modified from equipped-HELMET by casiliuscestus (GitHub) for SS14. Reptilian state by TiniestShark (Github)",
+    "copyright": "Taken from Paradise SS13 at commit https://github.com/ParadiseSS13/Paradise/commit/a67c929b7394f78e7787114457ba42f4df6cc3a1. Vox state by Flareguy for SS14. monkey state made by MercerBray for Ss14. equipped-HELMET-dog modified from equipped-HELMET by casiliuscestus (GitHub) for SS14. Reptilian state by TiniestShark (Github), icon-flash modified from icon; made by PAFFhassoocks (GitHub) for ss14, on-equipped-HELMET and species variations made by PAFFhassoocks (Github) for sS14",
     "size": {
         "x": 32,
         "y": 32
@@ -11,23 +11,46 @@
             "name": "icon"
         },
         {
-            "name": "equipped-HELMET",
+            "name": "icon-flash"
+        },
+        {
+            "name": "off-equipped-HELMET",
             "directions": 4
         },
         {
-            "name": "equipped-HELMET-vox",
+            "name": "off-equipped-HELMET-vox",
             "directions": 4
         },
         {
-            "name": "equipped-HELMET-reptilian",
+            "name": "off-equipped-HELMET-reptilian",
             "directions": 4
         },
         {
-            "name": "equipped-HELMET-monkey",
+            "name": "off-equipped-HELMET-monkey",
             "directions": 4
         },
         {
-            "name": "equipped-HELMET-dog",
+            "name": "off-equipped-HELMET-dog",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET-vox",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET-monkey",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET-dog",
             "directions": 4
         }
     ]

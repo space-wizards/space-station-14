@@ -708,6 +708,10 @@
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
+  - type: PointLight
+    color: red
+    radius: 5
+    energy: 4
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
