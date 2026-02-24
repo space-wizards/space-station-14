@@ -26,3 +26,7 @@
   - type: GunJam
     prob: 0.6
     jamChance: 0.08
+  - type: GunBurstVariance
+    prob: 0.6
+    minShots: 2
+    maxShots: 7
