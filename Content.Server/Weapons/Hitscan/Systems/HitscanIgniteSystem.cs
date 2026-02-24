@@ -15,7 +15,6 @@ public sealed class HitscanIgniteSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<HitscanIgniteComponent, HitscanRaycastFiredEvent>(OnHitscanHit);
-
     }
 
     //The hitscan has hit the target, rolls a chance to ignite and ignite if it succeeds.
