@@ -6,7 +6,6 @@
     atmospherics: LockerAtmospherics
     basic: ClosetSteelBase
     botanist: LockerBotanist
-    brigmedic: LockerBrigmedic
     captain: LockerCaptain
     ce: LockerChiefEngineer
     chemical: LockerChemistry

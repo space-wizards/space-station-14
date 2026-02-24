@@ -407,25 +407,6 @@
     sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecaparmored.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
-  id: ClothingOuterCoatAMG
-  name: armored medical gown
-  description: The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.85
-        Piercing: 0.65
-        Heat: 0.85
-        Caustic: 0.75
-
-- type: entity
   parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabSeniorResearcher
   name: senior researcher lab coat

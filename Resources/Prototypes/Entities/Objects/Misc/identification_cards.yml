@@ -501,22 +501,6 @@
     job: Detective
 
 - type: entity
-  parent: IDCardStandard
-  id: BrigmedicIDCard
-  name: brigmedic ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: stripe_top
-      color: *color-security-top
-    - state: stripe_bottom
-      color: *color-security-bottom
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Brigmedic
-
-- type: entity
   parent: SecurityIDCard
   id: SeniorOfficerIDCard
   name: senior officer ID card

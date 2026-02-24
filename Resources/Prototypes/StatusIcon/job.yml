@@ -195,14 +195,6 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconBrigmedic
-  icon:
-    sprite: *icon-rsi
-    state: Brigmedic
-  jobName: job-name-brigmedic
-
-- type: jobIcon
-  parent: JobIcon
   id: JobIconDetective
   icon:
     sprite: *icon-rsi

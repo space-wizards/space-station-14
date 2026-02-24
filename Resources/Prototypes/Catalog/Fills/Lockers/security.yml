@@ -98,51 +98,6 @@
       prob: 0.02
 
 - type: entity
-  id: LockerBrigmedicFilled
-  suffix: Brigmedic, Filled
-  parent: LockerBrigmedic
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerBrigmedic
-
-- type: entityTable
-  id: FillLockerBrigmedic
-  table: !type:AllSelector
-    children:
-    - id: ClothingEyesGlassesSecurity
-    - id: WeaponTaser
-    - id: WeaponDisabler
-    - id: TrackingImplanter
-      amount: 2
-    - id: ClothingOuterHardsuitBrigmedic
-    - id: BoxSterileMask
-    - id: ClothingHeadHatBeretBrigmedic
-    - id: ClothingOuterCoatAMG
-    - id: ClothingUniformJumpsuitBrigmedic
-    - id: ClothingUniformJumpskirtBrigmedic
-    - id: ClothingUniformJumpskirtOfLife
-      prob: 0.1
-    - id: MedkitFilled
-    - !type:GroupSelector
-      prob: 0.7
-      children:
-      - id: MedkitCombatFilled
-        weight: 1.6
-      - id: MedkitAdvancedFilled
-      - id: MedkitOxygenFilled
-        weight: 0.8
-      - id: MedkitBruteFilled
-        weight: 0.8
-      - id: MedkitToxinFilled
-        weight: 0.8
-      - id: MedkitBurnFilled
-        weight: 1.8
-    - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
-      prob: 0.15
-
-- type: entity
   id: LockerDetectiveFilled
   suffix: Filled
   parent: LockerDetective
