@@ -5,9 +5,9 @@ using Content.Shared.StatusEffectNew;
 namespace Content.Server.Speech.EntitySystems;
 
 /// <summary>
-/// Base system for accents. Handles subscription.
+/// Base system for accents. Handles subscriptions and relay events.
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">Accent component.</typeparam>
 public abstract class BaseAccentSystem<T> : EntitySystem
     where T : Component
 {
