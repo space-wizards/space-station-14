@@ -37,6 +37,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 using System.Linq;
 
@@ -70,6 +71,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly ArrivalsSystem _arrivals = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -439,7 +442,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             _ent.RemoveComponents(antagData.AntagEntity, antagData.AddAntagComponents);
 
-            _ent.AddComponents(antagData.AntagEntity, antagData.PlayerComponents);
+            if (antagData.PlayerComponents != null)
+            {
+                foreach (var comp in antagData.PlayerComponents)
+                {
+                    _ent.AddComponent(antagData.AntagEntity, comp);
+                }
+            }
 
             foreach (var faction in antagData.AddFactions)
             {
@@ -630,9 +639,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
 
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
-        _ent.AddComponents(antag, loadout.AddComponents);
-
         _ent.RemoveComponents(antag, loadout.RemoveComponents);
+
+        _ent.AddComponents(antag, loadout.AddComponents);
 
         _npcFaction.AddFactions(antag, loadout.AddFactions);
 
@@ -675,8 +684,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var preferredList = new List<ICommonSession>();
         var fallbackList = new List<ICommonSession>();
 
-        if (!_prototypeManager.Resolve(def.AntagLoadout, out var loadout))
-            loadout = new();
+        _prototypeManager.Resolve(def.AntagLoadout, out var loadout);
 
         foreach (var session in sessions)
         {

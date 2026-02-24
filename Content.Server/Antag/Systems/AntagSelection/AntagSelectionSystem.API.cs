@@ -9,8 +9,10 @@ using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -178,7 +180,7 @@ public sealed partial class AntagSelectionSystem
         if (!_pref.TryGetCachedPreferences(session.UserId, out var pref))
             return false;
 
-        var character = (HumanoidCharacterProfile) pref.SelectedCharacter;
+        var character = (HumanoidCharacterProfile)pref.SelectedCharacter;
 
         var valid = false;
 
@@ -337,16 +339,21 @@ public sealed partial class AntagSelectionSystem
 
     public AntagData CreateAntagData(AntagLoadoutPrototype antag, EntityUid player)
     {
-        var playerComponents = antag.RemoveComponents;
-        foreach (var (name, entry) in antag.AddComponents)
+        // Check if there are any components in the entity that we can remove/update to restore them when the antagonist is removed.
+        var playerComponents = new HashSet<IComponent>();
+        foreach (var (name, entry) in antag.AddComponents.Concat(antag.RemoveComponents))
         {
-            if (antag.RemoveComponents.ContainsKey(name))
-                continue;
-
             var compType = entry.Component.GetType();
-            if (_ent.HasComponent(player, type: compType))
-                playerComponents.Add(name, entry);
+            if (_ent.TryGetComponent(player, compType, out var comp))
+            {
+                // Сreate a new component because we cannot use the entity component
+                var copyComp = _componentFactory.GetComponent(name);
+                _serManager.CopyTo(comp, ref copyComp, notNullableOverride: true);
+
+                playerComponents.Add(copyComp);
+            }
         }
+
         return new AntagData { MindRoles = antag.MindRoles, AddAntagComponents = antag.AddComponents, PlayerComponents = playerComponents, AntagEntity = player, AddFactions = antag.AddFactions, RemoveFactions = antag.RemoveFactions };
     }
 

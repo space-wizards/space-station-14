@@ -9,7 +9,7 @@ public record struct AntagData
 {
     public List<EntProtoId>? MindRoles;
     public ComponentRegistry AddAntagComponents;
-    public ComponentRegistry PlayerComponents;
+    public HashSet<IComponent>? PlayerComponents;
     public HashSet<ProtoId<NpcFactionPrototype>> AddFactions;
     public HashSet<ProtoId<NpcFactionPrototype>> RemoveFactions;
     public EntityUid AntagEntity;
