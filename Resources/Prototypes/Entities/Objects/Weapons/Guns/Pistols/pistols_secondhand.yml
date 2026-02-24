@@ -16,7 +16,7 @@
     angleIncrease: 3
   - type: GunJam
     prob: 0.7
-    jamChance: 0.08
+    jamChance: 0.1
 
 # Worn Cobra: blown suppressor baffles, sluggish slide.
 - type: entity
@@ -34,4 +34,4 @@
     angleIncrease: 3
   - type: GunJam
     prob: 0.7
-    jamChance: 0.15
+    jamChance: 0.2

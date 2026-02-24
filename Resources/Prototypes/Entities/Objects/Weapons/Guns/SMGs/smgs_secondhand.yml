@@ -25,4 +25,4 @@
     maxAngle: -10
   - type: GunJam
     prob: 0.6
-    jamChance: 0.02
+    jamChance: 0.08
