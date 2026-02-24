@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests
             "Relic",
             "dm01-entryway",
             "Exo",
-	          "Snowball",
+	          "Ball",
             "Serpentcrest",
         };
 

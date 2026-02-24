@@ -1,15 +1,15 @@
 - type: gameMap
-  id: Snowball
-  mapName: 'Snowball Station'
-  mapPath: /Maps/snowball.yml
+  id: Ball
+  mapName: 'Ball Station'
+  mapPath: /Maps/ball.yml
   minPlayers: 15
   maxPlayers: 50
   stations:
-    Snowball:
+    Ball:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Snowball Station {1}'
+          mapNameTemplate: '{0} Ball Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
