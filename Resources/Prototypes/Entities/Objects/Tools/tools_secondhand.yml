@@ -1,0 +1,13 @@
+# Second-hand (defective) tool variants for the Second Hand uplink tab.
+
+# Worn emag: only 1 charge at a time instead of the normal 3.
+# The contacts are corroded and the power circuit is failing.
+- type: entity
+  name: worn cryptographic sequencer
+  parent: Emag
+  id: EmagWorn
+  suffix: Second Hand
+  description: A cryptographic sequencer with corroded contacts and a failing power circuit. Holds a single charge at a time before needing to recharge. Make it count.
+  components:
+  - type: LimitedCharges
+    maxCharges: 1

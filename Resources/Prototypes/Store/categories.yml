@@ -115,3 +115,8 @@
   id: DiscountedItems
   name: store-discounted-items
   priority: 200
+
+- type: storeCategory
+  id: SecondHandItems
+  name: store-second-hand-items
+  priority: 201

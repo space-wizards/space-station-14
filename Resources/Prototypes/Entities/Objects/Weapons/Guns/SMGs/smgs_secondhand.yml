@@ -1,0 +1,25 @@
+# Second-hand (worn/damaged) SMG variants for the Second Hand uplink tab.
+
+# Worn C-20r: reduced fire rate, worse unwielded spread, and less wield benefit.
+# The bolt carrier group is worn and the gas system is partially clogged.
+- type: entity
+  name: worn C-20r
+  parent: WeaponSubMachineGunC20r
+  id: WeaponSubMachineGunC20rWorn
+  suffix: Second Hand
+  description: A C-20r that's been through a few too many engagements. The receiver has hairline cracks and the barrel is slightly warped. Still fires, but don't expect much precision.
+  components:
+  - type: Gun
+    fireRate: 5
+    minAngle: 28
+    maxAngle: 42
+    shotsPerBurst: 5
+    availableModes:
+    - Burst
+    - FullAuto
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+  - type: GunWieldBonus
+    minAngle: -10
+    maxAngle: -10

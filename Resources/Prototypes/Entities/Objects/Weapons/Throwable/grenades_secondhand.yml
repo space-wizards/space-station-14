@@ -1,0 +1,73 @@
+# Second-hand (defective) grenade variants for the Second Hand uplink tab.
+
+# Weak explosive grenade: one-third the normal blast radius.
+# The filler charge is degraded and partially inert.
+- type: entity
+  name: worn explosive grenade
+  parent: ExGrenade
+  id: ExGrenadeWorn
+  suffix: Second Hand
+  description: An explosive grenade with degraded filler charge. Creates a much smaller explosion than standard - don't expect it to breach more than a window.
+  components:
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 5
+    intensitySlope: 3
+    totalIntensity: 40  # roughly 1/3 of normal 120 - about a ~2 tile radius
+    canCreateVacuum: false
+
+# Weak EMP grenade: pulse radius less than half the normal 5.5 tiles.
+# The capacitor bank is partially discharged and won't fully top off before use.
+- type: entity
+  name: weak EMP grenade
+  parent: EmpGrenade
+  id: EmpGrenadeWorn
+  suffix: Second Hand
+  description: An EMP grenade with a partially discharged capacitor bank. The pulse radius is less than half of normal - enough to knock out someone's gear if you're close enough.
+  components:
+  - type: EmpOnTrigger
+    keysIn:
+    - trigger
+    range: 2.5
+    energyConsumption: 50000
+
+# Degraded smoke grenade: shorter duration and smaller cloud than normal.
+# The compound has dried out and won't fully volatilize.
+- type: entity
+  name: degraded smoke grenade
+  parent: SmokeGrenade
+  id: SmokeGrenadeWorn
+  suffix: Second Hand
+  description: A smoke grenade with dried-out compound. Produces a smaller cloud that dissipates in about 10 seconds. Better than nothing for a moment of cover.
+  components:
+  - type: SmokeOnTrigger
+    keysIn:
+    - timer
+    duration: 10
+    spreadAmount: 20
+
+# Low-charge shrapnel grenade: half the normal pellet count.
+# The propellant charge is weak and only half the pellets are properly seated.
+- type: entity
+  name: low-charge shrapnel grenade
+  parent: GrenadeShrapnel
+  id: GrenadeShrapnelWorn
+  suffix: Second Hand
+  description: A shrapnel grenade with a weakened charge and only half the pellet fill. Still bleeds people. Fewer of them, less severely.
+  components:
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterLethal
+    capacity: 15
+
+# Low-charge incendiary grenade: half the normal pellet count.
+# The incendiary compound partially solidified in storage.
+- type: entity
+  name: low-charge incendiary grenade
+  parent: GrenadeIncendiary
+  id: GrenadeIncendiaryWorn
+  suffix: Second Hand
+  description: An incendiary grenade with solidified compound and a weak propellant charge. Releases half the normal incendiary payload. Still sets things on fire - just smaller things.
+  components:
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterIncendiary
+    capacity: 15

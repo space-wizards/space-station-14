@@ -1,0 +1,208 @@
+# Second Hand uplink catalog.
+# These listings are NOT placed in any category by default.
+# SecondHandSystem randomly selects from listings with secondHandCategory set
+# and adds them to the SecondHandItems category at round start.
+
+# --- GUNS ---
+
+- type: listing
+  id: UplinkSecondHandViperWorn
+  name: uplink-second-hand-viper-worn-name
+  description: uplink-second-hand-viper-worn-desc
+  productEntity: WeaponPistolViperWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandCobraWorn
+  name: uplink-second-hand-cobra-worn-name
+  description: uplink-second-hand-cobra-worn-desc
+  productEntity: WeaponPistolCobraWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 2
+
+- type: listing
+  id: UplinkSecondHandC20rWorn
+  name: uplink-second-hand-c20r-worn-name
+  description: uplink-second-hand-c20r-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
+  productEntity: WeaponSubMachineGunC20rWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 6
+
+- type: listing
+  id: UplinkSecondHandHushpupWorn
+  name: uplink-second-hand-hushpup-worn-name
+  description: uplink-second-hand-hushpup-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/hushpup.rsi, state: icon }
+  productEntity: WeaponShotgunHushpupWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 2
+
+- type: listing
+  id: UplinkSecondHandBulldogWorn
+  name: uplink-second-hand-bulldog-worn-name
+  description: uplink-second-hand-bulldog-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
+  productEntity: WeaponShotgunBulldogWorn
+  secondHandCategory: veryRareSecondHand
+  cost:
+    Telecrystal: 4
+
+# --- AMMO ---
+
+- type: listing
+  id: UplinkSecondHandMagazineViperWorn
+  name: uplink-second-hand-magazine-viper-worn-name
+  description: uplink-second-hand-magazine-viper-worn-desc
+  productEntity: MagazinePistolHighCapacityWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandMagazineSMGWorn
+  name: uplink-second-hand-magazine-smg-worn-name
+  description: uplink-second-hand-magazine-smg-worn-desc
+  productEntity: MagazinePistolSubMachineGunWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandMagazineCaselessRifleWorn
+  name: uplink-second-hand-magazine-caseless-worn-name
+  description: uplink-second-hand-magazine-caseless-worn-desc
+  productEntity: MagazinePistolCaselessRifleWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandMagazineShotgunWorn
+  name: uplink-second-hand-magazine-shotgun-worn-name
+  description: uplink-second-hand-magazine-shotgun-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: pellets }
+  productEntity: MagazineShotgunWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandMagazineShotgunSlugWorn
+  name: uplink-second-hand-magazine-shotgun-slug-worn-name
+  description: uplink-second-hand-magazine-shotgun-slug-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: slug }
+  productEntity: MagazineShotgunSlugWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandMagazineRifleWorn
+  name: uplink-second-hand-magazine-rifle-worn-name
+  description: uplink-second-hand-magazine-rifle-worn-desc
+  productEntity: MagazineRifleWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandMagazineBoxLightRifleWorn
+  name: uplink-second-hand-magazine-box-light-rifle-worn-name
+  description: uplink-second-hand-magazine-box-light-rifle-worn-desc
+  productEntity: MagazineBoxLightRifleWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+# --- EXPLOSIVES ---
+
+- type: listing
+  id: UplinkSecondHandExGrenadeWorn
+  name: uplink-second-hand-exgrenade-worn-name
+  description: uplink-second-hand-exgrenade-worn-desc
+  productEntity: ExGrenadeWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 2
+
+- type: listing
+  id: UplinkSecondHandEmpGrenadeWorn
+  name: uplink-second-hand-emp-grenade-worn-name
+  description: uplink-second-hand-emp-grenade-worn-desc
+  productEntity: EmpGrenadeWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandSmokeGrenadeWorn
+  name: uplink-second-hand-smoke-grenade-worn-name
+  description: uplink-second-hand-smoke-grenade-worn-desc
+  productEntity: SmokeGrenadeWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandShrapnelGrenadeWorn
+  name: uplink-second-hand-shrapnel-grenade-worn-name
+  description: uplink-second-hand-shrapnel-grenade-worn-desc
+  productEntity: GrenadeShrapnelWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 2
+
+- type: listing
+  id: UplinkSecondHandIncendiaryGrenadeWorn
+  name: uplink-second-hand-incendiary-grenade-worn-name
+  description: uplink-second-hand-incendiary-grenade-worn-desc
+  productEntity: GrenadeIncendiaryWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 2
+
+# --- TOOLS ---
+
+- type: listing
+  id: UplinkSecondHandC4Worn
+  name: uplink-second-hand-c4-worn-name
+  description: uplink-second-hand-c4-worn-desc
+  productEntity: C4Worn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandEmagWorn
+  name: uplink-second-hand-emag-worn-name
+  description: uplink-second-hand-emag-worn-desc
+  productEntity: EmagWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 2
+
+# --- MEDICAL ---
+
+- type: listing
+  id: UplinkSecondHandCombatMedipenWorn
+  name: uplink-second-hand-combat-medipen-worn-name
+  description: uplink-second-hand-combat-medipen-worn-desc
+  productEntity: CombatMedipenWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandStimpackWorn
+  name: uplink-second-hand-stimpack-worn-name
+  description: uplink-second-hand-stimpack-worn-desc
+  productEntity: StimpackWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1

@@ -78,6 +78,7 @@ public sealed class UplinkSystem : EntitySystem
             TargetUser: mind,
             Store: uplink,
             UseDiscounts: giveDiscounts,
+            UseSecondHand: true,
             Listings: _store.GetAvailableListings(mind, uplink, store)
                 .ToArray());
         RaiseLocalEvent(ref uplinkInitializedEvent);
