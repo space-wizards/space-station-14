@@ -126,7 +126,6 @@ public sealed class ClientClothingSystem : ClothingSystem
                 i++;
             }
 
-            item.MappedLayer = key;
             args.Layers.Add((key, layer));
         }
     }
@@ -305,8 +304,6 @@ public sealed class ClientClothingSystem : ClothingSystem
 
                 if (layerData.Color != null)
                     _sprite.LayerSetColor((equipee, sprite), key, layerData.Color.Value);
-                if (layerData.Scale != null)
-                    _sprite.LayerSetScale((equipee, sprite), key, layerData.Scale.Value);
             }
             else
                 index = _sprite.LayerMapReserve((equipee, sprite), key);
