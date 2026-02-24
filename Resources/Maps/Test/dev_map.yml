@@ -190,8 +190,6 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: Audio/Effects/alert.ogg
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -1672,8 +1670,6 @@ entities:
       dampingModifier: 0.25
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -1751,8 +1747,6 @@ entities:
       dampingModifier: 0.25
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: DecalGrid
       chunkCollection:
         version: 2

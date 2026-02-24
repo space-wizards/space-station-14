@@ -59,8 +59,6 @@ entities:
     - type: ImplicitRoof
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: DecalGrid
       chunkCollection:
         version: 2
