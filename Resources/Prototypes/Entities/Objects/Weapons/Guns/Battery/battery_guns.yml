@@ -424,7 +424,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: BatteryAmmoProvider
-    proto: RedHeavyLaser
+    proto: RedSniperLaser
     fireCost: 40
   - type: SpeedModifiedOnWield
     walkModifier: 0.85
@@ -986,6 +986,9 @@
   id: WeaponLaserCannonXenoborg
   name: xenoborg laser cannon
   components:
+  - type: BatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 100
   - type: BatterySelfRecharger
     autoRechargeRate: 30
   # "remove" wield bonus and penalty so borgs can use it
