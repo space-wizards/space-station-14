@@ -37,14 +37,6 @@
   maxGroupSize: 7
 
 - type: oreDunGen
-  id: OreSalt
-  replacement: AsteroidRock
-  entity: AsteroidRockSalt
-  count: 3
-  minGroupSize: 5
-  maxGroupSize: 7
-
-- type: oreDunGen
   id: OreGold
   replacement: AsteroidRock
   entity: AsteroidRockGold
