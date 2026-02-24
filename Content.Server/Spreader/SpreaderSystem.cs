@@ -36,11 +36,6 @@ public sealed class SpreaderSystem : EntitySystem
     /// </summary>
     private int[] _prototypeMaxUpdates = [];
 
-    /// <summary>
-    /// Remaining number of updates per grid & prototype.
-    /// </summary>
-    private readonly Dictionary<EntityUid, int[]> _gridUpdates = [];
-
     private EntityQuery<EdgeSpreaderComponent> _query;
 
     public const float SpreadCooldownSeconds = 1;
@@ -65,7 +60,12 @@ public sealed class SpreaderSystem : EntitySystem
         if (obj.WasModified<EdgeSpreaderPrototype>())
         {
             SetupPrototypes();
-            _gridUpdates.Clear();
+
+            var gridQuery = EntityQueryEnumerator<SpreaderGridComponent>();
+            while (gridQuery.MoveNext(out var uid, out var grid))
+            {
+                grid.RemainingUpdates = null;
+            }
         }
     }
 
@@ -103,19 +103,20 @@ public sealed class SpreaderSystem : EntitySystem
     {
         // Check which grids are valid for spreading
         var spreadGrids = EntityQueryEnumerator<SpreaderGridComponent>();
+        var readyGrids = new List<EntityUid>();
 
-        _gridUpdates.Clear();
         while (spreadGrids.MoveNext(out var uid, out var grid))
         {
             grid.UpdateAccumulator -= frameTime;
             if (grid.UpdateAccumulator > 0)
                 continue;
 
-            _gridUpdates[uid] = (int[])_prototypeMaxUpdates.Clone();
+            grid.RemainingUpdates = (int[])_prototypeMaxUpdates.Clone();
             grid.UpdateAccumulator += SpreadCooldownSeconds;
+            readyGrids.Add(uid);
         }
 
-        if (_gridUpdates.Count == 0)
+        if (readyGrids.Count == 0)
             return;
 
         var query = EntityQueryEnumerator<ActiveEdgeSpreaderComponent>();
@@ -146,7 +147,13 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
             }
 
-            if (!_gridUpdates.TryGetValue(xform.GridUid.Value, out var groupUpdates))
+            if (!readyGrids.Contains(xform.GridUid.Value))
+                continue;
+
+            if (!TryComp<SpreaderGridComponent>(xform.GridUid, out var grid))
+                continue;
+
+            if (grid.RemainingUpdates is null)
                 continue;
 
             if (!spreaderQuery.TryGetComponent(uid, out var spreader))
@@ -158,7 +165,7 @@ public sealed class SpreaderSystem : EntitySystem
             if (!_prototypeNameToIndex.TryGetValue(spreader.Id, out var index))
                 continue;
 
-            ref var updates = ref groupUpdates[index];
+            ref var updates = ref grid.RemainingUpdates[index];
             if (updates < 1)
                 continue;
 
