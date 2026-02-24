@@ -84,9 +84,6 @@ public sealed class ServerFeedbackManager : SharedFeedbackManager
     /// <inheritdoc />
     public override bool CheckRule(string? ruleId)
     {
-        if (ruleId == null)
-            return true;
-
-        return _gameTicker.IsGameRuleAdded(ruleId);
+        return ruleId == null || _gameTicker.IsGameRuleAdded(ruleId);
     }
 }
