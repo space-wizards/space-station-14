@@ -596,7 +596,7 @@ namespace Content.Server.GameTicking
             // Show rule specific feedback popups
             var feedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
                 .Select(x => _prototypeManager.Index(x))
-                .Where(x => IsGameRuleAdded(x.RuleId!))
+                .Where(x => IsGameRuleActive(x.RuleId!))
                 .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
                 .ToList();
 
