@@ -29,7 +29,6 @@ public sealed partial class GravitySystem
         {
             return;
         }
-
     }
 
     protected override void ShakeGrid(EntityUid uid, GravityComponent? gravity = null)
