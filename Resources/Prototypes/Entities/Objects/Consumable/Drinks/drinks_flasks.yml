@@ -92,8 +92,8 @@
 - type: entity
   parent: FlaskBase
   id: DrinkFlaskBar
-  name: bar flask
-  description: A metal flask often given out by the bartender on loan. Don't forget to return it!
+  name: flask
+  description: A reusable metal flask. Classier than drinking straight from a bottle.
   components:
     - type: Sprite
       sprite: Objects/Consumable/Drinks/barflask.rsi

@@ -20,8 +20,6 @@
   - type: Physics
     bodyType: Dynamic
     bodyStatus: InAir
-    angularDamping: 0
-    linearDamping: 0
   - type: Fixtures
     fixtures:
       projectile:

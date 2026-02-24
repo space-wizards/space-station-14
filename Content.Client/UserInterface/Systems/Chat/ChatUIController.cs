@@ -278,7 +278,7 @@ public sealed partial class ChatUIController : UIController
                  && style is StyleBoxFlat propStyleBoxFlat)
             color = propStyleBoxFlat.BackgroundColor;
         else
-            color = StyleNano.ChatBackgroundColor;
+            color = Color.FromHex("#25252ADD");
 
         panel.PanelOverride = new StyleBoxFlat
         {
@@ -689,7 +689,7 @@ public sealed partial class ChatUIController : UIController
         radioChannel = null;
         return _player.LocalEntity is EntityUid { Valid: true } uid
            && _chatSys != null
-           && _chatSys.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
+           && _chatSys.TryProcessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
     }
 
     public void UpdateSelectedChannel(ChatBox box)

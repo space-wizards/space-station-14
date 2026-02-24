@@ -67,7 +67,7 @@ public sealed partial class ChameleonMenu : DefaultWindow
                 MinSize = new Vector2(48, 48),
                 HorizontalExpand = true,
                 Group = group,
-                StyleClasses = {StyleBase.ButtonSquare},
+                StyleClasses = {StyleClass.ButtonSquare},
                 ToggleMode = true,
                 Pressed = _selectedId == id,
                 ToolTip = proto.Name

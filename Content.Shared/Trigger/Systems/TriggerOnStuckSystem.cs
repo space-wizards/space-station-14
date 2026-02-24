@@ -3,10 +3,8 @@ using Content.Shared.Trigger.Components.Triggers;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class TriggerOnStuckSystem : EntitySystem
+public sealed class TriggerOnStuckSystem : TriggerOnXSystem
 {
-    [Dependency] private readonly TriggerSystem _trigger = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -16,6 +14,6 @@ public sealed class TriggerOnStuckSystem : EntitySystem
 
     private void OnStuck(Entity<TriggerOnStuckComponent> ent, ref EntityStuckEvent args)
     {
-        _trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 }

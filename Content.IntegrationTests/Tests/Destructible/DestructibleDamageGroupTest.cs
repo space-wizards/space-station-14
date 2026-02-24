@@ -1,10 +1,10 @@
-using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
 
@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                     Assert.That(threshold.Trigger, Is.InstanceOf<AndTrigger>());
                 });
 
-                var trigger = (AndTrigger) threshold.Trigger;
+                var trigger = (AndTrigger)threshold.Trigger;
 
                 Assert.Multiple(() =>
                 {
@@ -132,7 +132,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Heal both classes of damage to 0
-                sDamageableSystem.SetAllDamage(sDestructibleEntity, sDamageableComponent, 0);
+                sDamageableSystem.ClearAllDamage((sDestructibleEntity, sDamageableComponent));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
@@ -162,7 +162,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                     Assert.That(threshold.Trigger, Is.InstanceOf<AndTrigger>());
                 });
 
-                trigger = (AndTrigger) threshold.Trigger;
+                trigger = (AndTrigger)threshold.Trigger;
 
                 Assert.Multiple(() =>
                 {
@@ -176,7 +176,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold.TriggersOnce = true;
 
                 // Heal brute and burn back to 0
-                sDamageableSystem.SetAllDamage(sDestructibleEntity, sDamageableComponent, 0);
+                sDamageableSystem.ClearAllDamage((sDestructibleEntity, sDamageableComponent));
 
                 // No new thresholds reached from healing
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);

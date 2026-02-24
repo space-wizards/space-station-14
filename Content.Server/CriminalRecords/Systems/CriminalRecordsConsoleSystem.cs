@@ -14,6 +14,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
 using System.Linq;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.CriminalRecords.Systems;
@@ -24,6 +26,7 @@ namespace Content.Server.CriminalRecords.Systems;
 public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleSystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
@@ -87,7 +90,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     {
         // prevent malf client violating wanted/reason nullability
         if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) &&
-            msg.Status == SecurityStatus.Suspected != (msg.Reason != null))
+            msg.Status == SecurityStatus.Suspected != (msg.Reason != null) &&
+            msg.Status == SecurityStatus.Hostile != (msg.Reason != null))
             return;
 
         if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
@@ -144,6 +148,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // figure out which radio message to send depending on transition
         var statusString = (oldStatus, msg.Status) switch
         {
+            (_, SecurityStatus.Hostile) => "hostile",
+            (_, SecurityStatus.Eliminated) => "eliminated",
             // person has been detained
             (_, SecurityStatus.Detained) => "detained",
             // person did something sus
@@ -154,6 +160,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             (_, SecurityStatus.Discharged) => "released",
             // going from any other state to wanted, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
             (_, SecurityStatus.Wanted) => "wanted",
+            (SecurityStatus.Hostile, SecurityStatus.None) => "not-hostile",
+            (SecurityStatus.Eliminated, SecurityStatus.None) => "not-eliminated",
             // person is no longer sus
             (SecurityStatus.Suspected, SecurityStatus.None) => "not-suspected",
             // going from wanted to none, must have been a mistake
@@ -165,8 +173,12 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             // this is impossible
             _ => "not-wanted"
         };
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args),
-            ent.Comp.SecurityChannel, ent);
+        _radio.SendRadioMessage(ent,
+            Loc.GetString($"criminal-records-console-{statusString}", args),
+            ent.Comp.SecurityChannel,
+            ent);
+
+        _adminLogger.Add(LogType.Identity, LogImpact.Low, $"{ToPrettyString(mob.Value):name} changed criminal status for {name} to \"{statusString}\"");
 
         UpdateUserInterface(ent);
     }

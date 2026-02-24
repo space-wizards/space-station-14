@@ -21,10 +21,6 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
-  - type: Tag
-    tags:
-    - DrinkCup # Do these tags
-    - DrinkGlass # even do anything?
   - type: TransformableContainer
 
 - type: entity
@@ -1230,18 +1226,18 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkKiraSpecial
-  suffix: kira special
+  id: DrinkOrangeLimeSodaGlass
+  suffix: citrus bikeshed
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: KiraSpecial
+        - ReagentId: OrangeLimeSoda
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
+    sprite: Objects/Consumable/Drinks/orangelime_soda.rsi
     state: icon
 
 - type: entity
