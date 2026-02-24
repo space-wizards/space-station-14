@@ -12,7 +12,8 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class DamagedSiliconAccentSystem : BaseAccentSystem<DamagedSiliconAccentComponent>
+//TODO: Slam: This system requires running the events after other systems, but Initialize has to run as well. Can probably be solved, but I'm leaving this to later.
+public sealed class DamagedSiliconAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
@@ -21,6 +22,8 @@ public sealed class DamagedSiliconAccentSystem : BaseAccentSystem<DamagedSilicon
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent, after: [typeof(ReplacementAccentSystem)]);
         SubscribeLocalEvent<DamagedSiliconAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args), after: [typeof(ReplacementAccentSystem)]);
         SubscribeLocalEvent<DamagedSiliconAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>((e, c, ev) =>
@@ -31,7 +34,7 @@ public sealed class DamagedSiliconAccentSystem : BaseAccentSystem<DamagedSilicon
             after: [typeof(ReplacementAccentSystem)]);
     }
 
-    protected override void OnAccent(Entity<DamagedSiliconAccentComponent> ent, ref AccentGetEvent args)
+    private void OnAccent(Entity<DamagedSiliconAccentComponent> ent, ref AccentGetEvent args)
     {
         var uid = ent.Owner;
 
