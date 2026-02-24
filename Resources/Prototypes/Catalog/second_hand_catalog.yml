@@ -246,3 +246,14 @@
   secondHandCategory: commonSecondHand
   cost:
     Telecrystal: 1
+
+# --- KITS ---
+
+- type: listing
+  id: UplinkSecondHandChameleonWorn
+  name: uplink-second-hand-chameleon-worn-name
+  description: uplink-second-hand-chameleon-worn-desc
+  productEntity: ClothingBackpackChameleonFillAgentWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 2

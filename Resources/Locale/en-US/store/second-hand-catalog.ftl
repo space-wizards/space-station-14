@@ -82,3 +82,8 @@ uplink-second-hand-combat-medipen-worn-desc = A combat medipen with a degraded r
 
 uplink-second-hand-stimpack-worn-name = Worn Stimpack
 uplink-second-hand-stimpack-worn-desc = A hyperzine injector with a partially depleted cartridge. Delivers roughly half the normal dose. Still gets you moving fast — just for less time.
+
+# Kits
+
+uplink-second-hand-chameleon-worn-name = Worn Chameleon Kit
+uplink-second-hand-chameleon-worn-desc = A chameleon kit that's been through a few too many hands. The suit and coat are intact — accessories, PDA, and implanter may or may not have made it into the bag. Check the contents before trusting your cover.
