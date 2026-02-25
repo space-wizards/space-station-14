@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Shared.GameTicking;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -134,7 +133,6 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     /// <param name="roundEndOnly">If true, only retrieve pop-ups with ShowRoundEnd set to true.</param>
     /// <param name="ruleSpecific">If true, only retrieve pop-ups with a non-null RuleId.
     /// If false, only retrieve pop-ups with a null RuleId.</param>
-    /// <remarks>Doesn't return feedback prototypes that have a non-null RuleID</remarks>
     /// <returns>Returns a list of protoIds; possibly empty.</returns>
     public List<ProtoId<FeedbackPopupPrototype>> GetOriginFeedbackPrototypes(bool roundEndOnly, bool ruleSpecific)
     {
