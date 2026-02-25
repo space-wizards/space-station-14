@@ -1,5 +1,4 @@
-﻿using Content.Server.GameTicking;
-using Content.Shared.FeedbackSystem;
+﻿using Content.Shared.FeedbackSystem;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -14,6 +13,7 @@ public sealed class ServerFeedbackManager : SharedFeedbackManager
     {
         base.Initialize();
         NetManager.RegisterNetMessage<FeedbackPopupMessage>();
+        NetManager.RegisterNetMessage<OpenFeedbackPopupMessage>();
     }
 
     /// <inheritdoc />
