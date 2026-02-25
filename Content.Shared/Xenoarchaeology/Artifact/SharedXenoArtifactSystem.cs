@@ -16,7 +16,6 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
 {
     private static readonly EntProtoId ArtifactEffectBaseProtoId = "BaseXenoArtifactEffect";
 
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
