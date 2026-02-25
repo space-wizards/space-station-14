@@ -10,7 +10,7 @@ public sealed class FeedbackSystem : EntitySystem
 {
     [Dependency] private readonly ServerFeedbackManager _feedbackManager = null!;
     [Dependency] private readonly GameTicker _gameTicker = null!;
-    [Dependency] private readonly PrototypeManager _prototypeManager = null!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = null!;
 
     public override void Initialize()
     {
