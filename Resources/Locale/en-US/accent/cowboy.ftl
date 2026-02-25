@@ -1,5 +1,5 @@
-accent-cowboy-words-1 = beer
-accent-cowboy-replacement-1 = hooch
+accent-cowboy-words-1 = wow
+accent-cowboy-replacement-1 = by gum
 
 accent-cowboy-words-2 = alien
 accent-cowboy-replacement-2 = space critter
@@ -238,14 +238,11 @@ accent-cowboy-replacement-79 = outlaws
 accent-cowboy-words-80 = very
 accent-cowboy-replacement-80 = mighty
 
-accent-cowboy-words-81 = wow
-accent-cowboy-replacement-81 = by gum
+accent-cowboy-words-81 = yell
+accent-cowboy-replacement-81 = holler
 
-accent-cowboy-words-82 = yell
-accent-cowboy-replacement-82 = holler
+accent-cowboy-words-82 = yelled
+accent-cowboy-replacement-82 = hollered
 
-accent-cowboy-words-83 = yelled
-accent-cowboy-replacement-83 = hollered
-
-accent-cowboy-words-84 = yelling
-accent-cowboy-replacement-84 = hollering
+accent-cowboy-words-83 = yelling
+accent-cowboy-replacement-83 = hollering
