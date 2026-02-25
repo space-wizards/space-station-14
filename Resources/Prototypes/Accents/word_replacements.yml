@@ -23,6 +23,7 @@
     accent-mobster-words-16: accent-mobster-words-replace-16
     accent-mobster-words-17: accent-mobster-words-replace-17
 
+
 - type: accent
   id: pirate
   wordReplacements:
