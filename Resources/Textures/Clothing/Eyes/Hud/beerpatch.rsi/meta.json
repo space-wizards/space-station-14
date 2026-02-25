@@ -19,19 +19,11 @@
       "directions": 4
     },
     {
-      "name": "equipped-EYES-dog",
-      "directions": 4
-    },
-    {
       "name": "flipped-equipped-EYES",
       "directions": 4
     },
     {
       "name": "flipped-equipped-EYES-moth",
-      "directions": 4
-    },
-    {
-      "name": "flipped-equipped-EYES-dog",
       "directions": 4
     }
   ]
