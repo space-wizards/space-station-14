@@ -1,10 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
+using Content.Shared.Gibbing;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -18,13 +17,14 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Tools.Systems;
 
 public sealed class ToolRefinableSystem : EntitySystem
 {
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly GibbingSystem _body = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -121,7 +121,7 @@ public sealed class ToolRefinableSystem : EntitySystem
         if(ev.Cancelled)
             return;
 
-        _body.GibBody(uid);
+        _body.Gib(uid);
         _destructible.DestroyEntity(uid);
     }
 
