@@ -16,7 +16,7 @@ namespace Content.Server.Gravity
         /// <summary>
         /// Iterates gravity components and checks if this entity can have gravity applied.
         /// </summary>
-        public void RefreshGravity(EntityUid uid, GravityComponent? gravity = null)
+        public void RefreshGravity(EntityUid uid, GravityComponent? gravity = null, bool doShake = true)
         {
             if (!GravityQuery.Resolve(uid, ref gravity))
                 return;
@@ -42,7 +42,7 @@ namespace Content.Server.Gravity
                 RaiseLocalEvent(uid, ref ev, true);
                 Dirty(uid, gravity);
 
-                if (HasComp<MapGridComponent>(uid))
+                if (doShake && HasComp<MapGridComponent>(uid))
                 {
                     StartGridShake(uid);
                 }
@@ -51,7 +51,7 @@ namespace Content.Server.Gravity
 
         private void OnGravityInit(EntityUid uid, GravityComponent component, ComponentInit args)
         {
-            RefreshGravity(uid);
+            RefreshGravity(uid, doShake:false);
         }
 
         /// <summary>
