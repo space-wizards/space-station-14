@@ -1,5 +1,4 @@
-﻿using Content.Shared.GameTicking.Components;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.FeedbackSystem;
 
