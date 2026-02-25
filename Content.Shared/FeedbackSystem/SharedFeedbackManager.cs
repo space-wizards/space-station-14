@@ -137,7 +137,7 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     public List<ProtoId<FeedbackPopupPrototype>> GetOriginFeedbackPrototypes(bool roundEndOnly, bool ruleSpecific)
     {
         var feedbackProtypes = _proto.EnumeratePrototypes<FeedbackPopupPrototype>()
-            .Where(x => (!roundEndOnly || x.ShowRoundEnd) && (!ruleSpecific || x.RuleWhitelist != null) && (ruleSpecific || x.RuleWhitelist == null) && _validOrigins.Contains(x.PopupOrigin))
+            .Where(x => (!roundEndOnly || x.ShowRoundEnd) && ruleSpecific == (x.RuleWhitelist != null) && _validOrigins.Contains(x.PopupOrigin))
             .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
             .OrderBy(x => x.Id)
             .ToList();
