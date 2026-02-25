@@ -243,6 +243,7 @@
     - AmmoniaBlood
     - ZombieBlood
     - Sap
+    - SulfurBlood
 
 - type: xenoArchTrigger
   id: TriggerThrow
