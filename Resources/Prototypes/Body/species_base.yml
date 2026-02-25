@@ -3,7 +3,7 @@
   parent:
   - BaseMob
   - MobCombat
-  - MobDamageable
+  # - MobDamageable # Offbrand - no thresholds
   - MobPolymorphable
   - StripableInventoryBase
   - BaseSpeciesAppearance

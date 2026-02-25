@@ -3,6 +3,7 @@ using Content.Shared._Offbrand.MMI;
 using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
+using Content.Shared.Body;
 using Content.Shared.Chat;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
@@ -21,7 +22,7 @@ public sealed class MMIExtractorSystem : EntitySystem
     [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly SharedChatSystem _chat = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -58,7 +59,7 @@ public sealed class MMIExtractorSystem : EntitySystem
             return true;
         }
 
-        if (!_body.TryGetBodyOrganEntityComps<BrainComponent>(target, out var organs))
+        if (!_body.TryGetOrgansWithComponent<BrainComponent>(target, out var organs))
         {
             _chat.TrySendInGameICMessage(ent,
                 Loc.GetString(ent.Comp.Brainless),

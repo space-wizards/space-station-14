@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Stylesheets;
 using Content.Shared.Atmos;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -72,13 +73,13 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         NoPatientDataText.Visible = false;
 
         // Begin Offbrand Tooltips
-        _brainHealthTooltip.Update(msg);
-        _heartRateTooltip.Update(msg);
-        _heartHealthTooltip.Update(msg);
-        _temperatureTooltip.Update(msg, (target.Value, _entityManager.GetComponentOrNull<CryostasisFactorComponent>(target)));
-        _spo2Tooltip.Update(msg);
-        _etco2Tooltip.Update(msg);
-        _respiratoryRateTooltip.Update(msg);
+        _brainHealthTooltip.Update(state);
+        _heartRateTooltip.Update(state);
+        _heartHealthTooltip.Update(state);
+        _temperatureTooltip.Update(state, (target.Value, _entityManager.GetComponentOrNull<CryostasisFactorComponent>(target)));
+        _spo2Tooltip.Update(state);
+        _etco2Tooltip.Update(state);
+        _respiratoryRateTooltip.Update(state);
         // End Offbrand Tooltips
 
         // Scan Mode
@@ -156,11 +157,11 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             });
 
         // Begin Offbrand
-        var showReagents = msg.WoundableData?.Reagents?.Count is { } count && count > 0;
+        var showReagents = state.WoundableData?.Reagents?.Count is { } count && count > 0;
         ReagentsDivider.Visible = showReagents;
         ReagentsContainer.Visible = showReagents;
 
-        if (msg.WoundableData is { } woundable)
+        if (state.WoundableData is { } woundable)
         {
             if (woundable.Wounds is not null)
             {
@@ -209,7 +210,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
                             new Label { Text = proto.LocalizedName, HorizontalExpand = true, SizeFlagsStretchRatio = 3 },
 
-                            new Label { Text = $"{metabolites}u", StyleClasses = { Content.Client.Stylesheets.StyleNano.StyleClassLabelSecondaryColor }, HorizontalExpand = true, SizeFlagsStretchRatio = 1 },
+                            new Label { Text = $"{metabolites}u", StyleClasses = { StyleClass.LabelWeak }, HorizontalExpand = true, SizeFlagsStretchRatio = 1 },
 
                             new Label { Text = $"{quantity}u", HorizontalExpand = true, SizeFlagsStretchRatio = 1 },
                         }

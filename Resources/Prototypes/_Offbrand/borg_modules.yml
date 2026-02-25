@@ -10,7 +10,7 @@
       sprite: _Offbrand/borg_modules.rsi
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: HandheldHealthAnalyzer
     - item: Scalpel
     - item: Hemostat
     - item: Retractor

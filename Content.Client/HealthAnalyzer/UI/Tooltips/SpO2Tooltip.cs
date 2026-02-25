@@ -4,7 +4,7 @@ namespace Content.Client.HealthAnalyzer.UI.Tooltips;
 
 public sealed partial class SpO2Tooltip : UpdatableTooltip
 {
-    public override void Update(HealthAnalyzerScannedUserMessage msg)
+    public override void Update(HealthAnalyzerUiState msg)
     {
         if (msg.WoundableData is not { } woundable)
             return;

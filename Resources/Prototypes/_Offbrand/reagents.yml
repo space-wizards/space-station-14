@@ -7,7 +7,7 @@
   color: "#c8a5dc"
   physicalDesc: reagent-physical-desc-opaque
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.05
       statusEffects:
       - statusEffect: StatusEffectPainkillersMildParacetamol
@@ -42,7 +42,7 @@
   color: "#cb68fc"
   physicalDesc: reagent-physical-desc-opaque
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.05
       statusEffects:
       - statusEffect: StatusEffectPainkillersTramadol
@@ -92,7 +92,7 @@
   color: "#800080"
   physicalDesc: reagent-physical-desc-opaque
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.15
       statusEffects:
       - statusEffect: StatusEffectPainkillersStrongOxycodone
@@ -150,7 +150,7 @@
   color: "#770101"
   physicalDesc: reagent-physical-desc-oily
   metabolisms:
-    Medicine:
+    Metabolites:
       metabolismRate: 1
       effects:
       - !type:ModifyBloodLevel
@@ -170,7 +170,7 @@
   flavorMinimum: 0.02
   color: "#561ec3"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.05
       effects:
       - !type:ModifyHeartDamage
@@ -212,7 +212,7 @@
   flavor: medicine
   color: "#4053b0"
   metabolisms:
-    Medicine:
+    Bloodstream:
       statusEffects:
       - statusEffect: StatusEffectMajorOxygenationCloneoxadone
         conditions:
@@ -253,7 +253,7 @@
   flavorMinimum: 0.01
   color: "#f7d896"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 1
       effects:
       - !type:SatiateThirst
@@ -298,7 +298,7 @@
   color: "#bf0000"
   contrabandSeverity: Syndicate
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.2
       effects:
       - !type:ClampWounds
@@ -317,7 +317,7 @@
   color: "#c9abab"
   contrabandSeverity: Syndicate
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:RemoveStatusEffect
         effectProto: WoundFracture
@@ -342,7 +342,7 @@
   flavor: chalky
   color: "#afe1ed"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -377,7 +377,7 @@
   flavor: bitter
   color: "#f7d9c0"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.2
       statusEffects:
       - statusEffect: StatusEffectPainkillersSalicylicAcid
@@ -434,7 +434,7 @@
   flavor: bitter
   color: "#b8e3cb"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.2
       statusEffects:
       - statusEffect: StatusEffectPainkillersOxandrolone

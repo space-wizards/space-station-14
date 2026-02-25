@@ -15,7 +15,7 @@ public partial class UpdatableTooltip : PanelContainer
         RobustXamlLoader.Load(this);
     }
 
-    public virtual void Update(HealthAnalyzerScannedUserMessage msg)
+    public virtual void Update(HealthAnalyzerUiState msg)
     {
     }
 }

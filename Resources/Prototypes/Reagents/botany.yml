@@ -180,7 +180,7 @@
       amount: -3 # Match this with current rate of Robust Harvest potency increase
   # Begin Offbrand
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 1
       statusEffects:
       - statusEffect: StatusEffectHeartStrainSedin

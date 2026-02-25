@@ -16,7 +16,7 @@ public sealed class LungDamageTemperatureSystem : EntitySystem
 
     private void OnBeforeInhaledGas(Entity<LungDamageOnInhaledAirTemperatureComponent> ent, ref BeforeInhaledGasEvent args)
     {
-        var temperature = Comp<TemperatureComponent>(ent);
+        var temperature = Comp<TemperatureDamageComponent>(ent);
 
         var heatDamageThreshold = temperature.ParentHeatDamageThreshold ?? temperature.HeatDamageThreshold;
         var coldDamageThreshold = temperature.ParentColdDamageThreshold ?? temperature.ColdDamageThreshold;

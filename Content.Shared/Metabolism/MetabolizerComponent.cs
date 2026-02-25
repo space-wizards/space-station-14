@@ -64,10 +64,12 @@ public sealed partial class MetabolizerComponent : Component
         {
             SolutionName = BloodstreamComponent.DefaultBloodSolutionName,
             TransferSolutionName = BloodstreamComponent.DefaultMetabolitesSolutionName,
+            TransferMetabolized = true,
         },
         ["Metabolites"] = new()
         {
-            SolutionName = BloodstreamComponent.DefaultMetabolitesSolutionName
+            SolutionName = BloodstreamComponent.DefaultMetabolitesSolutionName,
+            PreviousStage = "Bloodstream", // Offbrand
         }
     };
 
@@ -161,4 +163,16 @@ public sealed partial class MetabolismSolutionEntry
     /// </summary>
     [DataField]
     public bool TransferSolutionOnBody = true;
+
+    /// <summary>
+    /// Offbrand: If set, metabolizing reagents won't be removed unless they're absent in both direct and precursor forms in this stage
+    /// </summary>
+    [DataField]
+    public ProtoId<MetabolismStagePrototype>? PreviousStage;
+
+    /// <summary>
+    /// Offbrand: If set, metabolized reagents will also be transferred
+    /// </summary>
+    [DataField]
+    public bool TransferMetabolized = false;
 }

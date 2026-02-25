@@ -261,8 +261,9 @@ public sealed partial class HeartSystem : EntitySystem
         {
             return 1f;
         }
+        var bloodReferenceSolution = bloodstream.BloodReferenceSolution;
 
-        return Math.Max(bloodSolution.Volume.Float() / bloodSolution.MaxVolume.Float(), ent.Comp.MinimumBloodVolume);
+        return Math.Max(bloodSolution.Volume.Float() / bloodReferenceSolution.Volume.Float(), ent.Comp.MinimumBloodVolume);
     }
 
     [Access(typeof(HeartSystem), typeof(HeartrateComponent))]

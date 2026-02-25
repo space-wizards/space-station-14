@@ -16,7 +16,7 @@ public sealed partial class TemperatureTooltip : PanelContainer
         RobustXamlLoader.Load(this);
     }
 
-    public void Update(HealthAnalyzerScannedUserMessage msg, Entity<CryostasisFactorComponent?> ent)
+    public void Update(HealthAnalyzerUiState msg, Entity<CryostasisFactorComponent?> ent)
     {
         if (ent.Comp is null)
         {

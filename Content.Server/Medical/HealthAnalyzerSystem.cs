@@ -257,7 +257,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             null,
             bleeding,
             unrevivable,
-            _woundableHealthAnalyzer.TakeSample(target) // Offbrand
+            _woundableHealthAnalyzer.TakeSample(target.Value) // Offbrand
         );
     }
 }

@@ -1,12 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
+using Content.Shared.Body;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.Metabolism;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Offbrand.Wounds;
@@ -14,9 +14,12 @@ namespace Content.Server._Offbrand.Wounds;
 public sealed class WoundableHealthAnalyzerSystem : SharedWoundableHealthAnalyzerSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly MetabolizerSystem _metabolizer = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+
+    private static readonly ProtoId<MetabolismStagePrototype> MetabolitesStage = "Metabolites";
 
     public override Dictionary<ProtoId<ReagentPrototype>, (FixedPoint2 InBloodstream, FixedPoint2 Metabolites)>? SampleReagents(EntityUid uid, out bool hasNonMedical)
     {
@@ -49,32 +52,39 @@ public sealed class WoundableHealthAnalyzerSystem : SharedWoundableHealthAnalyze
             ret[reagent] = (ret[reagent].InBloodstream + quantity, ret[reagent].Metabolites);
         }
 
-        foreach (var metabolizer in _body.GetBodyOrganEntityComps<MetabolizerComponent>(uid))
+        _body.TryGetOrgansWithComponent<MetabolizerComponent>(uid, out var metabolizers);
+        foreach (var metabolizer in metabolizers)
         {
-            if (metabolizer.Comp1.SolutionName != bloodstream.BloodSolutionName)
+            var solutions = metabolizer.Comp.Solutions;
+            var stages = metabolizer.Comp.Stages;
+            if (!solutions.TryGetValue(MetabolitesStage, out var stage) || !stages.Contains(MetabolitesStage))
                 continue;
 
-            foreach (var (reagent, quantity) in metabolizer.Comp1.Metabolites)
+            if (!_metabolizer.LookupSolution(metabolizer, stage, false, out var metabolitesSolution, out _, out _))
+                continue;
+
+            foreach (var (reagent, quantity) in metabolitesSolution.Contents)
             {
-                if (_prototype.Index(reagent).Group != MedicineGroup)
+                if (_prototype.Index<ReagentPrototype>(reagent.Prototype).Group != MedicineGroup)
                 {
                     hasNonMedical = true;
                     continue;
                 }
 
-                if (!ret.ContainsKey(reagent))
-                    ret[reagent] = (0, 0);
+                if (!ret.ContainsKey(reagent.Prototype))
+                    ret[reagent.Prototype] = (0, 0);
 
-                ret[reagent] = (ret[reagent].InBloodstream, ret[reagent].Metabolites + quantity);
+                ret[reagent.Prototype] = (ret[reagent.Prototype].InBloodstream, ret[reagent.Prototype].Metabolites + quantity);
             }
         }
 
-        foreach (var lung in _body.GetBodyOrganEntityComps<LungComponent>(uid))
+        _body.TryGetOrgansWithComponent<LungComponent>(uid, out var lungs);
+        foreach (var lung in lungs)
         {
             foreach (var gasId in Enum.GetValues<Gas>())
             {
                 var idx = (int) gasId;
-                var moles = lung.Comp1.Air[idx];
+                var moles = lung.Comp.Air[idx];
                 if (moles <= 0)
                     continue;
 

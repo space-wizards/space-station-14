@@ -212,9 +212,9 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
                 InGameICChatType.Speak, true);
         }
         // Begin offbrand
-        else if (heartDefibrillatable is not null && _mobState.IsDead(target, mob))
+        else if (heartDefibrillatable is not null && _mobState.IsDead(target, targetMobState))
         {
-            _chatManager.TrySendInGameICMessage(uid, Loc.GetString(heartDefibrillatable.TargetIsDead),
+            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(heartDefibrillatable.TargetIsDead),
                 InGameICChatType.Speak, true);
         }
         else if (heartDefibrillatable is not null)
@@ -224,7 +224,7 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
 
             foreach (var message in before.Messages)
             {
-                _chatManager.TrySendInGameICMessage(uid, Loc.GetString(message), InGameICChatType.Speak, true);
+                _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(message), InGameICChatType.Speak, true);
             }
         }
         // End Offbrand

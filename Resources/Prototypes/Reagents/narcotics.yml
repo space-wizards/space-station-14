@@ -251,7 +251,7 @@
   - !type:PlantAdjustHealth
     amount: -5
   metabolisms: # Offbrand
-    Narcotic:
+    Bloodstream:
       statusEffects:
       - statusEffect: StatusEffectHeartStrainNicotine
       effects:
