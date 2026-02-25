@@ -3810,13 +3810,6 @@
   id: 9518
   time: '2026-02-11T22:31:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42868
-- author: PJB3005
-  changes:
-  - message: Nerfed and removed many boring word replacement accents.
-    type: Remove
-  id: 9519
-  time: '2026-02-12T14:42:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42880
 - author: bnuuy
   changes:
   - message: The fake mindshield action button now correctly shows your mindshield
