@@ -18,7 +18,7 @@ public sealed partial class FeedbackSystem : EntitySystem
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
     }
 
-    private void OnRoundEnd(RoundEndMessageEvent ev, EntitySessionEventArgs args)
+    private void OnRoundEnd(RoundEndMessageEvent args)
     {
         var showFeedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
             .Select(x => _prototypeManager.Index(x))
