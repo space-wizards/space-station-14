@@ -231,8 +231,6 @@ entities:
       dampingModifier: 0.25
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -1244,8 +1242,6 @@ entities:
     - type: ImplicitRoof
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -51498,7 +51494,7 @@ entities:
 
         [bold]Sentencing Phase:[/bold]
 
-        If the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part. 
+        If the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part.
 
         I. Each side can present more evidence/witnesses in any order. There is NO ban on emotional aspects or anything. The prosecution is to submit a suggested penalty. After all the sides are done then the judicial authority is to give a sentence.
 

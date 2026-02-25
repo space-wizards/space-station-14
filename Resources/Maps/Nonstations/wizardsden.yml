@@ -459,8 +459,6 @@ entities:
       shakeTimes: 10
     - type: NavMap
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
   - uid: 411
     components:
     - type: MetaData

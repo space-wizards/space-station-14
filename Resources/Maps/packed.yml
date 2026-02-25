@@ -318,8 +318,6 @@ entities:
     - type: BecomesStation
       id: Packed
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: GridAtmosphere
       version: 2
       data:

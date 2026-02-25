@@ -63,8 +63,6 @@ entities:
     - type: BecomesStation
       id: Arena
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
       inherent: True
       enabled: True
     - type: DecalGrid

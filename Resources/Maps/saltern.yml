@@ -1503,8 +1503,6 @@ entities:
           - 0
         chunkSize: 4
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: DecalGrid
       chunkCollection:
         version: 2

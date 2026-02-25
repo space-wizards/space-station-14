@@ -68,8 +68,6 @@ entities:
     - type: OccluderTree
     - type: Shuttle
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: DeviceNetwork
       configurators: []
       deviceLists: []

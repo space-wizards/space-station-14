@@ -92,8 +92,6 @@ entities:
     - type: BecomesStation
       id: dm01-entryway
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
       inherent: True
       enabled: True
     - type: OccluderTree

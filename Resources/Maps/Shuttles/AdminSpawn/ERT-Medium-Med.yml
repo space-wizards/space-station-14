@@ -65,8 +65,6 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
     - type: DecalGrid
       chunkCollection:
         version: 2
