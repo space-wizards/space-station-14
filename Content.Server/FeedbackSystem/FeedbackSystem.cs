@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.FeedbackSystem;
 
-public sealed class FeedbackSystem : EntitySystem
+public sealed partial class FeedbackSystem : EntitySystem
 {
     [Dependency] private readonly ServerFeedbackManager _feedbackManager = null!;
     [Dependency] private readonly GameTicker _gameTicker = null!;
@@ -15,7 +15,7 @@ public sealed class FeedbackSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEnd);
+        SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
     }
 
     private void OnRoundEnd(RoundEndMessageEvent ev, EntitySessionEventArgs args)
