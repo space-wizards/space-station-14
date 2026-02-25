@@ -27,6 +27,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
     private EntityQuery<GasTileOverlayComponent> _overlayQuery;
 
     private readonly OverlayResourceCache<CachedResources> _resources = new();
+    private List<Entity<MapGridComponent>> _grids = new();
 
     // Cache used to transform ThermalByte into Color for overlay
     private readonly Color[] _colorCache = new Color[256];
@@ -169,15 +170,13 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
         var mapId = args.MapId;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
-        List<Entity<MapGridComponent>> grids = new();
-
         drawHandle.RenderInRenderTarget(res.TemperatureTarget,
             () =>
             {
-                grids.Clear();
-                _mapManager.FindGridsIntersecting(mapId, worldAABB, ref grids);
+                _grids.Clear();
+                _mapManager.FindGridsIntersecting(mapId, worldAABB, ref _grids);
 
-                foreach (var grid in grids)
+                foreach (var grid in _grids)
                 {
                     if (!_overlayQuery.TryGetComponent(grid.Owner, out var comp))
                         continue;
