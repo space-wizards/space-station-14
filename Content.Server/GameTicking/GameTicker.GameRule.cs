@@ -5,6 +5,7 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Prototypes;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -16,6 +17,8 @@ namespace Content.Server.GameTicking;
 public sealed partial class GameTicker
 {
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
+
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
 
     /// <summary>
     ///     A list storing the start times of all game rules that have been started this round.
@@ -233,6 +236,12 @@ public sealed partial class GameTicker
         return false;
     }
 
+    public bool IsGameRuleAdded(EntityWhitelist ruleWhitelist)
+    {
+        return GetAddedGameRules()
+            .Any(x => _whitelist.IsWhitelistPass(ruleWhitelist, x));
+    }
+
     /// <summary>
     ///     Returns true if a game rule with the given component is active..
     /// </summary>
@@ -263,6 +272,12 @@ public sealed partial class GameTicker
         }
 
         return false;
+    }
+
+    public bool IsGameRuleActive(EntityWhitelist ruleWhitelist)
+    {
+        return GetActiveGameRules()
+            .Any(x => _whitelist.IsWhitelistPass(ruleWhitelist, x));
     }
 
     public void ClearGameRules()

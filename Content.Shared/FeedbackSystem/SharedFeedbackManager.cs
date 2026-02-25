@@ -131,13 +131,13 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     /// Get a list of feedback prototypes that match the current valid origins.
     /// </summary>
     /// <param name="roundEndOnly">If true, only retrieve pop-ups with ShowRoundEnd set to true.</param>
-    /// <param name="ruleSpecific">If true, only retrieve pop-ups with a non-null RuleId.
+    /// <param name="ruleSpecific">If true, only retrieve pop-ups with a non-null RuleWhitelist.
     /// If false, only retrieve pop-ups with a null RuleId.</param>
     /// <returns>Returns a list of protoIds; possibly empty.</returns>
     public List<ProtoId<FeedbackPopupPrototype>> GetOriginFeedbackPrototypes(bool roundEndOnly, bool ruleSpecific)
     {
         var feedbackProtypes = _proto.EnumeratePrototypes<FeedbackPopupPrototype>()
-            .Where(x => (!roundEndOnly || x.ShowRoundEnd) && (!ruleSpecific || x.RuleId != null) && (ruleSpecific || x.RuleId == null) && _validOrigins.Contains(x.PopupOrigin))
+            .Where(x => (!roundEndOnly || x.ShowRoundEnd) && (!ruleSpecific || x.RuleWhitelist != null) && (ruleSpecific || x.RuleWhitelist == null) && _validOrigins.Contains(x.PopupOrigin))
             .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
             .OrderBy(x => x.Id)
             .ToList();
