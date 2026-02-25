@@ -1,7 +1,7 @@
 using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Body.Events;
-using Content.Shared.Body.Systems;
 using Content.Shared.Medical.Cryogenics;
+using Content.Shared.Metabolism;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature;
 
