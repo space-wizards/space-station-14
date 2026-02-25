@@ -8,7 +8,6 @@ using Content.Server.Maps;
 using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.FeedbackSystem;
 using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
@@ -24,7 +23,6 @@ using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -592,16 +590,6 @@ namespace Content.Server.GameTicking
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             var sound = RoundEndSoundCollection == null ? null : _audio.ResolveSound(new SoundCollectionSpecifier(RoundEndSoundCollection));
-
-            // Show rule specific feedback popups
-            var feedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
-                .Select(x => _prototypeManager.Index(x))
-                .Where(x => IsGameRuleActive(x.RuleId!))
-                .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
-                .OrderBy(x => x.Id)
-                .ToList();
-
-            _feedbackManager.SendToAllSessions(feedbackPrototypes);
 
             var roundEndMessageEvent = new RoundEndMessageEvent(
                 gamemodeTitle,
