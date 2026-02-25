@@ -48,10 +48,6 @@
         {
             "name": "on-equipped-HELMET-monkey",
             "directions": 4
-        },
-        {
-            "name": "on-equipped-HELMET-dog",
-            "directions": 4
         }
     ]
 }
