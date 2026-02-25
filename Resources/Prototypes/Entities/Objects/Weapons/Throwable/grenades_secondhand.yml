@@ -1,7 +1,6 @@
-# Second-hand (defective) grenade variants for the Second Hand uplink tab.
+# Second-hand (defective) grenade/explosive variants for the Second Hand uplink tab.
 
-# Weak explosive grenade: one-third the normal blast radius.
-# The filler charge is degraded and partially inert.
+# Worn explosive grenade: one-third the normal blast radius.
 - type: entity
   name: worn explosive grenade
   parent: ExGrenade
@@ -13,26 +12,10 @@
     explosionType: Default
     maxIntensity: 5
     intensitySlope: 3
-    totalIntensity: 40  # roughly 1/3 of normal 120 - about a ~2 tile radius
+    totalIntensity: 40
     canCreateVacuum: false
 
-# Weak EMP grenade: pulse radius less than half the normal 5.5 tiles.
-# The capacitor bank is partially discharged and won't fully top off before use.
-- type: entity
-  name: weak EMP grenade
-  parent: EmpGrenade
-  id: EmpGrenadeWorn
-  suffix: Second Hand
-  description: An EMP grenade with a partially discharged capacitor bank. The pulse radius is less than half of normal - enough to knock out someone's gear if you're close enough.
-  components:
-  - type: EmpOnTrigger
-    keysIn:
-    - trigger
-    range: 2.5
-    energyConsumption: 50000
-
 # Degraded smoke grenade: shorter duration and smaller cloud than normal.
-# The compound has dried out and won't fully volatilize.
 - type: entity
   name: degraded smoke grenade
   parent: SmokeGrenade
@@ -47,7 +30,6 @@
     spreadAmount: 20
 
 # Low-charge shrapnel grenade: half the normal pellet count.
-# The propellant charge is weak and only half the pellets are properly seated.
 - type: entity
   name: low-charge shrapnel grenade
   parent: GrenadeShrapnel
@@ -59,15 +41,68 @@
     fillPrototype: PelletClusterLethal
     capacity: 15
 
-# Low-charge incendiary grenade: half the normal pellet count.
-# The incendiary compound partially solidified in storage.
+# Warmish grenade: fewer fragments and a random fuse between 2 and 7 seconds.
 - type: entity
-  name: low-charge incendiary grenade
+  name: warmish grenade
   parent: GrenadeIncendiary
   id: GrenadeIncendiaryWorn
   suffix: Second Hand
-  description: An incendiary grenade with solidified compound and a weak propellant charge. Releases half the normal incendiary payload. Still sets things on fire - just smaller things.
+  description: An incendiary grenade with a corroded fuse and only half the normal pellet fill. The countdown is unpredictable — somewhere between 2 and 7 seconds after you pull the pin. Plan accordingly.
   components:
   - type: ProjectileGrenade
     fillPrototype: PelletClusterIncendiary
     capacity: 15
+  - type: TimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+    delay: 3.5
+  - type: RandomFuse
+    minDelay: 2
+    maxDelay: 7
+
+# Grenade pongwin: wobbles toward you slowly, smaller boom.
+- type: entity
+  name: grenade pongwin
+  parent: MobGrenadePenguin
+  id: MobGrenadePenguinWorn
+  suffix: Second Hand
+  description: A grenade penguin that's seen better days. It ambles toward you more slowly than a healthy specimen and its payload is noticeably reduced. It still explodes. It's still a penguin.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 2.5
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 7
+    intensitySlope: 3
+    totalIntensity: 80
+
+# Crusty exploding pen: random fuse between 2 and 9 seconds.
+- type: entity
+  name: pen
+  parent: PenExploding
+  id: PenExplodingWorn
+  suffix: Second Hand, Exploding
+  description: A pen with a corroded detonator circuit. Still goes off when clicked — but the fuse is anyone's guess, anywhere from 2 to 9 seconds. Keep that in mind before handing it to someone.
+  components:
+  - type: TimerTrigger
+    delay: 4
+    examinable: false
+  - type: RandomFuse
+    minDelay: 2
+    maxDelay: 9
+
+# Rusty minibomb: longer fuse, same blast.
+- type: entity
+  name: rusty minibomb
+  parent: SyndieMiniBomb
+  id: SyndieMiniBombWorn
+  suffix: Second Hand
+  description: A syndicate minibomb with a corroded detonator that takes a full 9 seconds to fire instead of the standard 5. Same blast radius. Just more time to think about what you've done.
+  components:
+  - type: TimerTrigger
+    delay: 9

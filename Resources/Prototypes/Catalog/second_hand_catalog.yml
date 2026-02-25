@@ -93,6 +93,18 @@
   cost:
     Telecrystal: 6
 
+# --- DISRUPTION ---
+
+- type: listing
+  id: UplinkSecondHandPowerSinkWorn
+  name: uplink-second-hand-power-sink-worn-name
+  description: uplink-second-hand-power-sink-worn-desc
+  icon: { sprite: /Textures/Objects/Power/powersink.rsi, state: powersink }
+  productEntity: PowerSinkWorn
+  secondHandCategory: veryRareSecondHand
+  cost:
+    Telecrystal: 4
+
 # --- MELEE ---
 
 - type: listing
@@ -194,15 +206,6 @@
     Telecrystal: 2
 
 - type: listing
-  id: UplinkSecondHandEmpGrenadeWorn
-  name: uplink-second-hand-emp-grenade-worn-name
-  description: uplink-second-hand-emp-grenade-worn-desc
-  productEntity: EmpGrenadeWorn
-  secondHandCategory: rareSecondHand
-  cost:
-    Telecrystal: 1
-
-- type: listing
   id: UplinkSecondHandSmokeGrenadeWorn
   name: uplink-second-hand-smoke-grenade-worn-name
   description: uplink-second-hand-smoke-grenade-worn-desc
@@ -228,6 +231,36 @@
   secondHandCategory: rareSecondHand
   cost:
     Telecrystal: 2
+
+- type: listing
+  id: UplinkSecondHandGrenadePongwinWorn
+  name: uplink-second-hand-grenade-pongwin-name
+  description: uplink-second-hand-grenade-pongwin-desc
+  icon: { sprite: /Textures/Mobs/Animals/grenadepenguin.rsi, state: penguin }
+  productEntity: MobGrenadePenguinWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 2
+
+- type: listing
+  id: UplinkSecondHandPenExplodingWorn
+  name: uplink-second-hand-pen-exploding-worn-name
+  description: uplink-second-hand-pen-exploding-worn-desc
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
+  productEntity: PenExplodingWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkSecondHandSyndieMiniBombWorn
+  name: uplink-second-hand-minibomb-worn-name
+  description: uplink-second-hand-minibomb-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Grenades/syndgrenade.rsi, state: icon }
+  productEntity: SyndieMiniBombWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 3
 
 # --- TOOLS ---
 

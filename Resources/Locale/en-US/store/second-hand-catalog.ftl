@@ -63,17 +63,28 @@ uplink-second-hand-magazine-box-light-rifle-worn-desc = A 60-round box magazine 
 uplink-second-hand-exgrenade-worn-name = Dud Explosive Grenade
 uplink-second-hand-exgrenade-worn-desc = A standard explosive grenade with degraded filler compound. Creates a much smaller explosion than usual - useful for making a point, not so much for breaching reinforced walls.
 
-uplink-second-hand-emp-grenade-worn-name = Weak EMP Grenade
-uplink-second-hand-emp-grenade-worn-desc = An EMP grenade with a partially discharged capacitor bank that won't fully top off before use. Pulse radius is less than half of normal — enough to knock out someone's gear if you're right next to them.
-
 uplink-second-hand-smoke-grenade-worn-name = Degraded Smoke Grenade
 uplink-second-hand-smoke-grenade-worn-desc = A smoke grenade with dried-out compound that won't fully volatilize. Produces a smaller cloud that clears in about 10 seconds. Better than nothing for a moment of cover.
 
 uplink-second-hand-shrapnel-grenade-worn-name = Low-Charge Shrapnel Grenade
 uplink-second-hand-shrapnel-grenade-worn-desc = A shrapnel grenade with a weakened propellant charge and only half the pellet fill. Still throws metal at people. Just fewer of them, less far.
 
-uplink-second-hand-incendiary-grenade-worn-name = Low-Charge Incendiary Grenade
-uplink-second-hand-incendiary-grenade-worn-desc = An incendiary grenade where the compound has partially solidified in storage. Half the normal pellet count, but what does come out still burns. Just a smaller fire.
+uplink-second-hand-incendiary-grenade-worn-name = Warmish Grenade
+uplink-second-hand-incendiary-grenade-worn-desc = An incendiary grenade with a corroded fuse and half the normal pellet fill. The countdown is unpredictable — somewhere between 2 and 7 seconds. Still sets things on fire. Just fewer things, at an uncertain time.
+
+uplink-second-hand-grenade-pongwin-name = Grenade Pongwin
+uplink-second-hand-grenade-pongwin-desc = A grenade penguin in less than prime condition. Ambles toward targets at about half the speed of a healthy specimen and the explosive payload is noticeably reduced. It still explodes. It's still a penguin. It's just slower and sadder about it.
+
+uplink-second-hand-pen-exploding-worn-name = Crusty Exploding Pen
+uplink-second-hand-pen-exploding-worn-desc = A pen with a corroded detonator circuit. Still triggers on use and still explodes — the fuse is just anyone's guess, between 2 and 9 seconds. A great gift for someone you don't like.
+
+uplink-second-hand-minibomb-worn-name = Rusty Minibomb
+uplink-second-hand-minibomb-worn-desc = A syndicate minibomb with a corroded detonator that takes 9 seconds to fire instead of the standard 5. Same blast radius. Just more time to sit there wondering if it's going to work.
+
+# Disruption
+
+uplink-second-hand-power-sink-worn-name = Faulty Power Sink
+uplink-second-hand-power-sink-worn-desc = A power sink with a corroded intake coil. Drains the station's high-voltage grid at half the normal rate. Still crashes power infrastructure — just takes about twice as long to do it. Patience is a virtue.
 
 # Tools
 
