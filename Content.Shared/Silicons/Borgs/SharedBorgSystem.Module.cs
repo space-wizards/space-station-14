@@ -266,10 +266,10 @@ public abstract partial class SharedBorgSystem
 
         foreach (var comp in newModule.Components)
         {
-            if (ent.Comp.Components.ContainsKey(comp.Key))
+            if (ent.Comp.Components.TryGetComponent(comp.Key, out _))
             {
                 args.Args.Cancelled = true;
-                args.Args.Reason = Loc.GetString("borg-module-incompatible");
+                args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", ent));
             }
         }
     }

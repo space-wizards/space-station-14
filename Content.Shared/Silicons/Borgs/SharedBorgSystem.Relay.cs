@@ -31,6 +31,7 @@ public abstract partial class SharedBorgSystem
         foreach (var module in component.ModuleContainer.ContainedEntities)
         {
             RaiseLocalEvent(module, ref ev);
+            args = ev.Args;
         }
     }
 }
