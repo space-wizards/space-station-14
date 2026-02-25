@@ -9,7 +9,7 @@ namespace Content.Server._Offbrand.Wounds;
 
 public sealed class CryostasisFactorSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedMetabolizerSystem _metabolizer = default!;
+    [Dependency] protected readonly MetabolizerSystem _metabolizer = default!;
 
     public override void Initialize()
     {
