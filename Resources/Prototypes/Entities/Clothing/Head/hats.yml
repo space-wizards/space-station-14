@@ -503,6 +503,9 @@
     tags:
     - PetWearable
     - CorgiWearable
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: pirate
 
 - type: entity
   parent: ClothingHeadBase
@@ -1052,6 +1055,9 @@
     sprite: Clothing/Head/Hats/piratetricord.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/piratetricord.rsi
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: pirate
 
 - type: entity
   parent: ClothingHeadBase
@@ -1330,6 +1336,9 @@
       sprite: Clothing/Head/Hats/cowboyhatbrown.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatbrown.rsi
+    - type: AddAccentClothing
+      accent: ReplacementAccent
+      replacement: cowboy
     - type: Tag
       tags:
       - PetWearable
