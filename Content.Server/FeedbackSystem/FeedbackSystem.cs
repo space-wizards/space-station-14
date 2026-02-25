@@ -20,13 +20,21 @@ public sealed class FeedbackSystem : EntitySystem
 
     private void OnRoundEnd(RoundEndMessageEvent ev, EntitySessionEventArgs args)
     {
-        var feedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
+        var showFeedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
             .Select(x => _prototypeManager.Index(x))
             .Where(x => _gameTicker.IsGameRuleActive(x.RuleId!))
             .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
             .OrderBy(x => x.Id)
             .ToList();
 
-        _feedbackManager.SendToAllSessions(feedbackPrototypes);
+        var notShowFeedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
+            .Select(x => _prototypeManager.Index(x))
+            .Where(x => !_gameTicker.IsGameRuleActive(x.RuleId!))
+            .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
+            .OrderBy(x => x.Id)
+            .ToList();
+
+        _feedbackManager.SendToAllSessions(showFeedbackPrototypes);
+        _feedbackManager.SendToAllSessions(notShowFeedbackPrototypes, true);
     }
 }
