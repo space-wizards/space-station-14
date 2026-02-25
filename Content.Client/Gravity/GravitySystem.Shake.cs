@@ -16,22 +16,6 @@ public sealed partial class GravitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
-    private void InitializeShake()
-    {
-        SubscribeLocalEvent<GravityShakeComponent, ComponentInit>(OnShakeInit);
-    }
-
-    private void OnShakeInit(EntityUid uid, GravityShakeComponent component, ComponentInit args)
-    {
-        var localPlayer = _playerManager.LocalEntity;
-
-        if (!TryComp(localPlayer, out TransformComponent? xform) ||
-            xform.GridUid != uid && xform.MapUid != uid)
-        {
-            return;
-        }
-    }
-
     protected override void ShakeGrid(EntityUid uid, GravityComponent? gravity = null)
     {
         base.ShakeGrid(uid, gravity);

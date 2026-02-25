@@ -13,7 +13,6 @@ public sealed partial class GravitySystem : SharedGravitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GravityGeneratorComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        InitializeShake();
     }
 
     /// <summary>
