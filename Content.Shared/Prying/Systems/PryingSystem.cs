@@ -29,8 +29,8 @@ public sealed class PryingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PryingComponent, ComponentInit>(OnPryingInit);
-        SubscribeLocalEvent<PryingComponent, ComponentRemove>(OnPryingRemoved);
+        SubscribeLocalEvent<PryingComponent, ComponentStartup>(OnPryingStartup);
+        SubscribeLocalEvent<PryingComponent, ComponentShutdown>(OnPryingShutdown);
 
         // Mob prying doors
         SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
@@ -38,7 +38,7 @@ public sealed class PryingSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(TryPryDoor);
     }
 
-    private void OnPryingInit(Entity<PryingComponent> ent, ref ComponentInit args)
+    private void OnPryingStartup(Entity<PryingComponent> ent, ref ComponentStartup args)
     {
         if (ent.Comp.PryingAlertProtoId == null)
             return;
@@ -46,7 +46,7 @@ public sealed class PryingSystem : EntitySystem
         _alerts.ShowAlert(ent.Owner, ent.Comp.PryingAlertProtoId.Value);
     }
 
-    private void OnPryingRemoved(Entity<PryingComponent> ent, ref ComponentRemove args)
+    private void OnPryingShutdown(Entity<PryingComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.PryingAlertProtoId == null)
             return;

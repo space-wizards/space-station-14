@@ -28,6 +28,9 @@ public abstract partial class SharedBorgSystem
         SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleInstalledEvent>(OnComponentModuleInstalled);
         SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleUninstalledEvent>(OnComponentModuleUninstalled);
 
+        SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
+            OnComponentModuleInstalledRelay);
+
         _moduleQuery = GetEntityQuery<BorgModuleComponent>();
     }
 
@@ -253,6 +256,22 @@ public abstract partial class SharedBorgSystem
     {
         var chassis = args.ChassisEnt;
         EntityManager.RemoveComponents(chassis, ent.Comp.Components);
+    }
+
+    private void OnComponentModuleInstalledRelay(Entity<ComponentBorgModuleComponent> ent,
+        ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
+    {
+        if (!TryComp<ComponentBorgModuleComponent>(args.Args.ModuleEnt, out var newModule))
+            return;
+
+        foreach (var comp in newModule.Components)
+        {
+            if (ent.Comp.Components.ContainsKey(comp.Key))
+            {
+                args.Args.Cancelled = true;
+                args.Args.Reason = Loc.GetString("borg-module-incompatible");
+            }
+        }
     }
     #endregion
 }
