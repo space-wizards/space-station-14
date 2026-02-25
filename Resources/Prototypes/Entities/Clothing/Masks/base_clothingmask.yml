@@ -33,7 +33,7 @@
 
 - type: entity
   id: ClothingMaskBaseButcherable
-  parent: ClothingMaskBase
+  parent: [ClothingMaskBase, SlicingRefinableBase]
   abstract: true
   components:
   - type: ToolRefinable

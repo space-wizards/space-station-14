@@ -50,7 +50,7 @@
 
 - type: entity
   name: volcanic loaf
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadVolcanic
   description: A dark loaf. Resembles pumice.
   components:
@@ -82,7 +82,7 @@
 
 - type: entity
   name: banana bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadBanana
   description: A heavenly and filling treat.
   components:
@@ -123,7 +123,7 @@
     - Slice
 
 - type: entity
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadCotton
   name: cotton bread
   description: Bread, but for moff.
@@ -187,7 +187,7 @@
 
 - type: entity
   name: cornbread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadCorn
   description: Some good down-home country-style, rootin'-tootin', revolver-shootin', dad-gum yeehaw cornbread.
   components:
@@ -234,7 +234,7 @@
 
 - type: entity
   name: cream cheese bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadCreamcheese
   description: Yum yum yum!
   components:
@@ -287,7 +287,7 @@
 
 - type: entity
   name: meat bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadMeat
   description: The culinary base of every self-respecting eloquen/tg/entleman.
   components:
@@ -347,7 +347,7 @@
 
 - type: entity
   name: mimana bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadMimana
   description: Best eaten in silence.
   components:
@@ -406,7 +406,7 @@
 
 - type: entity
   name: bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadPlain
   description: Some plain old earthen bread.
   components:
@@ -430,7 +430,7 @@
 
 - type: entity
   name: sausage bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadSausage
   description: Dont think too much about it.
   components:
@@ -493,7 +493,7 @@
 
 - type: entity
   name: spider meat bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadMeatSpider
   description: Reassuringly green meatloaf made from spider meat.
   components:
@@ -553,7 +553,7 @@
 
 - type: entity
   name: tofu bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadTofu
   description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
   components:
@@ -604,7 +604,7 @@
 
 - type: entity
   name: xeno meat bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadMeatXeno
   description: A fitting, and filling, end to xeno scum.
   components:
@@ -665,7 +665,7 @@
 # Other than bread/refineResult:
 
 - type: entity
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, SlicingRefinableFoodBase]
   id: FoodBreadBaguette
   name: baguette
   description: Bon appétit!
@@ -710,7 +710,7 @@
 # Tastes like France.
 
 - type: entity
-  parent: FoodBreadBaguette
+  parent: [FoodBreadBaguette, SlicingRefinableFoodBase]
   id: FoodBreadBaguetteCotton
   name: cotton baguette
   description: Bon azzétit!
@@ -949,7 +949,7 @@
 - type: entity
   name: bread dog
   id: MobBreadDog
-  parent: EdibleBase
+  parent: [EdibleBase, SlicingRefinableFoodBase]
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
   - type: FlavorProfile

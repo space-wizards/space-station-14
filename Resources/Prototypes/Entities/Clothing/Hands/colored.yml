@@ -295,7 +295,7 @@
 # Black Gloves
 # TECHNICALLY, if you ported the worn state to the RSI, this could be greyscaled, but I do not really feel like doing that.
 - type: entity
-  parent: ClothingHandsGlovesSyntheticBase
+  parent: [ClothingHandsGlovesSyntheticBase, SlicingRefinableBase]
   id: ClothingHandsGlovesColorBlack
   name: black gloves
   description: Regular black gloves that do not keep you from frying.
@@ -319,7 +319,7 @@
 # Insulated Gloves (Yellow Gloves)
 # Currently can not be greyscaled without looking like shit.
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, SlicingRefinableBase]
   id: ClothingHandsGlovesColorYellow
   name: insulated gloves
   description: These gloves will protect the wearer from electric shocks.

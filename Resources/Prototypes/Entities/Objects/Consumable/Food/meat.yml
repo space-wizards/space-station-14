@@ -74,7 +74,7 @@
 # Raw
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeat
   name: raw meat
   description: A slab of raw meat.
@@ -111,7 +111,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatHuman
   name: raw human meat
   description: Gross.
@@ -209,7 +209,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatBear
   name: raw bear meat
   description: A very manly slab of raw bear meat.
@@ -243,7 +243,7 @@
         color: "#934C64"
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatPenguin
   name: raw penguin meat
   description: A slab of raw penguin meat. Can be used as a substitute for fish in recipes.
@@ -275,7 +275,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatChicken
   name: raw chicken meat
   description: A slab of raw chicken. Remember to wash your hands!
@@ -309,7 +309,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatDuck
   name: raw duck meat
   description: A slab of raw duck. Remember to wash your hands!
@@ -428,7 +428,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatDragon
   name: dragon flesh
   description: The dense meat of the space-era apex predator is oozing with its mythical ichor. Ironically, best eaten raw.
@@ -470,7 +470,7 @@
       - state: dragon-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatRat
   name: raw rat meat
   description: Prime meat from maintenance!
@@ -498,7 +498,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatLizard
   name: raw lizard meat
   description: Delicious dino damage.
@@ -573,7 +573,7 @@
       - state: rotten-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatSpider
   name: raw spider meat
   description: A slab of spider meat. That's so Kafkaesque.
@@ -683,7 +683,7 @@
 
 - type: entity
   # not raw since acid kills bacteria or something, same as xeno
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatXeno
   name: raw xeno meat
   description: A slab of xeno meat, dripping with acid.
@@ -754,7 +754,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatTomato
   name: killer tomato meat
   description: A slice from a huge tomato.
@@ -776,7 +776,7 @@
       - state: tomato-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatSalami
   name: salami
   description: A large tube of salami. Best not to ask what went into it.
@@ -805,7 +805,7 @@
         Blunt: 2
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatClown
   name: meat clown
   description: A delicious, round piece of meat clown. How horrifying.
@@ -931,7 +931,7 @@
         color: "#E2AE7C"
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatAnomaly
   name: anomalous meat mass
   description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
@@ -1007,7 +1007,7 @@
     - Meat
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatCooked
   name: steak
   description: A cooked slab of meat. Smells primal.
@@ -1092,7 +1092,7 @@
         color: "#5B3E2A"
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatBearCooked
   name: cooked bear
   description: A well-cooked slab of bear meat. Tough, but tasty with the right sides.
@@ -1129,7 +1129,7 @@
     heldPrefix: meatball
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatPenguinCooked
   name: penguin filet
   description: A cooked filet of penguin. Can be used as a substitute for fish in recipes.
@@ -1171,7 +1171,7 @@
         color: "#F7E3A3"
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatChickenCooked
   name: cooked chicken
   description: A cooked piece of chicken. Best used in other recipes.
@@ -1270,7 +1270,7 @@
           Quantity: 3
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatDuckCooked
   name: cooked duck
   description: A cooked piece of duck. Best used in other recipes.
@@ -1428,7 +1428,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatLizardCooked
   name: lizard steak
   description: Cooked, tough lizard meat.
@@ -1610,7 +1610,7 @@
         color: "#5B3E2A"
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatAnomalyCooked
   name: anomalous steak
   description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
@@ -1649,7 +1649,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatDragonCooked
   name: dragon steak
   description: Pouring ketchup on this is considered a capital crime on most stations.

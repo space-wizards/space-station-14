@@ -139,7 +139,7 @@
   name: papercane roll
   description: Why do we even need to grow paper?
   id: Papercane
-  parent: ProduceBase
+  parent: [ProduceBase, SlicingRefinableBase]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/papercane.rsi
@@ -193,7 +193,7 @@
   name: tower-cap log
   description: It's better than bad, it's good!
   id: Log
-  parent: ProduceBase
+  parent: [ ProduceBase, SlicingRefinableBase ]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/towercap.rsi
@@ -217,7 +217,7 @@
   name: steel-cap log
   description: Steel doesn't grow on trees! It grows on mushrooms, of course.
   id: SteelLog
-  parent: ProduceBase
+  parent: [ ProduceBase, SlicingRefinableBase ]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/steelcap.rsi
@@ -831,7 +831,7 @@
 
 - type: entity
   name: pineapple
-  parent: FoodProduceBase
+  parent: [ FoodProduceBase, SlicingRefinableBase ]
   id: FoodPineapple
   description: Mmm, tropical.
   components:
@@ -1282,7 +1282,7 @@
 
 - type: entity
   name: onion
-  parent: FoodProduceBase
+  parent: [ FoodProduceBase, SlicingRefinableBase ]
   id: FoodOnion
   description: Nothing to cry over.
   components:
@@ -1316,7 +1316,7 @@
 
 - type: entity
   name: red onion
-  parent: FoodProduceBase
+  parent: [ FoodProduceBase, SlicingRefinableBase ]
   id: FoodOnionRed
   description: Purple despite the name.
   components:
@@ -1804,7 +1804,7 @@
 
 - type: entity
   name: glasstle
-  parent: FoodProduceBase
+  parent: [ FoodProduceBase, SlicingRefinableBase ]
   id: FoodGlasstle
   description: A fragile crystal plant with lot of spiky thorns.
   components:
@@ -2116,7 +2116,7 @@
 
 - type: entity
   name: watermelon
-  parent: [FoodProduceBase, ItemHeftyBase]
+  parent: [FoodProduceBase, ItemHeftyBase, SlicingRefinableBase]
   id: FoodWatermelon
   description: Round green object that you can slice and eat.
   components:
@@ -2217,7 +2217,7 @@
 
 - type: entity
   name: holymelon
-  parent: [FoodProduceBase, ItemHeftyBase]
+  parent: [FoodProduceBase, ItemHeftyBase, SlicingRefinableBase]
   id: FoodHolymelon
   description: The water within this melon has been blessed by some deity that's particularly fond of watermelon.
   components:
@@ -2526,7 +2526,7 @@
 
 - type: entity
   name: pumpkin
-  parent: FoodProduceBase
+  parent: [ FoodProduceBase, SlicingRefinableBase ]
   id: FoodPumpkin
   description: A large, orange... berry. Seriously.
   components:
@@ -2628,7 +2628,7 @@
   name: cotton boll
   description: Moth people's favorite snack, and just as fluffy as them.
   id: CottonBol
-  parent: FoodProduceBase
+  parent: [ FoodProduceBase, SlicingRefinableBase ]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
@@ -2661,7 +2661,7 @@
   name: pyrotton boll
   description: This will probably set you on fire.
   id: PyrottonBol
-  parent: FoodProduceBase
+  parent: [ FoodProduceBase, SlicingRefinableBase ]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi

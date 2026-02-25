@@ -1,6 +1,6 @@
 - type: entity
   name: bat
-  parent: [ SimpleMobBase, FlyingMobBase, MobCombat ]
+  parent: [ SimpleMobBase, FlyingMobBase, MobCombat, SlicingRefinableBase ]
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
@@ -84,7 +84,7 @@
 
 - type: entity
   name: bee
-  parent: [ SimpleMobBase, FlyingMobBase ]
+  parent: [ SimpleMobBase, FlyingMobBase, SlicingRefinableBase ]
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
@@ -201,7 +201,7 @@
 
 - type: entity
   name: chicken
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
@@ -352,7 +352,7 @@
 
 - type: entity
   name: cockroach
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobCockroach
   description: This station is just crawling with bugs.
   components:
@@ -455,7 +455,7 @@
 
 - type: entity
   name: glockroach
-  parent: MobCockroach
+  parent: [MobCockroach, SlicingRefinableBase]
   suffix: Admeme
   id: MobGlockroach
   description: This station is just crawling with bu- OH GOD THAT COCKROACH HAS A GUN!!!
@@ -487,7 +487,7 @@
 
 - type: entity
   name: mothroach
-  parent: [ BaseMobMothroach, MobCockroach ]
+  parent: [ BaseMobMothroach, MobCockroach, SlicingRefinableBase ]
   id: MobMothroach
   description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
   components:
@@ -660,7 +660,7 @@
 
 - type: entity
   name: mallard duck #Quack
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
   components:
@@ -789,7 +789,7 @@
 
 - type: entity
   name: butterfly
-  parent: [ SimpleMobBase, FlyingMobBase ]
+  parent: [ SimpleMobBase, FlyingMobBase, SlicingRefinableBase ]
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
@@ -866,7 +866,7 @@
 
 - type: entity
   name: cow
-  parent: [ SimpleMobBase, BaseMobRuminant ]
+  parent: [ SimpleMobBase, BaseMobRuminant, SlicingRefinableBase ]
   id: MobCow
   description: Moo.
   components:
@@ -949,7 +949,7 @@
 
 - type: entity
   name: crab
-  parent: [ SimpleMobBase, BaseMobHemocyanin ]
+  parent: [ SimpleMobBase, BaseMobHemocyanin, SlicingRefinableBase ]
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
@@ -1017,7 +1017,7 @@
 
 - type: entity
   name: goat
-  parent: [ SimpleMobBase, BaseMobRuminant ]
+  parent: [ SimpleMobBase, BaseMobRuminant, SlicingRefinableBase ]
   id: MobGoat
   description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
@@ -1119,7 +1119,7 @@
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
   name: goose
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobGoose
   description: Its stomach and mind are an enigma beyond human comprehension.
   components:
@@ -1170,7 +1170,7 @@
 
 - type: entity
   name: gorilla
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, SlicingRefinableBase ]
   id: MobGorilla
   description: Smashes, roars, looks cool. Don't stand near one.
   components:
@@ -1254,6 +1254,7 @@
   - SimpleMobBase
   - MobCombat
   - StripableInventoryBase
+  - SlicingRefinableBase
   id: MobKangaroo
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
@@ -1725,6 +1726,7 @@
   parent:
   - SimpleMobBase
   - BaseMobAnimal
+  - SlicingRefinableBase
   id: MobMouse
   description: Squeak!
   components:
@@ -1999,7 +2001,7 @@
 - type: entity
   name: cancer mouse
   description: Toxic. Squeak!
-  parent: MobMouse
+  parent: [MobMouse, SlicingRefinableBase]
   id: MobMouseCancer
   components:
   - type: GhostRole
@@ -2043,7 +2045,7 @@
 
 - type: entity
   name: lizard #Weh
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobLizard
   description: A harmless dragon.
   components:
@@ -2102,7 +2104,7 @@
 
 - type: entity
   name: slug
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobSlug
   description: And they called this a lizard?
   components:
@@ -2152,7 +2154,7 @@
 
 - type: entity
   name: frog
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
@@ -2223,7 +2225,7 @@
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
-  parent: [ SimpleMobBase, FlyingMobBase ]
+  parent: [ SimpleMobBase, FlyingMobBase, SlicingRefinableBase ]
   id: MobParrotBase
   name: parrot
   abstract: true
@@ -2311,7 +2313,7 @@
 
 - type: entity
   name: penguin
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobPenguin
   description: Their lives are constant pain due to their inner-body knees.
   components:
@@ -2450,7 +2452,7 @@
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
   name: snake
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SlicingRefinableBase]
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
@@ -2501,7 +2503,7 @@
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
 - type: entity
-  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat ]
+  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, SlicingRefinableBase ]
   id: MobSpiderBase
   abstract: true
   components:
@@ -2659,7 +2661,7 @@
 
 - type: entity
   name: clown spider
-  parent: MobSpiderAngryBase
+  parent: [MobSpiderAngryBase, SlicingRefinableBase]
   id: MobClownSpider
   description: Combines the two most terrifying things in existence, spiders and clowns.
   components:
@@ -2720,7 +2722,7 @@
 
 - type: entity
   name: possum
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobPossum
   description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
   components:
@@ -2793,7 +2795,7 @@
 
 - type: entity
   name: raccoon
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobRaccoon
   description: Trash panda!
   components:
@@ -2846,7 +2848,7 @@
 
 - type: entity
   name: fox
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobFox
   description: They're a fox.
   components:
@@ -2971,7 +2973,7 @@
   - type: MessyDrinker
 
 - type: entity
-  parent: MobCorgiBase
+  parent: [MobCorgiBase, SlicingRefinableBase]
   id: MobCorgi
   components:
   - type: DamageStateVisuals
@@ -3086,7 +3088,7 @@
 
 - type: entity
   name: cat
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobCat
   description: Feline pet, very funny.
   components:
@@ -3289,7 +3291,7 @@
 
 - type: entity
   name: kitten
-  parent: MobCat
+  parent: [MobCat, SlicingRefinableBase]
   id: MobCatKitten
   description: Small and fluffy.
   components:
@@ -3322,7 +3324,7 @@
 
 - type: entity
   name: sloth
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
@@ -3379,7 +3381,7 @@
 
 - type: entity
   name: ferret
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobFerret
   description: Just a silly little guy!
   components:
@@ -3433,7 +3435,7 @@
 
 - type: entity
   name: hamster
-  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase]
+  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, SlicingRefinableBase]
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
@@ -3588,7 +3590,7 @@
 
 - type: entity
   name: pig
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobPig
   description: Oink.
   components:
@@ -3659,7 +3661,7 @@
 
 - type: entity
   name: diona nymph
-  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase]
+  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobDionaNymph
   description: It's like a cat, only.... branch-ier.
   components:
@@ -3750,7 +3752,7 @@
 
 - type: entity
   name: reindeer buck
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, SlicingRefinableBase ]
   id: MobReindeerBuck
   description: You think it can pull a sleigh?
   components:

@@ -69,7 +69,7 @@
 
 - type: entity
   name: blueberry cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeBlueberry
   description: Stains your teeth.
   components:
@@ -128,7 +128,7 @@
 
 - type: entity
   name: cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakePlain
   description: A plain cake, not a lie.
   components:
@@ -174,7 +174,7 @@
 
 - type: entity
   name: carrot cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeCarrot
   description: A favorite desert of a certain wascally wabbit.
   components:
@@ -253,7 +253,7 @@
 
 - type: entity
   name: brain cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeBrain
   description: A squishy cake-thing.
   components:
@@ -309,7 +309,7 @@
 
 - type: entity
   name: cheese cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeCheese
   description: DANGEROUSLY cheesy.
   components:
@@ -352,7 +352,7 @@
 
 - type: entity
   name: orange cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeOrange
   description: A cake with added orange.
   components:
@@ -409,7 +409,7 @@
 
 - type: entity
   name: lime cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeLime
   description: A cake with added lime.
   components:
@@ -466,7 +466,7 @@
 
 - type: entity
   name: lemon cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeLemon
   description: A cake with added lemon.
   components:
@@ -523,7 +523,7 @@
 
 - type: entity
   name: lemoon cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeLemoon
   description: A cake that represents the moon of earth.
   components:
@@ -598,7 +598,7 @@
 
 - type: entity
   name: chocolate cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeChocolate
   description: A cake with added chocolate.
   components:
@@ -662,7 +662,7 @@
 
 - type: entity
   name: apple cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeApple
   description: A cake centred with apple.
   components:
@@ -721,7 +721,7 @@
 
 - type: entity
   name: slime cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeSlime
   description: A cake made of slimes. Probably not electrified.
   components:
@@ -777,7 +777,7 @@
 
 - type: entity
   name: pumpkin-spice cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakePumpkin
   description: A hollow cake with real pumpkin.
   components:
@@ -847,7 +847,7 @@
 
 - type: entity
   name: christmas cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeChristmas
   description: A cake made of christmas.
   components:
@@ -894,7 +894,7 @@
 
 - type: entity
   name: birthday cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeBirthday
   description: Happy Birthday little clown...
   components:
@@ -921,7 +921,7 @@
 
 - type: entity
   name: vanilla cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeVanilla
   description: A vanilla frosted cake.
   components:
@@ -976,7 +976,7 @@
 
 - type: entity
   name: clown cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeClown
   description: A funny cake with a clown face on it.
   components:
@@ -1025,7 +1025,7 @@
 
 - type: entity
   name: spaceman's cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeSpaceman
   description: A spaceman's trumpet frosted cake.
   components:
@@ -1165,7 +1165,7 @@
 
 - type: entity
   name: suppermatter
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeSuppermatter
   description: Extremely dense and powerful food.
   components:
@@ -1229,7 +1229,7 @@
 
 - type: entity
   name: cotton cake
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeCotton
   description: A cake with a fiber frosting and a wad of cotton on top.
   components:
@@ -1288,7 +1288,7 @@
 
 - type: entity
   name: berry delight
-  parent: FoodCakeBase
+  parent: [FoodCakeBase, SlicingRefinableFoodBase]
   id: FoodCakeBerryDelight
   description: This is a cake that is approaching.
   components:

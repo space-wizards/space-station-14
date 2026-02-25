@@ -360,7 +360,7 @@
 
 - type: entity
   name: space adder
-  parent: SimpleSpaceMobBase
+  parent: [SimpleSpaceMobBase, SlicingRefinableBase]
   id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
   components:
@@ -430,7 +430,7 @@
 
 - type: entity
   name: space adder
-  parent: MobPurpleSnake
+  parent: [MobPurpleSnake, SlicingRefinableBase]
   id: MobSmallPurpleSnake
   suffix: small
   description: A smaller version of the menacing purple snake from Kepler-283c.

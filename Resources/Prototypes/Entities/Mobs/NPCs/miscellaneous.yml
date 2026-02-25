@@ -79,6 +79,7 @@
   - MobBloodstream
   - MobFlammable
   - MobCombat
+  - SlicingRefinableBase
   name: tomato killer
   description: Looks like it's not you eating tomatoes today, it's the tomatoes eating you.
   components:

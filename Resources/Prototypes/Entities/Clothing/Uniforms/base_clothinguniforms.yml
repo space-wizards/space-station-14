@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [Clothing, SlicingRefinableBase]
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite

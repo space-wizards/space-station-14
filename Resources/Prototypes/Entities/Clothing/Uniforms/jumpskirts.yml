@@ -716,7 +716,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, SlicingRefinableBase]
   id: ClothingUniformJumpskirtWeb
   name: web jumpskirt
   description: Makes it clear that you are one with the webs.

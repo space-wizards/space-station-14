@@ -299,7 +299,7 @@
   - type: NotJobRequirement
     jobs: [ HeadOfPersonnel ]
   - type: ObjectiveLimit
-    limit: 3 # ian only has 2 refineResult:, 3 obj for drama
+    limit: 3 # ian only has 2 slices, 3 obj for drama
   - type: StealCondition
     stealGroup: FoodMeatCorgi
     owner: objective-condition-steal-Ian

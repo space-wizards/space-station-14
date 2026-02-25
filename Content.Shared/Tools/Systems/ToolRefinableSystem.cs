@@ -18,6 +18,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Shared.Tools.Systems;
 
@@ -49,7 +51,7 @@ public sealed class ToolRefinableSystem : EntitySystem
 
         var (uid, component) = ent;
         var getIsBlocked = new GetIsToolRefineBlockedEvent(args.Used, component.QualityNeeded);
-        RaiseLocalEvent(ref getIsBlocked);
+        RaiseLocalEvent(args.Target, ref getIsBlocked);
         if (!getIsBlocked.IsRefinable)
         {
             _popup.PopupPredicted(getIsBlocked.BlockCause, args.User, args.User);

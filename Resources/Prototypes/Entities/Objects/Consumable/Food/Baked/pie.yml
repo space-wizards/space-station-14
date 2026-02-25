@@ -109,7 +109,7 @@
 
 - type: entity
   name: baklava
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPieBaklava
   description: A delightful healthy snack made of nut layers with thin bread.
   components:
@@ -142,7 +142,7 @@
 
 - type: entity
   name: banana cream pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPieBananaCream
   description: Just like back home, on clown planet! HONK!
   components:
@@ -205,7 +205,7 @@
 
 - type: entity
   name: berry clafoutis
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPieClafoutis
   description: No black birds, this is a good sign.
   components:
@@ -250,7 +250,7 @@
 
 - type: entity
   name: cherry pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPieCherry
   description: Tastes good enough to make a grown man cry.
   components:
@@ -292,7 +292,7 @@
 
 - type: entity
   name: meat pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPieMeat
   description: An old barber recipe, very delicious!
   components:
@@ -334,7 +334,7 @@
 
 - type: entity
   name: pumpkin pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPiePumpkin
   description: Someone should turn this into a latte!
   components:
@@ -373,7 +373,7 @@
 
 - type: entity
   name: xeno pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPieXeno
   components:
   - type: FlavorProfile
@@ -416,7 +416,7 @@
 
 - type: entity
   name: frosty pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPieFrosty
   description: Tastes like blue and cold.
   components:
@@ -449,7 +449,7 @@
 
 - type: entity
   name: mime tart
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodTartMime
   description: "\"      \""
   components:

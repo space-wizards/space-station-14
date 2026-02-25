@@ -159,7 +159,7 @@
   name: valid salad
   parent: FoodBowlBase
   id: FoodSaladValid
-  description: It's just an herb salad with meatballs and fried potato refineResult:. Nothing suspicious about it.
+  description: It's just an herb salad with meatballs and fried potato slices. Nothing suspicious about it.
   components:
   - type: FlavorProfile
     flavors:

@@ -15,7 +15,6 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Movement.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -92,7 +91,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnInsertAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out _))
+        if (args.Cancelled || HasComp<ButcherableComponent>(args.EntityUid))
             return;
 
         args.Cancel();

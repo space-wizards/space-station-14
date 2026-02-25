@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, SlicingRefinableBase]
   id: BaseMobDragon
   suffix: ""
   name: space dragon

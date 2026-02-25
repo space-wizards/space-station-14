@@ -1185,7 +1185,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, SlicingRefinableBase]
   id: ClothingUniformJumpsuitWeb
   name: web jumpsuit
   description: Makes it clear that you are one with the webs.

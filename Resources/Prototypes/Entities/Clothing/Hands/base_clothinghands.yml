@@ -30,7 +30,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, SlicingRefinableBase]
   id: ClothingHandsButcherable
   components:
   - type: ToolRefinable

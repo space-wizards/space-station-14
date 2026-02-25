@@ -330,7 +330,7 @@
           Quantity: 15
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodDough
   name: dough
   description: A piece of dough.
@@ -402,7 +402,7 @@
           Quantity: 5
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodDoughCornmeal
   name: cornmeal dough
   description: A piece of cornmeal dough.
@@ -439,7 +439,7 @@
     - Slice
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodDoughTortilla
   name: tortilla dough
   description: A piece of tortilla dough.
@@ -497,7 +497,7 @@
     node: flat
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodDoughCotton
   name: cotton dough
   description: A piece of fabric dough.
@@ -621,7 +621,7 @@
     state: dough-pie
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodDoughFlat
   name: flat dough
   description: A flattened dough.
@@ -641,7 +641,7 @@
       amount: 3
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodDoughCottonFlat
   name: flat cotton dough
   description: A flattened cotton dough.
@@ -688,7 +688,7 @@
     state: cakebatter
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodButter
   name: stick of butter
   description: A stick of delicious, golden, fatty goodness.
@@ -777,7 +777,7 @@
 
 - type: entity
   name: cheese wheel
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodCheese
   description: A big wheel of delicious Cheddar.
   components:
@@ -828,7 +828,7 @@
       - state: cheesewedge-inhand-right
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodChevre
   name: chèvre log
   description: A soft log of creamy Chèvre.
@@ -885,7 +885,7 @@
     - Slice
 
 - type: entity
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, SlicingRefinableFoodBase]
   id: FoodTofu
   name: tofu
   description: Solid white block with a subtle flavor.

@@ -642,7 +642,7 @@
           Quantity: 0.5
 
 - type: entity
-  parent: FoodBakedBase
+  parent: [FoodBakedBase, SlicingRefinableFoodBase]
   id: FoodBakedBrownieBatch
   name: brownies
   description: A pan of brownies.
@@ -699,7 +699,7 @@
     - Slice
 
 - type: entity
-  parent: FoodBakedBase
+  parent: [FoodBakedBase, SlicingRefinableFoodBase]
   id: FoodBakedCannabisBrownieBatch
   name: special brownies
   description: A pan of "special" brownies.

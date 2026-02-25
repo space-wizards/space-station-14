@@ -1,7 +1,7 @@
 # TODO move all of this to tiles once tile smoothing is supported
 - type: entity
   id: CarpetBase
-  parent: BaseStructure
+  parent: [BaseStructure, SlicingRefinableBase]
   name: carpet
   description: "Fancy walking surface."
   abstract: true
@@ -377,7 +377,7 @@
 
 - type: entity
   id: CarpetCard
-  parent: BaseStructure
+  parent: [BaseStructure, SlicingRefinableBase]
   name: cardboard "carpet"
   description: "Even lino is better."
   components:
