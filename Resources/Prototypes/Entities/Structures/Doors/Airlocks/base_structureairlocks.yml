@@ -80,6 +80,7 @@
       path: /Audio/Machines/airlock_close.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: Pryable
   - type: ContainerContainer
     containers:
       board: !type:Container
