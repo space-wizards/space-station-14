@@ -9,7 +9,7 @@
   flavor: medicine
   color: "#081a80"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectScrambled
@@ -27,7 +27,7 @@
   flavor: medicine
   color: "#3a1d8a"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -81,7 +81,7 @@
   flavor: medicine
   color: "#64ffe6"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:AdjustReagent
         reagent: Histamine
@@ -107,7 +107,7 @@
   flavor: medicine
   color: "#2d5708"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrunk
@@ -127,7 +127,7 @@
   flavor: medicine
   color: "#bd5902"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -145,7 +145,7 @@
   flavor: medicine
   color: "#ffaa00"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EvenHealthChange
         damage:
@@ -187,20 +187,19 @@
     amount: 5
   - !type:PlantCryoxadone {}
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
-        - !type:HealthChange
+        - !type:EvenHealthChange
           conditions:
           - !type:TemperatureCondition
             # this is a little arbitrary but they gotta be pretty cold
             max: 213.0
           damage:
           # todo scale with temp like SS13
-            groups:
-              Airloss: -6
-              Brute: -4
-              Burn: -6
-              Toxin: -4
+            Airloss: -3
+            Brute: -2
+            Burn: -2
+            Toxin: -2
 
 - type: reagent
   id: Doxarubixadone
@@ -211,7 +210,7 @@
   flavor: medicine
   color: "#32cd32"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:HealthChange
           conditions:
@@ -230,7 +229,7 @@
   flavor: medicine
   color: "#215263"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -264,7 +263,7 @@
   flavor: medicine
   color: "#0041a8"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -290,7 +289,7 @@
   flavor: medicine
   color: "#4da0bd"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -324,7 +323,7 @@
   flavor: medicine
   color: "#d2fffa"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:AdjustReagent
         conditions:
@@ -396,7 +395,7 @@
   flavor: medicine
   color: "#4cb580"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -429,7 +428,7 @@
   flavor: medicine
   color: "#422912"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:Vomit
         conditions:
@@ -447,7 +446,7 @@
   flavor: medicine
   color: "#731024"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.1 # Smaller doses stabilize critical people for longer. Gives it a specific usecase as to not be entirely outclassed by dex+
       effects:
       - !type:HealthChange
@@ -470,7 +469,7 @@
   flavor: medicine
   color: "#bf3d19"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -505,7 +504,7 @@
   flavor: medicine
   color: "#ff7db5"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -539,7 +538,7 @@
   flavor: medicine
   color: "#ff867d"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         probability: 0.3
@@ -590,7 +589,7 @@
     - !type:PlantPhalanximine
       minScale: 4
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.1
       effects:
       - !type:HealthChange
@@ -625,7 +624,7 @@
   flavor: violets
   color: "#9423FF"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -653,7 +652,7 @@
   flavor: medicine
   color: "#86caf7"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:CureZombieInfection
           conditions:
@@ -670,7 +669,7 @@
   flavor: medicine
   color: "#1274b5"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:CureZombieInfection
           innoculate: true
@@ -688,7 +687,7 @@
   flavor: medicine
   color: "#FFE774"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:ModifyBleed
         amount: -0.5
@@ -702,7 +701,7 @@
   flavor: salty
   color: "#0064C8"
   metabolisms:
-    Drink:
+    Bloodstream:
       effects:
         - !type:SatiateThirst
           factor: 6
@@ -718,7 +717,7 @@
   flavor: medicine
   color: "#f4dab8"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -733,8 +732,11 @@
   physicalDesc: reagent-physical-desc-starry
   flavor: medicine
   color: "#2b2f77"
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: -5
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -757,7 +759,7 @@
   flavor: medicine
   color: "#d49a2f"
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -784,7 +786,7 @@
   flavor: medicine
   color: "#ba7d7d"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       # Medium-large quantities can hurt you instead,
       # but still technically stop your bleeding.
@@ -808,7 +810,7 @@
   flavor: medicine
   color: "#00e5ff"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         conditions:
@@ -834,7 +836,7 @@
   flavor: medicine
   color: "#2690b5"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       # what the hell, this isn't satiating at all!!
       - !type:SatiateHunger
@@ -850,7 +852,7 @@
   flavor: medicine
   color: "#fcf7f9"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EvenHealthChange
         damage:
@@ -868,7 +870,7 @@
   flavor: medicine
   color: "#520e30"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EvenHealthChange
         conditions:
@@ -926,7 +928,7 @@
   flavor: medicine
   color: "#404040"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:EyeDamage
 
@@ -939,7 +941,7 @@
   flavor: magical
   color: "#b50ee8"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:MakeSentient
         conditions:
@@ -956,7 +958,7 @@
   flavor: medicine
   color: "#d5d5e4"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:Jitter
       - !type:GenericStatusEffect
@@ -986,7 +988,7 @@
   flavor: medicine
   color: "#b0abaa"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
@@ -1012,7 +1014,7 @@
   flavor: sweet
   color: "#e0a5b9"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -1072,7 +1074,7 @@
   flavor: syrupy
   color: "#283332"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -1098,7 +1100,7 @@
   flavor: fizzy
   color: "#b9bf93"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -1124,7 +1126,7 @@
   flavor: sour
   color: "#ff3636"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -1152,7 +1154,7 @@
   flavor: holy
   color: "#91C3F7"
   metabolisms:
-    Drink:
+    Digestion:
       effects:
       - !type:SatiateThirst
         factor: 3
@@ -1195,7 +1197,7 @@
   flavor: syrupy
   color: "#aa4308"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.1 # slow metabolism to not be a godly combat med, its for treating burn victims efficiently
       effects:
       - !type:HealthChange
@@ -1235,7 +1237,7 @@
   flavor: metallic
   color: "#8147ff"
   metabolisms:
-    Medicine:
+    Bloodstream:
       metabolismRate: 0.25
       effects:
       # heals shocks and removes shock chems
@@ -1283,7 +1285,7 @@
   color: "#b5e36d"
   worksOnTheDead: true
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
         - !type:ReduceRotting
           seconds: 20
@@ -1293,6 +1295,37 @@
             max: 150.0
           - !type:MobStateCondition
             mobstate: Dead
+
+- type: reagent
+  id: Arcryox
+  name: reagent-name-arcryox
+  group: Medicine
+  desc: reagent-desc-arcryox
+  physicalDesc: reagent-physical-desc-arcryox
+  flavor: medicine
+  color: "#0cbfe9"
+  worksOnTheDead: true
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 213.0
+        - !type:TotalDamageCondition
+          min: 199.9
+        damage:
+          Brute: -2
+          Burn: -2
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 213.0
+        - !type:TotalDamageCondition
+          min: 500
+        damage:
+          Brute: -4
+          Burn: -4
 
 - type: reagent
   id: Necrosol
@@ -1310,16 +1343,20 @@
     amount: 5
   - !type:PlantCryoxadone {}
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
+        - !type:EvenHealthChange
+          conditions:
+          - !type:TemperatureCondition
+            max: 213.0
+          damage:
+            Brute: -2
+            Burn: -2
         - !type:HealthChange
           conditions:
           - !type:TemperatureCondition
             max: 213.0
           damage:
-            groups:
-              Brute: -4
-              Burn: -5
             types:
               Poison: -2
 
@@ -1333,18 +1370,14 @@
   color: "#89f77f"
   worksOnTheDead: true
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         conditions:
         - !type:TemperatureCondition
           max: 213.0
         damage:
-          types:
-            Cold: -4.0
-            Heat: -4.0
-            Shock: -4.0
-            Caustic: -1.5
+          Burn: -4.5
 
 - type: reagent
   id : Mannitol # currently this is just a way to create psicodine
@@ -1355,7 +1388,7 @@
   flavor: sweet
   color: "#A0A0A0"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:PopupMessage
         conditions:
@@ -1376,7 +1409,7 @@
   flavor: bitter
   color: "#07E79E"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:HealthChange
         conditions:
@@ -1420,7 +1453,7 @@
   flavor: medicine
   color: "#baa15d"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:GenericStatusEffect
         key: RadiationProtection
@@ -1445,7 +1478,7 @@
   flavor: medicine
   color: "#27870a"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:Emote
         emote: Yawn
@@ -1487,3 +1520,27 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+
+- type: reagent
+  id: Heparin
+  name: reagent-name-heparin
+  group: Medicine
+  desc: reagent-desc-heparin
+  physicalDesc: reagent-physical-desc-thin
+  allowedDepartments:
+  - Medical
+  flavor: medicine
+  color: "#d0e21b"
+  metabolisms:
+    Bloodstream:
+      effects: # One day this could be useful for treating blood clots, if we get those
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAnticoagulant
+        time: 30 # 10 bleed ticks, you bleed every 3 seconds by default.
+        type: Update
+      - !type:ModifyBleed
+        conditions:
+        - !type:ReagentCondition
+          reagent: Heparin
+          min: 15
+        amount: 0.25

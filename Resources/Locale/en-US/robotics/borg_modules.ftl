@@ -4,6 +4,7 @@ borg-slot-circuitboards-empty = Circuitboards
 borg-slot-flatpacks-empty = Flatpacks
 borg-slot-tiles-empty = Floor tiles
 borg-slot-topicals-empty = Topicals
+borg-slot-injector-dropper-empty = Precision injectors
 borg-slot-small-containers-empty = Small containers
 borg-slot-chemical-containers-empty = Chemical containers
 borg-slot-documents-empty = Books and papers

@@ -1,9 +1,7 @@
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Robotics;
@@ -18,19 +16,13 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-
     private void InitializeTransponder()
     {
         SubscribeLocalEvent<BorgTransponderComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
-    public override void Update(float frameTime)
+    public void UpdateTransponder(float frameTime)
     {
-        base.Update(frameTime);
-
         var now = _timing.CurTime;
         var query = EntityQueryEnumerator<BorgTransponderComponent, BorgChassisComponent, DeviceNetworkComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var comp, out var chassis, out var device, out var meta))
@@ -41,9 +33,9 @@ public sealed partial class BorgSystem
             if (now < comp.NextBroadcast)
                 continue;
 
-            var charge = 0f;
+            var chargeFraction = 0f;
             if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-                charge = battery.CurrentCharge / battery.MaxCharge;
+                chargeFraction = _battery.GetChargeLevel(battery.Value.AsNullable());
 
             var hpPercent = CalcHP(uid);
 
@@ -54,7 +46,7 @@ public sealed partial class BorgSystem
                 comp.Sprite,
                 comp.Name,
                 meta.EntityName,
-                charge,
+                chargeFraction,
                 hpPercent,
                 chassis.ModuleCount,
                 hasBrain,
@@ -85,7 +77,7 @@ public sealed partial class BorgSystem
             return;
 
         var message = Loc.GetString(ent.Comp1.DisabledPopup, ("name", Name(ent, ent.Comp3)));
-        Popup.PopupEntity(message, ent);
+        _popup.PopupEntity(message, ent);
         _container.Remove(brain, ent.Comp2.BrainContainer);
     }
 
@@ -113,7 +105,7 @@ public sealed partial class BorgSystem
         if (CheckEmagged(ent, "disabled"))
             ent.Comp1.FakeDisabling = true;
         else
-            Popup.PopupEntity(Loc.GetString(ent.Comp1.DisablingPopup), ent);
+            _popup.PopupEntity(Loc.GetString(ent.Comp1.DisablingPopup), ent);
 
         ent.Comp1.NextDisable = _timing.CurTime + ent.Comp1.DisableDelay;
     }
@@ -136,7 +128,7 @@ public sealed partial class BorgSystem
         }
 
         var message = Loc.GetString(ent.Comp.DestroyingPopup, ("name", Name(ent)));
-        Popup.PopupEntity(message, ent);
+        _popup.PopupEntity(message, ent);
         _trigger.ActivateTimerTrigger(ent.Owner);
 
         // prevent a shitter borg running into people
@@ -147,7 +139,7 @@ public sealed partial class BorgSystem
     {
         if (_emag.CheckFlag(uid, EmagType.Interaction))
         {
-            Popup.PopupEntity(Loc.GetString($"borg-transponder-emagged-{name}-popup"), uid, uid, PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString($"borg-transponder-emagged-{name}-popup"), uid, uid, PopupType.LargeCaution);
             return true;
         }
 

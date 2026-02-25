@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared.Body.Systems;
+using Content.Shared.Body;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -29,7 +29,7 @@ public sealed class LoadoutSystem : EntitySystem
         base.Initialize();
 
         // Wait until the character has all their organs before we give them their loadout
-        SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit, after: [typeof(SharedBodySystem)]);
+        SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit, after: [typeof(InitialBodySystem)]);
     }
 
     public static string GetJobPrototype(string? loadout)
@@ -177,11 +177,8 @@ public sealed class LoadoutSystem : EntitySystem
 
     public HumanoidCharacterProfile GetProfile(EntityUid? uid)
     {
-        if (TryComp(uid, out HumanoidAppearanceComponent? appearance))
-        {
-            return HumanoidCharacterProfile.DefaultWithSpecies(appearance.Species);
-        }
-
-        return HumanoidCharacterProfile.Random();
+        return TryComp<HumanoidProfileComponent>(uid, out var profile)
+            ? HumanoidCharacterProfile.DefaultWithSpecies(profile.Species, profile.Sex)
+            : HumanoidCharacterProfile.Random();
     }
 }
