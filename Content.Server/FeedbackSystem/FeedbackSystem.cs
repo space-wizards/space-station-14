@@ -26,7 +26,11 @@ public sealed partial class FeedbackSystem : EntitySystem
             .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
             .OrderBy(x => x.Id)
             .ToList();
+        
+        _feedbackManager.SendToAllSessions(showFeedbackPrototypes);
 
+        // TODO: find a better way to remove the feedback popup from rounds where the rule is not present
+        /*
         var notShowFeedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
             .Select(x => _prototypeManager.Index(x))
             .Where(x => !_gameTicker.IsGameRuleActive(x.RuleId!))
@@ -34,7 +38,7 @@ public sealed partial class FeedbackSystem : EntitySystem
             .OrderBy(x => x.Id)
             .ToList();
 
-        _feedbackManager.SendToAllSessions(showFeedbackPrototypes);
         _feedbackManager.SendToAllSessions(notShowFeedbackPrototypes, true);
+        */
     }
 }
