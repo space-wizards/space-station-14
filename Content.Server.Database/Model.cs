@@ -642,6 +642,7 @@ namespace Content.Server.Database
         public List<AdminLogPlayer> Players { get; set; } = default!;
     }
 
+    //subject to change
     public class AdminLogPlayer
     {
         [Required, Key] public int RoundId { get; set; }
