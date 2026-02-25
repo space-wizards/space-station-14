@@ -132,7 +132,7 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     /// </summary>
     /// <param name="roundEndOnly">If true, only retrieve pop-ups with ShowRoundEnd set to true.</param>
     /// <param name="ruleSpecific">If true, only retrieve pop-ups with a non-null RuleWhitelist.
-    /// If false, only retrieve pop-ups with a null RuleId.</param>
+    /// If false, only retrieve pop-ups with a null RuleWhitelist.</param>
     /// <returns>Returns a list of protoIds; possibly empty.</returns>
     public List<ProtoId<FeedbackPopupPrototype>> GetOriginFeedbackPrototypes(bool roundEndOnly, bool ruleSpecific)
     {
