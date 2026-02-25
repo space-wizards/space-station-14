@@ -12,10 +12,10 @@
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
   - Glasses
+  - AssistiveItems
   - SurvivalMedical
   - Trinkets
 #  - ChiefMedicalOfficerJobTrinkets
-  - AssistiveItems
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -30,10 +30,10 @@
   - MedicalShoes
   - MedicalDoctorPDA
   - Glasses
+  - AssistiveItems
   - SurvivalMedical
   - Trinkets
 #  - MedicalDoctorJobTrinkets
-  - AssistiveItems
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -43,10 +43,10 @@
   - MedicalInternJumpsuit
   - MedicalBackpack
   - Glasses
+  - AssistiveItems
   - SurvivalMedical
   - Trinkets
 #  - MedicalInternJobTrinkets
-  - AssistiveItems
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -59,10 +59,10 @@
   - ChemistOuterClothing
   - MedicalShoes
   - Glasses
+  - AssistiveItems
   - SurvivalMedical
   - Trinkets
 #  - ChemistJobTrinkets
-  - AssistiveItems
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -76,8 +76,8 @@
   - ParamedicOuterClothing
   - ParamedicShoes
   - Glasses
+  - AssistiveItems
   - SurvivalMedical
   - Trinkets
 #  - ParamedicJobTrinkets
-  - AssistiveItems
   - GroupSpeciesBreathToolMedical
