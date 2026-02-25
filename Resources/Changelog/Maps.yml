@@ -963,4 +963,77 @@
   id: 117
   time: '2025-12-24T00:43:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42028
+- author: EchoOfNothing
+  changes:
+  - message: On Plasma, added a second APC to telecommunications, so the APC is no
+      longer overloaded at the start of the round.
+    type: Fix
+  id: 118
+  time: '2025-12-29T04:05:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42144
+- author: Spessmann
+  changes:
+  - message: On Snowball, a docking port has been added south of security.
+    type: Add
+  - message: On Snowball, replaced recharging items with their regular variants.
+    type: Fix
+  id: 119
+  time: '2026-01-02T00:05:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42124
+- author: F1restar4
+  changes:
+  - message: On Fland, added a missing LV cable to atmos' right side APC
+    type: Fix
+  id: 120
+  time: '2026-01-09T00:03:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42314
+- author: Kowlin
+  changes:
+  - message: On Reach station, replaced a door remote with its non-admin variant.
+    type: Tweak
+  id: 121
+  time: '2026-01-14T20:19:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42385
+- author: Velken
+  changes:
+  - message: Plasma finally got the memo that Christmas is over.
+    type: Tweak
+  id: 122
+  time: '2026-02-07T07:01:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42822
+- author: Vortebo
+  changes:
+  - message: On Relic, small changes to e.g. spawns, wiring, pipes, signage have been
+      made to slightly reduce friction in gameplay. Slightly.
+    type: Tweak
+  id: 123
+  time: '2026-02-22T22:16:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42921
+- author: F1restar4
+  changes:
+  - message: On Oasis, added an identifying label to every single air alarm
+    type: Tweak
+  - message: On Oasis, removed several duplicate air alarms
+    type: Fix
+  id: 124
+  time: '2026-02-22T23:06:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42911
+- author: Blackern5000
+  changes:
+  - message: Entirely remade the Vegan Meatball magnet wreck to better work as a wreck
+      for salvage.
+    type: Tweak
+  - message: The Vegan Meatball magnet wreck should no longer pollute space with dozens
+      of enemies after despawning
+    type: Fix
+  id: 125
+  time: '2026-02-22T23:20:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42994
+- author: TytosB
+  changes:
+  - message: On Serpentcrest, tweaked Atmospherics and Security.
+    type: Tweak
+  id: 126
+  time: '2026-02-23T05:48:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42905
 Order: 2

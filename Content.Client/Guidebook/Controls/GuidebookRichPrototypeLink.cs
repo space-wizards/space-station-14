@@ -42,7 +42,7 @@ public sealed class GuidebookRichPrototypeLink : Control, IPrototypeLinkControl
     public void SetMessage(FormattedMessage message)
     {
         _message = message;
-        _richTextLabel.SetMessage(_message);
+        _richTextLabel.SetMessage(_message, tagsAllowed: null);
     }
 
     public IPrototype? LinkedPrototype { get; set; }
