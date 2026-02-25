@@ -5,9 +5,9 @@
     count: 1
 
 - type: localizedDataset
-  id: BlockGameAds
+  id: KudzuCrushAds
   values:
-    prefix: advertisement-block-game-
+    prefix: advertisement-kudzu-crush-
     count: 12
 
 - type: localizedDataset

@@ -98,13 +98,13 @@
     maxAmount: 8
 
 - type: entity
-  id: BlockGameArcade
-  name: NT block game arcade
+  id: KudzuCrushArcade
+  name: NT kudzu crush arcade
   parent: ArcadeBase
   components:
   - type: Wires
-    boardName: wires-board-name-block-game
-    layoutId: BlockGame
+    boardName: wires-board-name-kudzu-crush
+    layoutId: KudzuCrush
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -114,36 +114,36 @@
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
       state: panel
       visible: false
-  - type: BlockGameArcade
+  - type: KudzuCrushArcade
     piecesBag:
-    - BlockGamePieceF
-    - BlockGamePieceI
-    - BlockGamePieceL
-    - BlockGamePieceN
-    - BlockGamePieceP
-    - BlockGamePieceT
-    - BlockGamePieceU
-    - BlockGamePieceV
-    - BlockGamePieceW
-    - BlockGamePieceX
-    - BlockGamePieceY
-    - BlockGamePieceZ
+    - KudzuCrushPieceF
+    - KudzuCrushPieceI
+    - KudzuCrushPieceL
+    - KudzuCrushPieceN
+    - KudzuCrushPieceP
+    - KudzuCrushPieceT
+    - KudzuCrushPieceU
+    - KudzuCrushPieceV
+    - KudzuCrushPieceW
+    - KudzuCrushPieceX
+    - KudzuCrushPieceY
+    - KudzuCrushPieceZ
   - type: UserInterface
     interfaces:
       enum.ArcadeUiKey.Key:
-        type: BlockGameArcadeBoundUserInterface
+        type: KudzuCrushArcadeBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
-    board: BlockGameArcadeComputerCircuitboard
+    board: KudzuCrushArcadeComputerCircuitboard
   - type: DatasetVocalizer
-    dataset: BlockGameAds
+    dataset: KudzuCrushAds
   - type: SpeakOnUIClosed
-    pack: BlockGameGoodbyes
+    pack: KudzuCrushGoodbyes
 
 - type: entity
-  id: BlockGameArcadeFilled
-  parent: BlockGameArcade
+  id: KudzuCrushArcadeFilled
+  parent: KudzuCrushArcade
   suffix: Filled
   components:
   - type: ArcadeRewards
@@ -163,7 +163,7 @@
     - map: ["computerLayerBody"]
       state: arcade
     - map: ["computerLayerScreen"]
-      state: screen_last_fighter
+      state: screen_invaders
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
       state: panel
       visible: false

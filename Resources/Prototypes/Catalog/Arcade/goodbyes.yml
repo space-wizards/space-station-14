@@ -5,9 +5,9 @@
     count: 1
 
 - type: localizedDataset
-  id: BlockGameGoodbyes
+  id: KudzuCrushGoodbyes
   values:
-    prefix: thankyou-block-game-
+    prefix: thankyou-kudzu-crush-
     count: 12
 
 - type: localizedDataset

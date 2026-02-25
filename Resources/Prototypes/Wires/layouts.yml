@@ -107,7 +107,7 @@
   - !type:AiInteractWireAction
 
 - type: wireLayout
-  id: BlockGame
+  id: KudzuCrush
   dummyWires: 4
   wires:
   - !type:PowerWireAction

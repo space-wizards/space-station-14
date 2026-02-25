@@ -23,7 +23,7 @@
         "directions": 4
     },
     {
-      "name": "screen_last_fighter",
+      "name": "screen_invaders",
       "directions": 4,
       "delays": [
         [

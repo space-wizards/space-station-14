@@ -430,12 +430,12 @@
       prototype: SpaceVillainArcade
 - type: entity
   parent: BaseComputerCircuitboard
-  id: BlockGameArcadeComputerCircuitboard
-  name: block game arcade board
-  description: A computer printed circuit board for a block game arcade cabinet.
+  id: KudzuCrushArcadeComputerCircuitboard
+  name: kudzu crush arcade board
+  description: A computer printed circuit board for a kudzu crush arcade cabinet.
   components:
     - type: ComputerBoard
-      prototype: BlockGameArcade
+      prototype: KudzuCrushArcade
 
 - type: entity
   parent: BaseComputerCircuitboard

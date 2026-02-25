@@ -396,7 +396,7 @@ entities:
       pos: -4.5,-2.5
       parent: 292
     - type: Godmode
-- proto: BlockGameArcade
+- proto: KudzuCrushArcade
   entities:
   - uid: 258
     components:
