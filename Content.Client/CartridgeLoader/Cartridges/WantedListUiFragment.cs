@@ -40,7 +40,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
         var found = !String.IsNullOrWhiteSpace(args.Text)
             ? _wantedRecords.FindAll(r =>
                 r.TargetInfo.Name.Contains(args.Text) ||
-                Loc.GetString(_prototypeManager.Index(r.Status)!.Name).Contains(args.Text, StringComparison.OrdinalIgnoreCase))
+                r.Status is not null && Loc.GetString(_prototypeManager.Index(r.Status).Name).Contains(args.Text, StringComparison.OrdinalIgnoreCase))
             : _wantedRecords;
 
         UpdateState(found, false);
@@ -81,7 +81,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
 
     private void OnItemSelected(BaseButton.ButtonEventArgs args, ListData data)
     {
-        if (data is not StatusListData(var record))
+        if (data is not StatusListData(var record) || record.Status is null)
             return;
 
         FormattedMessage GetLoc(string fluentId, params (string,object)[] args)
@@ -120,7 +120,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
         // Set status
         PersonState.SetMessage(GetLoc(
             "wanted-list-status-label",
-            ("status", Loc.GetString(_prototypeManager.Index(record.Status)!.Name).ToLower())
+            ("status", Loc.GetString(_prototypeManager.Index(record.Status).Name).ToLower())
         ));
 
         // Set initiator
