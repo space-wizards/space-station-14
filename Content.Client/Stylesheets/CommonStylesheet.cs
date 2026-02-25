@@ -6,7 +6,7 @@ namespace Content.Client.Stylesheets;
 
 public abstract class CommonStylesheet : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig, ITabContainerConfig,
     ISliderConfig, IRadialMenuConfig, IPlaceholderConfig, ITooltipConfig, IPanelConfig, INanoHeadingConfig,
-    ILineEditConfig, IStripebackConfig, ICheckboxConfig
+    ILineEditConfig, IStripebackConfig, ICheckboxConfig, ISwitchButtonConfig
 {
     /// <remarks>
     ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
@@ -73,4 +73,11 @@ public abstract class CommonStylesheet : PalettedStylesheet, IButtonConfig, IWin
     ColorPalette IButtonConfig.ButtonPalette => PrimaryPalette with { PressedElement = PositivePalette.PressedElement };
     ColorPalette IButtonConfig.PositiveButtonPalette => PositivePalette;
     ColorPalette IButtonConfig.NegativeButtonPalette => NegativePalette;
+
+    ResPath ISwitchButtonConfig.SwitchButtonTrackFillPath => new("switchbutton_track_fill.svg.96dpi.png");
+    ResPath ISwitchButtonConfig.SwitchButtonTrackOutlinePath => new("switchbutton_track_outline.svg.96dpi.png");
+    ResPath ISwitchButtonConfig.SwitchButtonThumbFillPath => new("switchbutton_thumb_fill.svg.96dpi.png");
+    ResPath ISwitchButtonConfig.SwitchButtonThumbOutlinePath => new("switchbutton_thumb_outline.svg.96dpi.png");
+    ResPath ISwitchButtonConfig.SwitchButtonSymbolOffPath => new("switchbutton_symbol_off.svg.96dpi.png");
+    ResPath ISwitchButtonConfig.SwitchButtonSymbolOnPath => new("switchbutton_symbol_on.svg.96dpi.png");
 }
