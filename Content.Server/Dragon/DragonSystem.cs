@@ -227,7 +227,7 @@ public sealed partial class DragonSystem : EntitySystem
         if (!resetRole || !TryComp<MindContainerComponent>(uid, out var mindContainer) || !mindContainer.HasMind)
             return;
 
-        var mind = Comp<MindComponent>(mindContainer.Mind.Value);
+        var mind = Comp<MindComponent>(mindContainer.Mind!.Value);
         foreach (var objId in mind.Objectives)
         {
             if (_objQuery.TryGetComponent(objId, out var obj))
@@ -249,7 +249,7 @@ public sealed partial class DragonSystem : EntitySystem
         if (!TryComp<MindContainerComponent>(uid, out var mindContainer) || !mindContainer.HasMind)
             return;
 
-        var mind = Comp<MindComponent>(mindContainer.Mind.Value);
+        var mind = Comp<MindComponent>(mindContainer.Mind!.Value);
         foreach (var objId in mind.Objectives)
         {
             if (_objQuery.TryGetComponent(objId, out var obj))
