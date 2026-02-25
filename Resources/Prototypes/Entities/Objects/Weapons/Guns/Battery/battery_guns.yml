@@ -993,3 +993,16 @@
     fireRate: 2
     minAngle: 1
     maxAngle: 2
+
+- type: entity
+  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
+  id: WeaponBurstFireLaserXenoborg
+  name: xenoborg burst fire laser
+  components:
+  - type: Gun
+    selectedMode: Burst
+    availableModes:
+    - Burst
+  - type: BatteryAmmoProvider
+    proto: RedXenoborgLaser
+    fireCost: 100

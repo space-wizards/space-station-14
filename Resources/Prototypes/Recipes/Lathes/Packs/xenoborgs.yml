@@ -15,6 +15,7 @@
   - XenoborgModuleDoorControlRecipe
   # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
+  - XenoborgModuleBurstFireLaserRecipe
   # scout xenoborg
   - XenoborgModuleEnergySwordRecipe
   # stealth xenoborg

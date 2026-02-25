@@ -91,6 +91,18 @@
       state: impact_beam_heavy
 
 - type: entity
+  parent: RedMediumLaser
+  id: RedXenoborgLaser
+  name: xenoborg laser ray
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 10
+  - type: HitscanIgnite
+    igniteChange: 1
+
+- type: entity
   parent: BasicHitscan
   id: RedLaserPractice
   name: red practice laser ray
