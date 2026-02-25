@@ -229,28 +229,11 @@
     accent-cowboy-words-82: accent-cowboy-replacement-82
     accent-cowboy-words-83: accent-cowboy-replacement-83
     accent-cowboy-words-84: accent-cowboy-replacement-84
-    accent-cowboy-words-85: accent-cowboy-replacement-85
-    accent-cowboy-words-86: accent-cowboy-replacement-86
-    accent-cowboy-words-87: accent-cowboy-replacement-87
-    accent-cowboy-words-88: accent-cowboy-replacement-88
-    accent-cowboy-words-89: accent-cowboy-replacement-89
-    accent-cowboy-words-90: accent-cowboy-replacement-90
-    accent-cowboy-words-91: accent-cowboy-replacement-91
-    accent-cowboy-words-92: accent-cowboy-replacement-92
-    accent-cowboy-words-93: accent-cowboy-replacement-93
-    accent-cowboy-words-94: accent-cowboy-replacement-94
-    accent-cowboy-words-95: accent-cowboy-replacement-95
-    accent-cowboy-words-96: accent-cowboy-replacement-96
-    accent-cowboy-words-97: accent-cowboy-replacement-97
-    accent-cowboy-words-98: accent-cowboy-replacement-98
-    accent-cowboy-words-99: accent-cowboy-replacement-99
 
 - type: accent
   id: southern
   wordReplacements:
     accent-southern-words-1: accent-southern-words-replace-1
-    accent-southern-words-2: accent-southern-words-replace-2
-    accent-southern-words-3: accent-southern-words-replace-3
 
 # For the chat sanitization system
 - type: accent
