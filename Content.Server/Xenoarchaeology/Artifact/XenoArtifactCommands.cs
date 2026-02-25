@@ -182,7 +182,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     )
     {
         var artifactSystem = _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
-        artifactSystem.SetNodeUnlocked((tuple.Artifact, tuple.Node));
+        artifactSystem.SetNodeUnlocked(tuple.Node.AsNullable());
     }
 
     /// <summary> Removes node from xeno artifact. </summary>
@@ -247,71 +247,29 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     public sealed class XenoArtifactNodeParser : CustomTypeParser<(Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>)>
     {
         [Dependency] private readonly IEntityManager _entityManager = null!;
+        [Dependency] private readonly ToolshedManager _toolshedManager = null!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = null!;
 
         /// <inheritdoc />
         public override bool TryParse(ParserContext parser, out (Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>) result)
         {
             result = default;
+
             
-            if (!TryParseEntity(_entityManager, parser, out var uid))
+            if (!_toolshedManager.TryParse<Entity<XenoArtifactComponent>>(parser, out var artifactEnt))
                 return false;
 
-            if (!_entityManager.TryGetComponent(uid, out XenoArtifactComponent? comp))
-                return false;
-            
-            if (!TryParseEntity(_entityManager, parser, out var uid2))
+            if (!_toolshedManager.TryParse<Entity<XenoArtifactNodeComponent>>(parser, out var nodeEnt))
                 return false;
 
-            if (!_entityManager.TryGetComponent(uid2, out XenoArtifactNodeComponent? comp2))
-                return false;
-
-            result = ((uid, comp), (uid2, comp2));
+            result = (artifactEnt, nodeEnt);
             return true;
-        }
-
-        private static bool TryParseEntity(IEntityManager entMan, ParserContext ctx, out EntityUid result)
-        {
-            string? word;
-            ctx.ConsumeWhitespace();
-
-            var start = ctx.Index;
-
-            // e prefix implies we should parse the number as an EntityUid directly, not as a NetEntity
-            // Note that this breaks auto completion results
-            if (ctx.EatMatch('e'))
-            {
-                word = ctx.GetWord(ParserContext.IsToken);
-                if (EntityUid.TryParse(word, out result))
-                    return true;
-
-                ctx.Error = word is not null ? new InvalidEntity($"e{word}") : new OutOfInputError();
-                ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-                return false;
-            }
-
-            // Optional 'n' prefix for differentiating whether an integer represents a NetEntity or EntityUid
-            ctx.EatMatch('n');
-            word = ctx.GetWord(ParserContext.IsToken);
-
-            if (NetEntity.TryParse(word, out var ent))
-            {
-                result = entMan.GetEntity(ent);
-                return true;
-            }
-
-            result = default;
-
-            ctx.Error = word is not null ? new InvalidEntity(word) : new OutOfInputError();
-            ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-            return false;
         }
 
         /// <inheritdoc />
         public override CompletionResult? TryAutocomplete(ParserContext ctx, CommandArgument? arg)
         {
-            if(!TryParseEntity(_entityManager, ctx, out var artifact)
-               || !_entityManager.TryGetComponent(artifact, out XenoArtifactComponent? comp))
+            if(!_toolshedManager.TryParse<Entity<XenoArtifactComponent>>(ctx, out var artifactEnt))
             {
                 return GetHintedEntities<XenoArtifactComponent>(arg);
             }
@@ -319,7 +277,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
             var hint = ToolshedCommand.GetArgHint(arg, typeof(Entity<XenoArtifactNodeComponent>));
 
             var xenoArtifactSystem = _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
-            var list = xenoArtifactSystem.GetAllNodes((artifact, comp))
+            var list = xenoArtifactSystem.GetAllNodes(artifactEnt)
                                          .Select(
                                              node =>
                                              {
