@@ -184,8 +184,8 @@ public sealed class MindSystem : SharedMindSystem
         {
             component = EnsureComp<MindContainerComponent>(entity.Value);
 
-            if (TryGetMind(entity.Value, out _, out var entMind))
-                _ghosts.OnGhostAttempt(entMind.MindRoleContainer.Owner, false);
+            if (TryGetMind(entity.Value, out var entityMindId, out _))
+                _ghosts.OnGhostAttempt(entityMindId, false);
 
             if (TryComp<ActorComponent>(entity.Value, out var actor))
             {
