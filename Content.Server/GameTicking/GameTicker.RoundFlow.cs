@@ -598,6 +598,7 @@ namespace Content.Server.GameTicking
                 .Select(x => _prototypeManager.Index(x))
                 .Where(x => IsGameRuleActive(x.RuleId!))
                 .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
+                .OrderBy(x => x.Id)
                 .ToList();
 
             _feedbackManager.SendToAllSessions(feedbackPrototypes);
