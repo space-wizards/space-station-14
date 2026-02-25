@@ -16,6 +16,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Tiles;
@@ -142,7 +143,7 @@ public sealed class FloorTileSystem : EntitySystem
 
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
+                if (CanPlaceOn(currentTileDefinition, baseTurf.ID))
                 {
                     if (!_stackSystem.TryUse((uid, stack), 1))
                         continue;
@@ -152,7 +153,7 @@ public sealed class FloorTileSystem : EntitySystem
                     return;
                 }
             }
-            else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
+            else if (HasBaseTurf(currentTileDefinition, new ProtoId<ContentTileDefinition>(ContentTileDefinition.SpaceID)))
             {
                 if (!_stackSystem.TryUse((uid, stack), 1))
                     continue;
@@ -171,9 +172,22 @@ public sealed class FloorTileSystem : EntitySystem
         }
     }
 
-    public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
+    public bool HasBaseTurf(ContentTileDefinition tileDef, ProtoId<ContentTileDefinition> baseTurf)
     {
         return tileDef.BaseTurf == baseTurf;
+    }
+
+    private bool CanPlaceOn(ContentTileDefinition tileDef, ProtoId<ContentTileDefinition> currentTurfId)
+    {
+        //Check exact BaseTurf match
+        if (tileDef.BaseTurf == currentTurfId)
+            return true;
+
+        // Check whitelist match
+        if (tileDef.BaseWhitelist.Count > 0 && tileDef.BaseWhitelist.Contains(currentTurfId))
+            return true;
+
+        return false;
     }
 
     private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
@@ -181,9 +195,12 @@ public sealed class FloorTileSystem : EntitySystem
     {
         _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
-        var random = new System.Random((int) _timing.CurTick.Value);
-        var variant = _tile.PickVariant((ContentTileDefinition) _tileDefinitionManager[tileId], random);
-        _map.SetTile(gridUid, mapGrid,location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
+        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileId];
+        var random = new System.Random((int)_timing.CurTick.Value);
+        var variant = _tile.PickVariant(tileDef, random);
+
+        var tileRef = _map.GetTileRef(gridUid, mapGrid, location.Offset(new Vector2(offset, offset)));
+        _tile.ReplaceTile(tileRef, tileDef, gridUid, mapGrid, variant: variant);
 
         _audio.PlayPredicted(placeSound, location, user);
     }

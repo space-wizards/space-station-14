@@ -100,20 +100,55 @@
   injectSound: /Audio/Items/hypospray.ogg
   injectPopupTarget: injector-component-feel-prick-message
   injectOnUse: true
-  mobTime: 0
   delayPerVolume: 0
   transferAmounts:
   - 5
 
 - type: injectorMode
-  parent: [ BaseHyposprayMode, BaseInjectMode ]
+  abstract: true
+  parent: BaseHyposprayMode
+  id: BaseInstantHyposprayMode
+  mobTime: 0
+
+- type: injectorMode
+  parent: [ BaseInstantHyposprayMode, BaseInjectMode ]
   id: HyposprayInjectMode
 
 - type: injectorMode
-  parent: [ BaseHyposprayMode, BaseDynamicMode ]
+  parent: [ BaseInstantHyposprayMode, BaseDynamicMode ]
   id: HyposprayDynamicMode
 
 - type: injectorMode
   parent: HyposprayDynamicMode
   id: HypopenDynamicMode
   containerDrawTime: 0.75
+
+- type: injectorMode
+  abstract: true
+  parent: BaseHyposprayMode
+  id: BaseJetInjectorMode
+  injectSound: /Audio/Items/Medical/jet_injector.ogg
+  popupUserAttempt: injector-component-spray-injecting-user
+  popupTargetAttempt: injector-component-spray-injecting-target
+
+- type: injectorMode
+  parent: [ BaseJetInjectorMode, BaseInjectMode ]
+  id: JetInjectorInjectMode
+
+- type: injectorMode
+  parent: [ BaseJetInjectorMode, BaseDynamicMode ]
+  id: JetInjectorDynamicMode
+
+- type: injectorMode
+  abstract: true
+  parent: BaseJetInjectorMode
+  id: BaseAdvancedJetInjectorMode
+  mobTime: 2.5
+
+- type: injectorMode
+  parent: [ BaseAdvancedJetInjectorMode, BaseInjectMode ]
+  id: AdvancedJetInjectorInjectMode
+
+- type: injectorMode
+  parent: [ BaseAdvancedJetInjectorMode, BaseDynamicMode ]
+  id: AdvancedJetInjectorDynamicMode
