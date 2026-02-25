@@ -1660,5 +1660,13 @@ Entries:
   id: 202
   time: '2026-02-09T13:31:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42791
+- author: slarticodefast
+  changes:
+  - message: Using the "fuckrules" command will now create an admin log and alert
+      the admins via chat.
+    type: Add
+  id: 203
+  time: '2026-02-21T20:22:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42988
 Name: Admin
 Order: 3
