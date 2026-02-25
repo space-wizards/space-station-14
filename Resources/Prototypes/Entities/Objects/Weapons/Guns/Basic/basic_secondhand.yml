@@ -1,0 +1,12 @@
+# Second-hand (defective) basic energy weapon variants for the Second Hand uplink tab.
+
+# Worn energy crossbow: 3x longer recharge cooldown (15s instead of 5s).
+- type: entity
+  name: worn mini energy crossbow
+  parent: WeaponEnergyCrossbow
+  id: WeaponEnergyCrossbowWorn
+  suffix: Second Hand
+  description: An energy crossbow with a failing power cell. Still floors targets on contact — just give it 15 seconds between shots instead of 5.
+  components:
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 15

@@ -21,3 +21,17 @@
   components:
   - type: RandomDefects
   - type: LoosePowerConnector
+
+# Partial throwing knives kit: 4 knives instead of the usual 8.
+- type: entity
+  name: partial throwing knives kit
+  parent: ThrowingKnivesKit
+  id: ThrowingKnivesKitWorn
+  suffix: Second Hand
+  description: A set of four syndicate throwing knives. Someone used the other half — or lost them, which tracks. Still sharp enough.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: ThrowingKnife
+        amount: 4

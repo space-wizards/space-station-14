@@ -29,7 +29,13 @@ uplink-second-hand-estoc-worn-desc = An Estoc whose burst mechanism has seized u
 uplink-second-hand-l6-saw-worn-name = Worn L6 SAW
 uplink-second-hand-l6-saw-worn-desc = An L6 SAW with a worn bolt carrier and a barrel that's seen too many sustained bursts. Rate of fire is down and the spread opens up faster under fire. Still an L6 SAW. Feeds from .30 ammo belts.
 
+uplink-second-hand-energy-crossbow-worn-name = Worn Energy Crossbow
+uplink-second-hand-energy-crossbow-worn-desc = A mini energy crossbow with a failing power cell. Still drops targets on contact — it just takes 15 seconds to recharge instead of 5. The floor is still coming. It'll just take a moment.
+
 # Melee
+
+uplink-second-hand-throwing-knives-worn-name = Partial Throwing Knives Kit
+uplink-second-hand-throwing-knives-worn-desc = Four syndicate throwing knives in a box that held eight. Someone used the other half — or lost them, which is more likely. Still sharp enough to ruin someone's day.
 
 uplink-second-hand-esword-worn-name = Worn Energy Sword
 uplink-second-hand-esword-worn-desc = An energy sword with a loose power connector rattling around in the hilt. Ignites fine, cuts just as hard — until the connector loses contact mid-swing and the blade dies. Expect it about once every seven swings.
@@ -65,6 +71,9 @@ uplink-second-hand-exgrenade-worn-desc = A standard explosive grenade with degra
 
 uplink-second-hand-smoke-grenade-worn-name = Degraded Smoke Grenade
 uplink-second-hand-smoke-grenade-worn-desc = A smoke grenade with dried-out compound that won't fully volatilize. Produces a smaller cloud that clears in about 10 seconds. Better than nothing for a moment of cover.
+
+uplink-second-hand-singularity-grenade-worn-name = Weak Singularity Grenade
+uplink-second-hand-singularity-grenade-worn-desc = A singularity grenade with a depleted energy cell. The pull kicks in on schedule — it just runs dry in about five seconds instead of ten. Gravitational chaos, quantity-limited edition.
 
 uplink-second-hand-shrapnel-grenade-worn-name = Low-Charge Shrapnel Grenade
 uplink-second-hand-shrapnel-grenade-worn-desc = A shrapnel grenade with a weakened propellant charge and only half the pellet fill. Still throws metal at people. Just fewer of them, less far.

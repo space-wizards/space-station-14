@@ -93,6 +93,16 @@
   cost:
     Telecrystal: 6
 
+- type: listing
+  id: UplinkSecondHandEnergyCrossbowWorn
+  name: uplink-second-hand-energy-crossbow-worn-name
+  description: uplink-second-hand-energy-crossbow-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Basic/energy_crossbow.rsi, state: icon }
+  productEntity: WeaponEnergyCrossbowWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 2
+
 # --- DISRUPTION ---
 
 - type: listing
@@ -106,6 +116,16 @@
     Telecrystal: 4
 
 # --- MELEE ---
+
+- type: listing
+  id: UplinkSecondHandThrowingKnivesWorn
+  name: uplink-second-hand-throwing-knives-worn-name
+  description: uplink-second-hand-throwing-knives-worn-desc
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: throwing_knives }
+  productEntity: ThrowingKnivesKitWorn
+  secondHandCategory: commonSecondHand
+  cost:
+    Telecrystal: 2
 
 - type: listing
   id: UplinkSecondHandEnergySwordWorn
@@ -261,6 +281,16 @@
   secondHandCategory: rareSecondHand
   cost:
     Telecrystal: 3
+
+- type: listing
+  id: UplinkSecondHandSingularityGrenadeWorn
+  name: uplink-second-hand-singularity-grenade-worn-name
+  description: uplink-second-hand-singularity-grenade-worn-desc
+  icon: { sprite: /Textures/Objects/Weapons/Grenades/singularitygrenade.rsi, state: icon }
+  productEntity: SingularityGrenadeWorn
+  secondHandCategory: rareSecondHand
+  cost:
+    Telecrystal: 1
 
 # --- TOOLS ---
 

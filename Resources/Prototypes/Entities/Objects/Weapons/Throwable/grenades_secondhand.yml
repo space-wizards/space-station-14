@@ -106,3 +106,14 @@
   components:
   - type: TimerTrigger
     delay: 9
+
+# Weak singularity grenade: depleted energy cell, effect lasts half as long (5s instead of 10.45s).
+- type: entity
+  name: weak singularity grenade
+  parent: SingularityGrenade
+  id: SingularityGrenadeWorn
+  suffix: Second Hand
+  description: A singularity grenade with a depleted energy cell. The pull kicks in on schedule — it just runs dry in about five seconds instead of ten. Gravitational chaos, quantity-limited edition.
+  components:
+  - type: TwoStageTrigger
+    triggerDelay: 5
