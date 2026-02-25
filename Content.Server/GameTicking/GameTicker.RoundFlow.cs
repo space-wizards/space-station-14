@@ -2,7 +2,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Announcements;
 using Content.Server.Discord;
-using Content.Server.FeedbackSystem;
 using Content.Server.GameTicking.Events;
 using Content.Server.Maps;
 using Content.Server.Roles;
