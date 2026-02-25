@@ -17,5 +17,17 @@ namespace Content.Shared.Gravity
         /// </summary>
         [DataField, AutoNetworkedField]
         public bool Inherent;
+
+        /// <summary>
+        /// Plays when gravity is lost.
+        /// </summary>
+        [DataField]
+        public SoundSpecifier? GravityOff = new SoundCollectionSpecifier("gravityOff");
+
+        /// <summary>
+        /// Plays when gravity is gained.
+        /// </summary>
+        [DataField]
+        public SoundSpecifier? GravityOn = new SoundCollectionSpecifier("gravityOn");
     }
 }

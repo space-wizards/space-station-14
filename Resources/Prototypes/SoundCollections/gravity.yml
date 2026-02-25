@@ -1,0 +1,25 @@
+﻿- type: soundCollection
+  id: gravityOff
+  files:
+  - /Audio/Effects/chop.ogg
+  - /Audio/Effects/closetopen.ogg
+  - /Audio/Effects/glass_crack1.ogg
+  - /Audio/Effects/glass_crack2.ogg
+  - /Audio/Effects/glass_crack3.ogg
+  - /Audio/Effects/glass_crack4.ogg
+  - /Audio/Effects/weak_hit1.ogg
+  - /Audio/Effects/weak_hit2.ogg
+  - /Audio/Effects/woodenclosetopen.ogg
+
+- type: soundCollection
+  id: gravityOn
+  files:
+  - /Audio/Effects/clang.ogg
+  - /Audio/Effects/closetclose.ogg
+  - /Audio/Effects/drop.ogg
+  - /Audio/Effects/glass_smack.ogg
+  - /Audio/Effects/metal_slam1.ogg
+  - /Audio/Effects/metal_slam2.ogg
+  - /Audio/Effects/metal_slam4.ogg
+  - /Audio/Effects/soft_thump.ogg
+  - /Audio/Effects/woodenclosetclose.ogg
