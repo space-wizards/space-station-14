@@ -140,7 +140,7 @@ accent-cowboy-words-47 = ninja
 accent-cowboy-replacement-47 = bushwhacker
 
 accent-cowboy-words-48 = ninjas
-accent-cowboy-replacement-48 bushwhackers
+accent-cowboy-replacement-48 = bushwhackers
 
 accent-cowboy-words-49 = noise
 accent-cowboy-replacement-49 = ruckus
