@@ -1,4 +1,6 @@
+using System.Text.Json;
 using Content.Server.Administration.Logs;
+using Content.Server.Database;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
@@ -37,7 +39,32 @@ public sealed partial class DamageOtherOnHitSystem : SharedDamageOtherOnHitSyste
 
         // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
         if (HasComp<MobStateComponent>(args.Target))
-            _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.GetTotal():damage} damage from collision");
+        {
+            var thrower = args.Component.Thrower;
+            _adminLogger.AddStructured(
+                LogType.ThrowHit,
+                LogImpact.Medium,
+                $"{ToPrettyString(args.Target):target} received {dmg.GetTotal():damage} damage from collision",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    source = (int) uid,
+                    target = (int) args.Target,
+                    thrower = thrower is null ? null : (int?) thrower.Value,
+                    totalDamage = dmg.GetTotal()
+                }),
+                entities: thrower is { } source
+                    ?
+                    [
+                        new AdminLogEntityRef(source, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(uid, AdminLogEntityRole.Tool),
+                        new AdminLogEntityRef(args.Target, AdminLogEntityRole.Victim),
+                    ]
+                    :
+                    [
+                        new AdminLogEntityRef(uid, AdminLogEntityRole.Tool),
+                        new AdminLogEntityRef(args.Target, AdminLogEntityRole.Victim),
+                    ]);
+        }
 
         if (!dmg.Empty)
         {

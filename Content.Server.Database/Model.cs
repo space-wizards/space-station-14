@@ -666,20 +666,6 @@ namespace Content.Server.Database
         public List<AdminLogEntity> Entities { get; set; } = default!;
     }
 
-    /// <summary>
-    ///  Role information for entities in admin logs
-    /// </summary>
-    public enum AdminLogEntityRole : byte
-    {
-        Actor = 0,
-        Target = 1,
-        Tool = 2,
-        Victim = 3,
-        Container = 4,
-        Subject = 6,
-        Other = 255
-    }
-
     //subject to change
     public class AdminLogPlayer
     {

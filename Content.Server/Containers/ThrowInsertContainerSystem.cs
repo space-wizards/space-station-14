@@ -1,6 +1,8 @@
+using System.Text.Json;
 using Content.Server.Administration.Logs;
 using Content.Shared.Containers;
 using Content.Shared.Database;
+using Content.Server.Database;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
@@ -50,6 +52,24 @@ public sealed partial class ThrowInsertContainerSystem : EntitySystem
         _audio.PlayPvs(ent.Comp.InsertSound, ent);
 
         if (args.Component.Thrower != null)
-            _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.Component.Thrower.Value):player} landed in {ToPrettyString(ent)}");
+        {
+            var thrower = args.Component.Thrower.Value;
+            _adminLogger.AddStructured(
+                LogType.Landed,
+                LogImpact.Low,
+                $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(thrower):player} landed in {ToPrettyString(ent)}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    thrown = (int) args.Thrown,
+                    thrower = (int) thrower,
+                    container = (int) ent.Owner
+                }),
+                entities:
+                [
+                    new AdminLogEntityRef(thrower, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(args.Thrown, AdminLogEntityRole.Target),
+                    new AdminLogEntityRef(ent.Owner, AdminLogEntityRole.Container),
+                ]);
+        }
     }
 }

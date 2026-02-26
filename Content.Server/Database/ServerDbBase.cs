@@ -986,7 +986,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
             var query = GetAdminLogsQuery(db.DbContext, filter);
-            query = query.Include(log => log.Players);
+            query = query.Include(log => log.Players).Include(log => log.Entities);
 
             await foreach (var log in query.AsAsyncEnumerable())
             {
@@ -996,7 +996,14 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     players[i] = log.Players[i].PlayerUserId;
                 }
 
-                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
+                var entities = new SharedAdminLogEntity[log.Entities.Count];
+                for (var i = 0; i < log.Entities.Count; i++)
+                {
+                    var entity = log.Entities[i];
+                    entities[i] = new SharedAdminLogEntity(entity.EntityUid, entity.Role, entity.PrototypeId, entity.EntityName);
+                }
+
+                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players, entities);
             }
         }
 

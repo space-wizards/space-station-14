@@ -1,4 +1,7 @@
-﻿using Content.Server.Administration.Logs;
+﻿using System.Text.Json;
+using Content.Server.Administration.Logs;
+using Content.Server.Database;
+using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Shared.Map;
 using Robust.Shared.Placement;
@@ -32,8 +35,24 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
         };
 
         if (actorEntity != null)
-            _adminLogger.Add(logType, LogImpact.Medium,
-                $"{ToPrettyString(actorEntity.Value):actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}");
+        {
+            _adminLogger.AddStructured(
+                logType,
+                LogImpact.Medium,
+                $"{ToPrettyString(actorEntity.Value):actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    actor = (int) actorEntity.Value,
+                    edited = (int) ev.EditedEntity,
+                    action = ev.PlacementEventAction.ToString(),
+                    coordinates = ev.Coordinates.ToString()
+                }),
+                entities:
+                [
+                    new AdminLogEntityRef(actorEntity.Value, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(ev.EditedEntity, AdminLogEntityRole.Target),
+                ]);
+        }
         else if (actor != null)
             _adminLogger.Add(logType, LogImpact.Medium,
                 $"{actor:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}");

@@ -51,7 +51,9 @@ public sealed partial class AdminLogManager
     private void CacheLog(AdminLog log)
     {
         var players = log.Players.Select(player => player.PlayerUserId).ToArray();
-        var record = new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
+        var entities = log.Entities.Select(entity =>
+            new SharedAdminLogEntity(entity.EntityUid, entity.Role, entity.PrototypeId, entity.EntityName)).ToArray();
+        var record = new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players, entities);
 
         CacheLog(record);
     }

@@ -1,4 +1,4 @@
-﻿using Content.Server.Database;
+﻿using Content.Shared.Database;
 
 namespace Content.Server.Administration.Logs;
 

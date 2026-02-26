@@ -295,6 +295,32 @@ public sealed partial class AdminLogsControl : Control
         return SelectedPlayers.Overlaps(label.Log.Players);
     }
 
+    private bool LogMatchesSearch(AdminLogLabel label)
+    {
+        if (string.IsNullOrWhiteSpace(LogSearch.Text))
+            return true;
+
+        if (label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        foreach (var entity in label.Log.Entities)
+        {
+            if (entity.EntityUid.ToString().Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (entity.Role.ToString().Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (entity.PrototypeId != null && entity.PrototypeId.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (entity.EntityName != null && entity.EntityName.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
+
+        return false;
+    }
+
     private bool ShouldShowLog(AdminLogLabel label)
     {
         // Check log type
@@ -311,6 +337,10 @@ public sealed partial class AdminLogsControl : Control
 
         // Check search
         if (!label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+            return false;
+
+        // Check search (message and structured entity participation)
+        if (!LogMatchesSearch(label))
             return false;
 
         return true;
