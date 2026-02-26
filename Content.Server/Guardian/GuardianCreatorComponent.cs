@@ -1,13 +1,12 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Guardian.Components
+namespace Content.Server.Guardian
 {
     /// <summary>
     /// Creates a GuardianComponent attached to the user's GuardianHost.
     /// </summary>
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent]
     public sealed partial class GuardianCreatorComponent : Component
     {
         /// <summary>
@@ -16,20 +15,13 @@ namespace Content.Shared.Guardian.Components
         /// <remarks>
         /// We don't mark as deleted as examine depends on this.
         /// </remarks>
-        [DataField, AutoNetworkedField]
-        public bool Used;
-
-        /// <remarks>
-        /// For other methods that are not done through injection.
-        /// </remarks>
-        [DataField, AutoNetworkedField]
-        public bool Magical;
+        public bool Used = false;
 
         /// <summary>
         /// The prototype of the guardian entity which will be created
         /// </summary>
         [DataField("guardianProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-        public string GuardianProto { get; set; } = null!;
+        public string GuardianProto { get; set; } = default!;
 
         /// <summary>
         /// How long it takes to inject someone.
