@@ -1,7 +1,7 @@
 - type: entity
-  name: holoparasite injector
-  id: HoloparasiteInjector
   parent: [BaseItem, BaseSyndicateContraband]
+  id: HoloparasiteInjector
+  name: holoparasite injector
   description: A complex artwork of handheld machinery allowing the user to host a holoparasite guardian.
   components:
   - type: Sprite
@@ -11,19 +11,19 @@
     guardianProto: MobHoloparasiteGuardian
 
 - type: entity
-  name: holoclown injector
   parent: HoloparasiteInjector
   id: HoloClownInjector
+  name: holoclown injector
   description: A complex artwork of handheld machinery allowing the user to host a holoclown guardian.
   components:
   - type: GuardianCreator
     guardianProto: MobHoloClownGuardian
 
 - type: entity
-  name: magical lamp
-  id: MagicalLamp
-  parent: BaseItem
-  description: The wizard federation had to cut costs after the jinn merchandise scandal somehow.
+  parent: [BaseItem, BaseMagicalContraband]
+  id: GuardianDeck
+  name: guardian deck
+  description: A deck of guardian tarot cards, capable of binding a personal guardian to your body.
   components:
   - type: Sprite
     sprite: Objects/Misc/Lights/lamp.rsi
@@ -31,11 +31,12 @@
       - state: lamp
   - type: GuardianCreator
     guardianProto: MobIfritGuardian
+    magical: true
 
 - type: entity
-  name: holoparasite box
   parent: [BoxCardboard, BaseSyndicateContraband]
   id: BoxHoloparasite
+  name: holoparasite box
   description: A box containing a holoparasite injector.
   components:
   - type: EntityTableContainerFill
@@ -51,9 +52,9 @@
       - state: holo
 
 - type: entity
-  name: holoclown box
   parent: [BoxCardboard, BaseSyndicateContraband]
   id: BoxHoloclown
+  name: holoclown box
   description: A box containing a holoclown injector.
   components:
   - type: EntityTableContainerFill

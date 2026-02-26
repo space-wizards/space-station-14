@@ -1,12 +1,13 @@
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Guardian
+namespace Content.Shared.Guardian.Components
 {
     /// <summary>
     /// Given to guardian users upon establishing a guardian link with the entity
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class GuardianHostComponent : Component
     {
         /// <summary>
@@ -15,17 +16,19 @@ namespace Content.Server.Guardian
         /// <remarks>
         /// Can be null if the component is added at any time.
         /// </remarks>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public EntityUid? HostedGuardian;
 
         /// <summary>
         /// Container which holds the guardian
         /// </summary>
-        [ViewVariables] public ContainerSlot GuardianContainer = default!;
+        [ViewVariables]
+        public ContainerSlot GuardianContainer = null!;
 
         [DataField]
         public EntProtoId Action = "ActionToggleGuardian";
 
-        [DataField] public EntityUid? ActionEntity;
+        [DataField]
+        public EntityUid? ActionEntity;
     }
 }

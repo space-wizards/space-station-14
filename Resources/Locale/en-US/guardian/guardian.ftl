@@ -6,10 +6,15 @@ guardian-already-present-invalid-creation = You are NOT re-living that haunting 
 guardian-no-actions-invalid-creation = You don't have the ability to host a guardian!
 guardian-activator-empty-invalid-creation = The injector is spent.
 guardian-activator-empty-examine = [color=#ba1919]The injector is spent.[/color]
-guardian-activator-invalid-target = {CAPITALIZE(THE($entity))} cannot be injected!
+guardian-activator-invalid-target = {CAPITALIZE(THE($entity))} is incapable of hosting a guardian!
 guardian-no-soul = Your guardian has no soul.
 guardian-available = Your guardian now has a soul.
 guardian-inside-container = There's no room to release your guardian!
+
+## Guardian deck specific
+
+guardian-wizard-activator-empty-invalid-creation = The deck can only provide one guardian at a time!
+guardian-wizard-activator-empty-examine = [color=#ba1919]The deck's seal has been broken.[/color]
 
 ## Guardian entity specific
 
