@@ -29,7 +29,6 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ILocalizationManager _localizationManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;

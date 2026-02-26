@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/27/2025 00:11:50
-  entityCount: 15967
+  time: 02/17/2026 18:18:48
+  entityCount: 15978
 maps:
 - 126
 grids:
@@ -6932,6 +6932,9 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
     - type: ImplicitRoof
+    - type: TileHistory
+      chunkHistory: {}
+    - type: ExplosionAirtightGrid
   - uid: 126
     components:
     - type: MetaData
@@ -11210,6 +11213,14 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 420
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 22.5,-20.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
   - uid: 598
     components:
     - type: MetaData
@@ -13858,11 +13869,6 @@ entities:
     components:
     - type: Transform
       pos: 16.5,-11.5
-      parent: 2
-  - uid: 420
-    components:
-    - type: Transform
-      pos: 18.5,-14.5
       parent: 2
   - uid: 454
     components:
@@ -23609,6 +23615,11 @@ entities:
     - type: Transform
       pos: 57.5,13.5
       parent: 2
+  - uid: 15242
+    components:
+    - type: Transform
+      pos: 22.5,-18.5
+      parent: 2
   - uid: 15319
     components:
     - type: Transform
@@ -23918,6 +23929,26 @@ entities:
     components:
     - type: Transform
       pos: 29.5,8.5
+      parent: 2
+  - uid: 15975
+    components:
+    - type: Transform
+      pos: 22.5,-19.5
+      parent: 2
+  - uid: 15976
+    components:
+    - type: Transform
+      pos: 22.5,-20.5
+      parent: 2
+  - uid: 15977
+    components:
+    - type: Transform
+      pos: 12.5,-16.5
+      parent: 2
+  - uid: 15978
+    components:
+    - type: Transform
+      pos: 12.5,-18.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -31302,6 +31333,11 @@ entities:
     - type: Transform
       pos: 49.5,27.5
       parent: 2
+  - uid: 8986
+    components:
+    - type: Transform
+      pos: 22.5,-20.5
+      parent: 2
   - uid: 9007
     components:
     - type: Transform
@@ -33547,6 +33583,11 @@ entities:
     - type: Transform
       pos: 21.5,-41.5
       parent: 2
+  - uid: 13167
+    components:
+    - type: Transform
+      pos: 22.5,-19.5
+      parent: 2
   - uid: 13170
     components:
     - type: Transform
@@ -34916,6 +34957,31 @@ entities:
     components:
     - type: Transform
       pos: 43.5,46.5
+      parent: 2
+  - uid: 15119
+    components:
+    - type: Transform
+      pos: 22.5,-18.5
+      parent: 2
+  - uid: 15120
+    components:
+    - type: Transform
+      pos: 22.5,-17.5
+      parent: 2
+  - uid: 15121
+    components:
+    - type: Transform
+      pos: 22.5,-16.5
+      parent: 2
+  - uid: 15122
+    components:
+    - type: Transform
+      pos: 22.5,-15.5
+      parent: 2
+  - uid: 15124
+    components:
+    - type: Transform
+      pos: 22.5,-14.5
       parent: 2
   - uid: 15315
     components:
@@ -43374,7 +43440,7 @@ entities:
       pos: 59.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -17814.623
+      secondsUntilStateChange: -18326.117
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -49230,7 +49296,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -65108.41
+      secondsUntilStateChange: -65619.91
       state: Closing
   - uid: 9362
     components:
@@ -72203,7 +72269,7 @@ entities:
       pos: 12.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -3280.357
+      secondsUntilStateChange: -3791.852
       state: Closing
   - uid: 5750
     components:
@@ -75262,6 +75328,13 @@ entities:
     components:
     - type: Transform
       pos: -3.4634295,-18.46823
+      parent: 2
+- proto: PlushieSpawner50
+  entities:
+  - uid: 8652
+    components:
+    - type: Transform
+      pos: 84.5,12.5
       parent: 2
 - proto: PortableFlasher
   entities:
@@ -89934,13 +90007,6 @@ entities:
     - type: Transform
       pos: 36.693336,32.541332
       parent: 2
-- proto: TowelColorOrange
-  entities:
-  - uid: 13167
-    components:
-    - type: Transform
-      pos: 39.307285,22.41729
-      parent: 2
 - proto: TowercapSeeds
   entities:
   - uid: 2601
@@ -89961,13 +90027,6 @@ entities:
     components:
     - type: Transform
       pos: 12.5,12.5
-      parent: 2
-- proto: ToySpawner
-  entities:
-  - uid: 8652
-    components:
-    - type: Transform
-      pos: 84.5,12.5
       parent: 2
 - proto: TrashBag
   entities:

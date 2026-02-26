@@ -240,14 +240,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 column: "ban_id",
                 unique: true);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_server_ban_hit_ban_ban_id",
-                table: "server_ban_hit",
-                column: "ban_id",
-                principalTable: "ban",
-                principalColumn: "ban_id",
-                onDelete: ReferentialAction.Cascade);
-
             migrationBuilder.Sql("""
                 CREATE INDEX "IX_ban_address_address"
                     ON ban_address
@@ -489,6 +481,14 @@ namespace Content.Server.Database.Migrations.Postgres
                 WHERE mm.merge_id = mm.server_role_ban_id
                 	AND round_id IS NOT NULL;
                 """);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_server_ban_hit_ban_ban_id",
+                table: "server_ban_hit",
+                column: "ban_id",
+                principalTable: "ban",
+                principalColumn: "ban_id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.DropForeignKey(
                 name: "FK_server_ban_hit_server_ban_ban_id",
