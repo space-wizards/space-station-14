@@ -28,7 +28,9 @@ public sealed class GunBurstVarianceSystem : EntitySystem
 
         ent.Comp.CurrentShots = _random.Next(ent.Comp.MinShots, ent.Comp.MaxShots + 1);
         Dirty(ent, ent.Comp);
-        _gun.RefreshModifiers(ent.Owner);
+
+        if (HasComp<GunComponent>(ent.Owner))
+            _gun.RefreshModifiers(ent.Owner);
     }
 
     private void OnRefreshModifiers(Entity<GunBurstVarianceComponent> ent, ref GunRefreshModifiersEvent args)
