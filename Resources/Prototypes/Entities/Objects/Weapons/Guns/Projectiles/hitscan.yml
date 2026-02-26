@@ -100,7 +100,7 @@
       types:
         Heat: 10
   - type: HitscanIgnite
-    igniteChange: 1
+    igniteChance: 1
 
 - type: entity
   parent: BasicHitscan
