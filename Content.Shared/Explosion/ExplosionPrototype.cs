@@ -32,6 +32,12 @@ public sealed partial class ExplosionPrototype : IPrototype
     public float? FireStacks;
 
     /// <summary>
+    ///     Temperature of the explosion
+    /// </summary>
+    [DataField]
+    public float? Temperature;
+
+    /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>

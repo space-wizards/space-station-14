@@ -53,6 +53,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
                 subs.Event<SprayPainterSetDecalColorMessage>(OnSetDecalColor);
                 subs.Event<SprayPainterSetDecalAngleMessage>(OnSetDecalAngle);
                 subs.Event<SprayPainterSetDecalSnapMessage>(OnSetDecalSnap);
+                subs.Event<SprayPainterSetDecalColorPickerMessage>(OnSetDecalColorPicker);
             });
     }
 
@@ -188,7 +189,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         args.Handled = true;
 
         if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
-            && charges.LastCharges < targetGroup.Cost)
+            && Charges.GetCurrentCharges((args.Used, charges)) < targetGroup.Cost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupClient(msg, args.User, args.User);
@@ -296,6 +297,16 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     private void OnSetDecalSnap(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalSnapMessage args)
     {
         ent.Comp.SnapDecals = args.Snap;
+        Dirty(ent);
+        UpdateUi(ent);
+    }
+
+    /// <summary>
+    /// Enables or disables the decal colour picker.
+    /// </summary>
+    private void OnSetDecalColorPicker(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalColorPickerMessage args)
+    {
+        ent.Comp.ColorPickerEnabled = args.Toggle;
         Dirty(ent);
         UpdateUi(ent);
     }
