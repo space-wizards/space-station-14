@@ -29,11 +29,26 @@ public sealed partial class MindContainerComponent : Component
     public bool GhostOnShutdown = true;
 }
 
+/// <summary>
+/// Base event for all other mind related events.
+/// </summary>
 public abstract class MindEvent : EntityEventArgs
 {
+    /// <summary>
+    /// <see cref="MindComponent"/> entity currently being handled by the event.
+    /// </summary>
     public readonly Entity<MindComponent> Mind;
+
+    /// <summary>
+    /// <see cref="MindContainerComponent"/> entity currently being handled by the event.
+    /// </summary>
     public readonly Entity<MindContainerComponent> Container;
-    public readonly EntityUid? TransferEntity; // The target entity in case the mind is being transferred. In MindRemoved it means the entity that is being transferred to, and in MindAdded it means the previous entity.
+
+    /// <summary>
+    /// The target entity in case the mind is being transferred. In MindRemoved it means the entity that is being transferred to, and in MindAdded it means the previous entity.
+    /// Null if the mind is being added for the first time or fully removed from entities.
+    /// </summary>
+    public readonly EntityUid? TransferEntity;
 
     public MindEvent(Entity<MindComponent> mind, Entity<MindContainerComponent> container, EntityUid? transferEntity)
     {
