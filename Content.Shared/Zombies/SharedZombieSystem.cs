@@ -2,6 +2,7 @@
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Zombies;
 
@@ -14,8 +15,13 @@ public abstract class SharedZombieSystem : EntitySystem
 
         SubscribeLocalEvent<ZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
         SubscribeLocalEvent<ZombieComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
+        SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnZombieStartup);
+
         SubscribeLocalEvent<ZombificationResistanceComponent, ArmorExamineEvent>(OnArmorExamine);
         SubscribeLocalEvent<ZombificationResistanceComponent, InventoryRelayedEvent<ZombificationResistanceQueryEvent>>(OnResistanceQuery);
+
+        SubscribeLocalEvent<InitialInfectedComponent, ComponentStartup>(OnInitialInfectedStartup);
+        SubscribeLocalEvent<InitialInfectedComponent, ComponentGetStateAttemptEvent>(OnInitialInfectedGetStateAttempt);
     }
 
     private void OnResistanceQuery(Entity<ZombificationResistanceComponent> ent, ref InventoryRelayedEvent<ZombificationResistanceQueryEvent> query)
@@ -43,5 +49,40 @@ public abstract class SharedZombieSystem : EntitySystem
     private void OnRefreshNameModifiers(Entity<ZombieComponent> entity, ref RefreshNameModifiersEvent args)
     {
         args.AddModifier("zombie-name-prefix");
+    }
+
+    private void OnInitialInfectedStartup(EntityUid uid, InitialInfectedComponent component, ComponentStartup args)
+    {
+        DirtyAllRelevant();
+    }
+
+    protected virtual void OnZombieStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
+    {
+        DirtyAllRelevant();
+    }
+
+    private void DirtyAllRelevant()
+    {
+        var initialInfectedQuery = EntityQueryEnumerator<InitialInfectedComponent>();
+        while (initialInfectedQuery.MoveNext(out var uid, out var comp))
+            Dirty(uid, comp);
+
+        var zombieQuery = EntityQueryEnumerator<ZombieComponent>();
+        while (zombieQuery.MoveNext(out var uid, out var comp))
+            Dirty(uid, comp);
+    }
+
+    private void OnInitialInfectedGetStateAttempt(EntityUid uid, InitialInfectedComponent component, ref ComponentGetStateAttemptEvent args)
+    {
+        if (args.Player?.AttachedEntity is not { } attached)
+            return;
+
+        if (HasComp<InitialInfectedComponent>(attached))
+            return;
+
+        if (HasComp<ZombieComponent>(attached))
+            return;
+
+        args.Cancelled = true;
     }
 }

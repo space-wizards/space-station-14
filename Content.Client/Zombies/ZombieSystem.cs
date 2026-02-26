@@ -1,7 +1,5 @@
 using System.Linq;
 using Content.Shared.Body;
-using Content.Shared.Ghost;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
 using Robust.Client.GameObjects;
@@ -18,7 +16,6 @@ public sealed class ZombieSystem : SharedZombieSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ZombieComponent, GetStatusIconsEvent>(GetZombieIcon);
         SubscribeLocalEvent<InitialInfectedComponent, GetStatusIconsEvent>(GetInitialInfectedIcon);
     }
@@ -38,8 +35,10 @@ public sealed class ZombieSystem : SharedZombieSystem
         args.StatusIcons.Add(iconPrototype);
     }
 
-    private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
+    protected override void OnZombieStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
     {
+        base.OnZombieStartup(uid, component, args);
+
         if (HasComp<VisualBodyComponent>(uid))
             return;
 
