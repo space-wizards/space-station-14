@@ -230,8 +230,7 @@
   - type: Produce
     seedId: steelcap
   - type: ToolRefinable
-    solutionToSplit: null
-    toolQuality: Sawing
+    qualityNeeded: Sawing
     refineResult:
     - id: SheetSteel1
 
