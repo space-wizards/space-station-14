@@ -19,8 +19,8 @@ public sealed partial class MindContainerComponent : Component
     /// <summary>
     ///     True if we have a mind, false otherwise.
     /// </summary>
-    [MemberNotNullWhen(true, nameof(Mind))]
-    public bool HasMind => Mind != null;
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public bool HasMind;
 
     /// <summary>
     ///     Whether the mind will be put on a ghost after this component is shutdown.

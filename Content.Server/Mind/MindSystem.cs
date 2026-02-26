@@ -184,8 +184,8 @@ public sealed class MindSystem : SharedMindSystem
         {
             component = EnsureComp<MindContainerComponent>(entity.Value);
 
-            if (component.HasMind)
-                _ghosts.OnGhostAttempt(component.Mind.Value, false);
+            if (TryGetMind(entity.Value, out var entityMindId, out _))
+                _ghosts.OnGhostAttempt(entityMindId, false);
 
             if (TryComp<ActorComponent>(entity.Value, out var actor))
             {
@@ -226,6 +226,7 @@ public sealed class MindSystem : SharedMindSystem
             RaiseLocalEvent(mindId, new BeforeMindGotRemovedEvent(mindEnt, containerEnt, entity));
 
             oldContainer.Mind = null;
+            oldContainer.HasMind = false;
             mind.OwnedEntity = null;
 
             RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(mindEnt, containerEnt, entity));
@@ -261,6 +262,7 @@ public sealed class MindSystem : SharedMindSystem
         if (entity != null)
         {
             component!.Mind = mindId;
+            component.HasMind = true;
             mind.OwnedEntity = entity;
             mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);
             Entity<MindComponent> mindEnt = (mindId, mind);

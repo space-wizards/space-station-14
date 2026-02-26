@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: NoreUhh
-  changes:
-  - message: The Ian suit makes you bark now. Woof!
-    type: Tweak
-  id: 9034
-  time: '2025-10-05T08:06:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40694
 - author: Princess-Cheeseballs
   changes:
   - message: Incendiary rounds now deal a mix of pierce damage and heat damage instead
@@ -3824,13 +3817,6 @@
   id: 9519
   time: '2026-02-12T14:42:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42880
-- author: PJB3005
-  changes:
-  - message: Dwarves have been removed.
-    type: Remove
-  id: 9520
-  time: '2026-02-13T00:31:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42882
 - author: bnuuy
   changes:
   - message: The fake mindshield action button now correctly shows your mindshield
@@ -3986,3 +3972,20 @@
   id: 9542
   time: '2026-02-23T23:07:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42915
+- author: TiniestShark
+  changes:
+  - message: Removed the majority of unique corgi sprites.
+    type: Remove
+  id: 9543
+  time: '2026-02-25T01:34:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42696
+- author: ScarKy0
+  changes:
+  - message: Cyborgs can now pry unpowered doors without the need for a crowbar.
+    type: Add
+  - message: Entities that can pry things innately (zombies, spiders, etc) now have
+      an alert telling them so.
+    type: Add
+  id: 9544
+  time: '2026-02-25T23:33:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41812
