@@ -3,10 +3,13 @@
   parent:
   - BaseMob
   - MobCombat
-  - MobDamageable
+  # - MobDamageable # Offbrand - no thresholds
   - MobPolymorphable
   - StripableInventoryBase
   - BaseSpeciesAppearance
+  - BaseMobWoundable # Offbrand
+  - BaseMobPain # Offbrand
+  - BaseMobSurgery # Offbrand
   id: BaseSpeciesMob
   save: false
   components:
@@ -136,6 +139,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.SurgeryGuideUiKey.Key: # Offbrand
+        type: SurgeryGuideBoundUserInterface
   - type: Puller
   - type: Speech
     speechSounds: Alto
@@ -164,11 +169,15 @@
 - type: entity
   abstract: true
   parent:
-  - MobBloodstream
+  # - MobBloodstream - Offbrand - we're doing our own thign with this
   - MobRespirator
   - MobAtmosStandard
   - MobFlammable
   - BaseSpeciesMob
+  - BaseMobHeartrate # Offbrand
+  - BaseMobBrain # Offbrand
+  - BaseMobCryostasis # Offbrand
+  - BaseMobLungDamage # Offbrand
   id: BaseSpeciesMobOrganic
   save: false
   components:

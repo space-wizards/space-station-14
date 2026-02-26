@@ -1,0 +1,50 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sowelipililimute (GitHub) using brain sprite by mqole for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "oxygen10"
+        },
+        {
+            "name": "oxygen9"
+        },
+        {
+            "name": "oxygen8"
+        },
+        {
+            "name": "oxygen7"
+        },
+        {
+            "name": "oxygen6"
+        },
+        {
+            "name": "oxygen5"
+        },
+        {
+            "name": "oxygen4"
+        },
+        {
+            "name": "oxygen3"
+        },
+        {
+            "name": "oxygen2"
+        },
+        {
+            "name": "oxygen1"
+        },
+        {
+            "name": "oxygen0",
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        }
+    ]
+}

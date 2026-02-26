@@ -20,7 +20,7 @@
         - Handcuffs
         - Zipties
         - FlashlightSeclite
-        - Tourniquet
+        - TourniquetOffbrand # Offbrand
       chance: 0.85
 
 - type: entity
@@ -50,7 +50,7 @@
         - FlashlightSeclite
         - GrenadeFlashBang
         - SecurityWhistle
-        - Tourniquet
+        - TourniquetOffbrand # Offbrand
       chance: 0.85
  
 # Armory loot spawner

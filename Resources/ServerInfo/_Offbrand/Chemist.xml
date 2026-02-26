@@ -1,0 +1,109 @@
+<Document>
+# Chemist
+
+As the primary source of medication within the [color=#5b97bc]Medical[/color] department, Chemists are primarily responsible for creating medicines for [color=cyan]Physicians[/color] and [color=cyan]Paramedics[/color] to use. They are also responsible for supplying other departments' chemical needs, or filling out prescriptions for the crew.
+
+[textlink="Read the complete list of chemicals." link="Chemicals"]
+
+## Basic Equipment
+
+### Machines
+
+<Box>
+  <GuideEntityEmbed Entity="ChemDispenser" />
+  <GuideEntityEmbed Entity="KitchenReagentGrinder" />
+  <GuideEntityEmbed Entity="ChemistryHotplate" />
+  <GuideEntityEmbed Entity="ChemMaster" />
+</Box>
+
+### Chemical Storage
+
+<Box>
+  <GuideEntityEmbed Entity="ChemistryEmptyBottle01" />
+  <GuideEntityEmbed Entity="LargeBeaker" />
+  <GuideEntityEmbed Entity="Jug" />
+  <GuideEntityEmbed Entity="PillCanister" />
+</Box>
+
+### Other Tools
+
+<Box>
+  <GuideEntityEmbed Entity="HandLabeler"/>
+  <GuideEntityEmbed Entity="Syringe"/>
+  <GuideEntityEmbed Entity="Dropper"/>
+</Box>
+
+## Mixing Chemicals
+
+Chemistry is straightforward once you understand how to read and execute recipes. The process overall is simple:
+
+- Begin by grabbing a container, such as a beaker, and inserting it into your [color=cyan]Chemical Dispenser[/color].
+- Dispense the required medicines for your recipe.
+- Eject the container from the dispenser.
+- If necessary, heat it up on a hot plate.
+- Once your chemical is done, you can transfer it to containers for distribution, such as a large jug or many small bottles.
+
+## Grinding Solids
+
+Some chemicals, such as those found in pills or plants, need to be ground up using your [color=cyan]Reagent Grinder[/color] before you can use them in recipes.
+
+## Unmixing Chemicals
+
+Sometimes, you may make mistakes with what you dispense from the ChemMaster. The [color=cyan]ChemMaster[/color] can move different chemicals indepently to and from its internal storage.
+
+## Distributing Chemicals
+
+<Box>
+  <GuideEntityEmbed Entity="SmartFridge" />
+</Box>
+
+How you wish to distribute chemicals is largely up to you, although your boss may wish for you to distribute chemicals in a specific form.
+
+### Bottles
+
+<Box>
+  <GuideEntityEmbed Entity="ChemistryEmptyBottle01"/>
+  <GuideEntityEmbed Entity="BoxBottle"/>
+  <GuideEntityEmbed Entity="ChemBag"/>
+</Box>
+
+Bottles are often the main method in which smaller amounts of chemicals are distributed for smaller jobs, as well as an option for allowing every doctor to carry common medications on them.
+
+Your [color=cyan]chemistry bag[/color] can hold many bottles.
+Using a chemistry bag on a SmartFridge will insert all of the contained bottles.
+
+### Jugs
+
+<Box>
+  <GuideEntityEmbed Entity="Jug"/>
+</Box>
+
+Chemicals can be stored in bulk in jugs, which allows efficient packaging, but only allows one person to hold a jug at a time.
+This is often how you'll be sending chemicals to [color=#9fed58]Botany[/color] should they not provide buckets.
+
+### Pills
+
+<Box>
+  <GuideEntityEmbed Entity="PillCanister" />
+  <GuideEntityEmbed Entity="Pill" />
+</Box>
+
+Pills can be created using the chemicals currently stored in a [color=cyan]ChemMaster[/color]. They're a great way to send out individually consumable portions, as well as the most space-efficient way to store a large amount of chemicals.
+
+However, pills have a delay after being eaten orally.
+
+## Chemicals To Mix
+
+[color=#5b97bc]Medical[/color] is the main department you will be preparing chemicals for, as the [color=cyan]Physicians[/color] and [color=cyan]Paramedics[/color] rely on your medicines to do their jobs.
+
+[textlink="Read what chemists usually make for Medical." link="OffbrandChemistMedical"]
+
+[color=#9fed58]Botany[/color] is another department that you will frequently be sending chemicals to. They can be a great source of chemicals if you give them the tools to do their job.
+
+[textlink="Read what chemists usually make for Botany." link="OffbrandChemistBotany"]
+
+If you don't have any outstanding requests from Medical or Botany, you can work on making rare chemicals or advanced topicals.
+
+[textlink="Read how to make advanced topicals." link="OffbrandChemistAdvancedTopicals"]
+
+</Document>

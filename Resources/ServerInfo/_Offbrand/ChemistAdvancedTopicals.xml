@@ -1,0 +1,9 @@
+<Document>
+# Advanced Topicals
+
+If resources and time permit, you can create advanced topicals as a chemist.
+
+<GuideMicrowaveEmbed Recipe="RecipeRegenerativeMesh" />
+<GuideMicrowaveEmbed Recipe="RecipeMedicatedSuture" />
+
+</Document>

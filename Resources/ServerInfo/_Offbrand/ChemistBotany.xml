@@ -1,0 +1,30 @@
+<Document>
+# Chemicals for Botany
+
+Giving these chemicals to [color=#9fed58]Botany[/color] allows them to do a better job, often allowing them to make valuable chemicals for you.
+
+## Basic Chemicals
+
+These chemicals allow botanists to increase the potency of their plants, manipulate or reverse their growth speed, and allows them to heal their plants.
+
+<GuideReagentEmbed Reagent="RobustHarvest" />
+<GuideReagentEmbed Reagent="Diethylamine" />
+<GuideReagentEmbed Reagent="Cryoxadone" />
+
+## Mutation Chemicals
+
+These chemicals allow botanists to mutate plants, and to handle the effects of their mutations.
+
+<GuideReagentEmbed Reagent="Dylovene" />
+<GuideReagentEmbed Reagent="Left4Zed" />
+<GuideReagentEmbed Reagent="Phalanximine" />
+<GuideReagentEmbed Reagent="UnstableMutagen" />
+
+## Nutritional Chemicals
+
+While not strictly necessary for botanists, these chemicals can give novice botanists an easier time.
+
+<GuideReagentEmbed Reagent="EZNutrient" />
+<GuideReagentEmbed Reagent="Ammonia" />
+
+</Document>

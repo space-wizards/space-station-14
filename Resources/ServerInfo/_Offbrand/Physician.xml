@@ -1,0 +1,61 @@
+<Document>
+# Physician
+
+As the primary care provider within the [color=#5b97bc]Medical[/color] department, Physicians are responsible for monitoring patients, ensuring they have the required medication, and operating on patients as necessary.
+
+## The Body
+
+A good understanding of how patients' bodies works is essential for saving lives and ensuring their visit to [color=#5b97bc]Medical[/color] has good outcomes.
+
+[textlink="Learn more about The Body." link="OffbrandBody"]
+
+## Topicals
+
+<Box>
+  <GuideEntityEmbed Entity="Brutepack" Caption="Bruise Pack"/>
+  <GuideEntityEmbed Entity="Ointment" Caption="Ointment"/>
+  <GuideEntityEmbed Entity="Gauze" Caption="Gauze"/>
+</Box>
+
+Topicals are the first step in treating brute or burn injuries; every wound should be bandaged or salved before proceeding with treatment.
+
+Each wound can only be bandaged or salved once; different medicated bandages and salves may be better for specific types of wounds.
+
+[textlink="Learn more about Topicals." link="OffbrandTopicals"]
+
+## Medications
+
+<Box>
+  <GuideEntityEmbed Entity="ChemistryBottleBicaridine" Caption="Bicaridine" />
+  <GuideEntityEmbed Entity="ChemistryBottleDermaline" Caption="Dermaline" />
+  <GuideEntityEmbed Entity="ChemistryBottleDexalinPlus" Caption="Dexalin Plus" />
+  <GuideEntityEmbed Entity="ChemistryBottleDylovene" Caption="Dylovene" />
+  <GuideEntityEmbed Entity="ChemistryBottleInaprovaline" Caption="Inaprovaline" />
+  <GuideEntityEmbed Entity="ChemistryBottleTramadol" Caption="Tramadol" />
+</Box>
+
+After ensuring wounds have been treated with topicals, medications can be given to aid the body in healing, and to relieve pain.
+
+[textlink="Learn more about Medications." link="OffbrandMedication"]
+
+## Cryostasis
+
+In emergency situations, you may not be able to attend to every patient in a timely manner.
+
+Cryostasis devices allow you to slow down your patients' bodies, buying you more time.
+
+<Box>
+  <GuideEntityEmbed Entity="StasisBed" Caption="stasis bed" />
+  <GuideEntityEmbed Entity="CryoPod" Caption="cryo pod" />
+</Box>
+
+[textlink="Learn more about Cryostasis." link="OffbrandCryostasis"]
+
+## Surgery
+
+Some patients may come in with internal injuries that surface-level administration of topicals or medicine cannot heal, invisible to your eye but reported by the health analyzer.
+
+Ensure patients are stable and wounds have been treated before bringing them to an operating room.
+
+[textlink="Learn more about Surgery." link="OffbrandSurgery"]
+</Document>

@@ -252,6 +252,13 @@
       types:
         Slash: 5 # Reduce?
   - type: Wagging
+  # Begin Offbrand Additions
+  - type: Heartrate
+    etco2Name: etco2-ammonia
+    etco2GasName: reagent-name-ammonia
+    spo2Name: spo2-nitrogen
+    spo2GasName: reagent-name-nitrogen
+  # End Offbrand Additions
 
 - type: entity
   parent: OrganBase

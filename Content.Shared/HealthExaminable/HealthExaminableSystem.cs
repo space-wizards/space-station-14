@@ -88,13 +88,15 @@ public sealed class HealthExaminableSystem : EntitySystem
             msg.AddMarkupOrThrow(chosenLocStr);
         }
 
+        // Offbrand: reordered the empty placeholder to after people have added to health examinable
+
+        // Anything else want to add on to this?
+        RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg), true);
+
         if (msg.IsEmpty)
         {
             msg.AddMarkupOrThrow(Loc.GetString($"health-examinable-{component.LocPrefix}-none"));
         }
-
-        // Anything else want to add on to this?
-        RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg), true);
 
         return msg;
     }

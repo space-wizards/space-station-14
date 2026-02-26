@@ -1,0 +1,23 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    MinHeight="450"
+    MinWidth="350"
+    Title="{Loc 'surgery-guide-title'}">
+
+    <BoxContainer Name="SurgeriesContainer" Orientation="Vertical">
+        <controls:ListContainer Name="PossibleSurgeries" VerticalExpand="True" Margin="4 4"/>
+        <Button Name="CleanUp" Text="{Loc 'surgery-guide-clean-up'}" StyleClasses="OpenBoth" />
+    </BoxContainer>
+    <BoxContainer Name="StepsContainer" Orientation="Vertical" Visible="False">
+        <BoxContainer Orientation="Vertical" Margin="4 4">
+            <Label Name="SurgeryName" StyleClasses="LabelHeading"/>
+            <RichTextLabel Name="SurgeryDescription"/>
+        </BoxContainer>
+
+        <ItemList Name="StepsList" VerticalExpand="True" Margin="4 4" />
+
+        <Button Name="BackButton" Text="{Loc 'surgery-guide-back'}" StyleClasses="OpenBoth" />
+        <Button Name="PerformButton" Text="{Loc 'surgery-guide-perform-surgery'}" StyleClasses="OpenBoth" />
+    </BoxContainer>
+</controls:FancyWindow>

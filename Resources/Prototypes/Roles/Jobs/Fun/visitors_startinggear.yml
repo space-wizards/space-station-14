@@ -679,7 +679,7 @@
     pocket1: PillCanisterTricordrazine
     pocket2: PillCanisterBicaridine
   inhand:
-  - SyringeSaline
+  - SyringeParacetamol # Offbrand
 
 - type: startingGear
   id: VisitorDentist
@@ -789,7 +789,7 @@
     pocket1: Ointment
     pocket2: Brutepack
   inhand:
-  - Bloodpack
+  - ChemistryBottleParacetamol # Offbrand
   - Gauze
 
 - type: startingGear
@@ -806,7 +806,7 @@
     pocket1: Ointment
     pocket2: Brutepack
   inhand:
-  - Bloodpack
+  - ChemistryBottleParacetamol # Offbrand
   - Gauze
 
 - type: startingGear

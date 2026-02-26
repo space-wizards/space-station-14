@@ -117,7 +117,7 @@
     coldDamageThreshold: 10
   - type: GuideHelp
     guides:
-    - Cryogenics
+    - OffbrandCryostasis # Offbrand
 
 - type: entity
   parent: BaseMachine

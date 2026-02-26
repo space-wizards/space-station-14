@@ -31,6 +31,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+
 namespace Content.Shared.Medical.Cryogenics;
 
 public abstract partial class SharedCryoPodSystem : EntitySystem

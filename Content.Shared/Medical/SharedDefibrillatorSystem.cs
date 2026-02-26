@@ -16,6 +16,7 @@ using Content.Shared.Timing;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Content.Shared._Offbrand.Wounds; // Offbrand
 
 namespace Content.Shared.Medical;
 
@@ -103,6 +104,11 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
         if (!_powerCell.HasActivatableCharge(ent.Owner, user: user, predicted: true))
             return false;
 
+        // Begin Offbrand
+        if (TryComp<HeartrateComponent>(target, out var heartrate) && heartrate.Running)
+            return false;
+        // End Offbrand
+
         if (!targetCanBeAlive && _mobState.IsAlive(target, mobState))
             return false;
 
@@ -173,6 +179,8 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
         if (!TryComp<MobStateComponent>(target, out var targetMobState))
             return;
 
+        TryComp<HeartDefibrillatableComponent>(target, out var heartDefibrillatable); // Offbrand
+
         _audio.PlayPredicted(ent.Comp.ZapSound, ent.Owner, user);
         _electrocution.TryDoElectrocution(target, ent.Owner, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true, ignoreInsulation: true);
 
@@ -198,11 +206,28 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
             _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-rotten"),
                 InGameICChatType.Speak, true);
         }
-        else if (TryComp<UnrevivableComponent>(target, out var unrevivable))
+        else if (heartDefibrillatable is null && TryComp<UnrevivableComponent>(target, out var unrevivable))
         {
             _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(unrevivable.ReasonMessage),
                 InGameICChatType.Speak, true);
         }
+        // Begin offbrand
+        else if (heartDefibrillatable is not null && _mobState.IsDead(target, targetMobState))
+        {
+            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(heartDefibrillatable.TargetIsDead),
+                InGameICChatType.Speak, true);
+        }
+        else if (heartDefibrillatable is not null)
+        {
+            var before = new BeforeTargetDefibrillatedEvent(new());
+            RaiseLocalEvent(target, ref before);
+
+            foreach (var message in before.Messages)
+            {
+                _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(message), InGameICChatType.Speak, true);
+            }
+        }
+        // End Offbrand
         else
         {
             if (_mobState.IsDead(target, targetMobState))

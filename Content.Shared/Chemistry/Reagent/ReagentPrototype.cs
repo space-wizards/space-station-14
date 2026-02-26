@@ -279,6 +279,12 @@ namespace Content.Shared.Chemistry.Reagent
         public FixedPoint2 MetabolismRate = FixedPoint2.New(0.5f);
 
         /// <summary>
+        /// Offbrand: Status effects to apply whilst this reagent is metabolising
+        /// </summary>
+        [DataField]
+        public List<ReagentStatusEffectEntry> StatusEffects = new();
+
+        /// <summary>
         ///     A list of effects to apply when these reagents are metabolized.
         /// </summary>
         [JsonPropertyName("effects")]
@@ -298,6 +304,30 @@ namespace Content.Shared.Chemistry.Reagent
             return new ReagentEffectsGuideEntry(MetabolismRate, proto.GuidebookReagentEffectsDescription(prototype, entSys, Effects, MetabolismRate).ToArray(), Metabolites);
         }
     }
+
+    // Begin Offbrand
+    [DataDefinition]
+    public sealed partial class ReagentStatusEffectEntry
+    {
+        [DataField]
+        public Content.Shared.EntityConditions.EntityCondition[]? Conditions;
+
+        [DataField]
+        public EntProtoId StatusEffect;
+
+        public string? Describe(IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            if (!prototype.Resolve(StatusEffect, out var effectProtoData))
+                return null;
+
+            return Loc.GetString("reagent-guidebook-status-effect", ("effect", effectProtoData.Name ?? string.Empty),
+                ("conditionCount", Conditions?.Length ?? 0),
+                ("conditions",
+                    Content.Shared.Localizations.ContentLocalizationManager.FormatList(Conditions?.Select(x => x.EntityConditionGuidebookText(prototype)).ToList() ??
+                                                            new List<string>())));
+        }
+    }
+    // End Offbrand
 
     [Serializable, NetSerializable]
     public struct ReagentEffectsGuideEntry

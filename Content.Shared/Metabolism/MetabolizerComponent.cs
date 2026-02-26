@@ -64,10 +64,12 @@ public sealed partial class MetabolizerComponent : Component
         {
             SolutionName = BloodstreamComponent.DefaultBloodSolutionName,
             TransferSolutionName = BloodstreamComponent.DefaultMetabolitesSolutionName,
+            TransferMetabolized = true,
         },
         ["Metabolites"] = new()
         {
-            SolutionName = BloodstreamComponent.DefaultMetabolitesSolutionName
+            SolutionName = BloodstreamComponent.DefaultMetabolitesSolutionName,
+            PreviousStage = "Bloodstream", // Offbrand
         }
     };
 
@@ -100,6 +102,18 @@ public sealed partial class MetabolizerComponent : Component
     /// </summary>
     [DataField]
     public List<ProtoId<MetabolismStagePrototype>> Stages = new();
+
+    /// <summary>
+    /// Offbrand: Set of reagents that are currently being metabolized
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<MetabolismStagePrototype>, HashSet<ProtoId<Content.Shared.Chemistry.Reagent.ReagentPrototype>>> MetabolizingReagents = new()
+    {
+        ["Respiration"] = new(),
+        ["Digestion"] = new(),
+        ["Bloodstream"] = new(),
+        ["Metabolites"] = new(),
+    };
 }
 
 [DataDefinition]
@@ -149,4 +163,16 @@ public sealed partial class MetabolismSolutionEntry
     /// </summary>
     [DataField]
     public bool TransferSolutionOnBody = true;
+
+    /// <summary>
+    /// Offbrand: If set, metabolizing reagents won't be removed unless they're absent in both direct and precursor forms in this stage
+    /// </summary>
+    [DataField]
+    public ProtoId<MetabolismStagePrototype>? PreviousStage;
+
+    /// <summary>
+    /// Offbrand: If set, metabolized reagents will also be transferred
+    /// </summary>
+    [DataField]
+    public bool TransferMetabolized = false;
 }

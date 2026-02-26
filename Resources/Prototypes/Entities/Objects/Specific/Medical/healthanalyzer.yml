@@ -29,4 +29,4 @@
     - DiscreteHealthAnalyzer
   - type: GuideHelp
     guides:
-    - MedicalDoctor
+    - OffbrandBody # Offbrand

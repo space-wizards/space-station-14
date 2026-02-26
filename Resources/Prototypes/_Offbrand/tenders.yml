@@ -1,0 +1,57 @@
+- type: stack
+  id: Suture
+  name: stack-suture
+  icon: { sprite: "/Textures/_Offbrand/sutures.rsi", state: suture }
+  spawn: Suture
+  maxCount: 10
+
+- type: entity
+  name: suture
+  description: Sterile sutures used to close up cuts and lacerations.
+  parent: BaseHealingItem
+  id: Suture
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: _Offbrand/sutures.rsi
+    state: suture
+  - type: Item
+    sprite: _Offbrand/sutures.rsi
+    heldPrefix: suture
+    storedRotation: 90
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      types:
+        Slash: -10
+        Piercing: -5
+    bloodlossModifier: -10
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Tending
+    woundWhitelist:
+      tags: [WoundCut, WoundPuncture]
+    damage:
+      types:
+        Slash: -10
+        Piercing: -5
+    tendingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    tendingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: Suture
+    count: 10
+  - type: StackPrice
+    price: 10
+
+- type: entity
+  id: Suture1
+  parent: Suture
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

@@ -3,6 +3,7 @@ using Content.Server.Ghost;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Robust.Shared.Player;
+using Content.Shared._Offbrand.Wounds; // Offbrand
 
 namespace Content.Server.Medical;
 

@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "design by sowelipililimute (GitHub), sprites by mqole for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "pain_blackout"
+        },
+        {
+            "name": "pain_severe"
+        },
+        {
+            "name": "pain_moderate"
+        },
+        {
+            "name": "pain_minor"
+        },
+        {
+            "name": "pain_good"
+        },
+        {
+            "name": "pain_suppressed"
+        },
+        {
+            "name": "pain_unconscious",
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        }
+    ]
+}

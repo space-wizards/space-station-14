@@ -17,7 +17,6 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private readonly HealthAnalyzerSystem _healthAnalyzerSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();

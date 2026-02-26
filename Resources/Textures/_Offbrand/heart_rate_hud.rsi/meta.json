@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "by sowelipililimute (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "hud_normal"
+        },
+        {
+            "name": "hud_okay"
+        },
+        {
+            "name": "hud_poor"
+        },
+        {
+            "name": "hud_bad"
+        },
+        {
+            "name": "hud_danger"
+        },
+        {
+            "name": "hud_stopped"
+        }
+    ]
+}
