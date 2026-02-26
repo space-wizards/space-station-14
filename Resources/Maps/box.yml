@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 271.2.0
+  engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 01/27/2026 15:04:54
+  time: 02/26/2026 21:21:07
   entityCount: 28800
 maps:
 - 780
@@ -131482,16 +131482,17 @@ entities:
           - Open
     - type: Fixtures
       fixtures: {}
-- proto: LockableButtonCommand
+- proto: LockableButtonCommandEmergencyEVA
   entities:
   - uid: 12007
     components:
-    - type: MetaData
-      name: emergency EVA Storage access
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -15.5,7.5
       parent: 8364
+    - type: AccessReader
+      accessListsOriginal:
+      - - Command
     - type: DeviceLinkSource
       linkedPorts:
         5651:
