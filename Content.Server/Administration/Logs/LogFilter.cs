@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Content.Server.Database;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 
@@ -21,6 +22,12 @@ public sealed class LogFilter
     public DateTime? After { get; set; }
 
     public bool IncludePlayers  { get; set; } = true;
+
+    public int[]? AnyEntities { get; set; }
+
+    public int[]? AllEntities { get; set; }
+
+    public HashSet<AdminLogEntityRole>? EntityRoles { get; set; }
 
     public Guid[]? AnyPlayers { get; set; }
 

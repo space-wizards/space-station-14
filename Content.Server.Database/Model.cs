@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
+using Content.Server.Database.Migrations.Postgres;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,7 @@ namespace Content.Server.Database
         public DbSet<Server> Server { get; set; } = null!;
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
+        public DbSet<AdminLogEntity> AdminLogEntity { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
         public DbSet<Blacklist> Blacklist { get; set; } = null!;
         public DbSet<Ban> Ban { get; set; } = default!;
@@ -131,6 +133,9 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminLog>()
                 .HasIndex(log => log.Date);
 
+            modelBuilder.Entity<AdminLog>()
+                .HasIndex(log => new { log.Type, log.Impact, log.Date });
+
             modelBuilder.Entity<PlayTime>()
                 .HasIndex(v => new { v.PlayerId, Role = v.Tracker })
                 .IsUnique();
@@ -149,6 +154,20 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
+
+            modelBuilder.Entity<AdminLogEntity>()
+                .HasOne(entity => entity.Log)
+                .WithMany(log => log.Entities)
+                .HasForeignKey(entity => new { entity.RoundId, entity.LogId });
+
+            modelBuilder.Entity<AdminLogEntity>()
+                .HasKey(logEntity => new {logEntity.RoundId, logEntity.LogId, logEntity.EntityUid, logEntity.Role});
+
+            modelBuilder.Entity<AdminLogEntity>()
+                .HasIndex(entity => new { entity.EntityUid, entity.RoundId, entity.LogId });
+
+            modelBuilder.Entity<AdminLogEntity>()
+                .HasIndex(entity => new { entity.EntityUid, entity.Role, entity.RoundId, entity.LogId });
 
             // Ban exemption can't have flags 0 since that wouldn't exempt anything.
             // The row should be removed if setting to 0.
@@ -640,6 +659,25 @@ namespace Content.Server.Database
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
 
         public List<AdminLogPlayer> Players { get; set; } = default!;
+
+        /// <summary>
+        ///  Entity-centric links for entity perspective timelines
+        /// </summary>
+        public List<AdminLogEntity> Entities { get; set; } = default!;
+    }
+
+    /// <summary>
+    ///  Role information for entities in admin logs
+    /// </summary>
+    public enum AdminLogEntityRole : byte
+    {
+        Actor = 0,
+        Target = 1,
+        Tool = 2,
+        Victim = 3,
+        Container = 4,
+        Subject = 6,
+        Other = 255
     }
 
     //subject to change
@@ -650,6 +688,26 @@ namespace Content.Server.Database
 
         [Required, Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
         public Player Player { get; set; } = default!;
+
+        [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
+    }
+
+    [Table("admin_log_participant_entity")]
+    public class AdminLogEntity
+    {
+        [Required, Key] public int RoundId { get; set; }
+        [Required, Key] public int LogId { get; set; }
+
+        /// <summary>
+        /// Runtime entity UID stored as an integer for index efficiency
+        /// </summary>
+        [Required, Key] public int EntityUid { get; set; }
+
+        [Required, Key] public AdminLogEntityRole Role { get; set; }
+
+        public string? PrototypeId { get; set; }
+
+        public string? EntityName { get; set; }
 
         [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
     }

@@ -60,6 +60,7 @@ internal static class ServerContentIoC
         deps.Register<GhostKickManager>();
         deps.Register<ISharedAdminLogManager, AdminLogManager>();
         deps.Register<IAdminLogManager, AdminLogManager>();
+        deps.Register<IAdminLogEventPublisher, NullAdminLogEventPublisher>();
         deps.Register<PlayTimeTrackingManager>();
         deps.Register<UserDbDataManager>();
         deps.Register<ServerInfoManager>();

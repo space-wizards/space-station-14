@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,18 +29,18 @@ namespace Content.Server.Administration.Logs;
 
 public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogManager
 {
-    [Dependency] private IConfigurationManager _configuration = default!;
-    [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private EuiManager _euis = default!;
-    [Dependency] private IServerDbManager _db = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IDynamicTypeFactory _typeFactory = default!;
-    [Dependency] private IReflectionManager _reflection = default!;
-    [Dependency] private IDependencyCollection _dependencies = default!;
-    [Dependency] private ISharedPlayerManager _player = default!;
-    [Dependency] private ISharedPlaytimeManager _playtime = default!;
-    [Dependency] private ISharedChatManager _chat = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
+    [Dependency] private readonly IReflectionManager _reflection = default!;
+    [Dependency] private readonly IDependencyCollection _dependencies = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly ISharedPlaytimeManager _playtime = default!;
+    [Dependency] private readonly ISharedChatManager _chat = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IAdminLogEventPublisher _publisher = default!;
 
     public const string SawmillId = "admin.logs";
 
@@ -267,6 +268,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             else
             {
                 await task;
+                PublishStructuredLogs(copy);
+                return;
             }
         }
         catch (Exception ex)
@@ -274,21 +277,37 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             _sawmill.Error($"Failed to save logs: {ex.Message}");
             _sawmill.Warning("Re-enqueueing logs and retrying at the next update.");
 
-            foreach (var log in copy)
+        await task;
+        PublishStructuredLogs(copy);
+    }
+
+    private void PublishStructuredLogs(List<AdminLog> logs)
+    {
+        _ = Task.Run(async () =>
+        {
+            try
             {
-                if (log.RoundId == _currentRoundId)
+                foreach (var log in logs)
                 {
-                    _logQueue.Enqueue(log);
-                }
-                else
-                {
-                    _preRoundLogQueue.Enqueue(log);
+                    var logEvent = new StructuredAdminLogEvent(
+                        log.RoundId,
+                        log.Id,
+                        log.Type,
+                        log.Impact,
+                        log.Date,
+                        log.Message,
+                        log.Json,
+                        (log.Players?.Select(p => p.PlayerUserId).ToArray()) ?? Array.Empty<Guid>(),
+                        (log.Entities?.Select(e => new AdminLogEntityPayload(e.EntityUid, e.Role, e.PrototypeId, e.EntityName)).ToArray()) ?? Array.Empty<AdminLogEntityPayload>());
+
+                    await _publisher.PublishAsync(logEvent);
                 }
             }
-
-            Queue.Set(_logQueue.Count);
-            PreRoundQueue.Set(_preRoundLogQueue.Count);
-        }
+            catch (Exception e)
+            {
+                _sawmill.Warning($"Failed publishing structured admin logs: {e}");
+            }
+        });
     }
 
     public void RoundStarting(int id)
@@ -347,6 +366,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         var json = JsonSerializer.SerializeToDocument(handler.Values, _jsonOptions);
         var id = NextLogId;
         var players = GetPlayers(handler.Values, id);
+        var entities = GetEntities(handler.Values, id);
 
         // PostgreSQL does not support storing null chars in text values.
         if (message.Contains('\0'))
@@ -365,9 +385,78 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Message = message,
             Json = json,
             Players = players,
+            Entities = entities,
         };
 
         DoAdminAlerts(players, message, impact, handler);
+
+        if (preRound)
+        {
+            _preRoundLogQueue.Enqueue(log);
+        }
+        else
+        {
+            _logQueue.Enqueue(log);
+            CacheLog(log);
+        }
+    }
+
+    public void AddStructured(
+        LogType type,
+        LogImpact impact,
+        string message,
+        JsonDocument json,
+        IReadOnlyCollection<Guid>? players = null,
+        IReadOnlyCollection<AdminLogEntityRef>? entities = null)
+    {
+        if (!Enabled)
+            return;
+
+        var preRound = _runLevel == GameRunLevel.PreRoundLobby;
+        var count = preRound ? _preRoundLogQueue.Count : _logQueue.Count;
+        if (count >= _dropThreshold)
+        {
+            Interlocked.Increment(ref _logsDropped);
+            return;
+        }
+
+        var id = NextLogId;
+        var logPlayers = new List<AdminLogPlayer>(players?.Count ?? 0);
+        if (players != null)
+        {
+            foreach (var player in players)
+            {
+                AddPlayer(logPlayers, player, id);
+            }
+        }
+
+        var logEntities = new List<AdminLogEntity>(entities?.Count ?? 0);
+        if (entities != null)
+        {
+            foreach (var entity in entities)
+            {
+                AddEntity(logEntities, (int) entity.Entity, entity.Role, id, entity.PrototypeId, entity.EntityName);
+            }
+        }
+
+        if (message.Contains('\0'))
+        {
+            _sawmill.Error($"Null character detected in admin log message '{message}'! LogType: {type}, LogImpact: {impact}");
+            message = message.Replace("\0", "");
+        }
+
+        var log = new AdminLog
+        {
+            Id = id,
+            RoundId = _currentRoundId,
+            Type = type,
+            Impact = impact,
+            Date = DateTime.UtcNow,
+            Message = message,
+            Json = json,
+            Players = logPlayers,
+            Entities = logEntities,
+        };
 
         if (preRound)
         {
@@ -407,6 +496,68 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         return players;
+    }
+
+    private List<AdminLogEntity> GetEntities(Dictionary<string, object?> values, int logId)
+    {
+        var entities = new List<AdminLogEntity>();
+
+        foreach (var (key, value) in values)
+        {
+            var role = GetEntityRole(key);
+
+            if (value is EntityStringRepresentation rep)
+            {
+                AddEntity(entities, (int) rep.Uid, role, logId, rep.Prototype, rep.Name);
+            }
+        }
+
+        return entities;
+    }
+
+    private static AdminLogEntityRole GetEntityRole(string key)
+    {
+        key = key.ToLowerInvariant();
+        if (key.Contains("actor") || key.Contains("user") || key.Contains("attacker"))
+            return AdminLogEntityRole.Actor;
+        if (key.Contains("target"))
+            return AdminLogEntityRole.Target;
+        if (key.Contains("tool") || key.Contains("weapon") || key.Contains("instrument"))
+            return AdminLogEntityRole.Tool;
+        if (key.Contains("victim"))
+            return AdminLogEntityRole.Victim;
+        if (key.Contains("container") || key.Contains("slot"))
+            return AdminLogEntityRole.Container;
+        if (key.Contains("location") || key.Contains("coord"))
+            return AdminLogEntityRole.Subject;
+        if (key.Contains("subject") || key.Contains("entity"))
+            return AdminLogEntityRole.Subject;
+
+        return AdminLogEntityRole.Other;
+    }
+
+    private void AddEntity(
+        List<AdminLogEntity> entities,
+        int entityUid,
+        AdminLogEntityRole role,
+        int logId,
+        string? prototypeId = null,
+        string? entityName = null)
+    {
+        foreach (var entity in entities)
+        {
+            if (entity.EntityUid == entityUid && entity.Role == role)
+                return;
+        }
+
+        entities.Add(new AdminLogEntity
+        {
+            LogId = logId,
+            EntityUid = entityUid,
+            Role = role,
+            PrototypeId = prototypeId,
+            EntityName = entityName,
+        });
     }
 
     /// <summary>

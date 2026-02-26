@@ -923,6 +923,22 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 query = query.Where(log => log.Players.Count == 0);
             }
 
+            if (filter.AnyEntities != null)
+            {
+                query = query.Where(log => log.Entities.Any(e => filter.AnyEntities.Contains(e.EntityUid)));
+            }
+
+            if (filter.AllEntities != null)
+            {
+                query = query.Where(log => filter.AllEntities.All(entityUid =>
+                    log.Entities.Any(entity => entity.EntityUid == entityUid)));
+            }
+
+            if (filter.EntityRoles != null)
+            {
+                query = query.Where(log => log.Entities.Any(entity => filter.EntityRoles.Contains(entity.Role)));
+            }
+
             if (filter.LastLogId != null)
             {
                 query = filter.DateOrder switch

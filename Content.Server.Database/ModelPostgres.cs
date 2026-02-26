@@ -69,7 +69,7 @@ namespace Content.Server.Database
 
         public override IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
         {
-            return query.Where(log => EF.Functions.ToTsVector("english", log.Message).Matches(searchText));
+            return query.Where(log => EF.Functions.ToTsVector("english", log.Message).Matches(EF.Functions.PlainToTsQuery("english", searchText)));
         }
 
         public override int CountAdminLogs()
