@@ -376,6 +376,7 @@
     accent-german-words-9: accent-german-words-replace-9
     accent-german-words-10: accent-german-words-replace-10
     accent-german-words-10-2: accent-german-words-replace-10
+    accent-german-words-11: accent-german-words-replace-11
 
 - type: accent
   id: russian

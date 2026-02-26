@@ -29,8 +29,5 @@ accent-german-words-10 = artifact
 accent-german-words-10-2 = artefact
 accent-german-words-replace-10 = artefakt
 
-accent-german-words-11 = and
-accent-german-words-replace-11 = und
-
-accent-german-words-12 = fantastic
-accent-german-words-replace-12 = fantastisch
+accent-german-words-11 = fantastic
+accent-german-words-replace-11 = fantastisch
