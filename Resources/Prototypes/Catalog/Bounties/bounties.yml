@@ -546,7 +546,7 @@
       - Meat
     blacklist:
       components:
-      - Sliceable
+      - ToolRefinable
 
 - type: cargoBounty
   id: BountyFruit
