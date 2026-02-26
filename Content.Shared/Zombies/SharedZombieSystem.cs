@@ -16,11 +16,13 @@ public abstract class SharedZombieSystem : EntitySystem
         SubscribeLocalEvent<ZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
         SubscribeLocalEvent<ZombieComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnZombieStartup);
+        SubscribeLocalEvent<ZombieComponent, ComponentShutdown>(OnZombieShutdown);
 
         SubscribeLocalEvent<ZombificationResistanceComponent, ArmorExamineEvent>(OnArmorExamine);
         SubscribeLocalEvent<ZombificationResistanceComponent, InventoryRelayedEvent<ZombificationResistanceQueryEvent>>(OnResistanceQuery);
 
         SubscribeLocalEvent<InitialInfectedComponent, ComponentStartup>(OnInitialInfectedStartup);
+        SubscribeLocalEvent<InitialInfectedComponent, ComponentShutdown>(OnInitialInfectedShutdown);
         SubscribeLocalEvent<InitialInfectedComponent, ComponentGetStateAttemptEvent>(OnInitialInfectedGetStateAttempt);
     }
 
@@ -51,16 +53,33 @@ public abstract class SharedZombieSystem : EntitySystem
         args.AddModifier("zombie-name-prefix");
     }
 
-    private void OnInitialInfectedStartup(EntityUid uid, InitialInfectedComponent component, ComponentStartup args)
+    private void OnInitialInfectedStartup(Entity<InitialInfectedComponent> ent, ref ComponentStartup args)
     {
         DirtyAllRelevant();
     }
 
-    protected virtual void OnZombieStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
+    private void OnInitialInfectedShutdown(Entity<InitialInfectedComponent> ent, ref ComponentShutdown args)
     {
         DirtyAllRelevant();
     }
 
+    protected virtual void OnZombieStartup(Entity<ZombieComponent> ent, ref ComponentStartup args)
+    {
+        DirtyAllRelevant();
+    }
+
+    private void OnZombieShutdown(Entity<ZombieComponent> ent, ref ComponentShutdown args)
+    {
+        DirtyAllRelevant();
+    }
+
+    /// <summary>
+    /// Forces a network state update for all <see cref="InitialInfectedComponent"/> and <see cref="ZombieComponent"/>.
+    /// Ensures that clients entitled to see these components actually receive them when the set of entities with these components changes.
+    /// </summary>
+    /// <remarks>
+    /// TODO: This is a temporary solution until a more efficient targeted dirtying mechanism is available.
+    /// </remarks>
     private void DirtyAllRelevant()
     {
         var initialInfectedQuery = EntityQueryEnumerator<InitialInfectedComponent>();
@@ -72,7 +91,10 @@ public abstract class SharedZombieSystem : EntitySystem
             Dirty(uid, comp);
     }
 
-    private void OnInitialInfectedGetStateAttempt(EntityUid uid, InitialInfectedComponent component, ref ComponentGetStateAttemptEvent args)
+    /// <summary>
+    /// Restricts <see cref="InitialInfectedComponent"/> state to entities that are themselves initial infected or zombies.
+    /// </summary>
+    private void OnInitialInfectedGetStateAttempt(Entity<InitialInfectedComponent> ent, ref ComponentGetStateAttemptEvent args)
     {
         if (args.Player?.AttachedEntity is not { } attached)
             return;
