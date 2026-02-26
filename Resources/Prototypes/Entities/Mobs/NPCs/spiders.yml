@@ -1,0 +1,542 @@
+# Code unique spider prototypes or combine them all into one spider and get a
+# random sprite state when you spawn it.
+- type: entity
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobSpiderBase
+  abstract: true
+  components:
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
+  - type: CombatMode
+  - type: Body
+    prototype: AnimalHemocyanin
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Dead
+  - type: ReplacementAccent
+    accent: xeno
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
+  - type: Puller
+    needsHands: false
+  - type: NoSlip
+  - type: Spider
+  - type: IgnoreSpiderWeb
+  - type: Bloodstream
+    bloodMaxVolume: 150
+    bloodReagent: CopperBlood
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
+    allowedEmotes: ['Click', 'Chitter']
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
+  - type: TypingIndicator
+    proto: spider
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: Prying # Open door from xeno.yml.
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute from base.yml.
+    allowedStates:
+    - Alive
+    damageCap: 89
+    damage:
+      types:
+        Poison: -0.07
+      groups:
+        Brute: -0.07
+        Burn: -0.07
+
+- type: entity
+  id: MobSpiderAngry
+  abstract: true
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Xeno
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-giant-spider-name
+    description: ghost-role-information-giant-spider-description
+    rules: ghost-role-information-giant-spider-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: giant spider
+  parent: MobSpiderBase
+  id: MobGiantSpider
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: tarantula
+      sprite: Mobs/Animals/spider.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: tarantula-moving
+    noMovementLayers:
+      movement:
+        state: tarantula
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: tarantula
+      Critical:
+        Base: tarantula_dead
+      Dead:
+        Base: tarantula_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 6
+
+
+# Tarantula Spider
+- type: entity
+  parent: MobGiantSpider
+  id: MobGiantSpiderTarantula
+  name: tarantula
+  description: Widely considered to be the worse thing in existence.
+  components:
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 4
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 5
+        reagents:
+          - ReagentId: Mechanotoxin
+            Quantity: 5
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.1
+  - type: MeleeChemicalInjector
+    transferAmount: 5
+    solution: melee
+
+# Hunter Spider
+- type: entity
+  parent: MobSpiderBase
+  id: MobGiantSpiderHunter
+  name: hunter spider
+  description: An aggressive, fast-moving variety of giant spider.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      sprite: Mobs/Animals/spider.rsi
+      state: hunter
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: hunter-moving
+    noMovementLayers:
+      movement:
+        state: hunter
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: hunter
+      Critical:
+        Base: hunter_dead
+      Dead:
+        Base: hunter_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 8
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
+        reagents:
+          - ReagentId: Mechanotoxin
+            Quantity: 10
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.1
+  - type: MeleeChemicalInjector
+    transferAmount: 10
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 6
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+ 
+
+# Guard Spider
+- type: entity
+  parent: MobSpiderBase
+  id: MobGiantSpiderGuard
+  name: guard spider
+  description: A stockier spider that stands its ground and blocks escape routes with webs.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      sprite: Mobs/Animals/spider.rsi
+      state: guard
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: guard-moving
+    noMovementLayers:
+      movement:
+        state: guard
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: guard
+      Critical:
+        Base: guard_dead
+      Dead:
+        Base: guard_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 4
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 5
+        reagents:
+          - ReagentId: Mechanotoxin
+            Quantity: 5
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.5
+  - type: MeleeChemicalInjector
+    transferAmount: 1
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      180: Dead
+
+# Midwife Spider
+- type: entity
+  parent: MobSpiderBase
+  id: MobGiantSpiderMidwife
+  name: midwife spider
+  description: Skittering and watchful; it seems to tend to egg sacs and cocoons.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      sprite: Mobs/Animals/spider.rsi
+      state: midwife
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: midwife-moving
+    noMovementLayers:
+      movement:
+        state: midwife
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: midwife
+      Critical:
+        Base: midwife_dead
+      Dead:
+        Base: midwife_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 4
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 30
+        reagents:
+          - ReagentId: Mechanotoxin
+            Quantity: 30
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.2
+  - type: MeleeChemicalInjector
+    transferAmount: 5
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 4
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+
+# Nurse Spider
+- type: entity
+  parent: MobSpiderBase
+  id: MobGiantSpiderNurse
+  name: nurse spider
+  description: A pallid, unsettling spider that oozes something caustic.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      sprite: Mobs/Animals/spider.rsi
+      state: nurse
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: nurse-moving
+    noMovementLayers:
+      movement:
+        state: nurse
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: nurse
+      Critical:
+        Base: nurse_dead
+      Dead:
+        Base: nurse_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 2
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 30
+        reagents:
+          - ReagentId: Mechanotoxin
+            Quantity: 10
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 1
+  - type: MeleeChemicalInjector
+    transferAmount: 1
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+
+# clown spider
+- type: entity
+  name: clown spider
+  parent: MobSpiderBase
+  id: MobGiantSpiderClown
+  description: Combines the two most terrifying things in existence, spiders and clowns.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: clown
+        sprite: Mobs/Animals/clownspider.rsi
+    - type: Butcherable
+      spawned:
+        - id: MaterialBananium1
+          amount: 1
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: clown
+        Critical:
+          Base: dead
+        Dead:
+          Base: dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        180: Dead
+    - type: Spider
+      webPrototype: SpiderWebClown
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepClownFast
+    - type: Speech
+      speechVerb: Cluwne
+    - type: Bloodstream
+      bloodMaxVolume: 150
+      bloodReagent: Laughter
+    - type: MeleeWeapon
+      altDisarm: false
+      angle: 0
+      animation: WeaponArcBite
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Piercing: 6
+    - type: SolutionContainerManager
+      solutions:
+        melee:
+          maxVol: 30
+          reagents:
+          - ReagentId: Laughter
+            Quantity: 30
+    - type: SolutionRegeneration
+      solution: melee
+      generated:
+        reagents:
+        - ReagentId: Laughter
+          Quantity: 1
+    - type: MeleeChemicalInjector
+      transferAmount: 5
+      solution: melee
+
+# Angry BaseSpider, should not be used
+- type: entity
+  parent:
+  - MobSpiderAngry
+  id: MobSpiderAngryBase
+  abstract: true
+
+# Angry Tarantula
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderTarantula
+  id: MobGiantSpiderTarantulaAngry
+
+# Angry Hunter Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderHunter
+  id: MobGiantSpiderHunterAngry
+
+# Angry Guard Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderGuard
+  id: MobGiantSpiderGuardAngry
+
+# Angry Midwife Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderMidwife
+  id: MobGiantSpiderMidwifeAngry
+
+# Angry Nurse Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderNurse
+  id: MobGiantSpiderNurseAngry
+
+# Angry Clown Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderClown
+  id: MobGiantSpiderClownAngry
+
+- type: entity
+  name: wizard spider
+  parent: MobGiantSpider
+  id: MobGiantSpiderWizard
+  description: This spider looks a little magical
+  suffix: Wizard
+  components:
+  - type: Accentless
+    removes:
+    - type: ReplacementAccent
+      accent: xeno  #let this wizard speak
