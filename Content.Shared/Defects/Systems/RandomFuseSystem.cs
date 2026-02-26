@@ -5,10 +5,8 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Defects.Systems;
 
-/// <summary>
-/// Randomizes <see cref="TimerTriggerComponent.Delay"/> at spawn for entities with
-/// <see cref="RandomFuseComponent"/>, so each instance has a unique fuse countdown.
-/// </summary>
+// Randomizes TimerTriggerComponent.Delay at spawn for entities with
+// RandomFuseComponent, so each instance has a unique fuse countdown.
 public sealed class RandomFuseSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;

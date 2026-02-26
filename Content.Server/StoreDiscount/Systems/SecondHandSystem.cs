@@ -8,10 +8,8 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StoreDiscount.Systems;
 
-/// <summary>
 /// Populates the Second Hand tab of an uplink with a random selection of worn/damaged syndicate items.
 /// Mirrors the structure of <see cref="StoreDiscountSystem"/> but for second-hand item listings.
-/// </summary>
 public sealed class SecondHandSystem : EntitySystem
 {
     private static readonly ProtoId<StoreCategoryPrototype> SecondHandStoreCategoryKey = "SecondHandItems";
@@ -29,9 +27,7 @@ public sealed class SecondHandSystem : EntitySystem
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
     }
 
-    /// <summary>
     /// Removes a second-hand item from the tab after it is purchased (one-purchase-only).
-    /// </summary>
     private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
     {
         var (storeId, purchasedItem) = ev;
@@ -49,9 +45,7 @@ public sealed class SecondHandSystem : EntitySystem
         purchasedItem.Categories.Remove(SecondHandStoreCategoryKey);
     }
 
-    /// <summary>
     /// Populates the Second Hand tab if the store was initialized with second-hand items enabled.
-    /// </summary>
     private void OnStoreInitialized(ref StoreInitializedEvent ev)
     {
         if (!ev.UseSecondHand)
@@ -70,9 +64,7 @@ public sealed class SecondHandSystem : EntitySystem
         secondHandComp.SecondHandItems = selectedItems;
     }
 
-    /// <summary>
     /// Selects a weighted random set of second-hand listings from the full catalog.
-    /// </summary>
     private IReadOnlyList<StoreSecondHandData> SelectSecondHandItems(
         IReadOnlyCollection<ListingDataWithCostModifiers> fullCatalog)
     {
@@ -84,9 +76,7 @@ public sealed class SecondHandSystem : EntitySystem
         return RollItems(fullCatalog, countByCategory);
     }
 
-    /// <summary>
     /// Determines how many items to draw from each second-hand category using weighted random selection.
-    /// </summary>
     private Dictionary<ProtoId<SecondHandCategoryPrototype>, int> PickCategoriesToRoll(
         int totalItems,
         SecondHandCategoryWeightMap weightMap)
@@ -109,9 +99,7 @@ public sealed class SecondHandSystem : EntitySystem
         return chosen;
     }
 
-    /// <summary>
     /// Picks the specific listings to activate for each category.
-    /// </summary>
     private IReadOnlyList<StoreSecondHandData> RollItems(
         IEnumerable<ListingDataWithCostModifiers> fullCatalog,
         Dictionary<ProtoId<SecondHandCategoryPrototype>, int> countByCategory)
@@ -140,9 +128,7 @@ public sealed class SecondHandSystem : EntitySystem
         return result;
     }
 
-    /// <summary>
     /// Adds the SecondHandItems category to the selected listings and to the store's category whitelist.
-    /// </summary>
     private void ApplySecondHandItems(
         StoreComponent storeComp,
         IReadOnlyList<StoreSecondHandData> selectedItems)
@@ -211,9 +197,7 @@ public sealed class SecondHandSystem : EntitySystem
         return false;
     }
 
-    /// <summary>
     /// Weighted category selection map, mirrors <see cref="StoreDiscountSystem"/>'s inner class.
-    /// </summary>
     private sealed record SecondHandCategoryWeightMap
     {
         private readonly List<SecondHandCategoryPrototype> _categories;

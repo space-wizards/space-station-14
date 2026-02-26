@@ -6,10 +6,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-/// <summary>
-/// Handles per-shot jam chance for guns with <see cref="GunJamComponent"/>.
-/// A jammed gun cannot fire until the player racks the slide (Z / Use In Hand).
-/// </summary>
+// Handles per-shot jam chance for guns with GunJamComponent.
+// A jammed gun cannot fire until the player racks the slide (Z / Use In Hand).
 public sealed class GunJamSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;

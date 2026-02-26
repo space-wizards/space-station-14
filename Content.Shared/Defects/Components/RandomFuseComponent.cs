@@ -1,17 +1,15 @@
 namespace Content.Shared.Defects.Components;
 
-/// <summary>
-/// Randomizes the fuse delay on a <c>TimerTriggerComponent</c> at spawn.
-/// Each instance rolls a delay in [MinDelay, MaxDelay] seconds.
-/// </summary>
+// Randomizes the fuse delay on a TimerTriggerComponent at spawn.
+// Each instance rolls a delay in [MinDelay, MaxDelay] seconds.
 [RegisterComponent]
 public sealed partial class RandomFuseComponent : DefectComponent
 {
-    /// <summary>Minimum fuse delay in seconds (inclusive).</summary>
+    // Minimum fuse delay in seconds (inclusive).
     [DataField]
     public float MinDelay = 2.0f;
 
-    /// <summary>Maximum fuse delay in seconds (inclusive).</summary>
+    // Maximum fuse delay in seconds (inclusive).
     [DataField]
     public float MaxDelay = 6.0f;
 }

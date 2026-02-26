@@ -8,9 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Defects.Systems;
 
-/// <summary>
-/// Randomly deactivates toggleable weapons with <see cref="LoosePowerConnectorComponent"/> on each swing.
-/// </summary>
+// Randomly deactivates toggleable weapons with LoosePowerConnectorComponent on each swing.
 public sealed class LoosePowerConnectorSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;

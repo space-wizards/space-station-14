@@ -5,10 +5,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-/// <summary>
-/// Randomizes shots-per-burst each time a burst completes for guns with
-/// <see cref="GunBurstVarianceComponent"/>.
-/// </summary>
+// Randomizes shots-per-burst each time a burst completes for guns with GunBurstVarianceComponent.
 public sealed class GunBurstVarianceSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;

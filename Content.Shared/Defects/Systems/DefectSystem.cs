@@ -6,10 +6,8 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Defects.Systems;
 
-/// <summary>
-/// Rolls <see cref="DefectComponent.Prob"/> for each defect on entities with
-/// <see cref="RandomDefectsComponent"/> at MapInit, removing defects that fail.
-/// </summary>
+// Rolls DefectComponent.Prob for each defect on entities with
+// RandomDefectsComponent at MapInit, removing defects that fail.
 public sealed class DefectSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
