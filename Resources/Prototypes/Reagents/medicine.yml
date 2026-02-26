@@ -626,12 +626,10 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -3.5
-          types:
-            Asphyxiation: -2.5
+          Brute: -2
+          Airloss: -2
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
