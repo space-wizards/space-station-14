@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 271.1.0
+  engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 01/26/2026 15:09:51
+  time: 02/26/2026 21:23:20
   entityCount: 18698
 maps:
 - 1
@@ -89568,6 +89568,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 44.5,-28.5
       parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: IntercomCommand
   entities:
   - uid: 4470
@@ -90140,17 +90142,14 @@ entities:
           - Toggle
     - type: Fixtures
       fixtures: {}
-  - uid: 18607
+- proto: LockableButtonCommandEmergencyEVA
+  entities:
+  - uid: 2831
     components:
-    - type: MetaData
-      name: emergency EVA Storage access
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,-5.5
       parent: 2
-    - type: AccessReader
-      accessListsOriginal:
-      - - Command
     - type: DeviceLinkSource
       linkedPorts:
         15548:
