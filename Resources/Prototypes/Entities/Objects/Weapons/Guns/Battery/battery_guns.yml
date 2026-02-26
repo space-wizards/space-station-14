@@ -1004,5 +1004,5 @@
     availableModes:
     - Burst
   - type: BatteryAmmoProvider
-    proto: RedXenoborgLaser
+    proto: XenoborgLaser
     fireCost: 100
