@@ -20,26 +20,27 @@ public sealed class LegsParalyzedSystem : EntitySystem
         SubscribeLocalEvent<LegsParalyzedComponent, UnbuckledEvent>(OnUnbuckled);
         SubscribeLocalEvent<LegsParalyzedComponent, ThrowPushbackAttemptEvent>(OnThrowPushbackAttempt);
         SubscribeLocalEvent<LegsParalyzedComponent, UpdateCanMoveEvent>(OnUpdateCanMoveEvent);
+        SubscribeLocalEvent<LegsParalyzedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
     }
 
     private void OnStartup(EntityUid uid, LegsParalyzedComponent component, ComponentStartup args)
     {
         // TODO: In future probably must be surgery related wound
-        if (!TryComp<MovementSpeedModifierComponent>(uid, out var movementSpeedModifierComponent))
-            return;
-
-        component.BaseWalkSpeed = movementSpeedModifierComponent.BaseWalkSpeed;
-        component.BaseSprintSpeed = movementSpeedModifierComponent.BaseSprintSpeed;
-        component.Acceleration = movementSpeedModifierComponent.Acceleration;
-
-        _movementSpeedModifierSystem.ChangeBaseSpeed(uid, 0, 0, 20);
+        component.SpeedModifier = 0.0f;
+        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
     }
 
     private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
     {
         _standingSystem.Stand(uid);
 
-        _movementSpeedModifierSystem.ChangeBaseSpeed(uid, component.BaseWalkSpeed, component.BaseSprintSpeed, component.Acceleration);
+        component.SpeedModifier = 1.0f;
+        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+    }
+
+    private void OnRefreshSpeed(EntityUid uid, LegsParalyzedComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        args.ModifySpeed(component.SpeedModifier, component.SpeedModifier);
     }
 
     private void OnBuckled(EntityUid uid, LegsParalyzedComponent component, ref BuckledEvent args)

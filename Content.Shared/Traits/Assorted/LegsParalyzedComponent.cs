@@ -9,7 +9,5 @@ namespace Content.Shared.Traits.Assorted;
 [RegisterComponent, NetworkedComponent, Access(typeof(LegsParalyzedSystem))]
 public sealed partial class LegsParalyzedComponent : Component
 {
-    public float BaseWalkSpeed = 0.0f;
-    public float BaseSprintSpeed = 0.0f;
-    public float Acceleration = 0.0f;
+    public float SpeedModifier = 0.0f;
 }
