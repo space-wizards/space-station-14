@@ -236,10 +236,18 @@ public sealed partial class GameTicker
         return false;
     }
 
-    public bool IsGameRuleAdded(EntityWhitelist ruleWhitelist)
+    /// <summary>
+    /// Returns true if a game rule that passes the whitelist has been added.
+    /// </summary>
+    /// <param name="ruleWhitelist">whitelist for the game rules</param>
+    /// <param name="whitelist">If true, treats ruleWhitelist as a whitelist, if false, as a blacklist</param>
+    public bool IsGameRuleAdded(EntityWhitelist ruleWhitelist, bool whitelist = true)
     {
-        return GetAddedGameRules()
-            .Any(x => _whitelist.IsWhitelistPass(ruleWhitelist, x));
+        return whitelist
+            ? GetAddedGameRules()
+                .Any(x => _whitelist.IsWhitelistPass(ruleWhitelist, x))
+            : GetAddedGameRules()
+                .Any(x => _whitelist.IsWhitelistFail(ruleWhitelist, x));
     }
 
     /// <summary>
@@ -274,10 +282,18 @@ public sealed partial class GameTicker
         return false;
     }
 
-    public bool IsGameRuleActive(EntityWhitelist ruleWhitelist)
+    /// <summary>
+    /// Returns true if a game rule that passes the whitelist is active.
+    /// </summary>
+    /// <param name="ruleWhitelist">whitelist for the game rules</param>
+    /// <param name="whitelist">If true, treats ruleWhitelist as a whitelist, if false, as a blacklist</param>
+    public bool IsGameRuleActive(EntityWhitelist ruleWhitelist, bool whitelist = true)
     {
-        return GetActiveGameRules()
-            .Any(x => _whitelist.IsWhitelistPass(ruleWhitelist, x));
+        return whitelist
+            ? GetActiveGameRules()
+                .Any(x => _whitelist.IsWhitelistPass(ruleWhitelist, x))
+            : GetActiveGameRules()
+                .Any(x => _whitelist.IsWhitelistFail(ruleWhitelist, x));
     }
 
     public void ClearGameRules()
