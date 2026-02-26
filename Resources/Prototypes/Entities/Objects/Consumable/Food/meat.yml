@@ -1634,7 +1634,7 @@
     refineResult:
     - id: FoodMeatCooked
       amount: 10
-    sliceTime: 5
+    refineTime: 5
   - type: Construction
     graph: AnomalyMeatSteak
     node: anomaly steak
