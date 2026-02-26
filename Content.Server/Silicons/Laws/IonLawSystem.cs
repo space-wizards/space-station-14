@@ -46,8 +46,8 @@ public sealed class IonLawSystem : EntitySystem
             _selectors[key].Add(selector);
         }
 
-        DatasetFill Df(string datasetId) => new() { Dataset = new ProtoId<DatasetPrototype>(datasetId) };
-        RandomManifestFill Rmf(string fallback) => new() { FallbackDataset = new ProtoId<DatasetPrototype>(fallback) };
+        DatasetFill Df(ProtoId<DatasetPrototype> datasetId) => new() { Dataset = datasetId };
+        RandomManifestFill Rmf(ProtoId<DatasetPrototype> fallback) => new() { FallbackDataset = fallback };
         ConstantFill Cf(bool val) => new() { BoolValue = val };
 
         AddSelector("ION-NUMBER-BASE", Df("IonStormNumberBase"));
@@ -115,6 +115,10 @@ public sealed class IonLawSystem : EntitySystem
         AddSelector("ION-VERB", Df("IonStormVerbs"));
     }
 
+    /// <summary>
+    /// Generates a random ion law by picking an ion law prototype and filling its placeholders with random values, from datasets.
+    /// </summary>
+    /// <returns>A formatted string representing the new ion law.</returns>
     public string GetIonLaw()
     {
         var laws = _prototypeManager.EnumeratePrototypes<IonLawPrototype>().ToList();
@@ -155,6 +159,13 @@ public sealed class IonLawSystem : EntitySystem
         return Loc.GetString(_lastLaw.LawString, ("ion", 0));
     }
 
+    /// <summary>
+    /// Gets a value for a specific selector and index, generating it if it doesn't exist in the cache.
+    /// This allows laws to reference the same generated value multiple times using the same index.
+    /// </summary>
+    /// <param name="selectorName">The key of the selector list to pick from (e.g.: "ION-WHO").</param>
+    /// <param name="index">The index for caching. Different indices generate different values.</param>
+    /// <returns>A string or object representing the generated law component.</returns>
     public object GetOrGenerateValue(string selectorName, int index)
     {
         var key = (selectorName, index);
