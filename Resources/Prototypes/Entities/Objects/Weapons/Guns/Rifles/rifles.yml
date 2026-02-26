@@ -237,17 +237,12 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
-    minAngle: 30
-    maxAngle: 43
     shotsPerBurst: 3
     selectedMode: Burst
     availableModes:
     - Burst
     - SemiAuto
     burstFireRate: 14
-  - type: GunWieldBonus
-    minAngle: -28
-    maxAngle: -25
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -266,9 +261,6 @@
         whitelist:
           tags:
           - CartridgeRifle
-  - type: SpeedModifiedOnWield
-    walkModifier: 0.75
-    sprintModifier: 0.75
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
     maxOffset: 2
