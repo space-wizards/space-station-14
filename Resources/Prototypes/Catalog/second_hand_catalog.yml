@@ -57,7 +57,7 @@
   id: UplinkSecondHandHristovWorn
   name: uplink-second-hand-hristov-worn-name
   description: uplink-second-hand-hristov-worn-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: icon }
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
   productEntity: WeaponSniperHristovWorn
   secondHandCategory: veryRareSecondHand
   cost:
@@ -67,7 +67,7 @@
   id: UplinkSecondHandMosinWorn
   name: uplink-second-hand-mosin-worn-name
   description: uplink-second-hand-mosin-worn-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi, state: icon }
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi, state: base }
   productEntity: WeaponSniperMosinWorn
   secondHandCategory: commonSecondHand
   cost:
