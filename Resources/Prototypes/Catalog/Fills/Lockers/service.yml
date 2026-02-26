@@ -25,6 +25,10 @@
       children:
       - id: BoxBeanbag
       - id: RagItem
+    - id: PlushieLizardJobBartender
+      prob: 0.02
+    - id: PlushieLizardJobServiceworker
+      prob: 0.02
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -64,6 +68,10 @@
       children:
       - id: FoodCondimentPacketSalt
       - id: FoodCondimentPacketPepper
+    - id: PlushieLizardJobChef
+      prob: 0.02
+    - id: PlushieLizardJobServiceworker
+      prob: 0.02
 
 - type: entity
   id: ClosetJanitorFilled
@@ -94,6 +102,8 @@
       - id: FlashlightLantern
       - id: Plunger
       - id: WireBrush
+    - id: PlushieLizardJobJanitor
+      prob: 0.02
 
 - type: entity
   id: ClosetLegalFilled
@@ -112,6 +122,8 @@
     - id: BriefcaseBrownFilled
       prob: 0.80
     - id: ClothingOuterRobesJudge
+    - id: PlushieLizardJobLawyer
+      prob: 0.02
 
 - type: entity
   id: LockerBotanistFilled
@@ -140,6 +152,10 @@
     - id: ClothingUniformOveralls
     - id: ClothingHeadHatTrucker
       prob: 0.1
+    - id: PlushieLizardJobBotanist
+      prob: 0.02
+    - id: PlushieLizardJobServiceworker
+      prob: 0.02
 
 - type: entity
   id: LockerBotanistLoot

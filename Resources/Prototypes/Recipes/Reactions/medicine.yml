@@ -571,6 +571,19 @@
     Opporozidone: 3
 
 - type: reaction
+  id: Arcryox
+  minTemp: 370
+  reactants:
+    Lithium:
+      amount: 1
+    Tricordrazine:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+  products:
+    Arcryox: 3
+
+- type: reaction
   id: Necrosol
   impact: Medium
   minTemp: 370
@@ -664,7 +677,7 @@
     Haloperidol: 5
 
 - type: reaction
-  id: Warfarin
+  id: Heparin
   reactants:
     SulfuricAcid:
       amount: 1
@@ -673,12 +686,12 @@
     Sodium:
       amount: 1
   products:
-    Warfarin: 2
+    Heparin: 2
 
 - type: reaction
   id: Hemorrhinol
   reactants:
-    Warfarin:
+    Heparin:
       amount: 2
     Razorium:
       amount: 2

@@ -18,7 +18,7 @@
   - type: BatteryAmmoProvider
     proto: DebugLaser
     fireCost: 1
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 1000
 
 - type: entity

@@ -24,7 +24,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
-        [Dependency] private readonly PredictedBatterySystem _battery = default!;
+        [Dependency] private readonly SharedBatterySystem _battery = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPointLightSystem _lights = default!;
@@ -147,7 +147,7 @@ namespace Content.Server.Light.EntitySystems
         }
 
         // TODO: Very important: Make this charge rate based instead of instantly removing charge each update step.
-        // See PredictedBatteryComponent
+        // See BatteryComponent
         public override void Update(float frameTime)
         {
             var toRemove = new RemQueue<Entity<HandheldLightComponent>>();
