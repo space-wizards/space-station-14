@@ -1,4 +1,5 @@
-﻿using Content.Server.Atmos.EntitySystems;
+﻿using Content.Shared.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
 using Robust.Shared.Random;
@@ -31,7 +32,8 @@ public sealed class HitscanIgniteSystem : EntitySystem
         if (!_robustRandom.Prob(ent.Comp.IgniteChance))
             return;
 
-        _flammable.AdjustFireStacks(target.Value, stackAmount, null, true);
+        if (TryComp<FlammableComponent>(target.Value, out var flamcmp))
+            _flammable.AdjustFireStacks(target.Value, stackAmount, flamcmp, true);
     }
 
 }
