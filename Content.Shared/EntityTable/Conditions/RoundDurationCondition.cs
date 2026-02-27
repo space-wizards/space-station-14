@@ -27,7 +27,6 @@ public sealed partial class RoundDurationCondition : EntityTableCondition
         EntityTableContext ctx)
     {
         var gameTicker = entMan.System<SharedGameTicker>();
-
         var duration = gameTicker.RoundDuration();
 
         return duration >= Min && duration <= Max;
