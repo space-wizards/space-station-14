@@ -14,8 +14,6 @@ public sealed partial class DamageableSystem
     public override void Initialize()
     {
         SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
-        SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
-        SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
         SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
 
@@ -178,28 +176,6 @@ public sealed partial class DamageableSystem
         _mobThreshold.SetAllowRevives(ent, true);
         ClearAllDamage(ent.AsNullable());
         _mobThreshold.SetAllowRevives(ent, false);
-    }
-
-    private void DamageableHandleState(Entity<DamageableComponent> ent, ref ComponentHandleState args)
-    {
-        if (args.Current is not DamageableComponentState state)
-            return;
-
-        ent.Comp.DamageContainerID = state.DamageContainerId;
-        ent.Comp.DamageModifierSetId = state.ModifierSetId;
-        ent.Comp.HealthBarThreshold = state.HealthBarThreshold;
-
-        // Has the damage actually changed?
-        DamageSpecifier newDamage = new() { DamageDict = new Dictionary<string, FixedPoint2>(state.DamageDict) };
-        var delta = newDamage - ent.Comp.Damage;
-        delta.TrimZeros();
-
-        if (delta.Empty)
-            return;
-
-        ent.Comp.Damage = newDamage;
-
-        OnEntityDamageChanged(ent, delta);
     }
 }
 

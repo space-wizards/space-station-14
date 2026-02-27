@@ -70,31 +70,6 @@ public sealed partial class DamageableSystem : EntitySystem
         // byref struct event.
         RaiseLocalEvent(ent, new DamageChangedEvent(ent.Comp, damageDelta, interruptsDoAfters, origin));
     }
-    private void DamageableGetState(Entity<DamageableComponent> ent, ref ComponentGetState args)
-    {
-        if (_netMan.IsServer)
-        {
-            args.State = new DamageableComponentState(
-                ent.Comp.Damage.DamageDict,
-                ent.Comp.DamageContainerID,
-                ent.Comp.DamageModifierSetId,
-                ent.Comp.HealthBarThreshold
-            );
-            // TODO BODY SYSTEM pass damage onto body system
-            // BOBBY WHEN? 😭
-            // BOBBY SOON 🫡
-
-            return;
-        }
-
-        // avoid mispredicting damage on newly spawned entities.
-        args.State = new DamageableComponentState(
-            ent.Comp.Damage.DamageDict.ShallowClone(),
-            ent.Comp.DamageContainerID,
-            ent.Comp.DamageModifierSetId,
-            ent.Comp.HealthBarThreshold
-        );
-    }
 
     /// <summary>
     /// Goes through an entity damage's and saves them inside a dictionary if the value is higher than 0
