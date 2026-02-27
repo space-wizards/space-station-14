@@ -28,6 +28,6 @@ public sealed partial class DamageGroupTrigger : IThresholdTrigger
 
     public bool Reached(Entity<DamageableComponent> damageable, SharedDestructibleSystem system)
     {
-        return damageable.Comp.DamagePerGroup[DamageGroup] >= Damage;
+        return damageable.Comp.DamagePerGroup.GetValueOrDefault(DamageGroup) >= Damage;
     }
 }

@@ -8,6 +8,15 @@ namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem
 {
+    /// <returns>If the damage container can take the given damage type</returns>
+    private bool SupportsType(ProtoId<DamageContainerPrototype>? container, ProtoId<DamageTypePrototype> type)
+    {
+        if (container is null)
+            return true;
+
+        return _supportedTypesByContainer[container.Value].Contains(type);
+    }
+
     /// <summary>
     ///     Directly sets the damage in a damageable component.
     ///     This method keeps the damage types supported by the DamageContainerPrototype in the component.
@@ -25,30 +34,15 @@ public sealed partial class DamageableSystem
 
         foreach (var type in ent.Comp.Damage.DamageDict.Keys)
         {
-            if (damage.DamageDict.TryGetValue(type, out var value))
-                ent.Comp.Damage.DamageDict[type] = value;
-            else
-                ent.Comp.Damage.DamageDict[type] = 0;
+            if (!damage.DamageDict.ContainsKey(type))
+                ent.Comp.Damage.DamageDict.Remove(type);
         }
 
-        OnEntityDamageChanged((ent, ent.Comp));
-    }
-
-    /// <summary>
-    ///     Directly sets the damage specifier of a damageable component.
-    ///     This will overwrite the complete damage dict, meaning it will bulldoze the supported damage types.
-    /// </summary>
-    /// <remarks>
-    ///     This may break persistance as the supported types are reset in case the component is initialized again.
-    ///     So this only makes sense if you also change the DamageContainerPrototype in the component at the same time.
-    ///     Only use this method if you know what you are doing.
-    /// </remarks>
-    public void SetDamageSpecifier(Entity<DamageableComponent?> ent, DamageSpecifier damage)
-    {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
-            return;
-
-        ent.Comp.Damage = damage;
+        foreach (var (type, amount) in damage.DamageDict)
+        {
+            if (SupportsType(ent.Comp.DamageContainerID, type))
+                ent.Comp.Damage.DamageDict[type] = amount;
+        }
 
         OnEntityDamageChanged((ent, ent.Comp));
     }
@@ -167,10 +161,10 @@ public sealed partial class DamageableSystem
         var dict = ent.Comp.Damage.DamageDict;
         foreach (var (type, value) in damage.DamageDict)
         {
-            // CollectionsMarshal my beloved.
-            if (!dict.TryGetValue(type, out var oldValue))
+            if (!SupportsType(ent.Comp.DamageContainerID, type))
                 continue;
 
+            var oldValue = dict.GetValueOrDefault(type);
             var newValue = FixedPoint2.Max(FixedPoint2.Zero, oldValue + value);
             if (newValue == oldValue)
                 continue;
