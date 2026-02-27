@@ -2,11 +2,9 @@
 
 # Faulty power sink: drains at half the normal rate.
 - type: entity
-  name: faulty power sink
   parent: PowerSink
   id: PowerSinkWorn
   suffix: Second Hand
-  description: A power sink with a corroded intake coil. Still draws from the high-voltage grid and still crashes the station's power infrastructure — just at half speed. Give it time.
   components:
   - type: PowerConsumer
     voltage: High

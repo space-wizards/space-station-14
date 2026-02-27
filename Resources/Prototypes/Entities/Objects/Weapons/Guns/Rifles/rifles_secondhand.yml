@@ -2,11 +2,9 @@
 
 # Worn Estoc DMR: seized burst mechanism (semi-auto only), heat-discolored barrel.
 - type: entity
-  name: worn Estoc DMR
   parent: WeaponRifleEstoc
   id: WeaponRifleEstocWorn
   suffix: Second Hand
-  description: An Estoc whose burst mechanism has seized up — semi-auto only now. The barrel has heat discoloration and the weld feel has gone soft. Still punches through at range if you pace your shots. Feeds from .20 rifle magazines.
   components:
   - type: RandomDefects
   - type: Gun

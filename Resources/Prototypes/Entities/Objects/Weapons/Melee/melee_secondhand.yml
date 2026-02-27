@@ -2,33 +2,27 @@
 
 # Worn energy sword: loose power connector, blade cuts out on swing.
 - type: entity
-  name: worn energy sword
   parent: EnergySword
   id: EnergySwordWorn
   suffix: Second Hand
-  description: An energy sword with a loose power connector rattling around in the hilt. The blade is as lethal as ever — until it isn't. Has a habit of cutting out mid-swing.
   components:
   - type: RandomDefects
   - type: LoosePowerConnector
 
 # Worn energy dagger: same loose connector issue, same pen disguise intact.
 - type: entity
-  name: pen
   parent: EnergyDagger
   id: EnergyDaggerWorn
   suffix: Second Hand, E-Dagger
-  description: A dark ink pen with a loose power connector in the hilt. Activates fine — right up until you swing it.
   components:
   - type: RandomDefects
   - type: LoosePowerConnector
 
 # Partial throwing knives kit: 4 knives instead of the usual 8.
 - type: entity
-  name: partial throwing knives kit
   parent: ThrowingKnivesKit
   id: ThrowingKnivesKitWorn
   suffix: Second Hand
-  description: A set of four syndicate throwing knives. Someone used the other half — or lost them, which tracks. Still sharp enough.
   components:
   - type: EntityTableContainerFill
     containers:

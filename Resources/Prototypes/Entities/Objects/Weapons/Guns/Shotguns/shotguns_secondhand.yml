@@ -2,11 +2,9 @@
 
 # Worn Bulldog: worn bolt carrier, bent feed ramp, half fire rate.
 - type: entity
-  name: worn bulldog
   parent: WeaponShotgunBulldog
   id: WeaponShotgunBulldogWorn
   suffix: Second Hand
-  description: A Bulldog whose bolt carrier can't keep pace anymore. Still full-auto, just at half speed. The bent feed ramp occasionally misfeeds but not often enough to save anyone from it.
   components:
   - type: RandomDefects
   - type: Gun
@@ -27,11 +25,9 @@
 
 # Worn Hushpup: blown suppressor baffles, gummed action, doubled spread.
 - type: entity
-  name: worn hushpup
   parent: WeaponShotgunHushpup
   id: WeaponShotgunHushpupWorn
   suffix: Second Hand
-  description: A Hushpup with a dying suppressor and a gummed-up action. Still quieter than most guns. The pattern opens up badly past close range. Uses .50 shotgun shells.
   components:
   - type: RandomDefects
   - type: Gun

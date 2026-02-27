@@ -3,11 +3,9 @@
 # Worn combat medipen: roughly half the normal chemical payload.
 # The reservoir seal is degraded and some reagent has evaporated.
 - type: entity
-  name: worn combat medipen
   parent: CombatMedipen
   id: CombatMedipenWorn
   suffix: Second Hand
-  description: A combat medipen with about half the chemical payload remaining. The reservoir seal degraded in storage. Still treats most damage types, just less aggressively.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -22,11 +20,9 @@
 # Worn hyperzine injector: roughly half the normal hyperzine dose.
 # The cartridge was partially used and then resealed.
 - type: entity
-  name: worn hyperzine injector
   parent: Stimpack
   id: StimpackWorn
   suffix: Second Hand
-  description: A hyperzine injector with a partially depleted cartridge. Delivers roughly half the normal dose. Still gets you moving fast - just for a bit less time.
   components:
   - type: SolutionContainerManager
     solutions:

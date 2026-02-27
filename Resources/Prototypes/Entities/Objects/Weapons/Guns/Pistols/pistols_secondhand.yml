@@ -2,11 +2,9 @@
 
 # Worn Viper: semi-auto only, warped barrel.
 - type: entity
-  name: worn viper
   parent: WeaponPistolViper
   id: WeaponPistolViperWorn
   suffix: Second Hand
-  description: A heavily used Viper with a selector switch that sticks on semi-auto and a warped barrel. Better than nothing.
   components:
   - type: RandomDefects
   - type: Gun
@@ -20,11 +18,9 @@
 
 # Worn Cobra: blown suppressor baffles, sluggish slide.
 - type: entity
-  name: worn cobra
   parent: WeaponPistolCobra
   id: WeaponPistolCobraWorn
   suffix: Second Hand
-  description: A beat-up Cobra with a suppressor that's seen better days. The baffles are blown and the slide doesn't cycle quite right.
   components:
   - type: RandomDefects
   - type: Gun

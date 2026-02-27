@@ -67,28 +67,28 @@ uplink-second-hand-magazine-box-light-rifle-worn-desc = A 60-round box magazine 
 
 # Explosives
 uplink-second-hand-exgrenade-worn-name = Dud Explosive Grenade
-uplink-second-hand-exgrenade-worn-desc = A standard explosive grenade with degraded filler compound. Creates a much smaller explosion than usual - useful for making a point, not so much for breaching reinforced walls.
+uplink-second-hand-exgrenade-worn-desc = An explosive grenade with degraded filler and a corroded fuse. Creates a much smaller explosion than standard — and the countdown is anywhere from 1.5 to 9 seconds.
 
 uplink-second-hand-smoke-grenade-worn-name = Degraded Smoke Grenade
-uplink-second-hand-smoke-grenade-worn-desc = A smoke grenade with dried-out compound that won't fully volatilize. Produces a smaller cloud that clears in about 10 seconds. Better than nothing for a moment of cover.
+uplink-second-hand-smoke-grenade-worn-desc = A smoke grenade with dried-out compound and a corroded fuse. Produces a smaller cloud that clears in about 10 seconds — and the fuse is anywhere from 1.5 to 9 seconds. Better than nothing.
 
 uplink-second-hand-singularity-grenade-worn-name = Weak Singularity Grenade
-uplink-second-hand-singularity-grenade-worn-desc = A singularity grenade with a depleted energy cell. The pull kicks in on schedule — it just runs dry in about five seconds instead of ten. Gravitational chaos, quantity-limited edition.
+uplink-second-hand-singularity-grenade-worn-desc = A singularity grenade with a depleted energy cell and a corroded timer. The fuse is somewhere between 1.5 and 9 seconds — and the pull only lasts about five seconds instead of ten.
 
 uplink-second-hand-shrapnel-grenade-worn-name = Low-Charge Shrapnel Grenade
-uplink-second-hand-shrapnel-grenade-worn-desc = A shrapnel grenade with a weakened propellant charge and only half the pellet fill. Still throws metal at people. Just fewer of them, less far.
+uplink-second-hand-shrapnel-grenade-worn-desc = A shrapnel grenade with a weakened charge and only half the pellet fill. The fuse is unreliable — somewhere between 1.75 and 10.5 seconds. Still bleeds people. Fewer of them.
 
 uplink-second-hand-incendiary-grenade-worn-name = Warmish Grenade
-uplink-second-hand-incendiary-grenade-worn-desc = An incendiary grenade with a corroded fuse and half the normal pellet fill. The countdown is unpredictable — somewhere between 2 and 7 seconds. Still sets things on fire. Just fewer things, at an uncertain time.
+uplink-second-hand-incendiary-grenade-worn-desc = An incendiary grenade with a corroded fuse and only half the normal pellet fill. The countdown is unpredictable — somewhere between 1.75 and 10.5 seconds after you pull the pin. Plan accordingly.
 
 uplink-second-hand-grenade-pongwin-name = Grenade Pongwin
-uplink-second-hand-grenade-pongwin-desc = A grenade penguin in less than prime condition. Ambles toward targets at about half the speed of a healthy specimen and the explosive payload is noticeably reduced. It still explodes. It's still a penguin. It's just slower and sadder about it.
+uplink-second-hand-grenade-pongwin-desc = A grenade penguin that's seen better days. Slower, smaller boom, and the timer in its harness is unreliable — somewhere between 5 and 30 seconds. It still explodes. It's still a penguin. It's just slower and sadder about it.
 
 uplink-second-hand-pen-exploding-worn-name = Crusty Exploding Pen
-uplink-second-hand-pen-exploding-worn-desc = A pen with a corroded detonator circuit. Still triggers on use and still explodes — the fuse is just anyone's guess, between 2 and 9 seconds. A great gift for someone you don't like.
+uplink-second-hand-pen-exploding-worn-desc = A pen with a corroded detonator circuit. Still triggers on use and still explodes — the fuse is just anyone's guess, between 2 and 12 seconds. A great gift for someone you don't like.
 
 uplink-second-hand-minibomb-worn-name = Rusty Minibomb
-uplink-second-hand-minibomb-worn-desc = A syndicate minibomb with a corroded detonator that takes 9 seconds to fire instead of the standard 5. Same blast radius. Just more time to sit there wondering if it's going to work.
+uplink-second-hand-minibomb-worn-desc = A syndicate minibomb with a corroded detonator. The fuse is unpredictable — somewhere between 5 and 15 seconds. Same blast radius. More time to think about what you've done.
 
 # Disruption
 

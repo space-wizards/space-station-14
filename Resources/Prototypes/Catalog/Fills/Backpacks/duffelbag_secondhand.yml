@@ -4,8 +4,6 @@
   parent: ClothingBackpackChameleon
   id: ClothingBackpackChameleonFillAgentWorn
   suffix: Fill, Second Hand
-  name: worn chameleon kit
-  description: A chameleon kit that's been through a few too many hands. The suit and coat are intact — accessories, PDA, and implanter may or may not have made it into the bag. Check the contents before trusting your cover.
   components:
   - type: EntityTableContainerFill
     containers:
