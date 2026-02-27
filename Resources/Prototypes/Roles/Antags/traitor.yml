@@ -59,7 +59,7 @@
     head: ClothingHeadHatSurgcapPurple
     id: VisitorPDA
     belt: ClothingBeltMedicalFilled
-    back: ClothingBackpackMedical
+    back: ClothingBackpackDuffelMedical
     ears: ClothingHeadsetMedical
     eyes: ClothingEyesHudMedical
     pocket1: HandheldHealthAnalyzer
@@ -80,12 +80,13 @@
   id: SyndicateReinforcementSpy
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackChameleonFillAgent
+    back: ClothingBackpack
     shoes: ClothingShoesColorBlack
     gloves: ClothingHandsGlovesColorBlack
     pocket1: WeaponPistolViper
     pocket2: VoiceMaskImplanter
-
+  inhand:
+    - ClothingBackpackChameleonFillAgent
 - type: startingGear
   id: SyndicateReinforcementThief
   parent: SyndicateOperativeClothing
