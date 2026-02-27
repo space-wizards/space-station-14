@@ -1,8 +1,10 @@
+using System.Numerics;
 using Content.Shared.Explosion;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -30,5 +32,12 @@ public sealed partial class StorageSystem : SharedStorageSystem
     {
         var filter = Filter.Pvs(uid).RemoveWhereAttachedEntity(e => e == user);
         RaiseNetworkEvent(new PickupAnimationEvent(GetNetEntity(uid), GetNetCoordinates(initialCoordinates), GetNetCoordinates(finalCoordinates), initialRotation), filter);
+    }
+
+    /// <inheritdoc/>
+    public override void PlayStorageAnimation(EntityUid uid, Vector2 scale, EntityUid? user = null)
+    {
+        var filter = Filter.Pvs(uid).RemoveWhereAttachedEntity(e => e == user);
+        RaiseNetworkEvent(new StorageAnimationEvent(GetNetEntity(uid), scale), filter);
     }
 }
