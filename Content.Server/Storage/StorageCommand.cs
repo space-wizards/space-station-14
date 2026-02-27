@@ -55,9 +55,13 @@ public sealed class StorageCommand : ToolshedCommand
 
     [CommandImplementation("query")]
     public IEnumerable<EntityUid> StorageQuery([PipedArgument] IEnumerable<EntityUid> storageEnts) =>
-        storageEnts.SelectMany(StorageQuery);
+        storageEnts.SelectMany(x => StorageQueryRecursibleBase(x, false));
 
-    public IEnumerable<EntityUid> StorageQuery([PipedArgument] EntityUid storageEnt)
+    [CommandImplementation("queryrecursive")]
+    public IEnumerable<EntityUid> StorageQueryRecursive([PipedArgument] IEnumerable<EntityUid> storageEnts) =>
+        storageEnts.SelectMany(x => StorageQueryRecursibleBase(x, false));
+
+    public IEnumerable<EntityUid> StorageQueryRecursibleBase(EntityUid storageEnt, bool recursive)
     {
         _storage ??= GetSys<SharedStorageSystem>();
         _container ??= GetSys<SharedContainerSystem>();
@@ -65,7 +69,14 @@ public sealed class StorageCommand : ToolshedCommand
         if (!EntityManager.TryGetComponent<StorageComponent>(storageEnt, out var storage))
             return [];
 
-        return storage.Container.ContainedEntities;
+        IEnumerable<EntityUid> containedEntities = storage.Container.ContainedEntities;
+
+        if (recursive)
+        {
+            containedEntities = containedEntities.Concat(StorageQueryRecursibleBase(storageEnt, true));
+        }
+
+        return containedEntities;
     }
 
 }
