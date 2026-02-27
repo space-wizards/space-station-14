@@ -16,6 +16,7 @@ public sealed partial class DamageableSystem
         SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
         SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<DamageableComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
 
         _appearanceQuery = GetEntityQuery<AppearanceComponent>();
         _damageableQuery = GetEntityQuery<DamageableComponent>();
@@ -115,6 +116,11 @@ public sealed partial class DamageableSystem
             value => UniversalMobDamageModifier = value,
             true
         );
+    }
+
+    private void OnAfterAutoHandleState(Entity<DamageableComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        OnEntityDamageChanged(ent);
     }
 
     /// <summary>
