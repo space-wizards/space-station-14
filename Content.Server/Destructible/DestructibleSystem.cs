@@ -65,15 +65,15 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
 
                 var logImpact = LogImpact.Low;
                 // Convert behaviors into string for logs
-                var triggeredBehaviors = string.Join(", ", threshold.Behaviors.Select(b =>
+                var triggeredBehaviors = string.Join(", ", threshold.Behaviors.Select(behavior =>
                 {
-                    if (logImpact <= b.Impact)
-                        logImpact = b.Impact;
-                    if (b is DoActsBehavior doActsBehavior)
+                    if (logImpact <= behavior.Impact)
+                        logImpact = behavior.Impact;
+                    if (behavior is DoActsBehavior doActsBehavior)
                     {
-                        return $"{b.GetType().Name}:{doActsBehavior.Acts.ToString()}";
+                        return $"{behavior.GetType().Name}:{doActsBehavior.Acts.ToString()}";
                     }
-                    return b.GetType().Name;
+                    return behavior.GetType().Name;
                 }));
 
                 // If it doesn't have a humanoid component, it's probably not particularly notable?
