@@ -20,14 +20,20 @@ public sealed partial class FeedbackSystem : EntitySystem
     private void OnRoundEnd(RoundEndMessageEvent args)
     {
         var validPopups = new List<ProtoId<FeedbackPopupPrototype>>();
+        var notValidPopups = new List<ProtoId<FeedbackPopupPrototype>>();
 
         foreach (var feedback in _feedbackManager.GetOriginFeedbackPrototypes(true, true))
         {
             if (_gameTicker.IsGameRuleAdded(_prototypeManager.Index(feedback).RuleWhitelist))
                 validPopups.Add(feedback);
+            else
+                notValidPopups.Add(feedback);
         }
 
         if (validPopups.Count > 0)
             _feedbackManager.SendToAllSessions(validPopups);
+
+        if (notValidPopups.Count > 0)
+            _feedbackManager.SendToAllSessions(notValidPopups, true);
     }
 }
