@@ -13,7 +13,7 @@ public sealed partial class DamageGroupEntityConditionSystem : EntityConditionSy
 {
     protected override void Condition(Entity<DamageableComponent> entity, ref EntityConditionEvent<DamageGroupCondition> args)
     {
-        var value = entity.Comp.DamagePerGroup[args.Condition.DamageGroup];
+        var value = entity.Comp.DamagePerGroup.GetValueOrDefault(args.Condition.DamageGroup);
         args.Result = value >= args.Condition.Min && value <= args.Condition.Max;
     }
 }
