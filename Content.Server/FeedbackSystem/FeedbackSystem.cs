@@ -22,7 +22,7 @@ public sealed partial class FeedbackSystem : EntitySystem
     {
         var showFeedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
             .Select(x => _prototypeManager.Index(x))
-            .Where(x => _gameTicker.IsGameRuleAdded(x.RuleWhitelist!))
+            .Where(x => _gameTicker.IsGameRuleAdded(x.RuleWhitelist))
             .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
             .OrderBy(x => x.Id)
             .ToList();
