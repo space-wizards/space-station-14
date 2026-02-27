@@ -52,11 +52,6 @@ namespace Content.Server.Database
 
             // ReSharper restore StringLiteralTypo
 
-            modelBuilder.Entity<AdminLog>()
-                .HasIndex(l => l.Message)
-                .HasMethod("GIN")
-                .IsTsVectorExpressionIndex("english");
-
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
                 foreach(var property in entity.GetProperties())
@@ -67,9 +62,9 @@ namespace Content.Server.Database
             }
         }
 
-        public override IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
+        public override IQueryable<AdminLogEvent> SearchLogs(IQueryable<AdminLogEvent> query, string searchText)
         {
-            return query.Where(log => EF.Functions.ToTsVector("english", log.Message).Matches(EF.Functions.PlainToTsQuery("english", searchText)));
+            return query.Where(log => EF.Functions.ToTsVector("english", log.Payload.Message).Matches(EF.Functions.PlainToTsQuery("english", searchText)));
         }
 
         public override int CountAdminLogs()

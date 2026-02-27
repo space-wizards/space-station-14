@@ -339,7 +339,7 @@ public sealed partial class AdminLogsControl : Control
         if (!label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
             return false;
 
-        // Check search (message and structured entity participation)
+        // Check search
         if (!LogMatchesSearch(label))
             return false;
 

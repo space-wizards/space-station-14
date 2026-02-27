@@ -1,25 +1,15 @@
 ﻿using System.Threading;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Content.Server.Database;
 using Content.Shared.Database;
 
 namespace Content.Server.Administration.Logs;
 
-//This whole thing is waiting for a faster third party indexing solution
+//This whole thing is waiting for a faster third party indexing solution ... eventually ...
 
 /// <summary>
-/// Structured admin log payload NOT IMPLEMENTED, but could be used by external indexers ... eventually ...
+/// Structured admin log payload NOT IMPLEMENTED
 /// </summary>
-/// <param name="RoundId"></param>
-/// <param name="LogId"></param>
-/// <param name="Type"></param>
-/// <param name="Impact"></param>
-/// <param name="Date"></param>
-/// <param name="Message"></param>
-/// <param name="Json"></param>
-/// <param name="Players"></param>
-/// <param name="Entities"></param>
 public sealed record StructuredAdminLogEvent(
     int RoundId,
     int LogId,
@@ -42,10 +32,7 @@ public sealed record AdminLogEntityPayload(
 /// </summary>
 public interface IAdminLogEventPublisher
 {
-    ValueTask PublishAsync(StructuredAdminLogEvent logEvent, CancellationToken cancellationToken = default)
-    {
-        return ValueTask.CompletedTask;
-    }
+    ValueTask PublishAsync(StructuredAdminLogEvent logEvent, CancellationToken cancellationToken = default);
 }
 
 public sealed class NullAdminLogEventPublisher : IAdminLogEventPublisher

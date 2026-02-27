@@ -71,7 +71,7 @@ namespace Content.Server.Database
                 v => JsonDocumentToByteArray(v),
                 v => ByteArrayToJsonDocument(v));
 
-            modelBuilder.Entity<AdminLog>()
+            modelBuilder.Entity<AdminLogEventPayload>()
                 .Property(log => log.Json)
                 .HasConversion(jsonStringConverter);
 
@@ -91,7 +91,7 @@ namespace Content.Server.Database
 
         public override int CountAdminLogs()
         {
-            return AdminLog.Count();
+            return AdminLogEvent.Count();
         }
 
         private static string InetToString(IPAddress address, int mask) {

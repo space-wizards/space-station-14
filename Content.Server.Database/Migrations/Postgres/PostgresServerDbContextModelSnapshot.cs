@@ -92,23 +92,126 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("admin_flag", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
+            modelBuilder.Entity("Content.Server.Database.AdminLogEntityDimension", b =>
                 {
                     b.Property<int>("RoundId")
                         .HasColumnType("integer")
                         .HasColumnName("round_id");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("EntityUid")
                         .HasColumnType("integer")
-                        .HasColumnName("admin_log_id");
+                        .HasColumnName("entity_uid");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date");
+                    b.Property<string>("EntityName")
+                        .HasColumnType("text")
+                        .HasColumnName("entity_name");
+
+                    b.Property<string>("PrototypeId")
+                        .HasColumnType("text")
+                        .HasColumnName("prototype_id");
+
+                    b.HasKey("RoundId", "EntityUid")
+                        .HasName("PK_admin_log_entity_dimension");
+
+                    b.ToTable("admin_log_entity_dimension", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminLogEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("admin_log_event_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<short>("Impact")
                         .HasColumnType("smallint")
                         .HasColumnName("impact");
+
+                    b.Property<DateTime>("OccurredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("occurred_at");
+
+                    b.Property<int>("RoundId")
+                        .HasColumnType("integer")
+                        .HasColumnName("round_id");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("PK_admin_log_event");
+
+                    b.HasIndex("RoundId", "OccurredAt", "Id");
+
+                    b.HasIndex("RoundId", "Type", "OccurredAt", "Id");
+
+                    b.ToTable("admin_log_event", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminLogEventParticipant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("admin_log_event_participant_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("EntityUid")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_uid");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("integer")
+                        .HasColumnName("event_id");
+
+                    b.Property<short>("Impact")
+                        .HasColumnType("smallint")
+                        .HasColumnName("impact");
+
+                    b.Property<DateTime>("OccurredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("occurred_at");
+
+                    b.Property<Guid?>("PlayerUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<byte>("Role")
+                        .HasColumnType("smallint")
+                        .HasColumnName("role");
+
+                    b.Property<int>("RoundId")
+                        .HasColumnType("integer")
+                        .HasColumnName("round_id");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("PK_admin_log_event_participant");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_admin_log_event_participant_event_id");
+
+                    b.HasIndex("RoundId", "EntityUid", "OccurredAt", "EventId");
+
+                    b.HasIndex("RoundId", "PlayerUserId", "OccurredAt", "EventId");
+
+                    b.HasIndex("RoundId", "EntityUid", "Role", "OccurredAt", "EventId");
+
+                    b.ToTable("admin_log_event_participant", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminLogEventPayload", b =>
+                {
+                    b.Property<int>("EventId")
+                        .HasColumnType("integer")
+                        .HasColumnName("event_id");
 
                     b.Property<JsonDocument>("Json")
                         .IsRequired()
@@ -120,85 +223,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("message");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer")
-                        .HasColumnName("type");
+                    b.HasKey("EventId")
+                        .HasName("PK_admin_log_event_payload");
 
-                    b.HasKey("RoundId", "Id")
-                        .HasName("PK_admin_log");
-
-                    b.HasIndex("Date");
-
-                    b.HasIndex("Message")
-                        .HasAnnotation("Npgsql:TsVectorConfig", "english");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Message"), "GIN");
-
-                    b.HasIndex("Type")
-                        .HasDatabaseName("IX_admin_log_type");
-
-                    b.HasIndex("Type", "Impact", "Date");
-
-                    b.ToTable("admin_log", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.AdminLogEntity", b =>
-                {
-                    b.Property<int>("RoundId")
-                        .HasColumnType("integer")
-                        .HasColumnName("round_id");
-
-                    b.Property<int>("LogId")
-                        .HasColumnType("integer")
-                        .HasColumnName("log_id");
-
-                    b.Property<int>("EntityUid")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_uid");
-
-                    b.Property<byte>("Role")
-                        .HasColumnType("smallint")
-                        .HasColumnName("role");
-
-                    b.Property<string>("EntityName")
-                        .HasColumnType("text")
-                        .HasColumnName("entity_name");
-
-                    b.Property<string>("PrototypeId")
-                        .HasColumnType("text")
-                        .HasColumnName("prototype_id");
-
-                    b.HasKey("RoundId", "LogId", "EntityUid", "Role")
-                        .HasName("PK_admin_log_participant_entity");
-
-                    b.HasIndex("EntityUid", "RoundId", "LogId");
-
-                    b.HasIndex("EntityUid", "Role", "RoundId", "LogId");
-
-                    b.ToTable("admin_log_participant_entity", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.AdminLogPlayer", b =>
-                {
-                    b.Property<int>("RoundId")
-                        .HasColumnType("integer")
-                        .HasColumnName("round_id");
-
-                    b.Property<int>("LogId")
-                        .HasColumnType("integer")
-                        .HasColumnName("log_id");
-
-                    b.Property<Guid>("PlayerUserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("player_user_id");
-
-                    b.HasKey("RoundId", "LogId", "PlayerUserId")
-                        .HasName("PK_admin_log_player");
-
-                    b.HasIndex("PlayerUserId")
-                        .HasDatabaseName("IX_admin_log_player_player_user_id");
-
-                    b.ToTable("admin_log_player", (string)null);
+                    b.ToTable("admin_log_event_payload", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminMessage", b =>
@@ -1586,50 +1614,40 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Admin");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
+            modelBuilder.Entity("Content.Server.Database.AdminLogEvent", b =>
                 {
                     b.HasOne("Content.Server.Database.Round", "Round")
-                        .WithMany("AdminLogs")
+                        .WithMany("AdminLogEvents")
                         .HasForeignKey("RoundId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_admin_log_round_round_id");
+                        .HasConstraintName("FK_admin_log_event_round_round_id");
 
                     b.Navigation("Round");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLogEntity", b =>
+            modelBuilder.Entity("Content.Server.Database.AdminLogEventParticipant", b =>
                 {
-                    b.HasOne("Content.Server.Database.AdminLog", "Log")
-                        .WithMany("Entities")
-                        .HasForeignKey("RoundId", "LogId")
+                    b.HasOne("Content.Server.Database.AdminLogEvent", "Event")
+                        .WithMany("Participants")
+                        .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_admin_log_participant_entity_admin_log_round_id_log_id");
+                        .HasConstraintName("FK_admin_log_event_participant_admin_log_event_event_id");
 
-                    b.Navigation("Log");
+                    b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLogPlayer", b =>
+            modelBuilder.Entity("Content.Server.Database.AdminLogEventPayload", b =>
                 {
-                    b.HasOne("Content.Server.Database.Player", "Player")
-                        .WithMany("AdminLogs")
-                        .HasForeignKey("PlayerUserId")
-                        .HasPrincipalKey("UserId")
+                    b.HasOne("Content.Server.Database.AdminLogEvent", "Event")
+                        .WithOne("Payload")
+                        .HasForeignKey("Content.Server.Database.AdminLogEventPayload", "EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_admin_log_player_player_player_user_id");
+                        .HasConstraintName("FK_admin_log_event_payload_admin_log_event_event_id");
 
-                    b.HasOne("Content.Server.Database.AdminLog", "Log")
-                        .WithMany("Players")
-                        .HasForeignKey("RoundId", "LogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_admin_log_player_admin_log_round_id_log_id");
-
-                    b.Navigation("Log");
-
-                    b.Navigation("Player");
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminMessage", b =>
@@ -2167,11 +2185,12 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Flags");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
+            modelBuilder.Entity("Content.Server.Database.AdminLogEvent", b =>
                 {
-                    b.Navigation("Entities");
+                    b.Navigation("Participants");
 
-                    b.Navigation("Players");
+                    b.Navigation("Payload")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminRank", b =>
@@ -2210,8 +2229,6 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
-                    b.Navigation("AdminLogs");
-
                     b.Navigation("AdminMessagesCreated");
 
                     b.Navigation("AdminMessagesDeleted");
@@ -2271,9 +2288,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>
                 {
-                    b.Navigation("AdminLogs");
-
-                    b.Navigation("CustomVoteLogs");
+                    b.Navigation("AdminLogEvents");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Server", b =>

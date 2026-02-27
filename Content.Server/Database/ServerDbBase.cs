@@ -826,7 +826,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return new ServerRecord(server.Id, server.Name);
         }
 
-        public async Task AddAdminLogs(List<AdminLog> logs)
+        public async Task AddAdminLogs(List<AdminLogEventWriteData> logs)
         {
             const int maxRetryAttempts = 5;
             var initialRetryDelay = TimeSpan.FromSeconds(5);
@@ -841,7 +841,80 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 try
                 {
                     await using var db = await GetDb();
-                    db.DbContext.AdminLog.AddRange(logs);
+                    var headers = new List<AdminLogEvent>(logs.Count);
+                    foreach (var log in logs)
+                    {
+                        var header = new AdminLogEvent
+                        {
+                            RoundId = log.RoundId,
+                            Type = log.Type,
+                            Impact = log.Impact,
+                            OccurredAt = log.OccurredAt,
+                        };
+
+                        headers.Add(header);
+                    }
+
+                    db.DbContext.AdminLogEvent.AddRange(headers);
+                    await db.DbContext.SaveChangesAsync();
+
+                    for (var i = 0; i < logs.Count; i++)
+                    {
+                        var log = logs[i];
+                        var header = headers[i];
+
+                        db.DbContext.AdminLogEventPayload.Add(new AdminLogEventPayload
+                        {
+                            EventId = header.Id,
+                            Message = log.Message,
+                            Json = log.Json,
+                        });
+
+                        foreach (var player in log.Players)
+                        {
+                            db.DbContext.AdminLogEventParticipant.Add(new AdminLogEventParticipant
+                            {
+                                EventId = header.Id,
+                                RoundId = log.RoundId,
+                                OccurredAt = log.OccurredAt,
+                                Type = log.Type,
+                                Impact = log.Impact,
+                                PlayerUserId = player,
+                                Role = AdminLogEntityRole.Actor,
+                            });
+                        }
+
+                        foreach (var entity in log.Entities)
+                        {
+                            db.DbContext.AdminLogEventParticipant.Add(new AdminLogEventParticipant
+                            {
+                                EventId = header.Id,
+                                RoundId = log.RoundId,
+                                OccurredAt = log.OccurredAt,
+                                Type = log.Type,
+                                Impact = log.Impact,
+                                EntityUid = entity.EntityUid,
+                                Role = entity.Role,
+                            });
+
+                            var dim = await db.DbContext.AdminLogEntityDimension.FindAsync(log.RoundId, entity.EntityUid);
+                            if (dim == null)
+                            {
+                                db.DbContext.AdminLogEntityDimension.Add(new AdminLogEntityDimension
+                                {
+                                    RoundId = log.RoundId,
+                                    EntityUid = entity.EntityUid,
+                                    PrototypeId = entity.PrototypeId,
+                                    EntityName = entity.EntityName,
+                                });
+                            }
+                            else
+                            {
+                                dim.PrototypeId = entity.PrototypeId ?? dim.PrototypeId;
+                                dim.EntityName = entity.EntityName ?? dim.EntityName;
+                            }
+                        }
+                    }
                     await db.DbContext.SaveChangesAsync();
                     _opsLog.Debug($"Successfully saved {logs.Count} admin logs.");
                     break;
@@ -865,16 +938,16 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             }
         }
 
-        protected abstract IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null);
+        protected abstract IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null);
 
-        private IQueryable<AdminLog> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        private IQueryable<AdminLogEvent> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             // Save me from SQLite
             var query = StartAdminLogsQuery(db, filter);
 
             if (filter == null)
             {
-                return query.OrderBy(log => log.Date);
+                return query.OrderBy(log => log.OccurredAt);
             }
 
             if (filter.Round != null)
@@ -894,49 +967,27 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             if (filter.Before != null)
             {
-                query = query.Where(log => log.Date < filter.Before);
+                query = query.Where(log => log.OccurredAt < filter.Before);
             }
 
             if (filter.After != null)
             {
-                query = query.Where(log => log.Date > filter.After);
+                query = query.Where(log => log.OccurredAt > filter.After);
             }
 
-            if (filter.IncludePlayers)
+            if (filter.AnyPlayers != null)
             {
-                if (filter.AnyPlayers != null)
-                {
-                    query = query.Where(log =>
-                        log.Players.Any(p => filter.AnyPlayers.Contains(p.PlayerUserId)) ||
-                        log.Players.Count == 0 && filter.IncludeNonPlayers);
-                }
-
-                if (filter.AllPlayers != null)
-                {
-                    query = query.Where(log =>
-                        log.Players.All(p => filter.AllPlayers.Contains(p.PlayerUserId)) ||
-                        log.Players.Count == 0 && filter.IncludeNonPlayers);
-                }
-            }
-            else
-            {
-                query = query.Where(log => log.Players.Count == 0);
+                query = query.Where(log => log.Participants.Any(p => p.PlayerUserId != null && filter.AnyPlayers.Contains(p.PlayerUserId.Value)));
             }
 
             if (filter.AnyEntities != null)
             {
-                query = query.Where(log => log.Entities.Any(e => filter.AnyEntities.Contains(e.EntityUid)));
-            }
-
-            if (filter.AllEntities != null)
-            {
-                query = query.Where(log => filter.AllEntities.All(entityUid =>
-                    log.Entities.Any(entity => entity.EntityUid == entityUid)));
+                query = query.Where(log => log.Participants.Any(p => p.EntityUid != null && filter.AnyEntities.Contains(p.EntityUid.Value)));
             }
 
             if (filter.EntityRoles != null)
             {
-                query = query.Where(log => log.Entities.Any(entity => filter.EntityRoles.Contains(entity.Role)));
+                query = query.Where(log => log.Participants.Any(p => filter.EntityRoles.Contains(p.Role)));
             }
 
             if (filter.LastLogId != null)
@@ -945,28 +996,19 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 {
                     DateOrder.Ascending => query.Where(log => log.Id > filter.LastLogId),
                     DateOrder.Descending => query.Where(log => log.Id < filter.LastLogId),
-                    _ => throw new ArgumentOutOfRangeException(nameof(filter),
-                        $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+                    _ => throw new ArgumentOutOfRangeException(nameof(filter), $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
                 };
             }
 
             query = filter.DateOrder switch
             {
-                DateOrder.Ascending => query.OrderBy(log => log.Date),
-                DateOrder.Descending => query.OrderByDescending(log => log.Date),
-                _ => throw new ArgumentOutOfRangeException(nameof(filter),
-                    $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+                DateOrder.Ascending => query.OrderBy(log => log.OccurredAt).ThenBy(log => log.Id),
+                DateOrder.Descending => query.OrderByDescending(log => log.OccurredAt).ThenByDescending(log => log.Id),
+                _ => throw new ArgumentOutOfRangeException(nameof(filter), $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
             };
 
             const int hardLogLimit = 500_000;
-            if (filter.Limit != null)
-            {
-                query = query.Take(Math.Min(filter.Limit.Value, hardLogLimit));
-            }
-            else
-            {
-                query = query.Take(hardLogLimit);
-            }
+            query = query.Take(Math.Min(filter.Limit ?? hardLogLimit, hardLogLimit));
 
             return query;
         }
@@ -976,34 +1018,46 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var query = GetAdminLogsQuery(db.DbContext, filter);
 
-            await foreach (var log in query.Select(log => log.Message).AsAsyncEnumerable())
+            await foreach (var message in query.Include(log => log.Payload).Select(log => log.Payload.Message).AsAsyncEnumerable())
             {
-                yield return log;
+                yield return message;
             }
         }
 
         public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = GetAdminLogsQuery(db.DbContext, filter);
-            query = query.Include(log => log.Players).Include(log => log.Entities);
+            var query = GetAdminLogsQuery(db.DbContext, filter).Include(log => log.Payload).Include(log => log.Participants);
 
-            await foreach (var log in query.AsAsyncEnumerable())
+            var logs = await query.ToListAsync();
+            var roundIds = logs.Select(log => log.RoundId).Distinct().ToArray();
+            var entityUids = logs
+                .SelectMany(log => log.Participants)
+                .Where(p => p.EntityUid != null)
+                .Select(p => p.EntityUid!.Value)
+                .Distinct()
+                .ToArray();
+
+            var dimensions = entityUids.Length == 0 || roundIds.Length == 0
+                ? new Dictionary<(int RoundId, int EntityUid), AdminLogEntityDimension>()
+                : await db.DbContext.AdminLogEntityDimension
+                    .Where(dim => roundIds.Contains(dim.RoundId) && entityUids.Contains(dim.EntityUid))
+                    .ToDictionaryAsync(dim => (dim.RoundId, dim.EntityUid));
+
+            foreach (var log in logs)
             {
-                var players = new Guid[log.Players.Count];
-                for (var i = 0; i < log.Players.Count; i++)
+                var players = log.Participants.Where(p => p.PlayerUserId != null).Select(p => p.PlayerUserId!.Value).Distinct().ToArray();
+                var entityRows = log.Participants.Where(p => p.EntityUid != null).ToArray();
+                var entities = new SharedAdminLogEntity[entityRows.Length];
+
+                for (var i = 0; i < entityRows.Length; i++)
                 {
-                    players[i] = log.Players[i].PlayerUserId;
+                    var row = entityRows[i];
+                    dimensions.TryGetValue((log.RoundId, row.EntityUid!.Value), out var dim);
+                    entities[i] = new SharedAdminLogEntity(row.EntityUid!.Value, row.Role, dim?.PrototypeId, dim?.EntityName);
                 }
 
-                var entities = new SharedAdminLogEntity[log.Entities.Count];
-                for (var i = 0; i < log.Entities.Count; i++)
-                {
-                    var entity = log.Entities[i];
-                    entities[i] = new SharedAdminLogEntity(entity.EntityUid, entity.Role, entity.PrototypeId, entity.EntityName);
-                }
-
-                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players, entities);
+                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.OccurredAt, log.Payload.Message, players, entities);
             }
         }
 
@@ -1012,7 +1066,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var query = GetAdminLogsQuery(db.DbContext, filter);
 
-            await foreach (var json in query.Select(log => log.Json).AsAsyncEnumerable())
+            await foreach (var json in query.Include(log => log.Payload).Select(log => log.Payload.Json).AsAsyncEnumerable())
             {
                 yield return json;
             }
@@ -1021,7 +1075,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         public async Task<int> CountAdminLogs(int round)
         {
             await using var db = await GetDb();
-            return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
+            return await db.DbContext.AdminLogEvent.CountAsync(log => log.RoundId == round);
         }
 
         #endregion

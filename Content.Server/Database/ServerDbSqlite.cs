@@ -317,11 +317,11 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        protected override IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
-            IQueryable<AdminLog> query = db.AdminLog;
+            IQueryable<AdminLogEvent> query = db.AdminLogEvent.Include(log => log.Payload);
             if (filter?.Search != null)
-                query = query.Where(log => EF.Functions.Like(log.Message, $"%{filter.Search}%"));
+                query = query.Where(log => EF.Functions.Like(log.Payload.Message, $"%{filter.Search}%"));
 
             return query;
         }

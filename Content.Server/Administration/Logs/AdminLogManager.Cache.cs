@@ -48,12 +48,12 @@ public sealed partial class AdminLogManager
         CacheRoundCount.Set(_roundsLogCache.Count);
     }
 
-    private void CacheLog(AdminLog log)
+    private void CacheLog(AdminLogEventWriteData log)
     {
-        var players = log.Players.Select(player => player.PlayerUserId).ToArray();
-        var entities = log.Entities.Select(entity =>
-            new SharedAdminLogEntity(entity.EntityUid, entity.Role, entity.PrototypeId, entity.EntityName)).ToArray();
-        var record = new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players, entities);
+        var players = log.Players.ToArray();
+        var entities = log.Entities.Select(entity => new SharedAdminLogEntity(entity.EntityUid, entity.Role, entity.PrototypeId, entity.EntityName)).ToArray();
+
+        var record = new SharedAdminLog(0, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities);
 
         CacheLog(record);
     }
@@ -80,81 +80,8 @@ public sealed partial class AdminLogManager
 
     private bool TrySearchCache(LogFilter? filter, [NotNullWhen(true)] out List<SharedAdminLog>? results)
     {
-        if (filter?.Round == null || !TryGetCache(filter.Round.Value, out var cache))
-        {
-            results = null;
-            return false;
-        }
-
-        // TODO ADMIN LOGS a better heuristic than linq spaghetti
-        var query = cache.AsEnumerable();
-
-        query = filter.DateOrder switch
-        {
-            DateOrder.Ascending => query,
-            DateOrder.Descending => query.Reverse(),
-            _ => throw new ArgumentOutOfRangeException(nameof(filter),
-                $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
-        };
-
-        if (filter.Search != null)
-        {
-            query = query.Where(log => log.Message.Contains(filter.Search, StringComparison.OrdinalIgnoreCase));
-        }
-
-        if (filter.Types != null && filter.Types.Count != _logTypes)
-        {
-            query = query.Where(log => filter.Types.Contains(log.Type));
-        }
-
-        if (filter.Impacts != null)
-        {
-            query = query.Where(log => filter.Impacts.Contains(log.Impact));
-        }
-
-        if (filter.Before != null)
-        {
-            query = query.Where(log => log.Date < filter.Before);
-        }
-
-        if (filter.After != null)
-        {
-            query = query.Where(log => log.Date > filter.After);
-        }
-
-        if (filter.IncludePlayers)
-        {
-            if (filter.AnyPlayers != null)
-            {
-                query = query.Where(log =>
-                    filter.AnyPlayers.Any(filterPlayer => log.Players.Contains(filterPlayer)) ||
-                    log.Players.Length == 0 && filter.IncludeNonPlayers);
-            }
-
-            if (filter.AllPlayers != null)
-            {
-                query = query.Where(log =>
-                    filter.AllPlayers.All(filterPlayer => log.Players.Contains(filterPlayer)) ||
-                    log.Players.Length == 0 && filter.IncludeNonPlayers);
-            }
-        }
-        else
-        {
-            query = query.Where(log => log.Players.Length == 0);
-        }
-
-        if (filter.LogsSent != 0)
-        {
-            query = query.Skip(filter.LogsSent);
-        }
-
-        if (filter.Limit != null)
-        {
-            query = query.Take(filter.Limit.Value);
-        }
-
-        // TODO ADMIN LOGS array pool
-        results = query.ToList();
-        return true;
+        //Logs V2 is keyset + participant first Old cache filtering is obsolete
+        results = null;
+        return false;
     }
 }

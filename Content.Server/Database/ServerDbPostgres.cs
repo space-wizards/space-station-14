@@ -364,19 +364,19 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        protected override IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             // https://learn.microsoft.com/en-us/ef/core/querying/sql-queries#passing-parameters
             // Read the link above for parameterization before changing this method or you get the bullet
             if (!string.IsNullOrWhiteSpace(filter?.Search))
             {
-                return db.AdminLog.FromSql($"""
-SELECT a.admin_log_id, a.round_id, a.date, a.impact, a.json, a.message, a.type FROM admin_log AS a
-WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('english'::regconfig, {filter.Search})
-""");
+                return db.AdminLogEvent
+                    .Include(a => a.Payload)
+                    .Where(a => EF.Functions.ToTsVector("english", a.Payload.Message)
+                        .Matches(EF.Functions.PlainToTsQuery("english", filter.Search)));
             }
 
-            return db.AdminLog;
+            return db.AdminLogEvent;
         }
 
         protected override DateTime NormalizeDatabaseTime(DateTime time)

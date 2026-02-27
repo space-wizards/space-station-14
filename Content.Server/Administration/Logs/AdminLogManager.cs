@@ -85,13 +85,11 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     // Per update
     private TimeSpan _nextUpdateTime;
-    private readonly ConcurrentQueue<AdminLog> _logQueue = new();
-    private readonly ConcurrentQueue<AdminLog> _preRoundLogQueue = new();
+    private readonly ConcurrentQueue<AdminLogEventWriteData> _logQueue = new();
+    private readonly ConcurrentQueue<AdminLogEventWriteData> _preRoundLogQueue = new();
 
     // Per round
     private int _currentRoundId;
-    private int _currentLogId;
-    private int NextLogId => Interlocked.Increment(ref _currentLogId);
     private GameRunLevel _runLevel = GameRunLevel.PreRoundLobby;
 
     // 1 when saving, 0 otherwise
@@ -215,7 +213,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         _nextUpdateTime = _timing.RealTime.Add(_queueSendDelay);
 
         // TODO ADMIN LOGS array pool
-        var copy = new List<AdminLog>(_logQueue.Count + _preRoundLogQueue.Count);
+        var copy = new List<AdminLogEventWriteData>(_logQueue.Count + _preRoundLogQueue.Count);
         copy.AddRange(_logQueue);
 
         if (_logQueue.Count >= _queueMax)
@@ -237,7 +235,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         {
             foreach (var log in _preRoundLogQueue)
             {
-                log.RoundId = _currentRoundId;
                 CacheLog(log);
             }
 
@@ -249,6 +246,35 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         _preRoundLogQueue.Clear();
         PreRoundQueue.Set(0);
+        // Round ID is unknown for pre-round logs. Attach them to the active round before persistence.
+        for (var i = copy.Count - 1; i >= 0; i--)
+        {
+            var log = copy[i];
+            if (log.RoundId > 0)
+                continue;
+
+            if (_currentRoundId > 0)
+            {
+                copy[i] = new AdminLogEventWriteData
+                {
+                    RoundId = _currentRoundId,
+                    Type = log.Type,
+                    Impact = log.Impact,
+                    OccurredAt = log.OccurredAt,
+                    Message = log.Message,
+                    Json = log.Json,
+                    Players = log.Players,
+                    Entities = log.Entities,
+                };
+                continue;
+            }
+
+            _sawmill.Warning($"Dropping admin log with unresolved round id. Type: {log.Type}, Message: {log.Message}");
+            copy.RemoveAt(i);
+        }
+
+        if (copy.Count == 0)
+            return;
 
         var task = _db.AddAdminLogs(copy);
 
@@ -281,7 +307,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         PublishStructuredLogs(copy);
     }
 
-    private void PublishStructuredLogs(List<AdminLog> logs)
+    private void PublishStructuredLogs(List<AdminLogEventWriteData> logs)
     {
         _ = Task.Run(async () =>
         {
@@ -291,21 +317,21 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 {
                     var logEvent = new StructuredAdminLogEvent(
                         log.RoundId,
-                        log.Id,
+                        0,
                         log.Type,
                         log.Impact,
-                        log.Date,
+                        log.OccurredAt,
                         log.Message,
                         log.Json,
-                        (log.Players?.Select(p => p.PlayerUserId).ToArray()) ?? Array.Empty<Guid>(),
-                        (log.Entities?.Select(e => new AdminLogEntityPayload(e.EntityUid, e.Role, e.PrototypeId, e.EntityName)).ToArray()) ?? Array.Empty<AdminLogEntityPayload>());
+                        log.Players.ToArray(),
+                        log.Entities.Select(e => new AdminLogEntityPayload(e.EntityUid, e.Role, e.PrototypeId, e.EntityName)).ToArray());
 
                     await _publisher.PublishAsync(logEvent);
                 }
             }
             catch (Exception e)
             {
-                _sawmill.Warning($"Failed publishing structured admin logs: {e}");
+                _sawmill.Warning($"Failed publishing admin logs: {e}");
             }
         });
     }
@@ -322,17 +348,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         if (level == GameRunLevel.PreRoundLobby)
         {
-            Interlocked.Exchange(ref _currentLogId, 0);
-
             if (!_preRoundLogQueue.IsEmpty)
             {
                 // This technically means that you could get pre-round logs from
                 // a previous round passed onto the next one
                 // If this happens please file a complaint with your nearest lottery
-                foreach (var log in _preRoundLogQueue)
-                {
-                    log.Id = NextLogId;
-                }
+                // V2 logs use database identity keys
             }
 
             if (_metricsEnabled)
@@ -364,9 +385,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         var json = JsonSerializer.SerializeToDocument(handler.Values, _jsonOptions);
-        var id = NextLogId;
-        var players = GetPlayers(handler.Values, id);
-        var entities = GetEntities(handler.Values, id);
+        var players = GetPlayers(handler.Values);
+        var entities = GetEntities(handler.Values, type);
 
         // PostgreSQL does not support storing null chars in text values.
         if (message.Contains('\0'))
@@ -375,13 +395,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             message = message.Replace("\0", "");
         }
 
-        var log = new AdminLog
+        var log = new AdminLogEventWriteData
         {
-            Id = id,
             RoundId = _currentRoundId,
             Type = type,
             Impact = impact,
-            Date = DateTime.UtcNow,
+            OccurredAt = DateTime.UtcNow,
             Message = message,
             Json = json,
             Players = players,
@@ -420,22 +439,21 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return;
         }
 
-        var id = NextLogId;
-        var logPlayers = new List<AdminLogPlayer>(players?.Count ?? 0);
+        var logPlayers = new List<Guid>(players?.Count ?? 0);
         if (players != null)
         {
             foreach (var player in players)
             {
-                AddPlayer(logPlayers, player, id);
+                AddPlayer(logPlayers,player);
             }
         }
 
-        var logEntities = new List<AdminLogEntity>(entities?.Count ?? 0);
+        var logEntities = new List<AdminLogEventEntityWriteData>(entities?.Count ?? 0);
         if (entities != null)
         {
             foreach (var entity in entities)
             {
-                AddEntity(logEntities, (int) entity.Entity, entity.Role, id, entity.PrototypeId, entity.EntityName);
+                AddEntity(logEntities, (int) entity.Entity, entity.Role, entity.PrototypeId, entity.EntityName);
             }
         }
 
@@ -445,13 +463,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             message = message.Replace("\0", "");
         }
 
-        var log = new AdminLog
+        var log = new AdminLogEventWriteData
         {
-            Id = id,
             RoundId = _currentRoundId,
             Type = type,
             Impact = impact,
-            Date = DateTime.UtcNow,
+            OccurredAt = DateTime.UtcNow,
             Message = message,
             Json = json,
             Players = logPlayers,
@@ -469,26 +486,31 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
     }
 
-    private List<AdminLogPlayer> GetPlayers(Dictionary<string, object?> values, int logId)
+    private List<Guid> GetPlayers(Dictionary<string, object?> values, int logId)
     {
-        List<AdminLogPlayer> players = new();
+        return GetPlayers(values);
+    }
+
+    private List<Guid> GetPlayers(Dictionary<string, object?> values)
+    {
+        List<Guid> players = new();
         foreach (var value in values.Values)
         {
             switch (value)
             {
                 case SerializablePlayer player:
-                    AddPlayer(players, player.UserId, logId);
+                    AddPlayer(players, player.UserId);
                     continue;
 
                 case EntityStringRepresentation rep:
                     if (rep.Session is {} session)
-                        AddPlayer(players, session.UserId.UserId, logId);
+                        AddPlayer(players, session.UserId.UserId);
                     continue;
 
                 case IAdminLogsPlayerValue playerValue:
                     foreach (var player in playerValue.Players)
                     {
-                        AddPlayer(players, player, logId);
+                        AddPlayer(players, player);
                     }
 
                     break;
@@ -498,49 +520,91 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         return players;
     }
 
-    private List<AdminLogEntity> GetEntities(Dictionary<string, object?> values, int logId)
+     private List<AdminLogEventEntityWriteData> GetEntities(Dictionary<string, object?> values, LogType type)
     {
-        var entities = new List<AdminLogEntity>();
+        var entities = new List<AdminLogEventEntityWriteData>();
 
         foreach (var (key, value) in values)
         {
-            var role = GetEntityRole(key);
+            var role = GetEntityRole(type, key);
 
             if (value is EntityStringRepresentation rep)
             {
-                AddEntity(entities, (int) rep.Uid, role, logId, rep.Prototype, rep.Name);
+                AddEntity(entities, (int) rep.Uid, role, rep.Prototype, rep.Name);
             }
         }
 
         return entities;
     }
 
-    private static AdminLogEntityRole GetEntityRole(string key)
+    private static AdminLogEntityRole GetEntityRole(LogType type, string key)
     {
         key = key.ToLowerInvariant();
-        if (key.Contains("actor") || key.Contains("user") || key.Contains("attacker"))
+
+        // Prefer explicit log-type semantics for events,
+        // then fall back to generic key-based role inference for all other log types.
+        // Yes this is switching hell,
+        switch (type)
+        {
+            case LogType.Damaged:
+            case LogType.Healed:
+            case LogType.MeleeHit:
+            case LogType.BulletHit:
+            case LogType.HitScanHit:
+            case LogType.Electrocution:
+            case LogType.ThrowHit:
+                if (ContainsAny(key, "attacker", "source", "shooter", "thrower", "actor", "user"))
+                    return AdminLogEntityRole.Actor;
+                if (ContainsAny(key, "victim", "target"))
+                    return AdminLogEntityRole.Victim;
+                if (ContainsAny(key, "weapon", "tool", "instrument", "projectile", "thrown"))
+                    return AdminLogEntityRole.Tool;
+                break;
+
+            case LogType.Pickup:
+            case LogType.Drop:
+            case LogType.Throw:
+            case LogType.Landed:
+                if (ContainsAny(key, "actor", "user", "thrower"))
+                    return AdminLogEntityRole.Actor;
+                if (ContainsAny(key, "item", "thrown", "target"))
+                    return AdminLogEntityRole.Target;
+                if (ContainsAny(key, "container", "slot"))
+                    return AdminLogEntityRole.Container;
+                break;
+        }
+
+        if (ContainsAny(key, "actor", "user", "attacker"))
             return AdminLogEntityRole.Actor;
         if (key.Contains("target"))
             return AdminLogEntityRole.Target;
-        if (key.Contains("tool") || key.Contains("weapon") || key.Contains("instrument"))
+        if (ContainsAny(key, "tool", "weapon", "instrument", "projectile"))
             return AdminLogEntityRole.Tool;
         if (key.Contains("victim"))
             return AdminLogEntityRole.Victim;
-        if (key.Contains("container") || key.Contains("slot"))
+        if (ContainsAny(key, "container", "slot"))
             return AdminLogEntityRole.Container;
-        if (key.Contains("location") || key.Contains("coord"))
-            return AdminLogEntityRole.Subject;
-        if (key.Contains("subject") || key.Contains("entity"))
+        if (ContainsAny(key, "location", "coord", "subject", "entity"))
             return AdminLogEntityRole.Subject;
 
         return AdminLogEntityRole.Other;
     }
 
+    private static bool ContainsAny(string input, params string[] values)
+    {
+        foreach (var value in values)
+        {
+            if (input.Contains(value))
+                return true;
+        }
+
+        return false;
+    }
+
     private void AddEntity(
-        List<AdminLogEntity> entities,
+        List<AdminLogEventEntityWriteData> entities,
         int entityUid,
         AdminLogEntityRole role,
-        int logId,
         string? prototypeId = null,
         string? entityName = null)
     {
@@ -550,9 +614,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 return;
         }
 
-        entities.Add(new AdminLogEntity
+        entities.Add(new AdminLogEventEntityWriteData
         {
-            LogId = logId,
             EntityUid = entityUid,
             Role = role,
             PrototypeId = prototypeId,
@@ -588,32 +651,27 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         return coordList;
     }
 
-    private void AddPlayer(List<AdminLogPlayer> players, Guid user, int logId)
+    private void AddPlayer(List<Guid> players, Guid user)
     {
-        // The majority of logs have a single player, or maybe two. Instead of allocating a List<AdminLogPlayer> and
+        // The majority of logs have a single player, or maybe two, not anymore :godo:. Instead of allocating a List<AdminLogPlayer> and
         // HashSet<Guid>, we just iterate over the list to check for duplicates.
         foreach (var player in players)
         {
-            if (player.PlayerUserId == user)
+            if (player == user)
                 return;
         }
 
-        players.Add(new AdminLogPlayer
-        {
-            LogId = logId,
-            PlayerUserId = user
-        });
+        players.Add(user);
     }
 
-    private void DoAdminAlerts(List<AdminLogPlayer> players, string message, LogImpact impact, LogStringHandler handler)
+    private void DoAdminAlerts(List<Guid> players, string message, LogImpact impact, LogStringHandler handler)
     {
         var adminLog = false;
         var logMessage = message;
         var playerNetEnts = new List<(NetEntity, string)>();
 
-        foreach (var player in players)
+        foreach (var id in players)
         {
-            var id = player.PlayerUserId;
 
             if (EntityManager.TrySystem(out AdminSystem? adminSys))
             {
