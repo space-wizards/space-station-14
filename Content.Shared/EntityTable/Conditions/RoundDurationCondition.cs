@@ -28,12 +28,7 @@ public sealed partial class RoundDurationCondition : EntityTableCondition
     {
         var gameTicker = entMan.System<SharedGameTicker>();
 
-        var duration = TimeSpan.Zero;
-
-        // We can't just use gameTicker.RoundDuration() because when we add roundstart GameRules, we're in the lobby,
-        // which means the RoundStartTimeSpan doesn't have the start of the round yet
-        if (gameTicker.RoundStartTimeSpan != TimeSpan.Zero)
-            duration = gameTicker.RoundDuration();
+        var duration = gameTicker.RoundDuration();
 
         return duration >= Min && duration <= Max;
     }
