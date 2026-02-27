@@ -15,6 +15,16 @@ public sealed class SlurredSystem : SharedSlurredSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    /// <summary>
+    /// Divisor applied to total seconds used to get the odds of slurred speech occuring.
+    /// </summary>
+    private const float SlurredModifier = 1100f;
+
+    /// <summary>
+    /// Minimum amount of time on the slurred accent for it to start taking effect.
+    /// </summary>
+    private const float SlurredThreshold = 80f;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<SlurredAccentComponent, AccentGetEvent>(OnAccent);
@@ -23,23 +33,18 @@ public sealed class SlurredSystem : SharedSlurredSystem
     }
 
     /// <summary>
-    ///     Slur chance scales with "drunkeness", which is just measured using the time remaining on the status effect.
+    ///     Slur chance scales with the time remaining on any status effect with the SlurredAccentComponent.
+    ///     Typically, this is equivalent to "drunkenness" on the DrunkStatusEffect
     /// </summary>
     private float GetProbabilityScale(EntityUid uid)
     {
-        if (!_status.TryGetMaxTime<DrunkStatusEffectComponent>(uid, out var time))
+        if (!_status.TryGetMaxTime<SlurredAccentComponent>(uid, out var time))
             return 0;
 
         // This is a magic number. Why this value? No clue it was made 3 years before I refactored this.
-        var magic = SharedDrunkSystem.MagicNumber;
+        var magic = time.Item2 == null ? SlurredModifier : (float) (time.Item2 - _timing.CurTime).Value.TotalSeconds - SlurredThreshold;
 
-        if (time.Item2 != null)
-        {
-            var curTime = _timing.CurTime;
-            magic = (float) (time.Item2 - curTime).Value.TotalSeconds - 80f;
-        }
-
-        return Math.Clamp(magic / SharedDrunkSystem.MagicNumber, 0f, 1f);
+        return Math.Clamp(magic / SlurredModifier, 0f, 1f);
     }
 
     private void OnAccent(Entity<SlurredAccentComponent> entity, ref AccentGetEvent args)

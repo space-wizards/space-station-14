@@ -1,3 +1,4 @@
+using Content.Shared.Explosion.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components.Effects;
@@ -7,8 +8,6 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// TargetUser will only work of the user has ExplosiveComponent as well.
 /// The User will be logged in the admin logs.
 /// </summary>
-/// <summary>
-/// TODO: Allow this to work without an ExplosiveComponent on the user via QueueExplosion.
-/// </summary>
+/// <seealso cref="ExplosionOnTriggerComponent"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ExplodeOnTriggerComponent : BaseXOnTriggerComponent;

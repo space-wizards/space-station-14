@@ -339,7 +339,7 @@ namespace Content.Shared.Containers.ItemSlots
         private bool CanInsertWhitelist(EntityUid usedUid, ItemSlot slot)
         {
             if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid)
-                || _whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
+                || _whitelistSystem.IsWhitelistPass(slot.Blacklist, usedUid))
                 return false;
             return true;
         }
@@ -573,7 +573,7 @@ namespace Content.Shared.Containers.ItemSlots
             item = slot.Item;
 
             // This handles user logic
-            if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value))
+            if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value, showPopup: true))
                 return false;
 
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
@@ -813,7 +813,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!component.Slots.TryGetValue(args.SlotId, out var slot))
                 return;
 
-            if (args.TryEject && slot.HasItem)
+            if (args.TryEject && slot.HasItem && !slot.DisableEject)
                 TryEjectToHands(uid, slot, args.Actor, true);
             else if (args.TryInsert && !slot.HasItem)
                 TryInsertFromHand(uid, slot, args.Actor);

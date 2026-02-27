@@ -1,38 +1,16 @@
 - type: entity
-  parent: DrinkBase
-  id: FlaskBase
   abstract: true
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable]
+  id: FlaskBase
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
   - type: Sprite
-    state: icon
     sprite: Objects/Consumable/Drinks/flask.rsi
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 300
   - type: FitsInDispenser
     solution: drink
-  - type: ExaminableSolution
-    examinableWhileClosed: false
-
-- type: entity
-  id: DrinkFlaskVisualsOpenable
-  abstract: true
-  components:
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
-  - type: Appearance
-  - type: Sprite
-    layers:
-    - state: icon
-      map: ["enum.OpenableVisuals.Layer"]
   - type: Openable
     sound:
       collection: flaskOpenSounds
@@ -43,7 +21,22 @@
 # Flasks
 
 - type: entity
-  parent: [FlaskBase, DrinkFlaskVisualsOpenable]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase]
+  id: DrinkFlaskOld
+  name: old flask
+  description: A decrepit old flask, its lid seems to be missing.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/flask_old.rsi
+  - type: FitsInDispenser
+    solution: drink
+
+- type: entity
+  parent: FlaskBase
   id: DrinkShinyFlask
   name: shiny flask
   description: A shiny metal flask. It appears to have a Greek symbol inscribed on it.
@@ -52,7 +45,7 @@
     sprite: Objects/Consumable/Drinks/shinyflask.rsi
 
 - type: entity
-  parent: [FlaskBase, DrinkFlaskVisualsOpenable]
+  parent: FlaskBase
   id: DrinkMREFlask
   suffix: Full
   name: MRE flask
@@ -70,7 +63,7 @@
     solution: drink
 
 - type: entity
-  parent: [FlaskBase, DrinkFlaskVisualsOpenable]
+  parent: FlaskBase
   id: DrinkDetFlask
   name: inspector's flask
   description: A metal flask with a leather band and golden badge belonging to the inspector.
@@ -79,7 +72,7 @@
     sprite: Objects/Consumable/Drinks/detflask.rsi
 
 - type: entity
-  parent: [FlaskBase, DrinkFlaskVisualsOpenable]
+  parent: FlaskBase
   id: DrinkHosFlask
   name: hos's flask
   description: A metal flask, fit for a hard working HoS.
@@ -88,7 +81,7 @@
     sprite: Objects/Consumable/Drinks/hosflask.rsi
 
 - type: entity
-  parent: [FlaskBase, DrinkFlaskVisualsOpenable]
+  parent: FlaskBase
   id: DrinkFlask
   name: captain's flask
   description: A metal flask belonging to the captain.
@@ -97,25 +90,16 @@
     sprite: Objects/Consumable/Drinks/flask.rsi
 
 - type: entity
-  parent: [FlaskBase, DrinkFlaskVisualsOpenable]
+  parent: FlaskBase
   id: DrinkFlaskBar
-  name: bar flask
-  description: A metal flask often given out by the bartender on loan. Don't forget to return it!
+  name: flask
+  description: A reusable metal flask. Classier than drinking straight from a bottle.
   components:
     - type: Sprite
       sprite: Objects/Consumable/Drinks/barflask.rsi
 
 - type: entity
   parent: FlaskBase
-  id: DrinkFlaskOld
-  name: old flask
-  description: A decrepit old flask, its lid seems to be missing.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/flask_old.rsi
-
-- type: entity
-  parent: [FlaskBase, DrinkFlaskVisualsOpenable]
   id: DrinkLithiumFlask
   name: lithium flask
   description: A flask with a Lithium Atom symbol on it.
@@ -124,10 +108,14 @@
     sprite: Objects/Consumable/Drinks/lithiumflask.rsi
 
 - type: entity
-  parent: [FlaskBase, DrinkFlaskVisualsOpenable]
+  parent: FlaskBase
   id: DrinkVacuumFlask
   name: vacuum flask
   description: Keeping your drinks at the perfect temperature since 1892.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vacuumflask.rsi
+  - type: Tool
+    qualities:
+    - Rolling # Perfectly cylindrical flask
+    speedModifier: 0.75

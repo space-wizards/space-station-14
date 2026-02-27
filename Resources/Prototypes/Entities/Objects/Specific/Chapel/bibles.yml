@@ -1,5 +1,5 @@
 - type: entity
-  name: bible
+  name: space bible
   description: New Interstellar Version 2340.
   parent: BaseStorageItem
   id: Bible
@@ -16,8 +16,8 @@
         Brute: 15
         Airloss: 15
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
-      groups:
-        Burn: 10
+      types:
+        Heat: 10
   - type: MeleeWeapon
     soundHit:
       collection: Punch
@@ -96,21 +96,10 @@
     event: !type:SummonActionEvent
 
 - type: entity
-  parent: Bible
-  name: tanakh
-  description: "For God's chosen crewmembers"
-  id: BibleTanakh
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/tanakh.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/tanakh.rsi
-
-- type: entity
-  parent: Bible
-  name: druidic tablet
-  description: "It's the mystery of the druids!"
   id: BibleDruid
+  name: druidic tablet
+  parent: Bible
+  description: "It's the mystery of the druids!"
   components:
   - type: Sprite
     sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
@@ -118,10 +107,10 @@
     sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
 
 - type: entity
-  parent: Bible
-  name: communist manifesto
-  description: "Remove the mask of humanity from Capital."
   id: BibleCommunistManifesto
+  name: communist manifesto
+  parent: Bible
+  description: "Remove the mask of humanity from Capital."
   components:
   - type: Sprite
     sprite: Objects/Specific/Chapel/communistmanifesto.rsi
@@ -129,23 +118,45 @@
     sprite: Objects/Specific/Chapel/communistmanifesto.rsi
 
 - type: entity
+  id: BibleNarsie
+  name: tome of nar'sie
   parent: Bible
-  name: satanic bible
-  description: "What could possibly go wrong?"
-  id: BibleSatanic
+  description: "What could possibly go wrong with a book covered in blood?"
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chapel/satanicbible.rsi
+    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
   - type: Item
-    sprite: Objects/Specific/Chapel/satanicbible.rsi
+    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
 
 - type: entity
-  parent: Bible
-  name: codex nanotrasimus
-  description: "A familiar book containing the Sacred Operating Procedures."
   id: BibleNanoTrasen
+  name: codex nanotrasimus
+  parent: Bible
+  description: "A familiar book containing the Sacred Operating Procedures."
   components:
   - type: Sprite
     sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
   - type: Item
     sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
+
+- type: entity
+  id: BibleHonk
+  name: mirth of the honkmother
+  parent: Bible
+  description: "Oh great and glorious Mother, Mistress of Mirth, Matron of Mask and Merriments, Blessed is she amongst us jesters."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/honk.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/honk.rsi
+
+- type: entity
+  id: BibleRatvar
+  name: tablet of ratvar
+  parent: Bible
+  description: "A holy relic of the Clockwork Cult, blessed by the Clockwork Justice, Ratvar."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi

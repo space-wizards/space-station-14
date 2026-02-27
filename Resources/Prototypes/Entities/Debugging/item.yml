@@ -5,9 +5,6 @@
   description: What is it...?
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Sprite
     sprite: Objects/Misc/skub.rsi
     state: icon

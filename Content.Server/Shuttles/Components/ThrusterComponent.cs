@@ -11,6 +11,12 @@ namespace Content.Server.Shuttles.Components
     public sealed partial class ThrusterComponent : Component
     {
         /// <summary>
+        /// If the thruster can be toggled on or off via interaction
+        /// </summary>
+        [DataField]
+        public bool CanToggle = true;
+
+        /// <summary>
         /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]

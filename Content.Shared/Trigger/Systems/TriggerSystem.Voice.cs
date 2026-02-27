@@ -11,18 +11,21 @@ public sealed partial class TriggerSystem
 {
     private void InitializeVoice()
     {
-        SubscribeLocalEvent<TriggerOnVoiceComponent, ComponentInit>(OnVoiceInit);
+        SubscribeLocalEvent<TriggerOnVoiceComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TriggerOnVoiceComponent, ExaminedEvent>(OnVoiceExamine);
         SubscribeLocalEvent<TriggerOnVoiceComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<TriggerOnVoiceComponent, GetVerbsEvent<AlternativeVerb>>(OnVoiceGetAltVerbs);
     }
 
-    private void OnVoiceInit(Entity<TriggerOnVoiceComponent> ent, ref ComponentInit args)
+    private void OnMapInit(Entity<TriggerOnVoiceComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.IsListening)
-            EnsureComp<ActiveListenerComponent>(ent).Range = ent.Comp.ListenRange;
-        else
-            RemCompDeferred<ActiveListenerComponent>(ent);
+        if (ent.Comp.DefaultKeyPhrase != null)
+        {
+            ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
+            Dirty(ent);
+        }
+
+        UpdateListening(ent);
     }
 
     private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
@@ -94,6 +97,19 @@ public sealed partial class TriggerSystem
             Priority = 1
         });
 
+        if (ent.Comp.DefaultKeyPhrase != null
+            && ent.Comp.KeyPhrase != Loc.GetString(ent.Comp.DefaultKeyPhrase))
+        {
+            args.Verbs.Add(new AlternativeVerb
+            {
+                Text = Loc.GetString(ent.Comp.ResetRecordingVerb),
+                Act = () =>
+                {
+                    SetToDefault(ent, user);
+                },
+            });
+        }
+
         if (string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase))
             return;
 
@@ -105,6 +121,17 @@ public sealed partial class TriggerSystem
                 ClearRecording(ent);
             }
         });
+    }
+
+    /// <summary>
+    /// Updates the presence/absence of the ActiveListenerComponent based on IsListening.
+    /// </summary>
+    private void UpdateListening(Entity<TriggerOnVoiceComponent> ent)
+    {
+        if (ent.Comp.IsListening)
+            EnsureComp<ActiveListenerComponent>(ent).Range = ent.Comp.ListenRange;
+        else
+            RemCompDeferred<ActiveListenerComponent>(ent);
     }
 
     /// <summary>
@@ -162,5 +189,24 @@ public sealed partial class TriggerSystem
         ent.Comp.IsRecording = false;
         Dirty(ent);
         RemComp<ActiveListenerComponent>(ent);
+    }
+
+    /// <summary>
+    /// Resets the current key phrase to default.
+    /// </summary>
+    public void SetToDefault(Entity<TriggerOnVoiceComponent> ent, EntityUid? user = null)
+    {
+        if (ent.Comp.DefaultKeyPhrase == null)
+            return;
+
+        ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
+        ent.Comp.IsRecording = false;
+        Dirty(ent);
+        UpdateListening(ent);
+
+        _adminLogger.Add(LogType.Trigger, LogImpact.Low,
+            $"A voice-trigger on {ToPrettyString(ent):entity} has been reset to default keyphrase: '{ent.Comp.KeyPhrase}'. User: {ToPrettyString(user):speaker}");
+
+        _popup.PopupPredicted(Loc.GetString("trigger-on-voice-set-default", ("keyphrase", ent.Comp.KeyPhrase)), ent, user);
     }
 }

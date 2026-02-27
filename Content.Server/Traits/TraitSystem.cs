@@ -41,11 +41,18 @@ public sealed class TraitSystem : EntitySystem
             }
 
             if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mob) ||
-                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mob))
+                _whitelistSystem.IsWhitelistPass(traitPrototype.Blacklist, args.Mob))
                 continue;
 
             // Add all components required by the prototype
-            EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
+            if (traitPrototype.Components.Count > 0)
+                EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
+
+            // Add all JobSpecials required by the prototype
+            foreach (var special in traitPrototype.Specials)
+            {
+                special.AfterEquip(args.Mob);
+            }
 
             // Add item required by the trait
             if (traitPrototype.TraitGear == null)

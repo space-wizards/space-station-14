@@ -215,13 +215,10 @@ public sealed class CargoTest
 
     [TestPrototypes]
     private const string StackProto = @"
-- type: entity
-  id: A
-
 - type: stack
   id: StackProto
   name: stack-steel
-  spawn: A
+  spawn: StackEnt
 
 - type: entity
   id: StackEnt

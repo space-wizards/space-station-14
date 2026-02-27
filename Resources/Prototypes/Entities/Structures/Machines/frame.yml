@@ -150,6 +150,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: InteractionOutline
     - type: Transform
       anchored: true
       noRot: true

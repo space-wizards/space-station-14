@@ -64,6 +64,15 @@
       ]
     },
     {
+      "name": "dead",
+      "delays": [
+        [
+          0.4,
+          0.4
+        ]
+      ]
+    },
+    {
       "name": "full",
       "delays": [
         [

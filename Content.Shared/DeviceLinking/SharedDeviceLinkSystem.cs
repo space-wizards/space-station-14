@@ -215,6 +215,17 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     }
 
     /// <summary>
+    /// Gets the entities linked to a specific source port.
+    /// </summary>
+    public HashSet<EntityUid> GetLinkedSinks(Entity<DeviceLinkSourceComponent?> source, ProtoId<SourcePortPrototype> port)
+    {
+        if (!Resolve(source, ref source.Comp) || !source.Comp.Outputs.TryGetValue(port, out var linked))
+            return new HashSet<EntityUid>(); // not a source or not linked
+
+        return new HashSet<EntityUid>(linked); // clone to prevent modifying the original
+    }
+
+    /// <summary>
     /// Returns the default links for the given list of source port prototypes
     /// </summary>
     /// <param name="sources">The list of source port prototypes to get the default links for</param>
