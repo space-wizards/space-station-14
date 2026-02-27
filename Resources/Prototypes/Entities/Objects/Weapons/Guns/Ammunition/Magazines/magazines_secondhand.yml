@@ -1,74 +1,51 @@
 # Second-hand (partial) magazine variants for the Second Hand uplink tab.
-# These inherit from their base counterparts but have reduced capacity due to a damaged spring or worn housing.
+# Each spawns with a random round count between half and full capacity.
 
-# Partial Viper high-capacity magazine: 7 rounds instead of 15.
-# The spring tension is shot and the feed lips are bent.
 - type: entity
   parent: MagazinePistolHighCapacity
   id: MagazinePistolHighCapacityWorn
-  suffix: Second Hand, 7/15
+  suffix: Second Hand
   components:
-  - type: BallisticAmmoProvider
-    capacity: 7
-    proto: CartridgePistol
+  - type: RandomAmmoFill
 
-# Partial SMG magazine: 15 rounds instead of 30.
-# The magazine housing is cracked and the follower sticks halfway.
 - type: entity
   parent: MagazinePistolSubMachineGun
   id: MagazinePistolSubMachineGunWorn
-  suffix: Second Hand, 15/30
+  suffix: Second Hand
   components:
-  - type: BallisticAmmoProvider
-    capacity: 15
-    proto: CartridgePistol
+  - type: RandomAmmoFill
 
-# Partial Cobra magazine: 5 rounds instead of 10.
-# The cracked follower jams against the feed lips halfway up.
 - type: entity
   parent: MagazinePistolCaselessRifle
   id: MagazinePistolCaselessRifleWorn
-  suffix: Second Hand, 5/10
+  suffix: Second Hand
   components:
-  - type: BallisticAmmoProvider
-    capacity: 5
+  - type: RandomAmmoFill
 
-# Partial Bulldog pellet drum: 4 rounds instead of 8.
-# The latch that holds shells in the back half of the drum is snapped off.
 - type: entity
   parent: MagazineShotgun
   id: MagazineShotgunWorn
-  suffix: Second Hand, 4/8
+  suffix: Second Hand
   components:
-  - type: BallisticAmmoProvider
-    capacity: 4
+  - type: RandomAmmoFill
 
-# Partial Bulldog slug drum: 4 rounds instead of 8.
-# Same housing damage as the pellet drum but loaded with slugs.
 - type: entity
   parent: MagazineShotgunSlug
   id: MagazineShotgunSlugWorn
-  suffix: Second Hand, 4/8
+  suffix: Second Hand
   components:
-  - type: BallisticAmmoProvider
-    capacity: 4
+  - type: RandomAmmoFill
 
-# Partial rifle magazine: 12 rounds instead of 25.
-# The cracked polymer shell lets the follower drag.
 - type: entity
   parent: MagazineRifle
   id: MagazineRifleWorn
-  suffix: Second Hand, 12/25
+  suffix: Second Hand
   components:
-  - type: BallisticAmmoProvider
-    capacity: 12
+  - type: RandomAmmoFill
 
-# Partial light rifle ammo box: 30 rounds instead of 60.
-# Half the rounds are corroded or deformed.
 - type: entity
   parent: MagazineBoxLightRifle
   id: MagazineBoxLightRifleWorn
-  suffix: Second Hand, 30/60
+  suffix: Second Hand
   components:
-  - type: BallisticAmmoProvider
-    capacity: 30
+  - type: RandomAmmoFill

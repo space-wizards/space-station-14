@@ -45,25 +45,25 @@ uplink-second-hand-edagger-worn-desc = A dark ink pen with a loose power connect
 
 # Ammo
 uplink-second-hand-magazine-viper-worn-name = Worn Viper Magazine (.35 auto)
-uplink-second-hand-magazine-viper-worn-desc = A 15-round Viper magazine with a damaged spring and bent feed lips. Only reliable for 7 rounds before the feed becomes erratic. Better than nothing if you're desperate.
+uplink-second-hand-magazine-viper-worn-desc = A 15-round Viper magazine with a damaged spring and bent feed lips. Between 7 and 15 rounds remain — how many is anyone's guess until you check.
 
 uplink-second-hand-magazine-smg-worn-name = Worn SMG Magazine (.35 auto)
-uplink-second-hand-magazine-smg-worn-desc = A 30-round SMG magazine with a cracked polymer housing and a follower that sticks halfway. You'll get 15 rounds out of it. The other 15 are more of a suggestion.
+uplink-second-hand-magazine-smg-worn-desc = A 30-round SMG magazine with a cracked polymer housing and a sticky follower. Somewhere between 15 and 30 rounds remain. Check before you commit.
 
 uplink-second-hand-magazine-caseless-worn-name = Worn Caseless Rifle Magazine (.20 caseless)
-uplink-second-hand-magazine-caseless-worn-desc = A 10-round caseless magazine with corroded internals. Only 5 rounds will feed reliably before the mechanism jams. Half a magazine is still half a magazine.
+uplink-second-hand-magazine-caseless-worn-desc = A 10-round caseless magazine with corroded internals. Between 5 and 10 rounds remain. Half a magazine is still half a magazine.
 
 uplink-second-hand-magazine-shotgun-worn-name = Worn Shotgun Drum (12ga pellet)
-uplink-second-hand-magazine-shotgun-worn-desc = A 12-gauge drum with a spring that's mostly given up. Only 4 of the usual 8 shells will cycle. The other 4 just rattle around uselessly.
+uplink-second-hand-magazine-shotgun-worn-desc = A 12-gauge drum with a spring that's mostly given up. Between 4 and 8 shells remain. The rest rattle uselessly or never made it in at all.
 
 uplink-second-hand-magazine-shotgun-slug-worn-name = Worn Shotgun Drum (12ga slug)
-uplink-second-hand-magazine-shotgun-slug-worn-desc = A 12-gauge slug drum with a partially seized feed mechanism. Reliable for 4 of the 8 slugs. The other 4 aren't going anywhere.
+uplink-second-hand-magazine-shotgun-slug-worn-desc = A 12-gauge slug drum with a partially seized feed mechanism. Between 4 and 8 slugs remain — which is enough to ruin someone's day.
 
 uplink-second-hand-magazine-rifle-worn-name = Worn Rifle Magazine (.30 rifle)
-uplink-second-hand-magazine-rifle-worn-desc = A 25-round rifle magazine with a cracked follower. Only 12 rounds before the feed starts double-stacking. Functional for a short engagement.
+uplink-second-hand-magazine-rifle-worn-desc = A 25-round rifle magazine with a cracked polymer shell. Between 12 and 25 rounds remain. The follower drags but it feeds.
 
 uplink-second-hand-magazine-box-light-rifle-worn-name = Worn Light Rifle Box (.30 LR)
-uplink-second-hand-magazine-box-light-rifle-worn-desc = A 60-round box magazine that's been dropped on concrete one too many times. The internal track is bent — only 30 rounds feed cleanly. Still a lot of ammo.
+uplink-second-hand-magazine-box-light-rifle-worn-desc = A 60-round box magazine that's been through it. Between 30 and 60 rounds remain — the rest are corroded, deformed, or just missing. Still a lot of ammo either way.
 
 # Explosives
 uplink-second-hand-exgrenade-worn-name = Dud Explosive Grenade
