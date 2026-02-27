@@ -46,6 +46,8 @@
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <BoxContainer Name="TopRightContainer">
                     <BoxContainer Name="LogImpactContainer" Orientation="Horizontal"/>
+                    <Button Name="ToggleMetadataButton" Text="{Loc admin-logs-toggle-metadata}" ToggleMode="True" Pressed="False"
+                            StyleClasses="ButtonSquare"/>
                     <Control HorizontalExpand="True"/>
                     <Label Name="Count" Access="Public"/>
                     <Control HorizontalExpand="True"/>

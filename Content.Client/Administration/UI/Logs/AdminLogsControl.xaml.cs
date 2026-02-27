@@ -38,6 +38,8 @@ public sealed partial class AdminLogsControl : Control
         SelectAllPlayersButton.OnPressed += SelectAllPlayers;
         SelectNoPlayersButton.OnPressed += SelectNoPlayers;
 
+        ToggleMetadataButton.OnPressed += ToggleMetadataPressed;
+
         RoundSpinBox.IsValid = i => i > 0 && i <= CurrentRound;
         RoundSpinBox.ValueChanged += RoundSpinBoxChanged;
         RoundSpinBox.InitDefaultButtons();
@@ -56,6 +58,7 @@ public sealed partial class AdminLogsControl : Control
     private int TotalLogs { get; set; }
     private int RoundLogs { get; set; }
     public bool IncludeNonPlayerLogs { get; set; }
+    public bool ShowMetadata { get; set; } = true;
 
     public HashSet<LogType> SelectedTypes { get; } = new();
 
@@ -336,14 +339,23 @@ public sealed partial class AdminLogsControl : Control
             return false;
 
         // Check search
-        if (!label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
-            return false;
-
-        // Check search
         if (!LogMatchesSearch(label))
             return false;
 
         return true;
+    }
+
+    private void ToggleMetadataPressed(ButtonEventArgs args)
+    {
+        ShowMetadata = args.Button.Pressed;
+
+        foreach (var child in LogsContainer.Children)
+        {
+            if (child is not AdminLogLabel log)
+                continue;
+
+            log.SetShowMetadata(ShowMetadata);
+        }
     }
 
     private void TypeButtonPressed(ButtonEventArgs args)
@@ -577,6 +589,8 @@ public sealed partial class AdminLogsControl : Control
         IncludeNonPlayersButton.OnPressed -= IncludeNonPlayers;
         SelectAllPlayersButton.OnPressed -= SelectAllPlayers;
         SelectNoPlayersButton.OnPressed -= SelectNoPlayers;
+
+        ToggleMetadataButton.OnPressed -= ToggleMetadataPressed;
 
         RoundSpinBox.IsValid = null;
         RoundSpinBox.ValueChanged -= RoundSpinBoxChanged;
