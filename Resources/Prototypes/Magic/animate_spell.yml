@@ -17,12 +17,13 @@
       - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister
     blacklist:
       components:
+      - CartridgeAmmo # Prevents animating hard to kill materials.
       - MindContainer
       - NukeDisk
       - GravityGenerator
       - AnomalyGenerator
       - TegGenerator
-      - TegCirculator
+      - TegCirculator1
       - XenoArtifact
     event: !type:ChangeComponentsSpellEvent
       toAdd:
@@ -73,3 +74,4 @@
       - BlockMovement
       - Item
       - MeleeRequiresWield
+      - Destructible # Fixes invulerable animated objects. E.G Fragile mail, Recycler.
