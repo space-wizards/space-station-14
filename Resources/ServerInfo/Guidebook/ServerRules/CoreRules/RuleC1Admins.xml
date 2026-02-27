@@ -2,27 +2,27 @@
   # Core Rule 1 - Admins have final say
   [color=SlateGray][italic]Revision A, 2025-10-11[/italic][/color]
 
-  Admins may intervene in-game, finalize rule interpretations, and override rules within admin and ban policies to improve community experience.
+  Admins may intervene in-game, interpret rules, and override rules in accordance with admin and ban policies to improve community experience.
   - Admin policy https://docs.spacestation14.com/en/community/admin/wizards-den-admin-policy.html
   - Ban policy https://docs.spacestation14.com/en/community/admin/wizards-den-banning-policy.html
 
-  Do not dispute final rulings and actions. If you believe an admin has misruled on an issue or breached the admin and ban policies, you may begin the formal complaint process at https://forum.spacestation14.com/w/complaint-wizard
+  Do not dispute admin rulings and subsequent actions. If you believe an admin misruled an issue or breached the admin and ban policies, you may begin the formal complaint process at https://forum.spacestation14.com/w/complaint-wizard
 
   ## When and how to contact admins
-  You should report bugs, rule breaches, and raiders as soon as you spot them. You may also ask rule clarifications and gameplay questions. (Helpful admin messages state what and where the issue is, who the issue involves, and when the issue took place.)
+  You should report bugs, rule breaches, and raiders as soon as you spot them. You may ask rule clarifications and gameplay questions whenever. [color=SlateGray](Helpful admin messages state what and where the issue is, who the issue involves, and when the issue took place.)[/color]
   - For current round issues, use ahelp [keybind="OpenAHelp"/].
   - For current round raiders, mention the Wizard's Den Discord role '@Game Admin (Ping for Raiders)'.
   - For past round issues, use the Wizard's Den Forum Game Admin Message https://forum.spacestation14.com/w/game-admin-message/
   - For rule clarifications, use the Wizard's Den Discord channel #admin-questions https://discord.com/channels/310555209753690112/1125299494066597888 and the Wizard's Den Forum category Rule Clarifications https://forum.spacestation14.com/c/rule-clarifications/13
-  - For non-issues or admemes, use in-game prayers, faxes, phone calls, and the dead chat channel.
+  - For non-issues or admeme requests, use in-game prayers, faxes, phone calls, and the dead chat channel.
 
-  If you are unsure, contact an admin anyway. (Since misreports are better than missed reports, you are not penalized without warning. Players believe not reporting issues reduces admin workload, yet admins take only seconds to investigate issues that spiral without their attention.)
+  If you are unsure, contact an admin anyway. [color=SlateGray](Since misreports are better than missed reports, admins may offer leniency for self-reports and do not penalize without warning. Players believe not reporting issues reduces admin workload, yet admins take only seconds to investigate issues that would spiral without their attention.)[/color]
 
-  Do not make false reports or abuse admins.
+  Do not make false reports, spam admin messages, or abuse admins.
 
-  When using ahelp, do not disconnect or ignore messages without resolving the issue or notifying admins. (Admins are not obligated to respond to admin messages.)
+  During ahelp, do not disconnect or ignore ahelp messages without resolving the issue or notifying admins. [color=SlateGray](Admins are not obligated to respond to admin messages.)[/color]
 
-  Do not discuss admin messages with other players. Do not discuss staff complaints with other players or staff. (Ahelps, forum admin messages, and staff complaints are not publicized without permission or redaction of named parties.)
+  Do not discuss admin messages of active issues with other players. Do not discuss staff complaints with other players or staff. [color=SlateGray](Ahelps, forum admin messages, and staff complaints are not publicized without permission or redaction of named parties.)[/color]
 
   ## Examples
   [color=#449944]Appropriate:[/color]
@@ -33,9 +33,10 @@
 
   [color=#994444]Prohibited:[/color]
   - Checking for admins with unclear messages like "hello."
-  - Stating that you have reported someone.
-  - Arguing after a ruling.
-  - Acting hostile or immature towards admins.
+  - Spamming admin messages.
+  - Stating to other players that you have reported them.
+  - Arguing in bad faith or after a ruling.
+  - Acting hostile towards admins.
   - Discussing staff complaints through ahelp.
   - Requesting an admeme through ahelp.
 </Document>
