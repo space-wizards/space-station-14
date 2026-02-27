@@ -34,6 +34,8 @@
   - type: GuideHelp
     guides:
     - ExpandingRepairingStation
+  - type: RCDAmmo
+    charges: 1
 
 - type: entity
   parent: SheetMetalBase

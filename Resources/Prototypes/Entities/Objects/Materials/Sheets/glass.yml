@@ -49,6 +49,8 @@
     solutions:
       glass:
         canReact: false
+  - type: RCDAmmo
+    charges: 1
 
 - type: entity
   parent: SheetGlassBase
