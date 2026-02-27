@@ -43,7 +43,7 @@ public sealed class EntityEffectAuraSystem : EntitySystem
                 if (_whitelistSystem.IsWhitelistFail(comp.Whitelist, ent) || _whitelistSystem.IsWhitelistPass(comp.Blacklist, ent))
                     continue;
 
-                _effects.ApplyEffects(ent, comp.Effects, user: uid);
+                _effects.ApplyEffects(ent, comp.Effects, comp.Scale, uid);
 
                 if (comp.Alert != null && HasComp<AlertsComponent>(ent))
                 {

@@ -39,6 +39,12 @@ public sealed partial class EntityEffectAuraComponent : Component
     public EntityEffect[] Effects = default!;
 
     /// <summary>
+    /// Optional scale multiplier for the effects.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float Scale = 1f;
+
+    /// <summary>
     /// Alert that a person will receive when they get effects
     /// </summary>
     [DataField]

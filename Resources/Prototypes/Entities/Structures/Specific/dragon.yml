@@ -8,14 +8,12 @@
   - type: DragonRift
   - type: EntityEffectAura
     effects:
-    - !type:HealthChange
+    - !type:EvenHealthChange
       damage:
-        types:
-          Bloodloss: -1
-        groups:
-          Brute: -1.5
-          Toxin: -1
-          Burn: -1.5
+        Burn: -1.5
+        Toxin: -1.5
+        Airloss: -1.5
+        Brute: -1.5
     alert: HealAura
     whitelist:
       tags:
