@@ -5,7 +5,7 @@
   This is a zero-tolerance rule. You must wait until the round ends with the in-game round end summary and Wizard's Den Discord round end announcement to share round info.
 
   ## Live streams and voice calls
-  Hosts must kick and report attendees who connect to the same current round. [color=SlateGray](Hosts should use a stream delay to reduce current round info leaks and stream sniping.)[/color]
+  Hosts must report attendees who connect to the same current round. Hosts must also kick such players from the stream when possible. [color=SlateGray](Hosts should use a stream delay to reduce current round info leaks and stream sniping.)[/color]
 
   Attendees must not join the same current round as the host. Former attendees must wait until the round ends to join the host in-game.
 </Document>
