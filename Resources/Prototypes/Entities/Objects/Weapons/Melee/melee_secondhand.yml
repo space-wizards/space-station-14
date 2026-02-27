@@ -18,7 +18,7 @@
   - type: RandomDefects
   - type: LoosePowerConnector
 
-# Partial throwing knives kit: 4 knives instead of the usual 8.
+# Partial throwing knives kit: 3-8 knives depending on what's left in the box.
 - type: entity
   parent: ThrowingKnivesKit
   id: ThrowingKnivesKitWorn
@@ -26,6 +26,18 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      storagebase:
-        id: ThrowingKnife
-        amount: 4
+      storagebase: !type:AllSelector
+        children:
+        - id: ThrowingKnife  # always
+        - id: ThrowingKnife  # always
+        - id: ThrowingKnife  # always
+        - id: ThrowingKnife
+          prob: 0.5
+        - id: ThrowingKnife
+          prob: 0.5
+        - id: ThrowingKnife
+          prob: 0.5
+        - id: ThrowingKnife
+          prob: 0.5
+        - id: ThrowingKnife
+          prob: 0.5

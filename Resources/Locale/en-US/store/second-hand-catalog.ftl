@@ -34,8 +34,8 @@ uplink-second-hand-energy-crossbow-worn-desc = A mini energy crossbow with a fai
 
 # Melee
 
-uplink-second-hand-throwing-knives-worn-name = Partial Throwing Knives Kit
-uplink-second-hand-throwing-knives-worn-desc = Four syndicate throwing knives in a box that held eight. Someone used the other half — or lost them, which is more likely. Still sharp enough to ruin someone's day.
+uplink-second-hand-throwing-knives-worn-name = Throwing Knives Kit (Partial)
+uplink-second-hand-throwing-knives-worn-desc = A box of syndicate throwing knives, most of them. Someone got into this kit before it reached you — between three and eight remain. Still sharp enough to ruin someone's day.
 
 uplink-second-hand-esword-worn-name = Worn Energy Sword
 uplink-second-hand-esword-worn-desc = An energy sword with a loose power connector rattling around in the hilt. Ignites fine, cuts just as hard — until the connector loses contact mid-swing and the blade dies. Expect it about once every seven swings.
