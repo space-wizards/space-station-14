@@ -40,7 +40,7 @@
           min: 20
         damage:
           types:
-            Blunt: -2
+            Blunt: 2
       - !type:Jitter
         conditions:
         - !type:ReagentCondition
@@ -634,8 +634,8 @@
       effects:
       - !type:EvenHealthChange
         damage:
-          Brute: -3.5
-          Airloss: -2.5
+          Brute: -1.75
+          Airloss: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
