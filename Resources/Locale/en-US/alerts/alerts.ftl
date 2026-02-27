@@ -126,3 +126,6 @@ alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
 
 alerts-heal-aura-name = Heal aura
 alerts-heal-aura-desc = It heals you!
+
+alerts-prying-name = Prying
+alerts-prying-desc = You can innately pry doors open.
