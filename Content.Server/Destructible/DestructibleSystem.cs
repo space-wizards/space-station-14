@@ -18,7 +18,6 @@ using Content.Shared.Gibbing;
 using Content.Shared.Humanoid;
 using Content.Shared.Trigger.Systems;
 using JetBrains.Annotations;
-using Robust.Server.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -32,7 +31,6 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     public new IEntityManager EntityManager => base.EntityManager;
 
     [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
-    [Dependency] public readonly AudioSystem AudioSystem = default!;
     [Dependency] public readonly GibbingSystem Gibbing = default!;
     [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
     [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
