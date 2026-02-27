@@ -46,7 +46,7 @@ public sealed partial class DamageableComponent : Component
     /// <remarks>
     ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
     /// </remarks>
-    [DataField(readOnly: true)] //TODO FULL GAME SAVE
+    [DataField]
     public DamageSpecifier Damage = new();
 
     /// <summary>
@@ -93,13 +93,13 @@ public sealed partial class DamageableComponent : Component
 
 [Serializable, NetSerializable]
 public sealed class DamageableComponentState(
-    Dictionary<string, FixedPoint2> damageDict,
+    DamageSpecifier damage,
     ProtoId<DamageContainerPrototype>? damageContainerId,
     ProtoId<DamageModifierSetPrototype>? modifierSetId,
     FixedPoint2? healthBarThreshold)
     : ComponentState
 {
-    public readonly Dictionary<string, FixedPoint2> DamageDict = damageDict;
+    public readonly DamageSpecifier Damage = damage;
     public readonly ProtoId<DamageContainerPrototype>? DamageContainerId = damageContainerId;
     public readonly ProtoId<DamageModifierSetPrototype>? ModifierSetId = modifierSetId;
     public readonly FixedPoint2? HealthBarThreshold = healthBarThreshold;
