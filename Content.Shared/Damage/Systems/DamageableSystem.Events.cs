@@ -165,22 +165,6 @@ public sealed partial class DamageableSystem
     /// </summary>
     private void DamageableInit(Entity<DamageableComponent> ent, ref ComponentInit _)
     {
-        if (
-            ent.Comp.DamageContainerID is null ||
-            !_prototypeManager.Resolve(ent.Comp.DamageContainerID, out var damageContainerPrototype)
-        )
-        {
-            // No DamageContainerPrototype was given. So we will allow the container to support all damage types
-            foreach (var type in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
-            {
-                ent.Comp.Damage.DamageDict.TryAdd(type.ID, FixedPoint2.Zero);
-            }
-        }
-        else
-        {
-
-        }
-
         ent.Comp.Damage.GetDamagePerGroup(_prototypeManager, ent.Comp.DamagePerGroup);
         ent.Comp.TotalDamage = ent.Comp.Damage.GetTotal();
     }
