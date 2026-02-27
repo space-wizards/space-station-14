@@ -20,7 +20,8 @@ public sealed partial class DamageableSystem
         SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
         SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<DamageableComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
+        SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
+        SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
 
         _appearanceQuery = GetEntityQuery<AppearanceComponent>();
         _damageableQuery = GetEntityQuery<DamageableComponent>();
@@ -155,11 +156,6 @@ public sealed partial class DamageableSystem
         }
     }
 
-    private void OnAfterAutoHandleState(Entity<DamageableComponent> ent, ref AfterAutoHandleStateEvent args)
-    {
-        OnEntityDamageChanged(ent);
-    }
-
     /// <summary>
     ///     Initialize a damageable component
     /// </summary>
@@ -189,6 +185,37 @@ public sealed partial class DamageableSystem
         _mobThreshold.SetAllowRevives(ent, true);
         ClearAllDamage(ent.AsNullable());
         _mobThreshold.SetAllowRevives(ent, false);
+    }
+
+    private void DamageableGetState(Entity<DamageableComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new DamageableComponentState(
+            _netMan.IsServer ? ent.Comp.Damage : ent.Comp.Damage.Clone(),
+            ent.Comp.DamageContainerID,
+            ent.Comp.DamageModifierSetId,
+            ent.Comp.HealthBarThreshold
+        );
+    }
+
+    private void DamageableHandleState(Entity<DamageableComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not DamageableComponentState state)
+            return;
+
+        ent.Comp.DamageContainerID = state.DamageContainerId;
+        ent.Comp.DamageModifierSetId = state.ModifierSetId;
+        ent.Comp.HealthBarThreshold = state.HealthBarThreshold;
+
+        // Has the damage actually changed?
+        var delta = state.Damage - ent.Comp.Damage;
+        delta.TrimZeros();
+
+        if (delta.Empty)
+            return;
+
+        ent.Comp.Damage = state.Damage;
+
+        OnEntityDamageChanged(ent, delta);
     }
 }
 
