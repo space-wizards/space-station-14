@@ -100,8 +100,6 @@
     damage:
       types:
         Heat: 42
-
-
 - type: entity
   parent: BasicHitscan
   id: RedLaserPractice
