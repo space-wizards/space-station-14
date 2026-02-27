@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Shared.FeedbackSystem;
 using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
@@ -20,13 +19,14 @@ public sealed partial class FeedbackSystem : EntitySystem
 
     private void OnRoundEnd(RoundEndMessageEvent args)
     {
-        var showFeedbackPrototypes = _feedbackManager.GetOriginFeedbackPrototypes(true, true)
-            .Select(x => _prototypeManager.Index(x))
-            .Where(x => _gameTicker.IsGameRuleAdded(x.RuleWhitelist))
-            .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
-            .OrderBy(x => x.Id)
-            .ToList();
+        var validPopups = new List<ProtoId<FeedbackPopupPrototype>>();
+        foreach (var feedback in _feedbackManager.GetOriginFeedbackPrototypes(true, true))
+        {
+            if (_gameTicker.IsGameRuleAdded(_prototypeManager.Index(feedback).RuleWhitelist))
+                validPopups.Add(feedback);
+        }
 
-        _feedbackManager.SendToAllSessions(showFeedbackPrototypes);
+        if (validPopups.Count > 0)
+            _feedbackManager.SendToAllSessions(validPopups);
     }
 }
