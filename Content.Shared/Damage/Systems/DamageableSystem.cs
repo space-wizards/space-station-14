@@ -37,6 +37,8 @@ public sealed partial class DamageableSystem : EntitySystem
     public float UniversalTopicalsHealModifier { get; private set; } = 1f;
     public float UniversalMobDamageModifier { get; private set; } = 1f;
 
+    private Dictionary<ProtoId<DamageContainerPrototype>, HashSet<ProtoId<DamageTypePrototype>>> _supportedTypesByContainer = new();
+
     /// <summary>
     ///     If the damage in a DamageableComponent was changed this function should be called.
     /// </summary>

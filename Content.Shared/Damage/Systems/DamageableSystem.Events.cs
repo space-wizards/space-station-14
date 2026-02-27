@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -13,6 +14,9 @@ public sealed partial class DamageableSystem
 {
     public override void Initialize()
     {
+        RebuildContainerCache();
+
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
         SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
@@ -118,6 +122,39 @@ public sealed partial class DamageableSystem
         );
     }
 
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
+    {
+        if (!ev.WasModified<DamageContainerPrototype>() && !ev.WasModified<DamageGroupPrototype>())
+            return;
+
+        RebuildContainerCache();
+    }
+
+    private void RebuildContainerCache()
+    {
+        _supportedTypesByContainer.Clear();
+
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<DamageContainerPrototype>())
+        {
+            var set = new HashSet<ProtoId<DamageTypePrototype>>();
+            _supportedTypesByContainer[proto.ID] = set;
+
+            foreach (var type in proto.SupportedTypes)
+            {
+                set.Add(type);
+            }
+
+            foreach (var groupId in proto.SupportedGroups)
+            {
+                var group = _prototypeManager.Index(groupId);
+                foreach (var type in group.DamageTypes)
+                {
+                    set.Add(type);
+                }
+            }
+        }
+    }
+
     private void OnAfterAutoHandleState(Entity<DamageableComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         OnEntityDamageChanged(ent);
@@ -141,21 +178,7 @@ public sealed partial class DamageableSystem
         }
         else
         {
-            // Initialize damage dictionary, using the types and groups from the damage
-            // container prototype
-            foreach (var type in damageContainerPrototype.SupportedTypes)
-            {
-                ent.Comp.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
-            }
 
-            foreach (var groupId in damageContainerPrototype.SupportedGroups)
-            {
-                var group = _prototypeManager.Index(groupId);
-                foreach (var type in group.DamageTypes)
-                {
-                    ent.Comp.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
-                }
-            }
         }
 
         ent.Comp.Damage.GetDamagePerGroup(_prototypeManager, ent.Comp.DamagePerGroup);
