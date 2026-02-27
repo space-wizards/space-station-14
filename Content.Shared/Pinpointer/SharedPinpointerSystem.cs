@@ -1,9 +1,11 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Pinpointer;
 
@@ -11,6 +13,9 @@ public abstract class SharedPinpointerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
@@ -152,5 +157,77 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         args.Handled = true;
         ent.Comp.CanRetarget = true;
+    }
+
+    /// <summary>
+    ///     Try to find the closest entity from whitelist on a current map
+    ///     Will return null if can't find anything
+    /// </summary>
+    protected EntityUid? FindTargetFromComponent(Entity<TransformComponent> ent, Type whitelist)
+    {
+        // sort all entities in distance increasing order
+        var mapId = ent.Comp.MapID;
+        var l = new SortedList<float, EntityUid>();
+        var worldPos = _transform.GetWorldPosition(ent.Comp);
+
+        foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist))
+        {
+            if (!_xformQuery.TryGetComponent(otherUid, out var compXform) || compXform.MapID != mapId)
+                continue;
+
+            var dist = (_transform.GetWorldPosition(compXform) - worldPos).LengthSquared();
+            l.TryAdd(dist, otherUid);
+        }
+
+        // return uid with a smallest distance
+        return l.Count > 0 ? l.First().Value : null;
+    }
+
+    /// <summary>
+    ///     Gets an EntityUid target from a PinpointerTarget, if the target exists. Entity is what is being
+    ///     used to calculate the closest entity with a given component, so Entity should almost always be
+    ///     the pinpointer.
+    /// </summary>
+    private EntityUid? GetEntityUidFromTarget(EntityUid entity, PinpointerTarget target)
+    {
+        EntityUid? result = null;
+
+        switch (target)
+        {
+            case PinpointerComponentTarget component:
+            {
+                if (!EntityManager.ComponentFactory.TryGetRegistration(component.Target, out var reg))
+                {
+                    Log.Error($"Unable to find component registration for {component.Target} for pinpointer!");
+                    DebugTools.Assert(false);
+                    break;
+                }
+
+                if (!_xformQuery.TryComp(entity, out var transform))
+                    break;
+
+                // There may be multiple entities with the specified component, so we want the closest one at the time of activation
+                result = FindTargetFromComponent((entity, transform), reg.Type);
+                break;
+            }
+            case PinpointerEntityUidTarget entityUid:
+            {
+                result = entityUid.Target;
+                break;
+            }
+            //TODO: Need to somehow query entities for an ent proto id? is there not a better way
+            case PinpointerEntProtoIdTarget entProtoId:
+            {
+
+                break;
+            }
+            //TODO: throw error
+            default:
+            {
+                break;
+            }
+        }
+
+        return result;
     }
 }

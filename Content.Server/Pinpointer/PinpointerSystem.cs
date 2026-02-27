@@ -75,14 +75,12 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     private void LocateTarget(Entity<PinpointerComponent> ent)
     {
-        var component = ent.Comp;
-
         // try to find target from whitelist
-        if (component.IsActive && component.Component != null)
+        if (ent.Comp.IsActive && ent.Comp.Component != null)
         {
-            if (!EntityManager.ComponentFactory.TryGetRegistration(component.Component, out var reg))
+            if (!EntityManager.ComponentFactory.TryGetRegistration(ent.Comp.Component, out var reg))
             {
-                Log.Error($"Unable to find component registration for {component.Component} for pinpointer!");
+                Log.Error($"Unable to find component registration for {ent.Comp.Component} for pinpointer!");
                 DebugTools.Assert(false);
                 return;
             }
@@ -105,32 +103,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
-    /// <summary>
-    ///     Try to find the closest entity from whitelist on a current map
-    ///     Will return null if can't find anything
-    /// </summary>
-    private EntityUid? FindTargetFromComponent(Entity<TransformComponent?> ent, Type whitelist)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return null;
-
-        // sort all entities in distance increasing order
-        var mapId = ent.Comp.MapID;
-        var l = new SortedList<float, EntityUid>();
-        var worldPos = _transform.GetWorldPosition(ent.Comp);
-
-        foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist))
-        {
-            if (!_xformQuery.TryGetComponent(otherUid, out var compXform) || compXform.MapID != mapId)
-                continue;
-
-            var dist = (_transform.GetWorldPosition(compXform) - worldPos).LengthSquared();
-            l.TryAdd(dist, otherUid);
-        }
-
-        // return uid with a smallest distance
-        return l.Count > 0 ? l.First().Value : null;
-    }
 
     /// <summary>
     ///     Update direction from pinpointer to selected target (if it was set)

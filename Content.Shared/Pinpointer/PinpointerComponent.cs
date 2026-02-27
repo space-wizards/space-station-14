@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Pinpointer;
 
@@ -48,8 +49,16 @@ public sealed partial class PinpointerComponent : Component
     [DataField]
     public bool CanRetarget;
 
+    /// <summary>
+    ///     The pinpointer's target if a target has been specified by a retargeting.
+    /// </summary>
     [ViewVariables]
     public EntityUid? Target = null;
+
+    /// <summary>
+    ///     A list of each PinpointerTarget.
+    /// </summary>
+    public List<PinpointerTarget> AllTargets;
 
     [ViewVariables, AutoNetworkedField]
     public bool IsActive = false;
@@ -72,4 +81,27 @@ public enum Distance : byte
     Close,
     Medium,
     Far
+}
+
+/// <summary>
+///     A target entry.
+/// </summary>
+public abstract record PinpointerTarget;
+
+public record PinpointerComponentTarget : PinpointerTarget
+{
+    [DataField(required:true)]
+    public required string Target;
+}
+
+public record PinpointerEntityUidTarget : PinpointerTarget
+{
+    [DataField(required:true)]
+    public required EntityUid Target;
+}
+
+public record PinpointerEntProtoIdTarget : PinpointerTarget
+{
+    [DataField(required:true)]
+    public required EntProtoId Target;
 }
