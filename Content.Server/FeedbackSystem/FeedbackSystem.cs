@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Shared.FeedbackSystem;
 using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
