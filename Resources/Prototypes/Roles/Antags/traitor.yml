@@ -90,7 +90,6 @@
   id: SyndicateReinforcementThief
   parent: SyndicateOperativeClothing
   equipment:
-    id: SyndiOperativeIDCard
     pocket1: WeaponPistolViper
     pocket2: MagazinePistolHighCapacity
   inhand:
@@ -98,6 +97,7 @@
   storage:
     back:
     - SyndicateJawsOfLife
+    - CameraBug
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear
