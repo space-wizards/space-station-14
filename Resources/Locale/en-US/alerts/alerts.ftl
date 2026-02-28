@@ -123,6 +123,8 @@ alerts-rooted-desc = You are attached to the ground. You can't slip, but you abs
 alerts-stealthy-name = Pickpocketing
 alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
 
-
 alerts-dragon-full-power-name = Full power
 alerts-dragon-full-power-desc = After placing all the rifts, you gained incredible power. Destroy everything!
+
+alerts-prying-name = Prying
+alerts-prying-desc = You can innately pry doors open.

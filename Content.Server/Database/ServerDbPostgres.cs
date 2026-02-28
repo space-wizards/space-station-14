@@ -11,7 +11,6 @@ using Content.Server.IP;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization.Manager;
@@ -33,9 +32,8 @@ namespace Content.Server.Database
             IConfigurationManager cfg,
             ISawmill opsLog,
             ISawmill notifyLog,
-            ITaskManager taskManager,
             ISerializationManager serialization)
-            : base(opsLog, taskManager, serialization)
+            : base(opsLog, serialization)
         {
             var concurrency = cfg.GetCVar(CCVars.DatabasePgConcurrency);
 

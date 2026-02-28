@@ -120,8 +120,9 @@
     damage:
       types:
         Heat: -0.14
-      groups:
-        Brute: -0.14
+        Blunt: -0.05
+        Piercing: -0.05
+        Slash: -0.05
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

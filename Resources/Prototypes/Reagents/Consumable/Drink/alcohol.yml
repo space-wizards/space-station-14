@@ -167,7 +167,7 @@
         damage:
           types:
             Poison: 0.02
-      - !type:HealthChange
+      - !type:EvenHealthChange
         conditions:
         - !type:ReagentCondition
           reagent: Ethanol
@@ -175,8 +175,7 @@
         - !type:MetabolizerTypeCondition
           type: [ Dwarf ]
         damage:
-          groups:
-            Brute: -0.1
+          Brute: -0.1
       - !type:Vomit
         probability: 0.04
         conditions:
@@ -877,13 +876,12 @@
         factor: 2
       - !type:SatiateHunger
         factor: -2
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Burn: -1
-            Brute: -1
-            Airloss: -1
-            Toxin: -1
+          Burn: -1
+          Brute: -1
+          Airloss: -1
+          Toxin: -1
 
 - type: reagent
   id: DriestMartini
