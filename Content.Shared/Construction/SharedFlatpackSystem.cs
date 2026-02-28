@@ -14,6 +14,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction;
@@ -22,7 +23,6 @@ public abstract class SharedFlatpackSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -34,6 +34,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -177,21 +178,15 @@ public abstract class SharedFlatpackSystem : EntitySystem
     private bool HasRoomToConstruct(EntProtoId protoId, EntityCoordinates coords)
     {
         var entWithPhysics = new EntProtoId<FixturesComponent>(protoId);
-        if (!entWithPhysics.TryGet(out var flatpackFixtures, PrototypeManager, _componentFactory))
+        if (!entWithPhysics.TryGet(out var flatpackFixtures, PrototypeManager, Factory))
         {
             // The entity we're constructing has no fixtures, so can't overlap anything
             return true;
         }
 
-        // Sum up the collision mask of all the fixtures of the entity we're trying to create
-        int collisionMask = 0;
-        foreach (var fixture in flatpackFixtures.Fixtures.Values)
-        {
-            if (fixture.Hard)
-            {
-                collisionMask |= fixture.CollisionMask;
-            }
-        }
+        // Have to call the static version of this method, as we don't
+        // have an EntityId for the item contained in the flatpack:
+        var (flatpackedLayer, flatpackedMask) = SharedPhysicsSystem.GetHardCollision(flatpackFixtures);
 
         // Find all the overlaps at the coordinates and see if they have a collision
         // layer which collides with any of the flatpacked entity's collision mask
@@ -200,20 +195,12 @@ public abstract class SharedFlatpackSystem : EntitySystem
         var overlaps = _entityLookup.GetEntitiesIntersecting(coords, LookupFlags.Static | LookupFlags.Dynamic);
         foreach (var overlap in overlaps)
         {
-            if (!TryComp<FixturesComponent>(overlap, out var overlapFixtures))
+            var (overlapLayer, overlapMask) = _physics.GetHardCollision(overlap);
+            if ((overlapLayer & flatpackedMask) != 0 || (overlapMask & flatpackedLayer) != 0)
             {
-                // This overlap has no fixtures. Can't collide.
-                continue;
-            }
-
-            foreach (var fixture in overlapFixtures.Fixtures.Values)
-            {
-                if (fixture.Hard && (fixture.CollisionLayer & collisionMask) != 0)
-                {
-                    // Found an overlap which collides with at least one of the
-                    // flatpacked entity's fixtures.
-                    return false;
-                }
+                // Found an overlap containing fixtures which would collide with
+                // at least one of the flatpacked entity's fixtures.
+                return false;
             }
         }
 
