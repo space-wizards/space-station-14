@@ -183,7 +183,7 @@ public sealed partial class ForensicScannerSystem : EntitySystem
         }
 
         // Spawn a piece of paper.
-        var printed = Spawn(component.MachineOutput, Transform(scanner).Coordinates);
+        var printed = Spawn(component.PaperPrototypeID, Transform(scanner).Coordinates);
         _handsSystem.PickupOrDrop(user, printed, checkActionBlocker: false);
 
         if (!TryComp<PaperComponent>(printed, out var paperComp))
