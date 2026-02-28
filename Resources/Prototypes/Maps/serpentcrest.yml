@@ -37,30 +37,30 @@
             Reporter: [ 1, 1 ]
             #engineering 
             AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 4, 5 ]
+            StationEngineer: [ 5, 5 ]
             TechnicalAssistant: [ 3, 3 ] #intern, not counted
             #medical 
             Chemist: [ 3, 3 ]
-            MedicalDoctor: [ 5, 5 ]
+            MedicalDoctor: [ 5, 6 ]
             Paramedic: [ 2, 2 ]
             MedicalIntern: [ 3, 3 ] #intern, not counted
             #science (5)
-            Scientist: [ 5, 5 ]
+            Scientist: [ 5, 6 ]
             ResearchAssistant: [ 4, 4 ] #intern, not counted
             #security 
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 5, 6 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 3, 3 ] #intern, not counted
+            SecurityCadet: [ 3, 4 ] #intern, not counted
             Lawyer: [ 2, 2 ]
             #supply 
             SalvageSpecialist: [ 4, 4 ]
-            CargoTechnician: [ 4, 5 ]
+            CargoTechnician: [ 5, 6 ]
             #civilian 
             Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             #silicon 
-            Borg: [ 3, 3 ]
+            Borg: [ 3, 4 ]
             StationAi: [ 1, 1 ]
