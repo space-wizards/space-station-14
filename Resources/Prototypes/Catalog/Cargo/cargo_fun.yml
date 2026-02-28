@@ -69,6 +69,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunInstrumentsDAW
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: daw-base
+  product: CrateFunInstrumentsDAW
+  cost: 5000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunArtSupplies
   icon:
     sprite: Objects/Fun/crayons.rsi

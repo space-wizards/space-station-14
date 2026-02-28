@@ -234,6 +234,17 @@
 
 - type: entity
   parent: CrateGenericSteel
+  id: CrateFunInstrumentsDAW
+  name: digital audio workstation
+  description: Light up the party with a pre-made digital audio workstation, straight from the 90s!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: DawInstrument
+
+- type: entity
+  parent: CrateGenericSteel
   id: CrateFunArtSupplies
   name: art supplies
   description: Make some happy little accidents with lots of crayons!
