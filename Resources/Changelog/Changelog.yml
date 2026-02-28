@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: BoskiYourk, spanky_spanky
-  changes:
-  - message: The Head of Security now has an energy magnum, a self-charging multi-mode
-      laser revolver, in their locker instead of the energy shotgun.
-    type: Add
-  - message: The Warden now has the energy shotgun in their locker round-start.
-    type: Tweak
-  id: 9044
-  time: '2025-10-07T16:05:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40615
 - author: FungiFellow
   changes:
   - message: Cancer Mice now have unique ghost role entries.
@@ -3995,3 +3985,11 @@
   id: 9554
   time: '2026-02-28T15:21:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43013
+- author: Velken
+  changes:
+  - message: Fixed door remotes working on fences, curtains and other entities they
+      shouldn't work on.
+    type: Fix
+  id: 9555
+  time: '2026-02-28T20:30:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43063
