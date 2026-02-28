@@ -30,10 +30,16 @@ public sealed partial class DoorRemoteComponent : Component
     public bool IncludeUserAccess;
 
     /// <summary>
-    /// If true, allows the remote to bypass line of sight and interaction range, and work on anything with door component.
+    /// If false, allows the remote to bypass line of sight and interaction range.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsAdmin;
+    public bool RequireInRangeUnoccluded = true;
+
+    /// <summary>
+    /// If false, allows the remote to work on anything with a Door component; even it doesn't have an AccessReader component.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RequireAccessReader = true;
 
     /// <summary>
     /// Client-side only field for checking if StatusControl requires update.

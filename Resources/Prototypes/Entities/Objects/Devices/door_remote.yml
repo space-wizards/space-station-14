@@ -221,7 +221,8 @@
       color: "#22871a"
   - type: DoorRemote
     includeUserAccess: true
-    isAdmin: true
+    requireInRangeUnoccluded: false
+    requireAccessReader: false
   - type: Access
     groups:
     - AllAccess

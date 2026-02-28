@@ -52,7 +52,7 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
             || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
                                                                       // Only able to control doors if they are within your vision and within your max range.
                                                                       // Not affected by mobs or machines anymore.
-            || (!entity.Comp.IsAdmin && !_examine.InRangeUnOccluded(args.User,
+            || (entity.Comp.RequireInRangeUnoccluded && !_examine.InRangeUnOccluded(args.User,
                 args.Target.Value,
                 SharedInteractionSystem.MaxRaycastRange,
                 null)))
@@ -77,19 +77,22 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
             // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
         }
 
-        // Only let remote work on doors that have AccessReader, otherwise, it works on anything with door component (curtains, fences, etc)
-        if (!HasComp<AccessReaderComponent>(args.Target.Value) && !entity.Comp.IsAdmin)
-            return;
-
-        if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
-            && !_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
+        // Only let remote work on doors that have AccessReader; otherwise, it works on anything with a Door component (curtains, fence gates, etc)
+        if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent))
         {
-            if (isAirlock)
-                _doorSystem.Deny(args.Target.Value, doorComp, user: args.User, predicted: true);
+            // Has an access reader component. Check access.
+            if (!_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
+            {
+                if (isAirlock)
+                    _doorSystem.Deny(args.Target.Value, doorComp, user: args.User, predicted: true);
 
-            _popup.PopupClient(Loc.GetString("door-remote-denied"), args.User, args.User);
-            return;
+                _popup.PopupClient(Loc.GetString("door-remote-denied"), args.User, args.User);
+                return;
+            }
         }
+        // Unless allowed to bypass by the flag on the component.
+        else if (entity.Comp.RequireAccessReader)
+            return;
 
         switch (entity.Comp.Mode)
         {
