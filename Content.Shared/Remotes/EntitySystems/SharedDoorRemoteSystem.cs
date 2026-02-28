@@ -52,10 +52,10 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
             || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
                                                                       // Only able to control doors if they are within your vision and within your max range.
                                                                       // Not affected by mobs or machines anymore.
-            || !_examine.InRangeUnOccluded(args.User,
+            || (!entity.Comp.BypassLoS && !_examine.InRangeUnOccluded(args.User,
                 args.Target.Value,
                 SharedInteractionSystem.MaxRaycastRange,
-                null))
+                null)))
 
         {
             return;
@@ -76,6 +76,10 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
             accessTarget = args.User;
             // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
         }
+
+        // Only let remote work on doors that have AccessReader, otherwise, it works on anything with door component (curtains, fences, etc)
+        if (!HasComp<AccessReaderComponent>(args.Target.Value))
+            return;
 
         if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
             && !_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))

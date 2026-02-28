@@ -220,6 +220,7 @@
       color: "#22871a"
   - type: DoorRemote
     includeUserAccess: true
+    bypassLoS: true
   - type: Access
     groups:
     - AllAccess
