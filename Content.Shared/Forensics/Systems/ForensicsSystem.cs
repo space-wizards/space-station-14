@@ -21,7 +21,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Forensics.Systems;
 
-public partial class ForensicsSystem : EntitySystem
+public sealed partial class ForensicsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
