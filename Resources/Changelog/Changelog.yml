@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: FungiFellow
   changes:
-  - message: Cancer Mice now have unique ghost role entries.
-    type: Tweak
-  id: 9045
-  time: '2025-10-07T16:33:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40102
-- author: FungiFellow
-  changes:
   - message: Biosuits can now fit Gastanks in Suit Storage, the Security Biosuit can
       fit both Gastanks and Weapons
     type: Add
@@ -3993,3 +3986,10 @@
   id: 9555
   time: '2026-02-28T20:30:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43063
+- author: IProduceWidgets
+  changes:
+  - message: C4 no longer sticks to Revenants.
+    type: Tweak
+  id: 9556
+  time: '2026-02-28T21:38:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42889
