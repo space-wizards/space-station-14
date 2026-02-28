@@ -52,7 +52,7 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
             || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
                                                                       // Only able to control doors if they are within your vision and within your max range.
                                                                       // Not affected by mobs or machines anymore.
-            || (!entity.Comp.BypassLoS && !_examine.InRangeUnOccluded(args.User,
+            || (!entity.Comp.IsAdmin && !_examine.InRangeUnOccluded(args.User,
                 args.Target.Value,
                 SharedInteractionSystem.MaxRaycastRange,
                 null)))
@@ -78,7 +78,7 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
         }
 
         // Only let remote work on doors that have AccessReader, otherwise, it works on anything with door component (curtains, fences, etc)
-        if (!HasComp<AccessReaderComponent>(args.Target.Value))
+        if (!HasComp<AccessReaderComponent>(args.Target.Value) && !entity.Comp.IsAdmin)
             return;
 
         if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
