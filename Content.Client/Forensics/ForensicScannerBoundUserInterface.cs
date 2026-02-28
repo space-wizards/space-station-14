@@ -25,6 +25,8 @@ public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
     {
         base.Open();
         _window = this.CreateWindow<ForensicScannerMenu>();
+        // We're setting this window invisible until we updated it, to avoid flickering with an empty UI.
+        _window.Visible = false;
         _window.Print.OnPressed += _ => Print();
         _window.Clear.OnPressed += _ => Clear();
     }

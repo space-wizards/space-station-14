@@ -64,6 +64,8 @@ namespace Content.Client.Forensics
                 text.AppendLine(residue);
             }
             Diagnostics.Text = text.ToString();
+            // Now that it's properly filled, we set it visible.
+            Visible = true;
         }
     }
 }
