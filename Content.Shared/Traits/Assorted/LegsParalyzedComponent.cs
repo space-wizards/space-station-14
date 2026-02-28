@@ -9,5 +9,9 @@ namespace Content.Shared.Traits.Assorted;
 [RegisterComponent, NetworkedComponent, Access(typeof(LegsParalyzedSystem))]
 public sealed partial class LegsParalyzedComponent : Component
 {
+    /// <summary>
+    /// The speed modifier to apply. Zero by default to completely stop movement.
+    /// </summary>
+    [DataField]
     public float SpeedModifier = 0.0f;
 }

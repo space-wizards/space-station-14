@@ -14,7 +14,7 @@ public sealed class LegsParalyzedSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<LegsParalyzedComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<LegsParalyzedComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<LegsParalyzedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<LegsParalyzedComponent, BuckledEvent>(OnBuckled);
         SubscribeLocalEvent<LegsParalyzedComponent, UnbuckledEvent>(OnUnbuckled);
@@ -23,19 +23,21 @@ public sealed class LegsParalyzedSystem : EntitySystem
         SubscribeLocalEvent<LegsParalyzedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
     }
 
-    private void OnStartup(EntityUid uid, LegsParalyzedComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, LegsParalyzedComponent component, MapInitEvent args)
     {
         // TODO: In future probably must be surgery related wound
         component.SpeedModifier = 0.0f;
         _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+
+        _standingSystem.Down(uid);
     }
 
     private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
     {
-        _standingSystem.Stand(uid);
-
         component.SpeedModifier = 1.0f;
         _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+
+        _standingSystem.Stand(uid);
     }
 
     private void OnRefreshSpeed(EntityUid uid, LegsParalyzedComponent component, RefreshMovementSpeedModifiersEvent args)
