@@ -207,13 +207,14 @@ public sealed partial class DamageableSystem
         ent.Comp.HealthBarThreshold = state.HealthBarThreshold;
 
         // Has the damage actually changed?
-        var delta = state.Damage - ent.Comp.Damage;
+        var newDamage = state.Damage.Clone();
+        var delta = newDamage - ent.Comp.Damage;
         delta.TrimZeros();
 
         if (delta.Empty)
             return;
 
-        ent.Comp.Damage = state.Damage;
+        ent.Comp.Damage = newDamage;
 
         OnEntityDamageChanged(ent, delta);
     }
