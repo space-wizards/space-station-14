@@ -103,6 +103,17 @@
   id: FillWelderSupplies
   table: !type:GroupSelector
     children:
+    - id: WelderMini
+    - id: Welder
+    - id: WelderIndustrial
+      weight: 0.25
+    - id: WelderIndustrialAdvanced
+      weight: 0.05
+
+- type: entityTable
+  id: FillWelderSuppliesMask
+  table: !type:GroupSelector
+    children:
     - id: ClothingHeadHatWelding
     - id: ClothingHeadHatWeldingMaskFlame
       weight: 0.25
