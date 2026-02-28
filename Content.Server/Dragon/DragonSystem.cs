@@ -249,7 +249,7 @@ public sealed partial class DragonSystem : EntitySystem
         if (!_mind.TryGetMind(uid, out _, out var mind))
             return;
 
-        foreach (var objId in mind.Objectives)
+        foreach (var ent in mind.Objectives)
         {
             if (_entManager.TryGetComponent<CarpRiftsConditionComponent>(ent, out var riftConditionComp))
             {
