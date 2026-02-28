@@ -127,7 +127,7 @@ public sealed class TippyUIController : UIController
                 if (!_queuedMessages.TryDequeue(out var next))
                     return;
 
-                if (next.Proto != null)
+                if (next.Proto != null && next.Proto != _cfg.GetCVar(CCVars.TippyEntity))
                 {
                     _entity = EntityManager.SpawnEntity(next.Proto, MapCoordinates.Nullspace);
                     tippy.ModifyLayers = false;
