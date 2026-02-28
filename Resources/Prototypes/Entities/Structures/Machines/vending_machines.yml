@@ -2313,7 +2313,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDrugs
-  name: Drugvend
+  name: DrugVend
   description: Legal? Maybe. What are you, a cop?
   components:
   - type: VendingMachine
