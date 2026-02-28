@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Content.Shared.EntityEffects;
 
 /// <summary>
-/// Passively damages the entity on a specified interval.
+/// Applies a list of <see cref="EntityEffect" />s to entities within range on a specified interval.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause, AutoGenerateComponentState]
 public sealed partial class EntityEffectAuraComponent : Component
