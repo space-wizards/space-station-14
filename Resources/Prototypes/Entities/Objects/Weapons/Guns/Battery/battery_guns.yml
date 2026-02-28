@@ -1003,6 +1003,11 @@
     selectedMode: Burst
     availableModes:
     - Burst
+    minAngle: 2
+    maxAngle: 17
+    angleIncrease: 2
+    angleDecay: 17
+    cameraRecoilScalarModified: .25
   - type: BatteryAmmoProvider
     proto: XenoborgLaser
     fireCost: 100
