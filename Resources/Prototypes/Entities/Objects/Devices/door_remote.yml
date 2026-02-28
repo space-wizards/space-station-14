@@ -222,7 +222,7 @@
   - type: DoorRemote
     includeUserAccess: true
     requireInRangeUnoccluded: false
-    requireAccessReader: false
+    requireTagWhitelist: false
   - type: Access
     groups:
     - AllAccess

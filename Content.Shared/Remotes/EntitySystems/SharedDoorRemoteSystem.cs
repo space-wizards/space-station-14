@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Remotes.Components;
+using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -25,6 +26,7 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
 
 
@@ -78,7 +80,7 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
         }
 
         // Only let remote work on doors that have AccessReader; otherwise, it works on anything with a Door component (curtains, fence gates, etc)
-        if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent))
+        if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) && _tagSystem.HasTag(args.Target.Value, entity.Comp.TargetTag))
         {
             // Has an access reader component. Check access.
             if (!_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
@@ -91,7 +93,7 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
             }
         }
         // Unless allowed to bypass by the flag on the component.
-        else if (entity.Comp.RequireAccessReader)
+        else if (entity.Comp.RequireTagWhitelist)
             return;
 
         switch (entity.Comp.Mode)
