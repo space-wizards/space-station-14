@@ -98,6 +98,7 @@ public abstract partial class SharedXenoArtifactSystem
                     {
                         // This is an unlockable node, check if is failed
                         var predecessorNodeIndices = GetPredecessorNodes((ent, ent), GetIndex(ent, nodeEnt.Owner));
+                        directPredecessorNodes.Add(nodeEnt); // Remember that triggering the unlockable node shouldn't count as failing the unlock!
                         if (unlockingComp.TriggeredNodeIndexes.All(x => predecessorNodeIndices.Contains(x)))
                         {
                             unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode; // We have found an unlockable node that is still possible to unlock - it contains all triggers in its predecessors
