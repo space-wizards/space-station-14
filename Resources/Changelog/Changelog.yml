@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Biosuits can now fit Gastanks in Suit Storage, the Security Biosuit can
-      fit both Gastanks and Weapons
-    type: Add
-  - message: Security Biosuits Cost has been increased 800->1600
-    type: Tweak
-  id: 9046
-  time: '2025-10-07T18:22:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39888
 - author: Hitlinemoss
   changes:
   - message: MRE wrappers are no longer twice as nutritious as the actual food within.
@@ -3993,3 +3983,13 @@
   id: 9556
   time: '2026-02-28T21:38:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42889
+- author: Hitlinemoss
+  changes:
+  - message: The rollerskates and clown mask/shoes cargo bounties have been removed.
+    type: Remove
+  - message: The pancakes cargo bounty now requires half as many pancakes, but rewards
+      half as many spesos.
+    type: Tweak
+  id: 9557
+  time: '2026-02-28T22:04:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42899
