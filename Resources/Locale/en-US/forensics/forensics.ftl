@@ -25,7 +25,7 @@ forensics-dna-unknown = unknown DNA
 
 forensics-verb-text = Remove evidence
 forensics-verb-message = Remove fingerprints and DNA residues from the object!
-forensics-cleaning-user = You begin cleaning the evidence off of {THE($target)}...
-forensics-cleaning-others = {CAPITALIZE($user)} begins cleaning the evidence off of {THE($target)}.
+forensics-cleaning-user = You begin cleaning off the evidence on {THE($target)}...
+forensics-cleaning-others = {CAPITALIZE($user)} begins cleaning off the evidence on {THE($target)}.
 
-forensics-cleaning-cannot-clean = There is nothing cleanable on {THE($target)}!
+forensics-cleaning-cannot-clean = There is no evidence to scrub away on {THE($target)}!
