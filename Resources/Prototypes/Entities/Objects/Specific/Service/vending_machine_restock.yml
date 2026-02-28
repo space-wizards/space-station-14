@@ -397,7 +397,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSmokes
-  name: ShadyCigs restock box
+  name: Cigs and drugs restock box
   description: It's hard to see anything under all the Surgeon General warnings, but it mentions loading it into a vending machine. There's a big marijuana leaf sticker on the side of the box.
   components:
   - type: VendingMachineRestock
