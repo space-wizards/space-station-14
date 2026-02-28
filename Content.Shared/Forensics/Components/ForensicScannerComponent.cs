@@ -83,8 +83,8 @@ public sealed partial class ForensicScannerComponent : Component
     public SoundSpecifier SoundPrint = new SoundPathSpecifier("/Audio/Machines/short_print_and_rip.ogg");
 
     /// <summary>
-    /// What the machine will print
+    /// What type of paper the device will print.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MachineOutput = "ForensicReportPaper";
+    [DataField]
+    public EntProtoId PaperPrototypeID = "ForensicReportPaper";
 }
