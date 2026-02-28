@@ -322,13 +322,13 @@
   id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
 
 - type: Tag
-  id: ClownMask # CargoBounty: BountyClownCostume. ConstructionGraph: Honker, BananaClownMask
+  id: ClownMask # ConstructionGraph: Honker, BananaClownMask
 
 - type: Tag
   id: ClownRecorder # ConstructionGraph: ClownHardsuit
 
 - type: Tag
-  id: ClownShoes # CargoBounty: BountyClownCostume. ConstructionGraph: Honker, BananaClownShoes
+  id: ClownShoes # ConstructionGraph: Honker, BananaClownShoes
 
 - type: Tag
   id: ClownSuit # ConstructionGraph: BananaClownJumpsuit
