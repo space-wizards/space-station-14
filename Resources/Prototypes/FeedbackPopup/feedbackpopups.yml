@@ -36,7 +36,7 @@
   popupOrigin: wizden_master
   title: "[bold]The [color=deepskyblue]xenoborg[/color] extractor [scramble chars=\"xenoborg-##][{}||,.<>\" rate=40 length=5][/bold]"
   description: >-
-    Please share feedback about the new xenoborg extractor and crystal and the changes those additions imply to the xenoborg gameplay.
+    Please share feedback on the new xenoborg extractor and crystal, and how these additions affect xenoborg gameplay.
   responseType: "Feedback Thread"
   responseLink: "https://forum.spacestation14.com/t/xenoborg-extractor/26689"
   showRoundEnd: true
