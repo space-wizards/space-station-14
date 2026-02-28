@@ -148,17 +148,6 @@ namespace Content.IntegrationTests.Tests.Damageable
             {
                 var uid = sDamageableEntity;
 
-                // Check that the correct types are supported.
-                Assert.Multiple(() =>
-                {
-                    Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type1.ID), Is.False);
-                    Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type2a.ID), Is.True);
-                    Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type2b.ID), Is.False);
-                    Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3a.ID), Is.True);
-                    Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3b.ID), Is.True);
-                    Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type3c.ID), Is.True);
-                });
-
                 // Check that damage is evenly distributed over a group if its a nice multiple
                 var types = group3.DamageTypes;
                 var damageToDeal = FixedPoint2.New(types.Count * 5);

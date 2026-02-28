@@ -246,10 +246,7 @@ public sealed class DrainSystem : EntitySystem
         if (args.Target == null)
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, ent.Owner.GetHashCode());
-        var rand = new System.Random(seed);
-        if (!rand.Prob(ent.Comp.UnclogProbability))
+        if (!SharedRandomExtensions.PredictedProb(_timing, ent.Comp.UnclogProbability, GetNetEntity(ent)))
         {
             _popup.PopupPredicted(Loc.GetString("drain-component-unclog-fail", ("object", args.Target.Value)), args.Target.Value, args.User);
             return;

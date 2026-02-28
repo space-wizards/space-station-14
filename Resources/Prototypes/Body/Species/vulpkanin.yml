@@ -145,6 +145,13 @@
   id: MobVulpkanin
   name: Urist McArfArf
   components:
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#ccac1f"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
   - type: MessyDrinker
     spillChance: 0.33
   - type: Speech
@@ -166,19 +173,19 @@
       types:
         Piercing: 2
         Slash: 3
-  - type: Temperature # Same as moth temperatures until below is solved.
+  - type: Temperature
     specificHeat: 44
   - type: TemperatureDamage
-    heatDamageThreshold: 320 # TODO: 315 when there is a way to make the temperature alert not blink to the side of the screen and disappear when you "sweat" at 39C.
-    coldDamageThreshold: 230 # TODO: 220 when the above is solved.
+    heatDamageThreshold: 320
+    coldDamageThreshold: 230
     coldDamage:
       types:
         Cold: 0.05 # Per second, scales with temperature & other constants
     heatDamage:
       types:
         Heat: 2.5 # Per second, scales with temperature & other constants
-  # - type: Wagging TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
-  #   action: ActionToggleWaggingVulpkanin
+  - type: Wagging
+    action: ActionToggleWaggingVulpkanin
   - type: TemperatureProtection
     heatingCoefficient: 1.2
     coolingCoefficient: 0.3
@@ -192,6 +199,11 @@
         pitch: 1.33
         volume: -5
         variation: 0.05
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: SulfurBlood
+        Quantity: 300
 
 - type: entity
   parent: OrganBase
@@ -212,7 +224,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Mobs/Species/Human/organs.rsi
+    sprite: Mobs/Species/Vulpkanin/organs.rsi
 
 - type: entity
   id: OrganVulpkaninVisual
@@ -297,11 +309,11 @@
   id: OrganVulpkaninTongue
 
 - type: entity
-  parent: [ OrganBaseAppendix, OrganSpriteHumanInternal, OrganVulpkaninInternal ]
+  parent: [ OrganBaseAppendix, OrganVulpkaninInternal ]
   id: OrganVulpkaninAppendix
 
 - type: entity
-  parent: [ OrganBaseEars, OrganSpriteHumanInternal, OrganVulpkaninInternal ]
+  parent: [ OrganBaseEars, OrganVulpkaninInternal ]
   id: OrganVulpkaninEars
 
 - type: entity
@@ -317,9 +329,9 @@
   id: OrganVulpkaninStomach
 
 - type: entity
-  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
+  parent: [ OrganBaseLiver, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
   id: OrganVulpkaninLiver
 
 - type: entity
-  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
+  parent: [ OrganBaseKidneys, OrganVulpkaninInternal, OrganVulpkaninMetabolizer ]
   id: OrganVulpkaninKidneys
