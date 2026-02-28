@@ -3,6 +3,8 @@
   id: WeaponCroissant
   suffix: Weapon
   components:
+  - type: Item
+    sprite: null
   - type: Fixtures
     fixtures:
       fix1:
