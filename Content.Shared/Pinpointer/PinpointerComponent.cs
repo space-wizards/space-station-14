@@ -32,18 +32,6 @@ public sealed partial class PinpointerComponent : Component
     public double Precision = 0.09;
 
     /// <summary>
-    ///     Name to display of the target being tracked.
-    /// </summary>
-    [DataField]
-    public string? TargetName;
-
-    /// <summary>
-    ///     Whether or not the target name should be updated when the target is updated.
-    /// </summary>
-    [DataField]
-    public bool UpdateTargetName;
-
-    /// <summary>
     ///     Whether or not the target can be reassigned.
     /// </summary>
     [DataField]
@@ -52,12 +40,13 @@ public sealed partial class PinpointerComponent : Component
     /// <summary>
     ///     The pinpointer's target if a target has been specified by a retargeting.
     /// </summary>
-    [ViewVariables]
-    public EntityUid? Target = null;
+    [DataField]
+    public PinpointerTarget? Target;
 
     /// <summary>
     ///     A list of each PinpointerTarget.
     /// </summary>
+    [DataField]
     public List<PinpointerTarget> AllTargets;
 
     [ViewVariables, AutoNetworkedField]
@@ -86,22 +75,37 @@ public enum Distance : byte
 /// <summary>
 ///     A target entry.
 /// </summary>
-public abstract record PinpointerTarget;
+public abstract record PinpointerTarget
+{
+    [DataField(required:true)]
+    public required string Name;
+}
 
-public record PinpointerComponentTarget : PinpointerTarget
+[DataDefinition, Serializable]
+public sealed partial record PinpointerComponentTarget : PinpointerTarget
 {
     [DataField(required:true)]
     public required string Target;
 }
 
-public record PinpointerEntityUidTarget : PinpointerTarget
+[DataDefinition, Serializable]
+public sealed partial record PinpointerEntityUidTarget : PinpointerTarget
 {
     [DataField(required:true)]
     public required EntityUid Target;
 }
 
-public record PinpointerEntProtoIdTarget : PinpointerTarget
+/// <summary>
+///     Search for a specific entity proto id from every entity with a given component.
+///     Component should NOT be something highly generic like transform because we will
+///     be querying for every entity with that component.
+/// </summary>
+[DataDefinition, Serializable]
+public sealed partial record PinpointerEntProtoIdTarget : PinpointerTarget
 {
     [DataField(required:true)]
     public required EntProtoId Target;
+
+    [DataField(required: true)]
+    public required string Component;
 }

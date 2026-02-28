@@ -58,8 +58,9 @@
   parent: [ PinpointerBase, BaseCommandContraband ]
   components:
   - type: Pinpointer
-    component: NukeDisk
-    targetName: nuclear authentication disk
+    target:
+      name: nuclear authentication disk
+      target: NukeDisk
 
 - type: entity
   name: syndicate pinpointer
@@ -92,8 +93,9 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    component: NukeDisk
-    targetName: nuclear authentication disk
+    target:
+      name: nuclear authentication disk
+      target: NukeDisk
 
 - type: entity
   name: universal pinpointer

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -5,6 +7,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Pinpointer;
@@ -36,12 +39,14 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (!ent.Comp.CanRetarget || ent.Comp.IsActive)
             return;
 
+        return;
+
         // TODO add doafter once the freeze is lifted
         args.Handled = true;
-        ent.Comp.Target = args.Target;
+        /*ent.Comp.Target = args.Target;
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(ent):pinpointer} to {ToPrettyString(ent.Comp.Target.Value):target}");
         if (ent.Comp.UpdateTargetName)
-            ent.Comp.TargetName = ent.Comp.Target == null ? null : Identity.Name(ent.Comp.Target.Value, EntityManager);
+            ent.Comp.TargetName = ent.Comp.Target == null ? null : Identity.Name(ent.Comp.Target.Value, EntityManager);*/
     }
 
     /// <summary>
@@ -58,8 +63,6 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
 
         pinpointer.Target = target;
-        if (pinpointer.UpdateTargetName)
-            pinpointer.TargetName = target == null ? null : Identity.Name(target.Value, EntityManager);
         if (pinpointer.IsActive)
             UpdateDirectionToTarget(ent);
     }
@@ -74,10 +77,10 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
     private void OnExamined(Entity<PinpointerComponent> ent, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange || ent.Comp.TargetName == null)
+        if (!args.IsInDetailsRange || ent.Comp.Target is null)
             return;
 
-        args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", ent.Comp.TargetName)));
+        args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", ent.Comp.Target.Name)));
     }
 
     /// <summary>
@@ -129,7 +132,6 @@ public abstract class SharedPinpointerSystem : EntitySystem
         Dirty(ent);
     }
 
-
     /// <summary>
     ///     Toggle Pinpointer screen. If it has target it will start tracking it.
     /// </summary>
@@ -157,77 +159,5 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         args.Handled = true;
         ent.Comp.CanRetarget = true;
-    }
-
-    /// <summary>
-    ///     Try to find the closest entity from whitelist on a current map
-    ///     Will return null if can't find anything
-    /// </summary>
-    protected EntityUid? FindTargetFromComponent(Entity<TransformComponent> ent, Type whitelist)
-    {
-        // sort all entities in distance increasing order
-        var mapId = ent.Comp.MapID;
-        var l = new SortedList<float, EntityUid>();
-        var worldPos = _transform.GetWorldPosition(ent.Comp);
-
-        foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist))
-        {
-            if (!_xformQuery.TryGetComponent(otherUid, out var compXform) || compXform.MapID != mapId)
-                continue;
-
-            var dist = (_transform.GetWorldPosition(compXform) - worldPos).LengthSquared();
-            l.TryAdd(dist, otherUid);
-        }
-
-        // return uid with a smallest distance
-        return l.Count > 0 ? l.First().Value : null;
-    }
-
-    /// <summary>
-    ///     Gets an EntityUid target from a PinpointerTarget, if the target exists. Entity is what is being
-    ///     used to calculate the closest entity with a given component, so Entity should almost always be
-    ///     the pinpointer.
-    /// </summary>
-    private EntityUid? GetEntityUidFromTarget(EntityUid entity, PinpointerTarget target)
-    {
-        EntityUid? result = null;
-
-        switch (target)
-        {
-            case PinpointerComponentTarget component:
-            {
-                if (!EntityManager.ComponentFactory.TryGetRegistration(component.Target, out var reg))
-                {
-                    Log.Error($"Unable to find component registration for {component.Target} for pinpointer!");
-                    DebugTools.Assert(false);
-                    break;
-                }
-
-                if (!_xformQuery.TryComp(entity, out var transform))
-                    break;
-
-                // There may be multiple entities with the specified component, so we want the closest one at the time of activation
-                result = FindTargetFromComponent((entity, transform), reg.Type);
-                break;
-            }
-            case PinpointerEntityUidTarget entityUid:
-            {
-                result = entityUid.Target;
-                break;
-            }
-            //TODO: Need to somehow query entities for an ent proto id? is there not a better way
-            case PinpointerEntProtoIdTarget entProtoId:
-            {
-
-                break;
-            }
-            //TODO: throw error
-            default:
-            {
-                break;
-            }
-        }
-
-        return result;
     }
 }
