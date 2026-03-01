@@ -12,6 +12,7 @@ namespace Content.Client.Overlays;
 public sealed class ImageOverlay : Overlay
 {
     [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
@@ -45,15 +46,28 @@ public sealed class ImageOverlay : Overlay
             _texturesToDraw.Remove(overlayPair);
     }
 
-    protected override void Draw(in OverlayDrawArgs args)
+protected override void Draw(in OverlayDrawArgs args)
     {
+        var zoomFactor = _eyeManager.CurrentEye.Zoom.X;
+
+        var screenRect = args.ViewportBounds;
+
         foreach (var (path, color) in _texturesToDraw)
         {
             var texture = _resourceCache.GetTexture(path);
             var sc = args.ScreenHandle;
 
-            sc.DrawRect(args.ViewportBounds, color);
-            sc.DrawTextureRect(texture, args.ViewportBounds);
+            sc.DrawRect(screenRect, color);
+
+            var regionWidth = texture.Width * zoomFactor;
+            var regionHeight = texture.Height * zoomFactor;
+
+            var left = (texture.Width / 2f) - (regionWidth / 2f);
+            var top = (texture.Height / 2f) - (regionHeight / 2f);
+
+            var subRegion = UIBox2.FromDimensions(left, top, regionWidth, regionHeight);
+
+            sc.DrawTextureRectRegion(texture, screenRect, subRegion);
         }
     }
 }
