@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/tilegun.rsi
+    state: icon
   - type: Item
     size: Large
   - type: AmmoCounter
