@@ -225,14 +225,7 @@ public abstract partial class SharedStackSystem : EntitySystem
 
     public void OnUsedAsAmmo(Entity<StackComponent> ent, ref GetAmmoEvent args)
     {
-        if(!_prototype.Resolve(ent.Comp.StackTypeId, out var stackType))
-            return;
-
-        ReduceCount(ent.AsNullable(), 1);
-
-        args.AmmoOverride = PredictedSpawnInContainerOrDrop(stackType.Spawn,
-            args.BallisticProvider,
-            args.BallisticProvider.Comp.Container.ID);
+        args.AmmoOverride = Split(ent.AsNullable(), 1, null);
     }
 
     /// <remarks>
