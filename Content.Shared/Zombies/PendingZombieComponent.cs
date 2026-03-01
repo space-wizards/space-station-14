@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Zombies;
@@ -6,7 +7,7 @@ namespace Content.Shared.Zombies;
 /// <summary>
 /// Temporary because diseases suck.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class PendingZombieComponent : Component
 {
     /// <summary>
@@ -63,4 +64,6 @@ public sealed partial class PendingZombieComponent : Component
         "zombie-infection-warning",
         "zombie-infection-underway"
     };
+
+    public override bool SendOnlyToOwner => true;
 }
