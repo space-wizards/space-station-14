@@ -1,6 +1,6 @@
+using Content.Server.Stack;
 using Content.Shared.TicketPrinter;
 using Robust.Shared.Prototypes;
-using Content.Server.Stack;
 
 namespace Content.Server.TicketPrinter;
 

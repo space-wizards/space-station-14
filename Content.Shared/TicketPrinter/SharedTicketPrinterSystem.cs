@@ -1,9 +1,8 @@
 using Content.Shared.Lathe;
-using Content.Shared.Stacks;
 using Content.Shared.Materials;
+using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.TicketPrinter;
 
@@ -49,7 +48,7 @@ public abstract class SharedTicketPrinterSystem : EntitySystem
         if (_whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, args.Item)) //plenty of things are reclaimable but only some salvagable, should only give tickets for salvage scrap.
             return;
 
-        if (!TryComp<PhysicalCompositionComponent>(args.Item, out var physComp))
+        if (!TryComp<PhysicalCompositionComponent>(args.Item, out var physComp)) //if we have no physical composition, this item was never reclaimable in the first place
             return;
 
         foreach (var (material, amount) in physComp.MaterialComposition) //for each material making up the reclaimed item's physical composition
@@ -62,7 +61,7 @@ public abstract class SharedTicketPrinterSystem : EntitySystem
                 !entProto.TryGetComponent<PhysicalCompositionComponent>(out var matphysComp, EntityManager.ComponentFactory)) //use that to get TicketValue and PhysicalComposition Components
                 continue; //theoretically an entity may have some materials that do and some materials that don't have ticket values so we have to check them all.
 
-            PrintTickets(ent, ticketComp.TicketValue * amount / matphysComp.MaterialComposition[materialProto.ID]);
+            PrintTickets(ent, ticketComp.TicketValue * amount / matphysComp.MaterialComposition[materialProto.ID]); //ticket value multiplied by amount of material divided by amount of material per sheet
         }
     }
 
