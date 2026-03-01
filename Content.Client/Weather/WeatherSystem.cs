@@ -130,7 +130,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (!Timing.IsFirstTimePredicted)
             return true;
 
-        if (_playerManager.LocalEntity is not {} ent)
+        if (_playerManager.LocalEntity is not { } ent)
             return false;
 
         var map = Transform(uid).MapUid;
