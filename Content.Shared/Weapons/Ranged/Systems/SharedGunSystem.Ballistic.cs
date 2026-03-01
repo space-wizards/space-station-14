@@ -277,6 +277,7 @@ public abstract partial class SharedGunSystem
         args.Capacity = ent.Comp.Capacity;
     }
 
+    /// <summary>
     /// Causes <paramref name="entity"/> to pause its refilling for either at least <paramref name="overridePauseDuration"/>
     /// (if not null) or the entity's <see cref="BallisticAmmoSelfRefillerComponent.AutoRefillPauseDuration"/>. If the
     /// entity's next refill would occur after the pause duration, this function has no effect.
