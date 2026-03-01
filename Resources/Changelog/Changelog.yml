@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: archee1
-  changes:
-  - message: Space Cobras no longer attack Space Adders automatically.
-    type: Fix
-  id: 9051
-  time: '2025-10-08T11:30:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37424
 - author: aada
   changes:
   - message: Buckets are now destructible.
@@ -3991,3 +3984,10 @@
   id: 9561
   time: '2026-03-01T18:31:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43072
+- author: Velken
+  changes:
+  - message: Fixed door remote not working on high security doors and windoors
+    type: Fix
+  id: 9562
+  time: '2026-03-01T23:28:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43094
