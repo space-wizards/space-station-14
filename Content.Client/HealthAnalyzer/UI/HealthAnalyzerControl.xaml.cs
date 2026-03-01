@@ -135,7 +135,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             damageable.DamagePerGroup.OrderByDescending(damage => damage.Value)
                 .ToDictionary(x => x.Key, x => x.Value);
 
-        IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
+        var damagePerType = damageable.Damage.DamageDict;
 
         DrawDiagnosticGroups(damageSortedGroups, damagePerType);
     }
@@ -153,7 +153,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
     private void DrawDiagnosticGroups(
         Dictionary<string, FixedPoint2> groups,
-        IReadOnlyDictionary<string, FixedPoint2> damageDict)
+        IReadOnlyDictionary<ProtoId<DamageTypePrototype>, FixedPoint2> damageDict)
     {
         GroupsContainer.RemoveAllChildren();
 
