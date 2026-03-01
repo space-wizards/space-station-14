@@ -10,7 +10,9 @@ namespace Content.Client.Atmos.EntitySystems
     [UsedImplicitly]
     internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
-        public readonly Dictionary<EntityUid, AtmosDebugOverlayMessage> TileData = new();
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+
+        public readonly Dictionary<EntityUid, AtmosDebugOverlayMessage> TileData = [];
 
         // Configuration set by debug commands and used by AtmosDebugOverlay {
         /// <summary>Value source for display</summary>
@@ -54,8 +56,7 @@ namespace Content.Client.Atmos.EntitySystems
                 return;
 
             _overlay = new AtmosDebugOverlay(this);
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.AddOverlay(_overlay);
+            _overlayManager.AddOverlay(_overlay);
         }
 
         private void HandleAtmosDebugOverlayDisableMessage(AtmosDebugOverlayDisableMessage ev)
@@ -86,8 +87,7 @@ namespace Content.Client.Atmos.EntitySystems
             if (_overlay is null)
                 return;
 
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.RemoveOverlay(_overlay);
+            _overlayManager.RemoveOverlay(_overlay);
             _overlay = null;
         }
     }
