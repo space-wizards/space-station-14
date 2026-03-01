@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: Bartenders with a significant amount of playtime can now select a golden
-      shaker in the loadout menu.
-    type: Add
-  id: 9049
-  time: '2025-10-07T23:37:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40762
 - author: SlamBamActionman
   changes:
   - message: The Energy Shotgun no longer has a self-recharge or wide fire mode, but
@@ -3989,3 +3981,10 @@
   id: 9559
   time: '2026-03-01T14:41:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43087
+- author: AffleWaffle
+  changes:
+  - message: APCs take 2 seconds to build instead of instantly appearing.
+    type: Tweak
+  id: 9560
+  time: '2026-03-01T17:58:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43089
