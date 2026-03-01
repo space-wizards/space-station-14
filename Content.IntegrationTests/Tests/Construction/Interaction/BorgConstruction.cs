@@ -3,7 +3,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
-[TestFixture]
 public sealed class BorgConstruction : InteractionTest
 {
     /// <summary>
