@@ -31,7 +31,7 @@ public sealed partial class PowerCellSystem
     [PublicAPI]
     public bool TryGetBatteryFromSlot(
         Entity<PowerCellSlotComponent?> ent,
-        [NotNullWhen(true)] out Entity<PredictedBatteryComponent>? battery)
+        [NotNullWhen(true)] out Entity<BatteryComponent>? battery)
     {
         if (!Resolve(ent, ref ent.Comp, false))
         {
@@ -45,7 +45,7 @@ public sealed partial class PowerCellSystem
             return false;
         }
 
-        if (!TryComp<PredictedBatteryComponent>(slot.Item, out var batteryComp))
+        if (!TryComp<BatteryComponent>(slot.Item, out var batteryComp))
         {
             battery = null;
             return false;
@@ -57,15 +57,15 @@ public sealed partial class PowerCellSystem
 
     /// <summary>
     /// First tries to get a battery from the entity's power cell slot.
-    /// If that fails check if the entity itself is a battery with <see cref="PredictedBatteryComponent"/>.
+    /// If that fails check if the entity itself is a battery with <see cref="BatteryComponent"/>.
     /// </summary>
     [PublicAPI]
-    public bool TryGetBatteryFromSlotOrEntity(Entity<PowerCellSlotComponent?> ent, [NotNullWhen(true)] out Entity<PredictedBatteryComponent>? battery)
+    public bool TryGetBatteryFromSlotOrEntity(Entity<PowerCellSlotComponent?> ent, [NotNullWhen(true)] out Entity<BatteryComponent>? battery)
     {
         if (TryGetBatteryFromSlot(ent, out battery))
             return true;
 
-        if (TryComp<PredictedBatteryComponent>(ent, out var batteryComp))
+        if (TryComp<BatteryComponent>(ent, out var batteryComp))
         {
             battery = (ent.Owner, batteryComp);
             return true;
@@ -76,13 +76,13 @@ public sealed partial class PowerCellSystem
     }
 
     /// <summary>
-    /// First checks if the entity itself is a battery with <see cref="PredictedBatteryComponent"/>.
+    /// First checks if the entity itself is a battery with <see cref="BatteryComponent"/>.
     /// If that fails it will try to get a battery from the entity's power cell slot instead.
     /// </summary>
     [PublicAPI]
-    public bool TryGetBatteryFromEntityOrSlot(Entity<PowerCellSlotComponent?> ent, [NotNullWhen(true)] out Entity<PredictedBatteryComponent>? battery)
+    public bool TryGetBatteryFromEntityOrSlot(Entity<PowerCellSlotComponent?> ent, [NotNullWhen(true)] out Entity<BatteryComponent>? battery)
     {
-        if (TryComp<PredictedBatteryComponent>(ent, out var batteryComp))
+        if (TryComp<BatteryComponent>(ent, out var batteryComp))
         {
             battery = (ent.Owner, batteryComp);
             return true;

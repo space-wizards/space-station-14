@@ -3,33 +3,34 @@
   id: CratePermaEscapeSpawner
   name: Perma Escape Crate Spawner
   components:
-  - type: RandomSpawner
-    prototypes:
-    # Please note any duplicates & alphabetize <3
-      - ClosetMaintenanceFilledRandom # x3
-      - ClosetMaintenanceFilledRandom
-      - ClosetMaintenanceFilledRandom
-      - CrateEngineeringMiniJetpack
-      - CratePermaEscapeBureaucracy
-      - CratePermaEscapeComs # x2
-      - CratePermaEscapeComs
-      - CratePermaEscapeDigging # x2
-      - CratePermaEscapeDigging
-      - CratePermaEscapeEVA
-      - CratePermaEscapeGiftsFromSyndicate
-      - CratePermaEscapeGun
-      - CratePermaEscapeLights
-      - CratePermaEscapeMats #x2
-      - CratePermaEscapeMats
-      - CratePermaEscapeMerc
-      - CratePermaEscapeTowercap # x2
-      - CratePermaEscapeTowercap
-      - CrateTrashCartFilled
-      - CrateServiceCustomSmokable
-    rarePrototypes:
-      - MobTick # These need to be killable by one dude with a shovel.
-    rareChance: .30
-    chance: 1
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobTick # These need to be killable by one dude with a shovel.
+        weight: 0.3
+      - !type:GroupSelector
+        weight: 0.7
+        children:
+        # Please alphabetize <3
+        - id: ClosetMaintenanceFilledRandom
+          weight: 3
+        - id: CrateEngineeringMiniJetpack
+        - id: CratePermaEscapeBureaucracy
+        - id: CratePermaEscapeComs
+          weight: 2
+        - id: CratePermaEscapeDigging
+          weight: 2
+        - id: CratePermaEscapeEVA
+        - id: CratePermaEscapeGiftsFromSyndicate
+        - id: CratePermaEscapeGun
+        - id: CratePermaEscapeLights
+        - id: CratePermaEscapeMats
+          weight: 2
+        - id: CratePermaEscapeMerc
+        - id: CratePermaEscapeTowercap
+          weight: 2
+        - id: CrateTrashCartFilled
+        - id: CrateServiceCustomSmokable
     offset: 0.0
 
 - type: entity
