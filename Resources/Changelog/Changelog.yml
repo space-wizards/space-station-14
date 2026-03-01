@@ -1,54 +1,4 @@
 ﻿Entries:
-- author: Lordbrandon12
-  changes:
-  - message: Fixed issue allowing space heater temperature to be set above the allowed
-      limit.
-    type: Fix
-  id: 9042
-  time: '2025-10-07T12:53:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40453
-- author: IProduceWidgets
-  changes:
-  - message: Vox that take excessive amounts of fire damage will now burn into fried
-      chicken.
-    type: Tweak
-  id: 9043
-  time: '2025-10-07T14:12:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40115
-- author: BoskiYourk, spanky_spanky
-  changes:
-  - message: The Head of Security now has an energy magnum, a self-charging multi-mode
-      laser revolver, in their locker instead of the energy shotgun.
-    type: Add
-  - message: The Warden now has the energy shotgun in their locker round-start.
-    type: Tweak
-  id: 9044
-  time: '2025-10-07T16:05:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40615
-- author: FungiFellow
-  changes:
-  - message: Cancer Mice now have unique ghost role entries.
-    type: Tweak
-  id: 9045
-  time: '2025-10-07T16:33:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40102
-- author: FungiFellow
-  changes:
-  - message: Biosuits can now fit Gastanks in Suit Storage, the Security Biosuit can
-      fit both Gastanks and Weapons
-    type: Add
-  - message: Security Biosuits Cost has been increased 800->1600
-    type: Tweak
-  id: 9046
-  time: '2025-10-07T18:22:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39888
-- author: Hitlinemoss
-  changes:
-  - message: MRE wrappers are no longer twice as nutritious as the actual food within.
-    type: Fix
-  id: 9047
-  time: '2025-10-07T19:36:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40761
 - author: TrixxedHeart
   changes:
   - message: 'Added new markings for Vox: 3 new beak types, 2 beak markings, 1 overlay
@@ -3996,3 +3946,50 @@
   id: 9552
   time: '2026-02-28T14:37:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43066
+- author: ScarKy0
+  changes:
+  - message: Makeshift Juicers now correctly craft in your hands instead of being
+      a construction ghost.
+    type: Fix
+  id: 9553
+  time: '2026-02-28T14:54:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43075
+- author: kento_da_neko
+  changes:
+  - message: The xenoborg gun now has a unique sprite
+    type: Add
+  id: 9554
+  time: '2026-02-28T15:21:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43013
+- author: Velken
+  changes:
+  - message: Fixed door remotes working on fences, curtains and other entities they
+      shouldn't work on.
+    type: Fix
+  id: 9555
+  time: '2026-02-28T20:30:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43063
+- author: IProduceWidgets
+  changes:
+  - message: C4 no longer sticks to Revenants.
+    type: Tweak
+  id: 9556
+  time: '2026-02-28T21:38:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42889
+- author: Hitlinemoss
+  changes:
+  - message: The rollerskates and clown mask/shoes cargo bounties have been removed.
+    type: Remove
+  - message: The pancakes cargo bounty now requires half as many pancakes, but rewards
+      half as many spesos.
+    type: Tweak
+  id: 9557
+  time: '2026-02-28T22:04:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42899
+- author: slarticodefast
+  changes:
+  - message: Fixed damage mispredicting.
+    type: Fix
+  id: 9558
+  time: '2026-03-01T00:06:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43080
