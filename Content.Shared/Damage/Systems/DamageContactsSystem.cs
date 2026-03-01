@@ -14,11 +14,16 @@ public sealed class DamageContactsSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
+    private EntityQuery<DamageContactsComponent> _damageContactsQuery;
+
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<DamageContactsComponent, StartCollideEvent>(OnEntityEnter);
-        SubscribeLocalEvent<DamageContactsComponent, EndCollideEvent>(OnEntityExit);
+
+        SubscribeLocalEvent<DamageContactsComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<DamageContactsComponent, EndCollideEvent>(OnEndCollide);
+
+        _damageContactsQuery = GetEntityQuery<DamageContactsComponent>();
     }
 
     public override void Update(float frameTime)
@@ -27,48 +32,51 @@ public sealed class DamageContactsSystem : EntitySystem
 
         var query = EntityQueryEnumerator<DamagedByContactComponent>();
 
-        while (query.MoveNext(out var ent, out var damaged))
+        while (query.MoveNext(out var uid, out var damaged))
         {
             if (_timing.CurTime < damaged.NextSecond)
                 continue;
+
             damaged.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
+            Dirty(uid, damaged);
 
             if (damaged.Damage != null)
-                _damageable.TryChangeDamage(ent, damaged.Damage, interruptsDoAfters: false);
+                _damageable.TryChangeDamage(uid, damaged.Damage, interruptsDoAfters: false);
         }
     }
 
-    private void OnEntityExit(EntityUid uid, DamageContactsComponent component, ref EndCollideEvent args)
+    private void OnEndCollide(Entity<DamageContactsComponent> ent, ref EndCollideEvent args)
     {
         var otherUid = args.OtherEntity;
 
         if (!TryComp<PhysicsComponent>(otherUid, out var body))
             return;
 
-        var damageQuery = GetEntityQuery<DamageContactsComponent>();
-        foreach (var ent in _physics.GetContactingEntities(otherUid, body))
+        foreach (var contact in _physics.GetContactingEntities(otherUid, body))
         {
-            if (ent == uid)
+            if (contact == ent.Owner)
                 continue;
 
-            if (damageQuery.HasComponent(ent))
+            if (_damageContactsQuery.HasComp(contact))
                 return;
         }
 
         RemComp<DamagedByContactComponent>(otherUid);
     }
 
-    private void OnEntityEnter(EntityUid uid, DamageContactsComponent component, ref StartCollideEvent args)
+    private void OnStartCollide(Entity<DamageContactsComponent> ent, ref StartCollideEvent args)
     {
         var otherUid = args.OtherEntity;
 
         if (HasComp<DamagedByContactComponent>(otherUid))
             return;
 
-        if (_whitelistSystem.IsWhitelistPass(component.IgnoreWhitelist, otherUid))
+        if (_whitelistSystem.IsWhitelistPass(ent.Comp.IgnoreWhitelist, otherUid))
             return;
 
         var damagedByContact = EnsureComp<DamagedByContactComponent>(otherUid);
-        damagedByContact.Damage = component.Damage;
+        damagedByContact.Damage = ent.Comp.Damage;
+        damagedByContact.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
+        Dirty(otherUid, damagedByContact);
     }
 }
