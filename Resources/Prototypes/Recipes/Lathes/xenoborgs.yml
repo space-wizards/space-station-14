@@ -69,14 +69,6 @@
     Steel: 1500
     Glass: 1500
 
-- type: latheRecipe
-  parent: BaseXenoborgModulesRecipe
-  id: XenoborgModuleBurstFireLaserRecipe
-  result: XenoborgModuleBurstFireLaser
-  materials:
-    Steel: 1500
-    Glass: 1500
-
 ## scout xenoborg modules
 
 - type: latheRecipe
