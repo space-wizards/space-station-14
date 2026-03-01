@@ -122,17 +122,6 @@
     - id: ClothingHeadHatWeldingMaskPainted
       weight: 0.25
 
-- type: entityTable
-  id: FillWelderSuppliesMask
-  table: !type:GroupSelector
-    children:
-    - id: WelderMini
-    - id: Welder
-    - id: WelderIndustrial
-      weight: 0.25
-    - id: WelderIndustrialAdvanced
-      weight: 0.05
-
 - type: entity
   id: LockerAtmosphericsFilledHardsuit
   suffix: Filled, Hardsuit
