@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Data for gas to consume/exude on plant growth.
+/// Component for gas to consume/exude on plant growth.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(SharedConsumeExudeGasGrowthSystem))]

@@ -5,9 +5,9 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Data for plant harvesting process.
+/// Component for plant harvesting process.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true)]
 [Access(typeof(PlantHarvestSystem))]
 public sealed partial class PlantHarvestComponent : Component
 {

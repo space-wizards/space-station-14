@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Basic parameters for plant growth.
+/// Component for basic parameters for plant growth.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(BasicGrowthSystem))]

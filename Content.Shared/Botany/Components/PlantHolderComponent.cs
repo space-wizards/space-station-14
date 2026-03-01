@@ -7,7 +7,7 @@ namespace Content.Shared.Botany.Components;
 /// <summary>
 /// Runtime plant lifecycle data. This component is attached to the plant entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 [Access(typeof(PlantHolderSystem), typeof(PlantSystem))]
 public sealed partial class PlantHolderComponent : Component
 {

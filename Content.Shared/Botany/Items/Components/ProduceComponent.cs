@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Botany.Items.Components;
 
 /// <summary>
-/// Produce-related data for plant and plant growth cycle.
+/// Component that stores produce data for a plant.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(BotanySystem))]

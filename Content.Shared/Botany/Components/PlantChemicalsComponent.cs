@@ -8,9 +8,9 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Defines what reagents harvested produce will contain for this plant species.
+/// Component for defining what reagents harvested produce will contain for this plant species.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(PlantChemicalsSystem))]
 public sealed partial class PlantChemicalsComponent : Component
 {

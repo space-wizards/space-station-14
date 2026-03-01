@@ -3,7 +3,10 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Botany.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+/// <summary>
+/// Component for a machine for extracting seeds from plant produce.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(SeedExtractorSystem))]
 public sealed partial class SeedExtractorComponent : Component
 {

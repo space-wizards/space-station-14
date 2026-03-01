@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Botany.Items.Components;
 
 /// <summary>
-/// Data container for plant seed. Contains all info (values for components) for new plant to grow from seed.
+/// Component for a container for plant seed. Contains all info (values for components) for new plant to grow from seed.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(BotanySystem))]

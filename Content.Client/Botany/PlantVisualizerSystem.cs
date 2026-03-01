@@ -16,17 +16,10 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
         base.Initialize();
 
         SubscribeLocalEvent<PlantVisualsComponent, ComponentInit>(OnComponentInit);
-    }
-
-    public override void FrameUpdate(float frameTime)
-    {
-        base.FrameUpdate(frameTime);
-
-        var query = EntityQueryEnumerator<PlantVisualsComponent, PlantComponent, PlantHarvestComponent, SpriteComponent>();
-        while (query.MoveNext(out var uid, out _, out var plant, out var harvest, out var sprite))
-        {
-            UpdateSprite((uid, plant), harvest, sprite);
-        }
+        SubscribeLocalEvent<PlantVisualsComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<PlantComponent, AfterAutoHandleStateEvent>(OnPlantState);
+        SubscribeLocalEvent<PlantHarvestComponent, AfterAutoHandleStateEvent>(OnHarvestState);
+        SubscribeLocalEvent<PlantHolderComponent, AfterAutoHandleStateEvent>(OnHolderState);
     }
 
     private void OnComponentInit(EntityUid uid, PlantVisualsComponent component, ComponentInit args)
@@ -40,13 +33,40 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
         SpriteSystem.LayerSetVisible((uid, sprite), PlantLayers.Plant, false);
     }
 
-    private void UpdateSprite(Entity<PlantComponent> ent, PlantHarvestComponent harvest, SpriteComponent sprite)
+    private void OnComponentStartup(Entity<PlantVisualsComponent> ent, ref ComponentStartup args)
     {
+        UpdateSprite(ent.Owner);
+    }
+
+    private void OnPlantState(Entity<PlantComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateSprite(ent.Owner);
+    }
+
+    private void OnHarvestState(Entity<PlantHarvestComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateSprite(ent.Owner);
+    }
+
+    private void OnHolderState(Entity<PlantHolderComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateSprite(ent.Owner);
+    }
+
+    private void UpdateSprite(EntityUid plantUid)
+    {
+        if (!HasComp<PlantVisualsComponent>(plantUid)
+            || !TryComp<PlantHarvestComponent>(plantUid, out var harvest)
+            || !TryComp<SpriteComponent>(plantUid, out var sprite))
+        {
+            return;
+        }
+
         string state;
 
-        var dead = _plantHolder.IsDead(ent.Owner);
+        var dead = _plantHolder.IsDead(plantUid);
         var harvestReady = harvest.ReadyForHarvest;
-        var growthStage = _plantSystem.GetGrowthStageValue(ent.AsNullable());
+        var growthStage = _plantSystem.GetGrowthStageValue(plantUid);
 
         if (dead)
             state = "dead";
@@ -55,8 +75,9 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
         else
             state = $"stage-{growthStage}";
 
-        SpriteSystem.LayerSetVisible((ent.Owner, sprite), PlantLayers.Plant, true);
-        SpriteSystem.LayerSetRsiState((ent.Owner, sprite), PlantLayers.Plant, state);
+        var layer = SpriteSystem.LayerMapReserve((plantUid, sprite), PlantLayers.Plant);
+        SpriteSystem.LayerSetVisible((plantUid, sprite), layer, true);
+        SpriteSystem.LayerSetRsiState((plantUid, sprite), layer, state);
     }
 }
 

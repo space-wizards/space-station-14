@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Data for plant resistance to toxins.
+/// Component for plant resistance to toxins.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(PlantToxinsSystem))]

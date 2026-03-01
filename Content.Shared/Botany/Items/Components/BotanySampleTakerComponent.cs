@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Botany.Items.Components;
 
 /// <summary>
-/// Anything that can be used to take a sample of a plant.
+/// Component for items that can function as a plant sample taker.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(BotanySampleTakerSystem))]

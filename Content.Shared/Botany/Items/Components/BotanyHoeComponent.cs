@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Botany.Items.Components;
 
 /// <summary>
-/// Anything that can be used to use a hoe on a plant.
+/// Component for items that can function as a hoe on plants.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(BotanyHoeSystem))]

@@ -4,8 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Data for weed and pest problems which can happen to plants - how well plant tolerates them,
-/// chances to develop them, how big of a problem they will be.
+/// Component for weed and pest problems which can happen to plants - how well plant tolerates them.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(WeedPestGrowthSystem))]

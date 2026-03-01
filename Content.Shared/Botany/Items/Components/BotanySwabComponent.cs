@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Botany.Items.Components;
 
 /// <summary>
-/// Anything that can be used to cross-pollinate plants.
+/// Component for items that can function as a plant cross-pollination tool.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(BotanySwabSystem))]

@@ -4,9 +4,9 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Atmospheric-related requirements for proper entity growth. Used in botany.
+/// Component for atmospheric-related requirements for proper plant growth.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(SharedAtmosphericGrowthSystem))]
 public sealed partial class AtmosphericGrowthComponent : Component
 {
