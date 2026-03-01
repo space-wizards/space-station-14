@@ -92,12 +92,10 @@
         children:
         - !type:NestedSelector
           tableId: FillWelderSupplies
-          rolls: !type:ConstantNumberSelector
-            value: 3
+          rolls: 3
         - !type:NestedSelector
           tableId: FillWelderSuppliesMask
-          rolls: !type:ConstantNumberSelector
-            value: 3
+          rolls: 3
 
 - type: entityTable
   id: FillWelderSupplies
