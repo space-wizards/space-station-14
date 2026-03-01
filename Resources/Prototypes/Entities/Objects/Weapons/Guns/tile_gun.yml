@@ -11,7 +11,7 @@
     size: Large
   - type: AmmoCounter
   - type: Gun
-    fireRate: 2
+    fireRate: 8
     selectedMode: FullAuto
     availableModes:
     - FullAuto
