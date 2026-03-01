@@ -174,8 +174,10 @@
     priority: 1
   - type: Tag
     tags:
-    - Airlock
+      - Airlock
       # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
   - type: PryUnpowered
   - type: BlockWeather
   - type: GuideHelp
@@ -233,5 +235,7 @@
     resistance: 2
   - type: Tag
     tags:
-    - GlassAirlock
+      - GlassAirlock
       # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door

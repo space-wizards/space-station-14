@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Mech.Components;
@@ -6,6 +5,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
@@ -25,6 +25,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Mech.Systems;
 
@@ -219,7 +220,7 @@ public sealed partial class MechSystem : SharedMechSystem
                     {
                         BreakOnMove = true,
                     };
-                    _popup.PopupEntity(Loc.GetString("mech-eject-pilot-alert", ("item", uid), ("user", args.User)), uid, PopupType.Large);
+                    _popup.PopupEntity(Loc.GetString("mech-eject-pilot-alert", ("item", uid), ("user", Identity.Entity(args.User, EntityManager))), uid, PopupType.Large);
 
                     _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }
@@ -235,7 +236,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (_whitelistSystem.IsWhitelistFail(component.PilotWhitelist, args.User))
         {
-            _popup.PopupEntity(Loc.GetString("mech-no-enter", ("item", uid)), args.User);
+            _popup.PopupEntity(Loc.GetString("mech-no-enter", ("item", uid)), Identity.Entity(args.User, EntityManager));
             return;
         }
 

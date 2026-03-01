@@ -9,7 +9,6 @@ using System.Net;
 using System.Text.Json;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
-using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -31,13 +30,17 @@ namespace Content.Server.Database
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
         public DbSet<Blacklist> Blacklist { get; set; } = null!;
-        public DbSet<ServerBan> Ban { get; set; } = default!;
-        public DbSet<ServerUnban> Unban { get; set; } = default!;
+        public DbSet<Ban> Ban { get; set; } = default!;
+        public DbSet<BanRound> BanRound { get; set; } = default!;
+        public DbSet<BanPlayer> BanPlayer { get; set; } = default!;
+        public DbSet<BanAddress> BanAddress { get; set; } = default!;
+        public DbSet<BanHwid> BanHwid { get; set; } = default!;
+        public DbSet<BanRole> BanRole { get; set; } = default!;
+        public DbSet<Unban> Unban { get; set; } = default!;
         public DbSet<ServerBanExemption> BanExemption { get; set; } = default!;
         public DbSet<ConnectionLog> ConnectionLog { get; set; } = default!;
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
-        public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
-        public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+
         public DbSet<PlayTime> PlayTime { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
@@ -145,42 +148,10 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
 
-            modelBuilder.Entity<ServerBan>()
-                .HasIndex(p => p.PlayerUserId);
-
-            modelBuilder.Entity<ServerBan>()
-                .HasIndex(p => p.Address);
-
-            modelBuilder.Entity<ServerBan>()
-                .HasIndex(p => p.PlayerUserId);
-
-            modelBuilder.Entity<ServerUnban>()
-                .HasIndex(p => p.BanId)
-                .IsUnique();
-
-            modelBuilder.Entity<ServerBan>().ToTable(t =>
-                t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR player_user_id IS NOT NULL OR hwid IS NOT NULL"));
-
             // Ban exemption can't have flags 0 since that wouldn't exempt anything.
             // The row should be removed if setting to 0.
             modelBuilder.Entity<ServerBanExemption>().ToTable(t =>
                 t.HasCheckConstraint("FlagsNotZero", "flags != 0"));
-
-            modelBuilder.Entity<ServerRoleBan>()
-                .HasIndex(p => p.PlayerUserId);
-
-            modelBuilder.Entity<ServerRoleBan>()
-                .HasIndex(p => p.Address);
-
-            modelBuilder.Entity<ServerRoleBan>()
-                .HasIndex(p => p.PlayerUserId);
-
-            modelBuilder.Entity<ServerRoleUnban>()
-                .HasIndex(p => p.BanId)
-                .IsUnique();
-
-            modelBuilder.Entity<ServerRoleBan>().ToTable(t =>
-                t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR player_user_id IS NOT NULL OR hwid IS NOT NULL"));
 
             modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)
@@ -296,34 +267,6 @@ namespace Content.Server.Database
                 t.HasCheckConstraint("NotDismissedAndSeen",
                     "NOT dismissed OR seen"));
 
-            modelBuilder.Entity<ServerBan>()
-                .HasOne(ban => ban.CreatedBy)
-                .WithMany(author => author.AdminServerBansCreated)
-                .HasForeignKey(ban => ban.BanningAdmin)
-                .HasPrincipalKey(author => author.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<ServerBan>()
-                .HasOne(ban => ban.LastEditedBy)
-                .WithMany(author => author.AdminServerBansLastEdited)
-                .HasForeignKey(ban => ban.LastEditedById)
-                .HasPrincipalKey(author => author.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<ServerRoleBan>()
-                .HasOne(ban => ban.CreatedBy)
-                .WithMany(author => author.AdminServerRoleBansCreated)
-                .HasForeignKey(ban => ban.BanningAdmin)
-                .HasPrincipalKey(author => author.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<ServerRoleBan>()
-                .HasOne(ban => ban.LastEditedBy)
-                .WithMany(author => author.AdminServerRoleBansLastEdited)
-                .HasForeignKey(ban => ban.LastEditedById)
-                .HasPrincipalKey(author => author.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
-
             modelBuilder.Entity<RoleWhitelist>()
                 .HasOne(w => w.Player)
                 .WithMany(p => p.JobWhitelists)
@@ -342,26 +285,6 @@ namespace Content.Server.Database
                 .Property(p => p.Type)
                 .HasDefaultValue(HwidType.Legacy);
 
-            modelBuilder.Entity<ServerBan>()
-                .OwnsOne(p => p.HWId)
-                .Property(p => p.Hwid)
-                .HasColumnName("hwid");
-
-            modelBuilder.Entity<ServerBan>()
-                .OwnsOne(p => p.HWId)
-                .Property(p => p.Type)
-                .HasDefaultValue(HwidType.Legacy);
-
-            modelBuilder.Entity<ServerRoleBan>()
-                .OwnsOne(p => p.HWId)
-                .Property(p => p.Hwid)
-                .HasColumnName("hwid");
-
-            modelBuilder.Entity<ServerRoleBan>()
-                .OwnsOne(p => p.HWId)
-                .Property(p => p.Type)
-                .HasDefaultValue(HwidType.Legacy);
-
             modelBuilder.Entity<ConnectionLog>()
                 .OwnsOne(p => p.HWId)
                 .Property(p => p.Hwid)
@@ -371,6 +294,8 @@ namespace Content.Server.Database
                 .OwnsOne(p => p.HWId)
                 .Property(p => p.Type)
                 .HasDefaultValue(HwidType.Legacy);
+
+            ModelBan.OnModelCreating(modelBuilder);
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -406,6 +331,7 @@ namespace Content.Server.Database
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string Species { get; set; } = null!;
+        [Column(TypeName = "jsonb")] public JsonDocument? OrganMarkings { get; set; } = null!;
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
         public string HairColor { get; set; } = null!;
@@ -590,10 +516,8 @@ namespace Content.Server.Database
         public List<AdminMessage> AdminMessagesCreated { get; set; } = null!;
         public List<AdminMessage> AdminMessagesLastEdited { get; set; } = null!;
         public List<AdminMessage> AdminMessagesDeleted { get; set; } = null!;
-        public List<ServerBan> AdminServerBansCreated { get; set; } = null!;
-        public List<ServerBan> AdminServerBansLastEdited { get; set; } = null!;
-        public List<ServerRoleBan> AdminServerRoleBansCreated { get; set; } = null!;
-        public List<ServerRoleBan> AdminServerRoleBansLastEdited { get; set; } = null!;
+        public List<Ban> AdminServerBansCreated { get; set; } = null!;
+        public List<Ban> AdminServerBansLastEdited { get; set; } = null!;
         public List<RoleWhitelist> JobWhitelists { get; set; } = null!;
     }
 
@@ -723,30 +647,6 @@ namespace Content.Server.Database
         [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
     }
 
-    // Used by SS14.Admin
-    public interface IBanCommon<TUnban> where TUnban : IUnbanCommon
-    {
-        int Id { get; set; }
-        Guid? PlayerUserId { get; set; }
-        NpgsqlInet? Address { get; set; }
-        TypedHwid? HWId { get; set; }
-        DateTime BanTime { get; set; }
-        DateTime? ExpirationTime { get; set; }
-        string Reason { get; set; }
-        NoteSeverity Severity { get; set; }
-        Guid? BanningAdmin { get; set; }
-        TUnban? Unban { get; set; }
-    }
-
-    // Used by SS14.Admin
-    public interface IUnbanCommon
-    {
-        int Id { get; set; }
-        int BanId { get; set; }
-        Guid? UnbanningAdmin { get; set; }
-        DateTime UnbanTime { get; set; }
-    }
-
     /// <summary>
     /// Flags for use with <see cref="ServerBanExemption"/>.
     /// </summary>
@@ -785,138 +685,6 @@ namespace Content.Server.Database
     }
 
     /// <summary>
-    /// A ban from playing on the server.
-    /// If an incoming connection matches any of UserID, IP, or HWID, they will be blocked from joining the server.
-    /// </summary>
-    /// <remarks>
-    /// At least one of UserID, IP, or HWID must be given (otherwise the ban would match nothing).
-    /// </remarks>
-    [Table("server_ban"), Index(nameof(PlayerUserId))]
-    public class ServerBan : IBanCommon<ServerUnban>
-    {
-        public int Id { get; set; }
-
-        [ForeignKey("Round")]
-        public int? RoundId { get; set; }
-        public Round? Round { get; set; }
-
-        /// <summary>
-        /// The user ID of the banned player.
-        /// </summary>
-        public Guid? PlayerUserId { get; set; }
-        [Required] public TimeSpan PlaytimeAtNote { get; set; }
-
-        /// <summary>
-        /// CIDR IP address range of the ban. The whole range can match the ban.
-        /// </summary>
-        public NpgsqlInet? Address { get; set; }
-
-        /// <summary>
-        /// Hardware ID of the banned player.
-        /// </summary>
-        public TypedHwid? HWId { get; set; }
-
-        /// <summary>
-        /// The time when the ban was applied by an administrator.
-        /// </summary>
-        public DateTime BanTime { get; set; }
-
-        /// <summary>
-        /// The time the ban will expire. If null, the ban is permanent and will not expire naturally.
-        /// </summary>
-        public DateTime? ExpirationTime { get; set; }
-
-        /// <summary>
-        /// The administrator-stated reason for applying the ban.
-        /// </summary>
-        public string Reason { get; set; } = null!;
-
-        /// <summary>
-        /// The severity of the incident
-        /// </summary>
-        public NoteSeverity Severity { get; set; }
-
-        /// <summary>
-        /// User ID of the admin that applied the ban.
-        /// </summary>
-        [ForeignKey("CreatedBy")]
-        public Guid? BanningAdmin { get; set; }
-
-        public Player? CreatedBy { get; set; }
-
-        /// <summary>
-        /// User ID of the admin that last edited the note
-        /// </summary>
-        [ForeignKey("LastEditedBy")]
-        public Guid? LastEditedById { get; set; }
-
-        public Player? LastEditedBy { get; set; }
-
-        /// <summary>
-        /// When the ban was last edited
-        /// </summary>
-        public DateTime? LastEditedAt { get; set; }
-
-        /// <summary>
-        /// Optional flags that allow adding exemptions to the ban via <see cref="ServerBanExemption"/>.
-        /// </summary>
-        public ServerBanExemptFlags ExemptFlags { get; set; }
-
-        /// <summary>
-        /// If present, an administrator has manually repealed this ban.
-        /// </summary>
-        public ServerUnban? Unban { get; set; }
-
-        /// <summary>
-        /// Whether this ban should be automatically deleted from the database when it expires.
-        /// </summary>
-        /// <remarks>
-        /// This isn't done automatically by the game,
-        /// you will need to set up something like a cron job to clear this from your database,
-        /// using a command like this:
-        /// psql -d ss14 -c "DELETE FROM server_ban WHERE auto_delete AND expiration_time &lt; NOW()"
-        /// </remarks>
-        public bool AutoDelete { get; set; }
-
-        /// <summary>
-        /// Whether to display this ban in the admin remarks (notes) panel
-        /// </summary>
-        public bool Hidden { get; set; }
-
-        public List<ServerBanHit> BanHits { get; set; } = null!;
-    }
-
-    /// <summary>
-    /// An explicit repeal of a <see cref="ServerBan"/> by an administrator.
-    /// Having an entry for a ban neutralizes it.
-    /// </summary>
-    [Table("server_unban")]
-    public class ServerUnban : IUnbanCommon
-    {
-        [Column("unban_id")] public int Id { get; set; }
-
-        /// <summary>
-        /// The ID of ban that is being repealed.
-        /// </summary>
-        public int BanId { get; set; }
-
-        /// <summary>
-        /// The ban that is being repealed.
-        /// </summary>
-        public ServerBan Ban { get; set; } = null!;
-
-        /// <summary>
-        /// The admin that repealed the ban.
-        /// </summary>
-        public Guid? UnbanningAdmin { get; set; }
-
-        /// <summary>
-        /// The time the ban repealed.
-        /// </summary>
-        public DateTime UnbanTime { get; set; }
-    }
-
-    /// <summary>
     /// An exemption for a specific user to a certain type of <see cref="ServerBan"/>.
     /// </summary>
     /// <example>
@@ -936,7 +704,7 @@ namespace Content.Server.Database
 
         /// <summary>
         /// The ban flags to exempt this player from.
-        /// If any bit overlaps <see cref="ServerBan.ExemptFlags"/>, the ban is ignored.
+        /// If any bit overlaps <see cref="Ban.ExemptFlags"/>, the ban is ignored.
         /// </summary>
         public ServerBanExemptFlags Flags { get; set; }
     }
@@ -999,52 +767,8 @@ namespace Content.Server.Database
         public int BanId { get; set; }
         public int ConnectionId { get; set; }
 
-        public ServerBan Ban { get; set; } = null!;
+        public Ban Ban { get; set; } = null!;
         public ConnectionLog Connection { get; set; } = null!;
-    }
-
-    [Table("server_role_ban"), Index(nameof(PlayerUserId))]
-    public sealed class ServerRoleBan : IBanCommon<ServerRoleUnban>
-    {
-        public int Id { get; set; }
-        public int? RoundId { get; set; }
-        public Round? Round { get; set; }
-        public Guid? PlayerUserId { get; set; }
-        [Required] public TimeSpan PlaytimeAtNote { get; set; }
-        public NpgsqlInet? Address { get; set; }
-        public TypedHwid? HWId { get; set; }
-
-        public DateTime BanTime { get; set; }
-
-        public DateTime? ExpirationTime { get; set; }
-
-        public string Reason { get; set; } = null!;
-
-        public NoteSeverity Severity { get; set; }
-        [ForeignKey("CreatedBy")] public Guid? BanningAdmin { get; set; }
-        public Player? CreatedBy { get; set; }
-
-        [ForeignKey("LastEditedBy")] public Guid? LastEditedById { get; set; }
-        public Player? LastEditedBy { get; set; }
-        public DateTime? LastEditedAt { get; set; }
-
-        public ServerRoleUnban? Unban { get; set; }
-        public bool Hidden { get; set; }
-
-        public string RoleId { get; set; } = null!;
-    }
-
-    [Table("server_role_unban")]
-    public sealed class ServerRoleUnban : IUnbanCommon
-    {
-        [Column("role_unban_id")] public int Id { get; set; }
-
-        public int BanId { get; set; }
-        public ServerRoleBan Ban { get; set; } = null!;
-
-        public Guid? UnbanningAdmin { get; set; }
-
-        public DateTime UnbanTime { get; set; }
     }
 
     [Table("play_time")]
@@ -1246,31 +970,31 @@ namespace Content.Server.Database
         /// <summary>
         /// The reason for the ban.
         /// </summary>
-        /// <seealso cref="ServerBan.Reason"/>
+        /// <seealso cref="Ban.Reason"/>
         public string Reason { get; set; } = "";
 
         /// <summary>
         /// Exemptions granted to the ban.
         /// </summary>
-        /// <seealso cref="ServerBan.ExemptFlags"/>
+        /// <seealso cref="Ban.ExemptFlags"/>
         public ServerBanExemptFlags ExemptFlags { get; set; }
 
         /// <summary>
         /// Severity of the ban
         /// </summary>
-        /// <seealso cref="ServerBan.Severity"/>
+        /// <seealso cref="Ban.Severity"/>
         public NoteSeverity Severity { get; set; }
 
         /// <summary>
         /// Ban will be automatically deleted once expired.
         /// </summary>
-        /// <seealso cref="ServerBan.AutoDelete"/>
+        /// <seealso cref="Ban.AutoDelete"/>
         public bool AutoDelete { get; set; }
 
         /// <summary>
         /// Ban is not visible to players in the remarks menu.
         /// </summary>
-        /// <seealso cref="ServerBan.Hidden"/>
+        /// <seealso cref="Ban.Hidden"/>
         public bool Hidden { get; set; }
     }
 

@@ -10,6 +10,11 @@
     allowedModes:
     - HyposprayDynamicMode
     - HyposprayInjectMode
+  - type: Spillable
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+    exactVolume: true
   - type: Appearance
 
 - type: entity
@@ -34,9 +39,6 @@
         maxVol: 30
   - type: RefillableSolution
     solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-    exactVolume: true
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -98,14 +100,74 @@
         maxVol: 10
   - type: RefillableSolution
     solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: borghypo_fill
     solutionName: hypospray
   - type: UseDelay
     delay: 0.5
+
+- type: entity
+  parent: BaseHypospray
+  id: JetInjector
+  name: jet injector
+  description: A sterile injector for convenient administration of drugs to patients.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/jetinjector.rsi
+    layers:
+    - state: jetinjector_base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: jetinjector_filled1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Item
+    sprite: Objects/Specific/Medical/jetinjector.rsi
+  - type: UseDelay
+    delay: 1.5
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 15
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: jetinjector_filled
+    solutionName: hypospray
+  - type: Injector
+    solutionName: hypospray
+    currentTransferAmount: null # Inject everything on injection.
+    activeModeProtoId: JetInjectorDynamicMode
+    allowedModes:
+    - JetInjectorDynamicMode
+    - JetInjectorInjectMode
+
+- type: entity
+  parent: JetInjector
+  id: AdvancedJetInjector
+  name: advanced jet injector
+  description: A pristine, fashionable, high quality injector. Allows for a faster injection, with a slightly larger capacity.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/advanced_jetinjector.rsi
+    layers:
+    - state: jetinjector_base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: jetinjector_filled1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Item
+    sprite: Objects/Specific/Medical/advanced_jetinjector.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 20
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+  - type: Injector
+    activeModeProtoId: AdvancedJetInjectorDynamicMode
+    allowedModes:
+    - AdvancedJetInjectorDynamicMode
+    - AdvancedJetInjectorInjectMode
 
 - type: entity
   parent: SyndiHypo
@@ -152,7 +214,6 @@
         maxVol: 15
   - type: ExaminableSolution
     solution: pen
-    exactVolume: true
   - type: Injector
     solutionName: pen
     currentTransferAmount: null
