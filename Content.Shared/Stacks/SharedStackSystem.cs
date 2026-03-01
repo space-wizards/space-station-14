@@ -6,6 +6,7 @@ using Content.Shared.Nutrition;
 using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Events;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
@@ -47,6 +48,8 @@ public abstract partial class SharedStackSystem : EntitySystem
         SubscribeLocalEvent<StackComponent, BeforeIngestedEvent>(OnBeforeEaten);
         SubscribeLocalEvent<StackComponent, IngestedEvent>(OnEaten);
         SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
+
+        SubscribeLocalEvent<StackComponent, GetAmmoEvent>(OnUsedAsAmmo);
 
         _vvm.GetTypeHandler<StackComponent>()
             .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
@@ -218,6 +221,18 @@ public abstract partial class SharedStackSystem : EntitySystem
 
             args.Verbs.Add(verb);
         }
+    }
+
+    public void OnUsedAsAmmo(Entity<StackComponent> ent, ref GetAmmoEvent args)
+    {
+        if(!_prototype.Resolve(ent.Comp.StackTypeId, out var stackType))
+            return;
+
+        ReduceCount(ent.AsNullable(), 1);
+
+        args.AmmoOverride = PredictedSpawnInContainerOrDrop(stackType.Spawn,
+            args.BallisticProvider,
+            args.BallisticProvider.Comp.Container.ID);
     }
 
     /// <remarks>
