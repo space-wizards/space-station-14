@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: MRE wrappers are no longer twice as nutritious as the actual food within.
-    type: Fix
-  id: 9047
-  time: '2025-10-07T19:36:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40761
 - author: TrixxedHeart
   changes:
   - message: 'Added new markings for Vox: 3 new beak types, 2 beak markings, 1 overlay
@@ -3993,3 +3986,10 @@
   id: 9557
   time: '2026-02-28T22:04:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42899
+- author: slarticodefast
+  changes:
+  - message: Fixed damage mispredicting.
+    type: Fix
+  id: 9558
+  time: '2026-03-01T00:06:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43080
