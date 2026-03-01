@@ -13,7 +13,8 @@ public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem
 {
     protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<ReagentCondition> args)
     {
-        var quant = entity.Comp.Solution.GetTotalPrototypeQuantity(args.Condition.Reagent);
+        var soln = entity.Comp.Solution;
+        var quant = soln.GetTotalPrototypeQuantity(args.Condition.Reagent);
 
         args.Result = quant >= args.Condition.Min && quant <= args.Condition.Max;
     }
