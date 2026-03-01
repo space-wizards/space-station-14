@@ -13,7 +13,6 @@
         - id: OxygenTankFilled
         - id: NitrogenTankFilled
 
-
 - type: entity
   parent: CrateGenericSteel
   id: CrateCargoParcelWrap
