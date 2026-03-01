@@ -1007,7 +1007,7 @@
     maxAngle: 30
     angleIncrease: 3
     angleDecay: 15
-    cameraRecoilScalarModified: .25
+    cameraRecoilScalar: .25
   - type: BatteryAmmoProvider
     proto: XenoborgLaser
     fireCost: 100
