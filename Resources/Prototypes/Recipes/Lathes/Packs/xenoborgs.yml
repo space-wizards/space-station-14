@@ -18,7 +18,6 @@
   recipes:
   # engi xenoborg
   - XenoborgModuleDoorControlRecipe
-  - XenoborgModuleTileGunRecipe
   # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
   # scout xenoborg

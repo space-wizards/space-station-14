@@ -71,14 +71,6 @@
   materials:
     XenoborgCrystal: 100
 
-- type: latheRecipe
-  parent: BaseXenoborgModulesRecipe
-  id: XenoborgModuleTileGunRecipe
-  result: XenoborgModuleTileGun
-  materials:
-    Plasteel: 2000
-    Steel: 1000
-
 ## heavy xenoborg modules
 
 - type: latheRecipe
