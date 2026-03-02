@@ -57,10 +57,7 @@ public abstract partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        var ammoEv = new BeforeAmmoLoadedEvent();
-        RaiseLocalEvent(args.Used, ref ammoEv);
-
-        if (ammoEv.CanLoad && TryBallisticInsert(ent, ammoEv.AmmoOverride ?? args.Used, args.User))
+        if (TryBallisticInsert(ent, args.Used, args.User))
             args.Handled = true;
     }
 
@@ -332,8 +329,16 @@ public abstract partial class SharedGunSystem
         if (!CanInsertBallistic(entity, inserted))
             return false;
 
-        entity.Comp.Entities.Add(inserted);
-        Containers.Insert(inserted, entity.Comp.Container);
+        var ammoEv = new BeforeAmmoLoadedEvent();
+        RaiseLocalEvent(inserted, ref ammoEv);
+
+        if (!ammoEv.CanLoad)
+            return false;
+
+        var ammo = ammoEv.AmmoOverride ?? inserted;
+
+        entity.Comp.Entities.Add(ammo);
+        Containers.Insert(ammo, entity.Comp.Container);
         if (!suppressInsertionSound)
         {
             Audio.PlayPredicted(entity.Comp.SoundInsert, entity, user);
@@ -382,12 +387,9 @@ public abstract partial class SharedGunSystem
         if (!TryComp<BallisticAmmoProviderComponent>(ent, out var ballisticAmmoProviderComp))
             return;
 
-        var ammoEv = new BeforeAmmoLoadedEvent();
-        RaiseLocalEvent(args.Target.Value, ref ammoEv);
-
-        if (ammoEv.CanLoad && TryBallisticInsert(
+        if (TryBallisticInsert(
                 (ent, ballisticAmmoProviderComp),
-                ammoEv.AmmoOverride ?? args.Target.Value,
+                args.Target.Value,
                 args.User))
             args.Handled = true;
     }
