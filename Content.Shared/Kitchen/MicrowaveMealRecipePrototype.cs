@@ -17,21 +17,42 @@ namespace Content.Shared.Kitchen
         [IdDataField]
         public string ID { get; private set; } = default!;
 
+        /// <summary>
+        ///     The name of the recipe.
+        /// </summary>
+        /// <remarks>
+        ///     This is used to sort recipes in alphabetical order in the guidebook.
+        /// </remarks>
         [DataField]
         public string Name = string.Empty;
 
+        /// <summary>
+        ///     The guidebook grouping for this recipe.
+        /// </summary>
         [DataField]
         public string Group = "Other";
 
+        /// <summary>
+        ///     The reagent ingredients used in this recipe.
+        /// </summary>
         [DataField("reagents")]
         private ReagentQuantity[] _ingsReagents = [];
 
+        /// <summary>
+        ///     The solid ingredients used in this recipe.
+        /// </summary>
         [DataField("solids", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, EntityPrototype>))]
         private Dictionary<string, FixedPoint2> _ingsSolids = new();
 
+        /// <summary>
+        ///     The resulting entity made from this recipe.
+        /// </summary>
         [DataField("result", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Result { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     The cooking time of this recipe.
+        /// </summary>
         [DataField("time")]
         public uint CookTime { get; private set; } = 5;
 
@@ -39,7 +60,7 @@ namespace Content.Shared.Kitchen
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsSolids => _ingsSolids;
 
         /// <summary>
-        /// Is this recipe unavailable in normal circumstances?
+        ///     Is this recipe unavailable in normal circumstances?
         /// </summary>
         [DataField]
         public bool SecretRecipe = false;
