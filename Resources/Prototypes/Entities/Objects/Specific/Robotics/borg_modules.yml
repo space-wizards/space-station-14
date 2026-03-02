@@ -1565,7 +1565,6 @@
   - type: ItemBorgModule
     hands:
     - item: WeaponTileGunEmpty
-    - item: Crowbar
     - hand:
         emptyRepresentative: FloorTileItemSteel
         emptyLabel: &TileEmptyLabel borg-slot-tiles-empty
