@@ -20,7 +20,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/magnetic_shot.ogg
     soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+      path: /Audio/Effects/Cargo/beep.ogg
   - type: BallisticAmmoProvider
     whitelist:
       components:
