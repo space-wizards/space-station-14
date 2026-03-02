@@ -1575,12 +1575,12 @@
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleBurstFireLaser
   name: burst fire laser xenoborg module
-  description: Module with a burst fire laser.
+  description: Module with a burst fire incendiary laser.
   components:
   - type: Sprite
     layers:
     - state: xenoborg_heavy
-    - state: icon-xenoborg-laser2
+    - state: icon-xenoborg-laser3
   - type: ItemBorgModule
     hands:
     - item: WeaponBurstFireLaserXenoborg
