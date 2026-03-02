@@ -1,11 +1,15 @@
 ﻿<Document>
-  # Core Rule 9 - Do not share accounts
+  # Core Rule 9 - Do not share or switch accounts
   [color=SlateGray][italic]Revision A, 2026-02-27[/italic][/color]
 
-  All users of the account are equally penalized for all penalties.
+  This is a zero-tolerance rule.
+
+  Do not share your account with other users. [color=SlateGray](You are responsible for actions taken on your account.)[/color]
+
+  Do not use other accounts to connect to Wizard's Den servers.
 
   # Switching usernames and accounts
   You may change your username at https://account.spacestation14.com/Identity/Account/Manage
 
-  As soon as you create a new account, you must notify admins of your previous username at https://forum.spacestation14.com/c/general/help/46
+  As soon as you create or log into a new account, you must notify admins of your previous username at https://forum.spacestation14.com/c/general/help/46
 </Document>
