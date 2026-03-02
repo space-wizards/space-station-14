@@ -49,7 +49,7 @@ public abstract partial class SharedStackSystem : EntitySystem
         SubscribeLocalEvent<StackComponent, IngestedEvent>(OnEaten);
         SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
 
-        SubscribeLocalEvent<StackComponent, GetAmmoEvent>(OnUsedAsAmmo);
+        SubscribeLocalEvent<StackComponent, BeforeAmmoLoadedEvent>(OnUsedAsAmmo);
 
         _vvm.GetTypeHandler<StackComponent>()
             .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
@@ -223,7 +223,7 @@ public abstract partial class SharedStackSystem : EntitySystem
         }
     }
 
-    public void OnUsedAsAmmo(Entity<StackComponent> ent, ref GetAmmoEvent args)
+    public void OnUsedAsAmmo(Entity<StackComponent> ent, ref BeforeAmmoLoadedEvent args)
     {
         args.AmmoOverride = Split(ent.AsNullable(), 1, Transform(ent).Coordinates);
     }

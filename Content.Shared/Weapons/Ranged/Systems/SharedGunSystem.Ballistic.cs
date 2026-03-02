@@ -55,7 +55,7 @@ public abstract partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        var ammoEv = new GetAmmoEvent();
+        var ammoEv = new BeforeAmmoLoadedEvent();
         RaiseLocalEvent(args.Used, ref ammoEv);
 
         if (ammoEv.CanLoad && TryBallisticInsert(ent, ammoEv.AmmoOverride ?? args.Used, args.User))
