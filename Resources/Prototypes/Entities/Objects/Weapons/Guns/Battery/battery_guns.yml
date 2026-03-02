@@ -1000,7 +1000,7 @@
   name: xenoborg burst fire laser
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/xeno_burstfire.rsi
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_burstfire.rsi
     layers:
     - state: base
       map: [ "enum.GunVisualLayers.Base" ]
