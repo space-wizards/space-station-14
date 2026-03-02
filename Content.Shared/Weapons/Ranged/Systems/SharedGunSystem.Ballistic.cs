@@ -326,9 +326,6 @@ public abstract partial class SharedGunSystem
         bool suppressInsertionSound = false
     )
     {
-        if (!CanInsertBallistic(entity, inserted))
-            return false;
-
         var ammoEv = new BeforeAmmoLoadedEvent();
         RaiseLocalEvent(inserted, ref ammoEv);
 
@@ -336,6 +333,9 @@ public abstract partial class SharedGunSystem
             return false;
 
         var ammo = ammoEv.AmmoOverride ?? inserted;
+
+        if (!CanInsertBallistic(entity, ammo))
+            return false;
 
         entity.Comp.Entities.Add(ammo);
         Containers.Insert(ammo, entity.Comp.Container);
