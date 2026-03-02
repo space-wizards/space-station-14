@@ -28,7 +28,7 @@
     capacity: 30
     proto: FloorTileItemSteel
     soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+      path: /Audio/Weapons/Guns/MagIn/tile_load.ogg
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
