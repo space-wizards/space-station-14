@@ -9,6 +9,7 @@
     state: icon
   - type: Item
     size: Large
+  - type: ToolTileCompatible
   - type: Tool
     qualities:
     - Prying
