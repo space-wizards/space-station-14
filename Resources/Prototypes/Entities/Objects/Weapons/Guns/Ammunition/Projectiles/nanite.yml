@@ -1,0 +1,56 @@
+- type: entity
+  id: MuzzleFlashEffectNanite
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    drawdepth: BelowMobs
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+    sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
+    state: muzzle_nanite
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: AnimationPlayer
+
+- type: entity
+  id: BulletImpactEffectNanite
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 0.25
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+    sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
+    state: impact_nanite
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseBullet
+  id: BulletNanite
+  categories: [ HideSpawnMenu ]
+  name: nanite crystal
+  components:
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectNanite
+  sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
+  layers:
+  - state: nanite
+    shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectNanite
+    damage:
+      types:
+        Cellular: 12
+
+

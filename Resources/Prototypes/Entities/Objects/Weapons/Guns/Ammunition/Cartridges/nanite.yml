@@ -1,0 +1,20 @@
+- type: entity
+  parent: [ BaseCartridge, BaseXenoborgContraband ]
+  id: CartridgeNanite
+  name: nanite crystal
+  description: A high-power nanite crystal used by xenoborgs.
+  components:
+  - type: Tag
+    tags:
+    - NaniteGun
+  - type: CartridgeAmmo
+    proto: BulletNanite
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/nanite_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 20
