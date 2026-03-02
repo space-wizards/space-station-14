@@ -13,7 +13,7 @@
         - id: OxygenTankFilled
         - id: NitrogenTankFilled
         - id: MiningDrill
-        - id: HandheldMassScanner
+        - id: HandHeldMassScanner
         - id: OreBag
         - id: ClothingBeltSalvageWebbing
 
