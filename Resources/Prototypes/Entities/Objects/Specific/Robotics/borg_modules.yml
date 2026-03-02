@@ -1565,20 +1565,6 @@
   - type: ItemBorgModule
     hands:
     - item: WeaponTileGunEmpty
-    - hand:
-        emptyRepresentative: FloorTileItemSteel
-        emptyLabel: &TileEmptyLabel borg-slot-tiles-empty
-        whitelist: &TileHandWhitelist
-          components:
-          - FloorTile
-    - hand:
-        emptyRepresentative: FloorTileItemWhite
-        emptyLabel: *TileEmptyLabel
-        whitelist: *TileHandWhitelist
-    - hand:
-        emptyRepresentative: FloorTileItemDark
-        emptyLabel: *TileEmptyLabel
-        whitelist: *TileHandWhitelist
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tile-module }
 
