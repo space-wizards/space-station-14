@@ -3,7 +3,7 @@
 namespace Content.Shared.Weapons.Ranged.Events;
 
 /// <summary>
-/// Raised before a entity is loaded into a gun (or a magazine) as ammo
+/// Raised on the ammo before it is loaded into a gun (or a magazine)
 /// </summary>
 [ByRefEvent]
 public struct GetAmmoEvent
