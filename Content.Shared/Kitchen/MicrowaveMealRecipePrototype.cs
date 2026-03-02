@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Reagent;
+﻿using System.Linq;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -16,17 +17,17 @@ namespace Content.Shared.Kitchen
         [IdDataField]
         public string ID { get; private set; } = default!;
 
-        [DataField("name")]
-        private string _name = string.Empty;
+        [DataField]
+        public string Name = string.Empty;
 
         [DataField]
         public string Group = "Other";
 
-        [DataField("reagents", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
-        private Dictionary<string, FixedPoint2> _ingsReagents = new();
+        [DataField("reagents")]
+        private ReagentQuantity[] _ingsReagents = [];
 
         [DataField("solids", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, EntityPrototype>))]
-        private Dictionary<string, FixedPoint2> _ingsSolids = new ();
+        private Dictionary<string, FixedPoint2> _ingsSolids = new();
 
         [DataField("result", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Result { get; private set; } = string.Empty;
@@ -34,10 +35,7 @@ namespace Content.Shared.Kitchen
         [DataField("time")]
         public uint CookTime { get; private set; } = 5;
 
-        public string Name => Loc.GetString(_name);
-
-        // TODO Turn this into a ReagentQuantity[]
-        public IReadOnlyDictionary<string, FixedPoint2> IngredientsReagents => _ingsReagents;
+        public IReadOnlyList<ReagentQuantity> IngredientsReagents => _ingsReagents;
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsSolids => _ingsSolids;
 
         /// <summary>
@@ -53,13 +51,10 @@ namespace Content.Shared.Kitchen
         /// </summary>
         public FixedPoint2 IngredientCount()
         {
-            FixedPoint2 n = 0;
-            n += _ingsReagents.Count; // number of distinct reagents
-            foreach (FixedPoint2 i in _ingsSolids.Values) // sum the number of solid ingredients
-            {
-                n += i;
-            }
-            return n;
+            var solidCount = _ingsSolids.Select(s => s.Value).Sum();
+            var reagentCount = _ingsReagents.Length;
+
+            return solidCount + reagentCount;
         }
     }
 }
