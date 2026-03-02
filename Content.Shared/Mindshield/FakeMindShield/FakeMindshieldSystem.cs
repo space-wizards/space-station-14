@@ -1,8 +1,10 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Implants;
 using Content.Shared.Mindshield.Components;
+using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -13,6 +15,8 @@ public sealed class FakeMindShieldSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
     private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
@@ -29,6 +33,16 @@ public sealed class FakeMindShieldSystem : EntitySystem
         comp.IsEnabled = !comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
+
+        if (_net.IsServer)
+        {
+            var message = comp.IsEnabled
+                ? Loc.GetString("fake-mindshield-enabled")
+                : Loc.GetString("fake-mindshield-disabled");
+
+            _popup.PopupEntity(message, uid, uid, PopupType.Small);
+        }
+
         Dirty(uid, comp);
     }
 
