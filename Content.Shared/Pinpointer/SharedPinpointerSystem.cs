@@ -42,8 +42,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Set pinpointers target to track
     /// </summary>
-    public virtual void SetTarget(Entity<PinpointerComponent> ent, EntityUid? target)
+    public virtual void SetTarget(Entity<PinpointerComponent?> ent, EntityUid? target)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
         var pinpointer = ent.Comp;
 
         if (pinpointer.Target == target)
@@ -59,7 +62,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Update direction from pinpointer to selected target (if it was set)
     /// </summary>
-    protected virtual void UpdateDirectionToTarget(Entity<PinpointerComponent> ent)
+    protected virtual void UpdateDirectionToTarget(Entity<PinpointerComponent?> ent)
     {
 
     }
@@ -75,8 +78,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Manually set distance from pinpointer to target
     /// </summary>
-    public void SetDistance(Entity<PinpointerComponent> ent, Distance distance)
+    public void SetDistance(Entity<PinpointerComponent?> ent, Distance distance)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
         if (distance == ent.Comp.DistanceToTarget)
             return;
 
@@ -89,8 +95,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     If difference between current angle and new angle is smaller than
     ///     pinpointer precision, new value will be ignored and it will return false.
     /// </summary>
-    public bool TrySetArrowAngle(Entity<PinpointerComponent> ent, Angle arrowAngle)
+    public bool TrySetArrowAngle(Entity<PinpointerComponent?> ent, Angle arrowAngle)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
         if (ent.Comp.ArrowAngle.EqualsApprox(arrowAngle, ent.Comp.Precision))
             return false;
 
@@ -103,8 +112,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Activate/deactivate pinpointer screen. If it has target it will start tracking it.
     /// </summary>
-    public void SetActive(Entity<PinpointerComponent> ent, bool isActive)
+    public void SetActive(Entity<PinpointerComponent?> ent, bool isActive)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
         if (isActive == ent.Comp.IsActive)
             return;
 
@@ -117,8 +129,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     Toggle Pinpointer screen. If it has target it will start tracking it.
     /// </summary>
     /// <returns>True if pinpointer was activated, false otherwise</returns>
-    public virtual bool TogglePinpointer(Entity<PinpointerComponent> ent)
+    public virtual bool TogglePinpointer(Entity<PinpointerComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
         var isActive = !ent.Comp.IsActive;
         SetActive(ent, isActive);
         return isActive;

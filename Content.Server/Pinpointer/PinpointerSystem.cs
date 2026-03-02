@@ -24,21 +24,24 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
     }
 
-    public override bool TogglePinpointer(Entity<PinpointerComponent> ent)
+    public override bool TogglePinpointer(Entity<PinpointerComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
         var isActive = !ent.Comp.IsActive;
         SetActive(ent, isActive);
         UpdateAppearance(ent);
         return isActive;
     }
 
-    private void UpdateAppearance(Entity<PinpointerComponent> ent, AppearanceComponent? appearance = null)
+    private void UpdateAppearance(Entity<PinpointerComponent?, AppearanceComponent?> ent)
     {
-        if (!Resolve(ent, ref appearance))
+        if (!Resolve(ent, ref ent.Comp1) || !Resolve(ent, ref ent.Comp2))
             return;
 
-        _appearance.SetData(ent, PinpointerVisuals.IsActive, ent.Comp.IsActive, appearance);
-        _appearance.SetData(ent, PinpointerVisuals.TargetDistance, ent.Comp.DistanceToTarget, appearance);
+        _appearance.SetData(ent, PinpointerVisuals.IsActive, ent.Comp1.IsActive, ent.Comp2);
+        _appearance.SetData(ent, PinpointerVisuals.TargetDistance, ent.Comp1.DistanceToTarget, ent.Comp2);
     }
 
     private void OnActivate(Entity<PinpointerComponent> ent, ref ActivateInWorldEvent args)
@@ -46,10 +49,10 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (args.Handled || !args.Complex)
             return;
 
-        TogglePinpointer(ent);
+        TogglePinpointer(ent!);
 
         if (!ent.Comp.CanRetarget)
-            LocateTarget(ent);
+            LocateTarget(ent!);
 
         args.Handled = true;
     }
@@ -89,7 +92,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 return;
 
             var target = FindTargetFromComponent((ent, transform), reg.Type);
-            SetTarget(ent, target);
+            SetTarget(ent!, target);
         }
     }
 
@@ -110,8 +113,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     ///     Try to find the closest entity from whitelist on a current map
     ///     Will return null if can't find anything
     /// </summary>
-    private EntityUid? FindTargetFromComponent(Entity<TransformComponent> ent, Type whitelist)
+    private EntityUid? FindTargetFromComponent(Entity<TransformComponent?> ent, Type whitelist)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
         // sort all entities in distance increasing order
         var mapId = ent.Comp.MapID;
         var l = new SortedList<float, EntityUid>();
@@ -133,8 +139,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Update direction from pinpointer to selected target (if it was set)
     /// </summary>
-    protected override void UpdateDirectionToTarget(Entity<PinpointerComponent> ent)
+    protected override void UpdateDirectionToTarget(Entity<PinpointerComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
         var pinpointer = ent.Comp;
 
         if (!pinpointer.IsActive)

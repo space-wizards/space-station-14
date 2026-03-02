@@ -11,6 +11,7 @@ namespace Content.Shared.Pinpointer;
 [Access(typeof(SharedPinpointerSystem))]
 public sealed partial class PinpointerComponent : Component
 {
+    // TODO: Type serializer oh god
     [DataField]
     public string? Component;
 
