@@ -80,6 +80,10 @@ stack-artifact-fragment = artifact {$amount ->
     [1] fragment
     *[other] fragments
 }
+stack-xenoborg-circuit = dvanced xenoborg {$amount ->
+    [1] circuitboard
+    *[other] circuitboards
+}
 
 stack-salvage-ticket = {$amount ->
     [1] token

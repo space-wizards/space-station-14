@@ -31,10 +31,12 @@ public sealed class BarSignSystem : EntitySystem
 
     private void OnMapInit(Entity<BarSignComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.Current != null)
+        BarSignPrototype? newPrototype;
+        if (ent.Comp.Current is null)
+            newPrototype = _random.Pick(GetAllBarSigns(_prototypeManager));
+        else if (!_prototypeManager.Resolve(ent.Comp.Current, out newPrototype))
             return;
 
-        var newPrototype = _random.Pick(GetAllBarSigns(_prototypeManager));
         SetBarSign(ent, newPrototype);
     }
 
@@ -77,9 +79,6 @@ public sealed class BarSignSystem : EntitySystem
     /// </summary>
     public void SetBarSign(Entity<BarSignComponent> ent, BarSignPrototype newPrototype)
     {
-        if (ent.Comp.Current == newPrototype.ID)
-            return;
-
         if (HasComp<EmpDisabledComponent>(ent))
             return;
 

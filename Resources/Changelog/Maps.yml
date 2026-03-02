@@ -1036,4 +1036,13 @@
   id: 126
   time: '2026-02-23T05:48:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42905
+- author: TytosB
+  changes:
+  - message: Added Serpentcrest to map pool
+    type: Add
+  - message: on Serpentcrest, several changes to map
+    type: Tweak
+  id: 127
+  time: '2026-02-28T06:56:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43061
 Order: 2

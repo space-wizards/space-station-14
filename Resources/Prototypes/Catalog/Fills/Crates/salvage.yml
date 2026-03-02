@@ -13,7 +13,7 @@
         - id: OxygenTankFilled
         - id: NitrogenTankFilled
         - id: MiningDrill
-        - id: MineralScanner
+        - id: HandheldMassScanner
         - id: OreBag
         - id: ClothingBeltSalvageWebbing
 
@@ -166,14 +166,14 @@
 - type: entity
   parent: CrateCargoSecure
   id: CrateSalvageHardsuit
-  name: salvage basics crate
-  description: Contains a salvage hardsuit, along with all the other basics an newly recruited salvager would need.
+  name: mining hardsuit crate
+  description: Contains a spationaut hardsuit, along with all the other basics an newly recruited salvager would need.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: ClothingOuterHardsuitSalvage
+        - id: ClothingOuterHardsuitSpatio
         - id: ClothingMaskGasExplorer
         - id: OxygenTankFilled
         - id: NitrogenTankFilled
