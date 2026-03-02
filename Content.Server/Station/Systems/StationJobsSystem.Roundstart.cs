@@ -138,27 +138,18 @@ public sealed partial class StationJobsSystem
                     var currentJobs = currentStationJobSlots.Keys.ToList();
                     _random.Shuffle(currentJobs);
 
-                    // Loop through the jobs repeatedly until one of the following happens:
-                    // * The station has its share of players for the current weight & priority
-                    // * All the players who were in jobCandidates have been assigned jobs
-                    // * None of the remaining jobCandidates can be assigned to any of the jobs in currentJobs, due
-                    //   to the jobs being full and/or the players not matching the remaining jobs
+                    // Loop through the jobs repeatedly until we can't assign any more jobs
                     var stillAssigningJobs = true;
+
                     while (stillAssigningJobs)
                     {
-                        // This will get set back to true in the inner loop when a player is assigned to a job.
-                        // If no players get assigned to jobs in the inner loop, then the jobs are full and/or
-                        // the players don't match the remaining jobs.
+                        // Will get set back to true if we assign any jobs on this loop through currentJobs
                         stillAssigningJobs = false;
 
                         foreach (var job in currentJobs)
                         {
-                            if (stationShares[station] == 0 // The station has its share of players for the current weight & priority
-                                || jobCandidates.Count == 0) // All the players who were in jobCandidates have been assigned jobs
-                            {
-                                stillAssigningJobs = false;
-                                break;
-                            }
+                            if (stationShares[station] == 0 || jobCandidates.Count == 0)
+                                break;  // Can't assign any job if we don't have space and a candidate
 
                             // null indicates an uncapped job here
                             if (currentStationJobSlots[job] != null && currentStationJobSlots[job] == 0)
@@ -172,13 +163,11 @@ public sealed partial class StationJobsSystem
                             assigned.Add(player, (job, station));
 
                             // Update various bookkeeping data
+                            stillAssigningJobs = true;
                             unassignedProfiles.Remove(player);
                             currentStationJobSlots[job]--;
                             stationShares[station]--;
                             RemoveJobCandidate(jobCandidates, player);
-
-                            // There was now at least one job assigned on this loop over the jobs
-                            stillAssigningJobs = true;
                         }
                     }
                 }
