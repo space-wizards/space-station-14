@@ -38,7 +38,7 @@ public sealed class PlantTraySystem : EntitySystem
 
         using (args.PushGroup(nameof(PlantTrayComponent)))
         {
-            if (TryGetPlant(ent.AsNullable(), out var plantUid))
+            if (!TryGetPlant(ent.AsNullable(), out var plantUid))
                 args.PushMarkup(Loc.GetString("plant-holder-component-nothing-planted-message"));
 
             args.PushMarkup(GetTrayWarningsMarkup(ent.AsNullable()));

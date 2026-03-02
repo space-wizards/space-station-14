@@ -99,6 +99,8 @@ public sealed class PlantSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        // Protection against plant removal during update loop.
+        var toUpdate = new List<EntityUid>();
         var query = EntityQueryEnumerator<PlantHolderComponent>();
         while (query.MoveNext(out var uid, out var plantHolder))
         {
@@ -107,6 +109,11 @@ public sealed class PlantSystem : EntitySystem
 
             plantHolder.NextUpdate = _gameTiming.CurTime;
             DirtyField(uid, plantHolder, nameof(plantHolder.NextUpdate));
+            toUpdate.Add(uid);
+        }
+
+        foreach (var uid in toUpdate)
+        {
             Update(uid);
         }
     }

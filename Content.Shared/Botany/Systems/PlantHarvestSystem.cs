@@ -33,6 +33,10 @@ public sealed class PlantHarvestSystem : EntitySystem
             || !TryComp<PlantComponent>(ent.Owner, out var plant))
             return;
 
+        // If the plant is not mature, set the last harvest to the current age.
+        if (holder.Age < plant.Maturation)
+            ent.Comp.LastHarvest = holder.Age;
+
         // Check if plant is ready for harvest.
         var timeLastHarvest = holder.Age - ent.Comp.LastHarvest;
         if (timeLastHarvest > plant.Production && !ent.Comp.ReadyForHarvest)
@@ -134,6 +138,7 @@ public sealed class PlantHarvestSystem : EntitySystem
 
         if (ent.Comp.HarvestRepeat == HarvestType.NoRepeat)
             _plant.RemovePlant(plantEnt.AsNullable());
+
         var ev = new AfterDoHarvestEvent(user, ent.Owner);
         RaiseLocalEvent(ent.Owner, ref ev);
     }

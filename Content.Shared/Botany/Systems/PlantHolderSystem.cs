@@ -38,7 +38,6 @@ public sealed class PlantHolderSystem : EntitySystem
         ent.Comp.MutationLevel += amount * ent.Comp.MutationMod;
         ent.Comp.MutationLevel = MathHelper.Clamp(ent.Comp.MutationLevel, 0f, ent.Comp.MaxMutationLevel);
         DirtyField(ent, nameof(ent.Comp.MutationLevel));
-
         CheckHealth(ent);
     }
 
