@@ -98,7 +98,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
                 return false;
 
         // See if conditions apply
-        if (!_condition.TryConditions(target, effect.Conditions))
+        if (!_condition.TryConditions(target, effect.Conditions, user))
             return false;
 
         ApplyEffect(target, effect, scale, user);
