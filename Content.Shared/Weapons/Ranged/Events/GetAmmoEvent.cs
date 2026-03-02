@@ -6,9 +6,8 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// Raised before a entity is loaded into a gun (or a magazine) as ammo
 /// </summary>
 [ByRefEvent]
-public struct GetAmmoEvent(Entity<BallisticAmmoProviderComponent> ballisticProvider)
+public struct GetAmmoEvent
 {
-    public Entity<BallisticAmmoProviderComponent> BallisticProvider => ballisticProvider;
     public bool CanLoad => true;
     public EntityUid? AmmoOverride;
 }

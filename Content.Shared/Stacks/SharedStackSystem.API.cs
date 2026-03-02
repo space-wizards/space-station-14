@@ -19,7 +19,7 @@ public abstract partial class SharedStackSystem
     /// <param name="spawnPosition">Where to spawn the new stack</param>
     /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has available.</returns>
     [PublicAPI]
-    public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates? spawnPosition)
+    public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return null;
@@ -32,9 +32,7 @@ public abstract partial class SharedStackSystem
             return null;
 
         // Set the output parameter in the event instance to the newly split stack.
-        var newEntity = spawnPosition != null
-            ? SpawnAtPosition(stackType.Spawn, spawnPosition.Value)
-            : Spawn(stackType.Spawn);
+        var newEntity = PredictedSpawnAtPosition(stackType.Spawn, spawnPosition);
 
         // There should always be a StackComponent
         var stackComp = Comp<StackComponent>(newEntity);

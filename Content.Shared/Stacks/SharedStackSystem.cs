@@ -225,7 +225,7 @@ public abstract partial class SharedStackSystem : EntitySystem
 
     public void OnUsedAsAmmo(Entity<StackComponent> ent, ref GetAmmoEvent args)
     {
-        args.AmmoOverride = Split(ent.AsNullable(), 1, null);
+        args.AmmoOverride = Split(ent.AsNullable(), 1, Transform(ent).Coordinates);
     }
 
     /// <remarks>
