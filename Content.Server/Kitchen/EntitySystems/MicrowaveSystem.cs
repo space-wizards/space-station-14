@@ -39,6 +39,7 @@ using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -155,7 +156,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (activeMicrowaveComp.PortionedRecipe.Item1 == null) // no recipe selected
                 return;
 
-            var recipeReagents = activeMicrowaveComp.PortionedRecipe.Item1.IngredientsReagents.Keys;
+            var recipeReagents = activeMicrowaveComp.PortionedRecipe.Item1.Reagents.Keys;
 
             foreach (var reagent in recipeReagents)
             {
@@ -198,7 +199,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
 
-            var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
+            var totalReagentsToRemove = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>(recipe.Reagents);
 
             // this is spaghetti ngl
             foreach (var item in component.Storage.ContainedEntities)
@@ -207,7 +208,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (!_solutionContainer.TryGetDrainableSolution(item, out var solutionEntity, out var solution))
                     continue;
 
-                foreach (var (reagent, _) in recipe.IngredientsReagents)
+                foreach (var (reagent, _) in recipe.Reagents)
                 {
                     // removed everything
                     if (!totalReagentsToRemove.ContainsKey(reagent))
@@ -229,7 +230,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 }
             }
 
-            foreach (var recipeSolid in recipe.IngredientsSolids)
+            foreach (var recipeSolid in recipe.Solids)
             {
                 for (var i = 0; i < recipeSolid.Value; i++)
                 {
@@ -515,7 +516,9 @@ namespace Content.Server.Kitchen.EntitySystems
         /// </remarks>
         public void Wzhzhzh(EntityUid uid, MicrowaveComponent component, EntityUid? user)
         {
-            if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid) || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
+            if (!HasContents(component)
+                || HasComp<ActiveMicrowaveComponent>(uid)
+                || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
                 return;
 
             var solidsDict = new Dictionary<string, int>();
@@ -628,7 +631,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return (recipe, 0);
             }
 
-            foreach (var solid in recipe.IngredientsSolids)
+            foreach (var solid in recipe.Solids)
             {
                 if (!solids.ContainsKey(solid.Key))
                     return (recipe, 0);
@@ -641,7 +644,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     : Math.Min(portions, solids[solid.Key] / solid.Value.Int());
             }
 
-            foreach (var reagent in recipe.IngredientsReagents)
+            foreach (var reagent in recipe.Reagents)
             {
                 // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
                 if (!reagents.ContainsKey(reagent.Key))
