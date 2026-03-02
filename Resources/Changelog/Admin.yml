@@ -1668,5 +1668,12 @@ Entries:
   id: 203
   time: '2026-02-21T20:22:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42988
+- author: Velken
+  changes:
+  - message: Admin door remote once again works through walls
+    type: Fix
+  id: 204
+  time: '2026-02-28T20:30:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43063
 Name: Admin
 Order: 3

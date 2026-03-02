@@ -127,4 +127,4 @@ alerts-dragon-full-power-name = Full power
 alerts-dragon-full-power-desc = After placing all the rifts, you gained incredible power. Destroy everything!
 
 alerts-prying-name = Prying
-alerts-prying-desc = You can innately pry doors open.
+alerts-prying-desc = You can innately pry doors open using alternative interaction.
