@@ -9,6 +9,9 @@
     state: icon
   - type: Item
     size: Large
+  - type: Tool
+    qualities:
+    - Prying
   - type: AmmoCounter
   - type: Gun
     fireRate: 8
