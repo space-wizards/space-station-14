@@ -34,6 +34,8 @@ public abstract partial class SharedGunSystem
 
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, MapInitEvent>(OnBallisticRefillerMapInit);
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, EmpPulseEvent>(OnRefillerEmpPulsed);
+
+        SubscribeLocalEvent<BallisticAmmoInteractLoaderComponent, AfterInteractEvent>(OnBallisticAmmoLoad);
     }
 
     private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent _)
@@ -370,6 +372,24 @@ public abstract partial class SharedGunSystem
             return;
 
         PauseSelfRefill(entity, args.Duration);
+    }
+
+    private void OnBallisticAmmoLoad(Entity<BallisticAmmoInteractLoaderComponent> ent, ref AfterInteractEvent args)
+    {
+        if (args.Handled || args.Target == null)
+            return;
+
+        if (!TryComp<BallisticAmmoProviderComponent>(ent, out var ballisticAmmoProviderComp))
+            return;
+
+        var ammoEv = new BeforeAmmoLoadedEvent();
+        RaiseLocalEvent(args.Target.Value, ref ammoEv);
+
+        if (ammoEv.CanLoad && TryBallisticInsert(
+                (ent, ballisticAmmoProviderComp),
+                ammoEv.AmmoOverride ?? args.Target.Value,
+                args.User))
+            args.Handled = true;
     }
 
     private void UpdateBallistic(float frameTime)
