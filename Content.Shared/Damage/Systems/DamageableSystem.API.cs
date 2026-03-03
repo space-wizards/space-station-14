@@ -447,7 +447,7 @@ public sealed partial class DamageableSystem
     [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
     public FixedPoint2 GetTotalDamage(Entity<DamageableComponent?> ent)
     {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp))
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
             return FixedPoint2.Zero;
 
         return ent.Comp.TotalDamage;
@@ -471,7 +471,7 @@ public sealed partial class DamageableSystem
     [Obsolete("Do not rely on the ability to determine if an entity will be able to be damaged by something")]
     public bool CanBeDamagedBy(Entity<DamageableComponent?> ent, ProtoId<DamageTypePrototype> type)
     {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp))
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
         return SupportsType(ent.Comp.DamageContainerID, type);
