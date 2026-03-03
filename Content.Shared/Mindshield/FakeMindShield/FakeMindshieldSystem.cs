@@ -27,22 +27,24 @@ public sealed class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
         SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
     }
+    private void ShowTogglePopup(EntityUid uid, FakeMindShieldComponent comp)
+    {
+        if (!_net.IsServer)
+            return;
+
+        var message = comp.IsEnabled
+            ? Loc.GetString("fake-mindshield-enabled")
+            : Loc.GetString("fake-mindshield-disabled");
+
+        _popup.PopupEntity(message, uid, uid, PopupType.Small);
+    }
 
     private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)
     {
         comp.IsEnabled = !comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
-
-        if (_net.IsServer)
-        {
-            var message = comp.IsEnabled
-                ? Loc.GetString("fake-mindshield-enabled")
-                : Loc.GetString("fake-mindshield-disabled");
-
-            _popup.PopupEntity(message, uid, uid, PopupType.Small);
-        }
-
+        ShowTogglePopup(uid, comp);
         Dirty(uid, comp);
     }
 
@@ -73,6 +75,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
 
             component.IsEnabled = args.ChameleonOutfit.HasMindShield;
             _actions.SetToggled(action, args.ChameleonOutfit.HasMindShield);
+            ShowTogglePopup(uid, component);
             Dirty(uid, component);
 
             if (actionComp.UseDelay != null)
