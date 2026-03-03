@@ -42,7 +42,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _prototypes = dependencies.Resolve<IPrototypeManager>();
         _cache = dependencies.Resolve<IResourceCache>();
-        _damageable = dependencies.Resolve<DamageableSystem>();
+        _damageable = _entityManager.System<DamageableSystem>();
     }
 
     public void Populate(HealthAnalyzerUiState state)
