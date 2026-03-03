@@ -1,64 +1,65 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Botany.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
+using Content.Shared.Botany.Systems;
 
 namespace Content.Server.Botany.Systems;
 
-/// <summary>
-/// Consumes and emits configured gases around plants each growth tick, then merges
-/// the adjusted gas mixture back into the environment.
-/// </summary>
-public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
+public sealed class ConsumeExudeGasGrowthSystem : SharedConsumeExudeGasGrowthSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<ConsumeExudeGasGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
     private void OnPlantGrow(Entity<ConsumeExudeGasGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (uid, component) = ent;
-
-        if (!TryComp(uid, out PlantHolderComponent? holder)
-            || !TryComp(uid, out PlantComponent? plant))
+        if (!TryComp<PlantComponent>(ent.Owner, out var plant)
+            || !TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))
             return;
 
-        var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
+        var environment = _atmosphere.GetContainingMixture(ent.Owner, true, true) ?? GasMixture.SpaceGas;
 
         // Consume Gasses.
-        holder.MissingGas = 0;
-        if (component.ConsumeGasses.Count > 0)
+        plantHolder.MissingGas = false;
+        var missingGas = 0;
+        if (ent.Comp.ConsumeGasses.Count > 0)
         {
-            foreach (var (gas, amount) in component.ConsumeGasses)
+            foreach (var (gas, amount) in ent.Comp.ConsumeGasses)
             {
                 if (environment.GetMoles(gas) < amount)
                 {
-                    holder.MissingGas++;
+                    missingGas++;
                     continue;
                 }
 
                 environment.AdjustMoles(gas, -amount);
             }
 
-            if (holder.MissingGas > 0)
+            if (missingGas > 0)
             {
-                holder.Health -= holder.MissingGas * BasicGrowthSystem.HydroponicsSpeedMultiplier;
-                if (holder.DrawWarnings)
-                    holder.UpdateSpriteAfterUpdate = true;
+                _plantHolder.AdjustsHealth(ent.Owner, -missingGas);
+                plantHolder.MissingGas = true;
             }
         }
 
         // Exude Gasses.
-        var exudeCount = component.ExudeGasses.Count;
+        var exudeCount = ent.Comp.ExudeGasses.Count;
         if (exudeCount > 0)
         {
-            foreach (var (gas, amount) in component.ExudeGasses)
+            foreach (var (gas, amount) in ent.Comp.ExudeGasses)
             {
                 environment.AdjustMoles(gas,
                     MathF.Max(1f, MathF.Round(amount * MathF.Round(plant.Potency) / exudeCount)));
             }
         }
+
+        Dirty(ent);
     }
 }
