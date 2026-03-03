@@ -35,10 +35,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnMindAdded(Entity<SiliconLawBoundComponent> ent, ref MindAddedMessage args)
     {
+        // We update the roles even if there are no actors, because we care about the mind role getting updated.
+        UpdateSiliconRoles(ent);
+
         if (!TryComp<ActorComponent>(ent, out var actor))
             return;
-
-        UpdateSiliconRoles(ent);
 
         var msg = Loc.GetString("laws-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));

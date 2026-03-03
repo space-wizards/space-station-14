@@ -203,6 +203,7 @@
   components:
   - type: SiliconLawProvider
     laws: XenoborgLawset
+    subverted: true
 
 - type: entity
   parent: MMINotIonStormable
@@ -211,6 +212,7 @@
   components:
   - type: SiliconLawProvider
     laws: XenoborgLawset
+    subverted: true
 
 - type: entity
   parent: MMIFilledNotIonStormable
@@ -219,6 +221,7 @@
   components:
   - type: SiliconLawProvider
     laws: XenoborgLawset
+    subverted: true
 
 # Syndicate brains
 - type: entity
@@ -228,6 +231,7 @@
   components:
   - type: SiliconLawProvider
     laws: SyndicateStatic
+    subverted: true
 
 - type: entity
   parent: MMINotIonStormable
@@ -236,6 +240,7 @@
   components:
   - type: SiliconLawProvider
     laws: SyndicateStatic
+    subverted: true
 
 - type: entity
   parent: MMIFilledNotIonStormable
@@ -244,3 +249,4 @@
   components:
   - type: SiliconLawProvider
     laws: SyndicateStatic
+    subverted: true
