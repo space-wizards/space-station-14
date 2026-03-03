@@ -53,7 +53,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         var damageRequired = _destructibleSystem.DestroyedAt(target);
         if (TryComp<DamageableComponent>(target, out var damageableComponent))
         {
-            damageRequired -= damageableComponent.TotalDamage;
+            damageRequired -= _damageableSystem.GetTotalDamage((uid, damageableComponent));
             damageRequired = FixedPoint2.Max(damageRequired, FixedPoint2.Zero);
         }
         var deleted = Deleted(target);

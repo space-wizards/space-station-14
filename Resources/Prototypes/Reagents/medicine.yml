@@ -185,6 +185,7 @@
   - !type:PlantAdjustHealth
     amount: 5
   - !type:PlantCryoxadone {}
+  worksOnTheDead: true
   metabolisms:
     Bloodstream:
       effects:
@@ -193,12 +194,19 @@
           - !type:TemperatureCondition
             # this is a little arbitrary but they gotta be pretty cold
             max: 213.0
+          - !type:MobStateCondition
           damage:
           # todo scale with temp like SS13
             Airloss: -3
+            Toxin: -2
+        - !type:EvenHealthChange
+          conditions:
+          - !type:TemperatureCondition
+            # this is a little arbitrary but they gotta be pretty cold
+            max: 213.0
+          damage:
             Brute: -2
             Burn: -2
-            Toxin: -2
 
 - type: reagent
   id: Doxarubixadone
@@ -817,9 +825,6 @@
     Bloodstream:
       effects:
       - !type:EvenHealthChange
-        conditions:
-        - !type:TotalDamageCondition
-          max: 50
         damage:
           Brute: -1
           Burn: -1
@@ -1160,8 +1165,6 @@
         factor: 3
       - !type:HealthChange
         conditions:
-        - !type:TotalDamageCondition
-          max: 50
         damage:
           types:
             Blunt: -0.2
@@ -1295,37 +1298,6 @@
             max: 150.0
           - !type:MobStateCondition
             mobstate: Dead
-
-- type: reagent
-  id: Arcryox
-  name: reagent-name-arcryox
-  group: Medicine
-  desc: reagent-desc-arcryox
-  physicalDesc: reagent-physical-desc-arcryox
-  flavor: medicine
-  color: "#0cbfe9"
-  worksOnTheDead: true
-  metabolisms:
-    Bloodstream:
-      effects:
-      - !type:EvenHealthChange
-        conditions:
-        - !type:TemperatureCondition
-          max: 213.0
-        - !type:TotalDamageCondition
-          min: 199.9
-        damage:
-          Brute: -2
-          Burn: -2
-      - !type:EvenHealthChange
-        conditions:
-        - !type:TemperatureCondition
-          max: 213.0
-        - !type:TotalDamageCondition
-          min: 500
-        damage:
-          Brute: -4
-          Burn: -4
 
 - type: reagent
   id: Necrosol

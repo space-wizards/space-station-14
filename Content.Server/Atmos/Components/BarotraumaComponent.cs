@@ -15,10 +15,6 @@ namespace Content.Server.Atmos.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
-        [DataField("maxDamage")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 MaxDamage = 200;
-
         /// <summary>
         ///     Used to keep track of when damage starts/stops. Useful for logs.
         /// </summary>
