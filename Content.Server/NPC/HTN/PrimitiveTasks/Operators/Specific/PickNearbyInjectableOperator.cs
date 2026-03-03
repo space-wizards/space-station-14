@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Silicons.Bots;
 using Content.Shared.Emag.Components;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
@@ -82,7 +83,7 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
                 // Only go towards a target if the bot can actually help them or if the medibot is emagged
                 // note: this and the actual injecting don't check for specific damage types so for example,
                 // radiation damage will trigger injection but the tricordrazine won't heal it.
-                if (!_emaggedQuery.HasComponent(entity) && !treatment.IsValid(_damageable.GetTotalDamage((entity, damage))))
+                if (!_emaggedQuery.HasComponent(entity) && _damageable.GetTotalDamage((entity, damage)) == FixedPoint2.Zero)
                     continue;
 
                 //Needed to make sure it doesn't sometimes stop right outside it's interaction range

@@ -116,7 +116,7 @@ public sealed class MedibotSystem : EntitySystem
             return false;
         }
 
-        if (!TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) || !treatment.IsValid(total) && !manual) return false;
+        if (!TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) || !manual) return false;
 
         return true;
     }

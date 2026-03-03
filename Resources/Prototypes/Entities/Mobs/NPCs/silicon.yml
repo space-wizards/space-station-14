@@ -321,7 +321,6 @@
       Alive:
         reagent: Tricordrazine
         quantity: 30
-        minDamage: 0
       Critical:
         reagent: Inaprovaline
         quantity: 15
