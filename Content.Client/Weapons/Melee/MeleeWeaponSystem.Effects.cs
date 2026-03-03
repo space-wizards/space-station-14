@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -35,7 +36,25 @@ public sealed partial class MeleeWeaponSystem
         if (!_xformQuery.TryGetComponent(user, out var userXform) || userXform.MapID == MapId.Nullspace)
             return;
 
-        var animationUid = Spawn(animation, userXform.Coordinates);
+        // Allow systems to override how visuals are spawned/tracked.
+        var prepare = new PrepareMeleeLungeEvent(user, weapon, angle, localPos, animation)
+        {
+            SpawnAtMap = false,
+            DisableTracking = false
+        };
+        RaiseLocalEvent(user, ref prepare);
+
+        EntityUid animationUid;
+        var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
+        if (prepare.SpawnAtMap)
+        {
+            var spawnCoords = new MapCoordinates(mapPos, userXform.MapID);
+            animationUid = Spawn(animation, spawnCoords);
+        }
+        else
+        {
+            animationUid = Spawn(animation, userXform.Coordinates);
+        }
 
         if (!TryComp<SpriteComponent>(animationUid, out var sprite)
             || !TryComp<WeaponArcVisualsComponent>(animationUid, out var arcComponent))
@@ -62,7 +81,8 @@ public sealed partial class MeleeWeaponSystem
             length = (1 / meleeWeaponComponent.AttackRate) * 0.6f;
             offset = meleeWeaponComponent.AnimationOffset;
         }
-        _sprite.SetRotation((animationUid, sprite), localPos.ToWorldAngle());
+        var baseVec = prepare.SpawnAtMap ? (mapRot - userXform.LocalRotation).RotateVec(localPos) : localPos;
+        _sprite.SetRotation((animationUid, sprite), baseVec.ToWorldAngle());
 
         var xform = _xformQuery.GetComponent(animationUid);
         TrackUserComponent track;
@@ -70,21 +90,27 @@ public sealed partial class MeleeWeaponSystem
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
-                track = EnsureComp<TrackUserComponent>(animationUid);
-                track.User = user;
+                if (!prepare.DisableTracking)
+                {
+                    track = EnsureComp<TrackUserComponent>(animationUid);
+                    track.User = user;
+                }
                 _animation.Play(animationUid, GetSlashAnimation((animationUid, sprite), angle, spriteRotation, length, offset), SlashAnimationKey);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, length * 0.5f, length + 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
-                track = EnsureComp<TrackUserComponent>(animationUid);
-                track.User = user;
+                if (!prepare.DisableTracking)
+                {
+                    track = EnsureComp<TrackUserComponent>(animationUid);
+                    track.User = user;
+                }
                 _animation.Play(animationUid, GetThrustAnimation((animationUid, sprite), offset, spriteRotation, length), ThrustAnimationKey);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, length * 0.5f, length + 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
+                (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
                 var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
                 var newLocalPos = Vector2.Transform(worldPos, TransformSystem.GetInvWorldMatrix(xform.ParentUid));
                 TransformSystem.SetLocalPositionNoLerp(animationUid, newLocalPos, xform);
