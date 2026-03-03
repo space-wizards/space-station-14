@@ -39,7 +39,7 @@ public sealed partial class ChangelingDevourComponent : Component
         Components =
         [
             "MobState",
-            "HumanoidAppearance",
+            "HumanoidProfile",
         ],
     };
 
@@ -99,7 +99,7 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier DamagePerTick = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new ()
         {
             { "Slash", 10},
             { "Piercing", 10 },
