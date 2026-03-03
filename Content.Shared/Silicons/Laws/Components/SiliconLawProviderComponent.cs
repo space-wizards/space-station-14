@@ -5,7 +5,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
-/// Means this entity is bound to silicon laws and can view them.
+/// Provider of silicon laws.
+/// The laws held here get replicated to all linked entities with <see cref="SiliconLawBoundComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedSiliconLawSystem))]

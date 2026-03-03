@@ -1,11 +1,11 @@
-﻿using Robust.Shared.Prototypes;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
 /// Means this entity is bound to silicon laws and can view them.
 /// Requires to be linked with <see cref="SiliconLawProviderComponent"/>.
+/// Contains cached laws provided by the <see cref="SiliconLawProviderComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedSiliconLawSystem))]
