@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(\"g:/SS14Dev/space-station-14/Resources/Prototypes/Entities/Objects/Weapons/Guns/Rifles/rifles_secondhand.yml\":*)",
-      "Bash(\"g:/SS14Dev/space-station-14/Resources/Prototypes/Entities/Objects/Weapons/Guns/LMGs/lmgs_secondhand.yml\":*)",
-      "Bash(\"g:/SS14Dev/space-station-14/Resources/Prototypes/Entities/Objects/Weapons/Guns/Snipers/snipers_secondhand.yml\":*)"
-    ]
-  }
-}
