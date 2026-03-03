@@ -27,20 +27,20 @@ namespace Content.Server.Destructible;
 [UsedImplicitly]
 public sealed partial class DestructibleSystem : SharedDestructibleSystem
 {
+    [Dependency] public readonly IAdminLogManager AdminLogger = default!;
+    [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] public readonly IRobustRandom Random = default!;
     public new IEntityManager EntityManager => base.EntityManager;
 
     [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
-    [Dependency] public readonly GibbingSystem Gibbing = default!;
     [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
     [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
-    [Dependency] public readonly StackSystem StackSystem = default!;
-    [Dependency] public readonly TriggerSystem TriggerSystem = default!;
+    [Dependency] public readonly GibbingSystem Gibbing = default!;
+    [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] public readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
     [Dependency] public readonly PuddleSystem PuddleSystem = default!;
-    [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] public readonly IAdminLogManager AdminLogger = default!;
+    [Dependency] public readonly StackSystem StackSystem = default!;
+    [Dependency] public readonly TriggerSystem TriggerSystem = default!;
 
     /// <summary>
     /// Minimum damage to invoke overkill behavior.
