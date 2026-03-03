@@ -21,5 +21,11 @@ namespace Content.Server.Destructible
         /// </summary>
         [DataField]
         public bool IsBroken = false;
+
+        /// <summary>
+        /// Specifies whether the entity should ignore excess damage and handle destruction normally.
+        /// </summary>
+        [DataField(readOnly: true)]
+        public bool IgnoreExcess = false;
     }
 }
