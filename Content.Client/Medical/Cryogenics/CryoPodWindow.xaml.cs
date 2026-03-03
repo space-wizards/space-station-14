@@ -87,8 +87,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         // Health analyzer
         var maybePatient = _entityManager.GetEntity(msg.Health.TargetEntity);
         var hasPatient = msg.Health.TargetEntity.HasValue;
-        var hasDamage = hasPatient
-             && _entityManager.System<DamageableSystem>().GetTotalDamage(maybePatient!.Value) > 0;
+        var hasDamage = hasPatient && msg.HasDamage;
 
         NoDamageText.Visible = (hasPatient && !hasDamage);
         HealthSection.Visible = hasPatient;

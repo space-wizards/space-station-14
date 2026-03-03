@@ -207,9 +207,20 @@ namespace Content.Server.Atmos.EntitySystems
 
             _timer -= UpdateTimer;
 
-            var enumerator = EntityQueryEnumerator<BarotraumaComponent>();
-            while (enumerator.MoveNext(out var uid, out var barotrauma))
+            var enumerator = EntityQueryEnumerator<BarotraumaComponent, DamageableComponent>();
+            while (enumerator.MoveNext(out var uid, out var barotrauma, out var damageable))
             {
+                var totalDamage = FixedPoint2.Zero;
+                var damageSpecifier = _damageableSystem.GetAllDamage((uid, damageable));
+                foreach (var (barotraumaDamageType, _) in barotrauma.Damage.DamageDict)
+                {
+                    if (!damageSpecifier.DamageDict.TryGetValue(barotraumaDamageType, out var damage))
+                        continue;
+                    totalDamage += damage;
+                }
+                if (totalDamage >= barotrauma.MaxDamage)
+                    continue;
+
                 var pressure = 1f;
 
                 if (_atmosphereSystem.GetContainingMixture(uid) is {} mixture)
