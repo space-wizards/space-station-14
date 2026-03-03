@@ -4,9 +4,17 @@
   name: tile gun
   description: A strange gun that shoots tiles. Shoot them with the floor!
   components:
+  - type: Appearance
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/tilegun.rsi
-    state: icon
+    layers:
+    - state: icon
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
   - type: Item
     size: Large
   - type: ToolTileCompatible
