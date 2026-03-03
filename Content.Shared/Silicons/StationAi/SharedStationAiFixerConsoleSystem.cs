@@ -352,9 +352,6 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
                     _siliconLaw.ResetLawProvider((ent.Comp.ActionTarget.Value, provider));
 
                     RemComp<EmaggedComponent>(ent.Comp.ActionTarget.Value);
-
-                    if (_mind.TryGetMind(ent.Comp.ActionTarget.Value, out var mindId, out _))
-                        _siliconLaw.RemoveSubvertedSiliconRole(mindId);
                     break;
             }
         }
