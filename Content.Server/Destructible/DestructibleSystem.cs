@@ -166,6 +166,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <summary>
     /// Triggers this threshold.
     /// </summary>
+    /// <param name="threshold">The threshold to execute.</param>
     /// <param name="owner">The entity that owns this threshold.</param>
     /// <param name="cause">The entity that caused this threshold to trigger.</param>
     public void Execute(DamageThreshold threshold, EntityUid owner, EntityUid? cause = null)
@@ -301,4 +302,3 @@ public sealed class DamageThresholdReached : EntityEventArgs
         Threshold = threshold;
     }
 }
-

@@ -11,13 +11,13 @@ namespace Content.Server.Destructible
     {
         /// <summary>
         /// A list of damage thresholds for the entity;
-        /// includes their triggers and resultant behaviors
+        /// includes their triggers and resultant behaviors.
         /// </summary>
         [DataField]
         public List<DamageThreshold> Thresholds = new();
 
         /// <summary>
-        /// Specifies whether the entity has passed a damage threshold that causes it to break
+        /// Specifies whether the entity has passed a damage threshold that causes it to break.
         /// </summary>
         [DataField]
         public bool IsBroken = false;
