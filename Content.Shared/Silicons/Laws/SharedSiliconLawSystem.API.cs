@@ -1,7 +1,7 @@
 using Content.Shared.Database;
-using Content.Shared.Mind;
 using Content.Shared.Overlays;
 using Content.Shared.Roles.Components;
+using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -11,13 +11,51 @@ namespace Content.Shared.Silicons.Laws;
 public abstract partial class SharedSiliconLawSystem
 {
     /// <summary>
+    /// Gives the mind of the entity neccessary mindroles based on their status as a silicon.
+    /// </summary>
+    /// <param name="entity">The entity to check.</param>
+    /// /// <param name="entityMind">The mind to update. If null, will use the mind of the provided entity.</param>
+    protected void UpdateSiliconRoles(EntityUid entity, EntityUid? entityMind = null)
+    {
+        // Have we provided a mind to affect the roles for?
+        if (entityMind == null)
+        {
+            // If we haven't provided a mind, grab the mind of the entity we are checking.
+            if (_mind.TryGetMind(entity, out var foundMind, out _))
+            {
+                entityMind = foundMind;
+            }
+        }
+
+        // Somehow the mind cannot be found, so we give up.
+        if (entityMind == null)
+            return;
+
+        if (TryComp<SiliconLawBoundComponent>(entity, out var lawbound))
+        {
+            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(entityMind.Value))
+                _roles.MindAddRole(entityMind.Value, SharedBorgSystem.SiliconBrainRole, silent: true);
+        }
+        else
+        {
+            if (_roles.MindHasRole<SiliconBrainRoleComponent>(entityMind.Value))
+                _roles.MindRemoveRole<SiliconBrainRoleComponent>(entityMind.Value);
+        }
+
+        if (lawbound != null && lawbound.Subverted)
+            EnsureSubvertedSiliconRole(entityMind.Value);
+        else
+            RemoveSubvertedSiliconRole(entityMind.Value);
+    }
+
+    /// <summary>
     /// Gives the mind the subverted silicon mindrole.
     /// </summary>
     /// <param name="mindId">The ID of the mind.</param>
     protected void EnsureSubvertedSiliconRole(EntityUid mindId)
     {
         if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
-            _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon", silent: true);
+            _roles.MindAddRole(mindId, SharedBorgSystem.SubvertedSiliconRole, silent: true);
     }
 
     /// <summary>
@@ -174,6 +212,8 @@ public abstract partial class SharedSiliconLawSystem
             crewIcons.UncertainCrewBorder = ent.Comp.Subverted;
             Dirty(ent, crewIcons);
         }
+
+        UpdateSiliconRoles(ent);
 
         Dirty(ent);
     }

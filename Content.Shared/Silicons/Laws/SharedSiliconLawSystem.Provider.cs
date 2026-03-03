@@ -44,11 +44,8 @@ public abstract partial class SharedSiliconLawSystem
             // Show the silicon has been subverted.
             ent.Comp.Subverted = true;
 
+            // Updating the mindrole is handled here.
             SetProviderLaws(ent.AsNullable(), newLaws.Laws);
-
-            // new laws may allow antagonist behaviour so make it clear for admins
-            if(_mind.TryGetMind(ent.Owner, out var mindId, out _))
-                EnsureSubvertedSiliconRole(mindId);
         }
     }
 

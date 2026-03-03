@@ -54,7 +54,7 @@ public sealed class BorgLawTest : InteractionTest
             {
                 EntityUid brain = default;
                 EntityUid chassis = default;
-                bool isIonStormed = false;
+                var isIonStormed = false;
 
                 await server.WaitPost(() =>
                 {
@@ -99,7 +99,7 @@ public sealed class BorgLawTest : InteractionTest
                     // 4. Remove brain
                     containerSystem.Remove(brain, chassisComp.BrainContainer);
 
-                    // 5. Check if brain still has the same laws
+                    // 5. Check if the brain still has the same laws
                     var brainLawsAfter = lawSystem.GetBoundLaws(brain).Laws;
                     if (!LawsMatch(brainLaws, brainLawsAfter))
                     {
@@ -146,7 +146,7 @@ public sealed class BorgLawTest : InteractionTest
             {
                 EntityUid brain = default;
                 EntityUid chassis = default;
-                bool isIonStormed = false;
+                var isIonStormed = false;
 
                 await server.WaitPost(() =>
                 {
@@ -189,7 +189,7 @@ public sealed class BorgLawTest : InteractionTest
                     // 4. Remove brain
                     containerSystem.Remove(brain, chassisComp.BrainContainer);
 
-                    // 5. Brain is supposed to have the laws it had before being inserted
+                    // 5. The brain is supposed to have the laws it had before being inserted
                     var brainLawsAfter = lawSystem.GetBoundLaws(brain).Laws;
                     if (!LawsMatch(brainLawsInitial, brainLawsAfter))
                     {
@@ -269,7 +269,7 @@ public sealed class BorgLawTest : InteractionTest
                 emagSystem.TryEmagEffect((emag, null), user, chassis, EmagType.Interaction);
 
                 var afterLaws = new List<SiliconLaw>();
-                if (entManager.TryGetComponent<SiliconLawProviderComponent>(chassis, out provider))
+                if (entManager.TryGetComponent(chassis, out provider))
                     afterLaws.AddRange(provider.Lawset.Laws);
 
                 if (!LawsMatch(initialLaws, afterLaws))
@@ -295,7 +295,7 @@ public sealed class BorgLawTest : InteractionTest
                 EntityUid brain = default;
                 EntityUid user = default;
                 EntityUid emag = default;
-                bool isIonStormed = false;
+                var isIonStormed = false;
 
                 await server.WaitPost(() =>
                 {
@@ -326,7 +326,7 @@ public sealed class BorgLawTest : InteractionTest
 
                     containerSystem.Insert(brain, chassisComp.BrainContainer);
 
-                    // 2. Unlock the chassis so we can emag it (if it requires open panel)
+                    // 2. Unlock the chassis so we can emag it (if it requires an open panel)
                     if (entManager.TryGetComponent<LockComponent>(chassis, out var lockComp))
                     {
                         lockSystem.Unlock(chassis, user, lockComp);
@@ -408,7 +408,7 @@ public sealed class BorgLawTest : InteractionTest
             EntityUid brain = default;
             EntityUid user = default;
             EntityUid emag = default;
-            bool isIonStormed = false;
+            var isIonStormed = false;
 
             await server.WaitPost(() =>
             {
@@ -574,7 +574,7 @@ public sealed class BorgLawTest : InteractionTest
         if (laws1.Count != laws2.Count)
             return false;
 
-        for (int i = 0; i < laws1.Count; i++)
+        for (var i = 0; i < laws1.Count; i++)
         {
             if (laws1[i].LawString != laws2[i].LawString)
                 return false;

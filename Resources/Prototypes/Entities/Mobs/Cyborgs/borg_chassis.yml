@@ -82,6 +82,35 @@
     selectedBorgType: service
 
 - type: entity
+  id: BorgChassisGenericProvider
+  parent: BaseBorgChassisNT
+  name: CC cyborg
+  suffix: admeme
+  components:
+  - type: Sprite
+    layers:
+    - state: robot
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: robot_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: robot_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
+  - type: BorgChassis
+    hasMindState: robot_e
+    noMindState: robot_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+    name: cyborg
+  - type: SiliconLawProvider
+    laws: Crewsimov
+
+- type: entity
   id: BorgChassisSyndicateAssault
   parent: BaseBorgChassisSyndicate
   name: syndicate assault cyborg

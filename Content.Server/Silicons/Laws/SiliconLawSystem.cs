@@ -30,11 +30,14 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         base.Initialize();
 
         SubscribeLocalEvent<SiliconLawBoundComponent, MindAddedMessage>(OnMindAdded);
-        SubscribeLocalEvent<SiliconLawBoundComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<SiliconLawBoundComponent, BeforeMindRemovedMessage>(OnMindRemoved);
     }
 
     private void OnMindAdded(Entity<SiliconLawBoundComponent> ent, ref MindAddedMessage args)
     {
+        // We update the roles even if there are no actors, because we care about the mind role getting updated.
+        UpdateSiliconRoles(ent);
+
         if (!TryComp<ActorComponent>(ent, out var actor))
             return;
 
@@ -45,19 +48,17 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (!ent.Comp.Subverted)
             return;
 
-        EnsureSubvertedSiliconRole(args.Mind);
-
         var modifedLawMsg = Loc.GetString("laws-notify-subverted");
         var modifiedLawWrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", modifedLawMsg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, modifedLawMsg, modifiedLawWrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
     }
 
-    private void OnMindRemoved(Entity<SiliconLawBoundComponent> ent, ref MindRemovedMessage args)
+    private void OnMindRemoved(Entity<SiliconLawBoundComponent> ent, ref BeforeMindRemovedMessage args)
     {
-        if (!ent.Comp.Subverted)
+        if (args.TransferEntity is not { } owner)
             return;
 
-        RemoveSubvertedSiliconRole(args.Mind);
+        UpdateSiliconRoles(owner, args.Mind);
     }
 
     public override void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
