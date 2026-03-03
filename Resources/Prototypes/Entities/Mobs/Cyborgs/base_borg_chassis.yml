@@ -328,6 +328,7 @@
   id: BaseBorgChassisSyndicate
   parent: BaseBorgChassis
   abstract: true
+  suffix: Syndie, Provider
   components:
   - type: NpcFactionMember
     factions:
@@ -385,6 +386,7 @@
   id: BaseBorgChassisSyndicateDerelict #For assault borg and maybe others in time
   parent: BaseBorgChassis # We don't want them to see Nukies or have syndi comms, their database is out of date
   abstract: true
+  suffix: Syndie, Provider
   components:
   - type: SiliconLawProvider
     laws: SyndicateStatic #Non-subverted version so they can still be changed
@@ -431,6 +433,7 @@
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army.
   save: false
   abstract: true
+  suffix: Xeno, Provider
   components:
   - type: RandomMetadata
     nameSegments:
