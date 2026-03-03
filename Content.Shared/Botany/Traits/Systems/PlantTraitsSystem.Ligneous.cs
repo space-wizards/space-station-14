@@ -35,14 +35,14 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
 
         if (_plantHolder.IsDead(ent.Owner))
         {
-            _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-dead-plant-message"), args.User);
+            _popup.PopupPredictedCursor(Loc.GetString("plant-component-dead-plant-message"), args.User);
             return;
         }
 
         // Ligneous requires sharp tool.
         if (!HasComp<SharpComponent>(args.Used))
         {
-            _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
+            _popup.PopupPredictedCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);
             return;
         }
 
@@ -52,7 +52,7 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
 
     private void OnDoHarvest(Entity<PlantTraitLigneousComponent> ent, ref DoHarvestEvent args)
     {
-        _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
+        _popup.PopupPredictedCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);
         args.Cancel();
     }
 }

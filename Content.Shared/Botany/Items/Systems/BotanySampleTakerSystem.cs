@@ -51,11 +51,17 @@ public sealed class BotanySampleTakerSystem : EntitySystem
             || !TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
             return;
 
+        if (_plantHolder.IsDead(ent.Owner))
+        {
+            _popup.PopupPredictedCursor(Loc.GetString("plant-sample-component-dead-plant-popup"), args.User);
+            return;
+        }
+
         // Prevent early sampling.
         var growthStage = _plant.GetGrowthStageValue(ent.AsNullable());
         if (growthStage <= args.Sample.Comp.MinSampleStage)
         {
-            _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-early-sample-message"), args.User);
+            _popup.PopupPredictedCursor(Loc.GetString("plant-sample-component-early-sample-popup"), args.User);
             return;
         }
 
@@ -71,7 +77,7 @@ public sealed class BotanySampleTakerSystem : EntitySystem
         _botany.SpawnSeedPacketFromPlant(ent.Owner, Transform(args.User).Coordinates, args.User, healthOverride);
 
         var displayName = Loc.GetString(plantData.DisplayName);
-        _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-take-sample-message", ("seedName", displayName)), args.User);
+        _popup.PopupPredictedCursor(Loc.GetString("plant-sample-component-take-sample-popup", ("seedName", displayName)), args.User);
 
         if (rand.Prob(args.Sample.Comp.SampleProbability))
             EnsureComp<PlantTraitSampledComponent>(ent.Owner);

@@ -61,28 +61,24 @@ public sealed class PlantSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder)
-            || !TryComp<PlantDataComponent>(ent.Owner, out var plantData))
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
 
         using (args.PushGroup(nameof(PlantComponent)))
         {
             args.PushMarkup(GetPlantStateMarkup(ent));
 
-            var displayName = Loc.GetString(plantData.DisplayName);
-            args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message", ("seedName", displayName)));
-
             if (_plantHolder.IsDead(ent.Owner))
-                args.PushMarkup(Loc.GetString("plant-holder-component-dead-plant-message"));
+                args.PushMarkup(Loc.GetString("plant-component-dead-plant-matter-message"));
 
             if (_plantHolder.GetHealthThreshold(ent.Owner))
             {
                 args.PushMarkup(Loc.GetString(
-                    "plant-holder-component-something-already-growing-low-health-message",
+                    "plant-component-something-already-growing-low-health-message",
                     ("healthState",
                         Loc.GetString(holder.Age > ent.Comp.Lifespan
-                            ? "plant-holder-component-plant-old-adjective"
-                            : "plant-holder-component-plant-unhealthy-adjective"))));
+                            ? "plant-component-plant-old-adjective"
+                            : "plant-component-plant-unhealthy-adjective"))));
             }
 
             foreach (var trait in EntityManager.GetComponents<PlantTraitsComponent>(ent.Owner))
@@ -344,23 +340,23 @@ public sealed class PlantSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return string.Empty;
 
-        var markup = string.Empty;
+        var markup = new List<string>();
         if (_plantHolder.GetToxinsThreshold(ent))
-            markup += "\n" + Loc.GetString("plant-holder-component-toxins-high-warning");
+            markup.Add(Loc.GetString("plant-component-toxins-high-warning"));
 
         if (ent.Comp.ImproperHeat)
-            markup += "\n" + Loc.GetString("plant-holder-component-heat-improper-warning");
+            markup.Add(Loc.GetString("plant-component-heat-improper-warning"));
 
         if (ent.Comp.ImproperPressure)
-            markup += "\n" + Loc.GetString("plant-holder-component-pressure-improper-warning");
+            markup.Add(Loc.GetString("plant-component-pressure-improper-warning"));
 
         if (ent.Comp.MissingGas)
-            markup += "\n" + Loc.GetString("plant-holder-component-gas-missing-warning");
+            markup.Add(Loc.GetString("plant-component-gas-missing-warning"));
 
         if (_weedPestGrowth.GetPestThreshold(ent.Owner))
-            markup += "\n" + Loc.GetString("plant-holder-component-pest-high-level-message");
+            markup.Add(Loc.GetString("plant-component-pest-high-level-message"));
 
-        return markup;
+        return string.Join("\n", markup);
     }
 
     [PublicAPI]

@@ -29,8 +29,8 @@ public sealed class PlantTrayVisualizerSystem : VisualizerSystem<PlantTrayVisual
         if (!ent.Comp.DrawWarnings)
             return;
 
-        var water = ent.Comp.WaterLevel <= ent.Comp.MaxWaterLevel * 0.1f;
-        var nutrition = ent.Comp.NutritionLevel <= ent.Comp.MaxNutritionLevel * 0.1f;
+        var water = _plantTray.GetWaterThreshold(ent.Owner);
+        var nutrition = _plantTray.GetNutrientThreshold(ent.Owner);
         var alert = _plantTray.GetWeedThreshold(ent.Owner);
         var health = false;
         var harvest = false;

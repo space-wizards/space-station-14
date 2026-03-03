@@ -60,7 +60,7 @@ public sealed class MutationSystem : EntitySystem
     /// preserving lifecycle state.
     /// </summary>
     [PublicAPI]
-    public void SpeciesChange(Entity<PlantDataComponent?> oldPlant, EntProtoId newPlantEnt)
+    public void SpeciesChange(Entity<PlantDataComponent?> oldPlant, EntProtoId newPlantProto)
     {
         if (!Resolve(oldPlant, ref oldPlant.Comp, false))
             return;
@@ -70,7 +70,8 @@ public sealed class MutationSystem : EntitySystem
 
         // Clone state via snapshot and apply to new plant.
         var snapshot = _botany.ClonePlantSnapshotData(oldPlant.Owner, cloneLifecycle: true);
-        var newPlantUid = EntityManager.PredictedSpawn(newPlantEnt, _transform.GetMapCoordinates(oldPlant.Owner), snapshot);
+        var newPlantUid = EntityManager.PredictedSpawn(newPlantProto, _transform.GetMapCoordinates(oldPlant.Owner), snapshot);
+        ChemicalsSpeciesChange(newPlantUid, newPlantProto);
 
         if (_plant.TryGetTray(oldPlant.Owner, out var trayEnt))
             _plantTray.PlantingPlantInTray(trayEnt, newPlantUid);
@@ -79,6 +80,29 @@ public sealed class MutationSystem : EntitySystem
 
         PredictedQueueDel(oldPlant);
         _plant.ForceUpdateByExternalCause(newPlantUid);
+    }
+
+    private void ChemicalsSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
+    {
+        if (!_botany.TryGetPlantComponent<PlantChemicalsComponent>(null, plantProto, out var newPlantChemicals)
+            || !TryComp<PlantChemicalsComponent>(plantUid, out var oldPlantChemicals))
+            return;
+
+        var oldPlant = oldPlantChemicals.Chemicals;
+        var newPlant = newPlantChemicals.Chemicals;
+
+        // Adding the new chemicals from the new species.
+        foreach (var otherChem in newPlant)
+        {
+            oldPlant.TryAdd(otherChem.Key, otherChem.Value);
+        }
+
+        // Removing the inherent chemicals from the old species. Leaving mutated/crossbred ones intact.
+        foreach (var originalChem in oldPlant)
+        {
+            if (!newPlant.ContainsKey(originalChem.Key) && originalChem.Value.Inherent)
+                oldPlant.Remove(originalChem.Key);
+        }
     }
 
     [PublicAPI]

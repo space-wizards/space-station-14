@@ -39,12 +39,19 @@ public sealed class PlantTraySystem : EntitySystem
         using (args.PushGroup(nameof(PlantTrayComponent)))
         {
             if (!TryGetPlant(ent.AsNullable(), out var plantUid))
-                args.PushMarkup(Loc.GetString("plant-holder-component-nothing-planted-message"));
+            {
+                args.PushMarkup(Loc.GetString("tray-component-nothing-planted-message"));
+                if (TryComp<PlantDataComponent>(plantUid, out var plantData))
+                {
+                    var displayName = Loc.GetString(plantData.DisplayName);
+                    args.PushMarkup(Loc.GetString("plant-component-something-already-growing-message", ("seedName", displayName)));
+                }
+            }
 
             args.PushMarkup(GetTrayWarningsMarkup(ent.AsNullable()));
-            args.PushMarkup(Loc.GetString("plant-holder-component-water-level-message",
+            args.PushMarkup(Loc.GetString("tray-component-water-level-message",
                 ("waterLevel", (int)ent.Comp.WaterLevel)));
-            args.PushMarkup(Loc.GetString("plant-holder-component-nutrient-level-message",
+            args.PushMarkup(Loc.GetString("tray-component-nutrient-level-message",
                 ("nutritionLevel", (int)ent.Comp.NutritionLevel)));
 
             if (plantUid != null && ent.Comp.DrawWarnings)
@@ -245,11 +252,17 @@ public sealed class PlantTraySystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return string.Empty;
 
-        var markup = string.Empty;
+        var markup = new List<string>(3);
         if (GetWeedThreshold(ent))
-            markup += "\n" + Loc.GetString("plant-holder-component-weed-high-level-message");
+            markup.Add(Loc.GetString("tray-component-weed-high-level-warning"));
 
-        return markup;
+        if (GetWaterThreshold(ent))
+            markup.Add(Loc.GetString("tray-component-water-low-warning"));
+
+        if (GetNutrientThreshold(ent))
+            markup.Add(Loc.GetString("tray-component-nutrient-low-warning"));
+
+        return string.Join("\n", markup);
     }
 
     [PublicAPI]
@@ -259,6 +272,24 @@ public sealed class PlantTraySystem : EntitySystem
             return false;
 
         return ent.Comp.WeedLevel >= ent.Comp.MaxWeedLevel * 0.5f;
+    }
+
+    [PublicAPI]
+    public bool GetWaterThreshold(Entity<PlantTrayComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.WaterLevel <= ent.Comp.MaxWaterLevel * 0.1f;
+    }
+
+    [PublicAPI]
+    public bool GetNutrientThreshold(Entity<PlantTrayComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.NutritionLevel <= ent.Comp.MaxNutritionLevel * 0.1f;
     }
 }
 

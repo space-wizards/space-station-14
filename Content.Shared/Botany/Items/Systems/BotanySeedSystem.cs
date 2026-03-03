@@ -49,7 +49,7 @@ public sealed class BotanySeedSystem : EntitySystem
         if (_plantTray.TryGetPlant(ent.AsNullable(), out _))
         {
             _popup.PopupPredictedCursor(
-                Loc.GetString("plant-holder-component-already-seeded-message", ("name", MetaData(ent.Owner).EntityName)),
+                Loc.GetString("plant-component-already-seeded-popup", ("name", MetaData(ent.Owner).EntityName)),
                 args.User,
                 PopupType.Medium);
             return;
@@ -61,7 +61,7 @@ public sealed class BotanySeedSystem : EntitySystem
 
         var name = Loc.GetString(plantData.DisplayName);
         var noun = Loc.GetString(plantData.Noun);
-        _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-plant-success-message",
+        _popup.PopupPredictedCursor(Loc.GetString("plant-component-plant-success-popup",
                 ("seedName", name),
                 ("seedNoun", noun)),
             args.User,

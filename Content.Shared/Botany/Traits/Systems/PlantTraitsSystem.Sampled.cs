@@ -16,7 +16,7 @@ public sealed partial class PlantTraitSampledSystem : EntitySystem
 
     private void OnPlantSampleAttempt(Entity<PlantTraitSampledComponent> ent, ref PlantSampleAttemptEvent args)
     {
-        _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
+        _popup.PopupPredictedCursor(Loc.GetString("plant-sample-component-already-sampled-popup"), args.User);
         args.Cancel();
     }
 }

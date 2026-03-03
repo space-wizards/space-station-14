@@ -46,12 +46,12 @@ public sealed class BotanyProduceSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        _popup.PopupPredictedCursor(Loc.GetString("plant-holder-component-compost-message",
+        _popup.PopupPredictedCursor(Loc.GetString("plant-produce-component-compost-popup",
                 ("owner", ent.Owner),
                 ("usingItem", args.Produce.Owner)),
             args.User,
             PopupType.Medium);
-        _popup.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
+        _popup.PopupEntity(Loc.GetString("plant-produce-component-compost-others-popup",
                 ("user", Identity.Entity(args.User, EntityManager)),
                 ("usingItem", args.Produce.Owner),
                 ("owner", ent.Owner)),
