@@ -171,7 +171,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 0.3 # Not even close to real damage, but creates the red flash to give the illusion of damage
+        Blunt: 0.0 # Remove damage to avoid pacifism metagaming
 
 - type: entity
   parent: [ BaseItem, BaseToySword ]
