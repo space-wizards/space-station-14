@@ -84,8 +84,8 @@
 - type: entity
   id: BorgChassisGenericProvider
   parent: BaseBorgChassisNT
-  name: CC cyborg
-  suffix: admeme
+  name: crewsimov-provider cyborg # Used for tests, no harm in having it spawnable.
+  suffix: Debug, Provider
   components:
   - type: Sprite
     layers:
