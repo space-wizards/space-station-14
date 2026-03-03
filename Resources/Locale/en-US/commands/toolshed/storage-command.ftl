@@ -3,4 +3,4 @@ command-description-storage-fasttake =
 command-description-storage-insert =
     Inserts the piped entity into the given storage entity.
 command-description-storage-query =
-    Gets all entities in a given storage entity.
+    Gets the entities in the storagebase of the piped entities and passes them along.

@@ -32,7 +32,6 @@ public sealed class StorageCommand : ToolshedCommand
             : null;
     }
 
-
     [CommandImplementation("fasttake")]
     public IEnumerable<EntityUid> StorageFastTake([PipedArgument] IEnumerable<EntityUid> storageEnts) =>
         storageEnts.Select(StorageFastTake).OfType<EntityUid>();
@@ -54,11 +53,10 @@ public sealed class StorageCommand : ToolshedCommand
     }
 
     [CommandImplementation("query")]
-    public IEnumerable<EntityUid> StorageQuery([PipedArgument] IEnumerable<EntityUid> storageEnts, bool recurseOnInternalStorage) =>
-        storageEnts.SelectMany(x => StorageQueryRecursibleBase(x, recurseOnInternalStorage));
+    public IEnumerable<EntityUid> StorageQuery([PipedArgument] IEnumerable<EntityUid> storageEnts, bool recursive) =>
+        storageEnts.SelectMany(x => StorageQueryRecursiveBase(x, recursive));
 
-
-    public IEnumerable<EntityUid> StorageQueryRecursibleBase(EntityUid storageEnt, bool recursive)
+    public IEnumerable<EntityUid> StorageQueryRecursiveBase(EntityUid storageEnt, bool recursive)
     {
         _storage ??= GetSys<SharedStorageSystem>();
         _container ??= GetSys<SharedContainerSystem>();
@@ -72,12 +70,11 @@ public sealed class StorageCommand : ToolshedCommand
         {
             foreach (var ent in containedEntities)
             {
-                containedEntities = containedEntities.Concat(StorageQueryRecursibleBase(ent, true));
+                containedEntities = containedEntities.Concat(StorageQueryRecursiveBase(ent, true));
             }
 
         }
 
         return containedEntities;
     }
-
 }
