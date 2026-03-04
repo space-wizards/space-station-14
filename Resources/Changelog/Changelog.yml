@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: UpAndLeaves
-  changes:
-  - message: Zombie infections now take approximately three minutes longer to bring
-      a fully healed person to critical condition.
-    type: Tweak
-  id: 9053
-  time: '2025-10-08T14:11:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37445
 - author: YoungThugSS14
   changes:
   - message: The temperature gun bolts now count as energy projectiles for the sake
@@ -3991,3 +3983,10 @@
   id: 9563
   time: '2026-03-03T18:09:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40813
+- author: ProPeperos
+  changes:
+  - message: Hyper Autolathe now needs 4 manipulators instead of 3
+    type: Tweak
+  id: 9564
+  time: '2026-03-04T05:08:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43109
