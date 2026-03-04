@@ -183,18 +183,26 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        var targetMap = TransformSystem.ToMapCoordinates(coordinates);
+        // Resolve attacker and use its transform for ray origin and ignore.
+        var attacker = user;
+        var getAttackerEv = new GetMeleeAttackerEntityEvent();
+        RaiseLocalEvent(user, ref getAttackerEv);
+        if (getAttackerEv.Handled && getAttackerEv.Attacker != null)
+            attacker = getAttackerEv.Attacker.Value;
 
-        if (targetMap.MapId != userXform.MapID)
+        var targetMap = TransformSystem.ToMapCoordinates(coordinates);
+        var attackerXform = _xformQuery.TryGetComponent(attacker, out var aXform) ? aXform : userXform;
+
+        if (targetMap.MapId != attackerXform.MapID)
             return;
 
-        var userPos = TransformSystem.GetWorldPosition(userXform);
-        var direction = targetMap.Position - userPos;
+        var attackerPos = TransformSystem.GetWorldPosition(attackerXform);
+        var direction = targetMap.Position - attackerPos;
         var distance = MathF.Min(component.Range, direction.Length());
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.
-        var entities = GetNetEntityList(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList());
+        var entities = GetNetEntityList(ArcRayCast(attackerPos, direction.ToWorldAngle(), component.Angle, distance, attackerXform.MapID, attacker).ToList());
         RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), GetNetCoordinates(coordinates)));
     }
 
