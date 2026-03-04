@@ -143,9 +143,6 @@
   id: FenceMetalStraight
   suffix: Straight
   components:
-  - type: Icon
-    sprite: Structures/Walls/fence.rsi
-    state: icon_straight
   - type: Sprite
     layers:
     - state: straight
@@ -248,9 +245,6 @@
   id: FenceMetalEnd
   suffix: End
   components:
-  - type: Icon
-    sprite: Structures/Walls/fence.rsi
-    state: icon_end
   - type: Sprite
     layers:
     - state: end
