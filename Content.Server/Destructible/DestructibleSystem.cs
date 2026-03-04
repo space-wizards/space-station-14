@@ -55,17 +55,17 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<DestructibleComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<DestructibleComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(OnDamageChanged);
     }
 
     /// <summary>
-    /// Initialization function for <see cref="DestructibleComponent"/>.
+    /// Initialization function for <see cref="DestructibleComponent"/>, adding automatic overkill threshold.
     /// </summary>
     /// <param name="uid">The entity UID of the destructible parent.</param>
     /// <param name="component">The destructible component.</param>
     /// <param name="args">The event arguments.</param>
-    private void OnInit(EntityUid uid, DestructibleComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, DestructibleComponent component, MapInitEvent args)
     {
         AddOverkillThreshold(uid, component);
     }
