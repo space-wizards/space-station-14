@@ -71,6 +71,9 @@ public sealed class InteractionPopupSystem : EntitySystem
             return;
         }
 
+        if (component.NeedsHands && _handsSystem.GetHandCount(user) == 0)
+            return;
+
         args.Handled = true;
 
         var curTime = _gameTiming.CurTime;
@@ -91,9 +94,6 @@ public sealed class InteractionPopupSystem : EntitySystem
                       && component.InteractFailureSpawn == null;
 
         if (_netMan.IsClient && !predict)
-            return;
-
-        if (component.NeedsHands && _handsSystem.GetHandCount(user) == 0)
             return;
 
         if (_random.Prob(component.SuccessChance))
