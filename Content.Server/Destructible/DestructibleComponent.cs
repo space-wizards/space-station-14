@@ -23,8 +23,8 @@ public sealed partial class DestructibleComponent : Component
     public bool IsBroken = false;
 
     /// <summary>
-    /// Specifies whether the entity should ignore excess damage and handle destruction normally.
+    /// Specifies if the entity should be silently destroyed on overkill damage.
     /// </summary>
     [DataField(readOnly: true)]
-    public bool IgnoreExcess = false;
+    public bool GenerateOverkillThreshhold = true;
 }
