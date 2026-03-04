@@ -231,6 +231,10 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
             }
         }
 
+        // No destruction behavior
+        if (FixedPoint2.Zero == maxTrigger)
+            return;
+
         var autoThreshold = new DamageThreshold
         {
             Trigger = new DamageTrigger { Damage = FixedPoint2.Max(MinimumOverkill, OverkillMultiplier * maxTrigger) },
