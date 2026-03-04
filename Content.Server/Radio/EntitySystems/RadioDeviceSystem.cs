@@ -211,30 +211,39 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         SetIntercomChannel(ent, args.Channel);
     }
 
-    private void SetIntercomChannel(Entity<IntercomComponent> ent, ProtoId<RadioChannelPrototype>? channel)
+    private void SetIntercomChannel(Entity<IntercomComponent> ent, ProtoId<RadioChannelPrototype>? channel, RadioMicrophoneComponent? mic = null, RadioSpeakerComponent? speaker = null)
     {
         ent.Comp.CurrentChannel = channel;
 
-        if (channel == null)
+        if (Resolve(ent, ref mic))
         {
-            SetSpeakerEnabled(ent, null, false);
-            SetMicrophoneEnabled(ent, null, false);
-            ent.Comp.MicrophoneEnabled = false;
-            ent.Comp.SpeakerEnabled = false;
-            Dirty(ent);
-            return;
+            if (channel == null)
+            {
+                SetMicrophoneEnabled(ent, null, false);
+                ent.Comp.MicrophoneEnabled = false;
+            }
+            else
+            {
+                mic.BroadcastChannel = channel.Value;
+                Dirty(ent, mic);
+            }
         }
 
-        if (TryComp<RadioMicrophoneComponent>(ent, out var mic))
+        if (Resolve(ent, ref speaker))
         {
-            mic.BroadcastChannel = channel.Value;
-            Dirty(ent, mic);
+            if (channel == null)
+            {
+                SetSpeakerEnabled(ent, null, false);
+                ent.Comp.SpeakerEnabled = false;
+            }
+
+            else
+            {
+                speaker.Channels = new() { channel.Value };
+                Dirty(ent, speaker);
+            }
         }
-        if (TryComp<RadioSpeakerComponent>(ent, out var speaker))
-        {
-            speaker.Channels = new() { channel.Value };
-            Dirty(ent, speaker);
-        }
+
         Dirty(ent);
     }
 }

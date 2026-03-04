@@ -72,7 +72,7 @@ public abstract class SharedRadioDeviceSystem : EntitySystem
             args.PushMarkup(Loc.GetString("radio-microphone-component-examine",
                 ("color", proto.Color),
                 ("channel", proto.LocalizedName),
-                ("frequency", proto.Frequency / 10f)));
+                ("frequency", proto.Frequency)));
         }
     }
 }
