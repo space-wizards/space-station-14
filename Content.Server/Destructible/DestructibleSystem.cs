@@ -67,7 +67,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <param name="args">The event arguments.</param>
     private void OnMapInit(EntityUid uid, DestructibleComponent component, MapInitEvent args)
     {
-        AddOverkillThreshold(uid, component);
+        AddOverkillThreshold((uid, component));
     }
 
     /// <summary>
@@ -192,27 +192,27 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <param name="index">The index at which to insert the threshold.</param>
     public void AddThreshold(Entity<DestructibleComponent?> entity, DamageThreshold threshold, int? index = null)
     {
-        var component = EnsureComp<DestructibleComponent>(entity);
+        if (!Resolve(entity.Owner, ref entity.Comp, false))
+            entity.Comp = AddComp<DestructibleComponent>(entity.Owner);
 
         if(index is not null)
-            component.Thresholds.Insert(Math.Clamp(index.Value, 0, component.Thresholds.Count), threshold);
+            entity.Comp.Thresholds.Insert(Math.Clamp(index.Value, 0, entity.Comp.Thresholds.Count), threshold);
         else
-            component.Thresholds.Add(threshold);
+            entity.Comp.Thresholds.Add(threshold);
     }
 
     /// <summary>
     /// Adds an overkill threshold if one does not exist.
     /// </summary>
-    /// <param name="uid">The entity to target.</param>
-    /// <param name="destructible">The destructible component.</param>
-    private void AddOverkillThreshold(EntityUid uid, DestructibleComponent destructible)
+    /// <param name="entity">The entity, component tuple to target.</param>
+    private void AddOverkillThreshold(Entity<DestructibleComponent> entity)
     {
-        if (destructible.IgnoreExcess)
+        if (entity.Comp.IgnoreExcess)
             return;
 
         var maxTrigger = FixedPoint2.Zero;
 
-        foreach (var threshold in destructible.Thresholds)
+        foreach (var threshold in entity.Comp.Thresholds)
         {
             if (threshold.Trigger is not DamageTrigger trigger)
                 continue;
@@ -242,7 +242,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
         };
 
         // Thresholds are evaluated in order, so overkill must be first to avoid triggering effects
-        AddThreshold(uid, autoThreshold, 0);
+        AddThreshold(entity.AsNullable(), autoThreshold, 0);
     }
 
     public bool TryGetDestroyedAt(Entity<DestructibleComponent?> ent, [NotNullWhen(true)] out FixedPoint2? destroyedAt)
