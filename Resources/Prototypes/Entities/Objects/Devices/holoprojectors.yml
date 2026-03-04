@@ -121,6 +121,25 @@
         swap: false
 
 - type: entity
+  parent: HolofanProjectorBorg
+  id: HoloprojectorXenoField
+  name: Xenoborg deflector field projector
+  description: An alien device, projecting fields that deflect projectiles. Lasers, too.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/Holoprojectors/xenoborg.rsi
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        swap: false
+  - type: HolosignProjector
+    signProto: XenoborgDeflectorField
+    chargeUse: 200
+
+- type: entity
   parent: Holoprojector
   id: HoloprojectorField
   name: force field projector
