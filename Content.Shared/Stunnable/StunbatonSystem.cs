@@ -1,59 +1,110 @@
-using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Stunnable;
 
 public sealed class StunbatonSystem : EntitySystem
 {
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly RiggableSystem _riggableSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(OnItemToggleActivateAttempt);
+        SubscribeLocalEvent<StunbatonComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
-        SubscribeLocalEvent<StunbatonComponent, PredictedBatteryChargeChangedEvent>(OnChargeChanged);
+        SubscribeLocalEvent<StunbatonComponent, ChargeChangedEvent>(OnChargeChanged);
+        SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
+        SubscribeLocalEvent<StunbatonComponent, ItemToggleDeactivateAttemptEvent>(TryTurnOff);
     }
 
-    private void OnStaminaHitAttempt(Entity<StunbatonComponent> ent, ref StaminaDamageOnHitAttemptEvent args)
+    private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
     {
-        if (!_itemToggle.IsActivated(ent.Owner)
-            || !_battery.TryUseCharge(ent.Owner, ent.Comp.EnergyPerUse))
+        if (!_itemToggle.IsActivated(entity.Owner) ||
+        !TryComp<BatteryComponent>(entity.Owner, out var battery) || !_battery.TryUseCharge((entity.Owner, battery), entity.Comp.EnergyPerUse))
         {
             args.Cancelled = true;
         }
     }
 
-    private void OnExamined(Entity<StunbatonComponent> ent, ref ExaminedEvent args)
+    private void OnExamined(Entity<StunbatonComponent> entity, ref ExaminedEvent args)
     {
-        var onMsg = _itemToggle.IsActivated(ent.Owner)
+        var onMsg = _itemToggle.IsActivated(entity.Owner)
         ? Loc.GetString("comp-stunbaton-examined-on")
         : Loc.GetString("comp-stunbaton-examined-off");
         args.PushMarkup(onMsg);
 
-        var count = _battery.GetRemainingUses(ent.Owner, ent.Comp.EnergyPerUse);
-        args.PushMarkup(Loc.GetString("melee-battery-examine", ("color", "yellow"), ("count", count)));
-    }
-
-    private void OnItemToggleActivateAttempt(Entity<StunbatonComponent> ent, ref ItemToggleActivateAttemptEvent args)
-    {
-        if (_battery.GetCharge(ent.Owner) < ent.Comp.EnergyPerUse)
+        if (TryComp<BatteryComponent>(entity.Owner, out var battery))
         {
-            args.Cancelled = true;
-            args.Popup = Loc.GetString("stunbaton-component-low-charge");
+            var count = _battery.GetRemainingUses((entity.Owner, battery), entity.Comp.EnergyPerUse);
+            args.PushMarkup(Loc.GetString("melee-battery-examine", ("color", "yellow"), ("count", count)));
         }
     }
 
-    private void OnChargeChanged(Entity<StunbatonComponent> ent, ref PredictedBatteryChargeChangedEvent args)
+    private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)
     {
-        if (args.CurrentCharge < ent.Comp.EnergyPerUse)
-            _itemToggle.TryDeactivate(ent.Owner);
+        if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        if (!TryComp<BatteryComponent>(entity, out var battery) || _battery.GetCharge((entity, battery)) < entity.Comp.EnergyPerUse)
+        {
+            args.Cancelled = true;
+            if (args.User != null)
+            {
+                _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid)args.User, (EntityUid)args.User);
+            }
+            return;
+        }
+
+        if (TryComp<RiggableComponent>(entity, out var rig) && rig.IsRigged)
+        {
+            _riggableSystem.Explode(entity.Owner, _battery.GetCharge((entity, battery)), args.User);
+        }
+    }
+    private void TryTurnOff(Entity<StunbatonComponent> entity, ref ItemToggleDeactivateAttemptEvent args)
+    {
+        if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value))
+        {
+            args.Cancelled = true;
+            return;
+        }
+    }
+
+    // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
+    private void OnSolutionChange(Entity<StunbatonComponent> entity, ref SolutionContainerChangedEvent args)
+    {
+        // Explode if baton is activated and rigged.
+        if (!TryComp<RiggableComponent>(entity, out var riggable) ||
+            !TryComp<BatteryComponent>(entity, out var battery))
+            return;
+
+        if (_itemToggle.IsActivated(entity.Owner) && riggable.IsRigged)
+            _riggableSystem.Explode(entity.Owner, _battery.GetCharge((entity, battery)));
+    }
+
+    private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
+    {
+        if (TryComp<BatteryComponent>(entity.Owner, out var battery) &&
+            _battery.GetCharge((entity.Owner, battery)) < entity.Comp.EnergyPerUse)
+        {
+            _itemToggle.TryDeactivate(entity.Owner, predicted: false);
+        }
     }
 }

@@ -7,7 +7,6 @@ using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Content.Shared.Wieldable;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 
@@ -73,7 +72,7 @@ public sealed class ItemToggleSystem : EntitySystem
 
     private void OnActivateVerb(Entity<ItemToggleComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !ent.Comp.OnActivate || ent.Comp.RequireComplexInteract && args.CanComplexInteract)
+        if (!args.CanAccess || !args.CanInteract || !ent.Comp.OnActivate || (ent.Comp.RequireComplexInteract && !args.CanComplexInteract))
             return;
 
         var user = args.User;

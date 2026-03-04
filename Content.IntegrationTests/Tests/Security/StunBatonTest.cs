@@ -24,7 +24,7 @@ public sealed class StunBatonTests : InteractionTest
     [Test]
     public async Task StunBatonTest()
     {
-        var batterySystem = SEntMan.System<PredictedBatterySystem>();
+        var batterySystem = SEntMan.System<SharedBatterySystem>();
         // Prevent the test mob from suffocating.
         await AddAtmosphere();
 
@@ -97,7 +97,7 @@ public sealed class StunBatonTests : InteractionTest
     [Test]
     public async Task HarmBatonTest()
     {
-        var batterySystem = SEntMan.System<PredictedBatterySystem>();
+        var batterySystem = SEntMan.System<SharedBatterySystem>();
         // Prevent the test mob from suffocating.
         await AddAtmosphere();
 
@@ -155,12 +155,12 @@ public sealed class StunBatonTests : InteractionTest
     [Test]
     public async Task StunBatonMissTest()
     {
-        var batterySystem = SEntMan.System<PredictedBatterySystem>();
+        var batterySystem = SEntMan.System<SharedBatterySystem>();
 
         // Spawn a stun baton in the player's hands and turn it on.
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: true);
         var sBaton = ToServer(baton);
-        var batteryComp = Comp<PredictedBatteryComponent>(baton);
+        var batteryComp = Comp<BatteryComponent>(baton);
         var batonIntialCharge = batterySystem.GetCharge(sBaton);
 
         Assert.Multiple(() =>
