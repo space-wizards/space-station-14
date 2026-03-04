@@ -1,6 +1,4 @@
-using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Item.ItemToggle;
@@ -14,7 +12,6 @@ namespace Content.Shared.Stunnable;
 
 public sealed class StunbatonSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -28,7 +25,6 @@ public sealed class StunbatonSystem : EntitySystem
         SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
         SubscribeLocalEvent<StunbatonComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
-        SubscribeLocalEvent<StunbatonComponent, ItemToggleDeactivateAttemptEvent>(TryTurnOff);
     }
 
     private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
@@ -56,12 +52,6 @@ public sealed class StunbatonSystem : EntitySystem
 
     private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)
     {
-        if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value))
-        {
-            args.Cancelled = true;
-            return;
-        }
-
         if (!TryComp<BatteryComponent>(entity, out var battery) || _battery.GetCharge((entity, battery)) < entity.Comp.EnergyPerUse)
         {
             args.Cancelled = true;
@@ -75,15 +65,6 @@ public sealed class StunbatonSystem : EntitySystem
         if (TryComp<RiggableComponent>(entity, out var rig) && rig.IsRigged)
         {
             _riggableSystem.Explode((entity, rig), _battery.GetCharge((entity, battery)), args.User);
-        }
-    }
-
-    private void TryTurnOff(Entity<StunbatonComponent> entity, ref ItemToggleDeactivateAttemptEvent args)
-    {
-        if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value))
-        {
-            args.Cancelled = true;
-            return;
         }
     }
 

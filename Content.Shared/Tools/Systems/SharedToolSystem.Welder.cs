@@ -13,8 +13,6 @@ namespace Content.Shared.Tools.Systems;
 
 public abstract partial class SharedToolSystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-
     public void InitializeWelder()
     {
         SubscribeLocalEvent<WelderComponent, MapInitEvent>(OnWelderInit);
