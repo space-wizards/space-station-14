@@ -35,10 +35,11 @@
           False: { visible: false }
   - type: StatusIcon
     bounds: -0.5,-0.5,0.5,0.5
+  - type: JobStatus
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
   - type: TypingIndicator
   - type: SlowOnDamage
     speedModifierThresholds:
@@ -187,8 +188,9 @@
     damage:
       types:
         Heat: -0.07
-      groups:
-        Brute: -0.07
+        Blunt: -0.05
+        Piercing: -0.05
+        Slash: -0.05
   - type: Fingerprint
   - type: Blindable
   - type: Temperature
