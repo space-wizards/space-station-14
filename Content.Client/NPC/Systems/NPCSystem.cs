@@ -1,7 +1,7 @@
 using Content.Client.NPC.HTN;
 using Content.Shared.NPC.Systems;
 
-namespace Content.Client.NPC;
+namespace Content.Client.NPC.Systems;
 
 public sealed class NPCSystem : SharedNPCSystem
 {
