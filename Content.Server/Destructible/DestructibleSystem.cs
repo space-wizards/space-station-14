@@ -189,7 +189,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <summary>
     /// Adds a threshold to the threshold list. If the entity does not have a destructible component, one will be added.
     /// </summary>
-    /// <param name="entity">The entity to target.</param>
+    /// <param name="entity">The entity, component tuple to target.</param>
     /// <param name="threshold">The threshold to add.</param>
     /// <param name="index">The index at which to insert the threshold.</param>
     public void AddThreshold(Entity<DestructibleComponent?> entity, DamageThreshold threshold, int? index = null)
