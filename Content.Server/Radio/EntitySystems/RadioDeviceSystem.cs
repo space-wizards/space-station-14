@@ -222,11 +222,13 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
             {
                 SetMicrophoneEnabled(ent, null, false);
                 ent.Comp.MicrophoneEnabled = false;
-                return;
             }
 
-            mic.BroadcastChannel = channel.Value;
-            Dirty(ent, mic);
+            else
+            {
+                mic.BroadcastChannel = channel.Value;
+                Dirty(ent, mic);
+            }
         }
 
         if (Resolve(ent, ref speaker))
@@ -235,11 +237,13 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
             {
                 SetSpeakerEnabled(ent, null, false);
                 ent.Comp.SpeakerEnabled = false;
-                return;
             }
 
-            speaker.Channels = new() { channel.Value };
-            Dirty(ent, speaker);
+            else
+            {
+                speaker.Channels = new() { channel.Value };
+                Dirty(ent, speaker);
+            }
         }
     }
 }
