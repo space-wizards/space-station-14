@@ -36,9 +36,9 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
     [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
     [Dependency] public readonly GibbingSystem Gibbing = default!;
+    [Dependency] public readonly PuddleSystem PuddleSystem = default!;
     [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] public readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
-    [Dependency] public readonly PuddleSystem PuddleSystem = default!;
     [Dependency] public readonly StackSystem StackSystem = default!;
     [Dependency] public readonly TriggerSystem TriggerSystem = default!;
 
