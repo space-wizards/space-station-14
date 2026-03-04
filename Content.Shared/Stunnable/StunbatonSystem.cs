@@ -14,11 +14,11 @@ namespace Content.Shared.Stunnable;
 
 public sealed class StunbatonSystem : EntitySystem
 {
-    [Dependency] private readonly RiggableSystem _riggableSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly RiggableSystem _riggableSystem = default!;
 
     public override void Initialize()
     {
@@ -78,6 +78,7 @@ public sealed class StunbatonSystem : EntitySystem
             _riggableSystem.Explode(entity.Owner, _battery.GetCharge((entity, battery)), args.User);
         }
     }
+
     private void TryTurnOff(Entity<StunbatonComponent> entity, ref ItemToggleDeactivateAttemptEvent args)
     {
         if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value))
