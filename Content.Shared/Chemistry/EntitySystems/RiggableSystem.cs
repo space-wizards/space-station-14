@@ -1,10 +1,11 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Explosion.EntitySystems;
-using Content.Shared.Power.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Explosion.EntitySystems;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Kitchen;
+using Content.Shared.Power.Components;
 using Content.Shared.Rejuvenate;
 
 namespace Content.Shared.Power.EntitySystems;
@@ -17,6 +18,7 @@ public sealed class RiggableSystem : EntitySystem
     [Dependency] private readonly SharedExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
+    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
 
     public override void Initialize()
     {
@@ -57,15 +59,29 @@ public sealed class RiggableSystem : EntitySystem
         if (entity.Comp.IsRigged && !wasRigged)
         {
             _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity.Owner)} has been rigged up to explode when used.");
+
+            if (_itemToggle.IsActivated(entity.Owner))
+            {
+                if (TryComp<BatteryComponent>(entity, out var batteryComponent))
+                {
+                    Explode(entity, _battery.GetCharge((entity, batteryComponent)));
+                }
+            }
         }
     }
 
-    public void Explode(EntityUid uid, float charge, EntityUid? cause = null)
+    public void Explode(Entity<RiggableComponent> ent, float charge, EntityUid? cause = null)
     {
+        if (ent.Comp.Exploded)
+            return;
+
         var radius = MathF.Min(5, MathF.Sqrt(charge) / 9);
 
-        _explosionSystem.TriggerExplosive(uid, radius: radius, user: cause);
-        QueueDel(uid);
+        _explosionSystem.TriggerExplosive(ent.Owner, radius: radius, user: cause);
+
+        ent.Comp.Exploded = true;
+        Dirty(ent);
+        QueueDel(ent.Owner);
     }
 
     private void OnChargeChanged(Entity<RiggableComponent> ent, ref ChargeChangedEvent args)

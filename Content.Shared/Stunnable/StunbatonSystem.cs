@@ -25,7 +25,6 @@ public sealed class StunbatonSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<StunbatonComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
         SubscribeLocalEvent<StunbatonComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
@@ -75,7 +74,7 @@ public sealed class StunbatonSystem : EntitySystem
 
         if (TryComp<RiggableComponent>(entity, out var rig) && rig.IsRigged)
         {
-            _riggableSystem.Explode(entity.Owner, _battery.GetCharge((entity, battery)), args.User);
+            _riggableSystem.Explode((entity, rig), _battery.GetCharge((entity, battery)), args.User);
         }
     }
 
@@ -86,18 +85,6 @@ public sealed class StunbatonSystem : EntitySystem
             args.Cancelled = true;
             return;
         }
-    }
-
-    // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
-    private void OnSolutionChange(Entity<StunbatonComponent> entity, ref SolutionContainerChangedEvent args)
-    {
-        // Explode if baton is activated and rigged.
-        if (!TryComp<RiggableComponent>(entity, out var riggable) ||
-            !TryComp<BatteryComponent>(entity, out var battery))
-            return;
-
-        if (_itemToggle.IsActivated(entity.Owner) && riggable.IsRigged)
-            _riggableSystem.Explode(entity.Owner, _battery.GetCharge((entity, battery)));
     }
 
     private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
