@@ -90,6 +90,7 @@
       collection: Welder
     qualities: Welding
   - type: Welder
+  - type: WelderHeat
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -143,6 +144,8 @@
         maxVol: 250
   - type: Tool
     speedModifier: 1.3
+  - type: WelderHeat
+    heatPerUse: 200
 
 - type: entity
   name: experimental welding tool
@@ -154,6 +157,9 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
+  - type: WelderHeat
+    heatPerUse: 300
+    maxTemperature: 600
   - type: SolutionContainerManager
     solutions:
       Welder:

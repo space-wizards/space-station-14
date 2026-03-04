@@ -13,7 +13,6 @@ namespace Content.Server.Chemistry.EntitySystems;
 
 /// <summary>
 /// Allows a lit welder to heat reagents inside solution containers.
-/// Similar to the hotplate/SolutionHeater but as a handheld tool interaction.
 /// </summary>
 public sealed class WelderHeatSystem : EntitySystem
 {
@@ -25,29 +24,22 @@ public sealed class WelderHeatSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderInteract);
-        SubscribeLocalEvent<WelderComponent, WelderHeatDoAfterEvent>(OnHeatDoAfter);
+        SubscribeLocalEvent<WelderHeatComponent, AfterInteractEvent>(OnWelderInteract);
+        SubscribeLocalEvent<WelderHeatComponent, WelderHeatDoAfterEvent>(OnHeatDoAfter);
     }
 
     /// <summary>
-    /// Triggered when a player clicks on an entity with a welder.
-    /// Checks the welder is lit and the target has a solution, then starts the DoAfter.
+    /// Starts the heating process when a welder is used on a container.
     /// </summary>
-    private void OnWelderInteract(EntityUid uid, WelderComponent welder, AfterInteractEvent args)
+    private void OnWelderInteract(EntityUid uid, WelderHeatComponent heatComp, AfterInteractEvent args)
     {
         if (args.Handled || args.Target == null || !args.CanReach)
             return;
 
-        // Welder must be lit
         if (!_itemToggle.IsActivated(uid))
             return;
 
-        // Target must have a solution container (beaker, bottle etc.)
         if (!TryComp<SolutionContainerManagerComponent>(args.Target, out var solutionManager))
-            return;
-
-        // Welder needs the heating component to know how much to heat
-        if (!TryComp<WelderHeatComponent>(uid, out var heatComp))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, heatComp.DoAfterDelay,
@@ -65,30 +57,25 @@ public sealed class WelderHeatSystem : EntitySystem
     }
 
     /// <summary>
-    /// Fires each time the DoAfter completes a step.
-    /// Adds a fixed chunk of heat to all solutions in the target container.
-    /// Repeats automatically until max temperature is reached or welder runs out of fuel.
+    /// Handles adding heat and consuming fuel when the heating step completes.
     /// </summary>
-    private void OnHeatDoAfter(EntityUid uid, WelderComponent welder, WelderHeatDoAfterEvent args)
+    private void OnHeatDoAfter(EntityUid uid, WelderHeatComponent heatComp, WelderHeatDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
             return;
 
         var welderEnt = args.Used.Value;
 
-        if (!TryComp<WelderHeatComponent>(welderEnt, out var heatComp))
+        if (!TryComp<WelderComponent>(welderEnt, out var welder))
             return;
 
-        // Make sure target still has a solution
         if (!TryComp<SolutionContainerManagerComponent>(args.Target, out var solutionManager))
             return;
 
-        // Make sure welder is still lit
         if (!_itemToggle.IsActivated(welderEnt))
             return;
 
-        // Check and consume fuel
-        if (!SolutionContainerSystem.TryGetSolution(welderEnt, welder.FuelSolutionName, out var fuelSolnComp, out var fuelSolution))
+        if (!_solutionContainer.TryGetSolution(welderEnt, welder.FuelSolutionName, out var fuelSolnComp, out var fuelSolution))
             return;
 
         var fuelNeeded = FixedPoint2.New(heatComp.FuelConsumptionPerHeat);
@@ -98,7 +85,6 @@ public sealed class WelderHeatSystem : EntitySystem
             return;
         }
 
-        // Track whether we should keep the DoAfter looping
         var shouldRepeat = false;
         var reachedMaxTemp = false;
 
@@ -106,14 +92,12 @@ public sealed class WelderHeatSystem : EntitySystem
         {
             var solution = soln.Comp.Solution;
 
-            // Stop heating this solution if it has hit the max temperature cap
             if (solution.Temperature >= heatComp.MaxTemperature)
             {
                 reachedMaxTemp = true;
                 continue;
             }
 
-            // Add the fixed heat chunk to the solution
             _solutionContainer.AddThermalEnergy(soln, heatComp.HeatPerUse);
             shouldRepeat = true;
         }
@@ -125,11 +109,9 @@ public sealed class WelderHeatSystem : EntitySystem
 
         if (shouldRepeat)
         {
-            // Consume fuel
             _solutionContainer.RemoveReagent(fuelSolnComp.Value, welder.FuelReagent, fuelNeeded);
         }
 
-        // Repeat the DoAfter loop until all solutions hit max temp
         args.Repeat = shouldRepeat;
         args.Handled = true;
     }
