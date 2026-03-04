@@ -4,8 +4,8 @@ meta:
   engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/04/2026 00:38:25
-  entityCount: 29069
+  time: 03/04/2026 20:28:09
+  entityCount: 29074
 maps:
 - 1
 grids:
@@ -181,7 +181,7 @@ entities:
           version: 7
         -2,-3:
           ind: -2,-3
-          tiles: AAAAAAAAAA0AAAAAAAANAAAAAAEADQAAAAAAAAAAAAAAAAANAAAAAAIADQAAAAABAA0AAAAAAgANAAAAAAIADQAAAAAAAA0AAAAAAgANAAAAAAAADQAAAAABAA0AAAAAAgAAAAAAAAAAFAAAAAABAAAAAAAAAAANAAAAAAEADQAAAAACAA0AAAAAAwAAAAAAAAAADQAAAAAAAA0AAAAAAwANAAAAAAAADQAAAAAAAA0AAAAAAwANAAAAAAMADQAAAAACAA0AAAAAAwANAAAAAAMAAAAAAAAAABQAAAAAAwAAAAAAAAAADQAAAAAAABoAAAAAAQANAAAAAAEAAAAAAAAAAA0AAAAAAgANAAAAAAEADQAAAAABAA0AAAAAAAANAAAAAAAADQAAAAACAA0AAAAAAgANAAAAAAIADQAAAAADAAAAAAAAAAAUAAAAAAEAAAAAAAAAAA0AAAAAAwAaAAAAAAIADQAAAAABAAAAAAAAAAANAAAAAAAADQAAAAABAA0AAAAAAgANAAAAAAIADQAAAAACAA0AAAAAAQANAAAAAAEADQAAAAABAA0AAAAAAwANAAAAAAEAIwAAAAAAAAAAAAAAAAANAAAAAAAAGgAAAAAAAA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAADQAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAMADQAAAAADAA0AAAAAAAANAAAAAAAAAAAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAAAgANAAAAAAIADQAAAAABAAAAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAIADQAAAAABAA0AAAAAAAAAAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAAADAA0AAAAAAwANAAAAAAIAAAAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAAAAAAAAAAA0AAAAAAgASAAAAAAMADQAAAAABAAAAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAAAAAAAAAAA0AAAAAAgANAAAAAAMAEgAAAAADAA0AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAIAEgAAAAACABIAAAAAAgANAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAAAAAA0AAAAAAAANAAAAAAMADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmAAAAAAAAJgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgAAAAAAACYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+          tiles: AAAAAAAAAA0AAAAAAAANAAAAAAEADQAAAAAAAAAAAAAAAAANAAAAAAIADQAAAAABAA0AAAAAAgANAAAAAAIADQAAAAAAAA0AAAAAAgANAAAAAAAADQAAAAABAA0AAAAAAgAAAAAAAAAAFAAAAAABAAAAAAAAAAANAAAAAAEADQAAAAACAA0AAAAAAwAAAAAAAAAADQAAAAAAAA0AAAAAAwANAAAAAAAADQAAAAAAAA0AAAAAAwANAAAAAAMADQAAAAACAA0AAAAAAwANAAAAAAMAAAAAAAAAABQAAAAAAwAAAAAAAAAADQAAAAAAABoAAAAAAQANAAAAAAEAAAAAAAAAAA0AAAAAAgANAAAAAAEADQAAAAABAA0AAAAAAAANAAAAAAAADQAAAAACAA0AAAAAAgANAAAAAAIADQAAAAADAAAAAAAAAAAUAAAAAAEAAAAAAAAAAA0AAAAAAwAaAAAAAAIADQAAAAABAAAAAAAAAAANAAAAAAAADQAAAAABAA0AAAAAAgANAAAAAAIADQAAAAACAA0AAAAAAQANAAAAAAEADQAAAAABAA0AAAAAAwANAAAAAAEAIwAAAAAAAAAAAAAAAAANAAAAAAAAGgAAAAAAAA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAADQAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAMADQAAAAADAA0AAAAAAAANAAAAAAAAAAAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAAAgANAAAAAAIADQAAAAABAAAAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAIADQAAAAABAA0AAAAAAAAAAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAAADAA0AAAAAAwANAAAAAAIAAAAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAAAAAAAAAAA0AAAAAAgASAAAAAAMADQAAAAABAAAAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAEwAAAAAAABMAAAAAAAATAAAAAAAAAAAAAAAAAA0AAAAAAgANAAAAAAMAEgAAAAADAA0AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAIAEgAAAAACABIAAAAAAgANAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAAAAAA0AAAAAAAANAAAAAAMADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmAAAAAAAAJgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAGQAAAAAAAAgAAAAAAAAZAAAAAAAAAAAAAAAAACQAAAAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgAAAAAAACYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
           version: 7
         1,-3:
           ind: 1,-3
@@ -5312,7 +5312,8 @@ entities:
           -6,-7:
             0: 3863
           -6,-9:
-            0: 47887
+            0: 47375
+            5: 512
           -5,-8:
             0: 340
           -5,-9:
@@ -5467,7 +5468,7 @@ entities:
           -9,3:
             3: 1799
           -9,4:
-            5: 7
+            6: 7
             3: 1792
           -12,-4:
             0: 63675
@@ -6008,7 +6009,7 @@ entities:
             0: 65535
           -9,5:
             3: 7
-            6: 1792
+            7: 1792
           -12,9:
             0: 30704
           -13,9:
@@ -6292,7 +6293,7 @@ entities:
             0: 12272
           -2,-15:
             0: 30567
-            7: 16
+            5: 16
           -2,-14:
             0: 61559
           -2,-17:
@@ -7486,16 +7487,16 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+            Oxygen: 21.813705
+            Nitrogen: 82.06108
+        - volume: 2500
+          temperature: 293.15
+          moles:
             Plasma: 6666.982
         - volume: 2500
           temperature: 293.15
           moles:
             Nitrogen: 6666.982
-        - volume: 2500
-          temperature: 293.15
-          moles:
-            Oxygen: 21.813705
-            Nitrogen: 82.06108
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
@@ -15771,6 +15772,14 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 29073
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 50.5,-24.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: APCElectronics
   entities:
   - uid: 10855
@@ -21295,7 +21304,7 @@ entities:
   - uid: 7637
     components:
     - type: Transform
-      pos: 50.5,-25.5
+      pos: 50.5,-26.5
       parent: 2
   - uid: 7638
     components:
@@ -26260,7 +26269,7 @@ entities:
   - uid: 15149
     components:
     - type: Transform
-      pos: 50.5,-22.5
+      pos: 51.5,-23.5
       parent: 2
   - uid: 15150
     components:
@@ -26270,12 +26279,12 @@ entities:
   - uid: 15151
     components:
     - type: Transform
-      pos: 48.5,-22.5
+      pos: 51.5,-26.5
       parent: 2
   - uid: 15152
     components:
     - type: Transform
-      pos: 49.5,-22.5
+      pos: 47.5,-25.5
       parent: 2
   - uid: 15153
     components:
@@ -37985,7 +37994,7 @@ entities:
   - uid: 27663
     components:
     - type: Transform
-      pos: 48.5,-27.5
+      pos: 48.5,-23.5
       parent: 2
   - uid: 27684
     components:
@@ -38651,6 +38660,21 @@ entities:
     components:
     - type: Transform
       pos: 61.5,-18.5
+      parent: 2
+  - uid: 29070
+    components:
+    - type: Transform
+      pos: 50.5,-24.5
+      parent: 2
+  - uid: 29071
+    components:
+    - type: Transform
+      pos: 49.5,-23.5
+      parent: 2
+  - uid: 29072
+    components:
+    - type: Transform
+      pos: 50.5,-23.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -54165,6 +54189,11 @@ entities:
     components:
     - type: Transform
       pos: 31.5,-53.5
+      parent: 2
+  - uid: 29074
+    components:
+    - type: Transform
+      pos: 50.5,-24.5
       parent: 2
 - proto: CableMVStack
   entities:
@@ -75477,29 +75506,29 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
+          Oxygen: 1.8968438
+          Nitrogen: 7.1357465
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 12353
           - 12365
-          - 12372
-          - 12364
-          - 12354
-          - 12362
-          - 12360
-          - 12359
-          - 12361
-          - 12358
-          - 12352
-          - 12351
-          - 12356
-          - 12355
           - 12357
+          - 12355
+          - 12356
+          - 12351
+          - 12352
+          - 12358
+          - 12361
+          - 12359
+          - 12360
+          - 12362
+          - 12354
+          - 12364
+          - 12372
+          - 12353
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -89621,6 +89650,11 @@ entities:
     - type: Transform
       pos: -7.578285,19.630724
       parent: 2
+  - uid: 6420
+    components:
+    - type: Transform
+      pos: 55.509937,14.471465
+      parent: 2
 - proto: FoodBreadBaguette
   entities:
   - uid: 24251
@@ -89732,6 +89766,18 @@ entities:
     components:
     - type: Transform
       pos: 56.61404,10.597787
+      parent: 2
+  - uid: 7337
+    components:
+    - type: Transform
+      pos: -57.451885,15.70558
+      parent: 2
+- proto: FoodDonutBluePumpkin
+  entities:
+  - uid: 20569
+    components:
+    - type: Transform
+      pos: -57.28001,15.564955
       parent: 2
 - proto: FoodFrozenPopsicleBerry
   entities:
@@ -129417,6 +129463,21 @@ entities:
       parent: 2
 - proto: KitchenMicrowave
   entities:
+  - uid: 866
+    components:
+    - type: Transform
+      pos: -22.5,-44.5
+      parent: 2
+  - uid: 5869
+    components:
+    - type: Transform
+      pos: -3.5,17.5
+      parent: 2
+  - uid: 6036
+    components:
+    - type: Transform
+      pos: 19.5,8.5
+      parent: 2
   - uid: 6164
     components:
     - type: Transform
@@ -159456,45 +159517,15 @@ entities:
       parent: 2
 - proto: SyndicateMicrowave
   entities:
-  - uid: 866
-    components:
-    - type: Transform
-      pos: -22.5,-44.5
-      parent: 2
-  - uid: 5869
-    components:
-    - type: Transform
-      pos: -3.5,17.5
-      parent: 2
-  - uid: 6036
-    components:
-    - type: Transform
-      pos: 19.5,8.5
-      parent: 2
   - uid: 6165
     components:
     - type: Transform
       pos: 6.5,-9.5
       parent: 2
-  - uid: 6420
-    components:
-    - type: Transform
-      pos: 55.5,14.5
-      parent: 2
-  - uid: 7337
-    components:
-    - type: Transform
-      pos: -57.5,15.5
-      parent: 2
   - uid: 7688
     components:
     - type: Transform
       pos: 54.5,-25.5
-      parent: 2
-  - uid: 20569
-    components:
-    - type: Transform
-      pos: 55.5,-36.5
       parent: 2
 - proto: SyndicateShuttleConsoleCircuitboard
   entities:
@@ -164002,6 +164033,43 @@ entities:
     - type: Transform
       pos: 51.5,-39.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        14664:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        7662:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        13699:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        19501:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        14656:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
   - uid: 23764
     components:
     - type: Transform
