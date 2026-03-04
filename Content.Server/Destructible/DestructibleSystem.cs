@@ -60,21 +60,23 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     }
 
     /// <summary>
-    /// Initialization function for <see cref="DestructibleComponent"/>, adding automatic overkill threshold.
+    /// Map Initialization function for <see cref="DestructibleComponent"/>, adding automatic overkill threshold.
     /// </summary>
-    /// <param name="uid">The entity UID of the destructible parent.</param>
-    /// <param name="component">The destructible component.</param>
+    /// <param name="entity">The uid, component tuple.</param>
     /// <param name="args">The event arguments.</param>
-    private void OnMapInit(EntityUid uid, DestructibleComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<DestructibleComponent> entity, ref MapInitEvent args)
     {
-        AddOverkillThreshold((uid, component));
+        AddOverkillThreshold(entity);
     }
 
     /// <summary>
     /// Check if any thresholds were reached. if they were, execute them.
     /// </summary>
-    private void OnDamageChanged(EntityUid uid, DestructibleComponent component, DamageChangedEvent args)
+    private void OnDamageChanged(Entity<DestructibleComponent> entity, ref DamageChangedEvent args)
     {
+        var component = entity.Comp;
+        var uid = entity.Owner;
+
         component.IsBroken = false;
 
         foreach (var threshold in component.Thresholds)
