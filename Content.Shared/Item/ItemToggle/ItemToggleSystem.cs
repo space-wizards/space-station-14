@@ -141,7 +141,7 @@ public sealed class ItemToggleSystem : EntitySystem
     /// <summary>
     /// Used when an item is attempting to be activated. It returns false if the attempt fails any reason, interrupting the activation.
     /// </summary>
-    public bool TryActivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true, bool showPopup = true)
+    public bool TryActivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true, bool showPopup = true, bool consciousAction = true)
     {
         if (!_query.Resolve(ent, ref ent.Comp, false))
             return false;
@@ -151,7 +151,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (comp.Activated)
             return true;
 
-        if (user != null && ent.Comp.RequireComplexInteract && !_actionBlocker.CanComplexInteract(user.Value))
+        if (user != null && ent.Comp.RequireComplexInteract && consciousAction && !_actionBlocker.CanComplexInteract(user.Value))
             return false;
 
         var attempt = new ItemToggleActivateAttemptEvent(user);
@@ -191,7 +191,7 @@ public sealed class ItemToggleSystem : EntitySystem
     /// <summary>
     /// Used when an item is attempting to be deactivated. It returns false if the attempt fails any reason, interrupting the deactivation.
     /// </summary>
-    public bool TryDeactivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true, bool showPopup = true)
+    public bool TryDeactivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true, bool showPopup = true, bool consciousAction = true)
     {
         if (!_query.Resolve(ent, ref ent.Comp, false))
             return false;
@@ -204,7 +204,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (!comp.Predictable)
             predicted = false;
 
-        if (user != null && ent.Comp.RequireComplexInteract && !_actionBlocker.CanComplexInteract(user.Value))
+        if (user != null && ent.Comp.RequireComplexInteract && consciousAction && !_actionBlocker.CanComplexInteract(user.Value))
             return false;
 
         var attempt = new ItemToggleDeactivateAttemptEvent(user);
