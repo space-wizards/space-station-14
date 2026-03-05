@@ -434,47 +434,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         }
     }
 
-    public static (FoodRecipePrototype, int) CanSatisfyRecipe(MicrowaveComponent component, FoodRecipePrototype recipe, Dictionary<string, int> solids, Dictionary<string, FixedPoint2> reagents)
-    {
-        var portions = 0;
-
-        if (component.CurrentCookTimerTime % recipe.CookTime != 0)
-        {
-            //can't be a multiple of this recipe
-            return (recipe, 0);
-        }
-
-        foreach (var solid in recipe.Solids)
-        {
-            if (!solids.ContainsKey(solid.Key))
-                return (recipe, 0);
-
-            if (solids[solid.Key] < solid.Value)
-                return (recipe, 0);
-
-            portions = portions == 0
-                ? solids[solid.Key] / solid.Value
-                : Math.Min(portions, solids[solid.Key] / solid.Value);
-        }
-
-        foreach (var reagent in recipe.Reagents)
-        {
-            // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
-            if (!reagents.ContainsKey(reagent.Key))
-                return (recipe, 0);
-
-            if (reagents[reagent.Key] < reagent.Value)
-                return (recipe, 0);
-
-            portions = portions == 0
-                ? reagents[reagent.Key].Int() / reagent.Value.Int()
-                : Math.Min(portions, reagents[reagent.Key].Int() / reagent.Value.Int());
-        }
-
-        //cook only as many of those portions as time allows
-        return (recipe, (int)Math.Min(portions, component.CurrentCookTimerTime / recipe.CookTime));
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
