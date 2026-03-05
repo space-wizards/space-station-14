@@ -664,8 +664,8 @@
   - type: MobReplacementRule
 
 - type: entity
-  parent: BaseGameRule
   id: WanderingPortals
+  parent: BaseGameRule
   components:
   - type: StationEvent
     startAnnouncement: station-event-wandering-portals-announcement

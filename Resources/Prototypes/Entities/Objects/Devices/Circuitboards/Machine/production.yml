@@ -19,7 +19,7 @@
   - type: MachineBoard
     prototype: AutolatheHyperConvection
     stackRequirements:
-      Manipulator: 4
+      Manipulator: 3
       Glass: 1
     tagRequirements:
       Igniter:

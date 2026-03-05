@@ -10,80 +10,22 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(WanderingPortalsRule))]
 public sealed partial class WanderingPortalsRuleComponent : Component
 {
-    /// <summary>
-    /// Basic portal prototype
+    /// Portal prototype
     /// </summary>
     [DataField]
     public EntProtoId PortalPrototype = "TemporaryWanderingPortal";
 
-    /// <summary>
-    /// Gravity well prototype
+    /// Minimum number of portals. If an odd number of portals is created, some will not be linked.
     /// </summary>
     [DataField]
-    public EntProtoId GravityWellPrototype = "TemporaryWanderingGravityWell";
+    public int MinPortals = 4;
 
-    /// <summary>
-    /// Gravity spout prototype
+    /// Maximum number of portals
     /// </summary>
     [DataField]
-    public EntProtoId GravitySpoutPrototype = "TemporaryWanderingGravitySpout";
+    public int MaxPortals = 10;
 
-    /// <summary>
-    /// Can basic portals spawn?
-    /// </summary>
-    [DataField]
-    public bool AllowBasic = true;
-
-    /// <summary>
-    /// Can gravity portals spawn? If AllowBasic and AllowGravity are both false, it defaults to basic portals.
-    /// </summary>
-    [DataField]
-    public bool AllowGravity = true;
-
-    /// <summary>
-    /// Can an odd number of basic portals spawn, leaving one unlinked? Gravity portals will never spawn unlinked.
-    /// </summary>
-    [DataField]
-    public bool AllowOdd = true;
-
-    /// <summary>
-    /// Minimum number of grav portal pairs.
-    /// </summary>
-    [DataField]
-    public int MinGravPortalPairs = 2;
-
-    /// <summary>
-    /// Minimum number of grav portal pairs when basic portals are enabled.
-    /// </summary>
-    [DataField]
-    public int MinGravPortalPairsWhenBasic = 0;
-
-    /// <summary>
-    /// Maximum number of grav portal pairs.
-    /// </summary>
-    [DataField]
-    public int MaxGravPortalPairs = 3;
-
-    /// <summary>
-    /// Minimum number of basic portals.
-    /// </summary>
-    [DataField]
-    public int MinBasicPortals = 4;
-
-    /// <summary>
-    /// Maximum number of basic portals.
-    /// </summary>
-    [DataField]
-    public int MaxBasicPortals = 10;
-
-    /// <summary>
-    /// The number removed from the basic portal count when a grav portal pair is created.
-    /// </summary>
-    [DataField]
-    public int GravPortalPairCost = 3;
-
-    /// <summary>
-    /// Should the basic wandering portals be able to pick up stationary objects, and cause as much mayhem as the gravity portals?
+    /// Should the wandering portals be able to pick up stationary objects? If disabled, a lotta lockers are gonna get displaced.
     /// </summary>
     [DataField]
     public bool IgnoreStationaryObjects = true;
