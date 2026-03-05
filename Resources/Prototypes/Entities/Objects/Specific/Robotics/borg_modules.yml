@@ -1566,7 +1566,7 @@
     hands:
     - item: WeaponNaniteGun
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-door-remote-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-nanite-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]

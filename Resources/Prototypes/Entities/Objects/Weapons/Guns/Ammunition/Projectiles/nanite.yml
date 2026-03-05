@@ -41,8 +41,6 @@
   categories: [ HideSpawnMenu ]
   name: nanite crystal
   components:
-  - type: Ammo
-    muzzleFlash: MuzzleFlashEffectNanite
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
     layers:

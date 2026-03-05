@@ -8,6 +8,7 @@
     tags:
     - NaniteGun
   - type: CartridgeAmmo
+    muzzleFlash: MuzzleFlashEffectNanite
     proto: BulletNanite
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/nanite_casing.rsi
