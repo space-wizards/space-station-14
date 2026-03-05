@@ -229,6 +229,19 @@
     AmbuzolPlus: 10
 
 - type: reaction
+  id: AmbuzolPlusAlternative
+  reactants:
+    Ambuzol:
+      amount: 2
+    Ultravasculine:
+      amount: 1
+    Blood:
+      amount: 1
+  products:
+    AmbuzolPlus: 1
+    Fiber: 2
+
+- type: reaction
   id: Synaptizine
   reactants:
     Lithium:
@@ -591,6 +604,20 @@
     Blood:
       amount: 3
     Omnizine:
+      amount: 1
+    Cryoxadone:
+      amount: 2
+  products:
+    Necrosol: 2
+
+- type: reaction
+  id: NecrosolAlternative
+  impact: Medium
+  minTemp: 370
+  reactants:
+    Blood:
+      amount: 3
+    Artifexium:
       amount: 1
     Cryoxadone:
       amount: 2

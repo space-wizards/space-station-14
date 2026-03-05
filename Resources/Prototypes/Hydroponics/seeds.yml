@@ -1320,10 +1320,10 @@
       Min: 1
       Max: 2
       PotencyDivisor: 10
-    Omnizine: # Don't kill me
+    Ephedrine:
       Min: 1
-      Max: 3
-      PotencyDivisor: 35
+      Max: 4
+      PotencyDivisor: 25
     SpaceDrugs:
       Min: 1
       Max: 5

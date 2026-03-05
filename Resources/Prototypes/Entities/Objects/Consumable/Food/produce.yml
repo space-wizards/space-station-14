@@ -1732,8 +1732,8 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Omnizine
-          Quantity: 3
+        - ReagentId: Ephedrine
+          Quantity: 4
         - ReagentId: SpaceDrugs
           Quantity: 5
         - ReagentId: Nutriment

@@ -4,7 +4,6 @@
   - quantity: 5
     weight: 0.5
     reagents:
-    - Omnizine
     - Impedrezene
     - Fresium
     - HeartbreakerToxin
@@ -13,6 +12,7 @@
   - quantity: 5
     weight: 1
     reagents:
+    - Omnizine
     - Cognizine
     - Toxin
     - Leporazine
