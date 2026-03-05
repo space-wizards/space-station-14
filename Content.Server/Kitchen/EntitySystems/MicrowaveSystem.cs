@@ -44,7 +44,7 @@ using Content.Shared.Kitchen.EntitySystems;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
-public sealed class MicrowaveSystem : SharedMicrowaveSystem
+public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -192,89 +192,6 @@ public sealed class MicrowaveSystem : SharedMicrowaveSystem
                     continue;
 
                 _solutionContainer.AddThermalEnergy(soln, heatToAdd);
-            }
-        }
-    }
-
-    private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe)
-    {
-        // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
-
-        var totalReagentsToRemove = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>(recipe.Reagents);
-
-        // this is spaghetti ngl
-        foreach (var item in component.Storage.ContainedEntities)
-        {
-            // use the same reagents as when we selected the recipe
-            if (!_solutionContainer.TryGetDrainableSolution(item, out var solutionEntity, out var solution))
-                continue;
-
-            foreach (var (reagent, _) in recipe.Reagents)
-            {
-                // removed everything
-                if (!totalReagentsToRemove.ContainsKey(reagent))
-                    continue;
-
-                var quant = solution.GetTotalPrototypeQuantity(reagent);
-
-                if (quant >= totalReagentsToRemove[reagent])
-                {
-                    quant = totalReagentsToRemove[reagent];
-                    totalReagentsToRemove.Remove(reagent);
-                }
-                else
-                {
-                    totalReagentsToRemove[reagent] -= quant;
-                }
-
-                _solutionContainer.RemoveReagent(solutionEntity.Value, reagent, quant);
-            }
-        }
-
-        foreach (var recipeSolid in recipe.Solids)
-        {
-            for (var i = 0; i < recipeSolid.Value; i++)
-            {
-                foreach (var item in component.Storage.ContainedEntities)
-                {
-                    string? itemID = null;
-
-                    // If an entity has a stack component, use the stacktype instead of prototype id
-                    if (TryComp<StackComponent>(item, out var stackComp))
-                    {
-                        itemID = _prototype.Index(stackComp.StackTypeId).Spawn;
-                    }
-                    else
-                    {
-                        var metaData = MetaData(item);
-                        if (metaData.EntityPrototype == null)
-                        {
-                            continue;
-                        }
-                        itemID = metaData.EntityPrototype.ID;
-                    }
-
-                    if (itemID != recipeSolid.Key)
-                    {
-                        continue;
-                    }
-
-                    if (stackComp is not null)
-                    {
-                        if (stackComp.Count == 1)
-                        {
-                            _container.Remove(item, component.Storage);
-                        }
-                        _stack.ReduceCount((item, stackComp), 1);
-                        break;
-                    }
-                    else
-                    {
-                        _container.Remove(item, component.Storage);
-                        Del(item);
-                        break;
-                    }
-                }
             }
         }
     }
@@ -582,7 +499,7 @@ public sealed class MicrowaveSystem : SharedMicrowaveSystem
 
             // only use reagents we have access to
             // you have to break the eggs before we can use them!
-            if (!_solutionContainer.TryGetDrainableSolution(item, out var _, out var solution))
+            if (!TryGetUsableIngredientSolution(item, out var _, out var solution))
                 continue;
 
             foreach (var (reagent, quantity) in solution.Contents)
@@ -700,21 +617,6 @@ public sealed class MicrowaveSystem : SharedMicrowaveSystem
             UpdateUserInterfaceState(uid, microwave);
             _audio.PlayPvs(microwave.FoodDoneSound, uid);
             StopCooking((uid, microwave));
-        }
-    }
-
-    /// <summary>
-    /// This event tries to get secret recipes that the microwave might be capable of.
-    /// Currently, we only check the microwave itself, but in the future, the user might be able to learn recipes.
-    /// </summary>
-    private void OnGetSecretRecipes(Entity<FoodRecipeProviderComponent> ent, ref GetSecretRecipesEvent args)
-    {
-        foreach (ProtoId<FoodRecipePrototype> recipeId in ent.Comp.ProvidedRecipes)
-        {
-            if (_prototype.Resolve(recipeId, out var recipeProto))
-            {
-                args.Recipes.Add(recipeProto);
-            }
         }
     }
 
