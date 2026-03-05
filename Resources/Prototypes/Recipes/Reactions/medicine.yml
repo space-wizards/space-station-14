@@ -571,18 +571,17 @@
     Opporozidone: 3
 
 - type: reaction
-  id: Necrosol
-  impact: Medium
+  id: Arcryox
   minTemp: 370
   reactants:
-    Blood:
-      amount: 3
-    Omnizine:
+    Lithium:
+      amount: 1
+    Tricordrazine:
       amount: 1
     Cryoxadone:
-      amount: 2
+      amount: 1
   products:
-    Necrosol: 2
+    Arcryox: 3
 
 - type: reaction
   id: Aloxadone
