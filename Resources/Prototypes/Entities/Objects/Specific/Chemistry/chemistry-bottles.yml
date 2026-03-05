@@ -711,7 +711,7 @@
 
 - type: entity
   id: ChemistryBottlePotassiumIodide
-  suffix: iodide
+  suffix: potassium iodide
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
@@ -741,7 +741,7 @@
 
 - type: entity
   id: ChemistryBottlePulpedBananaPeel
-  suffix: pulped-banana-peel
+  suffix: pulped banana peel
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
