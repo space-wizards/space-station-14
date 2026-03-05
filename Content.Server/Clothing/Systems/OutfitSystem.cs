@@ -25,7 +25,7 @@ public sealed class OutfitSystem : SharedOutfitSystem
         HumanoidCharacterProfile? profile = null;
         ICommonSession? session = null;
         // Check if we are setting the outfit of a player to respect the preferences
-        if (EntityManager.TryGetComponent(target, out ActorComponent? actorComponent))
+        if (TryComp(target, out ActorComponent? actorComponent))
         {
             session = actorComponent.PlayerSession;
             var userId = actorComponent.PlayerSession.UserId;
@@ -45,7 +45,7 @@ public sealed class OutfitSystem : SharedOutfitSystem
                 break;
 
             // Don't require a player, so this works on Urists
-            profile ??= EntityManager.TryGetComponent<HumanoidProfileComponent>(target, out var comp)
+            profile ??= TryComp<HumanoidProfileComponent>(target, out var comp)
                 ? HumanoidCharacterProfile.DefaultWithSpecies(comp.Species, comp.Sex)
                 : new HumanoidCharacterProfile();
             // Try to get the user's existing loadout for the role

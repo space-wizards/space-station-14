@@ -17,7 +17,7 @@ public abstract class SharedOutfitSystem : EntitySystem
 
     public virtual bool SetOutfit(EntityUid target, string gear, Action<EntityUid, EntityUid>? onEquipped = null, bool unremovable = false, bool stripEmptySlots = true, bool respectEquippability = false)
     {
-        if (!EntityManager.TryGetComponent(target, out InventoryComponent? inventoryComponent))
+        if (!TryComp(target, out InventoryComponent? inventoryComponent))
             return false;
 
         if (!PrototypeManager.TryIndex<StartingGearPrototype>(gear, out var startingGear))
@@ -27,29 +27,18 @@ public abstract class SharedOutfitSystem : EntitySystem
         {
             foreach (var slot in slots)
             {
+                _invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
                 var gearStr = ((IEquipmentLoadout)startingGear).GetGear(slot.Name);
                 if (gearStr == string.Empty)
-                {
-                    if (stripEmptySlots == true)
-                        _invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
                     continue;
-                }
 
-                var equipmentEntity = EntityManager.SpawnEntity(gearStr, EntityManager.GetComponent<TransformComponent>(target).Coordinates);
+                var equipmentEntity = Spawn(gearStr, Comp<TransformComponent>(target).Coordinates);
                 if (slot.Name == "id" &&
-                    EntityManager.TryGetComponent(equipmentEntity, out PdaComponent? pdaComponent) &&
-                    EntityManager.TryGetComponent<IdCardComponent>(pdaComponent.ContainedId, out var id))
+                    TryComp(equipmentEntity, out PdaComponent? pdaComponent) &&
+                    TryComp<IdCardComponent>(pdaComponent.ContainedId, out var id))
                 {
-                    id.FullName = EntityManager.GetComponent<MetaDataComponent>(target).EntityName;
+                    id.FullName = Comp<MetaDataComponent>(target).EntityName;
                 }
-
-                if (respectEquippability && !_invSystem.CanEquip(target, equipmentEntity, slot.Name, out var reason, slotDefinition: slot, inventory: inventoryComponent, ignoreAccess: true))
-                {
-                    Del(equipmentEntity);
-                    continue;
-                }
-
-                _invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
 
                 _invSystem.TryEquip(target, equipmentEntity, slot.Name, silent: true, force: true, inventory: inventoryComponent);
                 if (unremovable)
@@ -59,12 +48,12 @@ public abstract class SharedOutfitSystem : EntitySystem
             }
         }
 
-        if (EntityManager.TryGetComponent(target, out HandsComponent? handsComponent))
+        if (TryComp(target, out HandsComponent? handsComponent))
         {
-            var coords = EntityManager.GetComponent<TransformComponent>(target).Coordinates;
+            var coords = Comp<TransformComponent>(target).Coordinates;
             foreach (var prototype in startingGear.Inhand)
             {
-                var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
+                var inhandEntity = Spawn(prototype, coords);
                 _handSystem.TryPickup(target, inhandEntity, checkActionBlocker: false, handsComp: handsComponent);
             }
         }
