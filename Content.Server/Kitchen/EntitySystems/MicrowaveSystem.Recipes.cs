@@ -6,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Stacks;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Kitchen.EntitySystems;
@@ -31,9 +32,9 @@ public sealed partial class MicrowaveSystem
         return _solutionContainer.TryGetDrainableSolution(uid, out solutionEntity, out solution);
     }
 
-    private static FixedPoint2 GetSubtractionQuantity(FixedPoint2 recipeQuantity,
-        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> remainingReagents,
-        ProtoId<ReagentPrototype> reagent)
+    private static FixedPoint2 GetReagentSubtractionQuantity(FixedPoint2 recipeQuantity,
+        ProtoId<ReagentPrototype> reagent,
+        ref Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> remainingReagents)
     {
         if (recipeQuantity >= remainingReagents[reagent])
         {
@@ -46,72 +47,94 @@ public sealed partial class MicrowaveSystem
         return recipeQuantity;
     }
 
-    private void SubtractReagentContents(EntityUid item,
-        FoodRecipePrototype recipe,
-        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> remainingReagents)
+    private static int GetMaterialSubtractionQuantity(int recipeQuantity,
+        ProtoId<StackPrototype> stackId,
+        ref Dictionary<ProtoId<StackPrototype>, int> remainingMaterials)
     {
-        if (!TryGetUsableIngredientSolution(item, out var solutionEntity, out var solution))
-            return;
+        if (recipeQuantity >= remainingMaterials[stackId])
+        {
+            recipeQuantity = remainingMaterials[stackId];
+            remainingMaterials.Remove(stackId);
+        }
+        else
+            remainingMaterials[stackId] -= recipeQuantity;
 
+        return recipeQuantity;
+    }
+
+    private void TrySubtractReagentContents(Entity<SolutionComponent> solutionEntity,
+        Solution solution,
+        FoodRecipePrototype recipe,
+        ref Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> remainingReagents)
+    {
         foreach (var (reagent, _) in recipe.Reagents)
         {
             if (!remainingReagents.ContainsKey(reagent))
                 continue;
 
             var startingQuantity = solution.GetTotalPrototypeQuantity(reagent);
-            var recipeQuantity = GetSubtractionQuantity(startingQuantity, remainingReagents, reagent);
-            _solutionContainer.RemoveReagent(solutionEntity.Value, reagent, recipeQuantity);
+            var recipeQuantity = GetReagentSubtractionQuantity(startingQuantity, reagent, ref remainingReagents);
+            _solutionContainer.RemoveReagent(solutionEntity, reagent, recipeQuantity);
         }
+    }
+
+    private void SubtractSolidContents(EntityUid item,
+        EntProtoId itemProto,
+        Container container,
+        ref Dictionary<EntProtoId, int> remainingSolids)
+    {
+        remainingSolids[itemProto] -= 1;
+        if (remainingSolids[itemProto] <= 0)
+            remainingSolids.Remove(itemProto);
+
+        _container.Remove(item, container);
+        QueueDel(item);
+    }
+    private void SubtractMaterialContents(Entity<StackComponent?> ent,
+        ref Dictionary<ProtoId<StackPrototype>, int> remainingMaterials)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, logMissing: false))
+            return;
+
+        var stack = ent.Comp;
+        var stackId = stack.StackTypeId;
+        var startingQuantity = stack.Count;
+        var recipeQuantity = GetMaterialSubtractionQuantity(startingQuantity, stackId, ref remainingMaterials);
+
+        _stack.ReduceCount(ent, recipeQuantity);
     }
 
     private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe)
     {
+        var remainingSolids = new Dictionary<EntProtoId, int>(recipe.Solids);
+        var remainingMaterials = new Dictionary<ProtoId<StackPrototype>, int>(recipe.Materials);
         var remainingReagents = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>(recipe.Reagents);
 
         foreach (var item in component.Storage.ContainedEntities)
         {
-            SubtractReagentContents(item, recipe, remainingReagents);
-        }
-
-        foreach (var (ingredientId, count) in recipe.Solids)
-        {
-            for (var i = 0; i < count; i++)
+            var itemProto = MetaData(item).EntityPrototype;
+            if (itemProto != null && remainingSolids.ContainsKey(itemProto))
             {
-                foreach (var item in component.Storage.ContainedEntities)
-                {
-                    string? itemID = null;
-
-                    if (TryComp<StackComponent>(item, out var stackComp))
-                        itemID = _prototype.Index(stackComp.StackTypeId).Spawn;
-                    else
-                    {
-                        var metaData = MetaData(item);
-                        if (metaData.EntityPrototype == null)
-                            continue;
-
-                        itemID = metaData.EntityPrototype.ID;
-                    }
-
-                    if (itemID != ingredientId)
-                        continue;
-
-                    if (stackComp is not null)
-                    {
-                        if (stackComp.Count == 1)
-                        {
-                            _container.Remove(item, component.Storage);
-                        }
-                        _stack.ReduceCount((item, stackComp), 1);
-                        break;
-                    }
-                    else
-                    {
-                        _container.Remove(item, component.Storage);
-                        Del(item);
-                        break;
-                    }
-                }
+                SubtractSolidContents(item, itemProto, component.Storage, ref remainingSolids);
+                continue;
+                // We're exiting early here; if the solid ingredient is removed from the container,
+                // then we shouldn't be attempting to use its material stack or reagents.
             }
+
+            if (TryComp<StackComponent>(item, out var stack) && remainingMaterials.ContainsKey(stack.StackTypeId))
+            {
+                SubtractMaterialContents((item, stack), ref remainingMaterials);
+                if (stack.Count <= 0)
+                    continue;
+                // We're exiting early here - if the stack is empty, then the stack entity
+                // is gonna be deleted. Which means we shouldn't be using its reagents.
+            }
+
+            if (TryGetUsableIngredientSolution(item, out var solutionEntity, out var solution))
+                TrySubtractReagentContents(solutionEntity.Value,
+                    solution,
+                    recipe,
+                    ref remainingReagents);
         }
     }
 }

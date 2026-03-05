@@ -2,6 +2,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
+using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen;
@@ -43,7 +44,13 @@ public sealed partial class FoodRecipePrototype : IPrototype
     ///     The solid ingredients used in this recipe.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public Dictionary<EntProtoId, FixedPoint2> Solids = new();
+    public Dictionary<EntProtoId, int> Solids = new();
+
+    /// <summary>
+    ///     The material stack ingredients used in this recipe.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<StackPrototype>, int> Materials = new();
 
     /// <summary>
     ///     The resulting entity made from this recipe.
@@ -70,8 +77,9 @@ public sealed partial class FoodRecipePrototype : IPrototype
     /// </summary>
     public FixedPoint2 IngredientCount()
     {
-        var solidCount = Solids.Select(s => s.Value).Sum();
+        var solidCount = Solids.Sum(s => s.Value);
         var reagentCount = Reagents.Count;
+        var materialCount = Materials.Sum(s => s.Value);
 
         return solidCount + reagentCount;
     }

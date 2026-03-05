@@ -558,8 +558,8 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
                 return (recipe, 0);
 
             portions = portions == 0
-                ? solids[solid.Key] / solid.Value.Int()
-                : Math.Min(portions, solids[solid.Key] / solid.Value.Int());
+                ? solids[solid.Key] / solid.Value
+                : Math.Min(portions, solids[solid.Key] / solid.Value);
         }
 
         foreach (var reagent in recipe.Reagents)
