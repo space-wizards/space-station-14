@@ -81,10 +81,10 @@ public sealed partial class AnomalySystem
         UpdateGeneratorUi(uid, component);
     }
 
-    public void SpawnOnRandomGridLocation(EntityUid grid, string toSpawn)
+    public EntityUid? SpawnOnRandomGridLocation(EntityUid grid, string toSpawn)
     {
         if (!TryComp<MapGridComponent>(grid, out var gridComp))
-            return;
+            return null;
 
         var xform = Transform(grid);
 
@@ -150,7 +150,7 @@ public sealed partial class AnomalySystem
             break;
         }
 
-        Spawn(toSpawn, targetCoords);
+        return Spawn(toSpawn, targetCoords);
     }
 
     private void OnGeneratingStartup(EntityUid uid, GeneratingAnomalyGeneratorComponent component, ComponentStartup args)
