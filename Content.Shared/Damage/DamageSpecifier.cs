@@ -3,11 +3,10 @@ using System.Text.Json.Serialization;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.Damage
 {
@@ -19,31 +18,13 @@ namespace Content.Shared.Damage
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
     [DataDefinition, Serializable, NetSerializable]
-    public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>
+    public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>, IRobustCloneable<DamageSpecifier>
     {
-        // For the record I regret so many of the decisions i made when rewriting damageable
-        // Why is it just shitting out dictionaries left and right
-        // One day Arrays, stackalloc spans, and SIMD will save the day.
-        // TODO DAMAGEABLE REFACTOR
-
-        // These exist solely so the wiki works. Please do not touch them or use them.
-        [JsonPropertyName("types")]
-        [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
-        [UsedImplicitly]
-        private Dictionary<string, FixedPoint2>? _damageTypeDictionary;
-
-        [JsonPropertyName("groups")]
-        [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
-        [UsedImplicitly]
-        private Dictionary<string, FixedPoint2>? _damageGroupDictionary;
-
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>
-        [JsonIgnore]
-        [ViewVariables(VVAccess.ReadWrite)]
-        [IncludeDataField(customTypeSerializer: typeof(DamageSpecifierDictionarySerializer), readOnly: true)]
-        public Dictionary<string, FixedPoint2> DamageDict { get; set; } = new();
+        [DataField("types")]
+        public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> DamageDict { get; set; } = new();
 
         /// <summary>
         ///     Returns a sum of the damage values.
@@ -83,6 +64,11 @@ namespace Content.Shared.Damage
         /// </summary>
         [JsonIgnore]
         public bool Empty => DamageDict.Count == 0;
+
+        public DamageSpecifier Clone()
+        {
+            return new DamageSpecifier(this);
+        }
 
         public override string ToString()
         {
