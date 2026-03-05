@@ -1734,6 +1734,10 @@
         reagents:
         - ReagentId: Ephedrine
           Quantity: 4
+        - ReagentId: Bicaridine
+          Quantity: 5
+        - ReagentId: Tricordrazine
+          Quantity: 5
         - ReagentId: SpaceDrugs
           Quantity: 5
         - ReagentId: Nutriment

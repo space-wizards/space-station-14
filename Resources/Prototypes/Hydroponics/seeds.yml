@@ -1324,6 +1324,14 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+    Bicaridine:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Tricordrazine:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
     SpaceDrugs:
       Min: 1
       Max: 5
