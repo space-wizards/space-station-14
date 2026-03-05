@@ -30,9 +30,16 @@
   - type: Tag
     tags:
       - PowerCell
-  - type: Appearance
-  - type: PowerCellVisuals
   - type: Riggable
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerCellVisualLayers.Unshaded:
+          Full: {visible: true, state: o2}
+          Neither: {visible: true, state: o1}
+          Empty: {visible: false}
 
 - type: entity
   name: potato battery

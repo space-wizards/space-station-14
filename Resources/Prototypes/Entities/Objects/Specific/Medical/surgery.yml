@@ -101,6 +101,17 @@
     state: shiv
   - type: Item
     heldPrefix: shiv
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.375,-0.15,0.35,0.12"
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+
 
 - type: entity
   name: advanced scalpel
@@ -198,8 +209,8 @@
     heldPrefix: improv
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 10
+      types:
+        Slash: 10
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
@@ -217,8 +228,8 @@
     heldPrefix: electric
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 15
+      types:
+        Slash: 15
     soundHit:
       path: /Audio/Items/drill_hit.ogg
   - type: Tool

@@ -493,10 +493,9 @@
         - !type:NestedSelector
           tableId: GenericTrashItems
           weight: 35
-        - !type:AllSelector
+        - !type:NestedSelector
+          tableId: AllPlushiesTable
           weight: 1
-          children:
-          - id: ToySpawner
 
 - type: entity
   id: XenoArtifactEffectLightFlicker
@@ -1257,9 +1256,13 @@
       components:
       - MobState
     damage:
-      groups:
-        Brute: -300
-        Burn: -300
+      types:
+        Blunt: -100
+        Piercing: -100
+        Slash: -100
+        Heat: -100
+        Cold: -100
+        Shock: -100
 
 - type: entity
   id: XenoArtifactTesla

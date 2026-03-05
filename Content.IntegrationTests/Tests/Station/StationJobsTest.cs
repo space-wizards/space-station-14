@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Maps;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Maps;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
