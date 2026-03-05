@@ -22,8 +22,6 @@ public sealed partial class ConvertToClownEffectSystem : EntityEffectSystem<Meta
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedOutfitSystem _outfitSystem = default!;
-    [Dependency] private readonly SharedImplanterSystem _implanterSystem = default!;
-
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<ConvertToClown> args)
     {
         if (!(HasComp<ClumsyComponent>(entity) || HasComp<MutedComponent>(entity) || HasComp<MimePowersComponent>(entity)))
@@ -48,12 +46,6 @@ public sealed partial class ConvertToClown : EntityEffectBase<ConvertToClown>
     /// </summary>
     [DataField]
     public ProtoId<StartingGearPrototype> OutfitId = "ConvertedClownGear";
-
-    /// <summary>
-    /// ID for the sad trombone implant
-    /// </summary>
-    [DataField]
-    public ProtoId<StartingGearPrototype> ImplantId = "ConvertedClownGear";
 
     /// <summary>
     /// Message to popup when succesfully converting
