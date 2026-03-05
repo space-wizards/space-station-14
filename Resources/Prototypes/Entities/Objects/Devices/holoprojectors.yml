@@ -137,7 +137,7 @@
         swap: false
   - type: HolosignProjector
     signProto: XenoborgDeflectorField
-    chargeUse: 200
+    chargeUse: 160
 
 - type: entity
   parent: Holoprojector
