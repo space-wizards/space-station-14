@@ -11,9 +11,7 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-/// <summary>
 /// Allows a lit welder to heat reagents inside solution containers.
-/// </summary>
 public sealed class WelderHeatSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -28,9 +26,7 @@ public sealed class WelderHeatSystem : EntitySystem
         SubscribeLocalEvent<WelderHeatComponent, WelderHeatDoAfterEvent>(OnHeatDoAfter);
     }
 
-    /// <summary>
     /// Starts the heating process when a welder is used on a container.
-    /// </summary>
     private void OnWelderInteract(EntityUid uid, WelderHeatComponent heatComp, AfterInteractEvent args)
     {
         if (args.Handled || args.Target == null || !args.CanReach)
@@ -56,9 +52,7 @@ public sealed class WelderHeatSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// <summary>
     /// Handles adding heat and consuming fuel when the heating step completes.
-    /// </summary>
     private void OnHeatDoAfter(EntityUid uid, WelderHeatComponent heatComp, WelderHeatDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
