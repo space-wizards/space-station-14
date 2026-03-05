@@ -1,12 +1,10 @@
+using System.Linq;
 using Content.Server.Anomaly;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Station.Components;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
-using Robust.Shared.Map;
-using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 

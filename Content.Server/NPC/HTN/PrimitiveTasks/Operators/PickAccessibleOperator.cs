@@ -16,7 +16,7 @@ public sealed partial class PickAccessibleOperator : HTNOperator
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
 
-    [DataField("limitKey")]
+    [DataField]
     public string LimitKey = string.Empty;
 
     [DataField("targetCoordinates")]

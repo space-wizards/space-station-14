@@ -57,6 +57,6 @@ public sealed partial class PortalComponent : Component
     /// <summary>
     /// Should only mobs and moving entities be sent through the portal on contact?
     /// </summary>
-    [DataField("ignoreStationaryObjects"), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public bool IgnoreStationaryObjects = false;
 }
