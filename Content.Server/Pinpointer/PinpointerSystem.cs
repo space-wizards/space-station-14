@@ -49,10 +49,10 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (args.Handled || !args.Complex)
             return;
 
-        TogglePinpointer(ent!);
+        TogglePinpointer(ent.AsNullable());
 
         if (!ent.Comp.CanRetarget)
-            LocateTarget(ent!);
+            LocateTarget(ent);
 
         args.Handled = true;
     }
@@ -88,11 +88,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 return;
             }
 
-            if (!_xformQuery.TryComp(ent, out var transform))
-                return;
-
-            var target = FindTargetFromComponent((ent, transform), reg.Type);
-            SetTarget(ent!, target);
+            var target = FindTargetFromComponent((ent.Owner, reg.Type);
+            SetTarget(ent.AsNullable(), target);
         }
     }
 
