@@ -4,7 +4,6 @@ using System.Linq;
 using System.Numerics;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
-using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Pinpointer;
 
@@ -88,7 +87,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 return;
             }
 
-            var target = FindTargetFromComponent((ent.Owner, reg.Type);
+            var target = FindTargetFromComponent(ent.Owner, reg.Type);
             SetTarget(ent.AsNullable(), target);
         }
     }
