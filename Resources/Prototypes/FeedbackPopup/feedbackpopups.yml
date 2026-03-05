@@ -17,3 +17,30 @@
   responseType: "General Feedback"
   responseLink: "https://forum.spacestation14.com/c/development/feedback/51"
   showRoundEnd: false
+
+- type: feedbackPopup
+  id: PlayingAsMothershipCoreFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Playing as [color=deepskyblue]mothership[/color] core[/bold]"
+  description: >-
+    If you played mothership core this round or maybe in a previous round, feel free to respond this feedback thread about your experiences and issues with playing as the mothership core.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/playing-as-a-mothership-core/26688/2"
+  showRoundEnd: true
+  ruleWhitelist:
+    components:
+    - XenoborgsRule
+
+- type: feedbackPopup
+  id: XenoborgExtractorFeedback
+  popupOrigin: wizden_master
+  title: "[bold]The [color=deepskyblue]xenoborg[/color] extractor [scramble chars=\"xenoborg-##][{}||,.<>\" rate=40 length=5][/bold]"
+  description: >-
+    Please share feedback on the new xenoborg extractor and crystal, and how these additions affect xenoborg gameplay.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/xenoborg-extractor/26689"
+  showRoundEnd: true
+  ruleWhitelist:
+    components:
+    - XenoborgsRule
+
