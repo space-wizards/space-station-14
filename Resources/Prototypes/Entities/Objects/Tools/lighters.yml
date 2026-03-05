@@ -193,6 +193,11 @@
     fuelConsumption: 0.01
     fuelLitCost: 0.1
     tankSafe: true
+  - type: WelderHeat
+    heatPerUse: 25
+    maxTemperature: 380
+    fuelConsumptionPerHeat: 0.06
+    doAfterDelay: 2.2
   - type: ToggleableVisuals
     spriteLayer: lighter_flame
     inhandVisuals:

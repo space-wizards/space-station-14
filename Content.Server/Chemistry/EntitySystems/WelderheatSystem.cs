@@ -1,5 +1,3 @@
-using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
@@ -7,11 +5,15 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
+using Content.Shared.Temperature;
+using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Tools.Components;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-/// Allows a lit welder to heat reagents inside solution containers.
+/// <summary>
+///     Allows a lit tool to heat reagents inside solution containers.
+/// </summary>
 public sealed class WelderHeatSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -26,22 +28,26 @@ public sealed class WelderHeatSystem : EntitySystem
         SubscribeLocalEvent<WelderHeatComponent, WelderHeatDoAfterEvent>(OnHeatDoAfter);
     }
 
-    /// Starts the heating process when a welder is used on a container.
-    private void OnWelderInteract(EntityUid uid, WelderHeatComponent heatComp, AfterInteractEvent args)
+    /// <summary>
+    ///     Starts the heating process when a tool is used on a container.
+    /// </summary>
+    private void OnWelderInteract(Entity<WelderHeatComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target == null || !args.CanReach)
             return;
 
-        if (!_itemToggle.IsActivated(uid))
+        if (!_itemToggle.IsActivated(ent.Owner))
             return;
 
-        if (!TryComp<SolutionContainerManagerComponent>(args.Target, out var solutionManager))
+        var ev = new HeatableAttemptEvent(args.User);
+        RaiseLocalEvent(args.Target.Value, ref ev);
+        if (ev.Cancelled)
             return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, heatComp.DoAfterDelay,
-            new WelderHeatDoAfterEvent(), uid,
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterDelay,
+            new WelderHeatDoAfterEvent(), ent,
             target: args.Target,
-            used: uid)
+            used: ent)
         {
             NeedHand = true,
             BreakOnMove = true,
@@ -52,8 +58,10 @@ public sealed class WelderHeatSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// Handles adding heat and consuming fuel when the heating step completes.
-    private void OnHeatDoAfter(EntityUid uid, WelderHeatComponent heatComp, WelderHeatDoAfterEvent args)
+    /// <summary>
+    ///     Handles adding heat and consuming fuel when the heating step completes.
+    /// </summary>
+    private void OnHeatDoAfter(Entity<WelderHeatComponent> ent, ref WelderHeatDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
             return;
@@ -63,16 +71,13 @@ public sealed class WelderHeatSystem : EntitySystem
         if (!TryComp<WelderComponent>(welderEnt, out var welder))
             return;
 
-        if (!TryComp<SolutionContainerManagerComponent>(args.Target, out var solutionManager))
-            return;
-
         if (!_itemToggle.IsActivated(welderEnt))
             return;
 
         if (!_solutionContainer.TryGetSolution(welderEnt, welder.FuelSolutionName, out var fuelSolnComp, out var fuelSolution))
             return;
 
-        var fuelNeeded = FixedPoint2.New(heatComp.FuelConsumptionPerHeat);
+        var fuelNeeded = FixedPoint2.New(ent.Comp.FuelConsumptionPerHeat);
         if (fuelSolution.GetTotalPrototypeQuantity(welder.FuelReagent) < fuelNeeded)
         {
             _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), welderEnt, args.User);
@@ -82,17 +87,19 @@ public sealed class WelderHeatSystem : EntitySystem
         var shouldRepeat = false;
         var reachedMaxTemp = false;
 
-        foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((args.Target.Value, solutionManager)))
+        foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(args.Target.Value))
         {
             var solution = soln.Comp.Solution;
 
-            if (solution.Temperature >= heatComp.MaxTemperature)
+            if (solution.Temperature >= ent.Comp.MaxTemperature)
             {
                 reachedMaxTemp = true;
                 continue;
             }
 
-            _solutionContainer.AddThermalEnergy(soln, heatComp.HeatPerUse);
+            var heatContainer = new HeatContainer(solution.GetHeatCapacity(null), solution.Temperature);
+            heatContainer.AddHeat(ent.Comp.HeatPerUse * (float) args.Args.Delay.TotalSeconds);
+            _solutionContainer.SetTemperature(soln, heatContainer.Temperature);
             shouldRepeat = true;
         }
 
