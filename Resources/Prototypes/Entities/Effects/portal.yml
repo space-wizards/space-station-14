@@ -208,7 +208,6 @@
   description: Where did it come from? And where does it go? Stand too close, and you might just find out.
   components:
   - type: Sprite
-    drawDepth: 1
     noRot: true
     sprite: Structures/Machines/gateway.rsi
     color: "#ffaa44"
@@ -253,7 +252,6 @@
   description: Where did it come from? And where does it go? It doesn't seem to want you to know.
   components:
   - type: Sprite
-    drawDepth: 1
     noRot: true
     sprite: Structures/Machines/gateway.rsi
     color: "#ffffff"
