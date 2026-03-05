@@ -7,10 +7,10 @@
   - type: Sprite
     drawdepth: BelowMobs
     layers:
-    - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
-    sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
-    state: muzzle_nanite
+     - shader: unshaded
+       map: ["enum.EffectLayers.Unshaded"]
+       sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
+       state: muzzle_nanite
   - type: EffectVisuals
   - type: Tag
     tags:
@@ -26,10 +26,10 @@
   - type: Sprite
     drawdepth: Effects
     layers:
-    - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
-    sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
-    state: impact_nanite
+     - shader: unshaded
+       map: ["enum.EffectLayers.Unshaded"]
+       sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
+       state: impact_nanite
   - type: EffectVisuals
   - type: Tag
     tags:
@@ -44,14 +44,27 @@
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectNanite
   - type: Sprite
-  sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
-  layers:
-  - state: nanite
-    shader: unshaded
+    sprite: Objects/Weapons/Guns/Projectiles/nanite_crystal.rsi
+    layers:
+    - state: nanite
+      shader: unshaded
   - type: Projectile
     impactEffect: BulletImpactEffectNanite
     damage:
       types:
         Cellular: 12
+  - type: ComplexProjectileDamage
+    damageOptions:
+    - damage:
+        types:
+          Blunt: -10
+          Piercing: -10
+          Slash: -10
+          Heat: -10
+          Shock: -10
+      whitelist:
+        components:
+        - Xenoborg
+
 
 

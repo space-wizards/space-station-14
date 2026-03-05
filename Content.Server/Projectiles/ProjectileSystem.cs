@@ -46,7 +46,13 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
         }
 
-        var ev = new ProjectileHitEvent(component.Damage * _damageableSystem.UniversalProjectileDamageModifier, target, component.Shooter);
+                var damageEv = new BeforeProjectileHitEvent(
+                        component.Damage,
+                        target,
+                        component.Shooter);
+                RaiseLocalEvent(uid, ref damageEv);
+
+                    var ev = new ProjectileHitEvent(damageEv.Damage * _damageableSystem.UniversalProjectileDamageModifier, target, component.Shooter);
         RaiseLocalEvent(uid, ref ev);
 
         var otherName = ToPrettyString(target);
