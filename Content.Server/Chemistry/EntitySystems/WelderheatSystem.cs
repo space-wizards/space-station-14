@@ -27,7 +27,7 @@ public sealed class WelderHeatSystem : EntitySystem
     }
 
     /// Starts the heating process when a welder is used on a container.
-    private void OnWelderInteract(EntityUid uid, WelderHeatComponent heatComp, AfterInteractEvent args)
+    private void OnWelderInteract(Entity<WelderHeatComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target == null || !args.CanReach)
             return;
