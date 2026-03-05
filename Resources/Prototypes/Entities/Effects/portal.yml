@@ -125,10 +125,10 @@
       path: /Audio/Ambience/anomaly_scary.ogg
 
 - type: entity
-  id: WanderingPortal
-  suffix: AI
   parent: BaseMob
+  id: WanderingPortal
   name: wandering portal
+  suffix: AI
   description: Where did it come from? And where does it go?
   components:
   - type: Physics
@@ -137,8 +137,8 @@
     sleepingAllowed: false
   - type: CanMoveInAir
   - type: Sprite
-    noRot: true
     sprite: Structures/Machines/gateway.rsi
+    drawdepth: Overdoors
     color: SkyBlue
     layers:
     - state: wandering-portal
@@ -146,7 +146,6 @@
     color: SkyBlue
     radius: 5
     energy: 2
-    netsync: false
   - type: AmbientSound
     volume: 1
     range: 15
@@ -172,15 +171,13 @@
         layer:
         - None
   - type: Portal
-    arrivalSound: /Audio/Items/hiss.ogg
-    departureSound: /Audio/Items/hiss.ogg
     ignoreStationaryObjects: true
   - type: ChaoticJump
     jumpMinInterval: 15
     jumpMaxInterval: 30
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 2.5
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 1.5
   - type: HTN
     constantlyReplan: false
     rootTask:
@@ -196,9 +193,98 @@
         7
 
 - type: entity
+  parent: WanderingPortal
   id: TemporaryWanderingPortal
   suffix: AI, temporary
+  components:
+  - type: TimedDespawn
+    lifetime: 300
+
+- type: entity
   parent: WanderingPortal
+  id: WanderingGravityWell
+  name: wandering gravity well
+  suffix: AI
+  description: Where did it come from? And where does it go? Stand too close, and you might just find out.
+  components:
+  - type: Sprite
+    drawDepth: 1
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: "#ffaa44"
+    layers:
+    - state: wandering-portal
+  - type: PointLight
+    enabled: true
+    color: "#ffaa44"
+    energy: 8
+    radius: 6
+    softness: 1
+    offset: "0, 0"
+  - type: AmbientSound
+    enabled: true
+    volume: -8
+    range: 15
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+  - type: GravityWell
+    maxRange: 5
+    minRange: 0.25
+    baseRadialAcceleration: 10
+    baseTangentialAcceleration: 1
+    gravPulsePeriod: 0.031
+  - type: SingularityDistortion
+    intensity: 100
+    falloffPower: 1.8
+
+- type: entity
+  parent: WanderingGravityWell
+  id: TemporaryWanderingGravityWell
+  suffix: AI, temporary
+  components:
+  - type: TimedDespawn
+    lifetime: 300
+
+- type: entity
+  parent: WanderingPortal
+  id: WanderingGravitySpout
+  name: wandering gravity spout
+  suffix: AI
+  description: Where did it come from? And where does it go? It doesn't seem to want you to know.
+  components:
+  - type: Sprite
+    drawDepth: 1
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: "#ffffff"
+    layers:
+    - state: wandering-portal
+  - type: PointLight
+    enabled: true
+    color: "#ffffff"
+    energy: 8
+    radius: 6
+    softness: 1
+    offset: "0, 0"
+  - type: AmbientSound
+    enabled: true
+    volume: -8
+    range: 15
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
+  - type: GravityWell
+    maxRange: 3
+    baseRadialAcceleration: -10
+    baseTangentialAcceleration: -0.5
+    gravPulsePeriod: 0.03
+  - type: SingularityDistortion
+    intensity: -45
+    falloffPower: 1.7
+
+- type: entity
+  parent: WanderingGravitySpout
+  id: TemporaryWanderingGravitySpout
+  suffix: AI, temporary
   components:
   - type: TimedDespawn
     lifetime: 300
