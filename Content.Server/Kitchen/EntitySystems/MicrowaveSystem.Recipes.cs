@@ -115,7 +115,7 @@ public sealed partial class MicrowaveSystem
 
         foreach (var item in component.Storage.ContainedEntities)
         {
-            var itemProto = MetaData(item).EntityPrototype;
+            var itemProto = MetaData(item).EntityPrototype?.ID;
             if (itemProto != null && remainingSolids.ContainsKey(itemProto))
             {
                 SubtractSolidContents(item, itemProto, component.Storage, remainingSolids);
