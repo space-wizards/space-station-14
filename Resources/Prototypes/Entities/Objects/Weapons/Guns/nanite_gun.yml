@@ -26,20 +26,25 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+      path: /Audio/Weapons/Guns/Gunshots/nanite_gun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
     whitelist:
     tags:
     - NaniteGun
-    capacity: 15
+    capacity: 12
     proto: CartridgeNanite
     cycleable: false # No synthesizing ammo
   - type: BallisticAmmoSelfRefiller
-    autoRefillRate: 8s
+    autoRefillRate: 10s
     affectedByEmp: true
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
   - type: StaticPrice
     price: 5000
+  - type: MagazineVisuals
+    magState: mag-unshaded
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
