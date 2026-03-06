@@ -101,6 +101,14 @@ construction-graph-tag-honk-peripherals-control-module = H.O.N.K. peripherals co
 construction-graph-tag-honk-weapon-control-and-targeting-module = H.O.N.K. weapon control and targeting module
 construction-graph-tag-ripley-central-control-module = ripley central control module
 construction-graph-tag-ripley-peripherals-control-module = ripley peripherals control module
+construction-graph-tag-clarke-central-control-module = clarke central control module
+construction-graph-tag-clarke-peripherals-control-module = clarke peripherals control module
+construction-graph-tag-durand-central-control-module = durand central control module
+construction-graph-tag-durand-peripherals-control-module = durand peripherals control module
+construction-graph-tag-durand-weapon-control-and-targeting-module = durand weapon control and targeting module
+construction-graph-tag-gygax-central-control-module = gygax central control module
+construction-graph-tag-gygax-peripherals-control-module = gygax peripherals control module
+construction-graph-tag-gygax-weapon-control-and-targeting-module = gygax weapon control and targeting module
 
 # structures
 construction-graph-tag-door-electronics-circuit-board = door electronics circuit board

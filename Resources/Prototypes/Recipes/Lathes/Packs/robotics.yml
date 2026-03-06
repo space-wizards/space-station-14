@@ -62,10 +62,42 @@
   - HamtrLLeg
   - HamtrRLeg
   - VimHarness
+  - ClarkeHarness
+  - ClarkeHead
+  - ClarkeLArm
+  - ClarkeRArm
+  - ClarkeTreads
+  - DurandHarness
+  - DurandArmor
+  - DurandHead
+  - DurandLArm
+  - DurandLLeg
+  - DurandRArm
+  - DurandRLeg
+  - GygaxHarness
+  - GygaxArmor
+  - GygaxHead
+  - GygaxLArm
+  - GygaxLLeg
+  - GygaxRArm
+  - GygaxRLeg
 
 - type: latheRecipePack
   id: MechEquipment
   recipes:
-    - MechEquipmentGrabber
-    - MechEquipmentHorn
-    - MechEquipmentGrabberSmall
+  - MechEquipmentDrill
+  - MechEquipmentDrillDiamond
+  - MechEquipmentGrabber
+  - MechEquipmentGrabberSmall
+  - MechEquipmentHonkerBananaMortar
+  - MechEquipmentHonkerMousetrapMortar
+  - MechEquipmentKineticAccelerator
+
+- type: latheRecipePack
+  id: MechModule
+  recipes:
+  - MechModuleFan
+  - MechModuleAirTank
+  - MechModuleTeslaRelay
+  - MechModulePlasmaGenerator
+  - MechModuleHorn
