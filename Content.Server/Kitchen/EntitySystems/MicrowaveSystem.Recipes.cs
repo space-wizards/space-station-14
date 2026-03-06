@@ -28,7 +28,7 @@ public sealed partial class MicrowaveSystem
 
     public static int GetRecipePortions(FoodRecipePrototype recipe,
         uint cookTime,
-        AvailableIngredients ingredients)
+        CookingIngredients ingredients)
     {
         // Our cooking time must be a multiple of the recipe's cooking time.
         // For example: If a recipe takes 10 seconds to cook, then you can't make it with a 15 second timer.
@@ -68,7 +68,7 @@ public sealed partial class MicrowaveSystem
         return portionCount;
     }
 
-    private (FoodRecipePrototype? recipe, int count) GetRecipe(Entity<MicrowaveComponent> microwave, AvailableIngredients ingredients)
+    private (FoodRecipePrototype? recipe, int count) GetRecipe(Entity<MicrowaveComponent> microwave, CookingIngredients ingredients)
     {
         var recipes = GetRecipesForMicrowave(microwave.Owner);
         var cookTime = microwave.Comp.CurrentCookTimerTime;
@@ -122,7 +122,7 @@ public sealed partial class MicrowaveSystem
         }
     }
 
-    private AvailableIngredients GetTotalIngredients(Entity<MicrowaveComponent> microwave, List<EntityUid> items)
+    private CookingIngredients GetTotalIngredients(Entity<MicrowaveComponent> microwave, List<EntityUid> items)
     {
         var solids = new Dictionary<EntProtoId, int>();
         var materials = new Dictionary<ProtoId<StackPrototype>, int>();

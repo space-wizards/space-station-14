@@ -116,7 +116,7 @@ public sealed partial class MicrowaveSystem
     // thus, recipe detection might thing you have "more" ingredients than you actually do.
     //
     // moral of the story: I hate microwaves
-    public readonly struct AvailableIngredients(Dictionary<EntProtoId, int> solids,
+    public readonly struct CookingIngredients(Dictionary<EntProtoId, int> solids,
         Dictionary<ProtoId<StackPrototype>, int> materials,
         Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
     {
