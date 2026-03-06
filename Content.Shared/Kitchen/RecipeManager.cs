@@ -25,7 +25,7 @@ namespace Content.Shared.Kitchen
         /// </summary>
         public bool SolidAppears(string solidId)
         {
-            return Recipes.Any(recipe => recipe.Solids.ContainsKey(solidId));
+            return Recipes.Any(recipe => recipe.Ingredients.Solids.ContainsKey(solidId));
         }
 
         private sealed class RecipeComparer : Comparer<FoodRecipePrototype>
@@ -37,8 +37,8 @@ namespace Content.Shared.Kitchen
                     return 0;
                 }
 
-                var nx = x.IngredientCount();
-                var ny = y.IngredientCount();
+                var nx = x.Ingredients.Count();
+                var ny = y.Ingredients.Count();
                 return -nx.CompareTo(ny);
             }
         }

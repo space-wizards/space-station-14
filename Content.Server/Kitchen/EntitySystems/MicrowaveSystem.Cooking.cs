@@ -61,7 +61,7 @@ public sealed partial class MicrowaveSystem
 
     private void ActivateMicrowave(EntityUid uid,
         MicrowaveComponent component,
-        (FoodRecipePrototype? recipe, int count) recipe,
+        (FoodRecipePrototype? recipe, uint count) recipe,
         bool malfunctioning)
     {
         _audio.PlayPvs(component.StartCookingSound, uid);
@@ -108,20 +108,5 @@ public sealed partial class MicrowaveSystem
 
         ActivateMicrowave(uid, component, recipe, malfunctioning);
         UpdateUserInterfaceState(uid, component);
-    }
-
-    // TODO: there's actually a kind of nasty edge case microwave economics issue here,
-    // all reagents / materials / solids will be included, but when the recipe is actually made,
-    // solids are used first, then materials, then reagents.
-    // thus, recipe detection might thing you have "more" ingredients than you actually do.
-    //
-    // moral of the story: I hate microwaves
-    public readonly struct CookingIngredients(Dictionary<EntProtoId, int> solids,
-        Dictionary<ProtoId<StackPrototype>, int> materials,
-        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
-    {
-        public readonly Dictionary<EntProtoId, int> Solids = solids;
-        public readonly Dictionary<ProtoId<StackPrototype>, int> Materials = materials;
-        public readonly Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents = reagents;
     }
 }

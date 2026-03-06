@@ -155,7 +155,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         if (activeMicrowaveComp.PortionedRecipe.Item1 == null) // no recipe selected
             return;
 
-        var recipeReagents = activeMicrowaveComp.PortionedRecipe.Item1.Reagents.Keys;
+        var recipeReagents = activeMicrowaveComp.PortionedRecipe.Item1.Ingredients.Reagents.Keys;
 
         foreach (var reagent in recipeReagents)
         {

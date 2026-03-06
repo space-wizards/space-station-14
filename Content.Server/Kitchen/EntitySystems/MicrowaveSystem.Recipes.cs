@@ -26,7 +26,13 @@ public sealed partial class MicrowaveSystem
                 args.Recipes.Add(recipeProto);
     }
 
-    public static int GetRecipePortions(FoodRecipePrototype recipe,
+    // TODO: there's actually a kind of nasty edge case microwave economics issue here,
+    // all reagents / materials / solids will be included, but when the recipe is actually made,
+    // solids are used first, then materials, then reagents.
+    // thus, recipe detection might thing you have "more" ingredients than you actually do.
+    //
+    // moral of the story: I hate microwaves
+    public static uint GetRecipePortions(FoodRecipePrototype recipe,
         uint cookTime,
         CookingIngredients ingredients)
     {
@@ -36,39 +42,14 @@ public sealed partial class MicrowaveSystem
         if (cookTime % recipe.CookTime != 0)
             return 0;
 
-        var portionCount = (int)(cookTime / recipe.CookTime);
-
-        foreach (var (ingredient, requiredCount) in recipe.Solids)
-        {
-            if (!ingredients.Solids.TryGetValue(ingredient, out var availableCount))
-                return 0;
-
-            var ingredientPortionCount = availableCount / requiredCount;
-            portionCount = Math.Min(portionCount, ingredientPortionCount);
-        }
-
-        foreach (var (ingredient, requiredCount) in recipe.Materials)
-        {
-            if (!ingredients.Materials.TryGetValue(ingredient, out var availableCount))
-                return 0;
-
-            var ingredientPortionCount = availableCount / requiredCount;
-            portionCount = Math.Min(portionCount, ingredientPortionCount);
-        }
-
-        foreach (var (ingredient, requiredCount) in recipe.Reagents)
-        {
-            if (!ingredients.Reagents.TryGetValue(ingredient, out var availableCount))
-                return 0;
-
-            var ingredientPortionCount = (int)(availableCount / requiredCount);
-            portionCount = Math.Min(portionCount, ingredientPortionCount);
-        }
+        var portionCount = cookTime / recipe.CookTime;
+        var ingredientPortions = ingredients.PortionForRecipe(recipe.Ingredients);
+        portionCount = Math.Min(portionCount, ingredientPortions);
 
         return portionCount;
     }
 
-    private (FoodRecipePrototype? recipe, int count) GetRecipe(Entity<MicrowaveComponent> microwave, CookingIngredients ingredients)
+    private (FoodRecipePrototype? recipe, uint count) GetRecipe(Entity<MicrowaveComponent> microwave, CookingIngredients ingredients)
     {
         var recipes = GetRecipesForMicrowave(microwave.Owner);
         var cookTime = microwave.Comp.CurrentCookTimerTime;
@@ -203,7 +184,7 @@ public sealed partial class MicrowaveSystem
         FoodRecipePrototype recipe,
         Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> remainingReagents)
     {
-        foreach (var (reagent, _) in recipe.Reagents)
+        foreach (var (reagent, _) in recipe.Ingredients.Reagents)
         {
             if (!remainingReagents.ContainsKey(reagent))
                 continue;
@@ -239,9 +220,10 @@ public sealed partial class MicrowaveSystem
 
     private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe)
     {
-        var remainingSolids = new Dictionary<EntProtoId, int>(recipe.Solids);
-        var remainingMaterials = new Dictionary<ProtoId<StackPrototype>, int>(recipe.Materials);
-        var remainingReagents = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>(recipe.Reagents);
+        var ingredients = recipe.Ingredients;
+        var remainingSolids = new Dictionary<EntProtoId, int>(ingredients.Solids);
+        var remainingMaterials = new Dictionary<ProtoId<StackPrototype>, int>(ingredients.Materials);
+        var remainingReagents = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>(ingredients.Reagents);
 
         foreach (var item in component.Storage.ContainedEntities)
         {
