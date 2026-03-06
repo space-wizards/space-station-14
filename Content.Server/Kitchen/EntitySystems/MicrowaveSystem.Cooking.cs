@@ -38,12 +38,10 @@ public sealed partial class MicrowaveSystem
                 return false;
             }
 
-            // TODO: Whitelist
-            if (_tag.HasTag(item, MetalTag))
+            if (_whitelist.IsWhitelistPass(microwave.Comp.MalfunctionWhenCookedWhitelist, item))
                 malfunctioning = true;
 
-            // TODO: Whitelist
-            if (_tag.HasTag(item, PlasticTag))
+            if (_whitelist.IsWhitelistPass(microwave.Comp.BurnWhenCookedWhitelist, item))
             {
                 ingredientContents.Remove(item);
                 CreateBurnedMess(microwave, item);

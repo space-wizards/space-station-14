@@ -39,38 +39,37 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Kitchen.EntitySystems;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
 public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
-    [Dependency] private readonly RecipeManager _recipeManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly LightningSystem _lightning = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly HandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly LightningSystem _lightning = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly RecipeManager _recipeManager = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
-    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     private static readonly EntProtoId MalfunctionSpark = "Spark";
-
-    private static readonly ProtoId<TagPrototype> MetalTag = "Metal";
-    private static readonly ProtoId<TagPrototype> PlasticTag = "Plastic";
 
     public override void Initialize()
     {
