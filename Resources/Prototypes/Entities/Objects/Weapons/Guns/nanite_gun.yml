@@ -21,7 +21,7 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
-    fireRate: 0.5
+    fireRate: 0.7
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -33,13 +33,13 @@
     whitelist:
      tags:
       - NaniteGun
-    capacity: 12
+    capacity: 5
     proto: CartridgeNanite
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
     cycleable: false # No synthesizing ammo
   - type: BallisticAmmoSelfRefiller
-    autoRefillRate: 10s
+    autoRefillRate: 5s
     affectedByEmp: true
   - type: StaticPrice
     price: 5000
