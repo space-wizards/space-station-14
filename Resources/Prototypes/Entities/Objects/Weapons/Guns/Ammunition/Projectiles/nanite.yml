@@ -57,11 +57,11 @@
     damageOptions:
     - damage:
         types:
-          Blunt: -8
-          Piercing: -8
-          Slash: -8
-          Heat: -8
-          Shock: -8
+          Blunt: -10
+          Piercing: -10
+          Slash: -10
+          Heat: -10
+          Shock: -10
       whitelist:
         components:
         - Xenoborg
