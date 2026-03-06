@@ -75,6 +75,11 @@
   id: WeaponPistolViper
   description: A common handgun illegally modified by the Syndicate. The Viper sports a selector switch between semi-auto and ‘rock and roll’. The standard sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
   components:
+  - type: Gun
+    minAngle: 2
+    maxAngle: 25
+    angleIncrease: 2
+    angleDecay: 20
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: ItemSlots
@@ -157,6 +162,10 @@
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
+    minAngle: 2
+    maxAngle: 8
+    angleIncrease: 1
+    angleDecay: 14
     fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
@@ -207,6 +216,10 @@
   - type: Item
     storedOffset: 0,-2
   - type: Gun
+    minAngle: 2
+    maxAngle: 17
+    angleIncrease: 2
+    angleDecay: 14
     fireRate: 5
     availableModes:
     - SemiAuto
