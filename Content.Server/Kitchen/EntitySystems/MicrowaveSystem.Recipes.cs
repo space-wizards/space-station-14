@@ -33,8 +33,8 @@ public sealed partial class MicrowaveSystem
     //
     // moral of the story: I hate microwaves
     public static uint GetRecipePortions(FoodRecipePrototype recipe,
-        uint cookTime,
-        CookingIngredients ingredients)
+        CookingIngredients ingredients,
+        uint cookTime)
     {
         // Our cooking time must be a multiple of the recipe's cooking time.
         // For example: If a recipe takes 10 seconds to cook, then you can't make it with a 15 second timer.
@@ -55,7 +55,7 @@ public sealed partial class MicrowaveSystem
         var cookTime = microwave.Comp.CurrentCookTimerTime;
         var recipePortions = recipes.Select(recipe =>
             {
-                var portions = GetRecipePortions(recipe, cookTime, ingredients);
+                var portions = GetRecipePortions(recipe, ingredients, cookTime);
                 return (recipe, portions);
             });
 
