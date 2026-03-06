@@ -39,7 +39,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     /// <summary>
     /// List of tracked points of intrests
     /// </summary>
-    private List<(Vector2, Enum, Angle, float, Color)> _tracked = new();
+    private List<TrackedPoint> _tracked = new();
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
     public bool ShowTracked { get; set; } = true;
@@ -303,25 +303,24 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         if (!ShowTracked)
             return;
 
-        foreach (var ping in _tracked)
+        foreach (var trackedPoint in _tracked)
         {
-            var shapeRotMatrix = Matrix3x2.CreateRotation((float)ping.Item3.Theta) * Matrix3x2.CreateTranslation(ping.Item1);
+            var shapeRotMatrix = Matrix3x2.CreateRotation((float)trackedPoint.Rotation.Theta) * Matrix3x2.CreateTranslation(trackedPoint.Position);
             var worldToViewShapeRot = Matrix3x2.Multiply(shapeRotMatrix, worldToView);
 
-            switch (ping.Item2)
+            switch (trackedPoint.Shape)
             {
                 case RadarSignatureShape.Square:
                     {
                         var verts = new[]
                         {
-                        Vector2.Transform(new Vector2(-ping.Item4, -ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(ping.Item4, -ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(ping.Item4, ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(-ping.Item4, ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(-trackedPoint.Size, -trackedPoint.Size), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(trackedPoint.Size, -trackedPoint.Size), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(-trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
                         };
-
-                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, ping.Item5.WithAlpha(0.8f));
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, ping.Item5);
+                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint.WithAlpha(0.8f));
+                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
                         break;
                     }
 
@@ -329,13 +328,13 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                     {
                         var verts = new[]
                         {
-                        Vector2.Transform(new Vector2(0f, -ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(ping.Item4, ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(-ping.Item4, ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(0f, -trackedPoint.Size), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(-trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
                         };
 
-                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, ping.Item5.WithAlpha(0.8f));
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, ping.Item5);
+                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint.WithAlpha(0.8f));
+                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
                         break;
                     }
 
@@ -343,31 +342,31 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                     {
                         var verts = new[]
                         {
-                        Vector2.Transform(new Vector2(0f, -ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(ping.Item4, 0f), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(0f, ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(-ping.Item4, 0f), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(0f, -trackedPoint.Size), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(trackedPoint.Size, 0f), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(0f, trackedPoint.Size), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(-trackedPoint.Size, 0f), worldToViewShapeRot),
                         };
 
-                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, ping.Item5.WithAlpha(0.8f));
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, ping.Item5);
+                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint.WithAlpha(0.8f));
+                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
                         break;
                     }
 
                 case RadarSignatureShape.Chevron:
                     {
-                        var point = Vector2.Transform(ping.Item1, worldToView);
-                        handle.DrawCircle(point, ping.Item4 * MinimapScale * 0.8f, ping.Item5, true);
+                        var point = Vector2.Transform(trackedPoint.Position, worldToView);
+                        handle.DrawCircle(point, trackedPoint.Size * MinimapScale * 0.8f, trackedPoint.Tint, true);
 
                         var verts = new[]
                         {
-                            Vector2.Transform(new Vector2(ping.Item4, 0f), worldToViewShapeRot),
-                            Vector2.Transform(new Vector2(0f, -ping.Item4 * 1.2f), worldToViewShapeRot),
-                            Vector2.Transform(new Vector2(-ping.Item4, 0f), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(trackedPoint.Size, 0f), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(0f, -trackedPoint.Size * 1.2f), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(-trackedPoint.Size, 0f), worldToViewShapeRot),
                         };
 
-                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, ping.Item5);
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, ping.Item5);
+                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint);
+                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
 
                         break;
                     }
@@ -376,18 +375,18 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                     {
                         var verts = new[]
                         {
-                            Vector2.Transform(new Vector2(0f, ping.Item4), worldToViewShapeRot),
-                            Vector2.Transform(new Vector2(0f, -ping.Item4), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(0f, trackedPoint.Size), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(0f, -trackedPoint.Size), worldToViewShapeRot),
                         };
 
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, ping.Item5);
+                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
                         break;
                     }
 
                 default: // circle
                     {
-                        var point = Vector2.Transform(ping.Item1, worldToView);
-                        handle.DrawCircle(point, ping.Item4 * MinimapScale, ping.Item5, true);
+                        var point = Vector2.Transform(trackedPoint.Position, worldToView);
+                        handle.DrawCircle(point, trackedPoint.Size * MinimapScale, trackedPoint.Tint, true);
                         break;
                     }
             }

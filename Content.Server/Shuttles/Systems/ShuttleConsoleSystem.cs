@@ -16,13 +16,11 @@ using Content.Shared.Shuttles.UI.MapObjects;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
-using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Numerics;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -274,7 +272,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         }
         else
         {
-            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), new List<(Vector2, Enum, Angle, float, Color)>());
+            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), new List<TrackedPoint>());
             mapState = new ShuttleMapInterfaceState(
                 FTLState.Invalid,
                 default,
@@ -391,7 +389,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         Entity<RadarConsoleComponent?,
         TransformComponent?> entity,
         Dictionary<NetEntity, List<DockingPortState>> docks,
-        List<(Vector2, Enum, Angle, float, Color)> tracked)
+        List<TrackedPoint> tracked)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
             return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, tracked);
@@ -407,7 +405,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public NavInterfaceState GetNavState(
         Entity<RadarConsoleComponent?, TransformComponent?> entity,
         Dictionary<NetEntity, List<DockingPortState>> docks,
-        List<(Vector2, Enum, Angle, float, Color)> tracked,
+        List<TrackedPoint> tracked,
         EntityCoordinates coordinates,
         Angle angle)
     {
@@ -468,14 +466,15 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// <summary>
     /// Creates a list of tracked entity information to pass to client. We do this on server due to PVS.
     /// </summary>
-    public List<(Vector2, Enum, Angle, float, Color)> GetTracked()
+    ///
+    public List<TrackedPoint> GetTracked()
     {
-        var result = new List<(Vector2, Enum, Angle, float, Color)>();
+        var result = new List<TrackedPoint>();
         var query = AllEntityQuery<RadarTrackedComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var xform))
         {
-            result.Add((
+            result.Add(new TrackedPoint(
                 _transform.ToMapCoordinates(xform.Coordinates).Position,
                 comp.Shape,
                 comp.Angle + _transform.GetWorldRotation(uid),

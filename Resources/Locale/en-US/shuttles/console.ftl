@@ -26,6 +26,10 @@ shuttle-console-nav-settings = Settings
 shuttle-console-iff-toggle = Show IFF
 shuttle-console-dock-toggle = Show docks
 
+shuttle-console-nav-legend = Legend
+shuttle-console-nav-legend-meteor = Meteors
+shuttle-console-nav-legend-airlocks = External Airlocks
+
 # MAP
 
 shuttle-console-ftl-label = FTL Status

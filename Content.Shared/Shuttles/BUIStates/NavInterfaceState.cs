@@ -1,3 +1,4 @@
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using System.Numerics;
@@ -21,7 +22,7 @@ public sealed class NavInterfaceState
 
     public Dictionary<NetEntity, List<DockingPortState>> Docks;
 
-    public List<(Vector2, Enum, Angle, float, Color)> Tracked;
+    public List<TrackedPoint> Tracked;
 
     public bool RotateWithEntity = true;
 
@@ -30,7 +31,7 @@ public sealed class NavInterfaceState
         NetCoordinates? coordinates,
         Angle? angle,
         Dictionary<NetEntity, List<DockingPortState>> docks,
-        List<(Vector2, Enum, Angle, float, Color)> tracked)
+        List<TrackedPoint> tracked)
     {
         MaxRange = maxRange;
         Coordinates = coordinates;
@@ -45,3 +46,12 @@ public enum RadarConsoleUiKey : byte
 {
     Key
 }
+
+[Serializable, NetSerializable]
+public readonly record struct TrackedPoint(
+    Vector2 Position,
+    RadarSignatureShape Shape,
+    Angle Rotation,
+    float Size,
+    Color Tint
+);

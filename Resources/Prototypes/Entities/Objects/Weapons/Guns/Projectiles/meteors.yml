@@ -44,7 +44,6 @@
   - type: TileFrictionModifier
     modifier: 0
   - type: RadarTracked
-    shape: "Diamond"
     size: 1.1
 
 - type: entity
