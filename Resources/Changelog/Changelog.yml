@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: The Energy Shotgun no longer has a self-recharge or wide fire mode, but
-      charges faster in rechargers.
-    type: Tweak
-  id: 9050
-  time: '2025-10-08T02:51:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40757
-- author: archee1
-  changes:
-  - message: Space Cobras no longer attack Space Adders automatically.
-    type: Fix
-  id: 9051
-  time: '2025-10-08T11:30:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37424
-- author: aada
-  changes:
-  - message: Buckets are now destructible.
-    type: Tweak
-  id: 9052
-  time: '2025-10-08T13:58:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40772
-- author: UpAndLeaves
-  changes:
-  - message: Zombie infections now take approximately three minutes longer to bring
-      a fully healed person to critical condition.
-    type: Tweak
-  id: 9053
-  time: '2025-10-08T14:11:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37445
 - author: YoungThugSS14
   changes:
   - message: The temperature gun bolts now count as energy projectiles for the sake
@@ -3988,3 +3958,35 @@
   id: 9560
   time: '2026-03-01T17:58:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43089
+- author: SirWarock
+  changes:
+  - message: Added a nitrogen tank to the mining hardsuit crate!
+    type: Tweak
+  - message: Added internals to the luxury mining hardsuit crate!
+    type: Tweak
+  - message: Fixed the mining hardsuit helmet name and the mining hardsuit crate name!
+    type: Fix
+  id: 9561
+  time: '2026-03-01T18:31:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43072
+- author: Velken
+  changes:
+  - message: Fixed door remote not working on high security doors and windoors
+    type: Fix
+  id: 9562
+  time: '2026-03-01T23:28:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43094
+- author: UpAndLeaves
+  changes:
+  - message: Added storage:query and inventory:query commands
+    type: Add
+  id: 9563
+  time: '2026-03-03T18:09:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40813
+- author: ProPeperos
+  changes:
+  - message: Hyper Autolathe now needs 4 manipulators instead of 3
+    type: Tweak
+  id: 9564
+  time: '2026-03-04T05:08:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43109
