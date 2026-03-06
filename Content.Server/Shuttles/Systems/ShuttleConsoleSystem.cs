@@ -70,8 +70,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             subs.Event<BoundUIClosedEvent>(OnDronePilotConsoleClose);
         });
 
-        SubscribeLocalEvent<PoweredRadarColorComponent, PowerChangedEvent>(OnRadarSignaturePowerChange);
-
         SubscribeLocalEvent<DockEvent>(OnDock);
         SubscribeLocalEvent<UndockEvent>(OnUndock);
 
@@ -454,13 +452,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             stateDuration,
             beacons ?? new List<ShuttleBeaconObject>(),
             exclusions ?? new List<ShuttleExclusionObject>());
-    }
-    private void OnRadarSignaturePowerChange(EntityUid uid, PoweredRadarColorComponent component, ref PowerChangedEvent args)
-    {
-        if (!TryComp<RadarTrackedComponent>(uid, out var signatureComp))
-            return;
-
-        signatureComp.RadarColor = args.Powered ? component.OnColor : component.OffColor;
     }
 
     /// <summary>
