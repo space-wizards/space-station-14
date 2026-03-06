@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -7,7 +5,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
