@@ -63,6 +63,7 @@ public partial struct CookingIngredients(Dictionary<EntProtoId, int> solids,
     Dictionary<ProtoId<StackPrototype>, int> materials,
     Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
 {
+    // TODO: This should use tags or whitelists instead of entity prototype IDs
     [DataField]
     public Dictionary<EntProtoId, int> Solids = solids;
 
