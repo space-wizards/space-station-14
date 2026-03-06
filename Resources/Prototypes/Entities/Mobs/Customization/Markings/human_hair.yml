@@ -1210,3 +1210,9 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: overeyepigtail
+- type: marking
+  id: HumanHairTrispike
+  bodyPart: Hair
+  sprites:
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: trispike
