@@ -25,13 +25,13 @@ public struct HealthAnalyzerUiState
     public readonly NetEntity? TargetEntity;
     public float Temperature;
     public float BloodLevel;
-    public bool? ScanMode;
-    public bool? Bleeding;
-    public bool? Unrevivable;
+    public bool ScanMode;
+    public bool Bleeding;
+    public bool Unrevivable;
 
     public HealthAnalyzerUiState() {}
 
-    public HealthAnalyzerUiState(NetEntity? targetEntity, float temperature, float bloodLevel, bool? scanMode, bool? bleeding, bool? unrevivable)
+    public HealthAnalyzerUiState(NetEntity? targetEntity, float temperature, float bloodLevel, bool scanMode, bool bleeding, bool unrevivable)
     {
         TargetEntity = targetEntity;
         Temperature = temperature;

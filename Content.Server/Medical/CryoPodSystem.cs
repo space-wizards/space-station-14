@@ -7,6 +7,8 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Medical.Cryogenics;
+using Content.Shared.Medical.HealthAnalyzer;
+
 namespace Content.Server.Medical;
 
 public sealed partial class CryoPodSystem : SharedCryoPodSystem
@@ -14,7 +16,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly GasCanisterSystem _gasCanisterSystem = default!;
     [Dependency] private readonly GasAnalyzerSystem _gasAnalyzerSystem = default!;
-    [Dependency] private readonly HealthAnalyzerSystem _healthAnalyzerSystem = default!;
+    [Dependency] private readonly SharedHealthAnalyzerSystem _healthAnalyzerSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
 
@@ -53,8 +55,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var gasMix = _gasAnalyzerSystem.GenerateGasMixEntry("Cryo pod", air.Air);
         var (beakerCapacity, beaker) = GetBeakerInfo(entity);
         var injecting = GetInjectingReagents(entity);
-        var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient);
-        health.ScanMode = true;
+        var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient, true);
 
         UI.ServerSendUiMessage(
             entity.Owner,

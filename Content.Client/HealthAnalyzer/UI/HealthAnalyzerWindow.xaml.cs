@@ -13,8 +13,15 @@ public sealed partial class HealthAnalyzerWindow : FancyWindow
         RobustXamlLoader.Load(this);
     }
 
+    public void Populate(NetEntity? targetEntity, bool scanMode, float bloodlevel, bool unrevivable, bool bleeding)
+    {
+        HealthAnalyzer.Populate(targetEntity, scanMode, bloodlevel, unrevivable, bleeding);
+        Container.Visible = true;
+    }
+
     public void Populate(HealthAnalyzerScannedUserMessage msg)
     {
         HealthAnalyzer.Populate(msg.State);
+        Container.Visible = true;
     }
 }
