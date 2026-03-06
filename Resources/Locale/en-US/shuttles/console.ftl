@@ -24,7 +24,7 @@ shuttle-console-exclusion = Exclusion area
 
 shuttle-console-nav-settings = Settings
 shuttle-console-iff-toggle = Show IFF
-shuttle-console-dock-toggle = Show docks
+shuttle-console-poi-toggle = Show points of intrest
 
 shuttle-console-nav-legend = Legend
 shuttle-console-nav-legend-meteor = Meteors

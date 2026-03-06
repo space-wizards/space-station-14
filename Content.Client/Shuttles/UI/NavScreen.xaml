@@ -83,8 +83,8 @@
             ToggleMode="True" />
 
         <controls:Button
-            Name="DockToggle"
-            Text="{controls:Loc 'shuttle-console-dock-toggle'}"
+            Name="PoiToggle"
+            Text="{controls:Loc 'shuttle-console-poi-toggle'}"
             TextAlign="Center"
             ToggleMode="True" />
         

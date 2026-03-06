@@ -56,14 +56,4 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
         }
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = AllEntityQuery<RadarConsoleComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            UpdateState(uid, comp);
-        }
-    }
 }

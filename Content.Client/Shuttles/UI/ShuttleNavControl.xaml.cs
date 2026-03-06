@@ -42,8 +42,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     /// </summary>
     private List<TrackedPoint> _tracked = new();
     public bool ShowIFF { get; set; } = true;
-    public bool ShowDocks { get; set; } = true;
-    public bool ShowTracked { get; set; } = true;
+    public bool ShowPoi { get; set; } = true;
     public bool RotateWithEntity { get; set; } = true;
 
     /// <summary>
@@ -301,7 +300,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     }
     private void DrawTracked(DrawingHandleScreen handle, Matrix3x2 worldToView)
     {
-        if (!ShowTracked)
+        if (!ShowPoi)
             return;
 
         foreach (ref var trackedPoint in CollectionsMarshal.AsSpan(_tracked))
@@ -337,7 +336,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
     private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3x2 gridToView)
     {
-        if (!ShowDocks)
+        if (!ShowPoi)
             return;
 
         const float DockScale = 0.6f;
