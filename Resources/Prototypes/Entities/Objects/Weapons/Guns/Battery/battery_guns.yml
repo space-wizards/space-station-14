@@ -1,6 +1,6 @@
 - type: entity
   id: BaseWeaponBattery
-  parent: BaseItem
+  parent: [BaseItem, LaserExecution]
   abstract: true
   components:
   - type: Sprite
