@@ -5,80 +5,80 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Content.Shared.Forensics.Components;
 
-namespace Content.Client.Forensics
+namespace Content.Client.Forensics;
+
+[GenerateTypedNameReferences]
+public sealed partial class ForensicScannerMenu : DefaultWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class ForensicScannerMenu : DefaultWindow
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+    private ForensicScannerComponent? _scanner;
+
+    public ForensicScannerMenu()
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+    }
 
-        private ForensicScannerComponent? _scanner;
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
 
-        public ForensicScannerMenu()
+        if (_scanner == null)
+            return;
+
+        Print.Disabled = (_scanner.PrintReadyAt > _gameTiming.CurTime);
+    }
+
+    public void Update(ForensicScannerComponent scanner)
+    {
+        if (string.IsNullOrEmpty(scanner.LastScannedName))
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
+            _scanner = null;
+            Print.Disabled = true;
+            Clear.Disabled = true;
+            NameLabel.Text = string.Empty;
+            Diagnostics.Text = string.Empty;
+            return;
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
+        _scanner = scanner;
+        Clear.Disabled = false;
+
+        NameLabel.Text = scanner.LastScannedName;
+
+        var text = new StringBuilder();
+
+        text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
+        foreach (var fingerprint in scanner.Fingerprints)
         {
-            base.FrameUpdate(args);
-
-            if (_scanner == null)
-                return;
-
-            Print.Disabled = (_scanner.PrintReadyAt > _gameTiming.CurTime);
+            text.AppendLine(fingerprint);
+        }
+        text.AppendLine();
+        text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
+        foreach (var fiber in scanner.Fibers)
+        {
+            text.AppendLine(fiber);
+        }
+        text.AppendLine();
+        text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
+        foreach (var dna in scanner.DNAs)
+        {
+            text.AppendLine(dna);
+        }
+        foreach (var dna in scanner.SolutionDNAs)
+        {
+            if (scanner.DNAs.Contains(dna))
+                continue;
+            text.AppendLine(dna);
+        }
+        text.AppendLine();
+        text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
+        foreach (var residue in scanner.Residues)
+        {
+            text.AppendLine(residue);
         }
 
-        public void Update(ForensicScannerComponent scanner)
-        {
-            if (string.IsNullOrEmpty(scanner.LastScannedName))
-            {
-                _scanner = null;
-                Print.Disabled = true;
-                Clear.Disabled = true;
-                NameLabel.Text = string.Empty;
-                Diagnostics.Text = string.Empty;
-                return;
-            }
-
-            _scanner = scanner;
-            Clear.Disabled = false;
-
-            NameLabel.Text = scanner.LastScannedName;
-
-            var text = new StringBuilder();
-
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in scanner.Fingerprints)
-            {
-                text.AppendLine(fingerprint);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in scanner.Fibers)
-            {
-                text.AppendLine(fiber);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in scanner.DNAs)
-            {
-                text.AppendLine(dna);
-            }
-            foreach (var dna in scanner.SolutionDNAs)
-            {
-                if (scanner.DNAs.Contains(dna))
-                    continue;
-                text.AppendLine(dna);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in scanner.Residues)
-            {
-                text.AppendLine(residue);
-            }
-            Diagnostics.Text = text.ToString();
-        }
+        Diagnostics.Text = text.ToString();
     }
 }
