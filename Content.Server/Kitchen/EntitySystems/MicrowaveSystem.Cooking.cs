@@ -21,61 +21,6 @@ public sealed partial class MicrowaveSystem
         Del(item);
     }
 
-    private void SumItemIngredients(EntityUid item,
-        Dictionary<EntProtoId, int> solids,
-        Dictionary<ProtoId<StackPrototype>, int> materials,
-        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
-    {
-        if (TryGetSolidId(item, out var solidId))
-        {
-            if (!solids.TryAdd(solidId.Value, 1))
-                solids[solidId.Value] += 1;
-        }
-
-        if (TryGetMaterialId(item, out var materialId, out var stack))
-        {
-            var count = stack.Value.Comp.Count;
-            if (!materials.TryAdd(materialId.Value, count))
-                materials[materialId.Value] += count;
-        }
-
-        if (TryGetUsableIngredientSolution(item, out var _, out var solution))
-        {
-            foreach (var (reagent, quantity) in solution.Contents)
-            {
-                if (!reagents.TryAdd(reagent.Prototype, quantity))
-                    reagents[reagent.Prototype] += quantity;
-            }
-        }
-    }
-
-    private List<FoodRecipePrototype> GetRecipesForMicrowave(EntityUid microwave)
-    {
-        var getRecipesEv = new GetSecretRecipesEvent();
-        RaiseLocalEvent(microwave, ref getRecipesEv);
-
-        var recipes = getRecipesEv.Recipes;
-        recipes.AddRange(_recipeManager.Recipes);
-
-        return recipes;
-    }
-
-    private AvailableIngredients GetTotalIngredients(Entity<MicrowaveComponent> microwave, List<EntityUid> items)
-    {
-        var solids = new Dictionary<EntProtoId, int>();
-        var materials = new Dictionary<ProtoId<StackPrototype>, int>();
-        var reagents = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>();
-
-        foreach (var item in items)
-        {
-            SumItemIngredients(item, solids, materials, reagents);
-            var activelyMicrowaved = AddComp<ActivelyMicrowavedComponent>(item);
-            activelyMicrowaved.Microwave = microwave.Owner;
-        }
-
-        return new(solids, materials, reagents);
-    }
-
     private bool ProcessContents(Entity<MicrowaveComponent> microwave,
         EntityUid? user,
         ref bool malfunctioning,
@@ -107,26 +52,17 @@ public sealed partial class MicrowaveSystem
             {
                 ingredientContents.Remove(item);
                 CreateBurnedMess(microwave, item);
-                continue;
             }
+        }
+
+        foreach (var item in ingredientContents)
+        {
+            var activelyMicrowaved = AddComp<ActivelyMicrowavedComponent>(item);
+            activelyMicrowaved.Microwave = microwave.Owner;
         }
 
         available = GetTotalIngredients(microwave, ingredientContents);
         return true;
-    }
-
-    private (FoodRecipePrototype? recipe, int count) GetRecipe(Entity<MicrowaveComponent> microwave, AvailableIngredients ingredients)
-    {
-        var recipes = GetRecipesForMicrowave(microwave.Owner);
-        var cookTime = microwave.Comp.CurrentCookTimerTime;
-        var recipePortions = recipes.Select(recipe =>
-            {
-                var portions = GetRecipePortions(recipe, cookTime, ingredients);
-                return (recipe, portions);
-            });
-
-        return recipePortions.FirstOrNull(r => r.portions > 0)
-            ?? (null, 0);
     }
 
     private void ActivateMicrowave(EntityUid uid,
