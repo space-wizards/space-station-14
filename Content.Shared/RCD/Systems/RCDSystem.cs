@@ -57,7 +57,7 @@ public sealed class RCDSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RCDComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RCDComponent, ComponentStartup>(OnCompStartup);
         SubscribeLocalEvent<RCDComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RCDComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<RCDComponent, RCDDoAfterEvent>(OnDoAfter);
@@ -68,9 +68,9 @@ public sealed class RCDSystem : EntitySystem
 
     #region Event handling
 
-    private void OnMapInit(EntityUid uid, RCDComponent component, MapInitEvent args)
+    private void OnCompStartup(EntityUid uid, RCDComponent component, ComponentStartup args)
     {
-        // On init, set the RCD to its first available recipe
+        // Set the RCD to its first available recipe
         if (component.AvailablePrototypes.Count > 0)
         {
             component.ProtoId = component.AvailablePrototypes.ElementAt(0);
