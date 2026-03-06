@@ -12,7 +12,6 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.StationRecords.Systems;
 using Content.Server.Store.Systems;
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
@@ -23,9 +22,9 @@ using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
-using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Station;
 using Content.Shared.Station.Components;
 using Content.Shared.StationRecords;
@@ -36,6 +35,7 @@ using Content.Shared.Zombies;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -47,10 +47,12 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -638,87 +640,63 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         job = Loc.GetString("job-name-unknown");
         username = "unknown"; // magic word in Fluent selector
 
-        MindContainerComponent mindContainer = Comp<MindContainerComponent>(carrier);
-        if (mindContainer.HasMind)
-        {
-            var mind = Comp<MindComponent>(mindContainer.Mind.Value);
-            var roles = _roles.MindGetAllRoleInfo(mindContainer.Mind.Value);
-            if (mind.CharacterName is not null)
-            {
-                name = mind.CharacterName;
-            }
-            job = Loc.GetString(roles.FirstOrDefault().Name);
+        Entity<MindComponent>? mind = null;
 
-            if (mind.UserId is not null)
-            {
-                if (_player.TryGetPlayerData(mind.UserId.Value, out var sessionData))
-                {
-                    username = sessionData.UserName;
-                }
-            }
-            return;
+        if (_mind.TryGetMind(carrier, out _, out var mindComp))
+        {
+            mind = (carrier, mindComp);
         }
         else
         {
             var allMinds = EntityQueryEnumerator<MindComponent>();
-            while (allMinds.MoveNext(out var mindId, out var mind))
+            while (allMinds.MoveNext(out _, out mindComp))
             {
-                if (mind.CharacterName == Name(carrier))
-                {
-                    var roles = _roles.MindGetAllRoleInfo(mindId);
-                    if (roles.Count != 0)
-                    {
-                        name = mind.CharacterName;
-                        job = Loc.GetString(roles.FirstOrDefault().Name ?? Loc.GetString("game-ticker-unknown-role"));
-                        if (mind.OriginalOwnerUserId is not null)
-                        {
-                            if (_player.TryGetPlayerData(mind.OriginalOwnerUserId.Value, out var sessionData))
-                            {
-                                username = sessionData.UserName;
-                            }
-                        }
-                        return;
-                    }
-                }
+                if (mindComp.CharacterName != name)
+                    continue;
+
+                mind = (carrier, mindComp);
+                break;
+            }
+        }
+
+        if (mind is not null)
+        {
+            NetUserId? userId = mind.Value.Comp.UserId;
+            if (userId is not null && _player.TryGetPlayerData(userId.Value, out var sessionData))
+                username = sessionData.UserName;
+
+            // Role/job is the trickiest since it can be unknown in some cases
+            // For example, after "make ghost role" verb
+            var roles = _roles.MindGetAllRoleInfo(mind.Value.Owner);
+            if (roles.Count > 0)
+            {
+                job = Loc.GetString(roles.First().Name);
+                return;
+            }
+
+            if (_jobs.MindTryGetJobName(mind, out var jobName))
+            {
+                job = jobName;
+                return;
             }
         }
 
         // Try station records
         var xform = Transform(carrier);
         var station = _station.GetStationInMap(xform.MapID);
-        if (station != null && _records.GetRecordByName(station.Value, Name(carrier)) is { } id)
+        if (station != null && _records.GetRecordByName(station.Value, name) is { } id)
         {
             var key = new StationRecordKey(id, station.Value);
             if (_records.TryGetRecord<GeneralStationRecord>(key, out var record))
             {
-                name = record.Name;
                 job = record.JobTitle;
                 return;
             }
         }
 
-        // Try ID
-        if (_accessReader.FindAccessItemsInventory(carrier, out var items))
-        {
-            foreach (var item in items)
-            {
-                // ID Card
-                if (TryComp<IdCardComponent>(item, out var idCard))
-                {
-                    job = idCard.LocalizedJobTitle ?? job;
-                    break;
-                }
-
-                // PDA
-                if (TryComp<PdaComponent>(item, out var pda)
-                    && pda.ContainedId != null
-                    && TryComp(pda.ContainedId, out idCard))
-                {
-                    job = idCard.LocalizedJobTitle ?? job;
-                    break;
-                }
-            }
-        }
+        // Fallback to ID
+        if (_idCard.TryFindIdCard(carrier, out var idCard))
+            job = idCard.Comp.LocalizedJobTitle ?? job;
     }
 }
 
