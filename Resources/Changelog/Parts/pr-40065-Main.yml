@@ -1,7 +1,0 @@
-author: "SuperGDPWYL"
-time: "2025-10-31T09:37:48.0000000+00:00"
-url: "https://github.com/space-wizards/space-station-14/pull/40065"
-changes:
-- type: "Tweak"
-  message: "Certain thief objectives can no longer be rolled by jobs which have trivial access to the objective item."
-...

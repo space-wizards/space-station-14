@@ -208,8 +208,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-bark"]
   chatTriggers:
   - bark
@@ -226,8 +226,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-snarl"]
   chatTriggers:
   - snarl
@@ -244,8 +244,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-whine"]
   chatTriggers:
   - whine
@@ -262,8 +262,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-howl"]
   chatTriggers:
   - howl
@@ -280,8 +280,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-growl"]
   chatTriggers:
   - growl
@@ -479,6 +479,41 @@
     - chirps
     - chirped
     - chirping
+
+- type: emote
+  id: Flap
+  name: chat-emote-name-flap
+  category: Hands # Not really "hands", but how far it to vocal? (moth mimes want to flap too!)
+  available: false
+  icon: Interface/Emotes/flap.png
+  whitelist:
+    components:
+    - Hands
+  blacklist:
+    tags:
+    - SiliconEmotes
+  chatMessages: ["chat-emote-msg-flap"]
+  chatTriggers:
+   - flap
+   - flaps
+   - flapped
+   - flapping
+   - flutter
+   - flutters
+   - fluttering
+   - fluttered
+   - flap wings
+   - flaps wings
+   - flutter wings
+   - flutters wings
+   - flaps his wings
+   - flaps her wings
+   - flaps their wings
+   - flaps its wings
+   - flutters his wings
+   - flutters her wings
+   - flutters their wings
+   - flutters its wings
 
 # Machine Emotes
 - type: emote

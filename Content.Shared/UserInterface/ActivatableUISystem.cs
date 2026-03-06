@@ -108,7 +108,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
             if (component.InHandsOnly)
             {
-                if (!_hands.IsHolding((args.User, args.Hands), uid, out var hand ))
+                if (!_hands.IsHolding((args.User, args.Hands), uid, out var hand))
                     return false;
 
                 if (component.RequireActiveHand && args.Hands.ActiveHandId != hand)
@@ -116,7 +116,10 @@ public sealed partial class ActivatableUISystem : EntitySystem
             }
         }
 
-        return (args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators) && !RaiseCanOpenEventChecks(args.User, uid);
+        return ((args.CanInteract
+            || HasComp<GhostComponent>(args.User)
+            && !component.BlockSpectators))
+            && RaiseCanOpenEventChecks(args.User, uid, silent: true); // silent to prevent popups or sounds when only looking at the verb
     }
 
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
@@ -225,7 +228,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
         // This is so that stuff can require further conditions (like power).
-        if (RaiseCanOpenEventChecks(user, uiEntity))
+        if (!RaiseCanOpenEventChecks(user, uiEntity))
             return false;
 
         // Give the UI an opportunity to prepare itself if it needs to do anything
@@ -237,7 +240,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         _uiSystem.OpenUi(uiEntity, aui.Key, user);
 
         //Let the component know a user opened it so it can do whatever it needs to do
-        var aae = new AfterActivatableUIOpenEvent(user, user);
+        var aae = new AfterActivatableUIOpenEvent(user);
         RaiseLocalEvent(uiEntity, aae);
 
         return true;
@@ -283,14 +286,22 @@ public sealed partial class ActivatableUISystem : EntitySystem
             CloseAll(ent, ent);
     }
 
-    private bool RaiseCanOpenEventChecks(EntityUid user, EntityUid uiEntity)
+    private bool RaiseCanOpenEventChecks(EntityUid user, EntityUid uiEntity, bool silent = false)
     {
-        // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
+        // If we've gotten this far, fire a cancellable event that indicates someone is attempting to activate this UI.
         // This is so that stuff can require further conditions (like power).
-        var oae = new ActivatableUIOpenAttemptEvent(user);
-        var uae = new UserOpenActivatableUIAttemptEvent(user, uiEntity);
+        var uae = new UserOpenActivatableUIAttemptEvent(user, uiEntity, silent);
         RaiseLocalEvent(user, uae);
+
+        if (uae.Cancelled)
+            return false;
+
+        var oae = new ActivatableUIOpenAttemptEvent(user, silent);
         RaiseLocalEvent(uiEntity, oae);
-        return oae.Cancelled || uae.Cancelled;
+
+        if (oae.Cancelled)
+            return false;
+
+        return true;
     }
 }

@@ -295,35 +295,38 @@ public sealed class SpreaderSystem : EntitySystem
     /// This function activates all spreaders that are adjacent to a given entity. This also activates other spreaders
     /// on the same tile as the current entity (for thin airtight entities like windoors).
     /// </summary>
-    public void ActivateSpreadableNeighbors(EntityUid uid, (EntityUid Grid, Vector2i Tile)? position = null)
+    public void ActivateSpreadableNeighbors(EntityUid origin, (EntityUid Grid, Vector2i Tile)? position = null)
     {
         Vector2i tile;
-        EntityUid ent;
-        MapGridComponent? grid;
+        EntityUid gridUid;
+        MapGridComponent? gridComp;
 
         if (position == null)
         {
-            var transform = Transform(uid);
-            if (!TryComp(transform.GridUid, out grid) || TerminatingOrDeleted(transform.GridUid.Value))
+            var transform = Transform(origin);
+            if (!TryComp(transform.GridUid, out gridComp) || TerminatingOrDeleted(transform.GridUid.Value))
                 return;
 
-            tile = _map.TileIndicesFor(transform.GridUid.Value, grid, transform.Coordinates);
-            ent = transform.GridUid.Value;
+            tile = _map.TileIndicesFor(transform.GridUid.Value, gridComp, transform.Coordinates);
+            gridUid = transform.GridUid.Value;
         }
         else
         {
-            if (!TryComp(position.Value.Grid, out grid))
+            if (!TryComp(position.Value.Grid, out gridComp))
                 return;
-            (ent, tile) = position.Value;
+            (gridUid, tile) = position.Value;
         }
 
-        var anchored = _map.GetAnchoredEntitiesEnumerator(ent, grid, tile);
+        var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, gridComp, tile);
         while (anchored.MoveNext(out var entity))
         {
-            if (entity == ent)
+            // Don't re-activate the terminating entity
+            if (entity == origin)
                 continue;
             DebugTools.Assert(Transform(entity.Value).Anchored);
-            if (_query.HasComponent(ent) && !TerminatingOrDeleted(entity.Value))
+
+            // Activate any edge spreaders that are non-terminating
+            if (_query.HasComponent(entity) && !TerminatingOrDeleted(entity))
                 EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
         }
 
@@ -331,12 +334,14 @@ public sealed class SpreaderSystem : EntitySystem
         {
             var direction = (AtmosDirection) (1 << i);
             var adjacentTile = SharedMapSystem.GetDirection(tile, direction.ToDirection());
-            anchored = _map.GetAnchoredEntitiesEnumerator(ent, grid, adjacentTile);
+            anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, gridComp, adjacentTile);
 
             while (anchored.MoveNext(out var entity))
             {
                 DebugTools.Assert(Transform(entity.Value).Anchored);
-                if (_query.HasComponent(ent) && !TerminatingOrDeleted(entity.Value))
+
+                // Activate any edge spreaders that are non-terminating
+                if (_query.HasComponent(entity) && !TerminatingOrDeleted(entity))
                     EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
             }
         }
