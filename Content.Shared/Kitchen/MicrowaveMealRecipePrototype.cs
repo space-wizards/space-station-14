@@ -34,6 +34,8 @@ public sealed partial class FoodRecipePrototype : IPrototype
     [DataField]
     public string Group = "Other";
 
+    // TODO: Use AvailableIngredients struct
+
     /// <summary>
     ///     The reagent ingredients used in this recipe.
     /// </summary>

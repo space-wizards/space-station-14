@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -24,48 +25,46 @@ public sealed partial class MicrowaveSystem
                 args.Recipes.Add(recipeProto);
     }
 
-    public static (FoodRecipePrototype, int) CanSatisfyRecipe(MicrowaveComponent component,
-        FoodRecipePrototype recipe,
-        Dictionary<string, int> solids,
-        Dictionary<string, FixedPoint2> reagents)
+    public static int GetRecipePortions(FoodRecipePrototype recipe,
+        uint cookTime,
+        AvailableIngredients ingredients)
     {
-        var portions = 0;
+        // Our cooking time must be a multiple of the recipe's cooking time.
+        // For example: If a recipe takes 10 seconds to cook, then you can't make it with a 15 second timer.
+        // However, if you use a 30 second timer, you could make three of that recipe on one timer.
+        if (cookTime % recipe.CookTime != 0)
+            return 0;
 
-        if (component.CurrentCookTimerTime % recipe.CookTime != 0)
+        var portionCount = (int)(cookTime / recipe.CookTime);
+
+        foreach (var (ingredient, requiredCount) in recipe.Solids)
         {
-            //can't be a multiple of this recipe
-            return (recipe, 0);
+            if (!ingredients.Solids.TryGetValue(ingredient, out var availableCount))
+                return 0;
+
+            var ingredientPortionCount = availableCount / requiredCount;
+            portionCount = Math.Min(portionCount, ingredientPortionCount);
         }
 
-        foreach (var solid in recipe.Solids)
+        foreach (var (ingredient, requiredCount) in recipe.Materials)
         {
-            if (!solids.ContainsKey(solid.Key))
-                return (recipe, 0);
+            if (!ingredients.Materials.TryGetValue(ingredient, out var availableCount))
+                return 0;
 
-            if (solids[solid.Key] < solid.Value)
-                return (recipe, 0);
-
-            portions = portions == 0
-                ? solids[solid.Key] / solid.Value
-                : Math.Min(portions, solids[solid.Key] / solid.Value);
+            var ingredientPortionCount = availableCount / requiredCount;
+            portionCount = Math.Min(portionCount, ingredientPortionCount);
         }
 
-        foreach (var reagent in recipe.Reagents)
+        foreach (var (ingredient, requiredCount) in recipe.Reagents)
         {
-            // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
-            if (!reagents.ContainsKey(reagent.Key))
-                return (recipe, 0);
+            if (!ingredients.Reagents.TryGetValue(ingredient, out var availableCount))
+                return 0;
 
-            if (reagents[reagent.Key] < reagent.Value)
-                return (recipe, 0);
-
-            portions = portions == 0
-                ? reagents[reagent.Key].Int() / reagent.Value.Int()
-                : Math.Min(portions, reagents[reagent.Key].Int() / reagent.Value.Int());
+            var ingredientPortionCount = (int)(availableCount / requiredCount);
+            portionCount = Math.Min(portionCount, ingredientPortionCount);
         }
 
-        //cook only as many of those portions as time allows
-        return (recipe, (int)Math.Min(portions, component.CurrentCookTimerTime / recipe.CookTime));
+        return portionCount;
     }
 
     private bool TryGetUsableIngredientSolution(EntityUid uid,
@@ -121,18 +120,15 @@ public sealed partial class MicrowaveSystem
         QueueDel(item);
     }
 
-    private void SubtractMaterialContents(Entity<StackComponent?> ent,
+    private void SubtractMaterialContents(Entity<StackComponent> ent,
         Dictionary<ProtoId<StackPrototype>, int> remainingMaterials)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, logMissing: false))
-            return;
-
         var stack = ent.Comp;
         var stackId = stack.StackTypeId;
         var startingQuantity = stack.Count;
         var recipeQuantity = SpendMaterialQuantity(startingQuantity, stackId, remainingMaterials);
 
-        _stack.ReduceCount(ent, recipeQuantity);
+        _stack.ReduceCount(ent.AsNullable(), recipeQuantity);
     }
 
     private void TrySubtractReagentContents(Entity<SolutionComponent> solutionEntity,
@@ -151,6 +147,29 @@ public sealed partial class MicrowaveSystem
         }
     }
 
+    private bool TryGetSolidId(EntityUid item,
+        [NotNullWhen(true)] out EntProtoId? solidId)
+    {
+        solidId = MetaData(item).EntityPrototype?.ID;
+        return solidId != null;
+    }
+
+    private bool TryGetMaterialId(EntityUid item,
+        [NotNullWhen(true)] out ProtoId<StackPrototype>? material,
+        [NotNullWhen(true)] out Entity<StackComponent>? stackEnt)
+    {
+        material = null;
+        stackEnt = null;
+
+        if (!TryComp<StackComponent>(item, out var stack))
+            return false;
+
+        material = stack.StackTypeId;
+        stackEnt = (item, stack);
+
+        return material != null && stackEnt != null;
+    }
+
     private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe)
     {
         var remainingSolids = new Dictionary<EntProtoId, int>(recipe.Solids);
@@ -159,19 +178,19 @@ public sealed partial class MicrowaveSystem
 
         foreach (var item in component.Storage.ContainedEntities)
         {
-            var itemProto = MetaData(item).EntityPrototype?.ID;
-            if (itemProto != null && remainingSolids.ContainsKey(itemProto))
+            if (TryGetSolidId(item, out var solidId) && remainingSolids.ContainsKey(solidId.Value))
             {
-                SubtractSolidContents(item, itemProto, component.Storage, remainingSolids);
+                SubtractSolidContents(item, solidId.Value, component.Storage, remainingSolids);
                 continue;
                 // We're exiting early here; if the solid ingredient is removed from the container,
                 // then we shouldn't be attempting to use its material stack or reagents.
             }
 
-            if (TryComp<StackComponent>(item, out var stack) && remainingMaterials.ContainsKey(stack.StackTypeId))
+            if (TryGetMaterialId(item, out var materialId, out var stack)
+                && remainingMaterials.ContainsKey(materialId.Value))
             {
-                SubtractMaterialContents((item, stack), remainingMaterials);
-                if (stack.Count <= 0)
+                SubtractMaterialContents(stack.Value, remainingMaterials);
+                if (stack.Value.Comp.Count <= 0)
                     continue;
                 // We're exiting early here - if the stack is empty, then the stack entity
                 // is gonna be deleted. Which means we shouldn't be using its reagents.

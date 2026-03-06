@@ -359,15 +359,25 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         Wzhzhzh(ent.Owner, ent.Comp, null);
     }
 
-    public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
+    public void UpdateUserInterfaceState(Entity<MicrowaveComponent> microwave)
     {
-        _userInterface.SetUiState(uid, MicrowaveUiKey.Key, new MicrowaveUpdateUserInterfaceState(
-            GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
-            HasComp<ActiveMicrowaveComponent>(uid),
+        var uid = microwave.Owner;
+        var component = microwave.Comp;
+        var containedItems = GetNetEntityArray(component.Storage.ContainedEntities.ToArray());
+        var isActive = HasComp<ActiveMicrowaveComponent>(uid);
+        var state = new MicrowaveUpdateUserInterfaceState(
+            containedItems,
+            isActive,
             component.CurrentCookTimeButtonIndex,
             component.CurrentCookTimerTime,
-            component.CurrentCookTimeEnd
-        ));
+            component.CurrentCookTimeEnd);
+
+        _userInterface.SetUiState(uid, MicrowaveUiKey.Key, state);
+    }
+
+    public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
+    {
+        UpdateUserInterfaceState((uid, component));
     }
 
     public void SetAppearance(EntityUid uid, MicrowaveVisualState state, MicrowaveComponent? component = null, AppearanceComponent? appearanceComponent = null)
