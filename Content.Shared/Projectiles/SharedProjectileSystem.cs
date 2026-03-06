@@ -193,16 +193,15 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     }
 
     private void OnBeforeComplexProjectileHit(Entity<ComplexProjectileDamageComponent> ent, ref BeforeProjectileHitEvent args)
-            {
-                foreach (var option in ent.Comp.DamageOptions)
-                {
-                        if (!_whitelist.CheckBoth(args.Target, option.Blacklist, option.Whitelist))
-                                continue;
-
-                        args.Damage = option.Damage;
-                        return;
-                }
-            }
+    {
+        foreach (var option in ent.Comp.DamageOptions)
+        {
+            if (!_whitelist.CheckBoth(args.Target, option.Blacklist, option.Whitelist))
+                continue;
+            args.Damage = option.Damage;
+            return;
+        }
+    }
     public void DetachAllEmbedded(Entity<EmbeddedContainerComponent> container)
     {
         foreach (var embedded in container.Comp.EmbeddedObjects)
@@ -268,6 +267,6 @@ public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target
 
 /// <summary>
 /// Raised before a projectile hits an entity
-        /// </summary>
-            [ByRefEvent]
-    public record struct BeforeProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
+/// </summary>
+[ByRefEvent]
+public record struct BeforeProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
