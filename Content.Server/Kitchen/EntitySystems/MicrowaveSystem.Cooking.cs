@@ -22,16 +22,14 @@ public sealed partial class MicrowaveSystem
     }
 
     private bool ProcessContents(Entity<MicrowaveComponent> microwave,
+        IReadOnlyList<EntityUid> contents,
         EntityUid? user,
         ref bool malfunctioning,
-        [NotNullWhen(true)] out AvailableIngredients? available)
+        out List<EntityUid> ingredientContents)
     {
-        available = null;
+        ingredientContents = [.. contents];
 
-        var microwaveContainer = microwave.Comp.Storage;
-        var ingredientContents = microwaveContainer.ContainedEntities.ToList();
-
-        foreach (var item in microwaveContainer.ContainedEntities)
+        foreach (var item in contents)
         {
             // Special item-in-microwave interactions. Certain "being microwaved' interactions
             // may cancel out any actual cooking, so this may early exit.
@@ -61,7 +59,6 @@ public sealed partial class MicrowaveSystem
             activelyMicrowaved.Microwave = microwave.Owner;
         }
 
-        available = GetTotalIngredients(microwave, ingredientContents);
         return true;
     }
 
@@ -99,11 +96,19 @@ public sealed partial class MicrowaveSystem
             || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
             return;
 
+        var contents = component.Storage.ContainedEntities;
         var malfunctioning = false;
-        if (!ProcessContents((uid, component), user, ref malfunctioning, out var ingredients))
+
+        if (!ProcessContents((uid, component),
+            contents,
+            user,
+            ref malfunctioning,
+            out var ingredientContents))
             return;
 
-        var recipe = GetRecipe((uid, component), ingredients.Value);
+        var ingredients = GetTotalIngredients((uid, component), ingredientContents);
+        var recipe = GetRecipe((uid, component), ingredients);
+
         ActivateMicrowave(uid, component, recipe, malfunctioning);
         UpdateUserInterfaceState(uid, component);
     }
