@@ -95,7 +95,6 @@
       quickEquip: false
       slots:
       - back
-      sprite: Objects/Specific/Janitorial/advmop.rsi
 
 - type: entity
   name: wet floor sign
