@@ -132,11 +132,11 @@ public sealed partial class MicrowaveSystem
     private void ActivateMicrowave(EntityUid uid,
         MicrowaveComponent component,
         (FoodRecipePrototype? recipe, int count) recipe,
-        float cookTime,
         bool malfunctioning)
     {
         _audio.PlayPvs(component.StartCookingSound, uid);
 
+        var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
         var activeComp = AddComp<ActiveMicrowaveComponent>(uid); //microwave is now cooking
         activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
         activeComp.CookTimeRemaining = cookTime;
@@ -168,9 +168,7 @@ public sealed partial class MicrowaveSystem
             return;
 
         var recipe = GetRecipe((uid, component), ingredients.Value);
-        var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
-
-        ActivateMicrowave(uid, component, recipe, cookTime, malfunctioning);
+        ActivateMicrowave(uid, component, recipe, malfunctioning);
         UpdateUserInterfaceState(uid, component);
     }
 
