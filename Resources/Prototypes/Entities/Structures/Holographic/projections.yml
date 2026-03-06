@@ -119,7 +119,7 @@
   parent: HolosignWetFloor
   id: XenoborgDeflectorField
   name: deflector field
-  description: An energy matrix, comprised of interlocking fields that deflect projectiles and lasers. Powerful, but short-lived.
+  description: An energy matrix, comprised of interlocking fields that deflect projectiles. Powerful, but short-lived.
   components:
   - type: Physics
     bodyType: Static
