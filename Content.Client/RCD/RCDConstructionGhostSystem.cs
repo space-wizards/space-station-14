@@ -55,7 +55,12 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
 
             return;
         }
+
         var prototype = _protoManager.Index(rcd.ProtoId);
+
+        //safeguard against RCD being initialized on MapInit (ProtoId isn't set on mapping placement)
+        if (prototype.Mode == RcdMode.Invalid)
+            return;
 
         // Update the direction the RCD prototype based on the placer direction
         if (_placementDirection != _placementManager.Direction)
