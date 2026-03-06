@@ -11,14 +11,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Large
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
   - type: AmmoCounter
   - type: Gun
     fireRate: 0.7
@@ -39,7 +31,7 @@
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
     cycleable: false # No synthesizing ammo
   - type: BallisticAmmoSelfRefiller
-    autoRefillRate: 5s
+    autoRefillRate: 6s
     affectedByEmp: true
   - type: StaticPrice
     price: 5000
