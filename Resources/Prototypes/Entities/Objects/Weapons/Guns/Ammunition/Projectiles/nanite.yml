@@ -50,7 +50,8 @@
     impactEffect: BulletImpactEffectNanite
     damage:
       types:
-        Cellular: 8
+        Piercing: 6
+        Cellular: 4
     soundHit:
       path: /Audio/Effects/glass_break2.ogg
   - type: ComplexProjectileDamage
