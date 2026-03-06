@@ -25,13 +25,6 @@ public sealed partial class MicrowaveSystem
             if (_prototype.Resolve(recipeId, out var recipeProto))
                 args.Recipes.Add(recipeProto);
     }
-
-    // TODO: there's actually a kind of nasty edge case microwave economics issue here,
-    // all reagents / materials / solids will be included, but when the recipe is actually made,
-    // solids are used first, then materials, then reagents.
-    // thus, recipe detection might thing you have "more" ingredients than you actually do.
-    //
-    // moral of the story: I hate microwaves
     public static uint GetRecipePortions(FoodRecipePrototype recipe,
         CookingIngredients ingredients,
         uint cookTime)
@@ -42,6 +35,12 @@ public sealed partial class MicrowaveSystem
         if (cookTime % recipe.CookTime != 0)
             return 0;
 
+        // TODO: there's actually a kind of nasty edge case microwave economics issue here,
+        // all reagents / materials / solids will be included, but when the recipe is actually made,
+        // solids are used first, then materials, then reagents.
+        // thus, recipe detection might thing you have "more" ingredients than you actually do.
+        //
+        // moral of the story: I hate microwaves
         var portionCount = cookTime / recipe.CookTime;
         var ingredientPortions = ingredients.PortionForRecipe(recipe.Ingredients);
         portionCount = Math.Min(portionCount, ingredientPortions);
@@ -62,7 +61,6 @@ public sealed partial class MicrowaveSystem
         return recipePortions.FirstOrNull(r => r.portions > 0)
             ?? (null, 0);
     }
-
 
     private List<FoodRecipePrototype> GetRecipesForMicrowave(EntityUid microwave)
     {
@@ -221,9 +219,9 @@ public sealed partial class MicrowaveSystem
     private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe)
     {
         var ingredients = recipe.Ingredients;
-        var remainingSolids = new Dictionary<EntProtoId, int>(ingredients.Solids);
-        var remainingMaterials = new Dictionary<ProtoId<StackPrototype>, int>(ingredients.Materials);
-        var remainingReagents = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>(ingredients.Reagents);
+        var remainingSolids = ingredients.Solids.ShallowClone();
+        var remainingMaterials = ingredients.Materials.ShallowClone();
+        var remainingReagents = ingredients.Reagents.ShallowClone();
 
         foreach (var item in component.Storage.ContainedEntities)
         {
