@@ -64,7 +64,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
