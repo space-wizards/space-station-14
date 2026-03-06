@@ -28,7 +28,7 @@ shuttle-console-dock-toggle = Show docks
 
 shuttle-console-nav-legend = Legend
 shuttle-console-nav-legend-meteor = Meteors
-shuttle-console-nav-legend-airlocks = External Airlocks
+shuttle-console-nav-legend-airlocks = Docks
 
 # MAP
 

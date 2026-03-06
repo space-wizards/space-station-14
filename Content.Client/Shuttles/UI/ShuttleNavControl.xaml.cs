@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -12,6 +11,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace Content.Client.Shuttles.UI;
 
@@ -303,82 +304,23 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         if (!ShowTracked)
             return;
 
-        foreach (var trackedPoint in _tracked)
+        foreach (ref var trackedPoint in CollectionsMarshal.AsSpan(_tracked))
         {
             var shapeRotMatrix = Matrix3x2.CreateRotation((float)trackedPoint.Rotation.Theta) * Matrix3x2.CreateTranslation(trackedPoint.Position);
             var worldToViewShapeRot = Matrix3x2.Multiply(shapeRotMatrix, worldToView);
 
             switch (trackedPoint.Shape)
             {
-                case RadarSignatureShape.Square:
-                    {
-                        var verts = new[]
-                        {
-                        Vector2.Transform(new Vector2(-trackedPoint.Size, -trackedPoint.Size), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(trackedPoint.Size, -trackedPoint.Size), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(-trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
-                        };
-                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint.WithAlpha(0.8f));
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
-                        break;
-                    }
-
                 case RadarSignatureShape.Triangle:
                     {
-                        var verts = new[]
+                        var verts = new Vector2[3]
                         {
-                        Vector2.Transform(new Vector2(0f, -trackedPoint.Size), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(-trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
-                        };
-
-                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint.WithAlpha(0.8f));
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
-                        break;
-                    }
-
-                case RadarSignatureShape.Diamond:
-                    {
-                        var verts = new[]
-                        {
-                        Vector2.Transform(new Vector2(0f, -trackedPoint.Size), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(trackedPoint.Size, 0f), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(0f, trackedPoint.Size), worldToViewShapeRot),
-                        Vector2.Transform(new Vector2(-trackedPoint.Size, 0f), worldToViewShapeRot),
-                        };
-
-                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint.WithAlpha(0.8f));
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
-                        break;
-                    }
-
-                case RadarSignatureShape.Chevron:
-                    {
-                        var point = Vector2.Transform(trackedPoint.Position, worldToView);
-                        handle.DrawCircle(point, trackedPoint.Size * MinimapScale * 0.8f, trackedPoint.Tint, true);
-
-                        var verts = new[]
-                        {
-                            Vector2.Transform(new Vector2(trackedPoint.Size, 0f), worldToViewShapeRot),
-                            Vector2.Transform(new Vector2(0f, -trackedPoint.Size * 1.2f), worldToViewShapeRot),
-                            Vector2.Transform(new Vector2(-trackedPoint.Size, 0f), worldToViewShapeRot),
-                        };
-
-                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint);
-                        handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
-
-                        break;
-                    }
-
-                case RadarSignatureShape.Line:
-                    {
-                        var verts = new[]
-                        {
-                            Vector2.Transform(new Vector2(0f, trackedPoint.Size), worldToViewShapeRot),
                             Vector2.Transform(new Vector2(0f, -trackedPoint.Size), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(-trackedPoint.Size, trackedPoint.Size), worldToViewShapeRot),
                         };
 
+                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, trackedPoint.Tint.WithAlpha(0.8f));
                         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, trackedPoint.Tint);
                         break;
                     }

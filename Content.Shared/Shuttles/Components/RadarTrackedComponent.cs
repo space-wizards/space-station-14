@@ -34,9 +34,5 @@ public sealed partial class RadarTrackedComponent : Component
 public enum RadarSignatureShape : byte
 {
     Circle,
-    Square,
-    Triangle,
-    Diamond,
-    Chevron,
-    Line
+    Triangle
 }
