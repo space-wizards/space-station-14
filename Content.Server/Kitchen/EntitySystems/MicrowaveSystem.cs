@@ -4,7 +4,6 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -24,7 +23,6 @@ using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
-using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -163,33 +161,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         }
     }
 
-    /// <summary>
-    ///     Adds temperature to every item in the microwave,
-    ///     based on the time it took to microwave.
-    /// </summary>
-    /// <param name="component">The microwave that is heating up.</param>
-    /// <param name="time">The time on the microwave, in seconds.</param>
-    private void AddTemperature(MicrowaveComponent component, float time)
-    {
-        var heatToAdd = time * component.BaseHeatMultiplier;
-        foreach (var entity in component.Storage.ContainedEntities)
-        {
-            if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
-
-            if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
-                continue;
-            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
-            {
-                var solution = soln.Comp.Solution;
-                if (solution.Temperature > component.TemperatureUpperThreshold)
-                    continue;
-
-                _solutionContainer.AddThermalEnergy(soln, heatToAdd);
-            }
-        }
-    }
-
     private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
     {
         // this really does have to be in ComponentInit
@@ -268,6 +239,44 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         Wzhzhzh(ent, null);
     }
 
+    private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
+    {
+        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent) || _power.IsPowered(ent.Owner))
+            return;
+
+        // some validation to prevent trollage
+        if (args.NewCookTime % 5 != 0 || args.NewCookTime > ent.Comp.MaxCookTime)
+            return;
+
+        ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
+        ent.Comp.CurrentCookTimerTime = args.NewCookTime;
+        ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
+        _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
+        UpdateUserInterfaceState(ent, ent.Comp);
+    }
+
+    private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
+    {
+        var active = ent.Comp1;
+        var microwave = ent.Comp2;
+
+        active.CookTimeRemaining -= time;
+        RollMalfunction(ent);
+        AddTemperature(microwave, time);
+
+        if (active.CookTimeRemaining <= 0)
+            CompleteCooking(ent);
+    }
+
+    private void StopCooking(Entity<MicrowaveComponent> ent)
+    {
+        RemCompDeferred<ActiveMicrowaveComponent>(ent);
+        foreach (var solid in ent.Comp.Storage.ContainedEntities)
+        {
+            RemCompDeferred<ActivelyMicrowavedComponent>(solid);
+        }
+    }
+
     public void UpdateUserInterfaceState(Entity<MicrowaveComponent> microwave)
     {
         var uid = microwave.Owner;
@@ -322,6 +331,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(ent)} exploded from unsafe cooking!");
     }
+
     /// <summary>
     /// Handles the attempted cooking of unsafe objects
     /// </summary>
@@ -347,41 +357,30 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             _lightning.ShootRandomLightnings(ent, 1.0f, 2, MalfunctionSpark, triggerLightningEvents: false);
     }
 
-    private void StopCooking(Entity<MicrowaveComponent> ent)
+    /// <summary>
+    ///     Adds temperature to every item in the microwave,
+    ///     based on the time it took to microwave.
+    /// </summary>
+    /// <param name="component">The microwave that is heating up.</param>
+    /// <param name="time">The time on the microwave, in seconds.</param>
+    private void AddTemperature(MicrowaveComponent component, float time)
     {
-        RemCompDeferred<ActiveMicrowaveComponent>(ent);
-        foreach (var solid in ent.Comp.Storage.ContainedEntities)
+        var heatToAdd = time * component.BaseHeatMultiplier;
+        foreach (var entity in component.Storage.ContainedEntities)
         {
-            RemCompDeferred<ActivelyMicrowavedComponent>(solid);
+            if (TryComp<TemperatureComponent>(entity, out var tempComp))
+                _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
+
+            if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
+                continue;
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
+            {
+                var solution = soln.Comp.Solution;
+                if (solution.Temperature > component.TemperatureUpperThreshold)
+                    continue;
+
+                _solutionContainer.AddThermalEnergy(soln, heatToAdd);
+            }
         }
-    }
-
-    private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
-    {
-        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent) || _power.IsPowered(ent.Owner))
-            return;
-
-        // some validation to prevent trollage
-        if (args.NewCookTime % 5 != 0 || args.NewCookTime > ent.Comp.MaxCookTime)
-            return;
-
-        ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
-        ent.Comp.CurrentCookTimerTime = args.NewCookTime;
-        ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
-        _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
-        UpdateUserInterfaceState(ent, ent.Comp);
-    }
-
-    private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
-    {
-        var active = ent.Comp1;
-        var microwave = ent.Comp2;
-
-        active.CookTimeRemaining -= time;
-        RollMalfunction(ent);
-        AddTemperature(microwave, time);
-
-        if (active.CookTimeRemaining <= 0)
-            CompleteCooking(ent);
     }
 }
