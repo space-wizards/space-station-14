@@ -312,7 +312,7 @@ namespace Content.Client.Atmos.UI
             });
 
             // Unpack the GasPacket
-            var gasEntries = gasMix.Gases.Value.UnpackGasPacket();
+            var gasEntries = gasMix.Gases.Value.Unpack();
 
             var totalGasAmount = 0f;
             foreach (var gas in gasEntries)

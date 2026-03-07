@@ -109,7 +109,7 @@ public sealed partial class GasAnalyzerComponent : Component
         /// </summary>
         /// <returns>An array of tuples containing the name, amount, and color of each gas present in the packet. Returns an
         /// empty array if the packet is invalid.</returns>
-        public (string Name, float Amount, string Color)[] UnpackGasPacket()
+        public (string Name, float Amount, string Color)[] Unpack()
         {
 
             if (IsValid() == false)

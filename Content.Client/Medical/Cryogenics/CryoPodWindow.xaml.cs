@@ -69,7 +69,7 @@ public sealed partial class CryoPodWindow : FancyWindow
 
         if (msg.GasMix.Gases?.IsValid() == true)
         {
-            var gasEntries = msg.GasMix.Gases.Value.UnpackGasPacket();
+            var gasEntries = msg.GasMix.Gases.Value.Unpack();
             var totalGasAmount = msg.GasMix.Gases.Value.Moles!.Sum();
 
             foreach (var gas in gasEntries)
