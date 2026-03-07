@@ -1589,6 +1589,31 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser2-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleHeavyRadioactive
+  name: Radioactive xenoborg module
+  description: Module that causes a xenoborg to emanate radioactive energy.
+  components:
+  - type: Sprite
+    layers:
+      - state: xenoborg_heavy
+      - state: icon-xenoborg-radioactive
+  - type: ComponentBorgModule
+    components:
+    - type: RadiationSource
+      intensity: 1
+      slope: 0.2
+    - type: PointLight
+      color: green
+      radius: 5
+      energy: 1
+    - type: AmbientSound
+      range: 6
+      volume: -3
+      sound:
+        path: /Audio/Ambience/Objects/xenoborg_radioactive.ogg
+
+- type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleSpaceMovement
   name: space movement xenoborg module
