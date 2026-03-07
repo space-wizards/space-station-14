@@ -20,7 +20,7 @@
   id: CentcommGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesCommand
     gloves: ClothingHandsGlovesColorBlack
