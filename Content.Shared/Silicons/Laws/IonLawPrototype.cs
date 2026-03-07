@@ -43,11 +43,11 @@ public sealed partial class IonLawPrototype : IPrototype
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class IonLawSelector
 {
-
     /// <summary>
     /// Weight of the option being chosen.
     /// </summary>
-    public virtual float Weight { get; private set; } = 1.0f;
+    [DataField]
+    public virtual float Weight { get; set; } = 1.0f;
 }
 
 /// <summary>

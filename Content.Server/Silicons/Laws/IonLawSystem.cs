@@ -282,7 +282,10 @@ public sealed class IonLawSystem : EntitySystem
                 _sawmill.Error("Fallback DataSet (" + selector + ") was empty or not found" );
                 return Loc.GetString("ion-law-error-fallback-dataset-empty-or-not-found");
             case ConstantFill constantFill:
-                return constantFill.Value;
+                if (constantFill.BoolValue.HasValue)
+                    return constantFill.BoolValue.Value;
+                _sawmill.Error("The selected Constant Fill did not have a value: " + constantFill );
+                return Loc.GetString("ion-law-error-no-bool-value");
             default:
             {
                 _sawmill.Error("Selected DataSet (" + selector + ") was not selected" );

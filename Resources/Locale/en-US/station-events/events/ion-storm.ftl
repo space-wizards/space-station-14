@@ -98,3 +98,4 @@ ion-law-error-no-available-selectors = SYSTEM TRIED TO CALL A RESOURCE THAT DOES
 ion-law-error-dataset-empty-or-not-found = THE FILE YOU ARE LOOKING FOR COULD NOT BE FOUND
 ion-law-error-fallback-dataset-empty-or-not-found = SYSTEM RESTORE POINT FAILED
 ion-law-error-no-selector-selected = THE SELECTED RESOURCE WAS MOVED OR DELETED
+ion-law-error-no-bool-value = THIS SENTENCE IS FALSE
