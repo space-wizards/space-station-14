@@ -109,7 +109,7 @@ namespace Content.Client.Verbs.UI
             Close();
 
             var menu = popup ?? _context.RootMenu;
-            menu.MenuBody.DisposeAllChildren();
+            menu.MenuBody.RemoveAllChildren();
 
             CurrentTarget = target;
             CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, out ExtraCategories, force);
@@ -207,7 +207,7 @@ namespace Content.Client.Verbs.UI
         /// </summary>
         public void AddServerVerbs(List<Verb>? verbs, ContextMenuPopup popup)
         {
-            popup.MenuBody.DisposeAllChildren();
+            popup.MenuBody.RemoveAllChildren();
 
             // Verbs may be null if the server does not think we can see the target entity. This **should** not happen.
             if (verbs == null)
@@ -273,7 +273,7 @@ namespace Content.Client.Verbs.UI
 
             if (verbElement.SubMenu == null)
             {
-                var popupElement = new ConfirmationMenuElement(verb, "Confirm");
+                var popupElement = new ConfirmationMenuElement(verb, Loc.GetString("generic-confirm"));
                 verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
                 _context.AddElement(verbElement.SubMenu, popupElement);
             }

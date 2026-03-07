@@ -51,8 +51,9 @@ public sealed class RoofOverlay : Overlay
 
         var worldHandle = args.WorldHandle;
         var lightoverlay = _overlay.GetOverlay<BeforeLightTargetOverlay>();
+        var lightRes = lightoverlay.GetCachedForViewport(args.Viewport);
         var bounds = lightoverlay.EnlargedBounds;
-        var target = lightoverlay.EnlargedLightTarget;
+        var target = lightRes.EnlargedLightTarget;
 
         _grids.Clear();
         _mapManager.FindGridsIntersecting(args.MapId, bounds, ref _grids, approx: true, includeMap: true);

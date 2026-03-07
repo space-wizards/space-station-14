@@ -34,6 +34,10 @@
       - MindRoleThief
       briefing:
         sound: "/Audio/Misc/thief_greeting.ogg"
+  - type: DynamicRuleCost
+    cost: 75
+  - type: GameRule
+    cancelPresetOnTooFewPlayers: false
 
 # Needs testing
 - type: entity
@@ -68,3 +72,35 @@
         nameFormat: name-format-wizard
       mindRoles:
       - MindRoleWizard
+  - type: GameRule
+    cancelPresetOnTooFewPlayers: false
+
+- type: entity
+  parent: BaseXenoborgsRule
+  id: SubXenoborgs
+  components:
+  - type: GameRule
+    minPlayers: 30
+    cancelPresetOnTooFewPlayers: false
+  - type: AntagMultipleRoleSpawner
+    antagRoleToPrototypes:
+      MothershipCore: [ MothershipCore ]
+      Xenoborg: [ XenoborgEngi, XenoborgHeavy, XenoborgScout, XenoborgStealth ]
+    pickAndTake: true
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ MothershipCore ]
+      fallbackRoles: [ Xenoborg ]
+      spawnerPrototype: SpawnPointGhostRoleMothershipCore
+      mindRoles:
+      - MindRoleMothershipCore
+    - prefRoles: [ Xenoborg ]
+      fallbackRoles: [ MothershipCore ]
+      spawnerPrototype: SpawnPointGhostRoleXenoborg
+      mindRoles:
+      - MindRoleXenoborg
+      min: 4
+      max: 4
+  - type: DynamicRuleCost
+    cost: 200

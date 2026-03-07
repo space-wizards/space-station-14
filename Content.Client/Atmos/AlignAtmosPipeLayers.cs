@@ -134,7 +134,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
 
         var newProtoId = altPrototypes[(int)layer];
 
-        if (!_protoManager.TryIndex(newProtoId, out var newProto))
+        if (!_protoManager.Resolve(newProtoId, out var newProto))
             return;
 
         if (newProto.Type != ConstructionType.Structure)

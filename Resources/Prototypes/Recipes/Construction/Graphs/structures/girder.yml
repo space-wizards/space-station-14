@@ -509,11 +509,11 @@
         - to: wall
           steps:
             - tool: Welding
-              doAfter: 5
+              doAfter: 2
         - to: wall
           steps:
             - tool: Brushing
-              doAfter: 12
+              doAfter: 4
 
     - node: reinforcedWallRust
       entity: WallReinforcedRust
@@ -521,8 +521,8 @@
         - to: reinforcedWall
           steps:
             - tool: Welding
-              doAfter: 5
+              doAfter: 2
         - to: reinforcedWall
           steps:
             - tool: Brushing
-              doAfter: 12
+              doAfter: 4

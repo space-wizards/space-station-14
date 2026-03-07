@@ -1,8 +1,8 @@
 - type: entity
-  id: BulletFoam
-  description: I hope you're wearing eye protection.
-  name: foam dart
   parent: BaseItem
+  id: BulletFoam
+  name: foam dart
+  description: I hope you're wearing eye protection.
   components:
   - type: Fixtures
     fixtures:
@@ -24,7 +24,7 @@
       - Trash
   - type: Ammo
   - type: Sprite
-    sprite: Objects/Fun/Foam/foam_crossbow.rsi
+    sprite: Objects/Fun/Foam/foam_dart.rsi
     layers:
       - state: foamdart
   - type: EmbeddableProjectile

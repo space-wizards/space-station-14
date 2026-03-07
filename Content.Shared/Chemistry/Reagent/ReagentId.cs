@@ -75,7 +75,21 @@ public partial struct ReagentId : IEquatable<ReagentId>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Prototype, Data);
+        // We need to make sure we take the hash code of Data by value in order
+        // for hashed key lookups to work properly
+        var hash = 17;
+        unchecked
+        {
+            if (Data?.Count != 0)
+            {
+                foreach (var data in Data ?? [])
+                {
+                    hash = hash * 23 + data.GetHashCode();
+                }
+            }
+        }
+
+        return HashCode.Combine(Prototype, hash);
     }
 
     public string ToString(FixedPoint2 quantity)

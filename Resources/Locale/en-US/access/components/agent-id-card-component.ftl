@@ -8,3 +8,5 @@ agent-id-card-current-name = Name:
 agent-id-card-current-job = Job:
 agent-id-card-job-icon-label = Job icon:
 agent-id-menu-title = Agent ID Card
+
+agent-id-open-ui-verb = Change settings

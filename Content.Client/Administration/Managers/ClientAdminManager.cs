@@ -15,6 +15,7 @@ namespace Content.Client.Administration.Managers
         [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IClientNetManager _netMgr = default!;
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
+        [Dependency] private readonly IClientConsoleHost _host = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
@@ -86,12 +87,12 @@ namespace Content.Client.Administration.Managers
         private void UpdateMessageRx(MsgUpdateAdminStatus message)
         {
             _availableCommands.Clear();
-            var host = IoCManager.Resolve<IClientConsoleHost>();
 
             // Anything marked as Any we'll just add even if the server doesn't know about it.
-            foreach (var (command, instance) in host.AvailableCommands)
+            foreach (var (command, instance) in _host.AvailableCommands)
             {
-                if (Attribute.GetCustomAttribute(instance.GetType(), typeof(AnyCommandAttribute)) == null) continue;
+                if (Attribute.GetCustomAttribute(instance.GetType(), typeof(AnyCommandAttribute)) == null)
+                    continue;
                 _availableCommands.Add(command);
             }
 
