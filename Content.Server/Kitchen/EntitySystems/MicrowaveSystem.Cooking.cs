@@ -130,4 +130,31 @@ public sealed partial class MicrowaveSystem
         ActivateMicrowave(microwave, recipe, malfunctioning);
         UpdateUserInterfaceState(microwave);
     }
+
+    private void CompleteCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
+    {
+        var active = ent.Comp1;
+        var microwave = ent.Comp2;
+        var microwaveEnt = (ent.Owner, microwave);
+
+        if (active.PortionedRecipe.Recipe != null)
+            ProduceFinishedRecipe(microwaveEnt, active.PortionedRecipe.Recipe, active.PortionedRecipe.Count);
+
+        microwave.CurrentCookTimeEnd = TimeSpan.Zero;
+        _container.EmptyContainer(microwave.Storage);
+        _audio.PlayPvs(microwave.FoodDoneSound, ent);
+        UpdateUserInterfaceState(microwaveEnt);
+        StopCooking(microwaveEnt);
+    }
+
+    private void ProduceFinishedRecipe(Entity<MicrowaveComponent> microwave,
+        FoodRecipePrototype recipe,
+        uint count = 1)
+    {
+        SubtractContents(microwave, recipe, count);
+
+        var coords = Transform(microwave).Coordinates;
+        for (var i = 0; i < count; i++)
+            Spawn(recipe.Result, coords);
+    }
 }

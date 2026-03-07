@@ -104,46 +104,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
     }
 
-    private void ProduceFinishedRecipe(Entity<MicrowaveComponent> microwave,
-        FoodRecipePrototype recipe,
-        uint count = 1)
-    {
-        SubtractContents(microwave, recipe, count);
-
-        var coords = Transform(microwave).Coordinates;
-        for (var i = 0; i < count; i++)
-            Spawn(recipe.Result, coords);
-    }
-
-    private void CompleteCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
-    {
-        var active = ent.Comp1;
-        var microwave = ent.Comp2;
-        var microwaveEnt = (ent.Owner, microwave);
-
-        if (active.PortionedRecipe.Recipe != null)
-            ProduceFinishedRecipe(microwaveEnt, active.PortionedRecipe.Recipe, active.PortionedRecipe.Count);
-
-        microwave.CurrentCookTimeEnd = TimeSpan.Zero;
-        _container.EmptyContainer(microwave.Storage);
-        _audio.PlayPvs(microwave.FoodDoneSound, ent);
-        UpdateUserInterfaceState(microwaveEnt);
-        StopCooking(microwaveEnt);
-    }
-
-    private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
-    {
-        var active = ent.Comp1;
-        var microwave = ent.Comp2;
-
-        active.CookTimeRemaining -= time;
-        RollMalfunction(ent);
-        AddTemperature(microwave, time);
-
-        if (active.CookTimeRemaining <= 0)
-            CompleteCooking(ent);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -410,5 +370,18 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
         _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
         UpdateUserInterfaceState(ent, ent.Comp);
+    }
+
+    private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
+    {
+        var active = ent.Comp1;
+        var microwave = ent.Comp2;
+
+        active.CookTimeRemaining -= time;
+        RollMalfunction(ent);
+        AddTemperature(microwave, time);
+
+        if (active.CookTimeRemaining <= 0)
+            CompleteCooking(ent);
     }
 }
