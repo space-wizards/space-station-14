@@ -104,6 +104,46 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
+        while (query.MoveNext(out var uid, out var active, out var microwave))
+        {
+
+            active.CookTimeRemaining -= frameTime;
+
+            RollMalfunction((uid, active, microwave));
+
+            //check if there's still cook time left
+            if (active.CookTimeRemaining > 0)
+            {
+                AddTemperature(microwave, frameTime);
+                continue;
+            }
+
+            //this means the microwave has finished cooking.
+            AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
+
+            if (active.PortionedRecipe.Item1 != null)
+            {
+                var coords = Transform(uid).Coordinates;
+                for (var i = 0; i < active.PortionedRecipe.Item2; i++)
+                {
+                    SubtractContents(microwave, active.PortionedRecipe.Item1);
+                    Spawn(active.PortionedRecipe.Item1.Result, coords);
+                }
+            }
+
+            _container.EmptyContainer(microwave.Storage);
+            microwave.CurrentCookTimeEnd = TimeSpan.Zero;
+            UpdateUserInterfaceState(uid, microwave);
+            _audio.PlayPvs(microwave.FoodDoneSound, uid);
+            StopCooking((uid, microwave));
+        }
+    }
+
     private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
     {
         if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
@@ -344,46 +384,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         foreach (var solid in ent.Comp.Storage.ContainedEntities)
         {
             RemCompDeferred<ActivelyMicrowavedComponent>(solid);
-        }
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
-        while (query.MoveNext(out var uid, out var active, out var microwave))
-        {
-
-            active.CookTimeRemaining -= frameTime;
-
-            RollMalfunction((uid, active, microwave));
-
-            //check if there's still cook time left
-            if (active.CookTimeRemaining > 0)
-            {
-                AddTemperature(microwave, frameTime);
-                continue;
-            }
-
-            //this means the microwave has finished cooking.
-            AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
-
-            if (active.PortionedRecipe.Item1 != null)
-            {
-                var coords = Transform(uid).Coordinates;
-                for (var i = 0; i < active.PortionedRecipe.Item2; i++)
-                {
-                    SubtractContents(microwave, active.PortionedRecipe.Item1);
-                    Spawn(active.PortionedRecipe.Item1.Result, coords);
-                }
-            }
-
-            _container.EmptyContainer(microwave.Storage);
-            microwave.CurrentCookTimeEnd = TimeSpan.Zero;
-            UpdateUserInterfaceState(uid, microwave);
-            _audio.PlayPvs(microwave.FoodDoneSound, uid);
-            StopCooking((uid, microwave));
         }
     }
 
