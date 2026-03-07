@@ -626,7 +626,6 @@
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_vulp_upperleg_l
 
-
 - type: marking
   id: GauzeVulpUpperLegRight
   bodyPart: RLeg
