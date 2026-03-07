@@ -57,7 +57,7 @@ public sealed class StereoTest
                             if (field.GetValue(proto) is not { } fieldValue)
                                 continue;
 
-                            CheckValue(fieldValue, kind.Name, dataDefinitions, resCache, protoMan);
+                            CheckValue(fieldValue, $"{kind.Name}.{field.Name}", dataDefinitions, resCache, protoMan);
                         }
                     }
                 }
@@ -83,7 +83,7 @@ public sealed class StereoTest
                             if (field.GetValue(component) is not { } fieldValue)
                                 continue;
 
-                            CheckValue(fieldValue, comp.Name, dataDefinitions, resCache, protoMan);
+                            CheckValue(fieldValue, $"{comp.Name}.{field.Name}", dataDefinitions, resCache, protoMan);
                         }
                     }
                 }
@@ -138,7 +138,7 @@ public sealed class StereoTest
             // Recursively check each value in the dictionary
             foreach (var v in dictionary.Values)
             {
-                CheckValue(v, $"{path}.Value", dataDefs, resCache, protoMan);
+                CheckValue(v, $"{path}", dataDefs, resCache, protoMan);
             }
         }
         else if (dataDefs.TryGetValue(value.GetType(), out var dataDefFields))
@@ -181,7 +181,7 @@ public sealed class StereoTest
     {
         var audio = resCache.GetResource<AudioResource>(path);
         Assert.That(audio.AudioStream.ChannelCount, Is.EqualTo(1),
-            $"{path} has multiple channels, but {datafieldName} only allows mono audio. Stereo audio cannot be played positionally and should be converted to mono. If {datafieldName} is only played globally (without positional data, like music), add [AllowStereo] to the SoundSpecifer to remove this error.");
+            $"{path} has multiple channels, but {datafieldName} only allows mono audio. Stereo audio cannot be played positionally and should be converted to mono. If this audio is only played globally (without positional info; like music), add [AllowStereo] to the SoundSpecifer to remove this error.");
     }
 
     private static bool IsRelevantType(Type type)
