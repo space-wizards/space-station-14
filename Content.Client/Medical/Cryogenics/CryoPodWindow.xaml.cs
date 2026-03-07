@@ -66,11 +66,12 @@ public sealed partial class CryoPodWindow : FancyWindow
         GasMixChart.Clear();
         GasMixChart.Visible = hasGas;
 
-        if (msg.GasMix.Gases != null)
+        if (msg.GasMix.Gases?.IsValid() == true)
         {
-            var totalGasAmount = msg.GasMix.Gases.Sum(gas => gas.Amount);
+            var gasEntries = msg.GasMix.Gases.Value.UnpackGasPacket();
+            var totalGasAmount = msg.GasMix.Gases.Value.Moles!.Sum();
 
-            foreach (var gas in msg.GasMix.Gases)
+            foreach (var gas in gasEntries)
             {
                 var color = Color.FromHex($"#{gas.Color}", Color.White);
                 var percent = gas.Amount / totalGasAmount * 100;

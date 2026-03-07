@@ -240,7 +240,8 @@ namespace Content.Client.Atmos.UI
                 dataContainer.AddChild(tempBox);
             }
 
-            if (gasMix.Gases == null || gasMix.Gases?.Length == 0)
+            // Check if GasPacket is null or has no values
+            if (gasMix.Gases?.IsValid() != true)
             {
                 // Separator
                 dataContainer.AddChild(new Control
@@ -310,8 +311,11 @@ namespace Content.Client.Atmos.UI
                 VerticalExpand = true
             });
 
+            // Unpack the GasPacket
+            var gasEntries = gasMix.Gases.Value.UnpackGasPacket();
+
             var totalGasAmount = 0f;
-            foreach (var gas in gasMix.Gases!)
+            foreach (var gas in gasEntries)
             {
                 totalGasAmount += gas.Amount;
             }
@@ -327,9 +331,9 @@ namespace Content.Client.Atmos.UI
             tableVal.AddChild(new StripeBack());
             tablePercent.AddChild(new StripeBack());
 
-            for (var j = 0; j < gasMix.Gases.Length; j++)
+            for (var j = 0; j < gasEntries.Length; j++)
             {
-                var gas = gasMix.Gases[j];
+                var gas = gasEntries[j];
                 var color = Color.FromHex($"#{gas.Color}", Color.White);
                 // Add to the table
                 tableKey.AddChild(new Label

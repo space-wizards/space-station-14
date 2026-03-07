@@ -245,34 +245,35 @@ public sealed class GasAnalyzerSystem : EntitySystem
             mixture.Volume,
             mixture.Pressure,
             mixture.Temperature,
-            GenerateGasEntryArray(mixture)
+            BuildGasPacket(mixture)
         );
     }
 
     /// <summary>
-    /// Generates a GasEntry array for a given GasMixture
+    /// Generates a GasPacket for a given GasMixture
+    /// Packs relevant gas flags into a bitfield
+    /// The list order of Moles corresponds to the LSB->MSB order of the bitfield.
     /// </summary>
-    private GasEntry[] GenerateGasEntryArray(GasMixture? mixture)
+    private GasPacket? BuildGasPacket(GasMixture mixture)
     {
-        var gases = new List<GasEntry>();
+        ushort bitMask = 1;
+        ushort bitField = 0;
+        var amounts = new List<float>();
 
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
-            var gas = _atmo.GetGas(i);
+            var amount = mixture[i];
 
-            if (mixture?[i] <= UIMinMoles)
-                continue;
-
-            if (mixture != null)
+            if (amount > UIMinMoles)
             {
-                var gasName = Loc.GetString(gas.Name);
-                gases.Add(new GasEntry(gasName, mixture[i], gas.Color));
+                bitField |= bitMask;
+                amounts.Add(amount);
             }
+
+            bitMask <<= 1;
         }
 
-        var gasesOrdered = gases.OrderByDescending(gas => gas.Amount);
-
-        return gasesOrdered.ToArray();
+        return amounts.Count == 0 ? null : new GasPacket(bitField, amounts.ToArray());
     }
 }
 
