@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Energy shotgun lethal projectiles can now hit holo mobs.
-    type: Fix
-  id: 9055
-  time: '2025-10-08T15:23:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37920
 - author: Hitlinemoss
   changes:
   - message: Folders and clipboards are now available in the Trinkets loadout tab.
@@ -3985,3 +3978,11 @@
   id: 9565
   time: '2026-03-06T16:17:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43082
+- author: august-sun
+  changes:
+  - message: The Estoc DMR now has less slowdown when wielding and the same accuracy
+      as other rifles.
+    type: Tweak
+  id: 9566
+  time: '2026-03-07T02:00:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43038
