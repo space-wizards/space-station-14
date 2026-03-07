@@ -78,11 +78,13 @@ public sealed partial class MicrowaveSystem
         return true;
     }
 
-    private void ActivateMicrowave(EntityUid uid,
-        MicrowaveComponent component,
+    private void ActivateMicrowave(Entity<MicrowaveComponent> microwave,
         (FoodRecipePrototype? recipe, uint count) recipe,
         bool malfunctioning)
     {
+        var uid = microwave.Owner;
+        var component = microwave.Comp;
+
         _audio.PlayPvs(component.StartCookingSound, uid);
 
         var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
@@ -105,27 +107,27 @@ public sealed partial class MicrowaveSystem
     /// It does not make a "wzhzhzh" sound, it makes a "mmmmmmmm" sound!
     /// -emo
     /// </remarks>
-    public void Wzhzhzh(EntityUid uid, MicrowaveComponent component, EntityUid? user)
+    public void Wzhzhzh(Entity<MicrowaveComponent> microwave, EntityUid? user)
     {
-        if (!HasContents(component)
-            || HasComp<ActiveMicrowaveComponent>(uid)
-            || !_power.IsPowered(uid))
+        if (!HasContents(microwave)
+            || HasComp<ActiveMicrowaveComponent>(microwave)
+            || !_power.IsPowered(microwave.Owner))
             return;
 
-        var contents = component.Storage.ContainedEntities;
+        var contents = microwave.Comp.Storage.ContainedEntities;
         var malfunctioning = false;
 
-        if (!ProcessContents((uid, component),
+        if (!ProcessContents(microwave,
             contents,
             user,
             ref malfunctioning,
             out var ingredientContents))
             return;
 
-        var ingredients = GetTotalIngredients((uid, component), ingredientContents);
-        var recipe = GetRecipe((uid, component), ingredients);
+        var ingredients = GetTotalIngredients(microwave, ingredientContents);
+        var recipe = GetRecipe(microwave, ingredients);
 
-        ActivateMicrowave(uid, component, recipe, malfunctioning);
-        UpdateUserInterfaceState(uid, component);
+        ActivateMicrowave(microwave, recipe, malfunctioning);
+        UpdateUserInterfaceState(microwave);
     }
 }

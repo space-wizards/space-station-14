@@ -23,7 +23,7 @@ public sealed partial class MicrowaveSystem
 
     private void OnSolutionChange(Entity<MicrowaveComponent> ent, ref SolutionContainerChangedEvent args)
     {
-        UpdateUserInterfaceState(ent, ent.Comp);
+        UpdateUserInterfaceState(ent);
     }
 
     private void OnContentUpdate(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args) // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>. TODO: replace with Entity<T> syntax once that's possible
@@ -110,7 +110,7 @@ public sealed partial class MicrowaveSystem
 
     private void OnEjectMessage(Entity<MicrowaveComponent> ent, ref MicrowaveEjectMessage args)
     {
-        if (!HasContents(ent.Comp) || HasComp<ActiveMicrowaveComponent>(ent))
+        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent))
             return;
 
         _container.EmptyContainer(ent.Comp.Storage);
@@ -120,7 +120,7 @@ public sealed partial class MicrowaveSystem
 
     private void OnEjectIndex(Entity<MicrowaveComponent> ent, ref MicrowaveEjectSolidIndexedMessage args)
     {
-        if (!HasContents(ent.Comp) || HasComp<ActiveMicrowaveComponent>(ent))
+        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent))
             return;
 
         _container.Remove(GetEntity(args.EntityID), ent.Comp.Storage);

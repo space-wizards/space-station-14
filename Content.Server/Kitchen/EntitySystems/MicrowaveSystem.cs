@@ -88,7 +88,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
 
-        SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Actor));
+        SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((e, ref m) => Wzhzhzh(e, m.Actor));
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectIndex);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectTime);
@@ -218,7 +218,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
         ent.Comp.CurrentCookTimerTime = 10;
-        Wzhzhzh(ent.Owner, ent.Comp, args.Victim);
+        Wzhzhzh(ent, args.Victim);
         UpdateUserInterfaceState(ent.Owner, ent.Comp);
         args.Handled = true;
     }
@@ -256,7 +256,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         if (ent.Comp.Broken || !_power.IsPowered(ent))
             return;
 
-        Wzhzhzh(ent.Owner, ent.Comp, null);
+        Wzhzhzh(ent, null);
     }
 
     public void UpdateUserInterfaceState(Entity<MicrowaveComponent> microwave)
@@ -291,9 +291,9 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         _appearance.SetData(uid, PowerDeviceVisuals.VisualState, display, appearanceComponent);
     }
 
-    public static bool HasContents(MicrowaveComponent component)
+    public static bool HasContents(Entity<MicrowaveComponent> microwave)
     {
-        return component.Storage.ContainedEntities.Any();
+        return microwave.Comp.Storage.ContainedEntities.Any();
     }
 
     /// <summary>
@@ -389,7 +389,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
     private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
     {
-        if (!HasContents(ent.Comp) || HasComp<ActiveMicrowaveComponent>(ent) || _power.IsPowered(ent.Owner))
+        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent) || _power.IsPowered(ent.Owner))
             return;
 
         // some validation to prevent trollage
