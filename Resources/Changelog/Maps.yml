@@ -1055,4 +1055,11 @@
   id: 128
   time: '2026-03-04T09:08:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43007
+- author: TytosB
+  changes:
+  - message: several changes to Serpentcrest, salv area rework.
+    type: Tweak
+  id: 129
+  time: '2026-03-07T20:26:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43102
 Order: 2
