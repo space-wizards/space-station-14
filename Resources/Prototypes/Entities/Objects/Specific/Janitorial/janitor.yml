@@ -72,6 +72,8 @@
         visible: false
     - type: SolutionContainerVisuals
       maxFillLevels: 2
+      equippedMaxFillLevels: 2
+      equippedFillBaseName: -fill-
     - type: Item
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
