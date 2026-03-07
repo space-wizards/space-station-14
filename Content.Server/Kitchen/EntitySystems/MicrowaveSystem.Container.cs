@@ -1,5 +1,4 @@
 using Content.Server.Kitchen.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -70,7 +69,7 @@ public sealed partial class MicrowaveSystem
         if (args.Handled)
             return;
 
-        if (!(TryComp<ApcPowerReceiverComponent>(ent, out var apc) && apc.Powered))
+        if (!_power.IsPowered(ent.Owner))
         {
             _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), ent, args.User);
             return;

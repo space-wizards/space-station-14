@@ -109,7 +109,7 @@ public sealed partial class MicrowaveSystem
     {
         if (!HasContents(component)
             || HasComp<ActiveMicrowaveComponent>(uid)
-            || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
+            || !_power.IsPowered(uid))
             return;
 
         var contents = component.Storage.ContainedEntities;

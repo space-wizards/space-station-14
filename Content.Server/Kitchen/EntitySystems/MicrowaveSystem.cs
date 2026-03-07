@@ -389,7 +389,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
     private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
     {
-        if (!HasContents(ent.Comp) || HasComp<ActiveMicrowaveComponent>(ent) || !(TryComp<ApcPowerReceiverComponent>(ent, out var apc) && apc.Powered))
+        if (!HasContents(ent.Comp) || HasComp<ActiveMicrowaveComponent>(ent) || _power.IsPowered(ent.Owner))
             return;
 
         // some validation to prevent trollage
