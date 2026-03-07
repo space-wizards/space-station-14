@@ -83,7 +83,7 @@ public sealed class StereoTest
                             if (field.GetValue(component) is not { } fieldValue)
                                 continue;
 
-                            CheckValue(fieldValue, $"{comp.Name}.{field.Name}", dataDefinitions, resCache, protoMan);
+                            CheckValue(fieldValue, $"{proto.ID}:{comp.Name}.{field.Name}", dataDefinitions, resCache, protoMan);
                         }
                     }
                 }
