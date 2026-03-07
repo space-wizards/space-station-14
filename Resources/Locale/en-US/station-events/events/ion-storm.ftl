@@ -92,7 +92,7 @@ ion-storm-law-concept-verb = {ION-CONCEPT($ion, 1)} IS {ION-VERB($ion, 2)} {ION-
 
 # errors, in case something fails, so it doesn't break in-game flow, but still gives unique identifiers to find which part broke, the result string is mostly fluff
 ion-law-error-no-protos = ERROR 404
-ion-law-error-last-null = 500 INTERNAL SERVER ERROR
+ion-law-error-was-null = 500 INTERNAL SERVER ERROR
 ion-law-error-no-selectors = ERROR: RESOURCE COULD NOT BE LOCATED
 ion-law-error-no-available-selectors = SYSTEM TRIED TO CALL A RESOURCE THAT DOES NOT EXIST
 ion-law-error-dataset-empty-or-not-found = THE FILE YOU ARE LOOKING FOR COULD NOT BE FOUND

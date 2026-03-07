@@ -23,6 +23,9 @@ public sealed partial class IonLawPrototype : IPrototype
     /// The weight of this law.
     /// If 0, it won't be picked.
     /// </summary>
+    /// <remarks>
+    /// If all weights are 0, they will be treated as 1 and a random law will be picked, this is to prevent cases where no Ion Laws get picked.
+    /// </remarks>
     [DataField]
     public float Weight { get; private set; } = 1.0f;
 

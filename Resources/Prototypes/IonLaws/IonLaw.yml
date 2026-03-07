@@ -16,7 +16,6 @@
   lawString: ion-storm-law-crew-are
   selectorWeightAdjust:
     IonStormThreats: 2.0
-    IonStormObjects: 1.0
     RandomManifestFill: 0.15
 
 - type: ionLaw
@@ -34,7 +33,6 @@
   lawString: ion-storm-law-thing-harmful
   selectorWeightAdjust:
     IonStormConcepts: 0.5
-    IonStormActions: 1.0
 
 - type: ionLaw
   id: JobHarmful
@@ -55,7 +53,6 @@
   lawString: ion-storm-law-requires
   selectorWeightAdjust:
     IonStormConcepts: 0.7
-    IonStormRequires: 1.0
     RandomManifestFill: 0.15
 
 - type: ionLaw
@@ -69,7 +66,6 @@
   lawString: ion-storm-law-allergic
   selectorWeightAdjust:
     IonStormConcepts: 0.5
-    IonStormAllergies: 1.0
     RandomManifestFill: 0.15
 
 - type: ionLaw
@@ -77,7 +73,6 @@
   lawString: ion-storm-law-allergic-subjects
   selectorWeightAdjust:
     IonStormObjects: 0.5
-    IonStormCrew: 1.0
     RandomManifestFill: 0.15
 
 - type: ionLaw
@@ -170,7 +165,6 @@
   id: CrewOnlySubjects
   lawString: ion-storm-law-crew-only-subjects
   selectorWeightAdjust:
-    IonStormObjects: 1.0
     IonStormThreats: 1.5
     RandomManifestFill: 0.15
 
