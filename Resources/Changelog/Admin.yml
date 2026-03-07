@@ -1660,5 +1660,27 @@ Entries:
   id: 202
   time: '2026-02-09T13:31:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42791
+- author: slarticodefast
+  changes:
+  - message: Using the "fuckrules" command will now create an admin log and alert
+      the admins via chat.
+    type: Add
+  id: 203
+  time: '2026-02-21T20:22:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42988
+- author: Velken
+  changes:
+  - message: Admin door remote once again works through walls
+    type: Fix
+  id: 204
+  time: '2026-02-28T20:30:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43063
+- author: sowelipililimute
+  changes:
+  - message: Godmode no longer saves and restores the damage held before godmode.
+    type: Remove
+  id: 205
+  time: '2026-03-07T04:26:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43103
 Name: Admin
 Order: 3
