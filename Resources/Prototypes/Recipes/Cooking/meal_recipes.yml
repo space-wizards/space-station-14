@@ -231,7 +231,8 @@
   ingredients:
     solids:
       FoodBreadBun: 1
-      SheetPlasma1: 2
+    materials:
+      Plasma: 2
 
 - type: microwaveMealRecipe
   id: RecipeCarpBurger
@@ -781,7 +782,8 @@
       FoodDoughFlat: 1
       FoodChiliPepper: 2
       FoodTomato: 2
-      SheetUranium1: 2
+    materials:
+      Uranium: 2
 
 - type: microwaveMealRecipe
   id: RecipeCottonPizza

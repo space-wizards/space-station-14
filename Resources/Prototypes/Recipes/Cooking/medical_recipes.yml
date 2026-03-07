@@ -17,8 +17,9 @@
   ingredients:
     solids:
       FoodPoppy: 1
-      Brutepack: 1
-      MaterialCloth1: 1
+    materials:
+      Brutepack: 10
+      Cloth: 1
     reagents:
       TranexamicAcid: 20
       Cryptobiolin: 20
@@ -32,8 +33,9 @@
   ingredients:
     solids:
       FoodAloe: 1
-      Ointment: 1
-      MaterialCloth1: 1
+    materials:
+      Ointment: 10
+      Cloth: 1
     reagents:
       Sigynate: 20
       Dermaline: 20
