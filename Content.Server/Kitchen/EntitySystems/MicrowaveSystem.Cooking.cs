@@ -14,6 +14,37 @@ public sealed partial class MicrowaveSystem
         Del(item);
     }
 
+    private void MicrowaveItem(Entity<MicrowaveComponent> microwave,
+        EntityUid item,
+        EntityUid? user,
+        ref bool malfunctioning,
+        out bool shouldStopMicrowave,
+        out bool shouldRemoveFromContents)
+    {
+        shouldStopMicrowave = false;
+        shouldRemoveFromContents = false;
+
+        // Special item-in-microwave interactions. Certain "being microwaved' interactions
+        // may cancel out any actual cooking, so this may early exit.
+        var beingMicrowaved = new BeingMicrowavedEvent(microwave.Owner, user);
+        RaiseLocalEvent(item, beingMicrowaved);
+        if (beingMicrowaved.Handled)
+        {
+            UpdateUserInterfaceState(microwave);
+            shouldStopMicrowave = true;
+            return;
+        }
+
+        if (_whitelist.IsWhitelistPass(microwave.Comp.MalfunctionWhenCookedWhitelist, item))
+            malfunctioning = true;
+
+        if (_whitelist.IsWhitelistPass(microwave.Comp.BurnWhenCookedWhitelist, item))
+        {
+            shouldRemoveFromContents = true;
+            CreateBurnedMess(microwave, item);
+        }
+    }
+
     private bool ProcessContents(Entity<MicrowaveComponent> microwave,
         IReadOnlyList<EntityUid> contents,
         EntityUid? user,
@@ -24,24 +55,18 @@ public sealed partial class MicrowaveSystem
 
         foreach (var item in contents)
         {
-            // Special item-in-microwave interactions. Certain "being microwaved' interactions
-            // may cancel out any actual cooking, so this may early exit.
-            var beingMicrowaved = new BeingMicrowavedEvent(microwave.Owner, user);
-            RaiseLocalEvent(item, beingMicrowaved);
-            if (beingMicrowaved.Handled)
-            {
-                UpdateUserInterfaceState(microwave);
+            MicrowaveItem(microwave,
+                item,
+                user,
+                ref malfunctioning,
+                out var shouldExit,
+                out var shouldRemoveFromContents);
+
+            if (shouldExit)
                 return false;
-            }
 
-            if (_whitelist.IsWhitelistPass(microwave.Comp.MalfunctionWhenCookedWhitelist, item))
-                malfunctioning = true;
-
-            if (_whitelist.IsWhitelistPass(microwave.Comp.BurnWhenCookedWhitelist, item))
-            {
+            if (shouldRemoveFromContents)
                 ingredientContents.Remove(item);
-                CreateBurnedMess(microwave, item);
-            }
         }
 
         foreach (var item in ingredientContents)
