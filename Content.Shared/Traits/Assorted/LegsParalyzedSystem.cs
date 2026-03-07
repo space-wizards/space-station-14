@@ -1,4 +1,5 @@
-﻿using Content.Shared.Buckle.Components;
+﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -11,6 +12,10 @@ public sealed class LegsParalyzedSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
+    private const float MaxSpeedModifier = 1.0f;
+    private const float MinSpeedModifier = 0.0f;
 
     public override void Initialize()
     {
@@ -26,18 +31,22 @@ public sealed class LegsParalyzedSystem : EntitySystem
     private void OnMapInit(EntityUid uid, LegsParalyzedComponent component, MapInitEvent args)
     {
         // TODO: In future probably must be surgery related wound
-        component.SpeedModifier = 0.0f;
-        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+        component.CanMove = false;
+        component.SpeedModifier = MinSpeedModifier;
 
+        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         _standingSystem.Down(uid);
+        _actionBlockerSystem.UpdateCanMove(uid);
     }
 
     private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
     {
-        component.SpeedModifier = 1.0f;
-        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+        component.CanMove = true;
+        component.SpeedModifier = MaxSpeedModifier;
 
+        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         _standingSystem.Stand(uid);
+        _actionBlockerSystem.UpdateCanMove(uid);
     }
 
     private void OnRefreshSpeed(EntityUid uid, LegsParalyzedComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -57,7 +66,8 @@ public sealed class LegsParalyzedSystem : EntitySystem
 
     private void OnUpdateCanMoveEvent(EntityUid uid, LegsParalyzedComponent component, UpdateCanMoveEvent args)
     {
-        args.Cancel();
+        if(!component.CanMove)
+            args.Cancel();
     }
 
     private void OnThrowPushbackAttempt(EntityUid uid, LegsParalyzedComponent component, ThrowPushbackAttemptEvent args)

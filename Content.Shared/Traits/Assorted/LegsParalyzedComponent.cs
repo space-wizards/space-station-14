@@ -14,4 +14,10 @@ public sealed partial class LegsParalyzedComponent : Component
     /// </summary>
     [DataField]
     public float SpeedModifier = 0.0f;
+
+    /// <summary>
+    /// Can Move flag for correct actionBlockerSystem handling
+    /// </summary>
+    [DataField]
+    public bool CanMove = false;
 }
