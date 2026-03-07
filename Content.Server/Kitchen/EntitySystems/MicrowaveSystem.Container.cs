@@ -35,39 +35,41 @@ public sealed partial class MicrowaveSystem
         UpdateUserInterfaceState(uid, component);
     }
 
+    private bool ItemFitsInMicrowave(Entity<MicrowaveComponent> ent, Entity<ItemComponent> item)
+    {
+        var microwave = ent.Comp;
+
+        if (microwave.Storage.Count >= microwave.Capacity)
+            return false;
+
+        var maxSize = _item.GetSizePrototype(microwave.MaxItemSize);
+        var itemSize = _item.GetSizePrototype(item.Comp.Size);
+        if (itemSize > maxSize)
+            return false;
+
+        return true;
+    }
+
     private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
         if (args.Container.ID != ent.Comp.ContainerId)
             return;
 
-        if (ent.Comp.Broken)
+        if (ent.Comp.Broken
+            || HasComp<ActiveMicrowaveComponent>(ent.Owner)
+            || !TryComp<ItemComponent>(args.EntityUid, out var item)
+            || !ItemFitsInMicrowave(ent, (args.EntityUid, item)))
         {
             args.Cancel();
             return;
         }
-
-        if (TryComp<ItemComponent>(args.EntityUid, out var item))
-        {
-            if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(ent.Comp.MaxItemSize))
-            {
-                args.Cancel();
-                return;
-            }
-        }
-        else
-        {
-            args.Cancel();
-            return;
-        }
-
-        if (ent.Comp.Storage.Count >= ent.Comp.Capacity)
-            args.Cancel();
     }
 
     private void OnInteractUsing(Entity<MicrowaveComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
+
         if (!(TryComp<ApcPowerReceiverComponent>(ent, out var apc) && apc.Powered))
         {
             _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), ent, args.User);
