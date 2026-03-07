@@ -25,6 +25,7 @@ public sealed partial class MicrowaveSystem
             if (_prototype.Resolve(recipeId, out var recipeProto))
                 args.Recipes.Add(recipeProto);
     }
+
     public static uint GetRecipePortions(FoodRecipePrototype recipe,
         CookingIngredients ingredients,
         uint cookTime)

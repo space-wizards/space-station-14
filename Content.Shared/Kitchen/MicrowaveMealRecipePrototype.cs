@@ -58,18 +58,34 @@ public sealed partial class FoodRecipePrototype : IPrototype
     public bool SecretRecipe = false;
 }
 
+/// <summary>
+///     A data value representing ingredients for an appliance recipe.
+/// </summary>
+/// <param name="solids">A dictionary of solid item ingredient quantities - actual items used in a recipe.</param>
+/// <param name="materials">A dictionary of stack material quantities, such as plastic sheets or cloth rolls.</param>
+/// <param name="reagents">A dictionary of reagent quantities.</param>
 [Serializable, DataDefinition]
 public partial struct CookingIngredients(Dictionary<EntProtoId, int> solids,
     Dictionary<ProtoId<StackPrototype>, int> materials,
     Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
 {
     // TODO: This should use tags or whitelists instead of entity prototype IDs
+    /// <summary>
+    ///     A dictionary of solid item ingredient quantities - actual items used in a recipe.
+    /// </summary>
     [DataField]
     public Dictionary<EntProtoId, int> Solids = solids;
 
+    /// <summary>
+    ///     A dictionary of stack material quantities, such as plastic sheets or cloth rolls.
+    /// </summary>
     [DataField]
     public Dictionary<ProtoId<StackPrototype>, int> Materials = materials;
 
+    // TOOD: ReagentQuantity[]
+    /// <summary>
+    ///     A dictionary of reagent quantities.
+    /// </summary>
     [DataField]
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents = reagents;
 
