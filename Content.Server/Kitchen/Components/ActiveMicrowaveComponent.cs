@@ -21,5 +21,5 @@ public sealed partial class ActiveMicrowaveComponent : Component
     public TimeSpan MalfunctionTime = TimeSpan.Zero;
 
     [ViewVariables]
-    public (FoodRecipePrototype?, uint) PortionedRecipe;
+    public (FoodRecipePrototype? Recipe, uint Count) PortionedRecipe;
 }
