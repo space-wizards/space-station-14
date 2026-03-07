@@ -82,11 +82,12 @@
     fuelConsumption: 0.01
     fuelLitCost: 0.1
     tankSafe: true
-  - type: WelderHeat
+  - type: HeaterTool
     heatPerUse: 20
     maxTemperature: 350
-    fuelConsumptionPerHeat: 0.05
     doAfterDelay: 2.5
+  - type: WelderHeater
+    fuelConsumptionPerHeat: 0.05
   - type: PointLight
     enabled: false
     netsync: false
@@ -193,11 +194,12 @@
     fuelConsumption: 0.01
     fuelLitCost: 0.1
     tankSafe: true
-  - type: WelderHeat
+  - type: HeaterTool
     heatPerUse: 25
     maxTemperature: 380
-    fuelConsumptionPerHeat: 0.06
     doAfterDelay: 2.2
+  - type: WelderHeater
+    fuelConsumptionPerHeat: 0.06
   - type: ToggleableVisuals
     spriteLayer: lighter_flame
     inhandVisuals:
