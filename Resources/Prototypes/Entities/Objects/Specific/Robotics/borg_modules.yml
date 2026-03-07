@@ -1538,7 +1538,7 @@
          tags:
          - XenoborgC4
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-access-breaker-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-explosive-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
