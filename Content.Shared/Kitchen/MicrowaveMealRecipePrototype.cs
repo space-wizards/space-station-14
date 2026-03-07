@@ -61,33 +61,36 @@ public sealed partial class FoodRecipePrototype : IPrototype
 /// <summary>
 ///     A data value representing ingredients for an appliance recipe.
 /// </summary>
-/// <param name="solids">A dictionary of solid item ingredient quantities - actual items used in a recipe.</param>
-/// <param name="materials">A dictionary of stack material quantities, such as plastic sheets or cloth rolls.</param>
-/// <param name="reagents">A dictionary of reagent quantities.</param>
 [Serializable, DataDefinition]
-public partial struct CookingIngredients(Dictionary<EntProtoId, int> solids,
-    Dictionary<ProtoId<StackPrototype>, int> materials,
-    Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
+public partial record struct CookingIngredients
 {
-    // TODO: This should use tags or whitelists instead of entity prototype IDs
+    public CookingIngredients(Dictionary<EntProtoId, int> solids,
+        Dictionary<ProtoId<StackPrototype>, int> materials,
+        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
+    {
+        Solids = solids;
+        Materials = materials;
+        Reagents = reagents;
+    }
+
     /// <summary>
     ///     A dictionary of solid item ingredient quantities - actual items used in a recipe.
     /// </summary>
+    // TODO: This should use tags or whitelists instead of entity prototype IDs
     [DataField]
-    public Dictionary<EntProtoId, int> Solids = solids;
+    public Dictionary<EntProtoId, int> Solids { get; private set; } = new();
 
     /// <summary>
     ///     A dictionary of stack material quantities, such as plastic sheets or cloth rolls.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<StackPrototype>, int> Materials = materials;
+    public Dictionary<ProtoId<StackPrototype>, int> Materials { get; private set; } = new();
 
-    // TOOD: ReagentQuantity[]
     /// <summary>
     ///     A dictionary of reagent quantities.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents = reagents;
+    public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents { get; private set; } = new();
 
     /// <summary>
     ///    Count the number of ingredients in a recipe for sorting the recipe list.
