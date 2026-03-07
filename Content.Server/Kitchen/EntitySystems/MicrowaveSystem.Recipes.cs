@@ -216,12 +216,12 @@ public sealed partial class MicrowaveSystem
         return material != null && stackEnt != null;
     }
 
-    private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe)
+    private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe, uint count = 1)
     {
-        var ingredients = recipe.Ingredients;
-        var remainingSolids = ingredients.Solids.ShallowClone();
-        var remainingMaterials = ingredients.Materials.ShallowClone();
-        var remainingReagents = ingredients.Reagents.ShallowClone();
+        var portioned = recipe.Ingredients * count;
+        var remainingSolids = portioned.Solids.ShallowClone();
+        var remainingMaterials = portioned.Materials.ShallowClone();
+        var remainingReagents = portioned.Reagents.ShallowClone();
 
         foreach (var item in component.Storage.ContainedEntities)
         {

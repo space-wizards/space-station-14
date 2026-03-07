@@ -130,4 +130,21 @@ public partial struct CookingIngredients(Dictionary<EntProtoId, int> solids,
 
         return portions;
     }
+
+    public static CookingIngredients operator *(CookingIngredients c1, int scalar)
+    {
+        var scaledSolids = c1.Solids.ToDictionary(kvp => kvp.Key,
+            kvp => kvp.Value * scalar);
+        var scaledMaterials = c1.Materials.ToDictionary(kvp => kvp.Key,
+            kvp => kvp.Value * scalar);
+        var scaledReagents = c1.Reagents.ToDictionary(kvp => kvp.Key,
+            kvp => kvp.Value * scalar);
+
+        return new(scaledSolids, scaledMaterials, scaledReagents);
+    }
+
+    public static CookingIngredients operator *(CookingIngredients c1, uint scalar)
+    {
+        return c1 * (int)scalar;
+    }
 }

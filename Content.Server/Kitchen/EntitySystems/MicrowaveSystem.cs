@@ -104,21 +104,25 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
     }
 
-    private void FinishMicrowaving(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
+    private void ProduceFinishedRecipe(Entity<MicrowaveComponent> microwave,
+        FoodRecipePrototype recipe,
+        uint count = 1)
+    {
+        SubtractContents(microwave, recipe, count);
+
+        var coords = Transform(microwave).Coordinates;
+        for (var i = 0; i < count; i++)
+            Spawn(recipe.Result, coords);
+    }
+
+    private void FinishCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
     {
         var active = ent.Comp1;
         var microwave = ent.Comp2;
         var microwaveEnt = (ent.Owner, microwave);
 
         if (active.PortionedRecipe.Recipe != null)
-        {
-            var coords = Transform(ent).Coordinates;
-            for (var i = 0; i < active.PortionedRecipe.Count; i++)
-            {
-                SubtractContents(microwave, active.PortionedRecipe.Recipe);
-                Spawn(active.PortionedRecipe.Recipe.Result, coords);
-            }
-        }
+            ProduceFinishedRecipe(microwaveEnt, active.PortionedRecipe.Recipe, active.PortionedRecipe.Count);
 
         microwave.CurrentCookTimeEnd = TimeSpan.Zero;
         _container.EmptyContainer(microwave.Storage);
@@ -137,7 +141,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         AddTemperature(microwave, time);
 
         if (active.CookTimeRemaining <= 0)
-            FinishMicrowaving(ent);
+            FinishCooking(ent);
     }
 
     public override void Update(float frameTime)
