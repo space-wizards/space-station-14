@@ -19,10 +19,28 @@
   showRoundEnd: false
 
 - type: feedbackPopup
-  id: GibbingFeedback
+  id: PlayingAsMothershipCoreFeedback
   popupOrigin: wizden_master
-  title: "[bold]Feedback on Gibbing Removal[/bold]"
+  title: "[bold]Playing as [color=deepskyblue]mothership[/color] core[/bold]"
   description: >-
-    We're testing out the removal of gibbing to see how it affects the game. Please leave feedback on how your experience was removed/worsened so we can account for it!
-  responseType: "Experimental Feedback"
-  responseLink: "https://forum.spacestation14.com/t/gibbing-removal-feedback/26320"
+    If you played mothership core this round or maybe in a previous round, feel free to respond this feedback thread about your experiences and issues with playing as the mothership core.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/playing-as-a-mothership-core/26688/2"
+  showRoundEnd: true
+  ruleWhitelist:
+    components:
+    - XenoborgsRule
+
+- type: feedbackPopup
+  id: XenoborgExtractorFeedback
+  popupOrigin: wizden_master
+  title: "[bold]The [color=deepskyblue]xenoborg[/color] extractor [scramble chars=\"xenoborg-##][{}||,.<>\" rate=40 length=5][/bold]"
+  description: >-
+    Please share feedback on the new xenoborg extractor and crystal, and how these additions affect xenoborg gameplay.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/xenoborg-extractor/26689"
+  showRoundEnd: true
+  ruleWhitelist:
+    components:
+    - XenoborgsRule
+
