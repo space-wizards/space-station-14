@@ -7,7 +7,7 @@ namespace Content.Shared.Zombies;
 /// <summary>
 /// Temporary because diseases suck.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class PendingZombieComponent : Component
 {
     /// <summary>
@@ -64,6 +64,4 @@ public sealed partial class PendingZombieComponent : Component
         "zombie-infection-warning",
         "zombie-infection-underway"
     };
-
-    public override bool SendOnlyToOwner => true;
 }

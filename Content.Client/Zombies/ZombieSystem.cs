@@ -16,6 +16,7 @@ public sealed class ZombieSystem : SharedZombieSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ZombieComponent, GetStatusIconsEvent>(GetZombieIcon);
         SubscribeLocalEvent<InitialInfectedComponent, GetStatusIconsEvent>(GetInitialInfectedIcon);
     }
@@ -35,10 +36,8 @@ public sealed class ZombieSystem : SharedZombieSystem
         args.StatusIcons.Add(iconPrototype);
     }
 
-    protected override void OnZombieStartup(Entity<ZombieComponent> ent, ref ComponentStartup args)
+    private void OnStartup(Entity<ZombieComponent> ent, ref ComponentStartup args)
     {
-        base.OnZombieStartup(ent, ref args);
-
         if (HasComp<VisualBodyComponent>(ent))
             return;
 
