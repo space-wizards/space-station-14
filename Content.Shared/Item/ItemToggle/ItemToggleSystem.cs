@@ -319,12 +319,12 @@ public sealed class ItemToggleSystem : EntitySystem
         TryActivate((ent, ent.Comp));
     }
 
-    public bool IsActivated(EntityUid uid, ItemToggleComponent? component = null)
+    public bool IsActivated(Entity<ItemToggleComponent?> ent)
     {
-        if (!_query.Resolve(uid, ref component, false))
+        if (!_query.Resolve(ent, ref ent.Comp, false))
             return true; // assume always activated if no component
 
-        return component.Activated;
+        return ent.Comp.Activated;
     }
 
     /// <summary>

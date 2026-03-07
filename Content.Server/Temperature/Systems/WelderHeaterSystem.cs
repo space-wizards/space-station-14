@@ -28,7 +28,7 @@ public sealed class WelderHeaterSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!_itemToggle.IsActivated(ent.Owner))
+        if (!_itemToggle.IsActivated((ent.Owner, null)))
         {
             args.Cancelled = true;
             return;
