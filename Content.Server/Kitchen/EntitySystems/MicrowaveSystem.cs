@@ -115,7 +115,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             Spawn(recipe.Result, coords);
     }
 
-    private void FinishCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
+    private void CompleteCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
     {
         var active = ent.Comp1;
         var microwave = ent.Comp2;
@@ -141,7 +141,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         AddTemperature(microwave, time);
 
         if (active.CookTimeRemaining <= 0)
-            FinishCooking(ent);
+            CompleteCooking(ent);
     }
 
     public override void Update(float frameTime)
