@@ -42,46 +42,49 @@ public sealed class StereoTest
             // Scan all prototype types for SoundSpecifier and DataDefinition fields
             var prototypeFields = GetRelevantFields(protoMan.EnumeratePrototypeKinds());
 
-            // Iterate over the flagged prototype types
-            foreach (var (kind, fields) in prototypeFields)
+            using (Assert.EnterMultipleScope())
             {
-                // Inspect all prototype instances of the type
-                foreach (var proto in protoMan.EnumeratePrototypes(kind))
+                // Iterate over the flagged prototype types
+                foreach (var (kind, fields) in prototypeFields)
                 {
-                    // Check each flagged field
-                    foreach (var field in fields)
+                    // Inspect all prototype instances of the type
+                    foreach (var proto in protoMan.EnumeratePrototypes(kind))
                     {
-                        // Skip if null
-                        if (field.GetValue(proto) is not { } fieldValue)
-                            continue;
+                        // Check each flagged field
+                        foreach (var field in fields)
+                        {
+                            // Skip if null
+                            if (field.GetValue(proto) is not { } fieldValue)
+                                continue;
 
-                        CheckValue(fieldValue, kind.Name, dataDefinitions, resCache, protoMan);
+                            CheckValue(fieldValue, kind.Name, dataDefinitions, resCache, protoMan);
+                        }
                     }
                 }
-            }
 
-            // Scan all component types for SoundSpecifiers and DataDefinition fields
-            var componentFields = GetRelevantFields(compFactory.AllRegisteredTypes);
-            // Inspect all EntityPrototypes
-            foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
-            {
-                // Iterate over the flagged Component types
-                foreach (var (comp, fields) in componentFields)
+                // Scan all component types for SoundSpecifiers and DataDefinition fields
+                var componentFields = GetRelevantFields(compFactory.AllRegisteredTypes);
+                // Inspect all EntityPrototypes
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    // Get the registered name of the component type
-                    var compName = compFactory.GetComponentName(comp);
-                    // Get the component data from the prototype, if it has it
-                    if (!proto.Components.TryGetComponent(compName, out var component))
-                        continue;
-
-                    // Iterate over the flagged fields
-                    foreach (var field in fields)
+                    // Iterate over the flagged Component types
+                    foreach (var (comp, fields) in componentFields)
                     {
-                        // Skip if null
-                        if (field.GetValue(component) is not { } fieldValue)
+                        // Get the registered name of the component type
+                        var compName = compFactory.GetComponentName(comp);
+                        // Get the component data from the prototype, if it has it
+                        if (!proto.Components.TryGetComponent(compName, out var component))
                             continue;
 
-                        CheckValue(fieldValue, comp.Name, dataDefinitions, resCache, protoMan);
+                        // Iterate over the flagged fields
+                        foreach (var field in fields)
+                        {
+                            // Skip if null
+                            if (field.GetValue(component) is not { } fieldValue)
+                                continue;
+
+                            CheckValue(fieldValue, comp.Name, dataDefinitions, resCache, protoMan);
+                        }
                     }
                 }
             }
