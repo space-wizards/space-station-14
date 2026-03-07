@@ -179,7 +179,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             return;
 
         Audio.SetState(entity.Comp.AudioStream, AudioState.Stopped);
-        Dirty(entity);
     }
 
     /// <summary>
