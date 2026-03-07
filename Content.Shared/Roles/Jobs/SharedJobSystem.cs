@@ -205,6 +205,7 @@ public abstract class SharedJobSystem : EntitySystem
         return name;
     }
 
+    [Obsolete]
     public bool CanBeAntag(ICommonSession player)
     {
         // If the player does not have any mind associated with them (e.g., has not spawned in or is in the lobby), then

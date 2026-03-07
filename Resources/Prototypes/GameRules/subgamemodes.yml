@@ -18,22 +18,8 @@
     agentName: thief-round-end-agent-name
     selectionTime: IntraPlayerSpawn
     definitions:
-    - prefRoles: [ Thief ]
-      max: 3
-      playerRatio: 20
-      lateJoinAdditional: true
-      allowNonHumans: true
-      multiAntagSetting: NotExclusive
-      startingGear: ThiefGear
-      components:
-      - type: Pacified
-      - type: Thieving
-        stripTimeReduction: 2
-        stealthy: true
-      mindRoles:
-      - MindRoleThief
-      briefing:
-        sound: "/Audio/Misc/thief_greeting.ogg"
+    antags:
+    - Thief
   - type: DynamicRuleCost
     cost: 75
   - type: GameRule
@@ -91,12 +77,10 @@
     selectionTime: PrePlayerSpawn
     definitions:
     - prefRoles: [ MothershipCore ]
-      fallbackRoles: [ Xenoborg ]
       spawnerPrototype: SpawnPointGhostRoleMothershipCore
       mindRoles:
       - MindRoleMothershipCore
     - prefRoles: [ Xenoborg ]
-      fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg

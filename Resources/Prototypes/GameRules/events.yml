@@ -205,13 +205,8 @@
     - DragonSurviveObjective
   - type: AntagSelection
     agentName: dragon-round-end-agent-name
-    definitions:
-    - spawnerPrototype: SpawnPointGhostDragon
-      min: 1
-      max: 1
-      pickPlayer: false
-      mindRoles:
-      - MindRoleDragon
+    antags:
+    - Dragon
   - type: DynamicRuleCost
     cost: 75
 
@@ -237,33 +232,8 @@
     - NinjaSurviveObjective
   - type: AntagSelection
     agentName: ninja-round-end-agent-name
-    definitions:
-    - spawnerPrototype: SpawnPointGhostSpaceNinja
-      min: 1
-      max: 1
-      pickPlayer: false
-      startingGear: SpaceNinjaGear
-      roleLoadout:
-      - RoleSurvivalSpaceNinja
-      briefing:
-        text: ninja-role-greeting
-        color: Green
-        sound: /Audio/Misc/ninja_greeting.ogg
-      components:
-      - type: SpaceNinja
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      - type: AutoImplant
-        implants:
-        - DeathAcidifierImplant
-      - type: RandomMetadata
-        nameSegments:
-        - NamesNinjaTitle
-        - NamesNinja
-        nameFormat: name-format-ninja
-      mindRoles:
-      - MindRoleNinja
+    antags:
+    - SpaceNinja
   - type: DynamicRuleCost
     cost: 75
 
@@ -288,20 +258,8 @@
   - type: AntagRandomSpawn # TODO: improve spawning so they only start in maints
   - type: AntagSelection
     agentName: paradox-clone-round-end-agent-name
-    definitions:
-    - spawnerPrototype: SpawnPointGhostParadoxClone
-      min: 1
-      max: 1
-      pickPlayer: false
-      startingGear: ParadoxCloneGear
-      roleLoadout:
-      - RoleSurvivalVoxTank # give vox something to breath in case they don't get a copy
-      briefing:
-        text: paradox-clone-role-greeting
-        color: lightblue
-        sound: /Audio/Misc/paradox_clone_greeting.ogg
-      mindRoles:
-      - MindRoleParadoxClone
+    antags:
+    - ParadoxClone
   - type: DynamicRuleCost
     cost: 50
 
@@ -329,32 +287,8 @@
     minimumPlayers: 30
   - type: AntagSelection
     agentName: wizard-round-end-name
-    definitions:
-    - spawnerPrototype: SpawnPointGhostWizard
-      min: 1
-      max: 1
-      playerRatio: 1
-      pickPlayer: false
-      startingGear: WizardBlueGear
-      roleLoadout:
-      - RoleSurvivalExtended
-      briefing:
-        text: wizard-role-greeting
-        color: Turquoise
-        # TODO: Need Wizard Start sound
-        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
-      # TODO: WizardComp as needed
-      components:
-      - type: NpcFactionMember
-        factions:
-        - Wizard
-      - type: RandomMetadata
-        nameSegments:
-        - NamesWizardFirst
-        - NamesWizardLast
-        nameFormat: name-format-wizard
-      mindRoles:
-      - MindRoleWizard
+    antags:
+    - Wizard
 
 # disabled until event is rewritten to be more interesting
 #- type: entity
@@ -535,27 +469,8 @@
     occursDuringRoundEnd: false
   - type: ZombieRule
   - type: AntagSelection
-    definitions:
-    - prefRoles: [ InitialInfected ]
-      max: 3
-      playerRatio: 10
-      blacklist:
-        components:
-        - ZombieImmune
-        - AntagImmune
-      briefing:
-        text: zombie-patientzero-role-greeting
-        color: Plum
-        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
-      components:
-      - type: PendingZombie #less time to prepare than normal
-        minInitialInfectedGrace: 300
-        maxInitialInfectedGrace: 450
-      - type: ZombifyOnDeath
-      - type: IncurableZombie
-      - type: InitialInfected
-      mindRoles:
-      - MindRoleInitialInfected
+    antags:
+    - InitialInfectedMidRound # TODO Antag dict interface stuff
   - type: DynamicRuleCost
     cost: 200
 
@@ -574,26 +489,8 @@
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointLoneNukeOperative
-      min: 1
-      max: 1
-      pickPlayer: false
-      startingGear: SyndicateLoneOperativeGearFull
-      roleLoadout:
-      - RoleSurvivalNukie
-      components:
-      - type: NukeOperative
-      - type: RandomMetadata
-        nameSegments:
-        - NamesSyndicatePrefix
-        - NamesSyndicateNormal
-        nameFormat: name-format-nukie-generic
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      mindRoles:
-      - MindRoleLoneops
+    antags:
+    - LoneOp
   - type: DynamicRuleCost
     cost: 75
 
@@ -615,7 +512,6 @@
   - type: AntagSelection
     definitions:
     - prefRoles: [ TraitorSleeper ]
-      fallbackRoles: [ Traitor ]
       min: 1
       max: 2
       playerRatio: 10

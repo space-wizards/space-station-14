@@ -9,6 +9,49 @@
   - !type:OverallPlaytimeRequirement
     time: 1h
 
+- type: antagSpecifier
+  abstract: true
+  parent: RestrictedAntag
+  id: BaseInitialInfected
+  blacklist:
+    components:
+    - ZombieImmune
+    - AntagImmune
+  briefing:
+    text: zombie-patientzero-role-greeting
+    color: Plum
+    sound: "/Audio/Ambience/Antag/zombie_start.ogg"
+  components:
+  - type: PendingZombie #less time to prepare than normal
+    minInitialInfectedGrace: 300
+    maxInitialInfectedGrace: 450
+  - type: ZombifyOnDeath
+  - type: IncurableZombie
+  - type: InitialInfected
+  mindRoles:
+  - MindRoleInitialInfected
+
+
+- type: antagSpecifier
+  parent: BaseInitialInfected
+  id: InitialInfected
+  name: initial infected
+  prefRoles: [ InitialInfected ]
+  range:
+    max: 6
+  playerRatio: 10
+
+- type: antagSpecifier
+  parent: BaseInitialInfected
+  id: InitialInfectedMidRound
+  name: initial infected
+  prefRoles: [ InitialInfected ]
+  range:
+    max: 3
+  playerRatio: 10
+
+# TODO: Make it so creating new zombies uses antag prototypes! This saves a *lot* of boilerplate for conversion antags.
+
 - type: antag
   id: Zombie
   name: roles-antag-zombie-name

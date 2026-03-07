@@ -16,4 +16,32 @@
     time: 5h
   guides: [ Wizard ]
 
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: Wizard
+  name: wizard
+  spawnerPrototype: SpawnPointGhostWizard
+  playerRatio: 1
+  pickPlayer: false
+  startingGear: WizardBlueGear
+  roleLoadout:
+  - RoleSurvivalExtended
+  briefing:
+    text: wizard-role-greeting
+    color: Turquoise
+    # TODO: Need Wizard Start sound
+    #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
+  # TODO: WizardComp as needed
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Wizard
+  - type: RandomMetadata
+    nameSegments:
+    - NamesWizardFirst
+    - NamesWizardLast
+    nameFormat: name-format-wizard
+  mindRoles:
+  - MindRoleWizard
+
 # See wizard_startinggear for wiz start gear options

@@ -4,3 +4,40 @@
   antagonist: true
   setPreference: false # TODO: set this to true once Changeling exits WIP status
   objective: roles-antag-changeling-objective
+
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: Changeling
+  name: changeling
+  prefRoles: [ Changeling ]
+  range:
+    min: 1
+    max: 3
+  playerRatio: 15
+  briefing:
+    text: changeling-role-greeting
+    color: Red
+    sound: /Audio/Ambience/Antag/changeling_start.ogg
+  components:
+  - type: ChangelingDevour
+  - type: ChangelingIdentity
+  - type: ChangelingTransform
+  - type: ActionGrant
+    actions:
+    - ActionChangelingStore
+  # TODO: Make it so the changeling gamerule changeling can inherit from the changeling store preset somehow
+  - type: Store
+    name: store-preset-name-changeling
+    categories:
+    - ChangelingAbilities
+    currencyWhitelist:
+    - ChangelingDNA
+    balance:
+      ChangelingDNA: 50
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+        requireInputValidation: false
+  mindRoles:
+  - MindRoleChangeling

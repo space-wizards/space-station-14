@@ -9,6 +9,28 @@
   - !type:OverallPlaytimeRequirement
     time: 1h
 
+- type: antagSpecifier
+  abstract: true
+  parent: RestrictedAntag
+  id: BaseTraitor
+  playerRatio: 10
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: Traitor
+  name: traitor
+  prefRoles:
+  - Traitor
+  range:
+    min: 1
+    max: 8
+  blacklist:
+    components:
+    - AntagImmune
+  lateJoinAdditional: false
+  mindRoles:
+  - MindRoleTraitor
+
 - type: antag
   id: TraitorSleeper
   name: roles-antag-syndicate-agent-sleeper-name
@@ -19,6 +41,28 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 1h
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: TraitorSleeper
+  name: traitor sleeper
+  prefRoles:
+  - TraitorSleeper
+  range:
+    min: 1
+    max: 2
+  mindRoles:
+  - MindRoleTraitorSleeper
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: TraitorReinforcement
+  name: traitor reinforcement
+  prefRoles:
+  - Traitor
+  - GenericTeamAntagonist # Matters for Antag bans.
+  mindRoles:
+  - MindRoleTraitorReinforcement
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
