@@ -220,11 +220,12 @@ public sealed partial class MicrowaveSystem
     private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe, uint count = 1)
     {
         var portioned = recipe.Ingredients * count;
-        var remainingSolids = portioned.Solids.ShallowClone();
-        var remainingMaterials = portioned.Materials.ShallowClone();
-        var remainingReagents = portioned.Reagents.ShallowClone();
+        var remainingSolids = portioned.Solids;
+        var remainingMaterials = portioned.Materials;
+        var remainingReagents = portioned.Reagents;
+        var microwaveItems = component.Storage.ContainedEntities.ToArray();
 
-        foreach (var item in component.Storage.ContainedEntities)
+        foreach (var item in microwaveItems)
         {
             if (TryGetSolidId(item, out var solidId) && remainingSolids.ContainsKey(solidId.Value))
             {
