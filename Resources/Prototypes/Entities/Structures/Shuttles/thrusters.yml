@@ -35,7 +35,6 @@
     - type: InteractionOutline
     - type: Sprite
     - type: Appearance
-    - type: ThrusterVisuals
     - type: ApcPowerReceiver
       powerLoad: 1500
     - type: ExtensionCableReceiver

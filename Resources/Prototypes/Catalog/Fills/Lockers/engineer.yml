@@ -92,15 +92,24 @@
         children:
         - !type:NestedSelector
           tableId: FillWelderSupplies
-          rolls: !type:ConstantNumberSelector
-            value: 3
+          rolls: 3
         - !type:NestedSelector
           tableId: FillWelderSuppliesMask
-          rolls: !type:ConstantNumberSelector
-            value: 3
+          rolls: 3
 
 - type: entityTable
   id: FillWelderSupplies
+  table: !type:GroupSelector
+    children:
+    - id: WelderMini
+    - id: Welder
+    - id: WelderIndustrial
+      weight: 0.25
+    - id: WelderIndustrialAdvanced
+      weight: 0.05
+
+- type: entityTable
+  id: FillWelderSuppliesMask
   table: !type:GroupSelector
     children:
     - id: ClothingHeadHatWelding
@@ -110,17 +119,6 @@
       weight: 0.25
     - id: ClothingHeadHatWeldingMaskPainted
       weight: 0.25
-
-- type: entityTable
-  id: FillWelderSuppliesMask
-  table: !type:GroupSelector
-    children:
-    - id: WelderMini
-    - id: Welder
-    - id: WelderIndustrial
-      weight: 0.25
-    - id: WelderIndustrialAdvanced
-      weight: 0.05
 
 - type: entity
   id: LockerAtmosphericsFilledHardsuit
@@ -159,6 +157,8 @@
     - id: RCD
     - id: RCDAmmo
     - id: AirGrenade
+    - id: PlushieLizardJobAtmospherictechnician
+      prob: 0.02
 
 - type: entityTable
   id: FillAtmosphericsHardsuit
@@ -202,6 +202,10 @@
     - id: RCD
     - id: RCDAmmo
     - id: MetalFoamGrenade
+    - id: PlushieLizardJobTechnicalassistant
+      prob: 0.02
+    - id: PlushieLizardJobStationengineer
+      prob: 0.02
 
 - type: entityTable
   id: FillEngineerHardsuit

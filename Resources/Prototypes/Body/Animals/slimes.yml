@@ -1,0 +1,11 @@
+- type: entity
+  id: BaseMobSlimes
+  abstract: true
+  components:
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganSlimePersonCore
+        - id: OrganSlimePersonLungs
