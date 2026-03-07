@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Gauze sprites by Github KittenColony / Discord kittencolony (297865728374210561), gauze_head by github:DreamlyJack(624946166152298517)",
+  "copyright": "Gauze sprites by Github KittenColony / Discord kittencolony (297865728374210561), gauze_head by github:DreamlyJack(624946166152298517), Vulpkanin gauze sprites modified by Minemoder5000 on Github",
   "size": {
 	"x": 32,
 	"y": 32
@@ -145,6 +145,66 @@
     },
     {
       "name": "gauze_head",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_abdomen",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_blindfold",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_boxerwrap_l",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_boxerwrap_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_head",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_leftarm",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_lefteye_2",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_lowerarm_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_lowerleg_l",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_lowerleg_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_righteye_2",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_shoulder",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_upperarm_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_upperleg_l",
+      "directions": 4
+    },
+    {
+      "name": "gauze_vulp_upperleg_r",
       "directions": 4
     }
   ]
