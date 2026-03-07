@@ -136,9 +136,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             DirectSetVisualState(ent, JukeboxVisualState.Select);
             ent.Comp.Selecting = true;
             ent.Comp.AudioStream = Audio.Stop(ent.Comp.AudioStream);
+            Dirty(ent);
         }
-
-        Dirty(ent);
     }
 
     /// <summary>
