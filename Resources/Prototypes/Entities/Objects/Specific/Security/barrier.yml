@@ -13,6 +13,14 @@
     - state: idle
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
+  - type: Item
+    size: Ginormous
+    inhandVisuals:
+      left:
+      - state: inhand
+      right:
+      - state: inhand
+  - type: MultiHandedItem
   - type: Appearance
   - type: LockVisuals
   - type: InteractionOutline
