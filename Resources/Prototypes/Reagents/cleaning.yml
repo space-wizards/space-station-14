@@ -127,3 +127,8 @@
         time: 5
   footstepSound:
     collection: FootstepSlime
+
+- type: reagent
+  parent: SpaceGlue
+  id: SpaceGlueTactical
+  evaporationSpeed: 0.2

@@ -43,6 +43,25 @@
         Quantity: 30
 
 - type: entity
+  parent: [ SmokeGrenade, BaseSecurityContraband ]
+  id: GlueGrenade
+  name: Gluenade
+  description: A grenade filled with industrial-strength adhesive, guaranteed to slow down any who stand in the resultant foam.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/glue.rsi
+  - type: SmokeOnTrigger
+    keysIn:
+    - timer
+    duration: 15
+    spreadAmount: 50
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceGlueTactical
+        Quantity: 30
+
+- type: entity
   parent: SmokeGrenade
   id: TearGasGrenade
   name: tear gas grenade
