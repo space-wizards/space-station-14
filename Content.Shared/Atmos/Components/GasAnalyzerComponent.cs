@@ -135,7 +135,9 @@ public sealed partial class GasAnalyzerComponent : Component
                 }
             }
 
-            return results.ToArray();
+            var resultsOrdered = results.OrderByDescending(gas => gas.Amount);
+
+            return resultsOrdered.ToArray();
         }
 
     }
