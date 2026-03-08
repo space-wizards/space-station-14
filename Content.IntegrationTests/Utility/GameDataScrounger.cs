@@ -16,8 +16,13 @@ namespace Content.IntegrationTests.Utility;
 ///     A helper class for when you need prototype or VFS data particularly early, like for test source lists.
 /// </summary>
 /// <remarks>
+/// <para>
 ///     This does not include engine prototypes, nor anything generated at runtime, as it's made to be simple and fast
 ///     for usage during test framework startup where we cannot afford to initialize all of <see cref="ISerializationManager"/>.
+/// </para>
+/// <para>
+///     No initialization is required, it initializes itself on usage and all methods can be called immediately.
+/// </para>
 /// </remarks>
 /// <example>
 /// <code>
@@ -26,12 +31,22 @@ namespace Content.IntegrationTests.Utility;
 /// </example>
 public static partial class GameDataScrounger
 {
-    // YAML Linter, for Reasons, depends on the entirety of the test suite.
-    // As such, scrounging erroring out due to bad YAML can make the linter fail spectacularly.
-    // We do not want that, so the linter sets this, and we refuse to do any yaml-ing ourselves so the nicer set of
-    // errors get to it.
-    //
-    // Also, this means obviously bad YAML causes the main test suite to exit early. This is probably a pro, honestly.
+
+    /// <summary>
+    /// <para>
+    ///     YAML Linter, for Reasons, depends on the entirety of the test suite.
+    ///     As such, scrounging erroring out due to bad YAML can make the linter fail spectacularly.
+    ///     We do not want that, so the linter sets this, and we refuse to do any yaml-ing ourselves so the nicer set of
+    ///     errors get to it.
+    /// </para>
+    /// <para>
+    ///     Also, this means obviously bad YAML causes the main test suite to exit early. This is probably a pro, honestly.
+    /// </para>
+    /// </summary>
+    /// <remarks>
+    ///     This should not be set mid-run, as some methods will return data and others will not depending on their implementation.
+    ///     Set it before any operations that would call into GameDataScrounger.
+    /// </remarks>
     public static bool NoScrounging = false;
 
     /// <summary>
@@ -90,6 +105,15 @@ public static partial class GameDataScrounger
         }
     }
 
+    /// <summary>
+    ///     Returns all entities with the given component.
+    /// </summary>
+    /// <remarks>
+    ///     This does not accept components by type due to a non-public engine API that needs unsealed.
+    ///     When that is done, this will be removed and usages of it upstream will be refactored to go by type.
+    /// </remarks>
+    /// <param name="componentId">The name (like one would put in YAML) of the component to look for.</param>
+    /// <returns>A list of entity prototype IDs that have the given component.</returns>
     public static string[] EntitiesWithComponent(string componentId)
     {
         if (NoScrounging)
@@ -110,6 +134,11 @@ public static partial class GameDataScrounger
         }
     }
 
+    /// <summary>
+    ///     Ensures that the internal indices are initialized and not null.
+    ///     This will not do anything if they're initialized, and will initialize them to be empty if
+    ///     <see cref="NoScrounging"/> is set.
+    /// </summary>
     [MemberNotNull(nameof(_prototypeIndex))]
     [MemberNotNull(nameof(_entitiesWithComponentIndex))]
     [MemberNotNull(nameof(_entitiesMetaIndex))]
@@ -118,6 +147,8 @@ public static partial class GameDataScrounger
         if (_prototypeIndex is not null && _entitiesWithComponentIndex is not null && _entitiesMetaIndex is not null)
             return;
 
+        // Initialize regardless of if we actually fill them out.
+        // As we promise they will not be null, and various methods rely on this even if they're mpty.
         _prototypeIndex = new();
         _entitiesWithComponentIndex = new();
         _entitiesMetaIndex = new();
@@ -130,16 +161,18 @@ public static partial class GameDataScrounger
 
         var ignoreList = GetIgnoredPrototypes(resDir);
 
-        var explorationList = new List<string>() { $"{resDir}/Prototypes" };
+        // Start with our root directory. We use this as a stack of directories to traverse.
+        var explorationStack = new List<string>() { $"{resDir}/Prototypes" };
 
-        while (explorationList.Count > 0)
+        while (explorationStack.Count > 0)
         {
-            var dir = explorationList.Pop();
+            // Take a directory off the stack.
+            var dir = explorationStack.Pop();
 
             if (ignoreList.Contains(dir))
                 continue; // It's all abstract anyway.
 
-            explorationList.AddRange(Directory.EnumerateDirectories(dir));
+            explorationStack.AddRange(Directory.EnumerateDirectories(dir));
 
             foreach (var file in Directory.EnumerateFiles(dir, "*.yml"))
             {
@@ -166,7 +199,13 @@ public static partial class GameDataScrounger
     private static readonly YamlScalarNode IdNode = new("id");
     private static readonly YamlScalarNode TypeNode = new("type");
 
-    private static IEnumerable<(string, string)> IndexPrototypesIn(string file)
+    /// <summary>
+    ///     Indexes all prototypes in a folder, adding them to <see cref="_entitiesMetaIndex"/> as necessary and
+    ///     yielding all (type, id) pairs.
+    /// </summary>
+    /// <param name="file">The file to index.</param>
+    /// <returns>An enumerator of all prototypes in the file, regardless of kind.</returns>
+    private static IEnumerable<(string type, string id)> IndexPrototypesIn(string file)
     {
         var stream = new YamlStream();
 
@@ -241,6 +280,10 @@ public static partial class GameDataScrounger
         }
     }
 
+    /// <summary>
+    ///     Iterates through <see cref="_entitiesMetaIndex"/>, filling out <see cref="_entitiesWithComponentIndex"/>
+    ///     as it works and ensuring all inheritance-provided components are found.
+    /// </summary>
     private static void PushInheritanceAndIndex()
     {
         var visitedEntities = new HashSet<string>();
@@ -265,7 +308,12 @@ public static partial class GameDataScrounger
         }
     }
 
-    private static void VisitEntity(EntityMetadata entity, HashSet<string> visitedEntities)
+    /// <summary>
+    ///     Visits the given entity, potentially recursively in order to discover all of its components.
+    /// </summary>
+    /// <param name="entity">The entity to 'visit' and gather metadata on.</param>
+    /// <param name="visitedEntities">The set of all visited entities.</param>
+    private static void VisitEntity(EntityMetadata entity, in HashSet<string> visitedEntities)
     {
         // Return if we've visited already.
         if (!visitedEntities.Add(entity.Id))

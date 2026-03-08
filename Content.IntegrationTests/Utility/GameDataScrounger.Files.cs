@@ -10,10 +10,10 @@ public static partial class GameDataScrounger
     /// <summary>
     ///     Returns all files in a given content location that match a pattern.
     /// </summary>
-    /// <param name="location"></param>
-    /// <param name="pattern"></param>
-    /// <param name="recursive"></param>
-    /// <returns></returns>
+    /// <param name="location">The directory within the VFS to search</param>
+    /// <param name="pattern">A glob pattern to use as a filter</param>
+    /// <param name="recursive">Whether to search directories within the given directory.</param>
+    /// <returns>A list of all files within the VFS directory matching the pattern.</returns>
     public static string[] FilesInDirectory(string location, string pattern, bool recursive = true)
     {
         var path = GetContentPathOnDisk(location);
@@ -27,10 +27,10 @@ public static partial class GameDataScrounger
     /// <summary>
     ///     Returns all files in a given content location that match a pattern, as their VFS paths.
     /// </summary>
-    /// <param name="location"></param>
-    /// <param name="pattern"></param>
-    /// <param name="recursive"></param>
-    /// <returns></returns>
+    /// <param name="location">The directory within the VFS to search</param>
+    /// <param name="pattern">A glob pattern to use as a filter</param>
+    /// <param name="recursive">Whether to search directories within the given directory.</param>
+    /// <returns>A list of all file paths within the VFS directory matching the pattern.</returns>
     public static ResPath[] FilesInDirectoryInVfs(string location, string pattern, bool recursive = true)
     {
         var path = GetContentPathOnDisk(location.TrimEnd('/'));
@@ -70,16 +70,27 @@ public static partial class GameDataScrounger
         return Path.GetFullPath(Path.Combine(GetExecutableDirectory(), file));
     }
 
+    /// <summary>
+    ///     Mirrors a function in the engine for ease of maintenance.
+    /// </summary>
     private static string FindContentRootDir()
     {
         return "../../";
     }
 
+    /// <summary>
+    ///     Mirrors a function in the engine for ease of maintenance.
+    /// </summary>
     private static string ContentResources()
     {
         return ExecutableRelativeFile($"{FindContentRootDir()}Resources");
     }
 
+    /// <summary>
+    ///     Gets the real path of a path within the VFS.
+    /// </summary>
+    /// <param name="path">The path to get the real filesystem path of.</param>
+    /// <returns>The real filesystem path.</returns>
     public static string GetContentPathOnDisk(string path)
     {
         Assert.That(path, Does.StartWith("/"), "Path must be rooted.");

@@ -4,6 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Utility;
 
+[TestOf(typeof(GameDataScrounger))]
 public sealed class ScroungerTests
 {
     [Test]
