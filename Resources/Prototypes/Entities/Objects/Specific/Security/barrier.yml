@@ -49,8 +49,8 @@
   - type: Lock
     locked: false
     lockOnClick: true # toggle lock just by clicking on barrier
-    lockTime: 5
-    unlockTime: 5
+    lockTime: 1
+    unlockTime: 1
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
