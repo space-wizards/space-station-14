@@ -1,27 +1,28 @@
 - type: entity
-  name: Empty Crate Spawner
-  id: CrateEmptySpawner
   parent: MarkerBase
+  id: CrateEmptySpawner
+  name: Empty Crate Spawner
   components:
   - type: Sprite
     layers:
     - state: red
     - sprite: Structures/Storage/Crates/generic.rsi
       state: icon
-  - type: RandomSpawner
-    prototypes:
-    - CrateGenericSteel
-    - CratePlastic
-    - CrateFreezer
-    - CrateHydroponics
-    - CrateMedical
-    - CrateRadiation
-    - CrateInternals
-    - CrateElectrical
-    - CrateEngineering
-    - CrateScience
-    - CrateSurgery
-    chance: 0.7
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      prob: 0.7
+      children:
+      - id: CrateGenericSteel
+      - id: CratePlastic
+      - id: CrateFreezer
+      - id: CrateHydroponics
+      - id: CrateMedical
+      - id: CrateRadiation
+      - id: CrateInternals
+      - id: CrateElectrical
+      - id: CrateEngineering
+      - id: CrateScience
+      - id: CrateSurgery
     offset: 0.0
 
 - type: entityTable

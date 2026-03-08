@@ -43,7 +43,13 @@ namespace Content.Shared.Maps
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
         [DataField("baseTurf")]
-        public string BaseTurf { get; private set; } = string.Empty;
+        public ProtoId<ContentTileDefinition>? BaseTurf { get; private set; }
+
+        /// <summary>
+        /// On what tiles this tile can be placed on. BaseTurf is already included.
+        /// </summary>
+        [DataField]
+        public List<ProtoId<ContentTileDefinition>> BaseWhitelist { get; private set; } = new();
 
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();
@@ -129,6 +135,11 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         public Dictionary<string, int> MaterialComposition = new();
+
+        /// <summary>
+        ///     Hide this tile in the tile placement editor.
+        /// </summary>
+        [DataField] public bool EditorHidden { get; private set; } = false;
 
         public void AssignTileId(ushort id)
         {

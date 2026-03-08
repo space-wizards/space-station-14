@@ -300,6 +300,8 @@ public partial class AtmosphereSystem
 
     /// <summary>
     /// Checks if a tile on a grid is air-blocked in the specified directions.
+    /// This only checks for if the current tile, and only the current tile, is blocking
+    /// air.
     /// </summary>
     /// <param name="gridUid">The grid to check.</param>
     /// <param name="tile">The tile on the grid to check.</param>
@@ -323,6 +325,8 @@ public partial class AtmosphereSystem
 
     /// <summary>
     /// Checks if a tile on a grid is air-blocked in the specified directions, using cached data.
+    /// This only checks for if the current tile, and only the current tile, is blocking
+    /// air.
     /// </summary>
     /// <param name="grid">The grid to check.</param>
     /// <param name="tile">The tile on the grid to check.</param>
@@ -344,6 +348,29 @@ public partial class AtmosphereSystem
             return false;
 
         return atmosTile.AirtightData.BlockedDirections.IsFlagSet(directions);
+    }
+
+    /// <summary>
+    /// Returns the <see cref="TileAtmosphere.AdjacentBits"/> for a tile on a grid.
+    /// This represents the directions that the air can currently flow to.
+    /// </summary>
+    /// <param name="grid">The grid entity that the tile belongs to.</param>
+    /// <param name="tile">The <see cref="Vector2i"/> coordinates to check.</param>
+    /// <returns>The <see cref="TileAtmosphere.AdjacentBits"/> of the tile,
+    /// <see cref="AtmosDirection.Invalid"/> if the grid or tile couldn't be found.</returns>
+    /// <remarks>Note that this data is cached and is updated at the beginning of every atmostick.
+    /// As such, any airtight changes that were made may not be reflected in this value until
+    /// the cache is refreshed in the next processing tick.</remarks>
+    [PublicAPI]
+    public AtmosDirection GetAirflowDirections(Entity<GridAtmosphereComponent?> grid, Vector2i tile)
+    {
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
+            return AtmosDirection.Invalid;
+
+        if (!grid.Comp.Tiles.TryGetValue(tile, out var atmosTile))
+            return AtmosDirection.Invalid;
+
+        return atmosTile.AdjacentBits;
     }
 
     /// <summary>
