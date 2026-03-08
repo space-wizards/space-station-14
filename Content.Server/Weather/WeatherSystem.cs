@@ -18,12 +18,13 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
     private void OnCompInit(Entity<WeatherStatusEffectComponent> ent, ref ComponentInit args)
     {
+        // The map entitiy itself is networked by PVS if the player is on that map but not anything inside a container,
+        // So we need to add an overridce to make sure the client sees it.
         _pvs.AddGlobalOverride(ent);
     }
 
     private void OnCompShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
     {
-        Audio.Stop(ent.Comp.Stream);
         _pvs.RemoveGlobalOverride(ent);
     }
 }

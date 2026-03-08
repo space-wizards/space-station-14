@@ -35,7 +35,7 @@ public sealed partial class StencilOverlay : Overlay
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;
     private readonly StatusEffectsSystem _statusEffects;
-    private HashSet<Entity<WeatherStatusEffectComponent,StatusEffectComponent>>? _weatherSet = new ();
+    private HashSet<Entity<WeatherStatusEffectComponent, StatusEffectComponent>>? _weatherSet = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 

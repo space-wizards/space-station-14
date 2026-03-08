@@ -39,6 +39,7 @@ public sealed partial class WeatherStatusEffectComponent : Component
 
     /// <summary>
     /// Client audio stream.
+    /// Not used on the server.
     /// </summary>
     [ViewVariables]
     public EntityUid? Stream;

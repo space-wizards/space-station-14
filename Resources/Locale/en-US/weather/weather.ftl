@@ -12,4 +12,6 @@ cmd-weather-error-wrong-time = Time is in the wrong format!
 cmd-weather-error-wrong-map = Map with MapId {$id} doesn't exist!
 cmd-weather-error-no-weather = This weather does not exist on the selected map!
 
+cmd-weather-hint-map-id = Map Id
+cmd-weather-hint-prototype = Weather entity prototype
 cmd-weather-hint-time = Duration in seconds (leave empty for infinite duration)

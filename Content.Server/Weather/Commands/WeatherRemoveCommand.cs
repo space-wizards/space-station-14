@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Prototypes;
 using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -61,21 +62,19 @@ public sealed class WeatherRemoveCommand : LocalizedEntityCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), Loc.GetString("cmd-weather-hint-map-id"));
 
         if (args.Length == 2) //TODO: dont show ALL weathers here, only weathers applied to selected map
         {
             var opts = new List<CompletionOption>();
             foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!proto.Components.TryGetComponent(_compFactory.GetComponentName<WeatherStatusEffectComponent>(), out _))
+                if (!proto.HasComponent<WeatherStatusEffectComponent>(_compFactory))
                     continue;
 
                 opts.Add(new CompletionOption(proto.ID, proto.Name));
             }
-
-            opts.Add(new CompletionOption("null", Loc.GetString("cmd-weather-null")));
-            return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-weather-hint"));
+            return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-weather-hint-prototype"));
         }
 
         return CompletionResult.Empty;

@@ -18,7 +18,6 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedRoofSystem _roof = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -48,7 +47,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (Resolve(ent, ref ent.Comp2, false) && _roof.IsRooved((ent, ent.Comp1, ent.Comp2), tileRef.GridIndices))
             return false;
 
-        var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
+        var tileDef = (ContentTileDefinition)_tileDefManager[tileRef.Tile.TypeId];
 
         if (!tileDef.Weather)
             return false;
@@ -75,9 +74,9 @@ public abstract class SharedWeatherSystem : EntitySystem
         var remaining = duration - elapsed;
 
         if (remaining < ShutdownTime)
-            return (float) (remaining / ShutdownTime);
+            return (float)(remaining / ShutdownTime);
         else if (elapsed < StartupTime)
-            return (float) (elapsed / StartupTime);
+            return (float)(elapsed / StartupTime);
         else
             return 1f;
     }

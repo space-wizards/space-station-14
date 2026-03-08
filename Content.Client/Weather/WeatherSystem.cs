@@ -28,30 +28,40 @@ public sealed class WeatherSystem : SharedWeatherSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnComponentShutdown);
+
         _audioQuery = GetEntityQuery<AudioComponent>();
         _gridQuery = GetEntityQuery<MapGridComponent>();
         _roofQuery = GetEntityQuery<RoofComponent>();
+    }
+
+    private void OnComponentShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
+    {
+        ent.Comp.Stream = _audio.Stop(ent.Comp.Stream);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var ent = _playerManager.LocalEntity;
-
-        if (ent == null)
-            return;
-
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        var entXform = Transform(ent.Value);
+        var player = _playerManager.LocalEntity;
+
+        if (player == null)
+            return;
+
+        var playerXform = Transform(player.Value);
 
         var query = EntityQueryEnumerator<WeatherStatusEffectComponent, StatusEffectComponent>();
         while (query.MoveNext(out var uid, out var weather, out var status))
         {
-            if (weather.Sound == null)
+            if (weather.Sound == null || status.AppliedTo != playerXform.MapUid)
+            {
+                weather.Stream = _audio.Stop(weather.Stream);
                 return;
+            }
 
             weather.Stream ??= _audio.PlayGlobal(weather.Sound, Filter.Local(), true)?.Entity;
 
@@ -61,12 +71,12 @@ public sealed class WeatherSystem : SharedWeatherSystem
             var occlusion = 0f;
 
             // Work out tiles nearby to determine volume.
-            if (_gridQuery.TryComp(entXform.GridUid, out var grid))
+            if (_gridQuery.TryComp(playerXform.GridUid, out var grid))
             {
-                _roofQuery.TryComp(entXform.GridUid, out var roofComp);
-                var gridId = entXform.GridUid.Value;
+                _roofQuery.TryComp(playerXform.GridUid, out var roofComp);
+                var gridId = playerXform.GridUid.Value;
                 // FloodFill to the nearest tile and use that for audio.
-                var seed = _mapSystem.GetTileRef(gridId, grid, entXform.Coordinates);
+                var seed = _mapSystem.GetTileRef(gridId, grid, playerXform.Coordinates);
                 var frontier = new Queue<TileRef>();
                 frontier.Enqueue(seed);
                 // If we don't have a nearest node don't play any sound.
@@ -78,7 +88,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                     if (!visited.Add(node.GridIndices))
                         continue;
 
-                    if (!CanWeatherAffect((entXform.GridUid.Value, grid, roofComp), node))
+                    if (!CanWeatherAffect((playerXform.GridUid.Value, grid, roofComp), node))
                     {
                         // Add neighbors
                         // TODO: Ideally we pick some deterministically random direction and use that
@@ -101,7 +111,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                         continue;
                     }
 
-                    nearestNode = new EntityCoordinates(entXform.GridUid.Value,
+                    nearestNode = new EntityCoordinates(playerXform.GridUid.Value,
                         node.GridIndices + grid.TileSizeHalfVector);
                     break;
                 }
@@ -109,7 +119,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 // Get occlusion to the targeted node if it exists, otherwise set a default occlusion.
                 if (nearestNode != null)
                 {
-                    var entPos = _transform.GetMapCoordinates(entXform);
+                    var entPos = _transform.GetMapCoordinates(playerXform);
                     var nodePosition = _transform.ToMapCoordinates(nearestNode.Value).Position;
                     var delta = nodePosition - entPos.Position;
                     var distance = delta.Length();
