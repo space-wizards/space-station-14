@@ -312,7 +312,7 @@
     forceSound: true
 
 - type: entity
-  name : disabler bolt practice
+  name: disabler bolt practice
   id: BulletDisablerPractice
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
@@ -324,8 +324,9 @@
         volume: 5
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    color: "#71FF6B"
     layers:
-    - state: omnilaser
+    - state: omnilaser_greyscale
       shader: unshaded
   - type: Physics
   - type: Fixtures
@@ -339,12 +340,19 @@
         - Opaque
         - Impassable
         - BulletImpassable
-      fly-by: *flybyfixture
+      fly-by:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Opaque
+        - Impassable
+        - BulletImpassable
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 1
   - type: Projectile
-    impactEffect: BulletImpactEffectDisabler
+    impactEffect: BulletImpactEffectDisablerPractice
     damage:
       types:
         Heat: 0
