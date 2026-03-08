@@ -1537,6 +1537,20 @@
         whitelist:
          tags:
          - XenoborgC4
+    - item: XenoC4
+      hand:
+        emptyLabel: borg-slot-xenoborg-explosives-empty
+        emptyRepresentative: XenoC4
+        whitelist:
+          tags:
+          - XenoborgC4
+    - item: XenoC4
+      hand:
+        emptyLabel: borg-slot-xenoborg-explosives-empty
+        emptyRepresentative: XenoC4
+        whitelist:
+          tags:
+          - XenoborgC4
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-explosive-module }
 

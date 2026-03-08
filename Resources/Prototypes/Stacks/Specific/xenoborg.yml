@@ -4,10 +4,3 @@
   name: stack-xenoborg-circuit
   icon: { sprite: "/Textures/Objects/Materials/xenoborg_crystal.rsi", state: crystal-3 }
   spawn: MaterialXenoborgCrystal1
-
-- type: stack
-  parent: BaseSmallStack
-  id: XenoborgExplosive
-  name: stack-xenoborg-explosive
-  icon: { sprite: "/Textures/Objects/Weapons/Bombs/xenoc4.rsi", state: icon }
-  spawn: XenoC4

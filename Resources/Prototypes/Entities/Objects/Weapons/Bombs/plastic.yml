@@ -153,9 +153,6 @@
     layers:
     - state: icon
       map: ["base"]
-  - type: Stack
-    stackType: XenoborgExplosive
-    count: 3
   - type: TriggerOnActivate
   - type: TriggerOnSignal
   - type: TriggerOnStuck
