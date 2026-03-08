@@ -142,7 +142,7 @@
     - timer
 
 - type: entity
-  name: xenoborg remote explosive
+  name: xenoborg explosive
   description: I say we take off and nuke the entire site from orbit.
   parent: [BasePlasticExplosive, BaseXenoborgContraband]
   id: XenoC4
