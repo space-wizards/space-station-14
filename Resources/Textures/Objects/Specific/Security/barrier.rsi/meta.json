@@ -1,14 +1,18 @@
 {
+    "license": "CC-BY-SA-3.0",
+    "copyright": "idle and locked taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/commit/84e1cb497ff132d3fab3cb1aba17c3c4afdfbbeb | inhand taken from AuStation at https://github.com/austation/austation/commit/e2a4fefd01e702f48d3d4cc8d6a2686d54d104fa and modified by K-Dynamic (github)",
     "version": 1,
     "size": {
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/476e374cea95ff5e8b1603c48342bf700e2cd7af",
     "states": [
         {
             "name": "idle"
+        },
+        {
+            "name": "inhand",
+            "directions": 4
         },
         {
             "name": "locked",
