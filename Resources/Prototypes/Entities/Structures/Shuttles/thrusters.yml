@@ -35,7 +35,6 @@
     - type: InteractionOutline
     - type: Sprite
     - type: Appearance
-    - type: ThrusterVisuals
     - type: ApcPowerReceiver
       powerLoad: 1500
     - type: ExtensionCableReceiver
@@ -106,6 +105,14 @@
   parent: Thruster
   id: ThrusterXenoborg
   components:
+  # temporary solution until thruster rework
+  - type: Thruster
+    canToggle: false # no turning it off by just clicking it
+  - type: Anchorable
+    flags:
+    - Anchorable # no unwrenching it
+  - type: Rotatable
+    rotateWhileAnchored: false # no rotating it backwards so it doesn't face space
   - type: Sprite
     sprite: Structures/Shuttles/xenoborg_thruster.rsi
 

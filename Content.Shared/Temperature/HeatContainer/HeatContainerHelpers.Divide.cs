@@ -38,8 +38,7 @@ public static partial class HeatContainerHelpers
     [PublicAPI]
     public static HeatContainer[] Divide(this HeatContainer c, uint num)
     {
-        if (num == 0)
-            throw new ArgumentException("Cannot divide by zero.", nameof(num));
+        ArgumentOutOfRangeException.ThrowIfZero(num);
 
         var fraction = 1f / num;
         var cFrac = c.Split(fraction);

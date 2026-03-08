@@ -218,11 +218,13 @@ public abstract partial class SharedMoverController : VirtualController
          * Physics simulation, which will cause issues for Dynamic bodies (Such as Friction being applied twice).
          * Kinematic bodies have even less Physics options and as such aren't suitable for a player, especially
          * when we move to Box2D v3 where there will be more support for players updating outside of simulation.
+         * However, Kinematic bodies are useful currently for mobs which explicitly ignore physics, you should use
+         * this type extremely sparingly and only for mobs which *explicitly* disobey the laws of physics (A-Ghosts).
          * Lastly, static bodies can't move so they shouldn't be updated. If a static body makes it here we're
          * doing unnecessary calculations.
          * Only a Kinematic Controller should be making it to this point.
          */
-        DebugTools.Assert(physicsComponent.BodyType == BodyType.KinematicController,
+        DebugTools.Assert(physicsComponent.BodyType == BodyType.KinematicController || physicsComponent.BodyType == BodyType.Kinematic,
             $"Input mover: {ToPrettyString(uid)} in HandleMobMovement is not the correct BodyType, BodyType found: {physicsComponent.BodyType}, expected: KinematicController.");
 
         // If the body is in air but isn't weightless then it can't move
