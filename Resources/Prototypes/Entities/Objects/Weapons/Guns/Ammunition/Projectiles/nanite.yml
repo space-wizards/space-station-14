@@ -53,7 +53,7 @@
         Piercing: 5
         Cellular: 3
     soundHit:
-      path: /Audio/Effects/glass_break2.ogg
+      collection: NaniteBulletImpact
   - type: ComplexProjectileDamage
     damageOptions:
     - damage:
