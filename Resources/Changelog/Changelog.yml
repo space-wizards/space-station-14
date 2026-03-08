@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: You can now attach paper labels to wrapped parcels.
-    type: Add
-  id: 9058
-  time: '2025-10-08T22:27:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40783
 - author: ToastEnjoyer
   changes:
   - message: On fland, the wardens enforcer has been removed.
@@ -4003,3 +3996,10 @@
   id: 9568
   time: '2026-03-07T21:39:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43096
+- author: 11BelowStudio
+  changes:
+  - message: Spent air grenades cannot be re-triggered.
+    type: Fix
+  id: 9569
+  time: '2026-03-08T01:05:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42866
