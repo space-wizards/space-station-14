@@ -1,5 +1,5 @@
 - type: entity
-  name: deployable barrier
+  name: security barrier
   id: DeployableBarrier
   description: A deployable barrier. Swipe your ID card to lock/unlock it.
   parent: BaseStructure
@@ -58,13 +58,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 200
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 100
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -76,6 +76,9 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 2
   - type: PointLight
     enabled: false
     radius: 3
