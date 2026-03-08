@@ -8,19 +8,20 @@ namespace Content.Shared.Chemistry.EntitySystems;
 #region Events
 
 /// <summary>
-/// This event alerts system that the solution was changed
+/// Raised on the container of the solution entity when the contained solution is changed.
+/// If you want to subscribe with the solution entity itself
+/// then use <see cref="SolutionChangedEvent"/> instead.
 /// </summary>
+/// <remarks>
+/// This is always raised on the client when handling the component state so that we can update UIs accordingly.
+/// You might need an IGameTiming.ApplyingState guard to prevent mispredicts if the changes from your subscription are
+/// networked with the same game state.
+/// </remarks>
 [ByRefEvent]
-public record struct SolutionContainerChangedEvent
+public record struct SolutionContainerChangedEvent(Solution Solution, string SolutionId)
 {
-    public readonly Solution Solution;
-    public readonly string SolutionId;
-
-    public SolutionContainerChangedEvent(Solution solution, string solutionId)
-    {
-        SolutionId = solutionId;
-        Solution = solution;
-    }
+    public readonly Solution Solution = Solution;
+    public readonly string SolutionId = SolutionId;
 }
 
 /// <summary>
@@ -89,10 +90,14 @@ public abstract partial class SharedSolutionContainerSystem
         var (solutionId, solutionComp) = args.Solution;
         var solution = solutionComp.Solution;
 
-        UpdateAppearance(entity.Comp.Container, (solutionId, solutionComp, entity.Comp));
-
         var relayEvent = new SolutionContainerChangedEvent(solution, entity.Comp.ContainerName);
         RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
+
+        // The appearance changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
+        UpdateAppearance(entity.Comp.Container, (solutionId, solutionComp, entity.Comp));
     }
 
     protected virtual void OnSolutionOverflow(Entity<ContainedSolutionComponent> entity, ref SolutionOverflowEvent args)

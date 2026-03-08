@@ -1,5 +1,7 @@
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.Prototypes;
+using Content.Shared.CCVar;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
@@ -40,17 +42,27 @@ public abstract partial class SharedAtmosphereSystem
 
         for (var i = 0; i < GasPrototypes.Length; i++)
         {
+            /*
+             As an optimization routine we pre-divide the specific heat by the heat scale here,
+             so we don't have to do it every time we calculate heat capacity.
+             Most usages are going to want the scaled value anyway.
+
+             If you would like the unscaled specific heat, you'd need to multiply by HeatScale again.
+             TODO ATMOS: please just make this 2 separate arrays instead of invoking multiplication every time.
+             */
             _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
         }
     }
 
     /// <summary>
-    ///     Calculates the heat capacity for a gas mixture.
+    /// Calculates the heat capacity for a <see cref="GasMixture"/>.
     /// </summary>
-    /// <param name="mixture">The mixture whose heat capacity should be calculated</param>
-    /// <param name="applyScaling"> Whether the internal heat capacity scaling should be applied. This should not be
-    /// used outside of atmospheric related heat transfer.</param>
-    /// <returns></returns>
+    /// <param name="mixture">The <see cref="GasMixture"/> to calculate the heat capacity for.</param>
+    /// <param name="applyScaling">Whether to apply the heat capacity scaling factor.
+    /// This is an extremely important boolean to consider or else you will get heat transfer wrong.
+    /// See <see cref="CCVars.AtmosHeatScale"/> for more info.</param>
+    /// <returns>The heat capacity of the <see cref="GasMixture"/>.</returns>
+    [PublicAPI]
     public float GetHeatCapacity(GasMixture mixture, bool applyScaling)
     {
         var scale = GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
@@ -60,6 +72,14 @@ public abstract partial class SharedAtmosphereSystem
         return applyScaling ? scale : scale * HeatScale;
     }
 
+    /// <summary>
+    /// Gets the heat capacity for a <see cref="GasMixture"/>.
+    /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to calculate the heat capacity for.</param>
+    /// <returns>The heat capacity of the <see cref="GasMixture"/>.</returns>
+    /// <remarks>Note that the heat capacity of the mixture may be slightly different from
+    /// "real life" as we intentionally fake a heat capacity for space in <see cref="Atmospherics.SpaceHeatCapacity"/>
+    /// in order to allow Atmospherics to cool down space.</remarks>
     protected float GetHeatCapacity(GasMixture mixture)
     {
         return GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
@@ -70,8 +90,9 @@ public abstract partial class SharedAtmosphereSystem
     /// </summary>
     /// <param name="moles">The moles array of the <see cref="GasMixture"/></param>
     /// <param name="space">Whether this <see cref="GasMixture"/> represents space,
-    /// and thus experiences space-specific mechanics (we cheat and make it a bit cooler).</param>
-    /// <returns></returns>
+    /// and thus experiences space-specific mechanics (we cheat and make it a bit cooler).
+    /// See <see cref="Atmospherics.SpaceHeatCapacity"/>.</param>
+    /// <returns>The heat capacity of the <see cref="GasMixture"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected abstract float GetHeatCapacityCalculation(float[] moles, bool space);
 }

@@ -48,7 +48,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
 
     protected override void DirtyUI(EntityUid uid, GasCanisterComponent? canister = null, NodeContainerComponent? nodeContainer = null)
     {
-        if (!Resolve(uid, ref canister, ref nodeContainer))
+        if (!Resolve(uid, ref canister, ref nodeContainer, logMissing: false))
             return;
 
         var portStatus = false;

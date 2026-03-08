@@ -351,6 +351,29 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
+    /// Returns the <see cref="TileAtmosphere.AdjacentBits"/> for a tile on a grid.
+    /// This represents the directions that the air can currently flow to.
+    /// </summary>
+    /// <param name="grid">The grid entity that the tile belongs to.</param>
+    /// <param name="tile">The <see cref="Vector2i"/> coordinates to check.</param>
+    /// <returns>The <see cref="TileAtmosphere.AdjacentBits"/> of the tile,
+    /// <see cref="AtmosDirection.Invalid"/> if the grid or tile couldn't be found.</returns>
+    /// <remarks>Note that this data is cached and is updated at the beginning of every atmostick.
+    /// As such, any airtight changes that were made may not be reflected in this value until
+    /// the cache is refreshed in the next processing tick.</remarks>
+    [PublicAPI]
+    public AtmosDirection GetAirflowDirections(Entity<GridAtmosphereComponent?> grid, Vector2i tile)
+    {
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
+            return AtmosDirection.Invalid;
+
+        if (!grid.Comp.Tiles.TryGetValue(tile, out var atmosTile))
+            return AtmosDirection.Invalid;
+
+        return atmosTile.AdjacentBits;
+    }
+
+    /// <summary>
     /// Checks if a tile on a grid or map is space as defined by a tile's definition of space.
     /// Some tiles can hold back space and others cannot - for example, plating can hold
     /// back space, whereas scaffolding cannot, exposing the map atmosphere beneath.

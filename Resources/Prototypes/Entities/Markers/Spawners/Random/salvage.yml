@@ -205,3 +205,26 @@
       - MobFleshLoverSalvage
       chance: 1
       offset: 0.2
+
+- type: entity
+  name: Salvage Living Light Spawner
+  id: SalvageLivingLightSpawner
+  parent: SalvageMobSpawner
+  suffix: 100
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Elemental/living_light/luminous_person.rsi
+          state: luminous_person
+    - type: RandomSpawner
+      rarePrototypes:
+      - MobSharkSalvage
+      rareChance: 0
+      prototypes:
+      - MobLuminousPersonSalvage
+      - MobLuminousEntity
+      - MobLuminousObjectSalvage
+      - MobLuminousObjectSalvage
+      chance: 1
+      offset: 0.2
