@@ -48,7 +48,6 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IAdminLogManager _adminLog = default!;
         [Dependency] private readonly SharedEyeSystem _eye = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly JobSystem _jobs = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly MindSystem _minds = default!;
@@ -87,8 +86,6 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
             SubscribeLocalEvent<GhostComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<GhostComponent, ComponentShutdown>(OnGhostShutdown);
-
-            SubscribeLocalEvent<GhostComponent, ExaminedEvent>(OnGhostExamine);
 
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
@@ -235,16 +232,6 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
-        }
-
-        private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
-        {
-            var timeSinceDeath = _gameTiming.RealTime.Subtract(component.TimeOfDeath);
-            var deathTimeInfo = timeSinceDeath.Minutes > 0
-                ? Loc.GetString("comp-ghost-examine-time-minutes", ("minutes", timeSinceDeath.Minutes))
-                : Loc.GetString("comp-ghost-examine-time-seconds", ("seconds", timeSinceDeath.Seconds));
-
-            args.PushMarkup(deathTimeInfo);
         }
 
         #region Ghost Deletion
