@@ -45,6 +45,7 @@ public sealed class HealthExaminableSystem : EntitySystem
     public FormattedMessage CreateMarkup(EntityUid uid, HealthExaminableComponent component, DamageableComponent damage)
     {
         var msg = new FormattedMessage();
+        var target = Identity.Entity(uid, EntityManager);
 
         var first = true;
         foreach (var type in component.ExaminableTypes)
@@ -63,7 +64,7 @@ public sealed class HealthExaminableSystem : EntitySystem
                 Loc.TryGetString(
                     $"health-examinable-{component.LocPrefix}-{type}-{threshold}",
                     out var tempLocStr,
-                    ("target", Identity.Entity(uid, EntityManager)));
+                    ("target", target));
 
                 // i.e., this string doesn't exist, because theres nothing for that threshold
                 if (tempLocStr == null || dmg <= threshold || threshold <= closest)
