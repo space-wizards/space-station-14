@@ -93,7 +93,6 @@ public sealed class IonLawSystem : EntitySystem
         AddSelector("ION-DRINK", DatasetFill("IonStormDrinks"));
 
         AddSelector("ION-CHANGE", DatasetFill("IonStormCrew"));
-        AddSelector("ION-CHANGE", DatasetFill("IonStormChanges"));
         AddSelector("ION-CHANGE", RandomManifestFill("IonStormCrew"));
 
         AddSelector("ION-WHO-RANDOM", DatasetFill("IonStormCrew"));
