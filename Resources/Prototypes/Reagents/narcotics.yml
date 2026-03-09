@@ -190,15 +190,15 @@
         amount: -1.5
       - !type:EvenHealthChange
         conditions:
-        - !type:TotalDamageCondition
-          min: 70 # only heals when you're more dead than alive
+        - !type:MobStateCondition
+          mobstate: Critical
         damage: # Doesn't heal poison because if you OD'd I'm not giving you a safety net
           Burn: -0.5
           Brute: -0.5
       - !type:HealthChange
         conditions:
-        - !type:TotalDamageCondition
-          min: 95 # Just to bring you back from the brink of death
+        - !type:MobStateCondition
+          mobstate: Critical
         damage:
           types:
             Asphyxiation: -2

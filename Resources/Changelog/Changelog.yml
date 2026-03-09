@@ -1,150 +1,4 @@
 ﻿Entries:
-- author: SurrealShibe
-  changes:
-  - message: Added the nutri-batard to mime survival boxes in place of the nutri-brick.
-    type: Add
-  id: 9041
-  time: '2025-10-07T10:18:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40601
-- author: Lordbrandon12
-  changes:
-  - message: Fixed issue allowing space heater temperature to be set above the allowed
-      limit.
-    type: Fix
-  id: 9042
-  time: '2025-10-07T12:53:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40453
-- author: IProduceWidgets
-  changes:
-  - message: Vox that take excessive amounts of fire damage will now burn into fried
-      chicken.
-    type: Tweak
-  id: 9043
-  time: '2025-10-07T14:12:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40115
-- author: BoskiYourk, spanky_spanky
-  changes:
-  - message: The Head of Security now has an energy magnum, a self-charging multi-mode
-      laser revolver, in their locker instead of the energy shotgun.
-    type: Add
-  - message: The Warden now has the energy shotgun in their locker round-start.
-    type: Tweak
-  id: 9044
-  time: '2025-10-07T16:05:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40615
-- author: FungiFellow
-  changes:
-  - message: Cancer Mice now have unique ghost role entries.
-    type: Tweak
-  id: 9045
-  time: '2025-10-07T16:33:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40102
-- author: FungiFellow
-  changes:
-  - message: Biosuits can now fit Gastanks in Suit Storage, the Security Biosuit can
-      fit both Gastanks and Weapons
-    type: Add
-  - message: Security Biosuits Cost has been increased 800->1600
-    type: Tweak
-  id: 9046
-  time: '2025-10-07T18:22:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39888
-- author: Hitlinemoss
-  changes:
-  - message: MRE wrappers are no longer twice as nutritious as the actual food within.
-    type: Fix
-  id: 9047
-  time: '2025-10-07T19:36:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40761
-- author: TrixxedHeart
-  changes:
-  - message: 'Added new markings for Vox: 3 new beak types, 2 beak markings, 1 overlay
-      6 head, and 3 chest markings.'
-    type: Add
-  - message: Fixed sprite layering issue where a Vox's back leg would appear on top
-      of their front leg in side sprites.
-    type: Fix
-  id: 9048
-  time: '2025-10-07T23:14:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40569
-- author: Hitlinemoss
-  changes:
-  - message: Bartenders with a significant amount of playtime can now select a golden
-      shaker in the loadout menu.
-    type: Add
-  id: 9049
-  time: '2025-10-07T23:37:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40762
-- author: SlamBamActionman
-  changes:
-  - message: The Energy Shotgun no longer has a self-recharge or wide fire mode, but
-      charges faster in rechargers.
-    type: Tweak
-  id: 9050
-  time: '2025-10-08T02:51:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40757
-- author: archee1
-  changes:
-  - message: Space Cobras no longer attack Space Adders automatically.
-    type: Fix
-  id: 9051
-  time: '2025-10-08T11:30:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37424
-- author: aada
-  changes:
-  - message: Buckets are now destructible.
-    type: Tweak
-  id: 9052
-  time: '2025-10-08T13:58:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40772
-- author: UpAndLeaves
-  changes:
-  - message: Zombie infections now take approximately three minutes longer to bring
-      a fully healed person to critical condition.
-    type: Tweak
-  id: 9053
-  time: '2025-10-08T14:11:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37445
-- author: YoungThugSS14
-  changes:
-  - message: The temperature gun bolts now count as energy projectiles for the sake
-      of reflection.
-    type: Tweak
-  - message: The temperature gun's cold projectile can no longer pass through windows.
-    type: Fix
-  - message: The temperature gun now has color-appropriate muzzle flashes.
-    type: Fix
-  id: 9054
-  time: '2025-10-08T15:10:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37581
-- author: K-Dynamic
-  changes:
-  - message: Energy shotgun lethal projectiles can now hit holo mobs.
-    type: Fix
-  id: 9055
-  time: '2025-10-08T15:23:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37920
-- author: Hitlinemoss
-  changes:
-  - message: Folders and clipboards are now available in the Trinkets loadout tab.
-    type: Add
-  id: 9056
-  time: '2025-10-08T15:49:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39920
-- author: SlamBamActionman
-  changes:
-  - message: Disablers, temperature guns and tasers can now hit holo mobs.
-    type: Fix
-  id: 9057
-  time: '2025-10-08T21:59:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40782
-- author: Centronias
-  changes:
-  - message: You can now attach paper labels to wrapped parcels.
-    type: Add
-  id: 9058
-  time: '2025-10-08T22:27:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40783
 - author: ToastEnjoyer
   changes:
   - message: On fland, the wardens enforcer has been removed.
@@ -3996,3 +3850,156 @@
   id: 9551
   time: '2026-02-28T01:08:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42796
+- author: kontakt
+  changes:
+  - message: Throwing croissants no longer have a throwing knife in-hand sprite.
+    type: Fix
+  id: 9552
+  time: '2026-02-28T14:37:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43066
+- author: ScarKy0
+  changes:
+  - message: Makeshift Juicers now correctly craft in your hands instead of being
+      a construction ghost.
+    type: Fix
+  id: 9553
+  time: '2026-02-28T14:54:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43075
+- author: kento_da_neko
+  changes:
+  - message: The xenoborg gun now has a unique sprite
+    type: Add
+  id: 9554
+  time: '2026-02-28T15:21:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43013
+- author: Velken
+  changes:
+  - message: Fixed door remotes working on fences, curtains and other entities they
+      shouldn't work on.
+    type: Fix
+  id: 9555
+  time: '2026-02-28T20:30:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43063
+- author: IProduceWidgets
+  changes:
+  - message: C4 no longer sticks to Revenants.
+    type: Tweak
+  id: 9556
+  time: '2026-02-28T21:38:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42889
+- author: Hitlinemoss
+  changes:
+  - message: The rollerskates and clown mask/shoes cargo bounties have been removed.
+    type: Remove
+  - message: The pancakes cargo bounty now requires half as many pancakes, but rewards
+      half as many spesos.
+    type: Tweak
+  id: 9557
+  time: '2026-02-28T22:04:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42899
+- author: slarticodefast
+  changes:
+  - message: Fixed damage mispredicting.
+    type: Fix
+  id: 9558
+  time: '2026-03-01T00:06:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43080
+- author: slarticodefast
+  changes:
+  - message: Fixed topicals.
+    type: Fix
+  id: 9559
+  time: '2026-03-01T14:41:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43087
+- author: AffleWaffle
+  changes:
+  - message: APCs take 2 seconds to build instead of instantly appearing.
+    type: Tweak
+  id: 9560
+  time: '2026-03-01T17:58:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43089
+- author: SirWarock
+  changes:
+  - message: Added a nitrogen tank to the mining hardsuit crate!
+    type: Tweak
+  - message: Added internals to the luxury mining hardsuit crate!
+    type: Tweak
+  - message: Fixed the mining hardsuit helmet name and the mining hardsuit crate name!
+    type: Fix
+  id: 9561
+  time: '2026-03-01T18:31:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43072
+- author: Velken
+  changes:
+  - message: Fixed door remote not working on high security doors and windoors
+    type: Fix
+  id: 9562
+  time: '2026-03-01T23:28:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43094
+- author: UpAndLeaves
+  changes:
+  - message: Added storage:query and inventory:query commands
+    type: Add
+  id: 9563
+  time: '2026-03-03T18:09:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40813
+- author: ProPeperos
+  changes:
+  - message: Hyper Autolathe now needs 4 manipulators instead of 3
+    type: Tweak
+  id: 9564
+  time: '2026-03-04T05:08:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43109
+- author: neomoth
+  changes:
+  - message: Multi-directional eldritch horror Tippy is no more.
+    type: Fix
+  id: 9565
+  time: '2026-03-06T16:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43082
+- author: august-sun
+  changes:
+  - message: The Estoc DMR now has less slowdown when wielding and the same accuracy
+      as other rifles.
+    type: Tweak
+  id: 9566
+  time: '2026-03-07T02:00:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43038
+- author: sowelipililimute
+  changes:
+  - message: Underlying technical work for future medical improvements have resulted
+      in the following changes to better accomodate future development. Please note
+      that these changes are not representative of the final product and that the
+      medical balance will receive a major overhaul once limb and organ damage are
+      fully implemented.
+    type: Tweak
+  - message: Passive regeneration on mobs no longer stops after taking a certain amount
+      of damage.
+    type: Tweak
+  - message: Necrosol has been removed in favour of Acryox always healing, regardless
+      of damage.
+    type: Remove
+  - message: Hyperzine now heals you when critical, rather than relying on being above
+      a certain amount of damage.
+    type: Tweak
+  - message: Tricordrazine and Holy Water no longer have an upper damage
+    type: Tweak
+  - message: Changeling devour damage is no longer capped
+    type: Tweak
+  id: 9567
+  time: '2026-03-07T04:26:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43103
+- author: Minemoder
+  changes:
+  - message: Vulpkanins can now use Gauze markings.
+    type: Add
+  id: 9568
+  time: '2026-03-07T21:39:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43096
+- author: 11BelowStudio
+  changes:
+  - message: Spent air grenades cannot be re-triggered.
+    type: Fix
+  id: 9569
+  time: '2026-03-08T01:05:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42866
