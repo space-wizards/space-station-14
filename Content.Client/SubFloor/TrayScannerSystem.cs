@@ -26,7 +26,6 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly TrayScanRevealSystem _trayScanReveal = default!;
