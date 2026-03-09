@@ -189,4 +189,13 @@
       path: /Audio/Effects/Weather/space_dust.ogg
       params:
         loop: true
-        volume: 0
+        volume: 8
+  - type: WeatherEffects
+    effects:
+    - !type:HealthChange
+      probability: 0.3
+      ignoreResistances: false
+      damage:
+        types:
+          Blunt: 4
+
