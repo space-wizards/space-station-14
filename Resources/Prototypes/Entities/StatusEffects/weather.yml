@@ -191,6 +191,7 @@
         loop: true
         volume: 8
   - type: WeatherEffects
+  - type: WeatherEntityEffect
     effects:
     - !type:HealthChange
       probability: 0.3

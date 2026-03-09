@@ -10,25 +10,13 @@ namespace Content.Shared.Weather.Effects;
 /// defines gameplay effects that are periodically applied to entities under open sky.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
-public sealed partial class WeatherEffectsComponent : Component
+public sealed partial class WeatherEntityEffectComponent : Component
 {
     /// <summary>
     /// The entity effects to apply to exposed entities.
     /// </summary>
     [DataField(required: true)]
     public EntityEffect[] Effects = default!;
-
-    /// <summary>
-    /// The minimum interval between effect application cycles.
-    /// </summary>
-    [DataField]
-    public TimeSpan MinEffectFrequency = TimeSpan.FromSeconds(1f);
-
-    /// <summary>
-    /// The maximum interval between effect application cycles.
-    /// </summary>
-    [DataField]
-    public TimeSpan MaxEffectFrequency = TimeSpan.FromSeconds(5f);
 
     /// <summary>
     /// Scale multiplier passed to EntityEffect.
@@ -43,10 +31,4 @@ public sealed partial class WeatherEffectsComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<EntityEffectPrototype>? EffectPrototype;
-
-    /// <summary>
-    /// The time at which the next effect cycle should trigger.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan NextEffectTime;
 }

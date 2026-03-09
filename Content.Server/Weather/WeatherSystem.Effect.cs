@@ -1,3 +1,4 @@
+using Content.Server.Weather.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Light.Components;
 using Content.Shared.StatusEffectNew.Components;
@@ -20,7 +21,6 @@ public sealed partial class WeatherSystem
     [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    private EntityQuery<WeatherEffectsComponent> _weatherEffectsQuery;
     private EntityQuery<MapComponent> _mapCompQuery;
     private EntityQuery<RoofComponent> _roofQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -40,13 +40,12 @@ public sealed partial class WeatherSystem
 
     private void InitEffects()
     {
-        _weatherEffectsQuery = GetEntityQuery<WeatherEffectsComponent>();
         _mapCompQuery = GetEntityQuery<MapComponent>();
         _roofQuery = GetEntityQuery<RoofComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<WeatherEffectsComponent, ComponentInit>(OnWeatherEffectsInit);
-        SubscribeLocalEvent<WeatherEffectsComponent, ComponentShutdown>(OnWeatherEffectsShutdown);
+        SubscribeLocalEvent<WeatherEntityEffectComponent, ComponentShutdown>(OnWeatherEffectsShutdown);
 
         Subs.CVar(_cfg, CCVars.WeatherMaxAffectedPerTick, val => _maxAffectedPerTick = val, true);
         Subs.CVar(_cfg, CCVars.WeatherMaxTilesScannedPerTick, val => _maxTilesScannedPerTick = val, true);
@@ -57,19 +56,16 @@ public sealed partial class WeatherSystem
         ent.Comp.NextEffectTime = Timing.CurTime + ent.Comp.MaxEffectFrequency;
     }
 
-    private void OnWeatherEffectsShutdown(Entity<WeatherEffectsComponent> ent, ref ComponentShutdown args)
+    private void OnWeatherEffectsShutdown(Entity<WeatherEntityEffectComponent> ent, ref ComponentShutdown args)
     {
         _processingStates.Remove(ent.Owner);
     }
 
     private void UpdateEffects(float frameTime)
     {
-        var query = EntityQueryEnumerator<WeatherStatusEffectComponent, StatusEffectComponent>();
-        while (query.MoveNext(out var uid, out var weather, out var status))
+        var query = EntityQueryEnumerator<WeatherStatusEffectComponent, WeatherEffectsComponent, StatusEffectComponent>();
+        while (query.MoveNext(out var uid, out var weather, out var effects, out var status))
         {
-            if (!_weatherEffectsQuery.TryGetComponent(uid, out var effects))
-                continue;
-
             if (Timing.CurTime < effects.NextEffectTime)
                 continue;
 
@@ -254,7 +250,7 @@ internal enum EffectProcessingPhase : byte
 
 /// <summary>
 /// Raised on the weather entity for each exposed entity during the applying phase.
-/// Subscribe on <see cref="WeatherEffectsComponent"/> to handle effect application.
+/// Subscribe on <see cref="WeatherEntityEffectComponent"/> to handle effect application.
 /// </summary>
 [ByRefEvent]
 public record struct WeatherEntityAffectedEvent(EntityUid Target);

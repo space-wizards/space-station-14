@@ -11,10 +11,10 @@ public sealed class WeatherEntityEffectSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<WeatherEffectsComponent, WeatherEntityAffectedEvent>(OnEntityAffected);
+        SubscribeLocalEvent<WeatherEntityEffectComponent, WeatherEntityAffectedEvent>(OnEntityAffected);
     }
 
-    private void OnEntityAffected(Entity<WeatherEffectsComponent> ent, ref WeatherEntityAffectedEvent args)
+    private void OnEntityAffected(Entity<WeatherEntityEffectComponent> ent, ref WeatherEntityAffectedEvent args)
     {
         if (ent.Comp.EffectPrototype is { } protoId)
             _effects.TryApplyEffect(args.Target, protoId, ent.Comp.Scale);
