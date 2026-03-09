@@ -21,13 +21,13 @@ public sealed partial class BuyerAccessCondition : ListingCondition
     /// <summary>
     /// A whitelist of access prototypes that can purchase this listing. Only one needs to be found.
     /// </summary>
-    [DataField("whitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
     public HashSet<string>? Whitelist;
 
     /// <summary>
     /// A blacklist of access prototypes that can purchase this listing. Only one needs to be found.
     /// </summary>
-    [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
     public HashSet<string>? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)
