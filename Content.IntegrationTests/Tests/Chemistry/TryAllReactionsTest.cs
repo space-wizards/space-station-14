@@ -25,10 +25,10 @@ namespace Content.IntegrationTests.Tests.Chemistry
         maxVol: 50
         canMix: true";
 
-        private static string[] Reactions = GameDataScrounger.PrototypesOfKind<ReactionPrototype>();
+        private static string[] _reactions = GameDataScrounger.PrototypesOfKind<ReactionPrototype>();
 
         [Test]
-        [TestCaseSource(nameof(Reactions))]
+        [TestCaseSource(nameof(_reactions))]
         [TestOf(typeof(ReactionPrototype))]
         [Description("Tries an individual reaction to see if it succeeds.")]
         public async Task TryReaction(string reaction)
