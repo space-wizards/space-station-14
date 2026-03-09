@@ -23,7 +23,6 @@ public sealed class DeviceLinkingTest
 
     private static string[] _entitiesWithDeviceLinkSink = GameDataScrounger.EntitiesWithComponent("DeviceLinkSink");
 
-
     [Test]
     [TestOf(typeof(DeviceLinkSinkComponent))]
     [TestCaseSource(nameof(_entitiesWithDeviceLinkSink))]
@@ -55,14 +54,12 @@ public sealed class DeviceLinkingTest
 
                     // Spawn the sink entity
                     var sinkEnt = server.EntMan.SpawnEntity(proto.ID, coord);
-                    // Get the actual sink component, since the one we got from the prototype doesn't have its owner set up
-                    Assert.That(server.EntMan.TryGetComponent<DeviceLinkSinkComponent>(sinkEnt, out var sinkComp),
-                        $"{proto.ID} does not have a DeviceLinkSinkComponent!");
+                    // Get the actual sink component, since the one we got from the prototype isn't initialized.
+                    var sinkComp = server.EntMan.GetComponent<DeviceLinkSinkComponent>(sinkEnt);
 
                     // Spawn the tester
                     var sourceEnt = server.EntMan.SpawnEntity(PortTesterProtoId, coord);
-                    Assert.That(server.EntMan.TryGetComponent<DeviceLinkSourceComponent>(sourceEnt, out var sourceComp),
-                        $"Tester prototype does not have a DeviceLinkSourceComponent!");
+                    var sourceComp = server.EntMan.GetComponent<DeviceLinkSourceComponent>(sourceEnt);
 
                     // Create a link from the tester's output to the target port on the sink
                     deviceLinkSys.SaveLinks(null,
