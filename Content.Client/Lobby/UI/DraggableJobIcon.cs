@@ -42,6 +42,12 @@ public sealed class DraggableJobIcon : TextureRect
     private Control? _oldParent;
 
     /// <summary>
+    /// If the icon is being dragged, this will hold the position it had in _oldParent.
+    /// If the drag has ended and it gets snapped back to _oldParent, it will return to that position.
+    /// </summary>
+    private int _oldPosition;
+
+    /// <summary>
     /// If the icon is being dragged, this will hold the <see cref="TextureRect.TextureScale"/> that was set before the
     /// dragging. If the drag has ended and no other elements reparented this icon, it will reset the
     /// <see cref="TextureRect.TextureScale"/> back to this value..
@@ -104,13 +110,18 @@ public sealed class DraggableJobIcon : TextureRect
     /// </summary>
     private void StopDragging()
     {
-        // If nothing reparented the icon from the OnMouseUp events, then we should snap the icon back to its original
-        // parent
-        if (Parent == _uiManager.PopupRoot)
+        // If nothing reparented the icon from the OnMouseUp events, or if it was parented back to _oldParent, then we
+        // should snap the icon back to its original location
+        if (Parent == _uiManager.PopupRoot || Parent == _oldParent)
         {
-            // Put it back and make sure the TextureScale is reset
-            Orphan();
-            _oldParent?.AddChild(this);
+            // Put it back in _oldParent
+            if (Parent != _oldParent)
+            {
+                Orphan();
+                _oldParent?.AddChild(this);
+            }
+            // Make sure the position and TextureScale is reset
+            SetPositionInParent(_oldPosition);
             if (_oldScale is not null)
                 TextureScale = _oldScale.Value;
         }
@@ -120,6 +131,7 @@ public sealed class DraggableJobIcon : TextureRect
             OnPriorityChanged?.Invoke();
 
         _oldParent = null;
+        _oldPosition = 0;
         _oldScale = null;
     }
 
@@ -130,6 +142,7 @@ public sealed class DraggableJobIcon : TextureRect
     {
         // Save the current parent and texture scale
         _oldParent = Parent;
+        _oldPosition = GetPositionInParent();
         _oldScale = TextureScale;
         // Put it into PopupRoot
         Orphan();

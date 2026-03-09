@@ -47,9 +47,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         // If job or department prototypes get reloaded, we need to respond to that.
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
 
-        // Make sure that the cached job ordering is set up and up to date.
-        DraggableJobTarget.UpdatedOrderedJobs(_prototypeManager);
-
         // We need to tell the high priority target control where to bump its current job if someone tries to drag
         // in another high priority job.
         GetTargetControl(JobPriority.High).SetFallbackTarget(GetTargetControl(JobPriority.Medium));
@@ -60,7 +57,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         if (args.WasModified<JobPrototype>() || args.WasModified<DepartmentPrototype>())
         {
             // Update the job ordering and refresh the job icon layout.
-            DraggableJobTarget.UpdatedOrderedJobs(_prototypeManager);
             Refresh();
         }
     }
@@ -104,29 +100,41 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         var priorities = character.JobPriorities;
 
         // Create the job icons in order
-        foreach (var job in DraggableJobTarget.OrderedJobs)
+        var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToList();
+        departments.Sort(DepartmentUIComparer.Instance);
+        var iconsCreated = new HashSet<JobPrototype>(); // avoid duplicates for jobs that are in multiple departments
+        foreach (var department in departments)
         {
-            if (!job.SetPreference)
-                continue;
-            if (!_requirements.IsAllowed(job, null, out _))
-                continue;
-
-            var prio = priorities.GetValueOrDefault(job, JobPriority.Never);
-
-            var icon = new DraggableJobIcon(job, _ => CreateJobTooltip(job));
-
-            var jobIcon = _prototypeManager.Index(job.Icon);
-            icon.Texture = _sprite.Frame0(jobIcon.Icon);
-
-            foreach (var targetControl in Enum.GetValues<JobPriority>().Select(GetTargetControl))
+            var jobs = department.Roles.Select(_prototypeManager.Index).Where(r => r.SetPreference).ToList();
+            jobs.Sort(JobUIComparer.Instance);
+            foreach (var job in jobs)
             {
-                targetControl.RegisterJobIcon(icon);
+                if (iconsCreated.Contains(job))
+                    continue;
+                if (!job.SetPreference)
+                    continue;
+                if (!_requirements.IsAllowed(job, null, out _))
+                    continue;
+
+                var prio = priorities.GetValueOrDefault(job, JobPriority.Never);
+
+                var icon = new DraggableJobIcon(job, _ => CreateJobTooltip(job));
+
+                var jobIcon = _prototypeManager.Index(job.Icon);
+                icon.Texture = _sprite.Frame0(jobIcon.Icon);
+
+                foreach (var targetControl in Enum.GetValues<JobPriority>().Select(GetTargetControl))
+                {
+                    targetControl.RegisterJobIcon(icon);
+                }
+
+                icon.OnPriorityChanged += SendUpdatedPriorities;
+                icon.OnPriorityChanged += Refresh;
+
+                GetTargetControl(prio).AddJobIcon(icon);
+
+                iconsCreated.Add(job);
             }
-
-            icon.OnPriorityChanged += SendUpdatedPriorities;
-            icon.OnPriorityChanged += Refresh;
-
-            GetTargetControl(prio).AddJobIcon(icon, preOrdered: true);
         }
     }
 

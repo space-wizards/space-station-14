@@ -22,16 +22,6 @@ public sealed class DraggableJobTarget : Control
     public const string StylePseudoClassActive = "active";
 
     /// <summary>
-    /// A cached ordered list of jobs. This will be the sorted order of the job icons.
-    /// </summary>
-    private static readonly List<JobPrototype> OrderedJobsInternal = new ();
-
-    /// <summary>
-    /// A public immutable accessor for the ordered jobs list
-    /// </summary>
-    public static ImmutableList<JobPrototype> OrderedJobs => OrderedJobsInternal.ToImmutableList();
-
-    /// <summary>
     /// This will be the main "layout" box of the control, which contains the job container and label header
     /// </summary>
     private readonly BoxContainer _mainBox;
@@ -185,12 +175,16 @@ public sealed class DraggableJobTarget : Control
     /// Add a job icon to this control. The icon will be reparented if it is already parented.
     /// </summary>
     /// <param name="icon">Job icon to be added and parented</param>
-    /// <param name="preOrdered">
-    /// If false, it will figure out where to insert the icon to remain sorted.
-    /// If you are adding icons in order from an empty state, set this to true to save some cycles.
-    /// </param>
-    public void AddJobIcon(DraggableJobIcon icon, bool preOrdered = false)
+    /// We don't have to care about order here.
+    /// * If the icons are being created by LobbyCharacterPreviewPanel.Refresh(), they are being created in order
+    /// * If the icon has just been dragged here, then LobbyCharacterPreviewPanel.Refresh() is about to run and re-create
+    ///   all the icons in order
+    /// * If the icon is returning after being dragged to nowhere, it will remember its old position and move itself back
+    public void AddJobIcon(DraggableJobIcon icon)
     {
+        if (_jobIconContainer is null)
+            return;
+
         if (IsHighPriority && _jobIconContainer?.ChildCount > 0)
         {
             if (_fallbackTarget is null)
@@ -201,28 +195,8 @@ public sealed class DraggableJobTarget : Control
         }
 
         icon.SetScale(Priority);
-        var insertIndex = preOrdered ? -1 : FindInsertLocation(icon);
         icon.Orphan();
         _jobIconContainer?.AddChild(icon);
-        if(insertIndex >= 0)
-            icon.SetPositionInParent(insertIndex);
-    }
-
-    /// <summary>
-    /// Find which index the icon should be assigned to keep it in order.
-    /// </summary>
-    private int FindInsertLocation(DraggableJobIcon icon)
-    {
-        if (IsHighPriority)
-            return -1;
-
-        var thisIndex = OrderedJobs.IndexOf(icon.JobProto);
-
-        var insertAt = _jobIconContainer?.Children.Cast<DraggableJobIcon>()
-            .ToImmutableList()
-            .FindIndex(curIcon => OrderedJobs.IndexOf(curIcon.JobProto) > thisIndex);
-
-        return insertAt ?? -1;
     }
 
     /// <summary>
@@ -266,29 +240,6 @@ public sealed class DraggableJobTarget : Control
         SetActive(contained);
         if(contained)
             icon.SetScale(Priority);
-    }
-
-    /// <summary>
-    /// Update the cached list of sorted jobs
-    /// </summary>
-    public static void UpdatedOrderedJobs(IPrototypeManager protoMan)
-    {
-        OrderedJobsInternal.Clear();
-
-        // Get and sort departments
-        var departments = protoMan.EnumeratePrototypes<DepartmentPrototype>().ToList();
-        departments.Sort(DepartmentUIComparer.Instance);
-        foreach (var department in departments)
-        {
-            // Get and sort jobs in department
-            var jobs = department.Roles.Select(protoMan.Index).Where(r => r.SetPreference).ToList();
-            jobs.Sort(JobUIComparer.Instance);
-            foreach (var job in jobs)
-            {
-                if (!OrderedJobsInternal.Contains(job))
-                    OrderedJobsInternal.Add(job);
-            }
-        }
     }
 
     /// <summary>
