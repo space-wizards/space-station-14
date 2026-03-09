@@ -45,7 +45,4 @@ public sealed class TrayScannerState : ComponentState
 /// <summary>
 ///     Event raised when the T-Ray scanner action is used.
 /// </summary>
-public sealed partial class TrayScannerActionEvent : InstantActionEvent
-{
-
-}
+public sealed partial class TrayScannerActionEvent : InstantActionEvent;

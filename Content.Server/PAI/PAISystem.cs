@@ -2,7 +2,6 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Instruments;
 using Content.Server.Store.Systems;
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
@@ -17,7 +16,6 @@ using Content.Shared.Store;
 using Content.Shared.SubFloor;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
@@ -27,7 +25,6 @@ namespace Content.Server.PAI;
 public sealed class PAISystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedTrayScannerSystem _trayScannerSystem = default!;
     [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -36,6 +33,7 @@ public sealed class PAISystem : EntitySystem
     [Dependency] private readonly StoreSystem _storeSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly ActionAccessRequirementSystem _actionAccess = default!;
 
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
@@ -79,8 +77,7 @@ public sealed class PAISystem : EntitySystem
         if (!TryComp<ActionsComponent>(uid, out var actions))
             return;
 
-        var accessTags = _accessReader.FindAccessTags(uid);
-        TryComp<TrayScannerComponent>(uid, out var trayScanner);
+        var accessTags = _accessReader.FindAccessTags(uid).Select(p => p.Id).ToHashSet();
 
         foreach (var actionId in actions.Actions)
         {
@@ -92,21 +89,15 @@ public sealed class PAISystem : EntitySystem
             if (!TryComp<ActionAccessRequirementComponent>(actionId, out var requirement))
                 continue;
 
-            var denied = requirement.Blacklist != null && accessTags.Any(tag => requirement.Blacklist.Contains(tag)) ||
-                         requirement.Whitelist != null && !accessTags.Any(tag => requirement.Whitelist.Contains(tag));
+            if (_actionAccess.IsAllowed(requirement, accessTags).Item1)
+                continue;
 
-            if (denied)
+            var scanEv = new ScannerCheckEvent(actionId);
+            RaiseLocalEvent(uid, scanEv, false);
+
+            if (actionEvent is OpenUiActionEvent openUi && openUi.Key != null)
             {
-                if (actionEvent is TrayScannerActionEvent && trayScanner is { Enabled: true })
-                {
-                    _trayScannerSystem.SetScannerEnabled(uid, false, trayScanner);
-                    _actionsSystem.SetToggled((actionId, action), false);
-                }
-
-                if (actionEvent is OpenUiActionEvent openUi && openUi.Key != null)
-                {
-                    _uiSystem.CloseUi(uid, openUi.Key);
-                }
+                _uiSystem.CloseUi(uid, openUi.Key);
             }
         }
     }
@@ -135,7 +126,8 @@ public sealed class PAISystem : EntitySystem
         var existingActions = new HashSet<string>();
         foreach (var actionEnt in _actionsSystem.GetActions(uid))
         {
-            if (TryComp(actionEnt.Owner, out MetaDataComponent? metaData) && metaData.EntityPrototype != null)
+            var metaData = MetaData(actionEnt.Owner);
+            if (metaData.EntityPrototype != null)
             {
                 existingActions.Add(metaData.EntityPrototype.ID);
             }

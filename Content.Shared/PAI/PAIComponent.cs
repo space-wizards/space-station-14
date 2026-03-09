@@ -28,9 +28,7 @@ public sealed partial class PAIComponent : Component
     /// Used for keeping the purchased abilities when switching the Mind that is controlling the pAI.
     /// </summary>
     [DataField]
-    public List<EntProtoId> PurchasedAbilities { get; private set; } = new();
-
-
+    public List<EntProtoId> PurchasedAbilities = new();
 
     /// <summary>
     /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.

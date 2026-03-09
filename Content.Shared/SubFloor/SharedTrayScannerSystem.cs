@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -33,6 +34,20 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
         SubscribeLocalEvent<TrayScannerComponent, TrayScannerActionEvent>(OnTrayScannerAction);
         SubscribeLocalEvent<TrayScannerUserComponent, GetVisMaskEvent>(OnUserGetVis);
+        SubscribeLocalEvent<TrayScannerComponent, ScannerCheckEvent>(OnScannerCheck);
+    }
+
+    private void OnScannerCheck(EntityUid uid, TrayScannerComponent component, ScannerCheckEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!component.Enabled)
+            return;
+
+        SetScannerEnabled(uid, false, component);
+        _actions.SetToggled((args.ActionId, Comp<ActionComponent>(args.ActionId)), false);
+        args.Handled = true;
     }
 
     // for entities that have built-in t-ray scanner vision rather than item

@@ -50,6 +50,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         // API is extremely skrungly. If this ever shows up on dottrace ping me and laugh.
         var canSee = false;
 
+        // Check if player is a self scanner, if so, allow vision.
         if (scannerQuery.TryGetComponent(player, out var selfScanner) && selfScanner.Enabled)
         {
             canSee = true;

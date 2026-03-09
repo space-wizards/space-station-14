@@ -10,6 +10,7 @@ namespace Content.Shared.PDA
         [Dependency] protected readonly ItemSlotsSystem ItemSlotsSystem = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
         [Dependency] private readonly SharedJobStatusSystem _jobStatus = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -72,14 +73,13 @@ namespace Content.Shared.PDA
 
         private void NotifyPaiAccessChanged(EntityUid uid)
         {
-            var containerSystem = EntityManager.System<SharedContainerSystem>();
-            if (!containerSystem.TryGetContainer(uid, PdaComponent.PdaPaiSlotId, out var paiContainer))
+            if (!_containerSystem.TryGetContainer(uid, PdaComponent.PdaPaiSlotId, out var paiContainer))
                 return;
 
             foreach (var pai in paiContainer.ContainedEntities)
             {
-                if (HasComp<Content.Shared.PAI.PAIComponent>(pai))
-                    RaiseLocalEvent(pai, new Content.Shared.Access.Systems.PAIAccessChangedEvent());
+                if (HasComp<PAI.PAIComponent>(pai))
+                    RaiseLocalEvent(pai, new PAIAccessChangedEvent());
             }
         }
 
