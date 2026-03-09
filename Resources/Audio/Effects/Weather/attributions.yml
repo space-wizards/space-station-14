@@ -21,3 +21,8 @@
   copyright: '"RATH - Rain Hard Loop 08s" of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license.'
   license: Custom
   source: https://gdc.sonniss.com
+
+- files: [space_dust.ogg]
+  copyright: 'Isaac200000 on FreeSound.org'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/Isaac200000/sounds/336152/

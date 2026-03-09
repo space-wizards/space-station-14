@@ -109,6 +109,18 @@
   - type: AnomalySpawnRule
 
 - type: entity
+  id: SpaceDust
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-weather-space-dust
+    startAudio:
+      path: /Audio/Announcements/announce.ogg
+    weight: 8
+  - type: WeatherRule
+    weather: WeatherSpaceDust
+
+- type: entity
   id: BluespaceArtifact
   parent: BaseStationEventShortDelay
   components:
@@ -117,6 +129,7 @@
       min:  30
       max:  30
   - type: StationEvent
+    startAnnouncement: station-event-bureaucratic-error-announcement
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
