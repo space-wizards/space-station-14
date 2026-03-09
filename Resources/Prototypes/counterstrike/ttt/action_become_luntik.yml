@@ -1,7 +1,7 @@
 - type: entity
   id: ActionBecomeLuntik
   parent: BaseImplantAction
-  name: "Action: Become Luntik"
+  name: Action Become Luntik
   components:
   - type: LimitedCharges
     maxCharges: 1
@@ -13,6 +13,5 @@
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
       state: implanter0
   - type: InstantAction
-    # When this action is activated it raises a PolymorphActionEvent with the LuntikMorph proto
     event: !type:PolymorphActionEvent
       protoId: LuntikMorph

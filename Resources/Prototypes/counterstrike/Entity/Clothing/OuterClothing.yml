@@ -190,3 +190,35 @@
     reflectProb: 0.1
     spread: 75
     reflectingInHands: false
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterBabaTapaRadSuit
+  name: BTAPA LP's suit.
+  description: devyati shlyapnaya sobaka.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Suit/Btapa.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Suit/Btapa.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.9
+        Piercing: 0.7
+        Heat: 0.8
+        Caustic: 0.01
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Storage
+    grid:
+    - 0,0,7,1
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface

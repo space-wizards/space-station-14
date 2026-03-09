@@ -1,12 +1,10 @@
 - type: entity
   id: LuntikImplanter
   name: Luntik Implanter
-  description: A syndicate-style implanter preloaded with a Luntik implant.
-  # Make this prototype appear in the entity spawn panel under the Debug category.
+  description: become a luntik.exe
   categories: [ Debug ]
   parent: [ BaseImplantOnlyImplanterSyndi ]
   components:
   - type: Implanter
-    # The implant that will be injected when used on a target (including self)
     implant: LuntikImplant
 
