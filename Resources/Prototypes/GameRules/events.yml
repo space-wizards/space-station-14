@@ -110,7 +110,7 @@
 
 - type: entity
   id: SpaceDust
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventLongDelay
   components:
   - type: StationEvent
     startAnnouncement: station-event-weather-space-dust
