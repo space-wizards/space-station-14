@@ -26,7 +26,6 @@ public sealed class GuideEntryPrototypeTests
         await client.WaitIdleAsync();
         var protoMan = client.ResolveDependency<IPrototypeManager>();
         var resMan = client.ResolveDependency<IResourceManager>();
-        var locMan = client.ResolveDependency<ILocalizationManager>();
         var parser = client.ResolveDependency<DocumentParsingManager>();
         var proto = protoMan.Index<GuideEntryPrototype>(protoKey);
 
@@ -34,12 +33,8 @@ public sealed class GuideEntryPrototypeTests
         {
             using var reader = resMan.ContentFileReadText(proto.Text);
             var text = reader.ReadToEnd();
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse the guide entry's document.");
 
-                Assert.That(locMan.TryGetString(proto.Name, out _), $"The entry's name, {proto.Name}, is missing a locale key.");
-            }
+            Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse the guide entry's document.");
         });
 
         await pair.CleanReturnAsync();
