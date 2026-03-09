@@ -9,7 +9,7 @@ namespace Content.Shared.Weather.Effects;
 /// When added to a weather status effect entity (alongside <see cref="WeatherStatusEffectComponent"/>),
 /// defines gameplay effects that are periodically applied to entities under open sky.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class WeatherEntityEffectComponent : Component
 {
     /// <summary>
