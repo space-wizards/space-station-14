@@ -86,7 +86,6 @@ namespace Content.Server.NodeContainer.Nodes
         }
 
         [Obsolete("Use the overload that passes in Entity<MapGridComponent> and SharedMapSystem")]
-        [SuppressMessage("ReSharper", "EnforceForeachStatementBraces")]
         public static IEnumerable<(Direction dir, EntityUid entity)> GetCardinalNeighborCells(
             MapGridComponent grid,
             Vector2i coords,
