@@ -346,6 +346,13 @@ public abstract partial class SharedSiliconLawSystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
+        // Even supposed-to-be-subverted laws like xorgs will be set to false.
+        // This is not intended, however this part of the code will need to be updated later
+        // when implementing the law modification ddoc.
+        // The alternative right now is a very ugly function that gets the
+        // SiliconLawProviderComponent.Subverted from an entity based on its EntityPrototype and default component values.
+        // I promise to come back to fix it, or if a review says to just implement the ddoc in this PR.
+        // But right now the chance of this happening at all is too minor to worry about.
         ent.Comp.Subverted = false;
         SetProviderLaws(ent, GetLawset(ent.Comp.Laws).Laws);
     }
