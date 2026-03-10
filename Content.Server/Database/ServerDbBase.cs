@@ -232,6 +232,13 @@ namespace Content.Server.Database
             var facialHairMarking = flattenedMarkings.FirstOrNull(kvp => kvp.Key == HumanoidVisualLayers.FacialHair)?.Value.FirstOrDefault();
             profile.Markings =
                 JsonSerializer.SerializeToDocument(legacyMarkings.Select(marking => marking.ToString()).ToList());
+
+            if (hairMarking?.MarkingId.Id == null)
+                hairMarking = null;
+
+            if (facialHairMarking?.MarkingId.Id == null)
+                facialHairMarking = null;
+
             profile.HairName = hairMarking?.MarkingId ?? HairStyles.DefaultHairStyle;
             profile.FacialHairName = facialHairMarking?.MarkingId ?? HairStyles.DefaultFacialHairStyle;
             profile.HairColor = (hairMarking?.MarkingColors[0] ?? Color.Black).ToHex();
