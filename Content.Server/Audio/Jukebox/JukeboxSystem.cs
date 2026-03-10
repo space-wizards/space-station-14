@@ -174,7 +174,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     /// </summary>
     public void Stop(Entity<JukeboxComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return;
 
         Audio.SetState(entity.Comp.AudioStream, AudioState.Stopped);
@@ -185,7 +185,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     /// </summary>
     public void Pause(Entity<JukeboxComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return;
 
         Audio.SetState(entity.Comp.AudioStream, AudioState.Paused);
