@@ -30,7 +30,8 @@ namespace Content.Server.Power.Nodes
             return base.Connectable(entMan, xform);
         }
 
-        public override IEnumerable<Node> GetReachableNodes(Entity<TransformComponent> xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            Entity<TransformComponent> xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             Entity<MapGridComponent>? grid,

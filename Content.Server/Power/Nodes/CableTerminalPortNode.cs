@@ -7,7 +7,8 @@ namespace Content.Server.Power.Nodes
     [DataDefinition]
     public sealed partial class CableTerminalPortNode : Node
     {
-        public override IEnumerable<Node> GetReachableNodes(Entity<TransformComponent> xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            Entity<TransformComponent> xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             Entity<MapGridComponent>? grid,

@@ -92,7 +92,8 @@ public abstract partial class Node
     /// of this asymmetric relation are made to manually update with <see cref="NodeGroupSystem.QueueReflood"/>.
     /// </para>
     /// </remarks>
-    public abstract IEnumerable<Node> GetReachableNodes(Entity<TransformComponent> xform,
+    public abstract IEnumerable<Node> GetReachableNodes(
+        Entity<TransformComponent> xform,
         EntityQuery<NodeContainerComponent> nodeQuery,
         EntityQuery<TransformComponent> xformQuery,
         Entity<MapGridComponent>? grid,

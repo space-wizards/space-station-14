@@ -156,7 +156,8 @@ namespace Content.Server.NodeContainer.Nodes
             CurrentPipeDirection = OriginalPipeDirection.RotatePipeDirection(xform.LocalRotation);
         }
 
-        public override IEnumerable<Node> GetReachableNodes(Entity<TransformComponent> xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            Entity<TransformComponent> xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             Entity<MapGridComponent>? grid,
@@ -203,8 +204,12 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Gets the pipes that can connect to us from entities on the tile or adjacent in a direction.
         /// </summary>
-        private IEnumerable<PipeNode> LinkableNodesInDirection(Vector2i pos, PipeDirection pipeDir, Entity<MapGridComponent> grid,
-            EntityQuery<NodeContainerComponent> nodeQuery, SharedMapSystem mapSystem)
+        private IEnumerable<PipeNode> LinkableNodesInDirection(
+            Vector2i pos,
+            PipeDirection pipeDir,
+            Entity<MapGridComponent> grid,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            SharedMapSystem mapSystem)
         {
             foreach (var pipe in PipesInDirection(pos, pipeDir, grid, nodeQuery, mapSystem))
             {
@@ -220,8 +225,12 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Gets the pipes from entities on the tile adjacent in a direction.
         /// </summary>
-        protected IEnumerable<PipeNode> PipesInDirection(Vector2i pos, PipeDirection pipeDir, Entity<MapGridComponent> grid,
-            EntityQuery<NodeContainerComponent> nodeQuery, SharedMapSystem mapSystem)
+        protected IEnumerable<PipeNode> PipesInDirection(
+            Vector2i pos,
+            PipeDirection pipeDir,
+            Entity<MapGridComponent> grid,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            SharedMapSystem mapSystem)
         {
             var offsetPos = pos.Offset(pipeDir.ToDirection());
 
