@@ -45,7 +45,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
     // TODO combine textures into a single texture atlas.
     private readonly Texture[][] _frames;
 
-    private int _gasCount;
+    private readonly int _gasCount;
 
     public const int GasOverlayZIndex = (int) Shared.DrawDepth.DrawDepth.Gasses; // Under ghosts and fire, above mostly everything else
 
