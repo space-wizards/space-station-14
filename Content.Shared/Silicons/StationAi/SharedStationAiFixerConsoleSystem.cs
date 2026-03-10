@@ -32,6 +32,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedSiliconLawSystem _siliconLaw = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
