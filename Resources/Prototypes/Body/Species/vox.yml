@@ -184,6 +184,28 @@
     thresholds:
     - trigger:
         !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          FoodMeatChickenFriedVox:
+            min: 3
+            max: 5
+      - !type:BurnBodyBehavior
+        popupMessage: bodyburn-vox-text-others
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MeatLaserImpact
+    - trigger:
+        !type:DamageTypeTrigger
         damageType: Radiation
         damage: 15
       behaviors:
@@ -202,13 +224,13 @@
     # This allows Vox to take their mask off temporarily to eat something without needing a trip to medbay afterwards.
     allowedStates:
     - Alive
-    damageCap: 20
     damage:
       types:
         Heat: -0.07
+        Blunt: -0.05
+        Piercing: -0.05
+        Slash: -0.05
         Poison: -0.2 # needs to be less than the PendingZombieComponent does or they never become zombies by the disease.
-      groups:
-        Brute: -0.07
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
