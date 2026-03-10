@@ -53,7 +53,7 @@
   color: 13FF4B
   reagent: Tritium
   pricePerMole: 2.5
-  isFrue: true
+  isFuel: true
 
 - type: gas
   id: WaterVapor
