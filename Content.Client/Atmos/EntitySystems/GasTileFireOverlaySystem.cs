@@ -11,7 +11,6 @@ public sealed class GasTileFireOverlaySystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-
     private GasTileFireOverlay _fireOverlay = default!;
 
     public override void Initialize()
