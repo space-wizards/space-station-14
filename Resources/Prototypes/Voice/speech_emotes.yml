@@ -203,7 +203,7 @@
   name: chat-emote-name-hiss
   category: Vocal
   available: false
-  icon: Objects\Fun\Plushies\snake.rsi\icon.png
+  icon: Interface/Emotes/hiss.png
   whitelist:
     components:
     - Vocal
