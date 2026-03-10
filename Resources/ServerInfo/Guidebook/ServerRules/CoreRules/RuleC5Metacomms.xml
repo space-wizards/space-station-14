@@ -2,7 +2,7 @@
   # Core Rule 5 - Do not share current round info beyond the game
   [color=SlateGray][italic]Revision A, 2026-02-27[/italic][/color]
 
-  This is a zero-tolerance rule. You must wait until the round ends with the in-game round end summary and Wizard's Den Discord round end announcement to share round info.
+  This is a zero-tolerance rule. You must wait until the round ends to share round info beyond the game. [color=SlateGray](The end of the round is denoted by the in-game round end summary and Wizard's Den Discord round end announcement.)[/color]
 
   ## Live streams and voice calls
   Hosts must report attendees who connect to the same current round. Hosts must also kick such players from the stream when possible. [color=SlateGray](Hosts should use a stream delay to reduce current round info leaks and stream sniping.)[/color]
