@@ -155,8 +155,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         }
         else
         {
-            ent.Comp.AudioStream = Audio.Stop(ent.Comp.AudioStream);
-
             if (string.IsNullOrEmpty(ent.Comp.SelectedSongId) ||
                 !_protoManager.Resolve(ent.Comp.SelectedSongId, out var jukeboxProto))
             {
