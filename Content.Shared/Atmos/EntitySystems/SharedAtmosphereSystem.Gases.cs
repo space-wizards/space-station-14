@@ -81,7 +81,7 @@ public abstract partial class SharedAtmosphereSystem
             GasOxidizerMask[i] = GasPrototypes[i].IsOxidizer ? 1 : 0;
 
             // Flammable mask is just fuel and oxidizer combined, because both are required for a reaction to occur.
-            GasFlammableMask[i] = Math.Clamp(GasFuelMask[i] * GasOxidizerMask[i], 0, 1);
+            GasFlammableMask[i] = GasFuelMask[i] * GasOxidizerMask[i];
         }
     }
 
