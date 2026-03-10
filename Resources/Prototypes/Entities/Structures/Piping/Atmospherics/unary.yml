@@ -266,6 +266,7 @@
     - type: GuideHelp
       guides:
       - Thermomachines
+    - type: AtmosUnsafeUnanchor
 
 - type: entity
   parent: BaseGasThermoMachine

@@ -1,10 +1,10 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
+using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Destructible;
 using Content.Shared.NodeContainer;
@@ -25,6 +25,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, UserUnanchoredEvent>(OnUserUnanchored);
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, BreakageEventArgs>(OnBreak);
+            SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, MachineDeconstructedEvent>(OnMachineDeconstructed);
         }
 
         private void OnUnanchorAttempt(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchorAttemptEvent args)
@@ -69,6 +70,11 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             // Can't use DoActsBehavior["Destruction"] in the same trigger because that would prevent us
             // from leaking. So we make up for this by queueing deletion here.
             QueueDel(uid);
+        }
+
+        private void OnMachineDeconstructed(Entity<AtmosUnsafeUnanchorComponent> uid, ref MachineDeconstructedEvent args)
+        {
+            LeakGas(uid, false);
         }
 
         /// <summary>
