@@ -7,6 +7,7 @@
   color: 2887E8
   reagent: Oxygen
   pricePerMole: 0
+  isOxidizer: true
 
 - type: gas
   id: Nitrogen
@@ -39,6 +40,7 @@
   color: FF3300
   reagent: Plasma
   pricePerMole: 0
+  isFuel: true
 
 - type: gas
   id: Tritium
@@ -51,6 +53,7 @@
   color: 13FF4B
   reagent: Tritium
   pricePerMole: 2.5
+  isFrue: true
 
 - type: gas
   id: WaterVapor
