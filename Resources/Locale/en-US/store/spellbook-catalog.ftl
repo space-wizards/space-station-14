@@ -45,7 +45,7 @@ spellbook-cluwne-name = Cluwne's Curse
 spellbook-cluwne-desc = For when you really hate someone and Smite isn't enough. Requires Wizard Robe & Hat.
 
 spellbook-slip-name = Slippery Slope
-spellbook-slip-desc = Learn the ancient ways of the Janitor and curse your target to be slippery. Requires Wizard Robe & Hat.
+spellbook-slip-desc = Learn the ancient ways of the Janitor and curse your target to be slippery.
 
 spellbook-item-recall-name = Item Recall
 spellbook-item-recall-description = Mark a held item and summon it back at any time with just a snap of your fingers!

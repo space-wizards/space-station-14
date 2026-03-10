@@ -13,6 +13,8 @@ namespace Content.Client.Radiation.Overlays
 {
     public sealed class RadiationPulseOverlay : Overlay
     {
+        private static readonly ProtoId<ShaderPrototype> RadiationShader = "Radiation";
+
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -29,7 +31,7 @@ namespace Content.Client.Radiation.Overlays
         public RadiationPulseOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _baseShader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
+            _baseShader = _prototypeManager.Index(RadiationShader).Instance().Duplicate();
         }
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)

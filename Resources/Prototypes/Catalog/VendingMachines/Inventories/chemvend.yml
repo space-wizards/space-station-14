@@ -25,7 +25,6 @@
   contrabandInventory:
     DrinkLithiumFlask: 1
     StrangePill: 3
-  emaggedInventory:
     ChemistryBottleToxin: 1
 
 - type: vendingMachineInventory
@@ -57,7 +56,6 @@
   contrabandInventory:
     DrinkLithiumFlask: 1
     StrangePill: 3
-  emaggedInventory:
     ChemistryBottlePax: 3
     ChemistryBottleMuteToxin: 3
     ChemistryBottleLead: 2

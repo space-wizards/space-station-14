@@ -73,9 +73,6 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="frameTime">The time elapsed since the last set of updates.</param>
     public override void Update(float frameTime)
     {
-        if(!_timing.IsFirstTimePredicted)
-            return;
-
         var query = EntityQueryEnumerator<GravityWellComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var gravWell, out var xform))
         {

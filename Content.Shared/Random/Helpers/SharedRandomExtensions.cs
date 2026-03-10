@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Random.Helpers
 {
@@ -183,6 +184,61 @@ namespace Content.Shared.Random.Helpers
 
             // Shouldn't happen
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
+        }
+
+        /// <inheritdoc cref="HashCodeCombine(IReadOnlyCollection{int})"/>
+        public static int HashCodeCombine(params int[] values)
+        {
+            return HashCodeCombine((IReadOnlyCollection<int>)values);
+        }
+
+        /// <summary>
+        /// A very simple, deterministic djb2 hash function for generating a combined seed for the random number generator.
+        /// We can't use HashCode.Combine because that is initialized with a random value, creating different results on the server and client.
+        /// </summary>
+        /// <example>
+        /// Combine the current game tick with a NetEntity Id in order to not get the same random result if this is called multiple times in the same tick.
+        /// <code>
+        /// var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        /// </code>
+        /// </example>
+        public static int HashCodeCombine(IReadOnlyCollection<int> values)
+        {
+            int hash = 5381;
+            foreach (var value in values)
+            {
+                hash = (hash << 5) + hash + value;
+            }
+            return hash;
+        }
+
+        // TODO: REPLACE ALL OF THIS WITH PREDICTED RANDOM WHEN ENGINE PR IS MERGED
+        /// <summary>
+        /// Creates an instance of System.Random that will be the same for both the server and client.
+        /// This allows for the client and server to roll the same results when determining things randomly, preventing mispredictions.
+        /// We generate a unique seed by getting 2-3 unique but predictable integers into a Hashcode.
+        /// </summary>
+        /// <param name="timing">An instance if IGameTiming.
+        /// We use the integer value of the current tick to ensure a different seed every tick.</param>
+        /// <param name="netEnt">The relevant net entity to our seed.
+        /// This allows different entities to have different seeds and therefore different results on the same game-tick.</param>
+        /// <param name="netEnt2">An optional relevant net entity to our seed.
+        /// Typically used if we have an entity checking random potentially multiple times per tick, to ensure we get a unique seed each time.
+        /// This entity should not be the same entity as <see cref="netEnt"/>.</param>
+        public static System.Random PredictedRandom(IGameTiming timing, NetEntity netEnt, NetEntity? netEnt2 = null)
+        {
+            var seed = HashCodeCombine((int)timing.CurTick.Value, netEnt.Id, netEnt2?.Id ?? 0);
+            return new System.Random(seed);
+        }
+
+        /// <summary>
+        /// Checks a probability against a <see cref="PredictedRandom"/> instance.
+        /// Returns true if the amount rolled is below the probability.
+        /// </summary>
+        public static bool PredictedProb(IGameTiming timing, float probability, NetEntity netEnt1, NetEntity? netEnt2 = null)
+        {
+            var rand = PredictedRandom(timing, netEnt1, netEnt2);
+            return rand.Prob(probability);
         }
     }
 }

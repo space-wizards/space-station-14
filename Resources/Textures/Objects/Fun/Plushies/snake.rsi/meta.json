@@ -21,6 +21,10 @@
         {
             "name": "equipped-NECK",
 			"directions": 4
+        },
+        {
+            "name": "equipped-NECK-vox",
+            "directions": 4
         }
     ]
 }

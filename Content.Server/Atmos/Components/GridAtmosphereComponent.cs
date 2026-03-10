@@ -1,7 +1,9 @@
+using System.Collections.Concurrent;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Serialization;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Atmos.Components
 {
@@ -60,6 +62,39 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables]
         public int HighPressureDeltaCount => HighPressureDelta.Count;
+
+        /// <summary>
+        /// A list of entities that have a <see cref="DeltaPressureComponent"/> and are to
+        /// be processed by the <see cref="DeltaPressureSystem"/>, if enabled.
+        ///
+        /// To prevent massive bookkeeping overhead, this list is processed in-place,
+        /// with add/remove/find operations helped via a dict.
+        /// </summary>
+        /// <remarks>If you want to add/remove/find entities in this list,
+        /// use the API methods in the Atmospherics API.</remarks>
+        [ViewVariables]
+        public readonly List<Entity<DeltaPressureComponent>> DeltaPressureEntities =
+            new(AtmosphereSystem.DeltaPressurePreAllocateLength);
+
+        /// <summary>
+        /// An index lookup for the <see cref="DeltaPressureEntities"/> list.
+        /// Used for add/remove/find operations to speed up processing.
+        /// </summary>
+        public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup =
+            new(AtmosphereSystem.DeltaPressurePreAllocateLength);
+
+        /// <summary>
+        /// Integer that indicates the current position in the
+        /// <see cref="DeltaPressureEntities"/> list that is being processed.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public int DeltaPressureCursor;
+
+        /// <summary>
+        /// Queue of entities that need to have damage applied to them.
+        /// </summary>
+        [ViewVariables]
+        public readonly ConcurrentQueue<AtmosphereSystem.DeltaPressureDamageResult> DeltaPressureDamageResults = new();
 
         [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();

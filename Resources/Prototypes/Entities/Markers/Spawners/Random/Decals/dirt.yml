@@ -10,7 +10,7 @@
     - DirtHeavy
     maxDecalsPerTile: 1
     snapPosition: true
-    zIndex: 1
+    zIndex: 5
     prob: 0.8
     color: '#FFFFFF7F'
     cleanable: true

@@ -64,7 +64,7 @@
     displayName: Eyes
     whitelist:
       tags:
-      - CorgiWearable
+      - PetWearable
   - name: head
     slotTexture: head
     slotFlags: HEAD

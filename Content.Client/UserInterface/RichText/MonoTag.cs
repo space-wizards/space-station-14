@@ -10,9 +10,9 @@ namespace Content.Client.UserInterface.RichText;
 /// <summary>
 /// Sets the font to a monospaced variant
 /// </summary>
-public sealed class MonoTag : IMarkupTag
+public sealed class MonoTag : IMarkupTagHandler
 {
-    [ValidatePrototypeId<FontPrototype>] public const string MonoFont = "Monospace";
+    public static readonly ProtoId<FontPrototype> MonoFont = "Monospace";
 
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

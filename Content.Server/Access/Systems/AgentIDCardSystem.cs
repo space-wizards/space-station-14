@@ -11,9 +11,12 @@ using Content.Shared.Roles;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Clothing.Systems;
 using Content.Server.Implants;
+using Content.Server.VoiceMask;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
+using Content.Shared.Lock;
 using Content.Shared.PDA;
+using Content.Shared.VoiceMask;
 
 namespace Content.Server.Access.Systems
 {
@@ -25,6 +28,8 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ChameleonClothingSystem _chameleon = default!;
         [Dependency] private readonly ChameleonControllerSystem _chamController = default!;
+        [Dependency] private readonly LockSystem _lock = default!;
+        [Dependency] private readonly SharedJobStatusSystem _jobStatus = default!;
 
         public override void Initialize()
         {
@@ -36,6 +41,7 @@ namespace Content.Server.Access.Systems
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
             SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(OnChameleonControllerOutfitChangedItem);
+            SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<VoiceMaskNameUpdatedEvent>>(OnVoiceMaskNameChanged);
         }
 
         private void OnChameleonControllerOutfitChangedItem(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
@@ -43,7 +49,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(ent, out var idCardComp))
                 return;
 
-            _prototypeManager.TryIndex(args.Args.ChameleonOutfit.Job, out var jobProto);
+            _prototypeManager.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
 
             var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
             var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
@@ -77,9 +83,21 @@ namespace Content.Server.Access.Systems
             _chameleon.SetSelectedPrototype(ent, comp.IdCard);
         }
 
+        private void OnVoiceMaskNameChanged(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<VoiceMaskNameUpdatedEvent> args)
+        {
+            if (!TryComp<IdCardComponent>(ent, out var idCard))
+                return;
+
+            if (!args.Args.VoiceMask.Comp.ChangeIDName)
+                return;
+
+            _cardSystem.TryChangeFullName(ent, args.Args.NewName, idCard);
+        }
+
         private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
         {
-            if (args.Target == null || !args.CanReach || !TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target))
+            if (args.Target == null || !args.CanReach || _lock.IsLocked(uid) ||
+                !TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target))
                 return;
 
             if (!TryComp<AccessComponent>(uid, out var access) || !HasComp<IdCardComponent>(uid))
@@ -127,13 +145,15 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
+            if (!_prototypeManager.Resolve(args.JobIconId, out var jobIcon))
                 return;
 
             _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
 
             if (TryFindJobProtoFromIcon(jobIcon, out var job))
                 _cardSystem.TryChangeJobDepartment(uid, job, idCard);
+
+            _jobStatus.UpdateStatus(Transform(uid).ParentUid);
         }
 
         private bool TryFindJobProtoFromIcon(JobIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)

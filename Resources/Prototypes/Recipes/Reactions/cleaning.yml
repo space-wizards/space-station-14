@@ -12,6 +12,8 @@
 
 - type: reaction
   id: AmmoniaFromBlood
+  requiredMixerCategories:
+  - Stir # prevents evaporating vox blood, TODO: make it react only X units per second; make bloodstream an open thermal system
   minTemp: 370
   reactants:
     AmmoniaBlood:

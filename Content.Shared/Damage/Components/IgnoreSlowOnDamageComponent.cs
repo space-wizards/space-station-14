@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Damage.Components;
