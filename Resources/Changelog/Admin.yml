@@ -1682,5 +1682,14 @@ Entries:
   id: 205
   time: '2026-03-07T04:26:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43103
+- author: TheShuEd
+  changes:
+  - message: Added the "weatheradd", "weatherremove" and "weatherset" console commands.
+    type: Add
+  - message: Removed the "weather" console command.
+    type: Remove
+  id: 206
+  time: '2026-03-08T23:41:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41427
 Name: Admin
 Order: 3
