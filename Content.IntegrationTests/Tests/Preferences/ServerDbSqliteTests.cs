@@ -82,6 +82,23 @@ namespace Content.IntegrationTests.Tests.Preferences
         }
 
         [Test]
+        public async Task TestBadHairValueIgnored()
+        {
+            var pair = await PoolManager.GetServerClient();
+            var db = GetDb(pair.Server);
+            var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
+
+            var originalProfile = CharlieCharlieson();
+            originalProfile.Appearance.Markings["Head"] = new Dictionary<HumanoidVisualLayers, List<Marking>>
+            {
+                [HumanoidVisualLayers.Hair] = [],
+                [HumanoidVisualLayers.FacialHair] = [],
+            };
+
+            await db.InitPrefsAsync(username, originalProfile);
+        }
+
+        [Test]
         public async Task TestInitPrefs()
         {
             var pair = await PoolManager.GetServerClient();
