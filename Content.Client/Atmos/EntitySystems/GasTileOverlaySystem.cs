@@ -1,11 +1,13 @@
+using JetBrains.Annotations;
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
-using JetBrains.Annotations;
+using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Atmos.EntitySystems
@@ -13,10 +15,11 @@ namespace Content.Client.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IOverlayManager _overlayMan = default!;
-        [Dependency] private readonly SpriteSystem _spriteSys = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly SharedTransformSystem _xformSys = default!;
+        [Dependency] private readonly SpriteSystem _spriteSys = default!;
 
         private GasTileOverlay _overlay = default!;
 
@@ -28,6 +31,7 @@ namespace Content.Client.Atmos.EntitySystems
 
             _overlay = new GasTileOverlay(this, EntityManager, _resourceCache, ProtoMan, _spriteSys, _xformSys);
             _overlayMan.AddOverlay(_overlay);
+            Subs.CVar(_cfg, CCVars.GasOverlaySmoothingSubdivisionsPerAxis, value => _overlay.SetSmoothingSubdivisionsPerAxis(value), true);
         }
 
         public override void Shutdown()

@@ -161,6 +161,14 @@ public sealed partial class CCVars
         CVarDef.Create("atmos.max_explosion_range", 26f, CVar.SERVERONLY);
 
     /// <summary>
+    ///     Client-side gas overlay smoothing subdivisions per tile axis.
+    ///     1 = single tile sample, 2 = 2x2 segments (4 pieces), 4 = 4x4 segments (16 pieces).
+    ///     Higher values smooth cloud edges but increase draw calls.
+    /// </summary>
+    public static readonly CVarDef<int> GasOverlaySmoothingSubdivisionsPerAxis =
+        CVarDef.Create("atmos.gas_overlay_smoothing_subdivisions_per_axis", 4, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// Whether atmospherics will process delta-pressure damage on entities with a DeltaPressureComponent.
     /// Entities with this component will take damage if they are exposed to a pressure difference
     /// above the minimum pressure threshold defined in the component.
