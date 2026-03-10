@@ -37,3 +37,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Mix of vox_laugh.ogg and vox_cough.ogg, edited by ScarKy0."
   source: "https://github.com/space-wizards/space-station-14/pull/42929"
+
+- files: ["vox_caw.ogg"]
+  license: "CC0-1.0"
+  copyright: "Angry Geese hissing closely Fauchende Gänse Geschnatter"
+  source: "https://pixabay.com/sound-effects/nature-crow-calls-raspy-echoing-472377/"
+
+- files: ["vox_hiss.ogg"]
+  license: "CC0-1.0"
+  copyright: "Angry Geese hissing closely Fauchende Gänse Geschnatter"
+  source: "https://pixabay.com/sound-effects/nature-angry-geese-hissing-closely-fauchende-g%c3%a4nse-geschnatter-146556/"
