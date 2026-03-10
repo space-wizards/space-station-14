@@ -13,6 +13,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Numerics;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Atmos.Overlays;
 
@@ -47,7 +48,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
 
     private readonly int _gasCount;
 
-    public const int GasOverlayZIndex = (int) Shared.DrawDepth.DrawDepth.Gasses; // Under ghosts and fire, above mostly everything else
+    public const int GasOverlayZIndex = (int)DrawDepth.Gasses; // Under ghosts and fire, above mostly everything else
 
     public GasTileVisibleGasOverlay()
     {
