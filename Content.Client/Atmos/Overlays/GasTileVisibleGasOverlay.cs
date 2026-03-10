@@ -21,7 +21,6 @@ namespace Content.Client.Atmos.Overlays;
 /// </summary>
 public sealed class GasTileVisibleGasOverlay : Overlay
 {
-
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
