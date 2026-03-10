@@ -228,17 +228,10 @@ namespace Content.Server.Database
                 .ToList();
             var flattenedMarkings = appearance.Markings.SelectMany(it => it.Value)
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            var hairMarking = flattenedMarkings.FirstOrNull(kvp => kvp.Key == HumanoidVisualLayers.Hair)?.Value.FirstOrDefault();
-            var facialHairMarking = flattenedMarkings.FirstOrNull(kvp => kvp.Key == HumanoidVisualLayers.FacialHair)?.Value.FirstOrDefault();
+            var hairMarking = flattenedMarkings.FirstOrNull(kvp => kvp.Key == HumanoidVisualLayers.Hair)?.Value.FirstOrNull();
+            var facialHairMarking = flattenedMarkings.FirstOrNull(kvp => kvp.Key == HumanoidVisualLayers.FacialHair)?.Value.FirstOrNull();
             profile.Markings =
                 JsonSerializer.SerializeToDocument(legacyMarkings.Select(marking => marking.ToString()).ToList());
-
-            if (hairMarking?.MarkingId.Id == null)
-                hairMarking = null;
-
-            if (facialHairMarking?.MarkingId.Id == null)
-                facialHairMarking = null;
-
             profile.HairName = hairMarking?.MarkingId ?? HairStyles.DefaultHairStyle;
             profile.FacialHairName = facialHairMarking?.MarkingId ?? HairStyles.DefaultFacialHairStyle;
             profile.HairColor = (hairMarking?.MarkingColors[0] ?? Color.Black).ToHex();
