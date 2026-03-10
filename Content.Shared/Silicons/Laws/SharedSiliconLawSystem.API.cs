@@ -167,19 +167,6 @@ public abstract partial class SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Gets the default subverted state from the entity's prototype.
-    /// </summary>
-    public bool GetSubverted(Entity<SiliconLawProviderComponent?> ent)
-    {
-        if (MetaData(ent).EntityPrototype is { } proto &&
-            proto.TryGetComponent<SiliconLawProviderComponent>(out var protoComp, _componentFactory))
-        {
-            return protoComp.Subverted;
-        }
-        return false;
-    }
-
-    /// <summary>
     /// Sets the laws of a law provider to a new list.
     /// Updates the laws of all linked LawBound entities.
     /// </summary>
@@ -359,7 +346,7 @@ public abstract partial class SharedSiliconLawSystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        ent.Comp.Subverted = GetSubverted(ent);
+        ent.Comp.Subverted = false;
         SetProviderLaws(ent, GetLawset(ent.Comp.Laws).Laws);
     }
 }

@@ -28,7 +28,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
