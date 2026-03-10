@@ -227,7 +227,7 @@ public sealed partial class AtmosphereSystem
                 _adminLog.Add(LogType.Flammable,
                     LogImpact.High,
                     $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: " +
-                    $"{tile.Air.Temperature.ToString(CultureInfo.InvariantCulture):temperature}K - { tile.Air.Moles }"); // todo test if that works
+                    $"{tile.Air.ToPrettyString()}");
             }
 
             tile.Hotspot = new Hotspot

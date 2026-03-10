@@ -26,6 +26,15 @@ public abstract partial class SharedAtmosphereSystem
     /// <para>This is used to quickly determine if a <see cref="GasMixture"/> contains any flammable gas.
     /// When determining flammability, the float is multiplied with the mask and then
     /// added to see if the mixture is flammable, and how many moles are considered flammable.</para>
+    /// <para>This is done instead of a massive if statement of doom everywhere.</para>
+    /// <example><para>Say Plasma has the <see cref="GasPrototype.IsFuel"/> bool set to true.
+    /// Atmospherics will place a 1 in the spot where plasma goes in the masking array.
+    /// Whenever we need to determine if a GasMixture contains fuel gases, we multiply the
+    /// gas array by the mask. Fuel gases will keep their value (being multiplied by one)
+    /// whereas non-fuel gases will be multiplied by zero and be zeroed out.
+    /// The resulting array can be HorizontalAdded, with any value above zero indicating fuel gases.</para>
+    /// <para>This works for multiple fuel gases at the same time, so it's a fairly quick way
+    /// to determine if a mixture has the gases we care about.</para></example>
     protected readonly float[] GasFuelMask = new float[Atmospherics.AdjustedNumberOfGases];
 
     /// <summary>
