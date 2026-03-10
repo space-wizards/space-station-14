@@ -123,8 +123,8 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6 # Slightly more common than other hordes
-    duration: 15
-    maxDuration: 45
+    duration: 5
+    maxDuration: 20
     reoccurrenceDelay: 15 # Shorter because this event is basically a nat zero on the round. It only exists to potentially confuse security or the crew
   - type: VentHordeRule
     table: !type:GroupSelector

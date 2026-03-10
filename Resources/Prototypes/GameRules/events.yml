@@ -460,8 +460,8 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 15
-    maxDuration: 45
+    duration: 5
+    maxDuration: 20
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -481,8 +481,8 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 15
-    maxDuration: 45
+    duration: 5
+    maxDuration: 20
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -502,8 +502,8 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 15
-    maxDuration: 45
+    duration: 5
+    maxDuration: 20
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -521,8 +521,8 @@
     earliestStart: 20
     minimumPlayers: 20
     weight: 1.5
-    duration: 15
-    maxDuration: 45
+    duration: 5
+    maxDuration: 20
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
