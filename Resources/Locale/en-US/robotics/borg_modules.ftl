@@ -9,6 +9,7 @@ borg-slot-small-containers-empty = Small containers
 borg-slot-chemical-containers-empty = Chemical containers
 borg-slot-documents-empty = Books and papers
 borg-slot-soap-empty = Soap
+borg-slot-cleanade-empty = Cleanade
 borg-slot-instruments-empty = Instruments
 borg-slot-beakers-empty = Beakers
 borg-slot-brains-empty = Brains and MMIs

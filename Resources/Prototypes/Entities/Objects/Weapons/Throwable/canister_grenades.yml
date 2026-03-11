@@ -29,6 +29,9 @@
   name: cleanade
   description: Special grenade for janitors, releasing large cloud of space cleaner foam.
   components:
+  - type: Tag
+    tags:
+    - Cleanade
   - type: Sprite
     sprite: Objects/Weapons/Grenades/janitor.rsi
   - type: SmokeOnTrigger
