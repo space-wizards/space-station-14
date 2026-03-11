@@ -22,7 +22,6 @@ public sealed partial class GunSystem
             if (gun.NextFire > Timing.CurTime)
                 continue;
 
-
             if (TryComp(uid, out AutoShootGunComponent? autoShoot))
             {
                 if (!autoShoot.Enabled)

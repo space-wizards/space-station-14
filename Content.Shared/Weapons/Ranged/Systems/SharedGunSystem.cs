@@ -250,7 +250,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         DirtyField(ent.AsNullable(), nameof(GunComponent.ShotCounter));
     }
 
-
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
