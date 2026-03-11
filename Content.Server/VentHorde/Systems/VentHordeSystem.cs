@@ -61,7 +61,7 @@ public sealed class VentHordeSystem : EntitySystem
     /// <param name="uid">The entity to spawn the horde at.</param>
     /// <param name="spawns">List of entities to spawn.</param>
     /// <param name="spawnDelay">Time after which to spawn the entities.</param>
-    /// <param name="append">If an already active spawner is selected, will add entities to its list. Otherwise, will fial.</param>
+    /// <param name="append">If an already active spawner is selected, will add entities to its list. Otherwise, will fail.</param>
     public void StartHordeSpawn(EntityUid uid, List<EntProtoId> spawns, TimeSpan spawnDelay, bool append = true)
     {
         if (TryComp<VentHordeSpawnerComponent>(uid, out var hordeSpawner))
