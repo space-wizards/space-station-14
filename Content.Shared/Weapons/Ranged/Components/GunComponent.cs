@@ -261,8 +261,7 @@ public sealed partial class GunComponent : Component
     /// <summary>
     /// If the gun has been cancelled recently (via pacification, ninja honor, not being weilded, etc.)
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+[DataField, AutoNetworkedField]
     public bool CancellationHold = false;
 
     /// <summary>
