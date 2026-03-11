@@ -95,6 +95,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
+        SubscribeAllEvent<RequestGunCancelRelease>(OnCancelRelease);
         SubscribeLocalEvent<GunComponent, MeleeHitEvent>(OnGunMelee);
 
         // Ammo providers
@@ -224,7 +225,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         ent.Comp.Target = null;
         DirtyField(ent.AsNullable(), nameof(GunComponent.ShotCounter));
     }
-
+    private void OnCancelRelease(Entity<GunComponent> ent)
+    {
+        Log.Debug($"Shared: Releasing Cancellation Hold");
+        ent.Comp.CancellationHold = false;
+        DirtyField(ent.AsNullable(), nameof(GunComponent.CancellationHold));
+    }
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
@@ -265,12 +271,6 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
-        //If the gun was recently cancelled, prevent the shot
-        if (gun.Comp.CancellationHold == true)
-        {
-            Log.Debug($"Aborted Firing due to CancellationHold");
-            return false;
-        }
         // check if anything wants to prevent/cancel shooting (Pacification, Ninja Honor, Not being wielded, etc.)
         var prevention = new ShotAttemptedEvent
         {
