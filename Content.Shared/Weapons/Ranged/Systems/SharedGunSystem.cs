@@ -95,7 +95,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
-        SubscribeAllEvent<RequestGunCancelRelease>(OnCancelRelease);
+        SubscribeAllEvent<RequestGunCancelReleaseEvent>(OnCancelRelease);
         SubscribeLocalEvent<GunComponent, MeleeHitEvent>(OnGunMelee);
 
         // Ammo providers
@@ -179,6 +179,22 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         StopShooting(userGun);
     }
+    private void OnCancelRelease(RequestGunCancelReleaseEvent ev, EntitySessionEventArgs args)
+    {
+        var gunUid = GetEntity(ev.Gun);
+        if (args.SenderSession.AttachedEntity == null ||
+            !TryComp<GunComponent>(gunUid, out var gun) ||
+            !TryGetGun(args.SenderSession.AttachedEntity.Value, out var userGun))
+        {
+            return;
+        }
+
+        if (userGun != (gunUid, gun))
+            return;
+
+        userGun.Comp.CancellationHold = false;
+        DirtyField(userGun.AsNullable(), nameof(GunComponent.CancellationHold));
+    }
 
     public bool CanShoot(GunComponent component)
     {
@@ -225,12 +241,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         ent.Comp.Target = null;
         DirtyField(ent.AsNullable(), nameof(GunComponent.ShotCounter));
     }
-    private void OnCancelRelease(Entity<GunComponent> ent)
-    {
-        Log.Debug($"Shared: Releasing Cancellation Hold");
-        ent.Comp.CancellationHold = false;
-        DirtyField(ent.AsNullable(), nameof(GunComponent.CancellationHold));
-    }
+
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
