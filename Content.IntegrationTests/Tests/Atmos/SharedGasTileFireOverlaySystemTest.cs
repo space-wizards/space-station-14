@@ -22,11 +22,10 @@ public sealed class SharedGasTileFireOverlaySystemTest : AtmosTest
     {
         var sMapSys = Server.System<SharedMapSystem>();
 
-        var gridComp = ProcessEnt.Comp3;
         var gridNetEnt = Server.EntMan.GetNetEntity(ProcessEnt);
 
         var gridCoords = new EntityCoordinates(ProcessEnt, Vector2.Zero);
-        var tileIndices = sMapSys.TileIndicesFor(ProcessEnt, gridComp, gridCoords);
+        var tileIndices = sMapSys.TileIndicesFor(ProcessEnt, ProcessEnt.Comp3, gridCoords);
         var mixture = SAtmos.GetTileMixture(ProcessEnt, null, tileIndices, true);
 
         // Get data for client side.
