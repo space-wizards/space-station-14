@@ -44,6 +44,9 @@ public sealed class SharedGasSpecificHeatsTest
 
         _sAtmos = _sEntMan.System<Content.Server.Atmos.EntitySystems.AtmosphereSystem>();
         _cAtmos = _cEntMan.System<AtmosphereSystem>();
+
+        // ensure that client and server atmos are fully inited otherwise arrays might not agree
+        await _pair.ReallyBeIdle();
     }
 
     [TearDown]
