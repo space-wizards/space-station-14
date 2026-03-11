@@ -312,6 +312,7 @@
   id: Caw
   name: chat-emote-name-caw
   category: Vocal
+  icon: Interface/Emotes/caw.png
   available: false
   whitelist:
     components:
