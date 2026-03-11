@@ -293,7 +293,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (prevention.Cancelled)
         {
             //set the gun CancellationHold, to stop repeat checks until the mouse is released.
-            gun.Comp.CancellationHold = true;
+            if (gun.Comp.CancellationHold == false)
+                gun.Comp.CancellationHold = true;
             DirtyField(gun.AsNullable(), nameof(GunComponent.CancellationHold));
             return false;
         }
