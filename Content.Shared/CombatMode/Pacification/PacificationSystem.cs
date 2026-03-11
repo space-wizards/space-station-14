@@ -51,9 +51,9 @@ public sealed class PacificationSystem : EntitySystem
     {
         // Popup logic.
         // Cooldown is needed because the input events for melee/shooting etc. will fire continuously
-        if (target == user.Comp.LastAttackedEntity
-            && !(_timing.CurTime > user.Comp.NextPopupTime))
-            return;
+        // if (target == user.Comp.LastAttackedEntity
+        //     && !(_timing.CurTime > user.Comp.NextPopupTime))
+        //     return;
 
         var targetName = Identity.Entity(target, EntityManager);
         _popup.PopupClient(Loc.GetString(reason, ("entity", targetName)), user, user);

@@ -265,19 +265,27 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
-        // check if anything wants to prevent shooting
+        //If the gun was recently cancelled, prevent the shot
+        if (gun.Comp.CancellationHold == true)
+        {
+            Log.Debug($"Aborted Firing due to CancellationHold");
+            return false;
+        }
+        // check if anything wants to prevent/cancel shooting (Pacification, Ninja Honor, Not being wielded, etc.)
         var prevention = new ShotAttemptedEvent
         {
             User = user,
             Used = gun
         };
         RaiseLocalEvent(gun, ref prevention);
-        if (prevention.Cancelled)
-            return false;
-
         RaiseLocalEvent(user, ref prevention);
         if (prevention.Cancelled)
+        {
+            //set the gun CancellationHold, to stop repeat checks until the mouse is released.
+            gun.Comp.CancellationHold = true;
+            DirtyField(gun.AsNullable(), nameof(GunComponent.CancellationHold));
             return false;
+        }
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.

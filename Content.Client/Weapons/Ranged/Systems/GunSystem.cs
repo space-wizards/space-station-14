@@ -177,6 +177,13 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
 
+        //Release Cancellation Hold if the use key is up
+        if (gun.Comp.CancellationHold == true && _inputSystem.CmdStates.GetState(useKey) == BoundKeyState.Up)
+        {
+            Log.Debug($"Released CancellationHold");
+            gun.Comp.CancellationHold = false;
+        }
+
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.Comp.BurstActivated)
         {
             if (gun.Comp.ShotCounter != 0)
