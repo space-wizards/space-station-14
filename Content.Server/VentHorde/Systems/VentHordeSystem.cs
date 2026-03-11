@@ -61,9 +61,21 @@ public sealed class VentHordeSystem : EntitySystem
     /// <param name="uid">The entity to spawn the horde at.</param>
     /// <param name="spawns">List of entities to spawn.</param>
     /// <param name="spawnDelay">Time after which to spawn the entities.</param>
-    public void StartHordeSpawn(EntityUid uid, List<EntProtoId> spawns, TimeSpan spawnDelay)
+    /// <param name="append">If an already active spawner is selected, will add entities to its list. Otherwise, will fial.</param>
+    public void StartHordeSpawn(EntityUid uid, List<EntProtoId> spawns, TimeSpan spawnDelay, bool append = true)
     {
-        var hordeSpawner = EnsureComp<VentHordeSpawnerComponent>(uid);
+        if (TryComp<VentHordeSpawnerComponent>(uid, out var hordeSpawner))
+        {
+            if (append)
+            {
+                hordeSpawner.Entities.AddRange(spawns);
+                return;
+            }
+
+            return;
+        }
+
+        hordeSpawner = EnsureComp<VentHordeSpawnerComponent>(uid);
 
         hordeSpawner.AudioStream = _audio.PlayPvs(hordeSpawner.PassiveSound, uid, hordeSpawner.PassiveSound.Params.WithLoop(true))?.Entity;
 
