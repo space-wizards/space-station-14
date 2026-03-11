@@ -69,7 +69,6 @@ public sealed class VentHordeSystem : EntitySystem
             if (append)
             {
                 hordeSpawner.Entities.AddRange(spawns);
-                return;
             }
 
             return;
