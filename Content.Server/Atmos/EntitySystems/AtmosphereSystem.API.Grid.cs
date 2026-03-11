@@ -36,6 +36,7 @@ public partial class AtmosphereSystem
     /// </summary>
     /// <param name="gridUid">The grid to check.</param>
     /// <returns>>True if the grid is simulated, false otherwise.</returns>
+    [PublicAPI]
     public bool IsSimulatedGrid(EntityUid gridUid)
     {
         var ev = new IsSimulatedGridMethodEvent(gridUid);

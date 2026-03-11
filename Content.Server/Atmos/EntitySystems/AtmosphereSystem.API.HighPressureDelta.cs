@@ -11,13 +11,27 @@ namespace Content.Server.Atmos.EntitySystems;
 
 public sealed partial class AtmosphereSystem
 {
+    /// <summary>
+    /// Applies the effects of a pressure difference to an entity with a <see cref="MovedByPressureComponent"/>.
+    /// </summary>
+    /// <param name="ent">The <see cref="Entity{T}"/> to apply the pressure difference to.</param>
+    /// <param name="cycle">The current sim cycle.</param>
+    /// <param name="pressureDifference">The pressure difference to apply.</param>
+    /// <param name="direction">The direction of the pressure difference.</param>
+    /// <param name="pressureResistanceProbDelta"></param>
+    /// <param name="throwTarget">The target coordinates to throw the entity to.
+    /// If invalid, the entity will be pushed in the direction of the pressure difference instead.</param>
+    /// <param name="gridWorldRotation">The world rotation of the grid the entity is on,
+    /// used to adjust the direction of the pressure difference.</param>
+    /// <param name="xform">The entity's <see cref="TransformComponent"/>.</param>
+    /// <param name="physics">The entity's <see cref="PhysicsComponent"/>.</param>
     [PublicAPI]
-    public void ExperiencePressureDifference(
+    public void ExperiencePressureDifference( // shouldnt really be an API but its public rn so we'll need to deprecate it later
         Entity<MovedByPressureComponent> ent,
         int cycle,
         float pressureDifference,
         AtmosDirection direction,
-        float pressureResistanceProbDelta,
+        float pressureResistanceProbDelta, // unused, deprecate soon
         EntityCoordinates throwTarget,
         Angle gridWorldRotation,
         TransformComponent? xform = null,

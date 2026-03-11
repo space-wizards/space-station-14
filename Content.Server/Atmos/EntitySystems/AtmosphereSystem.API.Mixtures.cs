@@ -688,7 +688,7 @@ public partial class AtmosphereSystem
 
         switch (air.Temperature)
         {
-            case <= 260:
+            case <= 260: // TODO ATMOS nuke these hardcoded values someday
             case >= 360:
                 return false;
         }

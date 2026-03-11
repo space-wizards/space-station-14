@@ -8,15 +8,15 @@ namespace Content.Server.Atmos.EntitySystems;
 public partial class AtmosphereSystem
 {
     /// <summary>
-    /// <para>Marks a tile's visual overlay as needing to be redetermined.</para>
-    ///
-    /// <para>A tile's overlay (how it looks like, ex. water vapor's texture)
+    /// Marks a tile's visual overlay as needing to be redetermined.
+    /// </summary>
+    /// <remarks>A tile's overlay (how it looks like, ex. water vapor's texture)
     /// is determined via determining how much gas there is on the tile.
     /// This is expensive to do for every tile/gas that may have a custom overlay,
-    /// so its done once and only updated when it needs to be updated.</para>
-    /// </summary>
+    /// so its done once and only updated when it needs to be updated.</remarks>
     /// <param name="grid">The grid the tile is on.</param>
     /// <param name="tile">The tile to invalidate.</param>
+    [PublicAPI]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void InvalidateVisuals(Entity<GasTileOverlayComponent?> grid, Vector2i tile)
     {
