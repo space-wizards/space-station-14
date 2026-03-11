@@ -22,9 +22,6 @@ public sealed partial class GunSystem
             if (gun.NextFire > Timing.CurTime)
                 continue;
 
-            //If the gun is on a CancellationHold, do not Attempt to shoot
-            if (gun.CancellationHold)
-                continue;
 
             if (TryComp(uid, out AutoShootGunComponent? autoShoot))
             {
