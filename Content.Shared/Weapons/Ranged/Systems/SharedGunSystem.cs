@@ -179,21 +179,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         StopShooting(userGun);
     }
-    private void OnCancelRelease(RequestGunCancelReleaseEvent ev, EntitySessionEventArgs args)
-    {
-        var gunUid = GetEntity(ev.Gun);
-        if (args.SenderSession.AttachedEntity == null ||
-            !TryComp<GunComponent>(gunUid, out var gun) ||
-            !TryGetGun(args.SenderSession.AttachedEntity.Value, out var userGun))
-        {
-            return;
-        }
 
-        if (userGun != (gunUid, gun))
-            return;
-
-        userGun.Comp.CancellationHold = false;
-        DirtyField(userGun.AsNullable(), nameof(GunComponent.CancellationHold));
     }
 
     public bool CanShoot(GunComponent component)
@@ -240,6 +226,18 @@ public abstract partial class SharedGunSystem : EntitySystem
         ent.Comp.ShootCoordinates = null;
         ent.Comp.Target = null;
         DirtyField(ent.AsNullable(), nameof(GunComponent.ShotCounter));
+    }
+
+    //For releasing the gun CancellationHold after the useKey is up
+    private void OnCancelRelease(Entity<GunComponent> ent)
+    {
+        //If it's already false then don't bother
+        if (!ent.Comp.CancellationHold)
+            return;
+
+        //Otherwise set it to false and dirty the field
+        ent.Comp.CancellationHold = false;
+        DirtyField(ent.AsNullable(), nameof(GunComponent.CancellationHold));
     }
 
     /// <summary>
