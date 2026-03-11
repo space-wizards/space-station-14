@@ -3,6 +3,11 @@ using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Server.StationEvents.Components;
 
+/// <summary>
+/// Component used for the vent horde gamerule.
+/// Picks a random entity with <see cref="VentCritterSpawnLocationComponent"/>
+/// and spawns entities picked from the <see cref="Table"/> on it after a delay.
+/// </summary>
 [RegisterComponent, Access(typeof(VentHordeRule))]
 public sealed partial class VentHordeRuleComponent : Component
 {

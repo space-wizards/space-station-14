@@ -5,6 +5,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.VentHorde.Components;
 
+/// <summary>
+/// Marks an entity as selected by the <see cref="VentHordeRuleComponent"/>.
+/// Will spawn all entities contained within <see cref="Entities"/> on its location at <see cref="SpawnTime"/>.
+/// </summary>
 [RegisterComponent, Access(typeof(VentHordeSystem))]
 [AutoGenerateComponentPause]
 public sealed partial class VentHordeSpawnerComponent : Component

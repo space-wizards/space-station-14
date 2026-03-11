@@ -28,10 +28,7 @@ public sealed class VentHordeRule : StationEventSystem<VentHordeRuleComponent>
     [Dependency] private readonly VentHordeSystem _horde = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    protected override void Added(EntityUid uid,
-        VentHordeRuleComponent component,
-        GameRuleComponent gameRule,
-        GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, VentHordeRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         // Choose location and make sure it's not null
         component.ChosenVent = ChooseVent();
