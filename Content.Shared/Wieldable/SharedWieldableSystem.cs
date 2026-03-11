@@ -87,16 +87,8 @@ public abstract class SharedWieldableSystem : EntitySystem
             !wieldable.Wielded)
         {
             args.Cancel();
-
-            var time = _timing.CurTime;
-            if (time > component.LastPopup + component.PopupCooldown &&
-                !HasComp<MeleeWeaponComponent>(uid) &&
-                !HasComp<MeleeRequiresWieldComponent>(uid))
-            {
-                component.LastPopup = time;
-                var message = Loc.GetString("wieldable-component-requires", ("item", uid));
-                _popup.PopupClient(message, args.Used, args.User);
-            }
+            var message = Loc.GetString("wieldable-component-requires", ("item", uid));
+            _popup.PopupClient(message, args.Used, args.User);
         }
     }
 
