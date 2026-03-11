@@ -35,7 +35,6 @@ public abstract class SharedWieldableSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
