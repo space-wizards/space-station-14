@@ -186,7 +186,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (gun.Comp.CancellationHold)
             {
                 Log.Debug($"Client: RequestGunCancelRelease");
-                RaisePredictiveEvent(new RequestGunCancelRelease { Gun = GetNetEntity(gun) });
+                RaisePredictiveEvent(new RequestGunCancelReleaseEvent { Gun = GetNetEntity(gun) });
             }
             return;
         }

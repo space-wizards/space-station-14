@@ -6,7 +6,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// Raised on the client to request it would like to stop shooting.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RequestGunCancelRelease : EntityEventArgs
+public sealed class RequestGunCancelReleaseEvent : EntityEventArgs
 {
     public NetEntity Gun;
 }
