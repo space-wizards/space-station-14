@@ -216,10 +216,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+  - type: Repairable
+    doAfterDelay: 5
+    fuelCost: 25
