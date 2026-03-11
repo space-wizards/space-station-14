@@ -87,7 +87,8 @@ namespace Content.Shared.Atmos.Prototypes
         /// <summary>
         /// Whether the gas is considered to be flammable.
         /// This is used generically across Atmospherics to determine
-        /// if things like hotspots are allowed to ignite.
+        /// if things like hotspots are allowed to ignite if an
+        /// oxidizer is present.
         /// </summary>
         [DataField]
         public bool IsFuel;

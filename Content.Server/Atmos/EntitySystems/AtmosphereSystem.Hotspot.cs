@@ -88,7 +88,7 @@ public sealed partial class AtmosphereSystem
         if (tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist ||
             tile.Hotspot.Volume <= 1f ||
             tile.Air == null ||
-            !IsMixtureFlammable(tile.Air))
+            !IsMixtureIgnitable(tile.Air))
         {
             tile.Hotspot = new Hotspot();
             InvalidateVisuals(ent, tile);
@@ -204,7 +204,7 @@ public sealed partial class AtmosphereSystem
         if (!IsMixtureOxidizer(tile.Air))
             return;
 
-        var isFlammable = IsMixtureFlammable(tile.Air);
+        var isFlammable = IsMixtureIgnitable(tile.Air);
 
         if (tile.Hotspot.Valid)
         {

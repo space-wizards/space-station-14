@@ -45,10 +45,10 @@ public abstract partial class SharedAtmosphereSystem
     protected readonly float[] GasOxidizerMask = new float[Atmospherics.AdjustedNumberOfGases];
 
     /// <summary>
-    /// Mask used to determine both flammability and oxidizer properties of a gas at the same time.
+    /// Mask used to determine both fuel and oxidizer properties of a gas at the same time.
     /// Primarily used to quickly report the specific moles in a mixture that caused a flammable reaction to occur.
     /// </summary>
-    protected readonly float[] GasFlammableMask = new float[Atmospherics.TotalNumberOfGases];
+    protected readonly float[] GasOxidiserFuelMask = new float[Atmospherics.TotalNumberOfGases];
 
     public string?[] GasReagents = new string[Atmospherics.TotalNumberOfGases];
     protected readonly GasPrototype[] GasPrototypes = new GasPrototype[Atmospherics.TotalNumberOfGases];
@@ -82,15 +82,14 @@ public abstract partial class SharedAtmosphereSystem
              */
             _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
 
-            // """Mask""" built here. We multiply by this to determine
-            // if the mix is flammable.
+            // """Mask""" built here. Used to determine if a gas is fuel/oxidizer or not decently quickly and clearly.
             GasFuelMask[i] = GasPrototypes[i].IsFuel ? 1 : 0;
 
             // Same for oxidizer mask.
             GasOxidizerMask[i] = GasPrototypes[i].IsOxidizer ? 1 : 0;
 
-            // Flammable mask is just fuel and oxidizer combined, because both are required for a reaction to occur.
-            GasFlammableMask[i] = GasFuelMask[i] * GasOxidizerMask[i];
+            // OxidiserFuel mask is just fuel and oxidizer combined, because both are required for a reaction to occur.
+            GasOxidiserFuelMask[i] = GasFuelMask[i] * GasOxidizerMask[i];
         }
     }
 
@@ -103,19 +102,19 @@ public abstract partial class SharedAtmosphereSystem
     [PublicAPI]
     public void GetFlammableMoles(GasMixture mixture, float[] buffer)
     {
-        NumericsHelpers.Multiply(mixture.Moles, GasFlammableMask, buffer);
+        NumericsHelpers.Multiply(mixture.Moles, GasOxidiserFuelMask, buffer);
     }
 
     /// <summary>
-    /// Determines if a <see cref="GasMixture"/> is flammable or not.
+    /// Determines if a <see cref="GasMixture"/> is ignitable or not.
     /// This is a combination of determining if a mixture both has oxidizer and fuel.
     /// </summary>
     /// <param name="mixture">The <see cref="GasMixture"/> to determine.</param>
     /// <param name="epsilon">The minimum amount of moles at which a <see cref="GasMixture"/> is
-    /// considered flammable, for both oxidizer and fuel.</param>
-    /// <returns>True if the <see cref="GasMixture"/> is flammable, otherwise, false.</returns>
+    /// considered ignitable, for both oxidizer and fuel.</param>
+    /// <returns>True if the <see cref="GasMixture"/> is ignitable, otherwise, false.</returns>
     [PublicAPI]
-    public bool IsMixtureFlammable(GasMixture mixture, float epsilon = 0.001f)
+    public bool IsMixtureIgnitable(GasMixture mixture, float epsilon = 0.001f)
     {
         return IsMixtureFuel(mixture, epsilon) && IsMixtureOxidizer(mixture, epsilon);
     }
