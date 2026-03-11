@@ -18,13 +18,7 @@ namespace Content.YAMLLinter
 {
     internal static class Program
     {
-        internal sealed class LinterTestContext : ITestContextLike
-        {
-            public string FullName => "YAML Linter";
-            public TextWriter Out => Console.Out;
-        }
-
-        private static LinterTestContext Context = new();
+        private static readonly ExternalTestContext TestContext = new("YAML Linter", Console.Out);
 
         private static async Task<int> Main(string[] _)
         {
@@ -67,7 +61,7 @@ namespace Content.YAMLLinter
         private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             ValidateClient()
         {
-            await using var pair = await PoolManager.GetServerClient(testContext: Context);
+            await using var pair = await PoolManager.GetServerClient(testContext: TestContext);
             var client = pair.Client;
             var result = await ValidateInstance(client);
             await pair.CleanReturnAsync();
@@ -77,7 +71,7 @@ namespace Content.YAMLLinter
         private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             ValidateServer()
         {
-            await using var pair = await PoolManager.GetServerClient(testContext: Context);
+            await using var pair = await PoolManager.GetServerClient(testContext: TestContext);
             var server = pair.Server;
             var result = await ValidateInstance(server);
             await pair.CleanReturnAsync();
@@ -189,7 +183,7 @@ namespace Content.YAMLLinter
         private static async Task<(Assembly[] clientAssemblies, Assembly[] serverAssemblies)>
             GetClientServerAssemblies()
         {
-            await using var pair = await PoolManager.GetServerClient(testContext: Context);
+            await using var pair = await PoolManager.GetServerClient(testContext: TestContext);
 
             var result = (GetAssemblies(pair.Client), GetAssemblies(pair.Server));
 
