@@ -127,7 +127,16 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
     private void OnAnchorStateChanged(Entity<GrapplingProjectileEmbedComponent> entity, ref AnchorStateChangedEvent args)
     {
-        RefreshJointRelay(entity);
+        foreach (var hook in entity.Comp.GrapplingProjectiles)
+        {
+            if (!TryComp<ProjectileComponent>(hook, out var projectileComp) || !TryComp<JointComponent>(hook, out var jointComp))
+                continue;
+
+            if (projectileComp.Weapon == null || !TryComp<GrapplingGunComponent>(projectileComp.Weapon, out var gunComp))
+                continue;
+
+            Ungrapple((projectileComp.Weapon.Value, gunComp), true);
+        }
     }
 
     /// <summary>
@@ -414,6 +423,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
             }
         }
     }
+
 
     [Serializable, NetSerializable]
     protected sealed class RequestGrapplingReelMessage : EntityEventArgs
