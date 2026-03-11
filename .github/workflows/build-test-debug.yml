@@ -60,7 +60,8 @@ jobs:
       with:
         name: nunit3-results-${{ matrix.os }}
         path: test_results/*
-        retention-days: 7
+        retention-days: 1
+        compression-level: 9
   ci-success:
     name: Build & Test Debug
     needs:
