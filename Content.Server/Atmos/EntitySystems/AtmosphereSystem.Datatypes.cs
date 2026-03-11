@@ -4,6 +4,13 @@ namespace Content.Server.Atmos.EntitySystems;
 
 public partial class AtmosphereSystem
 {
+    /*
+     Partial class to store common internal datatypes that Atmospherics uses.
+     In general datatypes should not be stored inside the AtmosphereSystem class itself
+     and instead should be in their own file in Atmos. This is just here for legacy reasons
+     and will probably be migrated out soon.
+     */
+
     public enum GasCompareResult
     {
         NoExchange = -2,
