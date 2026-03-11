@@ -20,7 +20,6 @@ public sealed class SharedGasTileFireOverlaySystemTest : AtmosTest
     [Test]
     public async Task TestGasTileFireOverlayDataSync()
     {
-        var lightSys = Server.System<ExpendableLightSystem>();
         var sMapSys = Server.System<SharedMapSystem>();
 
         var gridComp = ProcessEnt.Comp3;
@@ -42,12 +41,10 @@ public sealed class SharedGasTileFireOverlaySystemTest : AtmosTest
         //Start real tests
         await Server.WaitPost(() =>
         {
-            if (mixture != null)
-            {
-                mixture.Clear();
-                mixture.AdjustMoles(Gas.Plasma, 100f);
-                mixture.AdjustMoles(Gas.Oxygen, 100f); // Inject flamable gasses
-            }
+            Assert.That(mixture, Is.Not.Null, "The gas mixture was not initialized.");
+            mixture.Clear();
+            mixture.AdjustMoles(Gas.Plasma, 100f);
+            mixture.AdjustMoles(Gas.Oxygen, 100f); // Inject flamable gasses
 
             var welder = SEntMan.SpawnEntity("Welder", gridCoords);
             Assert.That(ItemToggleSys.TryActivate(welder)); //ignite em
@@ -71,7 +68,7 @@ public sealed class SharedGasTileFireOverlaySystemTest : AtmosTest
 
             var tile = chunk.TileData[tileIndex];
 
-            Assert.That(tile.FireState > 0, Is.True, $"Tile at {tileIndices} is not set on fire!");
+            Assert.That(tile.FireState, Is.GreaterThan(0), $"Tile at {tileIndices} is not set on fire!");
         });
     }
 }

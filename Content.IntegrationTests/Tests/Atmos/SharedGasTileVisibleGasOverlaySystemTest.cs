@@ -21,7 +21,6 @@ public sealed class SharedGasTileVisibleGasOverlaySystemTest : AtmosTest
     [Test]
     public async Task TestGasTileVisibleGasOverlayDataSync()
     {
-        var lightSys = Server.System<ExpendableLightSystem>();
         var sMapSys = Server.System<SharedMapSystem>();
 
         var gridComp = ProcessEnt.Comp3;
@@ -43,15 +42,13 @@ public sealed class SharedGasTileVisibleGasOverlaySystemTest : AtmosTest
         //Start real tests
         await Server.WaitPost(() =>
         {
-            if (mixture != null)
-            {
-                mixture.Clear();
-                mixture.AdjustMoles(Gas.WaterVapor, 100f);
-                mixture.AdjustMoles(Gas.Oxygen, 100f);
-            }
+            Assert.That(mixture, Is.Not.Null, "The gas mixture was not initialized.");
+            mixture.Clear();
+            mixture.AdjustMoles(Gas.WaterVapor, 100f);
+            mixture.AdjustMoles(Gas.Oxygen, 100f);
         });
 
-        await RunTicks(60);
+        await RunTicks(10);
         await Task.WhenAll(Client.WaitIdleAsync(), Server.WaitIdleAsync());
 
 
