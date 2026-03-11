@@ -18,7 +18,7 @@ namespace Content.YAMLLinter
 {
     internal static class Program
     {
-        private static readonly ExternalTestContext TestContext = new("YAML Linter", Console.Out);
+        private static readonly ExternalTestContext TestContext = new("YAML Linter", StreamWriter.Null);
 
         private static async Task<int> Main(string[] _)
         {
