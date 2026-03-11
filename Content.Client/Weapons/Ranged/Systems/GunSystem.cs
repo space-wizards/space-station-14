@@ -185,7 +185,6 @@ public sealed partial class GunSystem : SharedGunSystem
             //If the gun was recently cancelled, release its CancellationHold now that the useKey is up.
             if (gun.Comp.CancellationHold)
             {
-                Log.Debug($"Client: RequestGunCancelRelease");
                 RaisePredictiveEvent(new RequestGunCancelReleaseEvent { Gun = GetNetEntity(gun) });
             }
             return;
