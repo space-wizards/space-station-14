@@ -58,7 +58,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: nunit3-results
+        name: nunit3-results-${{ matrix.os }}
         path: test_results/*
   ci-success:
     name: Build & Test Debug
