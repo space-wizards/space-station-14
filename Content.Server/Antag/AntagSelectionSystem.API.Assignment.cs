@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Rules.Components;
@@ -11,39 +10,49 @@ using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
+using static Content.Server.Antag.Components.AntagSelectionTime;
 
 namespace Content.Server.Antag;
 
 public sealed partial class AntagSelectionSystem
 {
+    /// <inhereitdoc cref="CanBeAntag(ICommonSession,Entity{AntagSelectionComponent},AntagSpecifierPrototype,bool)"/>
     [PublicAPI]
-    public bool CanBeAntag(ICommonSession session, AntagRule antagRule, bool checkPref = true)
+    public bool CanBeAntag(ICommonSession player, AntagRule antagRule, bool checkPref = true)
     {
-        return CanBeAntag(session, antagRule.GameRule, antagRule.Definition, checkPref);
+        return CanBeAntag(player, antagRule.GameRule, antagRule.Definition, checkPref);
     }
 
+    /// <inhereitdoc cref="CanBeAntag(ICommonSession,Entity{AntagSelectionComponent},AntagSpecifierPrototype,bool)"/>
     [PublicAPI]
-    public bool CanBeAntag(ICommonSession session, Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> proto, bool checkPref = true)
+    public bool CanBeAntag(ICommonSession player, Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> proto, bool checkPref = true)
     {
         // Can't be this antag if it doesn't exist :)
         if (!Proto.Resolve(proto, out var antag))
             return false;
 
-        return CanBeAntag(session, gameRule, antag, checkPref);
+        return CanBeAntag(player, gameRule, antag, checkPref);
     }
 
+    /// <summary>
+    /// Verifies that a player is able to be an antag performing a wide variety of checks.
+    /// </summary>
+    /// <param name="player">Player we're checking</param>
+    /// <param name="gameRule">Game rule which we want to be an antag for, needed to ensure we haven't already been selected.</param>
+    /// <param name="def">Antag definition we want to become</param>
+    /// <param name="checkPref">Whether we want to check our antag preferences or not.</param>
+    /// <returns>True if this player can be an antagonist.</returns>
     [PublicAPI]
-    public bool CanBeAntag(ICommonSession session, Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype def, bool checkPref = true)
+    public bool CanBeAntag(ICommonSession player, Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype def, bool checkPref = true)
     {
-        if (!IsSessionValid(session, def))
+        if (!IsSessionValid(player, def))
             return false;
 
-        if (gameRule.Comp.PreSelectedSessions.TryGetValue(def, out var preSelected) && preSelected.Contains(session))
+        if (IsAssignedAntag(gameRule, def, player))
             return false;
 
         // Add player to the appropriate antag pool
-        if (checkPref && !TryGetValidAntagPreferences(session, def.PrefRoles))
+        if (checkPref && !TryGetValidAntagPreferences(player, def.PrefRoles))
             return false;
 
         return true;
@@ -73,13 +82,8 @@ public sealed partial class AntagSelectionSystem
         if (IsDisconnected(session))
             return false;
 
-        var bans = _ban.GetAntagBans(session.UserId);
-        foreach (var role in def.PrefRoles)
-        {
-            // We're banned from this antag. Do not pass go.
-            if (bans != null && bans.Contains(role))
-                return false;
-        }
+        if (IsAntagBanned(session, def))
+            return false;
 
         // If our antag is mutually exclusive with other antags, yell about it!
         switch (def.MultiAntagSetting)
@@ -98,7 +102,7 @@ public sealed partial class AntagSelectionSystem
             }
         }
 
-        return IsEntityValid(session, def);
+        return session.AttachedEntity == null || IsEntityValid(session, def);
     }
 
     /// <inhereitdoc cref="IsMindValid(EntityUid?,AntagSpecifierPrototype)"/>
@@ -175,8 +179,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public bool IsAntagBanned(ICommonSession session, AntagSpecifierPrototype definition)
     {
-        var bans = _ban.GetAntagBans(session.UserId);
-        if (bans == null)
+        if (_ban.GetAntagBans(session.UserId) is not { } bans)
             return false;
 
         foreach (var role in definition.PrefRoles)
@@ -189,31 +192,29 @@ public sealed partial class AntagSelectionSystem
         return false;
     }
 
-    /// <summary>
-    /// Tries to makes a given player into the specified antagonist.
-    /// </summary>
+    /// <inheritdoc cref="TryMakeAntag(Entity{AntagSelectionComponent},AntagSpecifierPrototype,ICommonSession,bool)"/>
     [PublicAPI]
-    public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession session, ProtoId<AntagSpecifierPrototype> proto, bool checkPref = true)
+    public bool TryMakeAntag(Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> proto, ICommonSession session, bool checkPref = true)
     {
         if (!Proto.Resolve(proto, out var def))
             return false;
 
-        return TryMakeAntag(ent, session, def, checkPref);
+        return TryMakeAntag(gameRule, def, session, checkPref);
     }
 
     /// <summary>
-    /// Tries to makes a given player into the specified antagonist.
+    /// Tries to make a given player into the specified antagonist for the given game rule.
     /// </summary>
     [PublicAPI]
-    public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSpecifierPrototype def, bool checkPref = true)
+    public bool TryMakeAntag(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype prototype, ICommonSession session, bool checkPref = true)
     {
-        _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(ent)}, {def.ID}");
+        _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(gameRule)}, {prototype.ID}");
 
-        if (!CanBeAntag(session, ent, def, checkPref))
+        if (!CanBeAntag(session, gameRule, prototype, checkPref))
             return false;
 
-        MakeSessionAntagonist(ent, session, def);
-        return true;
+        PreSelectSession(gameRule, prototype, session);
+        return TryInitializeAntag(gameRule, prototype, session);
     }
 
     /// <inheritdoc cref="TryAssignNextAvailableAntag(Entity{AntagSelectionComponent},ICommonSession,int)"/>
@@ -241,7 +242,7 @@ public sealed partial class AntagSelectionSystem
                 continue;
 
             // Try and assign this antag, if we fail, then try the next definition!
-            if (TryMakeAntag(gameRule, session, def))
+            if (TryMakeAntag(gameRule, def, session))
                 return true;
         }
 
@@ -255,17 +256,19 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public bool TryMakeLateJoinAntag(ICommonSession session)
     {
-        // TODO: Make sure you fixed the bug where it spawns too many antags
-        // eventually this should probably store the players per definition with some kind of unique identifier.
-        // something to figure out later.
         // Sorry buddy, no antag for you!
         if (!RobustRandom.Prob(LateJoinRandomChance))
             return false;
 
+        // TODO: We may want to query all rules to add late joins to pre-selections?
         var query = QueryActiveRules();
         var rules = new List<(EntityUid, AntagSelectionComponent)>();
         while (query.MoveNext(out var uid, out _, out var antag, out _))
         {
+            // This is intended to only be used for ghost roles so it shouldn't be assigned for late joins
+            if (antag.SelectionTime == Never)
+                continue;
+
             rules.Add((uid, antag));
         }
         RobustRandom.Shuffle(rules);
@@ -274,28 +277,94 @@ public sealed partial class AntagSelectionSystem
 
         foreach (var (uid, antag) in rules)
         {
-            // TODO: We shouldn't need this.
-            DebugTools.AssertNotEqual(antag.SelectionTime, AntagSelectionTime.PrePlayerSpawn);
-
             if (TryAssignNextAvailableAntag((uid, antag), session, players))
-                break;
+                return true;
         }
 
         return false;
     }
 
-    public bool AssignSessionsAntagonist(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype prototype, params ICommonSession[] players)
+    /// <summary>
+    /// Takes a list of AntagRules and tries to make ghost roles out of them.
+    /// </summary>
+    /// <param name="antagRules">list of antag rules we wish to turn into ghost roles.
+    /// Note, a ghost role can only be created if the rule has the ghost role spawner protoId set to a valid prototype.</param>
+    [PublicAPI]
+    public void SpawnGhostRoles(List<AntagRule> antagRules)
     {
+        foreach (var rule in antagRules)
+        {
+            SpawnGhostRoles(rule.GameRule, rule.Definition, rule.Count);
+        }
+    }
 
+    /// <summary>
+    /// Takes a list of AntagCounts and tries to make ghost roles out of them
+    /// </summary>
+    /// <param name="gameRule">Game rule with the associated antags we're spawning</param>
+    /// <param name="antagRules">Antags we want to make into ghost roles, with paired counts we need to spawn</param>
+    [PublicAPI]
+    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, AntagCount[] antagRules)
+    {
+        foreach (var rule in antagRules)
+        {
+            SpawnGhostRoles(gameRule, rule.Definition, rule.Count);
+        }
+    }
 
+    /// <inheritdoc cref="SpawnGhostRoles(Entity{AntagSelectionComponent},AntagSpecifierPrototype,int)"/>
+    [PublicAPI]
+    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> protoId, int count)
+    {
+        if (!Proto.Resolve(protoId, out var antag))
+            return;
 
-        // Yay everything worked!!!
-        if (!gameRule.Comp.AssignedSessions.TryGetValue(prototype.ID, out var set))
-            gameRule.Comp.AssignedSessions.Add(prototype.ID, players.ToHashSet());
-        else
-            set.UnionWith(players);
+        SpawnGhostRoles(gameRule, antag, count);
+    }
 
-        return true;
+    /// <summary>
+    /// Creates ghost role spawners for a given antag definition equivalent to the count.
+    /// </summary>
+    /// <param name="gameRule">Game rule with the associated antags we're spawning</param>
+    /// <param name="proto">Antag prototype we're spawning.</param>
+    /// <param name="count">Amount of ghost roles we are spawning.</param>
+    [PublicAPI]
+    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype proto, int count)
+    {
+        for (var i = 0; i < count; i++)
+        {
+            SpawnGhostRole(gameRule, proto);
+        }
+    }
+
+    /// <summary>
+    /// Creates a ghost role spawner of a given antag for a given game rule.
+    /// </summary>
+    /// <param name="gameRule">Game rule with the associated antags we're spawning</param>
+    /// <param name="proto">Antag prototype we're spawning.</param>
+    [PublicAPI]
+    public void SpawnGhostRole(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype proto)
+    {
+        if (proto.SpawnerPrototype is not { } spawnerPrototype)
+            return;
+
+        if (!TryGetValidSpawnPosition(gameRule, proto, out var coordinates))
+        {
+            Log.Error($"Found no valid positions to place antag spawner for game rule: {ToPrettyString(gameRule)}, antag: {proto.ID}");
+            return;
+        }
+
+        var spawner = Spawn(spawnerPrototype, coordinates.Value);
+        if (!TryComp<GhostRoleAntagSpawnerComponent>(spawner, out var spawnerComp))
+        {
+            Log.Error($"Antag spawner {spawner} does not have a {nameof(GhostRoleAntagSpawnerComponent)}.");
+            _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {spawner} in game rule {ToPrettyString(gameRule)} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
+            Del(spawner);
+            return;
+        }
+
+        spawnerComp.Rule = gameRule;
+        spawnerComp.Definition = proto;
     }
 
     /// <summary>
@@ -303,12 +372,46 @@ public sealed partial class AntagSelectionSystem
     /// Then attempts to ticket an existing antag slot to our player, forcing one if there are no open slots.
     /// You shouldn't be using this basically ever except for debug and admin stuff.
     /// </summary>
+    [Obsolete]
     public void ForceMakeAntag<T>(ICommonSession player, EntProtoId defaultRule) where T : Component
     {
         var rule = ForceGetGameRuleEnt<T>(defaultRule);
 
+        // TODO: Doesn't preselect
         if (!TryAssignNextAvailableAntag(rule, player))
-            MakeSessionAntagonist(rule, player, rule.Comp.Antags.LastOrDefault());
+            TryInitializeAntag(rule, Proto.Index(rule.Comp.Antags.LastOrDefault()), player);
+    }
+
+    /// <summary>
+    /// Attempts to create a specific antag from a specific game rule prototype. Checking if the gamerule already exists first.
+    /// </summary>
+    /// <param name="player">Player we are making into an antag</param>
+    /// <param name="ruleProto">Gamerule prototype associated with the antag we are creating.</param>
+    /// <param name="antagProto">Prototype for the antag we are creating.</param>
+    /// <typeparam name="T">Component from the game rule we are creating, for faster querying.</typeparam>
+    /// <remarks>
+    /// Do not use this method for anything other than debugging purposes.
+    /// This ignores antag bans and the like so genuinely *do not use this unless it's for debugging purposes*
+    /// </remarks>
+    public void ForceMakeAntag<T>(ICommonSession player, EntProtoId ruleProto, ProtoId<AntagSpecifierPrototype> antagProto) where T : Component
+    {
+        if (!Proto.Resolve(antagProto, out var antag))
+            return;
+
+        var rule = ForceGetGameRuleEnt<T>(ruleProto);
+
+        foreach (var def in rule.Comp.Antags)
+        {
+            if (def != antagProto)
+                continue;
+
+            // Try and assign this antag, if we fail, then try the next definition!
+            // TODO: Doesn't Preselect
+            if (TryInitializeAntag(rule, antag, player))
+                return;
+        }
+
+        Log.Error($"Antag Prototype {antagProto} does not exist in {ToPrettyString(rule)}, {ruleProto}");
     }
 
     /// <summary>
@@ -327,7 +430,7 @@ public sealed partial class AntagSelectionSystem
         var ruleEnt = GameTicker.AddGameRule(id);
         RemComp<LoadMapRuleComponent>(ruleEnt);
         var antag = Comp<AntagSelectionComponent>(ruleEnt);
-        antag.AssignmentComplete = true; // don't do normal selection.
+        antag.AssignmentHandled = true; // don't do normal selection.
         GameTicker.StartGameRule(ruleEnt);
         return (ruleEnt, antag);
     }

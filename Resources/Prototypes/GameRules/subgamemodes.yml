@@ -16,7 +16,7 @@
     maxDifficulty: 2.5
   - type: AntagSelection
     agentName: thief-round-end-agent-name
-    selectionTime: IntraPlayerSpawn
+    selectionTime: PrePlayerSpawn
     definitions:
     antags:
     - Thief
@@ -75,16 +75,8 @@
     pickAndTake: true
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
-    definitions:
-    - prefRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointGhostRoleMothershipCore
-      mindRoles:
-      - MindRoleMothershipCore
-    - prefRoles: [ Xenoborg ]
-      spawnerPrototype: SpawnPointGhostRoleXenoborg
-      mindRoles:
-      - MindRoleXenoborg
-      min: 4
-      max: 4
+    antags:
+    - MothershipCore
+    - Xenoborg
   - type: DynamicRuleCost
     cost: 200

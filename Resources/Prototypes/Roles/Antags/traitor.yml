@@ -21,6 +21,7 @@
   name: traitor
   prefRoles:
   - Traitor
+  playerRatio: 1 # Everyone is a Traitor (Debug remove this)
   range:
     min: 1
     max: 8

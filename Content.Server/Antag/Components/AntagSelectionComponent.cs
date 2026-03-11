@@ -1,5 +1,7 @@
 using Content.Server.Administration.Systems;
+using Content.Server.GameTicking;
 using Content.Shared.Antag;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -9,10 +11,12 @@ namespace Content.Server.Antag.Components;
 public sealed partial class AntagSelectionComponent : Component
 {
     /// <summary>
-    /// Has the primary assignment of antagonists finished yet?
+    /// Has the primary assignment of antagonists been handled yet?
+    /// This is typically set to true at the start of antag assignment for a game rule.
+    /// Note that this can be true even before all antags have been assigned.
     /// </summary>
     [ViewVariables]
-    public bool AssignmentComplete;
+    public bool AssignmentHandled;
 
     /// <summary>
     /// Has the antagonists been preselected but yet to be fully assigned?
@@ -28,10 +32,11 @@ public sealed partial class AntagSelectionComponent : Component
     public HashSet<ProtoId<AntagSpecifierPrototype>> Antags = new();
 
     /// <summary>
-    /// Cached sessions of players who are chosen by prototype. Used so we don't have to rebuild the pool multiple times in a tick.
-    /// Is not serialized.
+    /// Cached sessions of antag definitions and selected players.
+    /// Players in this dict are not guaranteed to have been assigned the role yet, and may be removed if they fail to initialize as an antag.
     /// </summary>
-    public  Dictionary<ProtoId<AntagSpecifierPrototype>, HashSet<ICommonSession>> AssignedSessions = new();
+    [DataField]
+    public Dictionary<ProtoId<AntagSpecifierPrototype>, HashSet<ICommonSession>> PreSelectedSessions = new();
 
     /// <summary>
     /// The minds and original names of the players assigned to be antagonists, as well as their assigned antag.
@@ -43,14 +48,7 @@ public sealed partial class AntagSelectionComponent : Component
     /// When the antag selection will occur.
     /// </summary>
     [DataField]
-    public AntagSelectionTime SelectionTime = AntagSelectionTime.PostPlayerSpawn;
-
-    // TODO: Maybe combine this with AssignedSessions?
-    /// <summary>
-    /// Cached sessions of antag definitions and selected players. Players in this dict are not guaranteed to have been assigned the role yet.
-    /// </summary>
-    [DataField]
-    public Dictionary<ProtoId<AntagSpecifierPrototype>, HashSet<ICommonSession>> PreSelectedSessions = new();
+    public AntagSelectionTime SelectionTime = AntagSelectionTime.RuleStarted;
 
     /// <summary>
     /// Locale id for the name of the antag.
@@ -65,4 +63,34 @@ public sealed partial class AntagSelectionComponent : Component
     /// </summary>
     [DataField]
     public bool RemoveUponFailedSpawn = true;
+}
+
+/// <remarks>
+///     Regardless of this value, antags are only initialized after the game rule activates.
+///     If a game rule does not have a delayed activation, the antag will be initialized at the same time as this enum.
+///     Otherwise, it will not be initialized until the game rule becomes active.
+/// </remarks>
+public enum AntagSelectionTime : byte
+{
+    /// <summary>
+    /// Antag roles are selected at <see cref="RulePlayerSpawningEvent"/>
+    /// </summary>
+    PrePlayerSpawn,
+
+    /// <summary>
+    /// Antag roles are selected at <see cref="RulePlayerJobsAssignedEvent"/>
+    /// </summary>
+    JobsAssigned,
+
+    /// <summary>
+    /// Antag roles are selected at <see cref="GameRuleStartedEvent"/>
+    /// or <see cref="RulePlayerJobsAssignedEvent"/> if the game rule was started before spawning.
+    /// This is the latest an antag can be selected.
+    /// </summary>
+    RuleStarted,
+
+    /// <summary>
+    /// Antag roles are *never* selected. Instead, this definition only makes ghost roles.
+    /// </summary>
+    Never,
 }

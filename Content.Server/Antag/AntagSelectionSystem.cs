@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Antag.Components;
@@ -20,7 +22,6 @@ using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Random.Helpers;
@@ -34,16 +35,23 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using static Content.Server.Antag.Components.AntagSelectionTime;
 
 namespace Content.Server.Antag;
 
 /// <summary>
 /// Turns players into antags.
+/// When the round starts, all active game rules select players for antagonist.
+/// When a game rule is started, all selected players are given their antagonist status (including entities and components)
+/// If selection was not done before the game rule has been started, it will happen during that step.
+/// Antag entities spawned by this system are always prioritized over the player's current entity.
 /// </summary>
 /// <remarks>
-/// Do not ever ever ever spawn and initialize an entity prototype in nullspace then move it to the grid.
-/// I wasted 4 hours refactoring this system specifically to fix that mistake.
-/// Always initialize your entities attached to the entity you're spawning them on, or the correct map at the very least.
+/// I leave this remark here as a reminder of two things:
+/// Never initialize entities while they're still in nullspace, I had to refactor this system to fix that.
+/// Never do a patchwork refactor for a bad system, I had to refactor this system twice because of that mistake.
+/// I hope this system is now readable and significantly less buggy thanks to my efforts.
+/// I could do more, but I've been soaped enough. Now it's your turn to fix it.
 /// </remarks>
 public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
@@ -66,6 +74,26 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
 
+    /// <summary>
+    /// List of game rules and antags that are assigned during <see cref="RulePlayerSpawningEvent"/>
+    /// Should only ever include game rules with <see cref="AntagSelectionComponent.SelectionTime"/> of <see cref="AntagSelectionTime.PrePlayerSpawn"/>
+    /// </summary>
+    private List<AntagRule>? _preSpawnRules;
+
+    /// <summary>
+    /// List of game rules and antags that are assigned during <see cref="RulePlayerJobsAssignedEvent"/>
+    /// Includes both game rules with <see cref="AntagSelectionComponent.SelectionTime"/> of <see cref="AntagSelectionTime.JobsAssigned"/>
+    /// and active game rules with <see cref="AntagSelectionComponent.SelectionTime"/> of <see cref="AntagSelectionTime.RuleStarted"/>
+    /// </summary>
+    private List<AntagRule>? _postSpawnRules;
+
+    /// <summary>
+    /// A list of players which were selected by a game rule for a specific antag during <see cref="RulePlayerSpawningEvent"/>
+    /// but were not spawned during that step, and now must be spawned during <see cref="RulePlayerJobsAssignedEvent"/>.
+    /// This is also used to check for errors during <see cref="GameRuleStartedEvent"/> to see if any players were assigned
+    /// </summary>
+    private List<(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype antag, ICommonSession player)> _delayedAntags = [];
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -77,10 +105,29 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         SubscribeLocalEvent<AntagSelectionComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
 
-        SubscribeLocalEvent<NoJobsAvailableSpawningEvent>(OnJobNotAssigned);
+        // In order of how these occur.
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawning);
+        SubscribeLocalEvent<NoJobsAvailableSpawningEvent>(OnJobNotAssigned);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobsAssigned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
+    }
+
+    protected override void Started(EntityUid uid, AntagSelectionComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    {
+        base.Started(uid, component, gameRule, args);
+
+        // If we're not in round, don't spawn or assign antags. Those will be handled by RulePlayerSpawning, and RulePlayerJobs
+        if (GameTicker.RunLevel != GameRunLevel.InRound)
+            return;
+
+        if (component.AssignmentHandled)
+            return;
+
+        // Antags haven't been selected so we need to select them! Only if we select when the game rule starts though!
+        if (component.PreSelectionsComplete)
+            AssignPreSelectedSessions((uid, component));
+        else if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
+            AssignAntags((uid, component));
     }
 
     private void OnTakeGhostRole(Entity<GhostRoleAntagSpawnerComponent> ent, ref TakeGhostRoleEvent args)
@@ -97,7 +144,19 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!Exists(rule) || !TryComp<AntagSelectionComponent>(rule, out var select))
             return;
 
-        AttachSessionToAntagonist((rule, select), args.Player, def, _transform.GetMapCoordinates(ent));
+        // This likely means player was banned or lacks playtime.
+        if (!CanBeAntag(args.Player, (rule, select), def, false))
+            return;
+
+        if (!TrySpawnAntagonist((rule, select), def, args.Player, _transform.GetMapCoordinates(ent), out var uid))
+        {
+            Log.Error($"Tried to make {args.Player.UserId} into an antagonist but was unable to spawn an entity for them. Game rule {ToPrettyString(ent)}");
+            return;
+        }
+
+        // We do this after TrySpawnAntagonist so we don't have to worry about a failed spawn adding permanent pre selections to a game rule.
+        PreSelectSession((rule, select), def, args.Player);
+        InitializeAntag((rule, select), def, uid.Value, args.Player);
         args.TookRole = true;
         _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
@@ -111,75 +170,69 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     }
 
     // This is called when the round starts, before jobs are selected
-    // TODO: Remove the old code
     private void OnPlayerSpawning(RulePlayerSpawningEvent args)
     {
         var pool = args.PlayerPool;
 
-        // Get all GameRules and store all antags from them in a list.
-        List<AntagRule> definitions = [];
+        // Get all GameRules and store all antags from them in two lists, one we query now and another we query later!
+        _preSpawnRules = [];
+        _postSpawnRules = [];
         var rulesQuery = QueryAllRules();
-        while (rulesQuery.MoveNext(out var uid, out var antag, out _))
+        while (rulesQuery.MoveNext(out var uid, out var antag, out var rule))
         {
-            AddGameRuleDefinitions((uid, antag), pool, ref definitions);
+            // Add it to the list of pre selections then mark it as complete.
+            // This is the best query to do it in, and we're not returning early so might as well do it here.
+            AddGameRuleDefinitions((uid, antag), pool.Count, ref _preSpawnRules, ref _postSpawnRules, GameTicker.IsGameRuleActive(uid, rule));
+            antag.PreSelectionsComplete = true;
         }
 
         // Pick a random player session and then try to assign the currently available antags from it!
         // This means each player has the same chance at rolling antag, with minimal alterations to the odds by number of antags selected.
-        var weightedPool = GetWeightedPlayerPool(args.PlayerPool);
-        if (!TryTicketAntags(weightedPool, ref definitions))
+        var weightedPool = GetWeightedPlayerPool(pool);
+        while (RobustRandom.TryPickAndTake(weightedPool, out var session))
         {
-            // TODO: Handle not all antags being assigned!
-        }
-
-        var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out var comp, out _))
-        {
-            if (comp.SelectionTime == AntagSelectionTime.PostPlayerSpawn)
+            // Antag distributed so we remove the session.
+            if (!PreAssignAntag(session, ref _preSpawnRules))
                 continue;
 
-            if (comp.AssignmentComplete)
-                continue;
-
-            ChooseAntags((uid, comp), pool); // We choose the antags here...
-
-            if (comp.SelectionTime == AntagSelectionTime.PrePlayerSpawn)
-            {
-                AssignPreSelectedSessions((uid, comp)); // ...But only assign them if PrePlayerSpawn
-                foreach (var session in comp.AssignedSessions)
-                {
-                    //args.PlayerPool.Remove(session);
-                    //GameTicker.PlayerJoinGame(session);
-                }
-            }
+            args.PlayerPool.Remove(session);
+            GameTicker.PlayerJoinGame(session);
         }
 
-        // If IntraPlayerSpawn is selected, delayed rules should choose at this point too.
-        var queryDelayed = QueryDelayedRules();
-        while (queryDelayed.MoveNext(out var uid, out _, out var comp, out _))
-        {
-            if (comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
-                continue;
-
-            ChooseAntags((uid, comp), pool);
-        }
+        // Make ghost role spawners for any remaining rules!
+        SpawnGhostRoles(_preSpawnRules);
+        _preSpawnRules = null; // Clear the list, we don't want it anymore
     }
 
-    // TODO: This should handle "PostSpawn" antags, and we shouldn't need to query ActiveGameRules a *second* time...
     private void OnJobsAssigned(RulePlayerJobsAssignedEvent args)
     {
-        var query = QueryActiveRules();
-        while (query.MoveNext(out var uid, out _, out var comp, out _))
+        if (_postSpawnRules == null)
         {
-            if (comp.SelectionTime != AntagSelectionTime.PostPlayerSpawn && comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
-                continue;
-
-            ChooseAntags((uid, comp), args.Players);
-            AssignPreSelectedSessions((uid, comp));
+            Log.Error($"Error! _postSpawnRules was null when {nameof(RulePlayerJobsAssignedEvent)} was run, this should have been initialized and populated before jobs were assigned.");
+            return;
         }
+
+        // Pick a random player session and then try to assign the currently available antags from it!
+        // This means each player has the same chance at rolling antag, with minimal alterations to the odds by number of antags selected.
+        var weightedPool = GetWeightedPlayerPool(args.Players);
+        while (RobustRandom.TryPickAndTake(weightedPool, out var session))
+        {
+            AssignAntag(session, ref _postSpawnRules);
+        }
+
+        // Make ghost role spawners for any remaining rules!
+        SpawnGhostRoles(_postSpawnRules);
+        _postSpawnRules = null; // Clear the list since it's been used up!
+
+        foreach (var antag in _delayedAntags)
+        {
+            if (!TryInitializeAntag(antag.gameRule, antag.antag, antag.player))
+                Log.Error($"Gamerule {ToPrettyString(antag.gameRule)} failed to spawn {antag.player.Name} as antag {antag.antag.ID} after spawning.");
+        }
+
+        _delayedAntags.Clear();
     }
 
-    // TODO: This is probably fine? Double check.
     private void OnJobNotAssigned(NoJobsAvailableSpawningEvent args)
     {
         // If someone fails to spawn in due to there being no jobs, they should be removed from any preselected antags.
@@ -187,8 +240,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var query = QueryDelayedRules();
         while (query.MoveNext(out var uid, out _, out var comp, out _))
         {
-            if (comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
+            if (comp.SelectionTime == RuleStarted)
                 continue;
+
+            Debug.Assert(comp.SelectionTime != Never, $"Player: {args.Player.Name}, was pre selected for an game rule {ToPrettyString(uid)} which does not do pre-selections");
 
             if (!comp.RemoveUponFailedSpawn)
                 continue;
@@ -202,33 +257,76 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
     }
 
-    private void AddGameRuleDefinitions(Entity<AntagSelectionComponent> gameRule, List<ICommonSession> sessions, ref List<AntagRule> roles)
+    private void AddGameRuleDefinitions(Entity<AntagSelectionComponent> gameRule,
+        int playerCount,
+        ref List<AntagRule> preSpawnRoles,
+        ref List<AntagRule> postSpawnRoles,
+        bool active)
     {
-        AddGameRuleDefinitions(gameRule, sessions.Count, ref roles);
+        switch (gameRule.Comp.SelectionTime)
+        {
+            case PrePlayerSpawn:
+                AddGameRuleDefinitions(gameRule, playerCount, ref preSpawnRoles, active);
+                break;
+            case JobsAssigned:
+                AddGameRuleDefinitions(gameRule, playerCount, ref postSpawnRoles, active);
+                break;
+            case RuleStarted:
+                if (active) // Only if the game rule is active to we preselect, since the event for activation already ran and was skipped.
+                    AddGameRuleDefinitions(gameRule, playerCount, ref postSpawnRoles, active);
+                break;
+            case Never:
+                Debug.Assert(gameRule.Comp.Antags.All(x => Proto.Resolve(x, out var proto) && proto.SpawnerPrototype != null),
+                    $"Gamerule {ToPrettyString(gameRule)}, had pre-selection set to none, but one of its antags had no ghost roles to spawn.");
+                break;
+        }
     }
 
-    private void AddGameRuleDefinitions(Entity<AntagSelectionComponent> gameRule, int playerCount, ref List<AntagRule> roles)
+    private void AddGameRuleDefinitions(Entity<AntagSelectionComponent> gameRule,
+        int playerCount,
+        ref List<AntagRule> roles,
+        bool active)
     {
         var runningCount = 0;
 
-        // We assume that antag definitions are prioritized by order, and take up slots that other roles may take.
-        // I.E for Nukies, it selects 1 commander which takes up 10 players, then one corpsman which takes up another 10, then we select X nukies based on the remaining player count.
-        // This is how the system worked when I got here, and I decided not to change it to avoid fucking with team antag balance
         foreach (var proto in gameRule.Comp.Antags)
         {
             if (!Proto.Resolve(proto, out var definition))
                 continue;
 
-            roles.Add((gameRule, definition, GetTargetAntagCount(definition, playerCount, ref runningCount)));
+            // We do it this way in case our resolve fails.
+            roles.Add((gameRule, definition, active, GetTargetAntagCount(definition, playerCount, ref runningCount)));
         }
     }
 
-    private Dictionary<ICommonSession, float> GetWeightedPlayerPool(List<ICommonSession> sessions)
+    private AntagCount[] GetAntags(Entity<AntagSelectionComponent> gameRule,
+        int playerCount)
     {
-        var dict = new Dictionary<ICommonSession, float>(sessions.Count);
+        var runningCount = 0;
+        var antags = new AntagCount[gameRule.Comp.Antags.Count];
+
+        // We assume that antag definitions are prioritized by order, and take up slots that other roles may take.
+        // I.E for Nukies, it selects 1 commander which takes up 10 players, then one corpsman which takes up another 10, then we select X nukies based on the remaining player count.
+        // This is how the system worked when I got here, and I decided not to change it to avoid fucking with team antag balance
+        var i = 0;
+        foreach (var proto in gameRule.Comp.Antags)
+        {
+            if (!Proto.Resolve(proto, out var definition))
+                continue;
+
+            // We do it this way in case our resolve fails.
+            antags[i] = (definition, GetTargetAntagCount(definition, playerCount, ref runningCount));
+            i++;
+        }
+
+        return antags;
+    }
+
+    private Dictionary<ICommonSession, float> GetWeightedPlayerPool(IEnumerable<ICommonSession> sessions)
+    {
+        var dict = new Dictionary<ICommonSession, float>();
         foreach (var session in sessions)
         {
-            // TODO: Maybe we should also filter out sessions here instead? Haven't found a good reason for that yet though :P.
             // TODO: Actually add weights! This is placeholder for a future PR.
             dict.Add(session, 1f);
         }
@@ -236,53 +334,195 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         return dict;
     }
 
-    private bool TryTicketAntags(Dictionary<ICommonSession, float> weightedSessions, ref List<AntagRule> antags)
+    private void AssignAntags(Entity<AntagSelectionComponent> gameRule)
     {
-        while (RobustRandom.TryPickAndTake(weightedSessions, out var session))
+        AssignAntags(gameRule, GetActivePlayers().ToArray());
+    }
+
+    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, IList<ICommonSession> players)
+    {
+        var antags = GetAntags(gameRule, players.Count);
+        AssignAntags(gameRule, players, antags);
+        gameRule.Comp.PreSelectionsComplete = true;
+    }
+
+    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, IList<ICommonSession> players, AntagCount[] antags)
+    {
+        AssignAntags(gameRule, GetWeightedPlayerPool(players), antags);
+    }
+
+    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, Dictionary<ICommonSession, float> weightedPool, AntagCount[] antags)
+    {
+        while (RobustRandom.TryPickAndTake(weightedPool, out var session))
         {
-            if (antags.Count == 0)
-                return true;
+            AssignAntag(gameRule, session, ref antags);
 
-            // If this session cannot be an antag, then get the next session!
-            if (!TryGetValidAntagPreferences(session, out var prefs))
-                continue;
-
-            for (var i = antags.Count - 1; i >= 0; i--)
-            {
-                var antag = antags[i];
-                if (!PrefsContain(prefs, antag.Definition.PrefRoles))
-                    continue;
-
-                // We break it up like this to not log the server trying to make sessions without valid antag prefs into antags.
-                if (!CanBeAntag(session, antag, false))
-                    continue;
-
-                // Assign the antag, and then if we finish assigning antags, remove it from the list.
-                // The list doesn't need to stay organized because its order is completely arbitrary.
-                if (TryTicketAntags(session, ref antag))
-                    antags.RemoveSwap(i);
-
-                break;
-            }
+            // Assignment complete, return early.
+            if (antags.Length == 0)
+                return;
         }
 
-        // If we're here, then we didn't assign all the antags available!
+        // We didn't assign all antags, so we try and make ghost roles for the remaining antags!
+        SpawnGhostRoles(gameRule, antags);
+    }
+
+    /// <summary>
+    /// Selects and assigns antags from a list, this is called before the game has started.
+    /// Is private because it has it should only ever be run in very specific scenarios.
+    /// </summary>
+    private bool PreAssignAntag(ICommonSession player, ref List<AntagRule> antags)
+    {
+        // If this session cannot be an antag, then get the next session!
+        if (!TryGetValidAntagPreferences(player, out var prefs))
+            return false;
+
+        for (var i = antags.Count - 1; i >= 0; i--)
+        {
+            var antag = antags[i];
+
+            // Skip definitions that don't want a player assigned to them.
+            if (!antag.Definition.PickPlayer)
+            {
+                Debug.Assert(antag.Definition.SpawnerPrototype != null,
+                    $"Antag prototype {antag.Definition.ID} was set to not pre-select, but it also had no ghost spawner to spawn.");
+                continue;
+            }
+
+            if (!PrefsContain(prefs, antag.Definition.PrefRoles))
+                continue;
+
+            // We break it up like this to not log the server trying to make sessions without valid antag prefs into antags.
+            if (!CanBeAntag(player, antag.GameRule, antag.Definition, false))
+                continue;
+
+            // Pre-select the session then deprecate the selection count.
+            PreSelectSession(antag.GameRule, antag.Definition, player);
+
+            // Reduce the slots left by one
+            // If we finish assigning all slots
+            antag.Count--;
+            if (antag.Count == 0)
+                antags.RemoveSwap(i);
+            else
+                antags[i] = antag;
+
+            if (!antag.Active)
+                return false;
+
+            // Try to assign them an entity if the game rule allows it. We don't throw an error if this fails since we may have to wait until the player has spawned first!
+            if (TryInitializeAntag(antag.GameRule, antag.Definition, player))
+                return true;
+
+            // If we didn't assign an antag, try again after the player has spawned.
+            _delayedAntags.Add((antag.GameRule, antag.Definition, player));
+            return false;
+        }
+
+        // If we're here, then we didn't assign a single antag!
         return false;
     }
 
     /// <summary>
-    /// Makes this session into the given antag definition for the game rule, then decreases the count from the AntagRole by 1.
-    /// If Count reaches zero we return true to say that we've finished ticketing this antag rule.
+    /// Selects and assigns antags from a list, this is called before the game has started.
+    /// Is private because it has it should only ever be run in very specific scenarios.
     /// </summary>
-    private bool TryTicketAntags(ICommonSession session, ref AntagRule rule)
+    private bool AssignAntag(ICommonSession player, ref List<AntagRule> antags)
     {
-        if (!AssignSessionsAntagonist(rule.GameRule, rule.Definition, session))
-            return false; // Something has gone horribly wrong if this happens, check your error log!
+        // If this session cannot be an antag, then get the next session!
+        if (!TryGetValidAntagPreferences(player, out var prefs))
+            return false;
 
-        rule.Count--;
-        if (rule.Count == 0)
+        for (var i = antags.Count - 1; i >= 0; i--)
+        {
+            var antag = antags[i];
+
+            // Skip definitions that don't want a player assigned to them.
+            if (!antag.Definition.PickPlayer)
+            {
+                Debug.Assert(antag.Definition.SpawnerPrototype != null,
+                    $"Antag prototype {antag.Definition.ID} was set to not pre-select, but it also had no ghost spawner to spawn.");
+                continue;
+            }
+
+            if (!PrefsContain(prefs, antag.Definition.PrefRoles))
+                continue;
+
+            // We break it up like this to not log the server trying to make sessions without valid antag prefs into antags.
+            if (!CanBeAntag(player, antag, false))
+                continue;
+
+            // Try to get a valid antag entity.
+            if (!TryGetAntagEntity(antag.GameRule, antag.Definition, player, out var antagEnt))
+                continue; // Something has gone horribly wrong if this happens, check your error log!
+
+            // Pre-select the sesssion, then initialize the antag!
+            PreSelectSession(antag.GameRule, antag.Definition, player);
+            InitializeAntag(antag.GameRule, antag.Definition, antagEnt.Value, player);
+
+            // Reduce the slots left by one
+            // If we finish assigning all slots
+            antag.Count--;
+            if (antag.Count == 0)
+                antags.RemoveSwap(i);
+            else
+                antags[i] = antag;
+
             return true;
+        }
 
+        // If we're here, then we didn't assign a single antag!
+        return false;
+    }
+
+    /// <summary>
+    /// Selects and assigns antags from a list.
+    /// Is private because it has it should only ever be run in very specific scenarios.
+    /// </summary>
+    private bool AssignAntag(Entity<AntagSelectionComponent> gameRule, ICommonSession player, ref AntagCount[] antags)
+    {
+        // If this session cannot be an antag, then get the next session!
+        if (!TryGetValidAntagPreferences(player, out var prefs))
+            return false;
+
+        for (var i = antags.Length - 1; i >= 0; i--)
+        {
+            var antag = antags[i];
+
+            // Skip definitions that don't want a player assigned to them.
+            if (!antag.Definition.PickPlayer)
+            {
+                Debug.Assert(antag.Definition.SpawnerPrototype != null,
+                    $"Antag prototype {antag.Definition.ID} was set to not pre-select, but it also had no ghost spawner to spawn.");
+                continue;
+            }
+
+            if (!PrefsContain(prefs, antag.Definition.PrefRoles))
+                continue;
+
+            // We break it up like this to not log the server trying to make sessions without valid antag prefs into antags.
+            if (!CanBeAntag(player, gameRule, antag.Definition, false))
+                continue;
+
+            // Try to get a valid antag entity.
+            if (!TryGetAntagEntity(gameRule, antag.Definition, player, out var antagEnt))
+                continue; // Something has likely gone horribly wrong if this happens, check your error log!
+
+            // Pre-select the session, then initialize the antag!
+            PreSelectSession(gameRule, antag.Definition, player);
+            InitializeAntag(gameRule, antag.Definition, antagEnt.Value, player);
+
+            // Reduce the slots left by one
+            // If we finish assigning all slots
+            antag.Count--;
+            if (antag.Count == 0)
+                antags.RemoveSwap(i);
+            else
+                antags[i] = antag;
+
+            return true;
+        }
+
+        // If we're here, then we didn't assign a single antag!
         return false;
     }
 
@@ -294,277 +534,199 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <returns>True if any preferences match roles available.</returns>
     private bool PrefsContain(List<ProtoId<AntagPrototype>> prefs, List<ProtoId<AntagPrototype>> roles)
     {
-        foreach (var pref in prefs)
+        foreach (var role in roles)
         {
-            if (roles.Contains(pref))
+            if (prefs.Contains(role))
                 return true;
         }
 
         return false;
     }
 
-    protected override void Started(EntityUid uid, AntagSelectionComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    /// <summary>
+    /// Marks a player as being chosen by a game rule for antag.
+    /// This happens before the antag initializes.
+    /// A player will only be removed from pre-selection if they fail to initialize as antag later. Which will be logged.
+    /// </summary>
+    /// <param name="gameRule">Game rule which has chosen this player for antag.</param>
+    /// <param name="protoId">Antag prototype this player will become.</param>
+    /// <param name="player">Player.</param>
+    private void PreSelectSession(Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> protoId, ICommonSession player)
     {
-        base.Started(uid, component, gameRule, args);
+        if (!gameRule.Comp.PreSelectedSessions.TryGetValue(protoId, out var set))
+            gameRule.Comp.PreSelectedSessions.Add(protoId, set = new HashSet<ICommonSession>());
 
-        // If the round has not yet started, we defer antag selection until roundstart
-        if (GameTicker.RunLevel != GameRunLevel.InRound)
+        // Element already exists, don't need to log it twice, this typically happens when a pre-selected antag is initialized!
+        if (!set.Add(player))
             return;
 
-        if (component.AssignmentComplete)
+        Log.Debug($"Pre-selected {player.Name} as antagonist: {ToPrettyString(gameRule)}, {protoId}");
+        _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {player.Name} as antagonist: {ToPrettyString(gameRule)}, {protoId}");
+    }
+
+    /// <summary>
+    /// Removes a player from pre-selection, this can occur naturally due to a player disconnecting or dying, or due to errors.
+    /// This should only be called if a player cannot become antag, don't call this if a player becomes antag, we want that cached still.
+    /// </summary>
+    /// <param name="gameRule">Game rule which had chosen this player for antag, but failed to make them an antag.</param>
+    /// <param name="protoId">Antag prototype this player didn't become.</param>
+    /// <param name="player">Player.</param>
+    private void DeSelectSession(Entity<AntagSelectionComponent> gameRule,
+        ProtoId<AntagSpecifierPrototype> protoId,
+        ICommonSession player)
+    {
+        if (!gameRule.Comp.PreSelectedSessions.TryGetValue(protoId, out var set))
+        {
+            Log.Error($"Attempted to remove {player.Name} from antag pre-selection, but the rule {protoId} hasn't been pre-selected!");
             return;
-
-        var players = _playerManager.Sessions
-            .Where(x => GameTicker.PlayerGameStatuses.TryGetValue(x.UserId, out var status) &&
-                        status == PlayerGameStatus.JoinedGame)
-            .ToList();
-
-        ChooseAntags((uid, component), players, midround: true);
-        AssignPreSelectedSessions((uid, component));
-    }
-
-    /// <summary>
-    /// Chooses antagonists from the given selection of players
-    /// </summary>
-    /// <param name="ent">The antagonist rule entity</param>
-    /// <param name="pool">The players to choose from</param>
-    /// <param name="midround">Disable picking players for pre-spawn antags in the middle of a round</param>
-    [Obsolete]
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent, IList<ICommonSession> pool, bool midround = false)
-    {
-        foreach (var def in ent.Comp.Antags)
-        {
-            ChooseAntags(ent, pool, def, midround: midround);
         }
 
-        ent.Comp.PreSelectionsComplete = true;
+        DeSelectSession(gameRule, protoId, player, set);
     }
 
-    /// <summary>
-    /// Chooses antagonists from the given selection of players for the given antag definition.
-    /// </summary>
-    /// <param name="ent">The antagonist rule entity</param>
-    /// <param name="pool">The players to choose from</param>
-    /// <param name="def">The antagonist selection parameters and criteria</param>
-    /// <param name="midround">Disable picking players for pre-spawn antags in the middle of a round</param>
-    [Obsolete]
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent,
-        IList<ICommonSession> pool,
-        ProtoId<AntagSpecifierPrototype> def,
-        bool midround = false)
+    private void DeSelectSession(Entity<AntagSelectionComponent> gameRule,
+        ProtoId<AntagSpecifierPrototype> protoId,
+        ICommonSession player,
+        HashSet<ICommonSession> set)
     {
-        if (!Proto.Resolve(def, out var antag))
+        if (!set.Remove(player))
+        {
+            Log.Error($"Attempted to remove {player.Name} from antag pre-selection, but they weren't pre-selected in the first place!");
             return;
-
-        ChooseAntags(ent, pool, antag, midround);
-    }
-
-    [Obsolete]
-    public void ChooseAntags(Entity<AntagSelectionComponent> ent,
-        IList<ICommonSession> pool,
-        AntagSpecifierPrototype def,
-        bool midround = false)
-    {
-        var playerPool = GetPlayerPool(ent, pool, def);
-        // TODO: Shouldn't this already be cached?
-        var existingAntagCount = ent.Comp.PreSelectedSessions.TryGetValue(def, out var existingAntags) ? existingAntags.Count : 0;
-        var count = GetTargetAntagCount(ent, GetActivePlayerCount(pool), def) - existingAntagCount;
-
-        // if there is both a spawner and players getting picked, let it fall back to a spawner.
-        var noSpawner = def.SpawnerPrototype == null;
-        var picking = def.PickPlayer;
-        if (midround && ent.Comp.SelectionTime == AntagSelectionTime.PrePlayerSpawn)
-        {
-            // prevent antag selection from happening if the round is on-going, requiring a spawner if used midround.
-            // this is so rules like nukies, if added by an admin midround, dont make random living people nukies
-            Log.Info($"Antags for rule {ent:?} get picked pre-spawn so only spawners will be made.");
-            DebugTools.Assert(def.SpawnerPrototype != null, $"Rule {ent:?} had no spawner for pre-spawn rule added mid-round!");
-            picking = false;
         }
 
-        for (var i = 0; i < count; i++)
-        {
-            var session = (ICommonSession?)null;
-            if (picking)
-            {
-                if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
-                {
-                    Log.Warning($"Couldn't pick a player for {ToPrettyString(ent):rule}, no longer choosing antags for this definition");
-                    break;
-                }
-
-                if (session != null && ent.Comp.PreSelectedSessions.Values.Any(x => x.Contains(session)))
-                {
-                    Log.Warning($"Somehow picked {session} for an antag when this rule already selected them previously");
-                    continue;
-                }
-            }
-
-            if (session == null)
-                CreateAntagSpawner(ent, def); // Create a spawner since there's no session to attach.
-            else
-                PreSelectSessionForAntagonist(ent, session, def);
-        }
+        // Not an error because player could've disconnected or died or something.
+        Log.Debug($"De-selected {player.Name} as antagonist: {ToPrettyString(gameRule)}, {protoId}");
+        _adminLogger.Add(LogType.AntagSelection, $"De-selected {player.Name} as antagonist: {ToPrettyString(gameRule)}, {protoId}");
     }
 
     /// <summary>
-    /// Assigns antag roles to sessions selected for it.
+    /// Attempts to initialize a valid antag entity for a player.
+    /// Will de-select the player if they fail to initialize.
     /// </summary>
-    // TODO: Probably fine, but I need to double check the logic:tm:
-    [Obsolete]
-    private void AssignPreSelectedSessions(Entity<AntagSelectionComponent> ent)
+    /// <param name="gameRule">Game rule which is trying to create an antag right now!</param>
+    /// <param name="prototype">Antag prototype the player is becoming.</param>
+    /// <param name="player">Player.</param>
+    /// <returns>True if the player initialized as the selected antag.</returns>
+    private bool TryInitializeAntag(Entity<AntagSelectionComponent> gameRule,
+        AntagSpecifierPrototype prototype,
+        ICommonSession player)
     {
-        // Only assign if there's been a pre-selection, and the selection hasn't already been made
-        if (!ent.Comp.PreSelectionsComplete || ent.Comp.AssignmentComplete)
-            return;
-
-        foreach (var proto in ent.Comp.Antags)
+        // Get a valid entity to initialize
+        if (!TryGetAntagEntity(gameRule, prototype, player, out var antagEnt))
         {
-            if (!Proto.Resolve(proto, out var def) || !ent.Comp.PreSelectedSessions.TryGetValue(proto, out var set))
-                continue;
-
-            foreach (var session in set)
-            {
-                TryMakeAntag(ent, session, def);
-            }
+            DeSelectSession(gameRule, prototype, player);
+            return false;
         }
 
-        ent.Comp.AssignmentComplete = true;
+        InitializeAntag(gameRule, prototype, antagEnt.Value, player);
+        return true;
+    }
+
+    private bool TryGetAntagEntity(Entity<AntagSelectionComponent> gameRule,
+        AntagSpecifierPrototype prototype,
+        ICommonSession player,
+        [NotNullWhen(true)]out EntityUid? antagEnt)
+    {
+        antagEnt = GetAntagEntity(gameRule, prototype, player);
+        return antagEnt != null;
     }
 
     /// <summary>
-    /// Create an antag spawner which can be taken over by a player through the ghost role system.
+    /// Attempts to get an entity to assign antag to for a session.
+    /// First by raising an event to see if the associated <see cref="gameRule"/> has an entity it wants to spawn,
+    /// Then falling back to the attached entity for the player's session if the game rule doesn't have a specific entity.
+    /// Private because it can create an entity, and it needs to be called with <see cref="InitializeAntag"/>
     /// </summary>
-    /// <param name="ent">Antag rule entity</param>
-    /// <param name="def">Antag selection definition chosen from the entity</param>
-    private EntityUid? CreateAntagSpawner(Entity<AntagSelectionComponent> ent, AntagSpecifierPrototype def)
+    /// <param name="gameRule">Associated game rule entity for our antag</param>
+    /// <param name="prototype">Antag prototype we are trying to create</param>
+    /// <param name="player">Player session we are making into an antag</param>
+    /// <returns>Entity of the antagonist</returns>
+    private EntityUid? GetAntagEntity(Entity<AntagSelectionComponent> gameRule,
+        AntagSpecifierPrototype prototype,
+        ICommonSession player)
     {
-        if (def.SpawnerPrototype is not { } proto)
-            return null;
+        // If there's no valid position for us to be moved to, then just return the entity currently attached to the session.
+        // We need a position to spawn a new entity so we can't spawn a new entity without a proper position.
+        // Doesn't throw an error since for some antags this is intended behavior.
+        if (!TryGetValidSpawnPosition(gameRule, prototype, out var coordinates, player))
+            return player.AttachedEntity;
 
-        var spawner = Spawn(def.SpawnerPrototype);
-        if (!TryValidSpawnPosition(ent, spawner))
+        if (TrySpawnAntagonist(gameRule, prototype, player, coordinates.Value, out var entity))
+            return entity;
+
+        if (player.AttachedEntity is not { } uid)
         {
-            Log.Error($"Found no valid positions to place antag spawner {ToPrettyString(spawner)} prototype: {proto}");
-            Del(spawner);
+            Log.Error($"Tried to make {player.UserId} into an antagonist at Map: { coordinates.Value.MapId } ({ coordinates.Value.X }, { coordinates.Value.Y }) but was unable to find an entity for them. Gamerule {ToPrettyString(gameRule)}. Antag {prototype.ID}");
             return null;
         }
 
-        if (!TryComp<GhostRoleAntagSpawnerComponent>(spawner, out var spawnerComp))
-        {
-            Log.Error($"Antag spawner {spawner} does not have a {nameof(GhostRoleAntagSpawnerComponent)}.");
-            _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {spawner} in gamerule {ToPrettyString(ent)} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
-            Del(spawner);
-            return null;
-        }
-
-        spawnerComp.Rule = ent;
-        spawnerComp.Definition = def;
-        return spawner;
-    }
-
-    /// <summary>
-    /// Does antag pre-selection logic, adding a specified player session to the PreSelection list and logging it for admins.
-    /// </summary>
-    [Obsolete]
-    private void PreSelectSessionForAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSpecifierPrototype def)
-    {
-        if (!ent.Comp.PreSelectedSessions.TryGetValue(def, out var set))
-            ent.Comp.PreSelectedSessions.Add(def, set = new HashSet<ICommonSession>());
-        set.Add(session);
-
-        Log.Debug($"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
-        _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
-    }
-
-    /// <summary>
-    /// Creates a new antagonist entity at the specified coordinates, then attaches the specified player to that antagonist.
-    /// </summary>
-    [Obsolete]
-    private EntityUid? AttachSessionToAntagonist(Entity<AntagSelectionComponent> ent,
-        ICommonSession session,
-        AntagSpecifierPrototype def,
-        MapCoordinates coords)
-    {
-        PreSelectSessionForAntagonist(ent, session, def);
-        //ent.Comp.AssignedSessions.Add(session);
-        return SpawnNewAntagonist(ent, session, def, coords);
-    }
-
-    [Obsolete]
-    private EntityUid? MakeSessionAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, ProtoId<AntagSpecifierPrototype> def)
-    {
-        if (!Proto.Resolve(def, out var specifier))
-            return null;
-
-        return MakeSessionAntagonist(ent, session, specifier);
-    }
-
-    /// <summary>
-    /// Makes a specified player into a specified antagonist.
-    /// If the player is a ghost or has no attached entity, it will attempt to find a valid spawn position and spawn a new entity.
-    /// Otherwise, it will try to move their current entity to their antag's spawn position (if it exists) and then set them up as antag.
-    /// </summary>
-    [Obsolete]
-    private EntityUid? MakeSessionAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSpecifierPrototype def)
-    {
-        PreSelectSessionForAntagonist(ent, session, def);
-
-        //ent.Comp.AssignedSessions.Add(session);
-
-        // If the player has no entity to make an antagonist, make a new entity for them
-        if (HasComp<GhostComponent>(session.AttachedEntity) || session.AttachedEntity is not { } player)
-        {
-            return SpawnNewAntagonist(ent, session, def);
-        }
-
-        TryValidSpawnPosition(ent, player, session);
-        InitializeAntag(ent, player, session, def);
-        return player;
-    }
-
-    /// <summary>
-    /// Attempts to create a new antagonist entity and attach a player session to it at a valid spawnpoint.
-    /// Does nothing if it cannot find a valid spawnpoint.
-    /// </summary>
-    [Obsolete]
-    private EntityUid? SpawnNewAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSpecifierPrototype def)
-    {
-        if (GetValidSpawnPosition(ent, session.AttachedEntity, session) is not { } coordinates)
-        {
-            Log.Error($"Was unable to find a valid spawn position for, {session.Name}, gamerule: {ToPrettyString(ent)} when trying to make them into an antagonist.");
-            return null;
-        }
-
-        return SpawnNewAntagonist(ent, session, def, coordinates);
+        // Move our entity to the new coordinates we found!
+        var xform = Transform(uid);
+        _transform.SetMapCoordinates((uid, xform), coordinates.Value);
+        return uid;
     }
 
     /// <summary>
     /// Attempts to create a new antagonist entity at the specified coordinates and attach a player session to it.
     /// If it cannot spawn an antagonist entity, it does nothing.
     /// </summary>
-    [Obsolete]
-    private EntityUid? SpawnNewAntagonist(Entity<AntagSelectionComponent> ent, ICommonSession session, AntagSpecifierPrototype def, MapCoordinates coordinates)
+    private bool TrySpawnAntagonist(Entity<AntagSelectionComponent> gameRule,
+        AntagSpecifierPrototype prototype,
+        ICommonSession player,
+        MapCoordinates coordinates,
+        [NotNullWhen(true)]out EntityUid? uid)
     {
-        var getEntEv = new AntagSelectEntityEvent(session, ent, def.PrefRoles, coordinates);
+        var ev = new AntagSelectEntityEvent(gameRule, prototype, coordinates, player);
+        RaiseLocalEvent(gameRule, ref ev, true);
 
-        RaiseLocalEvent(ent, ref getEntEv, true);
-        if (getEntEv.Entity is not { } antag)
+        uid = ev.Entity;
+        return ev.Handled;
+    }
+
+    /// <summary>
+    /// Assigns antag roles to sessions selected for it.
+    /// </summary>
+    private void AssignPreSelectedSessions(Entity<AntagSelectionComponent> gameRule)
+    {
+        foreach (var (proto, set) in gameRule.Comp.PreSelectedSessions)
         {
-            Log.Error($"Tried to make {session.UserId} into an antagonist but was unable to spawn an entity for them. Gamerule {ToPrettyString(ent)}");
-            return null;
+            // How did we even get here?
+            if (!Proto.Resolve(proto, out var def))
+                continue;
+
+            foreach (var session in set)
+            {
+                _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(gameRule)}, {proto}");
+
+                if (!IsSessionValid(session, def))
+                {
+                    DeSelectSession(gameRule, proto, session, set);
+                    continue;
+                }
+
+                TryInitializeAntag(gameRule, def, session);
+            }
         }
 
-        InitializeAntag(ent, antag, session, def);
-        return antag;
+        gameRule.Comp.AssignmentHandled = true;
     }
 
     /// <summary>
     /// Raises an event to the gamerule to check all valid possible spawning points for this rule.
     /// Returns a random spawnpoint from a list of valid spawnpoints, or null if there weren't any.
     /// </summary>
-    [Obsolete]
-    private MapCoordinates? GetValidSpawnPosition(Entity<AntagSelectionComponent> ent, EntityUid? antag, ICommonSession? session = null)
+    private bool TryGetValidSpawnPosition(Entity<AntagSelectionComponent> ent, AntagSpecifierPrototype antag, [NotNullWhen(true)] out MapCoordinates? coordinates, ICommonSession? session = null)
+    {
+        coordinates = GetValidSpawnPosition(ent, antag, session);
+        return coordinates != null;
+    }
+
+    /// <summary>
+    /// Raises an event to the gamerule to check all valid possible spawning points for this rule.
+    /// Returns a random spawnpoint from a list of valid spawnpoints, or null if there weren't any.
+    /// </summary>
+    private MapCoordinates? GetValidSpawnPosition(Entity<AntagSelectionComponent> ent, AntagSpecifierPrototype antag, ICommonSession? session = null)
     {
         var getPosEv = new AntagSelectLocationEvent(ent, antag, session);
         RaiseLocalEvent(ent, ref getPosEv, true);
@@ -576,93 +738,56 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     }
 
     /// <summary>
-    ///  Looks for a valid spawn position for this antagonist type, then moves the antagonist entity to that spawn position.
-    /// </summary>
-    [Obsolete]
-    private bool TryValidSpawnPosition(Entity<AntagSelectionComponent> ent, EntityUid antag, ICommonSession? session = null)
-    {
-        if (GetValidSpawnPosition(ent, antag, session) is not { } coordinates)
-            return false;
-
-        var xform = Transform(antag);
-        _transform.SetMapCoordinates((antag, xform), coordinates);
-        return true;
-    }
-
-    /// <summary>
     /// Initializes the antagonist status on the specified entity.
     /// Adds the needed components, loadouts, items, attaches the player and fires off an event.
     /// </summary>
-    private void InitializeAntag(Entity<AntagSelectionComponent> ent, EntityUid antag, ICommonSession? session, AntagSpecifierPrototype def)
+    private void InitializeAntag(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype prototype, EntityUid antag, ICommonSession player)
     {
+        // Make sure player was properly pre-selected.
+        Debug.Assert(gameRule.Comp.PreSelectedSessions.TryGetValue(prototype.ID, out var value) && value.Contains(player),
+            $"Game rule {ToPrettyString(gameRule)}, failed to pre assigned {player.Name} to antag {prototype.ID}");
+
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
-        EntityManager.AddComponents(antag, def.Components);
+        EntityManager.AddComponents(antag, prototype.Components);
 
         // Equip the entity's RoleLoadout and LoadoutGroup
         List<ProtoId<StartingGearPrototype>> gear = new();
-        if (def.StartingGear is not null)
-            gear.Add(def.StartingGear.Value);
+        if (prototype.StartingGear is not null)
+            gear.Add(prototype.StartingGear.Value);
 
-        _loadout.Equip(antag, gear, def.RoleLoadout);
+        _loadout.Equip(antag, gear, prototype.RoleLoadout);
 
-        if (session != null)
-        {
-            var curMind = session.GetMind();
+        // Ensure that we have a mind for our entity!
+        if (player.GetMind() is not { } mind
+            || !TryComp<MindComponent>(mind, out var mindComp)
+            || mindComp.OwnedEntity != antag)
+            mind = _mind.CreateMind(player.UserId, Name(antag));
 
-            if (curMind == null ||
-                !TryComp<MindComponent>(curMind.Value, out var mindComp) ||
-                mindComp.OwnedEntity != antag)
-            {
-                curMind = _mind.CreateMind(session.UserId, Name(antag));
-                _mind.SetUserId(curMind.Value, session.UserId);
-            }
+        _mind.TransferTo(mind, antag, ghostCheckOverride: true);
+        _role.MindAddRoles(mind, prototype.MindRoles, null, true);
+        AssignMind(gameRule, prototype, mind, antag);
 
-            _mind.TransferTo(curMind.Value, antag, ghostCheckOverride: true);
-            _role.MindAddRoles(curMind.Value, def.MindRoles, null, true);
-            if (ent.Comp.AssignedMinds.TryGetValue(def.ID, out var minds))
-            {
-                minds.Add((curMind.Value, Name(antag)));
-            }
-            else
-            {
-                var hashset = new HashSet<(EntityUid, string)>();
-                hashset.Add((curMind.Value, Name(antag)));
-                ent.Comp.AssignedMinds.Add(def.ID, hashset);
-            }
+        Log.Debug($"Assigned {ToPrettyString(antag):target}, mind {ToPrettyString(mind):target} as antagonist: {ToPrettyString(gameRule):user}");
+        _adminLogger.Add(LogType.AntagSelection, $"Assigned {ToPrettyString(antag):target}, mind {ToPrettyString(mind):target} as antagonist: {ToPrettyString(gameRule):user}");
 
-            SendBriefing(session, def.Briefing);
+        SendBriefing(player, prototype.Briefing);
 
-            Log.Debug($"Assigned {ToPrettyString(curMind)} as antagonist: {ToPrettyString(ent)}");
-            _adminLogger.Add(LogType.AntagSelection, $"Assigned {ToPrettyString(curMind)} as antagonist: {ToPrettyString(ent)}");
-        }
-
-        var afterEv = new AfterAntagEntitySelectedEvent(session, antag, ent, def);
-        RaiseLocalEvent(ent, ref afterEv, true);
+        var afterEv = new AfterAntagEntitySelectedEvent(player, antag, gameRule, prototype);
+        RaiseLocalEvent(gameRule, ref afterEv, true);
     }
 
-    /// <summary>
-    /// Gets an ordered player pool based on player preferences and the antagonist definition.
-    /// </summary>
-    [Obsolete]
-    public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, IList<ICommonSession> sessions, AntagSpecifierPrototype def)
+    private void AssignMind(Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> proto, EntityUid mind, EntityUid antag)
     {
-        var preferredList = new List<ICommonSession>();
-        foreach (var session in sessions)
+        if (gameRule.Comp.AssignedMinds.TryGetValue(proto, out var minds))
         {
-            if (!IsSessionValid(session, def) || !IsEntityValid(session.AttachedEntity, def))
-                continue;
-
-            if (ent.Comp.PreSelectedSessions.TryGetValue(def, out var preSelected) && preSelected.Contains(session))
-                continue;
-
-            // Add player to the appropriate antag pool
-            if (TryGetValidAntagPreferences(session, def.PrefRoles))
-            {
-                preferredList.Add(session);
-            }
+            minds.Add((mind, Name(antag)));
         }
-
-        return new AntagSelectionPlayerPool(preferredList);
+        else
+        {
+            var hashset = new HashSet<(EntityUid, string)>();
+            hashset.Add((mind, Name(antag)));
+            gameRule.Comp.AssignedMinds.Add(proto, hashset);
+        }
     }
 
     private void OnObjectivesTextGetInfo(Entity<AntagSelectionComponent> ent, ref ObjectivesTextGetInfoEvent args)
@@ -679,14 +804,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 /// Event raised on a game rule entity in order to determine what the antagonist entity will be.
 /// Only raised if the selected player's current entity is invalid.
 /// </summary>
-/// TODO: This should really be an interface instead, we're always raising this to the same entity anyways and the values are extremely predictable
 [ByRefEvent]
-public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule, List<ProtoId<AntagPrototype>> AntagRoles, MapCoordinates Coords)
+public record struct AntagSelectEntityEvent(Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Antag, MapCoordinates Coords, ICommonSession? Session)
 {
     public readonly ICommonSession? Session = Session;
 
     /// list of antag role prototypes associated with a entity. used by the <see cref="AntagMultipleRoleSpawnerComponent"/>
-    public readonly List<ProtoId<AntagPrototype>> AntagRoles = AntagRoles;
+    public readonly AntagSpecifierPrototype Antag = Antag;
 
     public readonly MapCoordinates Coords = Coords;
 
@@ -697,16 +821,17 @@ public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<Anta
 
 /// <summary>
 /// Event raised on a game rule entity to determine the location for the antagonist.
+/// Methods responding to this event should not be making any changed as future methods can fail causing an antag to not spawn.
 /// </summary>
 [ByRefEvent]
-public record struct AntagSelectLocationEvent(Entity<AntagSelectionComponent> GameRule, EntityUid? Entity, ICommonSession? Session = null)
+public record struct AntagSelectLocationEvent(Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Antag, ICommonSession? Session = null)
 {
     public readonly ICommonSession? Session = Session;
 
     public bool Handled => Coordinates.Any();
 
     // the entity of the antagonist
-    public EntityUid? Entity = Entity;
+    public AntagSpecifierPrototype Antag = Antag;
 
     public List<MapCoordinates> Coordinates = new();
 }
@@ -724,21 +849,41 @@ public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Sess
 /// </summary>
 /// <param name="GameRule">The game rule which has the specified antag.</param>
 /// <param name="Definition">The specified antag.</param>
+/// <param name="Active">Whether or not this game rule is currently active, cached to avoid needless HasComps.</param>
 /// <param name="Count">The number of specified antags left to ticket. This value does change as antags are assigned.</param>
-public record struct AntagRule(Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Definition, int Count)
+public record struct AntagRule(Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Definition, bool Active, int Count)
+{
+    public static implicit operator AntagRule((Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Defintion, bool active) quad)
+    {
+        return new AntagRule(quad.GameRule, quad.Defintion, quad.active, 1);
+    }
+
+    public static implicit operator AntagRule((Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Defintion, bool active, int Count) quad)
+    {
+        return new AntagRule(quad.GameRule, quad.Defintion, quad.active, quad.Count);
+    }
+}
+
+/// <summary>
+/// A simple struct that stores an antag definition and the number of remaining slots available.
+/// Typically, is paired with a <see cref="Entity{AntagSelectionComponent}"/> or else it's worthless.
+/// </summary>
+/// <param name="Definition">The antag definition we have a count of</param>
+/// <param name="Count">The number of slots remaining for this antag</param>
+public record struct AntagCount(AntagSpecifierPrototype Definition, int Count)
 {
     /// <summary>
-    /// Remaining number of times this rule can be ticketed.
+    /// Remaining number of slots for this antag.
     /// </summary>
     public int Count = Count;
 
-    public static implicit operator AntagRule((Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Defintion) tuple)
+    public static implicit operator AntagCount(AntagSpecifierPrototype definition)
     {
-        return new AntagRule(tuple.GameRule, tuple.Defintion, 1);
+        return new AntagCount(definition, 1);
     }
 
-    public static implicit operator AntagRule((Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Defintion, int Count) triple)
+    public static implicit operator AntagCount((AntagSpecifierPrototype Defintion, int Count) tuple)
     {
-        return new AntagRule(triple.GameRule, triple.Defintion, triple.Count);
+        return new AntagCount(tuple.Defintion, tuple.Count);
     }
 }

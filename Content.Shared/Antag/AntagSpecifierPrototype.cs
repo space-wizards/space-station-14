@@ -169,26 +169,6 @@ public enum AntagAcceptability
     All,
 }
 
-public enum AntagSelectionTime : byte
-{
-    /// <summary>
-    /// Antag roles are assigned before players are assigned jobs and spawned in.
-    /// This prevents antag selection from happening if the round is on-going.
-    /// </summary>
-    PrePlayerSpawn,
-
-    /// <summary>
-    /// Antag roles are selected to the player session before job assignment and spawning.
-    /// Unlike PrePlayerSpawn, this does not remove you from the job spawn pool.
-    /// </summary>
-    IntraPlayerSpawn,
-
-    /// <summary>
-    /// Antag roles get assigned after players have been assigned jobs and have spawned in.
-    /// </summary>
-    PostPlayerSpawn,
-}
-
 /// <summary>
 /// Contains data used to generate a briefing.
 /// </summary>

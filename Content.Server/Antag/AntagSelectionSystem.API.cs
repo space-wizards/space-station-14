@@ -1,8 +1,5 @@
-using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Antag;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking.Components;
@@ -19,45 +16,8 @@ namespace Content.Server.Antag;
 
 public sealed partial class AntagSelectionSystem
 {
-    /// <inheritdoc cref="TryGetNextAvailableDefinition(Entity{AntagSelectionComponent},out AntagSpecifierPrototype?,int)"/>
-    [Obsolete]
-    public bool TryGetNextAvailableDefinition(Entity<AntagSelectionComponent> gameRule,
-        [NotNullWhen(true)] out AntagSpecifierPrototype? definition)
-    {
-        return TryGetNextAvailableDefinition(gameRule, out definition, GetActivePlayerCount());
-    }
-
-    /// <summary>
-    /// Tries to find the first available antagonist from this game rule that currently isn't assigned.
-    /// </summary>
-    /// <param name="gameRule">GameRule we are checking for antags</param>
-    /// <param name="definition">Outputted valid antag definition</param>
-    /// <param name="players">Current number of players in the round. Used to determine antag count.</param>
-    /// <returns></returns>
-    [Obsolete]
-    public bool TryGetNextAvailableDefinition(Entity<AntagSelectionComponent> gameRule,
-        [NotNullWhen(true)] out AntagSpecifierPrototype? definition,
-        int players)
-    {
-        definition = null;
-
-        foreach (var def in gameRule.Comp.Antags)
-        {
-            if (!Proto.Resolve(def, out var antag))
-                continue;
-
-            // Because this value can theoretically fluctuate as players leave and join, we don't want to cache it.
-            if (AllAntagsAssigned(gameRule, antag, players))
-                continue;
-
-            definition = antag;
-            return true;
-        }
-
-        return false;
-    }
-
     /// <inhereitdoc cref="GetActivePlayerCount(IList{ICommonSession})"/>
+    [PublicAPI]
     public int GetActivePlayerCount()
     {
         return GetActivePlayerCount(_playerManager.Sessions);
@@ -69,6 +29,7 @@ public sealed partial class AntagSelectionSystem
     /// </summary>
     /// <param name="pool">Player pool we're querying, this typically includes all players connected to the server.</param>
     /// <returns>The number of valid players</returns>
+    [PublicAPI]
     public int GetActivePlayerCount(IList<ICommonSession> pool)
     {
         var count = 0;
@@ -84,6 +45,27 @@ public sealed partial class AntagSelectionSystem
         }
 
         return count;
+    }
+
+    [PublicAPI]
+    public IEnumerable<ICommonSession> GetActivePlayers()
+    {
+        return GetActivePlayers(_playerManager.Sessions);
+    }
+
+    [PublicAPI]
+    public IEnumerable<ICommonSession> GetActivePlayers(IList<ICommonSession> pool)
+    {
+        foreach (var session in pool)
+        {
+            if (IsDisconnected(session))
+                continue;
+
+            if (session.AttachedEntity is not { } uid || HasComp<GhostComponent>(uid))
+                continue;
+
+            yield return session;
+        }
     }
 
     public bool IsDisconnected(ICommonSession session)
@@ -201,6 +183,7 @@ public sealed partial class AntagSelectionSystem
     /// <returns>
     /// A list containing, in order, the antag's mind, the session data, and the original name stored as a string.
     /// </returns>
+    [PublicAPI]
     public IEnumerable<(EntityUid, SessionData, string)> GetAntagIdentifiers(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -227,6 +210,7 @@ public sealed partial class AntagSelectionSystem
     /// <returns>
     /// A list containing, in order, the antag's mind, the session data, and the original name stored as a string.
     /// </returns>
+    [PublicAPI]
     public IEnumerable<(EntityUid, string)> GetAntagIdentities(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -244,6 +228,7 @@ public sealed partial class AntagSelectionSystem
     /// <summary>
     /// Returns all the minds of antagonists.
     /// </summary>
+    [PublicAPI]
     public IEnumerable<Entity<MindComponent>> GetAntagMinds(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -264,6 +249,7 @@ public sealed partial class AntagSelectionSystem
     /// <summary>
     /// Returns all the antagonists for this rule who are currently alive
     /// </summary>
+    [PublicAPI]
     public IEnumerable<EntityUid> GetAliveAntags(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -283,6 +269,7 @@ public sealed partial class AntagSelectionSystem
     /// <summary>
     /// Returns the number of alive antagonists for this rule.
     /// </summary>
+    [PublicAPI]
     public int GetAliveAntagCount(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -304,6 +291,7 @@ public sealed partial class AntagSelectionSystem
     /// <summary>
     /// Returns if there are any remaining antagonists alive for this rule.
     /// </summary>
+    [PublicAPI]
     public bool AnyAliveAntags(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -315,6 +303,7 @@ public sealed partial class AntagSelectionSystem
     /// <summary>
     /// Checks if all the antagonists for this rule are alive.
     /// </summary>
+    [PublicAPI]
     public bool AllAntagsAlive(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -330,6 +319,7 @@ public sealed partial class AntagSelectionSystem
     /// <param name="briefing">The briefing text to send</param>
     /// <param name="briefingColor">The color the briefing should be, null for default</param>
     /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
+    [PublicAPI]
     public void SendBriefing(EntityUid entity, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
     {
         if (!_mind.TryGetMind(entity, out _, out var mindComponent))
@@ -362,7 +352,7 @@ public sealed partial class AntagSelectionSystem
     /// </summary>
     /// <param name="session">The player chosen to be an antag</param>
     /// <param name="data">The briefing data</param>
-    public void SendBriefing(
+    private void SendBriefing(
         ICommonSession? session,
         BriefingData? data)
     {
@@ -380,6 +370,7 @@ public sealed partial class AntagSelectionSystem
     /// <param name="briefing">The briefing text to send</param>
     /// <param name="briefingColor">The color the briefing should be, null for default</param>
     /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
+    // TODO: It might take a bit of effort but this can probably be privated.
     public void SendBriefing(
         ICommonSession? session,
         string briefing,
@@ -393,17 +384,90 @@ public sealed partial class AntagSelectionSystem
         if (!string.IsNullOrEmpty(briefing))
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
-            _chat.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel,
-                briefingColor);
+            _chat.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel, briefingColor);
         }
+    }
+
+    /// <summary>
+    /// Returns a list of all antag players who have blacklisted jobs, and a hashset of those blacklisted jobs.
+    /// </summary>
+    /// <param name="except">Antag prototypes we're excluding for our returned job blacklist.</param>
+    /// <returns>A dictionary of antag sessions, and their job blacklists.</returns>
+    [PublicAPI]
+    public Dictionary<ICommonSession, HashSet<ProtoId<JobPrototype>>> GetAntagBlockedJobs(params HashSet<ProtoId<AntagSpecifierPrototype>> except)
+    {
+        var result = new Dictionary<ICommonSession, HashSet<ProtoId<JobPrototype>>>();
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out var comp, out _))
+        {
+            if (HasComp<EndedGameRuleComponent>(uid))
+                continue;
+
+            foreach (var def in comp.Antags)
+            {
+                if (except.Contains(def))
+                    continue;
+
+                if (!comp.PreSelectedSessions.TryGetValue(def, out var set) || !Proto.Resolve(def, out var antag))
+                    continue;
+
+                if (antag.JobBlacklist.Count == 0)
+                    continue;
+
+                foreach (var player in set)
+                {
+                    if (result.TryGetValue(player, out var jobs))
+                        jobs.UnionWith(antag.JobBlacklist);
+                    else
+                        result.Add(player, antag.JobBlacklist);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Returns a list of all blocked jobs for this player due to antags.
+    /// </summary>
+    /// <param name="player">Player we're checking the blocked jobs of</param>
+    /// <param name="except">Antag prototypes we're excluding in our search</param>
+    /// <returns>A hashset of all blocked jobs for this player.</returns>
+    [PublicAPI]
+    public HashSet<ProtoId<JobPrototype>> GetAntagBlockedJobs(ICommonSession player, params HashSet<ProtoId<AntagSpecifierPrototype>> except)
+    {
+        var result = new HashSet<ProtoId<JobPrototype>>();
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out var comp, out _))
+        {
+            if (HasComp<EndedGameRuleComponent>(uid))
+                continue;
+
+            foreach (var def in comp.Antags)
+            {
+                if (except.Contains(def))
+                    continue;
+
+                if (!comp.PreSelectedSessions.TryGetValue(def, out var set) || !Proto.Resolve(def, out var antag))
+                    continue;
+
+                if (antag.JobBlacklist.Count == 0)
+                    continue;
+
+                if (set.Contains(player))
+                    result.UnionWith(antag.JobBlacklist);
+            }
+        }
+
+        return result;
     }
 
     /// <summary>
     /// Get all sessions that have been preselected for antag.
     /// </summary>
     /// <param name="except">A specific definition to be excluded from the check.</param>
-    // TODO: Duke Nuke this.
-    public HashSet<ICommonSession> GetPreSelectedAntagSessions(ProtoId<AntagSpecifierPrototype>? except = null)
+    [PublicAPI]
+    public HashSet<ICommonSession> GetPreSelectedAntagSessions(params HashSet<ProtoId<AntagSpecifierPrototype>> except)
     {
         var result = new HashSet<ICommonSession>();
         var query = QueryAllRules();
@@ -414,7 +478,7 @@ public sealed partial class AntagSelectionSystem
 
             foreach (var def in comp.Antags)
             {
-                if (def.Equals(except))
+                if (except.Contains(def))
                     continue;
 
                 if (comp.PreSelectedSessions.TryGetValue(def, out var set))
@@ -437,7 +501,7 @@ public sealed partial class AntagSelectionSystem
     /// <param name="antags">List of valid antag prototypes this player can play as.</param>
     /// <param name="filter">Optional list of antag prototypes we're specifically looking for.</param>
     /// <returns>True if this player has any antags enabled they can play and pass our filter</returns>
-    // TODO: We likely want to iterate the other way around, see if we should change this method or if we need 2 methods...
+    [PublicAPI]
     public bool TryGetValidAntagPreferences(ICommonSession session, out List<ProtoId<AntagPrototype>> antags, List<ProtoId<AntagPrototype>>? filter = null)
     {
         antags = new List<ProtoId<AntagPrototype>>(GetValidAntagPreferences(session, filter));
@@ -451,6 +515,7 @@ public sealed partial class AntagSelectionSystem
     /// <param name="session">Session we want the antag preferences for</param>
     /// <param name="filter">Optional list of antag preferences we're specifically looking for.</param>
     /// <returns>A list of all antags which the player meets the requirement for, and are contained in the filter</returns>
+    [PublicAPI]
     public IEnumerable<ProtoId<AntagPrototype>> GetValidAntagPreferences(ICommonSession session, List<ProtoId<AntagPrototype>>? filter = null)
     {
         if (!_pref.TryGetCachedPreferences(session.UserId, out var prefs))
@@ -458,7 +523,8 @@ public sealed partial class AntagSelectionSystem
 
         foreach (var antag in prefs.SelectedCharacter.AntagPreferences)
         {
-            if (_ban.IsRoleBanned(session, antag) || _playTime.IsAllowed(session, antag))
+            // We also check this in IsSessionValid, but we also check it here since this is public API.
+            if (_ban.IsRoleBanned(session, antag) || !_playTime.IsAllowed(session, antag))
                 continue;
 
             if (filter != null && !filter.Contains(antag))
@@ -468,11 +534,55 @@ public sealed partial class AntagSelectionSystem
         }
     }
 
-    public bool IsAssignedAntag(ICommonSession session)
+    /// <summary>
+    /// Checks if a player has been assigned antag for a specific game rule.
+    /// Does not check if that game rule is active or ended so check that beforehand if it matters.
+    /// </summary>
+    /// <returns></returns>
+    [PublicAPI]
+    public bool IsAssignedAntag(Entity<AntagSelectionComponent> gameRule, ICommonSession player)
     {
         // First check our mindroles.
-        if (_role.MindIsAntagonist(session.AttachedEntity))
+        if (_role.MindIsAntagonist(player.AttachedEntity))
+            return true;
+
+        foreach (var (_, sessions) in gameRule.Comp.PreSelectedSessions)
+        {
+            // Session has already been preselected as antagonist, and therefore *has* been assigned antag!
+            if (sessions.Contains(player))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Checks if a player has been assigned a specific antag for a specific game rule.
+    /// Does not check if that game rule is active or ended so check that beforehand if it matters.
+    /// Also does not check mind roles, but if the game rule data is messed up you have bigger problems.
+    /// </summary>
+    /// <returns></returns>
+    [PublicAPI]
+    public bool IsAssignedAntag(Entity<AntagSelectionComponent> gameRule, ProtoId<AntagSpecifierPrototype> antag, ICommonSession player)
+    {
+        if (!gameRule.Comp.PreSelectedSessions.TryGetValue(antag, out var sessions))
             return false;
+
+        // Session has already been preselected as antagonist, and therefore *has* been assigned antag!
+        return sessions.Contains(player);
+    }
+
+    /// <summary>
+    /// Checks if the given player is currently assigned antag for any game rule.
+    /// </summary>
+    /// <param name="player">Player who may or may not be the antagonist.</param>
+    /// <returns>True if there is a game rule giving this player antag status</returns>
+    [PublicAPI]
+    public bool IsAssignedAntag(ICommonSession player)
+    {
+        // First check our mindroles.
+        if (_role.MindIsAntagonist(player.AttachedEntity))
+            return true;
 
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
@@ -483,7 +593,7 @@ public sealed partial class AntagSelectionSystem
             foreach (var (_, sessions) in comp.PreSelectedSessions)
             {
                 // Session has already been preselected as antagonist, and therefore *has* been assigned antag!
-                if (sessions.Contains(session))
+                if (sessions.Contains(player))
                     return true;
             }
         }
@@ -491,11 +601,17 @@ public sealed partial class AntagSelectionSystem
         return false;
     }
 
-    public bool IsAssignedExclusiveAntag(ICommonSession session)
+    /// <summary>
+    /// Checks if the given player is currently assigned antag for any game rule that is incompatible with other antag prototypes.
+    /// </summary>
+    /// <param name="player">Player who may or may not be the antagonist.</param>
+    /// <returns>True if there is a game rule giving this player antag status that is exclusive with other antags</returns>
+    [PublicAPI]
+    public bool IsAssignedExclusiveAntag(ICommonSession player)
     {
         // First check our mindroles.
-        if (_role.MindIsExclusiveAntagonist(session.AttachedEntity))
-            return false;
+        if (_role.MindIsExclusiveAntagonist(player.AttachedEntity))
+            return true;
 
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
@@ -508,7 +624,7 @@ public sealed partial class AntagSelectionSystem
                 if (!Proto.Resolve(proto, out var def))
                     continue; // How did you even get here?
 
-                if (!sessions.Contains(session))
+                if (!sessions.Contains(player))
                     continue;
 
                 if (def.MultiAntagSetting == AntagAcceptability.None)

@@ -6,6 +6,14 @@
 
 - type: entity
   parent: BaseGameRule
+  id: BaseRoundstartAntagRule
+  abstract: true
+  components:
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+
+- type: entity
+  parent: BaseGameRule
   id: RespawnDeadRule
   components:
   - type: RespawnDeadRule
@@ -134,7 +142,7 @@
     #- Vox
 
 - type: entity
-  parent: BaseNukeopsRule
+  parent: [ BaseNukeopsRule, BaseRoundstartAntagRule ]
   id: Nukeops
   components:
   - type: GameRule
@@ -142,7 +150,6 @@
   - type: LoadMapRule
     mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
-    selectionTime: PrePlayerSpawn
     antags:
     - NukeopsCommander
     - NukeopsMedic
@@ -168,7 +175,7 @@
     cost: 100
 
 - type: entity
-  parent: BaseTraitorRule
+  parent: [ BaseTraitorRule, BaseRoundstartAntagRule ]
   id: Traitor
   components:
   - type: GameRule
@@ -177,7 +184,6 @@
       min: 240
       max: 420
   - type: AntagSelection
-    selectionTime: IntraPlayerSpawn
     antags:
     - Traitor
 
@@ -200,7 +206,7 @@
     minPlayers: 25
   - type: AntagSelection
     agentName: changeling-round-end-agent-name
-    selectionTime: IntraPlayerSpawn
+    selectionTime: PrePlayerSpawn
     antags:
     - Changeling
   - type: AntagObjectives
@@ -215,7 +221,7 @@
     minPlayers: 15
   - type: RevolutionaryRule
   - type: AntagSelection
-    selectionTime: IntraPlayerSpawn
+    selectionTime: PrePlayerSpawn
     antags:
     - HeadRev
   - type: DynamicRuleCost
@@ -250,14 +256,13 @@
     speciesOverride: Human
 
 - type: entity
-  parent: BaseWizardRule
+  parent: [ BaseWizardRule, BaseRoundstartAntagRule ]
   id: Wizard
   components:
   - type: GameRule
     minPlayers: 10
   - type: AntagSelection
     agentName: wizard-round-end-name
-    selectionTime: PrePlayerSpawn
     definitions:
     - prefRoles: [ Wizard ]
       max: 1
@@ -297,7 +302,7 @@
       max: 900
   - type: ZombieRule
   - type: AntagSelection
-    selectionTime: IntraPlayerSpawn
+    selectionTime: PrePlayerSpawn
     antags:
     - InitialInfected
   - type: DynamicRuleCost
@@ -342,7 +347,7 @@
   - type: GameRule
     minPlayers: 5
   - type: AntagSelection
-    selectionTime: IntraPlayerSpawn # Pre-selection before jobs; assignment doesn't really matter though, we only care about the pre-selection to block other antags.
+    selectionTime: PrePlayerSpawn # Pre-selection before jobs; assignment doesn't really matter though, we only care about the pre-selection to block other antags.
     removeUponFailedSpawn: false
     definitions:
     - prefRoles: [ InitialInfected, Traitor, Thief, HeadRev ]

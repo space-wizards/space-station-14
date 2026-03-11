@@ -32,13 +32,16 @@
   guides: [ Xenoborgs ]
 
 - type: antagSpecifier
+  abstract: true
   parent: RestrictedAntag
-  id: Xenoborg
+  id: BaseXenoborg
   name: xenoborg
   prefRoles: [ Xenoborg ]
-  range:
-    min: 4
-    max: 4
   spawnerPrototype: SpawnPointGhostRoleXenoborg
   mindRoles:
   - MindRoleXenoborg
+
+- type: antagSpecifier
+  parent: BaseXenoborg
+  id: Xenoborg
+  name: xenoborg

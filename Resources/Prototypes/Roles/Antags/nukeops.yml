@@ -55,7 +55,7 @@
 
 - type: antagSpecifier
   parent: BaseNukeops
-  id: NukeOpsCommander
+  id: NukeopsCommander
   name: nuclear operative commander
   prefRoles:
   - NukeopsCommander
