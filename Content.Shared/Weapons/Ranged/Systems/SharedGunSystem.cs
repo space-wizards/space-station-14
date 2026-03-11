@@ -292,6 +292,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (gun.Comp.CancellationHold == true)
             return false;
+
         // check if anything wants to prevent/cancel shooting (Pacification, Ninja Honor, Not being wielded, etc.)
         var prevention = new ShotAttemptedEvent
         {
