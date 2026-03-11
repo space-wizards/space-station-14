@@ -209,6 +209,10 @@ public abstract partial class GameTest
 
             // And other teardown logic will go here. Eventually.
 
+            // In some cool future we might be able to make this only throw out the pair
+            // if the test threw exceptions. But that'd require fixing all of them to do cleanup properly.
+            //
+            // So not yet.
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
                 _pairDirty = true; // Blow it up, we failed and it might be screwed.
         }
