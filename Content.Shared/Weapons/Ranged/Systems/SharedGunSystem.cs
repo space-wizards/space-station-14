@@ -291,6 +291,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
+        if (gun.Comp.CancellationHold == true)
+            return false;
         // check if anything wants to prevent/cancel shooting (Pacification, Ninja Honor, Not being wielded, etc.)
         var prevention = new ShotAttemptedEvent
         {
@@ -302,8 +304,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (prevention.Cancelled)
         {
             //set the gun CancellationHold, to stop repeat checks until the mouse is released.
-            if (gun.Comp.CancellationHold == false)
-                gun.Comp.CancellationHold = true;
+
+            gun.Comp.CancellationHold = true;
             DirtyField(gun.AsNullable(), nameof(GunComponent.CancellationHold));
             return false;
         }
