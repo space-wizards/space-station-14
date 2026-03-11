@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ToastEnjoyer
-  changes:
-  - message: On fland, the wardens enforcer has been removed.
-    type: Remove
-  id: 9059
-  time: '2025-10-08T23:45:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40786
 - author: SlamBamActionman
   changes:
   - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration
@@ -4003,3 +3996,15 @@
   id: 9569
   time: '2026-03-08T01:05:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42866
+- author: ScarKy0
+  changes:
+  - message: Hostile vent critters now crawl out of a single vent, alerting the station
+      about the location in advance.
+    type: Add
+  - message: Friendly critters no longer have an announcement when spawning.
+    type: Remove
+  - message: Vent critters can no longer spawn on unachored vents.
+    type: Fix
+  id: 9570
+  time: '2026-03-11T23:42:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43047
