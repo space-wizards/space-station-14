@@ -53,5 +53,11 @@ namespace Content.Server.Bible.Components
 
         [DataField("locPrefix")]
         public string LocPrefix = "bible";
+
+        /// <summary>
+        /// How long the flash of light should last after healing
+        /// </summary>
+        [DataField]
+        public TimeSpan HolyLightTime = TimeSpan.FromSeconds(0.7f);
     }
 }
