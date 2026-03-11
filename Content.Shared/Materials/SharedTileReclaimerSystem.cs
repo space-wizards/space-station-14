@@ -13,7 +13,6 @@ namespace Content.Shared.Materials;
 public abstract class SharedTileReclaimerSystem : EntitySystem
 {
 
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
