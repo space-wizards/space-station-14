@@ -96,7 +96,7 @@ namespace Content.IntegrationTests.Tests.Preferences
                 [HumanoidVisualLayers.FacialHair] = [],
             };
 
-            await db.InitPrefsAsync(username, originalProfile);
+            Assert.DoesNotThrowAsync(async() => await db.InitPrefsAsync(username, originalProfile));
         }
 
         [Test]
