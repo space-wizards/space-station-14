@@ -601,6 +601,14 @@
           Quantity: 5
   - type: Edible
     requiresSpecialDigestion: true
+  - type: Perishable
+    # rots in 30 minutes becouse it's has only litle left overs of food on it
+    rotAfter: 1800
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: InorganicRot
+    # once it would say bloated, turn into the rotten prototype
+    stage: 1
 
 - type: entity
   categories: [ HideSpawnMenu ]

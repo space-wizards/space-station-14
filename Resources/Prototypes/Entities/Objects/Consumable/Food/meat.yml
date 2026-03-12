@@ -562,6 +562,14 @@
       - state: rotten-inhand-left
       right:
       - state: rotten-inhand-right
+  - type: Perishable
+    # rots in 15 minutes for balancing, so if players create a gigntic pile of roten meat, it's not gonna create a swarm of infestatiom that fast.
+    rotAfter: 900
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: Rot
+    # once it would say bloated, turn into the rotten prototype
+    stage: 1
 
 - type: entity
   parent: FoodMeatRawBase
