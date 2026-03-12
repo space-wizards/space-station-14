@@ -758,3 +758,110 @@
           Quantity: 2
         - ReagentId: Pax
           Quantity: 1.5
+
+# Alcohole be like
+- type: entity
+  name: beer pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaBeer
+  description: This pizza has beer in it. Congratulations – you’ve just become an engineer’s best friend.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - salty
+      - oily
+      - like piss
+  - type: Sprite
+    layers:
+    - state: beer-pizza
+  - type: SliceableFood
+    slice: FoodPizzaBeerSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 39
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Beer
+          Quantity: 20
+
+- type: entity
+  name: slice of beer pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaBeerSlice
+  description: There’s beer in this slice of pizza. Congratulations – you’ve just become an engineer’s best friend.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - salty
+      - oily
+      - like piss
+  - type: Sprite
+    layers:
+    - state: beer-slice
+  - type: Item
+    heldPrefix: beer-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9.5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Beer
+          Quantity: 2.5
+
+- type: entity
+  name: wine pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaWine
+  description: Pizza with wine. The choice of true aristocrats... Or people who really want to look like they are.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - like grape rinds
+      - fruity
+      - fishy
+  - type: Sprite
+    layers:
+    - state: wine-pizza
+  - type: SliceableFood
+    slice: FoodPizzaWineSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 39
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Wine
+          Quantity: 20
+
+- type: entity
+  name: slice of wine pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaWineSlice
+  description: A slice of pizza with wine. The choice of true aristocrats... Or people who really want to look like they are.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - like grape rinds
+      - fruity
+      - fishy
+  - type: Sprite
+    layers:
+    - state: wine-slice
+  - type: Item
+    heldPrefix: wine-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9.5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Wine
+          Quantity: 2.5

@@ -259,6 +259,34 @@
     {
       "name": "worldpeas-slice-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "beer-pizza"
+    },
+    {
+      "name": "beer-slice"
+    },
+    {
+      "name": "beer-slice-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "beer-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wine-pizza"
+    },
+    {
+      "name": "wine-slice"
+    },
+    {
+      "name": "wine-slice-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wine-slice-inhand-right",
+      "directions": 4
     }
   ]
 }

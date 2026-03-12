@@ -736,6 +736,35 @@
     FoodDoughFlat: 1
     FoodWorldPeas: 3
 
+- type: microwaveMealRecipe
+  id: RecipeBeerPizza
+  name: beer pizza recipe
+  result: FoodPizzaBeer
+  time: 30
+  group: Pizza
+  reagents:
+    Beer: 20
+  solids:
+    FoodDoughFlat: 1
+    FoodCheeseSlice: 1
+    FoodSnackCheesie: 1
+    FoodSnackChips: 1
+    FoodSnackPopcorn: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWinePizza
+  name: wine pizza recipe
+  result: FoodPizzaWine
+  time: 30
+  group: Pizza
+  reagents:
+    Wine: 20
+  solids:
+    FoodDoughFlat: 1
+    FoodMeatFish: 1
+    FoodApple: 1
+    FoodGrape: 1
+
 #Italian
 - type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
