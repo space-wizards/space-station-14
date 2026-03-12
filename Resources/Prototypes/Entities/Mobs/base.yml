@@ -111,7 +111,6 @@
   - type: RadiationReceiver
   - type: Stamina
   - type: StunVisuals
-  - type: BlessedVisuals
   - type: MobState
   - type: MobThresholds
     thresholds:

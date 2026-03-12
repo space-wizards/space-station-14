@@ -17,14 +17,12 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Bible
 {
     public sealed class BibleSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly InventorySystem _invSystem = default!;
@@ -34,7 +32,6 @@ namespace Content.Server.Bible
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -46,7 +43,6 @@ namespace Content.Server.Bible
             SubscribeLocalEvent<SummonableComponent, SummonActionEvent>(OnSummon);
             SubscribeLocalEvent<FamiliarComponent, MobStateChangedEvent>(OnFamiliarDeath);
             SubscribeLocalEvent<FamiliarComponent, GhostRoleSpawnerUsedEvent>(OnSpawned);
-            SubscribeLocalEvent<BlessedComponent, ComponentShutdown>(OnBlessEnd);
         }
 
         private readonly Queue<EntityUid> _addQueue = new();
@@ -91,15 +87,6 @@ namespace Content.Server.Bible
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
                 _remQueue.Enqueue(uid);
-            }
-
-            var blessedQuery = EntityQueryEnumerator<BlessedComponent>();
-            while (blessedQuery.MoveNext(out var uid, out var blessedComp))
-            {
-                if (blessedComp.EndTime <= _timing.CurTime)
-                {
-                    RemComp(uid, blessedComp);
-                }
             }
         }
 
@@ -158,12 +145,6 @@ namespace Content.Server.Bible
 
                 _audio.PlayPvs(component.HealSoundPath, args.User);
                 _delay.TryResetDelay((uid, useDelay));
-
-                // Mark the target as blessed for the holy light visualizer
-                var blessedComp = new BlessedComponent();
-                blessedComp.EndTime = _timing.CurTime + component.HolyLightTime;
-                AddComp(args.Target.Value, blessedComp, true);
-                _appearance.SetData(args.Target.Value, BlessedVisuals.HolyLight, true);
             }
             else
             {
@@ -266,12 +247,6 @@ namespace Content.Server.Bible
             }
             component.AlreadySummoned = true;
             _actionsSystem.RemoveAction(user, component.SummonActionEntity);
-        }
-
-        private void OnBlessEnd(Entity<BlessedComponent> ent, ref ComponentShutdown args)
-        {
-            // Handling this in an event in case the component is removed somewhere else
-            _appearance.SetData(ent, BlessedVisuals.HolyLight, false);
         }
     }
 }
