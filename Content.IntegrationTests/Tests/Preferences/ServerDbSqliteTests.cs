@@ -86,6 +86,7 @@ namespace Content.IntegrationTests.Tests.Preferences
         public async Task TestBadHairValueIgnored()
         {
             var pair = await PoolManager.GetServerClient();
+            var preferences = (ServerPreferencesManager)pair.Server.ResolveDependency<IServerPreferencesManager>();
             var db = GetDb(pair.Server);
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
 
@@ -96,7 +97,8 @@ namespace Content.IntegrationTests.Tests.Preferences
                 [HumanoidVisualLayers.FacialHair] = [],
             };
 
-            Assert.DoesNotThrowAsync(async() => await db.InitPrefsAsync(username, originalProfile));
+            Assert.DoesNotThrowAsync(async () => await db.InitPrefsAsync(username, originalProfile));
+            await pair.CleanReturnAsync();
         }
 
         [Test]
