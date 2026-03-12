@@ -15,7 +15,7 @@ public sealed class LaunchOnTriggerSystem : XOnTriggerSystem<LaunchOnTriggerComp
         if (!TryComp(target, out PhysicsComponent? phys))
             return;
 
-        var linearVelocity = _physics.GetMapLinearVelocity(target);
+        var linearVelocity = _physics.GetMapLinearVelocity(ent);
         // If the linear velocity is length 0, this means it's not moving. Given we want to move it in some direction...
         if (linearVelocity.IsLengthZero())
             // An object that isn't moving is launched in the direction its facing, not the direction it's rotated (objects face away from their rotation).
