@@ -13,13 +13,7 @@ public sealed class BlessedVisualizerSystem : VisualizerSystem<BlessedVisualsCom
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BlessedVisualsComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BlessedVisualsComponent, ComponentShutdown>(OnShutdown);
-    }
-
-    private void OnComponentInit(Entity<BlessedVisualsComponent> entity, ref ComponentInit args)
-    {
-        UpdateAppearance(entity);
     }
 
     protected override void OnAppearanceChange(EntityUid entity, BlessedVisualsComponent component, ref AppearanceChangeEvent args)
