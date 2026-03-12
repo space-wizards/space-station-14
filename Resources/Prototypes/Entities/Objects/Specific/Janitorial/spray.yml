@@ -169,7 +169,7 @@
     generated:
       reagents:
       - ReagentId: SpaceCleaner
-        Quantity: 2
+        Quantity: 1
 
 # Vapor
 - type: entity

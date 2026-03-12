@@ -828,17 +828,10 @@
   - type: ItemBorgModule
     hands:
     - item: MopItem
+    - item: WireBrush
     - item: BorgBucket
     - item: BorgSprayBottle
-    - item: CleanerGrenade
-      hand:
-        emptyLabel: borg-slot-cleanade-empty
-        emptyRepresentative: CleanerGrenade
-        whitelist:
-          tags:
-          -  Cleanade
     - item: HoloprojectorBorg
-    - item: WireBrush
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cleaning-module }
 
@@ -855,18 +848,11 @@
   - type: ItemBorgModule
     hands:
     - item: AdvMopItem
+    - item: WireBrushElectrical
     - item: BorgMegaSprayBottle
-    - item: CleanerGrenade
-      hand:
-        emptyLabel: borg-slot-cleanade-empty
-        emptyRepresentative: CleanerGrenade
-        whitelist:
-          tags:
-          -  Cleanade
     - item: HoloprojectorBorg
     - item: BorgDropper
     - item: Beaker
-    - item: WireBrushElectrical
       hand:
         emptyLabel: borg-slot-beakers-empty
         emptyRepresentative: Beaker

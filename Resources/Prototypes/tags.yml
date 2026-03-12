@@ -316,9 +316,6 @@
   id: CigPack # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltAssault, ClothingBeltChef, ClothingBeltMedical, ClothingBeltJanitor
 
 - type: Tag
-  id: Cleanade # Storage whitelist: BorgModuleCleaning, BorgModuleAdvancedCleaning
-
-- type: Tag
   id: Cleaver # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
