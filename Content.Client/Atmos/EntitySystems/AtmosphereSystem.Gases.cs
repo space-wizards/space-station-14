@@ -13,6 +13,20 @@ public sealed partial class AtmosphereSystem
      implementation.
      */
 
+    public override bool IsMixtureFuel(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
+    {
+        var tmp = new float[Atmospherics.AdjustedNumberOfGases];
+        NumericsHelpers.Multiply(mixture.Moles, GasFuelMask, tmp);
+        return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
+    }
+
+    public override bool IsMixtureOxidizer(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
+    {
+        var tmp = new float[Atmospherics.AdjustedNumberOfGases];
+        NumericsHelpers.Multiply(mixture.Moles, GasOxidizerMask, tmp);
+        return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override float GetHeatCapacityCalculation(float[] moles, bool space)
     {

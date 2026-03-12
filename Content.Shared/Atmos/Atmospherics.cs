@@ -20,6 +20,11 @@ namespace Content.Shared.Atmos
         public const float OneAtmosphere = 101.325f;
 
         /// <summary>
+        /// Global Atmospherics epsilon. Used for all general floating-point comparisons.
+        /// </summary>
+        public const float Epsilon = 0.001f;
+
+        /// <summary>
         ///     Maximum external pressure (in kPA) a gas miner will, by default, output to.
         ///     This is used to initialize roundstart atmos rooms.
         /// </summary>
