@@ -58,7 +58,7 @@
   parent: [ PinpointerBase, BaseCommandContraband ]
   components:
   - type: Pinpointer
-    target:
+    target: !type:PinpointerComponentTarget
       name: nuclear authentication disk
       target: NukeDisk
 
@@ -93,7 +93,7 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    target:
+    target: !type:PinpointerComponentTarget
       name: nuclear authentication disk
       target: NukeDisk
 
@@ -163,8 +163,9 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    component: ResearchServer
-    targetName: the station
+    target: !type:PinpointerComponentTarget
+      target: ResearchServer
+      name: the station
 
 - type: entity
   parent: [ PinpointerBase, BaseXenoborgContraband ]
@@ -197,8 +198,9 @@
   - type: Icon
     state: pinpointer-xenoborg
   - type: Pinpointer
-    component: MothershipCore
-    targetName: the Mothership
+    target: !type:PinpointerComponentTarget
+      target: MothershipCore
+      name: the Mothership
 
 - type: entity
   parent: BaseItem

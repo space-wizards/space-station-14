@@ -1,14 +1,7 @@
-using System.Collections;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Pinpointer;
 
@@ -16,9 +9,6 @@ public abstract class SharedPinpointerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-
-    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
@@ -36,6 +26,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (!args.CanReach || args.Target is not { } target)
             return;
 
+        // Don't retarget if you can't or the pinpointer is currently on
         if (!ent.Comp.CanRetarget || ent.Comp.IsActive)
             return;
 
@@ -52,7 +43,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     /// <summary>
     ///     Set pinpointers target to track
     /// </summary>
-    public virtual void SetTarget(Entity<PinpointerComponent?> ent, EntityUid? target)
+    public virtual void SetTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -80,7 +71,8 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (!args.IsInDetailsRange || ent.Comp.Target is null)
             return;
 
-        args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", ent.Comp.Target.Name)));
+        var name = ent.Comp.Target.Name ?? "Unknown";
+        args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", name)));
     }
 
     /// <summary>

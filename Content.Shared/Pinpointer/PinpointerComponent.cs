@@ -77,22 +77,22 @@ public enum Distance : byte
 /// </summary>
 public abstract record PinpointerTarget
 {
-    [DataField(required:true)]
-    public required string Name;
+    [DataField]
+    public string? Name;
 }
 
 [DataDefinition, Serializable]
 public sealed partial record PinpointerComponentTarget : PinpointerTarget
 {
-    [DataField(required:true)]
-    public required string Target;
+    [DataField(required: true)]
+    public string Target;
 }
 
 [DataDefinition, Serializable]
 public sealed partial record PinpointerEntityUidTarget : PinpointerTarget
 {
-    [DataField(required:true)]
-    public required EntityUid Target;
+    [DataField(required: true)]
+    public EntityUid Target;
 }
 
 /// <summary>
@@ -104,8 +104,8 @@ public sealed partial record PinpointerEntityUidTarget : PinpointerTarget
 public sealed partial record PinpointerEntProtoIdTarget : PinpointerTarget
 {
     [DataField(required:true)]
-    public required EntProtoId Target;
+    public EntProtoId Target;
 
     [DataField(required: true)]
-    public required string Component;
+    public string Component;
 }

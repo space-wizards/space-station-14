@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Pinpointer;
 
@@ -53,7 +54,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!ent.Comp.CanRetarget)
         {
             var target = LocateTarget(ent, ent.Comp.Target);
-            SetTarget(ent, ent.Comp.Target);
+            SetTarget(ent.AsNullable(), ent.Comp.Target);
         }
 
         args.Handled = true;
