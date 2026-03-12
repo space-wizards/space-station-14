@@ -112,7 +112,7 @@
   description: A double-barreled cleaning device that produces cleanade rounds on the fly via a self-recharging fabricator.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi # TODO: Make a custom sprite for this
+    sprite: Objects/Weapons/Guns/Launchers/cleanade_launcher_janiborg.rsi
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
