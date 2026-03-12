@@ -138,8 +138,6 @@
     capacity: 2 # Small capacity; cleanades shouldn't be the sole thing a janiborg uses!
     proto: GrenadeCleanade
     cycleable: false # No synthesizing free ammo for the crew.
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
   - type: BallisticAmmoSelfRefiller
