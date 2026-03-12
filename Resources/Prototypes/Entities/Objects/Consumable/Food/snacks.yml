@@ -601,14 +601,6 @@
           Quantity: 5
   - type: Edible
     requiresSpecialDigestion: true
-  - type: Perishable
-    # rots in 30 minutes becouse it's has only litle left overs of food on it
-    rotAfter: 1800
-    molsPerSecondPerUnitMass: 0
-  - type: RotInto
-    entity: InorganicRot
-    # once it would say bloated, turn into the rotten prototype
-    stage: 1
 
 - type: entity
   categories: [ HideSpawnMenu ]
@@ -813,6 +805,14 @@
       right:
       - state: trash-inhand-right
         color: "#FFFFFF"
+  - type: Perishable
+    # rots in 10 minutes becouse it's was specialy made by sindicate to increase infestation and chaos on the station
+    rotAfter: 600
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: InorganicRot
+    # once it would say bloated, turn into the rotten prototype
+    stage: 1
 
 - type: entity
   categories: [ HideSpawnMenu ]
