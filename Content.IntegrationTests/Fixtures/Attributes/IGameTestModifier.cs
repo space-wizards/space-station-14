@@ -4,6 +4,10 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 ///     Marks an attribute as a modifier for <see cref="GameTest"/> fixtures.
 ///     These attributes can be applied to both test methods and fixtures.
 /// </summary>
+/// <remarks>
+///     GameTest modifiers are <b>encouraged</b> to also implement IApplyToTest and add properties to the test
+///     indicating their presence.
+/// </remarks>
 public interface IGameTestModifier
 {
     /// <summary>

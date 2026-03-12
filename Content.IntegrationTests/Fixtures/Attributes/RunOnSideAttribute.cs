@@ -14,8 +14,10 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 /// </remarks>
 /// <seealso cref="GameTest"/>
 [AttributeUsage(AttributeTargets.Method)]
-public sealed class RunOnSideAttribute : Attribute, IWrapTestMethod, IImplyFixture
+public sealed class RunOnSideAttribute : Attribute, IWrapTestMethod, IImplyFixture, IApplyToTest
 {
+    public const string RunOnSideProperty = "RanOnSide";
+
     /// <summary>
     ///     Which side to run the inner test code on, if not the test thread.
     /// </summary>
@@ -68,5 +70,10 @@ public sealed class RunOnSideAttribute : Attribute, IWrapTestMethod, IImplyFixtu
 
             return context.CurrentResult;
         }
+    }
+
+    public void ApplyToTest(Test test)
+    {
+        test.Properties.Add(RunOnSideProperty, RunOnSide.ToString());
     }
 }
