@@ -5,6 +5,7 @@ using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Antag;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Players;
 using JetBrains.Annotations;
@@ -52,7 +53,7 @@ public sealed partial class AntagSelectionSystem
         AntagSpecifierPrototype def,
         bool checkPref = true)
     {
-        if (!IsSessionValid(player, def))
+        if (!IsSessionValid(player, gameRule, def))
             return false;
 
         if (IsAssignedAntag(gameRule, def, player))
@@ -65,31 +66,34 @@ public sealed partial class AntagSelectionSystem
         return true;
     }
 
-    /// <inhereitdoc cref="IsSessionValid(ICommonSession,ProtoId{AntagSpecifierPrototype})"/>
-    public bool IsSessionValid(ICommonSession session,
+    /// <inhereitdoc cref="IsSessionValid(ICommonSession,Entity{AntagSelectionComponent},ProtoId{AntagSpecifierPrototype})"/>
+    public bool IsSessionValid(ICommonSession player,
+        Entity<AntagSelectionComponent> gameRule,
         ProtoId<AntagSpecifierPrototype> def)
     {
         if (!Proto.Resolve(def, out var antag))
             return false;
 
-        return IsSessionValid(session, antag);
+        return IsSessionValid(player, gameRule, antag);
     }
 
     /// <summary>
     /// Checks if our session can play a given antagonist, checking if the session is role banned from the antag,
     /// </summary>
-    /// <param name="session">Session which we are checking antag viability for</param>
+    /// <param name="player">Player which we are checking antag viability for</param>
+    /// <param name="gameRule">Game that's trying to make this player an antag.</param>
     /// <param name="def">Antag definition we're checking against.</param>
     /// <returns>True if there is nothing stopping this session from becoming this antagonist.</returns>
     [PublicAPI]
-    public bool IsSessionValid(ICommonSession session,
+    public bool IsSessionValid(ICommonSession player,
+        Entity<AntagSelectionComponent> gameRule,
         AntagSpecifierPrototype def)
     {
         // Cannot be antag if you're not in the game.
-        if (IsDisconnected(session))
+        if (IsDisconnected(player))
             return false;
 
-        if (IsAntagBanned(session, def))
+        if (IsAntagBanned(player, def))
             return false;
 
         // If our antag is mutually exclusive with other antags, yell about it!
@@ -97,19 +101,19 @@ public sealed partial class AntagSelectionSystem
         {
             case AntagAcceptability.None:
             {
-                if (IsAssignedAntag(session))
+                if (IsAssignedAntag(player, gameRule))
                     return false;
                 break;
             }
             case AntagAcceptability.NotExclusive:
             {
-                if (IsAssignedExclusiveAntag(session))
+                if (IsAssignedExclusiveAntag(player, gameRule))
                     return false;
                 break;
             }
         }
 
-        return session.AttachedEntity == null || IsEntityValid(session, def);
+        return player.AttachedEntity == null || IsEntityValid(player, def);
     }
 
     /// <inhereitdoc cref="IsMindValid(EntityUid?,AntagSpecifierPrototype)"/>
@@ -168,6 +172,10 @@ public sealed partial class AntagSelectionSystem
             return false;
 
         if (_arrivals.IsOnArrivals((uid.Value, null)))
+            return false;
+
+        // No ghosts!!!
+        if (HasComp<GhostComponent>(uid))
             return false;
 
         if (!def.AllowNonHumans && !HasComp<HumanoidProfileComponent>(uid))

@@ -704,7 +704,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             {
                 _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(gameRule)}, {proto}");
 
-                if (!IsSessionValid(session, def))
+                if (!IsSessionValid(session, gameRule, def))
                 {
                     DeSelectSession(gameRule, proto, session, set);
                     continue;

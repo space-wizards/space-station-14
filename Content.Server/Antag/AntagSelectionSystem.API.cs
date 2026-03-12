@@ -572,9 +572,11 @@ public sealed partial class AntagSelectionSystem
     /// Checks if the given player is currently assigned antag for any game rule.
     /// </summary>
     /// <param name="player">Player who may or may not be the antagonist.</param>
+    /// <param name="ignored">Game rule entities we're ignoring.
+    /// You can only get one antag per game rule so it's fine to ignore by uid.</param>
     /// <returns>True if there is a game rule giving this player antag status</returns>
     [PublicAPI]
-    public bool IsAssignedAntag(ICommonSession player)
+    public bool IsAssignedAntag(ICommonSession player, params HashSet<EntityUid> ignored)
     {
         // First check our mindroles.
         if (_role.MindIsAntagonist(player.AttachedEntity))
@@ -583,7 +585,7 @@ public sealed partial class AntagSelectionSystem
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
         {
-            if (HasComp<EndedGameRuleComponent>(uid))
+            if (ignored.Contains(uid) || HasComp<EndedGameRuleComponent>(uid))
                 continue;
 
             foreach (var (_, sessions) in comp.PreSelectedSessions)
@@ -601,9 +603,10 @@ public sealed partial class AntagSelectionSystem
     /// Checks if the given player is currently assigned antag for any game rule that is incompatible with other antag prototypes.
     /// </summary>
     /// <param name="player">Player who may or may not be the antagonist.</param>
+    /// <param name="ignored">Game rule entities we're ignoring.</param>
     /// <returns>True if there is a game rule giving this player antag status that is exclusive with other antags</returns>
     [PublicAPI]
-    public bool IsAssignedExclusiveAntag(ICommonSession player)
+    public bool IsAssignedExclusiveAntag(ICommonSession player, params HashSet<EntityUid> ignored)
     {
         // First check our mindroles.
         if (_role.MindIsExclusiveAntagonist(player.AttachedEntity))
@@ -612,7 +615,7 @@ public sealed partial class AntagSelectionSystem
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
         {
-            if (HasComp<EndedGameRuleComponent>(uid))
+            if (ignored.Contains(uid) || HasComp<EndedGameRuleComponent>(uid))
                 continue;
 
             foreach (var (proto, sessions) in comp.PreSelectedSessions)
