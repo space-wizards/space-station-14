@@ -106,6 +106,48 @@
     proto: GrenadeFrag
 
 - type: entity
+  parent: BaseItem
+  id: WeaponLauncherCleanadeJaniborg # Used by the janiborg's advanced cleaning module. Self-recharges with cleanade rounds.
+  name: integrated cleanade launcher
+  description: A double-barreled cleaning device that produces cleanade rounds on the fly via a self-recharging fabricator.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi # TODO: Make a custom sprite for this
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
+  - type: Item
+    size: Huge
+  - type: StaticPrice
+    price: 500
+  - type: Gun
+    fireRate: 1
+    projectileSpeed: 25 # Slower than a bullet, same speed as our old projectile limit.
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - GrenadeCleanade # We don't want janiborgs to be able to load this with lethal rounds.
+    capacity: 2 # Small capacity; cleanades shouldn't be the sole thing a janiborg uses!
+    proto: GrenadeCleanade
+    cycleable: false # No synthesizing free ammo for the crew.
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 300s # 5 minutes per cleanade seems like a good number
+    affectedByEmp: true
+  - type: AmmoCounter
+
+- type: entity
   name: RPG-7
   parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket

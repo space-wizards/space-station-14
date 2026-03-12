@@ -139,6 +139,10 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
+  - type: Tag
+    tags:
+    - Grenade
+    - GrenadeCleanade
 
 - type: entity
   parent: BaseGrenade
