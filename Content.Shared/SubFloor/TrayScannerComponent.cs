@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TrayScannerComponent : Component
 {
     /// <summary>
@@ -24,15 +24,6 @@ public sealed partial class TrayScannerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Range = 4f;
-
-    /// <summary>
-    ///     Cooldown time between mode switching.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan UseDelay = TimeSpan.FromSeconds(0.5);
-
-    [DataField, AutoPausedField, AutoNetworkedField]
-    public TimeSpan LastUseAttempt;
 
     [DataField]
     public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");

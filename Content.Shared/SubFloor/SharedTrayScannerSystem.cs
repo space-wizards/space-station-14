@@ -3,11 +3,11 @@ using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.SubFloor;
@@ -17,7 +17,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
     [Dependency] private readonly INetManager _netMan = default!;
 
     public const float SubfloorRevealAlpha = 0.8f;
@@ -37,7 +37,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnAddSwitchModeVerb(Entity<TrayScannerComponent> scanner, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !HasComp<TrayScannerComponent>(args.Target) || !scanner.Comp.Enabled)
+        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !scanner.Comp.Enabled)
             return;
 
         var user = args.User;
@@ -50,19 +50,6 @@ public abstract class SharedTrayScannerSystem : EntitySystem
             Impact = LogImpact.Low
         };
         args.Verbs.Add(verb);
-    }
-
-    /// <summary>
-    /// Returns true if the last time this method was called is earlier than the scanner use delay.
-    /// </summary>
-    private bool Delay(Entity<TrayScannerComponent> scanner)
-    {
-        var currentTime = _gameTiming.CurTime;
-        if (currentTime < scanner.Comp.LastUseAttempt + scanner.Comp.UseDelay)
-            return true;
-
-        scanner.Comp.LastUseAttempt = currentTime;
-        return false;
     }
 
     private static TrayScannerMode Next(TrayScannerMode mode)
@@ -81,12 +68,14 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         if (!userUid.HasValue)
             return;
 
-        if (Delay(scanner))
+        // Prevents ping spam
+        if (!_delay.TryResetDelay(scanner, checkDelayed: true))
             return;
 
         scanner.Comp.Mode = Next(scanner.Comp.Mode);
         Dirty(scanner);
 
+        // Play a slightly different sound when we're back to All mode
         var pitch = scanner.Comp.Mode == TrayScannerMode.All ? 1 : 0.8f;
         _audio.PlayPredicted(scanner.Comp.SoundSwitchMode, scanner, userUid, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
     }
