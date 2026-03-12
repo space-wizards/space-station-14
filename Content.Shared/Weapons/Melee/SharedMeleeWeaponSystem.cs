@@ -743,9 +743,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             var target = entities.First();
             _meleeSound.PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component);
         }
-
-        if (appliedDamage.GetTotal() > FixedPoint2.Zero && TryComp(targets[0], out TransformComponent? targetXform))
+        // A check for when "rightclick" attacking; checks if target is "still there". Prevents accessing if entity was deleted.
+        if (appliedDamage.GetTotal() > FixedPoint2.Zero && targets.Count > 0)
         {
+            if (!TryComp(targets[0], out TransformComponent? targetXform))
+                return true;
             DoDamageEffect(targets, user, targetXform);
         }
 
