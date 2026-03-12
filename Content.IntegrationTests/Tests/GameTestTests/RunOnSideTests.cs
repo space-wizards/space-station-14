@@ -27,6 +27,7 @@ public sealed class RunOnSideTests : GameTest
     [Test]
     [RunOnSide(Side.Server)]
     [Description("Ensures that RunOnSide appropriately adds a property.")]
+    [Ignore("TestContext on the game threads is broken. https://github.com/space-wizards/RobustToolbox/issues/6449")]
     public void TestProperty()
     {
         Assert.That(TestContext.CurrentContext.Test.Properties.Get(RunOnSideAttribute.RunOnSideProperty), Is.Not.Null);

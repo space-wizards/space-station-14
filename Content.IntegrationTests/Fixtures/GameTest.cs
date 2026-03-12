@@ -130,7 +130,8 @@ public abstract partial class GameTest
     public virtual async Task DoSetup()
     {
         _pairDirty = false;
-        Pair = await PoolManager.GetServerClient(PoolSettings);
+        var testContext = TestContext.CurrentContext;
+        Pair = await PoolManager.GetServerClient(PoolSettings, new NUnitTestContextWrap(testContext, TestContext.Out));
 
         Task.WaitAll(
             Server.WaitPost(() => { ServerThread = Thread.CurrentThread; }),
