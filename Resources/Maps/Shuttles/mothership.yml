@@ -4,7 +4,7 @@ meta:
   engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/12/2026 00:55:53
+  time: 02/23/2026 18:44:56
   entityCount: 567
 maps: []
 grids:
@@ -1961,6 +1961,11 @@ entities:
       parent: 1
 - proto: ComputerXenoborgsControl
   entities:
+  - uid: 277
+    components:
+    - type: Transform
+      pos: 1.5,5.5
+      parent: 1
   - uid: 282
     components:
     - type: Transform
@@ -3324,13 +3329,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,2.5
-      parent: 1
-- proto: XenoborgComputerComms
-  entities:
-  - uid: 247
-    components:
-    - type: Transform
-      pos: 1.5,5.5
       parent: 1
 - proto: XenoborgWindow
   entities:
