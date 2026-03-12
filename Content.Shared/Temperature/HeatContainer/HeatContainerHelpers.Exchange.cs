@@ -16,9 +16,13 @@ public static partial class HeatContainerHelpers
     /// <returns>The amount of heat in joules that is needed
     /// to bring the containers to thermal equilibrium.</returns>
     /// <example>A positive value indicates heat transfer from a hot cA to a cold cB.</example>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of both containers is zero or negative.</exception>
     [PublicAPI]
-    public static float EquilibriumHeatQuery(this HeatContainer cA, HeatContainer cB)
+    public static float EquilibriumHeatQuery(this ref HeatContainer cA, ref HeatContainer cB)
     {
+        var cTotal = cA.HeatCapacity + cB.HeatCapacity;
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(cTotal);
+
         /*
         The solution is derived from the following facts:
         1. Let Q be the amount of heat energy transferred from cA to cB.
@@ -32,7 +36,7 @@ public static partial class HeatContainerHelpers
         7. Solve for Q.
         */
         return (cA.Temperature - cB.Temperature) *
-               (cA.HeatCapacity * cB.HeatCapacity / (cA.HeatCapacity + cB.HeatCapacity));
+               (cA.HeatCapacity * cB.HeatCapacity / cTotal);
     }
 
     /// <summary>
@@ -42,11 +46,14 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="HeatContainer"/> to exchange heat.</param>
     /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
     /// <returns>The resulting equilibrium temperature both containers will be at.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of both containers is zero or negative.</exception>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery(this HeatContainer cA, HeatContainer cB)
+    public static float EquilibriumTemperatureQuery(this ref HeatContainer cA, ref HeatContainer cB)
     {
+        var cTotal = cA.HeatCapacity + cB.HeatCapacity;
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(cTotal);
         // Insert the above solution for Q into T_A_final = T_A_initial - Q / C_A and rearrange the result.
-        return (cA.HeatCapacity * cA.Temperature - cB.HeatCapacity * cB.Temperature) / (cA.HeatCapacity + cB.HeatCapacity);
+        return (cA.HeatCapacity * cA.Temperature - cB.HeatCapacity * cB.Temperature) / cTotal;
     }
 
     /// <summary>
@@ -55,9 +62,9 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="HeatContainer"/> to exchange heat.</param>
     /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
     [PublicAPI]
-    public static void Equilibrate(this HeatContainer cA, HeatContainer cB)
+    public static void Equilibrate(this ref HeatContainer cA, ref HeatContainer cB)
     {
-        var tFinal = EquilibriumTemperatureQuery(cA, cB);
+        var tFinal = EquilibriumTemperatureQuery(ref cA, ref cB);
         cA.Temperature = tFinal;
         cB.Temperature = tFinal;
     }
@@ -69,12 +76,13 @@ public static partial class HeatContainerHelpers
     /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
     /// <param name="dQ">The amount of heat in joules that was transferred from container A to B.</param>
     [PublicAPI]
-    public static void Equilibrate(this HeatContainer cA, HeatContainer cB, out float dQ)
+    public static void Equilibrate(this ref HeatContainer cA, ref HeatContainer cB, out float dQ)
     {
         var tInitialA = cA.Temperature;
-        var tFinal = EquilibriumTemperatureQuery(cA, cB);
+        var tFinal = EquilibriumTemperatureQuery(ref cA, ref cB);
         cA.Temperature = tFinal;
         cB.Temperature = tFinal;
+        // Guarded against div/0 in EquilibriumTemperatureQuery: totalHeatCapacity > 0.
         dQ = (tInitialA - tFinal) / cA.HeatCapacity;
     }
 
@@ -103,7 +111,7 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="HeatContainer"/> to bring into thermal equilibrium.</param>
     /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
     [PublicAPI]
-    public static void Equilibrate(this HeatContainer cA, HeatContainer[] cN)
+    public static void Equilibrate(this ref HeatContainer cA, HeatContainer[] cN)
     {
         var tF = cA.EquilibriumTemperatureQuery(cN);
 
@@ -120,6 +128,7 @@ public static partial class HeatContainerHelpers
     /// </summary>
     /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
     /// <returns>The temperature of all <see cref="HeatContainer"/>s involved after reaching thermal equilibrium.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of all containers is zero or negative.</exception>
     [PublicAPI]
     public static float EquilibriumTemperatureQuery(this HeatContainer[] cN)
     {
@@ -161,6 +170,8 @@ public static partial class HeatContainerHelpers
             denominator += c.HeatCapacity;
         }
 
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(denominator);
+
         return numerator / denominator;
     }
 
@@ -201,7 +212,7 @@ public static partial class HeatContainerHelpers
     /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
     /// <returns>The temperature of all <see cref="HeatContainer"/>s involved after reaching thermal equilibrium.</returns>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery(this HeatContainer cA, HeatContainer[] cN)
+    public static float EquilibriumTemperatureQuery(this ref HeatContainer cA, HeatContainer[] cN)
     {
         var cAll = new HeatContainer[cN.Length + 1];
         cAll[0] = cA;
