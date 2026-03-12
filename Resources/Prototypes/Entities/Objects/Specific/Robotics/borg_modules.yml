@@ -856,7 +856,7 @@
     hands:
     - item: AdvMopItem
     - item: BorgMegaSprayBottle
-    - item: CleanerGrenade
+    - item: CleanerGrenade # Please remove if cleanade gun gets added to the module
       hand:
         emptyLabel: borg-slot-cleanade-empty
         emptyRepresentative: CleanerGrenade
