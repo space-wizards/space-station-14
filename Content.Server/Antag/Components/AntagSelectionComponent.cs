@@ -1,4 +1,5 @@
 using Content.Server.Administration.Systems;
+using Content.Server.Antag.Selectors;
 using Content.Server.GameTicking;
 using Content.Shared.Antag;
 using Content.Shared.GameTicking.Components;
@@ -25,11 +26,16 @@ public sealed partial class AntagSelectionComponent : Component
     public bool PreSelectionsComplete;
 
     /// <summary>
+    /// If true, players that late join into a round have a chance of being converted into antagonists for this game rule.
+    /// </summary>
+    [DataField]
+    public bool LateJoinAdditional;
+
+    /// <summary>
     /// The antag specifiers for the antagonists
     /// </summary>
-    // TODO: To Dict with keys being prototypes, and values being spawn count interface
-    [DataField]
-    public HashSet<ProtoId<AntagSpecifierPrototype>> Antags = new();
+    [DataField(required: true)]
+    public AntagCountSelector[] Antags;
 
     /// <summary>
     /// Cached sessions of antag definitions and selected players.

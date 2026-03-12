@@ -1,4 +1,3 @@
-using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
@@ -42,33 +41,12 @@ public sealed partial class AntagSpecifierPrototype : IPrototype, IInheritingPro
     [DataField]
     public AntagAcceptability MultiAntagSetting = AntagAcceptability.None;
 
-    // I deleted the random "MinMax" selector datafields that were unused.
-    // If that behavior is still needed, you should use an abtract system or interface instead.
-    // Upstream it and bother me and I can get it reviewed and merged.
-    /// <summary>
-    /// The minimum number of this antag.
-    /// </summary>
-    [DataField]
-    public MinMax Range = (1,1);
-
-    /// <summary>
-    /// a player to antag ratio: used to determine the amount of antags that will be present.
-    /// </summary>
-    [DataField]
-    public int PlayerRatio = 10;
-
     /// <summary>
     /// Whether or not players should be picked to inhabit this antag or not.
     /// If no players are left and <see cref="SpawnerPrototype"/> is set, it will make a ghost role.
     /// </summary>
     [DataField]
     public bool PickPlayer = true;
-
-    /// <summary>
-    /// If true, players that latejoin into a round have a chance of being converted into antagonists.
-    /// </summary>
-    [DataField]
-    public bool LateJoinAdditional;
 
     // TODO: JobWhitelist?
     /// <summary>

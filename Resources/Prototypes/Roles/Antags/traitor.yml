@@ -13,22 +13,15 @@
   abstract: true
   parent: RestrictedAntag
   id: BaseTraitor
-  playerRatio: 10
 
 - type: antagSpecifier
   parent: BaseTraitor
   id: Traitor
-  name: traitor
   prefRoles:
   - Traitor
-  playerRatio: 1 # Everyone is a Traitor (Debug remove this)
-  range:
-    min: 1
-    max: 8
   blacklist:
     components:
     - AntagImmune
-  lateJoinAdditional: false
   mindRoles:
   - MindRoleTraitor
 
@@ -46,19 +39,14 @@
 - type: antagSpecifier
   parent: BaseTraitor
   id: TraitorSleeper
-  name: traitor sleeper
   prefRoles:
   - TraitorSleeper
-  range:
-    min: 1
-    max: 2
   mindRoles:
   - MindRoleTraitorSleeper
 
 - type: antagSpecifier
   parent: BaseTraitor
   id: TraitorReinforcement
-  name: traitor reinforcement
   prefRoles:
   - Traitor
   - GenericTeamAntagonist # Matters for Antag bans.

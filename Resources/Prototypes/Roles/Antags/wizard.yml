@@ -19,9 +19,7 @@
 - type: antagSpecifier
   parent: RestrictedAntag
   id: Wizard
-  name: wizard
   spawnerPrototype: SpawnPointGhostWizard
-  playerRatio: 1
   pickPlayer: false
   startingGear: WizardBlueGear
   roleLoadout:

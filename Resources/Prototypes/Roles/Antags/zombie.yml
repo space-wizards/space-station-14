@@ -10,9 +10,9 @@
     time: 1h
 
 - type: antagSpecifier
-  abstract: true
   parent: RestrictedAntag
-  id: BaseInitialInfected
+  id: InitialInfected
+  prefRoles: [ InitialInfected ]
   blacklist:
     components:
     - ZombieImmune
@@ -30,25 +30,6 @@
   - type: InitialInfected
   mindRoles:
   - MindRoleInitialInfected
-
-
-- type: antagSpecifier
-  parent: BaseInitialInfected
-  id: InitialInfected
-  name: initial infected
-  prefRoles: [ InitialInfected ]
-  range:
-    max: 6
-  playerRatio: 10
-
-- type: antagSpecifier
-  parent: BaseInitialInfected
-  id: InitialInfectedMidRound
-  name: initial infected
-  prefRoles: [ InitialInfected ]
-  range:
-    max: 3
-  playerRatio: 10
 
 # TODO: Make it so creating new zombies uses antag prototypes! This saves a *lot* of boilerplate for conversion antags.
 

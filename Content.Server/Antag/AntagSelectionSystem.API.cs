@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Antag.Components;
+using Content.Server.Antag.Selectors;
 using Content.Shared.Antag;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking.Components;
@@ -88,9 +89,9 @@ public sealed partial class AntagSelectionSystem
         // We assume that antag definitions are prioritized by order, and take up slots that other roles may take.
         // I.E for Nukies, it selects 1 commander which takes up 10 players, then one corpsman which takes up another 10, then we select X nukies based on the remaining player count.
         // This is how the system worked when I got here, and I decided not to change it to avoid fucking with team antag balance
-        foreach (var definition in gameRule.Comp.Antags)
+        foreach (var antag in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(definition, out var antag))
+            if (!Proto.Resolve(antag.Proto, out _))
                 continue;
 
             count += GetTargetAntagCount(antag, playerCount, ref runningCount);
@@ -125,15 +126,15 @@ public sealed partial class AntagSelectionSystem
         // We assume that antag definitions are prioritized by order, and take up slots that other roles may take.
         // I.E for Nukies, it selects 1 commander which takes up 10 players, then one corpsman which takes up another 10, then we select X nukies based on the remaining player count.
         // This is how the system worked when I got here, and I decided not to change it to avoid fucking with team antag balance
-        foreach (var definition in gameRule.Comp.Antags)
+        foreach (var antag in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(definition, out var antag))
+            if (!Proto.Resolve(antag.Proto, out _))
                 continue;
 
             // We need to update our running count which is why we get the count for definitions we may not be assigning.
             var count = GetTargetAntagCount(antag, playerCount, ref runningCount);
 
-            if (definition == proto)
+            if (antag.Proto == proto)
                 return count;
         }
 
@@ -144,16 +145,11 @@ public sealed partial class AntagSelectionSystem
     /// <summary>
     /// Do not use this if you don't know what you're doing. This is public for test purposes only.
     /// </summary>
-    public int GetTargetAntagCount(AntagSpecifierPrototype definition, int playerCount, ref int runningCount)
+    public int GetTargetAntagCount(AntagCountSelector selector, int playerCount, ref int runningCount)
     {
-        var count = GetTargetAntagCount(definition, playerCount - runningCount);
-        runningCount += count * definition.PlayerRatio;
+        var count = selector.GetTargetAntagCount(RobustRandom, playerCount - runningCount);
+        runningCount += count * selector.PlayerRatio;
         return count;
-    }
-
-    private int GetTargetAntagCount(AntagSpecifierPrototype definition, int playerCount)
-    {
-        return Math.Clamp(playerCount / definition.PlayerRatio, definition.Range.Min, definition.Range.Max);
     }
 
     /// <summary>
@@ -403,23 +399,23 @@ public sealed partial class AntagSelectionSystem
             if (HasComp<EndedGameRuleComponent>(uid))
                 continue;
 
-            foreach (var def in comp.Antags)
+            foreach (var antag in comp.Antags)
             {
-                if (except.Contains(def))
+                if (except.Contains(antag))
                     continue;
 
-                if (!comp.PreSelectedSessions.TryGetValue(def, out var set) || !Proto.Resolve(def, out var antag))
+                if (!comp.PreSelectedSessions.TryGetValue(antag, out var set) || !Proto.Resolve(antag.Proto, out var proto))
                     continue;
 
-                if (antag.JobBlacklist.Count == 0)
+                if (proto.JobBlacklist.Count == 0)
                     continue;
 
                 foreach (var player in set)
                 {
                     if (result.TryGetValue(player, out var jobs))
-                        jobs.UnionWith(antag.JobBlacklist);
+                        jobs.UnionWith(proto.JobBlacklist);
                     else
-                        result.Add(player, antag.JobBlacklist);
+                        result.Add(player, proto.JobBlacklist);
                 }
             }
         }
@@ -443,19 +439,19 @@ public sealed partial class AntagSelectionSystem
             if (HasComp<EndedGameRuleComponent>(uid))
                 continue;
 
-            foreach (var def in comp.Antags)
+            foreach (var antag in comp.Antags)
             {
-                if (except.Contains(def))
+                if (except.Contains(antag))
                     continue;
 
-                if (!comp.PreSelectedSessions.TryGetValue(def, out var set) || !Proto.Resolve(def, out var antag))
+                if (!comp.PreSelectedSessions.TryGetValue(antag, out var set) || !Proto.Resolve(antag.Proto, out var proto))
                     continue;
 
-                if (antag.JobBlacklist.Count == 0)
+                if (proto.JobBlacklist.Count == 0)
                     continue;
 
                 if (set.Contains(player))
-                    result.UnionWith(antag.JobBlacklist);
+                    result.UnionWith(proto.JobBlacklist);
             }
         }
 
@@ -476,12 +472,12 @@ public sealed partial class AntagSelectionSystem
             if (HasComp<EndedGameRuleComponent>(uid))
                 continue;
 
-            foreach (var def in comp.Antags)
+            foreach (var antag in comp.Antags)
             {
-                if (except.Contains(def))
+                if (except.Contains(antag))
                     continue;
 
-                if (comp.PreSelectedSessions.TryGetValue(def, out var set))
+                if (comp.PreSelectedSessions.TryGetValue(antag, out var set))
                     result.UnionWith(set);
             }
         }

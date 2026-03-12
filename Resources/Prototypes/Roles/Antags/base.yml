@@ -1,7 +1,6 @@
 ﻿- type: antagSpecifier
   abstract: true
   id: BaseAntagSpecifier
-  name: antagonist
   jobBlacklist:
   - CentralCommandOfficial
   - DeathSquad
@@ -19,7 +18,7 @@
 # Command
 - type: antagSpecifier
   abstract: true
-  parents: BaseAntagSpecifier
+  parent: BaseAntagSpecifier
   id: CommandBlacklistedAntag
   jobBlacklist:
     - Captain
@@ -33,7 +32,7 @@
 # Borgs
 - type: antagSpecifier
   abstract: true
-  parents: BaseAntagSpecifier
+  parent: BaseAntagSpecifier
   id: CyborgBlacklistedAntag
   jobBlacklist:
     - StationAi
@@ -42,7 +41,7 @@
 # Learner Roles
 - type: antagSpecifier
   abstract: true
-  parents: BaseAntagSpecifier
+  parent: BaseAntagSpecifier
   id: InternBlacklistedAntag
   jobBlacklist:
     - SecurityCadet
@@ -54,7 +53,7 @@
 # Security
 - type: antagSpecifier
   abstract: true
-  parents: BaseAntagSpecifier
+  parent: BaseAntagSpecifier
   id: SecurityBlacklistedAntag
   jobBlacklist:
     - HeadOfSecurity
@@ -65,10 +64,10 @@
 
 - type: antagSpecifier
   abstract: true
-  parents: [ CommandBlacklistedAntag, SecurityBlacklistedAntag ]
+  parent: [ CommandBlacklistedAntag, SecurityBlacklistedAntag ]
   id: MindshieldRestrictedAntag
 
 - type: antagSpecifier
   abstract: true
-  parents: [ MindshieldRestrictedAntag, CyborgBlacklistedAntag, InternBlacklistedAntag ]
+  parent: [ MindshieldRestrictedAntag, CyborgBlacklistedAntag, InternBlacklistedAntag ]
   id: RestrictedAntag

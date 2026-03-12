@@ -206,7 +206,8 @@
   - type: AntagSelection
     agentName: dragon-round-end-agent-name
     antags:
-    - Dragon
+    - !type:FixedAntagCount
+      proto: Dragon
   - type: DynamicRuleCost
     cost: 75
 
@@ -233,7 +234,8 @@
   - type: AntagSelection
     agentName: ninja-round-end-agent-name
     antags:
-    - SpaceNinja
+    - !type:FixedAntagCount
+      proto: SpaceNinja
   - type: DynamicRuleCost
     cost: 75
 
@@ -259,7 +261,8 @@
   - type: AntagSelection
     agentName: paradox-clone-round-end-agent-name
     antags:
-    - ParadoxClone
+    - !type:FixedAntagCount
+      proto: ParadoxClone
   - type: DynamicRuleCost
     cost: 50
 
@@ -285,10 +288,6 @@
     earliestStart: 30
     reoccurrenceDelay: 60
     minimumPlayers: 30
-  - type: AntagSelection
-    agentName: wizard-round-end-name
-    antags:
-    - Wizard
 
 # disabled until event is rewritten to be more interesting
 #- type: entity
@@ -470,7 +469,11 @@
   - type: ZombieRule
   - type: AntagSelection
     antags:
-    - InitialInfectedMidRound # TODO Antag dict interface stuff
+    - !type:LinearAntagCount
+      proto: InitialInfected
+      range:
+        min: 1
+        max: 3
   - type: DynamicRuleCost
     cost: 200
 
@@ -490,7 +493,8 @@
     roundEndBehavior: Nothing
   - type: AntagSelection
     antags:
-    - LoneOp
+    - !type:FixedAntagCount
+      proto: LoneOp
   - type: DynamicRuleCost
     cost: 75
 
@@ -510,16 +514,12 @@
     occursDuringRoundEnd: false
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
-    definitions:
-    - prefRoles: [ TraitorSleeper ]
-      min: 1
-      max: 2
-      playerRatio: 10
-      blacklist:
-        components:
-        - AntagImmune
-      mindRoles:
-      - MindRoleTraitorSleeper
+    antags:
+    - !type:LinearAntagCount
+      proto: TraitorSleeper
+      range:
+        min: 1
+        max: 2
 
 - type: entity
   id: MassHallucinations
@@ -607,11 +607,9 @@
   - type: AntagSpawner
     prototype: PlayerEngineeringBorgDerelictGhostRole
   - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointGhostDerelictEngineeringCyborg
-      min: 1
-      max: 1
-      pickPlayer: false
+    antags:
+    - !type:FixedAntagCount
+      proto: DerelictEngineeringCyborg
 
 - type: entity
   parent: BaseGameRule
@@ -628,11 +626,9 @@
   - type: AntagSpawner
     prototype: PlayerBorgDerelictGhostRole
   - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointGhostDerelictCyborg
-      min: 1
-      max: 1
-      pickPlayer: false
+    antags:
+    - !type:FixedAntagCount
+      proto: DerelictGenericCyborg
 
 - type: entity
   parent: BaseGameRule
@@ -649,11 +645,9 @@
   - type: AntagSpawner
     prototype: PlayerJanitorBorgDerelictGhostRole
   - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointGhostDerelictJanitorCyborg
-      min: 1
-      max: 1
-      pickPlayer: false
+    antags:
+    - !type:FixedAntagCount
+      proto: DerelictJanitorCyborg
 
 - type: entity
   parent: BaseGameRule
@@ -670,11 +664,9 @@
   - type: AntagSpawner
     prototype: PlayerMedicalBorgDerelictGhostRole
   - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointGhostDerelictMedicalCyborg
-      min: 1
-      max: 1
-      pickPlayer: false
+    antags:
+    - !type:FixedAntagCount
+      proto: DerelictMedicalCyborg
 
 - type: entity
   parent: BaseGameRule
@@ -691,11 +683,9 @@
   - type: AntagSpawner
     prototype: PlayerMiningBorgDerelictGhostRole
   - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointGhostDerelictMiningCyborg
-      min: 1
-      max: 1
-      pickPlayer: false
+    antags:
+    - !type:FixedAntagCount
+      proto: DerelictMiningCyborg
 
 - type: entity
   parent: BaseGameRule
@@ -712,8 +702,6 @@
   - type: AntagSpawner
     prototype: PlayerBorgSyndicateDerelictGhostRole
   - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointGhostDerelictSyndicateAssaultCyborg
-      min: 1
-      max: 1
-      pickPlayer: false
+    antags:
+    - !type:FixedAntagCount
+      proto: DerelictSyndicateAssaultCyborg

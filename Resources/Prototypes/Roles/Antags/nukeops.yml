@@ -42,7 +42,6 @@
   abstract: true
   parent: RestrictedAntag
   id: BaseNukeops
-  name: nukie
   prefRoles:
   - GenericTeamAntagonist # For antag ban purposes
   roleLoadout:
@@ -56,7 +55,6 @@
 - type: antagSpecifier
   parent: BaseNukeops
   id: NukeopsCommander
-  name: nuclear operative commander
   prefRoles:
   - NukeopsCommander
   spawnerPrototype: SpawnPointNukeopsCommander
@@ -72,7 +70,6 @@
 - type: antagSpecifier
   parent: BaseNukeops
   id: NukeopsMedic
-  name: nuclear operative corpsman
   prefRoles:
   - NukeopsMedic
   spawnerPrototype: SpawnPointNukeopsMedic
@@ -91,10 +88,6 @@
   prefRoles:
   - Nukeops
   spawnerPrototype: SpawnPointNukeopsOperative
-  range:
-    min: 1
-    max: 3
-  playerRatio: 10
   startingGear: SyndicateOperativeGearFull
   components:
   - type: RandomMetadata
@@ -107,7 +100,6 @@
 - type: antagSpecifier
   parent: BaseNukeops
   id: LoneOp
-  name: lone operative
   spawnerPrototype: SpawnPointLoneNukeOperative
   pickPlayer: false
   startingGear: SyndicateLoneOperativeGearFull

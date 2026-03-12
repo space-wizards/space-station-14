@@ -9,7 +9,6 @@
 - type: antagSpecifier
   parent: RestrictedAntag
   id: SpaceNinja
-  name: space ninja
   spawnerPrototype: SpawnPointGhostSpaceNinja
   pickPlayer: false
   startingGear: SpaceNinjaGear

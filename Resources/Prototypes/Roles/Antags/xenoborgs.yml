@@ -13,7 +13,6 @@
 - type: antagSpecifier
   parent: RestrictedAntag
   id: MothershipCore
-  name: mothership core
   prefRoles: [ MothershipCore ]
   spawnerPrototype: SpawnPointGhostRoleMothershipCore
   mindRoles:
@@ -35,7 +34,6 @@
   abstract: true
   parent: RestrictedAntag
   id: BaseXenoborg
-  name: xenoborg
   prefRoles: [ Xenoborg ]
   spawnerPrototype: SpawnPointGhostRoleXenoborg
   mindRoles:
@@ -44,4 +42,3 @@
 - type: antagSpecifier
   parent: BaseXenoborg
   id: Xenoborg
-  name: xenoborg

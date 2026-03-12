@@ -248,9 +248,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!comp.RemoveUponFailedSpawn)
                 continue;
 
-            foreach (var def in comp.Antags)
+            foreach (var antag in comp.Antags)
             {
-                if (!comp.PreSelectedSessions.TryGetValue(def, out var session))
+                if (!comp.PreSelectedSessions.TryGetValue(antag, out var session))
                     break;
                 session.Remove(args.Player);
             }
@@ -276,7 +276,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                     AddGameRuleDefinitions(gameRule, playerCount, ref postSpawnRoles, active);
                 break;
             case Never:
-                Debug.Assert(gameRule.Comp.Antags.All(x => Proto.Resolve(x, out var proto) && proto.SpawnerPrototype != null),
+                Debug.Assert(gameRule.Comp.Antags.All(x => Proto.Resolve(x.Proto, out var proto) && proto.SpawnerPrototype != null),
                     $"Gamerule {ToPrettyString(gameRule)}, had pre-selection set to none, but one of its antags had no ghost roles to spawn.");
                 break;
         }
@@ -289,49 +289,54 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         var runningCount = 0;
 
-        foreach (var proto in gameRule.Comp.Antags)
+        foreach (var antag in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(proto, out var definition))
+            if (!Proto.Resolve(antag.Proto, out var proto))
                 continue;
 
             // We do it this way in case our resolve fails.
-            roles.Add((gameRule, definition, active, GetTargetAntagCount(definition, playerCount, ref runningCount)));
+            roles.Add((gameRule, proto, active, GetTargetAntagCount(antag, playerCount, ref runningCount)));
         }
     }
 
-    private AntagCount[] GetAntags(Entity<AntagSelectionComponent> gameRule,
+    private AntagCount[]  GetAntags(Entity<AntagSelectionComponent> gameRule,
         int playerCount)
     {
         var runningCount = 0;
-        var antags = new AntagCount[gameRule.Comp.Antags.Count];
+        var antags = new AntagCount[gameRule.Comp.Antags.Length];
 
         // We assume that antag definitions are prioritized by order, and take up slots that other roles may take.
         // I.E for Nukies, it selects 1 commander which takes up 10 players, then one corpsman which takes up another 10, then we select X nukies based on the remaining player count.
         // This is how the system worked when I got here, and I decided not to change it to avoid fucking with team antag balance
         var i = 0;
-        foreach (var proto in gameRule.Comp.Antags)
+        foreach (var antag in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(proto, out var definition))
+            if (!Proto.Resolve(antag.Proto, out var definition))
                 continue;
 
             // We do it this way in case our resolve fails.
-            antags[i] = (definition, GetTargetAntagCount(definition, playerCount, ref runningCount));
+            antags[i] = (definition, GetTargetAntagCount(antag, playerCount, ref runningCount));
             i++;
         }
 
         return antags;
     }
 
-    private Dictionary<ICommonSession, float> GetWeightedPlayerPool(IEnumerable<ICommonSession> sessions)
+    private Dictionary<ICommonSession, float> GetWeightedPlayerPool(IEnumerable<ICommonSession> players)
     {
         var dict = new Dictionary<ICommonSession, float>();
-        foreach (var session in sessions)
+        foreach (var player in players)
         {
-            // TODO: Actually add weights! This is placeholder for a future PR.
-            dict.Add(session, 1f);
+            dict.Add(player, GetWeight(player));
         }
 
         return dict;
+    }
+
+    private float GetWeight(ICommonSession player)
+    {
+        // TODO: Actually add weights! This is placeholder for a future PR.
+        return 1f;
     }
 
     private void AssignAntags(Entity<AntagSelectionComponent> gameRule)

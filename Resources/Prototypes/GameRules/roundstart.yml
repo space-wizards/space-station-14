@@ -151,9 +151,15 @@
     mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
     antags:
-    - NukeopsCommander
-    - NukeopsMedic
-    - NukeopsOperative
+    - !type:FixedAntagCount
+      proto: NukeopsCommander
+    - !type:FixedAntagCount
+      proto: NukeopsMedic
+    - !type:LinearAntagCount
+      proto: NukeopsOperative
+      range:
+        min: 1
+        max: 3
   - type: DynamicRuleCost
     cost: 200
 
@@ -184,8 +190,13 @@
       min: 240
       max: 420
   - type: AntagSelection
+    lateJoinAdditional: true
     antags:
-    - Traitor
+    - !type:LinearAntagCount
+      proto: Traitor
+      range:
+        min: 1
+        max: 8
 
 - type: entity
   id: TraitorReinforcement # This shouldn't be in here but I'm not sure where to put it :(
@@ -196,26 +207,31 @@
     giveBriefing: false
   - type: AntagSelection
     antags:
-    - TraitorReinforcement
+    - !type:FixedAntagCount
+      proto: TraitorReinforcement
 
 - type: entity
   id: Changeling
-  parent: BaseGameRule
+  parent: [BaseGameRule, BaseRoundstartAntagRule]
   components:
   - type: GameRule
     minPlayers: 25
   - type: AntagSelection
     agentName: changeling-round-end-agent-name
-    selectionTime: PrePlayerSpawn
     antags:
-    - Changeling
+    - !type:LinearAntagCount
+      proto: Changeling
+      playerRatio: 15
+      range:
+        min: 1
+        max: 3
   - type: AntagObjectives
     objectives:
     - ChangelingSurviveObjective
 
 - type: entity
   id: Revolutionary
-  parent: BaseGameRule
+  parent: [BaseGameRule, BaseRoundstartAntagRule]
   components:
   - type: GameRule
     minPlayers: 15
@@ -223,7 +239,12 @@
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     antags:
-    - HeadRev
+    - !type:LinearAntagCount
+      proto: HeadRev
+      playerRatio: 15
+      range:
+        min: 1
+        max: 3
   - type: DynamicRuleCost
     cost: 200
 
@@ -252,6 +273,10 @@
     mapPath: /Maps/Nonstations/wizardsden.yml
   - type: RuleGrids
   - type: AntagSelection
+    agentName: wizard-round-end-name
+    antags:
+    - !type:FixedAntagCount
+      proto: Wizard
   - type: AntagLoadProfileRule
     speciesOverride: Human
 
@@ -261,39 +286,13 @@
   components:
   - type: GameRule
     minPlayers: 10
-  - type: AntagSelection
-    agentName: wizard-round-end-name
-    definitions:
-    - prefRoles: [ Wizard ]
-      max: 1
-      playerRatio: 1
-      spawnerPrototype: SpawnPointGhostWizard
-      roleLoadout:
-       - RoleSurvivalExtended
-      briefing:
-        text: wizard-role-greeting
-        color: Turquoise
-        # TODO: Need Wizard Start sound
-        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
-      startingGear: WizardBlueGear
-      # TODO: WizardComp as needed
-      components:
-      - type: NpcFactionMember
-        factions:
-        - Wizard
-      - type: RandomMetadata
-        nameSegments:
-        - NamesWizardFirst
-        - NamesWizardLast
-        nameFormat: name-format-wizard
-      mindRoles:
-      - MindRoleWizard
+
   - type: DynamicRuleCost
     cost: 150
 
 - type: entity
   id: Zombie
-  parent: BaseGameRule
+  parent: [ BaseGameRule, BaseRoundstartAntagRule]
   components:
   - type: GameRule
     minPlayers: 20
@@ -302,9 +301,12 @@
       max: 900
   - type: ZombieRule
   - type: AntagSelection
-    selectionTime: PrePlayerSpawn
     antags:
-    - InitialInfected
+    - !type:LinearAntagCount
+      proto: InitialInfected
+      range:
+        min: 1
+        max: 6
   - type: DynamicRuleCost
     cost: 200
 
@@ -317,13 +319,6 @@
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/mothership.yml
-
-- type: entity
-  parent: BaseXenoborgsRule
-  id: Xenoborgs
-  components:
-  - type: GameRule
-    minPlayers: 30
   - type: AntagMultipleRoleSpawner
     antagRoleToPrototypes:
       MothershipCore: [ MothershipCore ]
@@ -332,11 +327,20 @@
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     antags:
-    - MothershipCore
-    - Xenoborg
+    - !type:FixedAntagCount
+      proto: MothershipCore
+    - !type:FixedAntagCount
+      proto: Xenoborg
+      count: 4
   - type: DynamicRuleCost
     cost: 200
 
+- type: entity
+  parent: [ BaseXenoborgsRule, BaseRoundstartAntagRule]
+  id: Xenoborgs
+  components:
+  - type: GameRule
+    minPlayers: 30
 
 # This rule makes the chosen players unable to get other antag rules, as a way to prevent metagaming job rolls.
 # Put this before antags assigned to station jobs, but after non-job antags (NukeOps/Wiz).
@@ -349,10 +353,18 @@
   - type: AntagSelection
     selectionTime: PrePlayerSpawn # Pre-selection before jobs; assignment doesn't really matter though, we only care about the pre-selection to block other antags.
     removeUponFailedSpawn: false
-    definitions:
-    - prefRoles: [ InitialInfected, Traitor, Thief, HeadRev ]
-      max: 2
+    antags:
+    - !type:LinearAntagCount
+      proto: DummyAntag
       playerRatio: 30
+      range:
+        min: 1
+        max: 2
+
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: DummyAntag
+  prefRoles: [ InitialInfected, Traitor, Thief, HeadRev ] # Only Station bound roles.
 
 # event schedulers
 

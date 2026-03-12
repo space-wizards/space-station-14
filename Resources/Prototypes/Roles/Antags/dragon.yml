@@ -7,7 +7,6 @@
 - type: antagSpecifier
   parent: RestrictedAntag
   id: Dragon
-  name: space dragon
   spawnerPrototype: SpawnPointGhostDragon
   pickPlayer: false
   mindRoles:

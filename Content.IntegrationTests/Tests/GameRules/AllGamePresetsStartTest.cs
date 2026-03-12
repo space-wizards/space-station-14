@@ -11,18 +11,17 @@ using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class AllGamemodesStartTest
+public sealed class AllGamePresetsStartTest
 {
     /// <summary>
-    /// A list of blacklisted gamemodes for this test. Some downstreams might make changes which nuke upstream game modes they don't use.
+    /// A list of blacklisted <see cref="GamePresetPrototype"/> for this test. Some down streams might make changes which nuke upstream game modes they don't use.
     /// This prevents them from being tested. If you use this to silence valid test fails and your game fails to start. Skill issue. Do 100 push-ups.
     /// </summary>
-    private static readonly HashSet<ProtoId<GamePresetPrototype>> BlacklistedPresets = [];
+    private static readonly HashSet<string> IgnoredPresets = []; // Is a string to prevent YAML Linter from freaking if this is empty.
 
     // Tests that all game modes can start given ideal circumstances.
     [Test]
@@ -46,7 +45,7 @@ public sealed class AllGamemodesStartTest
         // Get all current game presets
         foreach (var preset in protoMan.EnumeratePrototypes<GamePresetPrototype>())
         {
-            if (BlacklistedPresets.Contains(preset))
+            if (IgnoredPresets.Contains(preset.ID))
                 continue;
 
             // Initially in the lobby
@@ -94,12 +93,12 @@ public sealed class AllGamemodesStartTest
 
                     var runningCount = 0;
 
-                    foreach (var proto in antag.Antags)
+                    foreach (var selector in antag.Antags)
                     {
-                        if (!protoMan.Resolve(proto, out var definition))
+                        if (!protoMan.Resolve(selector.Proto, out var definition))
                             continue;
 
-                        rules.Add((definition, antagSys.GetTargetAntagCount(definition, min, ref runningCount)));
+                        rules.Add((definition, antagSys.GetTargetAntagCount(selector, min, ref runningCount)));
                     }
                 }
             });
