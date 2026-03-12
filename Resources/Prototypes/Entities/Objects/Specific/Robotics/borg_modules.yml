@@ -851,7 +851,6 @@
     - item: WireBrushElectrical
     - item: BorgMegaSprayBottle
     - item: HoloprojectorBorg
-    - item: WeaponLauncherCleanadeJaniborg
     - item: BorgDropper
     - item: Beaker
       hand:
@@ -862,6 +861,22 @@
           - FitsInDispenser
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
+
+- type: entity
+  id: BorgModuleCleanades
+  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  name: cleanade launcher cyborg module
+  description: Advanced janitorial module containing an integrated cleanade launcher, for heavy-duty stain removal.
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+    - state: icon-mop-adv # TODO: custom sprite
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponLauncherCleanadeJaniborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module } # TODO: custom sprite
 
 # medical modules
 - type: entity

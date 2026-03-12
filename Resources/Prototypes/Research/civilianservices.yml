@@ -148,6 +148,7 @@
   - AdvMopItem
   - MegaSprayBottle
   - BorgModuleAdvancedCleaning
+  - BorgModuleCleanades
 
 - type: technology
   id: HONKMech
