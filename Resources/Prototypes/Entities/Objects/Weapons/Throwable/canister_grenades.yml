@@ -31,6 +31,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: Tag
+    tags:
+    - Cleanade
   - type: SmokeOnTrigger
     keysIn:
     - timer
