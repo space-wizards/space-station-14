@@ -1,4 +1,6 @@
 using System.Reflection;
+using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 using Robust.Shared.Configuration;
 
 namespace Content.IntegrationTests.Fixtures.Attributes;
@@ -24,18 +26,48 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 /// </example>
 /// <seealso cref="GameTest"/>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public sealed class EnsureCVarAttribute(Side side, Type definitionType, string fieldName, object value) : Attribute, IGameTestModifier
+public sealed class EnsureCVarAttribute(Side side, Type definitionType, string fieldName, object value) : Attribute, IGameTestModifier, IApplyToTest
 {
+    private const string ClientEnsuredCVarsProperty = "ClientEnsuredCVars";
+    private const string ServerEnsuredCVarsProperty = "ServerEnsuredCVars";
+
     Task IGameTestModifier.ApplyToTest(GameTest test)
     {
-        var field = definitionType.GetField(fieldName, BindingFlags.Static | BindingFlags.Public);
-        var cvar = (CVarDef)field!.GetValue(field);
-
-        if (value.GetType() != cvar!.DefaultValue.GetType())
-            throw new NotSupportedException($"Cannot set {cvar.Name} to {value}, it's the wrong type.");
+        var cvar = LookupCVar();
 
         test.PreTestAddOverride(side, cvar!.Name, value);
 
         return Task.CompletedTask;
+    }
+
+    private CVarDef LookupCVar()
+    {
+        var field = definitionType.GetField(fieldName, BindingFlags.Static | BindingFlags.Public);
+        if (field is null)
+            throw new ArgumentException($"Couldn't find a public, static field named {fieldName} on {definitionType}");
+
+        var obj = field.GetValue(field);
+
+        if (obj is not CVarDef cvar)
+        {
+            throw new ArgumentException(
+                $"Expected a CVar definition on {definitionType}.{fieldName}, but it was a {obj?.GetType().FullName ?? "null"}");
+        }
+
+        if (value.GetType() != cvar!.DefaultValue.GetType())
+            throw new NotSupportedException($"Cannot set {cvar.Name} to {value}, it's the wrong type.");
+
+        return cvar;
+    }
+
+    void IApplyToTest.ApplyToTest(Test test)
+    {
+        var cvar = LookupCVar();
+
+        if ((side & Side.Client) != 0)
+            test.Properties.Add(ClientEnsuredCVarsProperty, $"{cvar} = {value}");
+
+        if ((side & Side.Server) != 0)
+            test.Properties.Add(ServerEnsuredCVarsProperty, $"{cvar} = {value}");
     }
 }
