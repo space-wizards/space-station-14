@@ -67,6 +67,14 @@
         - id: DerelictSyndicateAssaultCyborgSpawn
 
 - type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseAntagGhostRoleRule
+  components:
+  - type: AntagSelection
+    selectionTime: Never
+
+- type: entity
   id: BaseStationEvent
   parent: BaseGameRule
   abstract: true
@@ -185,7 +193,7 @@
     prototype: MobSkeletonCloset
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseAntagGhostRoleRule
   id: DragonSpawn
   components:
   - type: StationEvent
@@ -212,7 +220,7 @@
     cost: 75
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseAntagGhostRoleRule
   id: NinjaSpawn
   components:
   - type: StationEvent
@@ -240,7 +248,7 @@
     cost: 75
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseAntagGhostRoleRule
   id: ParadoxCloneSpawn
   components:
   - type: StationEvent
@@ -279,7 +287,7 @@
     prototype: MobRevenant
 
 - type: entity
-  parent: BaseWizardRule
+  parent: [ BaseAntagGhostRoleRule, BaseWizardRule ]
   id: WizardSpawn
   components:
   - type: StationEvent
@@ -484,7 +492,7 @@
     cost: 200
 
 - type: entity
-  parent: BaseNukeopsRule
+  parent: [ BaseAntagGhostRoleRule, BaseNukeopsRule ]
   id: LoneOpsSpawn
   components:
   - type: StationEvent
@@ -599,8 +607,9 @@
     prototype: RandomSatchelSpawner
 
 - type: entity
-  parent: BaseGameRule
-  id: DerelictEngineerCyborgSpawn
+  abstract: true
+  parent: BaseAntagGhostRoleRule
+  id: BaseDerelictCyborgSpawn
   components:
   - type: StationEvent
     weight: 2.5
@@ -610,6 +619,11 @@
     duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
+
+- type: entity
+  parent: BaseDerelictCyborgSpawn
+  id: DerelictEngineerCyborgSpawn
+  components:
   - type: AntagSpawner
     prototype: PlayerEngineeringBorgDerelictGhostRole
   - type: AntagSelection
@@ -618,17 +632,9 @@
       proto: DerelictEngineeringCyborg
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseDerelictCyborgSpawn
   id: DerelictGenericCyborgSpawn
   components:
-  - type: StationEvent
-    weight: 2.5
-    earliestStart: 15
-    reoccurrenceDelay: 20
-    minimumPlayers: 4
-    duration: null
-  - type: SpaceSpawnRule
-    spawnDistance: 0
   - type: AntagSpawner
     prototype: PlayerBorgDerelictGhostRole
   - type: AntagSelection
@@ -637,17 +643,9 @@
       proto: DerelictGenericCyborg
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseDerelictCyborgSpawn
   id: DerelictJanitorCyborgSpawn
   components:
-  - type: StationEvent
-    weight: 2.5
-    earliestStart: 15
-    reoccurrenceDelay: 20
-    minimumPlayers: 4
-    duration: null
-  - type: SpaceSpawnRule
-    spawnDistance: 0
   - type: AntagSpawner
     prototype: PlayerJanitorBorgDerelictGhostRole
   - type: AntagSelection
@@ -656,17 +654,9 @@
       proto: DerelictJanitorCyborg
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseDerelictCyborgSpawn
   id: DerelictMedicalCyborgSpawn
   components:
-  - type: StationEvent
-    weight: 2.5
-    earliestStart: 15
-    reoccurrenceDelay: 20
-    minimumPlayers: 4
-    duration: null
-  - type: SpaceSpawnRule
-    spawnDistance: 0
   - type: AntagSpawner
     prototype: PlayerMedicalBorgDerelictGhostRole
   - type: AntagSelection
@@ -675,17 +665,9 @@
       proto: DerelictMedicalCyborg
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseDerelictCyborgSpawn
   id: DerelictMiningCyborgSpawn
   components:
-  - type: StationEvent
-    weight: 2.5
-    earliestStart: 15
-    reoccurrenceDelay: 20
-    minimumPlayers: 4
-    duration: null
-  - type: SpaceSpawnRule
-    spawnDistance: 0
   - type: AntagSpawner
     prototype: PlayerMiningBorgDerelictGhostRole
   - type: AntagSelection
@@ -694,17 +676,12 @@
       proto: DerelictMiningCyborg
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseDerelictCyborgSpawn
   id: DerelictSyndicateAssaultCyborgSpawn
   components:
   - type: StationEvent
-    weight: 2.5
     earliestStart: 25
-    reoccurrenceDelay: 20
     minimumPlayers: 15
-    duration: null
-  - type: SpaceSpawnRule
-    spawnDistance: 0
   - type: AntagSpawner
     prototype: PlayerBorgSyndicateDerelictGhostRole
   - type: AntagSelection

@@ -286,7 +286,6 @@
   components:
   - type: GameRule
     minPlayers: 10
-
   - type: DynamicRuleCost
     cost: 150
 
@@ -364,7 +363,11 @@
 - type: antagSpecifier
   parent: RestrictedAntag
   id: DummyAntag
-  prefRoles: [ InitialInfected, Traitor, Thief, HeadRev ] # Only Station bound roles.
+  prefRoles: # Only Station bound roles.
+  - InitialInfected
+  - Traitor
+  - Thief
+  - HeadRev
 
 # event schedulers
 

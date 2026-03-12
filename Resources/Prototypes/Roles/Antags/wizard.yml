@@ -20,7 +20,6 @@
   parent: RestrictedAntag
   id: Wizard
   spawnerPrototype: SpawnPointGhostWizard
-  pickPlayer: false
   startingGear: WizardBlueGear
   roleLoadout:
   - RoleSurvivalExtended
