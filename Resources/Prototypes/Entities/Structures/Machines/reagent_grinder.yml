@@ -67,7 +67,7 @@
   - type: SolutionContainerManager
     solutions:
       output:
-        maxVol: 400 #*slaps roof of machine* This baby can fit so much omnizine in it
+        maxVol: 1000 #*slaps roof of machine* This baby can fit so much omnizine in it
   - type: MaterialReclaimer
     whitelist:
       components:
