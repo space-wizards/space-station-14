@@ -65,9 +65,9 @@ public sealed class EnsureCVarAttribute(Side side, Type definitionType, string f
         var cvar = LookupCVar();
 
         if ((side & Side.Client) != 0)
-            test.Properties.Add(ClientEnsuredCVarsProperty, $"{cvar} = {value}");
+            test.Properties.Add(ClientEnsuredCVarsProperty, $"{cvar.Name} = {value}");
 
         if ((side & Side.Server) != 0)
-            test.Properties.Add(ServerEnsuredCVarsProperty, $"{cvar} = {value}");
+            test.Properties.Add(ServerEnsuredCVarsProperty, $"{cvar.Name} = {value}");
     }
 }
