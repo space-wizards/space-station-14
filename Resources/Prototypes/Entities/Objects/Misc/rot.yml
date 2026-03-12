@@ -2,7 +2,7 @@
   parent: BaseItem
   id: BaseRot
   name: rot
-  description: A roten mess.
+  description: A rotten mess.
   abstract: true
   components:
   - type: Sprite
@@ -54,7 +54,7 @@
   parent: BaseRot
   id: BaseInorganicRot
   name: inorganic rot
-  description: A roten mess with a pices of plastic and metal in it.
+  description: A rotten mess with pices of plastic and metal in it.
   abstract: true
   components:
   - type: Sprite
@@ -106,7 +106,7 @@
   parent: BaseRot
   id: SpiderInfestedRot
   name: spider infested rot
-  description: A roten mess, infested by spiders.
+  description: A rotten mess, infested by spiders.
   components:
   - type: Sprite
     sprite: Objects/Misc/rot.rsi
@@ -125,7 +125,7 @@
   parent: BaseRot
   id: SpaceTickInfesteRot
   name: space tick infested rot
-  description: A roten mess, infested by spiders.
+  description: A rotten mess, infested by spiders.
   components:
   - type: Sprite
     sprite: Objects/Misc/rot.rsi
@@ -143,7 +143,7 @@
 
 # tabels that used for rot infetation rolling
 - type: entityTable
-  id: RotInfestetionGambler
+  id: RotInfestationGambler
   table: !type:GroupSelector
     children:
     - !type:GroupSelector #basicaly has 90% chance to roll itself and 10% to become infested, so it's would feel much more random when it's become infested
@@ -160,7 +160,7 @@
       - id: SpiderInfestedRot
 
 - type: entityTable
-  id: InorganicRotInfestetionGambler
+  id: InorganicRotInfestationGambler
   table: !type:GroupSelector
     children:
     - !type:GroupSelector #basicaly has 90% chance to roll itself and 10% to become infested, so it's would feel much more random when it's become infested
@@ -191,7 +191,7 @@
     - type: EntityTableSpawner
       offset: 0.2
       table: !type:NestedSelector
-        tableId: RotInfestetionGambler
+        tableId: RotInfestationGambler
   placement:
     mode: AlignTileAny
 
@@ -208,6 +208,6 @@
     - type: EntityTableSpawner
       offset: 0.2
       table: !type:NestedSelector
-        tableId: InorganicRotInfestetionGambler
+        tableId: InorganicRotInfestationGambler
   placement:
     mode: AlignTileAny
