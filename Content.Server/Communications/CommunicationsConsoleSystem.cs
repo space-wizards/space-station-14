@@ -36,6 +36,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly LockSystem _lockSystem = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -176,7 +177,7 @@ namespace Content.Server.Communications
 
         private bool CanUse(EntityUid user, EntityUid console)
         {
-            if (TryComp<LockComponent>(console, out var lockComp) && !lockComp.Locked)
+            if (HasComp<LockComponent>(console) && !_lockSystem.IsLocked(console))
                 return true;
 
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent))
