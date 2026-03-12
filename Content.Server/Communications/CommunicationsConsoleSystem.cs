@@ -16,6 +16,7 @@ using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -175,6 +176,9 @@ namespace Content.Server.Communications
 
         private bool CanUse(EntityUid user, EntityUid console)
         {
+            if (TryComp<LockComponent>(console, out var lockComp) && !lockComp.Locked)
+                return true;
+
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent))
             {
                 return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);

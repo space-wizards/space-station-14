@@ -218,6 +218,7 @@
     enabled: true
     tags:
     - Xenoborg
+    - Mothership
   - type: LockingWhitelist
     blacklist:
       components:
