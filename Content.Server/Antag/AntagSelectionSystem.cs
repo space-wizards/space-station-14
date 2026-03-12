@@ -49,6 +49,7 @@ namespace Content.Server.Antag;
 /// <remarks>
 /// I leave this remark here as a reminder of two things:
 /// Never initialize entities while they're still in nullspace, I had to refactor this system to fix that.
+/// Do not touch the spawning logic unless you understand how spawning works in engine to ensure the above.
 /// Never do a patchwork refactor for a bad system, I had to refactor this system twice because of that mistake.
 /// I hope this system is now readable and significantly less buggy thanks to my efforts.
 /// I could do more, but I've been soaped enough. Now it's your turn to fix it.
