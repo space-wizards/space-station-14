@@ -38,6 +38,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly TurfSystem _turf = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
+    private EntityQuery<PuddleBlockerComponent> _puddleBlockerQuery;
 
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
@@ -50,9 +51,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         base.Initialize();
 
         _puddleQuery = GetEntityQuery<PuddleComponent>();
+        _puddleBlockerQuery = GetEntityQuery<PuddleBlockerComponent>();
 
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
         SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
+
+        SubscribeLocalEvent<PuddleBlockerComponent, AnchorStateChangedEvent>(OnBlockerAnchored);
     }
 
     // TODO: This can be predicted once https://github.com/space-wizards/RobustToolbox/pull/5849 is merged
@@ -365,6 +369,25 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         return split;
     }
 
+    private void OnBlockerAnchored(Entity<PuddleBlockerComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            return;
+
+        var xform = Transform(ent);
+        if (xform.GridUid is null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
+            return;
+
+        var tile = _map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
+        var anchored = _map.GetAnchoredEntitiesEnumerator(xform.GridUid.Value, grid, tile);
+
+        while (anchored.MoveNext(out var uid))
+        {
+            if (_puddleQuery.HasComponent(uid.Value))
+                QueueDel(uid.Value);
+        }
+    }
+
     #region Spill
 
     // TODO: This can be predicted once https://github.com/space-wizards/RobustToolbox/pull/5849 is merged
@@ -487,25 +510,25 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     public override bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true,
         bool tileReact = true)
     {
+        puddleUid = EntityUid.Invalid;
+
         if (solution.Volume <= 0)
-        {
-            puddleUid = EntityUid.Invalid;
             return false;
-        }
 
         // If space return early, let that spill go out into the void
         if (tileRef.Tile.IsEmpty || _turf.IsSpace(tileRef))
-        {
-            puddleUid = EntityUid.Invalid;
             return false;
-        }
 
         // Let's not spill to invalid grids.
         var gridId = tileRef.GridUid;
         if (!TryComp<MapGridComponent>(gridId, out var mapGrid))
-        {
-            puddleUid = EntityUid.Invalid;
             return false;
+
+        var blockers = _map.GetAnchoredEntitiesEnumerator(gridId, mapGrid, tileRef.GridIndices);
+        while (blockers.MoveNext(out var ent))
+        {
+            if (_puddleBlockerQuery.HasComponent(ent.Value))
+                return false;
         }
 
         if (tileReact)
@@ -516,10 +539,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // Tile reactions used up everything.
         if (solution.Volume == FixedPoint2.Zero)
-        {
-            puddleUid = EntityUid.Invalid;
             return false;
-        }
 
         // Get normalized co-ordinate for spill location and spill it in the centre
         // TODO: Does SnapGrid or something else already do this?
@@ -530,7 +550,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         while (anchored.MoveNext(out var ent))
         {
             // If there's existing sparkles then delete it
-            if (sparklesQuery.TryGetComponent(ent, out var sparkles))
+            if (sparklesQuery.TryGetComponent(ent, out var _))
             {
                 QueueDel(ent.Value);
                 continue;
