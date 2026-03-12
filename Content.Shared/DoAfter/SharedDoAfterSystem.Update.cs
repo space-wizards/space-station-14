@@ -2,12 +2,18 @@ using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Robust.Shared.Exceptions;
+using Robust.Shared.Network;
 
 namespace Content.Shared.DoAfter;
 
 public abstract partial class SharedDoAfterSystem : EntitySystem
 {
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
+#if EXCEPTION_TOLERANCE
+    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+#endif
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -31,7 +37,11 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 Update(uid, active, comp, time, xformQuery, handsQuery);
             }
             // ReSharper disable once RedundantCatchClause
+#if EXCEPTION_TOLERANCE
+            catch (Exception e)
+#else
             catch (Exception)
+#endif
             {
 #if EXCEPTION_TOLERANCE
                 // Doafter in question failed to complete..
