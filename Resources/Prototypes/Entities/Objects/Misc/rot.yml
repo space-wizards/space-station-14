@@ -112,7 +112,7 @@
     sprite: Objects/Misc/rot.rsi
     state: spider_rot
   - type: Perishable
-    # raw meat rots in 5 minutes, get it into the freezer fast
+    #rots in 5 minutes, basicaly uses rot mechanic for hatching
     rotAfter: 300
     molsPerSecondPerUnitMass: 0
   - type: RotInto
@@ -131,7 +131,7 @@
     sprite: Objects/Misc/rot.rsi
     state: space_tick_rot
   - type: Perishable
-    # raw meat rots in 5 minutes, get it into the freezer fast
+    #rots in 5 minutes, basicaly uses rot mechanic for hatching
     rotAfter: 300
     molsPerSecondPerUnitMass: 0
   - type: RotInto
