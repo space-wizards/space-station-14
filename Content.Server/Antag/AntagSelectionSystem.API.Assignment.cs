@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Rules.Components;
@@ -306,13 +307,21 @@ public sealed partial class AntagSelectionSystem
     /// </summary>
     /// <param name="antagRules">list of antag rules we wish to turn into ghost roles.
     /// Note, a ghost role can only be created if the rule has the ghost role spawner protoId set to a valid prototype.</param>
+    /// <param name="assert">Whether we should throw if the spawner prototype doesn't exist.</param>
     [PublicAPI]
-    public void SpawnGhostRoles(List<AntagRule> antagRules)
+    public void SpawnGhostRoles(List<AntagRule> antagRules, bool assert = false)
     {
         foreach (var rule in antagRules)
         {
-            SpawnGhostRoles(rule.GameRule, rule.Definition, rule.Count);
+            SpawnGhostRoles(rule.GameRule, rule.Definition, rule.Count, assert);
         }
+    }
+
+    /// <inheritdoc cref="SpawnGhostRoles(Entity{AntagSelectionComponent},AntagCount[],bool)"/>
+    [PublicAPI]
+    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, int playerCount, bool assert = false)
+    {
+        SpawnGhostRoles(gameRule, GetAntags(gameRule, playerCount), assert);
     }
 
     /// <summary>
@@ -320,25 +329,27 @@ public sealed partial class AntagSelectionSystem
     /// </summary>
     /// <param name="gameRule">Game rule with the associated antags we're spawning</param>
     /// <param name="antagRules">Antags we want to make into ghost roles, with paired counts we need to spawn</param>
+    /// <param name="assert">Whether we should throw if the spawner prototype doesn't exist.</param>
     [PublicAPI]
-    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, AntagCount[] antagRules)
+    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, AntagCount[] antagRules, bool assert = false)
     {
         foreach (var rule in antagRules)
         {
-            SpawnGhostRoles(gameRule, rule.Definition, rule.Count);
+            SpawnGhostRoles(gameRule, rule.Definition, rule.Count, assert);
         }
     }
 
-    /// <inheritdoc cref="SpawnGhostRoles(Entity{AntagSelectionComponent},AntagSpecifierPrototype,int)"/>
+    /// <inheritdoc cref="SpawnGhostRoles(Entity{AntagSelectionComponent},AntagSpecifierPrototype,int,bool)"/>
     [PublicAPI]
     public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule,
         ProtoId<AntagSpecifierPrototype> protoId,
-        int count)
+        int count,
+        bool assert = false)
     {
         if (!Proto.Resolve(protoId, out var antag))
             return;
 
-        SpawnGhostRoles(gameRule, antag, count);
+        SpawnGhostRoles(gameRule, antag, count, assert);
     }
 
     /// <summary>
@@ -347,12 +358,13 @@ public sealed partial class AntagSelectionSystem
     /// <param name="gameRule">Game rule with the associated antags we're spawning</param>
     /// <param name="proto">Antag prototype we're spawning.</param>
     /// <param name="count">Amount of ghost roles we are spawning.</param>
+    /// <param name="assert">Whether we should throw if the spawner prototype doesn't exist.</param>
     [PublicAPI]
-    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype proto, int count)
+    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype proto, int count, bool assert = false)
     {
         for (var i = 0; i < count; i++)
         {
-            SpawnGhostRole(gameRule, proto);
+            SpawnGhostRole(gameRule, proto, assert);
         }
     }
 
@@ -361,11 +373,16 @@ public sealed partial class AntagSelectionSystem
     /// </summary>
     /// <param name="gameRule">Game rule with the associated antags we're spawning</param>
     /// <param name="proto">Antag prototype we're spawning.</param>
+    /// <param name="assert">Whether we should throw if the spawner prototype doesn't exist.</param>
     [PublicAPI]
-    public void SpawnGhostRole(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype proto)
+    public void SpawnGhostRole(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype proto, bool assert = false)
     {
         if (proto.SpawnerPrototype is not { } spawnerPrototype)
+        {
+            Debug.Assert(!assert, $"Tried to spawn a ghost role for {proto.ID}, but it had no prototype!");
             return;
+        }
+
 
         if (!TryGetValidSpawnPosition(gameRule, proto, out var coordinates))
         {

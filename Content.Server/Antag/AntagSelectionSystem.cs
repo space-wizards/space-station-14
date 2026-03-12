@@ -276,8 +276,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                     AddGameRuleDefinitions(gameRule, playerCount, ref postSpawnRoles, active);
                 break;
             case Never:
-                Debug.Assert(gameRule.Comp.Antags.All(x => Proto.Resolve(x.Proto, out var proto) && proto.SpawnerPrototype != null),
-                    $"Gamerule {ToPrettyString(gameRule)}, had pre-selection set to none, but one of its antags had no ghost roles to spawn.");
+                SpawnGhostRoles(gameRule, playerCount, true);
                 break;
         }
     }
