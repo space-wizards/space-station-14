@@ -750,7 +750,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         // Make sure player was properly pre-selected.
         Debug.Assert(gameRule.Comp.PreSelectedSessions.TryGetValue(prototype.ID, out var value) && value.Contains(player),
-            $"Game rule {ToPrettyString(gameRule)}, failed to pre assigned {player.Name} to antag {prototype.ID}");
+            $"Game rule {ToPrettyString(gameRule)}, failed to pre-assign {player.Name} to antag {prototype.ID}");
 
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
         EntityManager.AddComponents(antag, prototype.Components);
