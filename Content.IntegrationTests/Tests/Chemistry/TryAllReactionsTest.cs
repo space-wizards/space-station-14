@@ -5,6 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Utility;
 using Content.Shared.Chemistry.EntitySystems;
 
@@ -12,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
 {
     [TestFixture]
     [TestOf(typeof(ReactionPrototype))]
-    public sealed class TryAllReactionsTest
+    public sealed class TryAllReactionsTest : GameTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -33,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
         [Description("Tries an individual reaction to see if it succeeds.")]
         public async Task TryReaction(string reaction)
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
 
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -134,8 +135,6 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
                 server.EntMan.DeleteEntity(beaker);
             });
-
-            await pair.CleanReturnAsync();
         }
     }
 }

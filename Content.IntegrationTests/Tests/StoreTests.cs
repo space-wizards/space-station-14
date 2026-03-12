@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
@@ -16,7 +17,7 @@ using Robust.Shared.Random;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-public sealed class StoreTests
+public sealed class StoreTests : GameTest
 {
 
     [TestPrototypes]
@@ -35,7 +36,7 @@ public sealed class StoreTests
     [Test]
     public async Task StoreDiscountAndRefund()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -168,7 +169,5 @@ public sealed class StoreTests
             }
 
         });
-
-        await pair.CleanReturnAsync();
     }
 }
