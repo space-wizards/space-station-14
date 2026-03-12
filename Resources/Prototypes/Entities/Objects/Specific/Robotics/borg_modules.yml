@@ -851,6 +851,7 @@
     - item: WireBrushElectrical
     - item: BorgMegaSprayBottle
     - item: HoloprojectorBorg
+    - item: WeaponLauncherCleanadeJaniborg
     - item: BorgDropper
     - item: Beaker
       hand:
