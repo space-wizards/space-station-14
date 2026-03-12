@@ -28,8 +28,8 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
 public sealed class EnsureCVarAttribute(Side side, Type definitionType, string fieldName, object value) : Attribute, IGameTestModifier, IApplyToTest
 {
-    private const string ClientEnsuredCVarsProperty = "ClientEnsuredCVars";
-    private const string ServerEnsuredCVarsProperty = "ServerEnsuredCVars";
+    public const string ClientEnsuredCVarsProperty = "ClientEnsuredCVars";
+    public const string ServerEnsuredCVarsProperty = "ServerEnsuredCVars";
 
     Task IGameTestModifier.ApplyToTest(GameTest test)
     {
