@@ -1,4 +1,7 @@
 #nullable enable
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -10,6 +13,7 @@ using Content.Shared.Medical.Healing;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Medical;
@@ -27,65 +31,98 @@ public sealed class TopicalsTest : InteractionTest
     private static readonly ProtoId<DamageTypePrototype> BluntDamageTypeId = "Slash";
     private static readonly ProtoId<DamageTypePrototype> SlashDamageTypeId = "Blunt";
     private static readonly ProtoId<DamageTypePrototype> PiercingDamageTypeId = "Piercing";
+    private static readonly ProtoId<DamageTypePrototype> PoisonDamageTypeId = "Poison";
+    private static readonly List<EntProtoId> TopicalsToBeTested = new List<EntProtoId> { BruisePack, Ointment, Gauze }; //please dont add HealingToolbox to this
 
     /// <summary>
     /// Tests that the correct topical heals the right damage.
     /// </summary>
     [Test]
-    public async Task TopicalInteractionsTest()
+    public async Task TopicalsInteractionsTest()
     {
-        var damageSystem = SEntMan.System<DamageableSystem>();
+        var damageableSystem = SEntMan.System<DamageableSystem>();
 
         await AddAtmosphere(); // prevent the InteractionTestMob from suffocating
 
-        var urist = await SpawnTarget(MobHuman);
-        var damageComp = Comp<DamageableComponent>(urist);
+        //For every topical we need to test
+        foreach (EntProtoId topicalID in TopicalsToBeTested)
+        {
+            //Spawn a new urist
+            var urist = await SpawnTarget(MobHuman);
+            var damageableComp = Comp<DamageableComponent>(urist);
 
-        //Hold a bruise pack
-        var bruisePackEnt = await PlaceInHands(BruisePack);
-        var healingComp = Comp<HealingComponent>(bruisePackEnt);
+            //Hold the topical stack
+            var topical = await PlaceInHands(topicalID);
 
-        // //get the damage types this is meant to fix
-        // var healsTypes = healingComp.DamageContainers;
+            var healingComp = Comp<HealingComponent>(topical);
+            var stackComp = Comp<StackComponent>(topical);
+            var emptyDamageSpecifier = new DamageSpecifier();
+            var startStackSize = stackComp.Count;
 
-        //Damage the Urist with 15 of each Brute Damage (Blunt, Pierce, and Slash)
+            //get the damage types this is meant to fix
+            DamageSpecifier healsTypes = healingComp.Damage;
 
-        //Assert Damaged
+            //Damage the Urist 2 topicals worth
+            damageableSystem.SetDamage((STarget.Value, damageableComp), -2 * healsTypes);
+            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)) == -2 * healsTypes,
+            "The urist did not get damaged the correct amount.");
 
-        //Use Bruise Pack once
-        //Assert that Could use
+            //Use topical
+            await Interact();
+            //Assert that could use?
 
-        //Assert each Brute Damage lowered, and lowered equally
-        //Assert that stack number lowered by 1
+            //Assert each correct Damage lowered the right amount, or at all
+            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)) == -healsTypes,
+            "The correct damage types did not lower, or did not lower the correct amount.");
+            //Assert that stack number lowered by 1
+            Assert.That(stackComp.Count == startStackSize - 1,
+            "The topical stack count did not lower, or did not lower by the correct amount.");
 
-        //Use Bruise Pack until doafters stop
+            //Use topical
+            await Interact();
+            //Assert that all damage gone
+            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)) == emptyDamageSpecifier,
+            "Damage was not fully removed after using topical twice.");
 
-        //Assert that Brute Damage gone
-        //Assert that stack number lowered by 2
+            //No Topicals work on poison, lets use 10 of it.
+            var poisonSpecifier = new DamageSpecifier(ProtoMan.Index(PoisonDamageTypeId), 10);
+            damageableSystem.SetDamage((STarget.Value, damageableComp), poisonSpecifier);
 
-        //Reset Damage
+            //Try to use the topical
+            await Interact(false);
+            //Assert could not use (by checking if there are any doafters)
+            Assert.That(!ActiveDoAfters.Any(),
+            "Topical use went through despite wrong damage type.");
+            //Assert Poison damage is unchanged
+            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)) == poisonSpecifier,
+            "The topical healed damage it shouldn't.");
 
-        //Damage the Urist with Heat
+            //Add in more damage types (5 of each brute, 5 Caustic, 5 Poison)
 
-        //Use Bruise Pack
-        //Assert could not use
-        //Assert Heat damage unchanged
+            //Use Bruize Pack once
 
-        //Reset Damage
+            //Assert brute damage gone
 
-        //Add in more damage types (5 of each brute, 5 Caustic, 5 Poison)
+            //Attempt use Bruize Pack
+            //Assert could not use
 
-        //Use Bruize Pack once
+            //Assert non-brute damage types unchanged
 
-        //Assert brute damage gone
+            //Reset Damage
 
-        //Attempt use Bruize Pack
-        //Assert could not use
+            //Set bruize pack stack size to 2
 
-        //Assert non-brute damage types unchanged
+            //Deal 15 brute to the urist
 
-        //Reset Damage
+            //Use once
 
-        //Set topical
+            //Assert id changed to Brutepack1
+
+            //Use again
+
+            //Assert Hands empty
+
+            //Assert some brute damage remains
+        }
     }
 }
