@@ -24,4 +24,11 @@ public sealed class RunOnSideTests : GameTest
         Assert.That(Thread.CurrentThread, Is.EqualTo(ClientThread));
     }
 
+    [Test]
+    [RunOnSide(Side.Server)]
+    [Description("Ensures that RunOnSide appropriately adds a property.")]
+    public void TestProperty()
+    {
+        Assert.That(TestContext.CurrentContext.Test.Properties.Get(RunOnSideAttribute.RunOnSideProperty), Is.Not.Null);
+    }
 }
