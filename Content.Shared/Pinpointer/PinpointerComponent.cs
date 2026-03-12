@@ -44,10 +44,16 @@ public sealed partial class PinpointerComponent : Component
     public PinpointerTarget? Target;
 
     /// <summary>
+    ///     The current entity we are pointing at. We save this here as opposed to constantly re-getting the entity uid from the
+    ///     PinpointerTarget, which may be expensive.
+    /// </summary>
+    public EntityUid? TargetEntity;
+
+    /// <summary>
     ///     A list of each PinpointerTarget.
     /// </summary>
     [DataField]
-    public List<PinpointerTarget> AllTargets;
+    public List<PinpointerTarget> AllTargets = [];
 
     [ViewVariables, AutoNetworkedField]
     public bool IsActive = false;
@@ -75,20 +81,19 @@ public enum Distance : byte
 /// <summary>
 ///     A target entry.
 /// </summary>
-public abstract record PinpointerTarget
+[ImplicitDataDefinitionForInheritors]
+public abstract partial record PinpointerTarget
 {
     [DataField]
     public string? Name;
 }
 
-[DataDefinition, Serializable]
 public sealed partial record PinpointerComponentTarget : PinpointerTarget
 {
     [DataField(required: true)]
     public string Target;
 }
 
-[DataDefinition, Serializable]
 public sealed partial record PinpointerEntityUidTarget : PinpointerTarget
 {
     [DataField(required: true)]
@@ -100,7 +105,6 @@ public sealed partial record PinpointerEntityUidTarget : PinpointerTarget
 ///     Component should NOT be something highly generic like transform because we will
 ///     be querying for every entity with that component.
 /// </summary>
-[DataDefinition, Serializable]
 public sealed partial record PinpointerEntProtoIdTarget : PinpointerTarget
 {
     [DataField(required:true)]

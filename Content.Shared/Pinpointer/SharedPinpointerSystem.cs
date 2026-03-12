@@ -41,7 +41,8 @@ public abstract class SharedPinpointerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Set pinpointers target to track
+    ///     Set pinpointers target to track. Updates the pinpointer's PinpointerTarget. Use this to logically update
+    ///     what the pinpointer should be pointing to, i.e. when the pinpointer needs to point to a new kind of target.
     /// </summary>
     public virtual void SetTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
     {
@@ -59,6 +60,25 @@ public abstract class SharedPinpointerSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Set pinpointer's entity target to track. Updates the specific entity the pinpointer is pointing at. Use this
+    ///     to refresh the exact entity the pinpointer is pointing to, i.e. when you turn the pinpointer on.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="target"></param>
+    public virtual void UpdateTargetEntity(Entity<PinpointerComponent?> ent, EntityUid? target)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.TargetEntity == target)
+            return;
+
+        ent.Comp.TargetEntity = target;
+        if (ent.Comp.IsActive)
+            UpdateDirectionToTarget(ent);
+    }
+
+    /// <summary>
     ///     Update direction from pinpointer to selected target (if it was set)
     /// </summary>
     protected virtual void UpdateDirectionToTarget(Entity<PinpointerComponent?> ent)
@@ -71,6 +91,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (!args.IsInDetailsRange || ent.Comp.Target is null)
             return;
 
+        // TODO: Move to loc string
         var name = ent.Comp.Target.Name ?? "Unknown";
         args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", name)));
     }

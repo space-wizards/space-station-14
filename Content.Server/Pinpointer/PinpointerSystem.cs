@@ -53,8 +53,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         if (!ent.Comp.CanRetarget)
         {
-            var target = LocateTarget(ent, ent.Comp.Target);
-            SetTarget(ent.AsNullable(), ent.Comp.Target);
+            UpdateTargetEntity(ent.AsNullable(), LocateTarget(ent, ent.Comp.Target));
         }
 
         args.Handled = true;
@@ -103,7 +102,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!pinpointer.IsActive)
             return;
 
-        var target = LocateTarget(ent, pinpointer.Target);
+        var target = pinpointer.TargetEntity;
         if (target == null || !Exists(target.Value))
         {
             SetDistance(ent, Distance.Unknown);
@@ -167,12 +166,15 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     ///     Try to find the closest entity from whitelist on a current map
     ///     Will return null if can't find anything
     /// </summary>
-    private EntityUid? FindTargetFromComponent(Entity<TransformComponent> pinpointer, Type whitelist, EntProtoId? protoId = null)
+    private EntityUid? FindTargetFromComponent(Entity<TransformComponent?> ent, Type whitelist, EntProtoId? protoId = null)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
         // sort all entities in distance increasing order
-        var mapId = pinpointer.Comp.MapID;
+        var mapId = ent.Comp.MapID;
         var l = new SortedList<float, EntityUid>();
-        var worldPos = _transform.GetWorldPosition(pinpointer.Comp);
+        var worldPos = _transform.GetWorldPosition(ent.Comp);
 
         foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist))
         {
