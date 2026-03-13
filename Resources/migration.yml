@@ -805,12 +805,6 @@ TowelColorMaroon: null
 TowelColorSilver: null
 TowelColorMime: null
 
-# 2026-02-11
-MobDwarf: MobHuman
-OrganDwarfHeart: OrganHumanHeart
-OrganDwarfStomach: OrganHumanStomach
-OrganDwarfLiver: OrganHumanLiver
-
 # 2026-02-18
 # Replace cargo order crates which contain exactly one item with the item, parcel wrapped.
 CrateVendingMachineRestockBoozeFilled: VendingMachineRestockBooze
