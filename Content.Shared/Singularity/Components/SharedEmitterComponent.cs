@@ -114,25 +114,25 @@ public sealed partial class EmitterComponent : Component
     /// Localized string to use when this emitter is destroyed and AlertRadio is set to true
     /// </summary>
     [DataField]
-    public string LocDestroyed = "emitter-destroyed-broadcast";
+    public LocId LocDestroyed = "emitter-destroyed-broadcast";
 
     /// <summary>
     /// Localized string to use when this emitter is deconstructed and AlertRadio is set to true
     /// </summary>
     [DataField]
-    public string LocDeconstructed = "emitter-deconstructed-broadcast";
+    public LocId LocDeconstructed = "emitter-deconstructed-broadcast";
 
     /// <summary>
     /// Localized string to use when this emitter is unlocked and AlertRadio is set to true
     /// </summary>
     [DataField]
-    public string LocUnlocked = "emitter-unlocked-broadcast";
+    public LocId LocUnlocked = "emitter-unlocked-broadcast";
 
     /// <summary>
     /// Localized string to use when this emitter is unpowered and AlertRadio is set to true
     /// </summary>
     [DataField]
-    public string LocUnpowered = "emitter-unpowered-broadcast";
+    public LocId LocUnpowered = "emitter-unpowered-broadcast";
 }
 
 [NetSerializable, Serializable]
