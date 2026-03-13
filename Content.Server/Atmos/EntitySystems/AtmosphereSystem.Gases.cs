@@ -53,22 +53,6 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        ///     Calculates the thermal energy for a gas mixture.
-        /// </summary>
-        public float GetThermalEnergy(GasMixture mixture)
-        {
-            return mixture.Temperature * GetHeatCapacity(mixture);
-        }
-
-        /// <summary>
-        ///     Calculates the thermal energy for a gas mixture, using a cached heat capacity value.
-        /// </summary>
-        public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
-        {
-            return mixture.Temperature * cachedHeatCapacity;
-        }
-
-        /// <summary>
         ///     Add 'dQ' Joules of energy into 'mixture'.
         /// </summary>
         public void AddHeat(GasMixture mixture, float dQ)
@@ -76,28 +60,6 @@ namespace Content.Server.Atmos.EntitySystems
             var c = GetHeatCapacity(mixture);
             float dT = dQ / c;
             mixture.Temperature += dT;
-        }
-
-        /// <summary>
-        ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
-        ///     The <see cref="giver"/> gas mixture is not modified by this method.
-        /// </summary>
-        public void Merge(GasMixture receiver, GasMixture giver)
-        {
-            if (receiver.Immutable) return;
-
-            if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
-            {
-                var receiverHeatCapacity = GetHeatCapacity(receiver);
-                var giverHeatCapacity = GetHeatCapacity(giver);
-                var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
-                if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
-                {
-                    receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
-                }
-            }
-
-            NumericsHelpers.Add(receiver.Moles, giver.Moles);
         }
 
         /// <summary>
