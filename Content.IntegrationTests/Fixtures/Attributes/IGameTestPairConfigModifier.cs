@@ -11,7 +11,6 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 public interface IGameTestPairConfigModifier
 {
     bool Exclusive { get; }
-    IReadOnlySet<string> AffectedProperties { get; }
 
     void ApplyToPairSettings(GameTest test, ref PoolSettings settings);
 }
