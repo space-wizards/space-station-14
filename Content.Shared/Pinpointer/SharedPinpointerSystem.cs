@@ -1,7 +1,10 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.Pinpointer;
 
@@ -16,6 +19,24 @@ public abstract class SharedPinpointerSystem : EntitySystem
         SubscribeLocalEvent<PinpointerComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<PinpointerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<PinpointerComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<PinpointerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+    }
+
+    #region Event Subscriptions
+
+    private void OnEmagged(Entity<PinpointerComponent> ent, ref GotEmaggedEvent args)
+    {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
+            return;
+
+        if (ent.Comp.CanRetarget)
+            return;
+
+        args.Handled = true;
+        ent.Comp.CanRetarget = true;
     }
 
     /// <summary>
@@ -30,21 +51,54 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (!ent.Comp.CanRetarget || ent.Comp.IsActive)
             return;
 
-        return;
-
-        // TODO add doafter once the freeze is lifted
         args.Handled = true;
-        /*ent.Comp.Target = args.Target;
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(ent):pinpointer} to {ToPrettyString(ent.Comp.Target.Value):target}");
-        if (ent.Comp.UpdateTargetName)
-            ent.Comp.TargetName = ent.Comp.Target == null ? null : Identity.Name(ent.Comp.Target.Value, EntityManager);*/
+
+        var targetListing = new PinpointerEntityUidTarget
+        {
+            Name = Identity.Name(target, EntityManager),
+            Target = target,
+        };
+
+        AddTarget(ent.AsNullable(), targetListing);
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(ent):pinpointer} to {ToPrettyString(target):target}");
     }
+
+    private void OnExamined(Entity<PinpointerComponent> ent, ref ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange || ent.Comp.Target is null)
+            return;
+
+        // TODO: Move to loc string
+        args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", GetName(ent.Comp.Target))));
+    }
+
+    private void OnGetAltVerbs(Entity<PinpointerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+        {
+            return;
+        }
+
+        foreach (var target in ent.Comp.AllTargets)
+        {
+            args.Verbs.Add(new()
+            {
+                Act = () =>
+                {
+                    SetTarget(ent.AsNullable(), target);
+                },
+                Text = GetName(target),
+            });
+        }
+    }
+
+    #endregion
 
     /// <summary>
     ///     Set pinpointers target to track. Updates the pinpointer's PinpointerTarget. Use this to logically update
     ///     what the pinpointer should be pointing to, i.e. when the pinpointer needs to point to a new kind of target.
     /// </summary>
-    public virtual void SetTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
+    public void SetTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -55,27 +109,42 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
 
         pinpointer.Target = target;
-        if (pinpointer.IsActive)
-            UpdateDirectionToTarget(ent);
+        UpdateTargetEntity(ent);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void AddTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+        {
+            return;
+        }
+
+        if (target is null)
+        {
+            return;
+        }
+
+        if (ent.Comp.AllTargets.Count >= ent.Comp.TargetLimit)
+        {
+            return;
+        }
+
+        ent.Comp.AllTargets.Add(target);
     }
 
     /// <summary>
     ///     Set pinpointer's entity target to track. Updates the specific entity the pinpointer is pointing at. Use this
-    ///     to refresh the exact entity the pinpointer is pointing to, i.e. when you turn the pinpointer on.
+    ///     to refresh the exact entity the pinpointer is pointing to, i.e. when you turn the pinpointer on or when
+    ///     you swap the logical target.
     /// </summary>
     /// <param name="ent"></param>
     /// <param name="target"></param>
-    public virtual void UpdateTargetEntity(Entity<PinpointerComponent?> ent, EntityUid? target)
+    protected virtual void UpdateTargetEntity(Entity<PinpointerComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
 
-        if (ent.Comp.TargetEntity == target)
-            return;
-
-        ent.Comp.TargetEntity = target;
-        if (ent.Comp.IsActive)
-            UpdateDirectionToTarget(ent);
     }
 
     /// <summary>
@@ -86,14 +155,10 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
     }
 
-    private void OnExamined(Entity<PinpointerComponent> ent, ref ExaminedEvent args)
+    public string GetName(PinpointerTarget target)
     {
-        if (!args.IsInDetailsRange || ent.Comp.Target is null)
-            return;
-
-        // TODO: Move to loc string
-        var name = ent.Comp.Target.Name ?? "Unknown";
-        args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", name)));
+        // TODO update with a loc string
+        return target.Name ?? "Unknown";
     }
 
     /// <summary>
@@ -157,20 +222,5 @@ public abstract class SharedPinpointerSystem : EntitySystem
         var isActive = !ent.Comp.IsActive;
         SetActive(ent, isActive);
         return isActive;
-    }
-
-    private void OnEmagged(Entity<PinpointerComponent> ent, ref GotEmaggedEvent args)
-    {
-        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
-            return;
-
-        if (_emag.CheckFlag(ent, EmagType.Interaction))
-            return;
-
-        if (ent.Comp.CanRetarget)
-            return;
-
-        args.Handled = true;
-        ent.Comp.CanRetarget = true;
     }
 }

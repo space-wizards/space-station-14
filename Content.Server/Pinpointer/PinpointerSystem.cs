@@ -53,7 +53,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         if (!ent.Comp.CanRetarget)
         {
-            UpdateTargetEntity(ent.AsNullable(), LocateTarget(ent, ent.Comp.Target));
+            UpdateTargetEntity(ent.AsNullable());
         }
 
         args.Handled = true;
@@ -87,6 +87,21 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             UpdateDirectionToTarget((uid, pinpointer));
         }
+    }
+
+    protected override void UpdateTargetEntity(Entity<PinpointerComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        var target = LocateTarget(ent, ent.Comp.Target);
+
+        if (ent.Comp.TargetEntity == target)
+            return;
+
+        ent.Comp.TargetEntity = target;
+        if (ent.Comp.IsActive)
+            UpdateDirectionToTarget(ent);
     }
 
     /// <summary>

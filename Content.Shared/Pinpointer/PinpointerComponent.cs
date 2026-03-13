@@ -32,7 +32,7 @@ public sealed partial class PinpointerComponent : Component
     public double Precision = 0.09;
 
     /// <summary>
-    ///     Whether or not the target can be reassigned.
+    ///     Whether or not additional targets can be added.
     /// </summary>
     [DataField]
     public bool CanRetarget;
@@ -54,6 +54,12 @@ public sealed partial class PinpointerComponent : Component
     /// </summary>
     [DataField]
     public List<PinpointerTarget> AllTargets = [];
+
+    /// <summary>
+    ///     Maximum number of possible targets i.e. max size of AllTargets
+    /// </summary>
+    [DataField]
+    public int TargetLimit = 6;
 
     [ViewVariables, AutoNetworkedField]
     public bool IsActive = false;
