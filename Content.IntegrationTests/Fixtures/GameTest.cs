@@ -40,7 +40,7 @@ public abstract partial class GameTest
     /// <summary>
     ///     Set if the test manually marks itself dirty.
     /// </summary>
-    private bool _pairDirty;
+    private bool _pairDestroyed;
 
     /// <summary>
     ///     Tests-testing-tests assistant to run right before the pair is returned.
@@ -57,8 +57,12 @@ public abstract partial class GameTest
     public Thread ClientThread { get; private set; } = null!; // NULLABILITY: This is always set during test setup.
 
     /// <summary>
-    ///     Settings for the client/server pair. By default, this gets you a client and server that have connected together.
+    ///     Settings for the client/server pair.
+    ///     By default, this gets you a client and server that have connected together.
     /// </summary>
+    /// <remarks>
+    ///     Always return a new instance whenever this is read. In other words, no backing field please. Arrow syntax only.
+    /// </remarks>
     public virtual PoolSettings PoolSettings => new() { Connected = true };
 
     /// <summary>
@@ -129,9 +133,35 @@ public abstract partial class GameTest
     [SetUp]
     public virtual async Task DoSetup()
     {
-        _pairDirty = false;
+        _pairDestroyed = false;
         var testContext = TestContext.CurrentContext;
-        Pair = await PoolManager.GetServerClient(PoolSettings, new NUnitTestContextWrap(testContext, TestContext.Out));
+
+
+        var test = testContext.Test;
+
+        var settings = PoolSettings;
+
+        var pairAttribs = test.Method!.GetCustomAttributes<IGameTestPairConfigModifier>(false);
+        var pairSuiteAttribs = test.Method!.TypeInfo.GetCustomAttributes<IGameTestPairConfigModifier>(true);
+
+        if (pairAttribs.Length > 1 && pairAttribs.Any(x => x.Exclusive))
+        {
+            throw new InvalidOperationException(
+                "More than one exclusive pair config attribute is present on the test member.");
+        }
+
+        if (pairSuiteAttribs.Length > 1 && pairSuiteAttribs.Any(x => x.Exclusive))
+        {
+            throw new InvalidOperationException(
+                "More than one exclusive pair config attribute is present on the test fixture.");
+        }
+
+        foreach (var attribute in pairAttribs.Concat(pairSuiteAttribs))
+        {
+            attribute.ApplyToPairSettings(this, ref settings);
+        }
+
+        Pair = await PoolManager.GetServerClient(settings, new NUnitTestContextWrap(testContext, TestContext.Out));
 
         Task.WaitAll(
             Server.WaitPost(() => { ServerThread = Thread.CurrentThread; }),
@@ -139,8 +169,6 @@ public abstract partial class GameTest
         );
 
         InjectDependencies(this);
-
-        var test = TestContext.CurrentContext.Test;
 
         var attribs = test.Method!.GetCustomAttributes<IGameTestModifier>(false);
         var suiteAttribs = test.Method!.TypeInfo.GetCustomAttributes<IGameTestModifier>(true);
@@ -203,6 +231,16 @@ public abstract partial class GameTest
     {
         try
         {
+            // In some cool future we might be able to make this only throw out the pair
+            // if the test threw exceptions. But that'd require fixing all of them to do cleanup properly.
+            //
+            // So not yet.
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                _pairDestroyed = true; // Blow it up, we failed and it might be screwed.
+                return;
+            }
+
             // Roll forward til sync for teardown.
             await Pair.RunUntilSynced();
 
@@ -210,23 +248,17 @@ public abstract partial class GameTest
 
             // And other teardown logic will go here. Eventually.
 
-            // In some cool future we might be able to make this only throw out the pair
-            // if the test threw exceptions. But that'd require fixing all of them to do cleanup properly.
-            //
-            // So not yet.
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-                _pairDirty = true; // Blow it up, we failed and it might be screwed.
         }
         catch (Exception)
         {
-            _pairDirty = true;
+            _pairDestroyed = true;
             throw;
         }
         finally
         {
             PreFinalizeHook?.Invoke();
 
-            if (!_pairDirty)
+            if (!_pairDestroyed)
                 await Pair.CleanReturnAsync();
             else
                 await Pair.DisposeAsync();

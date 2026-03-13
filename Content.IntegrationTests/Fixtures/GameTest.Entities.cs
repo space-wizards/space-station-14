@@ -41,14 +41,6 @@ public abstract partial class GameTest
     }
 
     /// <summary>
-    ///     Marks the test pair as dirty, ensuring it is returned as such.
-    /// </summary>
-    public void MarkDirty()
-    {
-        _pairDirty = true;
-    }
-
-    /// <summary>
     ///     Returns a string representation of an entity for the server.
     /// </summary>
     public string SToPrettyString(EntityUid uid)

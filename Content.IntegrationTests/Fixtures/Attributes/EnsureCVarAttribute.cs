@@ -46,7 +46,7 @@ public sealed class EnsureCVarAttribute(Side side, Type definitionType, string f
         if (field is null)
             throw new ArgumentException($"Couldn't find a public, static field named {fieldName} on {definitionType}");
 
-        var obj = field.GetValue(field);
+        var obj = field.GetValue(null);
 
         if (obj is not CVarDef cvar)
         {
