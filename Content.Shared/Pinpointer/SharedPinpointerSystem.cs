@@ -4,7 +4,9 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Pinpointer;
 
@@ -12,10 +14,13 @@ public abstract class SharedPinpointerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<PinpointerComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<PinpointerComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<PinpointerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<PinpointerComponent, ExaminedEvent>(OnExamined);
@@ -23,6 +28,20 @@ public abstract class SharedPinpointerSystem : EntitySystem
     }
 
     #region Event Subscriptions
+
+    private void OnComponentInit(Entity<PinpointerComponent> ent, ref ComponentInit _)
+    {
+        if (ent.Comp.AllTargets.Count == 0)
+        {
+            return;
+        }
+
+        // This makes pinpointers start with a target selected, so pinpointers
+        // with one target don't require the user to select the singular target
+        // before being able to use the pinpointer.
+        SetTarget(ent.AsNullable(), ent.Comp.AllTargets[0]);
+
+    }
 
     private void OnEmagged(Entity<PinpointerComponent> ent, ref GotEmaggedEvent args)
     {
@@ -37,10 +56,12 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         args.Handled = true;
         ent.Comp.CanRetarget = true;
+
+        Dirty(ent);
     }
 
     /// <summary>
-    ///     Set the target if capable
+    ///     Adds the target entity to the list of targets if there is space and the pinpointer allows retargeting
     /// </summary>
     private void OnAfterInteract(Entity<PinpointerComponent> ent, ref AfterInteractEvent args)
     {
@@ -59,8 +80,17 @@ public abstract class SharedPinpointerSystem : EntitySystem
             Target = target,
         };
 
+        // If the pinpointer is at maximum capacity, try to remove the current target before adding the new one.
+        // This is so the user is not prevented from adding new targets once the target limit is reached.
+        if (ent.Comp.AllTargets.Count >= ent.Comp.TargetLimit && !RemoveTarget(ent.AsNullable(), ent.Comp.Target))
+        {
+            return;
+        }
+
         AddTarget(ent.AsNullable(), targetListing);
+        SetTarget(ent.AsNullable(), targetListing);
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(ent):pinpointer} to {ToPrettyString(target):target}");
+        _popup.PopupClient(Loc.GetString("pinpointer-add-target", ("target", GetName(targetListing))), ent, args.User);
     }
 
     private void OnExamined(Entity<PinpointerComponent> ent, ref ExaminedEvent args)
@@ -68,26 +98,28 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (!args.IsInDetailsRange || ent.Comp.Target is null)
             return;
 
-        // TODO: Move to loc string
         args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", GetName(ent.Comp.Target))));
     }
 
     private void OnGetAltVerbs(Entity<PinpointerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || args.Hands is null)
         {
             return;
         }
 
         foreach (var target in ent.Comp.AllTargets)
         {
+            var user = args.User;
             args.Verbs.Add(new()
             {
                 Act = () =>
                 {
                     SetTarget(ent.AsNullable(), target);
+                    _popup.PopupClient(Loc.GetString("pinpointer-add-target", ("target", GetName(target))), ent, user);
                 },
                 Text = GetName(target),
+                IconEntity = GetNetEntity(args.Target),
             });
         }
     }
@@ -98,7 +130,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     Set pinpointers target to track. Updates the pinpointer's PinpointerTarget. Use this to logically update
     ///     what the pinpointer should be pointing to, i.e. when the pinpointer needs to point to a new kind of target.
     /// </summary>
-    public void SetTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
+    protected void SetTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -109,30 +141,67 @@ public abstract class SharedPinpointerSystem : EntitySystem
             return;
 
         pinpointer.Target = target;
+        Dirty(ent);
         UpdateTargetEntity(ent);
     }
 
     /// <summary>
-    ///
+    ///     Attempts to add a target to the list of targets of a pinpointer.
     /// </summary>
-    public void AddTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
+    [PublicAPI]
+    public bool AddTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
     {
         if (!Resolve(ent, ref ent.Comp))
         {
-            return;
+            return false;
         }
 
         if (target is null)
         {
-            return;
+            return false;
         }
 
         if (ent.Comp.AllTargets.Count >= ent.Comp.TargetLimit)
         {
-            return;
+            return false;
         }
 
         ent.Comp.AllTargets.Add(target);
+        Dirty(ent);
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Attempts to remove a target from the list of targets of a pinpointer.
+    /// </summary>
+    [PublicAPI]
+    public bool RemoveTarget(Entity<PinpointerComponent?> ent, PinpointerTarget? target)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+        {
+            return false;
+        }
+
+        if (target is null)
+        {
+            return false;
+        }
+
+        if (ent.Comp.AllTargets.Count == 0)
+        {
+            return false;
+        }
+
+        if (ent.Comp.Target == target)
+        {
+            ent.Comp.Target = null;
+            UpdateTargetEntity(ent);
+        }
+        var result = ent.Comp.AllTargets.Remove(target);
+        Dirty(ent);
+
+        return result;
     }
 
     /// <summary>
@@ -155,16 +224,15 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
     }
 
-    public string GetName(PinpointerTarget target)
+    protected string GetName(PinpointerTarget target)
     {
-        // TODO update with a loc string
-        return target.Name ?? "Unknown";
+        return target.Name ?? Loc.GetString("pinpointer-unknown-target");
     }
 
     /// <summary>
     ///     Manually set distance from pinpointer to target
     /// </summary>
-    public void SetDistance(Entity<PinpointerComponent?> ent, Distance distance)
+    protected void SetDistance(Entity<PinpointerComponent?> ent, Distance distance)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -181,7 +249,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     If difference between current angle and new angle is smaller than
     ///     pinpointer precision, new value will be ignored and it will return false.
     /// </summary>
-    public bool TrySetArrowAngle(Entity<PinpointerComponent?> ent, Angle arrowAngle)
+    protected bool TrySetArrowAngle(Entity<PinpointerComponent?> ent, Angle arrowAngle)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
@@ -196,8 +264,9 @@ public abstract class SharedPinpointerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Activate/deactivate pinpointer screen. If it has target it will start tracking it.
+    ///     Activate/deactivate pinpointer screen.
     /// </summary>
+    [PublicAPI]
     public void SetActive(Entity<PinpointerComponent?> ent, bool isActive)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -211,9 +280,10 @@ public abstract class SharedPinpointerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Toggle Pinpointer screen. If it has target it will start tracking it.
+    ///     Toggle pinpointer screen.
     /// </summary>
-    /// <returns>True if pinpointer was activated, false otherwise</returns>
+    /// <returns>True if pinpointer was toggled successfully.</returns>
+    [PublicAPI]
     public virtual bool TogglePinpointer(Entity<PinpointerComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -221,6 +291,6 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         var isActive = !ent.Comp.IsActive;
         SetActive(ent, isActive);
-        return isActive;
+        return true;
     }
 }

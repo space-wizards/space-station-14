@@ -58,7 +58,8 @@
   parent: [ PinpointerBase, BaseCommandContraband ]
   components:
   - type: Pinpointer
-    target: !type:PinpointerComponentTarget
+    allTargets:
+    - !type:PinpointerComponentTarget
       name: nuclear authentication disk
       target: NukeDisk
 
@@ -93,7 +94,8 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    target: !type:PinpointerComponentTarget
+    allTargets:
+    - !type:PinpointerComponentTarget
       name: nuclear authentication disk
       target: NukeDisk
 
@@ -128,7 +130,7 @@
   - type: Icon
     state: pinpointer-way
   - type: Pinpointer
-    updateTargetName: true
+    targetLimit: 6
     canRetarget: true
 
 - type: entity
@@ -163,7 +165,8 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    target: !type:PinpointerComponentTarget
+    allTargets:
+    - !type:PinpointerComponentTarget
       target: ResearchServer
       name: the station
 
@@ -198,7 +201,8 @@
   - type: Icon
     state: pinpointer-xenoborg
   - type: Pinpointer
-    target: !type:PinpointerComponentTarget
+    allTargets:
+    - !type:PinpointerComponentTarget
       target: MothershipCore
       name: the Mothership
 
@@ -235,6 +239,10 @@
     layers:
     - state: pinpointer-xenoborg-repaired
       map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: [ "enum.PinpointerLayers.Screen" ]
+      shader: unshaded
+      visible: false
   - type: Icon
     state: pinpointer-xenoborg-repaired
   - type: Construction

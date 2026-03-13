@@ -51,16 +51,19 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         TogglePinpointer(ent.AsNullable());
 
-        if (!ent.Comp.CanRetarget)
-        {
-            UpdateTargetEntity(ent.AsNullable());
-        }
+        // We update the target entity in case a closer entity with the right constraints appears
+        UpdateTargetEntity(ent.AsNullable());
 
         args.Handled = true;
     }
 
+    /// <summary>
+    ///     Refreshes the entity target of all pinpointers when an FTL jump happens.
+    /// </summary>
     private void OnLocateTarget(ref FTLCompletedEvent ev)
     {
+        // This is necessary due to pinpointers only looking for entities within the current map.
+        // Otherwise, players will have to manually toggle their pinpointers off and on again every time they FTL jump to refresh them.
         // This feels kind of expensive, but it only happens once per hyperspace jump
 
         // todo: ideally, you would need to raise this event only on jumped entities
@@ -72,7 +75,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             if (pinpointer.CanRetarget)
                 continue;
 
-            SetTarget((uid,pinpointer), pinpointer.Target);
+            UpdateTargetEntity((uid,pinpointer));
         }
     }
 
@@ -213,6 +216,9 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     ///     used to calculate the closest entity with a given component, so Entity should almost always be
     ///     the pinpointer.
     /// </summary>
+    /// <remarks>
+    ///     Add a new case here if you are creating a new subclass of <see cref="PinpointerTarget"/>.
+    /// </remarks>
     private EntityUid? LocateTarget(EntityUid entity, PinpointerTarget? target)
     {
         EntityUid? result = null;
@@ -255,7 +261,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
                 if (!_xformQuery.TryComp(entity, out var transform))
                     break;
-                // write more here
+
                 result = FindTargetFromComponent((entity, transform), reg.Type, entProtoId.Target);
                 break;
             }

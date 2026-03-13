@@ -5,17 +5,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Pinpointer;
 
 /// <summary>
-/// Displays a sprite on the item that points towards the target component.
+/// Displays a sprite on the item that points towards a given <see cref="PinpointerTarget"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 [Access(typeof(SharedPinpointerSystem))]
 public sealed partial class PinpointerComponent : Component
 {
-    // TODO: Type serializer oh god
-    [DataField]
-    public string? Component;
-
     [DataField]
     public float MediumDistance = 16f;
 
@@ -32,15 +28,16 @@ public sealed partial class PinpointerComponent : Component
     public double Precision = 0.09;
 
     /// <summary>
-    ///     Whether or not additional targets can be added.
+    ///     Whether or not additional targets can be added. A pinpointer with this set to true
+    ///     is a universal pinpointer.
     /// </summary>
     [DataField]
     public bool CanRetarget;
 
     /// <summary>
-    ///     The pinpointer's target if a target has been specified by a retargeting.
+    ///     The pinpointer's target if a target has been specified by a retargeting. Do not define this in YML. If you
+    ///     need a pinpointer with a single target, add a single element to the AllTargets list.
     /// </summary>
-    [DataField]
     public PinpointerTarget? Target;
 
     /// <summary>
@@ -59,8 +56,11 @@ public sealed partial class PinpointerComponent : Component
     ///     Maximum number of possible targets i.e. max size of AllTargets
     /// </summary>
     [DataField]
-    public int TargetLimit = 6;
+    public int TargetLimit = 1;
 
+    /// <summary>
+    ///     If the pinpointer is turned on or not.
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public bool IsActive = false;
 
@@ -69,9 +69,6 @@ public sealed partial class PinpointerComponent : Component
 
     [ViewVariables, AutoNetworkedField]
     public Distance DistanceToTarget = Distance.Unknown;
-
-    [ViewVariables]
-    public bool HasTarget => DistanceToTarget != Distance.Unknown;
 }
 
 [Serializable, NetSerializable]
@@ -81,25 +78,41 @@ public enum Distance : byte
     Reached,
     Close,
     Medium,
-    Far
+    Far,
 }
 
 /// <summary>
-///     A target entry.
+///     A target entry for a pinpointer.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial record PinpointerTarget
 {
+    /// <summary>
+    ///     The name of the target, to be displayed when examining the pinpointer and when selecting
+    ///     a target.
+    /// </summary>
+    /// <remarks>
+    ///     This should almost always be the target's Identity.Name representation.
+    /// </remarks>
     [DataField]
     public string? Name;
 }
 
+/// <summary>
+///     A target entry for the nearest instance of an entity with a specific component.
+/// </summary>
 public sealed partial record PinpointerComponentTarget : PinpointerTarget
 {
+    /// <summary>
+    ///     A component to search entities for.
+    /// </summary>
     [DataField(required: true)]
     public string Target;
 }
 
+/// <summary>
+///     A target entry for a specific entity.
+/// </summary>
 public sealed partial record PinpointerEntityUidTarget : PinpointerTarget
 {
     [DataField(required: true)]
@@ -107,9 +120,8 @@ public sealed partial record PinpointerEntityUidTarget : PinpointerTarget
 }
 
 /// <summary>
-///     Search for a specific entity proto id from every entity with a given component.
-///     Component should NOT be something highly generic like transform because we will
-///     be querying for every entity with that component.
+///     A target entry for the nearest instance of an entity with a specific component and
+///     a specific EntProtoId.
 /// </summary>
 public sealed partial record PinpointerEntProtoIdTarget : PinpointerTarget
 {
