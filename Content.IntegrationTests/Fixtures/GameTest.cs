@@ -156,7 +156,7 @@ public abstract partial class GameTest
                 "More than one exclusive pair config attribute is present on the test fixture.");
         }
 
-        foreach (var attribute in pairAttribs.Concat(pairSuiteAttribs))
+        foreach (var attribute in pairSuiteAttribs.Concat(pairAttribs))
         {
             attribute.ApplyToPairSettings(this, ref settings);
         }
@@ -175,7 +175,7 @@ public abstract partial class GameTest
         var attribs = test.Method!.GetCustomAttributes<IGameTestModifier>(false);
         var suiteAttribs = test.Method!.TypeInfo.GetCustomAttributes<IGameTestModifier>(true);
 
-        foreach (var attribute in attribs.Concat(suiteAttribs))
+        foreach (var attribute in suiteAttribs.Concat(attribs))
         {
             await attribute.ApplyToTest(this);
         }
