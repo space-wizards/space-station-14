@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration
-      and shorter delay before activating.
-    type: Tweak
-  id: 9060
-  time: '2025-10-09T13:32:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40797
 - author: Princess-Cheeseballs
   changes:
   - message: Dying while asleep shouldn't permanently blind you anymore.
@@ -4008,3 +4000,10 @@
   id: 9570
   time: '2026-03-11T23:42:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43047
+- author: Centronias
+  changes:
+  - message: Wrapped parcels can now fit in mail carts.
+    type: Add
+  id: 9571
+  time: '2026-03-13T20:22:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43226
