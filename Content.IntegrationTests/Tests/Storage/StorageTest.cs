@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Shared.Containers;
 using Content.Shared.Item;
 using Content.Shared.Prototypes;
@@ -12,7 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Storage;
 
-public sealed class StorageTest
+public sealed class StorageTest : GameTest
 {
     /// <summary>
     /// Can an item store more than itself weighs.
@@ -21,7 +22,7 @@ public sealed class StorageTest
     [Test]
     public async Task StorageSizeArbitrageTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -44,13 +45,12 @@ public sealed class StorageTest
                     $"Found storage arbitrage on {proto.ID}");
             }
         });
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestStorageFillPrototypes()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -72,13 +72,12 @@ public sealed class StorageTest
                 }
             });
         });
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestSufficientSpaceForFill()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IEntityManager>();
@@ -159,14 +158,12 @@ public sealed class StorageTest
                 }
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestSufficientSpaceForEntityStorageFill()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IEntityManager>();
@@ -194,7 +191,6 @@ public sealed class StorageTest
                     $"{proto.ID} storage fill is too large.");
             });
         }
-        await pair.CleanReturnAsync();
     }
 
     private int GetEntrySize(EntitySpawnEntry entry, bool getCount, IPrototypeManager protoMan, SharedItemSystem itemSystem)
@@ -242,7 +238,7 @@ public sealed class StorageTest
     [Test]
     public async Task NoMultipleContainerFillsTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var compFact = pair.Server.ResolveDependency<IComponentFactory>();
 
         Assert.Multiple(() =>
@@ -258,6 +254,5 @@ public sealed class StorageTest
                 Assert.That(!proto.HasComponent<StorageFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(StorageFillComponent)}.");
             }
         });
-        await pair.CleanReturnAsync();
     }
 }

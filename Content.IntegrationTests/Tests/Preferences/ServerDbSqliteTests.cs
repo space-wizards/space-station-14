@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
 using Content.Shared.GameTicking;
@@ -24,7 +25,7 @@ using Robust.UnitTesting;
 namespace Content.IntegrationTests.Tests.Preferences
 {
     [TestFixture]
-    public sealed class ServerDbSqliteTests
+    public sealed class ServerDbSqliteTests : GameTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -73,18 +74,16 @@ namespace Content.IntegrationTests.Tests.Preferences
         [Test]
         public async Task TestUserDoesNotExist()
         {
-            var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var db = GetDb(pair.Server);
             // Database should be empty so a new GUID should do it.
             Assert.That(await db.GetPlayerPreferencesAsync(NewUserId()), Is.Null);
-
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestInitPrefs()
         {
-            var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var db = GetDb(pair.Server);
             var preferences = (ServerPreferencesManager)pair.Server.ResolveDependency<IServerPreferencesManager>();
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
@@ -94,13 +93,12 @@ namespace Content.IntegrationTests.Tests.Preferences
             var prefs = await db.GetPlayerPreferencesAsync(username);
             var profile = preferences.ConvertProfiles(prefs!.Profiles.Find(p => p.Slot == slot));
             Assert.That(profile.MemberwiseEquals(originalProfile));
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestDeleteCharacter()
         {
-            var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var db = GetDb(server);
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
@@ -110,18 +108,16 @@ namespace Content.IntegrationTests.Tests.Preferences
             await db.SaveCharacterSlotAsync(username, null, 1);
             var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.That(prefs!.Profiles, Has.Count.EqualTo(1));
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestNoPendingDatabaseChanges()
         {
-            var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var db = GetDb(server);
             Assert.That(async () => await db.HasPendingModelChanges(), Is.False,
                 "The database has pending model changes. Add a new migration to apply them. See https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations");
-            await pair.CleanReturnAsync();
         }
 
         private static NetUserId NewUserId()
@@ -137,7 +133,7 @@ namespace Content.IntegrationTests.Tests.Preferences
         [TestCaseSource(nameof(_trueFalse))]
         public async Task InvalidSpeciesConversion(bool legacy)
         {
-            var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var db = GetDb(pair.Server);
             var preferences = (ServerPreferencesManager)pair.Server.ResolveDependency<IServerPreferencesManager>();
@@ -169,8 +165,6 @@ namespace Content.IntegrationTests.Tests.Preferences
                 Assert.That(converted.Characters[0].Species, Is.Not.EqualTo(InvalidSpecies));
                 Assert.That(converted.Characters[0].Species, Is.EqualTo(HumanoidCharacterProfile.DefaultSpecies));
             });
-
-            await pair.CleanReturnAsync();
         }
     }
 }

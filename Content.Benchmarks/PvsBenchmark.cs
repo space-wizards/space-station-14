@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
@@ -50,7 +51,7 @@ public class PvsBenchmark
 #endif
         PoolManager.Startup();
 
-        _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
+        _pair = PoolManager.GetServerClient(testContext: new ExternalTestContext("Benchmark", StreamWriter.Null)).GetAwaiter().GetResult();
         _entMan = _pair.Server.ResolveDependency<IEntityManager>();
         _pair.Server.CfgMan.SetCVar(CVars.NetPVS, true);
         _pair.Server.CfgMan.SetCVar(CVars.ThreadParallelCount, 0);
