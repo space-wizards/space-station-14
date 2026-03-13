@@ -47,6 +47,7 @@ public sealed partial class DamageableComponent : Component
     ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
     /// </remarks>
     [DataField]
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
     public DamageSpecifier Damage = new();
 
     /// <summary>
@@ -56,12 +57,15 @@ public sealed partial class DamageableComponent : Component
     ///     Groups which have no members that are supported by this component will not be present in this
     ///     dictionary.
     /// </remarks>
-    [ViewVariables] public Dictionary<string, FixedPoint2> DamagePerGroup = new();
+    [ViewVariables]
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
+    public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> DamagePerGroup = new();
 
     /// <summary>
     ///     The sum of all damages in the DamageableComponent.
     /// </summary>
     [ViewVariables]
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
     public FixedPoint2 TotalDamage;
 
     [DataField("radiationDamageTypes")]

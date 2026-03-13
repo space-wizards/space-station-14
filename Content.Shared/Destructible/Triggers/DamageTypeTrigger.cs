@@ -28,7 +28,7 @@ public sealed partial class DamageTypeTrigger : IThresholdTrigger
 
     public bool Reached(Entity<DamageableComponent> damageable, SharedDestructibleSystem system)
     {
-        return damageable.Comp.Damage.DamageDict.TryGetValue(DamageType, out var damageReceived) &&
+        return system.Damageable.GetAllDamage(damageable.AsNullable()).DamageDict.TryGetValue(DamageType, out var damageReceived) &&
                damageReceived >= Damage;
     }
 }

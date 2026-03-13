@@ -115,3 +115,10 @@
         enabled:
           True: { state: active }
           False: { state: spent }
+  - type: RemoveComponentsOnTrigger # should prevent it from being re-triggered
+    keysIn:
+    - timer
+    triggerOnce: true
+    components:
+    - type: TriggerOnUse
+    - type: TimerTrigger

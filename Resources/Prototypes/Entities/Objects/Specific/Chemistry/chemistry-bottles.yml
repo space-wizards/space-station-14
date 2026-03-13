@@ -620,21 +620,6 @@
           Quantity: 30
 
 - type: entity
-  id: ChemistryBottleNecrosol
-  suffix: necrosol
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: Label
-    currentLabel: reagent-name-necrosol
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Necrosol
-          Quantity: 30
-
-- type: entity
   id: ChemistryBottleOculine
   suffix: oculine
   parent: BaseChemistryBottleFilled
@@ -1476,7 +1461,6 @@
     - id: ChemistryBottleLeporazine
     - id: ChemistryBottleLipozine
     - id: ChemistryBottleMannitol
-    - id: ChemistryBottleNecrosol
     - id: ChemistryBottleOculine
     - id: ChemistryBottleOmnizine
     - id: ChemistryBottleOpporozidone

@@ -1,66 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Buckets are now destructible.
-    type: Tweak
-  id: 9052
-  time: '2025-10-08T13:58:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40772
-- author: UpAndLeaves
-  changes:
-  - message: Zombie infections now take approximately three minutes longer to bring
-      a fully healed person to critical condition.
-    type: Tweak
-  id: 9053
-  time: '2025-10-08T14:11:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37445
-- author: YoungThugSS14
-  changes:
-  - message: The temperature gun bolts now count as energy projectiles for the sake
-      of reflection.
-    type: Tweak
-  - message: The temperature gun's cold projectile can no longer pass through windows.
-    type: Fix
-  - message: The temperature gun now has color-appropriate muzzle flashes.
-    type: Fix
-  id: 9054
-  time: '2025-10-08T15:10:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37581
-- author: K-Dynamic
-  changes:
-  - message: Energy shotgun lethal projectiles can now hit holo mobs.
-    type: Fix
-  id: 9055
-  time: '2025-10-08T15:23:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37920
-- author: Hitlinemoss
-  changes:
-  - message: Folders and clipboards are now available in the Trinkets loadout tab.
-    type: Add
-  id: 9056
-  time: '2025-10-08T15:49:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39920
-- author: SlamBamActionman
-  changes:
-  - message: Disablers, temperature guns and tasers can now hit holo mobs.
-    type: Fix
-  id: 9057
-  time: '2025-10-08T21:59:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40782
-- author: Centronias
-  changes:
-  - message: You can now attach paper labels to wrapped parcels.
-    type: Add
-  id: 9058
-  time: '2025-10-08T22:27:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40783
-- author: ToastEnjoyer
-  changes:
-  - message: On fland, the wardens enforcer has been removed.
-    type: Remove
-  id: 9059
-  time: '2025-10-08T23:45:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40786
 - author: SlamBamActionman
   changes:
   - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration
@@ -3991,3 +3929,82 @@
   id: 9562
   time: '2026-03-01T23:28:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43094
+- author: UpAndLeaves
+  changes:
+  - message: Added storage:query and inventory:query commands
+    type: Add
+  id: 9563
+  time: '2026-03-03T18:09:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40813
+- author: ProPeperos
+  changes:
+  - message: Hyper Autolathe now needs 4 manipulators instead of 3
+    type: Tweak
+  id: 9564
+  time: '2026-03-04T05:08:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43109
+- author: neomoth
+  changes:
+  - message: Multi-directional eldritch horror Tippy is no more.
+    type: Fix
+  id: 9565
+  time: '2026-03-06T16:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43082
+- author: august-sun
+  changes:
+  - message: The Estoc DMR now has less slowdown when wielding and the same accuracy
+      as other rifles.
+    type: Tweak
+  id: 9566
+  time: '2026-03-07T02:00:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43038
+- author: sowelipililimute
+  changes:
+  - message: Underlying technical work for future medical improvements have resulted
+      in the following changes to better accomodate future development. Please note
+      that these changes are not representative of the final product and that the
+      medical balance will receive a major overhaul once limb and organ damage are
+      fully implemented.
+    type: Tweak
+  - message: Passive regeneration on mobs no longer stops after taking a certain amount
+      of damage.
+    type: Tweak
+  - message: Necrosol has been removed in favour of Acryox always healing, regardless
+      of damage.
+    type: Remove
+  - message: Hyperzine now heals you when critical, rather than relying on being above
+      a certain amount of damage.
+    type: Tweak
+  - message: Tricordrazine and Holy Water no longer have an upper damage
+    type: Tweak
+  - message: Changeling devour damage is no longer capped
+    type: Tweak
+  id: 9567
+  time: '2026-03-07T04:26:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43103
+- author: Minemoder
+  changes:
+  - message: Vulpkanins can now use Gauze markings.
+    type: Add
+  id: 9568
+  time: '2026-03-07T21:39:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43096
+- author: 11BelowStudio
+  changes:
+  - message: Spent air grenades cannot be re-triggered.
+    type: Fix
+  id: 9569
+  time: '2026-03-08T01:05:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42866
+- author: ScarKy0
+  changes:
+  - message: Hostile vent critters now crawl out of a single vent, alerting the station
+      about the location in advance.
+    type: Add
+  - message: Friendly critters no longer have an announcement when spawning.
+    type: Remove
+  - message: Vent critters can no longer spawn on unachored vents.
+    type: Fix
+  id: 9570
+  time: '2026-03-11T23:42:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43047
