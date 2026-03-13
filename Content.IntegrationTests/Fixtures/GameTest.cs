@@ -195,28 +195,16 @@ public abstract partial class GameTest
     {
         foreach (var field in target.GetType().GetAllFields())
         {
-            if (field.GetCustomAttribute<SystemAttribute>() is { } sysAttrib)
-            {
-                // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-                if (sysAttrib.Side is Side.Server)
-                {
-                    field.SetValue(target, Server.EntMan.EntitySysManager.GetEntitySystem(field.FieldType));
-                }
-                else
-                {
-                    field.SetValue(target, Client.EntMan.EntitySysManager.GetEntitySystem(field.FieldType));
-                }
-            }
-            else if (field.GetCustomAttribute<SidedDependencyAttribute>() is { } depAttrib)
+            if (field.GetCustomAttribute<SidedDependencyAttribute>() is { } depAttrib)
             {
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (depAttrib.Side is Side.Server)
                 {
-                    field.SetValue(target, Server.InstanceDependencyCollection.ResolveType(field.FieldType));
+                    field.SetValue(target, Server.EntMan.EntitySysManager.DependencyCollection.ResolveType(field.FieldType));
                 }
                 else
                 {
-                    field.SetValue(target, Client.InstanceDependencyCollection.ResolveType(field.FieldType));
+                    field.SetValue(target, Client.EntMan.EntitySysManager.DependencyCollection.ResolveType(field.FieldType));
                 }
             }
         }
