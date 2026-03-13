@@ -225,9 +225,6 @@ public sealed class AddTests : GameTest
 
             return true;
         });
-
-        await pair.CleanReturnAsync();
-        Assert.Pass();
     }
 
     [Test]
@@ -263,9 +260,6 @@ public sealed class AddTests : GameTest
 
             return true;
         });
-
-        await pair.CleanReturnAsync();
-        Assert.Pass();
     }
 }
 
@@ -335,7 +329,6 @@ public sealed class PreRoundAddTests : GameTest
 
             json.Dispose();
         }
-        await pair.CleanReturnAsync();
     }
 
 }

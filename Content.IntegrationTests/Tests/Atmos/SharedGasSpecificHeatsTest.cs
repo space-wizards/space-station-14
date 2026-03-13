@@ -37,7 +37,7 @@ public sealed class SharedGasSpecificHeatsTest
         {
             Connected = true,
         };
-        _pair = await PoolManager.GetServerClient(poolSettings);
+        _pair = await PoolManager.GetServerClient(poolSettings, new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
 
         _sEntMan = Server.ResolveDependency<IEntityManager>();
         _cEntMan = Client.ResolveDependency<IEntityManager>();

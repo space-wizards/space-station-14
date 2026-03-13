@@ -28,6 +28,11 @@ public sealed class ObjectiveCommandsTest : GameTest
   - type: DieCondition
 """;
 
+    public override PoolSettings PoolSettings => new ()
+    {
+        Connected = false
+    };
+
     /// <summary>
     /// Creates a dummy session, and assigns it a mind, then
     /// tests using <c>addobjective</c>, <c>lsobjectives</c>,
