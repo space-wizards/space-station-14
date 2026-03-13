@@ -44,6 +44,20 @@ namespace Content.Server.Atmos.EntitySystems
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
         }
 
+        public override bool IsMixtureFuel(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
+        {
+            Span<float> tmp = stackalloc float[Atmospherics.AdjustedNumberOfGases];
+            NumericsHelpers.Multiply(mixture.Moles, GasFuelMask, tmp);
+            return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
+        }
+
+        public override bool IsMixtureOxidizer(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
+        {
+            Span<float> tmp = stackalloc float[Atmospherics.AdjustedNumberOfGases];
+            NumericsHelpers.Multiply(mixture.Moles, GasOxidizerMask, tmp);
+            return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
+        }
+
         /// <summary>
         ///     Return speedup factor for pumped or flow-based devices that depend on MaxTransferRate.
         /// </summary>
