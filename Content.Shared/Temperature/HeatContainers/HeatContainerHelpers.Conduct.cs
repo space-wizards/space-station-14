@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Content.Shared.Temperature.HeatContainer;
+namespace Content.Shared.Temperature.HeatContainers;
 
 public static partial class HeatContainerHelpers
 {
@@ -57,7 +57,7 @@ public static partial class HeatContainerHelpers
     [PublicAPI]
     public static float ConductHeat(this ref HeatContainer cA, ref HeatContainer cB, float deltaTime, float g)
     {
-        var dQ = ConductHeatQuery(ref cA, cB.Temperature, deltaTime, g);
+        var dQ = ConductHeatQuery(ref cA, ref cB, deltaTime, g);
         cA.AddHeat(dQ);
         cB.AddHeat(-dQ);
         return dQ;
@@ -118,7 +118,11 @@ public static partial class HeatContainerHelpers
     [PublicAPI]
     public static float ConductHeatQuery(this ref HeatContainer c1, ref HeatContainer c2, float deltaTime, float g)
     {
-        return ConductHeatQuery(ref c1, c2.Temperature, deltaTime, g);
+        var dQ = g * (c2.Temperature - c1.Temperature) * deltaTime;
+        var dQMax = Math.Min(Math.Abs(c1.ConductHeatToTempQuery(c2.Temperature)), Math.Abs(c2.ConductHeatToTempQuery(c1.Temperature)));
+
+        // Clamp the transferred heat amount in case we are overshooting the equilibrium temperature because our time step was too large.
+        return Math.Clamp(dQ, -dQMax, dQMax);
     }
 
     /// <summary>

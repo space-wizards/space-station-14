@@ -6,6 +6,7 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Projectiles;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.HeatContainers;
 using Content.Shared.Temperature.Systems;
 
 namespace Content.Server.Temperature.Systems;
@@ -20,13 +21,22 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
 
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
-        Subs.SubscribeWithRelay<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt, held: false);
+        Subs.SubscribeWithRelay<TemperatureProtectionComponent, BeforeHeatExchangeEvent>(OnBeforeHeatExchange, held: false);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
         SubscribeLocalEvent<ChangeTemperatureOnCollideComponent, ProjectileHitEvent>(ChangeTemperatureOnCollide);
 
         InitializeDamage();
+    }
+
+    protected override void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)
+    {
+        base.OnMapInit(entity, ref args);
+
+        // Force test fails for species so they don't spawn cold!
+        if (_thermalRegulatorQuery.TryComp(entity, out var comp))
+            entity.Comp.HeatContainer.Temperature = comp.NormalBodyTemperature;
     }
 
     public override void Update(float frameTime)
@@ -37,72 +47,31 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
         var query = EntityQueryEnumerator<InternalTemperatureComponent, TemperatureComponent>();
         while (query.MoveNext(out var uid, out var comp, out var temp))
         {
-            // don't do anything if they equalised
+            // don't do anything if they equalized
             var diff = Math.Abs(temp.CurrentTemperature - comp.Temperature);
             if (diff < 0.1f)
                 continue;
 
-            // heat flow in W/m^2 as per fourier's law in 1D.
-            var q = comp.Conductivity * diff / comp.Thickness;
-
-            // convert to J then K
-            var joules = q * comp.Area * frameTime;
-            var degrees = joules / GetHeatCapacity(uid, temp);
-            if (temp.CurrentTemperature < comp.Temperature)
-                degrees *= -1;
-
-            // exchange heat between inside and surface
-            comp.Temperature += degrees;
-            ForceChangeTemperature(uid, temp.CurrentTemperature - degrees, temp);
+            // TODO: Heat containers one day. Currently not worth the effort though.
+            var dQ = ConductHeat((uid, temp), comp.Temperature, frameTime, comp.Conductance, true);
+            comp.Temperature -= dQ / temp.HeatCapacity;
         }
 
         UpdateDamage();
     }
 
-    public void ForceChangeTemperature(EntityUid uid, float temp, TemperatureComponent? temperature = null)
-    {
-        if (!TemperatureQuery.Resolve(uid, ref temperature))
-            return;
-
-        var lastTemp = temperature.CurrentTemperature;
-        var delta = temperature.CurrentTemperature - temp;
-        temperature.CurrentTemperature = temp;
-        RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), broadcast: true);
-    }
-
-    public override void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false, TemperatureComponent? temperature = null)
-    {
-        if (!TemperatureQuery.Resolve(uid, ref temperature, false))
-            return;
-
-        if (!ignoreHeatResistance)
-        {
-            var ev = new ModifyChangedTemperatureEvent(heatAmount);
-            RaiseLocalEvent(uid, ev);
-            heatAmount = ev.TemperatureDelta;
-        }
-
-        float lastTemp = temperature.CurrentTemperature;
-        temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
-        float delta = temperature.CurrentTemperature - lastTemp;
-
-        RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), broadcast: true);
-    }
-
-    private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature, ref AtmosExposedUpdateEvent args)
+    private void OnAtmosExposedUpdate(Entity<TemperatureComponent> entity, ref AtmosExposedUpdateEvent args)
     {
         var transform = args.Transform;
 
         if (transform.MapUid == null)
             return;
 
-        var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
-        var airHeatCapacity = _atmosphere.GetHeatCapacity(args.GasMixture, false);
-        var heatCapacity = GetHeatCapacity(uid, temperature);
-        // TODO ATMOS: This heat transfer formula is really really wrong, it needs to be pulled out. Pending on HeatContainers.
-        var heat = temperatureDelta * (airHeatCapacity * heatCapacity /
-                                       (airHeatCapacity + heatCapacity));
-        ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
+        // TODO ATMOS: Atmos heat containers!!!
+        // We purposefully do not change the gas mixture's heat because it will cause vacuums to heat up to be 20x hotter than the core of the sun.
+        var atmosContainer = new HeatContainer(_atmosphere.GetHeatCapacity(args.GasMixture, false), args.GasMixture.Temperature);
+        ConductHeat(entity.AsNullable(), ref atmosContainer, args.DeltaTime, 1f);
+        args.GasMixture.Temperature = atmosContainer.Temperature;
     }
 
     private void OnInit(Entity<InternalTemperatureComponent> entity, ref MapInitEvent args)
@@ -110,24 +79,18 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
         if (!TemperatureQuery.TryComp(entity, out var temp))
             return;
 
-        entity.Comp.Temperature = temp.CurrentTemperature;
+        // TODO: Make this use heat containers as well. Rn I'm lazy and it's only used for the chef who I hate!!!
+        entity.Comp.Temperature = temp.HeatContainer.Temperature;
     }
 
-    private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
+    private void OnRejuvenate(Entity<TemperatureComponent> entity, ref RejuvenateEvent args)
     {
-        ForceChangeTemperature(uid, Atmospherics.T20C, comp);
+        SetTemperature(entity.AsNullable(), _thermalRegulatorQuery.CompOrNull(entity)?.NormalBodyTemperature ?? Atmospherics.T20C);
     }
 
-    private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)
+    private void OnBeforeHeatExchange(Entity<TemperatureProtectionComponent> entity, ref BeforeHeatExchangeEvent args)
     {
-        var coefficient = args.TemperatureDelta < 0
-            ? component.CoolingCoefficient
-            : component.HeatingCoefficient;
-
-        var ev = new GetTemperatureProtectionEvent(coefficient);
-        RaiseLocalEvent(uid, ref ev);
-
-        args.TemperatureDelta *= ev.Coefficient;
+        args.Conductance *= entity.Comp.Coefficient;
     }
 
     private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)

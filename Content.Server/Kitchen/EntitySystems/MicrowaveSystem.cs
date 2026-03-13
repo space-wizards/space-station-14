@@ -178,12 +178,9 @@ namespace Content.Server.Kitchen.EntitySystems
             var heatToAdd = time * component.BaseHeatMultiplier;
             foreach (var entity in component.Storage.ContainedEntities)
             {
-                if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                    _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
+                _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false);
 
-                if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
-                    continue;
-                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
                 {
                     var solution = soln.Comp.Solution;
                     if (solution.Temperature > component.TemperatureUpperThreshold)

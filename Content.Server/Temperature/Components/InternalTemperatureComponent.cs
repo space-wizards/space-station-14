@@ -1,4 +1,5 @@
 using Content.Server.Temperature.Systems;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Temperature.Components;
 
@@ -22,27 +23,13 @@ public sealed partial class InternalTemperatureComponent : Component
     public float Temperature;
 
     /// <summary>
-    /// Thermal conductivity of the material in W/m/K.
-    /// Higher conductivity means its insides will heat up faster.
+    /// Thermal Conductance in W/K.
+    /// Precalculated by multiplying meat's thermal conductivity of about 0.4 W/(m*K) by the total surface area of the meat,
+    /// and dividing by the thickness of the meat.
+    /// Then we multiply by four because we should only care about half the thickness typically, and also we're sharing a heat capacity.
+    /// Yes this is stupid. I'll care when chef has content or this is used by BodySystem.
+    /// No I'm not doing a custom value for each piece of meat.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Conductivity = 0.5f;
-
-    /// <summary>
-    /// Average thickness between the surface and the inside.
-    /// For meats and such this is constant.
-    /// Thicker materials take longer for heat to dissipate.
-    /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public float Thickness;
-
-    /// <summary>
-    /// Surface area in m^2 for the purpose of conducting surface temperature to the inside.
-    /// Larger surface area means it takes longer to heat up/cool down
-    /// </summary>
-    /// <remarks>
-    /// For meats etc this should just be the area of the cooked surface not the whole thing as it's only getting heat from one side usually.
-    /// </remarks>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public float Area;
+    [DataField]
+    public float Conductance = 40f;
 }

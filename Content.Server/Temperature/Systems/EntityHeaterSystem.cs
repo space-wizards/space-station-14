@@ -41,7 +41,7 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
             var energy = power.PowerReceived * deltaTime;
             foreach (var ent in placer.PlacedEntities)
             {
-                _temperature.ChangeHeat(ent, energy);
+                _temperature.ChangeHeat(ent, energy / placer.PlacedEntities.Count);
             }
         }
     }
