@@ -51,25 +51,24 @@ public sealed class TopicalsTest : InteractionTest
         var damageableSystem = SEntMan.System<DamageableSystem>();
         var sharedStackSystem = SEntMan.System<SharedStackSystem>();
 
-        await AddAtmosphere(); // prevent the InteractionTestMob from suffocating
+        await AddAtmosphere(); // prevent everyone from suffocating
 
-        //For every topical we need to test
+        //Spawn a new urist
+        var urist = await SpawnTarget(MobHuman);
+        var damageableComp = Comp<DamageableComponent>(urist);
+        //Stop passive healing from messing with the numbers
+        var passivehealing = Comp<PassiveDamageComponent>(urist);
+        passivehealing.Damage = new();
+
+        //For each topical we need to test
         foreach (EntProtoId topicalID in TopicalsToBeTested)
         {
-            //Spawn a new urist
-            var urist = await SpawnTarget(MobHuman);
-            var damageableComp = Comp<DamageableComponent>(urist);
-
             //Hold the topical stack
             var topical = await PlaceInHands(topicalID, 10);
             var topicalUid = SEntMan.GetEntity(topical);
 
             var healingComp = Comp<HealingComponent>(topical);
             var stackComp = Comp<StackComponent>(topical);
-
-            //Stop passive healing from messing with the numbers
-            var passivehealing = Comp<PassiveDamageComponent>(urist);
-            passivehealing.Damage = new();
 
             var emptyDamageSpecifier = new DamageSpecifier();
             var startStackSize = stackComp.Count;
