@@ -168,6 +168,8 @@ public abstract partial class GameTest
             Client.WaitPost(() => ClientThread = Thread.CurrentThread)
         );
 
+        await Pair.ReallyBeIdle(5); // Arbitrary setup time wait.
+
         InjectDependencies(this);
 
         var attribs = test.Method!.GetCustomAttributes<IGameTestModifier>(false);
