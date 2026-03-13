@@ -31,7 +31,6 @@
   components:
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
 
 #Alternate / slim basic armor vest
@@ -131,7 +130,6 @@
     sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
 
 - type: entity

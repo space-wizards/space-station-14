@@ -93,7 +93,6 @@
   - type: GroupExamine
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
 
 - type: entity
@@ -265,7 +264,6 @@
     slots: WITHOUT_POCKET
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
   - type: AddAccentClothing
     accent: BarkAccent
