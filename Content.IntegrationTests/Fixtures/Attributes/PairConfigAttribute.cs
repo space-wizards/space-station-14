@@ -14,7 +14,6 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 public sealed class PairConfigAttribute(Type? sourceType, string sourceMember) : Attribute, IGameTestPairConfigModifier
 {
     public bool Exclusive => true;
-    public IReadOnlySet<string> AffectedProperties { get; } = new HashSet<string>();
 
     public readonly Type? SourceType = sourceType;
     public readonly string SourceMember = sourceMember;
