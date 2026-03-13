@@ -17,8 +17,9 @@
     allowed:
     - Electrocution
   - type: Repairable
-    doAfterDelay: 8
-    fuelCost: 15
+    damageValue: -15 # 8 seconds to repair from dead
+    doAfterDelay: 1
+    fuelCost: 0.5
   - type: Pullable
   - type: Tag
     tags:
@@ -320,8 +321,6 @@
       Alive:
         reagent: Tricordrazine
         quantity: 30
-        minDamage: 0
-        maxDamage: 50
       Critical:
         reagent: Inaprovaline
         quantity: 15

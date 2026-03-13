@@ -280,3 +280,18 @@
   - type: GuideHelp
     guides:
     - FoodRecipes
+
+- type: entity
+  parent: [ BaseFlatpack, BaseXenoborgContraband ]
+  id: XenoborgExtractorFlatpack
+  name: xenoborg extractor flatpack
+  description: A flatpack used for constructing a xenoborg extractor.
+  components:
+  - type: Item
+    size: Normal
+  - type: Flatpack
+    entity: XenoborgExtractor
+  - type: GuideHelp
+    guides:
+    - Xenoborgs
+

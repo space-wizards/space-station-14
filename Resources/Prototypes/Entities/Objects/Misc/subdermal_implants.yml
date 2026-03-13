@@ -250,6 +250,7 @@
     implantAction: ActionChangeVoiceMaskImplant
   - type: VoiceMask
     overrideIdentity: true
+    changeIDName: true
   - type: UserInterface
     interfaces:
       enum.VoiceMaskUIKey.Key:
