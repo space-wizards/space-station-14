@@ -23,6 +23,7 @@ namespace Content.IntegrationTests.Tests
 
         public override PoolSettings PoolSettings => new()
         {
+            Connected = true,
             Dirty = true
         };
 
@@ -177,7 +178,7 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await pair.RunTicksSync(15);
+            await pair.RunUntilSynced();
 
             // Make sure the client actually received the entities
             // 500 is completely arbitrary. Note that the client & sever entity counts aren't expected to match.
