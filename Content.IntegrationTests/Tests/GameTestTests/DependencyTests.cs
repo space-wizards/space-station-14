@@ -6,19 +6,19 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.NUnit.Constraints;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameTestTests;
 
 [TestOf(typeof(GameTest))]
 [TestOf(typeof(SidedDependencyAttribute))]
-[TestOf(typeof(SystemAttribute))]
 public sealed class DependencyTests : GameTest
 {
-    [System(Side.Server)] private readonly SharedGameTicker _sGameTicker = null!;
-    [System(Side.Client)] private readonly SharedGameTicker _cGameTicker = null!;
+    [SidedDependency(Side.Server)] private readonly SharedGameTicker _sGameTicker = null!;
+    [SidedDependency(Side.Client)] private readonly SharedGameTicker _cGameTicker = null!;
+    [SidedDependency(Side.Server)] private readonly EntityQuery<TransformComponent> _sXformQuery = default!;
 
     [Test]
-    [TestOf(typeof(SidedDependencyAttribute))]
     [Description("Asserts that sided dependencies actually grab from the right sides.")]
     public void DependenciesRespectSides()
     {
@@ -31,7 +31,6 @@ public sealed class DependencyTests : GameTest
     }
 
     [Test]
-    [TestOf(typeof(SystemAttribute))]
     [Description("Asserts that system dependencies actually grab from the right sides.")]
     public void SystemDependenciesRespectSides()
     {
@@ -42,5 +41,14 @@ public sealed class DependencyTests : GameTest
             Assert.That(_sGameTicker, Is.TypeOf<GameTicker>());
             Assert.That(_cGameTicker, Is.TypeOf<ClientGameTicker>());
         }
+    }
+
+    [Test]
+    [Description("Asserts that query dependencies function")]
+    public async Task QueryDependencies()
+    {
+        var ent = await Spawn(null);
+
+        Assert.That(_sXformQuery.HasComp(ent), Is.True);
     }
 }
