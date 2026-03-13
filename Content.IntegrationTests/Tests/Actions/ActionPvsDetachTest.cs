@@ -12,8 +12,8 @@ namespace Content.IntegrationTests.Tests.Actions;
 [TestFixture]
 public sealed class ActionPvsDetachTest : GameTest
 {
-    [System(Side.Server)] private readonly SharedActionsSystem _sActionsSys = null!;
-    [System(Side.Client)] private readonly SharedActionsSystem _cActionsSys = null!;
+    [SidedDependency(Side.Server)] private readonly SharedActionsSystem _sActionsSys = null!;
+    [SidedDependency(Side.Client)] private readonly SharedActionsSystem _cActionsSys = null!;
 
     [Test]
     public async Task TestActionDetach()
