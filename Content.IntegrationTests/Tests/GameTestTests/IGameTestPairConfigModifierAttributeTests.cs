@@ -13,7 +13,6 @@ public sealed class IGameTestPairConfigModifierAttributeTests : GameTest
         Assert.That(Pair.Settings.Connected, Is.True);
     }
 
-
     [Test]
     [PairConfig(nameof(PsDisconnected))]
     [Description("Ensures pair settings apply.")]
