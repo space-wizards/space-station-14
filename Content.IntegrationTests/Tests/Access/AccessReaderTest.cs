@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests.Access
   - type: AccessReader
 ";
 
-        [System(Side.Server)] private readonly AccessReaderSystem _system = null!;
+        [SidedDependency(Side.Server)] private readonly AccessReaderSystem _system = null!;
 
         [Test]
         [RunOnSide(Side.Server)]
