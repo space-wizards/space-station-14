@@ -27,7 +27,6 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly EmagSystem _emag = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly ParcelWrappingSystem _parcelWrapping = default!;
 
         private void InitializeConsole()
         {
