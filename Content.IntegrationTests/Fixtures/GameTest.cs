@@ -206,7 +206,11 @@ public abstract partial class GameTest
                 }
                 else
                 {
-                    field.SetValue(target, Client.EntMan.EntitySysManager.DependencyCollection.ResolveType(field.FieldType));
+                    // Must be initially connected for this...
+                    if (Client.Session is not null)
+                        field.SetValue(target, Client.EntMan.EntitySysManager.DependencyCollection.ResolveType(field.FieldType));
+                    else
+                        field.SetValue(target, Client.InstanceDependencyCollection.ResolveType(field.FieldType));
                 }
             }
         }
