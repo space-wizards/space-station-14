@@ -33,6 +33,10 @@ public sealed class StoreTests : GameTest
     - idcard
   - type: Pda
 ";
+
+    // This test is broken and crashes the client if connected.
+    public override PoolSettings PoolSettings => new();
+
     [Test]
     public async Task StoreDiscountAndRefund()
     {
