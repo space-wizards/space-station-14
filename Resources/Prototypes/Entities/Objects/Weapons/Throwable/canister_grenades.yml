@@ -43,10 +43,10 @@
         Quantity: 30
 
 - type: entity
-  parent: [ SmokeGrenade, BaseSecurityContraband ]
+  parent: [ SmokeGrenade, BaseSyndicateContraband ]
   id: GlueGrenade
   name: Gluenade
-  description: A grenade filled with industrial-strength adhesive, guaranteed to slow down any who stand in the resultant foam.
+  description: A grenade filled with industrial-strength adhesive, guaranteed to slow down any who stand in the affected area. The adhesive evaporates over time.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/glue.rsi

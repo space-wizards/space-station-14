@@ -54,6 +54,9 @@ uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and 
 uplink-smoke-grenade-name = Smoke Grenade
 uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke, perfect for killing someone in the shadows or making a sneaky getaway.
 
+uplink-glue-grenade-name = Gluenade
+uplink-glue-grenade-desc = A grenade that spreads ultra-strong adhesive over a large area, slowing down opponents significantly. Evaporates over time.
+
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a 5 second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
