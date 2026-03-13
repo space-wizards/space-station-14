@@ -1604,6 +1604,7 @@
       - state: icon-xenoborg-radioactive
   - type: ComponentBorgModule
     components:
+    - type: XenoborgVisuals
     - type: RadiationSource
       intensity: 0.75
       slope: 0.2
