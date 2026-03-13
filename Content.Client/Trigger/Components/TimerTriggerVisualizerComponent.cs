@@ -40,4 +40,16 @@ public sealed partial class TimerTriggerVisualsComponent : Component
     /// </summary>
     [ViewVariables]
     public Animation PrimingAnimation = default!;
+
+    /// <summary>
+    /// Optional in-hand visuals to show a primed animation
+    /// </summary>
+    [DataField]
+    public string? InHandPrimedName;
+
+    /// <summary>
+    /// Optional in-hand visuals to show an unprimed state
+    /// </summary>
+    [DataField]
+    public string? InHandUnprimedName;
 }

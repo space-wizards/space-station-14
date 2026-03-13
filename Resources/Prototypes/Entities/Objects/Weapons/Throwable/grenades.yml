@@ -20,6 +20,9 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 2 # 2 beeps total (at 0 and 2)
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   name: flashbang
@@ -51,6 +54,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
   - type: GuideHelp
     guides:
     - Security
@@ -315,6 +320,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   name: modular grenade
@@ -382,6 +389,9 @@
     - trigger
   - type: StaticPrice
     price: 666 # 2000 for 3, I love fractions
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   name: holy hand grenade
@@ -409,6 +419,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/hallelujah.ogg
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
   - type: StaticPrice
     price: 10000
 

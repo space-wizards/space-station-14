@@ -26,6 +26,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/clusterbang.rsi
     state: base-0
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   parent: ClusterBang
@@ -91,6 +94,9 @@
     positional: true
   - type: StaticPrice
     price: 2500
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   parent: [FragileGrenadeBase, ScatteringGrenadeBase, ImpactGrenadeBase, BaseSyndicateContraband]

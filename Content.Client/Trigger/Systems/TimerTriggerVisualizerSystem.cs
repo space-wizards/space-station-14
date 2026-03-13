@@ -1,4 +1,7 @@
+using Content.Client.Items.Systems;
 using Content.Client.Trigger.Components;
+using Content.Shared.Hands;
+using Content.Shared.Item;
 using Content.Shared.Trigger;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -9,11 +12,14 @@ namespace Content.Client.Trigger.Systems;
 public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTriggerVisualsComponent>
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly ItemSystem _itemSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<TimerTriggerVisualsComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<TimerTriggerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals);
+
     }
 
     private void OnComponentInit(Entity<TimerTriggerVisualsComponent> ent, ref ComponentInit args)
@@ -62,6 +68,34 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        // in-hand visuals
+        _itemSystem.VisualsChanged(uid);
+    }
+
+    private void OnGetHeldVisuals(EntityUid uid, TimerTriggerVisualsComponent component, GetInhandVisualsEvent args)
+    {
+        if (component.InHandPrimedName == null)
+            return;
+
+        if (!TryComp(uid, out AppearanceComponent? appearance))
+            return;
+
+        if (!TryComp<ItemComponent>(uid, out var item))
+            return;
+
+        if (!AppearanceSystem.TryGetData<TriggerVisualState>(uid, TriggerVisuals.VisualState, out var state, appearance))
+            state = TriggerVisualState.Unprimed;
+
+        var layer = new PrototypeLayerData();
+
+        // Selects inhand sprites to load based on primed state, e.g. inhand-right or inhand-right-primed
+        var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
+        var key = heldPrefix + args.Location.ToString().ToLowerInvariant();
+        key += (state == TriggerVisualState.Unprimed) ? component.InHandUnprimedName : component.InHandPrimedName;
+
+        layer.State = key;
+        args.Layers.Add((key, layer));
     }
 }
 
