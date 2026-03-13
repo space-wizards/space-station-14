@@ -11,6 +11,13 @@ namespace Content.IntegrationTests.Tests.GameTestTests;
 public sealed class RunOnSideTests : GameTest
 {
     [Test]
+    [Description("Ensures that the default scenario is the test thread.")]
+    public void Control()
+    {
+        Assert.That(Thread.CurrentThread, Is.Not.EqualTo(ServerThread).And.Not.EqualTo(ClientThread));
+    }
+
+    [Test]
     [RunOnSide(Side.Server)]
     public void TestServerSide()
     {
