@@ -7,6 +7,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Antag;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
@@ -18,13 +19,13 @@ namespace Content.IntegrationTests.Tests.GameRules;
 [TestFixture]
 public sealed class AllGamePresetsStartTest
 {
-    private static string[] _gamePresets = GameDataScrounger.PrototypesOfKind<GamePresetPrototype>();
-
     /// <summary>
     /// A list of blacklisted <see cref="GamePresetPrototype"/> for this test. Some down streams might make changes which nuke upstream game modes they don't use.
     /// This prevents them from being tested. If you use this to silence valid test fails and your game fails to start. Skill issue. Do 100 push-ups.
     /// </summary>
-    private static readonly HashSet<string> _ignoredPresets = []; // Is a string to prevent YAML Linter from freaking if this is empty.
+    private static readonly HashSet<string> IgnoredPresets = []; // Is a string to prevent YAML Linter from freaking if this is empty.
+
+    private static string[] _gamePresets = GameDataScrounger.PrototypesOfKind<GamePresetPrototype>().Where(p => !IgnoredPresets.Contains(p)).ToArray();
 
     // Tests that all game modes can start given ideal circumstances.
     [Test]
@@ -33,9 +34,6 @@ public sealed class AllGamePresetsStartTest
     [Description("Ensures all Game Presets are able to start and assign all antags correctly without spawning anyone in nullspace.")]
     public async Task TestAllGamemodesCanStart(string presetId)
     {
-        if (_ignoredPresets.Contains(presetId))
-            return;
-
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             DummyTicker = false,
@@ -55,6 +53,9 @@ public sealed class AllGamePresetsStartTest
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
         Assert.That(client.AttachedEntity, Is.Null);
         Assert.That(ticker.PlayerGameStatuses[client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+
+        // Don't start dummy antag game rule because we want our antags to be predictable for the test.
+        server.CfgMan.SetCVar(CCVars.GameTickerIgnoredPresets, GameTicker.DummyGameRule);
 
         var preset = protoMan.Index<GamePresetPrototype>(presetId);
 

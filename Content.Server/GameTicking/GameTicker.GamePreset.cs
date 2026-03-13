@@ -16,6 +16,8 @@ public sealed partial class GameTicker
 {
     public const float PresetFailedCooldownIncrease = 30f;
 
+    public const string DummyGameRule = "DummyNonAntag";
+
     /// <summary>
     /// The selected preset that will be used at the start of the next round.
     /// </summary>
@@ -201,9 +203,11 @@ public sealed partial class GameTicker
             return false;
 
         CurrentPreset = Preset;
+        var ignored = _cfg.GetCVar(CCVars.GameTickerIgnoredPresets).Split(",");
         foreach (var rule in Preset.Rules)
         {
-            AddGameRule(rule);
+            if (!ignored.Contains(rule))
+                AddGameRule(rule);
         }
 
         return true;
