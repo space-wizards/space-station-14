@@ -871,7 +871,7 @@
   - type: Sprite
     layers:
     - state: janitor
-    - state: icon-mop-adv # TODO: custom sprite
+    - state: icon-cleanade
   - type: ItemBorgModule
     hands:
     - item: WeaponLauncherCleanadeJaniborg
