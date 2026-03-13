@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Dying while asleep shouldn't permanently blind you anymore.
-    type: Fix
-  id: 9061
-  time: '2025-10-09T13:46:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40366
 - author: kontakt
   changes:
   - message: Bulldog magazines are now only accessible through emagged fabricators.
@@ -4007,3 +4000,10 @@
   id: 9571
   time: '2026-03-13T20:22:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43226
+- author: Velken
+  changes:
+  - message: Corrupted silicon laws now use scrambled text in the UI again.
+    type: Fix
+  id: 9572
+  time: '2026-03-13T23:48:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43229
