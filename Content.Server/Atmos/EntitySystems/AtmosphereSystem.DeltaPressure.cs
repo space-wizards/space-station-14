@@ -33,11 +33,6 @@ public sealed partial class AtmosphereSystem
     private const int DeltaPressurePairCount = Atmospherics.Directions / 2;
 
     /// <summary>
-    /// The length to pre-allocate list/dicts of delta pressure entities on a <see cref="GridAtmosphereComponent"/>.
-    /// </summary>
-    public const int DeltaPressurePreAllocateLength = 1000;
-
-    /// <summary>
     /// Bulk processes a range of <see cref="DeltaPressureComponent"/> entities on a <see cref="GridAtmosphereComponent"/>
     /// from a starting index to an ending index,
     /// determining the pressures they're experiencing and applying damage based on that.
