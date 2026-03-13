@@ -1,0 +1,10 @@
+warp-point-beacon = beacon
+warp-point-mothershipcore = Mothership Core
+warp-point-narsie = Nar'Sie
+warp-point-ratvar = Ratvar
+warp-point-disk = nuke disk
+warp-point-rod = immovable rod
+warp-point-powersink = powersink
+warp-point-bomb = nuclear bomb
+warp-point-singularity = singularity
+warp-point-tesla = tesla ball
