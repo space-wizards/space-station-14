@@ -17,6 +17,10 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? LastLawProvider;
+    /// <summary>
+    /// Version to display on the law panel. Increments whenever the laws are changed
+    /// </summary>
+    public int Version = 0;
 }
 
 /// <summary>
@@ -53,10 +57,12 @@ public sealed class SiliconLawBuiState : BoundUserInterfaceState
 {
     public List<SiliconLaw> Laws;
     public HashSet<ProtoId<RadioChannelPrototype>>? RadioChannels;
+    public int Version;
 
-    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<ProtoId<RadioChannelPrototype>>? radioChannels)
+    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<ProtoId<RadioChannelPrototype>>? radioChannels, int version)
     {
         Laws = laws;
         RadioChannels = radioChannels;
+        Version = version;
     }
 }

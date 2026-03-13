@@ -19,6 +19,15 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
+    /// <summary>
+    /// Minimum length of generated ion storm law identifiers.
+    /// </summary>
+    public const int IonStormIdentifierMinLength = 3;
+    /// <summary>
+    /// Maximum length of generated ion storm law identifiers.
+    /// </summary>
+    public const int IonStormIdentifierMaxLength = 10;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
