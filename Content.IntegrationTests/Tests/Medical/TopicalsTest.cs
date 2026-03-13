@@ -14,7 +14,9 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Stacks;
+using Microsoft.Testing.Platform.Extensions.Messages;
 using NUnit.Framework.Constraints;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Medical;
@@ -47,6 +49,7 @@ public sealed class TopicalsTest : InteractionTest
     public async Task TopicalsInteractionsTest()
     {
         var damageableSystem = SEntMan.System<DamageableSystem>();
+        var sharedStackSystem = SEntMan.System<SharedStackSystem>();
 
         await AddAtmosphere(); // prevent the InteractionTestMob from suffocating
 
@@ -59,6 +62,7 @@ public sealed class TopicalsTest : InteractionTest
 
             //Hold the topical stack
             var topical = await PlaceInHands(topicalID, 10);
+            var topicalUid = SEntMan.GetEntity(topical);
 
             var healingComp = Comp<HealingComponent>(topical);
             var stackComp = Comp<StackComponent>(topical);
@@ -81,16 +85,21 @@ public sealed class TopicalsTest : InteractionTest
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).Equals(damageAmount),
             "The urist did not get damaged the correct amount.");
 
-            //Use topical
-            await Interact();
+            //Use topical just once
+            await Interact(false);
+            //Wait for a bit after the first doAfter finishes
+            await RunSeconds(healingComp.Delay.Seconds + 1);
+            //Then Cancel that doAfter, having used 1 topical
+            await CancelDoAfters();
 
-            //Assert each correct Damage lowered the right amount, or at all
-            damageAmount = -healsTypes;
-            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).Equals(damageAmount),
-            "The correct damage types did not lower, or did not lower the correct amount.");
             //Assert that stack number lowered by 1
             Assert.That(stackComp.Count == startStackSize - 1,
-            "The topical stack count did not lower, or did not lower by the correct amount.");
+            "The topical stack count did not lower by one per use.");
+
+            //Assert that each correct Damage type lowered by one topical's worth
+            var correctDamage = -healsTypes;
+            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).Equals(correctDamage),
+            "The correct damage types did not lower, or did not lower the correct amount.");
 
             //Use topical
             await Interact();
@@ -106,29 +115,30 @@ public sealed class TopicalsTest : InteractionTest
             await Interact(false);
             //Assert could not use (by checking if there are any doafters)
             Assert.That(!ActiveDoAfters.Any(),
-            "Topical use went through despite wrong damage type.");
+            "Topical use started despite wrong damage type.");
             //Assert Poison damage is unchanged
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).Equals(poisonSpecifier),
             "The topical healed damage it shouldn't.");
 
-            //Add in more damage types (5 of each specififed in DamageTypesToBeTested)
+            //Testing Multiple Damage Types (10 of each specififed in DamageTypesToBeTested)
             var multiDamage = new DamageSpecifier();
             foreach (var type in DamageTypesToBeTested)
             {
-                multiDamage += new DamageSpecifier(ProtoMan.Index(type), 10);
+                multiDamage += new DamageSpecifier(ProtoMan.Index(type), 5);
             }
             //Damage the urist
             damageableSystem.SetDamage((STarget.Value, damageableComp), multiDamage);
 
-            //Use topical once
+            //Use topical
             await Interact();
-            //Assert correct damage gone
-            var correctDamage = multiDamage - healsTypes;
-            correctDamage.ClampMin(0); //in case damage became negative
+            //Assert correct damage done
+            correctDamage = multiDamage + healsTypes;
+            correctDamage.ClampMin(0); //in case damage became negative somehow
+            correctDamage.TrimZeros();
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).Equals(correctDamage),
-            "The topical did not heal the correct damage");
+            "The topical did not heal the correct damage amongst many damage types");
 
-            //Try to use the topical
+            //Try to use the topical with no more matching damage types
             await Interact(false);
             //Assert could not use (by checking if there are any doafters)
             Assert.That(!ActiveDoAfters.Any(),
@@ -137,21 +147,28 @@ public sealed class TopicalsTest : InteractionTest
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).Equals(correctDamage),
             "The topical healed damage it shouldn't.");
 
-            //Reset Damage
-
             //Set topical stack size to 2
+            sharedStackSystem.SetCount((topicalUid, stackComp), 2);
+            //Assert stack count is 2
+            Assert.That(stackComp.Count == 2,
+            "The stack of topicals did not get set to 2");
 
-            //Deal 15 brute to the urist
+            //Deal 3 topicals worth to the urist
+            damageAmount = healsTypes * -3;
+            damageableSystem.SetDamage((STarget.Value, damageableComp), damageAmount);
 
-            //Use once
-
-            //Assert id changed to Brutepack1
-
-            //Use again
+            //Use topicals until we run out
+            await Interact();
 
             //Assert Hands empty
+            var inHands = HandSys.GetActiveItem((SPlayer, Hands));
+            Assert.That(inHands, Is.Null,
+            "Topicals did not leave hand after being used up.");
 
             //Assert some brute damage remains
+            correctDamage = -healsTypes;
+            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).Equals(correctDamage),
+            "The topical stack did not leave the correct amount of damage after running out");
         }
     }
 }
