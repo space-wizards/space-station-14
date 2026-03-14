@@ -211,8 +211,7 @@ namespace Content.Client.Cargo.UI
 
             foreach (var order in orders)
             {
-                if (order.Approved ||
-                    !_protoManager.Resolve(order.Product, out var productProto))
+                if (order.Approved || !_protoManager.Resolve(order.Product, out var productProto))
                     continue;
 
                 var product = _protoManager.Index<EntityPrototype>(productProto.Product);
