@@ -136,11 +136,10 @@ public sealed partial class ParcelWrappingSystem
     /// </returns>
     private EntityUid? UnwrapInternal(EntityUid? user, Entity<WrappedParcelComponent> parcel)
     {
-        var containedEntity = parcel.Comp.Contents.ContainedEntity;
-        _audio.PlayPredicted(parcel.Comp.UnwrapSound, parcel, user);
-
         var parcelTransform = Transform(parcel);
+        _audio.PlayPredicted(parcel.Comp.UnwrapSound, parcelTransform.Coordinates, user);
 
+        var containedEntity = parcel.Comp.Contents.ContainedEntity;
         if (containedEntity is { } parcelContents)
         {
             _container.Remove(
