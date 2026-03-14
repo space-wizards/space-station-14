@@ -32,10 +32,7 @@ public sealed partial class ParcelWrappingSystem
         entity.Comp.Contents = _container.EnsureContainer<ContainerSlot>(entity, entity.Comp.ContainerId);
     }
 
-    private void OnEntInsertedIntoContainer(
-        Entity<WrappedParcelComponent> entity,
-        ref EntInsertedIntoContainerMessage args
-    )
+    private void OnEntInsertedIntoContainer(Entity<WrappedParcelComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
         // If the entity was inserted because of a server state application, assume that the item's state is applied
         // correctly as well and that deriving them from the contents is unneeded.
