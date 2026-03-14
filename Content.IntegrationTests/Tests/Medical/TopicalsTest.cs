@@ -50,7 +50,7 @@ public sealed class TopicalsTest : InteractionTest
         }
         var emptyDamageSpecifier = new DamageSpecifier(allNormalDamageSpecifier);
         emptyDamageSpecifier.ClampMax(0);
-        var damageAmount = new DamageSpecifier();
+        DamageSpecifier damageAmount;
 
         await AddAtmosphere(); // prevent everyone from suffocating
 
@@ -97,7 +97,7 @@ public sealed class TopicalsTest : InteractionTest
             await RunSeconds(healingComp.Delay.Seconds + 1);
 
             //Assert that bleeding is stopped.
-            Assert.That(bloodStreamSystem.GetBloodLevel((STarget.Value, bloodStreamComp)), Is.GreaterThan(.99f),
+            Assert.That(bloodStreamComp.BleedAmount, Is.EqualTo(0),
             "The self-damaging topical did not fix bleeding fully.");
             //And that some damage was done.
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).AnyPositive(),
@@ -119,6 +119,25 @@ public sealed class TopicalsTest : InteractionTest
             return;
         }
 
+        //For keeping track of stack count.
+        var stackComp = Comp<StackComponent>(topical);
+        var startStackSize = stackComp.Count;
+
+        // //if the topical affects blood loss damage
+        // if (healingComp.Damage.DamageDict.ContainsKey("Bloodloss"))
+        // {
+        //     //Bleed the amount the topical fixes
+        //     bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), -healingComp.BloodlossModifier);
+        //     //Use up our topicals
+        //     await Interact();
+        //     //Assert that all damage and blood loss is fixed
+        //     Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(emptyDamageSpecifier),
+        //     "The blood-related topical did not heal all of its damage types.");
+        //     Assert.That(bloodStreamSystem.GetBloodLevel((STarget.Value, bloodStreamComp)), Is.GreaterThan(.99f),
+        //     "The blood-related topical did not fix bleeding fully.");
+        //     return;
+        // }
+
         //Damage the Urist 2 topicals worth
         damageAmount = healsTypes * -2;
         damageableSystem.SetDamage((STarget.Value, damageableComp), damageAmount);
@@ -126,26 +145,11 @@ public sealed class TopicalsTest : InteractionTest
         "The urist did not get damaged the correct amount.");
 
 
-        //For keeping track of stack count.
-        var stackComp = Comp<StackComponent>(topical);
-        var startStackSize = stackComp.Count;
-
-        //if the topical affects blood loss damage
-        if (healingComp.Damage.DamageDict.ContainsKey("Bloodloss"))
-        {
-            //Bleed the amount the topical fixes
-            bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), -healingComp.BloodlossModifier);
-            //Use up our topicals
-            await Interact();
-            //Assert that all damage and blood loss is fixed
-            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(emptyDamageSpecifier),
-            "The blood-related topical did not heal all of its damage types.");
-            Assert.That(bloodStreamSystem.GetBloodLevel((STarget.Value, bloodStreamComp)), Is.EqualTo(1.0f),
-            "The blood-related topical did not fix bleeding fully.");
-            return;
-        }
         if (startStackSize == 1)
         {
+            //if it also causes bleeding, bleed that amount.
+            if (healingComp.BloodlossModifier < 0)
+                bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), -healingComp.BloodlossModifier);
             //Use up our one topical
             await Interact();
             //Assert Hands empty
@@ -157,6 +161,9 @@ public sealed class TopicalsTest : InteractionTest
             correctDamage = -healsTypes;
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
             "The correct damage types did not lower, or did not lower the correct amount.");
+            //Assert that there's no bleeding.
+            Assert.That(bloodStreamComp.BleedAmount, Is.EqualTo(0),
+            "The bleed-fixing topical did not deal with blood.");
         }
         else //if we have a stack of more than 1
         {
@@ -239,6 +246,9 @@ public sealed class TopicalsTest : InteractionTest
             //Deal 3 topicals worth to the urist
             damageAmount = healsTypes * -3;
             damageableSystem.SetDamage((STarget.Value, damageableComp), damageAmount);
+            //if it also causes bleeding, bleed that amount.
+            if (healingComp.BloodlossModifier < 0)
+                bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), 3 * -healingComp.BloodlossModifier);
 
             //Use topicals until we run out
             await Interact();
@@ -252,6 +262,10 @@ public sealed class TopicalsTest : InteractionTest
             correctDamage = -healsTypes;
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
             "The topical stack did not leave the correct amount of damage after running out");
+
+            //Assert that there's no bleeding.
+            Assert.That(bloodStreamComp.BleedAmount, Is.EqualTo(0),
+            "The bleed-fixing topical did not deal with blood.");
         }
     }
 }
