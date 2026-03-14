@@ -2,89 +2,91 @@
 # These rulesets exist because Salvage mobs kept harassing the station and going out of control.
 
 - type: entity
+  parent: MarkerBase
   name: Salvage Material Crate Spawner
   id: SalvageMaterialCrateSpawner
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Structures/Storage/Crates/generic.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - SalvageHumanCorpse
-        - CrateMaterialPlasteel
-        - CrateMaterialWood
-        - CrateMaterialPlastic
-        - CrateSalvageEquipment
-        - CrateMaterialSteel
-        - CrateMaterialGlass
-        - CrateServiceJanitorialSupplies
-        - CrateHydroponicsSeedsMedicinal
-        - CrateEmergencyInternals
-        - CrateFoodMRE
-        - CrateMaterialTextiles
-        - CrateMedicalSupplies
-        - CrateEngineeringCableBulk
-        - CrateMaterialCardboard
-        - CrateServiceBooks
-        - CrateServiceSmokeables
-        - CrateTrashCartFilled
-        - ClosetMaintenanceFilledRandom
-        - ClosetEmergencyFilledRandom
-      rareChance: 0.4
-      prototypes:
-        - CrateSalvageAssortedGoodies
-      chance: 0.9
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/Crates/generic.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: CrateSalvageAssortedGoodies
+        weight: 0.6
+        prob: 0.9
+      - !type:GroupSelector
+        weight: 0.4
+        children:
+        - id: SalvageHumanCorpse
+        - id: CrateMaterialPlasteel
+        - id: CrateMaterialWood
+        - id: CrateMaterialPlastic
+        - id: CrateSalvageEquipment
+        - id: CrateMaterialSteel
+        - id: CrateMaterialGlass
+        - id: CrateServiceJanitorialSupplies
+        - id: CrateHydroponicsSeedsMedicinal
+        - id: CrateEmergencyInternals
+        - id: CrateFoodMRE
+        - id: CrateMaterialTextiles
+        - id: CrateMedicalSupplies
+        - id: CrateEngineeringCableBulk
+        - id: CrateMaterialCardboard
+        - id: CrateServiceBooks
+        - id: CrateServiceSmokeables
+        - id: CrateTrashCartFilled
+        - id: ClosetMaintenanceFilledRandom
+        - id: ClosetEmergencyFilledRandom
       offset: 0.0
 
 - type: entity
+  parent: MarkerBase
   name: salvage loot spawner
   id: SalvageLootSpawner
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Weapons/Melee/crusher.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - WeaponCrusher
-      - WeaponCrusherDagger
-      - WeaponCrusherGlaive
-      - MiningDrill
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Weapons/Melee/crusher.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: WeaponCrusher
+      - id: WeaponCrusherDagger
+      - id: WeaponCrusherGlaive
+      - id: MiningDrill
+    offset: 0.0
 
 - type: entity
+  parent: MarkerBase
   name: Salvage Mob Spawner
   id: SalvageMobSpawner
-  parent: MarkerBase
   suffix: 25
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Mobs/Aliens/Carps/space.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-      - MobSharkSalvage
-      rareChance: 0.2
-      prototypes:
-        - MobCarpSalvage
-        - MobCarpSalvage
-        - MobCarpSalvage
-        - MobCarpSalvage
-        - MobCarpSalvage
-        - MobTickSalvage
-        - MobTickSalvage
-        - MobTickSalvage
-        - PlushieCarp
-        - DehydratedSpaceCarp
-      chance: 0.25
-      offset: 0.2
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/Carps/space.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobSharkSalvage
+        weight: 0.2
+      - !type:GroupSelector
+        weight: 0.8
+        prob: 0.25
+        children:
+        - id: MobCarpSalvage
+          weight: 5
+        - id: MobTickSalvage
+          weight: 3
+        - id: PlushieCarp
+        - id: DehydratedSpaceCarp
 
 - type: entity #I made this in case someone decided to make a terrifying space tick swarm for salvage. that someone may be me -EG404
   name: Salvage Space Tick Spawner
@@ -120,23 +122,21 @@
   parent: SalvageMobSpawner
   suffix: 75
   components:
-  - type: RandomSpawner
-    rarePrototypes:
-    - MobSharkSalvage
-    rareChance: 0.2
-    prototypes:
-    - MobCarpSalvage
-    - MobCarpSalvage
-    - MobCarpSalvage
-    - MobCarpSalvage
-    - MobCarpSalvage
-    - MobTickSalvage
-    - MobTickSalvage
-    - MobTickSalvage
-    - PlushieCarp
-    - DehydratedSpaceCarp
-    chance: 0.75
-    offset: 0.2
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobSharkSalvage
+        weight: 0.2
+      - !type:GroupSelector
+        weight: 0.8
+        prob: 0.75
+        children:
+        - id: MobCarpSalvage
+          weight: 5
+        - id: MobTickSalvage
+          weight: 3
+        - id: PlushieCarp
+        - id: DehydratedSpaceCarp
 
 - type: entity
   name: Salvage Space Kangaroo Spawner
@@ -181,50 +181,40 @@
     - MobCobraSpaceSalvage
 
 - type: entity
+  parent: MarkerBase
   name: Salvage Flesh Spawner
   id: SalvageFleshSpawner
-  parent: SalvageMobSpawner
   suffix: 100
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Mobs/Aliens/flesh.rsi
-          state: jared
-    - type: RandomSpawner
-      rarePrototypes:
-      - MobSharkSalvage
-      rareChance: 0
-      prototypes:
-      - MobFleshJaredSalvage
-      - MobFleshGolemSalvage
-      - MobFleshGolemSalvage
-      - MobFleshClampSalvage
-      - MobFleshClampSalvage
-      - MobFleshLoverSalvage
-      - MobFleshLoverSalvage
-      chance: 1
-      offset: 0.2
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/flesh.rsi
+      state: jared
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobFleshGolemSalvage
+      - id: MobFleshClampSalvage
+      - id: MobFleshLoverSalvage
+      - id: MobFleshJaredSalvage
+        weight: 0.5
 
 - type: entity
+  parent: MarkerBase
   name: Salvage Living Light Spawner
   id: SalvageLivingLightSpawner
-  parent: SalvageMobSpawner
   suffix: 100
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Mobs/Elemental/living_light/luminous_person.rsi
-          state: luminous_person
-    - type: RandomSpawner
-      rarePrototypes:
-      - MobSharkSalvage
-      rareChance: 0
-      prototypes:
-      - MobLuminousPersonSalvage
-      - MobLuminousEntity
-      - MobLuminousObjectSalvage
-      - MobLuminousObjectSalvage
-      chance: 1
-      offset: 0.2
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Elemental/living_light/luminous_person.rsi
+      state: luminous_person
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobLuminousPersonSalvage
+      - id: MobLuminousEntity
+      - id: MobLuminousObjectSalvage
+        weight: 2
