@@ -6,7 +6,6 @@ using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Systems;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Construction.EntitySystems;
@@ -35,7 +34,6 @@ using Content.Server.Construction.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Temperature.Components;
 using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Whitelist;
 
@@ -213,22 +211,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         Wzhzhzh(ent, null);
     }
 
-    private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
-    {
-        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent) || !_power.IsPowered(ent.Owner))
-            return;
-
-        // some validation to prevent trollage
-        if (args.NewCookTime % 5 != 0 || args.NewCookTime > ent.Comp.MaxCookTime)
-            return;
-
-        ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
-        ent.Comp.CurrentCookTimerTime = args.NewCookTime;
-        ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
-        _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
-        UpdateUserInterfaceState(ent);
-    }
-
     private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
     {
         var active = ent.Comp1;
@@ -240,22 +222,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         if (active.CookTimeRemaining <= 0)
             CompleteCooking(ent);
-    }
-
-    public void UpdateUserInterfaceState(Entity<MicrowaveComponent> microwave)
-    {
-        var uid = microwave.Owner;
-        var component = microwave.Comp;
-        var containedItems = GetNetEntityArray(component.Storage.ContainedEntities.ToArray());
-        var isActive = HasComp<ActiveMicrowaveComponent>(uid);
-        var state = new MicrowaveUpdateUserInterfaceState(
-            containedItems,
-            isActive,
-            component.CurrentCookTimeButtonIndex,
-            component.CurrentCookTimerTime,
-            component.CurrentCookTimeEnd);
-
-        _userInterface.SetUiState(uid, MicrowaveUiKey.Key, state);
     }
 
     public void SetAppearance(EntityUid uid,
