@@ -7,6 +7,11 @@ namespace Content.Server.Kitchen.EntitySystems;
 
 public sealed partial class MicrowaveSystem
 {
+    /// <summary>
+    ///     Update the UI state of the microwave, including the microwave's current contents, cook time,
+    ///     and whether or not it is actively cooking.
+    /// </summary>
+    /// <param name="microwave">The microwave to update.</param>
     public void UpdateUserInterfaceState(Entity<MicrowaveComponent> microwave)
     {
         var uid = microwave.Owner;
@@ -23,6 +28,11 @@ public sealed partial class MicrowaveSystem
         _userInterface.SetUiState(uid, MicrowaveUiKey.Key, state);
     }
 
+    /// <summary>
+    ///     Change the cook time of the microwave by selecting a new button index.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    /// <param name="args">Event arguments.</param>
     private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
     {
         if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent) || !_power.IsPowered(ent.Owner))
