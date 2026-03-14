@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: The thieving beacon can now detect the officer's handgun objective.
-    type: Fix
-  id: 9063
-  time: '2025-10-10T04:59:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40811
-- author: Hitlinemoss
-  changes:
-  - message: The Paladin AI lawset has been rewritten.
-    type: Tweak
-  id: 9064
-  time: '2025-10-10T12:41:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40343
 - author: kontakt
   changes:
   - message: Ninjas can now have a bombing target at any warp point.
@@ -4007,3 +3993,18 @@
   id: 9573
   time: '2026-03-14T16:21:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43208
+- author: Crude Oil
+  changes:
+  - message: Fixed some emitter alerts missing the word "emitter"
+    type: Fix
+  id: 9574
+  time: '2026-03-14T16:32:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43225
+- author: SnappingOpossum
+  changes:
+  - message: Certain randomised items and decorations no longer spawn with the wrong
+      rotation.
+    type: Fix
+  id: 9575
+  time: '2026-03-14T16:32:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43234
