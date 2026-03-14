@@ -150,7 +150,7 @@ namespace Content.IntegrationTests.Tests
                         continue;
 
                     var entitiesInProtoContainingRestock = new List<EntProtoId<VendingMachineRestockComponent>>();
-                    foreach (var fillSpawnEntry in entityTable.GetSpawns(container))
+                    foreach (var (fillSpawnEntry, _) in entityTable.ListSpawns(container))
                     {
                         if (restockEntities.Contains(fillSpawnEntry.Id))
                             entitiesInProtoContainingRestock.Add(fillSpawnEntry.Id);

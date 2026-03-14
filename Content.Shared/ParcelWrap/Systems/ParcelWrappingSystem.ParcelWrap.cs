@@ -172,7 +172,7 @@ public sealed partial class ParcelWrappingSystem
     )
     {
         // If an override is defined on the target, use that.
-        if (TryComp(target, out target.Comp))
+        if (Resolve(target, ref target.Comp, logMissing: false))
             return target.Comp.ParcelPrototype;
 
         return wrapper.Comp.ParcelPrototype;

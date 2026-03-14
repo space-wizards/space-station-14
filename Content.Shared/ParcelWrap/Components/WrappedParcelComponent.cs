@@ -51,14 +51,14 @@ public sealed partial class WrappedParcelComponent : Component
     /// into <see cref="Container"/>. If the contents do not have a size,
     /// <see cref="ParcelWrappingSystem._fallbackParcelSize"/> is used instead.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool GetsSizeFromContent = true;
 
     /// <summary>
     /// If true, the owner of this entity has its <see cref="ItemComponent.Shape"/> set to the shape of any item
     /// inserted into <see cref="Container"/>.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool GetsShapeFromContent;
 
     /// <summary>
