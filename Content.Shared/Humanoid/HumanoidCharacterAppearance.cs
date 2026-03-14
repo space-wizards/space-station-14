@@ -127,10 +127,16 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             var organs = markingManager.GetOrgans(species);
             skinColor = strategy.EnsureVerified(skinColor);
 
-            foreach (var (organ, markings) in appearance.Markings)
+            foreach (var (organ, markingSets) in appearance.Markings)
             {
                 if (!organs.ContainsKey(organ))
                     validatedMarkings.Remove(organ);
+
+                foreach (var (markingSet, markings) in markingSets)
+                {
+                    if (markings.Count == 0)
+                        markingSets.Remove(markingSet);
+                }
             }
 
             foreach (var (organ, organProtoID) in organs)
