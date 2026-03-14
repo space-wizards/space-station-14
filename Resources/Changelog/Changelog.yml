@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kontakt
-  changes:
-  - message: Ninjas can now have a bombing target at any warp point.
-    type: Tweak
-  id: 9065
-  time: '2025-10-10T21:27:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40726
 - author: frigid-dev
   changes:
   - message: Ore Crabs now collide with the player if mob collisions are enabled.
@@ -4008,3 +4001,10 @@
   id: 9575
   time: '2026-03-14T16:32:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43234
+- author: themias
+  changes:
+  - message: Healing with a holy book now gives off a holy light.
+    type: Tweak
+  id: 9576
+  time: '2026-03-14T16:33:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43189
