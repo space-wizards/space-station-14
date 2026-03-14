@@ -13,10 +13,10 @@
       state: icon
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.9
       children:
       - id: CrateSalvageAssortedGoodies
         weight: 0.6
-        prob: 0.9
       - !type:GroupSelector
         weight: 0.4
         children:
