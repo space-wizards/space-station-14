@@ -20,6 +20,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Numerics;
+using Content.Shared.Damage.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -230,33 +231,56 @@ public sealed partial class ShuttleSystem
         var knockdownTime = TimeSpan.FromSeconds(5);
 
         var minsq = _minThrowVelocity * _minThrowVelocity;
-        // iterate all entities on the grid
-        // TODO: only iterate non-static entities
-        var childEnumerator = xform.ChildEnumerator;
-        while (childEnumerator.MoveNext(out var uid))
-        {
-            // don't throw static bodies
-            if (!_physicsQuery.TryGetComponent(uid, out var physics) || (physics.BodyType & BodyType.Static) != 0)
-                continue;
 
+        // iterate all dynamic entities on the grid
+        if (!TryComp<BroadphaseComponent>(gridUid, out var lookup) || !_gridQuery.TryComp(gridUid, out var gridComp))
+            return;
+
+        var gridBox = gridComp.LocalAABB;
+        List<Entity<PhysicsComponent>> list = new();
+        HashSet<EntityUid> processed = new();
+        var state = (list, processed, _physicsQuery);
+        lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+
+        foreach (var ent in list)
+        {
             // don't throw if buckled
-            if (_buckle.IsBuckled(uid, _buckleQuery.CompOrNull(uid)))
+            if (_buckle.IsBuckled(ent, _buckleQuery.CompOrNull(ent)))
                 continue;
 
             // don't throw them if they have magboots
-            if (movedByPressureQuery.TryComp(uid, out var moved) && !moved.Enabled)
+            if (movedByPressureQuery.TryComp(ent, out var moved) && !moved.Enabled)
                 continue;
 
             if (direction.LengthSquared() > minsq)
             {
-                _stuns.TryCrawling(uid, knockdownTime);
-                _throwing.TryThrow(uid, direction, physics, Transform(uid), _projQuery, direction.Length(), playSound: false);
+                _stuns.TryCrawling(ent.Owner, knockdownTime);
+                _throwing.TryThrow(ent, direction, ent.Comp, Transform(ent), _projQuery, direction.Length(), playSound: false);
             }
             else
             {
-                _physics.ApplyLinearImpulse(uid, direction * physics.Mass, body: physics);
+                _physics.ApplyLinearImpulse(ent, direction * ent.Comp.Mass, body: ent.Comp);
             }
         }
+    }
+
+    private static bool GridQueryCallback(
+        ref (List<Entity<PhysicsComponent>> List, HashSet<EntityUid> Processed, EntityQuery<PhysicsComponent> PhysicsQuery) state,
+        in EntityUid uid)
+    {
+        if (state.Processed.Add(uid) && state.PhysicsQuery.TryComp(uid, out var body))
+            state.List.Add((uid, body));
+
+        return true;
+    }
+
+    private static bool GridQueryCallback(
+        ref (List<Entity<PhysicsComponent>> List, HashSet<EntityUid> Processed, EntityQuery<PhysicsComponent> PhysicsQuery) state,
+        in FixtureProxy proxy)
+    {
+        var owner = proxy.Entity;
+        return GridQueryCallback(ref state, in owner);
     }
 
     /// <summary>
@@ -372,7 +396,7 @@ public sealed partial class ShuttleSystem
                     damageSpec.DamageDict["Blunt"] = scaledDamage;
                     damageSpec.DamageDict["Structural"] = scaledDamage * _structuralDamage;
 
-                    _damageSys.TryChangeDamage(localEnt, damageSpec, damageable: damageable);
+                    _damageSys.ChangeDamage((localEnt, damageable), damageSpec);
                 }
                 // might've been destroyed
                 if (TerminatingOrDeleted(localEnt) || EntityManager.IsQueuedForDeletion(localEnt))

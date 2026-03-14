@@ -102,7 +102,10 @@ public sealed class UplinkSystem : EntitySystem
         var implant = _subdermalImplant.AddImplant(user, FallbackUplinkImplant);
 
         if (!HasComp<StoreComponent>(implant))
+        {
+            Log.Error($"Implant does not have the store component {implant}");
             return false;
+        }
 
         SetUplink(user, implant.Value, balance, giveDiscounts);
         return true;
@@ -117,20 +120,19 @@ public sealed class UplinkSystem : EntitySystem
         // Try to find PDA in inventory
         if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
         {
-            while (containerSlotEnumerator.MoveNext(out var pdaUid))
+            while (containerSlotEnumerator.MoveNext(out var containerSlot))
             {
-                if (!pdaUid.ContainedEntity.HasValue)
-                    continue;
+                var pdaUid = containerSlot.ContainedEntity;
 
-                if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
-                    return pdaUid.ContainedEntity.Value;
+                if (HasComp<PdaComponent>(pdaUid) && HasComp<StoreComponent>(pdaUid))
+                    return pdaUid;
             }
         }
 
         // Also check hands
         foreach (var item in _handsSystem.EnumerateHeld(user))
         {
-            if (HasComp<PdaComponent>(item) || HasComp<StoreComponent>(item))
+            if (HasComp<PdaComponent>(item) && HasComp<StoreComponent>(item))
                 return item;
         }
 

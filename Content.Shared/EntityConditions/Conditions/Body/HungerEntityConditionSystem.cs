@@ -29,5 +29,5 @@ public sealed partial class HungerCondition : EntityConditionBase<HungerConditio
     public float Max = float.PositiveInfinity;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-total-hunger", ("max", float.IsPositiveInfinity(Max) ? int.MaxValue : Max), ("min", Min));
+        Loc.GetString("entity-condition-guidebook-total-hunger", ("max", float.IsPositiveInfinity(Max) ? int.MaxValue : Max), ("min", Min));
 }

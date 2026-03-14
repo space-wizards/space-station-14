@@ -79,6 +79,9 @@
   id: Haunted
   layers:
   - !type:PrefabDunGen
+    roomWhitelist:
+      tags:
+      - Haunted
     presets:
     - Bucket
     - Wow

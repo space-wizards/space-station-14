@@ -21,7 +21,7 @@ public sealed partial class EmoteSoundsPrototype : IPrototype, IInheritingProtot
     /// <inheritdoc/>
     [AbstractDataField]
     [NeverPushInheritance]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <summary>
     ///     Optional fallback sound that will play if collection

@@ -4,6 +4,7 @@ lobbyenabled = false
 # Dev map for faster loading & convenience
 map = "Dev"
 role_timers = false
+admin_job_tracking = true
 role_loadout_timers = false
 
 [events]
@@ -38,8 +39,18 @@ preload_grids = false
 
 [admin]
 see_own_notes = true
+new_player_threshold = 120
 
 [ic]
 random_characters = true
 random_species_weights = ""
 ssd_sleep_time = 3600
+
+[database]
+# Change to postgres if needed
+engine = "sqlite"
+pg_host = "localhost"
+pg_port = 5432
+pg_database = "ss14"
+pg_username = "postgres"
+pg_password = "postgres"

@@ -81,7 +81,9 @@ public sealed partial class StoreSystem : EntitySystem
         if (component.AccountOwner == mind)
             return;
 
-        _popup.PopupEntity(Loc.GetString("store-not-account-owner", ("store", uid)), uid, args.User);
+        if (!args.Silent)
+            _popup.PopupEntity(Loc.GetString("store-not-account-owner", ("store", uid)), uid, args.User);
+
         args.Cancel();
     }
 
@@ -153,7 +155,7 @@ public sealed partial class StoreSystem : EntitySystem
         // same tick
         currency.Comp.Price.Clear();
         if (stack != null)
-            _stack.SetCount(currency.Owner, 0, stack);
+            _stack.SetCount((currency.Owner, stack), 0);
 
         QueueDel(currency);
         return true;

@@ -56,6 +56,7 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
+    - type: TemperatureDamage
       heatDamage:
         types:
           Heat: 5
@@ -75,12 +76,10 @@
         methods: [Touch]
         effects:
         - !type:HealthChange
-          scaling: true
           damage:
             types:
               Heat: 0.5
     - type: AtmosExposed
-    - type: Edible
     - type: Kudzu
       growthTickChance: 0.3
       spreadChance: 0.4
@@ -90,7 +89,7 @@
       ignoreWhitelist:
         components:
         - IgnoreKudzu
-    - type: Food
+    - type: Edible
       requiresSpecialDigestion: true
       delay: 0.5
     - type: FlavorProfile
@@ -228,6 +227,7 @@
           Cold: -1.0
           Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
     - type: Temperature
+    - type: TemperatureDamage
       heatDamage:
         types:
           Heat: 10
@@ -244,15 +244,14 @@
        types:
          Heat: 3
     - type: AtmosExposed
-    - type: Edible
+    - type: Edible # delightfully devilish !
+      delay: 0.5
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
       ignoreWhitelist:
         tags:
         - Flesh
-    - type: Food # delightfully devilish !
-      delay: 0.5
     - type: SolutionContainerManager
       solutions:
         food:

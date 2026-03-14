@@ -28,7 +28,16 @@ public class ListContainer : Control
     /// Called when creating a button on the UI.
     /// The provided <see cref="ListContainerButton"/> is the generated button that Controls should be parented to.
     /// </summary>
-    public Action<ListData, ListContainerButton>? GenerateItem;
+    public Action<ListData, ListContainerButton>? GenerateItem
+    {
+        get => _generateItem;
+        set {
+            _generateItem = value;
+            // Invalidate _itemHeight so we recalculate the size of children the next
+            // time PopulateList() is called
+            _itemHeight = 0;
+        }
+    }
 
     /// <inheritdoc cref="BaseButton.OnPressed"/>
     public Action<BaseButton.ButtonEventArgs, ListData>? ItemPressed;
@@ -59,6 +68,7 @@ public class ListContainer : Control
     private bool _updateChildren = false;
     private bool _suppressScrollValueChanged;
     private ButtonGroup? _buttonGroup;
+    public Action<ListData, ListContainerButton>? _generateItem;
 
     public int ScrollSpeedY { get; set; } = 50;
 

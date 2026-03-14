@@ -24,5 +24,5 @@ public sealed partial class MobStateCondition : EntityConditionBase<MobStateCond
     public MobState Mobstate = MobState.Alive;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", Mobstate));
+        Loc.GetString("entity-condition-guidebook-mob-state-condition", ("state", Mobstate));
 }
