@@ -468,9 +468,7 @@ namespace Content.Server.Atmos.EntitySystems
             return GasCompareResult.NoExchange;
         }
 
-        /// <summary>
-        ///     Performs reactions for a given gas mixture on an optional holder.
-        /// </summary>
+        [PublicAPI]
         public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
         {
             var reaction = ReactionResult.NoReaction;

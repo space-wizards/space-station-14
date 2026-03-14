@@ -159,25 +159,37 @@ public abstract partial class SharedAtmosphereSystem
     }
 
     /// <summary>
-    ///     Calculates the thermal energy for a gas mixture.
+    /// Calculates the thermal energy for a <see cref="GasMixture"/>.
     /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to calculate the thermal
+    /// energy of.</param>
+    /// <returns>The <see cref="GasMixture"/>'s thermal energy in joules.</returns>
+    [PublicAPI]
     public float GetThermalEnergy(GasMixture mixture)
     {
         return mixture.Temperature * GetHeatCapacity(mixture);
     }
 
     /// <summary>
-    ///     Calculates the thermal energy for a gas mixture, using a cached heat capacity value.
+    /// Calculates the thermal energy for a gas mixture,
+    /// using a provided cached heat capacity value.
     /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to calculate the thermal energy of.</param>
+    /// <param name="cachedHeatCapacity">A cached heat capacity value for the gas mixture,
+    /// to avoid redundant heat capacity calculations.</param>
+    /// <returns>The <see cref="GasMixture"/>'s thermal energy in joules.</returns>
+    [PublicAPI]
     public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
     {
         return mixture.Temperature * cachedHeatCapacity;
     }
 
     /// <summary>
-    ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
-    ///     The <see cref="giver"/> gas mixture is not modified by this method.
+    /// Merges one <see cref="GasMixture"/> into another, modifying the receiver.
     /// </summary>
+    /// <param name="receiver">The <see cref="GasMixture"/> to merge into. This will be modified.</param>
+    /// <param name="giver">The <see cref="GasMixture"/> to merge from. This will not be modified.</param>
+    [PublicAPI]
     public void Merge(GasMixture receiver, GasMixture giver)
     {
         if (receiver.Immutable)
@@ -198,8 +210,12 @@ public abstract partial class SharedAtmosphereSystem
     }
 
     /// <summary>
-    ///     Performs reactions for a given gas mixture on an optional holder.
+    /// Performs reactions for a given gas mixture on an optional holder.
     /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to perform reactions on.</param>
+    /// <param name="holder"><see cref="IGasMixtureHolder"/> that holds the <see cref="GasMixture"/>.
+    /// used by Atmospherics to determine locality for certain reaction effects.</param>
+    /// <returns>The <see cref="ReactionResult"/> of the reactions performed.</returns>
     [PublicAPI]
     public abstract ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder);
 

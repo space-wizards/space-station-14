@@ -32,19 +32,36 @@ public abstract partial class SharedAtmosphereSystem : EntitySystem
         InitializeCVars();
     }
 
+    /// <summary>
+    /// Gets the <see cref="GasPrototype"/> of a given gas ID.
+    /// </summary>
+    /// <param name="gasId">The gas ID to get the prototype of.</param>
+    /// <returns>The <see cref="GasPrototype"/> of the given gas ID.</returns>
     public GasPrototype GetGas(int gasId)
     {
         return GasPrototypes[gasId];
     }
 
+    /// <summary>
+    /// Gets the <see cref="GasPrototype"/> of a given gas ID.
+    /// </summary>
+    /// <param name="gasId">The gas ID to get the prototype of.</param>
+    /// <returns>The <see cref="GasPrototype"/> of the given gas ID.</returns>
     public GasPrototype GetGas(Gas gasId)
     {
         return GasPrototypes[(int)gasId];
     }
 
+    /// <summary>
+    /// Gets an enumerable of all the <see cref="GasPrototype"/>s.
+    /// </summary>
     public IEnumerable<GasPrototype> Gases => GasPrototypes;
 }
 
+/// <summary>
+/// Enum that represents the current processing state of a
+/// <see cref="GridAtmosphereComponent"/>.
+/// </summary>
 public enum AtmosphereProcessingState : byte
 {
     Revalidate,
@@ -57,7 +74,7 @@ public enum AtmosphereProcessingState : byte
     Superconductivity,
     PipeNet,
     AtmosDevices,
-    NumStates
+    NumStates,
 }
 
 /// <summary>

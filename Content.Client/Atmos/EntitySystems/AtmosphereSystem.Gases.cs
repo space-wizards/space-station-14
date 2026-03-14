@@ -14,6 +14,9 @@ public sealed partial class AtmosphereSystem
      implementation.
      */
 
+    /// <inheritdoc/>
+    /// <remarks>No-op on client as reactions aren't entirely in shared.
+    /// Don't call it. Smile.</remarks>
     public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
     {
         // Reactions don't work on client so don't even try.
