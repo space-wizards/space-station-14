@@ -39,29 +39,6 @@ namespace Content.IntegrationTests.Tests.Preferences
           values:
           - Ackerley";
 
-        private static HumanoidCharacterProfile LeafEricson()
-        {
-            return new HumanoidCharacterProfile
-            {
-                Name = "Leaf Ericson",
-                FlavorText = "The smallest boy around.",
-                Species = "Diona",
-                Age = 21,
-                Appearance = new HumanoidCharacterAppearance(
-                    Color.Azure,
-                    Color.Beige,
-                    new Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>
-                    {
-                        ["Head"] =
-                        {
-                            [HumanoidVisualLayers.Hair] = [],
-                            [HumanoidVisualLayers.FacialHair] = [],
-                        },
-                        ["OrganFake"] = {},
-                    }),
-            };
-        }
-
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
             return new()
