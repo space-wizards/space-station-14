@@ -13,12 +13,14 @@ public sealed partial class TechnologyDiskComponent : Component
     /// A discipline to constrain the disk to.
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public ProtoId<TechDisciplinePrototype>? Discipline;
 
     /// <summary>
     /// A tier to constrain the disk to.
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public int? Tier;
 
     /// <summary>
