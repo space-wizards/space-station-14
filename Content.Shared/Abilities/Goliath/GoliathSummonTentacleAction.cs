@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Abilities.Goliath;
 
-public sealed partial class GoliathSummonTentacleAction : EntityWorldTargetActionEvent
+public sealed partial class GoliathSummonTentacleAction : WorldTargetActionEvent
 {
     /// <summary>
     /// The ID of the entity that is spawned.

@@ -6,14 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class FaxUiCommand : IConsoleCommand
+public sealed class FaxUiCommand : LocalizedEntityCommands
 {
-    public string Command => "faxui";
+    [Dependency] private readonly EuiManager _euiManager = default!;
 
-    public string Description => Loc.GetString("cmd-faxui-desc");
-    public string Help => Loc.GetString("cmd-faxui-help");
+    public override string Command => "faxui";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } player)
         {
@@ -21,8 +20,7 @@ public sealed class FaxUiCommand : IConsoleCommand
             return;
         }
 
-        var eui = IoCManager.Resolve<EuiManager>();
         var ui = new AdminFaxEui();
-        eui.OpenEui(ui, player);
+        _euiManager.OpenEui(ui, player);
     }
 }

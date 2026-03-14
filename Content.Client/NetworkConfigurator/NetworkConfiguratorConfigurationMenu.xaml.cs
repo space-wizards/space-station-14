@@ -15,8 +15,8 @@ public sealed partial class NetworkConfiguratorConfigurationMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
 
-        Clear.StyleClasses.Add(StyleBase.ButtonOpenLeft);
-        Clear.StyleClasses.Add(StyleNano.StyleClassButtonColorRed);
+        Clear.StyleClasses.Add(StyleClass.ButtonOpenLeft);
+        Clear.StyleClasses.Add(StyleClass.Negative);
         DeviceList.OnRemoveAddress += args =>
         {
             OnRemoveAddress?.Invoke(args);

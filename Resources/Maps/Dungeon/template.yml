@@ -13,7 +13,6 @@ entities:
     - type: MetaData
     - type: Transform
     - type: Map
-    - type: PhysicsMap
     - type: Broadphase
     - type: OccluderTree
     - type: MapGrid
@@ -76,6 +75,5 @@ entities:
     - type: LoadedMap
     - type: SpreaderGrid
     - type: GridTree
-    - type: MovedGrids
     - type: GridPathfinding
 ...

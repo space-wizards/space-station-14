@@ -3,6 +3,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lathe;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Research.Components;
@@ -23,6 +24,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
     [Dependency] private readonly SharedResearchSystem _research = default!;
     [Dependency] private readonly SharedLatheSystem _lathe = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
     /// <summary>
     /// Mapping of disk tiers to disk prices.
@@ -42,6 +44,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         SubscribeLocalEvent<TechnologyDiskComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<TechnologyDiskComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<TechnologyDiskComponent, PriceCalculationEvent>(OnPriceCalculation);
+        SubscribeLocalEvent<TechnologyDiskComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
     private void OnMapInit(Entity<TechnologyDiskComponent> ent, ref MapInitEvent args)
@@ -87,6 +90,8 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
         ent.Comp.Recipes = [];
         ent.Comp.Recipes.Add(_random.Pick(recipes));
+        Dirty(ent);
+        _nameModifier.RefreshNameModifiers(ent.Owner);
     }
 
     /// <summary>
@@ -216,6 +221,18 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
         args.Price = price;
         args.Handled = true;
+    }
+
+    private void OnRefreshNameModifiers(Entity<TechnologyDiskComponent> entity, ref RefreshNameModifiersEvent args)
+    {
+        if (entity.Comp.Recipes != null)
+        {
+            foreach (var recipe in entity.Comp.Recipes)
+            {
+                var proto = _protoMan.Index(recipe);
+                args.AddModifier("tech-disk-name-format", extraArgs: ("technology", _lathe.GetRecipeName(proto)));
+            }
+        }
     }
 }
 

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by TheShuEd (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "web_0",
+      "directions": 4
+    },
+    {
+      "name": "web_1",
+      "directions": 4
+    },
+    {
+      "name": "web_2",
+      "directions": 4
+    },
+    {
+      "name": "web_3",
+      "directions": 4
+    },
+    {
+      "name": "web_4",
+      "directions": 4
+    },
+    {
+      "name": "web_5",
+      "directions": 4
+    },
+    {
+      "name": "web_6",
+      "directions": 4
+    },
+    {
+      "name": "web_7",
+      "directions": 4
+    }
+  ]
+}

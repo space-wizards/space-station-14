@@ -6,6 +6,9 @@
       edges:
         - to: clockGrille
           completed:
+            - !type:AdminLog
+              message: "Construction"
+              impact: High
             - !type:SnapToGrid
               southRotation: true
           steps:

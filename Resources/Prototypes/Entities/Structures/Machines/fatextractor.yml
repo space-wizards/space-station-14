@@ -101,8 +101,11 @@
   - type: Appearance
   - type: Speech
     speechVerb: Robotic
-  - type: Advertise
-    pack: FatExtractorFacts
+  - type: Vocalizer
+    hideChat: true
+  - type: VocalizerRequiresPower
+  - type: DatasetVocalizer
+    dataset: FatExtractorFacts
   - type: StaticPrice
     price: 1000
   - type: ResistLocker

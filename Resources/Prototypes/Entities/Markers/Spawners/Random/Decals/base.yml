@@ -1,0 +1,10 @@
+- type: entity
+  parent: MarkerBase
+  id: DecalSpawnerBase
+  name: Decal Spawner
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal

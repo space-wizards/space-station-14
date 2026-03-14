@@ -6,34 +6,31 @@ using Robust.Shared.Console;
 namespace Content.Server.Afk
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class IsAfkCommand : IConsoleCommand
+    public sealed class IsAfkCommand : LocalizedCommands
     {
+        [Dependency] private readonly IAfkManager _afkManager = default!;
         [Dependency] private readonly IPlayerManager _players = default!;
 
-        public string Command => "isafk";
-        public string Description => "Checks if a specified player is AFK";
-        public string Help => "Usage: isafk <playerName>";
+        public override string Command => "isafk";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var afkManager = IoCManager.Resolve<IAfkManager>();
-
             if (args.Length == 0)
             {
-                shell.WriteError("Need one argument");
+                shell.WriteError(Loc.GetString($"shell-need-exactly-one-argument"));
                 return;
             }
 
             if (!_players.TryGetSessionByUsername(args[0], out var player))
             {
-                shell.WriteError("Unable to find that player");
+                shell.WriteError(Loc.GetString($"shell-target-player-does-not-exist"));
                 return;
             }
 
-            shell.WriteLine(afkManager.IsAfk(player) ? "They are indeed AFK" : "They are not AFK");
+            shell.WriteLine(Loc.GetString(_afkManager.IsAfk(player) ? "cmd-isafk-true" : "cmd-isafk-false"));
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
             {

@@ -36,6 +36,10 @@ stack-hv-cable = {$amount ->
     [1] hv cable
     *[other] hv cables
 }
+stack-explosive-cord = {$amount ->
+    [1] explosive cord
+    *[other] explosive cords
+}
 stack-wood-plank = {$amount ->
     [1] wood plank
     *[other] wood planks
@@ -75,6 +79,10 @@ stack-cotton = {$amount ->
 stack-artifact-fragment = artifact {$amount ->
     [1] fragment
     *[other] fragments
+}
+stack-xenoborg-circuit = dvanced xenoborg {$amount ->
+    [1] circuitboard
+    *[other] circuitboards
 }
 
 # best materials
@@ -121,9 +129,7 @@ stack-brutepack = brutepack
 stack-bloodpack = bloodpack
 stack-medicated-suture = medicated-suture
 stack-regenerative-mesh = regenerative-mesh
-stack-capacitor = capacitor
-stack-micro-manipulator = micro manipulator
-stack-matter-bin = matter bin
+stack-micro-manipulator = modular machine part
 stack-pancake = pancake
 stack-blueberry-pancake = blueberry pancake
 stack-chocolate-chip-pancake = chocolate chip pancake
@@ -132,33 +138,43 @@ stack-dark-tile = dark tile
 stack-dark-steel-diagonal-mini-tile = dark steel diagonal mini tile
 stack-dark-steel-diagonal-tile = dark steel diagonal tile
 stack-dark-steel-herringbone = dark steel herringbone
+stack-dark-steel-horizontal-slats-tile-bordered = dark steel bordered horizontal slat tile
 stack-dark-steel-mini-tile = dark steel mini tile
 stack-dark-steel-mono-tile = dark steel mono tile
 stack-dark-steel-pavement = dark steel pavement
 stack-dark-steel-vertical-pavement = dark steel vertical pavement
+stack-dark-steel-vertical-slats-tile-bordered = dark steel bordered vertical slat tile
+stack-dark-steel-slats-tile-continuous = dark steel continuous slat tile
 stack-offset-dark-steel-tile = offset dark steel tile
 stack-offset-steel-tile = offset steel tile
 stack-steel-diagonal-mini-tile = steel diagonal mini tile
 stack-steel-diagonal-tile = steel diagonal tile
 stack-steel-herringbone = steel herringbone
+stack-steel-horizontal-slats-tile-bordered = steel bordered horizontal slat tile
 stack-steel-mini-tile = steel mini tile
 stack-steel-mono-tile = steel mono tile
 stack-steel-pavement = steel pavement
 stack-steel-vertical-pavement = steel vertical pavement
+stack-steel-vertical-slats-tile-bordered = steel bordered vertical slat tile
+stack-steel-slats-tile-continuous = steel continuous slat tile
 stack-white-tile = white tile
 stack-offset-white-steel-tile = offset white steel tile
 stack-white-steel-diagonal-mini-tile = white steel diagonal mini tile
 stack-white-steel-diagonal-tile = white steel diagonal tile
 stack-white-steel-herringbone = white steel herringbone
+stack-white-steel-horizontal-slats-tile-bordered = white steel bordered horizontal slat tile
 stack-white-steel-mini-tile = white steel mini tile
 stack-white-steel-mono-tile = white steel mono tile
 stack-white-steel-pavement = white steel pavement
 stack-white-steel-vertical-pavement = white steel vertical pavement
+stack-white-steel-vertical-slats-tile-bordered = white steel bordered vertical slat tile
+stack-white-steel-slats-tile-continuous = white steel continuous slat tile
 stack-steel-dark-checker-tile = steel dark checker tile
 stack-steel-light-checker-tile = steel light checker tile
 stack-steel-tile = steel tile
 stack-wood-floor = wood floor
 stack-techmaint-floor = techmaint floor
+stack-techmaint-floor-dark = dark techmaint floor
 stack-freezer-tile = freezer tile
 stack-showroom-tile = showroom tile
 stack-green-circuit-floor = green-circuit floor
@@ -181,7 +197,7 @@ stack-eighties-floor-tile = eighties floor tile
 stack-blue-arcade-tile = blue arcade tile
 stack-red-arcade-tile = red arcade tile
 stack-red-carpet-tile = red carpet tile
-stack-block-carpet-tile = block carpet tile
+stack-black-carpet-tile = black carpet tile
 stack-blue-carpet-tile = blue carpet tile
 stack-green-carpet-tile = green carpet tile
 stack-orange-carpet-tile = orange carpet tile
@@ -214,6 +230,9 @@ stack-gray-concrete-smooth = gray concrete smooth
 stack-old-concrete-tile = old concrete tile
 stack-old-concrete-mono-tile = old concrete mono tile
 stack-old-concrete-smooth = old concrete smooth
+stack-ironsand-concrete-tile = ironsand concrete tile
+stack-ironsand-concrete-mono-tile = ironsand concrete mono tile
+stack-ironsand-concrete-smooth = ironsand concrete smooth
 stack-silver-floor-tile = silver floor tile
 stack-bcircuit-floor-tile = bcircuit floor tile
 stack-grass-floor-tile = grass floor tile
@@ -225,6 +244,8 @@ stack-steel-maint-floor = steel maint floor
 stack-grating-maint-floor = grating maint floor
 stack-web-tile = web tile
 stack-astro-grass-floor = astro-grass floor
+stack-dark-astro-grass-floor = dark astro-grass floor
+stack-light-astro-grass-floor = light astro-grass floor
 stack-mowed-astro-grass-floor = mowed astro-grass floor
 stack-jungle-astro-grass-floor = jungle astro-grass floor
 stack-astro-ice-floor = astro-ice floor
@@ -232,3 +253,16 @@ stack-astro-snow-floor = astro-snow floor
 stack-large-wood-floor = large wood floor
 stack-red-circuit-floor = red-circuit floor
 stack-asteroid-astro-sand-floor = asteroid astro-sand floor
+stack-desert-astro-sand-floor = desert astro-sand floor
+stack-xeno-floor = xeno floor
+stack-xeno-steel = xeno steel tile
+stack-xeno-steel-corner = xeno steel corner tile
+stack-xenoborg = xenoborg tile
+stack-xeno-maint = xeno techmaint
+stack-dark-squiggly = dark steel squiggly tile
+stack-white-marble-floor = white marble floor
+stack-dark-marble-floor = dark marble floor
+stack-plasma-marble-floor = plasmarble floor
+stack-uranium-marble-floor = uranium marble floor
+stack-astro-ironsand-floor = astro-ironsand floor
+stack-astro-ironsand-floor-borderless = borderless astro-ironsand floor

@@ -10,6 +10,7 @@
     emitterType: Port
   - type: Construction
     graph: ParticleAcceleratorEmitterPort
+  - type: MultipartMachinePart
 
 - type: entity
   parent: ParticleAcceleratorFinishedPart
@@ -23,6 +24,7 @@
     emitterType: Fore
   - type: Construction
     graph: ParticleAcceleratorEmitterFore
+  - type: MultipartMachinePart
 
 - type: entity
   parent: ParticleAcceleratorFinishedPart
@@ -36,6 +38,7 @@
     emitterType: Starboard
   - type: Construction
     graph: ParticleAcceleratorEmitterStarboard
+  - type: MultipartMachinePart
 
 # Unfinished
 
@@ -50,6 +53,7 @@
     sprite: Structures/Power/Generation/PA/emitter_port.rsi
   - type: Construction
     graph: ParticleAcceleratorEmitterPort
+  - type: MultipartMachinePart
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
@@ -62,6 +66,7 @@
     sprite: Structures/Power/Generation/PA/emitter_fore.rsi
   - type: Construction
     graph: ParticleAcceleratorEmitterFore
+  - type: MultipartMachinePart
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
@@ -74,3 +79,4 @@
     sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
   - type: Construction
     graph: ParticleAcceleratorEmitterStarboard
+  - type: MultipartMachinePart

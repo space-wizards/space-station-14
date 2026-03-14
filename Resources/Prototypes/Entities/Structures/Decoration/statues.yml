@@ -41,3 +41,124 @@
   - type: Construction
     graph: BananiumStatueClown
     node: bananiumStatue
+
+# Ironsand Statues
+
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseIronsandStatue
+  description: A mysterious statue found in a desert of iron sand.
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150 # Overkill
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelOre1:
+            min: 1
+            max: 2
+
+- type: entity
+  parent: BaseIronsandStatue
+  id: StatueIronsandSmall
+  name: ironsand small statue
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/ironsand_statue.rsi
+    state: small_pillar
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: BaseIronsandStatue
+  id: StatueIronsandSmall2
+  name: ironsand small statue
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/ironsand_statue.rsi
+    state: small_pillar_2
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: BaseIronsandStatue
+  id: StatueIronsandTall
+  name: ironsand tall statue
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/ironsand_statue_tall.rsi
+    state: pillar_of_weh
+    offset: "0.0,0.5"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.30,-0.30,0.30,0.30"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: BaseIronsandStatue
+  id: StatueIronsandTall2
+  name: ironsand tall statue
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/ironsand_statue_tall.rsi
+    state: inverse_pillar
+    offset: "0.0,0.5"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.1,0.45,0.1"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer

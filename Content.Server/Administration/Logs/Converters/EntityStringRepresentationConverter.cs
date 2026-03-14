@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Content.Server.Administration.Managers;
-using Robust.Server.Player;
 
 namespace Content.Server.Administration.Logs.Converters;
 
@@ -24,7 +23,7 @@ public sealed class EntityStringRepresentationConverter : AdminLogConverter<Enti
         {
             writer.WriteString("player", value.Session.UserId.UserId);
 
-            if (_adminManager.IsAdmin(value.Uid))
+            if (_adminManager.IsAdmin(value.Session))
             {
                 writer.WriteBoolean("admin", true);
             }

@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: BaseItem
   id: BaseComputerCircuitboard
   name: computer board
@@ -17,6 +17,7 @@
         Glass: 230
       chemicalComposition:
         Silicon: 20
+    - type: Circuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -262,6 +263,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: XenoborgCameraMonitorCircuitboard
+  name: xenoborg camera monitor board
+  description: A computer printed circuit board for a xenoborg camera monitor.
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerSurveillanceWirelessXenoborgCameraMonitor
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: ComputerTelevisionCircuitboard
   name: television board
   description: A computer printed circuit board for a television.
@@ -390,7 +402,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: RadarConsoleCircuitboard
-  name: radar console computer board
+  name: mass scanner computer board
   components:
   - type: Sprite
     state: cpu_supply
@@ -529,11 +541,33 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: ComputerXenoborgsControlCircuitboard
+  name: xenoborg control console board
+  description: A computer printed circuit board for a xenoborg control console.
+  components:
+    - type: Sprite
+      state: cpu_science
+    - type: ComputerBoard
+      prototype: ComputerXenoborgsControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: StationAiUploadCircuitboard
   name: AI upload console board
-  description: A computer printed circuit board for a AI upload console.
+  description: A computer printed circuit board for an AI upload console.
   components:
     - type: Sprite
       state: cpu_science
     - type: ComputerBoard
       prototype: StationAiUploadComputer
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: StationAiFixerCircuitboard
+  name: AI restoration console board
+  description: A computer printed circuit board for an AI restoration console console.
+  components:
+    - type: Sprite
+      state: cpu_science
+    - type: ComputerBoard
+      prototype: StationAiFixerComputer
