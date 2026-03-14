@@ -50,7 +50,7 @@
       - id: RandomBrownStalagmite
       - id: RandomGreyStalagmite
       - !type:NestedSelector
-        tableId: RandomCrytsalTable
+        tableId: RandomCrystalTable
         prob: 0.7
     offset: 0.3
 
