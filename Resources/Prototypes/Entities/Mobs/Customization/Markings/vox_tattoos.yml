@@ -94,7 +94,7 @@
 - type: marking
   id: TattooVoxTailRing
   # TODO // Looks off on some tails (i.e docked/amputated), if conditionals for markings ever get implemented this needs to be updated to account for those.
-  bodyPart: Tail
+  bodyPart: TailOverlay
   groupWhitelist: [Vox]
   coloring:
     default:
