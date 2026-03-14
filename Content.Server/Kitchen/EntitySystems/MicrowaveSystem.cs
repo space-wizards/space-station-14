@@ -41,6 +41,10 @@ using Content.Shared.Whitelist;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
+/// <summary>
+///     A system that handles microwave logic, such as activation, malfunctions, and producing cooked recipes.
+///     TODO: Replace with a more sophisticated(?) cooking system.
+/// </summary>
 public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -130,35 +134,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         _powerState.SetWorkingState(ent.Owner, false);
     }
 
-    // Stop items from transforming through constructiongraphs while being microwaved.
-    // They might be reserved for a microwave recipe.
-    private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
-    {
-        args.Result = HandleResult.False;
-    }
-
-    // Stop reagents from reacting if they are currently reserved for a microwave recipe.
-    // For example Egg would cook into EggCooked, causing it to not being removed once we are done microwaving.
-    private void OnReactionAttempt(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
-    {
-        if (!TryComp<ActiveMicrowaveComponent>(ent.Comp.Microwave, out var activeMicrowaveComp))
-            return;
-
-        if (activeMicrowaveComp.PortionedRecipe.Recipe == null) // no recipe selected
-            return;
-
-        var recipeReagents = activeMicrowaveComp.PortionedRecipe.Recipe.Ingredients.Reagents.Keys;
-
-        foreach (var reagent in recipeReagents)
-        {
-            if (args.Event.Reaction.Reactants.ContainsKey(reagent))
-            {
-                args.Event.Cancelled = true;
-                return;
-            }
-        }
-    }
-
     private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
     {
         // this really does have to be in ComponentInit
@@ -172,7 +147,8 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
     /// <summary>
     /// Kills the user by microwaving their head
-    /// TODO: Make this not awful, it keeps any items attached to your head still on and you can revive someone and cogni them so you have some dumb headless fuck running around. I've seen it happen.
+    /// TODO: Make this not awful, it keeps any items attached to your head still on and you can revive someone and cogni them
+    /// so you have some dumb headless fuck running around. I've seen it happen.
     /// </summary>
     private void OnSuicideByEnvironment(Entity<MicrowaveComponent> ent, ref SuicideByEnvironmentEvent args)
     {
@@ -187,7 +163,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         _suicide.ApplyLethalDamage((args.Victim, damageableComponent), "Heat");
 
         var victim = args.Victim;
-
         var othersMessage = Loc.GetString("microwave-component-suicide-others-message", ("victim", victim));
         var selfMessage = Loc.GetString("microwave-component-suicide-message");
 
@@ -217,6 +192,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             SetAppearance(ent, MicrowaveVisualState.Idle, ent.Comp);
             StopCooking(ent);
         }
+
         UpdateUserInterfaceState(ent, ent.Comp);
     }
 

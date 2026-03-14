@@ -1,5 +1,4 @@
 using Content.Server.Kitchen.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Kitchen;
 
 namespace Content.Server.Kitchen.EntitySystems;
