@@ -16,7 +16,6 @@ using Robust.Shared.GameObjects;
 using Content.Client.Body.Systems;
 using Content.Shared.Body.Systems;
 using Content.Shared.Body.Components;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Medical;
@@ -118,7 +117,7 @@ public sealed class TopicalsTest : InteractionTest
                 "The self-damaging topical did not fix bleeding fully.");
                 return;
             }
-            Assert.That(true,
+            Assert.Fail(
             "You added a topical that deals damage but does not fix bleeding. Please write a test for it here.");
         }
 
