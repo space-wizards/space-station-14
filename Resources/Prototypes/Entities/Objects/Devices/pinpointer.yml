@@ -104,7 +104,7 @@
       target: SyndicateNuke
     - !type:PinpointerComponentTarget
       name: nanotrasen nuclear fission explosive
-      target: StationNuke
+      target: NanotrasenNuke
 
 - type: entity
   name: universal pinpointer
