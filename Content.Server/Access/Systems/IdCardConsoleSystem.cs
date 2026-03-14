@@ -22,12 +22,15 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Server.Access.Systems;
 
 [UsedImplicitly]
 public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly StationRecordsSystem _record = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
@@ -142,6 +145,16 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component, out var privilegedId))
             return;
+
+        // Limit name and job title lengths
+        var maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
+        var maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+
+        if (newFullName.Length > maxNameLength)
+            newFullName = newFullName[..maxNameLength];
+
+        if (newJobTitle.Length > maxIdJobLength)
+            newJobTitle = newJobTitle[..maxIdJobLength];
 
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
