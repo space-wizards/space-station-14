@@ -5,9 +5,11 @@ using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Spawning;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Spawners;
 using Robust.Shared.Random;
+using Robust.Shared.Spawners;
+using System.Numerics;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
@@ -23,7 +25,7 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
     private static readonly EntProtoId TempEntityProtoId = "TemporaryEntityForTimedDespawnSpawners";
     private const int MaxSpawnAttempts = 5;
     private const CollisionGroup SpawnCollisionMask = CollisionGroup.InteractImpassable;
-    private const float MinSpawnSeparation = 0.6f;
+    private const float MinSpawnSeparation = 1.0f;
 
     /// <summary>
     /// A table of entities with assigned weights to randomly pick from
@@ -67,21 +69,29 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
         var entity = system.PrototypeManager.Index(WeightedEntityTable).Pick(system.Random);
         var amountToSpawn = system.Random.NextFloat(MinSpawn, MaxSpawn);
 
+        bool CheckExistingMarkers(MapCoordinates coordinates)
+        {
+            foreach (var entity in lookup.GetEntitiesInRange(coordinates, MinSpawnSeparation))
+            {
+                if (!system.EntityManager.TryGetComponent<MetaDataComponent>(entity, out var metadata))
+                    continue;
+
+                if (metadata.EntityPrototype is not null && metadata.EntityPrototype.ID == TempEntityProtoId)
+                    return true;
+            }
+
+            return false;
+        }
+
         bool TrySpawn(string prototype, out EntityUid spawned)
         {
             for (var attempt = 0; attempt < MaxSpawnAttempts; attempt++)
             {
                 var coordinates = position.Offset(GetRandomVector());
 
-                // Check that we're not stacking spawn markers on top of each other
-                foreach (var entity in lookup.GetEntitiesInRange(coordinates, MinSpawnSeparation))
-                {
-                    if (!system.EntityManager.TryGetComponent<MetaDataComponent>(entity, out var metadata))
-                        continue;
-
-                    if (metadata.EntityPrototype is not null && metadata.EntityPrototype.ID == prototype)
-                        continue;
-                }
+                // Make sure we're not stacking spawn markers on top of each other
+                if (CheckExistingMarkers(coordinates))
+                    continue;
 
                 var spawnedEntity = system.EntityManager.SpawnIfUnobstructed(prototype, coordinates, SpawnCollisionMask);
                 if (spawnedEntity is not null)
