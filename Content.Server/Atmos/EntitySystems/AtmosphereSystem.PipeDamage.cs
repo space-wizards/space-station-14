@@ -1,9 +1,9 @@
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.Atmos;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.NodeContainer.NodeGroups;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -24,11 +24,16 @@ public sealed partial class AtmosphereSystem
     private readonly DamageSpecifier _pipeBurstingDamageSpecifier = new();
 
     /// <summary>
+    /// Type of damage to deal to pipes when they are overpressured.
+    /// </summary>
+    private readonly ProtoId<DamageTypePrototype> _structuralDamageId = new("Structural");
+
+    /// <summary>
     /// Initializes the pipe damage specifier.
     /// </summary>
     private void InitializePipeDamage()
     {
-        _pipeBurstingDamageSpecifier.DamageDict.Add("Structural", 0);
+        _pipeBurstingDamageSpecifier.DamageDict.Add(_structuralDamageId, 0);
     }
 
     /// <summary>
@@ -81,7 +86,8 @@ public sealed partial class AtmosphereSystem
                 // fails instead of the whole pipenet bursting at the same time.
                 const float baseChance = 0.5f;
                 var p = baseChance;
-                p += (float)damage.TotalDamage * (1 - baseChance);
+                var curDamage = _damage.GetPositiveDamage((pipe.Owner, damage)).GetTotal();
+                p += (float)curDamage * (1 - baseChance);
 
                 var finalChance = Math.Clamp(1-p, 0f, 1f);
                 if (_random.Prob(finalChance))
