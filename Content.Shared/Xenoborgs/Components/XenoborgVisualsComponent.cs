@@ -13,7 +13,7 @@ public sealed partial class XenoborgVisualsComponent : Component
     /// The key of the entity layer into which the sprite will be inserted
     /// </summary>
     [DataField]
-    public string LayerMap = "heavy_xenoborg_rad";
+    public string LayerMap = "unshaded_lighting";
 
     [DataField, AutoNetworkedField]
     public bool ForceUnshaded = true;

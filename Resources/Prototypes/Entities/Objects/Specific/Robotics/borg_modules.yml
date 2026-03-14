@@ -1605,6 +1605,9 @@
   - type: ComponentBorgModule
     components:
     - type: XenoborgVisuals
+      fallbackSprite:
+        sprite: Resources/Textures/Mobs/Silicon/chassis.rsi
+        state: xenoborg_heavy_rad
     - type: RadiationSource
       intensity: 0.75
       slope: 0.2
