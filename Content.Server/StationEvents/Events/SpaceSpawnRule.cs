@@ -1,10 +1,9 @@
 using Content.Server.Antag;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -32,10 +31,8 @@ public sealed class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleComponent>
             return;
         }
 
-        var stationData = Comp<StationDataComponent>(station.Value);
-
         // find a station grid
-        var gridUid = StationSystem.GetLargestGrid(stationData);
+        var gridUid = StationSystem.GetLargestGrid(station.Value);
         if (gridUid == null || !TryComp<MapGridComponent>(gridUid, out var grid))
         {
             Sawmill.Warning("Chosen station has no grids, cannot pick location for {ToPrettyString(uid):rule}");

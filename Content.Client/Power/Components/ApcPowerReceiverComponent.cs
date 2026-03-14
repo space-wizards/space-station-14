@@ -5,4 +5,5 @@ namespace Content.Client.Power.Components;
 [RegisterComponent]
 public sealed partial class ApcPowerReceiverComponent : SharedApcPowerReceiverComponent
 {
+    public override float Load { get; set; }
 }

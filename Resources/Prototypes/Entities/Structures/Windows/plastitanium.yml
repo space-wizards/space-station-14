@@ -138,6 +138,7 @@
   - type: Tag
     tags:
     - Diagonal
+    - Window
   - type: Icon
     sprite: Structures/Windows/plastitanium_window_diagonal.rsi
     state: state0

@@ -571,18 +571,17 @@
     Opporozidone: 3
 
 - type: reaction
-  id: Necrosol
-  impact: Medium
+  id: Arcryox
   minTemp: 370
   reactants:
-    Blood:
-      amount: 3
-    Omnizine:
+    Lithium:
+      amount: 1
+    Tricordrazine:
       amount: 1
     Cryoxadone:
-      amount: 2
+      amount: 1
   products:
-    Necrosol: 2
+    Arcryox: 3
 
 - type: reaction
   id: Aloxadone
@@ -662,3 +661,27 @@
       amount: 1
   products:
     Haloperidol: 5
+
+- type: reaction
+  id: Heparin
+  reactants:
+    SulfuricAcid:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Sodium:
+      amount: 1
+  products:
+    Heparin: 2
+
+- type: reaction
+  id: Hemorrhinol
+  reactants:
+    Heparin:
+      amount: 2
+    Razorium:
+      amount: 2
+    Plasma:
+      amount: 1
+  products:
+    Hemorrhinol: 2

@@ -29,7 +29,7 @@ public sealed partial class ThiefBackpackMenu : FancyWindow
 
     public void UpdateState(ThiefBackpackBoundUserInterfaceState state)
     {
-        SetsGrid.DisposeAllChildren();
+        SetsGrid.RemoveAllChildren();
         var selectedNumber = 0;
         foreach (var (set, info) in state.Sets)
         {
@@ -46,7 +46,8 @@ public sealed partial class ThiefBackpackMenu : FancyWindow
                 selectedNumber++;
         }
 
-        Description.Text = Loc.GetString("thief-backpack-window-description", ("maxCount", state.MaxSelectedSets));
+        Title = Loc.GetString(state.ToolName);
+        Description.Text = Loc.GetString(state.ToolDesc, ("maxCount", state.MaxSelectedSets));
         SelectedSets.Text = Loc.GetString("thief-backpack-window-selected", ("selectedCount", selectedNumber), ("maxCount", state.MaxSelectedSets));
         ApproveButton.Disabled = selectedNumber != state.MaxSelectedSets;
     }

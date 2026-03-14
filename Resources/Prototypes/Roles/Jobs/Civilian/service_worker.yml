@@ -6,7 +6,7 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Civilian
-    time: 1800 #0.5 hr
+    time: 0.5h
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service

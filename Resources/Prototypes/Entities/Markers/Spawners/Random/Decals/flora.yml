@@ -5,12 +5,15 @@
   components:
   - type: RandomDecalSpawner
     radius: 0.3
-    zIndex: 1
+    zIndex: 5
     deleteSpawnerAfterSpawn: true
     tileWhitelist:
     - FloorAstroGrass
     - FloorMowedAstroGrass
     - FloorJungleAstroGrass
+    - FloorDarkAstroGrass
+    - FloorLightAstroGrass
+    - FloorDesertAstroSand
     - FloorAstroIce
     - FloorAstroSnow
     - FloorAstroAsteroidSand

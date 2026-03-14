@@ -59,6 +59,18 @@
     dependsOnComponents:
     - type: AllowSuitStorage
     displayName: Suit Storage
+  - name: back
+    slotTexture: back
+    fullTextureName: template_small
+    slotFlags: BACK
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 3,2
+    strippingWindowPos: 0,5
+    displayName: Back
+    whitelist:
+      tags:
+      - ScurretWearable
   - name: outerClothing
     slotTexture: suit
     slotFlags: OUTERCLOTHING

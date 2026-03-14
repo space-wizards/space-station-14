@@ -45,7 +45,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        var artifact = GetEntity(ent.Comp.Attached);
+        var artifact = ent.Comp.Attached;
         if (!TryComp<XenoArtifactComponent>(artifact, out var artiComp))
             return false;
 

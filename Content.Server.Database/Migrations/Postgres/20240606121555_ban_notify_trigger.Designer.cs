@@ -18,7 +18,6 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20240606121555_ban_notify_trigger")]
     partial class ban_notify_trigger
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1910,6 +1909,5 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

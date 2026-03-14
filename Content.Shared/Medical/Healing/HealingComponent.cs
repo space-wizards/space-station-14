@@ -43,7 +43,7 @@ public sealed partial class HealingComponent : Component
     /// How long it takes to apply the damage.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Delay = 3f;
+    public TimeSpan Delay = TimeSpan.FromSeconds(3f);
 
     /// <summary>
     /// Delay multiplier when healing yourself.

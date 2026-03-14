@@ -1,5 +1,5 @@
 using Content.Client.Chat.Managers;
-using Content.Client.Message;
+using Content.Client.RichText;
 using Content.Shared.Chat;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Laws;
@@ -26,7 +26,7 @@ public sealed partial class LawDisplay : Control
 
     private readonly Dictionary<Button, TimeSpan> _nextAllowedPress = new();
 
-    public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
+    public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<ProtoId<RadioChannelPrototype>>? radioChannels)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -37,8 +37,8 @@ public sealed partial class LawDisplay : Control
         var lawIdentifierPlaintext = FormattedMessage.RemoveMarkupPermissive(lawIdentifier);
         var lawDescriptionPlaintext = FormattedMessage.RemoveMarkupPermissive(lawDescription);
 
-        LawNumberLabel.SetMarkup(lawIdentifier);
-        LawLabel.SetMessage(lawDescription);
+        LawNumberLabel.SetMessage(FormattedMessage.FromMarkupPermissive(lawIdentifier), UserFormattableTags.SiliconAllowedTags);
+        LawLabel.SetMessage(FormattedMessage.FromMarkupPermissive(lawDescription), UserFormattableTags.SiliconAllowedTags);
 
         // If you can't talk, you can't state your laws...
         if (!_entityManager.TryGetComponent<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)

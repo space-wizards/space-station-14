@@ -1,8 +1,10 @@
+using System.Linq;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Shared.Chat;
 
@@ -27,7 +29,7 @@ public sealed class SharedSuicideSystem : EntitySystem
         // Mob thresholds are sorted from alive -> crit -> dead,
         // grabbing the last key will give us how much damage is needed to kill a target from zero
         // The exact lethal damage amount is adjusted based on their current damage taken
-        var lethalAmountOfDamage = mobThresholds.Thresholds.Keys.Last() - target.Comp.TotalDamage;
+        var lethalAmountOfDamage = mobThresholds.Thresholds.Keys.Last() - _damageableSystem.GetTotalDamage(target.AsNullable());
         var totalDamage = appliedDamageSpecifier.GetTotal();
 
         // Removing structural because it causes issues against entities that cannot take structural damage,
@@ -40,7 +42,7 @@ public sealed class SharedSuicideSystem : EntitySystem
             appliedDamageSpecifier.DamageDict[key] = Math.Ceiling((double) (value * lethalAmountOfDamage / totalDamage));
         }
 
-        _damageableSystem.TryChangeDamage(target, appliedDamageSpecifier, true, origin: target);
+        _damageableSystem.ChangeDamage(target.AsNullable(), appliedDamageSpecifier, true, origin: target);
     }
 
     /// <summary>
@@ -54,7 +56,7 @@ public sealed class SharedSuicideSystem : EntitySystem
         // Mob thresholds are sorted from alive -> crit -> dead,
         // grabbing the last key will give us how much damage is needed to kill a target from zero
         // The exact lethal damage amount is adjusted based on their current damage taken
-        var lethalAmountOfDamage = mobThresholds.Thresholds.Keys.Last() - target.Comp.TotalDamage;
+        var lethalAmountOfDamage = mobThresholds.Thresholds.Keys.Last() - _damageableSystem.GetTotalDamage(target.AsNullable());
 
         // We don't want structural damage for the same reasons listed above
         if (!_prototypeManager.TryIndex(damageType, out var damagePrototype) || damagePrototype.ID == "Structural")
@@ -64,6 +66,6 @@ public sealed class SharedSuicideSystem : EntitySystem
         }
 
         var damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
-        _damageableSystem.TryChangeDamage(target, damage, true, origin: target);
+        _damageableSystem.ChangeDamage(target.AsNullable(), damage, true, origin: target);
     }
 }

@@ -1,0 +1,85 @@
+- type: constructionGraph
+  id: WeaponEnergyTurretControlPanel
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: frame
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 2
+
+  - node: frame
+    entity: WeaponEnergyTurretControlPanelFrame
+    edges:
+    - to: board
+      steps:
+      - tag: TurretControlElectronics
+        name: construction-graph-tag-turret-control-electronics
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: command
+        store: board
+
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 3
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 4
+
+  - node: board
+    entity: WeaponEnergyTurretControlPanelFrame
+    edges:
+    - to: glass
+      steps:
+      - material: Glass
+        amount: 1
+        doAfter: 1
+
+    - to: frame
+      completed:
+      - !type:EmptyContainer
+        container: board
+        pickup: true
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+  - node: glass
+    edges:
+    - to: finish
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+    - to: board
+      completed:
+      - !type:GivePrototype
+        prototype: SheetGlass1
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+  - node: finish
+    entity: !type:BoardNodeEntity { container: board }
+    actions:
+    - !type:AddContainer
+      container: board
+    edges:
+    - to: board
+      conditions:
+      - !type:AllWiresCut {}
+      - !type:WirePanel {}
+      completed:
+      - !type:GivePrototype
+        prototype: SheetGlass1
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 4

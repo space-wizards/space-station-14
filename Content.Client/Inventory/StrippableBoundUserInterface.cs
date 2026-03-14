@@ -154,7 +154,7 @@ namespace Content.Client.Inventory
                 var button = new Button()
                 {
                     Text = Loc.GetString("strippable-bound-user-interface-stripping-menu-ensnare-button"),
-                    StyleClasses = { StyleBase.ButtonOpenRight }
+                    StyleClasses = { StyleClass.ButtonOpenRight }
                 };
 
                 button.OnPressed += (_) => SendPredictedMessage(new StrippingEnsnareButtonPressed());
@@ -190,7 +190,7 @@ namespace Content.Client.Inventory
             if (EntMan.TryGetComponent<VirtualItemComponent>(heldEntity, out var virt))
             {
                 button.Blocked = true;
-                if (EntMan.TryGetComponent<CuffableComponent>(Owner, out var cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
+                if (_cuffable.TryGetAllCuffs(Owner, out var cuffs) && cuffs.Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 

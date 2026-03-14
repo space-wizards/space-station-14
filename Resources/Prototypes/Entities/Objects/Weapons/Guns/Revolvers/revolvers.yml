@@ -12,6 +12,7 @@
     shape:
     - 0,0,1,0
     - 0,1,0,1
+    storedOffset: 0,-6
   - type: Tag
     tags:
     - Sidearm
@@ -82,16 +83,20 @@
   name: Inspector
   parent: [BaseWeaponRevolver, BaseSecurityContraband]
   id: WeaponRevolverInspector
-  description: A single-action revolver manufactured by various companies. It is readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
+  description: A double-action revolver manufactured by various companies. It is readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
+  - type: Item
+    storedOffset: 0,-2
   - type: RevolverAmmoProvider
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null ]
+  - type: StealTarget
+    stealGroup: OfficerHandgun
 
 - type: entity
   name: Mateba
@@ -103,6 +108,8 @@
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+  - type: Item
+    storedOffset: 0,-3
   - type: Gun
     fireRate: 3
     soundGunshot:
@@ -126,6 +133,8 @@
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+  - type: Item
+    storedOffset: 0,-2
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 2
@@ -144,10 +153,6 @@
   suffix: armor-piercing
   components:
   - type: RevolverAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeMagnum
-        - SpeedLoaderMagnum
     proto: CartridgeMagnumAP
 
 
@@ -161,6 +166,8 @@
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
+  - type: Item
+    storedOffset: 1,-5
   - type: Gun
     fireRate: 1
   - type: ContainerContainer

@@ -1,5 +1,3 @@
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
@@ -7,6 +5,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -16,6 +15,7 @@ using Content.Shared.Wires;
 using Content.Shared.Item.ItemToggle.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -26,14 +26,15 @@ namespace Content.Shared.Lock;
 [UsedImplicitly]
 public sealed class LockSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+
+    private readonly LocId _defaultDenyReason = "lock-comp-has-user-access-fail";
 
     /// <inheritdoc />
     public override void Initialize()
@@ -42,20 +43,22 @@ public sealed class LockSystem : EntitySystem
 
         SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated, before: [typeof(ActivatableUISystem)]);
+        SubscribeLocalEvent<LockComponent, UseInHandEvent>(OnUseInHand, before: [typeof(ActivatableUISystem)]);
         SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
         SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<LockComponent, LockDoAfter>(OnDoAfterLock);
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
-        SubscribeLocalEvent<LockComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
+
 
         SubscribeLocalEvent<LockedWiresPanelComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
         SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+        SubscribeLocalEvent<LockedStorageComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
 
-        SubscribeLocalEvent<ActivatableUIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
-        SubscribeLocalEvent<ActivatableUIRequiresLockComponent, LockToggledEvent>(LockToggled);
+        SubscribeLocalEvent<UIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
+        SubscribeLocalEvent<UIRequiresLockComponent, LockToggledEvent>(LockToggled);
 
         SubscribeLocalEvent<ItemToggleRequiresLockComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
     }
@@ -83,6 +86,23 @@ public sealed class LockSystem : EntitySystem
         }
     }
 
+    private void OnUseInHand(EntityUid uid, LockComponent lockComp, UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (lockComp.Locked && lockComp.UnlockInHand)
+        {
+            args.Handled = true;
+            TryUnlock(uid, args.User, lockComp);
+        }
+        else if (!lockComp.Locked && lockComp.LockInHand)
+        {
+            args.Handled = true;
+            TryLock(uid, args.User, lockComp);
+        }
+    }
+
     private void OnStorageOpenAttempt(EntityUid uid, LockComponent component, ref StorageOpenAttemptEvent args)
     {
         if (!component.Locked)
@@ -96,7 +116,10 @@ public sealed class LockSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, LockComponent lockComp, ExaminedEvent args)
     {
-        args.PushText(Loc.GetString(lockComp.Locked
+        if (!lockComp.ShowExamine)
+            return;
+
+        args.PushMarkup(Loc.GetString(lockComp.Locked
                 ? "lock-comp-on-examined-is-locked"
                 : "lock-comp-on-examined-is-unlocked",
             ("entityName", Identity.Name(uid, EntityManager))));
@@ -121,7 +144,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, false))
             return false;
 
         if (!skipDoAfter && lockComp.LockTime != TimeSpan.Zero)
@@ -220,7 +243,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, false))
             return false;
 
         if (!skipDoAfter && lockComp.UnlockTime != TimeSpan.Zero)
@@ -240,6 +263,20 @@ public sealed class LockSystem : EntitySystem
     }
 
     /// <summary>
+    /// Toggle the lock to locked if unlocked, and unlocked if locked.
+    /// </summary>
+    /// <param name="uid">Entity to toggle the lock state of.</param>
+    /// <param name="user">The person trying to toggle the lock</param>
+    /// <param name="lockComp">Entities lock comp (will be resolved)</param>
+    public void ToggleLock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
+    {
+        if (IsLocked((uid, lockComp)))
+            Unlock(uid, user, lockComp);
+        else
+            Lock(uid, user, lockComp);
+    }
+
+    /// <summary>
     /// Returns true if the entity is locked.
     /// Entities with no lock component are considered unlocked.
     /// </summary>
@@ -255,43 +292,80 @@ public sealed class LockSystem : EntitySystem
     /// Raises an event for other components to check whether or not
     /// the entity can be locked in its current state.
     /// </summary>
-    public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
+    public bool CanToggleLock(Entity<LockComponent?> ent, EntityUid user, bool quiet = true)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
         if (!_actionBlocker.CanComplexInteract(user))
             return false;
 
+        if (!ent.Comp.Locked && !ent.Comp.AllowRepeatedLocking)
+            return false;
+
         var ev = new LockToggleAttemptEvent(user, quiet);
-        RaiseLocalEvent(uid, ref ev, true);
+        RaiseLocalEvent(ent, ref ev, true);
         if (ev.Cancelled)
             return false;
 
-        var userEv = new UserLockToggleAttemptEvent(uid, quiet);
+        var userEv = new UserLockToggleAttemptEvent(ent, quiet);
         RaiseLocalEvent(user, ref userEv, true);
         return !userEv.Cancelled;
     }
 
-    // TODO: this should be a helper on AccessReaderSystem since so many systems copy paste it
-    private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)
+    /// <summary>
+    /// Checks whether the user has access to locks on an entity.
+    /// </summary>
+    /// <param name="ent">The entity we check for locks.</param>
+    /// <param name="user">The user we check for access.</param>
+    /// <param name="quiet">Whether to display a popup if user has no access.</param>
+    /// <returns>True if the user has access, otherwise False.</returns>
+    [PublicAPI]
+    public bool HasUserAccess(Entity<LockComponent?> ent, EntityUid user, bool quiet = true)
     {
-        // Not having an AccessComponent means you get free access. woo!
-        if (!Resolve(uid, ref reader, false))
+        // Entity literally has no lock. Congratulations.
+        if (!Resolve(ent, ref ent.Comp, false))
             return true;
 
-        if (_accessReader.IsAllowed(user, uid, reader))
+        var checkedReaders = LockTypes.None;
+        if (ent.Comp.CheckedLocks is null)
+        {
+            var lockEv = new FindAvailableLocksEvent(user);
+            RaiseLocalEvent(ent, ref lockEv);
+            checkedReaders = lockEv.FoundReaders;
+        }
+
+        // If no locks are found, you have access. Woo!
+        if (checkedReaders == LockTypes.None)
+            return true;
+
+        var accessEv = new CheckUserHasLockAccessEvent(user, checkedReaders);
+        RaiseLocalEvent(ent, ref accessEv);
+
+        // If we check for any, as long as user has access to any of the locks we grant access.
+        if (accessEv.HasAccess != LockTypes.None && ent.Comp.CheckForAnyReaders)
+            return true;
+
+        if (accessEv.HasAccess == checkedReaders)
             return true;
 
         if (!quiet)
-            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), uid, user);
+        {
+            var denyReason = accessEv.DenyReason ?? Loc.GetString(_defaultDenyReason);
+            _sharedPopupSystem.PopupClient(denyReason, ent, user);
+        }
+
         return false;
     }
 
     private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || !component.ShowLockVerbs)
             return;
 
         AlternativeVerb verb = new()
         {
+            Disabled = !CanToggleLock(uid, args.User),
             Act = component.Locked
                 ? () => TryUnlock(uid, args.User, component)
                 : () => TryLock(uid, args.User, component),
@@ -340,9 +414,9 @@ public sealed class LockSystem : EntitySystem
         TryUnlock(uid, args.User, skipDoAfter: true);
     }
 
-    private void OnStorageInteractAttempt(Entity<LockComponent> ent, ref StorageInteractAttemptEvent args)
+    private void OnStorageInteractAttempt(Entity<LockedStorageComponent> ent, ref StorageInteractAttemptEvent args)
     {
-        if (ent.Comp.Locked)
+        if (IsLocked(ent.Owner))
             args.Cancelled = true;
     }
 
@@ -394,43 +468,92 @@ public sealed class LockSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnUIOpenAttempt(EntityUid uid, ActivatableUIRequiresLockComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnUIOpenAttempt(EntityUid uid, UIRequiresLockComponent component, ActivatableUIOpenAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
-        {
-            args.Cancel();
-            if (lockComp.Locked)
-            {
-                _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
-            }
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
+            return;
 
-            _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
+        args.Cancel();
+
+        if (args.Silent)
+            return;
+
+        if (lockComp.Locked && component.Popup != null)
+        {
+            _sharedPopupSystem.PopupClient(Loc.GetString(component.Popup), uid, args.User);
         }
+
+        _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
     }
 
-    private void LockToggled(EntityUid uid, ActivatableUIRequiresLockComponent component, LockToggledEvent args)
+    private void LockToggled(EntityUid uid, UIRequiresLockComponent component, LockToggledEvent args)
     {
         if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
             return;
 
-        _activatableUI.CloseAll(uid);
+        if (component.UserInterfaceKeys == null)
+        {
+            _ui.CloseUis(uid);
+            return;
+        }
+
+        foreach (var key in component.UserInterfaceKeys)
+        {
+            _ui.CloseUi(uid, key);
+        }
     }
+
     private void OnActivateAttempt(EntityUid uid, ItemToggleRequiresLockComponent component, ref ItemToggleActivateAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
+            return;
+
+        args.Cancelled = true;
+
+        if (lockComp.Locked && component.LockedPopup != null)
         {
-            args.Cancelled = true;
-            if (lockComp.Locked)
-                _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
-                ("target", Identity.Entity(uid, EntityManager))),
+            _sharedPopupSystem.PopupClient(Loc.GetString(component.LockedPopup,
+                    ("target", Identity.Entity(uid, EntityManager))),
                 uid,
                 args.User);
         }
     }
+}
+
+/// <summary>
+/// Raised on an entity to check whether it has any readers that can prevent it from being opened.
+/// </summary>
+/// <param name="User">The person attempting to open the entity.</param>
+/// <param name="FoundReaders">What readers were found. This should not be set when raising the event.</param>
+[ByRefEvent]
+public record struct FindAvailableLocksEvent(EntityUid User, LockTypes FoundReaders = LockTypes.None);
+
+/// <summary>
+/// Raised on an entity to check if the user has access (ID, Fingerprint, etc) to said entity.
+/// </summary>
+/// <param name="User">The user we are checking.</param>
+/// <param name="FoundReaders">What readers we are attempting to verify access for.</param>
+/// <param name="HasAccess">Which readers the user has access to. This should not be set when raising the event.</param>
+[ByRefEvent]
+public record struct CheckUserHasLockAccessEvent(EntityUid User, LockTypes FoundReaders = LockTypes.None, LockTypes HasAccess = LockTypes.None, string? DenyReason = null);
+
+/// <summary>
+/// Enum of all readers a lock can be "locked" by.
+/// Used to determine what you need in order to access the lock.
+/// For example, an entity with <see cref="AccessReaderComponent"/> will have the Access type, which is gathered by an event and handled by the respective system.
+/// </summary>
+[Flags]
+[Serializable, NetSerializable]
+public enum LockTypes : byte
+{
+    None, // Default state, means the lock is not restricted.
+    Access, // Means there is an AccessReader currently present.
+    Fingerprint, // Means there is a FingerprintReader currently present.
+    All = Access | Fingerprint,
 }
