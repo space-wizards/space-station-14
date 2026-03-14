@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared.Body.Systems;
@@ -8,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
+using Content.Shared.Atmos.Components;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Utility;
 
