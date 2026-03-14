@@ -61,6 +61,19 @@
       - id: MiningDrill
     offset: 0.0
 
+- type: entityTable
+  id: SalvageMobTable
+  table: !type:GroupSelector
+    children:
+    - id: MobCarpSalvage
+      weight: 5
+    - id: MobTickSalvage
+      weight: 3
+    - id: MobSharkSalvage
+      weight: 2.5
+    - id: PlushieCarp
+    - id: DehydratedSpaceCarp
+
 - type: entity
   parent: MarkerBase
   name: Salvage Mob Spawner
@@ -73,20 +86,19 @@
     - sprite: Mobs/Aliens/Carps/space.rsi
       state: icon
   - type: EntityTableSpawner
-    table: !type:GroupSelector
-      children:
-      - id: MobSharkSalvage
-        weight: 0.2
-      - !type:GroupSelector
-        weight: 0.8
-        prob: 0.25
-        children:
-        - id: MobCarpSalvage
-          weight: 5
-        - id: MobTickSalvage
-          weight: 3
-        - id: PlushieCarp
-        - id: DehydratedSpaceCarp
+    table: !type:NestedSelector
+      prob: 0.25
+      tableId: SalvageMobTable
+
+- type: entity
+  parent: SalvageMobSpawner
+  id: SalvageMobSpawner75
+  suffix: 75
+  components:
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      prob: 0.75
+      tableId: SalvageMobTable
 
 - type: entity #I made this in case someone decided to make a terrifying space tick swarm for salvage. that someone may be me -EG404
   name: Salvage Space Tick Spawner
@@ -116,27 +128,6 @@
   - type: ConditionalSpawner
     prototypes:
     - MobBearSpaceSalvage
-
-- type: entity
-  id: SalvageMobSpawner75
-  parent: SalvageMobSpawner
-  suffix: 75
-  components:
-  - type: EntityTableSpawner
-    table: !type:GroupSelector
-      children:
-      - id: MobSharkSalvage
-        weight: 0.2
-      - !type:GroupSelector
-        weight: 0.8
-        prob: 0.75
-        children:
-        - id: MobCarpSalvage
-          weight: 5
-        - id: MobTickSalvage
-          weight: 3
-        - id: PlushieCarp
-        - id: DehydratedSpaceCarp
 
 - type: entity
   name: Salvage Space Kangaroo Spawner
