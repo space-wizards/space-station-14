@@ -44,28 +44,26 @@ namespace Content.Server.Atmos.EntitySystems
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
         }
 
+        public override bool IsMixtureFuel(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
+        {
+            Span<float> tmp = stackalloc float[Atmospherics.AdjustedNumberOfGases];
+            NumericsHelpers.Multiply(mixture.Moles, GasFuelMask, tmp);
+            return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
+        }
+
+        public override bool IsMixtureOxidizer(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
+        {
+            Span<float> tmp = stackalloc float[Atmospherics.AdjustedNumberOfGases];
+            NumericsHelpers.Multiply(mixture.Moles, GasOxidizerMask, tmp);
+            return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
+        }
+
         /// <summary>
         ///     Return speedup factor for pumped or flow-based devices that depend on MaxTransferRate.
         /// </summary>
         public float PumpSpeedup()
         {
             return Speedup;
-        }
-
-        /// <summary>
-        ///     Calculates the thermal energy for a gas mixture.
-        /// </summary>
-        public float GetThermalEnergy(GasMixture mixture)
-        {
-            return mixture.Temperature * GetHeatCapacity(mixture);
-        }
-
-        /// <summary>
-        ///     Calculates the thermal energy for a gas mixture, using a cached heat capacity value.
-        /// </summary>
-        public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
-        {
-            return mixture.Temperature * cachedHeatCapacity;
         }
 
         /// <summary>
@@ -76,28 +74,6 @@ namespace Content.Server.Atmos.EntitySystems
             var c = GetHeatCapacity(mixture);
             float dT = dQ / c;
             mixture.Temperature += dT;
-        }
-
-        /// <summary>
-        ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
-        ///     The <see cref="giver"/> gas mixture is not modified by this method.
-        /// </summary>
-        public void Merge(GasMixture receiver, GasMixture giver)
-        {
-            if (receiver.Immutable) return;
-
-            if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
-            {
-                var receiverHeatCapacity = GetHeatCapacity(receiver);
-                var giverHeatCapacity = GetHeatCapacity(giver);
-                var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
-                if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
-                {
-                    receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
-                }
-            }
-
-            NumericsHelpers.Add(receiver.Moles, giver.Moles);
         }
 
         /// <summary>
@@ -345,6 +321,26 @@ namespace Content.Server.Atmos.EntitySystems
         [PublicAPI]
         public static float FractionToMaxPressure(GasMixture mix1, GasMixture mix2, float targetPressure)
         {
+            var molesToTransfer = MolesToMaxPressure(mix1, mix2, targetPressure);
+            return molesToTransfer / mix1.TotalMoles;
+        }
+
+        /// <summary>
+        /// Determines the number of moles to be removed and transferred from a source
+        /// <see cref="GasMixture"/> to a target <see cref="GasMixture"/> to reach a target pressure
+        /// in the target <see cref="GasMixture"/>.
+        /// </summary>
+        /// <param name="mix1">The source <see cref="GasMixture"/> that gas will be removed from.
+        /// This should always be of higher pressure than the second <see cref="GasMixture"/>.</param>
+        /// <param name="mix2">The target <see cref="GasMixture"/> that will increase in pressure
+        /// to the target pressure.</param>
+        /// <param name="targetPressure">The target mixture's desired pressure to target.</param>
+        /// <returns>The difference in moles required to reach the target pressure.</returns>
+        /// <remarks>Note that this method doesn't take into account the heat capacity of the
+        /// transferred volume causing a pressure rise in the target <see cref="GasMixture"/>.</remarks>
+        [PublicAPI]
+        public static float MolesToMaxPressure(GasMixture mix1, GasMixture mix2, float targetPressure)
+        {
             /*
              Calculate the moles required to reach the target pressure.
              The formula is derived from the ideal gas law and the
@@ -388,7 +384,7 @@ namespace Content.Server.Atmos.EntitySystems
             var requiredMoles = (delta * mix2.Volume) / (mix1.Temperature * Atmospherics.R);
 
             // Return the fraction of moles to transfer.
-            return requiredMoles / mix1.TotalMoles;
+            return requiredMoles;
         }
 
         /// <summary>
@@ -472,10 +468,8 @@ namespace Content.Server.Atmos.EntitySystems
             return GasCompareResult.NoExchange;
         }
 
-        /// <summary>
-        ///     Performs reactions for a given gas mixture on an optional holder.
-        /// </summary>
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+        [PublicAPI]
+        public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
         {
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;
