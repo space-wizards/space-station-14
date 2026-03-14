@@ -1,54 +1,4 @@
 ﻿Entries:
-- author: ToastEnjoyer
-  changes:
-  - message: On fland, the wardens enforcer has been removed.
-    type: Remove
-  id: 9059
-  time: '2025-10-08T23:45:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40786
-- author: SlamBamActionman
-  changes:
-  - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration
-      and shorter delay before activating.
-    type: Tweak
-  id: 9060
-  time: '2025-10-09T13:32:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40797
-- author: Princess-Cheeseballs
-  changes:
-  - message: Dying while asleep shouldn't permanently blind you anymore.
-    type: Fix
-  id: 9061
-  time: '2025-10-09T13:46:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40366
-- author: kontakt
-  changes:
-  - message: Bulldog magazines are now only accessible through emagged fabricators.
-    type: Tweak
-  id: 9062
-  time: '2025-10-09T14:00:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40790
-- author: Princess-Cheeseballs
-  changes:
-  - message: The thieving beacon can now detect the officer's handgun objective.
-    type: Fix
-  id: 9063
-  time: '2025-10-10T04:59:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40811
-- author: Hitlinemoss
-  changes:
-  - message: The Paladin AI lawset has been rewritten.
-    type: Tweak
-  id: 9064
-  time: '2025-10-10T12:41:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40343
-- author: kontakt
-  changes:
-  - message: Ninjas can now have a bombing target at any warp point.
-    type: Tweak
-  id: 9065
-  time: '2025-10-10T21:27:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40726
 - author: frigid-dev
   changes:
   - message: Ore Crabs now collide with the player if mob collisions are enabled.
@@ -4003,3 +3953,58 @@
   id: 9569
   time: '2026-03-08T01:05:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42866
+- author: ScarKy0
+  changes:
+  - message: Hostile vent critters now crawl out of a single vent, alerting the station
+      about the location in advance.
+    type: Add
+  - message: Friendly critters no longer have an announcement when spawning.
+    type: Remove
+  - message: Vent critters can no longer spawn on unachored vents.
+    type: Fix
+  id: 9570
+  time: '2026-03-11T23:42:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43047
+- author: Centronias
+  changes:
+  - message: Wrapped parcels can now fit in mail carts.
+    type: Add
+  id: 9571
+  time: '2026-03-13T20:22:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43226
+- author: Velken
+  changes:
+  - message: Corrupted silicon laws now use scrambled text in the UI again.
+    type: Fix
+  id: 9572
+  time: '2026-03-13T23:48:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43229
+- author: TaserTheFox
+  changes:
+  - message: Fixed certain bottled reagents not having localization text.
+    type: Fix
+  id: 9573
+  time: '2026-03-14T16:21:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43208
+- author: Crude Oil
+  changes:
+  - message: Fixed some emitter alerts missing the word "emitter"
+    type: Fix
+  id: 9574
+  time: '2026-03-14T16:32:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43225
+- author: SnappingOpossum
+  changes:
+  - message: Certain randomised items and decorations no longer spawn with the wrong
+      rotation.
+    type: Fix
+  id: 9575
+  time: '2026-03-14T16:32:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43234
+- author: themias
+  changes:
+  - message: Healing with a holy book now gives off a holy light.
+    type: Tweak
+  id: 9576
+  time: '2026-03-14T16:33:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43189
