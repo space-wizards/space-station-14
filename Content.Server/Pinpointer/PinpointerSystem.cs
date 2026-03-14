@@ -235,8 +235,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 return true;
             }
         }
-
-        return false;
     }
 
     /// <summary>
