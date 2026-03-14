@@ -4,7 +4,7 @@ using System.Linq;
 using System.Numerics;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
-using Robust.Shared.Prototypes;
+using Content.Shared.Tag;
 
 namespace Content.Server.Pinpointer;
 
@@ -12,6 +12,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -124,6 +125,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (target == null || !Exists(target.Value))
         {
             SetDistance(ent, Distance.Unknown);
+            UpdateAppearance(ent);
             return;
         }
 
@@ -184,7 +186,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     ///     Try to find the closest entity from whitelist on a current map
     ///     Will return null if can't find anything
     /// </summary>
-    private EntityUid? FindTargetFromComponent(Entity<TransformComponent?> ent, Type whitelist, EntProtoId? protoId = null)
+    private EntityUid? FindTargetFromComponent(Entity<TransformComponent?> ent, Type whitelist, PinpointerTarget filter)
     {
         if (!Resolve(ent, ref ent.Comp))
             return null;
@@ -199,16 +201,42 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             if (!_xformQuery.TryGetComponent(otherUid, out var compXform) || compXform.MapID != mapId)
                 continue;
 
-            // If no protoId is specified, don't filter for entities with a specific proto id.
-            if (protoId is not null && Prototype(otherUid)?.ID != protoId)
+            if (!PassesComparison(otherUid, filter))
+            {
                 continue;
+            }
 
             var dist = (_transform.GetWorldPosition(compXform) - worldPos).LengthSquared();
             l.TryAdd(dist, otherUid);
         }
 
-        // return uid with a smallest distance
+        // return uid with the smallest distance
         return l.Count > 0 ? l.First().Value : null;
+    }
+
+    /// <summary>
+    ///     Returns if entity passes the comparison with the PinpointerTarget
+    /// </summary>
+    private bool PassesComparison(EntityUid ent, PinpointerTarget comparison)
+    {
+        switch (comparison)
+        {
+            case PinpointerEntProtoIdTarget entProtoId:
+            {
+                return (Prototype(ent)?.ID! == entProtoId.Target);
+            }
+            case PinpointerTagTarget tag:
+            {
+                return _tag.HasTag(ent, tag.Target);
+            }
+            // no designated filter = auto pass
+            default:
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -242,7 +270,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                     break;
 
                 // There may be multiple entities with the specified component, so we want the closest one at the time of activation
-                result = FindTargetFromComponent((entity, transform), reg.Type);
+                result = FindTargetFromComponent((entity, transform), reg.Type, component);
                 break;
             }
             case PinpointerEntityUidTarget entityUid:
@@ -262,7 +290,22 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 if (!_xformQuery.TryComp(entity, out var transform))
                     break;
 
-                result = FindTargetFromComponent((entity, transform), reg.Type, entProtoId.Target);
+                result = FindTargetFromComponent((entity, transform), reg.Type, entProtoId);
+                break;
+            }
+            case PinpointerTagTarget tag:
+            {
+                if (!EntityManager.ComponentFactory.TryGetRegistration(tag.Component, out var reg))
+                {
+                    Log.Error($"Unable to find component registration for {tag.Component} for pinpointer!");
+                    DebugTools.Assert(false);
+                    break;
+                }
+
+                if (!_xformQuery.TryComp(entity, out var transform))
+                    break;
+
+                result = FindTargetFromComponent((entity, transform), reg.Type, tag);
                 break;
             }
             default:

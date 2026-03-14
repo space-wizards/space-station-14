@@ -94,10 +94,17 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
+    targetLimit: 3
     allTargets:
     - !type:PinpointerComponentTarget
       name: nuclear authentication disk
       target: NukeDisk
+    - !type:PinpointerComponentTarget
+      name: syndicate nuclear fission explosive
+      target: SyndicateNuke
+    - !type:PinpointerComponentTarget
+      name: nanotrasen nuclear fission explosive
+      target: StationNuke
 
 - type: entity
   name: universal pinpointer

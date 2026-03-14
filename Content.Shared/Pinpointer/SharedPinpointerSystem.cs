@@ -210,7 +210,6 @@ public abstract class SharedPinpointerSystem : EntitySystem
     ///     you swap the logical target.
     /// </summary>
     /// <param name="ent"></param>
-    /// <param name="target"></param>
     protected virtual void UpdateTargetEntity(Entity<PinpointerComponent?> ent)
     {
 

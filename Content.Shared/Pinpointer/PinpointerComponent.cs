@@ -1,3 +1,4 @@
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Prototypes;
@@ -125,9 +126,23 @@ public sealed partial record PinpointerEntityUidTarget : PinpointerTarget
 /// </summary>
 public sealed partial record PinpointerEntProtoIdTarget : PinpointerTarget
 {
-    [DataField(required:true)]
+    [DataField(required: true)]
     public EntProtoId Target;
 
     [DataField(required: true)]
     public string Component;
+}
+
+/// <summary>
+///     A target entry for the nearest instance of an entity with a specific component and
+///     a specific tag.
+/// </summary>
+public sealed partial record PinpointerTagTarget : PinpointerTarget
+{
+    [DataField(required: true)]
+    public ProtoId<TagPrototype> Target;
+
+    [DataField(required: true)]
+    public string Component;
+
 }
