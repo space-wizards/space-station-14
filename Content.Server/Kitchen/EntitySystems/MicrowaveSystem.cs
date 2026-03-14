@@ -172,7 +172,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
         ent.Comp.CurrentCookTimerTime = 10;
         Wzhzhzh(ent, args.Victim);
-        UpdateUserInterfaceState(ent.Owner, ent.Comp);
+        UpdateUserInterfaceState(ent);
         args.Handled = true;
     }
 
@@ -182,7 +182,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SetAppearance(ent, MicrowaveVisualState.Broken, ent.Comp);
         StopCooking(ent);
         _container.EmptyContainer(ent.Comp.Storage);
-        UpdateUserInterfaceState(ent, ent.Comp);
+        UpdateUserInterfaceState(ent);
     }
 
     private void OnPowerChanged(Entity<MicrowaveComponent> ent, ref PowerChangedEvent args)
@@ -193,7 +193,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             StopCooking(ent);
         }
 
-        UpdateUserInterfaceState(ent, ent.Comp);
+        UpdateUserInterfaceState(ent);
     }
 
     private void OnAnchorChanged(EntityUid uid, MicrowaveComponent component, ref AnchorStateChangedEvent args)
@@ -226,7 +226,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         ent.Comp.CurrentCookTimerTime = args.NewCookTime;
         ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
         _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
-        UpdateUserInterfaceState(ent, ent.Comp);
+        UpdateUserInterfaceState(ent);
     }
 
     private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
@@ -265,11 +265,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             component.CurrentCookTimeEnd);
 
         _userInterface.SetUiState(uid, MicrowaveUiKey.Key, state);
-    }
-
-    public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
-    {
-        UpdateUserInterfaceState((uid, component));
     }
 
     public void SetAppearance(EntityUid uid,

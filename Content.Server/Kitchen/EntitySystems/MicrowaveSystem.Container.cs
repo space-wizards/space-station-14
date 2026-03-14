@@ -31,7 +31,7 @@ public sealed partial class MicrowaveSystem
         if (component.Storage != args.Container)
             return;
 
-        UpdateUserInterfaceState(uid, component);
+        UpdateUserInterfaceState((uid, component));
     }
 
     private bool ItemFitsInMicrowave(Entity<MicrowaveComponent> ent, Entity<ItemComponent> item)
@@ -105,7 +105,7 @@ public sealed partial class MicrowaveSystem
 
         args.Handled = true;
         _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
-        UpdateUserInterfaceState(ent, ent.Comp);
+        UpdateUserInterfaceState(ent);
     }
 
     private void OnEjectMessage(Entity<MicrowaveComponent> ent, ref MicrowaveEjectMessage args)
@@ -115,7 +115,7 @@ public sealed partial class MicrowaveSystem
 
         _container.EmptyContainer(ent.Comp.Storage);
         _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
-        UpdateUserInterfaceState(ent, ent.Comp);
+        UpdateUserInterfaceState(ent);
     }
 
     private void OnEjectIndex(Entity<MicrowaveComponent> ent, ref MicrowaveEjectSolidIndexedMessage args)
@@ -124,6 +124,6 @@ public sealed partial class MicrowaveSystem
             return;
 
         _container.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
-        UpdateUserInterfaceState(ent, ent.Comp);
+        UpdateUserInterfaceState(ent);
     }
 }
