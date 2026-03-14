@@ -66,8 +66,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
-    private static readonly EntProtoId MalfunctionSpark = "Spark";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -354,7 +352,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         }
 
         if (_random.Prob(ent.Comp2.LightningChance))
-            _lightning.ShootRandomLightnings(ent, 1.0f, 2, MalfunctionSpark, triggerLightningEvents: false);
+            _lightning.ShootRandomLightnings(ent, 1.0f, 2, ent.Comp2.MalfunctionSpark, triggerLightningEvents: false);
     }
 
     /// <summary>

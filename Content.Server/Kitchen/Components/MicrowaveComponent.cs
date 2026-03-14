@@ -125,5 +125,11 @@ namespace Content.Server.Kitchen.Components
         /// </summary>
         [DataField]
         public EntityWhitelist? BurnWhenCookedWhitelist = new() { Tags = ["Plastic"] };
+
+        /// <summary>
+        ///     A "spark" entity spawned when this microwave malfunctions.
+        /// </summary>
+        [DataField]
+        public EntProtoId MalfunctionSpark = "Spark";
     }
 }
