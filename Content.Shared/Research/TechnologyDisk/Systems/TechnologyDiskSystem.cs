@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Cargo;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -64,67 +63,46 @@ public sealed class TechnologyDiskSystem : EntitySystem
         if (ent.Comp.Recipes != null)
             return;
 
-        var tier = ent.Comp.Tier ?? TryPickAndSetTier(ent);
-        if (tier == null)
-            return;
-
-        var discipline = ent.Comp.Discipline ?? TryPickAndSetDiscipline(ent);
-        if (discipline == null)
-            return;
-
-        //get a list of every distinct recipe in all the technologies.
-        var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
-        foreach (var tech in _protoMan.EnumeratePrototypes<TechnologyPrototype>())
+        int tier;
+        if (ent.Comp.Tier.HasValue)
         {
-            if (tech.Tier != tier || tech.Discipline != discipline)
-                continue;
-
-            recipes.UnionWith(tech.RecipeUnlocks);
+            tier = ent.Comp.Tier.Value;
+        }
+        else
+        {
+            var weightedRandom = _protoMan.Index(ent.Comp.TierWeightPrototype);
+            tier = int.Parse(weightedRandom.Pick(_random));
+            ent.Comp.Tier = tier;
         }
 
-        if (recipes.Count == 0)
+        //get a list of every distinct recipe in all the technologies.
+        var bundles = new HashSet<(ProtoId<LatheRecipePrototype> recipe, ProtoId<TechDisciplinePrototype> discipline)>();
+        foreach (var tech in _protoMan.EnumeratePrototypes<TechnologyPrototype>())
+        {
+            if (tech.Tier != tier)
+                continue;
+            if(ent.Comp.Discipline != null && tech.Discipline != ent.Comp.Discipline.Value)
+                continue;
+
+            foreach (var recipe in tech.RecipeUnlocks)
+            {
+                bundles.Add((recipe, tech.Discipline));
+            }
+        }
+
+        if (bundles.Count == 0)
         {
             Log.Error($"Failed to pick recipe for a tech disk: no suitable recipes were found");
             return;
         }
 
+        //pick one
+        var bundle = _random.Pick(bundles);
+        ent.Comp.Discipline = bundle.discipline;
         ent.Comp.Recipes = [];
-        ent.Comp.Recipes.Add(_random.Pick(recipes));
+        ent.Comp.Recipes.Add(bundle.recipe);
         Dirty(ent);
         _nameModifier.RefreshNameModifiers(ent.Owner);
-    }
-
-    /// <summary>
-    /// Attempts to pick and set a random tier as the chosen one.
-    /// </summary>
-    private int? TryPickAndSetTier(Entity<TechnologyDiskComponent> ent)
-    {
-        if (!_protoMan.TryIndex(ent.Comp.TierWeightPrototype, out var tierWeights))
-        {
-            Log.Error($"Failed to pick tier for a tech disk: disk tier weights prototype '{ent.Comp.TierWeightPrototype}' not found");
-            return null;
-        }
-
-        var tier = int.Parse(tierWeights.Pick());
-        ent.Comp.Tier = tier;
-        return tier;
-    }
-
-    /// <summary>
-    /// Attempts to pick and set a random discipline as the chosen one.
-    /// </summary>
-    private ProtoId<TechDisciplinePrototype>? TryPickAndSetDiscipline(Entity<TechnologyDiskComponent> ent)
-    {
-        var disciplinePool = _protoMan.EnumeratePrototypes<TechDisciplinePrototype>().ToArray();
-        if (disciplinePool.Length == 0)
-        {
-            Log.Error("Failed to pick discipline for a tech disk: no discipline prototypes were found");
-            return null;
-        }
-
-        var discipline = _random.Pick(disciplinePool);
-        ent.Comp.Discipline = discipline;
-        return discipline;
     }
 
     /// <summary>
@@ -181,9 +159,8 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
     private void OnExamine(Entity<TechnologyDiskComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.Tier != null
-              && ent.Comp.Discipline != null
-              && _protoMan.TryIndex(ent.Comp.Discipline, out var disciplineProto))
+        if (ent.Comp is { Tier: not null, Discipline: not null }
+            && _protoMan.TryIndex(ent.Comp.Discipline, out var disciplineProto))
         {
             var desc = Loc.GetString("tech-disk-examine-desc",
                 ("tier", ent.Comp.Tier),
