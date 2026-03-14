@@ -24,20 +24,20 @@ namespace Content.IntegrationTests.Tests.Preferences
     {
         [TestPrototypes]
         private const string Prototypes = @"
-        - type: dataset
-          id: sqlite_test_names_first_male
-          values:
-          - Aaden
+- type: dataset
+  id: sqlite_test_names_first_male
+  values:
+  - Aaden
 
-        - type: dataset
-          id: sqlite_test_names_first_female
-          values:
-          - Aaliyah
+- type: dataset
+  id: sqlite_test_names_first_female
+  values:
+  - Aaliyah
 
-        - type: dataset
-          id: sqlite_test_names_last
-          values:
-          - Ackerley";
+- type: dataset
+  id: sqlite_test_names_last
+  values:
+  - Ackerley";
 
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
