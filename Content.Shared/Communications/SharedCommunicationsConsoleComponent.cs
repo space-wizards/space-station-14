@@ -1,7 +1,6 @@
-using Robust.Shared.Serialization;
-
 using Content.Shared.AlertLevel;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Communications
 {

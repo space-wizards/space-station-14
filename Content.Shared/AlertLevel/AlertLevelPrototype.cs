@@ -63,4 +63,3 @@ public sealed partial class AlertLevelPrototype : IPrototype
     [DataField]
     public TimeSpan ShuttleTime = TimeSpan.FromMinutes(5);
 }
-
