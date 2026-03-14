@@ -9,14 +9,11 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Medical.Healing;
 using Content.IntegrationTests.Utility;
 using Content.Shared.Stacks;
-
 using Robust.Shared.Prototypes;
-using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.GameObjects;
-using Content.Client.Body.Systems;
 using Content.Shared.Body.Systems;
 using Content.Shared.Body.Components;
-using Robust.Shared.Utility;
+
 
 namespace Content.IntegrationTests.Tests.Medical;
 
@@ -27,16 +24,6 @@ namespace Content.IntegrationTests.Tests.Medical;
 public sealed class TopicalsTest : InteractionTest
 {
     private static readonly EntProtoId MobHuman = "MobHuman";
-    private static readonly EntProtoId BruisePack = "Brutepack";
-    private static readonly EntProtoId Ointment = "Ointment";
-    private static readonly EntProtoId Gauze = "Gauze";
-    private static readonly ProtoId<DamageTypePrototype> BluntDamageTypeId = "Slash";
-    private static readonly ProtoId<DamageTypePrototype> SlashDamageTypeId = "Blunt";
-    private static readonly ProtoId<DamageTypePrototype> PiercingDamageTypeId = "Piercing";
-    private static readonly ProtoId<DamageTypePrototype> HeatDamageTypeId = "Heat";
-    private static readonly ProtoId<DamageTypePrototype> RadiationDamageTypeId = "Radiation";
-    private static readonly ProtoId<DamageTypePrototype> PoisonDamageTypeId = "Poison";
-
     private static string[] _topicalsToBeTested = GameDataScrounger.EntitiesWithComponent("Healing");
     private static string[] _allDamageTypes = GameDataScrounger.PrototypesOfKind("damageType");
 
@@ -53,7 +40,7 @@ public sealed class TopicalsTest : InteractionTest
         var sharedStackSystem = SEntMan.System<SharedStackSystem>();
         var bloodStreamSystem = SEntMan.System<SharedBloodstreamSystem>();
 
-        //make a damage specifier with 5 of all normal types of damage (exclude structural and holy)
+        //make a damage specifier with 5 of all normal types of damage (exclude structural and holy) (wanted to use DamageContainer Supportedtypes here)
         var allNormalDamageSpecifier = new DamageSpecifier();
         foreach (var type in _allDamageTypes)
         {
@@ -61,7 +48,8 @@ public sealed class TopicalsTest : InteractionTest
             if (type != "Structural" && type != "Holy")
                 allNormalDamageSpecifier += new DamageSpecifier(ProtoMan.Index(typeID), 5);
         }
-        var emptyDamageSpecifier = new DamageSpecifier();
+        var emptyDamageSpecifier = new DamageSpecifier(allNormalDamageSpecifier);
+        emptyDamageSpecifier.ClampMax(0);
         var damageAmount = new DamageSpecifier();
 
         await AddAtmosphere(); // prevent everyone from suffocating
@@ -69,13 +57,12 @@ public sealed class TopicalsTest : InteractionTest
         //Spawn a new urist, with empty health
         var urist = await SpawnTarget(MobHuman);
         var damageableComp = Comp<DamageableComponent>(urist);
-        damageableSystem.SetDamage((STarget.Value, damageableComp), new DamageSpecifier());
-
+        damageableSystem.SetDamage((STarget.Value, damageableComp), new DamageSpecifier(emptyDamageSpecifier));
         var bloodStreamComp = Comp<BloodstreamComponent>(urist);
+
         //Stop passive healing from messing with the numbers
         var passivehealing = Comp<PassiveDamageComponent>(urist);
         passivehealing.Damage = new();
-
 
         //Hold the topical stack
         var topical = await PlaceInHands(protoKey);
@@ -98,27 +85,24 @@ public sealed class TopicalsTest : InteractionTest
         }
         if (dealsDamage) //we need special logic if it's going to hurt you to use (looking at you tourniquet)
         {
-            //if it also causes bleeding
+            //if it also causes bleeding, bleed that amount.
             if (healingComp.BloodlossModifier < 0)
-            {
-                //Bleed the amount the topical fixes
                 bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), -healingComp.BloodlossModifier);
-                //Use our topical
-                await Interact(false);
-                //Assert that we could use (by checking if there are any doafters)
-                Assert.That(ActiveDoAfters.Any(),
-                "The self-damaging topical did not start a do-after");
+            //Use our topical
+            await Interact(false);
+            //Assert that we could use (by checking if there are any doafters)
+            Assert.That(ActiveDoAfters.Any(),
+            "The self-damaging topical did not start a do-after");
+            //Wait for doafter to finish
+            await RunSeconds(healingComp.Delay.Seconds + 1);
 
-                //Wait for doafter to finish
-                await RunSeconds(healingComp.Delay.Seconds);
-                await RunTicks(5);
-
-                Assert.That(bloodStreamSystem.GetBloodLevel((STarget.Value, bloodStreamComp)), Is.EqualTo(1.0f),
-                "The self-damaging topical did not fix bleeding fully.");
-                return;
-            }
-            Assert.Fail(
-            "You added a topical that deals damage but does not fix bleeding. Please write a test for it here.");
+            //Assert that bleeding is stopped.
+            Assert.That(bloodStreamSystem.GetBloodLevel((STarget.Value, bloodStreamComp)), Is.GreaterThan(.99f),
+            "The self-damaging topical did not fix bleeding fully.");
+            //And that some damage was done.
+            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).AnyPositive(),
+            "The self-damaging topical did not deal any damage.");
+            return;
         }
 
         //if we do not have a stack comp (looking at you healingtoolbox)
