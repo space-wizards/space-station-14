@@ -1,10 +1,43 @@
 using Content.Server.Kitchen.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Kitchen;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
 public sealed partial class MicrowaveSystem
 {
+    /// <summary>
+    /// Starts Cooking
+    /// </summary>
+    /// <remarks>
+    /// It does not make a "wzhzhzh" sound, it makes a "mmmmmmmm" sound!
+    /// -emo
+    /// </remarks>
+    public void Wzhzhzh(Entity<MicrowaveComponent> microwave, EntityUid? user)
+    {
+        if (!HasContents(microwave)
+            || HasComp<ActiveMicrowaveComponent>(microwave)
+            || !_power.IsPowered(microwave.Owner))
+            return;
+
+        var contents = microwave.Comp.Storage.ContainedEntities;
+        var malfunctioning = false;
+
+        if (!ProcessContents(microwave,
+            contents,
+            user,
+            ref malfunctioning,
+            out var ingredientContents))
+            return;
+
+        var ingredients = GetTotalIngredients(microwave, ingredientContents);
+        var recipe = GetRecipe(microwave, ingredients);
+
+        ActivateMicrowave(microwave, recipe, malfunctioning);
+        UpdateUserInterfaceState(microwave);
+    }
+
     private void CreateBurnedMess(Entity<MicrowaveComponent> microwave, EntityUid item)
     {
         var junk = Spawn(microwave.Comp.BadRecipeEntityId, Transform(microwave).Coordinates);
@@ -100,34 +133,31 @@ public sealed partial class MicrowaveSystem
     }
 
     /// <summary>
-    /// Starts Cooking
+    ///     Adds temperature to every item in the microwave,
+    ///     based on the time it took to microwave.
     /// </summary>
-    /// <remarks>
-    /// It does not make a "wzhzhzh" sound, it makes a "mmmmmmmm" sound!
-    /// -emo
-    /// </remarks>
-    public void Wzhzhzh(Entity<MicrowaveComponent> microwave, EntityUid? user)
+    /// <param name="component">The microwave that is heating up.</param>
+    /// <param name="time">The time on the microwave, in seconds.</param>
+    private void AddTemperature(MicrowaveComponent component, float time)
     {
-        if (!HasContents(microwave)
-            || HasComp<ActiveMicrowaveComponent>(microwave)
-            || !_power.IsPowered(microwave.Owner))
-            return;
+        var heatToAdd = time * component.BaseHeatMultiplier;
+        foreach (var entity in component.Storage.ContainedEntities)
+        {
+            if (TryComp<TemperatureComponent>(entity, out var tempComp))
+                _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
 
-        var contents = microwave.Comp.Storage.ContainedEntities;
-        var malfunctioning = false;
+            if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
+                continue;
 
-        if (!ProcessContents(microwave,
-            contents,
-            user,
-            ref malfunctioning,
-            out var ingredientContents))
-            return;
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
+            {
+                var solution = soln.Comp.Solution;
+                if (solution.Temperature > component.TemperatureUpperThreshold)
+                    continue;
 
-        var ingredients = GetTotalIngredients(microwave, ingredientContents);
-        var recipe = GetRecipe(microwave, ingredients);
-
-        ActivateMicrowave(microwave, recipe, malfunctioning);
-        UpdateUserInterfaceState(microwave);
+                _solutionContainer.AddThermalEnergy(soln, heatToAdd);
+            }
+        }
     }
 
     private void CompleteCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
@@ -155,5 +185,14 @@ public sealed partial class MicrowaveSystem
         var coords = Transform(microwave).Coordinates;
         for (var i = 0; i < count; i++)
             Spawn(recipe.Result, coords);
+    }
+
+    private void StopCooking(Entity<MicrowaveComponent> ent)
+    {
+        RemCompDeferred<ActiveMicrowaveComponent>(ent);
+        foreach (var solid in ent.Comp.Storage.ContainedEntities)
+        {
+            RemCompDeferred<ActivelyMicrowavedComponent>(solid);
+        }
     }
 }

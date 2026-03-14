@@ -242,15 +242,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             CompleteCooking(ent);
     }
 
-    private void StopCooking(Entity<MicrowaveComponent> ent)
-    {
-        RemCompDeferred<ActiveMicrowaveComponent>(ent);
-        foreach (var solid in ent.Comp.Storage.ContainedEntities)
-        {
-            RemCompDeferred<ActivelyMicrowavedComponent>(solid);
-        }
-    }
-
     public void UpdateUserInterfaceState(Entity<MicrowaveComponent> microwave)
     {
         var uid = microwave.Owner;
@@ -274,6 +265,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     {
         if (!Resolve(uid, ref component, ref appearanceComponent, false))
             return;
+
         var display = component.Broken ? MicrowaveVisualState.Broken : state;
         _appearance.SetData(uid, PowerDeviceVisuals.VisualState, display, appearanceComponent);
     }
@@ -324,32 +316,5 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         if (_random.Prob(ent.Comp2.LightningChance))
             _lightning.ShootRandomLightnings(ent, 1.0f, 2, ent.Comp2.MalfunctionSpark, triggerLightningEvents: false);
-    }
-
-    /// <summary>
-    ///     Adds temperature to every item in the microwave,
-    ///     based on the time it took to microwave.
-    /// </summary>
-    /// <param name="component">The microwave that is heating up.</param>
-    /// <param name="time">The time on the microwave, in seconds.</param>
-    private void AddTemperature(MicrowaveComponent component, float time)
-    {
-        var heatToAdd = time * component.BaseHeatMultiplier;
-        foreach (var entity in component.Storage.ContainedEntities)
-        {
-            if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
-
-            if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
-                continue;
-            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
-            {
-                var solution = soln.Comp.Solution;
-                if (solution.Temperature > component.TemperatureUpperThreshold)
-                    continue;
-
-                _solutionContainer.AddThermalEnergy(soln, heatToAdd);
-            }
-        }
     }
 }
