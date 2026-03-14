@@ -116,7 +116,9 @@ public static partial class HeatContainerHelpers
     /// integration steps with adaptive step size.
     /// </remarks>
     [PublicAPI]
-    public static float ConductHeatQuery<T>(ref T c1, ref T c2, float deltaTime, float g) where T : IHeatContainer
+    public static float ConductHeatQuery<T1, T2>(ref T1 c1, ref T2 c2, float deltaTime, float g)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var dQ = g * (c2.Temperature - c1.Temperature) * deltaTime;
         var dQMax = Math.Min(Math.Abs(ConductHeatToTempQuery(ref c1, c2.Temperature)),

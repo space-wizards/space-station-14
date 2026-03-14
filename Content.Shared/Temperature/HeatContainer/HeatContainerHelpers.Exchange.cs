@@ -18,7 +18,9 @@ public static partial class HeatContainerHelpers
     /// <example>A positive value indicates heat transfer from a hot cA to a cold cB.</example>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of both containers is zero or negative.</exception>
     [PublicAPI]
-    public static float EquilibriumHeatQuery<T>(ref T cA, ref T cB) where T : IHeatContainer
+    public static float EquilibriumHeatQuery<T1, T2>(ref T1 cA, ref T2 cB)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var cTotal = cA.HeatCapacity + cB.HeatCapacity;
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(cTotal);
@@ -48,12 +50,14 @@ public static partial class HeatContainerHelpers
     /// <returns>The resulting equilibrium temperature both containers will be at.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of both containers is zero or negative.</exception>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery<T>(ref T cA, ref T cB) where T : IHeatContainer
+    public static float EquilibriumTemperatureQuery<T1, T2>(ref T1 cA, ref T2 cB)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var cTotal = cA.HeatCapacity + cB.HeatCapacity;
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(cTotal);
         // Insert the above solution for Q into T_A_final = T_A_initial - Q / C_A and rearrange the result.
-        return (cA.HeatCapacity * cA.Temperature - cB.HeatCapacity * cB.Temperature) / cTotal;
+        return (cA.HeatCapacity * cA.Temperature + cB.HeatCapacity * cB.Temperature) / cTotal;
     }
 
     /// <summary>
@@ -62,7 +66,9 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="IHeatContainer"/> to exchange heat.</param>
     /// <param name="cB">The second <see cref="IHeatContainer"/> to exchange heat with.</param>
     [PublicAPI]
-    public static void Equilibrate<T>(ref T cA, ref T cB) where T : IHeatContainer
+    public static void Equilibrate<T1, T2>(ref T1 cA, ref T2 cB)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var tFinal = EquilibriumTemperatureQuery(ref cA, ref cB);
         cA.Temperature = tFinal;
@@ -76,7 +82,9 @@ public static partial class HeatContainerHelpers
     /// <param name="cB">The second <see cref="IHeatContainer"/> to exchange heat with.</param>
     /// <param name="dQ">The amount of heat in joules that was transferred from container A to B.</param>
     [PublicAPI]
-    public static void Equilibrate<T>(ref T cA, ref T cB, out float dQ) where T : IHeatContainer
+    public static void Equilibrate<T1, T2>(ref T1 cA, ref T2 cB, out float dQ)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var tInitialA = cA.Temperature;
         var tFinal = EquilibriumTemperatureQuery(ref cA, ref cB);
@@ -111,7 +119,9 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="IHeatContainer"/> to bring into thermal equilibrium.</param>
     /// <param name="cN">The array of <see cref="IHeatContainer"/>s to bring into thermal equilibrium.</param>
     [PublicAPI]
-    public static void Equilibrate<T>(ref T cA, T[] cN) where T : IHeatContainer
+    public static void Equilibrate<T1, T2>(ref T1 cA, T2[] cN)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var tF = EquilibriumTemperatureQuery(ref cA, cN);
 
@@ -212,9 +222,11 @@ public static partial class HeatContainerHelpers
     /// <param name="cN">The array of <see cref="IHeatContainer"/>s to bring into thermal equilibrium.</param>
     /// <returns>The temperature of all <see cref="IHeatContainer"/>s involved after reaching thermal equilibrium.</returns>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery<T>(ref T cA, T[] cN) where T : IHeatContainer
+    public static float EquilibriumTemperatureQuery<T1, T2>(ref T1 cA, T2[] cN)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
-        var cAll = new T[cN.Length + 1];
+        var cAll = new T1[cN.Length + 1];
         cAll[0] = cA;
         cN.CopyTo(cAll, 1);
 
