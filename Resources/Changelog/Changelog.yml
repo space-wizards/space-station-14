@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kontakt
-  changes:
-  - message: Bulldog magazines are now only accessible through emagged fabricators.
-    type: Tweak
-  id: 9062
-  time: '2025-10-09T14:00:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40790
 - author: Princess-Cheeseballs
   changes:
   - message: The thieving beacon can now detect the officer's handgun objective.
@@ -4007,3 +4000,10 @@
   id: 9572
   time: '2026-03-13T23:48:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43229
+- author: TaserTheFox
+  changes:
+  - message: Fixed certain bottled reagents not having localization text.
+    type: Fix
+  id: 9573
+  time: '2026-03-14T16:21:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43208
