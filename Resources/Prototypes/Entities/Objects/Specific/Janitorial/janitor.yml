@@ -61,7 +61,7 @@
   parent: MopItem
   name: advanced mop
   id: AdvMopItem
-  description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
+  description: Motorized mop that has a bigger reservoir, quickly replaces reagents inside with water and can be worn on the user's back. Automatic Clown Countermeasure not included.
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -72,6 +72,8 @@
         visible: false
     - type: SolutionContainerVisuals
       maxFillLevels: 2
+      equippedMaxFillLevels: 2
+      equippedFillBaseName: -fill-
     - type: Item
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
@@ -91,6 +93,10 @@
       tags:
         - Mop
         - MopAdv
+    - type: Clothing
+      quickEquip: false
+      slots:
+      - back
 
 - type: entity
   name: wet floor sign
