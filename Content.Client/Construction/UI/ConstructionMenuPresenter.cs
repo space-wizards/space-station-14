@@ -129,8 +129,10 @@ namespace Content.Client.Construction.UI
 
             _constructionView.RecipeFavorited += (_, _) => OnViewFavoriteRecipe();
 
-            _constructionView.PreviousRecipeInHistoryButtonPressed += OnPreviousRecipeInHistoryButtonPressed;
-            _constructionView.NextRecipeInHistoryButtonPressed += OnNextRecipeInHistoryButtonPressed;
+            _constructionView.PreviousRecipeInHistoryButtonPressed +=
+                (sender, args) => TrySelectRecipeFromHistory(_recipeHistoryIndex - 1);
+            _constructionView.NextRecipeInHistoryButtonPressed +=
+                (sender, args) => TrySelectRecipeFromHistory(_recipeHistoryIndex + 1);
 
             SetFavorites(_preferencesManager.Preferences?.ConstructionFavorites ?? []);
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
@@ -368,33 +370,30 @@ namespace Content.Client.Construction.UI
                 _gridRecipeButtons[recipe.ConstructionProto.ID] = itemButton;
                 var isCurrentButtonSelected = _selected == recipe.ConstructionProto;
                 itemButton.Pressed = isCurrentButtonSelected;
-                UpdateGridViewButtonStyle(itemButton, isCurrentButtonSelected);
+                _constructionView.UpdateGridViewButtonStyle(itemButton, isCurrentButtonSelected);
             }
         }
 
+        /// <summary>
+        /// Handles toggle of a grid button.
+        /// </summary>
         private void OnGridViewButtonToggled(ConstructionPrototype recipeProto, ContainerButton button, bool pressed)
         {
-            UpdateGridViewButtonStyle(button, pressed);
+            // since this method is called when the button is already toggled,
+            // we only have to update the styles. no need to set the pressed state.
+            _constructionView.UpdateGridViewButtonStyle(button, pressed);
 
             if (pressed &&
                 _selected != null &&
                 _gridRecipeButtons.TryGetValue(_selected.ID!, out var oldButton))
             {
+                // the old button is NOT unpressed for some reason, so we have to UNPRESS it
+                // as well as update its styles.
                 oldButton.Pressed = false;
-                UpdateGridViewButtonStyle(oldButton, false);
+                _constructionView.UpdateGridViewButtonStyle(oldButton, false);
             }
 
             OnViewRecipeSelected(this, recipeProto);
-        }
-
-        private void UpdateGridViewButtonStyle(BaseButton button, bool select)
-        {
-            if (button.Parent is not PanelContainer buttonPanel)
-                return;
-
-            button.Children.Single().Modulate = select ? Color.Green : Color.White;
-            var buttonColor = select ? StyleNano.ButtonColorDefault : Color.Transparent;
-            buttonPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = buttonColor };
         }
 
         #endregion
@@ -496,7 +495,7 @@ namespace Content.Client.Construction.UI
             if (_recipeHistory.Count > _recipeHistoryIndex + 1)
             {
                 var removeFromIdx = _recipeHistoryIndex + 1;
-                var numElementsToRemove = _recipeHistory.Count - (removeFromIdx + 1);
+                var numElementsToRemove = _recipeHistory.Count - (removeFromIdx + 1) + 1;
                 _recipeHistory.RemoveRange(removeFromIdx, numElementsToRemove);
             }
 
@@ -518,41 +517,21 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Handles previous recipe in history button press.
+        /// Attempts to select recipe from history with specified index. The index is clamped first to be within history bounds.
         /// </summary>
-        private void OnPreviousRecipeInHistoryButtonPressed(object? sender, EventArgs e)
+        private void TrySelectRecipeFromHistory(int historyIndex)
         {
-            if (_recipeHistory.Count < 2 || _recipeHistoryIndex <= 0)
-            {
-                return;
-            }
-
-            _recipeHistoryIndex--;
-            var previous = _recipeHistory[_recipeHistoryIndex];
-            TrySelectRecipeFromHistory(previous);
+            _recipeHistoryIndex = int.Clamp(historyIndex, 0, _recipeHistory.Count - 1);
+            var recipe = _recipeHistory[_recipeHistoryIndex];
+            TrySelectRecipeFromHistory(recipe);
         }
 
         /// <summary>
-        /// Handles next recipe in history button press.
-        /// </summary>
-        private void OnNextRecipeInHistoryButtonPressed(object? sender, EventArgs e)
-        {
-            if (_recipeHistory.Count < 2 || _recipeHistoryIndex >= _recipeHistory.Count - 1)
-            {
-                return;
-            }
-
-            _recipeHistoryIndex++;
-            var next = _recipeHistory[_recipeHistoryIndex];
-            TrySelectRecipeFromHistory(next);
-        }
-
-        /// <summary>
-        /// Attempt to select recipe using a history entry.
+        /// Attempts to select recipe from history using a history entry.
         /// </summary>
         private void TrySelectRecipeFromHistory(HistoryEntry entry)
         {
-            if(!_prototypeManager.TryIndex(entry.ConstructionProtoId, out var recipeProto))
+            if(!_prototypeManager.TryIndex(entry.ConstructionProtoId, out var constructionProto))
                 return;
 
             _constructionView.TrySelectCategory(entry.CategoryId);
@@ -560,17 +539,22 @@ namespace Content.Client.Construction.UI
             var isGridView = _constructionView.GridViewButtonPressed;
             if (isGridView)
             {
-                if (_gridRecipeButtons.TryGetValue(recipeProto.ID, out var button))
+                if (_gridRecipeButtons.TryGetValue(constructionProto.ID, out var button))
                 {
-                    _constructionView.TrySelectGridViewRecipe(recipeProto.ID, button);
+                    // toggle the button to simulate the event
+                    button.Pressed = true;
+                    // let the handler handle the rest
+                    OnGridViewButtonToggled(constructionProto, button, true);
+                    // _constructionView.TrySelectGridViewButton(constructionProto.ID, button);
                 }
             }
             else
             {
-                _constructionView.TrySelectListViewRecipe(recipeProto.ID);
+                _constructionView.TrySelectListViewButton(constructionProto.ID);
             }
 
-            PopulateInfo(recipeProto);
+            PopulateInfo(constructionProto);
+            SyncRecipeHistoryButtons();
         }
 
         /// <summary>
