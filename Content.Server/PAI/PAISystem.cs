@@ -1,24 +1,39 @@
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Instruments;
+using Content.Server.Store.Systems;
+using Content.Shared.Access.Systems;
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.Kitchen;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
 using Content.Shared.Instruments;
+using Content.Shared.Store;
+using Content.Shared.SubFloor;
+using Content.Shared.UserInterface;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
+using System.Linq;
 using System.Text;
 
 namespace Content.Server.PAI;
 
 public sealed class PAISystem : EntitySystem
 {
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
+    [Dependency] private readonly StoreSystem _storeSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly ActionAccessRequirementSystem _actionAccess = default!;
 
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
@@ -33,6 +48,69 @@ public sealed class PAISystem : EntitySystem
         SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
+        SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
+        SubscribeLocalEvent<PAIComponent, PAIAccessChangedEvent>(OnPAIAccessChanged);
+        SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+    }
+
+    // since pAIs don't have an ID card themselves, we use their name for anything that looks for name through ID card.
+    private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<PAIComponent>(args.ForActor, out var pai))
+            return;
+
+        args.Title = Name(args.ForActor);
+        args.Handled = true;
+    }
+
+    // pAI's access is determined by the access of the ID card that is with the pAI inside a PDA.
+    private void OnPAIAccessChanged(EntityUid uid, PAIComponent component, PAIAccessChangedEvent args)
+    {
+        foreach (var actor in _uiSystem.GetActors(uid, StoreUiKey.Key))
+        {
+            _storeSystem.UpdateUserInterface(actor, uid);
+        }
+
+        if (!TryComp<ActionsComponent>(uid, out var actions))
+            return;
+
+        var accessTags = _accessReader.FindAccessTags(uid).Select(p => p.Id).ToHashSet();
+
+        foreach (var actionId in actions.Actions)
+        {
+            if (!TryComp<ActionComponent>(actionId, out var action))
+                continue;
+
+            var actionEvent = _actionsSystem.GetEvent(actionId);
+
+            if (!TryComp<ActionAccessRequirementComponent>(actionId, out var requirement))
+                continue;
+
+            if (_actionAccess.IsAllowed(requirement, accessTags).Item1)
+                continue;
+
+            var scanEv = new ScannerCheckEvent(actionId);
+            RaiseLocalEvent(uid, scanEv, false);
+
+            if (actionEvent is OpenUiActionEvent openUi && openUi.Key != null)
+            {
+                _uiSystem.CloseUi(uid, openUi.Key);
+            }
+        }
+    }
+
+    private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
+    {
+        if (!TryComp<PAIComponent>(ev.StoreUid, out var component))
+            return;
+
+        if (ev.PurchasedItem.ProductAction != null)
+        {
+            component.PurchasedAbilities.Add(ev.PurchasedItem.ProductAction.Value);
+        }
     }
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
@@ -45,6 +123,25 @@ public sealed class PAISystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, PAIComponent component, MindAddedMessage args)
     {
+        var existingActions = new HashSet<string>();
+        foreach (var actionEnt in _actionsSystem.GetActions(uid))
+        {
+            var metaData = MetaData(actionEnt.Owner);
+            if (metaData.EntityPrototype != null)
+            {
+                existingActions.Add(metaData.EntityPrototype.ID);
+            }
+        }
+
+        foreach (var action in component.PurchasedAbilities)
+        {
+            if (!existingActions.Contains(action.Id))
+            {
+                _actionsSystem.AddAction(uid, action);
+                existingActions.Add(action.Id);
+            }
+        }
+
         if (component.LastUser == null)
             return;
 

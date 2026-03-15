@@ -50,6 +50,13 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         // API is extremely skrungly. If this ever shows up on dottrace ping me and laugh.
         var canSee = false;
 
+        // Check if player is a self scanner, if so, allow vision.
+        if (scannerQuery.TryGetComponent(player, out var selfScanner) && selfScanner.Enabled)
+        {
+            canSee = true;
+            range = MathF.Max(range, selfScanner.Range);
+        }
+
         // TODO: Common iterator for both systems.
         if (_inventory.TryGetContainerSlotEnumerator(player.Value, out var enumerator))
         {
@@ -58,6 +65,9 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
                 foreach (var ent in slot.ContainedEntities)
                 {
                     if (!scannerQuery.TryGetComponent(ent, out var sneakScanner) || !sneakScanner.Enabled)
+                        continue;
+
+                    if (sneakScanner.DisableContained)
                         continue;
 
                     canSee = true;
@@ -72,6 +82,9 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
                 continue;
 
             if (!scannerQuery.TryGetComponent(heldEntity, out var heldScanner) || !heldScanner.Enabled)
+                continue;
+
+            if (heldScanner.DisableContained)
                 continue;
 
             range = MathF.Max(heldScanner.Range, range);

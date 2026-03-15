@@ -10,6 +10,7 @@ namespace Content.Shared.PDA
         [Dependency] protected readonly ItemSlotsSystem ItemSlotsSystem = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
         [Dependency] private readonly SharedJobStatusSystem _jobStatus = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -49,6 +50,11 @@ namespace Content.Shared.PDA
 
             UpdatePdaAppearance(uid, pda);
             UpdateJobStatus(uid);
+
+            if (args.Container.ID == PdaComponent.PdaIdSlotId || args.Container.ID == PdaComponent.PdaPaiSlotId)
+            {
+                NotifyPaiAccessChanged(uid);
+            }
         }
 
         protected virtual void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
@@ -57,7 +63,24 @@ namespace Content.Shared.PDA
                 pda.ContainedId = null;
 
             UpdatePdaAppearance(uid, pda);
+
+            if (args.Container.ID == PdaComponent.PdaIdSlotId || args.Container.ID == PdaComponent.PdaPaiSlotId)
+            {
+                NotifyPaiAccessChanged(uid);
+            }
             UpdateJobStatus(uid);
+        }
+
+        private void NotifyPaiAccessChanged(EntityUid uid)
+        {
+            if (!_containerSystem.TryGetContainer(uid, PdaComponent.PdaPaiSlotId, out var paiContainer))
+                return;
+
+            foreach (var pai in paiContainer.ContainedEntities)
+            {
+                if (HasComp<PAI.PAIComponent>(pai))
+                    RaiseLocalEvent(pai, new PAIAccessChangedEvent());
+            }
         }
 
         private void OnGetAdditionalAccess(EntityUid uid, PdaComponent component, ref GetAdditionalAccessEvent args)
