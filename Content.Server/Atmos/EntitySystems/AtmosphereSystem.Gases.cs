@@ -12,6 +12,7 @@ namespace Content.Server.Atmos.EntitySystems
     public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly GenericGasReactionSystem _reaction = default!;
 
         private GasReactionPrototype[] _gasReactions = [];
 
@@ -471,6 +472,7 @@ namespace Content.Server.Atmos.EntitySystems
         [PublicAPI]
         public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
         {
+            // First pass: run through the legacy (hard-coded) gas reactions
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;
             var energy = GetThermalEnergy(mixture);
@@ -502,7 +504,8 @@ namespace Content.Server.Atmos.EntitySystems
                     break;
             }
 
-            return reaction;
+            // Second pass: Regardless of result, run YAML gas reactions
+            return _reaction.ReactAll(GasReactions, mixture, holder);
         }
 
         /// <summary>
