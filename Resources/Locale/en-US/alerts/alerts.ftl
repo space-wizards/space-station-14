@@ -39,6 +39,9 @@ alerts-knockdown-desc = You're [color=yellow]Knocked Down[/color]! Something has
 alerts-handcuffed-name = [color=yellow]Handcuffed[/color]
 alerts-handcuffed-desc = You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist.
 
+alerts-cocooned-name = [color=yellow]Cocooned[/color]
+alerts-cocooned-desc = You're [color=yellow]wrapped in a cocoon[/color] and can't move or use your hands. Click the alert to struggle free.
+
 alerts-ensnared-name = [color=yellow]Ensnared[/color]
 alerts-ensnared-desc = You're [color=yellow]ensnared[/color] and is impairing your ability to move.
 
