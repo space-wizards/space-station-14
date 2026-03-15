@@ -1,16 +1,15 @@
 ﻿using System.Numerics;
-using Content.Server.Beam.Components;
 using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Beam;
 
@@ -21,6 +20,8 @@ public sealed class BeamSystem : SharedBeamSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+
+    private static readonly EntProtoId VirtualBeamEntityControllerId = "VirtualBeamEntityController";
 
     public override void Initialize()
     {
@@ -77,8 +78,8 @@ public sealed class BeamSystem : SharedBeamSystem
         string shader = "unshaded")
     {
         var beamSpawnPos = beamStartPos;
-        var ent = Spawn(prototype, beamSpawnPos);
-        var shape = new EdgeShape(distanceCorrection, new Vector2(0,0));
+        var ent = Spawn(prototype, beamSpawnPos, rotation: userAngle);
+        var shape = new EdgeShape(distanceCorrection, new Vector2(0, 0));
 
         if (!TryComp<PhysicsComponent>(ent, out var physics) || !TryComp<BeamComponent>(ent, out var beam))
             return;
@@ -108,7 +109,7 @@ public sealed class BeamSystem : SharedBeamSystem
 
         else
         {
-            var controllerEnt = Spawn("VirtualBeamEntityController", beamSpawnPos);
+            var controllerEnt = Spawn(VirtualBeamEntityControllerId, beamSpawnPos);
             beam.VirtualBeamController = controllerEnt;
 
             _audio.PlayPvs(beam.Sound, ent);
@@ -118,10 +119,11 @@ public sealed class BeamSystem : SharedBeamSystem
         }
 
         //Create the rest of the beam, sprites handled through the BeamVisualizerEvent
-        for (var i = 0; i < distanceLength-1; i++)
+        for (var i = 0; i < distanceLength - 1; i++)
         {
             beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized());
             var newEnt = Spawn(prototype, beamSpawnPos);
+            _transform.SetWorldRotation(newEnt, userAngle);
 
             var ev = new BeamVisualizerEvent(GetNetEntity(newEnt), distanceLength, userAngle, bodyState, shader);
             RaiseNetworkEvent(ev);
@@ -140,7 +142,7 @@ public sealed class BeamSystem : SharedBeamSystem
     /// <param name="bodyPrototype">The prototype spawned when this beam is created</param>
     /// <param name="bodyState">Optional sprite state for the <see cref="bodyPrototype"/> if a default one is not given</param>
     /// <param name="shader">Optional shader for the <see cref="bodyPrototype"/> if a default one is not given</param>
-    /// <param name="controller"></param>
+    /// <param name="controller">The virtual beam controller entity to use. If null one will be spawned.</param>
     public void TryCreateBeam(EntityUid user, EntityUid target, string bodyPrototype, string? bodyState = null, string shader = "unshaded", EntityUid? controller = null)
     {
         if (Deleted(user) || Deleted(target))
@@ -149,21 +151,21 @@ public sealed class BeamSystem : SharedBeamSystem
         var userMapPos = _transform.GetMapCoordinates(user);
         var targetMapPos = _transform.GetMapCoordinates(target);
 
-        //The distance between the target and the user.
-        var calculatedDistance = targetMapPos.Position - userMapPos.Position;
-        var userAngle = calculatedDistance.ToWorldAngle();
-
         if (userMapPos.MapId != targetMapPos.MapId)
             return;
 
-        //Where the start of the beam will spawn
-        var beamStartPos = userMapPos.Offset(calculatedDistance.Normalized());
+        //The distance between the target and the user.
+        var calculatedDistance = targetMapPos.Position - userMapPos.Position;
+        var userAngle = calculatedDistance.ToWorldAngle();
 
         //Don't divide by zero
         if (calculatedDistance.Length() == 0)
             return;
 
-        if (controller != null && TryComp<BeamComponent>(controller, out var controllerBeamComp))
+        //Where the start of the beam will spawn
+        var beamStartPos = userMapPos.Offset(calculatedDistance.Normalized());
+
+        if (TryComp<BeamComponent>(controller, out var controllerBeamComp))
         {
             controllerBeamComp.HitTargets.Add(user);
             controllerBeamComp.HitTargets.Add(target);
