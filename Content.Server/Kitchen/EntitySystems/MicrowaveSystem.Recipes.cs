@@ -194,16 +194,16 @@ public sealed partial class MicrowaveSystem
     ///     that we have available in a solution, this function gets the amount of reagents we need to
     ///     remove from the solution. This also removes that amount from the "reagents to spend" dictionary.
     /// </summary>
-    /// <param name="recipeQuantity">How much reagent we have available.</param>
+    /// <param name="availableQuantity">How much reagent we have available.</param>
     /// <param name="reagent">The ID of the reagent we are spending.</param>
     /// <param name="remainingReagents">A dictionary of reagents that still need to be spent.</param>
     /// <returns>How much we should reduce the available reagent volume by.</returns>
-    private static FixedPoint2 SpendReagentQuantity(FixedPoint2 recipeQuantity,
+    private static FixedPoint2 SpendReagentQuantity(FixedPoint2 availableQuantity,
         ProtoId<ReagentPrototype> reagent,
         Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> remainingReagents)
     {
         var remaining = remainingReagents[reagent];
-        var spent = FixedPoint2.Min(recipeQuantity, remaining);
+        var spent = FixedPoint2.Min(availableQuantity, remaining);
         remaining -= spent;
 
         if (remaining == FixedPoint2.Zero)
@@ -221,18 +221,18 @@ public sealed partial class MicrowaveSystem
     /// <param name="item">The entity to remove.</param>
     /// <param name="itemProto">The solid ID of the ingredient.</param>
     /// <param name="container">The microwave's ingredient storage container.</param>
-    /// <param name="remainingSolids">A dictionary of recipe solids that still need to be spent.</param>
+    /// <param name="materialsToSpend">A dictionary of recipe solids that still need to be spent.</param>
     private void SubtractSolidContents(EntityUid item,
         EntProtoId itemProto,
         Container container,
-        Dictionary<EntProtoId, int> remainingSolids)
+        Dictionary<EntProtoId, int> materialsToSpend)
     {
-        if (!remainingSolids.ContainsKey(itemProto))
+        if (!materialsToSpend.ContainsKey(itemProto))
             return;
 
-        remainingSolids[itemProto] -= 1;
-        if (remainingSolids[itemProto] <= 0)
-            remainingSolids.Remove(itemProto);
+        materialsToSpend[itemProto] -= 1;
+        if (materialsToSpend[itemProto] <= 0)
+            materialsToSpend.Remove(itemProto);
 
         _container.Remove(item, container);
         QueueDel(item);
@@ -249,21 +249,21 @@ public sealed partial class MicrowaveSystem
     ///     be removed from the remaining materials dictionary.
     /// </remarks>
     /// <param name="ent">The stack entity.</param>
-    /// <param name="remainingMaterials">A dictionary of recipe materials that still need to be spent.</param>
+    /// <param name="materialsToSpend">A dictionary of recipe materials that still need to be spent.</param>
     private void SubtractMaterialContents(Entity<StackComponent> ent,
-        Dictionary<ProtoId<StackPrototype>, int> remainingMaterials)
+        Dictionary<ProtoId<StackPrototype>, int> materialsToSpend)
     {
         var stack = ent.Comp;
         var stackId = stack.StackTypeId;
         var startingQuantity = stack.Count;
-        var recipeQuantity = SpendMaterialQuantity(startingQuantity, stackId, remainingMaterials);
+        var quantityToRemove = SpendMaterialQuantity(startingQuantity, stackId, materialsToSpend);
 
-        _stack.ReduceCount(ent.AsNullable(), recipeQuantity);
+        _stack.ReduceCount(ent.AsNullable(), quantityToRemove);
     }
 
     /// <summary>
     ///     Given a dictionary of remaining reagents that still need to be spent in a recipe, this function iterates
-    ///     over a solution's contents and subtracts reagents according to what remains to be spent. This also removes
+    ///     over a solution's contents and subtracts reagents according to the reagents to spend. This also removes
     ///     it from the "remaining reagents to spend" dictionary accordingly.
     /// </summary>
     /// <remarks>
@@ -273,26 +273,22 @@ public sealed partial class MicrowaveSystem
     /// </remarks>
     /// <param name="solutionEntity">The solution entity.</param>
     /// <param name="solution">The solution itself.</param>
-    /// <param name="remainingReagents">A dictionary of reagents that still need to be spent.</param>
-    /// <returns>A new dictionary of how many reagents still need to be spent.</returns>
-    private Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> SubtractReagentContents(
-        Entity<SolutionComponent> solutionEntity,
+    /// <param name="reagentsToSpend">A dictionary of reagents that still need to be spent.</param>
+    private void SubtractReagentContents(Entity<SolutionComponent> solutionEntity,
         Solution solution,
-        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> remainingReagents)
+        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagentsToSpend)
     {
-        var newReagentsRemaining = remainingReagents.ShallowClone();
+        var reagentsToProcess = reagentsToSpend.Keys.ToList();
 
-        foreach (var (reagent, _) in remainingReagents)
+        foreach (var reagent in reagentsToProcess)
         {
-            var startingQuantity = solution.GetTotalPrototypeQuantity(reagent);
-            if (startingQuantity == 0)
+            var availableQuantity = solution.GetTotalPrototypeQuantity(reagent);
+            if (availableQuantity == 0)
                 continue;
 
-            var recipeQuantity = SpendReagentQuantity(startingQuantity, reagent, newReagentsRemaining);
-            _solutionContainer.RemoveReagent(solutionEntity, reagent, recipeQuantity);
+            var quantityToRemove = SpendReagentQuantity(availableQuantity, reagent, reagentsToSpend);
+            _solutionContainer.RemoveReagent(solutionEntity, reagent, quantityToRemove);
         }
-
-        return newReagentsRemaining;
     }
 
     /// <summary>
@@ -350,40 +346,40 @@ public sealed partial class MicrowaveSystem
     private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe, uint count = 1)
     {
         var portioned = recipe.Ingredients * count;
-        var remainingSolids = portioned.Solids;
-        var remainingMaterials = portioned.Materials;
-        var remainingReagents = portioned.Reagents;
+        var solidsToSpend = portioned.Solids;
+        var materialsToSpend = portioned.Materials;
+        var reagentsToSpend = portioned.Reagents;
         var microwaveItems = component.Storage.ContainedEntities.ToArray();
 
         foreach (var item in microwaveItems)
         {
-            if (remainingSolids.Count > 0
+            if (solidsToSpend.Count > 0
                 && TryGetSolidId(item, out var solidId)
-                && remainingSolids.ContainsKey(solidId.Value))
+                && solidsToSpend.ContainsKey(solidId.Value))
             {
-                SubtractSolidContents(item, solidId.Value, component.Storage, remainingSolids);
+                SubtractSolidContents(item, solidId.Value, component.Storage, solidsToSpend);
                 continue;
                 // We're exiting early here; if the solid ingredient is removed from the container,
                 // then we shouldn't be attempting to use its material stack or reagents.
             }
 
-            if (remainingMaterials.Count > 0
+            if (materialsToSpend.Count > 0
                 && TryGetMaterialId(item, out var materialId, out var stack)
-                && remainingMaterials.ContainsKey(materialId.Value))
+                && materialsToSpend.ContainsKey(materialId.Value))
             {
-                SubtractMaterialContents(stack.Value, remainingMaterials);
+                SubtractMaterialContents(stack.Value, materialsToSpend);
                 if (Deleted(stack) || stack.Value.Comp.Count <= 0)
                     continue;
                 // We're exiting early here - if the stack is empty, then the stack entity
                 // is gonna be deleted. Which means we shouldn't be using its reagents.
             }
 
-            if (remainingReagents.Count > 0
+            if (reagentsToSpend.Count > 0
                 && TryGetUsableIngredientSolution(item, out var solutionEntity, out var solution)
                 && solution.Volume > 0)
-                remainingReagents = SubtractReagentContents(solutionEntity.Value,
+                SubtractReagentContents(solutionEntity.Value,
                     solution,
-                    remainingReagents);
+                    reagentsToSpend);
         }
     }
 }
