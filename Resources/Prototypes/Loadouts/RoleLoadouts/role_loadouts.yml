@@ -1,3 +1,5 @@
+# All (items that ALL jobs should have)
+
 # Command
 - type: roleLoadout
   id: JobCaptain
@@ -7,6 +9,7 @@
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
+  - AssistiveItems
   - Survival
   - Trinkets
   #- CaptainJobTrinkets
@@ -22,6 +25,7 @@
   - HoPBackpack
   - HoPOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- HoPJobTrinkets
@@ -51,6 +55,7 @@
   - PassengerOuterClothing
   - PassengerShoes
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- PassengerJobTrinkets
@@ -65,6 +70,7 @@
   - CommonBackpack
   - BartenderOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   - BartenderJobTrinkets
@@ -77,6 +83,7 @@
   - BartenderJumpsuit
   - CommonBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- ServiceWorkerJobTrinkets
@@ -92,6 +99,7 @@
   - CommonBackpack
   - ChefOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- ChefJobTrinkets
@@ -104,6 +112,7 @@
   - LibrarianJumpsuit
   - CommonBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- LibrarianJobTrinkets
@@ -117,6 +126,7 @@
   - LawyerJumpsuit
   - CommonBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- LawyerJobTrinkets
@@ -135,6 +145,7 @@
   - ChaplainOuterClothing
   - ChaplainBible
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- ChaplainJobTrinkets
@@ -150,6 +161,7 @@
   - CommonBackpack
   - JanitorOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   - JanitorJobTrinkets
@@ -164,6 +176,7 @@
   - BotanistBackpack
   - BotanistOuterClothing
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- BotanistJobTrinkets
@@ -180,6 +193,7 @@
   - ClownOuterClothing
   - ClownShoes
   - Glasses
+  - AssistiveItems
   - SurvivalClown
   - Trinkets
   - ClownJobTrinkets
@@ -196,6 +210,7 @@
   - MimeOuterClothing
   - MimeBelt
   - Glasses
+  - AssistiveItems
   - SurvivalMime
   - Trinkets
   #- MimeJobTrinkets
@@ -208,11 +223,12 @@
   - MusicianJumpsuit
   - CommonBackpack
   - MusicianOuterClothing
+  - Instruments
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- MusicianJobTrinkets
-  - Instruments
   - GroupSpeciesBreathTool
 
 # Cargo
@@ -227,6 +243,7 @@
   - QuartermasterOuterClothing
   - QuartermasterShoes
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- QuartermasterJobTrinkets
@@ -243,6 +260,7 @@
   - CargoTechnicianShoes
   - CargoTechnicianID
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- CargoTechnicianJobTrinkets
@@ -256,6 +274,7 @@
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- SalvageSpecialistJobTrinkets
@@ -272,6 +291,7 @@
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
+  - AssistiveItems
   - SurvivalExtended
   - Trinkets
   #- ChiefEngineerJobTrinkets
@@ -283,6 +303,7 @@
   - GroupTankHarness
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
+  - AssistiveItems
   - SurvivalExtended
   - Trinkets
   #- TechnicalAssistantJobTrinkets
@@ -298,6 +319,7 @@
   - StationEngineerOuterClothing
   - StationEngineerShoes
   - StationEngineerID
+  - AssistiveItems
   - SurvivalExtended
   - Trinkets
   #- StationEngineerJobTrinkets
@@ -311,6 +333,7 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
+  - AssistiveItems
   - SurvivalExtended
   - Trinkets
   #- AtmosphericTechnicianJobTrinkets
@@ -329,6 +352,7 @@
   - ScientistGloves
   - ResearchDirectorShoes
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- ResearchDirectorJobTrinkets
@@ -347,6 +371,7 @@
   - ScientistShoes
   - ScientistPDA
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- ScientistJobTrinkets
@@ -359,6 +384,7 @@
   - ResearchAssistantJumpsuit
   - ScientistBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- ResearchAssistantJobTrinkets
@@ -375,6 +401,7 @@
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - SecurityShoes
+  - AssistiveItems
   - SurvivalSecurity
   - Trinkets
   - HeadofSecurityJobTrinkets
@@ -389,6 +416,7 @@
   - SecurityBelt
   - WardenOuterClothing
   - SecurityShoes
+  - AssistiveItems
   - SurvivalSecurity
   - Trinkets
   - WardenJobTrinkets
@@ -404,6 +432,7 @@
   - SecurityShoes
   - SecurityPDA
   - SecurityBelt
+  - AssistiveItems
   - SurvivalSecurity
   - Trinkets
   - SecurityJobTrinkets
@@ -418,6 +447,7 @@
   - SecurityBackpack
   - DetectiveOuterClothing
   - SecurityShoes
+  - AssistiveItems
   - SurvivalSecurity
   - Trinkets
   - DetectiveJobTrinkets
@@ -428,6 +458,7 @@
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack
+  - AssistiveItems
   - SurvivalSecurity
   - Trinkets
   #- SecurityCadetJobTrinkets
@@ -443,6 +474,7 @@
   - ReporterOuterClothing
   - CommonBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- ReporterJobTrinkets
@@ -455,6 +487,7 @@
   - PsychologistJumpsuit
   - MedicalBackpack
   - Glasses
+  - AssistiveItems
   - Survival
   - Trinkets
   #- PsychologistJobTrinkets
