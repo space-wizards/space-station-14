@@ -871,6 +871,9 @@
     name: ghost-role-information-punpun-name
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-primate
+    weight: 0.00
   - type: GhostTakeoverAvailable
   - type: Butcherable
     butcheringType: Spike
