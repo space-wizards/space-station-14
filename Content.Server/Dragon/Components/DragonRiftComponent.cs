@@ -1,4 +1,5 @@
 using Content.Shared.Dragon;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -34,6 +35,11 @@ public sealed partial class DragonRiftComponent : SharedDragonRiftComponent
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("spawnCooldown")]
     public float SpawnCooldown = 30f;
+
+    /// <summary>
+    /// Sound played when a rift is announced.
+    /// </summary>
+    public readonly SoundSpecifier RiftAnnouncementSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
 
     [ViewVariables(VVAccess.ReadWrite), DataField("spawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnPrototype = "MobCarpDragon";

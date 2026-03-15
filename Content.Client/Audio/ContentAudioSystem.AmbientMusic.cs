@@ -206,7 +206,7 @@ public sealed partial class ContentAudioSystem
         tracks.RemoveAt(tracks.Count - 1);
 
         var strim = _audio.PlayGlobal(
-            track.ToString(),
+            new ResolvedPathSpecifier(track),
             Filter.Local(),
             false,
             AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
