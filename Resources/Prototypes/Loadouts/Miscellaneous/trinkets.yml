@@ -8,128 +8,129 @@
       department: Command
       time: 1h
 
-# Flowers
+# Accessories
 - type: loadout
   id: FlowerWreath
   storage:
     back:
     - ClothingHeadHatFlowerWreath
+  groupBy: "accessory"
 
 - type: loadout
   id: Hairflower
   storage:
     back:
     - ClothingHeadHatHairflower
+  groupBy: "accessory"
 
-# Headphones
 - type: loadout
   id: Headphones
   storage:
     back:
     - ClothingMultipleHeadphones
+  groupBy: "accessory"
 
-# Toys
+- type: loadout
+  id: Wristwatch
+  storage:
+    back:
+    - Wristwatch
+  groupBy: "accessory"
+
+# Plushies
+# NOTE: Plushies available as roundstart trinkets should only be of regular animals or roundstart species, rather than more exotic stuff (e.g nukie plush,
+# rainbow lizard plush, ghost soft toy). Human plushies have also been intentionally excluded, since despite humans being a roundstart species the
+# plush is so goofy (naked, realistic screams) that it makes more sense as rare loot.
+- type: loadout
+  id: PlushiePenguin
+  storage:
+    back:
+    - PlushiePenguin
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSharkBlue
+  storage:
+    back:
+    - PlushieSharkBlue
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSharkGrey
+  storage:
+    back:
+    - PlushieSharkGrey
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSharkPink
+  storage:
+    back:
+    - PlushieSharkPink
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSnake
+  storage:
+    back:
+    - PlushieSnake
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieArachind
+  storage:
+    back:
+    - PlushieArachind
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieDiona
+  storage:
+    back:
+    - PlushieDiona
+  groupBy: "plushie"
+
 - type: loadout
   id: PlushieLizard
   storage:
     back:
     - PlushieLizard
+  groupBy: "plushie"
 
 - type: loadout
   id: PlushieSpaceLizard
   storage:
     back:
     - PlushieSpaceLizard
+  groupBy: "plushie"
 
 - type: loadout
-  id: ThreeCandles
-  dummyEntity: LoadoutDummyCandles
+  id: PlushieMoth
   storage:
     back:
-    - CandleRed
-    - CandleBlue
-    - CandleGreenSmall
-
-# Smokeables
-- type: loadout
-  id: Lighter
-  storage:
-    back:
-    - Lighter
-  groupBy: "smokeables"
+    - PlushieMoth
+  groupBy: "plushie"
 
 - type: loadout
-  id: CigPackGreen
+  id: PlushieSlime
   storage:
     back:
-    - CigPackGreen
-  groupBy: "smokeables"
+    - PlushieSlime
+  groupBy: "plushie"
 
 - type: loadout
-  id: CigPackRed
+  id: PlushieVox
   storage:
     back:
-    - CigPackRed
-  groupBy: "smokeables"
+    - PlushieVox
+  groupBy: "plushie"
 
 - type: loadout
-  id: CigPackBlue
+  id: PlushieVulp
   storage:
     back:
-    - CigPackBlue
-  groupBy: "smokeables"
-
-- type: loadout
-  id: CigPackBlack
-  storage:
-    back:
-    - CigPackBlack
-  groupBy: "smokeables"
-
-- type: loadout
-  id: CigarCase
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Command
-  storage:
-    back:
-    - CigarCase
-  groupBy: "smokeables"
-
-- type: loadout
-  id: CigarGold
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Command
-  storage:
-    back:
-    - CigarGold
-  groupBy: "smokeables"
-
-# Folders
-- type: loadout
-  id: BoxFolderBaseThreePapers
-  storage:
-    back:
-    - BoxFolderBaseThreePapers
-  groupBy: "folders"
-
-- type: loadout
-  id: BoxFolderPlasticClipboardThreePapers
-  storage:
-    back:
-    - BoxFolderPlasticClipboardThreePapers
-  groupBy: "folders"
-
-- type: loadout
-  id: BoxFolderClipboardThreePapers
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Command
-  storage:
-    back:
-    - BoxFolderClipboardThreePapers
-  groupBy: "folders"
+    - PlushieVulp
+  groupBy: "plushie"
 
 # Pins
 - type: loadout
