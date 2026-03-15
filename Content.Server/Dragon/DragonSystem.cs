@@ -1,8 +1,10 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
+using Content.Server.RoundEnd;
 using Content.Shared.Actions;
 using Content.Shared.Dragon;
+using Content.Shared.EntityEffects;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -25,12 +27,13 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _effects = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
-
-    private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.
@@ -42,13 +45,9 @@ public sealed partial class DragonSystem : EntitySystem
     /// </summary>
     private const int RiftTileRadius = 2;
 
-    private const int RiftsAllowed = 3;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        _objQuery = GetEntityQuery<CarpRiftsConditionComponent>();
 
         SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
@@ -78,7 +77,7 @@ public sealed partial class DragonSystem : EntitySystem
             }
 
             // At max rifts
-            if (comp.Rifts.Count >= RiftsAllowed)
+            if (comp.Rifts.Count >= comp.MaxRifts)
                 continue;
 
             // If there's an active rift don't accumulate.
@@ -124,7 +123,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
         }
 
-        if (component.Rifts.Count >= RiftsAllowed)
+        if (component.Rifts.Count >= component.MaxRifts)
         {
             _popup.PopupEntity(Loc.GetString("carp-rift-max"), uid, uid);
             return;
@@ -230,7 +229,7 @@ public sealed partial class DragonSystem : EntitySystem
 
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_entManager.TryGetComponent<CarpRiftsConditionComponent>(objId, out var obj))
             {
                 _carpRifts.ResetRifts(objId, obj);
                 break;
@@ -243,20 +242,38 @@ public sealed partial class DragonSystem : EntitySystem
     /// </summary>
     public void RiftCharged(EntityUid uid, DragonComponent? comp = null)
     {
+
         if (!Resolve(uid, ref comp))
             return;
 
         if (!_mind.TryGetMind(uid, out _, out var mind))
             return;
 
-        foreach (var objId in mind.Objectives)
+        foreach (var ent in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_entManager.TryGetComponent<CarpRiftsConditionComponent>(ent, out var riftConditionComp))
             {
-                _carpRifts.RiftCharged(objId, obj);
+                _carpRifts.RiftCharged(ent, riftConditionComp);
                 break;
             }
         }
+
+        comp.ChargedRifts++;
+
+        if (comp.ChargedRifts >= comp.MaxRifts)
+            DragonFullPower(uid, comp);
+    }
+
+    public void DragonFullPower(EntityUid uid, DragonComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        _roundEnd.RequestRoundEnd(null, null, false, comp.RoundEndText);
+
+        _effects.ApplyEffects(uid, comp.FullPowerEffects, user: uid);
+
+        _entManager.AddComponents(uid, comp.FullPowerComponents, true);
     }
 
     /// <summary>

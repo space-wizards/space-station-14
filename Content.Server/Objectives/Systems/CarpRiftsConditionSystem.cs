@@ -29,7 +29,7 @@ public sealed class CarpRiftsConditionSystem : EntitySystem
         if (comp.RiftsCharged >= target)
             return 1f;
 
-        return (float) comp.RiftsCharged / (float) target;
+        return (float)comp.RiftsCharged / (float)target;
     }
 
     /// <summary>
