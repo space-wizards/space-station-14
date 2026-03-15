@@ -6,6 +6,18 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
+  - type: EntityEffectAura
+    effects:
+    - !type:EvenHealthChange
+      damage:
+        Burn: -1.5
+        Toxin: -1.5
+        Airloss: -1.5
+        Brute: -1.5
+    alert: HealAura
+    whitelist:
+      tags:
+      - RiftHealAura
   - type: Transform
     anchored: true
   - type: Physics

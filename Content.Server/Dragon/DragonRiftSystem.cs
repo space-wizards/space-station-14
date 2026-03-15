@@ -13,6 +13,7 @@ using Content.Shared.Damage.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
+using Content.Shared.EntityEffects;
 
 namespace Content.Server.Dragon;
 
@@ -63,6 +64,7 @@ public sealed class DragonRiftSystem : EntitySystem
 
                 comp.Accumulator = comp.MaxAccumulator;
                 RemComp<DamageableComponent>(uid);
+                RemComp<EntityEffectAuraComponent>(uid);
                 comp.State = DragonRiftState.Finished;
                 Dirty(uid, comp);
             }
