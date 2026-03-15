@@ -14,7 +14,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            system.Gibbing.Gib(owner, _recursive);
+            system.Gibbing.Gib(owner, _recursive, 0.5f, true);
         }
     }
 }
