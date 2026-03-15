@@ -1,10 +1,10 @@
 using Content.Client.Items;
+using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Power.Visualizers;
 using Content.Client.Stylesheets;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.SubFloor;
@@ -199,7 +199,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         return new StatusControl(entity, binding?.GetKeyString() ?? "");
     }
 
-    private sealed class StatusControl : Control
+    private sealed class StatusControl : PollingItemStatusControl<StatusControl.TRayData>
     {
         private readonly RichTextLabel _label;
         private readonly TrayScannerComponent _scanner;
@@ -213,29 +213,33 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
             AddChild(_label);
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
+        protected override TRayData PollData()
         {
-            base.FrameUpdate(args);
-
-            if (_scanner.Enabled)
-            {
-                var modeLocString = _scanner.Mode switch
-                {
-                    TrayScannerMode.All => "tray-scanner-examine-mode-all",
-                    TrayScannerMode.Wiring => "tray-scanner-examine-mode-wiring",
-                    TrayScannerMode.Piping => "tray-scanner-examine-mode-piping",
-                    _ => "",
-                };
-
-                _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("tray-scanner-item-status-label",
-                    ("mode", Robust.Shared.Localization.Loc.GetString(modeLocString)),
-                    ("keybinding", _keyBindingName)));
-            }
-            else
-            {
-                _label.SetMarkup("");
-            }
+            return new TRayData(_scanner.Enabled, _scanner.Mode);
         }
+
+        protected override void Update(in TRayData data)
+        {
+            if (!data.Enabled)
+            {
+                _label.SetMarkup(string.Empty);
+                return;
+            }
+
+            var modeLocString = data.Mode switch
+            {
+                TrayScannerMode.All => "tray-scanner-examine-mode-all",
+                TrayScannerMode.Wiring => "tray-scanner-examine-mode-wiring",
+                TrayScannerMode.Piping => "tray-scanner-examine-mode-piping",
+                _ => "",
+            };
+
+            _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("tray-scanner-item-status-label",
+                ("mode", Robust.Shared.Localization.Loc.GetString(modeLocString)),
+                ("keybinding", _keyBindingName)));
+        }
+
+        public readonly record struct TRayData(bool Enabled, TrayScannerMode Mode);
     }
     #endregion
 }
