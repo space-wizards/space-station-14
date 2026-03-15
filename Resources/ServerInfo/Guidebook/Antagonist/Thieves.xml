@@ -10,23 +10,24 @@
 
   Thieves are petty yet crafty [color=green]criminals[/color] who can't keep their hands to themselves. You were forcefully given a [bold]pacifism implant[/bold] after your last arrest, but you won't let that stop you from trying to add to your collection.
 
+
   ## Art of the Steal
-  Unlike other antagonists, [bold]staying out of trouble is almost a requirement for you[/bold] because of your implant.
-  You can only run if [color=#cb0000]Security[/color] picks a fight with you, and because you work alone you don't have any friends to pull you out of danger.
+  Unlike other antagonists, it's important to [bold]stay out of trouble[/bold] because of your pacifism implant.
+  While you can still use [color=yellow]stun weapons[/color] in a pinch, you should run if [color=#cb0000]Security[/color] picks a fight with you.
+  You work alone and you don't have any friends to pull you out of danger.
 
-  But against all odds, you'll sucessfully swipe what you want using determination, sleight of hand, a few tools and your [color=cyan]pickpocketing skills.[/color]
+  But against all odds, you'll successfully swipe what you want using determination, sleight of hand, a few tools and your [color=cyan]pickpocketing skills[/color].
 
-  The pickpocketing skills you have give you a major advantage: [bold]the ability to take things from people without them even noticing.[/bold] With a little practice you can steal their wallet and keep up a conversation at the same time.
+  The pickpocketing skills you have give you a major advantage: [bold]the ability to take things from people without them even noticing[/bold]. With a little practice you can steal their wallet and keep up a conversation at the same time.
 
   It is advised to get a pair of gloves as your fingerprints could still be traced back to the stolen goods if they're found.
 
 
-
   ## Tools of the Trade
-  You've got two more aces up your stolen sleeves: your [color=cyan]beacon[/color] and your [color=cyan]satchel.[/color]
+  You've got two more aces up your stolen sleeves: your [color=cyan]thieving beacon[/color] and your [color=cyan]thieving satchel[/color].
 
-  Your [color=cyan]beacon[/color] provides safe passage home for trinkets that may not be easy to carry with you on the evac shuttle. Simply find a secluded part of the station to unfold the beacon, then set its coordinates to your hideout.
-  Any shinies near it will be [bold]teleported to your vault when the shift ends,[/bold] fulfilling your objectives.
+  Your [color=cyan]thieving beacon[/color] provides safe passage home for trinkets that may not be easy to carry with you on the evac shuttle. Simply find a secluded part of the station to unfold the thieving beacon, then set its coordinates to your hideout.
+  Any shinies near it will be [bold]teleported to your vault when the shift ends[/bold], fulfilling your objectives.
 
   However, this will instantly out you if found and make it extremely easy for people to reclaim their "missing" possessions. [bold]Make sure to hide it well![/bold]
 
@@ -34,7 +35,7 @@
     <GuideEntityEmbed Entity="ThiefBeacon"/>
   </Box>
 
-  Your [color=cyan]satchel[/color] contains... well, whatever you remembered to pack. [bold]You can select two pre-made kits[/bold] to help you complete grander heists.
+  Your [color=cyan]thieving satchel[/color] contains... well, whatever you remembered to pack. [bold]You can select two pre-made kits[/bold] to help you complete grander heists.
 
   <Box>
     <GuideEntityEmbed Entity="SatchelThief"/>
@@ -50,15 +51,25 @@
     <GuideEntityEmbed Entity="Fulton" Caption="Smuggler"/>
     <GuideEntityEmbed Entity="Telecrystal" Caption="Syndie"/>
   </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ClothingBackpackSatchelSmugglerUnanchored"/>
+  </Box>
+
+  After approving your selection, the kits will fold out into a [color=cyan]smuggler's satchel[/color].
+  Larger kits will fall onto the floor around you.
+  [bold]Don't let anyone see your kits or smuggler's satchel[/bold], as they will recognize it as contraband!
+  The smuggler's satchel can be wrenched to the hull plating underneath floor tiles if you need to hide items from prying eyes.
+
 
   ## Centerpiece of the Collection
   Your kleptomania will take you places. One day, you'll feel like stealing a few figurines. Another day, you'll feel like stealing an industrial machine.
 
   No matter. They'll all be a part of your collection within a matter of time.
 
-  You can steal items by [bold]having them on your person[/bold] when you get to CentComm. Failing this, you can steal larger items by [bold]leaving them by your beacon.[/bold]
+  You can steal items by [bold]having them on your person[/bold] when you get to CentComm. Failing this, you can steal larger items by [bold]leaving them by your thieving beacon.[/bold]
 
-  Some of the more [italic]animate[/italic] objectives may not cooperate with you. Make sure they're alive and with you or your beacon when the shift ends.
+  Some of the more [italic]animate[/italic] objectives may not cooperate with you. Make sure they're alive and with you or your thieving beacon when the shift ends.
+  A [color=cyan]pet carrier[/color] is optional, but might make the critters easier to handle.
 
   Things that you may desire include but are not limited to:
 
