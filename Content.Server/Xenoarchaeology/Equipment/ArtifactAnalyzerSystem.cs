@@ -1,6 +1,7 @@
-using Content.Server.Research.Systems;
 using Content.Server.Xenoarchaeology.Artifact;
 using Content.Shared.Popups;
+using Content.Shared.Research.Components;
+using Content.Shared.Research.Systems;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Audio.Systems;
@@ -28,7 +29,10 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (!TryGetArtifactFromConsole(ent, out var artifact))
             return;
 
-        if (!_research.TryGetClientServer(ent, out var server, out var serverComponent))
+        if (!TryComp<ResearchClientComponent>(ent, out var client))
+            return;
+
+        if (!_research.TryGetClientServer((ent, client), out var server))
             return;
 
         var sumResearch = 0;
@@ -43,7 +47,7 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (sumResearch <= 0)
             return;
 
-        _research.ModifyServerPoints(server.Value, sumResearch, serverComponent);
+        _research.ModifyServerPoints(server.Value.AsNullable(), sumResearch);
         _audio.PlayPvs(ent.Comp.ExtractSound, artifact.Value);
         _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"), artifact.Value, PopupType.Large);
     }
