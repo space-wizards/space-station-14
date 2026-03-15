@@ -29,6 +29,8 @@ public abstract class SharedRoleSystem : EntitySystem
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
+    public static readonly LocId UnknownRoleLocId = "game-ticker-unknown-role";
+
     public override void Initialize()
     {
         Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
@@ -554,7 +556,7 @@ public abstract class SharedRoleSystem : EntitySystem
         foreach (var role in mind.Comp.MindRoleContainer.ContainedEntities)
         {
             var valid = false;
-            var name = "game-ticker-unknown-role";
+            var name = UnknownRoleLocId;
             var prototype = "";
             string? playTimeTracker = null;
 
