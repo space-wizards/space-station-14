@@ -14,4 +14,11 @@ public sealed partial class LaunchOnTriggerComponent : BaseXOnTriggerComponent
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Impulse = 10.0f;
+
+    /// <summary>
+    /// Set to true to speed the target up in the direction that it itself is moving.
+    /// Set to false to move the target in the direction the launcher is moving.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool UseTargetDirection = false;
 }
