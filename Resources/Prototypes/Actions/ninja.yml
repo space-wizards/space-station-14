@@ -16,14 +16,18 @@
   description: Channels suit power into creating a throwing star that deals extra stamina damage.
   components:
   - type: Action
-    useDelay: 0.5
+    useDelay: 0.75
     icon:
       sprite: Objects/Weapons/Throwable/throwing_star.rsi
       state: icon
     itemIconStyle: NoItem
     priority: -10
+  - type: ChargeCostAction
+    charge: 14.4
+    noPowerPopup: ninja-no-power
   - type: InstantAction
-    event: !type:CreateItemEvent {}
+    event: !type:CreateItemEvent
+      protoId: ThrowingStarNinja
 
 - type: entity
   parent: BaseAction
@@ -68,6 +72,26 @@
     priority: -9
   - type: InstantAction
     event: !type:ToggleActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionCreateNanostraps
+  name: Create nanostraps
+  description: Channels suit power into creating a pair of nanostraps for quick, silencing restraints.
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: Objects/Misc/nanocuffs.rsi
+      state: nanocuff
+    itemIconStyle: NoItem
+    priority: -14
+  - type: ChargeCostAction
+    charge: 14.4
+    noPowerPopup: ninja-no-power
+  - type: InstantAction
+    event: !type:CreateItemEvent
+      protoId: NanostrapsNinja
 
 # katana
 - type: entity

@@ -158,3 +158,42 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
     state: icon
+
+# Need a version of ninja's Nanostraps without a despawn timer to work with the guidebook.
+- type: entity
+  parent: Handcuffs
+  id: Nanostraps
+  name: nanostraps
+  description: Hi-tech temporary restraints made of nanomachines. Breaks on the wearer taking damage.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/nanocuffs.rsi
+    state: nanocuff
+  - type: Handcuff
+    cuffTime: 2.5
+    breakoutTime: 8
+    cuffedRSI: Objects/Misc/nanocuffs.rsi
+    bodyIconState: body-overlay
+    breakOnRemove: true
+    breakOnDamageThreshold: 15
+    startCuffSound:
+      path: /Audio/Items/Handcuffs/ziptie_start.ogg
+    endCuffSound:
+      path: /Audio/Items/Handcuffs/ziptie_end.ogg
+    startUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+    endUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_breakout.ogg
+    startBreakoutSound:
+      path: /Audio/Items/Handcuffs/rope_takeoff.ogg
+  - type: AddAccentClothing
+    accent: MumbleAccent
+
+- type: entity
+  parent: Nanostraps
+  id: NanostrapsNinja
+  suffix: Timed, 60s
+  description: Hi-tech temporary restraints made of nanomachines. Breaks on the wearer taking damage.
+  components:
+  - type: TimedDespawn
+    lifetime: 60
