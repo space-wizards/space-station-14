@@ -22,7 +22,19 @@ public sealed class HitscanBasicDamageSystem : EntitySystem
 
         var dmg = ent.Comp.Damage * _damage.UniversalHitscanDamageModifier;
 
-        if(!_damage.TryChangeDamage(args.Data.HitEntity.Value, dmg, out var damageDealt, origin: args.Data.Gun))
+        var beforeEvent = new BeforeHitscanDamageDealtEvent
+        {
+            Target = args.Data.HitEntity.Value,
+            DamageToDeal = dmg,
+            Canceled = false,
+        };
+
+        RaiseLocalEvent(ent, ref beforeEvent);
+
+        if (beforeEvent.Canceled)
+            return;
+
+        if(!_damage.TryChangeDamage(args.Data.HitEntity.Value, beforeEvent.DamageToDeal, out var damageDealt, origin: args.Data.Gun))
             return;
 
         var damageEvent = new HitscanDamageDealtEvent
