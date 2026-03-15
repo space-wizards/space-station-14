@@ -1,5 +1,8 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Storage;
@@ -14,6 +17,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMoverController _moverController = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -23,6 +27,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         SubscribeLocalEvent<PilotedClothingComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<PilotedClothingComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<PilotedClothingComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<ActiveClothingPilotComponent, MobStateChangedEvent>(OnPilotMobStateChanged);
     }
 
     private void OnEntInserted(Entity<PilotedClothingComponent> entity, ref EntInsertedIntoContainerMessage args)
@@ -38,6 +43,15 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         entity.Comp.Pilot = args.Entity;
         Dirty(entity);
 
+        // Setup back reference.
+        var activePilot = EnsureComp<ActiveClothingPilotComponent>(args.Entity);
+        activePilot.Clothing = entity.Owner;
+        Dirty(args.Entity, activePilot);
+
+        // Make sure the entity is not crit or dead before they start piloting.
+        if (_mobState.IsIncapacitated(args.Entity))
+            return;
+
         // Attempt to setup control link, if Pilot and Wearer are both present.
         StartPiloting(entity);
     }
@@ -51,6 +65,9 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         StopPiloting(entity);
         entity.Comp.Pilot = null;
         Dirty(entity);
+
+        // Remove back reference.
+        RemCompDeferred<ActiveClothingPilotComponent>(args.Entity);
     }
 
     private void OnEquipped(Entity<PilotedClothingComponent> entity, ref GotEquippedEvent args)
@@ -76,6 +93,24 @@ public sealed partial class PilotedClothingSystem : EntitySystem
 
         entity.Comp.Wearer = null;
         Dirty(entity);
+    }
+
+    /// <summary>
+    /// Stops the movement control when the pilot is crit or dead.
+    /// Resumes when the pilot is revived.
+    /// </summary>
+    private void OnPilotMobStateChanged(Entity<ActiveClothingPilotComponent> entity, ref MobStateChangedEvent args)
+    {
+        if (!TryComp<PilotedClothingComponent>(entity.Comp.Clothing, out var clothing))
+            return;
+
+        if (_mobState.IsIncapacitated(entity))
+        {
+            StopPiloting((entity.Comp.Clothing.Value, clothing));
+        } else if (_mobState.IsAlive(entity))
+        {
+            StartPiloting((entity.Comp.Clothing.Value, clothing));
+        }
     }
 
     /// <summary>
@@ -123,11 +158,11 @@ public sealed partial class PilotedClothingSystem : EntitySystem
 
         // Clean up components on the Pilot
         var pilotEnt = entity.Comp.Pilot.Value;
-        RemCompDeferred<RelayInputMoverComponent>(pilotEnt);
+        RemComp<RelayInputMoverComponent>(pilotEnt);
 
         // Clean up components on the Wearer
         var wearerEnt = entity.Comp.Wearer.Value;
-        RemCompDeferred<MovementRelayTargetComponent>(wearerEnt);
+        RemComp<MovementRelayTargetComponent>(wearerEnt);
         RemCompDeferred<PilotedByClothingComponent>(wearerEnt);
 
         // Raise an event on the Pilot
