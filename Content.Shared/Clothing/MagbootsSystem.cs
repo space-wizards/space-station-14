@@ -1,10 +1,8 @@
-using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Containers;
@@ -17,6 +15,7 @@ public sealed class SharedMagbootsSystem : EntitySystem
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly ClothingSystem _clothing = default!;
 
     public override void Initialize()
     {
@@ -32,7 +31,10 @@ public sealed class SharedMagbootsSystem : EntitySystem
     private void OnToggled(Entity<MagbootsComponent> ent, ref ItemToggledEvent args)
     {
         if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
-            UpdateMagbootEffects(container.Owner, ent, args.Activated);
+        {
+            bool isEquipped = _clothing.IsEquipped(ent.Owner);
+            UpdateMagbootEffects(container.Owner, ent, args.Activated && isEquipped);
+        }
     }
 
     private void OnGotUnequipped(Entity<MagbootsComponent> ent, ref ClothingGotUnequippedEvent args)

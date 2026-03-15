@@ -190,6 +190,7 @@ public abstract class ClothingSystem : EntitySystem
             layer.Color = color;
         }
     }
+
     public void SetLayerState(ClothingComponent clothing, string slot, string mapKey, string state)
     {
         foreach (var layer in clothing.ClothingVisuals[slot])
@@ -202,6 +203,19 @@ public abstract class ClothingSystem : EntitySystem
 
             layer.State = state;
         }
+    }
+
+    /// <summary>Return true if entity is clothing, which is equipped</summary>
+    /// <param name="ent">Entity to check</param>
+    /// <param name="clothing">Optional clothing component beloning to ent. Will be looked up if null.</param>
+    public bool IsEquipped(EntityUid ent, ClothingComponent? clothing = null)
+    {
+        if (!Resolve(ent, ref clothing))
+        {
+            return false;
+        }
+
+        return clothing.InSlotFlag is {} slotFlag && clothing.Slots.HasFlag(slotFlag);
     }
 
     #endregion
