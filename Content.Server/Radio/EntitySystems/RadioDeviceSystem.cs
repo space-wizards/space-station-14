@@ -21,7 +21,6 @@ namespace Content.Server.Radio.EntitySystems;
 /// </summary>
 public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
@@ -35,7 +34,6 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
     {
         base.Initialize();
         SubscribeLocalEvent<RadioMicrophoneComponent, ComponentInit>(OnMicrophoneInit);
-        SubscribeLocalEvent<RadioMicrophoneComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioMicrophoneComponent, ActivateInWorldEvent>(OnActivateMicrophone);
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenAttemptEvent>(OnAttemptListen);
@@ -134,20 +132,7 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
 
     #endregion
 
-    private void OnExamine(EntityUid uid, RadioMicrophoneComponent component, ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange)
-            return;
 
-        var proto = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel);
-
-        using (args.PushGroup(nameof(RadioMicrophoneComponent)))
-        {
-            args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", proto.Frequency)));
-            args.PushMarkup(Loc.GetString("handheld-radio-component-chennel-examine",
-                ("channel", proto.LocalizedName)));
-        }
-    }
 
     private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)
     {
@@ -226,24 +211,39 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         SetIntercomChannel(ent, args.Channel);
     }
 
-    private void SetIntercomChannel(Entity<IntercomComponent> ent, ProtoId<RadioChannelPrototype>? channel)
+    private void SetIntercomChannel(Entity<IntercomComponent> ent, ProtoId<RadioChannelPrototype>? channel, RadioMicrophoneComponent? mic = null, RadioSpeakerComponent? speaker = null)
     {
         ent.Comp.CurrentChannel = channel;
+        Dirty(ent);
 
-        if (channel == null)
+        if (Resolve(ent, ref mic))
         {
-            SetSpeakerEnabled(ent, null, false);
-            SetMicrophoneEnabled(ent, null, false);
-            ent.Comp.MicrophoneEnabled = false;
-            ent.Comp.SpeakerEnabled = false;
-            Dirty(ent);
-            return;
+            if (channel == null)
+            {
+                SetMicrophoneEnabled(ent, null, false);
+                ent.Comp.MicrophoneEnabled = false;
+            }
+
+            else
+            {
+                mic.BroadcastChannel = channel.Value;
+                Dirty(ent, mic);
+            }
         }
 
-        if (TryComp<RadioMicrophoneComponent>(ent, out var mic))
-            mic.BroadcastChannel = channel.Value;
-        if (TryComp<RadioSpeakerComponent>(ent, out var speaker))
-            speaker.Channels = new() { channel.Value };
-        Dirty(ent);
+        if (Resolve(ent, ref speaker))
+        {
+            if (channel == null)
+            {
+                SetSpeakerEnabled(ent, null, false);
+                ent.Comp.SpeakerEnabled = false;
+            }
+
+            else
+            {
+                speaker.Channels = new() { channel.Value };
+                Dirty(ent, speaker);
+            }
+        }
     }
 }

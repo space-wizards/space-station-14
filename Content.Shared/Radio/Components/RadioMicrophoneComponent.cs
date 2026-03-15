@@ -9,10 +9,11 @@ namespace Content.Shared.Radio.Components;
 ///     Listens for local chat messages and relays them to some radio frequency
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 [Access(typeof(SharedRadioDeviceSystem))]
 public sealed partial class RadioMicrophoneComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<RadioChannelPrototype> BroadcastChannel = SharedChatSystem.CommonChannel;
 
     [DataField]
