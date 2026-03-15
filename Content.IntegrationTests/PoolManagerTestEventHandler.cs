@@ -1,4 +1,6 @@
-﻿namespace Content.IntegrationTests;
+﻿using System.Diagnostics;
+
+namespace Content.IntegrationTests;
 
 [SetUpFixture]
 public sealed class PoolManagerTestEventHandler
@@ -11,6 +13,10 @@ public sealed class PoolManagerTestEventHandler
     public void Setup()
     {
         PoolManager.Startup();
+
+        if (Debugger.IsAttached)
+            return;
+
         // If the tests seem to be stuck, we try to end it semi-nicely
         _ = Task.Delay(MaximumTotalTestingTimeLimit).ContinueWith(_ =>
         {
