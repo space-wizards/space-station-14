@@ -198,6 +198,24 @@
    - click
    - clicks
 
+- type: emote
+  id: Hiss
+  name: chat-emote-name-hiss
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/hiss.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    tags:
+    - SiliconEmotes
+  chatMessages: [chat-emote-msg-hiss]
+  chatTriggers:
+   - hiss
+   - hisses
+   - hissed
+
 # Vulpkanin
 - type: emote
   id: Bark
@@ -288,6 +306,25 @@
   - growls
   - growled
   - growling
+
+#vox
+- type: emote
+  id: Caw
+  name: chat-emote-name-caw
+  category: Vocal
+  icon: Interface/Emotes/caw.png
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    tags:
+    - SiliconEmotes
+  chatMessages: [chat-emote-msg-caw]
+  chatTriggers:
+   - caw
+   - caws
+   - cawed
 
 # hand emotes
 - type: emote
