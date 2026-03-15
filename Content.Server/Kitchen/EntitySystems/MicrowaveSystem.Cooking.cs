@@ -31,7 +31,7 @@ public sealed partial class MicrowaveSystem
             out var ingredientContents))
             return;
 
-        var ingredients = GetTotalIngredients(microwave, ingredientContents);
+        var ingredients = GetTotalIngredients(ingredientContents);
         var recipe = GetRecipe(microwave, ingredients);
 
         ActivateMicrowave(microwave, recipe, malfunctioning);
