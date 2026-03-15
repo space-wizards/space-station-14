@@ -1618,7 +1618,7 @@
   - type: ComponentBorgModule
     components:
     - type: JumpAbility
-      action: "ActionJumpBoost"
+      action: ActionJumpBoost
       jumpDistance: 4
       jumpSound: /Audio/Effects/stealthoff.ogg
   - type: Sprite
