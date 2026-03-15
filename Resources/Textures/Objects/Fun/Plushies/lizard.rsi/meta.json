@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, equipped-HELMET sprite made by Cinder, in-hand lizard plushie sprites by KieueCaprie, plushie_lizard_inversed and inhand sprites modified from plushie_lizard_mirrored and plushielizard-inhand-left, plushielizard-inhand-right by ArtisticRoomba, spacelizard-equipped-HELMET by miamioni, spacelizard-inhand-(left/right) by SeamLesss (GitHub), rainbowlizardplush-equipped-HELMET modified from equipped-HELMET by perryprog.",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, plushie_lizard_inversed modified from plushie_lizard_mirrored by ArtisticRoomba, inhands and wearables by TiniestShark (Github)",
     "size": {
         "x": 32,
         "y": 32
