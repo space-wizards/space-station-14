@@ -91,6 +91,17 @@
       state: impact_beam_heavy
 
 - type: entity
+  parent: RedHeavyLaser
+  id: RedSniperLaser
+  name: red high-precision laser ray
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 42
+
+- type: entity
   parent: BasicHitscan
   id: RedLaserPractice
   name: red practice laser ray

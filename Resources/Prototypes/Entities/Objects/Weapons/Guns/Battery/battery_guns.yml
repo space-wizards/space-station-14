@@ -53,8 +53,8 @@
     availableModes:
     - SemiAuto
   - type: BatteryAmmoProvider
-    proto: RedLaser
-    fireCost: 62.5
+    proto: RedMediumLaser
+    fireCost: 33.3
   - type: StaticPrice
     price: 420
   - type: Tag
@@ -420,12 +420,15 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: Gun
-    fireRate: 1.5
+    fireRate: .7
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: BatteryAmmoProvider
-    proto: RedHeavyLaser
-    fireCost: 100
+    proto: RedSniperLaser
+    fireCost: 40
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: Tag
     tags:
     - TurretCompatibleWeapon
@@ -991,6 +994,9 @@
   id: WeaponLaserCannonXenoborg
   name: xenoborg laser cannon
   components:
+  - type: BatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 100
   - type: BatterySelfRecharger
     autoRechargeRate: 30
   # "remove" wield bonus and penalty so borgs can use it
