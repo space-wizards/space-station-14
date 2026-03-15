@@ -1,33 +1,3 @@
-# Playtime requirement for NanoTrasen Bible, Codex NanoTrasimus
-- type: loadoutEffectGroup
-  id: NanoTrasenBibleRequirement
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobCaptain
-      time: 7200 #2 hrs
-
-# Playtime requirement for Druid Bible, Druidic Tablet
-- type: loadoutEffectGroup
-  id: DruidBibleRequirement
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobBotanist
-      time: 18000 #5 hrs
-
-# Playtime requirement for Clown Bible, Mirth of the Honkmother
-- type: loadoutEffectGroup
-  id: ClownBibleRequirement
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobClown
-      time: 18000 #5 hrs
-
 # Head
 - type: loadout
   id: ChaplainHead
@@ -119,7 +89,7 @@
   id: BibleDruid
   effects:
   - !type:GroupLoadoutEffect
-    proto: DruidBibleRequirement
+    proto: BotanyStarter
   storage:
     back:
     - BibleDruid
@@ -128,11 +98,11 @@
   id: BibleNanoTrasen
   effects:
   - !type:GroupLoadoutEffect
-    proto: NanoTrasenBibleRequirement
+    proto: CaptainStarter
   storage:
     back:
     - BibleNanoTrasen
-    
+
 - type: loadout
   id: BibleNarsie
   storage:
@@ -143,7 +113,7 @@
   id: BibleHonk
   effects:
   - !type:GroupLoadoutEffect
-    proto: ClownBibleRequirement
+    proto: ClownStarter
   storage:
     back:
     - BibleHonk
