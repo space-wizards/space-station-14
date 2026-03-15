@@ -1,0 +1,7 @@
+- type: entity
+  id: PaperWrittenIanAdventureNote
+  suffix: "Ian Adventure"
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-ian-adventure-note
