@@ -131,6 +131,8 @@ public sealed class MindSystem : SharedMindSystem
         var comp = EnsureComp<VisitingMindComponent>(entity);
         comp.MindId = mindId;
 
+        Dirty(mindId, mind);
+
         // Do this AFTER the entity changes above as this will fire off a player-detached event
         // which will run ghosting twice.
         if (_players.TryGetSessionById(mind.UserId, out var session))
