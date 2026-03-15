@@ -24,6 +24,10 @@
       - tool: Prying
         doAfter: 4
     - to: bonfireStake
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
       steps:
       - material: WoodPlank
         amount: 2
