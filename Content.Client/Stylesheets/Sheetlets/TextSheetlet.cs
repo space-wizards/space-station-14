@@ -11,15 +11,14 @@ public sealed class TextSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        // TODO: once fonts are reworked, change this!
-        var mono = ResCache.GetFont("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf", 12);
+        var mono = sheet.Fonts.GetFont(StandardFontType.Monospace, 12);
 
         return
         [
             E().Class(StyleClass.Monospace).Font(mono),
-            E().Class(StyleClass.Italic).Font(sheet.BaseFont.GetFont(12, FontKind.Italic)),
-            E().Class(StyleClass.FontLarge).Font(sheet.BaseFont.GetFont(14)),
-            E().Class(StyleClass.FontSmall).Font(sheet.BaseFont.GetFont(10)),
+            E().Class(StyleClass.Italic).Font(sheet.Fonts.GetFont(StandardFontType.Main, 12, FontKind.Italic)),
+            E().Class(StyleClass.FontLarge).Font(sheet.Fonts.GetFont(StandardFontType.Main, 14)),
+            E().Class(StyleClass.FontSmall).Font(sheet.Fonts.GetFont(StandardFontType.Main, 10)),
         ];
     }
 }

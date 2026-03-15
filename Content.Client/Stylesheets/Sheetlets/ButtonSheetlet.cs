@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
@@ -44,8 +45,8 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
             CButton()
                 .Class(StyleClass.ButtonSmall)
                 .ParentOf(E<Label>())
-                .Font(sheet.BaseFont.GetFont(8)),
-            CButton().Class(StyleClass.ButtonBig).ParentOf(E<Label>()).Font(sheet.BaseFont.GetFont(16)),
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 8)),
+            CButton().Class(StyleClass.ButtonBig).ParentOf(E<Label>()).Font(sheet.Fonts.GetFont(StandardFontType.Main, 16)),
 
             // Cross Button (Red)
             E<TextureButton>()

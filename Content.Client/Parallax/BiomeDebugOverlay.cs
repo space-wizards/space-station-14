@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Text;
+using Content.Client.Stylesheets.Fonts;
 using Content.Shared.Parallax.Biomes;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -17,7 +18,7 @@ public sealed class BiomeDebugOverlay : Overlay
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly IFontSelectionManager _fontSelection = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
 
     private BiomeSystem _biomes;
@@ -32,7 +33,27 @@ public sealed class BiomeDebugOverlay : Overlay
         _biomes = _entManager.System<BiomeSystem>();
         _maps = _entManager.System<SharedMapSystem>();
 
-        _font = new VectorFont(_cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);
+        UpdateFont();
+        _fontSelection.OnFontChanged += OnFontChanged;
+    }
+
+    protected override void DisposeBehavior()
+    {
+        base.DisposeBehavior();
+
+        _fontSelection.OnFontChanged -= OnFontChanged;
+    }
+
+    private void OnFontChanged(StandardFontType type)
+    {
+        if (type == StandardFontType.Main)
+            UpdateFont();
+    }
+
+    [MemberNotNull(nameof(_font))]
+    private void UpdateFont()
+    {
+        _font = _fontSelection.GetFont(StandardFontType.Main, 12);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
