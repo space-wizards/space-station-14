@@ -121,7 +121,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         // Hide the wires panel UI on activation
         if (enabled && TryComp<WiresPanelComponent>(ent, out var wires) && wires.Open)
         {
-            _wires.TogglePanel(ent, wires, false);
+            _wires.TogglePanel((ent, wires), false);
             _audio.PlayPredicted(wires.ScrewdriverCloseSound, ent, user);
         }
 
