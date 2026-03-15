@@ -1,1219 +1,1328 @@
 - type: microwaveMealRecipe
   id: RecipeBun
-  name: bun recipe
+  name: microwave-meal-recipe-bun-name
   result: FoodBreadBun
   time: 5
   group: Breads
-  solids:
-    FoodDoughSlice: 1 # one third of a standard bread dough recipe
+  ingredients:
+    solids:
+      FoodDoughSlice: 1 # one third of a standard bread dough recipe
 
 - type: microwaveMealRecipe
   id: RecipeCottonBun
-  name: cotton bun recipe
+  name: microwave-meal-recipe-cotton-bun-name
   result: FoodCottonBun
   time: 5
   group: Moth
-  solids:
-    FoodDoughCottonSlice: 1
+  ingredients:
+    solids:
+      FoodDoughCottonSlice: 1
 
 #Bagels
 - type: microwaveMealRecipe
   id: RecipeBagel
-  name: bagel recipe
+  name: microwave-meal-recipe-bagel-name
   result: FoodBagel
   time: 5
   group: Breads
-  solids:
-    FoodDoughRope: 1 # created by rolling a dough slice.
+  ingredients:
+    solids:
+      FoodDoughRope: 1 # created by rolling a dough slice.
 
 - type: microwaveMealRecipe
   id: RecipeBagelPoppy
-  name: poppyseed bagel recipe
+  name: microwave-meal-recipe-bagel-poppy-name
   result: FoodBagelPoppy
   time: 5
   group: Breads
-  solids:
-    FoodDoughRope: 1
-    PoppySeeds: 1
+  ingredients:
+    solids:
+      FoodDoughRope: 1
+      PoppySeeds: 1
 
 - type: microwaveMealRecipe
   id: RecipeBagelCotton
-  name: cotton bagel recipe
+  name: microwave-meal-recipe-bagel-cotton-name
   result: FoodBagelCotton
   time: 5
   group: Moth
-  solids:
-    FoodDoughCottonRope: 1
+  ingredients:
+    solids:
+      FoodDoughCottonRope: 1
 
 #Burgers
 
 - type: microwaveMealRecipe
   id: RecipeAppendixBurger
-  name: appendix burger recipe
+  name: microwave-meal-recipe-appendix-burger-name
   result: FoodBurgerAppendix
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    OrganHumanAppendix: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      OrganHumanAppendix: 1
 
 - type: microwaveMealRecipe
   id: RecipeBaconBurger
-  name: bacon burger recipe
+  name: microwave-meal-recipe-bacon-burger-name
   result: FoodBurgerBacon
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatBacon: 1
-    FoodCheeseSlice: 2
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatBacon: 1
+      FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeBaseballBurger
-  name: baseball burger recipe
+  name: microwave-meal-recipe-baseball-burger-name
   result: FoodBurgerBaseball
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    BaseBallBat: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      BaseBallBat: 1
 
 - type: microwaveMealRecipe
   id: RecipeBearger
-  name: bearger recipe
+  name: microwave-meal-recipe-bearger-name
   result: FoodBurgerBear
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatBear: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatBear: 1
 
 - type: microwaveMealRecipe
   id: RecipeBigBiteBurger
-  name: big bite burger recipe
+  name: microwave-meal-recipe-big-bite-burger-name
   result: FoodBurgerBig
   time: 15
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeat: 2
-    FoodCheeseSlice: 1
-    FoodTomato: 1
-    FoodOnionSlice: 2
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeat: 2
+      FoodCheeseSlice: 1
+      FoodTomato: 1
+      FoodOnionSlice: 2
 
 - type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeBrainBurger
-  name: brain burger recipe
+  name: microwave-meal-recipe-brain-burger-name
   result: FoodBurgerBrain
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    OrganHumanBrain: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      OrganHumanBrain: 1
 
 - type: microwaveMealRecipe
   id: RecipeCatBurger
-  name: cat burger recipe
+  name: microwave-meal-recipe-cat-burger-name
   result: FoodBurgerCat
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeat: 1
-    ClothingHeadHatCatEars: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeat: 1
+      ClothingHeadHatCatEars: 1
 
 - type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeCheeseburger
-  name: cheeseburger recipe
+  name: microwave-meal-recipe-cheeseburger-name
   result: FoodBurgerCheese
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeat: 1
-    FoodCheeseSlice: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeat: 1
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeChickenSandwich
-  name: chicken sandwich recipe
+  name: microwave-meal-recipe-chicken-sandiwch-name
   result: FoodBurgerChicken
   time: 10
   group: Savory
-  reagents:
-    Mayo: 5
-  solids:
-    FoodBreadBun: 1
-    FoodMeatChicken: 1
+  ingredients:
+    reagents:
+      Mayo: 5
+    solids:
+      FoodBreadBun: 1
+      FoodMeatChicken: 1
 
 - type: microwaveMealRecipe
   id: RecipeClownBurger
-  name: clownburger recipe
+  name: microwave-meal-recipe-clown-burger-name
   result: FoodBurgerClown
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    ClothingMaskClown: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      ClothingMaskClown: 1
 
 - type: microwaveMealRecipe
   id: RecipeCorgiBurger
-  name: corgi burger recipe
+  name: microwave-meal-recipe-corgi-burger-name
   result: FoodBurgerCorgi
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatCorgi: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatCorgi: 1
 
 - type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeCrabBurger
-  name: crab burger recipe
+  name: microwave-meal-recipe-crab-burger-name
   result: FoodBurgerCrab
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatCrab: 2
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatCrab: 2
 
 - type: microwaveMealRecipe
   id: RecipeCrazyHamburger
-  name: crazy hamburger recipe
+  name: microwave-meal-recipe-crazy-hamburger-name
   result: FoodBurgerCrazy
   time: 15
   group: Savory
-  reagents:
-    OilOlive: 15
-  solids:
-    FoodBreadBun: 1
-    FoodMeat: 2
-    FoodCheeseSlice: 2
-    FoodChiliPepper: 1
-    FoodCabbage: 1
-    CrayonGreen: 1
-    Flare: 1
+  ingredients:
+    reagents:
+      OilOlive: 15
+    solids:
+      FoodBreadBun: 1
+      FoodMeat: 2
+      FoodCheeseSlice: 2
+      FoodChiliPepper: 1
+      FoodCabbage: 1
+      CrayonGreen: 1
+      Flare: 1
 
 - type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeDuckBurger
-  name: duck sandwich recipe
+  name: microwave-meal-recipe-duck-burger-name
   result: FoodBurgerDuck
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatDuck: 1
-    FoodCheeseSlice: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatDuck: 1
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeEmpoweredBurger
-  name: empowered burger recipe
+  name: microwave-meal-recipe-empowered-burger-name
   result: FoodBurgerEmpowered
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    SheetPlasma1: 2
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+    materials:
+      Plasma: 2
 
 - type: microwaveMealRecipe
   id: RecipeCarpBurger
-  name: fillet-o-carp burger recipe
+  name: microwave-meal-recipe-carp-burger-name
   result: FoodBurgerCarp
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatFish: 1
-    FoodCheeseSlice: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatFish: 1
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeFiveBurger
-  name: five alarm burger recipe
+  name: microwave-meal-recipe-five-burger-name
   result: FoodBurgerFive
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeat: 1
-    FoodChiliPepper: 3
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeat: 1
+      FoodChiliPepper: 3
 
 - type: microwaveMealRecipe
   id: RecipeGhostBurger
-  name: ghost burger recipe
+  name: microwave-meal-recipe-ghost-burger-name
   result: FoodBurgerGhost
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    Ectoplasm: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      Ectoplasm: 1
 
 - type: microwaveMealRecipe
   id: RecipeHumanBurger
-  name: human burger recipe
+  name: microwave-meal-recipe-human-burger-name
   result: FoodBurgerHuman
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatHuman: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatHuman: 1
 
 - type: microwaveMealRecipe
   id: RecipeJellyBurger
-  name: jelly burger recipe
+  name: microwave-meal-recipe-jelly-burger-name
   result: FoodBurgerJelly
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodJellyAmanita: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodJellyAmanita: 1
 
 - type: microwaveMealRecipe
   id: RecipeBurgerMcguffin
-  name: McGuffin recipe
+  name: microwave-meal-recipe-burger-mcguffin-name
   result: FoodBurgerMcguffin
   time: 10
   group: Savory
-  reagents:
-    Egg: 12
-  solids:
-    FoodBreadBun: 1
-    FoodCheeseSlice: 1
+  ingredients:
+    reagents:
+      Egg: 12
+    solids:
+      FoodBreadBun: 1
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeBurgerMcrib
-  name: BBQ rib sandwich recipe
+  name: microwave-meal-recipe-burger-mcrib-name
   result: FoodBurgerMcrib
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMealRibs: 1
-    FoodOnionSlice: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMealRibs: 1
+      FoodOnionSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeMimeBurger
-  name: mime burger recipe
+  name: microwave-meal-recipe-mime-burger-name
   result: FoodBurgerMime
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    ClothingMaskMime: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      ClothingMaskMime: 1
 
 - type: microwaveMealRecipe
   id: RecipePlainBurger
-  name: plain burger recipe
+  name: microwave-meal-recipe-plain-burger-name
   result: FoodBurgerPlain
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeat: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeat: 1
 
 - type: microwaveMealRecipe
   id: RecipeRatBurger
-  name: rat burger recipe
+  name: microwave-meal-recipe-rat-burger-name
   result: FoodBurgerRat
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatRat: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatRat: 1
 
 - type: microwaveMealRecipe
   id: RecipeRobotBurger
-  name: roburger recipe
+  name: microwave-meal-recipe-robot-burger-name
   result: FoodBurgerRobot
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    MicroManipulatorStockPart: 2
-    # i would add steel to this recipe but the microwave explodes
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      MicroManipulatorStockPart: 2
+      # i would add steel to this recipe but the microwave explodes
 
 - type: microwaveMealRecipe
   id: RecipeSoylentBurger
-  name: soylent burger recipe
+  name: microwave-meal-recipe-soylent-burger-name
   result: FoodBurgerSoy
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodCheeseSlice: 2
-    FoodSoybeans: 2 #replace with soylent green when those become craftable
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodCheeseSlice: 2
+      FoodSoybeans: 2 #replace with soylent green when those become craftable
 
 - type: microwaveMealRecipe
   id: RecipeSpellBurger
-  name: spell burger recipe
+  name: microwave-meal-recipe-spell-burger-name
   result: FoodBurgerSpell
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    ClothingHeadHatWizard: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      ClothingHeadHatWizard: 1
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
-  name: super bite burger recipe
+  name: microwave-meal-recipe-super-bite-burger-name
   result: FoodBurgerSuper
   time: 25
   group: Savory
-  reagents:
-    TableSalt: 5
-    Egg: 12
-  solids:
-    FoodBreadBun: 1
-    FoodMeat: 2
-    FoodCheeseSlice: 2
-    FoodTomato: 2
+  ingredients:
+    reagents:
+      TableSalt: 5
+      Egg: 12
+    solids:
+      FoodBreadBun: 1
+      FoodMeat: 2
+      FoodCheeseSlice: 2
+      FoodTomato: 2
 
 - type: microwaveMealRecipe
   id: RecipeTofuBurger
-  name: tofu burger recipe
+  name: microwave-meal-recipe-tofu-burger-name
   result: FoodBurgerTofu
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodTofuSlice: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodTofuSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoburger
-  name: xenoburger recipe
+  name: microwave-meal-recipe-xenoburger-name
   result: FoodBurgerXeno
   time: 10
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    FoodMeatXeno: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      FoodMeatXeno: 1
 
 - type: microwaveMealRecipe
   id: RecipeMothRoachburger
-  name: mothroachburger recipe
+  name: microwave-meal-recipe-moth-roachburger-name
   result: FoodBurgerMothRoach
   group: Savory
-  solids:
-    FoodBreadBun: 1
-    MobMothroach: 1
+  ingredients:
+    solids:
+      FoodBreadBun: 1
+      MobMothroach: 1
 
 #Breads & Sandwiches
 
 - type: microwaveMealRecipe
   id: RecipeBananaBread
-  name: banana bread recipe
+  name: microwave-meal-recipe-banana-bread-name
   result: FoodBreadBanana
   time: 15
   group: Breads
-  solids:
-    FoodDough: 1
-    FoodBanana: 1
+  ingredients:
+    solids:
+      FoodDough: 1
+      FoodBanana: 1
 
 - type: microwaveMealRecipe
   id: RecipeCornbread
-  name: cornbread recipe
+  name: microwave-meal-recipe-cornbread-name
   result: FoodBreadCorn
   time: 10
   group: Breads
-  solids:
-    FoodDoughCornmeal: 1
+  ingredients:
+    solids:
+      FoodDoughCornmeal: 1
 
 - type: microwaveMealRecipe
   id: RecipeCreamCheeseBread
-  name: cream cheese bread recipe
+  name: microwave-meal-recipe-cream-cheese-bread-name
   result: FoodBreadCreamcheese
   time: 15
   group: Breads
-  reagents:
-    Milk: 5
-  solids:
-    FoodDough: 1
-    FoodCheeseSlice: 2
+  ingredients:
+    reagents:
+      Milk: 5
+    solids:
+      FoodDough: 1
+      FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeMeatBread
-  name: meat bread recipe
+  name: microwave-meal-recipe-meat-bread-name
   result: FoodBreadMeat
   time: 15
   group: Breads
-  solids:
-    FoodDough: 1
-    FoodMeatCutlet: 2
-    FoodCheeseSlice: 2
+  ingredients:
+    solids:
+      FoodDough: 1
+      FoodMeatCutlet: 2
+      FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeMimanaBread
-  name: mimana bread recipe
+  name: microwave-meal-recipe-mimana-bread-name
   result: FoodBreadMimana
   time: 15
   group: Breads
-  reagents:
-    Nothing: 5
-  solids:
-    FoodDough: 1
-    FoodMimana: 1
+  ingredients:
+    reagents:
+      Nothing: 5
+    solids:
+      FoodDough: 1
+      FoodMimana: 1
 
 - type: microwaveMealRecipe
   id: RecipeBread
-  name: bread recipe
+  name: microwave-meal-recipe-bread-name
   result: FoodBreadPlain
   time: 10
   group: Breads
-  solids:
-    FoodDough: 1
+  ingredients:
+    solids:
+      FoodDough: 1
 
 - type: microwaveMealRecipe
   id: RecipeBreadCotton
-  name: cotton bread recipe
+  name: microwave-meal-recipe-bread-cotton-name
   result: FoodBreadCotton
   time: 10
   group: Moth
-  solids:
-    FoodDoughCotton: 1
+  ingredients:
+    solids:
+      FoodDoughCotton: 1
 
 - type: microwaveMealRecipe
   id: RecipeSausageBread
-  name: sausage bread recipe
+  name: microwave-meal-recipe-sausage-bread-name
   result: FoodBreadSausage
   time: 15
   group: Breads
-  solids:
-    FoodDough: 1
-    FoodMeat: 1 #replace with sausage
+  ingredients:
+    solids:
+      FoodDough: 1
+      FoodMeat: 1 #replace with sausage
 
 - type: microwaveMealRecipe
   id: RecipeSpiderMeatBread
-  name: spider meat bread recipe
+  name: microwave-meal-recipe-spider-meat-bread-name
   result: FoodBreadMeatSpider
   time: 15
   group: Breads
-  solids:
-    FoodDough: 1
-    FoodMeatSpiderCutlet: 2
-    FoodCheeseSlice: 2
+  ingredients:
+    solids:
+      FoodDough: 1
+      FoodMeatSpiderCutlet: 2
+      FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeTofuBread
-  name: tofu bread recipe
+  name: microwave-meal-recipe-tofu-bread-name
   result: FoodBreadTofu
   time: 15
   group: Breads
-  solids:
-    FoodDough: 1
-    FoodTofu: 1
+  ingredients:
+    solids:
+      FoodDough: 1
+      FoodTofu: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoMeatBread
-  name: xeno meat bread recipe
+  name: microwave-meal-recipe-xeno-meat-bread-name
   result: FoodBreadMeatXeno
   time: 15
   group: Breads
-  solids:
-    FoodDough: 1
-    FoodMeatXenoCutlet: 2
-    FoodCheeseSlice: 2
+  ingredients:
+    solids:
+      FoodDough: 1
+      FoodMeatXenoCutlet: 2
+      FoodCheeseSlice: 2
 
 #Slices Only
 
 - type: microwaveMealRecipe
   id: RecipeBaguette
-  name: baguette recipe
+  name: microwave-meal-recipe-baguette-name
   result: FoodBreadBaguette
   time: 15
   group: Breads
-  reagents:
-    TableSalt: 5
-    Blackpepper: 5
-  solids:
-    FoodDough: 1
+  ingredients:
+    reagents:
+      TableSalt: 5
+      Blackpepper: 5
+    solids:
+      FoodDough: 1
 
 - type: microwaveMealRecipe
   id: RecipeBaguetteCotton
-  name: baguette recipe
+  name: microwave-meal-recipe-baguette-cotton-name
   result: FoodBreadBaguetteCotton
   time: 15
   group: Moth
-  reagents:
-    TableSalt: 5
-    Blackpepper: 5
-  solids:
-    FoodDoughCotton: 1
+  ingredients:
+    reagents:
+      TableSalt: 5
+      Blackpepper: 5
+    solids:
+      FoodDoughCotton: 1
 
 - type: microwaveMealRecipe
   id: RecipeBaguetteSword
-  name: baguette sword recipe
+  name: microwave-meal-recipe-baguette-sword-name
   result: WeaponBaguette
   secretRecipe: true
   time: 15
   group: Secret
-  reagents:
-    TableSalt: 5
-    Blackpepper: 5
-  solids:
-    FoodDough: 1
-    PartRodMetal1: 1
+  ingredients:
+    reagents:
+      TableSalt: 5
+      Blackpepper: 5
+    solids:
+      FoodDough: 1
+      PartRodMetal1: 1
 
 - type: microwaveMealRecipe
   id: RecipeButteredToast
-  name: buttered toast recipe
+  name: microwave-meal-recipe-buttered-toast-name
   result: FoodBreadButteredToast
   time: 5
   group: Breads
-  solids:
-    FoodBreadPlainSlice: 1
-    FoodButterSlice: 1
+  ingredients:
+    solids:
+      FoodBreadPlainSlice: 1
+      FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrenchToast
-  name: french toast recipe
+  name: microwave-meal-recipe-french-toast-name
   result: FoodBreadFrenchToast
   time: 5
   group: Breakfast
-  reagents:
-    Milk: 5
-    Egg: 12
-  solids:
-    FoodBreadPlainSlice: 1
+  ingredients:
+    reagents:
+      Milk: 5
+      Egg: 12
+    solids:
+      FoodBreadPlainSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeGarlicBread
-  name: garlic bread slice recipe
+  name: microwave-meal-recipe-garlic-bread-name
   result: FoodBreadGarlicSlice
   time: 5
   group: Breads
-  solids:
-    FoodBreadPlainSlice: 1
-    FoodGarlic: 1
-    FoodButterSlice: 1
+  ingredients:
+    solids:
+      FoodBreadPlainSlice: 1
+      FoodGarlic: 1
+      FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeJellyToast
-  name: jelly toast recipe
+  name: microwave-meal-recipe-jelly-toast-name
   result: FoodBreadJellySlice
   time: 5
   group: Breads
-  solids:
-    FoodBreadPlainSlice: 1
-    FoodJellyAmanita: 1 #replace with jelly
+  ingredients:
+    solids:
+      FoodBreadPlainSlice: 1
+      FoodJellyAmanita: 1 #replace with jelly
 
 - type: microwaveMealRecipe
   id: RecipeMoldyBreadSlice
-  name: moldy bread slice recipe
+  name: microwave-meal-recipe-moldy-bread-slice-name
   result: FoodBreadMoldySlice
   time: 5
   group: Breads
-  solids:
-    FoodBreadPlainSlice: 1
-    FoodFlyAmanita: 1
+  ingredients:
+    solids:
+      FoodBreadPlainSlice: 1
+      FoodFlyAmanita: 1
 
 - type: microwaveMealRecipe
   id: RecipeTwoBreadSlice
-  name: two slice recipe
+  name: microwave-meal-recipe-two-bread-slice-name
   result: FoodBreadTwoSlice
   time: 5
   group: Breads
-  reagents:
-    Wine: 5
-  solids:
-    FoodBreadPlainSlice: 2
+  ingredients:
+    reagents:
+      Wine: 5
+    solids:
+      FoodBreadPlainSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeOnionRings
-  name: onion rings recipe
+  name: microwave-meal-recipe-onion-rings-name
   result: FoodOnionRings
   time: 15
   group: Savory
-  solids:
-    FoodOnionSlice: 1
+  ingredients:
+    solids:
+      FoodOnionSlice: 1
 
 #Pizzas TODO: contruction graph based pizza
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
-  name: margherita pizza recipe
+  name: microwave-meal-recipe-margherita-pizza-name
   result: FoodPizzaMargherita
   time: 30
   group: Pizza
-  solids:
-    FoodDoughFlat: 1
-    FoodCheeseSlice: 1
-    FoodTomato: 4
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      FoodCheeseSlice: 1
+      FoodTomato: 4
 
 - type: microwaveMealRecipe
   id: RecipeMushroomPizza
-  name: mushroom pizza recipe
+  name: microwave-meal-recipe-mushroom-pizza-name
   result: FoodPizzaMushroom
   time: 30
   group: Pizza
-  solids:
-    FoodDoughFlat: 1
-    FoodMushroom: 5
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      FoodMushroom: 5
 
 - type: microwaveMealRecipe
   id: RecipeMeatPizza
-  name: meat pizza recipe
+  name: microwave-meal-recipe-meat-pizza-name
   result: FoodPizzaMeat
   time: 30
   group: Pizza
-  solids:
-    FoodDoughFlat: 1
-    FoodMeat: 3
-    FoodCheeseSlice: 1
-    FoodTomato: 1
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      FoodMeat: 3
+      FoodCheeseSlice: 1
+      FoodTomato: 1
 
 - type: microwaveMealRecipe
   id: RecipeVegetablePizza
-  name: vegetable pizza recipe
+  name: microwave-meal-recipe-vegetable-pizza-name
   result: FoodPizzaVegetable
   time: 30
   group: Pizza
-  solids:
-    FoodDoughFlat: 1
-    FoodEggplant: 1
-    FoodCarrot: 1
-    FoodCorn: 1
-    FoodTomato: 1
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      FoodEggplant: 1
+      FoodCarrot: 1
+      FoodCorn: 1
+      FoodTomato: 1
 
 - type: microwaveMealRecipe
   id: RecipeHawaiianPizza
-  name: Hawaiian pizza recipe
+  name: microwave-meal-recipe-hawaiian-pizza-name
   result: FoodPizzaPineapple
   time: 30
   group: Pizza
-  solids:
-    FoodDoughFlat: 1
-    FoodMeatChickenCutlet: 3
-    FoodPineappleSlice: 5
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      FoodMeatChickenCutlet: 3
+      FoodPineappleSlice: 5
 
 - type: microwaveMealRecipe
   id: RecipeDankPizza
-  name: dank pizza recipe
+  name: microwave-meal-recipe-dank-pizza-name
   result: FoodPizzaDank
   time: 30
   group: Pizza
-  solids:
-    FoodDoughFlat: 1
-    LeavesCannabis: 2
-    FoodCheeseSlice: 1
-    FoodTomato: 1
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      LeavesCannabis: 2
+      FoodCheeseSlice: 1
+      FoodTomato: 1
 
 - type: microwaveMealRecipe
   id: RecipeDonkpocketPizza
-  name: donk-pocket pizza recipe
+  name: microwave-meal-recipe-donkpocket-pizza-name
   result: FoodPizzaDonkpocket
   time: 30
   group: Pizza
-  solids:
-    FoodDoughFlat: 1
-    FoodDonkpocketWarm: 3
-    FoodCheeseSlice: 1
-    FoodTomato: 1
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      FoodDonkpocketWarm: 3
+      FoodCheeseSlice: 1
+      FoodTomato: 1
 
 - type: microwaveMealRecipe
   id: RecipeUraniumPizza
-  name: spicy rock pizza recipe
+  name: microwave-meal-recipe-uranium-pizza-name
   result: FoodPizzaUranium
   time: 30
   group: Pizza
-  solids:
-    FoodDoughFlat: 1
-    FoodChiliPepper: 2
-    FoodTomato: 2
-    SheetUranium1: 2
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      FoodChiliPepper: 2
+      FoodTomato: 2
+    materials:
+      Uranium: 2
 
 - type: microwaveMealRecipe
   id: RecipeCottonPizza
-  name: cotton pizza recipe
+  name: microwave-meal-recipe-cotton-pizza-name
   result: FoodPizzaCotton
   time: 30
   group: Moth
-  solids:
-    FoodDoughCottonFlat: 1
-    CottonBol: 4
+  ingredients:
+    solids:
+      FoodDoughCottonFlat: 1
+      CottonBol: 4
 
 - type: microwaveMealRecipe
   id: RecipeWorldpeasPizza
-  name: world peazza recipe
+  name: microwave-meal-recipe-worldpeas-pizza-name
   result: FoodPizzaWorldpeas
   time: 30
-  solids:
-    FoodDoughFlat: 1
-    FoodWorldPeas: 3
+  ingredients:
+    solids:
+      FoodDoughFlat: 1
+      FoodWorldPeas: 3
 
 #Italian
 - type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
-  name: boiled spaghetti recipe
+  name: microwave-meal-recipe-boiled-spaghetti-name
   result: FoodNoodlesBoiled
   time: 15
   group: Pasta
-  reagents:
-    Flour: 15
-    Egg: 6
-    OilOlive: 5
+  ingredients:
+    reagents:
+      Flour: 15
+      Egg: 6
+      OilOlive: 5
 
 - type: microwaveMealRecipe
   id: RecipePastaTomato
-  name: pasta tomato recipe
+  name: microwave-meal-recipe-pasta-tomato-name
   result: FoodNoodles
   time: 10
   group: Pasta
-  solids:
-    FoodNoodlesBoiled: 1
-    FoodTomato: 2
+  ingredients:
+    solids:
+      FoodNoodlesBoiled: 1
+      FoodTomato: 2
 
 - type: microwaveMealRecipe
   id: RecipeMeatballSpaghetti
-  name: spaghetti & meatballs recipe
+  name: microwave-meal-recipe-meatball-spaghetti-name
   result: FoodNoodlesMeatball
   time: 10
   group: Pasta
-  solids:
-    FoodNoodlesBoiled: 1
-    FoodMeatMeatball: 2
+  ingredients:
+    solids:
+      FoodNoodlesBoiled: 1
+      FoodMeatMeatball: 2
 
 - type: microwaveMealRecipe
   id: RecipeButterNoodles
-  name: butter noodles recipe
+  name: microwave-meal-recipe-butter-noodles-name
   result: FoodNoodlesButter
   time: 10
   group: Pasta
-  solids:
-    FoodNoodlesBoiled: 1
-    FoodButter: 1
+  ingredients:
+    solids:
+      FoodNoodlesBoiled: 1
+      FoodButter: 1
 
 - type: microwaveMealRecipe
   id: RecipeChowMein
-  name: chow mein recipe
+  name: microwave-meal-recipe-chow-mein-name
   result: FoodNoodlesChowmein
   time: 10
   group: Pasta
-  reagents:
-    Egg: 6
-  solids:
-    FoodNoodlesBoiled: 1
-    FoodEggplant: 1
-    FoodCarrot: 1
-    FoodCorn: 1
+  ingredients:
+    reagents:
+      Egg: 6
+    solids:
+      FoodNoodlesBoiled: 1
+      FoodEggplant: 1
+      FoodCarrot: 1
+      FoodCorn: 1
 
 - type: microwaveMealRecipe
   id: RecipeOatmeal
-  name: oatmeal recipe
+  name: microwave-meal-recipe-oatmeal-name
   result: FoodOatmeal
   time: 15
   group: Savory
-  reagents:
-    Oats: 15
-    Water: 10
-  solids:
-    FoodBowlBig: 1
+  ingredients:
+    reagents:
+      Oats: 15
+      Water: 10
+    solids:
+      FoodBowlBig: 1
 
 - type: microwaveMealRecipe
   id: RecipeBoiledRice
-  name: boiled rice recipe
+  name: microwave-meal-recipe-boiled-rice-name
   result: FoodRiceBoiled
   time: 15
   group: Savory
-  reagents:
-    Rice: 15
-    Water: 10
-  solids:
-    FoodBowlBig: 1
+  ingredients:
+    reagents:
+      Rice: 15
+      Water: 10
+    solids:
+      FoodBowlBig: 1
 
 - type: microwaveMealRecipe
   id: RecipeRicePudding
-  name: rice pudding recipe
+  name: microwave-meal-recipe-rice-pudding-name
   result: FoodRicePudding
   time: 15
   group: Dessert
-  reagents:
-    Rice: 15
-    Milk: 10
-    Sugar: 5
-  solids:
-    FoodBowlBig: 1
+  ingredients:
+    reagents:
+      Rice: 15
+      Milk: 10
+      Sugar: 5
+    solids:
+      FoodBowlBig: 1
 
 - type: microwaveMealRecipe
   id: RecipeRicePork
-  name: rice and pork recipe
+  name: microwave-meal-recipe-rice-pork-name
   result: FoodRicePork
   time: 15
   group: Savory
-  solids:
-    FoodRiceBoiled: 1
-    FoodMeatCutlet: 3
+  ingredients:
+    solids:
+      FoodRiceBoiled: 1
+      FoodMeatCutlet: 3
 
 - type: microwaveMealRecipe
   id: RecipeRiceGumbo
-  name: black-eyed gumbo recipe
+  name: microwave-meal-recipe-rice-gumbo-name
   result: FoodRiceGumbo
   time: 15
   group: Savory
-  solids:
-    FoodRiceBoiled: 1
-    FoodMeatCutlet: 3
-    FoodChiliPepper: 2
+  ingredients:
+    solids:
+      FoodRiceBoiled: 1
+      FoodMeatCutlet: 3
+      FoodChiliPepper: 2
 
 - type: microwaveMealRecipe
   id: RecipeEggRice
-  name: egg-fried rice recipe
+  name: microwave-meal-recipe-egg-rice-name
   result: FoodRiceEgg
   time: 15
   group: Savory
-  reagents:
-    Egg: 6
-  solids:
-    FoodRiceBoiled: 1
-    FoodCarrot: 1
+  ingredients:
+    reagents:
+      Egg: 6
+    solids:
+      FoodRiceBoiled: 1
+      FoodCarrot: 1
 
 - type: microwaveMealRecipe
   id: RecipeCopypasta
-  name: copypasta recipe
+  name: microwave-meal-recipe-copypasta-name
   result: FoodNoodlesCopy
   time: 10
   group: Pasta
-  solids:
-    FoodNoodles: 2
-    FoodPlateSmall: 2
+  ingredients:
+    solids:
+      FoodNoodles: 2
+      FoodPlateSmall: 2
 
 #Soups & Stew
 - type: microwaveMealRecipe
   id: RecipeBisque
-  name: bisque recipe
+  name: microwave-meal-recipe-bisque-name
   result: FoodSoupBisque
   time: 10
   group: Soup
-  reagents:
-    Water: 10
-  solids:
-    FoodBowlBig: 1
-    FoodTomato: 1
-    FoodMushroom: 1
-    FoodMeatFish: 1
+  ingredients:
+    reagents:
+      Water: 10
+    solids:
+      FoodBowlBig: 1
+      FoodTomato: 1
+      FoodMushroom: 1
+      FoodMeatFish: 1
 
 - type: microwaveMealRecipe
   id: RecipeMeatballSoup
-  name: meatball soup recipe
+  name: microwave-meal-recipe-meatball-soup-name
   result: FoodSoupMeatball
   time: 10
   group: Soup
-  reagents:
-    Water: 10
-  solids:
-    FoodBowlBig: 1
-    FoodMeatMeatball: 1
-    FoodCarrot: 1
-    FoodPotato: 1
+  ingredients:
+    reagents:
+      Water: 10
+    solids:
+      FoodBowlBig: 1
+      FoodMeatMeatball: 1
+      FoodCarrot: 1
+      FoodPotato: 1
 
 - type: microwaveMealRecipe
   id: RecipeNettleSoup
-  name: nettle soup recipe
+  name: microwave-meal-recipe-nettle-soup-name
   result: FoodSoupNettle
   time: 10
   group: Soup
-  reagents:
-    Water: 10
-    Egg: 6
-  solids:
-    FoodBowlBig: 1
-    Nettle: 1
-    FoodPotato: 1
+  ingredients:
+    reagents:
+      Water: 10
+      Egg: 6
+    solids:
+      FoodBowlBig: 1
+      Nettle: 1
+      FoodPotato: 1
 
 - type: microwaveMealRecipe
   id: RecipeEyeballSoup
-  name: eyeball soup recipe
+  name: microwave-meal-recipe-eyeball-soup-name
   result: FoodSoupEyeball
   time: 10
   group: Soup
-  reagents:
-    Water: 10
-  solids:
-    FoodBowlBig: 1
-    OrganHumanEyes: 1
-    FoodCarrot: 1
-    FoodPotato: 1
+  ingredients:
+    reagents:
+      Water: 10
+    solids:
+      FoodBowlBig: 1
+      OrganHumanEyes: 1
+      FoodCarrot: 1
+      FoodPotato: 1
 
 - type: microwaveMealRecipe
   id: RecipeAmanitaJelly
-  name: amanita jelly recipe
+  name: microwave-meal-recipe-amanita-jelly-name
   result: FoodJellyAmanita
   time: 10
   group: Savory
-  reagents:
-    Water: 5
-    Vodka: 5
-  solids:
-    FoodFlyAmanita: 3
+  ingredients:
+    reagents:
+      Water: 5
+      Vodka: 5
+    solids:
+      FoodFlyAmanita: 3
 
 - type: microwaveMealRecipe
   id: RecipeOnionSoup
-  name: onion soup recipe
+  name: microwave-meal-recipe-onion-soup-name
   result: FoodSoupOnion
   time: 10
   group: Soup
-  reagents:
-    Water: 10
-  solids:
-    FoodBowlBig: 1
-    FoodOnionSlice: 5
-    FoodCheeseSlice: 1
+  ingredients:
+    reagents:
+      Water: 10
+    solids:
+      FoodBowlBig: 1
+      FoodOnionSlice: 5
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeMushroomSoup
-  name: mushroom soup recipe
+  name: microwave-meal-recipe-mushroom-soup-name
   result: FoodSoupMushroom
   time: 10
   group: Soup
-  reagents:
-    Water: 5
-    Milk: 5
-  solids:
-    FoodBowlBig: 1
-    FoodMushroom: 2
+  ingredients:
+    reagents:
+      Water: 5
+      Milk: 5
+    solids:
+      FoodBowlBig: 1
+      FoodMushroom: 2
 
 - type: microwaveMealRecipe
   id: RecipeStewSoup
-  name: stew recipe
+  name: microwave-meal-recipe-stew-soup-name
   result: FoodSoupStew
   time: 10
   group: Soup
-  reagents:
-    Water: 10
-  solids:
-    FoodBowlBig: 1
-    FoodMeatCutlet: 3
-    FoodTomato: 1
-    FoodPotato: 1
-    FoodCarrot: 1
-    FoodEggplant: 1
-    FoodMushroom: 1
+  ingredients:
+    reagents:
+      Water: 10
+    solids:
+      FoodBowlBig: 1
+      FoodMeatCutlet: 3
+      FoodTomato: 1
+      FoodPotato: 1
+      FoodCarrot: 1
+      FoodEggplant: 1
+      FoodMushroom: 1
 
 - type: microwaveMealRecipe
   id: RecipeTomatoSoup
-  name: tomato soup recipe
+  name: microwave-meal-recipe-tomato-soup-name
   result: FoodSoupTomato
   time: 10
   group: Soup
-  reagents:
-    Water: 10
-  solids:
-    FoodBowlBig: 1
-    FoodTomato: 2
+  ingredients:
+    reagents:
+      Water: 10
+    solids:
+      FoodBowlBig: 1
+      FoodTomato: 2
 
 - type: microwaveMealRecipe
   id: RecipeTomatoBloodSoup
-  name: tomato blood soup recipe
+  name: microwave-meal-recipe-tomato-blood-soup-name
   result: FoodSoupTomatoBlood
   time: 10
   group: Soup
-  reagents:
-    Blood: 10
-  solids:
-    FoodBowlBig: 1
-    FoodBloodTomato: 2
+  ingredients:
+    reagents:
+      Blood: 10
+    solids:
+      FoodBowlBig: 1
+      FoodBloodTomato: 2
 
 - type: microwaveMealRecipe
   id: RecipeWingFangChuSoup
-  name: wing fang chu recipe
+  name: microwave-meal-recipe-wing-fang-chu-soup-name
   result: FoodSoupWingFangChu
   time: 10
   group: Soup
-  reagents:
-    Soysauce: 5
-  solids:
-    FoodBowlBig: 1
-    FoodMeatXenoCutlet: 2
+  ingredients:
+    reagents:
+      Soysauce: 5
+    solids:
+      FoodBowlBig: 1
+      FoodMeatXenoCutlet: 2
 
 - type: microwaveMealRecipe
   id: RecipeWingFangChuSoupSpider
-  name: wing fang chu recipe
+  name: microwave-meal-recipe-wing-fang-chu-soup-spider-name
   result: FoodSoupWingFangChu
   time: 10
   group: Soup
-  reagents:
-    Soysauce: 5
-  solids:
-    FoodBowlBig: 1
-    FoodMeatSpider: 2
+  ingredients:
+    reagents:
+      Soysauce: 5
+    solids:
+      FoodBowlBig: 1
+      FoodMeatSpider: 2
 
 - type: microwaveMealRecipe
   id: RecipeVegetableSoup
-  name: vegetable soup recipe
+  name: microwave-meal-recipe-vegetable-soup-name
   result: FoodSoupVegetable
   time: 10
   group: Soup
-  reagents:
-    Water: 5
-  solids:
-    FoodBowlBig: 1
-    FoodCorn: 1
-    FoodCarrot: 1
-    FoodPotato: 1
-    FoodEggplant: 1
+  ingredients:
+    reagents:
+      Water: 5
+    solids:
+      FoodBowlBig: 1
+      FoodCorn: 1
+      FoodCarrot: 1
+      FoodPotato: 1
+      FoodEggplant: 1
 
 - type: microwaveMealRecipe
   id: RecipeClownTearsSoup
-  name: clown tears soup recipe
+  name: microwave-meal-recipe-clown-tears-soup-name
   result: FoodSoupClown
   time: 10
   group: Soup
-  reagents:
-    Water: 10
-  solids:
-    FoodBowlBig: 1
-    FoodBanana: 1
-    ShardGlass: 1
-    #idk probably replace shard with someting bananium when #14663 merged
+  ingredients:
+    reagents:
+      Water: 10
+    solids:
+      FoodBowlBig: 1
+      FoodBanana: 1
+      ShardGlass: 1
+      #idk probably replace shard with someting bananium when #14663 merged
 
 - type: microwaveMealRecipe
   id: RecipeMonkeysDelightSoup
-  name: monkeys delight recipe
+  name: microwave-meal-recipe-monkeys-delight-soup-name
   result: FoodSoupMonkey
   time: 10
   group: Soup
-  reagents:
-    Flour: 5
-    TableSalt: 1
-    Blackpepper: 1
-  solids:
-    FoodBowlBig: 1
-    FoodBanana: 1
-    MonkeyCube: 1
+  ingredients:
+    reagents:
+      Flour: 5
+      TableSalt: 1
+      Blackpepper: 1
+    solids:
+      FoodBowlBig: 1
+      FoodBanana: 1
+      MonkeyCube: 1
 
 - type: microwaveMealRecipe
   id: RecipeBungoSoup
-  name: bungo soup recipe
+  name: microwave-meal-recipe-bungo-soup-name
   result: FoodSoupBungo
   time: 10
   group: Soup
-  reagents:
-    Water: 5
-  solids:
-    FoodBowlBig: 1
-    FoodBungo: 2
-    FoodChiliPepper: 1
+  ingredients:
+    reagents:
+      Water: 5
+    solids:
+      FoodBowlBig: 1
+      FoodBungo: 2
+      FoodChiliPepper: 1
 
 - type: microwaveMealRecipe
   id: RecipeBoiledSnail
-  name: boiled snail recipe
+  name: microwave-meal-recipe-boiled-snail-name
   result: FoodMeatSnailCooked
   time: 5
   group: Savory
-  reagents:
-    Water: 10
-  solids:
-    FoodMeatSnail: 1
+  ingredients:
+    reagents:
+      Water: 10
+    solids:
+      FoodMeatSnail: 1
 
 - type: microwaveMealRecipe
   id: RecipeEscargotSoup
-  name: escargot recipe
+  name: microwave-meal-recipe-escargot-soup-name
   result: FoodSoupEscargot
   time: 10
   group: Soup
-  reagents:
-    Water: 5
-  solids:
-    FoodBowlBig: 1
-    FoodOnionSlice: 1
-    FoodButter: 1
-    FoodMeatSnailCooked: 1
+  ingredients:
+    reagents:
+      Water: 5
+    solids:
+      FoodBowlBig: 1
+      FoodOnionSlice: 1
+      FoodButter: 1
+      FoodMeatSnailCooked: 1
 
 #Pies
 
 - type: microwaveMealRecipe
   id: RecipeAmanitaPie
-  name: amanita pie recipe
+  name: microwave-meal-recipe-amanita-pie-name
   result: FoodPieAmanita
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodFlyAmanita: 1
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodFlyAmanita: 1
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeApplePie
-  name: apple pie recipe
+  name: microwave-meal-recipe-apple-pie-name
   result: FoodPieApple
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodApple: 3
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodApple: 3
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeBaklava
-  name: baklava recipe
+  name: microwave-meal-recipe-baklava-name
   result: FoodPieBaklava
   time: 15
   group: BarsAndCookies
-  solids:
-    FoodDoughPie: 1
-    FoodSnackPistachios: 1 #i'd rather use a botany crop but we don't have nuts yet
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodSnackPistachios: 1 #i'd rather use a botany crop but we don't have nuts yet
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeBananaCreamPie
-  name: banana cream pie recipe
+  name: microwave-meal-recipe-banana-cream-pie-name
   result: FoodPieBananaCream
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodBanana: 3
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodBanana: 3
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeBerryClafoutis
-  name: berry clafoutis recipe
+  name: microwave-meal-recipe-berry-clafoutis-name
   result: FoodPieClafoutis
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodBerries: 3
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodBerries: 3
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeCherryPie
-  name: cherry pie recipe
+  name: microwave-meal-recipe-cherry-pie-name
   result: FoodPieCherry
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodCherry: 5
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodCherry: 5
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrostyPie
-  name: frosty pie recipe
+  name: microwave-meal-recipe-frosty-pie-name
   result: FoodPieFrosty
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodChillyPepper: 3
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodChillyPepper: 3
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeMeatPie
-  name: meat pie recipe
+  name: microwave-meal-recipe-meat-pie-name
   result: FoodPieMeat
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodMeat: 3
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodMeat: 3
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipePumpkinPie
-  name: pumpkin pie recipe
+  name: microwave-meal-recipe-pumpkin-pie-name
   result: FoodPiePumpkin
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodPumpkin: 1
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodPumpkin: 1
+      FoodPlateTin: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipePlumpPie
@@ -1227,1236 +1336,1343 @@
 
 - type: microwaveMealRecipe
   id: RecipeXenoPie
-  name: xeno pie recipe
+  name: microwave-meal-recipe-xeno-pie-name
   result: FoodPieXeno
   time: 15
   group: Pie
-  solids:
-    FoodDoughPie: 1
-    FoodMeatXeno: 3
-    FoodPlateTin: 1
+  ingredients:
+    solids:
+      FoodDoughPie: 1
+      FoodMeatXeno: 3
+      FoodPlateTin: 1
 
 #Tarts
 
 - type: microwaveMealRecipe
   id: RecipeCocoTart
-  name: chocolate lava tart recipe
+  name: microwave-meal-recipe-coco-tart-name
   result: FoodTartCoco
   time: 15
   group: Pie
-  reagents:
-    Sugar: 5
-    Milk: 5
-  solids:
-    FoodDoughPie: 1
-    FoodSnackChocolateBar: 3
-    FoodPlateTin: 1
+  ingredients:
+    reagents:
+      Sugar: 5
+      Milk: 5
+    solids:
+      FoodDoughPie: 1
+      FoodSnackChocolateBar: 3
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeGappleTart
-  name: golden apple streusel tart recipe
+  name: microwave-meal-recipe-gapple-tart-name
   result: FoodTartGapple
   time: 15
   group: Pie
-  reagents:
-    Gold: 10
-    Sugar: 5
-    Milk: 5
-  solids:
-    FoodDoughPie: 1
-    FoodApple: 2 #in absence of the real gapple i'm substituting one apple with 10u gold (one ingot)
-    FoodPlateTin: 1
+  ingredients:
+    reagents:
+      Gold: 10
+      Sugar: 5
+      Milk: 5
+    solids:
+      FoodDoughPie: 1
+      FoodApple: 2 #in absence of the real gapple i'm substituting one apple with 10u gold (one ingot)
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeGrapeTart
-  name: grape tart recipe
+  name: microwave-meal-recipe-grape-tart-name
   result: FoodTartGrape
   time: 15
   group: Pie
-  reagents:
-    Sugar: 5
-    Milk: 5
-  solids:
-    FoodDoughPie: 1
-    FoodGrape: 3
-    FoodPlateTin: 1
+  ingredients:
+    reagents:
+      Sugar: 5
+      Milk: 5
+    solids:
+      FoodDoughPie: 1
+      FoodGrape: 3
+      FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeMimeTart
-  name: mime tart recipe
+  name: microwave-meal-recipe-mime-tart-name
   result: FoodTartMime
   time: 15
   group: Pie
-  reagents:
-    Sugar: 5
-    Milk: 5
-  solids:
-    FoodDoughPie: 1
-    FoodMimana: 3
-    FoodPlateTin: 1
+  ingredients:
+    reagents:
+      Sugar: 5
+      Milk: 5
+    solids:
+      FoodDoughPie: 1
+      FoodMimana: 3
+      FoodPlateTin: 1
 
 #Other
 
 - type: microwaveMealRecipe
   id: RecipeCubanCarp
-  name: Cuban carp recipe
+  name: microwave-meal-recipe-cuban-carp-name
   result: FoodMealCubancarp
   time: 15
   group: Savory
-  solids:
-    FoodDough: 1
-    FoodCheeseSlice: 2
-    FoodChiliPepper: 1
-    FoodMeatFish: 2
+  ingredients:
+    solids:
+      FoodDough: 1
+      FoodCheeseSlice: 2
+      FoodChiliPepper: 1
+      FoodMeatFish: 2
 
 - type: microwaveMealRecipe
   id: RecipeSashimi
-  name: sashimi recipe
+  name: microwave-meal-recipe-sashimi-name
   result: FoodMealSashimi
   time: 15
   group: Savory
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodMeatFish: 2
+  ingredients:
+    reagents:
+      TableSalt: 1
+    solids:
+      FoodMeatFish: 2
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
-  name: salty sweet misocola soup recipe
+  name: microwave-meal-recipe-miso-cola-soup-name
   result: DisgustingSweptSoup
   time: 15
   group: Savory
-  reagents:
-    Cola: 5
-  solids:
-    FoodSoupMiso: 1
+  ingredients:
+    reagents:
+      Cola: 5
+    solids:
+      FoodSoupMiso: 1
 
 - type: microwaveMealRecipe
   id: RecipeLoadedBakedPotato
-  name: loaded baked potato recipe
+  name: microwave-meal-recipe-loaded-baked-potato-name
   result: FoodMealPotatoLoaded
   time: 15
   group: Savory
-  solids:
-    FoodPotato: 1
-    FoodCheeseSlice: 1
+  ingredients:
+    solids:
+      FoodPotato: 1
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeFries
-  name: space fries recipe
+  name: microwave-meal-recipe-fries-name
   result: FoodMealFries
   time: 15
   group: Savory
-  reagents:
-    TableSalt: 5
-  solids:
-    FoodPotato: 1
+  ingredients:
+    reagents:
+      TableSalt: 5
+    solids:
+      FoodPotato: 1
 
 - type: microwaveMealRecipe
   id: RecipeCheesyFries
-  name: cheesy fries recipe
+  name: microwave-meal-recipe-cheesy-fries-name
   result: FoodMealFriesCheesy
   time: 15
   group: Savory
-  reagents:
-    TableSalt: 5
-  solids:
-    FoodPotato: 1
-    FoodCheeseSlice: 1
+  ingredients:
+    reagents:
+      TableSalt: 5
+    solids:
+      FoodPotato: 1
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeCarrotFries
-  name: carrot fries recipe
+  name: microwave-meal-recipe-carrot-fries-name
   result: FoodMealFriesCarrot
   time: 15
   group: Savory
-  reagents:
-    TableSalt: 5
-  solids:
-    FoodCarrot: 1
+  ingredients:
+    reagents:
+      TableSalt: 5
+    solids:
+      FoodCarrot: 1
 
 - type: microwaveMealRecipe
   id: RecipeNachos
-  name: nachos recipe
+  name: microwave-meal-recipe-nachos-name
   result: FoodMealNachos
   time: 10
   group: Savory
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodDoughTortillaFlat: 1
-    FoodPlateSmall: 1
+  ingredients:
+    reagents:
+      TableSalt: 1
+    solids:
+      FoodDoughTortillaFlat: 1
+      FoodPlateSmall: 1
 
 - type: microwaveMealRecipe
   id: RecipeNachosCheesy
-  name: cheesy nachos recipe
+  name: microwave-meal-recipe-nachos-cheesy-name
   result: FoodMealNachosCheesy
   time: 10
   group: Savory
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodCheeseSlice: 1
-    FoodDoughTortillaFlat: 1
-    FoodPlateSmall: 1
+  ingredients:
+    reagents:
+      TableSalt: 1
+    solids:
+      FoodCheeseSlice: 1
+      FoodDoughTortillaFlat: 1
+      FoodPlateSmall: 1
 
 - type: microwaveMealRecipe
   id: RecipeNachosCuban
-  name: cuban nachos recipe
+  name: microwave-meal-recipe-nachos-cuban-name
   result: FoodMealNachosCuban
   time: 10
   group: Savory
-  reagents:
-    Ketchup: 5
-  solids:
-    FoodChiliPepper: 1
-    FoodDoughTortillaFlat: 1
-    FoodPlateSmall: 1
+  ingredients:
+    reagents:
+      Ketchup: 5
+    solids:
+      FoodChiliPepper: 1
+      FoodDoughTortillaFlat: 1
+      FoodPlateSmall: 1
 
 - type: microwaveMealRecipe
   id: RecipePopcorn
-  name: popcorn recipe
+  name: microwave-meal-recipe-popcorn-name
   result: FoodSnackPopcorn
   time: 20
   group: Savory
-  solids:
-    FoodCorn: 1
+  ingredients:
+    solids:
+      FoodCorn: 1
 
 - type: microwaveMealRecipe
   id: RecipePancake
-  name: pancake recipe
+  name: microwave-meal-recipe-pancake-name
   result: FoodBakedPancake
   time: 5
   group: Breakfast
-  reagents:
-    Flour: 5
-    Milk: 5
-    Egg: 6
+  ingredients:
+    reagents:
+      Flour: 5
+      Milk: 5
+      Egg: 6
 
 - type: microwaveMealRecipe
   id: RecipeBlueberryPancake
-  name: blueberry pancake recipe
+  name: microwave-meal-recipe-blueberry-pancake-name
   result: FoodBakedPancakeBb
   time: 5
   group: Breakfast
-  reagents:
-    Flour: 5
-    Milk: 5
-    Egg: 6
-  solids:
-    FoodBerries: 2
+  ingredients:
+    reagents:
+      Flour: 5
+      Milk: 5
+      Egg: 6
+    solids:
+      FoodBerries: 2
 
 - type: microwaveMealRecipe
   id: RecipeWaffles
-  name: waffle recipe
+  name: microwave-meal-recipe-waffles-name
   result: FoodBakedWaffle
   time: 10
   group: Breakfast
-  reagents:
-    Flour: 5
-    Milk: 5
-    Egg: 6
-    SodaWater: 5
+  ingredients:
+    reagents:
+      Flour: 5
+      Milk: 5
+      Egg: 6
+      SodaWater: 5
 
 - type: microwaveMealRecipe
   id: RecipeWaffleSoy
-  name: soy waffle recipe
+  name: microwave-meal-recipe-waffle-soy-name
   result: FoodBakedWaffleSoy
   time: 10
   group: Breakfast
-  reagents:
-    Flour: 5
-    MilkSoy: 5
-    Egg: 6
-    SodaWater: 5
+  ingredients:
+    reagents:
+      Flour: 5
+      MilkSoy: 5
+      Egg: 6
+      SodaWater: 5
 
 - type: microwaveMealRecipe
   id: RecipeCookie
-  name: cookie recipe
+  name: microwave-meal-recipe-cookie-name
   result: FoodBakedCookie
   time: 5
   group: BarsAndCookies
-  reagents:
-    Flour: 5
-    Sugar: 5
-  solids:
-    FoodButterSlice: 1
-    FoodSnackChocolateBar: 1
+  ingredients:
+    reagents:
+      Flour: 5
+      Sugar: 5
+    solids:
+      FoodButterSlice: 1
+      FoodSnackChocolateBar: 1
 
 - type: microwaveMealRecipe
   id: RecipeSugarCookie
-  name: sugar cookie recipe
+  name: microwave-meal-recipe-sugar-cookie-name
   result: FoodBakedCookieSugar
   time: 5
   group: BarsAndCookies
-  reagents:
-    Flour: 5
-    Sugar: 10
-  solids:
-    FoodButterSlice: 1
+  ingredients:
+    reagents:
+      Flour: 5
+      Sugar: 10
+    solids:
+      FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeRaisinCookie
-  name: raisin cookie recipe
+  name: microwave-meal-recipe-raisin-cookie-name
   result: FoodBakedCookieRaisin
   time: 5
   group: BarsAndCookies
-  reagents:
-    Flour: 5
-    Sugar: 5
-  solids:
-    FoodSnackRaisins: 1
+  ingredients:
+    reagents:
+      Flour: 5
+      Sugar: 5
+    solids:
+      FoodSnackRaisins: 1
 
 - type: microwaveMealRecipe
   id: RecipeCookieOatmeal
-  name: oatmeal cookie recipe
+  name: microwave-meal-recipe-cookie-oatmeal-name
   result: FoodBakedCookieOatmeal
   time: 5
   group: BarsAndCookies
-  reagents:
-    Oats: 5
-    Sugar: 5
-  solids:
-    FoodButterSlice: 1
+  ingredients:
+    reagents:
+      Oats: 5
+      Sugar: 5
+    solids:
+      FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeChocolateChipPancake
-  name: chocolate chip pancake recipe
+  name: microwave-meal-recipe-chocolate-chip-pancake-name
   result: FoodBakedPancakeCc
   time: 5
   group: BarsAndCookies
-  reagents:
-    Flour: 5
-    Milk: 5
-    Egg: 6
-  solids:
-    FoodSnackChocolateBar: 1
+  ingredients:
+    reagents:
+      Flour: 5
+      Milk: 5
+      Egg: 6
+    solids:
+      FoodSnackChocolateBar: 1
 
 - type: microwaveMealRecipe
   id: RecipeAppleCake
-  name: apple cake recipe
+  name: microwave-meal-recipe-apple-cake-name
   result: FoodCakeApple
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodApple: 3
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodApple: 3
 
 - type: microwaveMealRecipe
   id: RecipeCarrotCake
-  name: carrot cake recipe
+  name: microwave-meal-recipe-carrot-cake-name
   result: FoodCakeCarrot
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodCarrot: 3
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodCarrot: 3
 
 - type: microwaveMealRecipe
   id: RecipeLemonCake
-  name: lemon cake recipe
+  name: microwave-meal-recipe-lemon-cake-name
   result: FoodCakeLemon
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodLemon: 3
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodLemon: 3
 
 - type: microwaveMealRecipe
   id: RecipeLemoonCake
-  name: lemoon cake recipe
+  name: microwave-meal-recipe-lemoon-cake-name
   result: FoodCakeLemoon
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodLemoon: 2
-    FoodBerries: 1 #dark colouring
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodLemoon: 2
+      FoodBerries: 1 #dark colouring
 
 - type: microwaveMealRecipe
   id: RecipeOrangeCake
-  name: orange cake recipe
+  name: microwave-meal-recipe-orange-cake-name
   result: FoodCakeOrange
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodOrange: 3
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodOrange: 3
 
 - type: microwaveMealRecipe
   id: RecipeBlueberryCake
-  name: blueberry cake recipe
+  name: microwave-meal-recipe-blueberry-cake-name
   result: FoodCakeBlueberry
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodBerries: 3
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodBerries: 3
 
 - type: microwaveMealRecipe
   id: RecipeLimeCake
-  name: lime cake recipe
+  name: microwave-meal-recipe-lime-cake-name
   result: FoodCakeLime
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodLime: 3
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodLime: 3
 
 - type: microwaveMealRecipe
   id: RecipeCheeseCake
-  name: cheese cake recipe
+  name: microwave-meal-recipe-cheese-cake-name
   result: FoodCakeCheese
   time: 5
   group: Cake
-  reagents:
-    Cream: 10
-  solids:
-    FoodCakePlain: 1
-    FoodCheeseSlice: 3
+  ingredients:
+    reagents:
+      Cream: 10
+    solids:
+      FoodCakePlain: 1
+      FoodCheeseSlice: 3
 
 - type: microwaveMealRecipe
   id: RecipePumpkinCake
-  name: pumpkin cake recipe
+  name: microwave-meal-recipe-pumpkin-cake-name
   result: FoodCakePumpkin
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodPumpkin: 1
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodPumpkin: 1
 
 - type: microwaveMealRecipe
   id: RecipeClownCake
-  name: clown cake recipe
+  name: microwave-meal-recipe-clown-cake-name
   result: FoodCakeClown
   time: 5
   group: Cake
-  solids:
-    ClothingMaskClown: 1
-    FoodCakePlain: 1
+  ingredients:
+    solids:
+      ClothingMaskClown: 1
+      FoodCakePlain: 1
 
 - type: microwaveMealRecipe
   id: RecipeCake
-  name: cake recipe
+  name: microwave-meal-recipe-cake-name
   result: FoodCakePlain
   time: 15
   group: Cake
-  solids:
-    FoodCakeBatter: 1
+  ingredients:
+    solids:
+      FoodCakeBatter: 1
 
 - type: microwaveMealRecipe
   id: RecipeBirthdayCake
-  name: birthday cake recipe
+  name: microwave-meal-recipe-birthday-cake-name
   result: FoodCakeBirthday
   time: 5
   group: Cake
-  reagents:
-    Cream: 5
-  solids:
-    FoodCakePlain: 1
+  ingredients:
+    reagents:
+      Cream: 5
+    solids:
+      FoodCakePlain: 1
 
 - type: microwaveMealRecipe
   id: RecipeChocolateCake
-  name: chocolate cake recipe
+  name: microwave-meal-recipe-chocolate-cake-name
   result: FoodCakeChocolate
   time: 5
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodSnackChocolateBar: 2
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      FoodSnackChocolateBar: 2
 
 - type: microwaveMealRecipe
   id: RecipeBrainCake
-  name: brain cake recipe
+  name: microwave-meal-recipe-brain-cake-name
   result: FoodCakeBrain
   time: 15
   group: Cake
-  solids:
-    FoodCakePlain: 1
-    OrganHumanBrain: 1
+  ingredients:
+    solids:
+      FoodCakePlain: 1
+      OrganHumanBrain: 1
 
 - type: microwaveMealRecipe
   id: RecipeSlimeCake
-  name: slime cake recipe
+  name: microwave-meal-recipe-slime-cake-name
   result: FoodCakeSlime
   time: 5
   group: Cake
-  reagents:
-    Slime: 15
-  solids:
-    FoodCakePlain: 1
+  ingredients:
+    reagents:
+      Slime: 15
+    solids:
+      FoodCakePlain: 1
 
 - type: microwaveMealRecipe
   id: RecipeCatCake
-  name: cat cake recipe
+  name: microwave-meal-recipe-cat-cake-name
   result: MobCatCake
   time: 15
   group: Cake
-  reagents:
-    Milk: 15
-    Cognizine: 5
-  solids:
-    FoodCakePlain: 1
-    FoodSnackRaisins: 1
-    OrganAnimalHeart: 1
+  ingredients:
+    reagents:
+      Milk: 15
+      Cognizine: 5
+    solids:
+      FoodCakePlain: 1
+      FoodSnackRaisins: 1
+      OrganAnimalHeart: 1
 
 - type: microwaveMealRecipe
   id: RecipeBerryDelight
-  name: berry delight recipe
+  name: microwave-meal-recipe-berry-delight-name
   result: FoodCakeBerryDelight
   time: 5
   group: Cake
-  solids:
-    FoodCakeBlueberry: 1
-    FoodBerries: 2
-  reagents:
-    Milk: 10
+  ingredients:
+    solids:
+      FoodCakeBlueberry: 1
+      FoodBerries: 2
+    reagents:
+      Milk: 10
 
 - type: microwaveMealRecipe
   id: RecipeBreadDog
-  name: bread dog recipe
+  name: microwave-meal-recipe-bread-dog-name
   result: MobBreadDog
   time: 15
   group: Breads
-  reagents:
-    Cognizine: 5
-  solids:
-    FoodBreadSausage: 1
-    OrganAnimalHeart: 1
-    FoodSpaceshroomCooked: 1
+  ingredients:
+    reagents:
+      Cognizine: 5
+    solids:
+      FoodBreadSausage: 1
+      OrganAnimalHeart: 1
+      FoodSpaceshroomCooked: 1
 
 - type: microwaveMealRecipe
   id: RecipeDumplings
-  name: dumplings recipe
+  name: microwave-meal-recipe-dumplings-name
   result: FoodBakedDumplings
   time: 15
   group: Savory
-  reagents:
-    Water: 10
-    UncookedAnimalProteins: 6
-  solids:
-    FoodDoughSlice: 3
+  ingredients:
+    reagents:
+      Water: 10
+      UncookedAnimalProteins: 6
+    solids:
+      FoodDoughSlice: 3
 
 - type: microwaveMealRecipe
   id: RecipeBrownies
-  name: brownie recipe
+  name: microwave-meal-recipe-brownies-name
   result: FoodBakedBrownieBatch
   time: 25
   group: BarsAndCookies
-  reagents:
-    Flour: 15
-    Sugar: 30
-    Egg: 18
-  solids:
-    FoodButter: 2
-    FoodSnackChocolateBar: 2
+  ingredients:
+    reagents:
+      Flour: 15
+      Sugar: 30
+      Egg: 18
+    solids:
+      FoodButter: 2
+      FoodSnackChocolateBar: 2
 
 #Donks i guess
 - type: microwaveMealRecipe
   id: RecipeWarmDonkpocket
-  name: warm donk pocket recipe
+  name: microwave-meal-recipe-warm-donkpocket-name
   result: FoodDonkpocketWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocket: 1
+  ingredients:
+    solids:
+      FoodDonkpocket: 1
 
 - type: microwaveMealRecipe
   id: RecipeWarmDankpocket
-  name: warm dank pocket recipe
+  name: microwave-meal-recipe-warm-dankpocket-name
   result: FoodDonkpocketDankWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocketDank: 1
+  ingredients:
+    solids:
+      FoodDonkpocketDank: 1
 
 - type: microwaveMealRecipe
   id: RecipeWarmDonkpocketSpicy
-  name: warm spicy donk-pocket recipe
+  name: microwave-meal-recipe-warm-donkpocket-spicy-name
   result: FoodDonkpocketSpicyWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocketSpicy: 1
+  ingredients:
+    solids:
+      FoodDonkpocketSpicy: 1
 
 - type: microwaveMealRecipe
   id: RecipeWarmDonkpocketTeriyaki
-  name: warm teriyaki-pocket recipe
+  name: microwave-meal-recipe-warm-donkpocket-teriyaki-name
   result: FoodDonkpocketTeriyakiWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocketTeriyaki: 1
+  ingredients:
+    solids:
+      FoodDonkpocketTeriyaki: 1
 
 - type: microwaveMealRecipe
   id: RecipeWarmDonkpocketPizza
-  name: warm pizza-pocket recipe
+  name: microwave-meal-recipe-warm-donkpocket-pizza-name
   result: FoodDonkpocketPizzaWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocketPizza: 1
+  ingredients:
+    solids:
+      FoodDonkpocketPizza: 1
 
 - type: microwaveMealRecipe
   id: RecipeDonkpocketHonk
-  name: warm honk-pocket recipe
+  name: microwave-meal-recipe-donkpocket-honk-name
   result: FoodDonkpocketHonkWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocketHonk: 1
+  ingredients:
+    solids:
+      FoodDonkpocketHonk: 1
 
 - type: microwaveMealRecipe
   id: RecipeDonkpocketBerry
-  name: warm berry-pocket recipe
+  name: microwave-meal-recipe-donkpocket-berry-name
   result: FoodDonkpocketBerryWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocketBerry: 1
+  ingredients:
+    solids:
+      FoodDonkpocketBerry: 1
 
 - type: microwaveMealRecipe
   id: RecipeDonkpocketStonk
-  name: warm stonk-pocket recipe
+  name: microwave-meal-recipe-donkpocket-stonk-name
   result: FoodDonkpocketStonkWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocketStonk: 1
+  ingredients:
+    solids:
+      FoodDonkpocketStonk: 1
 
 - type: microwaveMealRecipe
   id: RecipeDonkpocketCarp
-  name: warm carp-pocket recipe
+  name: microwave-meal-recipe-donkpocket-carp-name
   result: FoodDonkpocketCarpWarm
   time: 5
   group: Savory
-  solids:
-    FoodDonkpocketCarp: 1
+  ingredients:
+    solids:
+      FoodDonkpocketCarp: 1
 
 - type: microwaveMealRecipe
   id: RecipeDonkpocketMoth
-  name: warm moth-pocket recipe
+  name: microwave-meal-recipe-donkpocket-moth-name
   result: FoodDonkpocketMothWarm
   time: 5
-  solids:
-    FoodDonkpocketMoth: 1
+  ingredients:
+    solids:
+      FoodDonkpocketMoth: 1
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
-  name: hot chili recipe
+  name: microwave-meal-recipe-hot-chili-name
   result: FoodSoupChiliHot
   time: 20
   group: Soup
-  solids:
-    FoodBowlBig: 1
-    FoodChiliPepper: 1
-    FoodMeatCutlet: 1
-    FoodOnionSlice: 1
-    FoodTomato: 1
+  ingredients:
+    solids:
+      FoodBowlBig: 1
+      FoodChiliPepper: 1
+      FoodMeatCutlet: 1
+      FoodOnionSlice: 1
+      FoodTomato: 1
 
 - type: microwaveMealRecipe
   id: RecipeColdChili
-  name: cold chili recipe
+  name: microwave-meal-recipe-cold-chili-name
   result: FoodSoupChiliCold
   time: 5
   group: Soup
-  reagents:
-    Nitrogen: 5
-  solids:
-    FoodSoupChiliHot: 1
+  ingredients:
+    reagents:
+      Nitrogen: 5
+    solids:
+      FoodSoupChiliHot: 1
 
 - type: microwaveMealRecipe
   id: RecipeClownTears
-  name: clown's tears recipe
+  name: microwave-meal-recipe-clown-tears-name
   result: FoodSoupClown
   time: 15
   group: Soup
-  solids:
-    FoodBowlBig: 1
-    FoodOnionSlice: 1
-    FoodTomato: 1
-    BikeHorn: 1
+  ingredients:
+    solids:
+      FoodBowlBig: 1
+      FoodOnionSlice: 1
+      FoodTomato: 1
+      BikeHorn: 1
 
 - type: microwaveMealRecipe
   id: RecipeChiliClown
-  name: chili con carnival recipe
+  name: microwave-meal-recipe-chili-clown-name
   result: FoodSoupChiliClown
   time: 30
   group: Soup
-  solids:
-    FoodBowlBig: 1
-    FoodChiliPepper: 1
-    FoodMeatCutlet: 1
-    FoodOnionSlice: 1
-    FoodTomato: 1
-    ClothingShoesClown: 1
+  ingredients:
+    solids:
+      FoodBowlBig: 1
+      FoodChiliPepper: 1
+      FoodMeatCutlet: 1
+      FoodOnionSlice: 1
+      FoodTomato: 1
+      ClothingShoesClown: 1
 
 - type: microwaveMealRecipe
   id: RecipeQueso
-  name: queso recipe
+  name: microwave-meal-recipe-queso-name
   result: FoodMealQueso
   time: 15
   group: Soup
-  #todo Add blackpepper
-  #reagents:
-    #blackpepper: 5
-  solids:
-    FoodChiliPepper: 1
-    FoodCheeseSlice: 2
+  ingredients:
+    reagents:
+      Blackpepper: 5
+    solids:
+      FoodChiliPepper: 1
+      FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeRibs
-  name: BBQ ribs recipe
+  name: microwave-meal-recipe-ribs-name
   result: FoodMealRibs
   time: 15
   group: Savory
-  reagents:
-    BbqSauce: 5
-  solids:
-    FoodMeat: 2
-    FoodKebabSkewer: 1
+  ingredients:
+    reagents:
+      BbqSauce: 5
+    solids:
+      FoodMeat: 2
+      FoodKebabSkewer: 1
 
 - type: microwaveMealRecipe
   id: RecipeEnchiladas
-  name: enchiladas recipe
+  name: microwave-meal-recipe-enchiladas-name
   result: FoodMealEnchiladas
   time: 20
   group: Savory
-  solids:
-    FoodChiliPepper: 2
-    FoodMeatCutlet: 1
-    FoodCorn: 1
+  ingredients:
+    solids:
+      FoodChiliPepper: 2
+      FoodMeatCutlet: 1
+      FoodCorn: 1
 
 # SALADS: These should be moved out of the microwave as soon as possible
 - type: microwaveMealRecipe
   id: RecipeHerbSalad
-  name: herb salad recipe
+  name: microwave-meal-recipe-herb-salad-name
   result: FoodSaladHerb
   time: 5
   group: Salad
-  solids:
-    FoodBowlBig: 1
-    FoodAmbrosiaVulgaris: 3
-    FoodApple: 1
+  ingredients:
+    solids:
+      FoodBowlBig: 1
+      FoodAmbrosiaVulgaris: 3
+      FoodApple: 1
 
 - type: microwaveMealRecipe
   id: RecipeValidSalad
-  name: valid salad recipe
+  name: microwave-meal-recipe-valid-salad-name
   result: FoodSaladValid
   time: 5
   group: Salad
-  solids:
-    FoodBowlBig: 1
-    FoodAmbrosiaVulgaris: 3
-    FoodPotato: 1
-    FoodMeatMeatball: 1
+  ingredients:
+    solids:
+      FoodBowlBig: 1
+      FoodAmbrosiaVulgaris: 3
+      FoodPotato: 1
+      FoodMeatMeatball: 1
 
 - type: microwaveMealRecipe
   id: RecipeColeslaw
-  name: coleslaw recipe
+  name: microwave-meal-recipe-coleslaw-name
   result: FoodSaladColeslaw
   time: 5
   group: Salad
-  reagents:
-    Vinaigrette: 5
-  solids:
-    FoodBowlBig: 1
-    FoodOnionRed: 1
-    FoodCabbage: 1
+  ingredients:
+    reagents:
+      Vinaigrette: 5
+    solids:
+      FoodBowlBig: 1
+      FoodOnionRed: 1
+      FoodCabbage: 1
 
 - type: microwaveMealRecipe
   id: RecipeCaesarSalad
-  name: caesar salad recipe
+  name: microwave-meal-recipe-caesar-salad-name
   result: FoodSaladCaesar
   time: 5
   group: Salad
-  reagents:
-    OilOlive: 5
-  solids:
-    FoodBowlBig: 1
-    FoodOnionRedSlice: 1
-    FoodBreadPlainSlice: 1
-    FoodCheeseSlice: 1
-    FoodCabbage: 1
+  ingredients:
+    reagents:
+      OilOlive: 5
+    solids:
+      FoodBowlBig: 1
+      FoodOnionRedSlice: 1
+      FoodBreadPlainSlice: 1
+      FoodCheeseSlice: 1
+      FoodCabbage: 1
 
 - type: microwaveMealRecipe
   id: RecipeCitrusSalad
-  name: citrus salad recipe
+  name: microwave-meal-recipe-citrus-salad-name
   result: FoodSaladCitrus
   time: 5
   group: Salad
-  solids:
-    FoodBowlBig: 1
-    FoodOrange: 1
-    FoodLemon: 1
-    FoodLime: 1
+  ingredients:
+    solids:
+      FoodBowlBig: 1
+      FoodOrange: 1
+      FoodLemon: 1
+      FoodLime: 1
 
 - type: microwaveMealRecipe
   id: RecipeKimchiSalad
-  name: kimchi salad recipe
+  name: microwave-meal-recipe-kimchi-salad-name
   result: FoodSaladKimchi
   time: 5
   group: Salad
-  reagents:
-    Vinegar: 5
-  solids:
-    FoodBowlBig: 1
-    FoodCarrot: 1
-    FoodCabbage: 1
-    FoodGarlic: 1
+  ingredients:
+    reagents:
+      Vinegar: 5
+    solids:
+      FoodBowlBig: 1
+      FoodCarrot: 1
+      FoodCabbage: 1
+      FoodGarlic: 1
 
 - type: microwaveMealRecipe
   id: RecipeFruitSalad
-  name: fruit salad recipe
+  name: microwave-meal-recipe-fruit-salad-name
   result: FoodSaladFruit
   time: 5
   group: Salad
-  solids:
-    FoodBowlBig: 1
-    FoodOrange: 1
-    FoodApple: 1
-    FoodGrape: 1
-    FoodWatermelonSlice: 2
+  ingredients:
+    solids:
+      FoodBowlBig: 1
+      FoodOrange: 1
+      FoodApple: 1
+      FoodGrape: 1
+      FoodWatermelonSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeJungleSalad
-  name: jungle salad recipe
+  name: microwave-meal-recipe-jungle-salad-name
   result: FoodSaladJungle
   time: 5
   group: Salad
-  solids:
-    FoodBowlBig: 1
-    FoodBanana: 1
-    FoodApple: 1
-    FoodGrape: 1
-    FoodWatermelonSlice: 2
+  ingredients:
+    solids:
+      FoodBowlBig: 1
+      FoodBanana: 1
+      FoodApple: 1
+      FoodGrape: 1
+      FoodWatermelonSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeWatermelonFruitBowlSalad
-  name: watermelon fruit bowl recipe
+  name: microwave-meal-recipe-watermelon-fruit-bowl-salad-name
   result: FoodSaladWatermelonFruitBowl
   time: 5
   group: Salad
-  solids:
-    FoodWatermelon: 1
-    FoodApple: 1
-    FoodBanana: 1
-    FoodLemon: 1
-    FoodOrange: 1
-    FoodAmbrosiaVulgaris: 1
+  ingredients:
+    solids:
+      FoodWatermelon: 1
+      FoodApple: 1
+      FoodBanana: 1
+      FoodLemon: 1
+      FoodOrange: 1
+      FoodAmbrosiaVulgaris: 1
 
 # Muffins
 
 - type: microwaveMealRecipe
   id: RecipeMuffin
-  name: muffin recipe
+  name: microwave-meal-recipe-muffin-name
   result: FoodBakedMuffin
   time: 15
   group: Dessert
-  solids:
-    FoodPlateMuffinTin: 1
-    FoodDoughSlice: 1
-  reagents:
-    Sugar: 10
+  ingredients:
+    solids:
+      FoodPlateMuffinTin: 1
+      FoodDoughSlice: 1
+    reagents:
+      Sugar: 10
 
 - type: microwaveMealRecipe
   id: RecipeMuffinChocolate
-  name: chocolate muffin recipe
+  name: microwave-meal-recipe-muffin-chocolate-name
   result: FoodBakedMuffinChocolate
   time: 15
   group: Dessert
-  solids:
-    FoodPlateMuffinTin: 1
-    FoodDoughSlice: 1
-    FoodSnackChocolateBar: 1
-  reagents:
-    Sugar: 10
+  ingredients:
+    solids:
+      FoodPlateMuffinTin: 1
+      FoodDoughSlice: 1
+      FoodSnackChocolateBar: 1
+    reagents:
+      Sugar: 10
 
 - type: microwaveMealRecipe
   id: RecipeMuffinBerry
-  name: berry muffin recipe
+  name: microwave-meal-recipe-muffin-berry-name
   result: FoodBakedMuffinBerry
   time: 15
   group: Dessert
-  solids:
-    FoodPlateMuffinTin: 1
-    FoodDoughSlice: 1
-    FoodBerries: 1
-  reagents:
-    Sugar: 10
+  ingredients:
+    solids:
+      FoodPlateMuffinTin: 1
+      FoodDoughSlice: 1
+      FoodBerries: 1
+    reagents:
+      Sugar: 10
 
 - type: microwaveMealRecipe
   id: RecipeMuffinBanana
-  name: banana muffin recipe
+  name: microwave-meal-recipe-muffin-banana-name
   result: FoodBakedMuffinBanana
   time: 15
   group: Dessert
-  solids:
-    FoodPlateMuffinTin: 1
-    FoodDoughSlice: 1
-    FoodBanana: 1
-  reagents:
-    Sugar: 10
+  ingredients:
+    solids:
+      FoodPlateMuffinTin: 1
+      FoodDoughSlice: 1
+      FoodBanana: 1
+    reagents:
+      Sugar: 10
 
 - type: microwaveMealRecipe
   id: RecipeMuffinCherry
-  name: cherry muffin recipe
+  name: microwave-meal-recipe-muffin-cherry-name
   result: FoodBakedMuffinCherry
   time: 15
   group: Dessert
-  solids:
-    FoodPlateMuffinTin: 1
-    FoodDoughSlice: 1
-    FoodCherry: 3
-  reagents:
-    Sugar: 10
+  ingredients:
+    solids:
+      FoodPlateMuffinTin: 1
+      FoodDoughSlice: 1
+      FoodCherry: 3
+    reagents:
+      Sugar: 10
 
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
   id: RecipeDriedTeaLeaves
-  name: dried tea leaves recipe
+  name: microwave-meal-recipe-dried-tea-leaves-name
   result: LeavesTeaDried
   time: 10
-  solids:
-    LeavesTea: 1
+  ingredients:
+    solids:
+      LeavesTea: 1
 
 - type: microwaveMealRecipe
   id: RecipeDriedTobacco
-  name: dried tobacco leaves recipe
+  name: microwave-meal-recipe-dried-tobacco-name
   result: LeavesTobaccoDried
   time: 10
   group: Medicinal
-  solids:
-    LeavesTobacco: 1
+  ingredients:
+    solids:
+      LeavesTobacco: 1
 
 - type: microwaveMealRecipe
   id: RecipeDriedCannabis
-  name: dried cannabis leaves recipe
+  name: microwave-meal-recipe-dried-cannabis-name
   result: LeavesCannabisDried
   time: 10
   group: Medicinal
-  solids:
-    LeavesCannabis: 1
+  ingredients:
+    solids:
+      LeavesCannabis: 1
 
 - type: microwaveMealRecipe
   id: RecipeDriedCannabisRainbow
-  name: dried rainbow cannabis leaves recipe
+  name: microwave-meal-recipe-dried-cannabis-rainbow-name
   result: LeavesCannabisRainbowDried
   time: 10
   group: Medicinal
-  solids:
-    LeavesCannabisRainbow: 1
+  ingredients:
+    solids:
+      LeavesCannabisRainbow: 1
 
 - type: microwaveMealRecipe
   id: RecipeTrashBakedBananaPeel
-  name: baked banana peel recipe
+  name: microwave-meal-recipe-trash-baked-banana-peel-name
   result: TrashBakedBananaPeel
   time: 5
-  solids:
-    TrashBananaPeel: 1
+  ingredients:
+    solids:
+      TrashBananaPeel: 1
 
 # Suppermatter
 - type: microwaveMealRecipe
   id: RecipeSuppermatter
-  name: suppermatter recipe
+  name: microwave-meal-recipe-suppermatter-name
   result: FoodCakeSuppermatter
   time: 30
-  solids:
-    FoodCakeBatter: 2
-  reagents:
-    Sugar: 30
-    Nitrogen: 10
-    Plasma: 10
+  ingredients:
+    solids:
+      FoodCakeBatter: 2
+    reagents:
+      Sugar: 30
+      Nitrogen: 10
+      Plasma: 10
 
 - type: microwaveMealRecipe
   id: RecipeFoodBakedChevreChaud
-  name: chevre chaud recipe
+  name: microwave-meal-recipe-food-baked-chevre-chaud-name
   result: FoodBakedChevreChaud
   time: 5
   group: Savory
-  solids:
-    FoodChevreSlice: 1
-    FoodBreadBaguetteSlice: 1
+  ingredients:
+    solids:
+      FoodChevreSlice: 1
+      FoodBreadBaguetteSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeFoodBakedChevreChaudCotton
-  name: cotton chevre chaud recipe
+  name: microwave-meal-recipe-food-baked-chevre-chaud-cotton-name
   result: FoodBakedChevreChaudCotton
   time: 5
   group: Moth
-  solids:
-    FoodChevreSlice: 1
-    FoodBreadBaguetteCottonSlice: 1
+  ingredients:
+    solids:
+      FoodChevreSlice: 1
+      FoodBreadBaguetteCottonSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeCannabisButter
-  name: cannabis butter recipe
+  name: microwave-meal-recipe-cannabis-butter-name
   result: FoodCannabisButter
   time: 15
-  solids:
-    FoodButter: 1
-    LeavesCannabis: 6
+  ingredients:
+    solids:
+      FoodButter: 1
+      LeavesCannabis: 6
 
 - type: microwaveMealRecipe
   id: RecipeCannabisBrownies
-  name: cannabis brownie recipe
+  name: microwave-meal-recipe-cannabis-brownies-name
   result: FoodBakedCannabisBrownieBatch
   time: 25
   group: BarsAndCookies
-  reagents:
-    Flour: 15
-    Sugar: 30
-    Egg: 18
-  solids:
-    FoodCannabisButter: 2
-    FoodSnackChocolateBar: 2
+  ingredients:
+    reagents:
+      Flour: 15
+      Sugar: 30
+      Egg: 18
+    solids:
+      FoodCannabisButter: 2
+      FoodSnackChocolateBar: 2
 
 - type: microwaveMealRecipe
   id: RecipeCornInButter
-  name: corn in butter recipe
+  name: microwave-meal-recipe-corn-in-butter-name
   result: FoodMealCornInButter
   time: 10
   group: Savory
-  solids:
-    FoodCorn: 1
-    FoodPlate: 1
-    FoodButter: 1
+  ingredients:
+    solids:
+      FoodCorn: 1
+      FoodPlate: 1
+      FoodButter: 1
 
 - type: microwaveMealRecipe
   id: RecipePeaSoup
-  name: pea soup recipe
+  name: microwave-meal-recipe-pea-soup-name
   result: FoodSoupPea
   time: 10
   group: Soup
-  solids:
-    FoodPeaPod: 2
-    FoodBowlBig: 1
-  reagents:
-    Water: 10
+  ingredients:
+    solids:
+      FoodPeaPod: 2
+      FoodBowlBig: 1
+    reagents:
+      Water: 10
 
 - type: microwaveMealRecipe
   id: RecipeTacoShell
-  name: taco shell recipe
+  name: microwave-meal-recipe-taco-shell-name
   result: FoodTacoShell
   time: 5
   group: Breads
-  solids:
-    FoodDoughTortillaFlat: 1 # one third of a standard bread dough recipe
+  ingredients:
+    solids:
+      FoodDoughTortillaFlat: 1 # one third of a standard bread dough recipe
 
 - type: microwaveMealRecipe
   id: RecipeTacoBeef
-  name: beef taco recipe
+  name: microwave-meal-recipe-taco-beef-name
   result: FoodTacoBeef
   time: 10
   group: Savory
-  solids:
-    FoodTacoShell: 1
-    FoodMeatCutlet: 1
-    FoodCheeseSlice: 1
+  ingredients:
+    solids:
+      FoodTacoShell: 1
+      FoodMeatCutlet: 1
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeTacoChicken
-  name: chicken taco recipe
+  name: microwave-meal-recipe-taco-chicken-name
   result: FoodTacoChicken
   time: 10
   group: Savory
-  solids:
-    FoodTacoShell: 1
-    FoodMeatChickenCutlet: 1
-    FoodCheeseSlice: 1
+  ingredients:
+    solids:
+      FoodTacoShell: 1
+      FoodMeatChickenCutlet: 1
+      FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeTacoFish
-  name: fish taco recipe
+  name: microwave-meal-recipe-taco-fish-name
   result: FoodTacoFish
   time: 10
   group: Savory
-  solids:
-    FoodTacoShell: 1
-    FoodMeatFish: 1
-    FoodOnionSlice: 2
-    FoodTomato: 1
-    FoodCabbage: 1
+  ingredients:
+    solids:
+      FoodTacoShell: 1
+      FoodMeatFish: 1
+      FoodOnionSlice: 2
+      FoodTomato: 1
+      FoodCabbage: 1
 
 - type: microwaveMealRecipe
   id: RecipeTacoRat
-  name: rat taco recipe
+  name: microwave-meal-recipe-taco-rat-name
   result: FoodTacoRat
   time: 10
   group: Savory
-  solids:
-    FoodTacoShell: 1
-    FoodCheeseSlice: 1
-    FoodMeatRat: 1
+  ingredients:
+    solids:
+      FoodTacoShell: 1
+      FoodCheeseSlice: 1
+      FoodMeatRat: 1
 
 - type: microwaveMealRecipe
   id: RecipeTacoBeefSupreme
-  name: beef taco supreme recipe
+  name: microwave-meal-recipe-taco-beef-supreme-name
   result: FoodTacoBeefSupreme
   time: 10
   group: Savory
-  solids:
-    FoodTacoShell: 1
-    FoodCheeseSlice: 1
-    FoodMeatCutlet: 1
-    FoodTomato: 1
-    FoodCabbage: 1
-    FoodOnionSlice: 2
+  ingredients:
+    solids:
+      FoodTacoShell: 1
+      FoodCheeseSlice: 1
+      FoodMeatCutlet: 1
+      FoodTomato: 1
+      FoodCabbage: 1
+      FoodOnionSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeTacoChickenSupreme
-  name: beef taco supreme recipe
+  name: microwave-meal-recipe-taco-chicken-supreme-name
   result: FoodTacoChickenSupreme
   time: 10
   group: Savory
-  solids:
-    FoodTacoShell: 1
-    FoodCheeseSlice: 1
-    FoodMeatChickenCutlet: 1
-    FoodTomato: 1
-    FoodCabbage: 1
-    FoodOnionSlice: 2
+  ingredients:
+    solids:
+      FoodTacoShell: 1
+      FoodCheeseSlice: 1
+      FoodMeatChickenCutlet: 1
+      FoodTomato: 1
+      FoodCabbage: 1
+      FoodOnionSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeTacoDragon
-  name: draco recipe
+  name: microwave-meal-recipe-taco-dragon-name
   result: FoodTacoDragon
   time: 10
   group: Savory
-  solids:
-    FoodTacoShell: 1
-    FoodMeatDragonCutlet: 2
-    FoodChiliPepper: 1
+  ingredients:
+    solids:
+      FoodTacoShell: 1
+      FoodMeatDragonCutlet: 2
+      FoodChiliPepper: 1
 
 - type: microwaveMealRecipe
   id: RecipeCroissant
-  name: croissant recipe
+  name: microwave-meal-recipe-croissant-name
   result: FoodBakedCroissant
   time: 5
   group: Dessert
-  solids:
-    FoodCroissantRaw: 1
-    FoodButterSlice: 1
+  ingredients:
+    solids:
+      FoodCroissantRaw: 1
+      FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeCroissantCotton
-  name: cotton croissant recipe
+  name: microwave-meal-recipe-croissant-cotton-name
   result: FoodBakedCroissantCotton
   time: 5
   group: Moth
-  solids:
-    FoodCroissantRawCotton: 1
-    FoodButterSlice: 1
+  ingredients:
+    solids:
+      FoodCroissantRawCotton: 1
+      FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeThrowingCroissant
-  name: throwing croissant recipe
+  name: microwave-meal-recipe-throwing-croissant-name
   result: WeaponCroissant
   secretRecipe: true
   time: 5
   group: Secret
-  solids:
-    FoodCroissantRaw: 1
-    FoodButterSlice: 1
-    ShardGlass: 1
+  ingredients:
+    solids:
+      FoodCroissantRaw: 1
+      FoodButterSlice: 1
+      ShardGlass: 1
 
 - type: microwaveMealRecipe
   id: RecipeInertAnomalyMeat
-  name: inert meat anomaly recipe
+  name: microwave-meal-recipe-inert-anomaly-meat-name
   result: FoodMeatAnomaly
   time: 5
   group: Savory
-  solids:
-    AnomalyCoreFleshInert: 1
+  ingredients:
+    solids:
+      AnomalyCoreFleshInert: 1
 
 - type: microwaveMealRecipe
   id: RecipeAnomalyMeat
-  name: meat anomaly recipe
+  name: microwave-meal-recipe-anomaly-meat-name
   result: FoodMeatAnomaly
   time: 5
   group: Savory
-  solids:
-    AnomalyCoreFlesh: 1
+  ingredients:
+    solids:
+      AnomalyCoreFlesh: 1
 
 - type: microwaveMealRecipe
   id: RecipeAnomalyMeatCooked
-  name: cooked meat anomaly recipe
+  name: microwave-meal-recipe-anomaly-meat-cooked-name
   result: FoodMeatAnomalyCooked
   time: 5
   group: Savory
-  solids:
-    FoodMeatAnomaly: 1
+  ingredients:
+    solids:
+      FoodMeatAnomaly: 1
 
 - type: microwaveMealRecipe
   id: RecipeGrilledCheeseSandwich
-  name: grilled cheese sandwich recipe
+  name: microwave-meal-recipe-grilled-cheese-sandwich-name
   result: FoodBakedGrilledCheeseSandwich
   time: 10
   group: Savory
-  solids:
-    FoodBreadPlainSlice: 2
-    FoodCheeseSlice: 1
-    FoodButterSlice: 1
+  ingredients:
+    solids:
+      FoodBreadPlainSlice: 2
+      FoodCheeseSlice: 1
+      FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeGrilledCheeseSandwichCotton
-  name: cotton grilled cheese sandwich recipe
+  name: microwave-meal-recipe-grilled-cheese-sandwich-cotton-name
   result: FoodBakedGrilledCheeseSandwichCotton
   time: 10
   group: Moth
-  solids:
-    FoodBreadCottonSlice: 2
-    FoodCheeseSlice: 1
-    FoodButterSlice: 1
+  ingredients:
+    solids:
+      FoodBreadCottonSlice: 2
+      FoodCheeseSlice: 1
+      FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeBreakfastAmerican
-  name: full american breakfast recipe
+  name: microwave-meal-recipe-breakfast-american-name
   result: FoodBreakfastAmerican
   time: 30
   group: Savory
-  reagents:
-    Egg: 12
-  solids:
-    FoodMeatBacon: 2
-    FoodPotato: 1
-    FoodBakedPancake: 2
+  ingredients:
+    reagents:
+      Egg: 12
+    solids:
+      FoodMeatBacon: 2
+      FoodPotato: 1
+      FoodBakedPancake: 2
 
 - type: microwaveMealRecipe
   id: RecipeBreakfastEnglish
-  name: full english breakfast recipe
+  name: microwave-meal-recipe-breakfast-english-name
   result: FoodBreakfastEnglish
   time: 30
   group: Savory
-  reagents:
-    Egg: 12
-  solids:
-    FoodMeatBacon: 1
-    FoodMeat: 1
-    FoodTomato: 1
-    FoodSoybeans: 2 # replace these with green beans once those become a thing
+  ingredients:
+    reagents:
+      Egg: 12
+    solids:
+      FoodMeatBacon: 1
+      FoodMeat: 1
+      FoodTomato: 1
+      FoodSoybeans: 2 # replace these with green beans once those become a thing
 
 - type: microwaveMealRecipe
   id: RecipeMoproach # TODO: Move this to be an actual surgery instead, once surgery gets implemented.
-  name: moproach recipe
+  name: microwave-meal-recipe-moproach-name
   result: MobMoproach
   time: 30
   group: Other
-  reagents:
-    SpaceCleaner: 15
-  solids:
-    MobMothroach: 1
-    OrganAnimalHeart: 1
-    MoproachShoes: 1
+  ingredients:
+    reagents:
+      SpaceCleaner: 15
+    solids:
+      MobMothroach: 1
+      OrganAnimalHeart: 1
+      MoproachShoes: 1
 
 - type: microwaveMealRecipe
   id: RecipeCottonCake
-  name: cotton cake recipe
+  name: microwave-meal-recipe-cotton-cake-name
   result: FoodCakeCotton
   time: 5
   group: Moth
-  reagents:
-    Fiber: 10
-  solids:
-    FoodCakePlain: 1
+  ingredients:
+    reagents:
+      Fiber: 10
+    solids:
+      FoodCakePlain: 1

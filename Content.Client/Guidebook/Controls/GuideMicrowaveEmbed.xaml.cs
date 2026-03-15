@@ -91,7 +91,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
 
     private void GenerateSolidIngredients(FoodRecipePrototype recipe)
     {
-        foreach (var (product, amount) in recipe.IngredientsSolids.OrderByDescending(p => p.Value))
+        foreach (var (product, amount) in recipe.Ingredients.Solids.OrderByDescending(p => p.Value))
         {
             var ingredient = _prototype.Index<EntityPrototype>(product);
 
@@ -124,7 +124,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
 
     private void GenerateLiquidIngredients(FoodRecipePrototype recipe)
     {
-        foreach (var (product, amount) in recipe.IngredientsReagents.OrderByDescending(p => p.Value))
+        foreach (var (product, amount) in recipe.Ingredients.Reagents.OrderByDescending(p => p.Value))
         {
             var reagent = _prototype.Index<ReagentPrototype>(product);
 
