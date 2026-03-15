@@ -50,7 +50,7 @@ public sealed class ResaveCommand : LocalizedCommands
             if (result.Maps.Count != 1)
             {
                 shell.WriteError(
-                    $"Multi-map or multi-grid files like {fn} are not yet supported by the {Command} command");
+                    Loc.GetString("cmd-resave-multi-map-or-grid", ("fn", fn), ("command", Command)));
                 loader.Delete(result);
                 continue;
             }
@@ -70,12 +70,12 @@ public sealed class ResaveCommand : LocalizedCommands
             }
             else
             {
-                shell.WriteError($"Failed to resave {fn}");
+                shell.WriteError(Loc.GetString("cmd-resave-failed-to-resave", ("fn", fn)));
             }
 
             loader.Delete(result);
         }
 
-        shell.WriteLine($"Resaved all maps");
+        shell.WriteLine(Loc.GetString("cmd-resave-resaved-all-maps"));
     }
 }

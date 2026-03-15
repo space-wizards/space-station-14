@@ -14,7 +14,8 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly OutfitSystem _outfitSystem = default!;
 
         public override string Command => "setoutfit";
-        public override string Description => Loc.GetString("cmd-setoutfit-desc", ("requiredComponent", nameof(InventoryComponent)));
+
+        public override string Description => Loc.GetString($"cmd-{Command}-desc", ("requiredComponent", nameof(InventoryComponent)));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {

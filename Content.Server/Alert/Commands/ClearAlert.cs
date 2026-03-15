@@ -7,20 +7,18 @@ using Robust.Shared.Console;
 namespace Content.Server.Alert.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ClearAlert : IConsoleCommand
+    public sealed class ClearAlert : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _e = default!;
 
-        public string Command => "clearalert";
-        public string Description => "Clears an alert for a player, defaulting to current player";
-        public string Help => "clearalert <alertType> <name or userID, omit for current player>";
+        public override string Command => "clearalert";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine("You don't have an entity.");
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
@@ -34,7 +32,7 @@ namespace Content.Server.Alert.Commands
 
             if (!_e.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
             {
-                shell.WriteLine("user has no alerts component");
+                shell.WriteLine(Loc.GetString("cmd-clearalert-no-alerts-component"));
                 return;
             }
 
@@ -42,7 +40,7 @@ namespace Content.Server.Alert.Commands
             var alertsSystem = _e.System<AlertsSystem>();
             if (!alertsSystem.TryGet(alertType, out var alert))
             {
-                shell.WriteLine("unrecognized alertType " + alertType);
+                shell.WriteLine(Loc.GetString("cmd-clearalert-unrecognized-alert-type", ("alertType", alertType)));
                 return;
             }
 

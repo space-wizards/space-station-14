@@ -1,8 +1,9 @@
-cmd-set-map-atmos-desc = Sets a map's atmosphere
-cmd-set-map-atmos-help = setmapatmos <mapid> <space> [<temperature> [moles...]]
-cmd-set-map-atmos-removed = Atmosphere removed from map {$map}
-cmd-set-map-atmos-updated = Atmosphere set for map {$map}
-cmd-set-map-atmos-hint-map = <mapid>
-cmd-set-map-atmos-hint-space = <space>
-cmd-set-map-atmos-hint-temp = <temperature> (float)
-cmd-set-map-atmos-hint-gas = <{$gas} moles> (float)
+cmd-setmapatmos-desc = Sets a map's atmosphere.
+cmd-setmapatmos-help = Usage: {$command} <mapid> <space> [<temperature> [moles...]]
+
+cmd-setmapatmos-removed = Atmosphere removed from map {$map}
+cmd-setmapatmos-updated = Atmosphere set for map {$map}
+cmd-setmapatmos-hint-map = <mapid>
+cmd-setmapatmos-hint-space = <space>
+cmd-setmapatmos-hint-temp = <temperature> (float)
+cmd-setmapatmos-hint-gas = <{$gas} moles> (float)

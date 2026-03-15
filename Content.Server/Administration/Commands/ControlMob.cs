@@ -5,15 +5,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class ControlMob : IConsoleCommand
+    public sealed class ControlMob : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public string Command => "controlmob";
-        public string Description => Loc.GetString("control-mob-command-description");
-        public string Help => Loc.GetString("control-mob-command-help-text");
+        public override string Command => "controlmob";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
@@ -44,7 +42,7 @@ namespace Content.Server.Administration.Commands
             _entities.System<MindSystem>().ControlMob(player.UserId, target.Value);
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length != 1)
                 return CompletionResult.Empty;

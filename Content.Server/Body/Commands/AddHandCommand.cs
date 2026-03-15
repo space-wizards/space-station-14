@@ -7,17 +7,15 @@ using Robust.Shared.Console;
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    sealed class AddHandCommand : IConsoleCommand
+    sealed class AddHandCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         private static int _handIdAccumulator;
 
-        public string Command => "addhand";
-        public string Description => "Adds a hand to your entity.";
-        public string Help => $"Usage: {Command} <entityUid>";
+        public override string Command => "addhand";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
 
@@ -28,13 +26,13 @@ namespace Content.Server.Body.Commands
                 case 0:
                     if (player == null)
                     {
-                        shell.WriteLine("Only a player can run this command without arguments.");
+                        shell.WriteLine(Loc.GetString("cmd-addhand-only-player-run-without-args"));
                         return;
                     }
 
                     if (player.AttachedEntity == null)
                     {
-                        shell.WriteLine("You don't have an entity to add a hand to.");
+                        shell.WriteLine(Loc.GetString("cmd-addhand-no-entity"));
                         return;
                     }
 
@@ -46,7 +44,7 @@ namespace Content.Server.Body.Commands
                         {
                             if (!_entManager.EntityExists(uid))
                             {
-                                shell.WriteLine($"No entity found with uid {uid}");
+                                shell.WriteLine(Loc.GetString("cmd-addhand-no-entity-uid", ("uid", uid)));
                                 return;
                             }
 
@@ -56,13 +54,13 @@ namespace Content.Server.Body.Commands
                         {
                             if (player == null)
                             {
-                                shell.WriteLine("You must specify an entity to add a hand to when using this command from the server terminal.");
+                                shell.WriteLine(Loc.GetString("cmd-addhand-no-entity-server-terminal"));
                                 return;
                             }
 
                             if (player.AttachedEntity == null)
                             {
-                                shell.WriteLine("You don't have an entity to add a hand to.");
+                                shell.WriteLine(Loc.GetString("cmd-addhand-no-entity"));
                                 return;
                             }
 
@@ -71,6 +69,7 @@ namespace Content.Server.Body.Commands
 
                         break;
                     }
+
                 default:
                     shell.WriteLine(Help);
                     return;
@@ -78,7 +77,7 @@ namespace Content.Server.Body.Commands
 
             _entManager.System<HandsSystem>().AddHand(entity, $"cmd-{_handIdAccumulator++}", HandLocation.Middle);
 
-            shell.WriteLine($"Added hand to entity {_entManager.GetComponent<MetaDataComponent>(entity).EntityName}");
+            shell.WriteLine(Loc.GetString("cmd-addhand-added-hand", ("entity", _entManager.GetComponent<MetaDataComponent>(entity).EntityName)));
         }
     }
 }

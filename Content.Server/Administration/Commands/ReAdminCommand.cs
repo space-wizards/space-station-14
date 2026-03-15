@@ -22,7 +22,7 @@ namespace Content.Server.Administration.Commands
 
             if (_adminManager.GetAdminData(player, includeDeAdmin: true) == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-readmin-not-an-admin"));
+                shell.WriteLine(Loc.GetString("cmd-readmin-not-an-admin"));
                 return;
             }
 

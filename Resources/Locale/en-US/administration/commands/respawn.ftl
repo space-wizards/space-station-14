@@ -1,5 +1,5 @@
 cmd-respawn-desc = Respawns a player, kicking them back to the lobby.
-cmd-respawn-help = respawn [player or UserId]
+cmd-respawn-help = Usage: {$command} [player or UserId]
 
 cmd-respawn-invalid-args = Must provide <= 1 argument.
 cmd-respawn-no-player = If not a player, an argument must be given.

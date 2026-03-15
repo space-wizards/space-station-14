@@ -1,5 +1,5 @@
 ﻿cmd-showaccessreaders-desc = Toggles showing access reader permissions on the map
-cmd-showaccessreaders-help =
+cmd-showaccessreaders-help = Usage: {$command}
     Overlay Info:
     -Disabled | The access reader is disabled
     +Unrestricted | The access reader has no restrictions

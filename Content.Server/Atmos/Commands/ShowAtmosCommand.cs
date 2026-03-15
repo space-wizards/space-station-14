@@ -6,29 +6,27 @@ using Robust.Shared.Console;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ShowAtmos : IConsoleCommand
+    public sealed class ShowAtmos : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly AtmosDebugOverlaySystem _atmosDebugOverlaySystem = default!;
 
-        public string Command => "showatmos";
-        public string Description => "Toggles seeing atmos debug overlay.";
-        public string Help => $"Usage: {Command}";
+        public override string Command => "showatmos";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine("You must be a player to use this command.");
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
-            var atmosDebug = _e.System<AtmosDebugOverlaySystem>();
+            var atmosDebug = _atmosDebugOverlaySystem;
             var enabled = atmosDebug.ToggleObserver(player);
 
             shell.WriteLine(enabled
-                ? "Enabled the atmospherics debug overlay."
-                : "Disabled the atmospherics debug overlay.");
+                ? Loc.GetString("cmd-showatmos-enabled")
+                : Loc.GetString("cmd-showatmos-disabled"));
         }
     }
 }

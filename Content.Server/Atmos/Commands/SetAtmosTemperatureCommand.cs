@@ -8,20 +8,18 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class SetAtmosTemperatureCommand : IConsoleCommand
+    public sealed class SetAtmosTemperatureCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
-        public string Command => "setatmostemp";
-        public string Description => "Sets a grid's temperature (in kelvin).";
-        public string Help => "Usage: setatmostemp <GridId> <Temperature>";
+        public override string Command => "setatmostemp";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 2)
                 return;
 
-            if (!_entManager.TryParseNetEntity(args[0], out var gridId)
+            if (!EntityManager.TryParseNetEntity(args[0], out var gridId)
                 || !float.TryParse(args[1], out var temperature))
             {
                 return;
@@ -29,26 +27,24 @@ namespace Content.Server.Atmos.Commands
 
             if (temperature < Atmospherics.TCMB)
             {
-                shell.WriteLine("Invalid temperature.");
+                shell.WriteLine(Loc.GetString("cmd-setatmostemp-invalid-temperature"));
                 return;
             }
 
-            if (!gridId.Value.IsValid() || !_entManager.HasComponent<MapGridComponent>(gridId))
+            if (!gridId.Value.IsValid() || !EntityManager.HasComponent<MapGridComponent>(gridId))
             {
-                shell.WriteLine("Invalid grid ID.");
+                shell.WriteLine(Loc.GetString("cmd-setatmostemp-invalid-grid"));
                 return;
             }
-
-            var atmosphereSystem = _entManager.System<AtmosphereSystem>();
 
             var tiles = 0;
-            foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
+            foreach (var tile in _atmosphereSystem.GetAllMixtures(gridId.Value, true))
             {
                 tiles++;
                 tile.Temperature = temperature;
             }
 
-            shell.WriteLine($"Changed the temperature of {tiles} tiles.");
+            shell.WriteLine(Loc.GetString("cmd-setatmostemp-changed-temperature", ("tiles", tiles)));
         }
     }
 }

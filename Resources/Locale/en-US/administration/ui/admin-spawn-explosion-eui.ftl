@@ -16,10 +16,10 @@ admin-explosion-eui-label-distance = Distance
 admin-explosion-eui-label-spawn = Kabloom!
 
 cmd-explosionui-desc = Opens a window for easy access to station destruction.
-cmd-explosionui-help = Usage: explosionui
+cmd-explosionui-help = Usage: {$command}
 
-cmd-explosion-desc = Train go boom
-cmd-explosion-help = Usage: explosion [intensity] [slope] [maxIntensity] [x y] [mapId] [prototypeId]
+cmd-explosion-desc = Train go boom.
+cmd-explosion-help = Usage: {$command} [intensity] [slope] [maxIntensity] [x y] [mapId] [prototypeId]
 cmd-explosion-failed-to-parse-intensity = Failed to parse intensity: {$value}
 cmd-explosion-failed-to-parse-float = Failed to parse float: {$value}
 cmd-explosion-failed-to-parse-coords = Failed to parse coordinates: {$value1} {$value2}

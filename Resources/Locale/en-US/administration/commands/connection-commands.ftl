@@ -1,7 +1,5 @@
-﻿## Strings for the "grant_connect_bypass" command.
-
-cmd-grant_connect_bypass-desc = Temporarily allow a user to bypass regular connection checks.
-cmd-grant_connect_bypass-help = Usage: grant_connect_bypass <user> [duration minutes]
+﻿cmd-grant_connect_bypass-desc = Temporarily allow a user to bypass regular connection checks.
+cmd-grant_connect_bypass-help = Usage: {$command} <user> [duration minutes]
     Temporarily grants a user the ability to bypass regular connections restrictions.
     The bypass only applies to this game server and will expire after (by default) 1 hour.
     They will be able to join regardless of whitelist, panic bunker, or player cap.

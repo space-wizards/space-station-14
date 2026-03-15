@@ -68,6 +68,6 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
 
         return CompletionResult.FromHintOptions(
             _objectives.Objectives(),
-            Loc.GetString("cmd-add-objective-obj-completion"));
+            Loc.GetString("cmd-addobjective-obj-completion"));
     }
 }

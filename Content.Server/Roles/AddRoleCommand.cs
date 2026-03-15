@@ -30,26 +30,26 @@ namespace Content.Server.Roles
 
             if (!_playerManager.TryGetPlayerDataByUsername(args[0], out var data))
             {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-not-found"));
+                shell.WriteLine(Loc.GetString("cmd-addrole-mind-not-found"));
                 return;
             }
 
             var mind = data.ContentData()?.Mind;
             if (mind == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-not-found"));
+                shell.WriteLine(Loc.GetString("cmd-addrole-mind-not-found"));
                 return;
             }
 
             if (!_prototypeManager.TryIndex<JobPrototype>(args[1], out var jobPrototype))
             {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-role-not-found"));
+                shell.WriteLine(Loc.GetString("cmd-addrole-role-not-found"));
                 return;
             }
 
             if (_jobSystem.MindHasJobWithId(mind, jobPrototype.Name))
             {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-already-has-role"));
+                shell.WriteLine(Loc.GetString("cmd-addrole-mind-already-has-role"));
                 return;
             }
 

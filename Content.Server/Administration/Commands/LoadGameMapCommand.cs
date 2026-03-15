@@ -27,7 +27,7 @@ namespace Content.Server.Administration.Commands
 
             if (!_prototypeManager.TryIndex<GameMapPrototype>(args[1], out var gameMap))
             {
-                shell.WriteError($"The given map prototype {args[0]} is invalid.");
+                shell.WriteError(Loc.GetString("cmd-loadgamemap-invalid-map-prototype", ("mapPrototype", args[0])));
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace Content.Server.Administration.Commands
                 ? _gameTicker.MergeGameMap(gameMap, id, stationName: stationName, offset: offset)
                 : _gameTicker.LoadGameMapWithId(gameMap, id, stationName: stationName, offset: offset);
 
-            shell.WriteLine($"Loaded {grids.Count} grids.");
+            shell.WriteLine(Loc.GetString("cmd-loadgamemap-loaded-grids", ("count", grids.Count)));
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

@@ -1,6 +1,6 @@
 # Command
-cmd-faxui-desc = Open admin window for sending faxes
-cmd-faxui-help = Usage: faxui
+cmd-faxui-desc = Open admin window for sending faxes.
+cmd-faxui-help = Usage: {$command}
 
 # Window
 admin-fax-title = Admin Fax Manager

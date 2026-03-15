@@ -1,19 +1,19 @@
 ﻿cmd-whitelistadd-desc = Adds the player with the given username to the server whitelist.
-cmd-whitelistadd-help = Usage: whitelistadd <username or User ID>
+cmd-whitelistadd-help = Usage: {$command} <username or User ID>
 cmd-whitelistadd-existing = {$username} is already on the whitelist!
 cmd-whitelistadd-added = {$username} added to the whitelist
 cmd-whitelistadd-not-found = Unable to find '{$username}'
 cmd-whitelistadd-arg-player = [player]
 
 cmd-whitelistremove-desc = Removes the player with the given username from the server whitelist.
-cmd-whitelistremove-help = Usage: whitelistremove <username or User ID>
+cmd-whitelistremove-help = Usage: {$command} <username or User ID>
 cmd-whitelistremove-existing = {$username} is not on the whitelist!
 cmd-whitelistremove-removed = {$username} removed from the whitelist
 cmd-whitelistremove-not-found = Unable to find '{$username}'
 cmd-whitelistremove-arg-player = [player]
 
 cmd-kicknonwhitelisted-desc = Kicks all non-whitelisted players from the server.
-cmd-kicknonwhitelisted-help = Usage: kicknonwhitelisted
+cmd-kicknonwhitelisted-help = Usage: {$command}
 
 ban-banned-permanent = This ban will only be removed via appeal.
 ban-banned-permanent-appeal = This ban will only be removed via appeal. You can appeal at {$link}
@@ -37,14 +37,14 @@ whitelist-always-deny = You are not allowed to join this server.
 whitelist-fail-prefix = Not whitelisted: {$msg}
 
 cmd-blacklistadd-desc = Adds the player with the given username to the server blacklist.
-cmd-blacklistadd-help = Usage: blacklistadd <username>
+cmd-blacklistadd-help = Usage: {$command} <username>
 cmd-blacklistadd-existing = {$username} is already on the blacklist!
 cmd-blacklistadd-added = {$username} added to the blacklist
 cmd-blacklistadd-not-found = Unable to find '{$username}'
 cmd-blacklistadd-arg-player = [player]
 
 cmd-blacklistremove-desc = Removes the player with the given username from the server blacklist.
-cmd-blacklistremove-help = Usage: blacklistremove <username>
+cmd-blacklistremove-help = Usage: {$command} <username>
 cmd-blacklistremove-existing = {$username} is not on the blacklist!
 cmd-blacklistremove-removed = {$username} removed from the blacklist
 cmd-blacklistremove-not-found = Unable to find '{$username}'

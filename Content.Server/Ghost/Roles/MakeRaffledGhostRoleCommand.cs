@@ -11,52 +11,50 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Ghost.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class MakeRaffledGhostRoleCommand : IConsoleCommand
+    public sealed class MakeRaffledGhostRoleCommand : LocalizedCommands
     {
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "makeghostroleraffled";
-        public string Description => "Turns an entity into a raffled ghost role.";
-        public string Help => $"Usage: {Command} <entity uid> <name> <description> (<settings prototype> | <initial duration> <extend by> <max duration>) [<rules>]\n" +
-                              $"Durations are in seconds.";
+        public override string Command => "makeghostroleraffled";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length is < 4 or > 7)
             {
-                shell.WriteLine($"Invalid amount of arguments.\n{Help}");
+                shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 4), ("upper", 7)));
+                shell.WriteLine(Help);
                 return;
             }
 
             if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
-                shell.WriteLine($"{args[0]} is not a valid entity uid.");
+                shell.WriteError(Loc.GetString("shell-invalid-entity-uid", ("uid", args[0])));
                 return;
             }
 
             if (!_entManager.TryGetComponent(uid, out MetaDataComponent? metaData))
             {
-                shell.WriteLine($"No entity found with uid {uid}");
+                shell.WriteError(Loc.GetString("shell-could-not-find-entity-with-uid", ("uid", uid)));
                 return;
             }
 
             if (_entManager.TryGetComponent(uid, out MindContainerComponent? mind) &&
                 mind.HasMind)
             {
-                shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a mind.");
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-entity-has-mind", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
             if (_entManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
             {
-                shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostRoleComponent)}");
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-entity-has-ghost-role", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
             if (_entManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
-                shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostTakeoverAvailableComponent)}");
+                shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-entity-has-ghost-takeover", ("entity", metaData.EntityName), ("uid", uid)));
                 return;
             }
 
@@ -83,7 +81,7 @@ namespace Content.Server.Ghost.Roles
                         _protoManager.EnumeratePrototypes<GhostRoleRaffleSettingsPrototype>().Select(p => p.ID)
                     );
 
-                    shell.WriteLine($"{args[3]} is not a valid raffle settings prototype. Valid options: {validProtos}");
+                    shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-raffle-settings-prototype", ("prototype", args[3]), ("validProtos", validProtos)));
                     return;
                 }
 
@@ -96,13 +94,13 @@ namespace Content.Server.Ghost.Roles
                     || !uint.TryParse(args[5], out var max)
                     || initial == 0 || max == 0)
                 {
-                    shell.WriteLine($"The raffle initial/extends/max settings must be positive numbers.");
+                    shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-raffle-settings"));
                     return;
                 }
 
                 if (initial > max)
                 {
-                    shell.WriteLine("The initial duration must be smaller than or equal to the maximum duration.");
+                    shell.WriteError(Loc.GetString("cmd-makeghostroleraffled-invalid-raffle-settings"));
                     return;
                 }
 
@@ -121,7 +119,7 @@ namespace Content.Server.Ghost.Roles
             ghostRole.RoleRules = rules;
             ghostRole.RaffleConfig = new GhostRoleRaffleConfig(settings);
 
-            shell.WriteLine($"Made entity {metaData.EntityName} a raffled ghost role.");
+            shell.WriteLine(Loc.GetString("cmd-makeghostroleraffled-made-raffled-ghost-role", ("entity", metaData.EntityName)));
         }
     }
 }

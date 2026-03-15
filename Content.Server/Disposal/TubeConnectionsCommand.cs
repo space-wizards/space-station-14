@@ -6,15 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Disposal
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class TubeConnectionsCommand : IConsoleCommand
+    public sealed class TubeConnectionsCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
 
-        public string Command => "tubeconnections";
-        public string Description => Loc.GetString("tube-connections-command-description");
-        public string Help => Loc.GetString("tube-connections-command-help-text", ("command", Command));
+        public override string Command => "tubeconnections";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
@@ -34,19 +32,19 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            if (!NetEntity.TryParse(args[0], out var idNet) || !_entities.TryGetEntity(idNet, out var id))
+            if (!NetEntity.TryParse(args[0], out var idNet) || !EntityManager.TryGetEntity(idNet, out var id))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-uid",("uid", args[0])));
                 return;
             }
 
-            if (!_entities.EntityExists(id))
+            if (!EntityManager.EntityExists(id))
             {
                 shell.WriteLine(Loc.GetString("shell-could-not-find-entity-with-uid",("uid", id)));
                 return;
             }
 
-            if (!_entities.TryGetComponent(id, out DisposalTubeComponent? tube))
+            if (!EntityManager.TryGetComponent(id, out DisposalTubeComponent? tube))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-with-uid-lacks-component",
                                               ("uid", id),
@@ -54,7 +52,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            _entities.System<DisposalTubeSystem>().PopupDirections(id.Value, tube, player.AttachedEntity.Value);
+            _disposalTubeSystem.PopupDirections(id.Value, tube, player.AttachedEntity.Value);
         }
     }
 }
