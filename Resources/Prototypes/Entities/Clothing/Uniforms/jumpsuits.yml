@@ -514,8 +514,8 @@
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitQMTurtleneck
-  name: quartermasters's turtleneck
-  description: A sharp turtleneck made for the hardy work environment of supply.
+  name: quartermaster's turtleneck
+  description: A sharp turtleneck made for the hardy work environment of cargo.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/qmturtle.rsi
@@ -525,8 +525,8 @@
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitQMFormal
-  name: quartermasters's formal suit
-  description: Inspired by the quartermasters of military's past, the perfect outfit for supplying a formal occasion.
+  name: quartermaster's formal suit
+  description: Inspired by the quartermasters of militaries past, the perfect outfit for supplying a formal occasion.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/qmformal.rsi
