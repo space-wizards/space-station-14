@@ -1589,7 +1589,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser2-module }
 
 - type: entity
-  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  parent: [ BaseXenoborgModuleHeavy, BaseXenoborgContraband ]
   id: XenoborgModuleHeavyRadioactive
   name: radioactive xenoborg module
   description: Module that causes a xenoborg to emanate radioactive energy.
