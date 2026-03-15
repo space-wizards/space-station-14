@@ -54,3 +54,4 @@
   - type: Tag
     tags:
     - HideContextMenu
+  - type: PuddleBlocker

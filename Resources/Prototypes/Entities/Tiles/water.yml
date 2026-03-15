@@ -63,3 +63,4 @@
   - type: TileEntityEffect
     effects:
     - !type:Extinguish
+  - type: PuddleBlocker
