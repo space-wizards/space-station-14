@@ -133,7 +133,9 @@ namespace Content.Server.Cargo.Systems
                 bank.NextIncomeTime += bank.IncomeDelay;
 
                 var balanceToAdd = (int) Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
-                UpdateBankAccount((uid, bank), balanceToAdd, bank.RevenueDistribution);
+
+                var revenueDistribution = CreateAccountDistribution((uid, bank), false);
+                UpdateBankAccount((uid, bank), balanceToAdd, revenueDistribution);
             }
         }
 
@@ -203,7 +205,11 @@ namespace Content.Server.Cargo.Systems
             }
 
             var cost = order.Price * order.OrderQuantity;
-            var accountBalance = GetBalanceFromAccount((station.Value, bank), order.Account);
+            if (!TryGetAccountBalance((station.Value, bank), order.Account, out var accountBalance))
+            {
+                PlayDenySound(uid, component);
+                return;
+            }
 
             // Not enough balance
             if (cost > accountBalance)
