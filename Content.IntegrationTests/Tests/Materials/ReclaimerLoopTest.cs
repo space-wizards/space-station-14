@@ -1,11 +1,12 @@
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Materials;
 using Content.Shared.Materials;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Content.IntegrationTests.Utility;
 using Robust.Shared.Prototypes;
-using NetCord;
 using System.Linq;
+using Robust.Shared.Utility;
+using System.Collections.Generic;
+
 
 namespace Content.IntegrationTests.Tests.Materials;
 //ProtoIDs we may need
@@ -18,47 +19,54 @@ namespace Content.IntegrationTests.Tests.Materials;
 [TestOf(typeof(MaterialReclaimerComponent))]
 public sealed class ReclaimerLoopTest : InteractionTest
 {
-    private static string[] _materials = GameDataScrounger.EntitiesWithComponent("PhysicalComposition");
     private static string[] _reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
-
-
 
     /// <summary>
     /// For each entity that recycles into materials, recycle it and check that
     /// </summary>
-    [Test, Combinatorial]
+    [Test]
+    [TestCaseSource(nameof(_reclaimers))]
     [TestOf(typeof(MaterialReclaimerSystem))]
     [TestOf(typeof(MaterialReclaimerComponent))]
-    public async Task RecyclerLoopTest(string reclaimerID)
+    public async Task ReclaimingLoopTest(string reclaimerID)
     {
-        var materialReclaimerSystem = SEntMan.System<MaterialReclaimerSystem>();
+        // var materialReclaimerSystem = SEntMan.System<MaterialReclaimerSystem>();
 
         //go through all recyclable items, compile a list of produceable materials
-        string[] produceableMaterials = [];
-        foreach (String itemID in _materials)
+        List<string> produceableMaterials = [];
+        foreach (string itemID in GameDataScrounger.EntitiesWithComponent("PhysicalComposition"))
         {
             EntityPrototype item = ProtoMan.Index(itemID);
-            item.TryGetComponent<PhysicalCompositionComponent>("PhysicalCompositionComponent", out var compositionComp);
-            foreach ((var mat, var value) in compositionComp.MaterialComposition) //for each material they spawn
+            await Server.WaitAssertion(() =>
             {
-                //If its not already in producedMaterials, add it
-                if (!produceableMaterials.Contains(mat))
+                item.TryGetComponent<PhysicalCompositionComponent>(out var compositionComp, Factory);
+                foreach ((var mat, var value) in compositionComp.MaterialComposition) //for each material they spawn
                 {
-                    produceableMaterials.Append(mat);
+                    //If its not already in producedMaterials, add it
+                    if (!produceableMaterials.Contains(mat))
+                    {
+                        produceableMaterials.Add(mat);
+                    }
                 }
-            }
+            });
         }
 
         //For each produceable Material, assert that it is not recyclable (and would thus cause a recycling loop)
         foreach (string material in produceableMaterials)
         {
-            await PlaceInHands(material);
 
-            var reclaimerNetEnt = await SpawnTarget(reclaimerID);
+            //Spawn the reclaimer at the player coords, so we're right above it for the drop
+            var reclaimerNetEnt = await SpawnTarget(reclaimerID, PlayerCoords);
 
             // Power the reclaimer
             await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
             await RunTicks(1);
+
+            await InteractUsing(material);
+
+            //Assert Hands not empty
+            Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Not.EqualTo(null),
+            $"The material that should not have been reclaimed, {material}, is no longer in our hands.");
         }
 
     }
