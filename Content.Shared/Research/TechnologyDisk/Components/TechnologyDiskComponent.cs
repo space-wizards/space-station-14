@@ -12,22 +12,19 @@ public sealed partial class TechnologyDiskComponent : Component
     /// <summary>
     /// A discipline to constrain the disk to.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public ProtoId<TechDisciplinePrototype>? Discipline;
 
     /// <summary>
     /// A tier to constrain the disk to.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public int? Tier;
 
     /// <summary>
     /// The recipe that will be added. If null, one will be randomly generated
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public List<ProtoId<LatheRecipePrototype>>? Recipes;
 
     /// <summary>
@@ -35,4 +32,15 @@ public sealed partial class TechnologyDiskComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<WeightedRandomPrototype> TierWeightPrototype = "TechDiskTierWeights";
+
+    /// <summary>
+    /// Mapping of disk tiers to disk prices.
+    /// </summary>
+    [DataField]
+    public Dictionary<int, int> DiskPricePerTier = new()
+    {
+        [1] = 100,
+        [2] = 500,
+        [3] = 1500
+    };
 }

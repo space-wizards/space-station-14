@@ -25,16 +25,6 @@ public sealed class TechnologyDiskSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
-    /// <summary>
-    /// Mapping of disk tiers to disk prices.
-    /// </summary>
-    private readonly Dictionary<int, int> _diskPricePerTier = new()
-    {
-        [1] = 100,
-        [2] = 500,
-        [3] = 1500
-    };
-
     public override void Initialize()
     {
         base.Initialize();
@@ -48,10 +38,8 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
     private void OnMapInit(Entity<TechnologyDiskComponent> ent, ref MapInitEvent args)
     {
-        var uid = (EntityUid)ent;
-
         TryPickAndSetRecipe(ent);
-        TrySetVisuals(ent, uid);
+        TrySetVisuals(ent);
     }
 
     /// <summary>
@@ -81,7 +69,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         {
             if (tech.Tier != tier)
                 continue;
-            if(ent.Comp.Discipline != null && tech.Discipline != ent.Comp.Discipline.Value)
+            if (ent.Comp.Discipline != null && tech.Discipline != ent.Comp.Discipline.Value)
                 continue;
 
             foreach (var recipe in tech.RecipeUnlocks)
@@ -108,33 +96,33 @@ public sealed class TechnologyDiskSystem : EntitySystem
     /// <summary>
     /// Attempts to set tier and discipline visuals based on chosen tier and discipline.
     /// </summary>
-    private void TrySetVisuals(Entity<TechnologyDiskComponent> ent, EntityUid uid)
+    private void TrySetVisuals(Entity<TechnologyDiskComponent> ent)
     {
-        TrySetTierVisuals(ent, uid);
-        TrySetDisciplineVisuals(ent, uid);
+        TrySetTierVisuals(ent);
+        TrySetDisciplineVisuals(ent);
     }
 
     /// <summary>
     /// Attempts to set tier visuals based on chosen tier.
     /// </summary>
-    private void TrySetTierVisuals(Entity<TechnologyDiskComponent> ent, EntityUid uid)
+    private void TrySetTierVisuals(Entity<TechnologyDiskComponent> ent)
     {
         var tier = ent.Comp.Tier;
         if (!tier.HasValue)
             return;
 
-        _appearance.SetData(uid, TechDiskVisuals.Tier, tier.Value);
+        _appearance.SetData(ent.Owner, TechDiskVisuals.Tier, tier.Value);
     }
 
     /// <summary>
     /// Attempts to set discipline visuals based on chosen discipline.
     /// </summary>
-    private void TrySetDisciplineVisuals(Entity<TechnologyDiskComponent> ent, EntityUid uid)
+    private void TrySetDisciplineVisuals(Entity<TechnologyDiskComponent> ent)
     {
         if (!_protoMan.TryIndex(ent.Comp.Discipline, out var discipline))
             return;
 
-        _appearance.SetData(uid, TechDiskVisuals.Discipline, discipline.ID);
+        _appearance.SetData(ent.Owner, TechDiskVisuals.Discipline, discipline.ID);
     }
 
     private void OnAfterInteract(Entity<TechnologyDiskComponent> ent, ref AfterInteractEvent args)
@@ -188,12 +176,10 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
     private void OnPriceCalculation(Entity<TechnologyDiskComponent> ent, ref PriceCalculationEvent args)
     {
-        if(!ent.Comp.Tier.HasValue)
+        if (ent.Comp.Tier is not { } tier)
             return;
 
-        var tier = ent.Comp.Tier.Value;
-
-        if (!_diskPricePerTier.TryGetValue(tier, out var price))
+        if (!ent.Comp.DiskPricePerTier.TryGetValue(tier, out var price))
             return;
 
         args.Price = price;
