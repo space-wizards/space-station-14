@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "adapted from https://github.com/discordia-space/CEV-Eris/raw/9ea3eccbe22e18d24653949067f3d7dd12194ea9/icons/obj/stationobjs.dmi by EmoGarbage404 (github)",
+    "copyright": "adapted from https://github.com/discordia-space/CEV-Eris/raw/9ea3eccbe22e18d24653949067f3d7dd12194ea9/icons/obj/stationobjs.dmi by EmoGarbage404 (github), in-hands by spanky-spanky (GitHub)",
     "states": [
         {
             "name": "empty"
@@ -57,6 +57,14 @@
                     0.05
                 ]
             ]
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
         }
     ]
 }
