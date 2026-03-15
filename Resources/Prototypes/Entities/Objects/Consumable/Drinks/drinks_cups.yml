@@ -326,5 +326,45 @@
   - type: TrashOnSolutionEmpty
     solution: drink
 
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkLemonLimeClownJuiceCup
+  name: Smite Clown Juice cup
+  description: You asked for SMITE. They gave you Clown Juice.
+  components:
+  - type: Openable
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: LemonLimeClownJuice
+          Quantity: 30
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_empty"}
+          False: {state: "icon_empty_closed"}
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/clownjuice.rsi
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: Objects/Consumable/Drinks/clownjuice.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+
 #[1] https://en.wikipedia.org/wiki/Cup
 #[2] https://en.wikipedia.org/wiki/Mug
