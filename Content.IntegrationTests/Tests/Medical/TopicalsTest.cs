@@ -28,7 +28,7 @@ public sealed class TopicalsTest : InteractionTest
     private static string[] _allDamageTypes = GameDataScrounger.PrototypesOfKind("damageType");
 
     /// <summary>
-    /// Tests that all topicals heal the right damage, cannot be used on incorrect damage, lower with stack size on use, and stop healing after being used up"
+    /// Tests that all topicals heal the right damage/bleeding, cannot be used on incorrect damage, lower with stack size on use, and stop healing after being used up"
     /// </summary>
     [Test]
     [TestOf(typeof(HealingComponent))]
@@ -69,7 +69,6 @@ public sealed class TopicalsTest : InteractionTest
 
         //Hold the topical stack
         var topical = await PlaceInHands(protoKey);
-        EntityUid? inHands;
         var topicalUid = SEntMan.GetEntity(topical);
         var healingComp = Comp<HealingComponent>(topical);
         //get the damage types this is meant to fix
@@ -89,13 +88,14 @@ public sealed class TopicalsTest : InteractionTest
             "The self-damaging topical did not start a do-after");
             //Wait for doafter to finish
             await RunSeconds(healingComp.Delay.Seconds + 1);
-
             //Assert that bleeding is stopped.
             Assert.That(bloodStreamComp.BleedAmount, Is.LessThan(1),
             "The self-damaging topical did not fix bleeding fully.");
             //And that some damage was done.
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).AnyPositive(),
             "The self-damaging topical did not deal any damage.");
+            //Assert that hands empty
+            await CheckHandsEmpty();
             return;
         }
 
@@ -124,17 +124,30 @@ public sealed class TopicalsTest : InteractionTest
         if (healingComp.Damage.DamageDict.ContainsKey("Bloodloss"))
         {
             //Bleed the amount the topical fixes
-            bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), -healingComp.BloodlossModifier);
-            //Use up our topicals
-            await Interact();
+            bloodStreamSystem.TryModifyBloodLevel((STarget.Value, bloodStreamComp), -healingComp.ModifyBloodLevel);
+            await RunTicks(2);
+            //Use our topical
+            await Interact(false);
+            //Assert that we could use (by checking if there are any doafters)
+            Assert.That(ActiveDoAfters.Any(),
+            "The blood-restoring topical did not start a do-after");
+            //Wait for doafter to finish
+            await RunSeconds(healingComp.Delay.Seconds + .5f);
             //Assert that all damage is fixed
             Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(emptyDamageSpecifier),
-            "The blood-related topical did not heal all of its damage types.");
+            "The blood-restoring topical did not heal all of its damage types.");
             //Assert that there's no bleeding.
-            Assert.That(bloodStreamComp.BleedAmount, Is.EqualTo(0),
-            "The bleed-fixing topical did not deal with blood.");
+            Assert.That(bloodStreamSystem.GetBloodLevel((STarget.Value, bloodStreamComp)), Is.EqualTo(1),
+            "The blood-restoring topical did not deal with blood.");
+            //Assert that stack number lowered
+            Assert.That(stackComp.Count, Is.LessThan(startStackSize),
+            "The blood-restoring topical stack count did not lower.");
             return;
         }
+
+        /*
+        Correct Damage Per Use Test
+        */
 
         //Damage the Urist 2 topicals worth
         damageAmount = healsTypes * -2;
@@ -151,7 +164,7 @@ public sealed class TopicalsTest : InteractionTest
         await CancelDoAfters();
 
         //Assert that stack number lowered by 1
-        Assert.That(stackComp.Count == startStackSize - 1,
+        Assert.That(stackComp.Count, Is.EqualTo(startStackSize - 1),
         "The topical stack count did not lower by one per use.");
 
         //Assert that each correct Damage type lowered by one topical's worth
@@ -164,6 +177,10 @@ public sealed class TopicalsTest : InteractionTest
         //Assert that all damage gone
         Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(emptyDamageSpecifier),
         "Damage was not fully removed after using topical twice.");
+
+        /*
+        Incorrect Damage Test
+        */
 
         //Find a damage type that the topical does not heal
         ProtoId<DamageTypePrototype>? incorrectDamageType = null;
@@ -190,9 +207,10 @@ public sealed class TopicalsTest : InteractionTest
             "The topical healed damage it shouldn't.");
         }
 
-
-        //Testing Multiple Damage Types (5 of each excluding Structural and Holy)
-        //Damage the urist
+        /*
+        Multiple Damage Types Test
+        */
+        //Damage the urist (5 of each in allNormalDamageSpecifier)
         damageableSystem.SetDamage((STarget.Value, damageableComp), allNormalDamageSpecifier);
         //Use topical until we can't anymore
         await Interact();
@@ -212,6 +230,9 @@ public sealed class TopicalsTest : InteractionTest
         Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
         "The topical healed damage it shouldn't.");
 
+        /*
+        Finish Stack Test
+        */
         //Set topical stack size to 1
         sharedStackSystem.SetCount((topicalUid, stackComp), 1);
         //Assert stack count is 1
@@ -229,9 +250,7 @@ public sealed class TopicalsTest : InteractionTest
         await Interact();
 
         //Assert Hands empty
-        inHands = HandSys.GetActiveItem((SPlayer, Hands));
-        Assert.That(inHands, Is.Null,
-        "Topicals did not leave hand after being used up.");
+        await CheckHandsEmpty();
 
         //Assert some correct damage remains
         correctDamage = -healsTypes;
@@ -241,5 +260,13 @@ public sealed class TopicalsTest : InteractionTest
         //Assert that there's no bleeding.
         Assert.That(bloodStreamComp.BleedAmount, Is.EqualTo(0),
         "The bleed-fixing topical did not deal with blood.");
+    }
+
+    async Task CheckHandsEmpty()
+    {
+        //Assert Hands empty
+        var inHands = HandSys.GetActiveItem((SPlayer, Hands));
+        Assert.That(inHands, Is.Null,
+        "Topicals did not leave hand after being used up.");
     }
 }
