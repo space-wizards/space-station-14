@@ -296,8 +296,8 @@ public abstract class SharedMagicSystem : EntitySystem
 
         ev.Handled = true;
 
-        RemoveComponents(ev.Target, ev.ToRemove);
-        AddComponents(ev.Target, ev.ToAdd);
+        EntityManager.RemoveComponents(ev.Target, ev.ToRemove);
+        EntityManager.AddComponents(ev.Target, ev.ToAdd);
     }
     // End Change Component Spells
     #endregion
@@ -353,28 +353,6 @@ public abstract class SharedMagicSystem : EntitySystem
         }
     }
 
-    private void AddComponents(EntityUid target, ComponentRegistry comps)
-    {
-        foreach (var (name, data) in comps)
-        {
-            if (HasComp(target, data.Component.GetType()))
-                continue;
-
-            var component = (Component)Factory.GetComponent(name);
-            var temp = (object)component;
-            _seriMan.CopyTo(data.Component, ref temp);
-            AddComp(target, (Component)temp!);
-        }
-    }
-
-    private void RemoveComponents(EntityUid target, HashSet<string> comps)
-    {
-        foreach (var toRemove in comps)
-        {
-            if (Factory.TryGetRegistration(toRemove, out var registration))
-                RemComp(target, registration.Type);
-        }
-    }
     // End Spell Helpers
     #endregion
     #region Touch Spells

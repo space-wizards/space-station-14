@@ -65,11 +65,9 @@
           - !type:PlaySoundBehavior
             sound:
               collection: MetalBreak
-      - type: Hands
       - type: CanEscapeInventory
-      - type: MobCollision
       toRemove:
-      - RequireProjectileTarget
-      - BlockMovement
-      - Item
-      - MeleeRequiresWield
+      - type: RequireProjectileTarget
+      - type: BlockMovement
+      - type: Item
+      - type: MeleeRequiresWield
