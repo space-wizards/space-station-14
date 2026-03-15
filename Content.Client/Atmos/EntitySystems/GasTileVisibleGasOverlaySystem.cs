@@ -1,6 +1,8 @@
 using Content.Client.Atmos.Overlays;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Client.Atmos.EntitySystems;
 
@@ -11,6 +13,7 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed class GasTileVisibleGasOverlaySystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private GasTileVisibleGasOverlay _visibleGasOverlay = default!;
 
@@ -20,6 +23,7 @@ public sealed class GasTileVisibleGasOverlaySystem : EntitySystem
 
         _visibleGasOverlay = new GasTileVisibleGasOverlay();
         _overlayMan.AddOverlay(_visibleGasOverlay);
+        Subs.CVar(_cfg, CCVars.GasOverlaySmoothingSubdivisionsPerAxis, value => _visibleGasOverlay.SetSmoothingSubdivisionsPerAxis(value), true);
     }
 
     public override void Shutdown()
