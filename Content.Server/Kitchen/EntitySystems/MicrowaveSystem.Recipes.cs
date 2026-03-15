@@ -160,7 +160,6 @@ public sealed partial class MicrowaveSystem
         [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity,
         [NotNullWhen(true)] out Solution? solution)
     {
-        // Have to break the eggs before we can use them!
         return _solutionContainer.TryGetDrainableSolution(uid, out solutionEntity, out solution);
     }
 
