@@ -1,10 +1,11 @@
 using Content.Client.Atmos.Overlays;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+
 namespace Content.Client.Atmos.EntitySystems;
 
 /// <summary>
-///     System responsible for rendering atmos fire animations using <see cref="GasTileFireOverlay"/>.
+/// System responsible for rendering atmos fire animations using <see cref="GasTileFireOverlay"/>.
 /// </summary>
 [UsedImplicitly]
 public sealed class GasTileFireOverlaySystem : EntitySystem
@@ -26,5 +27,4 @@ public sealed class GasTileFireOverlaySystem : EntitySystem
         base.Shutdown();
         _overlayMan.RemoveOverlay<GasTileFireOverlay>();
     }
-
 }

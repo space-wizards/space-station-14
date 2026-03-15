@@ -18,7 +18,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client.Atmos.Overlays;
 
 /// <summary>
-///     Overlay responsible for rendering visible atmos gasses (like plasma for example) usin.
+/// Overlay responsible for rendering visible atmos gasses (like plasma for example) usin.
 /// </summary>
 public sealed class GasTileVisibleGasOverlay : Overlay
 {
@@ -74,10 +74,11 @@ public sealed class GasTileVisibleGasOverlay : Overlay
 
             SpriteSpecifier overlay;
 
-            if (!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
-                overlay = new SpriteSpecifier.Rsi(new (gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
+            if (!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) &&
+                !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
+                overlay = new SpriteSpecifier.Rsi(new(gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
             else if (!string.IsNullOrEmpty(gasPrototype.GasOverlayTexture))
-                overlay = new SpriteSpecifier.Texture(new (gasPrototype.GasOverlayTexture));
+                overlay = new SpriteSpecifier.Texture(new(gasPrototype.GasOverlayTexture));
             else
                 continue;
 
@@ -101,6 +102,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
             }
         }
     }
+
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
@@ -150,8 +152,11 @@ public sealed class GasTileVisibleGasOverlay : Overlay
             return;
 
         // TODO: WorldBounds callback.
-        _mapManager.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
-            static (EntityUid uid, MapGridComponent grid,
+        _mapManager.FindGridsIntersecting(args.MapId,
+            args.WorldAABB,
+            ref gridState,
+            static (EntityUid uid,
+                MapGridComponent grid,
                 ref (Box2Rotated WorldBounds,
                     DrawingHandleWorld drawHandle,
                     int gasCount,
@@ -172,10 +177,10 @@ public sealed class GasTileVisibleGasOverlay : Overlay
                 state.drawHandle.SetTransform(worldMatrix);
                 var floatBounds = invMatrix.TransformBox(state.WorldBounds).Enlarged(grid.TileSize);
                 var localBounds = new Box2i(
-                    (int) MathF.Floor(floatBounds.Left),
-                    (int) MathF.Floor(floatBounds.Bottom),
-                    (int) MathF.Ceiling(floatBounds.Right),
-                    (int) MathF.Ceiling(floatBounds.Top));
+                    (int)MathF.Floor(floatBounds.Left),
+                    (int)MathF.Floor(floatBounds.Bottom),
+                    (int)MathF.Ceiling(floatBounds.Right),
+                    (int)MathF.Ceiling(floatBounds.Top));
 
                 // Currently it would be faster to group drawing by gas rather than by chunk, but if the textures are
                 // ever moved to a single atlas, that should no longer be the case. So this is just grouping draw calls
@@ -199,7 +204,11 @@ public sealed class GasTileVisibleGasOverlay : Overlay
                         {
                             var opacity = gas.Opacity[i];
                             if (opacity > 0)
-                                state.drawHandle.DrawTexture(state.frames[i][state.frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
+                            {
+                                state.drawHandle.DrawTexture(state.frames[i][state.frameCounter[i]],
+                                    tilePosition,
+                                    Color.White.WithAlpha(opacity));
+                            }
                         }
                     }
                 }
