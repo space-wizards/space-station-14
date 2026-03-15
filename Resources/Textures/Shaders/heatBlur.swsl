@@ -1,0 +1,34 @@
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D NOISE_TEXTURE; // The pre-generated noise
+
+// Those 3 are overwritten at SetReducedMotion
+uniform highp float spatial_scale = 1.0; // Makes more waves
+uniform highp float strength_scale = 0.005; // Makes waves stronger
+uniform highp float speed_scale = 0.25; // Makes waves run faster
+
+void fragment()
+{
+    // Calculate scrolling UVs for the noise
+    highp vec2 flow1 = vec2(0.0, TIME * speed_scale);
+    highp vec2 flow2 = vec2(TIME * 0.5 * 0.1, TIME * speed_scale * 1.2);
+
+    // Sample the pre-calculated noise
+    highp float noiseVal = texture2D(NOISE_TEXTURE, fract((UV * spatial_scale) - flow1)).r;
+    highp float noiseVal2 = texture2D(NOISE_TEXTURE, fract((UV * spatial_scale) - flow2 + vec2(0.43, 0.12))).r;
+    
+    // Create distortion vector
+    highp vec2 distortion = vec2(
+        noiseVal - 0.5,
+        noiseVal2 - 0.5 
+    );
+
+    highp float heatStrength = texture2D(TEXTURE, UV).r; 
+    
+    // Non-linear curve to make the heat look more "intense" in the center
+    heatStrength = clamp(-heatStrength * heatStrength + 2.0 * heatStrength, 0.0, 1.0);
+
+    // Apply Distortion to Screen
+    highp vec2 distortedUV = UV + (distortion * strength_scale * heatStrength);
+    
+    COLOR = texture2D(SCREEN_TEXTURE, distortedUV);
+}
