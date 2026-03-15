@@ -20,6 +20,9 @@
       whitelist:
         components:
         - Brain
+      blacklist:
+        components:
+        - BorgBrain
   - type: BorgBrain
   - type: BlockMovement
   - type: Examiner
