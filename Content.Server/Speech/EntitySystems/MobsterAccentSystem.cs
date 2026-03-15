@@ -1,12 +1,11 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
-using Content.Shared.Speech;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class MobsterAccentSystem : EntitySystem
+public sealed class MobsterAccentSystem : BaseAccentSystem<MobsterAccentComponent>
 {
     private static readonly Regex RegexIng = new(@"(?<=\w\w)(in)g(?!\w)", RegexOptions.IgnoreCase);
     private static readonly Regex RegexLowerOr = new(@"(?<=\w)o[Rr](?=\w)");
@@ -19,14 +18,7 @@ public sealed class MobsterAccentSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MobsterAccentComponent, AccentGetEvent>(OnAccentGet);
-    }
-
-    public string Accentuate(string message, MobsterAccentComponent component)
+    public override string Accentuate(string message, Entity<MobsterAccentComponent>? ent)
     {
         // Order:
         // Do text manipulations first
@@ -73,7 +65,7 @@ public sealed class MobsterAccentSystem : EntitySystem
             //So the suffix can be allcapped
             var lastWordAllCaps = !RegexLastWord.Match(msg).Value.Any(char.IsLower);
             var suffix = "";
-            if (component.IsBoss)
+            if (ent.HasValue && ent.Value.Comp.IsBoss)
             {
                 var pick = _random.Next(1, 4);
                 suffix = Loc.GetString($"accent-mobster-suffix-boss-{pick}");
@@ -89,10 +81,5 @@ public sealed class MobsterAccentSystem : EntitySystem
         }
 
         return msg;
-    }
-
-    private void OnAccentGet(EntityUid uid, MobsterAccentComponent component, AccentGetEvent args)
-    {
-        args.Message = Accentuate(args.Message, component);
     }
 }

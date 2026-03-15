@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class MumbleAccentSystem : EntitySystem
+public sealed class MumbleAccentSystem : BaseAccentSystem<MumbleAccentComponent>
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
@@ -18,10 +18,10 @@ public sealed class MumbleAccentSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MumbleAccentComponent, AccentGetEvent>(OnAccentGet);
         SubscribeLocalEvent<MumbleAccentComponent, EmoteEvent>(OnEmote, before: [typeof(VocalSystem)]);
     }
 
+    // TODO: This likely will not hold up with a relay system!
     private void OnEmote(Entity<MumbleAccentComponent> ent, ref EmoteEvent args)
     {
         if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
@@ -38,13 +38,8 @@ public sealed class MumbleAccentSystem : EntitySystem
         }
     }
 
-    public string Accentuate(string message, MumbleAccentComponent component)
+    public override string Accentuate(string message, Entity<MumbleAccentComponent>? _)
     {
         return _replacement.ApplyReplacements(message, "mumble");
-    }
-
-    private void OnAccentGet(Entity<MumbleAccentComponent> ent, ref AccentGetEvent args)
-    {
-        args.Message = Accentuate(args.Message, ent.Comp);
     }
 }

@@ -355,8 +355,7 @@
     equipDelay: 3
     unequipDelay: 3
   - type: IngestionBlocker
-  - type: AddAccentClothing
-    accent: MumbleAccent
+  - type: MumbleAccent
   - type: EmoteBlocker
     blocksCategories:
     - Vocal
@@ -394,8 +393,7 @@
   - type: Clothing
     sprite: Clothing/Mask/cluwne.rsi
   - type: Unremoveable
-  - type: AddAccentClothing
-    accent: StutteringAccent
+  - type: StutteringAccent
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityContraband ]

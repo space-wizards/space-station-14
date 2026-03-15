@@ -1,10 +1,9 @@
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
-using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed partial class SlowAccentSystem : EntitySystem
+public sealed class SlowAccentSystem : BaseAccentSystem<SlowAccentComponent>
 {
     /// <summary>
     /// Matches whitespace characters or commas (with or without a space after them).
@@ -16,19 +15,7 @@ public sealed partial class SlowAccentSystem : EntitySystem
     /// </summary>
     private static readonly Regex NoFinalPunctuation = new("\\w\\z");
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SlowAccentComponent, AccentGetEvent>(OnAccentGet);
-    }
-
-    private void OnAccentGet(Entity<SlowAccentComponent> ent, ref AccentGetEvent args)
-    {
-        args.Message = Accentuate(ent, args.Message);
-    }
-
-    public string Accentuate(Entity<SlowAccentComponent> ent, string message)
+    public override string Accentuate(string message, Entity<SlowAccentComponent>? _)
     {
         // Add... some... delay... between... each... word
         message = WordEndings.Replace(message, "... ");

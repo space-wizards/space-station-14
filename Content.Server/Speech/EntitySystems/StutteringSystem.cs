@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew;
@@ -8,6 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
 {
+    // TODO: Slam: This system is partially Shared, and as such I am not adding it to BaseAccentSystem at this time. It should be possible to integrate it when all accents are moved to Shared.
     public sealed class StutteringSystem : SharedStutteringSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -19,8 +21,8 @@ namespace Content.Server.Speech.EntitySystems
         public override void Initialize()
         {
             SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
-
             SubscribeLocalEvent<StutteringAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>(OnAccent);
+            SubscribeLocalEvent<StutteringAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args));
         }
 
         public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh)

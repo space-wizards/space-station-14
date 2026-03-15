@@ -1,10 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
-using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class LizardAccentSystem : EntitySystem
+public sealed class LizardAccentSystem : BaseAccentSystem<LizardAccentComponent>
 {
     private static readonly Regex RegexLowerS = new("s+");
     private static readonly Regex RegexUpperS = new("S+");
@@ -12,16 +11,8 @@ public sealed class LizardAccentSystem : EntitySystem
     private static readonly Regex RegexLowerEndX = new(@"\bx([\-|r|R]|\b)");
     private static readonly Regex RegexUpperEndX = new(@"\bX([\-|r|R]|\b)");
 
-    public override void Initialize()
+    public override string Accentuate(string message, Entity<LizardAccentComponent>? _)
     {
-        base.Initialize();
-        SubscribeLocalEvent<LizardAccentComponent, AccentGetEvent>(OnAccent);
-    }
-
-    private void OnAccent(EntityUid uid, LizardAccentComponent component, AccentGetEvent args)
-    {
-        var message = args.Message;
-
         // hissss
         message = RegexLowerS.Replace(message, "sss");
         // hiSSS
@@ -33,6 +24,6 @@ public sealed class LizardAccentSystem : EntitySystem
         // eckS
         message = RegexUpperEndX.Replace(message, "ECKS$1");
 
-        args.Message = message;
+        return message;
     }
 }

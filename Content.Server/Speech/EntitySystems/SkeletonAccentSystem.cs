@@ -1,11 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
-using Content.Shared.Speech;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed partial class SkeletonAccentSystem : EntitySystem
+public sealed partial class SkeletonAccentSystem : BaseAccentSystem<SkeletonAccentComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
@@ -13,14 +12,7 @@ public sealed partial class SkeletonAccentSystem : EntitySystem
     [GeneratedRegex(@"(?<!\w)[^aeiou]one", RegexOptions.IgnoreCase, "en-US")]
     private static partial Regex BoneRegex();
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SkeletonAccentComponent, AccentGetEvent>(OnAccentGet);
-    }
-
-    public string Accentuate(string message, SkeletonAccentComponent component)
+    public override string Accentuate(string message, Entity<SkeletonAccentComponent>? ent)
     {
         // Order:
         // Do character manipulations first
@@ -37,15 +29,10 @@ public sealed partial class SkeletonAccentSystem : EntitySystem
         msg = _replacement.ApplyReplacements(msg, "skeleton");
 
         // Suffix:
-        if (_random.Prob(component.ackChance))
+        if (_random.Prob(ent.HasValue ? ent.Value.Comp.ackChance : 0.3f))
         {
             msg += (" " + Loc.GetString("skeleton-suffix")); // e.g. "We only want to socialize. ACK ACK!"
         }
         return msg;
-    }
-
-    private void OnAccentGet(EntityUid uid, SkeletonAccentComponent component, AccentGetEvent args)
-    {
-        args.Message = Accentuate(args.Message, component);
     }
 }
