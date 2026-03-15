@@ -47,6 +47,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
     private readonly Texture[][] _frames;
 
     private readonly int _gasCount;
+    private int _smoothingSubdivisionsPerAxis;
 
     public const int GasOverlayZIndex = (int)DrawDepth.Gasses; // Under ghosts and fire, above mostly everything else
 
@@ -136,6 +137,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
         var gridState = (args.WorldBounds,
             args.WorldHandle,
             _gasCount,
+            _smoothingSubdivisionsPerAxis,
             _frames,
             _frameCounter,
             _shader,
@@ -160,6 +162,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
                 ref (Box2Rotated WorldBounds,
                     DrawingHandleWorld drawHandle,
                     int gasCount,
+                    int smoothingSubdivisionsPerAxis,
                     Texture[][] frames,
                     int[] frameCounter,
                     ShaderInstance shader,
@@ -203,12 +206,18 @@ public sealed class GasTileVisibleGasOverlay : Overlay
                         for (var i = 0; i < state.gasCount; i++)
                         {
                             var opacity = gas.Opacity[i];
-                            if (opacity > 0)
-                            {
-                                state.drawHandle.DrawTexture(state.frames[i][state.frameCounter[i]],
-                                    tilePosition,
-                                    Color.White.WithAlpha(opacity));
-                            }
+
+                            if (opacity == 0)
+                                continue;
+
+                            DrawSmoothedGasTile(
+                                state.drawHandle,
+                                state.frames[i][state.frameCounter[i]],
+                                tilePosition,
+                                i,
+                                opacity,
+                                comp.Chunks,
+                                state.smoothingSubdivisionsPerAxis);
                         }
                     }
                 }
@@ -218,6 +227,165 @@ public sealed class GasTileVisibleGasOverlay : Overlay
 
         drawHandle.UseShader(null);
         drawHandle.SetTransform(Matrix3x2.Identity);
+    }
+
+    /// <summary>
+    /// Controls how many discrete smoothing segments are rendered per tile axis.
+    /// </summary>
+    public void SetSmoothingSubdivisionsPerAxis(int value)
+    {
+        _smoothingSubdivisionsPerAxis = Math.Clamp(value, 1, 32);
+    }
+
+    /// <summary>
+    /// Draws a gas overlay tile with edge smoothing based on neighbouring gas opacity.
+    /// </summary>
+    /// <remarks>
+    /// The function renders a gas tile whose opacity smoothly blends with adjacent tiles.
+    /// It samples the opacity of the four cardinal neighbours (N,S,E,W) and four diagonal neighbours
+    /// to approximate how the gas density changes across the tile.
+    /// </remarks>
+    private static void DrawSmoothedGasTile(
+        DrawingHandleWorld drawHandle,
+        Texture texture,
+        Vector2i tileIndices,
+        int gasIndex,
+        byte centerOpacity,
+        Dictionary<Vector2i, GasOverlayChunk> chunks,
+        int smoothingSubdivisionsPerAxis)
+    {
+        var centerChunkIndices = SharedGasTileOverlaySystem.GetGasChunkIndices(tileIndices);
+        if (!chunks.TryGetValue(centerChunkIndices, out var centerChunk))
+            return;
+
+        var centerLocalX = tileIndices.X - centerChunk.Origin.X;
+        var centerLocalY = tileIndices.Y - centerChunk.Origin.Y;
+        if ((uint)centerLocalX >= SharedGasTileOverlaySystem.ChunkSize ||
+            (uint)centerLocalY >= SharedGasTileOverlaySystem.ChunkSize)
+        {
+            return;
+        }
+
+        var centerData = centerChunk.TileData[centerLocalX + centerLocalY * SharedGasTileOverlaySystem.ChunkSize];
+        if (centerData.ByteGasTemperature.IsAtmosImpossible)
+            return;
+
+        byte GetOpacity(Vector2i indices)
+        {
+            var localX = indices.X - centerChunk.Origin.X;
+            var localY = indices.Y - centerChunk.Origin.Y;
+            if ((uint)localX < SharedGasTileOverlaySystem.ChunkSize &&
+                (uint)localY < SharedGasTileOverlaySystem.ChunkSize)
+            {
+                var data = centerChunk.TileData[localX + localY * SharedGasTileOverlaySystem.ChunkSize];
+                if (data.ByteGasTemperature.IsAtmosImpossible)
+                    return centerOpacity;
+
+                return gasIndex < data.Opacity.Length ? data.Opacity[gasIndex] : (byte)0;
+            }
+
+            if (!SharedGasTileOverlaySystem.TryGetOverlayData(chunks, indices, out var data2))
+                return 0;
+
+            if (data2.ByteGasTemperature.IsAtmosImpossible)
+                return centerOpacity;
+
+            return gasIndex < data2.Opacity.Length ? data2.Opacity[gasIndex] : (byte)0;
+        }
+
+        var n = GetOpacity(tileIndices + Vector2i.Up);
+        var s = GetOpacity(tileIndices + Vector2i.Down);
+        var e = GetOpacity(tileIndices + Vector2i.Right);
+        var w = GetOpacity(tileIndices + Vector2i.Left);
+
+        // Dense clouds are common and can use the old single draw call path.
+        if (n == centerOpacity && s == centerOpacity && e == centerOpacity && w == centerOpacity)
+        {
+            drawHandle.DrawTexture(texture, tileIndices, Color.White.WithAlpha(centerOpacity));
+            return;
+        }
+
+        var nw = GetOpacity(tileIndices + Vector2i.UpLeft);
+        var ne = GetOpacity(tileIndices + Vector2i.UpRight);
+        var sw = GetOpacity(tileIndices + Vector2i.DownLeft);
+        var se = GetOpacity(tileIndices + Vector2i.DownRight);
+
+        var alphaNw = BlendCorner(centerOpacity, n, w, nw);
+        var alphaNe = BlendCorner(centerOpacity, n, e, ne);
+        var alphaSw = BlendCorner(centerOpacity, s, w, sw);
+        var alphaSe = BlendCorner(centerOpacity, s, e, se);
+
+        if (alphaNw == centerOpacity && alphaNe == centerOpacity && alphaSw == centerOpacity && alphaSe == centerOpacity)
+        {
+            drawHandle.DrawTexture(texture, tileIndices, Color.White.WithAlpha(centerOpacity));
+            return;
+        }
+
+        if (smoothingSubdivisionsPerAxis <= 1)
+        {
+            var uniformAlpha = (byte)((alphaNw + alphaNe + alphaSw + alphaSe + 2) / 4);
+            if (uniformAlpha > 0)
+                drawHandle.DrawTexture(texture, tileIndices, Color.White.WithAlpha(uniformAlpha));
+            return;
+        }
+
+        var texWidth = texture.Width;
+        var texHeight = texture.Height;
+        var x = tileIndices.X;
+        var y = tileIndices.Y;
+        var segmentWorldSize = 1f / smoothingSubdivisionsPerAxis;
+        var segmentTextureWidth = (float)texWidth / smoothingSubdivisionsPerAxis;
+        var segmentTextureHeight = (float)texHeight / smoothingSubdivisionsPerAxis;
+
+        for (var sx = 0; sx < smoothingSubdivisionsPerAxis; sx++)
+        {
+            var sampleX = (sx + 0.5f) / smoothingSubdivisionsPerAxis;
+
+            for (var sy = 0; sy < smoothingSubdivisionsPerAxis; sy++)
+            {
+                var sampleY = (sy + 0.5f) / smoothingSubdivisionsPerAxis;
+                var alpha = Bilinear(sampleX, sampleY, alphaSw, alphaSe, alphaNw, alphaNe);
+                if (alpha == 0)
+                    continue;
+
+                var worldRect = Box2.FromDimensions(
+                    x + sx * segmentWorldSize,
+                    y + sy * segmentWorldSize,
+                    segmentWorldSize,
+                    segmentWorldSize);
+
+                // World-space Y grows upwards, sub-region Y grows downwards.
+                var subTop = texHeight - (sy + 1) * segmentTextureHeight;
+                var subBottom = texHeight - sy * segmentTextureHeight;
+                var subLeft = sx * segmentTextureWidth;
+                var subRight = (sx + 1) * segmentTextureWidth;
+
+                drawHandle.DrawTextureRectRegion(
+                    texture,
+                    worldRect,
+                    Color.White.WithAlpha(alpha),
+                    new UIBox2(subLeft, subTop, subRight, subBottom));
+            }
+        }
+    }
+
+    private static byte BlendCorner(byte center, byte cardA, byte cardB, byte diagonal)
+    {
+        // 4:2:2:1 (center:cardinal:cardinal:diagonal) keeps edges soft without washing out dense tiles.
+        const int blendCenterWeight = 4;
+        const int blendCardinalWeight = 2;
+        const int blendDiagonalWeight = 1;
+        const int blendWeightTotal = blendCenterWeight + blendCardinalWeight + blendCardinalWeight + blendDiagonalWeight;
+
+        var weighted = center * blendCenterWeight + cardA * blendCardinalWeight + cardB * blendCardinalWeight + diagonal * blendDiagonalWeight;
+        return (byte)((weighted + blendWeightTotal / 2) / blendWeightTotal);
+    }
+
+    private static byte Bilinear(float x, float y, byte sw, byte se, byte nw, byte ne)
+    {
+        var south = MathHelper.Lerp(sw, se, x);
+        var north = MathHelper.Lerp(nw, ne, x);
+        return (byte)MathF.Round(MathHelper.Lerp(south, north, y));
     }
 
     private void DrawMapOverlay(
