@@ -40,7 +40,9 @@ public sealed class TopicalsTest : InteractionTest
         var sharedStackSystem = SEntMan.System<SharedStackSystem>();
         var bloodStreamSystem = SEntMan.System<SharedBloodstreamSystem>();
 
-        //make a damage specifier with 5 of all normal types of damage (exclude structural and holy and bloodloss) (wanted to use DamageContainer Supportedtypes here)
+        //make a damage specifier with 5 of all normal types of damage
+        //(exclude structural and holy; and bloodloss+asphyxiation because their numbers aren't static)
+        //(wanted to use DamageContainer Supportedtypes here)
         var allNormalDamageSpecifier = new DamageSpecifier();
         foreach (var type in _allDamageTypes)
         {
@@ -75,16 +77,7 @@ public sealed class TopicalsTest : InteractionTest
         DamageSpecifier correctDamage;
 
         //Check to see if the topical deals damage to you
-        var dealsDamage = false;
-        foreach (var (key, value) in healsTypes.DamageDict)
-        {
-            if (value > 0)
-            {
-                dealsDamage = true;
-                break;
-            }
-        }
-        if (dealsDamage) //we need special logic if it's going to hurt you to use (looking at you tourniquet)
+        if (healsTypes.AnyPositive()) //we need special logic if it's going to hurt you to use (looking at you tourniquet)
         {
             //if it also fixes bleeding, bleed that amount.
             if (healingComp.BloodlossModifier < 0)
@@ -149,128 +142,104 @@ public sealed class TopicalsTest : InteractionTest
         Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)).Equals(damageAmount),
         "The urist did not get damaged the correct amount.");
 
+        //Use topical just once
+        await Interact(false);
+        //Wait for a bit after the first doAfter finishes
+        await RunSeconds(healingComp.Delay.Seconds);
+        await RunTicks(5);
+        //Then Cancel that doAfter, having used 1 topical
+        await CancelDoAfters();
 
-        if (startStackSize == 1)
+        //Assert that stack number lowered by 1
+        Assert.That(stackComp.Count == startStackSize - 1,
+        "The topical stack count did not lower by one per use.");
+
+        //Assert that each correct Damage type lowered by one topical's worth
+        correctDamage = -healsTypes;
+        Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
+        "The correct damage types did not lower, or did not lower the correct amount.");
+
+        //Use topical
+        await Interact();
+        //Assert that all damage gone
+        Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(emptyDamageSpecifier),
+        "Damage was not fully removed after using topical twice.");
+
+        //Find a damage type that the topical does not heal
+        ProtoId<DamageTypePrototype>? incorrectDamageType = null;
+        foreach (var (key, value) in allNormalDamageSpecifier.DamageDict)
         {
-            //if it also fixes bleeding, bleed that amount.
-            if (healingComp.BloodlossModifier < 0)
-                bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), -healingComp.BloodlossModifier);
-            //Use up our one topical
-            await Interact();
-            //Assert Hands empty
-            inHands = HandSys.GetActiveItem((SPlayer, Hands));
-            Assert.That(inHands, Is.Null,
-            "Topicals did not leave hand after being used up.");
-
-            //Assert that each correct Damage type lowered by one topical's worth
-            correctDamage = -healsTypes;
-            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
-            "The correct damage types did not lower, or did not lower the correct amount.");
-            //Assert that there's no bleeding.
-            Assert.That(bloodStreamComp.BleedAmount, Is.EqualTo(0),
-            "The bleed-fixing topical did not deal with blood.");
-        }
-        else //if we have a stack of more than 1
-        {
-            //Use topical just once
-            await Interact(false);
-            //Wait for a bit after the first doAfter finishes
-            await RunSeconds(healingComp.Delay.Seconds);
-            await RunTicks(5);
-            //Then Cancel that doAfter, having used 1 topical
-            await CancelDoAfters();
-
-            //Assert that stack number lowered by 1
-            Assert.That(stackComp.Count == startStackSize - 1,
-            "The topical stack count did not lower by one per use.");
-
-            //Assert that each correct Damage type lowered by one topical's worth
-            correctDamage = -healsTypes;
-            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
-            "The correct damage types did not lower, or did not lower the correct amount.");
-
-            //Use topical
-            await Interact();
-            //Assert that all damage gone
-            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(emptyDamageSpecifier),
-            "Damage was not fully removed after using topical twice.");
-
-            //Find a damage type that the topical does not heal
-            ProtoId<DamageTypePrototype>? incorrectDamageType = null;
-            foreach (var (key, value) in allNormalDamageSpecifier.DamageDict)
+            if (!healsTypes.DamageDict.ContainsKey(key))
             {
-                if (!healsTypes.DamageDict.ContainsKey(key))
-                {
-                    incorrectDamageType = key;
-                    break;
-                }
+                incorrectDamageType = key;
+                break;
             }
-            //Only run this test if we found an incorrect damage type
-            if (!(incorrectDamageType == null))
-            {   //Damage 10 in the incorrect Damage Type
-                var incorrectDamageSpecifier = new DamageSpecifier(ProtoMan.Index(incorrectDamageType), 10);
-                damageableSystem.SetDamage((STarget.Value, damageableComp), incorrectDamageSpecifier);
-                //Try to use the topical
-                await Interact(false);
-                //Assert could not use (by checking if there are any doafters)
-                Assert.That(!ActiveDoAfters.Any(),
-                "Topical use started despite wrong damage type.");
-                //Assert incorrect damage is unchanged
-                Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(incorrectDamageSpecifier),
-                "The topical healed damage it shouldn't.");
-            }
-
-
-            //Testing Multiple Damage Types (5 of each excluding Structural and Holy)
-            //Damage the urist
-            damageableSystem.SetDamage((STarget.Value, damageableComp), allNormalDamageSpecifier);
-            //Use topical until we can't anymore
-            await Interact();
-            //Assert correct damage done
-            correctDamage = allNormalDamageSpecifier + healsTypes * 10; //healtypes is negative, so this makes all correct types negative
-            correctDamage.ClampMin(0); // which can then be clamped to zero
-            correctDamage.TrimZeros();
-            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
-            "The topical did not heal the correct damage amongst many damage types");
-
-            //Try to use the topical with no more matching damage types
+        }
+        //Only run this test if we found an incorrect damage type
+        if (!(incorrectDamageType == null))
+        {   //Damage 10 in the incorrect Damage Type
+            var incorrectDamageSpecifier = new DamageSpecifier(ProtoMan.Index(incorrectDamageType), 10);
+            damageableSystem.SetDamage((STarget.Value, damageableComp), incorrectDamageSpecifier);
+            //Try to use the topical
             await Interact(false);
             //Assert could not use (by checking if there are any doafters)
             Assert.That(!ActiveDoAfters.Any(),
-            "Topical use went through despite wrong damage type.");
-            //Assert Other damage is unchanged
-            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
+            "Topical use started despite wrong damage type.");
+            //Assert incorrect damage is unchanged
+            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(incorrectDamageSpecifier),
             "The topical healed damage it shouldn't.");
-
-            //Set topical stack size to 1
-            sharedStackSystem.SetCount((topicalUid, stackComp), 1);
-            //Assert stack count is 1
-            Assert.That(stackComp.Count == 1,
-            "The stack of topicals did not get set to 1");
-
-            //Deal 2 topicals worth to the urist
-            damageAmount = healsTypes * -2;
-            damageableSystem.SetDamage((STarget.Value, damageableComp), damageAmount);
-            //if it also fixes bleeding, bleed that amount.
-            if (healingComp.BloodlossModifier < 0)
-                bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), -healingComp.BloodlossModifier);
-
-            //Use topicals until we run out
-            await Interact();
-
-            //Assert Hands empty
-            inHands = HandSys.GetActiveItem((SPlayer, Hands));
-            Assert.That(inHands, Is.Null,
-            "Topicals did not leave hand after being used up.");
-
-            //Assert some correct damage remains
-            correctDamage = -healsTypes;
-            Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
-            "The topical stack did not leave the correct amount of damage after running out");
-
-            //Assert that there's no bleeding.
-            Assert.That(bloodStreamComp.BleedAmount, Is.EqualTo(0),
-            "The bleed-fixing topical did not deal with blood.");
         }
+
+
+        //Testing Multiple Damage Types (5 of each excluding Structural and Holy)
+        //Damage the urist
+        damageableSystem.SetDamage((STarget.Value, damageableComp), allNormalDamageSpecifier);
+        //Use topical until we can't anymore
+        await Interact();
+        //Assert correct damage done
+        correctDamage = allNormalDamageSpecifier + healsTypes * 10; //healtypes is negative, so this makes all correct types negative
+        correctDamage.ClampMin(0); // which can then be clamped to zero
+        correctDamage.TrimZeros();
+        Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
+        "The topical did not heal the correct damage amongst many damage types");
+
+        //Try to use the topical with no more matching damage types
+        await Interact(false);
+        //Assert could not use (by checking if there are any doafters)
+        Assert.That(!ActiveDoAfters.Any(),
+        "Topical use went through despite wrong damage type.");
+        //Assert Other damage is unchanged
+        Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
+        "The topical healed damage it shouldn't.");
+
+        //Set topical stack size to 1
+        sharedStackSystem.SetCount((topicalUid, stackComp), 1);
+        //Assert stack count is 1
+        Assert.That(stackComp.Count == 1,
+        "The stack of topicals did not get set to 1");
+
+        //Deal 2 topicals worth to the urist
+        damageAmount = healsTypes * -2;
+        damageableSystem.SetDamage((STarget.Value, damageableComp), damageAmount);
+        //if it also fixes bleeding, bleed that amount.
+        if (healingComp.BloodlossModifier < 0)
+            bloodStreamSystem.TryModifyBleedAmount((STarget.Value, bloodStreamComp), -healingComp.BloodlossModifier);
+
+        //Use topicals until we run out
+        await Interact();
+
+        //Assert Hands empty
+        inHands = HandSys.GetActiveItem((SPlayer, Hands));
+        Assert.That(inHands, Is.Null,
+        "Topicals did not leave hand after being used up.");
+
+        //Assert some correct damage remains
+        correctDamage = -healsTypes;
+        Assert.That(damageableSystem.GetPositiveDamage((STarget.Value, damageableComp)), Is.EqualTo(correctDamage),
+        "The topical stack did not leave the correct amount of damage after running out");
+
+        //Assert that there's no bleeding.
+        Assert.That(bloodStreamComp.BleedAmount, Is.EqualTo(0),
+        "The bleed-fixing topical did not deal with blood.");
     }
 }
