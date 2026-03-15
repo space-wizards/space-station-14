@@ -266,6 +266,6 @@ public abstract class SharedFlashSystem : EntitySystem
     private void OnExamine(Entity<FlashImmunityComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.ShowInExamine)
-            args.PushMarkup(Loc.GetString("flash-protection"));
+            args.PushMarkup(Loc.GetString($"{(HasComp<ClothingComponent>(ent) ? "provides" : "has")}-flash-protection"));
     }
 }
