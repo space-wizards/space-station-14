@@ -30,6 +30,7 @@ verb-categories-fax = Set Destination
 verb-categories-power-level = Power Level
 verb-categories-voltage-level = Voltage Level
 verb-categories-adjust = Adjust
+verb-categories-power-threshold = Set Threshold
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close
