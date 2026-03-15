@@ -42,7 +42,7 @@ public sealed class ClumsySystem : EntitySystem
     #region Clumsy interaction events
     private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeInjectEvent args)
     {
-        // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
+        // Clumsy people sometimes inject themselves!
 
         // checks if ClumsyHypo is false, if so, skips.
         if (!ent.Comp.ClumsyHypo)
