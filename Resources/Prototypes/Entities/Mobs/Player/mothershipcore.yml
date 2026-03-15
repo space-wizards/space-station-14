@@ -3,6 +3,7 @@
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
+  suffix: Provider
   components:
   - type: InputMover # needs this to pilot the mothership
   - type: BlockMovement # They should never be moving!
@@ -205,7 +206,6 @@
   - type: IgnoreUIRange
   - type: ComplexInteraction
   - type: MindContainer
-  - type: SiliconLawBound
   - type: Actions
   - type: ActionGrant
     actions:
@@ -213,6 +213,7 @@
   - type: SiliconLawProvider
     laws: MothershipCoreLawset # custom laws here
     subverted: true
+  - type: SiliconLawBound
   - type: Stripping
   - type: Access
     enabled: true
