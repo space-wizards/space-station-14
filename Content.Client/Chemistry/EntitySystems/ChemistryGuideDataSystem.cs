@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
-using Content.Shared.Body.Part;
+using Content.Shared.Body;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -94,7 +94,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
                 continue;
 
             //these bloat the hell out of blood/fat
-            if (entProto.HasComponent<BodyPartComponent>())
+            if (entProto.HasComponent<OrganComponent>())
                 continue;
 
             //these feel obvious...
@@ -116,7 +116,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             }
 
 
-            if (extractableComponent.GrindableSolution is { } grindableSolutionId &&
+            if (extractableComponent.GrindableSolutionName is { } grindableSolutionId &&
                 entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager, EntityManager.ComponentFactory) &&
                 _solutionContainer.TryGetSolution(manager, grindableSolutionId, out var grindableSolution))
             {

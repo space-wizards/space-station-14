@@ -1,6 +1,6 @@
 - type: entity
-  id: CrateFoodPizza
   parent: CratePlastic
+  id: CrateFoodPizza
   name: emergency pizza delivery
   description: Help do your part to end station hunger by distributing pizza to underfunded departments! Includes 4 pizzas.
   components:
@@ -15,8 +15,8 @@
           prob: 0.01
 
 - type: entity
-  id: CrateFoodMRE
   parent: CratePlastic
+  id: CrateFoodMRE
   name: MRE crate
   description: A military style meal fit to feed a whole department.
   components:
@@ -27,8 +27,8 @@
         amount: 6
 
 - type: entity
-  id: CrateFoodCooking
   parent: CrateFreezer
+  id: CrateFoodCooking
   name: kitchen supplies crate
   description: Extra kitchen supplies, in case the botanists are absent.
   components:
@@ -55,8 +55,8 @@
           amount: 2
 
 - type: entity
-  id: CrateFoodDinnerware
   parent: CratePlastic
+  id: CrateFoodDinnerware
   name: kitchen dinnerware crate
   description: Extra kitchen supplies, in case the clown was allowed in the cafeteria unsupervised.
   components:
@@ -82,8 +82,8 @@
         - id: BoxUtensil
 
 - type: entity
-  id: CrateFoodBarSupply
   parent: CrateFreezer
+  id: CrateFoodBarSupply
   name: bartending supplies crate
   description: Extra Bar supplies, in case the clown was allowed in the bar unsupervised.
   components:
@@ -111,8 +111,8 @@
           amount: 2
 
 - type: entity
-  id: CrateFoodSoftdrinks
   parent: CrateFreezer
+  id: CrateFoodSoftdrinks
   name: softdrinks crate
   description: A variety of sodas to complement a small party, without having to empty the soda machines. Includes 14 sodas.
   components:
@@ -136,8 +136,8 @@
           amount: 2
 
 - type: entity
-  id: CrateFoodGetMore
   parent: CrateFreezer
+  id: CrateFoodGetMore
   name: Getmore Bakemore crate
   description: Getmore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's Getmore machines!
   components:
@@ -164,8 +164,8 @@
         - id: FoodBoxCloth
 
 - type: entity
-  id: CrateFoodIceCream
   parent: CrateFreezer
+  id: CrateFoodIceCream
   name: ice cream delivery
   description: An assortment of ice cream delights for any occasion! Includes 16 frozen treats.
   components:
@@ -189,8 +189,8 @@
           amount: 2
 
 - type: entity
-  id: CrateFoodSnowcone
   parent: CrateFreezer
+  id: CrateFoodSnowcone
   name: snowcone delivery
   description: A freezer packed with refreshing snowcones for a hard working crew, or even a lazy one! Includes 16 snowcones.
   components:
@@ -212,8 +212,8 @@
           amount: 2
 
 - type: entity
-  id: CrateFoodHappyHonkBigBite
   parent: CratePlastic
+  id: CrateFoodHappyHonkBigBite
   name: Happy Honk meal delivery
   description: Two fully loaded Happy Honk Big Bite burger meals, complete with cheesy fries, a bottle of Space Cola, a slice of apple pie and a toy!
   components:

@@ -1,6 +1,6 @@
 - type: entity
-  id: CrateHydroponicsSeedsExotic
   parent: CrateHydroSecure
+  id: CrateHydroponicsSeedsExotic
   name: exotic seeds crate
   description: Any entrepreneuring botanist's dream. Contains many different exotic seeds. Requires Hydroponics access to open.
   components:
@@ -24,8 +24,8 @@
           amount: 2
 
 - type: entity
-  id: CrateHydroponicsSeedsMedicinal
   parent: CrateHydroSecure
+  id: CrateHydroponicsSeedsMedicinal
   name: medicinal seeds crate
   description: The wannabe chemist's dream. The power of medicine is at your fingertips! Requires Hydroponics access to open.
   components:
@@ -45,8 +45,8 @@
           amount: 3
 
 - type: entity
-  id: CrateHydroponicsTools
   parent: CrateHydroponics
+  id: CrateHydroponicsTools
   name: hydroponics equipment crate
   description: Supplies for growing a great garden! Contains some spray bottles of plant chemicals, a hatchet, a mini-hoe, scythe, as well as a pair of leather gloves and a botanist's apron.
   components:
@@ -68,8 +68,8 @@
           amount: 2
 
 - type: entity
-  id: CrateHydroponicsSeeds
   parent: CrateHydroponics
+  id: CrateHydroponicsSeeds
   name: seeds crate
   description: Big things have small beginnings. Contains twenty-four different seeds.
   components:
@@ -103,8 +103,8 @@
         - id: CottonSeeds
 
 - type: entity
-  id: CrateHydroponicsTray
   parent: CrateHydroponics
+  id: CrateHydroponicsTray
   name: hydroponics tray crate
   description: Contains a hydroponics tray flatpack.
   components:

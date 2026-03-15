@@ -21,6 +21,7 @@ using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -41,6 +42,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     private ProtoId<ReagentPrototype>[] _standoutReagents = [];
 
@@ -114,6 +116,10 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
     private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
     {
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.SolutionId != entity.Comp.SolutionName)
             return;
 
@@ -354,6 +360,15 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     }
 
     #region Spill
+
+    /// <inheritdoc cref="TrySplashSpillAt(EntityUid,EntityCoordinates,Solution,out EntityUid,bool,EntityUid?)"/>
+    public abstract bool TrySplashSpillAt(Entity<SpillableComponent?> entity,
+        EntityCoordinates coordinates,
+        out EntityUid puddleUid,
+        out Solution spilled,
+        bool sound = true,
+        EntityUid? user = null);
+
     // These methods are in Shared to make it easier to interact with PuddleSystem in Shared code.
     // Note that they always fail when run on the client, not creating a puddle and returning false.
     // Adding proper prediction to this system would require spawning temporary puddle entities on the
@@ -367,9 +382,9 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     /// <remarks>
     /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"/> and return false.
     /// </remarks>
-    public abstract bool TrySplashSpillAt(EntityUid uid,
+    public abstract bool TrySplashSpillAt(EntityUid entity,
         EntityCoordinates coordinates,
-        Solution solution,
+        Solution spilled,
         out EntityUid puddleUid,
         bool sound = true,
         EntityUid? user = null);
