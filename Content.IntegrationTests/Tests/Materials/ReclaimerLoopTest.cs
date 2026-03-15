@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Materials;
 /// </summary>
 [TestOf(typeof(MaterialReclaimerSystem))]
 [TestOf(typeof(MaterialReclaimerComponent))]
-public sealed class RecyclingLoopTest : InteractionTest
+public sealed class ReclaimerLoopTest : InteractionTest
 {
     private static string[] _materials = GameDataScrounger.EntitiesWithComponent("PhysicalComposition");
     private static string[] _reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
@@ -49,8 +49,17 @@ public sealed class RecyclingLoopTest : InteractionTest
             }
         }
 
-        //For each produceable Material, assert that it is not recyclable
+        //For each produceable Material, assert that it is not recyclable (and would thus cause a recycling loop)
+        foreach (string material in produceableMaterials)
+        {
+            await PlaceInHands(material);
 
+            var reclaimerNetEnt = await SpawnTarget(reclaimerID);
+
+            // Power the reclaimer
+            await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
+            await RunTicks(1);
+        }
 
     }
 }
