@@ -89,6 +89,16 @@
   group: market
 
 - type: cargoProduct
+  id: EmergencyZombieKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: toxinkit
+  product: CrateEmergencyZombieKit
+  cost: 5000
+  category: cargoproduct-category-name-medical
+  group: market
+
+- type: cargoProduct
   id: MedicalBodybags
   icon:
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi

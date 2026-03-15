@@ -126,3 +126,18 @@
       storagebase:
         id: StimpackMini
         amount: 6
+
+- type: entity
+  id: MedkitZombieFilled
+  suffix: Filled, DO NOT MAP
+  parent: MedkitZombie
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Brutepack
+        - id: Gauze
+        - id: Bloodpack
+        - id: SyringeAmbuzolPartial # todo: replace with PillAmbuzol after #42774 is fixed
+        - id: PillCanisterDylovene

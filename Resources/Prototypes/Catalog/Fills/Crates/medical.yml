@@ -189,3 +189,14 @@
           rolls: 2
         - id: ClothingMaskSterile
           amount: 2
+
+- type: entity
+  parent: CrateMedical
+  id: CrateEmergencyZombieKit
+  name: emergency zombie kit
+  description: Crate filled with a zombie treatment kit.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MedkitZombieFilled

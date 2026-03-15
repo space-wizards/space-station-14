@@ -100,3 +100,12 @@
     heldPrefix: blackkit
     size: Normal
 
+- type: entity
+  name: zombie treatment kit
+  description: When there's no more room in hell, the dead will walk the station.
+  parent: Medkit
+  id: MedkitZombie
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    state: toxinkit
