@@ -43,7 +43,8 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
         bloodSolution.AddSolution(solution, PrototypeManager);
     }
 
-    // forensics is not predicted yet
+    // Forensics IS predicted now, but Solutions aren't serializable, and to put this into shared, it requires the Solution to be serialized.
+    // So this cannot be put into shared.
     private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
     {
         if (SolutionContainer.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
