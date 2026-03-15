@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Content.Shared.NPC.Systems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -17,6 +18,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly SharedNPCSystem _npc = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
@@ -47,6 +49,9 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
     {
+        if (IsNpc(uid, component))
+            return;
+
         component.IsSSD = true;
 
         // Sets the time when the entity should fall asleep
@@ -61,12 +66,22 @@ public sealed class SSDIndicatorSystem : EntitySystem
     // Prevents mapped mobs to go to sleep immediately
     private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
     {
-        if (!_icSsdSleep || !component.IsSSD)
+        if (!_icSsdSleep || !component.IsSSD || IsNpc(uid, component))
             return;
 
         component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
         component.NextUpdate = _timing.CurTime + component.UpdateInterval;
         Dirty(uid, component);
+    }
+
+    private bool IsNpc(EntityUid uid, SSDIndicatorComponent component)
+    {
+        if (!_npc.IsNpc(uid))
+            return false;
+
+        component.IsSSD = false;
+        Dirty(uid, component);
+        return true;
     }
 
     public override void Update(float frameTime)
