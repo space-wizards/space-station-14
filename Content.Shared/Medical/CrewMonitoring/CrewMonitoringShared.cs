@@ -1,4 +1,5 @@
 using Content.Shared.Medical.SuitSensor;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.CrewMonitoring;
@@ -17,5 +18,16 @@ public sealed class CrewMonitoringState : BoundUserInterfaceState
     public CrewMonitoringState(List<SuitSensorStatus> sensors)
     {
         Sensors = sensors;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed partial class CrewMonitoringWarpRequestMessage : BoundUserInterfaceMessage
+{
+    public NetCoordinates Coordinates;
+
+    public CrewMonitoringWarpRequestMessage(NetCoordinates coordinates)
+    {
+        Coordinates = coordinates;
     }
 }

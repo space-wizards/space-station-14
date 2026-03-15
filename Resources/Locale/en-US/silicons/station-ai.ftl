@@ -54,3 +54,11 @@ station-ai-hologram-male = Male appearance
 station-ai-hologram-face = Disembodied head
 station-ai-hologram-cat = Cat form
 station-ai-hologram-dog = Corgi form
+
+station-ai-warp-window-title = Warp
+station-ai-warp-search-placeholder = Search crew or locations...
+station-ai-warp-loading = Loading warp destinations...
+station-ai-warp-no-results = No destinations found.
+station-ai-warp-section-crew = Crew
+station-ai-warp-section-locations = Locations
+station-ai-warp-radial-tooltip = Warp

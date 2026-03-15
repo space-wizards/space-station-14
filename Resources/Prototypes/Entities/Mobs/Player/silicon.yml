@@ -34,6 +34,7 @@
   - type: ActionGrant
     actions:
     - ActionJumpToCore
+    - ActionAIWarp
     - ActionSurvCameraLights
     - ActionAIViewLaws
   - type: UserInterface
