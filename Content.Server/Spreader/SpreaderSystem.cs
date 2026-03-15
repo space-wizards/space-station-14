@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Shuttles.Components;
@@ -26,15 +27,14 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly TurfSystem _turf = default!;
 
     /// <summary>
-    /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
+    /// Maps prototype ID to its index in <see cref="_prototypeMaxUpdates"/> and per-grid update arrays.
     /// </summary>
-    private Dictionary<string, int> _prototypeUpdates = default!;
+    private Dictionary<string, int> _prototypeNameToIndex = [];
 
     /// <summary>
-    /// Remaining number of updates per grid & prototype.
+    /// Cached maximum number of updates per spreader prototype. Index corresponds to <see cref="_prototypeNameToIndex"/>.
     /// </summary>
-    // TODO PERFORMANCE Assign each prototype to an index and convert dictionary to array
-    private readonly Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = [];
+    private int[] _prototypeMaxUpdates = [];
 
     private EntityQuery<EdgeSpreaderComponent> _query;
 
@@ -58,15 +58,28 @@ public sealed class SpreaderSystem : EntitySystem
     private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
         if (obj.WasModified<EdgeSpreaderPrototype>())
+        {
             SetupPrototypes();
+
+            var gridQuery = EntityQueryEnumerator<SpreaderGridComponent>();
+            while (gridQuery.MoveNext(out var uid, out var grid))
+            {
+                grid.RemainingUpdates = null;
+            }
+        }
     }
 
     private void SetupPrototypes()
     {
-        _prototypeUpdates = [];
-        foreach (var proto in _prototype.EnumeratePrototypes<EdgeSpreaderPrototype>())
+        var prototypes = _prototype.EnumeratePrototypes<EdgeSpreaderPrototype>().ToList();
+        _prototypeNameToIndex.Clear();
+        _prototypeMaxUpdates = new int[prototypes.Count];
+
+        for (var i = 0; i < prototypes.Count; i++)
         {
-            _prototypeUpdates.Add(proto.ID, proto.UpdatesPerSecond);
+            var proto = prototypes[i];
+            _prototypeNameToIndex[proto.ID] = i;
+            _prototypeMaxUpdates[i] = proto.UpdatesPerSecond;
         }
     }
 
@@ -90,19 +103,20 @@ public sealed class SpreaderSystem : EntitySystem
     {
         // Check which grids are valid for spreading
         var spreadGrids = EntityQueryEnumerator<SpreaderGridComponent>();
+        var readyGrids = new List<EntityUid>();
 
-        _gridUpdates.Clear();
         while (spreadGrids.MoveNext(out var uid, out var grid))
         {
             grid.UpdateAccumulator -= frameTime;
             if (grid.UpdateAccumulator > 0)
                 continue;
 
-            _gridUpdates[uid] = _prototypeUpdates.ShallowClone();
+            grid.RemainingUpdates = (int[])_prototypeMaxUpdates.Clone();
             grid.UpdateAccumulator += SpreadCooldownSeconds;
+            readyGrids.Add(uid);
         }
 
-        if (_gridUpdates.Count == 0)
+        if (readyGrids.Count == 0)
             return;
 
         var query = EntityQueryEnumerator<ActiveEdgeSpreaderComponent>();
@@ -133,7 +147,13 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
             }
 
-            if (!_gridUpdates.TryGetValue(xform.GridUid.Value, out var groupUpdates))
+            if (!readyGrids.Contains(xform.GridUid.Value))
+                continue;
+
+            if (!TryComp<SpreaderGridComponent>(xform.GridUid, out var grid))
+                continue;
+
+            if (grid.RemainingUpdates is null)
                 continue;
 
             if (!spreaderQuery.TryGetComponent(uid, out var spreader))
@@ -142,18 +162,17 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
             }
 
-            if (!groupUpdates.TryGetValue(spreader.Id, out var updates) || updates < 1)
+            if (!_prototypeNameToIndex.TryGetValue(spreader.Id, out var index))
+                continue;
+
+            ref var updates = ref grid.RemainingUpdates[index];
+            if (updates < 1)
                 continue;
 
             // Edge detection logic is to be handled
             // by the subscribing system, see KudzuSystem
             // for a simple example
             Spread(uid, xform, spreader.Id, ref updates);
-
-            if (updates < 1)
-                groupUpdates.Remove(spreader.Id);
-            else
-                groupUpdates[spreader.Id] = updates;
         }
     }
 
@@ -233,7 +252,7 @@ public sealed class SpreaderSystem : EntitySystem
         // Add the normal neighbors.
         for (var i = 0; i < 4; i++)
         {
-            var atmosDir = (AtmosDirection) (1 << i);
+            var atmosDir = (AtmosDirection)(1 << i);
             var neighborPos = tile.Offset(atmosDir);
             neighborTiles.Add((comp.GridUid.Value, grid, neighborPos, atmosDir, i.ToOppositeDir()));
         }
@@ -332,7 +351,7 @@ public sealed class SpreaderSystem : EntitySystem
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
-            var direction = (AtmosDirection) (1 << i);
+            var direction = (AtmosDirection)(1 << i);
             var adjacentTile = SharedMapSystem.GetDirection(tile, direction.ToDirection());
             anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, gridComp, adjacentTile);
 
