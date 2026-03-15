@@ -603,6 +603,7 @@
       whitelist:
         tags:
           - Ore
+          - RawMaterial
     - type: Lathe
       idleState: icon
       runningState: building
