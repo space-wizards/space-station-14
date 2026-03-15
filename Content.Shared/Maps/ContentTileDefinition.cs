@@ -34,8 +34,16 @@ namespace Content.Shared.Maps
         [DataField("name")]
         public string Name { get; private set; } = "";
         [DataField("sprite")] public ResPath? Sprite { get; private set; }
-
-        [DataField("edgeSprites")] public Dictionary<Direction, ResPath> EdgeSprites { get; private set; } = new();
+        
+        /// <summary>
+        /// Tile edges. Visible when a tile touches another tile that has a lower EdgeSpritePriority than this tile.
+        /// </summary>
+        [DataField] public Dictionary<Direction, ResPath> EdgeSprites { get; private set; } = new();
+        
+        /// <summary>
+        /// Tile edges. Visible when a tile touches a space tile.
+        /// </summary>
+        [DataField] public Dictionary<Direction, ResPath> EdgeSpaceSprites { get; private set; } = new();
 
         [DataField("edgeSpritePriority")] public int EdgeSpritePriority { get; private set; } = 0;
 
