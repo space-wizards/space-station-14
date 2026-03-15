@@ -177,10 +177,16 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
 
+        //If the usekey is up and we aren't in a burst we need to stop shooting.
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.Comp.BurstActivated)
         {
             if (gun.Comp.ShotCounter != 0)
                 RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
+            //If the gun was recently cancelled, release its CancellationHold now that the useKey is up.
+            if (gun.Comp.CancellationHold)
+            {
+                RaisePredictiveEvent(new RequestGunCancelReleaseEvent { Gun = GetNetEntity(gun) });
+            }
             return;
         }
 
