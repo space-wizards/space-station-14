@@ -32,6 +32,7 @@ public sealed partial class AdminVerbSystem
     private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
     private static readonly EntProtoId DefaultWizardRule = "Wizard";
     private static readonly EntProtoId DefaultNinjaRule = "NinjaSpawn";
+    private static readonly EntProtoId DefaultBloodCultRule = "BloodCult";
     private static readonly ProtoId<StartingGearPrototype> PirateGearId = "PirateGear";
 
     // All antag verbs have names so invokeverb works.
@@ -222,6 +223,21 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", ninjaName, Loc.GetString("admin-verb-make-space-ninja")),
         };
         args.Verbs.Add(ninja);
+
+        var bloodCultName = Loc.GetString("admin-verb-text-make-bloodcult");
+        Verb bloodCult = new()
+        {
+            Text = bloodCultName,
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Weapons/Melee/cult_dagger.rsi"), "icon"),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<BloodCultRuleComponent>(targetPlayer, DefaultBloodCultRule);
+            },
+            Impact = LogImpact.High,
+            Message = string.Join(": ", bloodCultName, Loc.GetString("admin-verb-make-bloodcult")),
+        };
+        args.Verbs.Add(bloodCult);
 
         if (HasComp<HumanoidProfileComponent>(args.Target)) // only humanoids can be cloned
             args.Verbs.Add(paradox);

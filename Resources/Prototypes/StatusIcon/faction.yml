@@ -47,6 +47,20 @@
     state: HeadRevolutionary
 
 - type: factionIcon
+  id: BloodCultFaction
+  isShaded: true
+  priority: 11
+  visibleToGhosts: true
+  showTo:
+    requireAll: true
+    components:
+      - ShowAntagIcons
+      - BloodCultist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Cultist
+
+- type: factionIcon
   id: SyndicateFaction
   priority: 0
   locationPreference: Left

@@ -48,6 +48,7 @@ flavor-base-clean = clean
 flavor-base-alkaline = alkaline
 flavor-base-holy = holy
 flavor-base-horrible = horrible
+flavor-base-forbidden = forbidden
 # lmao
 flavor-base-terrible = terrible
 flavor-base-mindful = mindful
@@ -344,6 +345,7 @@ flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
+flavor-complex-forbidden = forbidden
 flavor-complex-artifact-glue = like crushed artifacts
 flavor-weh = like weh
 flavor-hew = like hew

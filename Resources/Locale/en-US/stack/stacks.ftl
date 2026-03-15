@@ -13,6 +13,9 @@ stack-uranium-glass = uranium glass
 stack-clockwork-glass = clockwork glass
 stack-reinforced-plasma-glass = reinforced plasma glass
 stack-reinforced-uranium-glass = reinforced uranium glass
+stack-runed-glass = runed glass
+stack-runed-steel = runed steel
+stack-runed-plasteel = runed plasteel
 stack-gunpowder = gunpowder
 stack-cardboard = cardboard
 

@@ -1,5 +1,4 @@
-﻿# Accents that work off of full replacements rather than word replacements.
-
+# Accents that work off of full replacements rather than word replacements.
 - type: accent
   id: cat
   fullReplacements:
@@ -207,3 +206,14 @@
   - accent-words-scurret-18
   - accent-words-scurret-19
   - accent-words-scurret-20
+
+- type: accent
+  id: juggernaut
+  fullReplacements:
+  - accent-words-juggernaut-1
+  - accent-words-juggernaut-2
+  - accent-words-juggernaut-3
+  - accent-words-juggernaut-4
+  - accent-words-juggernaut-5
+  - accent-words-juggernaut-6
+  - accent-words-juggernaut-7

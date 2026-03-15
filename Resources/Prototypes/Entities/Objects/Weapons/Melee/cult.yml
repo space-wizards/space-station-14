@@ -85,3 +85,122 @@
     - back
   - type: UseDelay
     delay: 1
+
+# Blood Cult Items
+- type: entity
+  abstract: true
+  name: cult dagger
+  parent: [ BaseItem, BaseBloodCultContraband ]
+  id: CultDagger
+  description: A sickening, crude bone blade. Tar-like ooze drips from the edge, poisoning your foes and protecting allies from your strikes. Useful as both a melee weapon and a throwing knife. Your veins pulse in anticipation - images of runes already flashing into your mind as you hold it.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cult_dagger.rsi
+    state: icon
+  - type: BloodCultMeleeWeapon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 15
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Small
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/cult_dagger.rsi
+    quickEquip: false
+    slots:
+    - back
+  - type: DisarmMalus
+#  - type: BloodCultRuneCarver
+#    timeToCarve: 15
+#  - type: UserInterface
+#    interfaces:
+#      enum.RunesUiKey.Key:
+#        type: RunesBoundUserInterface
+#  - type: ActivatableUI
+#    key: enum.RunesUiKey.Key
+#    inHandsOnly: true
+#    singleUser: true
+#    blockSpectators: true
+#    verbOnly: false
+#    verbText: cult-rune-select
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 15
+        reagents:
+        - ReagentId: EdgeEssentia
+          Quantity: 15
+  - type: MeleeChemicalInjector
+    transferAmount: 3
+    solution: melee
+    pierceArmor: true
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 3
+    solution: melee
+    pierceArmor: true
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 3
+  - type: SolutionRegeneration
+    solution: melee
+    duration: 1
+    generated:
+      reagents:
+      - ReagentId: EdgeEssentia
+        Quantity: 0.5
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    ignoreResistances: true
+    damage:
+      types:
+        Slash: 10
+        Piercing: 15
+  - type: ThrowingAngle
+    angle: 225
+
+- type: entity
+  name: cult dagger
+  suffix: Curved
+  parent: CultDagger
+  id: CultDaggerCurved
+  components:
+  - type: Sprite
+    sprite: BloodCult/Objects/Weapons/Melee/bloodcult_dagger_curved.rsi
+    state: icon
+  - type: Clothing
+    sprite: BloodCult/Objects/Weapons/Melee/bloodcult_dagger_curved.rsi
+
+- type: entity
+  name: cult dagger
+  suffix: Serrated
+  parent: CultDagger
+  id: CultDaggerSerrated
+  components:
+  - type: Sprite
+    sprite: BloodCult/Objects/Weapons/Melee/bloodcult_dagger_serrated.rsi
+    state: icon
+  - type: Clothing
+    sprite: BloodCult/Objects/Weapons/Melee/bloodcult_dagger_serrated.rsi
+
+- type: entity
+  name: cult dagger
+  suffix: Straight
+  parent: CultDagger
+  id: CultDaggerStraight
+  components:
+  - type: Sprite
+    sprite: BloodCult/Objects/Weapons/Melee/bloodcult_dagger_straight.rsi
+    state: icon
+  - type: Clothing
+    sprite: BloodCult/Objects/Weapons/Melee/bloodcult_dagger_straight.rsi

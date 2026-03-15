@@ -585,3 +585,32 @@
     - id: BasicDecalDirtMonospaceVariationPass
       prob: 0.50
       orGroup: monospaceDecals
+
+- type: entity
+  id: BloodCult
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 20
+  - type: BloodCultRule
+    possibleVeilBeaconPrefix: DefaultStationBeacon #must be a valid beacon prefix used in mapping, stations already use these beacons
+    cultBloodReagent: UnholyBlood #must be a valid reagent prototype id
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ BloodCultist ]
+      min: 3
+      max: 5
+      playerRatio: 10
+      startingGear: BloodCultistGear
+      briefing:
+        text: cult-start-briefing
+        color: CornflowerBlue
+        sound: "/Audio/Ambience/Antag/cultist_start.ogg"
+      blacklist:
+        components:
+        - BibleUser
+      components:
+      - type: BloodCultist
+      mindRoles:
+      - MindRoleCultist

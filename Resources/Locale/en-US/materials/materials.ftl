@@ -5,12 +5,15 @@ materials-plasma-glass = plasma glass
 materials-reinforced-plasma-glass = reinforced plasma glass
 materials-uranium-glass = uranium glass
 materials-reinforced-uranium-glass = reinforced uranium glass
+materials-runed-glass = runed glass
 
 # Metals
 materials-steel = steel
 materials-gold = gold
 materials-silver = silver
 materials-plasteel = plasteel
+materials-runed-steel = runed steel
+materials-runed-plasteel = runed plasteel
 
 # Other
 materials-biomass = biomass

@@ -1,5 +1,6 @@
 # Improvised weapons/gear, etc. Not departmentally restricted per se, but you shouldn't really have it around
 # as non-sec without a valid reason.
+
 - type: contrabandSeverity
   id: Minor
   examineText: contraband-examine-text-Minor
@@ -35,3 +36,8 @@
 - type: contrabandSeverity
   id: Magical
   examineText: contraband-examine-text-Magical
+
+# This is an evil cult thingy and is illegal to own IC.
+- type: contrabandSeverity
+  id: BloodCult
+  examineText: contraband-examine-text-BloodCult

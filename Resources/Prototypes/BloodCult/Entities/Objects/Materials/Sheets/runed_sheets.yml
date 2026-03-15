@@ -1,0 +1,197 @@
+# Runed Steel Sheets
+- type: entity
+  parent: [ SheetMetalBase, BaseBloodCultContraband ]
+  id: SheetRunedSteel
+  name: runed steel
+  suffix: Full
+  description: A sheet of otherworldly steel, used by acolytes of cosmic entities to assemble twisted constructs.
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      RunedSteel: 100
+  - type: Stack
+    stackType: RunedSteel
+    baseLayer: base
+    layerStates:
+    - runedmetal
+    - runedmetal_2
+    - runedmetal_3
+  - type: Sprite
+    sprite: BloodCult/Sheets/metal.rsi
+    state: runedmetal_3
+    layers:
+    - state: runedmetal_3
+      map: ["base"]
+  - type: Item
+    sprite: BloodCult/Sheets/metal.rsi
+    heldPrefix: runedmetal
+  - type: Appearance
+
+- type: entity
+  parent: SheetRunedSteel
+  id: SheetRunedSteel30
+  name: runed steel
+  suffix: 30
+  components:
+  - type: Sprite
+    state: runedmetal_3
+  - type: Stack
+    stackType: RunedSteel
+    count: 30
+
+- type: entity
+  parent: SheetRunedSteel
+  id: SheetRunedSteel10
+  name: runed steel
+  suffix: 10
+  components:
+  - type: Sprite
+    state: runedmetal_2
+  - type: Stack
+    stackType: RunedSteel
+    count: 10
+
+- type: entity
+  parent: SheetRunedSteel
+  id: SheetRunedSteel1
+  name: runed steel
+  suffix: Single
+  components:
+  - type: Sprite
+    state: runedmetal
+  - type: Stack
+    stackType: RunedSteel
+    count: 1
+
+# Runed Glass Sheets
+- type: entity
+  parent: [ SheetGlassBase, BaseBloodCultContraband ]
+  id: SheetRunedGlass
+  name: runed glass
+  suffix: Full
+  description: A sheet of otherworldly glass, used by acolytes of cosmic entities to assemble twisted constructs.
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      RunedGlass: 100
+  - type: Stack
+    stackType: RunedGlass
+    baseLayer: base
+    layerStates:
+    - runedglass
+    - runedglass_2
+    - runedglass_3
+  - type: Sprite
+    sprite: BloodCult/Sheets/glass.rsi
+    state: runedglass_3
+    layers:
+    - state: runedglass_3
+      map: ["base"]
+  - type: Item
+    sprite: BloodCult/Sheets/glass.rsi
+    heldPrefix: runedglass
+  - type: Appearance
+
+- type: entity
+  parent: SheetRunedGlass
+  id: SheetRunedGlass30
+  name: runed glass
+  suffix: 30
+  components:
+  - type: Sprite
+    state: runedglass_3
+  - type: Stack
+    stackType: RunedGlass
+    count: 30
+
+- type: entity
+  parent: SheetRunedGlass
+  id: SheetRunedGlass10
+  name: runed glass
+  suffix: 10
+  components:
+  - type: Sprite
+    state: runedglass_2
+  - type: Stack
+    stackType: RunedGlass
+    count: 10
+
+- type: entity
+  parent: SheetRunedGlass
+  id: SheetRunedGlass1
+  name: runed glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: runedglass
+  - type: Stack
+    stackType: RunedGlass
+    count: 1
+
+# Runed Plasteel Sheets
+- type: entity
+  parent: [ SheetMetalBase, BaseBloodCultContraband ]
+  id: SheetRunedPlasteel
+  name: runed plasteel
+  suffix: Full
+  description: A sheet of otherworldly plasteel, used by cultists to armor their robes.
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      RunedPlasteel: 100
+  - type: Stack
+    stackType: RunedPlasteel
+    baseLayer: base
+    layerStates:
+    - runedplasteel
+    - runedplasteel_2
+    - runedplasteel_3
+  - type: Sprite
+    sprite: BloodCult/Sheets/plasteel.rsi
+    state: runedplasteel_3
+    layers:
+    - state: runedplasteel_3
+      map: ["base"]
+  - type: Item
+    sprite: BloodCult/Sheets/plasteel.rsi
+    heldPrefix: runedplasteel
+  - type: Appearance
+
+- type: entity
+  parent: SheetRunedPlasteel
+  id: SheetRunedPlasteel30
+  name: runed plasteel
+  suffix: 30
+  components:
+  - type: Sprite
+    state: runedplasteel_3
+  - type: Stack
+    stackType: RunedPlasteel
+    count: 30
+
+- type: entity
+  parent: SheetRunedPlasteel
+  id: SheetRunedPlasteel10
+  name: runed plasteel
+  suffix: 10
+  components:
+  - type: Sprite
+    state: runedplasteel_2
+  - type: Stack
+    stackType: RunedPlasteel
+    count: 10
+
+- type: entity
+  parent: SheetRunedPlasteel
+  id: SheetRunedPlasteel1
+  name: runed plasteel
+  suffix: Single
+  components:
+  - type: Sprite
+    state: runedplasteel
+  - type: Stack
+    stackType: RunedPlasteel
+    count: 1

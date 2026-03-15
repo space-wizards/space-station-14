@@ -1,0 +1,26 @@
+- type: reagent
+  id: EdgeEssentia
+  name: reagent-name-edge-essentia
+  group: Exotic
+  desc: reagent-desc-edge-essentia
+  physicalDesc: reagent-physical-desc-profane
+  flavor: forbidden
+  color: "#330000"
+  boilingPoint: 98.0
+  meltingPoint: -5.0
+  recognizable: true
+  metabolisms:
+    Bloodstream:
+      metabolismRate: 0.2
+      effects:
+      - !type:BleedUnholyBlood
+        probability: 0.5
+      - !type:ModifyBleed
+        amount: 0.3  # Mild bleeding effect when metabolized
+      - !type:AdjustReagent
+        reagent: EdgeEssentia
+        amount: -0.2
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.2

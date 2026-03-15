@@ -263,3 +263,36 @@
   - KesslerSyndromeScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
+
+- type: gamePreset
+  id: BloodCult
+  alias:
+    - bloodcult
+    - bcult
+  name: bloodcult-title
+  description: bloodcult-description
+  showInVote: false
+  rules:
+    - DummyNonAntagChance
+    - BloodCult
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - BasicRoundstartVariation
+    - SpaceTrafficControlEventScheduler
+
+- type: gamePreset
+  id: SecretBloodCult
+  alias:
+    - secretbloodcult
+  name: secret-title
+  description: secret-description
+  showInVote: false
+  rules:
+    - DummyNonAntagChance
+    - BloodCult
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - BasicRoundstartVariation
+    - SpaceTrafficControlEventScheduler

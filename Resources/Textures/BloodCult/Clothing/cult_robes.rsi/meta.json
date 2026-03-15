@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "sprited by zergologst (discord) for Funky",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon",
+      "delays": [
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ]
+      ]
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4,
+      "delays": [
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ],
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ],
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ],
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ]
+      ]
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-vox",
+      "directions": 4,
+      "delays": [
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ],
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ],
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ],
+        [
+		      0.5,
+		      0.125,
+		      0.5,
+		      0.125
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

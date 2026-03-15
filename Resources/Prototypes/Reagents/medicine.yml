@@ -1177,6 +1177,26 @@
         damage:
           types:
             Holy: 0.5
+      - !type:HealthChange
+        ignoreResistances: false
+        damage:
+          types:
+            Heat: 0.1
+        conditions:
+        - !type:IsBloodCultist
+      - !type:DeCultify
+        amount: 0.35
+        conditions:
+        - !type:IsBloodCultist
+      - !type:PopupMessage
+        messages: ["cult-holywater-burn"]
+        visualType: LargeCaution
+        conditions:
+        - !type:IsBloodCultist
+      - !type:PlaySound
+        sound: /Audio/Effects/lightburn.ogg
+        conditions:
+        - !type:IsBloodCultist
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1

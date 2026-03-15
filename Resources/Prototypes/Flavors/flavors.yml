@@ -1325,6 +1325,11 @@
   description: flavor-base-horrible
 
 - type: flavor
+  id: forbidden
+  flavorType: Base
+  description: flavor-base-forbidden
+
+- type: flavor
   id: light
   flavorType: Complex
   description: flavor-complex-light
