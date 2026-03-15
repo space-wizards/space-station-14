@@ -41,9 +41,9 @@ public sealed partial class EmergencyShuttleSystem
     private float _consoleAccumulator = float.MinValue;
 
     /// <summary>
-    /// How long after the transit is over to end the round.
+    /// <see cref="CCVars.RoundEndBufferTime"/>
     /// </summary>
-    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(5);
+    public float RoundEndBufferTime { get; private set; }
 
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleMinTransitTime"/>
@@ -90,6 +90,7 @@ public sealed partial class EmergencyShuttleSystem
         Subs.CVar(ConfigManager, CCVars.EmergencyShuttleMinTransitTime, SetMinTransitTime, true);
         Subs.CVar(ConfigManager, CCVars.EmergencyShuttleMaxTransitTime, SetMaxTransitTime, true);
         Subs.CVar(ConfigManager, CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime, true);
+        Subs.CVar(ConfigManager, CCVars.RoundEndBufferTime, SetRoundEndBufferTime, true);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ComponentStartup>(OnEmergencyStartup);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
@@ -110,6 +111,11 @@ public sealed partial class EmergencyShuttleSystem
     private void SetMaxTransitTime(float obj)
     {
         MaximumTransitTime = Math.Max(MinimumTransitTime, obj);
+    }
+
+    private void SetRoundEndBufferTime(float obj)
+    {
+        RoundEndBufferTime = obj;
     }
 
     private void OnEmergencyStartup(EntityUid uid, EmergencyShuttleConsoleComponent component, ComponentStartup args)
@@ -210,7 +216,7 @@ public sealed partial class EmergencyShuttleSystem
             ShuttlesLeft = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
-            Timer.Spawn((int)(TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
+            Timer.Spawn((int)((TransitTime + RoundEndBufferTime) * 1000), () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
         }
 
         // All the others.
