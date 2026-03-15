@@ -25,12 +25,12 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     {
         // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
         // This can for example happen when the user is cuffed and being pulled.
-        if (TryComp<PullableComponent>(target, out var pull) && _pulling.IsPulled(target, pull))
-            _pulling.TryStopPull(target, pull);
+        _pulling.TryStopPull(target);
+
 
         // Check if the user is pulling anything, and drop it if so.
-        if (TryComp<PullerComponent>(target, out var puller) && TryComp<PullableComponent>(puller.Pulling, out var pullable))
-            _pulling.TryStopPull(puller.Pulling.Value, pullable);
+        if (TryComp<PullerComponent>(target, out var puller))
+            _pulling.TryStopPull(puller.Pulling);
 
         _audio.PlayPredicted(ent.Comp.TeleportSound, ent, args.User);
 
