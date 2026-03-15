@@ -162,8 +162,12 @@ namespace Content.Client.Chemistry.UI
                     throw new($"Chemmaster {castState.OutputContainerInfo} draw source is not set");
             }
 
-            InputEjectButton.Disabled = castState.InputContainerInfo is null;
-            OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
+            InputEjectButton.Text = castState.InputContainerInfo is null ?
+                Loc.GetString("chem-master-window-insert-button") :
+                Loc.GetString("chem-master-window-eject-button");
+            OutputEjectButton.Text = castState.OutputContainerInfo is null ?
+                Loc.GetString("chem-master-window-insert-button") :
+                Loc.GetString("chem-master-window-eject-button");
             CreateBottleButton.Disabled = castState.OutputContainerInfo?.Reagents == null;
             CreatePillButton.Disabled = castState.OutputContainerInfo?.Entities == null;
 
