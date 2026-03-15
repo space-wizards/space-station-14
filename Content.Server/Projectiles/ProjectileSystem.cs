@@ -58,16 +58,25 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         }
         var deleted = Deleted(target);
 
-        if (_damageableSystem.TryChangeDamage((target, damageableComponent), ev.Damage, out var damage, component.IgnoreResistances, origin: component.Shooter) && Exists(component.Shooter))
+        if (_damageableSystem.TryChangeDamage((target, damageableComponent), ev.Damage, out var damage, component.IgnoreResistances, origin: component.Shooter))
         {
             if (!deleted)
             {
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
-            _adminLogger.Add(LogType.BulletHit,
-                LogImpact.Medium,
-                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
+            if (Exists(component.Shooter))
+            {
+                _adminLogger.Add(LogType.BulletHit,
+                    LogImpact.Medium,
+                    $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.BulletHit,
+                    LogImpact.Medium,
+                    $"Projectile {ToPrettyString(uid):projectile} shot by a now deleted entity (grenade?) hit {otherName:target} and dealt {damage:damage} damage");
+            }
 
             component.ProjectileSpent = !TryPenetrate((uid, component), damage, damageRequired);
         }
