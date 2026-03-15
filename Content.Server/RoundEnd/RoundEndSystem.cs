@@ -19,6 +19,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.RoundEnd;
 using Content.Shared.Station.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -28,7 +29,7 @@ namespace Content.Server.RoundEnd
     /// Handles ending rounds normally and also via requesting it (e.g. via comms console)
     /// If you request a round end then an escape shuttle will be used.
     /// </summary>
-    public sealed class RoundEndSystem : EntitySystem
+    public sealed class RoundEndSystem : SharedRoundEndSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -126,7 +127,7 @@ namespace Content.Server.RoundEnd
             return _cooldownTokenSource == null && !CantRecall;
         }
 
-        public bool IsRoundEndRequested()
+        public override bool IsRoundEndRequested()
         {
             return _countdownTokenSource != null;
         }
