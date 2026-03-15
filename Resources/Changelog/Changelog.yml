@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: The artifact analysis console no longer breaks when trying to link it
-      to multiple artifact analyzers or vice versa.
-    type: Fix
-  id: 9069
-  time: '2025-10-11T00:33:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39984
 - author: qwerltaz
   changes:
   - message: The ID card computer now has buttons to grant or revoke all access from
@@ -4005,3 +3997,11 @@
   id: 9579
   time: '2026-03-15T16:08:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43170
+- author: slarticodefast
+  changes:
+  - message: The reagent grinder interactions and user interface are now predicted
+      and should feel much more responsive.
+    type: Tweak
+  id: 9580
+  time: '2026-03-15T19:29:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42815
