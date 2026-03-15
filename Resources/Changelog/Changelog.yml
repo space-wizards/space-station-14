@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: frigid-dev
-  changes:
-  - message: Ore Crabs now collide with the player if mob collisions are enabled.
-    type: Tweak
-  - message: Ore Crabs now show they are stunned
-    type: Fix
-  id: 9066
-  time: '2025-10-10T23:31:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40764
 - author: Crude Oil
   changes:
   - message: Removed 'Activate Holopad Projector' verb from the station AI core.
@@ -4008,3 +3999,11 @@
   id: 9576
   time: '2026-03-14T16:33:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43189
+- author: Centronias
+  changes:
+  - message: Certain small cargo products are now delivered in parcel wrap rather
+      than in crates.
+    type: Tweak
+  id: 9577
+  time: '2026-03-15T13:59:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40834
