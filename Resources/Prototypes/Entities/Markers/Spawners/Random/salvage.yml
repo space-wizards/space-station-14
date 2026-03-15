@@ -206,6 +206,6 @@
     table: !type:GroupSelector
       children:
       - id: MobLuminousPersonSalvage
-      - id: MobLuminousEntity
+      - id: MobLuminousEntitySalvage
       - id: MobLuminousObjectSalvage
         weight: 2
