@@ -56,6 +56,7 @@ wire-name-bolt-light = BLIT
 wire-name-door-bolt = BOLT
 wire-name-door-safety = SAFE
 wire-name-door-timer = TIMR
+wire-name-door-emergency-access = EMRG
 wire-name-lock = LOCK
 wire-name-power = POWR
 wire-name-arcade-invincible = MNGR
