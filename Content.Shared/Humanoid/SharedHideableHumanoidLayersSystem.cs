@@ -52,7 +52,7 @@ public abstract partial class SharedHideableHumanoidLayersSystem : EntitySystem
 
         Dirty(ent);
 
-        var evt = new HumanoidLayerVisibilityChangedEvent(layer, ent.Comp.HiddenLayers.ContainsKey(layer));
+        var evt = new HumanoidLayerVisibilityChangedEvent(layer, !ent.Comp.HiddenLayers.ContainsKey(layer));
         RaiseLocalEvent(ent, ref evt);
     }
 }
