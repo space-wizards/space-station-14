@@ -53,6 +53,12 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    usesApcPower: false
+    mediumVoltageNode: input
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
