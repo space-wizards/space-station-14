@@ -322,6 +322,13 @@ public abstract partial class SharedActionsSystem : EntitySystem
         };
         RaiseLocalEvent(action, ref validateEv);
         if (validateEv.Invalid)
+        {
+            Log.Warning($"{ToPrettyString(user):user} tried performing a invalid {Name(action):action}.");
+
+            return false;
+        }
+
+        if (validateEv.Cancel)
             return false;
 
         if (TryComp<DoAfterArgsComponent>(action, out var actionDoAfterComp) && TryComp<DoAfterComponent>(user, out var performerDoAfterComp) && !skipDoActionRequest)
@@ -372,7 +379,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
             _rotateToFace.TryFaceCoordinates(user, targetWorldPos);
 
         if (!ValidateEntityTarget(user, target, ent))
+        {
+            args.Cancel = true;
             return;
+        }
 
         _adminLogger.Add(LogType.Action,
             $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {ToPrettyString(args.Provider):provider}) targeted at {ToPrettyString(target):target}.");
@@ -395,7 +405,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
             _rotateToFace.TryFaceCoordinates(user, _transform.ToMapCoordinates(target).Position);
 
         if (!ValidateWorldTarget(user, target, ent))
+        {
+            args.Cancel = true;
             return;
+        }
 
         // if the client specified an entity it needs to be valid
         var targetEntity = GetEntity(args.Input.EntityTarget);
