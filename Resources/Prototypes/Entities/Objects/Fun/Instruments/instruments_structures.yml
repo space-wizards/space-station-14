@@ -168,3 +168,16 @@
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
+
+- type: entity
+  id: BigDrumsInstrument
+  parent: BasePlaceableInstrumentRotatable
+  name: drum kit
+  description: Ba dum tss!
+  components:
+  - type: Instrument
+    program: 7
+    bank: 100 # Defined in space-station-14.sf2
+    allowPercussion: true
+  - type: Sprite
+    state: drum
