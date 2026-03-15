@@ -92,16 +92,31 @@ public partial record struct CookingIngredients
     [DataField]
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents { get; private set; } = new();
 
+    /// <summary>
+    ///     Adds a quantity of a solid ingredient to this ingredients list.
+    /// </summary>
+    /// <param name="solidId">The ID of the solid to add.</param>
+    /// <param name="count">How much of the solid to add. 1 by default.</param>
     public readonly void AddSolid(EntProtoId solidId, int count = 1)
     {
         Solids[solidId] = Solids.GetValueOrDefault(solidId) + count;
     }
 
+    /// <summary>
+    ///     Adds a quantity of a material stack to this ingredients list.
+    /// </summary>
+    /// <param name="materialId">The ID of the material stack to add.</param>
+    /// <param name="count">How many stacks to add.</param>
     public readonly void AddMaterial(ProtoId<StackPrototype> materialId, int count)
     {
         Materials[materialId] = Materials.GetValueOrDefault(materialId) + count;
     }
 
+    /// <summary>
+    ///     Adds a quantity of a reagent to this ingredients list.
+    /// </summary>
+    /// <param name="reagentId">The ID of the reagent to add.</param>
+    /// <param name="quantity">The volume of the reagent to add.</param>
     public readonly void AddReagent(ProtoId<ReagentPrototype> reagentId, FixedPoint2 quantity)
     {
         Reagents[reagentId] = Reagents.GetValueOrDefault(reagentId) + quantity;
@@ -146,6 +161,16 @@ public partial record struct CookingIngredients
         return new[] { solidPortions, materialPortions, reagentPortions }.Min();
     }
 
+    /// <summary>
+    ///     Given an ingredient dictionary, and a recipe's ingredient dictionary, gets the maximum
+    ///     amount of times the recipe can be fulfilled with our available ingredients.
+    /// </summary>
+    /// <typeparam name="T">The key of the ingredient dictionary.</typeparam>
+    /// <typeparam name="TCount">A numerical quantity of the ingredient in the dictionary.</typeparam>
+    /// <param name="ingredients">A dictionary of available ingredients.</param>
+    /// <param name="recipe">A recipe's dictionary of required ingredients.</param>
+    /// <param name="divide">Function to divide the recipe's ingredient count by our ingredient count.</param>
+    /// <returns>How many times the given recipe's ingredients can be fulfilled.</returns>
     private static uint GetTimesFulfilled<T, TCount>(Dictionary<T, TCount> ingredients,
         Dictionary<T, TCount> recipe,
         Func<TCount, TCount, uint> divide)
