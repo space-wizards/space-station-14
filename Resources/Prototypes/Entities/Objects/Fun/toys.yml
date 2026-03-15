@@ -54,8 +54,8 @@
   - type: Storage
     grid:
     - 0,0,4,3
-    areaInsert: true
     maxItemSize: Tiny
+  - type: AreaPickup
   - type: EntityTableContainerFill
     containers:
       storagebase:
