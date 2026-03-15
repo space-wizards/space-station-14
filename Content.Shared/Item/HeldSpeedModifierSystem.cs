@@ -17,16 +17,24 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotUnequippedHandEvent>(OnGotUnequippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshMovementSpeedModifiers);
+        SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshWeightlessModifiersEvent>>(OnRefreshModifiers);
+    }
+
+    private void OnRefreshModifiers(Entity<HeldSpeedModifierComponent> ent, ref HeldRelayedEvent<RefreshWeightlessModifiersEvent> args)
+    {
+        args.Args.ModifySpeed(ent.Comp.ZeroGravityModifier);
     }
 
     private void OnGotEquippedHand(Entity<HeldSpeedModifierComponent> ent, ref GotEquippedHandEvent args)
     {
         _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshWeightlessModifiers(args.User);
     }
 
     private void OnGotUnequippedHand(Entity<HeldSpeedModifierComponent> ent, ref GotUnequippedHandEvent args)
     {
         _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshWeightlessModifiers(args.User);
     }
 
     public (float,float) GetHeldMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component)
@@ -41,6 +49,7 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
 
         return (walkMod, sprintMod);
     }
+
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
