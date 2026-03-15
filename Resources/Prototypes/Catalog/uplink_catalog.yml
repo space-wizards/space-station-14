@@ -2196,6 +2196,42 @@
     - Mime
 
 - type: listing
+  id: UplinkRCMouse
+  name: uplink-rcmouse-name
+  description: uplink-rcmouse-desc
+  productEntity: MobRemoteMouseUplinkFilled
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkDeception
+  conditions:
+  - !type:StoreWhitelistCondition
+     blacklist:
+       tags:
+       - NukeOpsUplink
+
+- type: listing
+  id: UplinkNukieRCMouse
+  name: uplink-rcmouse-name
+  description: uplink-rcmouse-desc
+  productEntity: MobRemoteMouseUplinkFilled
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkDeception
+  conditions:
+  - !type:StoreWhitelistCondition
+     whitelist:
+       tags:
+       - NukeOpsUplink
+
+- type: listing
   id: UplinkContrabandLighter
   name: uplink-contraband-lighter-name
   description: uplink-contraband-lighter-desc
