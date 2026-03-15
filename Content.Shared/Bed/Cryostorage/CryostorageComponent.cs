@@ -63,14 +63,19 @@ public record struct CryostorageContainedPlayerData()
     public NetEntity PlayerEnt = NetEntity.Invalid;
 
     /// <summary>
-    /// A dictionary relating a slot definition name to the name of the item inside of it.
+    /// A list of slot data - id name of the slot, user friendly display name of the slot and the name of the item inside of it.
     /// </summary>
-    public Dictionary<string, string> ItemSlots = new();
+    public List<(string, string, string)> ItemSlots = new();
 
     /// <summary>
     /// A dictionary relating a hand ID to the hand name and the name of the item being held.
     /// </summary>
     public Dictionary<string, string> HeldItems = new();
+
+    /// <summary>
+    /// List containing items stored within entity stored in cryo, for example Slime people. It containes Id number and name of the item being held.
+    /// </summary>
+    public List<(short, string)> ItemsStoredInsidePlayer = new();
 }
 
 [Serializable, NetSerializable]
@@ -96,7 +101,8 @@ public sealed class CryostorageRemoveItemBuiMessage : BoundUserInterfaceMessage
     public enum RemovalType : byte
     {
         Hand,
-        Inventory
+        Inventory,
+        InsidePlayer
     }
 
     public CryostorageRemoveItemBuiMessage(NetEntity storedEntity, string key, RemovalType type)
