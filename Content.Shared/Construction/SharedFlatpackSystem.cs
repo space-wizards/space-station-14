@@ -10,8 +10,11 @@ using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction;
@@ -31,6 +34,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -80,10 +84,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
         var coords = _map.ToCenterCoordinates(grid, buildPos);
 
-        // TODO FLATPAK
-        // Make this logic smarter. This should eventually allow for shit like building microwaves on tables and such.
-        // Also: make it ignore ghosts
-        if (_entityLookup.AnyEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static))
+        if (!HasRoomToConstruct(comp.Entity.Value, coords))
         {
             // this popup is on the server because the predicts on the intersection is crazy
             if (_net.IsServer)
@@ -163,6 +164,44 @@ public abstract class SharedFlatpackSystem : EntitySystem
         {
             cost.TryAdd(mat, 0);
             cost[mat] -= amount;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if there is room to construct a prototype at specified coordinates,
+    /// checking collison layers.
+    /// </summary>
+    /// <param name="protoId">The prototype being constructed</param>
+    /// <param name="coords">Location that protoId is being constructed</param>
+    private bool HasRoomToConstruct(EntProtoId protoId, EntityCoordinates coords)
+    {
+        var entWithPhysics = new EntProtoId<FixturesComponent>(protoId);
+        if (!entWithPhysics.TryGet(out var flatpackFixtures, PrototypeManager, Factory))
+        {
+            // The entity we're constructing has no fixtures, so can't overlap anything
+            return true;
+        }
+
+        // Have to call the static version of this method, as we don't
+        // have an EntityId for the item contained in the flatpack:
+        var (flatpackedLayer, flatpackedMask) = SharedPhysicsSystem.GetHardCollision(flatpackFixtures);
+
+        // Find all the overlaps at the coordinates and see if they have a collision
+        // layer which collides with any of the flatpacked entity's collision mask
+        // Note, we're not doing a proper narrowphase test against every fixture pair
+        // here, just checking for any fixture at the specified coordinates.
+        var overlaps = _entityLookup.GetEntitiesIntersecting(coords, LookupFlags.Static | LookupFlags.Dynamic);
+        foreach (var overlap in overlaps)
+        {
+            var (overlapLayer, overlapMask) = _physics.GetHardCollision(overlap);
+            if ((overlapLayer & flatpackedMask) != 0 || (overlapMask & flatpackedLayer) != 0)
+            {
+                // Found an overlap containing fixtures which would collide with
+                // at least one of the flatpacked entity's fixtures.
+                return false;
+            }
         }
 
         return true;
