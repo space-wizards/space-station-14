@@ -108,6 +108,8 @@
         - ReagentId: Plasma
           Quantity: 10
         canReact: false
+  - type: TicketValue
+    ticketValue: 15
 
 - type: entity
   parent: SheetPlasma
@@ -171,6 +173,8 @@
         - ReagentId: Phosphorus
           Quantity: 5
         canReact: false
+  - type: TicketValue
+    ticketValue: 10
 
 - type: entity
   parent: SheetPlastic
@@ -233,6 +237,8 @@
         - ReagentId: Radium
           Quantity: 2
         canReact: false
+  - type: TicketValue
+    ticketValue: 20
 
 - type: entity
   parent: SheetUranium

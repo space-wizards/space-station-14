@@ -1779,3 +1779,56 @@
     name: store-preset-name-nukie-delivery
     categories:
     - NukieDelivery
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerCargoOrdersSalvage
+  name: salvage requisition console
+  description: An interface for redeeming salvage tokens to request additional gear for your duties.
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: salvjob
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoOrderConsole
+    account: Salvage
+    cashType: SalvTicket
+    allowedGroups:
+    - salvage
+    baseTransferLimit: 0
+  - type: ActiveRadio
+    channels:
+    - Supply
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Orders
+  - type: UserInterface
+    interfaces:
+      enum.CargoConsoleUiKey.Orders:
+        type: CargoOrderConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: CargoRequestSalvageComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#a1449a"
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    range: 200
+    ports:
+      - OrderSender

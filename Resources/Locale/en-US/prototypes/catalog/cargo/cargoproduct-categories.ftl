@@ -14,3 +14,8 @@ cargoproduct-category-name-science = Science
 cargoproduct-category-name-security = Security
 cargoproduct-category-name-service = Service
 cargoproduct-category-name-shuttle = Shuttle
+
+cargoproduct-category-name-salv-equipment = Equipment
+cargoproduct-category-name-salv-hardsuits = Hardsuits
+cargoproduct-category-name-salv-weapons = Weapons
+cargoproduct-category-name-salv-other = Other

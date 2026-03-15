@@ -50,6 +50,7 @@
   - type: Tag
     tags:
     - Recyclable
+    - SalvageScrap
   - type: Transform
     anchored: False
     noRot: true

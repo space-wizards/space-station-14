@@ -2,10 +2,4 @@
   id: market
 
 - type: cargoMarket
-  id: SalvageJobReward2
-
-- type: cargoMarket
-  id: SalvageJobReward3
-
-- type: cargoMarket
-  id: SalvageJobRewardMAX
+  id: salvage

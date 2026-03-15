@@ -1,0 +1,98 @@
+- type: entity
+  parent: BaseItem
+  id: SalvageTicket
+  name: salvage tokens
+  suffix: 1
+  description: A simple and rugged stamped coin, redeemable at a salvage requisition console as proof of contribution to the station.
+  components:
+  - type: Item
+    size: Small
+  - type: Stack
+    count: 1
+    stackType: SalvTicket
+    baseLayer: base
+    layerStates:
+    - coin_salv
+    - coin_salv_100
+    - coin_salv_1000
+    - coin_salv_5000
+    - coin_salv_10000
+    - coin_salv_25000
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [10, 100, 1000, 5000, 10000, 25000]
+  - type: Sprite
+    sprite: Objects/Misc/coins.rsi
+    state: coin_salv
+    layers:
+    - state: coin_salv
+      map: ["base"]
+  - type: StaticPrice
+    price: 0
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      SalvTicket: 1
+  - type: Appearance
+
+- type: material
+  id: SalvTicket
+  name: salvage token
+  unit: materials-unit-ticket
+  stackEntity: SalvageTicket
+  icon: { sprite: /Textures/Objects/Misc/coins.rsi, state: coin_salv }
+  price: 1
+
+- type: stack
+  id: SalvTicket
+  name: stack-salvage-ticket
+  icon: { sprite: /Textures/Objects/Misc/coins.rsi, state: coin_salv }
+  spawn: SalvageTicket
+
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket10
+  suffix: 10
+  components:
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket100
+  suffix: 100
+  components:
+  - type: Stack
+    count: 100
+
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket1000
+  suffix: 1000
+  components:
+  - type: Stack
+    count: 1000
+
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket5000
+  suffix: 5000
+  components:
+  - type: Stack
+    count: 5000
+
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket10000
+  suffix: 10000
+  components:
+  - type: Stack
+    count: 10000
+
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket25000
+  suffix: 25000
+  components:
+  - type: Stack
+    count: 25000

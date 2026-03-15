@@ -85,6 +85,11 @@ stack-xenoborg-circuit = dvanced xenoborg {$amount ->
     *[other] circuitboards
 }
 
+stack-salvage-ticket = {$amount ->
+    [1] token
+    *[other] tokens
+}
+
 # best materials
 stack-ground-tobacco = ground tobacco
 stack-ground-cannabis = ground cannabis

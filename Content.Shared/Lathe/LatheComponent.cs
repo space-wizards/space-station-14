@@ -121,4 +121,10 @@ namespace Content.Shared.Lathe
     /// </summary>
     [ByRefEvent]
     public readonly record struct LatheStartPrintingEvent(LatheRecipePrototype Recipe);
+
+    /// <summary>
+    /// Event raised on a lathe when it finishes producing a recipe.
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct LatheFinishPrintingEvent(LatheRecipePrototype Recipe);
 }
