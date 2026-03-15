@@ -17,12 +17,13 @@
   abstract: true
   components:
   - type: Appearance
-  - type: FlippableClothingVisuals
   - type: Foldable
     canFoldInsideContainer: true
     unfoldVerbText: fold-flip-verb
     foldVerbText: fold-flip-verb
   - type: FoldableClothing
+    foldedEquippedPrefix: flipped
+    foldedHeldPrefix: flipped
   - type: Sprite
     layers:
     - map: [ "unfoldedLayer" ]
@@ -40,6 +41,10 @@
   components:
   - type: Foldable
     folded: true
+  - type: Clothing
+    equippedPrefix: flipped
+  - type: Item
+    heldPrefix: flipped
   - type: Sprite
     layers:
     - map: [ "unfoldedLayer" ]

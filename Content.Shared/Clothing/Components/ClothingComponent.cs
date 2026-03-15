@@ -19,12 +19,6 @@ public sealed partial class ClothingComponent : Component
     [DataField]
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
-    /// <summary>
-    /// The name of the layer in the user that this piece of clothing will map to
-    /// </summary>
-    [DataField]
-    public string? MappedLayer;
-
     [DataField]
     public bool QuickEquip = true;
 
