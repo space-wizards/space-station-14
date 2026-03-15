@@ -3,6 +3,7 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:ui="clr-namespace:Content.Client.Materials.UI"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="550 450"
     SetSize="750 500">
@@ -42,13 +43,11 @@
                             <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
                         </PanelContainer.PanelOverride>
                         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-                            <BoxContainer
+                            <controls:ListContainer
                                 Name="RecipeList"
-                                Orientation="Vertical"
                                 HorizontalExpand="True"
                                 VerticalExpand="True"
-                                RectClipContent="True">
-                            </BoxContainer>
+                                RectClipContent="True" />
                         </ScrollContainer>
                     </PanelContainer>
                 </BoxContainer>
@@ -88,7 +87,8 @@
                     Name="FabricatingContainer"
                     Orientation="Horizontal"
                     HorizontalExpand="True"
-                    SizeFlagsStretchRatio="2">
+                    SizeFlagsStretchRatio="2"
+                    Visible="False">
                     <PanelContainer
                         VerticalExpand="True"
                         HorizontalExpand="True"
