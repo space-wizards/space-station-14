@@ -49,9 +49,8 @@ public sealed class SharedGasTileFireOverlaySystemTest : AtmosTest
             Assert.That(ItemToggleSys.TryActivate(welder)); //ignite em
         });
 
-        await RunTicks(60);
+        await RunTicks(10);
         await Task.WhenAll(Client.WaitIdleAsync(), Server.WaitIdleAsync());
-
 
         await Client.WaitPost(() =>
         {
