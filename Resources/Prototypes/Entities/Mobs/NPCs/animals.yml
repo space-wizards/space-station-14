@@ -3264,6 +3264,7 @@
   - type: MovementAlwaysTouching
   - type: PressureImmunity
   - type: ProtectedFromStepTriggers
+  - type: TriggerProtectedFromStepTriggers
   - type: Insulated
   - type: InteractionPopup
     successChance: 0.7
