@@ -21,6 +21,7 @@ namespace Content.Server.Power.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentStartup>(OnReceiverStartup);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExaminedEvent>(OnExamined);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
@@ -37,6 +38,11 @@ namespace Content.Server.Power.EntitySystems
 
             _recQuery = GetEntityQuery<ApcPowerReceiverComponent>();
             _provQuery = GetEntityQuery<ApcPowerProviderComponent>();
+        }
+
+        private void OnReceiverStartup(Entity<ApcPowerReceiverComponent> ent, ref ComponentStartup args)
+        {
+            ent.Comp.PowerDisabled = ent.Comp.StartingPowerDisabled;
         }
 
         private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
