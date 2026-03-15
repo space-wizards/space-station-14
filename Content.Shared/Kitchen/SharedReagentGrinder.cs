@@ -3,13 +3,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Kitchen;
 
 /// <summary>
-/// Send by the client if they want to toggle the grinder's auto mode.
+/// Sent by the client if they want to toggle the grinder's auto mode.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class ReagentGrinderToggleAutoModeMessage() : BoundUserInterfaceMessage;
 
 /// <summary>
-/// Send by the client if they want to start the grinder.
+/// Sent by the client if they want to start the grinder.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class ReagentGrinderStartMessage(GrinderProgram program) : BoundUserInterfaceMessage
@@ -18,13 +18,13 @@ public sealed class ReagentGrinderStartMessage(GrinderProgram program) : BoundUs
 }
 
 /// <summary>
-/// Send by the client if they want to eject all grindable entities within the grinder.
+/// Sent by the client if they want to eject all grindable entities within the grinder.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class ReagentGrinderEjectChamberAllMessage() : BoundUserInterfaceMessage;
 
 /// <summary>
-/// Send by the client if they want eject a single grindable entity within the grinder.
+/// Sent by the client if they want eject a single grindable entity within the grinder.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class ReagentGrinderEjectChamberContentMessage(NetEntity entityId) : BoundUserInterfaceMessage
