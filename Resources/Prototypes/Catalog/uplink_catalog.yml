@@ -531,6 +531,21 @@
   categories:
   - UplinkExplosives
 
+- type: listing
+  id: UplinkDeadmanSwitch
+  name: uplink-deadman-switch-name
+  description: uplink-deadman-switch-desc
+  productEntity: RemoteSignallerDeadman
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+     blacklist:
+       tags:
+       - NukeOpsUplink
+
 # Ammo
 
 - type: listing
