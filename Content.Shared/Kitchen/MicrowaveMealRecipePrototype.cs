@@ -3,7 +3,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Kitchen;
 
@@ -93,6 +92,21 @@ public partial record struct CookingIngredients
     [DataField]
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents { get; private set; } = new();
 
+    public readonly void AddSolid(EntProtoId solidId, int count = 1)
+    {
+        Solids[solidId] = Solids.GetValueOrDefault(solidId) + count;
+    }
+
+    public readonly void AddMaterial(ProtoId<StackPrototype> materialId, int count)
+    {
+        Materials[materialId] = Materials.GetValueOrDefault(materialId) + count;
+    }
+
+    public readonly void AddReagent(ProtoId<ReagentPrototype> reagentId, FixedPoint2 quantity)
+    {
+        Reagents[reagentId] = Reagents.GetValueOrDefault(reagentId) + quantity;
+    }
+
     /// <summary>
     ///    Count the number of ingredients in a recipe for sorting the recipe list.
     ///    This makes sure that where ingredient lists overlap, the more complex
@@ -153,19 +167,18 @@ public partial record struct CookingIngredients
 
     public static CookingIngredients operator +(CookingIngredients c1, CookingIngredients c2)
     {
-        var solids = c1.Solids.ShallowClone();
+        var newIngredients = c1;
+
         foreach (var (key, count) in c2.Solids)
-            solids[key] = solids.GetValueOrDefault(key) + count;
+            newIngredients.AddSolid(key, count);
 
-        var materials = c1.Materials.ShallowClone();
         foreach (var (key, count) in c2.Materials)
-            materials[key] = materials.GetValueOrDefault(key) + count;
+            newIngredients.AddMaterial(key, count);
 
-        var reagents = c1.Reagents.ShallowClone();
         foreach (var (key, quantity) in c2.Reagents)
-            reagents[key] = reagents.GetValueOrDefault(key) + quantity;
+            newIngredients.AddReagent(key, quantity);
 
-        return new(solids, materials, reagents);
+        return newIngredients;
     }
 
     public static CookingIngredients operator *(CookingIngredients c1, int scalar)

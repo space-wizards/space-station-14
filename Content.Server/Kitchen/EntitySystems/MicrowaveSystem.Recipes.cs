@@ -108,7 +108,7 @@ public sealed partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Gets all usable ingredients from a given entity.
+    ///     Adds all usable ingredients from a given entity to an ingredient list.
     /// </summary>
     /// <remarks>
     ///     The entity itself is a "solid".
@@ -116,24 +116,18 @@ public sealed partial class MicrowaveSystem
     ///     If it has a usable ingredient solution, then the solution's contents are "reagents".
     /// </remarks>
     /// <param name="item">The entity to use as ingredients.</param>
-    /// <returns>Quantities of ingredients represented by this item.</returns>
-    private CookingIngredients SumItemIngredients(EntityUid item)
+    /// <param name="ingredients">A dictionary of available ingredients to add to.</param>
+    private void AddItemIngredients(EntityUid item, ref CookingIngredients ingredients)
     {
-        var solids = new Dictionary<EntProtoId, int>();
-        var materials = new Dictionary<ProtoId<StackPrototype>, int>();
-        var reagents = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>();
-
         if (TryGetSolidId(item, out var solidId))
-            solids.Add(solidId.Value, 1);
+            ingredients.AddSolid(solidId.Value);
 
         if (TryGetMaterialId(item, out var materialId, out var stack))
-            materials.Add(materialId.Value, stack.Value.Comp.Count);
+            ingredients.AddMaterial(materialId.Value, stack.Value.Comp.Count);
 
         if (TryGetUsableIngredientSolution(item, out var _, out var solution))
             foreach (var (reagent, quantity) in solution.Contents)
-                reagents.Add(reagent.Prototype, quantity);
-
-        return new(solids, materials, reagents);
+                ingredients.AddReagent(reagent.Prototype, quantity);
     }
 
     /// <summary>
@@ -147,7 +141,7 @@ public sealed partial class MicrowaveSystem
         var ingredients = new CookingIngredients();
 
         foreach (var item in items)
-            ingredients += SumItemIngredients(item);
+            AddItemIngredients(item, ref ingredients);
 
         return ingredients;
     }
