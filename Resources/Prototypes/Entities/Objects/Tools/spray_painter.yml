@@ -35,6 +35,7 @@
   - type: LimitedCharges
     maxCharges: 15
     lastCharges: 15
+  - type: ChargeItemStatus
   - type: PhysicalComposition
     materialComposition:
       Steel: 100

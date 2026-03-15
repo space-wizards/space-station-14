@@ -94,6 +94,7 @@
       flashOnUse: false
     - type: LimitedCharges
       maxCharges: 15
+    - type: ChargeItemStatus
     - type: MeleeWeapon
       damage:
         types:
