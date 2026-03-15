@@ -1122,6 +1122,19 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  id: DiscoFloorFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: discoFloor
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 #conveyor
 - type: construction
   id: ConveyorBelt
