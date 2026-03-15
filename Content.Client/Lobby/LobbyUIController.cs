@@ -138,8 +138,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     public void OnStateExited(LobbyState state)
     {
         PreviewPanel?.SetLoaded(false);
-        _profileEditor?.Dispose();
-        _characterSetup?.Dispose();
+        _profileEditor?.Orphan();
+        _characterSetup?.Orphan();
 
         _characterSetup = null;
         _profileEditor = null;
