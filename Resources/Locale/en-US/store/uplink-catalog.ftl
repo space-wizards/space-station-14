@@ -124,6 +124,9 @@ uplink-mosin-ammo-desc = A box of 60 cartridges for the surplus rifle.
 uplink-sniper-ammo-name = Ammunition box (.60 antimateriel)
 uplink-sniper-ammo-desc = A box of 10 cartridges for the Hristov sniper rifle.
 
+uplink-sniper-ammo-hollow-name = Ammunition box (.60 hollow point)
+uplink-sniper-ammo-hollow-desc = A box of 5 exotic and expensive hollow point rounds for the hristov sniper rifle. Trades out almost all its breaching power in favor of dealing massive harm to personnel.
+
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
 uplink-holopara-kit-desc = The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active.

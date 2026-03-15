@@ -39,3 +39,23 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBoxAntiMateriel
+  id: MagazineBoxHristovHollowPoint
+  name: ammunition box (.60 hollow point)
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeAntiMateriel
+    proto: CartridgeHristovHollowPoint
+    capacity: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/hristov_hollow_point.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+

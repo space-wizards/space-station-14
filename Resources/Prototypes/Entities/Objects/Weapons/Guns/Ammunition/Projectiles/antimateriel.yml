@@ -14,3 +14,17 @@
     - Structural
   - type: StaminaDamageOnCollide
     damage: 60
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  id: BulletHristovHollowPoint
+  name: bullet (.60 hollow point)
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 75
+        Slash: 20
+  - type: StaminaDamageOnCollide
+    damage: 40
