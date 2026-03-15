@@ -79,6 +79,16 @@
   group: market
 
 - type: cargoProduct
+  id: FoodHappyHonkCotton
+  icon:
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    state: grilled-cheese-cotton
+  product: CrateFoodHappyHonkCotton
+  cost: 2800
+  category: cargoproduct-category-name-food
+  group: market
+
+- type: cargoProduct
   id: FoodIceCream
   icon:
     sprite: Objects/Consumable/Food/frozen.rsi
