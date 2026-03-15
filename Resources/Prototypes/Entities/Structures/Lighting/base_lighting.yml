@@ -9,6 +9,10 @@
   name: light
   description: "An always powered light."
   suffix: Always powered
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
   - type: MeleeSound
     soundGroups:
@@ -85,10 +89,8 @@
           collection: GlassBreak
   - type: PlacementReplacement
     key: lights
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
+  - type: IgnoreProjectilesAboveAngle
+    backwards: true
 
 - type: entity
   name: light
