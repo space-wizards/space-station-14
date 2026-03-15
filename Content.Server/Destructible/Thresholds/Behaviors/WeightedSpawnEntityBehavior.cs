@@ -25,7 +25,8 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
     private static readonly EntProtoId TempEntityProtoId = "TemporaryEntityForTimedDespawnSpawners";
     private const int MaxSpawnAttempts = 5;
     private const CollisionGroup SpawnCollisionMask = CollisionGroup.InteractImpassable;
-    private const float MinSpawnSeparation = 1.0f;
+    // Chosen arbitrarily, seems to work fine
+    private const float MinSpawnSeparation = 0.7f;
 
     /// <summary>
     /// A table of entities with assigned weights to randomly pick from
@@ -63,47 +64,9 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
         // Get the position at which to start initially spawning entities
         var transform = system.EntityManager.System<TransformSystem>();
         var position = transform.GetMapCoordinates(uid);
-        // Helper function used to randomly get an offset to apply to the original position
-        Vector2 GetRandomVector() => new (system.Random.NextFloat(-SpawnOffset, SpawnOffset), system.Random.NextFloat(-SpawnOffset, SpawnOffset));
         // Randomly pick the entity to spawn and randomly pick how many to spawn
         var entity = system.PrototypeManager.Index(WeightedEntityTable).Pick(system.Random);
         var amountToSpawn = system.Random.NextFloat(MinSpawn, MaxSpawn);
-
-        bool CheckExistingMarkers(MapCoordinates coordinates)
-        {
-            foreach (var entity in lookup.GetEntitiesInRange(coordinates, MinSpawnSeparation))
-            {
-                if (!system.EntityManager.TryGetComponent<MetaDataComponent>(entity, out var metadata))
-                    continue;
-
-                if (metadata.EntityPrototype is not null && metadata.EntityPrototype.ID == TempEntityProtoId)
-                    return true;
-            }
-
-            return false;
-        }
-
-        bool TrySpawn(string prototype, out EntityUid spawned)
-        {
-            for (var attempt = 0; attempt < MaxSpawnAttempts; attempt++)
-            {
-                var coordinates = position.Offset(GetRandomVector());
-
-                // Make sure we're not stacking spawn markers on top of each other
-                if (CheckExistingMarkers(coordinates))
-                    continue;
-
-                var spawnedEntity = system.EntityManager.SpawnIfUnobstructed(prototype, coordinates, SpawnCollisionMask);
-                if (spawnedEntity is not null)
-                {
-                    spawned = spawnedEntity.Value;
-                    return true;
-                }
-            }
-
-            spawned = default;
-            return false;
-        }
 
         // Different behaviors for delayed spawning and immediate spawning
         if (SpawnAfter != 0)
@@ -115,7 +78,7 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
             // spawn the spawner, assign it a lifetime, and assign the entity that it will spawn when despawned
             for (var i = 0; i < amountToSpawn; i++)
             {
-                if (TrySpawn(tempSpawnerProto.ID, out var spawner))
+                if (TrySpawn(position, tempSpawnerProto.ID, system, lookup, out var spawner))
                 {
                     system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
                     timedDespawnComponent.Lifetime = SpawnAfter;
@@ -129,8 +92,48 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
             // directly spawn the desired entities
             for (var i = 0; i < amountToSpawn; i++)
             {
-                TrySpawn(entity, out _);
+                TrySpawn(position, entity, system, lookup, out _);
             }
         }
+    }
+
+    // Make X attempts to spawn Y entities properly spaced
+    private bool TrySpawn(MapCoordinates position, string prototype, DestructibleSystem system, EntityLookupSystem lookup, out EntityUid spawned)
+    {
+        for (var attempt = 0; attempt < MaxSpawnAttempts; attempt++)
+        {
+            var coordinates = position.Offset(GetRandomVector(system));
+
+            if (CheckSpotIsFree(coordinates, lookup))
+                continue;
+
+            var spawnedEntity = system.EntityManager.SpawnIfUnobstructed(prototype, coordinates, SpawnCollisionMask);
+            if (spawnedEntity is not null)
+            {
+                spawned = spawnedEntity.Value;
+                return true;
+            }
+        }
+
+        spawned = default;
+        return false;
+    }
+
+    // Make sure we're not stacking spawn markers on top of each other
+    private static bool CheckSpotIsFree(MapCoordinates coordinates, EntityLookupSystem lookup)
+    {
+        foreach (var entity in lookup.GetEntitiesInRange<MetaDataComponent>(coordinates, MinSpawnSeparation))
+        {
+            if (entity.Comp.EntityPrototype is not null && entity.Comp.EntityPrototype.ID == TempEntityProtoId)
+                return true;
+        }
+
+        return false;
+    }
+
+    // Helper function used to randomly get an offset to apply to the original position
+    private Vector2 GetRandomVector(DestructibleSystem system)
+    {
+        return new(system.Random.NextFloat(-SpawnOffset, SpawnOffset), system.Random.NextFloat(-SpawnOffset, SpawnOffset));
     }
 }
