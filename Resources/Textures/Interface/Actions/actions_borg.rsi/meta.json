@@ -134,6 +134,9 @@
             "name":"xenoborg-basic-module"
         },
         {
+            "name":"xenoborg-jump-module"
+        },
+        {
             "name":"xenoborg-camera-computer"
         },
         {
