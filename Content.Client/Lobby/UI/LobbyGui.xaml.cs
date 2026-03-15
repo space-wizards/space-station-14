@@ -18,6 +18,7 @@ namespace Content.Client.Lobby.UI
             IoCManager.InjectDependencies(this);
             SetAnchorPreset(MainContainer, LayoutPreset.Wide);
             SetAnchorPreset(Background, LayoutPreset.Wide);
+            SetAnchorPreset(CharacterSetupState, LayoutPreset.Wide);
 
             LobbySong.SetMarkup(Loc.GetString("lobby-state-song-no-song-text"));
 

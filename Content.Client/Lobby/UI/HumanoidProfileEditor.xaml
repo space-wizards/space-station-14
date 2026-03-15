@@ -6,44 +6,14 @@
          xmlns:profile="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls"
          HorizontalExpand="True">
         <!-- Left side -->
-        <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" Margin="10" HorizontalExpand="True">
             <!-- Middle container -->
             <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalExpand="True">
-                <!-- Name box-->
-                <BoxContainer Orientation="Vertical">
-                    <ui:HighlightedContainer>
-                        <BoxContainer Orientation="Vertical">
-                            <ui:HighlightedContainer>
-                                <BoxContainer Orientation="Vertical">
-                                    <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-                                        <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
-                                        <LineEdit Name="NameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
-                                        <Button Name="NameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
-                                    </BoxContainer>
-                                    <Button Name="RandomizeEverythingButton" HorizontalAlignment="Center"
-                                            HorizontalExpand="False" MaxWidth="256"
-                                            Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
-                                    <RichTextLabel Name="WarningLabel" HorizontalExpand="False"
-                                                   VerticalExpand="True" MaxWidth="425"
-                                                   HorizontalAlignment="Left" />
-                                </BoxContainer>
-                            </ui:HighlightedContainer>
-                        </BoxContainer>
-                    </ui:HighlightedContainer>
-                </BoxContainer>
-                <!-- Import/Export -->
-                <BoxContainer Orientation="Vertical" MinSize="60 0" HorizontalExpand="True" HorizontalAlignment="Right">
-                    <ui:HighlightedContainer Name="ProfileHighlight">
-                        <BoxContainer Orientation="Vertical">
-                            <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}"/>
-                            <Button Name="ResetButton" Disabled="True" Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
-                            <Button Name="ImportButton" Text="{Loc 'humanoid-profile-editor-import-button'}"/>
-                            <Button Name="ExportButton" Text="{Loc 'humanoid-profile-editor-export-button'}"/>
-                            <Button Name="ExportImageButton" Text="{Loc 'humanoid-profile-editor-export-image-button'}"/>
-                            <Button Name="OpenImagesButton" Text="{Loc 'humanoid-profile-editor-open-image-button'}"/>
-                        </BoxContainer>
-                    </ui:HighlightedContainer>
-                </BoxContainer>
+                <Button Name="ImportButton" Text="{Loc 'humanoid-profile-editor-import-button'}"/>
+                <Button Name="ExportButton" Text="{Loc 'humanoid-profile-editor-export-button'}"/>
+                <Control HorizontalExpand="True" />
+                <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}"/>
+                <Button Name="ResetButton" Disabled="True" Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
             </BoxContainer>
             <Control MinHeight="10" />
             <!-- tabContainer -->
@@ -53,6 +23,13 @@
                         <!-- appearanceList -->
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Margin="10" Orientation="Vertical" HorizontalExpand="True">
+                                <!-- Name -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <LineEdit Name="NameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
+                                    <Button Name="NameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
+                                </BoxContainer>
                                 <!-- Species -->
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
@@ -79,12 +56,6 @@
                                     <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
                                     <Control HorizontalExpand="True"/>
                                     <OptionButton Name="PronounsButton" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- Show clothing -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-clothing'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'humanoid-profile-editor-clothing-show'}" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Spawn Priority -->
                                 <BoxContainer HorizontalExpand="True">
@@ -134,11 +105,17 @@
         </BoxContainer>
         <!-- Right side -->
         <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
+            <Button Name="RandomizeEverythingButton" HorizontalAlignment="Center"
+                    HorizontalExpand="False" MaxWidth="256"
+                    Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
             <profile:ProfilePreviewSpriteView Name="SpriteView" Scale="8 8" Margin="4" SizeFlagsStretchRatio="1" />
             <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
                 <Button Name="SpriteRotateLeft" Text="◀" StyleClasses="OpenRight" />
                 <cc:VSeparator Margin="2 0 3 0" />
                 <Button Name="SpriteRotateRight" Text="▶" StyleClasses="OpenLeft" />
             </BoxContainer>
+            <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'humanoid-profile-editor-clothing-show'}" HorizontalAlignment="Center" />
+            <Button Name="ExportImageButton" Text="{Loc 'humanoid-profile-editor-export-image-button'}" HorizontalAlignment="Center"/>
+            <Button Name="OpenImagesButton" Text="{Loc 'humanoid-profile-editor-open-image-button'}" HorizontalAlignment="Center"/>
         </BoxContainer>
 </BoxContainer>
