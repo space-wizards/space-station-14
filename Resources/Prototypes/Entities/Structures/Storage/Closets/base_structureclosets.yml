@@ -38,7 +38,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.48,0.25,0.48"
+          bounds: "-0.20,-0.20,0.20,0.20"
         density: 75
         mask:
         - MachineMask
@@ -100,6 +100,8 @@
     stateBaseClosed: generic
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+    openDrawDepth: Objects
+    closedDrawDepth: Mobs
   - type: StaticPrice
     price: 75
 
