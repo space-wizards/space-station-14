@@ -12,7 +12,7 @@ namespace Content.Shared.Temperature.HeatContainer;
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
 [Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem))]
-public partial struct HeatContainer : IRobustCloneable<HeatContainer>
+public partial struct HeatContainer : IRobustCloneable<HeatContainer>, IHeatContainer
 {
     /// <summary>
     /// The heat capacity of this container in Joules per Kelvin.
@@ -21,13 +21,13 @@ public partial struct HeatContainer : IRobustCloneable<HeatContainer>
     /// without a significant change in temperature.
     /// </summary>
     [DataField]
-    public float HeatCapacity = 4000f; // about 1kg of water
+    public float HeatCapacity { get; set; } = 4000f; // about 1kg of water
 
     /// <summary>
     /// The current temperature of the container in Kelvin.
     /// </summary>
     [DataField]
-    public float Temperature = Atmospherics.T20C; // room temperature
+    public float Temperature { get; set; } = Atmospherics.T20C; // room temperature
 
     /// <summary>
     /// The current temperature of the container in Celsius.

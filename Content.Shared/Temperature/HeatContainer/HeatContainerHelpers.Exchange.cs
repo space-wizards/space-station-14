@@ -11,14 +11,16 @@ public static partial class HeatContainerHelpers
     /// to bring them into thermal equilibrium.
     /// Does not modify the containers.
     /// </summary>
-    /// <param name="cA">The first <see cref="HeatContainer"/> to exchange heat.</param>
-    /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
+    /// <param name="cA">The first <see cref="IHeatContainer"/> to exchange heat.</param>
+    /// <param name="cB">The second <see cref="IHeatContainer"/> to exchange heat with.</param>
     /// <returns>The amount of heat in joules that is needed
     /// to bring the containers to thermal equilibrium.</returns>
     /// <example>A positive value indicates heat transfer from a hot cA to a cold cB.</example>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of both containers is zero or negative.</exception>
     [PublicAPI]
-    public static float EquilibriumHeatQuery(this ref HeatContainer cA, ref HeatContainer cB)
+    public static float EquilibriumHeatQuery<T1, T2>(ref T1 cA, ref T2 cB)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var cTotal = cA.HeatCapacity + cB.HeatCapacity;
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(cTotal);
@@ -43,26 +45,30 @@ public static partial class HeatContainerHelpers
     /// Determines the resulting temperature if two heat containers are brought into thermal equilibrium.
     /// Does not modify the containers.
     /// </summary>
-    /// <param name="cA">The first <see cref="HeatContainer"/> to exchange heat.</param>
-    /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
+    /// <param name="cA">The first <see cref="IHeatContainer"/> to exchange heat.</param>
+    /// <param name="cB">The second <see cref="IHeatContainer"/> to exchange heat with.</param>
     /// <returns>The resulting equilibrium temperature both containers will be at.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of both containers is zero or negative.</exception>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery(this ref HeatContainer cA, ref HeatContainer cB)
+    public static float EquilibriumTemperatureQuery<T1, T2>(ref T1 cA, ref T2 cB)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var cTotal = cA.HeatCapacity + cB.HeatCapacity;
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(cTotal);
         // Insert the above solution for Q into T_A_final = T_A_initial - Q / C_A and rearrange the result.
-        return (cA.HeatCapacity * cA.Temperature - cB.HeatCapacity * cB.Temperature) / cTotal;
+        return (cA.HeatCapacity * cA.Temperature + cB.HeatCapacity * cB.Temperature) / cTotal;
     }
 
     /// <summary>
-    /// Brings two <see cref="HeatContainer"/>s into thermal equilibrium by exchanging heat.
+    /// Brings two <see cref="IHeatContainer"/>s into thermal equilibrium by exchanging heat.
     /// </summary>
-    /// <param name="cA">The first <see cref="HeatContainer"/> to exchange heat.</param>
-    /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
+    /// <param name="cA">The first <see cref="IHeatContainer"/> to exchange heat.</param>
+    /// <param name="cB">The second <see cref="IHeatContainer"/> to exchange heat with.</param>
     [PublicAPI]
-    public static void Equilibrate(this ref HeatContainer cA, ref HeatContainer cB)
+    public static void Equilibrate<T1, T2>(ref T1 cA, ref T2 cB)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var tFinal = EquilibriumTemperatureQuery(ref cA, ref cB);
         cA.Temperature = tFinal;
@@ -70,13 +76,15 @@ public static partial class HeatContainerHelpers
     }
 
     /// <summary>
-    /// Brings two <see cref="HeatContainer"/>s into thermal equilibrium by exchanging heat.
+    /// Brings two <see cref="IHeatContainer"/>s into thermal equilibrium by exchanging heat.
     /// </summary>
-    /// <param name="cA">The first <see cref="HeatContainer"/> to exchange heat.</param>
-    /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
+    /// <param name="cA">The first <see cref="IHeatContainer"/> to exchange heat.</param>
+    /// <param name="cB">The second <see cref="IHeatContainer"/> to exchange heat with.</param>
     /// <param name="dQ">The amount of heat in joules that was transferred from container A to B.</param>
     [PublicAPI]
-    public static void Equilibrate(this ref HeatContainer cA, ref HeatContainer cB, out float dQ)
+    public static void Equilibrate<T1, T2>(ref T1 cA, ref T2 cB, out float dQ)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var tInitialA = cA.Temperature;
         var tFinal = EquilibriumTemperatureQuery(ref cA, ref cB);
@@ -91,13 +99,13 @@ public static partial class HeatContainerHelpers
     #region N-Body Exchange
 
     /// <summary>
-    /// Brings an array of <see cref="HeatContainer"/>s into thermal equilibrium by exchanging heat.
+    /// Brings an array of <see cref="IHeatContainer"/>s into thermal equilibrium by exchanging heat.
     /// </summary>
-    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
+    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to bring into thermal equilibrium.</param>
     [PublicAPI]
-    public static void Equilibrate(this HeatContainer[] cN)
+    public static void Equilibrate<T>(this T[] cN) where T : IHeatContainer
     {
-        var tF = cN.EquilibriumTemperatureQuery();
+        var tF = EquilibriumTemperatureQuery(cN);
         for (var i = 0; i < cN.Length; i++)
         {
             cN[i].Temperature = tF;
@@ -105,15 +113,17 @@ public static partial class HeatContainerHelpers
     }
 
     /// <summary>
-    /// Brings a <see cref="HeatContainer"/> into thermal equilibrium
-    /// with an array of other <see cref="HeatContainer"/>s by exchanging heat.
+    /// Brings a <see cref="IHeatContainer"/> into thermal equilibrium
+    /// with an array of other <see cref="IHeatContainer"/>s by exchanging heat.
     /// </summary>
-    /// <param name="cA">The first <see cref="HeatContainer"/> to bring into thermal equilibrium.</param>
-    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
+    /// <param name="cA">The first <see cref="IHeatContainer"/> to bring into thermal equilibrium.</param>
+    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to bring into thermal equilibrium.</param>
     [PublicAPI]
-    public static void Equilibrate(this ref HeatContainer cA, HeatContainer[] cN)
+    public static void Equilibrate<T1, T2>(ref T1 cA, T2[] cN)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
-        var tF = cA.EquilibriumTemperatureQuery(cN);
+        var tF = EquilibriumTemperatureQuery(ref cA, cN);
 
         cA.Temperature = tF;
         for (var i = 0; i < cN.Length; i++)
@@ -123,14 +133,14 @@ public static partial class HeatContainerHelpers
     }
 
     /// <summary>
-    /// Determines the final temperature of an array of <see cref="HeatContainer"/>s
+    /// Determines the final temperature of an array of <see cref="IHeatContainer"/>s
     /// when they are brought into thermal equilibrium. Does not modify the containers.
     /// </summary>
-    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
-    /// <returns>The temperature of all <see cref="HeatContainer"/>s involved after reaching thermal equilibrium.</returns>
+    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to bring into thermal equilibrium.</param>
+    /// <returns>The temperature of all <see cref="IHeatContainer"/>s involved after reaching thermal equilibrium.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of all containers is zero or negative.</exception>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery(this HeatContainer[] cN)
+    public static float EquilibriumTemperatureQuery<T>(this T[] cN) where T : IHeatContainer
     {
         /*
         The solution is derived via the following:
@@ -176,15 +186,15 @@ public static partial class HeatContainerHelpers
     }
 
     /// <summary>
-    /// Determines the final temperature of an array of <see cref="HeatContainer"/>s
+    /// Determines the final temperature of an array of <see cref="IHeatContainer"/>s
     /// when they are brought into thermal equilibrium. Does not modify the containers.
     /// </summary>
-    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
+    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to bring into thermal equilibrium.</param>
     /// <param name="dQ">The amount of heat in joules that was added to each container
     /// to reach thermal equilibrium.</param>
-    /// <returns>The temperature of all <see cref="HeatContainer"/>s involved after reaching thermal equilibrium.</returns>
+    /// <returns>The temperature of all <see cref="IHeatContainer"/>s involved after reaching thermal equilibrium.</returns>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery(this HeatContainer[] cN, out float[] dQ)
+    public static float EquilibriumTemperatureQuery<T>(this T[] cN, out float[] dQ) where T : IHeatContainer
     {
         /*
         For finding the total heat exchanged during the equalization between a group of bodies
@@ -205,16 +215,18 @@ public static partial class HeatContainerHelpers
     }
 
     /// <summary>
-    /// Determines the final temperature of a <see cref="HeatContainer"/> when it is brought into thermal equilibrium
-    /// with an array of other <see cref="HeatContainer"/>s. Does not modify the containers.
+    /// Determines the final temperature of a <see cref="IHeatContainer"/> when it is brought into thermal equilibrium
+    /// with an array of other <see cref="IHeatContainer"/>s. Does not modify the containers.
     /// </summary>
-    /// <param name="cA">The first <see cref="HeatContainer"/> to bring into thermal equilibrium.</param>
-    /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
-    /// <returns>The temperature of all <see cref="HeatContainer"/>s involved after reaching thermal equilibrium.</returns>
+    /// <param name="cA">The first <see cref="IHeatContainer"/> to bring into thermal equilibrium.</param>
+    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to bring into thermal equilibrium.</param>
+    /// <returns>The temperature of all <see cref="IHeatContainer"/>s involved after reaching thermal equilibrium.</returns>
     [PublicAPI]
-    public static float EquilibriumTemperatureQuery(this ref HeatContainer cA, HeatContainer[] cN)
+    public static float EquilibriumTemperatureQuery<T1, T2>(ref T1 cA, T2[] cN)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
-        var cAll = new HeatContainer[cN.Length + 1];
+        var cAll = new T1[cN.Length + 1];
         cAll[0] = cA;
         cN.CopyTo(cAll, 1);
 
