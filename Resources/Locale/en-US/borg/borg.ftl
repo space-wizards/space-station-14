@@ -1,4 +1,4 @@
-borg-player-not-allowed = The brain doesn't fit!
+borg-player-not-allowed = The chassis is rejecting the brain!
 borg-player-not-allowed-eject = The brain was expelled from the chassis!
 
 borg-panel-not-open = The cyborg's panel isn't open...

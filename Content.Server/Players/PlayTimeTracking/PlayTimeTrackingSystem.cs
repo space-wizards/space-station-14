@@ -183,8 +183,10 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     private void OnIsRoleAllowed(ref IsRoleAllowedEvent ev)
     {
-        if (!IsAllowed(ev.Player, ev.Jobs) || !IsAllowed(ev.Player, ev.Antags))
+        if (!IsAllowed(ev.Player, ev.Jobs, out _) || !IsAllowed(ev.Player, ev.Antags))
             ev.Cancelled = true;
+
+        //TODO put the/a reason into the event's returned args?
     }
 
     private void OnGetDisallowedJobs(ref GetDisallowedJobsEvent ev)
@@ -197,15 +199,18 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     /// </summary>
     /// <param name="player">The player.</param>
     /// <param name="jobs">A list of role prototype IDs</param>
+    /// <param name="reason">The reason that caused the role to be denied. If there were multiple reasons, only the last one will be reported.</param>
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
-    public bool IsAllowed(ICommonSession player, List<ProtoId<JobPrototype>>? jobs)
+    public bool IsAllowed(ICommonSession player, List<ProtoId<JobPrototype>>? jobs, out FormattedMessage? reason)
     {
+        reason = null;
+
         if (jobs is null)
             return true;
 
         foreach (var job in jobs)
         {
-            if (!IsAllowed(player, job))
+            if (!IsAllowed(player, job, out reason))
                 return false;
         }
 
@@ -220,6 +225,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public bool IsAllowed(ICommonSession player, List<ProtoId<AntagPrototype>>? antags)
     {
+        //TODO antags also might need 'reason' one day
+
         if (antags is null)
             return true;
 
@@ -237,9 +244,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     /// </summary>
     /// <param name="player">The player.</param>
     /// <param name="job">A list of role prototype IDs</param>
+    /// <param name="reason">The reason that caused the role to be denied.</param>
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
-    public bool IsAllowed(ICommonSession player, ProtoId<JobPrototype> job)
+    public bool IsAllowed(ICommonSession player, ProtoId<JobPrototype> job, out FormattedMessage? reason)
     {
+        reason = null;
+
         if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
@@ -253,7 +263,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         return JobRequirements.TryRequirementsMet(
             requirements,
             playTimes,
-            out _,
+            out reason,
             EntityManager,
             _prototypes,
             (HumanoidCharacterProfile?)
@@ -268,6 +278,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public bool IsAllowed(ICommonSession player, ProtoId<AntagPrototype> antag)
     {
+        //TODO antags also might need 'reason' one day
+
         if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
