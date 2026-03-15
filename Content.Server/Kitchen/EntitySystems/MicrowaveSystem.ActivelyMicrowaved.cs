@@ -14,7 +14,6 @@ public sealed partial class MicrowaveSystem
     ///     For example: raw meat will not turn into steak while it is actively being microwaved.
     /// </remarks>
     /// <param name="ent">An entity that is actively being microwaved.</param>
-    /// <param name="args">Event arguments.</param>
     private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
     {
         args.Result = HandleResult.False;
@@ -28,7 +27,6 @@ public sealed partial class MicrowaveSystem
     ///     "spent" when the microwave is finished cooking.
     /// </remarks>
     /// <param name="ent">An entity that is actively being microwaved.</param>
-    /// <param name="args">Event arguments.</param>
     private void OnReactionAttempt(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
         if (!TryComp<ActiveMicrowaveComponent>(ent.Comp.Microwave, out var activeMicrowaveComp))
