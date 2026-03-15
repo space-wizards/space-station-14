@@ -265,7 +265,7 @@ public sealed class IonLawSystem : EntitySystem
                 if (stations.Count > 0)
                 {
                     var station = _random.Pick(stations);
-                    if (EntityManager.TryGetComponent(station, out StationRecordsComponent? stationRecords) &&
+                    if (TryComp(station, out StationRecordsComponent? stationRecords) &&
                         _stationRecordsSystem.TryGetRandomRecord((station, stationRecords), out GeneralStationRecord? record))
                     {
                         var upperName = "'" + record.Name.ToUpper() + "'";
