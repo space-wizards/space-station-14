@@ -39,16 +39,16 @@ book-text-agrichemkit-manual = Thank you for choosing the safe-for-all-ages Nano
       A little bottle of EZ Nutrient replaces a big stack of produce you'd otherwise compost to keep your plants growing strong. And crops you compost are crops you didn't make a profit on, so keep that EZ Nutrient flowing.
 
       Second Experiment: Ammonia and Diethylamine
-      Mix 3 parts hydrogen to 1 part nitrogen to make ammonia. It's a healthy, nutritious treat for your crops that aren't at their best. 
+      Mix 3 parts hydrogen to 1 part nitrogen to make ammonia. It's a healthy, nutritious treat for your crops that aren't at their best.
       But if you want to impress the judges at your local NanoTrasen-sponsored County Fair, you'll need to add an equal amount of ethanol to your ammonia.
       This will mix into Diethylamine, a miracle fertilizer that can make plants grow faster AND live longer! Keep the crops you love with you longer thanks to Diethylamine.
 
       Third Experiment: Unstable Mutagen
       When you're ready to show everyone you're the greatest botanist on the station, you'll need to mix up some unstable mutagen and hope for the best. Despite the scary name, unstable mutagen is entirely safe when applied to plants, but do not drink the appealingly green chemical yourself.
-      
+
       Mix equal parts radium, phosphorus, and chlorine together to get a bright green batch of unstable mutagen, the safe and fun way to get the most of your farm. The 15u this kit lets you make could be your introduction to agrichemical stardom!
       Unstable mutagen can have a wide variety of effects on plant life, including drastic changes to all sorts of growth parameters, produce full of helpful pharmaceuticals, plants that glow in the dark, or creating entirely new species.
-      
+
       Each individual plant responds to unstable mutagen differently, so you may want to use small doses on multiple crops and try to crossbreed the best traits from each of those. Applying multiple doses to one plant can stack multiple changes and make it harder to single out desirable traits.
       Unstable mutagen is entirely safe when used as a fertilizer, and NanoTrasen takes no responsibility for dead crops, excessive water bills, newly sentient plants asking existential questions, or flora-strangled farmhands that may coincidentally occur while using it.
       Do not drink unstable mutagen. Wash your hands thoroughly after handling. Wash your eyes if you have looked at unstable mutagen for over 30 minutes in a 24 hour period. Store in a dark room between 293–295K. Do not use on corporate holidays. If you begin hearing voices telling you to drink unstable mutagen, please contact your doctor, head of personnel, or exorcist.
@@ -70,3 +70,14 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Butter Slice x 1
       Glass Shard x 1
       Cook Time: 5 seconds
+
+book-text-scurret-employment-contract = [head=2]SCURRET TEMPORARY EMPLOYMENT CONTRACT[/head]
+       ──────────────────────────────────────────
+
+       This contract is made between Arnold's Pizza and Nanotrasen ("the employer") concerning the temporary hire of one (1) scurret employee ("the worker") for the term of one work shift. All relevant parties agree to abide by the following terms:
+
+       - The employer shall pay a non-refundable sum of 25,000 spesos to Arnold's Pizza for the services of training, transporting, and compensating the worker.
+       - The worker's term with the employer will begin immediately upon this payment being processed.
+       - The exact nature of the worker's job responsibilities shall be negotiated between them and the employer.
+       - Arnold's Pizza is not responsible for the worker's health and/or safety for the duration of their term with the employer.
+       - Arnold's Pizza provides the employee "as-is" with no promises as to their competence or disposition.
