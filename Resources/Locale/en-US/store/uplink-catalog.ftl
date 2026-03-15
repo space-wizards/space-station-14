@@ -134,7 +134,7 @@ uplink-holoclown-kit-desc = A joint venture between Cybersun and Honk.co. Contai
     The holoclown has pockets to store things, a hardlight hand it can manipulate the environment with and is immune to hazardous environments while being resistant to direct trauma, but shares any damage it takes with the user.
 
 uplink-holster-name = Shoulder Holster
-uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
+uplink-holster-desc = A heavily modified deep shoulder holster capable of holding many types of ballistics. Unable to store LMG's, Snipers, or Launchers.
 
 uplink-chest-rig-name = Chest Rig
 uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.

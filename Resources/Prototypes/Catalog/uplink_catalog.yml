@@ -1599,6 +1599,16 @@
   description: uplink-black-jetpack-desc
   productEntity: JetpackBlackFilled
   cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkHolster
+  name: uplink-holster-name
+  description: uplink-holster-desc
+  productEntity: ClothingBeltSyndieHolster
+  cost:
     Telecrystal: 1
   categories:
   - UplinkWearables

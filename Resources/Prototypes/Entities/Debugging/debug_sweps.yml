@@ -41,6 +41,9 @@
     state: icon
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Gun
     fireRate: 100
     selectedMode: FullAuto
@@ -78,6 +81,7 @@
   - type: Tag
     tags:
       - MagazineDebug
+      - MagazinePistolAll
   - type: BallisticAmmoProvider
     proto: CartridgeDebug
     capacity: 1000
