@@ -3830,19 +3830,6 @@
   id: 9550
   time: '2026-02-27T16:02:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42960
-- author: Samuka
-  changes:
-  - message: 'EXPERIMENTAL: Added the xenoborg crystal!'
-    type: Add
-  - message: 'EXPERIMENTAL: Added the xenoborg extractor which can produce the xenoborg
-      crystal.'
-    type: Add
-  - message: 'EXPERIMENTAL: The recipes to make xenoborg chassis and xenoborg modules
-      now uses xenoborg crystals instead of normal materials.'
-    type: Tweak
-  id: 9551
-  time: '2026-02-28T01:08:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42796
 - author: kontakt
   changes:
   - message: Throwing croissants no longer have a throwing knife in-hand sprite.
