@@ -20,10 +20,12 @@ public sealed class SiliconLawsSaveMessage : EuiMessageBase
 {
     public List<SiliconLaw> Laws { get; }
     public NetEntity Target { get; }
+    public bool OverrideProvider { get; }
 
-    public SiliconLawsSaveMessage(List<SiliconLaw> laws, NetEntity target)
+    public SiliconLawsSaveMessage(List<SiliconLaw> laws, NetEntity target, bool overrideProvider)
     {
         Laws = laws;
         Target = target;
+        OverrideProvider = overrideProvider;
     }
 }

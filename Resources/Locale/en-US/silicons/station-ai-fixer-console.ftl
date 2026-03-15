@@ -6,9 +6,10 @@ station-ai-fixer-console-examination-station-ai-holder-absent = There is an unoc
 station-ai-fixer-console-repair-finished = Repair complete. Attempting to reboot AI...
 station-ai-fixer-console-repair-successful = Repair complete. AI successfully rebooted.
 station-ai-fixer-console-purge-successful = Purge complete. AI successfully deleted.
+station-ai-fixer-console-law-reset-successful = Factory reset complete. Laws successfully restored.
 
 # UI
-station-ai-fixer-console-window = AI restoration console
+station-ai-fixer-console-window = silicon restoration console
 station-ai-fixer-console-window-no-station-ai = No AI detected
 station-ai-fixer-console-window-no-station-ai-status = Waiting
 station-ai-fixer-console-window-station-ai-online = Online
@@ -20,9 +21,12 @@ station-ai-fixer-console-window-controls-locked = Controls locked
 station-ai-fixer-console-window-station-ai-eject = Eject storage unit
 station-ai-fixer-console-window-station-ai-repair = Run repair tool
 station-ai-fixer-console-window-station-ai-purge = Initiate AI purge
+station-ai-fixer-console-window-station-law-reset = Factory reset laws
 
+station-ai-fixer-console-window-action-progress-default = Action in progress...
 station-ai-fixer-console-window-action-progress-repair = Repair in progress...
 station-ai-fixer-console-window-action-progress-purge = Purge in progress...
+station-ai-fixer-console-window-action-progress-law-reset = Law reset in progress...
 station-ai-fixer-console-window-action-progress-eta = Time remaining: {$time} {$units}
 
 station-ai-fixer-console-window-flavor-left = Lock this console when it is not in use
@@ -32,6 +36,6 @@ station-ai-fixer-console-window-continue-action = Continue
 station-ai-fixer-console-window-cancel-action = Cancel
 
 station-ai-fixer-console-window-purge-warning-title = Initiating AI purge
-station-ai-fixer-console-window-purge-warning-1 = You are about to permanently delete an artifical intelligence. 
+station-ai-fixer-console-window-purge-warning-1 = You are about to permanently delete an artifical intelligence.
 station-ai-fixer-console-window-purge-warning-2 = Once this operation is complete, the intelligence will be gone and cannot be revived.
 station-ai-fixer-console-window-purge-warning-3 = Do you wish to proceed?

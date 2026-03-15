@@ -2,7 +2,7 @@
   parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgEngi
   name: engi xenoborg
-  suffix: with brain
+  suffix: Brain, Provider
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one seems to be an engineering type, as it has more tools for supporting the other Xenoborgs.
   components:
   - type: BorgTransponder
@@ -34,7 +34,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMIFilled
+      - MMIFilledXeno
       borg_module:
       - XenoborgModuleBasic
       - BorgModuleAdvancedTool
@@ -58,7 +58,7 @@
   parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgHeavy
   name: heavy xenoborg
-  suffix: with brain
+  suffix: Brain, Provider
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This type is has heavy lasers and is covered in thick armor plates. It may be tougher, but its speed matches its brawn.
   components:
   - type: BorgTransponder
@@ -134,7 +134,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMIFilled
+      - MMIFilledXeno
       borg_module:
       - XenoborgModuleBasic
       - XenoborgModuleTool
@@ -150,7 +150,7 @@
   parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgScout
   name: scout xenoborg
-  suffix: with brain
+  suffix: Brain, Provider
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This is a scout type, its nimble thrusters allow it to move quickly through space.
   components:
   - type: BorgTransponder
@@ -160,15 +160,15 @@
       state: xenoborg_scout
   - type: Sprite
     layers:
-      - state: xenoborg_scout
-      - state: xenoborg_scout_e
-        map: ["enum.BorgVisualLayers.Light"]
-        shader: unshaded
-        visible: false
-      - state: xenoborg_scout_l
-        shader: unshaded
-        map: ["light"]
-        visible: false
+    - state: xenoborg_scout
+    - state: xenoborg_scout_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_scout_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
       collection: FootstepHoverXenoborg
@@ -188,7 +188,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMIFilled
+      - MMIFilledXeno
       borg_module:
       - XenoborgModuleBasic
       - XenoborgModuleTool
@@ -204,7 +204,7 @@
   parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgStealth
   name: stealth xenoborg
-  suffix: with brain
+  suffix: Brain, Provider
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one is a stealth type. Its armor shimmers in the light like no other material you've seen.
   components:
   - type: BorgTransponder
@@ -214,15 +214,15 @@
       state: xenoborg_stealth
   - type: Sprite
     layers:
-      - state: xenoborg_stealth
-      - state: xenoborg_stealth_e
-        map: ["enum.BorgVisualLayers.Light"]
-        shader: unshaded
-        visible: false
-      - state: xenoborg_stealth_l
-        shader: unshaded
-        map: ["light"]
-        visible: false
+    - state: xenoborg_stealth
+    - state: xenoborg_stealth_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_stealth_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
       collection: FootstepHoverXenoborg
@@ -241,7 +241,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMIFilled
+      - MMIFilledXeno
       borg_module:
       - XenoborgModuleBasic
       - XenoborgModuleTool
@@ -259,12 +259,12 @@
 - type: entity
   parent: XenoborgEngi
   id: XenoborgEngiPrinted
-  suffix: no brain
+  suffix: Brainless, Provider
   components:
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMI
+      - MMIXeno
       borg_module:
       - XenoborgModuleBasic
       - BorgModuleAdvancedTool
@@ -282,12 +282,12 @@
 - type: entity
   parent: XenoborgHeavy
   id: XenoborgHeavyPrinted
-  suffix: no brain
+  suffix: Brainless, Provider
   components:
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMI
+      - MMIXeno
       borg_module:
       - XenoborgModuleBasic
       - XenoborgModuleTool
@@ -302,12 +302,12 @@
 - type: entity
   parent: XenoborgScout
   id: XenoborgScoutPrinted
-  suffix: no brain
+  suffix: Brainless, Provider
   components:
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMI
+      - MMIXeno
       borg_module:
       - XenoborgModuleBasic
       - XenoborgModuleTool
@@ -322,12 +322,12 @@
 - type: entity
   parent: XenoborgStealth
   id: XenoborgStealthPrinted
-  suffix: no brain
+  suffix: Brainless, Provider
   components:
   - type: ContainerFill
     containers:
       borg_brain:
-      - MMI
+      - MMIXeno
       borg_module:
       - XenoborgModuleBasic
       - XenoborgModuleTool

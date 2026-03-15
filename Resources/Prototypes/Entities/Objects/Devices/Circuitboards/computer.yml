@@ -564,8 +564,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: StationAiFixerCircuitboard
-  name: AI restoration console board
-  description: A computer printed circuit board for an AI restoration console console.
+  name: silicon restoration console board
+  description: A computer printed circuit board for an silicon restoration console console.
   components:
     - type: Sprite
       state: cpu_science

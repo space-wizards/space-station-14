@@ -1659,7 +1659,7 @@
 - type: entity
   id: StationAiFixerComputer
   parent: BaseComputer
-  name: AI restoration console
+  name: silicon restoration console
   description: Used to repair damaged artifical intelligences.
   components:
   - type: Sprite
@@ -1694,6 +1694,10 @@
           Purge1: { state: ai-fixer-purge-1 }
           Purge2: { state: ai-fixer-purge-2 }
           Purge3: { state: ai-fixer-purge-3 }
+          LawReset0: { state: ai-fixer-progress-0 }
+          LawReset1: { state: ai-fixer-progress-1 }
+          LawReset2: { state: ai-fixer-progress-2 }
+          LawReset3: { state: ai-fixer-progress-3 }
           Empty: { state: ai-fixer-empty }
           Occupied: { state: ai-fixer-full }
           Rebooting: { state: ai-fixer-404 }
@@ -1725,10 +1729,9 @@
         lockedFailPopup: station-ai-fixer-console-is-locked
         whitelistFailPopup: station-ai-fixer-console-station-ai-holder-required
         whitelist:
-          requireAll: true
           components:
           - StationAiHolder
-          - Item
+          - BorgBrain
   - type: ContainerContainer
     containers:
       station_ai_holder: !type:ContainerSlot

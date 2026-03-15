@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Silicons.StationAi;
 
 /// <summary>
-/// This component holds data needed for AI Restoration Consoles to function.
+/// This component holds data needed for Silicon Restoration Consoles to function.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedStationAiFixerConsoleSystem))]
@@ -22,6 +22,12 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan PurgeDuration = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// Determines how long law reset takes to complete (in seconds).
+    /// </summary>
+    [DataField]
+    public TimeSpan LawResetDuration = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// The number of stages that a console action (repair or purge)
@@ -75,6 +81,12 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     public SoundSpecifier? PurgeFinishedSound = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
 
     /// <summary>
+    /// Sound clip that is played when a repair is completed.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? LawResetFinishedSound = new SoundPathSpecifier("/Audio/Items/beep.ogg");
+
+    /// <summary>
     /// The name of the console slot which is used to contain station AI holders.
     /// </summary>
     [DataField]
@@ -88,13 +100,13 @@ public sealed partial class StationAiFixerConsoleComponent : Component
 }
 
 /// <summary>
-/// Message sent from the server to the client to update the UI of AI Restoration Consoles.
+/// Message sent from the server to the client to update the UI of Silicon Restoration Consoles.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class StationAiFixerConsoleBoundUserInterfaceState : BoundUserInterfaceState;
 
 /// <summary>
-/// Message sent from the client to the server to handle player UI inputs from AI Restoration Consoles.
+/// Message sent from the client to the server to handle player UI inputs from Silicon Restoration Consoles.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class StationAiFixerConsoleMessage : BoundUserInterfaceMessage
@@ -108,7 +120,7 @@ public sealed class StationAiFixerConsoleMessage : BoundUserInterfaceMessage
 }
 
 /// <summary>
-/// Potential actions that AI Restoration Consoles can perform.
+/// Potential actions that Silicon Restoration Consoles can perform.
 /// </summary>
 [Serializable, NetSerializable]
 public enum StationAiFixerConsoleAction
@@ -117,11 +129,12 @@ public enum StationAiFixerConsoleAction
     Eject,
     Repair,
     Purge,
+    LawReset,
     Cancel,
 }
 
 /// <summary>
-/// Appearance keys for AI Restoration Consoles.
+/// Appearance keys for Silicon Restoration Consoles.
 /// </summary>
 [Serializable, NetSerializable]
 public enum StationAiFixerConsoleVisuals : byte
@@ -134,7 +147,7 @@ public enum StationAiFixerConsoleVisuals : byte
 }
 
 /// <summary>
-/// Interactable UI key for AI Restoration Consoles.
+/// Interactable UI key for Silicon Restoration Consoles.
 /// </summary>
 [Serializable, NetSerializable]
 public enum StationAiFixerConsoleUiKey
