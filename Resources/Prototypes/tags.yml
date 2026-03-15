@@ -993,6 +993,10 @@
   id: Mushroom  # ConstructionGraph: Soil
 
 ## N ##
+
+- type: Tag
+  id: NaniteGun # Used for xenoborg nanite gun
+
 - type: Tag
   id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
 

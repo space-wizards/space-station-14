@@ -1,0 +1,46 @@
+- type: entity
+  parent: [BaseItem, BaseXenoborgContraband]
+  id: WeaponNaniteGun
+  name: nanite gun
+  description: A strange gun that shoots regenerating crystal shards.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/nanite.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 0.7
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/nanite_gun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+     tags:
+      - NaniteGun
+    capacity: 5
+    proto: CartridgeNanite
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    cycleable: false # No synthesizing ammo
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 6s
+    affectedByEmp: true
+  - type: StaticPrice
+    price: 5000
+  - type: MagazineVisuals
+    magState: mag-unshaded
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: [ ]
