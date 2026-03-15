@@ -1,75 +1,48 @@
-using Robust.Client.GameObjects;
-using Robust.Shared.Timing;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Forensics
+namespace Content.Client.Forensics;
+
+public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
 {
-    public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private ForensicScannerMenu? _window;
+
+    public ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+    }
 
-        [ViewVariables]
-        private ForensicScannerMenu? _window;
+    protected override void Open()
+    {
+        base.Open();
+        _window = this.CreateWindow<ForensicScannerMenu>();
+        _window.Print.OnPressed += _ => Print();
+        _window.Clear.OnPressed += _ => Clear();
 
-        [ViewVariables]
-        private TimeSpan _printCooldown;
+        Update();
+    }
 
-        public ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+    private void Print()
+    {
+        SendPredictedMessage(new ForensicScannerPrintMessage());
+    }
 
-        protected override void Open()
-        {
-            base.Open();
-            _window = this.CreateWindow<ForensicScannerMenu>();
-            _window.Print.OnPressed += _ => Print();
-            _window.Clear.OnPressed += _ => Clear();
-        }
+    private void Clear()
+    {
+        SendPredictedMessage(new ForensicScannerClearMessage());
+    }
 
-        private void Print()
-        {
-            SendMessage(new ForensicScannerPrintMessage());
+    public override void Update()
+    {
+        base.Update();
 
-            if (_window != null)
-                _window.UpdatePrinterState(true);
+        if (_window == null)
+            return;
 
-            // This UI does not require pinpoint accuracy as to when the Print
-            // button is available again, so spawning client-side timers is
-            // fine. The server will make sure the cooldown is honored.
-            Timer.Spawn(_printCooldown, () =>
-            {
-                if (_window != null)
-                    _window.UpdatePrinterState(false);
-            });
-        }
+        if (!EntMan.TryGetComponent(Owner, out ForensicScannerComponent? scanner))
+            return;
 
-        private void Clear()
-        {
-            SendMessage(new ForensicScannerClearMessage());
-        }
-
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-
-            if (_window == null)
-                return;
-
-            if (state is not ForensicScannerBoundUserInterfaceState cast)
-                return;
-
-            _printCooldown = cast.PrintCooldown;
-
-            // TODO: Fix this
-            if (cast.PrintReadyAt > _gameTiming.CurTime)
-                Timer.Spawn(cast.PrintReadyAt - _gameTiming.CurTime, () =>
-                {
-                    if (_window != null)
-                        _window.UpdatePrinterState(false);
-                });
-
-            _window.UpdateState(cast);
-        }
+        _window.Update(scanner);
     }
 }
