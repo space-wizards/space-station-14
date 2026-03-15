@@ -66,7 +66,7 @@ namespace Content.Client.Kitchen.UI
 
         public void EjectBeaker()
         {
-            SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId));
+            SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId, predicted: false));
         }
 
         public void EjectChamberContent(EntityUid uid)
