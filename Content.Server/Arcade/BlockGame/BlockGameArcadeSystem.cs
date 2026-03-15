@@ -1,9 +1,10 @@
 using Content.Shared.UserInterface;
 using Content.Server.Advertise.EntitySystems;
 using Content.Shared.Advertise.Components;
-using Content.Shared.Arcade;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
+using Content.Shared.Arcade.BlockGame;
+using Content.Server.Arcade.Systems;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -19,11 +20,12 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         SubscribeLocalEvent<BlockGameArcadeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BlockGameArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
         SubscribeLocalEvent<BlockGameArcadeComponent, PowerChangedEvent>(OnBlockPowerChanged);
+        SubscribeLocalEvent<BlockGameArcadeComponent, ArcadeScorePlacementSubmittedEvent>(OnPlacementSubmitted);
 
         Subs.BuiEvents<BlockGameArcadeComponent>(BlockGameUiKey.Key, subs =>
         {
             subs.Event<BoundUIClosedEvent>(OnAfterUiClose);
-            subs.Event<BlockGameMessages.BlockGamePlayerActionMessage>(OnPlayerAction);
+            subs.Event<BlockGamePlayerActionMessage>(OnPlayerAction);
         });
     }
 
@@ -41,7 +43,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         if (!Resolve(uid, ref blockGame))
             return;
 
-        _uiSystem.ServerSendUiMessage(uid, BlockGameUiKey.Key, new BlockGameMessages.BlockGameUserStatusMessage(blockGame.Player == actor), actor);
+        _uiSystem.ServerSendUiMessage(uid, BlockGameUiKey.Key, new BlockGameUserStatusMessage(blockGame.Player == actor), actor);
     }
 
     private void OnComponentInit(EntityUid uid, BlockGameArcadeComponent component, ComponentInit args)
@@ -90,7 +92,17 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         component.Spectators.Clear();
     }
 
-    private void OnPlayerAction(EntityUid uid, BlockGameArcadeComponent component, BlockGameMessages.BlockGamePlayerActionMessage msg)
+    private void OnPlacementSubmitted(Entity<BlockGameArcadeComponent> ent, ref ArcadeScorePlacementSubmittedEvent args)
+    {
+        if (ent.Comp.Game == null)
+            return;
+
+        var game = ent.Comp.Game;
+        var placement = args.Placements;
+        game.SetPlacement(placement);
+    }
+
+    private void OnPlayerAction(EntityUid uid, BlockGameArcadeComponent component, BlockGamePlayerActionMessage msg)
     {
         if (component.Game == null)
             return;

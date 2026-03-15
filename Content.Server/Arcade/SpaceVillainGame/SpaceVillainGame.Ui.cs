@@ -1,4 +1,4 @@
-using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
+using Content.Shared.Arcade.SpaceVillain;
 
 namespace Content.Server.Arcade.SpaceVillain;
 

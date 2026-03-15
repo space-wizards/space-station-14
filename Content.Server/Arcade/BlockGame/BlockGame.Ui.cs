@@ -1,6 +1,8 @@
-using Content.Shared.Arcade;
 using System.Linq;
 using Robust.Shared.Player;
+using Content.Shared.Arcade.BlockGame;
+using Content.Server.Arcade.Systems;
+using Content.Server.Arcade.Components;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -89,18 +91,18 @@ public sealed partial class BlockGame
                 break;
             case BlockGamePlayerAction.Pause:
                 _running = false;
-                SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, Started));
+                SendMessage(new BlockGameSetScreenMessage(BlockGameScreen.Pause, Started));
                 break;
             case BlockGamePlayerAction.Unpause:
                 if (!_gameOver && Started)
                 {
                     _running = true;
-                    SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
+                    SendMessage(new BlockGameSetScreenMessage(BlockGameScreen.Game));
                 }
                 break;
             case BlockGamePlayerAction.ShowHighscores:
                 _running = false;
-                SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores, Started));
+                SendMessage(new BlockGameSetScreenMessage(BlockGameScreen.Highscores, Started));
                 break;
         }
     }
@@ -178,14 +180,14 @@ public sealed partial class BlockGame
     {
         if (_gameOver)
         {
-            SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement), actor);
+            SendMessage(new BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement), actor);
             return;
         }
 
         if (Paused)
-            SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, Started), actor);
+            SendMessage(new BlockGameSetScreenMessage(BlockGameScreen.Pause, Started), actor);
         else
-            SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game, Started), actor);
+            SendMessage(new BlockGameSetScreenMessage(BlockGameScreen.Game, Started), actor);
 
         FullUpdate(actor);
     }
@@ -226,7 +228,7 @@ public sealed partial class BlockGame
             return;
 
         var computedField = ComputeField();
-        SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(computedField.ToArray(), BlockGameMessages.BlockGameVisualType.GameField));
+        SendMessage(new BlockGameVisualUpdateMessage(computedField.ToArray(), BlockGameVisualType.GameField));
     }
 
     /// <summary>
@@ -238,7 +240,7 @@ public sealed partial class BlockGame
             return;
 
         var computedField = ComputeField();
-        SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(computedField.ToArray(), BlockGameMessages.BlockGameVisualType.GameField), actor);
+        SendMessage(new BlockGameVisualUpdateMessage(computedField.ToArray(), BlockGameVisualType.GameField), actor);
     }
 
     /// <summary>
@@ -273,7 +275,7 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendNextPieceUpdate()
     {
-        SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock));
+        SendMessage(new BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameVisualType.NextBlock));
     }
 
     /// <summary>
@@ -281,7 +283,7 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendNextPieceUpdate(EntityUid actor)
     {
-        SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock), actor);
+        SendMessage(new BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameVisualType.NextBlock), actor);
     }
 
     /// <summary>
@@ -290,9 +292,9 @@ public sealed partial class BlockGame
     private void SendHoldPieceUpdate()
     {
         if (HeldPiece.HasValue)
-            SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(HeldPiece.Value.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.HoldBlock));
+            SendMessage(new BlockGameVisualUpdateMessage(HeldPiece.Value.BlocksForPreview(), BlockGameVisualType.HoldBlock));
         else
-            SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(Array.Empty<BlockGameBlock>(), BlockGameMessages.BlockGameVisualType.HoldBlock));
+            SendMessage(new BlockGameVisualUpdateMessage(Array.Empty<BlockGameBlock>(), BlockGameVisualType.HoldBlock));
     }
 
     /// <summary>
@@ -301,9 +303,9 @@ public sealed partial class BlockGame
     private void SendHoldPieceUpdate(EntityUid actor)
     {
         if (HeldPiece.HasValue)
-            SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(HeldPiece.Value.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.HoldBlock), actor);
+            SendMessage(new BlockGameVisualUpdateMessage(HeldPiece.Value.BlocksForPreview(), BlockGameVisualType.HoldBlock), actor);
         else
-            SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(Array.Empty<BlockGameBlock>(), BlockGameMessages.BlockGameVisualType.HoldBlock), actor);
+            SendMessage(new BlockGameVisualUpdateMessage(Array.Empty<BlockGameBlock>(), BlockGameVisualType.HoldBlock), actor);
     }
 
     /// <summary>
@@ -311,7 +313,7 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendLevelUpdate()
     {
-        SendMessage(new BlockGameMessages.BlockGameLevelUpdateMessage(Level));
+        SendMessage(new BlockGameLevelUpdateMessage(Level));
     }
 
     /// <summary>
@@ -319,7 +321,7 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendLevelUpdate(EntityUid actor)
     {
-        SendMessage(new BlockGameMessages.BlockGameLevelUpdateMessage(Level), actor);
+        SendMessage(new BlockGameLevelUpdateMessage(Level), actor);
     }
 
     /// <summary>
@@ -327,7 +329,7 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendPointsUpdate()
     {
-        SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(Points));
+        SendMessage(new BlockGameScoreUpdateMessage(Points));
     }
 
     /// <summary>
@@ -335,7 +337,7 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendPointsUpdate(EntityUid actor)
     {
-        SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(Points), actor);
+        SendMessage(new BlockGameScoreUpdateMessage(Points), actor);
     }
 
     /// <summary>
@@ -343,7 +345,9 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendHighscoreUpdate()
     {
-        SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(_arcadeSystem.GetLocalHighscores(), _arcadeSystem.GetGlobalHighscores()));
+        var message = GetHighScoreUpdateMessage();
+        if (message != null)
+            SendMessage(message);
     }
 
     /// <summary>
@@ -351,6 +355,21 @@ public sealed partial class BlockGame
     /// </summary>
     private void SendHighscoreUpdate(EntityUid actor)
     {
-        SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(_arcadeSystem.GetLocalHighscores(), _arcadeSystem.GetGlobalHighscores()), actor);
+        var message = GetHighScoreUpdateMessage();
+        if (message != null)
+            SendMessage(message, actor);
+    }
+
+    private BlockGameHighScoreUpdateMessage? GetHighScoreUpdateMessage()
+    {
+        if (!_entityManager.TryGetComponent<ArcadeScoreboardComponent>(_owner, out var scoreboard))
+            return null;
+
+        _arcadeSystem.TryGetSortedGlobalScores((_owner, scoreboard), out var globalScores, out var maxGlobal);
+        _arcadeSystem.TryGetSortedLocalScores((_owner, scoreboard), out var localScores, out var maxLocal);
+
+        var message = new BlockGameHighScoreUpdateMessage(localScores, globalScores, maxLocal, maxGlobal);
+
+        return message;
     }
 }
