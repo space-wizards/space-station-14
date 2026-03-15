@@ -8,7 +8,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed class SliderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ISliderConfig
+public sealed class SliderSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ISliderConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -31,7 +31,7 @@ public sealed class SliderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet,
         var sliderForeBox = new StyleBoxTexture
         {
             Texture = sheet.GetTextureOr(sliderCfg.SliderOutlinePath, NanotrasenStylesheet.TextureRoot),
-            Modulate = Color.FromHex("#494949") // TODO: Unhardcode.
+            Modulate = sheet.SecondaryPalette.TextDark
         };
 
         var sliderGrabBox = new StyleBoxTexture
@@ -49,8 +49,8 @@ public sealed class SliderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet,
         // var sliderFillBlue = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Blue };
         // var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
-        return new StyleRule[]
-        {
+        return
+        [
             E<Slider>()
                 .Prop(Slider.StylePropertyBackground, sliderBackBox)
                 .Prop(Slider.StylePropertyForeground, sliderForeBox)
@@ -69,6 +69,6 @@ public sealed class SliderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet,
             //     .Prop(Slider.StylePropertyFill, sliderFillGreen),
             // E<Slider>().Class(StyleClass.StyleClassSliderWhite)
             //     .Prop(Slider.StylePropertyFill, sliderFillWhite),
-        };
+        ];
     }
 }
