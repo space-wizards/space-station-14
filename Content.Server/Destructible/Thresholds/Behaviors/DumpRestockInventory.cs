@@ -17,7 +17,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class DumpRestockInventory : EntitySystem, IThresholdBehavior
 {
     [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 

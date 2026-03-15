@@ -18,7 +18,7 @@ public sealed partial class PlaySoundBehavior : EntitySystem, IThresholdBehavior
 
     public void Execute(EntityUid owner, EntityUid? cause = null)
     {
-        var pos = EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
+        var pos = Comp<TransformComponent>(owner).Coordinates;
         _audio.PlayPvs(Sound, pos);
     }
 }
