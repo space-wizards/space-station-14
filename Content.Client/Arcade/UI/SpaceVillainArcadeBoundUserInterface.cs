@@ -1,36 +1,20 @@
-﻿using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 
 namespace Content.Client.Arcade.UI;
 
-public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
+/// <summary>
+///
+/// </summary>
+public sealed class SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [ViewVariables] private SpaceVillainArcadeMenu? _menu;
-
-    public SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        SendAction(PlayerAction.RequestData);
-    }
-
-    public void SendAction(PlayerAction action)
-    {
-        SendMessage(new SpaceVillainArcadePlayerActionMessage(action));
-    }
+    private SpaceVillainArcadeWindow? _window;
 
     protected override void Open()
     {
         base.Open();
 
-        _menu = this.CreateWindow<SpaceVillainArcadeMenu>();
-        _menu.OnPlayerAction += SendAction;
-    }
-
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        if (message is SpaceVillainArcadeDataUpdateMessage msg)
-            _menu?.UpdateInfo(msg);
+        _window = this.CreateWindow<SpaceVillainArcadeWindow>();
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.OpenCentered();
     }
 }

@@ -13,21 +13,10 @@
   - type: LitOnPowered
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: arcade
-    - map: ["computerLayerScreen"]
-      state: screen_invaders
-    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state: panel
-      visible: false
   - type: Icon
     sprite: Structures/Machines/arcade.rsi
     state: arcade
   - type: WiresPanel
-  - type: Wires
-    layoutId: Arcade
-    boardName: wires-board-name-arcade
   - type: WiresVisuals
   - type: TypingIndicator
     proto: robot
@@ -51,14 +40,28 @@
         volume: -8
         maxDistance: 10
         variation: 0.05
+  - type: ActivatableUI
+    key: enum.ArcadeUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: StationAiWhitelist
+  - type: Arcade
+  - type: ArcadeRewards
+    rewards: !type:NestedSelector
+        tableId: SpaceVillainArcadeRewards
 
 - type: entity
   id: SpaceVillainArcade
-  name: space villain arcade
+  name: NT space villain arcade
   parent: ArcadeBase
   components:
+  - type: Wires
+    boardName: wires-board-name-space-villain
+    layoutId: SpaceVillain
   - type: Sprite
-    sprite: Structures/Machines/arcade.rsi
     layers:
     - map: ["computerLayerBody"]
       state: arcade
@@ -70,110 +73,14 @@
   - type: PointLight
     color: "#e3a136"
   - type: SpaceVillainArcade
-    rewardMinAmount: 0
-    rewardMaxAmount: 0
-    possibleRewards:
-    - Basketball
-    - BalloonNT
-    - BalloonCorgi
-    - BoxDonkSoftBox
-    - BoxCartridgeCap
-    - BeachBall
-    - CandyBucket
-    - CrayonBox
-    - ClothingHeadHatCowboyRed
-    - FoamCrossbow
-    - FoamBlade
-    - FoamCutlass
-    - Football
-    - GlowstickGreen
-    - GlowstickBlue
-    - GlowstickYellow
-    - GlowstickPurple
-    - GlowstickRed
-    - HarmonicaInstrument
-    - OcarinaInstrument
-    - RecorderInstrument
-    - GunpetInstrument
-    - BirdToyInstrument
-    - MysteryFigureBox
-    - PlushieHampter
-    - PlushieLizard
-    - PlushieRainbowLizard
-    - PlushieAtmosian
-    - PlushieSpaceLizard
-    - PlushieNuke
-    - PlushieCarp
-    - PlushieMagicarp
-    - PlushieHolocarp
-    - PlushieRainbowCarp
-    - PlushieRatvar
-    - PlushieNar
-    - PlushieSnake
-    - PlushieArachind
-    - PlushieMoth
-    - PlushieVulp
-    - PlushieHampter
-    - PlushiePenguin
-    - PlushieHuman
-    - PlushieRouny
-    - PlushieBee
-    - PlushieSlime
-    - PlushieGhost
-    - PlushieDiona
-    - PlushieSharkBlue
-    - PlushieVox
-    - PlushieXeno
-    - PlasticBanana
-    - RevolverCapGun
-    - SnapPopBox
-    - TennisBall
-    - ToyMouse
-    - ToyAi
-    - ToyNuke
-    - ToyFigurineGriffin
-    - ToyHonk
-    - ToyIan
-    - ToyMarauder
-    - ToyMauler
-    - ToyGygax
-    - ToyOdysseus
-    - ToyFigurineOwlman
-    - ToyDeathRipley
-    - ToyPhazon
-    - ToyFireRipley
-    - ToyReticence
-    - ToyRipley
-    - ToySeraph
-    - ToyDurand
-    - ToyFigurineSkeleton
-    - ToySword
-    - ToyAmongPequeno
-    - ToyRubberDuck
-    - ToyHammer
-    - WeaponWaterPistol
-    - WhoopieCushion
-    - Whistle
-  - type: WiresPanel
-  - type: Wires
-    layoutId: Arcade
-    boardName: wires-board-name-arcade
-  - type: ActivatableUI
-    key: enum.SpaceVillainArcadeUiKey.Key
-  - type: ActivatableUIRequiresPower
-  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      enum.SpaceVillainArcadeUiKey.Key:
+      enum.ArcadeUiKey.Key:
         type: SpaceVillainArcadeBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
-  - type: Vocalizer
-    minVocalizeInterval: 1m # Arcades are noisy
-    maxVocalizeInterval: 4m
-    hideChat: true
   - type: DatasetVocalizer
     dataset: SpaceVillainAds
   - type: SpeakOnUIClosed
@@ -184,18 +91,19 @@
   parent: SpaceVillainArcade
   suffix: Filled
   components:
-  - type: SpaceVillainArcade
-    rewardMinAmount: 5
-    rewardMaxAmount: 8
+  - type: ArcadeRewards
+    minAmount: 5
+    maxAmount: 8
 
 - type: entity
-  id: BlockGameArcade
-  description: An arcade cabinet with a strangely familiar game.
-  name: NT block game
+  id: KudzuCrushArcade
+  name: NT kudzu crush arcade
   parent: ArcadeBase
   components:
+  - type: Wires
+    boardName: wires-board-name-kudzu-crush
+    layoutId: KudzuCrush
   - type: Sprite
-    sprite: Structures/Machines/arcade.rsi
     layers:
     - map: ["computerLayerBody"]
       state: arcade
@@ -204,24 +112,171 @@
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
       state: panel
       visible: false
-  - type: BlockGameArcade
-  - type: ActivatableUI
-    key: enum.BlockGameUiKey.Key
-  - type: ActivatableUIRequiresPower
-  - type: StationAiWhitelist
+  - type: KudzuCrushArcade
+    piecesBag:
+    - KudzuCrushPieceF
+    - KudzuCrushPieceI
+    - KudzuCrushPieceL
+    - KudzuCrushPieceN
+    - KudzuCrushPieceP
+    - KudzuCrushPieceT
+    - KudzuCrushPieceU
+    - KudzuCrushPieceV
+    - KudzuCrushPieceW
+    - KudzuCrushPieceX
+    - KudzuCrushPieceY
+    - KudzuCrushPieceZ
   - type: UserInterface
     interfaces:
-      enum.BlockGameUiKey.Key:
-        type: BlockGameBoundUserInterface
+      enum.ArcadeUiKey.Key:
+        type: KudzuCrushArcadeBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
-    board: BlockGameArcadeComputerCircuitboard
-  - type: Vocalizer
-    minVocalizeInterval: 1m # Arcades are noisy
-    maxVocalizeInterval: 4m
-    hideChat: true
+    board: KudzuCrushArcadeComputerCircuitboard
   - type: DatasetVocalizer
-    dataset: BlockGameAds
+    dataset: KudzuCrushAds
   - type: SpeakOnUIClosed
-    pack: BlockGameGoodbyes
+    pack: KudzuCrushGoodbyes
+
+- type: entity
+  id: KudzuCrushArcadeFilled
+  parent: KudzuCrushArcade
+  suffix: Filled
+  components:
+  - type: ArcadeRewards
+    minAmount: 5
+    maxAmount: 8
+
+- type: entity
+  id: LastFighterArcade
+  name: NT last fighter arcade
+  parent: ArcadeBase
+  components:
+  - type: Wires
+    boardName: wires-board-name-last-fighter
+    layoutId: LastFighter
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: screen_invaders
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
+      visible: false
+  - type: LastFighterArcade
+  - type: UserInterface
+    interfaces:
+      enum.ArcadeUiKey.Key:
+        type: LastFighterArcadeBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: LastFighterArcadeComputerCircuitboard
+  - type: DatasetVocalizer
+    dataset: LastFighterAds
+  - type: SpeakOnUIClosed
+    pack: LastFighterGoodbyes
+
+- type: entity
+  id: LastFighterArcadeFilled
+  parent: LastFighterArcade
+  suffix: Filled
+  components:
+  - type: ArcadeRewards
+    minAmount: 5
+    maxAmount: 8
+
+# Toys table
+- type: entityTable
+  id: SpaceVillainArcadeRewards
+  table: !type:AllSelector
+    children:
+    # Common
+    - !type:GroupSelector
+      weight: 10
+      children:
+      - id: Basketball
+      - id: BalloonNT
+      - id: BalloonCorgi
+      - id: BoxDonkSoftBox
+      - id: BeachBall
+      - id: CandyBucket
+      - id: CrayonBox
+      - id: ClothingHeadHatCowboyRed
+      - id: FoamCutlass
+      - id: Football
+      - id: GlowstickBase #green
+      - id: GlowstickBlue
+      - id: GlowstickYellow
+      - id: GlowstickPurple
+      - id: GlowstickRed
+      - id: HarmonicaInstrument
+      - id: OcarinaInstrument
+      - id: RecorderInstrument
+      - id: GunpetInstrument
+      - id: BirdToyInstrument
+      - id: MysteryFigureBox
+      - id: PlushieHampter
+      - id: PlushieLizard
+      - id: PlushieRainbowLizard
+      - id: PlushieAtmosian
+      - id: PlushieSpaceLizard
+      - id: PlushieNuke
+      - id: PlushieCarp
+      - id: PlushieMagicarp
+      - id: PlushieHolocarp
+      - id: PlushieRainbowCarp
+      - id: PlushieRatvar
+      - id: PlushieNar
+      - id: PlushieSnake
+      - id: PlushieArachind
+      - id: PlushieMoth
+      - id: PlushieHampter
+      - id: PlushiePenguin
+      - id: PlushieHuman
+      - id: PlushieRouny
+      - id: PlushieBee
+      - id: PlushieSlime
+      - id: PlushieGhost
+      - id: PlushieDiona
+      - id: PlushieSharkBlue
+      - id: PlushieVox
+      - id: PlushieXeno
+      - id: PlasticBanana
+      - id: SnapPopBox
+      - id: ToyMouse
+      - id: ToyAi
+      - id: ToyGriffin
+      - id: ToyHonk
+      - id: ToyIan
+      - id: ToyMarauder
+      - id: ToyMauler
+      - id: ToyGygax
+      - id: ToyOdysseus
+      - id: ToyOwlman
+      - id: ToyDeathRipley
+      - id: ToyPhazon
+      - id: ToyFireRipley
+      - id: ToyReticence
+      - id: ToyRipley
+      - id: ToySeraph
+      - id: ToyDurand
+      - id: ToySkeleton
+      - id: ToySword
+      - id: ToyAmongPequeno
+      - id: ToyRubberDuck
+      - id: WhoopieCushion
+    # Rare
+    - !type:GroupSelector
+      weight: 2
+      children:
+      - id: ToySword
+      - id: WeaponWaterPistol
+      - id: ToyNuke
+      - id: ToyHammer
+      - id: RevolverCapGun
+      - id: FoamCrossbow
+      - id: FoamBlade
+      - id: BoxCartridgeCap

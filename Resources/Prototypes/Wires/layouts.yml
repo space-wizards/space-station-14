@@ -96,13 +96,30 @@
     alarmOnPulse: true
 
 - type: wireLayout
-  id: Arcade
+  id: SpaceVillain
+  dummyWires: 4
   wires:
   - !type:PowerWireAction
   - !type:SpeechWireAction
-  - !type:ArcadeOverflowWireAction
-  - !type:ArcadePlayerInvincibleWireAction
-  - !type:ArcadeEnemyInvincibleWireAction
+  - !type:SpaceVillainInvinciblePlayerToggleWireAction
+  - !type:SpaceVillainInvincibleVillainToggleWireAction
+  - !type:SpaceVillainOverflowToggleWireAction
+  - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: KudzuCrush
+  dummyWires: 4
+  wires:
+  - !type:PowerWireAction
+  - !type:SpeechWireAction
+  - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: LastFighter
+  dummyWires: 4
+  wires:
+  - !type:PowerWireAction
+  - !type:SpeechWireAction
   - !type:AiInteractWireAction
 
 - type: wireLayout

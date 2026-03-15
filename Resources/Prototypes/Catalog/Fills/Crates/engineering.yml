@@ -255,7 +255,8 @@
     - id: BorgChargerCircuitboard
     - id: CellRechargerCircuitboard
     - id: SpaceVillainArcadeComputerCircuitboard
-    - id: BlockGameArcadeComputerCircuitboard
+    - id: KudzuCrushArcadeComputerCircuitboard
+    - id: LastFighterArcadeComputerCircuitboard
 
 - type: entity
   parent: ToteBase

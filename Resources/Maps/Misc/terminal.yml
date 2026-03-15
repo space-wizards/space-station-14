@@ -1572,7 +1572,7 @@ entities:
     missingComponents:
     - Destructible
     - ApcPowerReceiver
-- proto: BlockGameArcade
+- proto: KudzuCrushArcade
   entities:
   - uid: 727
     components:

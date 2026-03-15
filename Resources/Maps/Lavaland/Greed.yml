@@ -100,7 +100,7 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-- proto: BlockGameArcade
+- proto: KudzuCrushArcade
   entities:
   - uid: 52
     components:

@@ -10,6 +10,7 @@
         state: icon
   - type: RandomSpawner
     prototypes:
-      - BlockGameArcade
+      - KudzuCrushArcadeFilled
+      - LastFighterArcadeFilled
       - SpaceVillainArcadeFilled
     chance: 1

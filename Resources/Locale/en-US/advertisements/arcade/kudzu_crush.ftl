@@ -1,0 +1,25 @@
+advertisement-kudzu-crush-1 = Legally distinct!
+advertisement-kudzu-crush-2 = What the hell is a T-spin?
+advertisement-kudzu-crush-3 = These blocks aren't going to clear themselves!
+advertisement-kudzu-crush-4 = Beep boop! Bwoooop!
+advertisement-kudzu-crush-5 = Let's play a game!
+advertisement-kudzu-crush-6 = 6 whole colors of gameplay!
+advertisement-kudzu-crush-7 = Hot 8-bit action!
+advertisement-kudzu-crush-8 = Blocks, blocks, blocks!
+advertisement-kudzu-crush-9 = Think YOU can claim the high score?
+advertisement-kudzu-crush-10 = Now with blast processing!
+advertisement-kudzu-crush-11 = Our lawyers are standing by!
+advertisement-kudzu-crush-12 = Hallelujah, it's raining blocks!
+
+thankyou-kudzu-crush-1 = Play again soon!
+thankyou-kudzu-crush-2 = Well played!
+thankyou-kudzu-crush-3 = Just one more game?
+thankyou-kudzu-crush-4 = Stopping so soon?
+thankyou-kudzu-crush-5 = The blocks will miss you.
+thankyou-kudzu-crush-6 = Thanks for playin'!
+thankyou-kudzu-crush-7 = Come back soon!
+thankyou-kudzu-crush-8 = Beep bwooop!
+thankyou-kudzu-crush-9 = There's always time for another game!
+thankyou-kudzu-crush-10 = Don't give up now!
+thankyou-kudzu-crush-11 = There are always more blocks!
+thankyou-kudzu-crush-12 = The blocks await your return!

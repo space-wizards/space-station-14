@@ -88,9 +88,8 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.ArcadeDown);
             human.AddFunction(ContentKeyFunctions.ArcadeLeft);
             human.AddFunction(ContentKeyFunctions.ArcadeRight);
-            human.AddFunction(ContentKeyFunctions.Arcade1);
-            human.AddFunction(ContentKeyFunctions.Arcade2);
-            human.AddFunction(ContentKeyFunctions.Arcade3);
+            human.AddFunction(ContentKeyFunctions.ArcadeDrop);
+            human.AddFunction(ContentKeyFunctions.ArcadeRotate);
 
             // actions should be common (for ghosts, mobs, etc)
             common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
