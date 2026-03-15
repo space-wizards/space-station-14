@@ -41,16 +41,19 @@
         layer:
         - WallLayer
   - type: Repairable
-    fuelCost: 10
-    doAfterDelay: 5
+    fuelCost: 15
+    doAfterDelay: 10
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: PowerCharge
     windowTitle: gravity-generator-window-title
     idlePower: 50
@@ -79,6 +82,14 @@
     color: "#a8ffd9"
   - type: StaticPrice
     price: 5000
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+    totalIntensity: 300
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: false
+    repeatable: true
 
 - type: entity
   id: GravityGeneratorMini
@@ -114,6 +125,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 500
       behaviors:
       - !type:DoActsBehavior
@@ -126,6 +143,9 @@
           MachineFrameDestroyed:
             min: 1
             max: 1
+  - type: Repairable
+    fuelCost: 5
+    doAfterDelay: 5
   - type: WiresPanel
   - type: Machine
     board: MiniGravityGeneratorCircuitboard
@@ -139,3 +159,11 @@
     lightRadiusMax: 2.5
   - type: StaticPrice
     price: 2000
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 4
+    totalIntensity: 25
+    intensitySlope: 2
+    canCreateVacuum: false
+    deleteAfterExplosion: false
+    repeatable: true
