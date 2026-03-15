@@ -50,7 +50,7 @@ namespace Content.Server.GameTicking.Commands
                 shell.WriteLine(Loc.GetString("cmd-setgamepreset-preset-set-finite-with-decoy", ("preset", preset.ID), ("rounds", rounds.ToString()), ("decoy", decoy.ID)));
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             return args.Length switch
             {
