@@ -22,6 +22,17 @@
 
 - type: skinColoration
   id: VulpkaninColors
-  strategy: !type:ClampedHslColoration
-    saturation: [0.0, 0.60]
-    lightness: [0.2, 0.9]
+  strategy: !type:HueRangedClampedHsvColoration
+    ranges:
+    # Red(0) to Greenish(90)
+    - hueRange: [0, 0.25]
+      saturation: [0, 0.9]
+      value: [0.2, 0.9]
+    # Greenish(90) to Pink(340)
+    - hueRange: [ 0.25, 0.97 ]
+      saturation: [ 0, 0.6 ]
+      value: [ 0.2, 0.9 ]
+    # Pink(340) to Red(360)
+    - hueRange: [ 0.97, 1 ]
+      saturation: [ 0, 0.9 ]
+      value: [ 0.2, 0.9 ]

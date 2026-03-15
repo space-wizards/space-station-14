@@ -303,6 +303,100 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 }
 
 /// <summary>
+/// Coloration strategy that clamps the color within the HSV colorspace.
+/// Clamped color depends on specified hue ranges.
+/// </summary>
+[DataDefinition]
+[Serializable, NetSerializable]
+public sealed partial class HueRangedClampedHsvColoration : ISkinColorationStrategy
+{
+    /// <summary>
+    /// List of valid ranges this coloration covers.
+    /// Colors outside of all ranges are considered invalid.
+    /// </summary>
+    [DataField]
+    public List<HueRangedClampedHsvColorationRange>? Ranges;
+
+    public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
+
+    public bool VerifySkinColor(Color color)
+    {
+        var hsv =  Color.ToHsv(color);
+        var range = GetHueRange(hsv.X);
+
+        // If no range was found, this color is invalid.
+        // We don't care for clamping the hue here, but it must be within a specified range.
+        if (range == null)
+            return false;
+
+        // If a range is found, check if the saturation is within the provided ranges.
+        if (hsv.Y < range.Saturation.Item1 || hsv.Y > range.Saturation.Item2)
+            return false;
+
+        // Check if the value is within provided ranges.
+        if (hsv.Z < range.Value.Item1 || hsv.Y > range.Value.Item2)
+            return false;
+
+        return true;
+    }
+
+    public Color ClosestSkinColor(Color color)
+    {
+        if (Ranges is null)
+            return color;
+
+        var hsv = Color.ToHsv(color);
+        var range = GetHueRange(hsv.X);
+        if (range == null)
+            return color;
+
+        hsv.Y = Math.Clamp(hsv.Y, range.Saturation.Item1, range.Saturation.Item2);
+        hsv.Z = Math.Clamp(hsv.Z, range.Value.Item1, range.Value.Item2);
+
+        return Color.FromHsv(hsv);
+    }
+
+    private HueRangedClampedHsvColorationRange? GetHueRange(float hue)
+    {
+        if (Ranges is null)
+            return null;
+
+        foreach (var hueRange in Ranges)
+        {
+            if (hue >= hueRange.HueRange.Item1 && hue <= hueRange.HueRange.Item2)
+            {
+                return hueRange;
+            }
+        }
+
+        return null;
+    }
+}
+
+[DataDefinition]
+[Serializable, NetSerializable]
+public sealed partial class HueRangedClampedHsvColorationRange
+{
+    /// <summary>
+    /// Defines the range within which the saturation and value ranges will apply.
+    /// </summary>
+    [DataField]
+    public (float, float) HueRange;
+
+    /// <summary>
+    /// Defines the (min, max) saturation within the provided range.
+    /// </summary>
+    [DataField]
+    public (float, float) Saturation;
+
+    /// <summary>
+    /// Defines the (min, max) value within the provided range.
+    /// </summary>
+    [DataField]
+    public (float, float) Value;
+}
+
+/// <summary>
 /// Contains shared utility methods for handling color manipulations in skin coloration strategies.
 /// </summary>
 internal static class SkinColorationUtils
