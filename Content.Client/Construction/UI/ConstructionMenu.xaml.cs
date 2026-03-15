@@ -26,12 +26,12 @@ namespace Content.Client.Construction.UI
         bool GridViewButtonPressed { get; set; }
         bool BuildButtonPressed { get; set; }
 
-        ListContainer Recipes { get; }
+        ListContainer ListViewRecipes { get; }
+
+        ScrollContainer GridViewRecipesScrollContainer { get; }
+        GridContainer GridViewRecipes { get; }
+
         ItemList RecipeStepList { get; }
-
-
-        ScrollContainer RecipesGridScrollContainer { get; }
-        GridContainer RecipesGrid { get; }
 
         event EventHandler<(string search, string catagory)> PopulateRecipes;
         event EventHandler<ConstructionMenu.ConstructionMenuListData?> RecipeSelected;
@@ -39,16 +39,17 @@ namespace Content.Client.Construction.UI
         event EventHandler<bool> BuildButtonToggled;
         event EventHandler<bool> EraseButtonToggled;
         event EventHandler ClearAllGhosts;
-        event EventHandler PreviousRecipeButtonPressed;
-        event EventHandler NextRecipeButtonPressed;
+        event EventHandler PreviousRecipeInHistoryButtonPressed;
+        event EventHandler NextRecipeInHistoryButtonPressed;
 
         void ClearRecipeInfo();
         void SetRecipeInfo(string name, string description, EntityPrototype? targetPrototype, bool isItem, bool isFavorite);
         void ResetPlacement();
-        bool TrySelectCategoryById(int categoryDisplayId);
-        bool TrySelectRecipeById(ProtoId<ConstructionPrototype> recipeProtoId);
-        void TogglePreviousRecipeButton(bool toggle);
-        void ToggleNextRecipeButton(bool toggle);
+        bool TrySelectCategory(int categoryId);
+        bool TrySelectListViewRecipe(ProtoId<ConstructionPrototype> constructionProtoId);
+        bool TrySelectGridViewRecipe(ProtoId<ConstructionPrototype> constructionProtoId, ContainerButton button);
+        void TogglePreviousRecipeButton(bool enabled);
+        void ToggleNextRecipeButton(bool enabled);
 
         #region Window Control
 
@@ -98,9 +99,9 @@ namespace Content.Client.Construction.UI
             Title = Loc.GetString("construction-menu-title");
 
             BuildButton.Text = Loc.GetString("construction-menu-place-ghost");
-            Recipes.ItemPressed += (_, data) => RecipeSelected?.Invoke(this, data as ConstructionMenuListData);
-            Recipes.NoItemSelected += () => RecipeSelected?.Invoke(this, null);
-            Recipes.GenerateItem += (data, button) =>
+            ListViewRecipes.ItemPressed += (_, data) => RecipeSelected?.Invoke(this, data as ConstructionMenuListData);
+            ListViewRecipes.NoItemSelected += () => RecipeSelected?.Invoke(this, null);
+            ListViewRecipes.GenerateItem += (data, button) =>
             {
                 if (data is not ConstructionMenuListData (var prototype, var targetPrototype))
                     return;
@@ -131,7 +132,7 @@ namespace Content.Client.Construction.UI
 
             SearchBar.OnTextChanged += _ =>
                 PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[OptionCategories.SelectedId]));
-            OptionCategories.OnItemSelected += obj => OnSelectCategory(obj.Id);
+            OptionCategories.OnItemSelected += obj => OnCategorySelected(obj.Id);
 
             BuildButton.Text = Loc.GetString("construction-menu-place-ghost");
             BuildButton.OnToggled += args => BuildButtonToggled?.Invoke(this, args.Pressed);
@@ -140,8 +141,8 @@ namespace Content.Client.Construction.UI
             EraseButton.Text = Loc.GetString("construction-menu-eraser-mode");
             EraseButton.OnToggled += args => EraseButtonToggled?.Invoke(this, args.Pressed);
 
-            PreviousRecipeButton.OnPressed += _ => PreviousRecipeButtonPressed?.Invoke(this, EventArgs.Empty);
-            NextRecipeButton.OnPressed += _ => NextRecipeButtonPressed?.Invoke(this, EventArgs.Empty);
+            NextRecipeInHistoryButton.OnPressed += _ => NextRecipeInHistoryButtonPressed?.Invoke(this, EventArgs.Empty);
+            PreviousRecipeInHistoryButton.OnPressed += _ => PreviousRecipeInHistoryButtonPressed?.Invoke(this, EventArgs.Empty);
 
             FavoriteButton.OnPressed += args => RecipeFavorited?.Invoke(this, EventArgs.Empty);
 
@@ -155,8 +156,8 @@ namespace Content.Client.Construction.UI
         public event EventHandler? RecipeFavorited;
         public event EventHandler<bool>? BuildButtonToggled;
         public event EventHandler<bool>? EraseButtonToggled;
-        public event EventHandler? PreviousRecipeButtonPressed;
-        public event EventHandler? NextRecipeButtonPressed;
+        public event EventHandler? PreviousRecipeInHistoryButtonPressed;
+        public event EventHandler? NextRecipeInHistoryButtonPressed;
 
         public void ResetPlacement()
         {
@@ -191,69 +192,90 @@ namespace Content.Client.Construction.UI
             RecipeStepList.Clear();
         }
 
-        public sealed record ConstructionMenuListData(ConstructionPrototype Prototype, EntityPrototype TargetPrototype) : ListData;
+        public sealed record ConstructionMenuListData(ConstructionPrototype ConstructionProto, EntityPrototype EntityProto) : ListData;
 
         /// <summary>
         /// Handle category selection.
         /// </summary>
-        private void OnSelectCategory(int categoryDisplayId)
+        private void OnCategorySelected(int categoryId)
         {
-            OptionCategories.SelectId(categoryDisplayId);
+            OptionCategories.SelectId(categoryId);
             SearchBar.SetText(string.Empty);
-            PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[categoryDisplayId]));
+            PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[categoryId]));
         }
 
         /// <summary>
-        /// Attempts to select a category by its display ID.
+        /// Attempts to select category by its ID.
         /// </summary>
         /// <returns>Whether it was successful.</returns>
-        public bool TrySelectCategoryById(int categoryDisplayId)
+        public bool TrySelectCategory(int categoryId)
         {
             // do nothing if category is already selected
-            if (OptionCategories.SelectedId == categoryDisplayId)
+            if (OptionCategories.SelectedId == categoryId)
             {
                 return true;
             }
 
-            OnSelectCategory(categoryDisplayId);
+            OnCategorySelected(categoryId);
 
             return true;
         }
 
         /// <summary>
-        /// Attempts to select a recipe by its ID.
+        /// Attempts to select a recipe by its ID. Only works when in list view.
         /// </summary>
         /// <returns>Whether it was successful.</returns>
-        public bool TrySelectRecipeById(ProtoId<ConstructionPrototype> recipeProtoId)
+        public bool TrySelectListViewRecipe(ProtoId<ConstructionPrototype> constructionProtoId)
         {
-            if (!Recipes.Data.TryFirstOrDefault(
-                    data => ((ConstructionMenuListData)data).Prototype.ID == recipeProtoId,
-                    out var matchingData
-                ))
+            var isGridView = GridViewButtonPressed;
+            if (isGridView)
+                return false;
+
+            if (!ListViewRecipes.Data.TryFirstOrDefault(
+                    data => ((ConstructionMenuListData)data).ConstructionProto.ID == constructionProtoId,
+                    out var matchingData))
             {
                 return false;
             }
 
-            Recipes.Select(matchingData);
+            ListViewRecipes.Select(matchingData);
+            return true;
+        }
+
+        /// <summary>
+        /// Attempts to select a recipe by its ID. Only works when in grid view.
+        /// </summary>
+        /// <returns>Whether it was successful.</returns>
+        public bool TrySelectGridViewRecipe(ProtoId<ConstructionPrototype> constructionProtoId, ContainerButton button)
+        {
+            var isGridView = GridViewButtonPressed;
+            if (!isGridView)
+            {
+                return false;
+            }
+
+            button.Pressed = true;
+            // todo check if this is needed since setting press to true should trigger the events?
+            // OnGridViewButtonToggled(recipeProto, gridItem, true);
             return true;
         }
 
         /// <summary>
         /// Toggles previous recipe button on/off.
         /// </summary>
-        /// <param name="toggle">Desired toggle state.</param>
-        public void TogglePreviousRecipeButton(bool toggle)
+        /// <param name="enabled">Desired toggle state.</param>
+        public void TogglePreviousRecipeButton(bool enabled)
         {
-            PreviousRecipeButton.Disabled = !toggle;
+            NextRecipeInHistoryButton.Disabled = !enabled;
         }
 
         /// <summary>
         /// Toggles next recipe button on/off.
         /// </summary>
-        /// <param name="toggle">Desired toggle state.</param>
-        public void ToggleNextRecipeButton(bool toggle)
+        /// <param name="enabled">Desired toggle state.</param>
+        public void ToggleNextRecipeButton(bool enabled)
         {
-            NextRecipeButton.Disabled = !toggle;
+            NextRecipeInHistoryButton.Disabled = !enabled;
         }
     }
 }
