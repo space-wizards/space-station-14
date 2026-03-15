@@ -41,8 +41,9 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 26 # 20% decrease
-    ignoreResistances: true
+        Piercing: 30 # 15% weaker than default
+        Structural: 10
+    ignoreResistances: true # this means it's basically 40 structural, because AP applies to wall resistances
 
 - type: entity
   parent: BaseBulletUranium
