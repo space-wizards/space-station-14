@@ -1,6 +1,7 @@
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Systems;
@@ -30,6 +31,7 @@ namespace Content.Shared.Cloning;
 public abstract partial class SharedCloningPodSystem : EntitySystem
 {
     [Dependency] private readonly CloningConsoleSystem _cloningConsole = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -123,7 +125,7 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
 
         // genetic damage checks.
         if (TryComp<DamageableComponent>(bodyToClone, out var damageable) &&
-            damageable.Damage.DamageDict.TryGetValue("Cellular", out var cellularDmg))
+            _damageable.GetAllDamage((bodyToClone, damageable)).DamageDict.TryGetValue("Cellular", out var cellularDmg))
         {
             var chance = Math.Clamp((float)(cellularDmg / 100), 0, 1);
             chance *= failChanceModifier;
