@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
@@ -29,6 +30,8 @@ public sealed class SmartEquipSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
+    private BaseContainer? _lastContainer;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -38,7 +41,22 @@ public sealed class SmartEquipSystem : EntitySystem
             .Bind(ContentKeyFunctions.SmartEquipPocket1, InputCmdHandler.FromDelegate(HandleSmartEquipPocket1, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.SmartEquipPocket2, InputCmdHandler.FromDelegate(HandleSmartEquipPocket2, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.SmartEquipSuitStorage, InputCmdHandler.FromDelegate(HandleSmartEquipSuitStorage, handle: false, outsidePrediction: false))
+            .Bind(ContentKeyFunctions.SmartEquipLastInteracted, InputCmdHandler.FromDelegate(HandleSmartEquipLastInteracted, handle: false, outsidePrediction: false))
             .Register<SmartEquipSystem>();
+
+        SubscribeLocalEvent<ContainerManagerComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
+    }
+
+    private void OnItemRemoved(EntityUid uid, ContainerManagerComponent component, EntRemovedFromContainerMessage args)
+    {
+        // TODO: probably need to check if the player was the one who removed the item, and not just a random entity getting removed
+        //       and not some random item getting removed somewhere else in the world.
+
+        // do not update last container if the container is the players hands
+        if (TryComp<HandsComponent>(args.Container.Owner, out _))
+            return;
+
+        _lastContainer = args.Container;
     }
 
     public override void Shutdown()
@@ -73,12 +91,37 @@ public sealed class SmartEquipSystem : EntitySystem
         HandleSmartEquip(session, "suitstorage");
     }
 
-    private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
+    private void HandleSmartEquipLastInteracted(ICommonSession? session)
     {
-        if (session is not { } playerSession)
+        if (_lastContainer == null)
             return;
 
-        if (playerSession.AttachedEntity is not { Valid: true } uid || !Exists(uid))
+        if (!GetUIDFromSession(session, out var uid))
+            return;
+
+        // early out if we don't have any hands or a valid inventory slot
+        if (!TryComp<HandsComponent>(uid, out var hands) || hands.ActiveHandId == null)
+            return;
+
+        var handItem = _hands.GetActiveItem((uid, hands));
+
+        // can the user interact, and is the item interactable? e.g. virtual items
+        if (!_actionBlocker.CanInteract(uid, handItem))
+            return;
+
+        // early out if we have an item and cant drop it at all
+        if (handItem != null && !_hands.CanDropHeld(uid, hands.ActiveHandId))
+        {
+            _popup.PopupClient(Loc.GetString("smart-equip-cant-drop"), uid, uid);
+            return;
+        }
+
+        HandleSlotEntity(_lastContainer.Owner, Loc.GetString("smart-equip-no-recently-opened"), handItem, uid, hands);
+    }
+
+    private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
+    {
+        if (!GetUIDFromSession(session, out var uid))
             return;
 
         // early out if we don't have any hands or a valid inventory slot
@@ -238,5 +281,124 @@ public sealed class SmartEquipSystem : EntitySystem
 
         _inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true);
         _hands.TryPickup(uid, slotItem, handsComp: hands);
+    }
+
+    private void HandleSlotEntity(EntityUid? slotEntity, string emptyError, EntityUid? handItem, EntityUid uid, HandsComponent hands)
+    {
+        // case 1 (no slot item):
+        if (slotEntity is not { } slotItem)
+        {
+            if (handItem == null)
+            {
+                _popup.PopupClient(emptyError, uid, uid);
+                return;
+            }
+
+            _hands.TryDrop((uid, hands), hands.ActiveHandId!);
+            return;
+        }
+
+        // case 2 (storage item):
+        if (TryComp<StorageComponent>(slotItem, out var storage))
+        {
+            switch (handItem)
+            {
+                case null when storage.Container.ContainedEntities.Count == 0:
+                    _popup.PopupClient(emptyError, uid, uid);
+                    return;
+                case null:
+                    var removing = storage.Container.ContainedEntities[^1];
+                    _container.RemoveEntity(slotItem, removing);
+                    _hands.TryPickup(uid, removing, handsComp: hands);
+                    return;
+            }
+
+            if (!_storage.CanInsert(slotItem, handItem.Value, out var reason))
+            {
+                if (reason != null)
+                    _popup.PopupClient(Loc.GetString(reason), uid, uid);
+
+                return;
+            }
+
+            _hands.TryDrop((uid, hands), hands.ActiveHandId!);
+            _storage.Insert(slotItem, handItem.Value, out var stacked, out _, user: uid);
+
+            // if the hand item stacked with the things in inventory, but there's no more space left for the rest
+            // of the stack, place the stack back in hand rather than dropping it on the floor
+            if (stacked != null && !_storage.CanInsert(slotItem, handItem.Value, out _))
+            {
+                if (TryComp<StackComponent>(handItem.Value, out var handStack) && handStack.Count > 0)
+                    _hands.TryPickup(uid, handItem.Value, handsComp: hands);
+            }
+
+            return;
+        }
+
+        // case 3 (itemslot item):
+        if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
+        {
+            if (handItem == null)
+            {
+                ItemSlot? toEjectFrom = null;
+
+                foreach (var slot in slots.Slots.Values)
+                {
+                    if (slot.HasItem && slot.Priority > (toEjectFrom?.Priority ?? int.MinValue))
+                        toEjectFrom = slot;
+                }
+
+                if (toEjectFrom == null)
+                {
+                    _popup.PopupClient(emptyError, uid, uid);
+                    return;
+                }
+
+                _slots.TryEjectToHands(slotItem, toEjectFrom, uid, excludeUserAudio: true);
+                return;
+            }
+
+            ItemSlot? toInsertTo = null;
+
+            foreach (var slot in slots.Slots.Values)
+            {
+                if (!slot.HasItem
+                    && _whitelistSystem.IsWhitelistPassOrNull(slot.Whitelist, handItem.Value)
+                    && slot.Priority > (toInsertTo?.Priority ?? int.MinValue))
+                {
+                    toInsertTo = slot;
+                }
+            }
+
+            if (toInsertTo == null)
+            {
+                _popup.PopupClient(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)), uid, uid);
+                return;
+            }
+
+            _slots.TryInsertFromHand(slotItem, toInsertTo, uid, hands, excludeUserAudio: true);
+            return;
+        }
+
+        // case 4 (just an item):
+        if (handItem != null)
+            return;
+
+        _hands.TryPickup(uid, slotItem, handsComp: hands);
+    }
+
+    private bool GetUIDFromSession(ICommonSession? session, out EntityUid uid)
+    {
+        uid = default;
+
+        if (session is not { } playerSession)
+            return false;
+
+        if (playerSession.AttachedEntity is not { Valid: true } attachedUid || !Exists(attachedUid))
+            return false;
+
+        uid = attachedUid;
+
+        return true;
     }
 }
