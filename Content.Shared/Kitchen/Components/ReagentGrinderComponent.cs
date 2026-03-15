@@ -43,7 +43,7 @@ public sealed partial class ReagentGrinderComponent : Component
     /// Roughly matches the grind/juice sounds.
     /// </summary>
     [DataField]
-    public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5);
+    public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5f);
 
     /// <summary>
     /// Multiplier for WorkTime, that pitches the audio accordingly.
