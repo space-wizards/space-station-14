@@ -1,4 +1,44 @@
 - type: cargoProduct
+  id: ServiceBarSupply
+  icon:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon
+  product: CrateServiceBarSupply
+  cost: 750
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceCook
+  icon:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: flour-big
+  product: CrateServiceCooking
+  cost: 750
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceCookGetmore
+  icon:
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: raisins
+  product: CrateServiceGetMore
+  cost: 750
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceDinnerware
+  icon:
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: tin
+  product: CrateServiceDinnerware
+  cost: 750
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
   id: ServiceJanitorial
   icon:
     sprite: Objects/Specific/Janitorial/spray_bottle.rsi

@@ -19,52 +19,12 @@
   group: market
 
 - type: cargoProduct
-  id: FoodCook
-  icon:
-    sprite: Objects/Consumable/Food/ingredients.rsi
-    state: flour-big
-  product: CrateFoodCooking
-  cost: 750
-  category: cargoproduct-category-name-food
-  group: market
-
-- type: cargoProduct
-  id: FoodDinnerware
-  icon:
-    sprite: Objects/Consumable/Food/plates.rsi
-    state: tin
-  product: CrateFoodDinnerware
-  cost: 750
-  category: cargoproduct-category-name-food
-  group: market
-
-- type: cargoProduct
-  id: FoodBarSupply
-  icon:
-    sprite: Objects/Consumable/Drinks/beerglass.rsi
-    state: icon
-  product: CrateFoodBarSupply
-  cost: 750
-  category: cargoproduct-category-name-food
-  group: market
-
-- type: cargoProduct
   id: FoodSoftdrinks
   icon:
     sprite: Objects/Consumable/Drinks/cola.rsi
     state: icon
   product: CrateFoodSoftdrinks
   cost: 1500
-  category: cargoproduct-category-name-food
-  group: market
-
-- type: cargoProduct
-  id: FoodCookGetmore
-  icon:
-    sprite: Objects/Consumable/Food/snacks.rsi
-    state: raisins
-  product: CrateFoodGetMore
-  cost: 750
   category: cargoproduct-category-name-food
   group: market
 

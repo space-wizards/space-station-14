@@ -14,17 +14,7 @@
     sprite: Objects/Specific/Chemistry/beaker.rsi
     state: beaker
   product: CrateChemistrySupplies
-  cost: 750
-  category: cargoproduct-category-name-medical
-  group: market
-
-- type: cargoProduct
-  id: MedicalChemistryVials
-  icon:
-    sprite: Objects/Specific/Chemistry/vial.rsi
-    state: vial
-  product: CrateChemistryVials
-  cost: 1100
+  cost: 1750
   category: cargoproduct-category-name-medical
   group: market
 
