@@ -58,7 +58,7 @@ public sealed partial class KitchenSpikeComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier SpikeDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             { "Piercing", 10 },
         },
@@ -70,7 +70,7 @@ public sealed partial class KitchenSpikeComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier ButcherDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             { "Slash", 20 },
         },
@@ -82,7 +82,7 @@ public sealed partial class KitchenSpikeComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier TimeDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             { "Blunt", 1 }, // Mobs are only gibbed from blunt (at least for now).
         },

@@ -478,6 +478,17 @@
   name: alerts-adrenaline-name
   description: alerts-adrenaline-desc
 
+# Making alerts for innate abilities like this should generally be avoided by turning them into actions or giving better UX.
+# This was done this way because several entities currently can pry innately and have no indicator for this whatsoever.
+# The ideal solution would be to clean up actions to handle this sort of thing easier while avoiding bloating the action UI.
+- type: alert
+  id: Prying
+  icons:
+  - sprite: /Textures/Objects/Tools/crowbar.rsi
+    state: icon
+  name: alerts-prying-name
+  description: alerts-prying-desc
+
 - type: alert
   id: Debug1
   icons:
