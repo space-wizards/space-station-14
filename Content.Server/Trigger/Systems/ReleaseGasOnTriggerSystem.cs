@@ -24,7 +24,7 @@ public sealed class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTriggerSystem
             if (!comp.Active || comp.NextReleaseTime > curTime)
                 continue;
 
-            var giverGasMix = comp.Air.Remove(comp.StartingTotalMoles * comp.RemoveFraction);
+
             var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
 
             if (environment == null)
@@ -34,15 +34,25 @@ public sealed class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTriggerSystem
                 continue;
             }
 
+
+            if (comp.PressureLimit != 0 && environment.Pressure >= comp.PressureLimit)
+            {
+                if (!comp.ContinueUntilEmpty)
+                {
+                    _appearance.SetData(uid, ReleaseGasOnTriggerVisuals.Key, false);
+                    RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
+                }
+                continue;
+            }
+
+            var giverGasMix = comp.Air.Remove(comp.StartingTotalMoles * comp.RemoveFraction);
             _atmosphereSystem.Merge(environment, giverGasMix);
             comp.NextReleaseTime += comp.ReleaseInterval;
 
-            if (comp.PressureLimit != 0 && environment.Pressure >= comp.PressureLimit ||
-                comp.Air.TotalMoles <= 0)
-            {
-                _appearance.SetData(uid, ReleaseGasOnTriggerVisuals.Key, false);
-                RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
-            }
+            if (comp.Air.TotalMoles > 0 && (comp.ContinueUntilEmpty || (comp.PressureLimit == 0 || environment.Pressure <= comp.PressureLimit)))
+                continue;
+            _appearance.SetData(uid, ReleaseGasOnTriggerVisuals.Key, false);
+            RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
         }
     }
 }

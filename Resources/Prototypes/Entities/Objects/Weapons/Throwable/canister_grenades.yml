@@ -107,6 +107,8 @@
         Oxygen: 654.7464 # oxygen
         Nitrogen: 2463.0936 # nitrogen
       temperature: 293.15
+    pressureLimit: 101.325
+    continueUntilEmpty: true
   - type: StaticPrice
     price: 350
   - type: GenericVisualizer
