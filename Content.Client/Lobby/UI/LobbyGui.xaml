@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:vote="clr-namespace:Content.Client.Voting.UI"
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
@@ -25,7 +24,7 @@
                             <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="800">
                                 <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center"
                                                  Margin="3 3 3 3" />
-                                <controls:StripeBack>
+                                <StripeBack>
                                     <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
                                         <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public"
                                                             Text="{Loc 'ui-lobby-observe-button'}"
@@ -40,7 +39,7 @@
                                                 Text="{Loc 'ui-lobby-ready-up-button'}"
                                                 StyleClasses="ButtonBig" MinWidth="137" />
                                     </BoxContainer>
-                                </controls:StripeBack>
+                                </StripeBack>
                                 <RichTextLabel Name="PlaytimeComment" Visible="False" Access="Public" HorizontalAlignment="Center" />
                             </BoxContainer>
                         </PanelContainer>
@@ -76,8 +75,8 @@
                                HorizontalExpand="True" HorizontalAlignment="Center" />
                     </BoxContainer>
                     <!-- Gold line -->
-                    <controls:HLine StyleClasses="highlight" Thickness="2" />
-                    <controls:HSpacer Spacing="10" />
+                    <HLine StyleClasses="highlight" Thickness="2" />
+                    <HSpacer Spacing="10" />
                     <!-- Voting & misc button bar -->
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
                         <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
@@ -88,20 +87,20 @@
                         <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig"
                                 Text="{Loc 'ui-lobby-leave-button'}" />
                     </BoxContainer>
-                    <controls:HSpacer Spacing="10" />
+                    <HSpacer Spacing="10" />
                     <!-- Server info -->
-                    <controls:NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
+                    <NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
                     <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30" VerticalExpand="false"
                                      Margin="3 3 3 3" MaxWidth="400" HorizontalAlignment="Left" />
                     <Label Name="StationTime" Access="Public" FontColorOverride="{x:Static maths:Color.LightGray}"
                            Margin="3 3 3 3" HorizontalAlignment="Left" />
-                    <controls:HSpacer Spacing="5" />
+                    <HSpacer Spacing="5" />
                     <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public" />
-                    <controls:HSpacer Spacing="5" />
+                    <HSpacer Spacing="5" />
                     <BoxContainer MinHeight="10" />
                     <!-- Gold line -->
-                    <controls:HLine StyleClasses="highlight" Thickness="2" Access="Public" />
-                    <controls:HSpacer Spacing="10" />
+                    <HLine StyleClasses="highlight" Thickness="2" Access="Public" />
+                    <HSpacer Spacing="10" />
                     <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" />
                 </BoxContainer>
                 <TextureButton Name="CollapseButton"

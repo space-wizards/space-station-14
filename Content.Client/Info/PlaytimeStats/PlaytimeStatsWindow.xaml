@@ -1,5 +1,4 @@
-<ui:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                 xmlns:pt="clr-namespace:Content.Client.Info.PlaytimeStats"
                 xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 VerticalExpand="True" HorizontalExpand="True"
@@ -22,4 +21,4 @@
             </ScrollContainer>
         </BoxContainer>
     </Control>
-</ui:FancyWindow>
+</FancyWindow>

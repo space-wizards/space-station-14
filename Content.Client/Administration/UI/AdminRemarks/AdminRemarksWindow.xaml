@@ -1,5 +1,4 @@
-<ui:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                 VerticalExpand="True" HorizontalExpand="True"
                 Title="{Loc admin-remarks-title}"
                 SetSize="600 400">
@@ -10,4 +9,4 @@
             </ScrollContainer>
         </BoxContainer>
     </PanelContainer>
-</ui:FancyWindow>
+</FancyWindow>

@@ -1,6 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+<FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       SetSize="650 330"
                       Resizable="False">
@@ -21,7 +19,7 @@
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-in'}" HorizontalExpand="True" VerticalAlignment="Top"
                                        StyleClasses="LabelKeyText" />
-                                <controls:OnOffButton Name="InBreaker" />
+                                <OnOffButton Name="InBreaker" />
                             </BoxContainer>
                             <Label Name="InValue" />
                         </BoxContainer>
@@ -51,7 +49,7 @@
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-out'}" HorizontalExpand="True" VerticalAlignment="Top"
                                        StyleClasses="LabelKeyText" />
-                                <controls:OnOffButton Name="OutBreaker" />
+                                <OnOffButton Name="OutBreaker" />
                             </BoxContainer>
                             <Label Name="OutValue" />
                         </BoxContainer>
@@ -143,4 +141,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

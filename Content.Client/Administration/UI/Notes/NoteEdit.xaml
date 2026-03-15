@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                       Title="Loading..."
                       MinSize="400 200">
     <BoxContainer Orientation="Vertical" Margin="4">
@@ -20,4 +19,4 @@
             <Button Name="SubmitButton" Access="Public" Text="{Loc admin-note-editor-submit}" HorizontalAlignment="Right" />
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

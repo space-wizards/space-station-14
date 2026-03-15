@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                      Title="{Loc 'laws-ui-menu-title'}"
                      MinSize="200 100"
@@ -24,4 +23,4 @@
             </ScrollContainer>
         </PanelContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

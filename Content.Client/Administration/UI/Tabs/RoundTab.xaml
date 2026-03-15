@@ -1,13 +1,12 @@
 ﻿<Control
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Margin="4"
     MinSize="50 50">
     <GridContainer
         Columns="3">
-        <controls:ConfirmButton Name="StartRound" Text="{Loc administration-ui-round-tab-start-round}" />
-        <controls:ConfirmButton Name="EndRound" Text="{Loc administration-ui-round-tab-end-round}" />
-        <controls:ConfirmButton Name="RestartRound" Text="{Loc administration-ui-round-tab-restart-round}" />
-        <controls:ConfirmButton Name="RestartRoundNow" Text="{Loc administration-ui-round-tab-restart-round-now}" />
+        <ConfirmButton Name="StartRound" Text="{Loc administration-ui-round-tab-start-round}" />
+        <ConfirmButton Name="EndRound" Text="{Loc administration-ui-round-tab-end-round}" />
+        <ConfirmButton Name="RestartRound" Text="{Loc administration-ui-round-tab-restart-round}" />
+        <ConfirmButton Name="RestartRoundNow" Text="{Loc administration-ui-round-tab-restart-round-now}" />
     </GridContainer>
 </Control>

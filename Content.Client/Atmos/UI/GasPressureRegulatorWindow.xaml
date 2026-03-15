@@ -1,6 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+﻿<FancyWindow xmlns="https://spacestation14.io"
                       SetSize="345 380"
                       MinSize="345 380"
                       Title="{Loc gas-pressure-regulator-ui-title}"
@@ -53,7 +51,7 @@
         </BoxContainer>
 
         <!-- Controls to Set Pressure -->
-        <controls:StripeBack Name="SetPressureStripeBack" HorizontalExpand="True">
+        <StripeBack Name="SetPressureStripeBack" HorizontalExpand="True">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10 10 10 10">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                     <LineEdit Name="ThresholdInput" HorizontalExpand="True" MinSize="70 0" />
@@ -89,8 +87,8 @@
                             Text="{Loc gas-pressure-regulator-ui-set-to-current-pressure}" HorizontalExpand="True" />
                 </BoxContainer>
             </BoxContainer>
-        </controls:StripeBack>
+        </StripeBack>
 
     </BoxContainer>
 
-</controls:FancyWindow>
+</FancyWindow>

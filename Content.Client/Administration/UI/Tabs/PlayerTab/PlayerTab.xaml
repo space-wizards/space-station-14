@@ -1,7 +1,6 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:pt="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab"
-         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="PlayerCount" HorizontalExpand="True" Text="{Loc player-tab-player-count}" />
@@ -14,6 +13,6 @@
         <Control MinSize="0 5"/>
         <pt:PlayerTabHeader Name="ListHeader"/>
         <cc:HSeparator/>
-        <co:SearchListContainer Name="SearchList" Access="Public" VerticalExpand="True"/>
+        <SearchListContainer Name="SearchList" Access="Public" VerticalExpand="True"/>
     </BoxContainer>
 </Control>

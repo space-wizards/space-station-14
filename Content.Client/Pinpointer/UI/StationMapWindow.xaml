@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                       xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
                       Title="{Loc 'station-map-window-title'}"
                       Resizable="False"
@@ -7,11 +6,11 @@
                       MinSize="868 748">
     <BoxContainer Orientation="Vertical">
         <!-- Station name -->
-        <controls:StripeBack>
+        <StripeBack>
             <PanelContainer>
                 <Label Name="StationName" Text="{Loc 'station-map-unknown-station'}" StyleClasses="LabelBig" Align="Center"/>
             </PanelContainer>
-        </controls:StripeBack>
+        </StripeBack>
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Top">
             <ui:NavMapControl Name="NavMapScreen"/>
@@ -39,4 +38,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>
