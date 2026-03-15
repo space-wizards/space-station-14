@@ -212,22 +212,24 @@ public sealed class SpreaderSystem : EntitySystem
                 neighborTiles.Add((dockedXform.GridUid.Value, dockedGrid, _map.CoordinatesToTile(dockedXform.GridUid.Value, dockedGrid, dockedXform.Coordinates), xform.LocalRotation.ToAtmosDirection(), dockedXform.LocalRotation.ToAtmosDirection()));
             }
 
-            // If we're on a blocked tile work out which directions we can go.
+            // Are we on a blocked tile?
             if (!airtightQuery.TryGetComponent(ent, out var airtight) || !airtight.AirBlocked ||
                 _tag.HasTag(ent.Value, IgnoredTag))
             {
                 continue;
             }
 
+            // Figure out which directions are blocked.
             foreach (var value in new[] { AtmosDirection.North, AtmosDirection.East, AtmosDirection.South, AtmosDirection.West })
             {
                 if ((value & airtight.AirBlockedDirection) == 0x0)
                     continue;
 
                 blockedAtmosDirs |= value;
-                break;
             }
-            break;
+
+            if (blockedAtmosDirs == AtmosDirection.All)
+                break;
         }
 
         // Add the normal neighbors.
