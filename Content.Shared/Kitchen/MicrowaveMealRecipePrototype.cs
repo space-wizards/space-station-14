@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Kitchen;
 
@@ -148,6 +149,23 @@ public partial record struct CookingIngredients
         }
 
         return portions;
+    }
+
+    public static CookingIngredients operator +(CookingIngredients c1, CookingIngredients c2)
+    {
+        var solids = c1.Solids.ShallowClone();
+        foreach (var (key, count) in c2.Solids)
+            solids[key] = solids.GetValueOrDefault(key) + count;
+
+        var materials = c1.Materials.ShallowClone();
+        foreach (var (key, count) in c2.Materials)
+            materials[key] = materials.GetValueOrDefault(key) + count;
+
+        var reagents = c1.Reagents.ShallowClone();
+        foreach (var (key, quantity) in c2.Reagents)
+            reagents[key] = reagents.GetValueOrDefault(key) + quantity;
+
+        return new(solids, materials, reagents);
     }
 
     public static CookingIngredients operator *(CookingIngredients c1, int scalar)

@@ -108,7 +108,7 @@ public sealed partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Gets all usable ingredients from a given entity and adds it to the list of respective ingredients.
+    ///     Gets all usable ingredients from a given entity.
     /// </summary>
     /// <remarks>
     ///     The entity itself is a "solid".
@@ -116,35 +116,24 @@ public sealed partial class MicrowaveSystem
     ///     If it has a usable ingredient solution, then the solution's contents are "reagents".
     /// </remarks>
     /// <param name="item">The entity to use as ingredients.</param>
-    /// <param name="solids">The dictionary of available recipe solids.</param>
-    /// <param name="materials">The dictionary of available recipe materials.</param>
-    /// <param name="reagents">The dictionary of available recipe reagents.</param>
-    private void SumItemIngredients(EntityUid item,
-        Dictionary<EntProtoId, int> solids,
-        Dictionary<ProtoId<StackPrototype>, int> materials,
-        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
+    /// <returns>Quantities of ingredients represented by this item.</returns>
+    private CookingIngredients SumItemIngredients(EntityUid item)
     {
+        var solids = new Dictionary<EntProtoId, int>();
+        var materials = new Dictionary<ProtoId<StackPrototype>, int>();
+        var reagents = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>();
+
         if (TryGetSolidId(item, out var solidId))
-        {
-            if (!solids.TryAdd(solidId.Value, 1))
-                solids[solidId.Value] += 1;
-        }
+            solids.Add(solidId.Value, 1);
 
         if (TryGetMaterialId(item, out var materialId, out var stack))
-        {
-            var count = stack.Value.Comp.Count;
-            if (!materials.TryAdd(materialId.Value, count))
-                materials[materialId.Value] += count;
-        }
+            materials.Add(materialId.Value, stack.Value.Comp.Count);
 
         if (TryGetUsableIngredientSolution(item, out var _, out var solution))
-        {
             foreach (var (reagent, quantity) in solution.Contents)
-            {
-                if (!reagents.TryAdd(reagent.Prototype, quantity))
-                    reagents[reagent.Prototype] += quantity;
-            }
-        }
+                reagents.Add(reagent.Prototype, quantity);
+
+        return new(solids, materials, reagents);
     }
 
     /// <summary>
@@ -155,14 +144,12 @@ public sealed partial class MicrowaveSystem
     /// <returns>Cooking ingredient quantities representing the total usable ingredient list.</returns>
     private CookingIngredients GetTotalIngredients(List<EntityUid> items)
     {
-        var solids = new Dictionary<EntProtoId, int>();
-        var materials = new Dictionary<ProtoId<StackPrototype>, int>();
-        var reagents = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>();
+        var ingredients = new CookingIngredients();
 
         foreach (var item in items)
-            SumItemIngredients(item, solids, materials, reagents);
+            ingredients += SumItemIngredients(item);
 
-        return new(solids, materials, reagents);
+        return ingredients;
     }
 
     /// <summary>
