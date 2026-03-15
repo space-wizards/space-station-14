@@ -31,7 +31,7 @@ public sealed class StationPowerTests
         "Packed",
         "Plasma",
         "Relic",
-        "Snowball",
+        "Ball",
         "Reach",
         "Exo",
     ];
