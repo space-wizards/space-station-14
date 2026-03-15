@@ -556,6 +556,9 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 pipenet.Update();
 
+                if (PipeDamage)
+                    PerformPipeDamageOnAllNodes(pipenet);
+
                 if (number++ < LagCheckIterations)
                     continue;
 
