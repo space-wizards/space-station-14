@@ -629,6 +629,14 @@
     defaultText: station-beacon-janitor
 
 - type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconNewsroom
+  suffix: Newsroom
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-newsroom
+
+- type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconAI
   suffix: AI
@@ -719,14 +727,6 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-library
-
-- type: entity
-  parent: DefaultStationBeacon
-  id: DefaultStationBeaconReporter
-  suffix: Reporter
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-reporter
 
 - type: entity
   parent: DefaultStationBeacon
