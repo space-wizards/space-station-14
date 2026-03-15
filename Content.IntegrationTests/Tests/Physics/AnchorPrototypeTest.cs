@@ -1,3 +1,4 @@
+using Content.IntegrationTests.Fixtures;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -6,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Physics;
 
 [TestFixture]
-public sealed class AnchorPrototypeTest
+public sealed class AnchorPrototypeTest : GameTest
 {
     /// <summary>
     /// Asserts that entityprototypes marked as anchored are also static physics bodies.
@@ -14,7 +15,7 @@ public sealed class AnchorPrototypeTest
     [Test]
     public async Task TestStaticAnchorPrototypes()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
 
         var protoManager = pair.Server.ResolveDependency<IPrototypeManager>();
 
@@ -37,7 +38,5 @@ public sealed class AnchorPrototypeTest
                 Assert.That(physics.BodyType, Is.EqualTo(BodyType.Static), $"Found entity prototype {ent} marked as anchored but not static for physics.");
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 }

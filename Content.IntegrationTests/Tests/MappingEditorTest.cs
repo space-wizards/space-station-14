@@ -1,19 +1,17 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client.Mapping;
+using Content.IntegrationTests.Fixtures;
 using Robust.Client.State;
 
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-public sealed class MappingEditorTest
+public sealed class MappingEditorTest : GameTest
 {
     [Test]
     public async Task StopHardCodingWidgetsJesusChristTest()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings
-        {
-            Connected = true
-        });
+        var pair = Pair;
         var client = pair.Client;
         var state = client.ResolveDependency<IStateManager>();
 
@@ -35,7 +33,5 @@ public sealed class MappingEditorTest
                 state.RequestStateChange<GameplayState>();
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 }

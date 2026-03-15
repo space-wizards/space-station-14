@@ -1,3 +1,4 @@
+using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Utility;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
@@ -7,7 +8,7 @@ using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.DeviceLinking;
 
-public sealed class DeviceLinkingTest
+public sealed class DeviceLinkingTest : GameTest
 {
     private const string PortTesterProtoId = "DeviceLinkingSinkPortTester";
 
@@ -29,7 +30,7 @@ public sealed class DeviceLinkingTest
     [Description("Ensures all devices that can sink signals will not cause exceptions when signaled.")]
     public async Task DeviceLinkSinkAllPortsTest(string protoKey)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var protoMan = server.ProtoMan;
         var compFact = server.ResolveDependency<IComponentFactory>();
@@ -77,7 +78,5 @@ public sealed class DeviceLinkingTest
                 }
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 }

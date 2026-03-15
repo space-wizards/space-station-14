@@ -1,3 +1,4 @@
+using Content.IntegrationTests.Fixtures;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -10,14 +11,14 @@ namespace Content.IntegrationTests.Tests.Humanoid;
 
 [TestFixture]
 [TestOf(typeof(HumanoidProfileSystem))]
-public sealed class HumanoidProfileTests
+public sealed class HumanoidProfileTests : GameTest
 {
     private static readonly ProtoId<SpeciesPrototype> Vox = "Vox";
 
     [Test]
     public async Task EnsureValidLoading()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         await server.WaitIdleAsync();
@@ -43,7 +44,5 @@ public sealed class HumanoidProfileTests
             Assert.That(voiceComponent.Sounds, Is.Not.Null, message: "the MobHuman spawned by this test needs to have sex-specific sound set");
             Assert.That(voiceComponent.Sounds![Sex.Female], Is.EqualTo(voiceComponent.EmoteSounds));
         });
-
-        await pair.CleanReturnAsync();
     }
 }

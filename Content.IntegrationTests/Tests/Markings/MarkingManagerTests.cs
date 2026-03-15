@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.IntegrationTests.Fixtures;
 using Content.Shared.Body;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -9,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Markings;
 
 [TestFixture]
 [TestOf(typeof(MarkingManager))]
-public sealed class MarkingManagerTests
+public sealed class MarkingManagerTests : GameTest
 {
     [TestPrototypes]
     private const string Prototypes = @"
@@ -76,7 +77,7 @@ public sealed class MarkingManagerTests
     [Test]
     public async Task HairConvesion()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         await server.WaitIdleAsync();
@@ -96,14 +97,12 @@ public sealed class MarkingManagerTests
             Assert.That(hairMarkings[0].MarkingId, Is.EqualTo("HumanHairLongBedhead2"));
             Assert.That(hairMarkings[0].MarkingColors[0], Is.EqualTo(Color.Red));
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task LimitsFilling()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         await server.WaitIdleAsync();
@@ -118,14 +117,12 @@ public sealed class MarkingManagerTests
             Assert.That(dict[HumanoidVisualLayers.Eyes], Has.Count.EqualTo(1));
             Assert.That(dict[HumanoidVisualLayers.Eyes][0].MarkingId, Is.EqualTo("EyesMarking"));
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task LimitsTruncations()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         await server.WaitIdleAsync();
@@ -146,14 +143,12 @@ public sealed class MarkingManagerTests
             Assert.That(dict[HumanoidVisualLayers.Eyes], Has.Count.EqualTo(1));
             Assert.That(dict[HumanoidVisualLayers.Eyes][0].MarkingId, Is.EqualTo("MenOnlyMarking"));
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task EnsureValidGroupAndSex()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         await server.WaitIdleAsync();
@@ -191,14 +186,12 @@ public sealed class MarkingManagerTests
             Assert.That(testingMenMarkings[HumanoidVisualLayers.Eyes][1].MarkingId, Is.EqualTo("TestingOnlyMarking"));
             Assert.That(testingMenMarkings[HumanoidVisualLayers.Eyes][2].MarkingId, Is.EqualTo("TestingMenOnlyMarking"));
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task EnsureValidColors()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         await server.WaitIdleAsync();
@@ -232,7 +225,5 @@ public sealed class MarkingManagerTests
             Assert.That(eyeMarkings[1].MarkingColors[0], Is.EqualTo(Color.Red));
             Assert.That(eyeMarkings[3].MarkingColors[0], Is.EqualTo(Color.Green));
         });
-
-        await pair.CleanReturnAsync();
     }
 }

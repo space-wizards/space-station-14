@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Prototypes;
@@ -6,12 +7,12 @@ using Content.Shared.Atmos.Prototypes;
 namespace Content.IntegrationTests.Tests.Atmos;
 
 [TestOf(typeof(Atmospherics))]
-public sealed class ConstantsTest
+public sealed class ConstantsTest : GameTest
 {
     [Test]
     public async Task TotalGasesTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var entityManager = server.EntMan;
         var protoManager = server.ProtoMan;
@@ -45,7 +46,6 @@ public sealed class ConstantsTest
                 }
             });
         });
-        await pair.CleanReturnAsync();
     }
 }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Procedural;
 using Content.Shared.Procedural;
 using Robust.Shared.Maths;
@@ -7,12 +8,12 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Procedural;
 
 [TestOf(typeof(DungeonSystem))]
-public sealed class DungeonTests
+public sealed class DungeonTests : GameTest
 {
     [Test]
     public async Task TestDungeonRoomPackBounds()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var protoManager = pair.Server.ResolveDependency<IPrototypeManager>();
 
         await pair.Server.WaitAssertion(() =>
@@ -55,14 +56,12 @@ public sealed class DungeonTests
                 }
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestDungeonPresets()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var protoManager = pair.Server.ResolveDependency<IPrototypeManager>();
 
         await pair.Server.WaitAssertion(() =>
@@ -92,7 +91,5 @@ public sealed class DungeonTests
                 }
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 }
