@@ -134,18 +134,6 @@
         conditions:
         - !type:MetabolizerTypeCondition
           type: [Plant]
-      - !type:HealthChange
-        conditions:
-        - !type:MetabolizerTypeCondition
-          type: [Plant]
-        - !type:ReagentCondition
-          reagent: RobustHarvest
-          min: 30
-        damage:
-          types:
-            Asphyxiation: 1
-            Heat: 2
-            Poison: 1
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
@@ -153,7 +141,16 @@
             type: [Plant]
           - !type:ReagentCondition
             reagent: RobustHarvest
-            min: 80
+            min: 25
+      - !type:AdjustReagent
+        reagent: RobustHarvest
+        amount: -10 # Metabolism is paused while polymorphed, so this is to avoid the 999u unkillable diona antag
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
+        - !type:ReagentCondition
+          reagent: RobustHarvest
+          min: 35 # This is one and a half advanced jet injectors worth. Remember that the polymorph cooldown starts and is paused while it is in effect.
 
 - type: reagent
   id: Sedin
