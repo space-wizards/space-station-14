@@ -23,12 +23,12 @@ public sealed class ImpairedMobilitySystem : EntitySystem
 
     private void OnInit(Entity<ImpairedMobilityComponent> ent, ref ComponentInit args)
     {
-        _speedModifier.RefreshMovementSpeedModifiers(ent);
+        _speedModifier.RefreshMovementSpeedModifiers(ent.Owner);
     }
 
     private void OnShutdown(Entity<ImpairedMobilityComponent> ent, ref ComponentShutdown args)
     {
-        _speedModifier.RefreshMovementSpeedModifiers(ent);
+        _speedModifier.RefreshMovementSpeedModifiers(ent.Owner);
     }
 
     // Handles movement speed for entities with impaired mobility.

@@ -118,7 +118,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
             return;
 
         // make sentient boots slow or fast too
-        _movementSpeed.RefreshMovementSpeedModifiers(ent);
+        _movementSpeed.RefreshMovementSpeedModifiers(ent.Owner);
 
         if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
         {
