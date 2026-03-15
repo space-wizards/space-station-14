@@ -102,7 +102,8 @@ public sealed class IonStormSystem : EntitySystem
             laws.Laws[i] = new SiliconLaw()
             {
                 LawString = newLaw,
-                Order = laws.Laws[i].Order
+                Order = laws.Laws[i].Order,
+                SoftLaw = false // new law is not removable via SoftSetLaws
             };
         }
         else
@@ -111,7 +112,8 @@ public sealed class IonStormSystem : EntitySystem
             {
                 LawString = newLaw,
                 Order = -1,
-                LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10)))
+                LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10))),
+                SoftLaw = false // new law is not removable via SoftSetLaws
             });
         }
 

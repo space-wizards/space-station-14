@@ -71,6 +71,14 @@
   materials:
     XenoborgCrystal: 100
 
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleLawOverriderRecipe
+  result: XenoborgModuleLawOverrider
+  materials:
+    Steel: 1000
+    Glass: 2000
+
 ## heavy xenoborg modules
 
 - type: latheRecipe
