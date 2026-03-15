@@ -5,6 +5,10 @@
     # hijacks use key, prevents from using artifact, sadly
     #- id: XenoArtifactEffectUniversalIntercom
     #  weight: 10.0
+    - id: XenoArtifactBecomeLamp
+      weight: 10.0
+    - id: XenoArtifactBecomeRainbowLamp
+      weight: 1.0
     - id: XenoArtifactSolutionStorage
       weight: 10.0
     - id: XenoArtifactPhasing
@@ -167,6 +171,27 @@
       max: 0
   - type: NameIdentifier
     group: XenoArtifactNode
+
+- type: entity
+  id: XenoArtifactBecomeLamp
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Emits strange light
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: PointLight
+    - type: RandomPointLight
+
+- type: entity
+  id: XenoArtifactBecomeRainbowLamp
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Emits shifting light
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: PointLight
+      radius: 3
+    - type: RgbLightController
 
 - type: entity
   id: XenoArtifactEffectUniversalIntercom
