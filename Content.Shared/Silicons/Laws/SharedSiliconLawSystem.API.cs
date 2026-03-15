@@ -120,8 +120,9 @@ public abstract partial class SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Get the current laws of this silicon.
+    /// Get the current laws of a law provider.
     /// </summary>
+    /// <remarks>LawProvider is the actual holder of the laws, which should get replicated to all the linked LawBound on change.</remarks>
     /// <param name="ent">The silicon to get the laws of.</param>
     /// <returns>The lawset.</returns>
     public SiliconLawset GetProviderLaws(Entity<SiliconLawProviderComponent?> ent)
@@ -133,8 +134,9 @@ public abstract partial class SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Get the current laws of this silicon.
+    /// Gets the current laws cached in a <see cref="SiliconLawBoundComponent"/>.
     /// </summary>
+    /// <remarks>This should be used for all player-facing interactions. Lawbound is the actual laws that are visible to the player and the admins, cached for prediction reasons.</remarks>
     /// <param name="ent">The silicon to get the laws of.</param>
     /// <returns>The lawset.</returns>
     public SiliconLawset GetBoundLaws(Entity<SiliconLawBoundComponent?> ent)

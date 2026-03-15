@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Content.Shared.Atmos;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
@@ -10,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Atmos.Serialization;
+namespace Content.Shared.Atmos.Serialization;
 
 public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<Vector2i, TileAtmosphere>, MappingDataNode>, ITypeCopier<Dictionary<Vector2i, TileAtmosphere>>
 {

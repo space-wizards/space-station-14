@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Atmos;
+﻿namespace Content.Shared.Atmos;
 
 /// <summary>
 /// Internal Atmospherics struct that stores data about a hotspot in a tile.
