@@ -1,11 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
+using Content.Shared.Random.Helpers;
 
 namespace Content.Shared.StationRecords;
 
 public abstract class SharedStationRecordsSystem : EntitySystem
 {
-    [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+
     public StationRecordKey? Convert((NetEntity, uint)? input)
     {
         return input == null ? null : Convert(input.Value);
@@ -118,7 +121,8 @@ public abstract class SharedStationRecordsSystem : EntitySystem
         if (ent.Comp.Records.Keys.Count == 0)
             return false;
 
-        var key = Random.Pick(ent.Comp.Records.Keys);
+        var random = SharedRandomExtensions.PredictedRandom(Timing, GetNetEntity(ent.Owner));
+        var key = random.Pick(ent.Comp.Records.Keys);
 
         return ent.Comp.Records.TryGetRecordEntry(key, out entry);
     }
