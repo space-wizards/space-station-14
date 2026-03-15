@@ -41,11 +41,11 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
-        private readonly Dictionary<string, ContainerButton> _recipeButtons = new();
         // map recipes to grid buttons since grid buttons can't hold metadata
         private Dictionary<ProtoId<ConstructionPrototype>, ContainerButton> _gridRecipeButtons = new();
         private string _selectedCategory = string.Empty;
-        private List<HistoryEntry> _recipeHistory = [];
+        private List<HistoryRecord> _recipeHistory = [];
+        /// <summary>Index of the selected recipe history record. -1 means no record is selected.</summary>
         private int _recipeHistoryIndex = -1;
 
         private const string FavoriteCatName = "construction-category-favorites";
@@ -313,7 +313,7 @@ namespace Content.Client.Construction.UI
             _constructionView.BuildButtonPressed = pressed;
         }
 
-        private void OnViewRecipeSelected(object? sender, ConstructionPrototype? constructionProto)
+        private void OnViewRecipeSelected(object? sender, ConstructionPrototype? constructionProto, bool appendToHistory = true)
         {
             if (constructionProto is null)
             {
@@ -323,17 +323,16 @@ namespace Content.Client.Construction.UI
             }
 
             _selected = constructionProto;
-            AppendToRecipeHistory(_selected, _constructionView.OptionCategories.SelectedId);
+            if (appendToHistory)
+            {
+                AppendToRecipeHistory(_selected, _constructionView.OptionCategories.SelectedId);
+            }
 
             if (_placementManager is { IsActive: true, Eraser: false })
                 UpdateGhostPlacement();
 
             PopulateInfo(_selected);
         }
-
-        #region View mode: List
-
-        #endregion
 
         #region View mode: Grid
 
@@ -363,8 +362,8 @@ namespace Content.Client.Construction.UI
                     Children = { itemButton },
                 };
 
-                itemButton.OnToggled += buttonToggledEventArgs =>
-                    OnGridViewButtonToggled(recipe.ConstructionProto, itemButton, buttonToggledEventArgs.Pressed);
+                itemButton.OnToggled += _ =>
+                    OnGridViewButtonToggled(recipe.ConstructionProto, itemButton);
 
                 recipesGrid.AddChild(itemButtonPanelContainer);
                 _gridRecipeButtons[recipe.ConstructionProto.ID] = itemButton;
@@ -375,25 +374,18 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Handles toggle of a grid button.
+        /// Handles grid view button toggle.
         /// </summary>
-        private void OnGridViewButtonToggled(ConstructionPrototype recipeProto, ContainerButton button, bool pressed)
+        private void OnGridViewButtonToggled(ConstructionPrototype constructionProto, ContainerButton button)
         {
-            // since this method is called when the button is already toggled,
-            // we only have to update the styles. no need to set the pressed state.
-            _constructionView.UpdateGridViewButtonStyle(button, pressed);
-
-            if (pressed &&
-                _selected != null &&
-                _gridRecipeButtons.TryGetValue(_selected.ID!, out var oldButton))
+            ContainerButton? previousButton = null;
+            if (_selected != null)
             {
-                // the old button is NOT unpressed for some reason, so we have to UNPRESS it
-                // as well as update its styles.
-                oldButton.Pressed = false;
-                _constructionView.UpdateGridViewButtonStyle(oldButton, false);
+                _gridRecipeButtons.TryGetValue(_selected, out previousButton);
             }
 
-            OnViewRecipeSelected(this, recipeProto);
+            _constructionView.TrySelectGridViewButton(button, previousButton);
+            OnViewRecipeSelected(this, constructionProto);
         }
 
         #endregion
@@ -499,7 +491,7 @@ namespace Content.Client.Construction.UI
                 _recipeHistory.RemoveRange(removeFromIdx, numElementsToRemove);
             }
 
-            _recipeHistory.Add(new HistoryEntry()
+            _recipeHistory.Add(new HistoryRecord()
             {
                 ConstructionProtoId = constructionProto,
                 Category = constructionProto.Category,
@@ -507,10 +499,11 @@ namespace Content.Client.Construction.UI
             });
             _recipeHistoryIndex++;
 
-            if (_recipeHistory.Count > RecipeHistoryLimit)
+            if (RecipeHistoryLimit > 0 && _recipeHistory.Count > RecipeHistoryLimit)
             {
                 _recipeHistory.RemoveAt(0);
                 _recipeHistoryIndex--;
+                ClampRecipeHistoryIndex();
             }
 
             SyncRecipeHistoryButtons();
@@ -521,31 +514,33 @@ namespace Content.Client.Construction.UI
         /// </summary>
         private void TrySelectRecipeFromHistory(int historyIndex)
         {
-            _recipeHistoryIndex = int.Clamp(historyIndex, 0, _recipeHistory.Count - 1);
-            var recipe = _recipeHistory[_recipeHistoryIndex];
-            TrySelectRecipeFromHistory(recipe);
+            _recipeHistoryIndex = historyIndex;
+            if (ClampRecipeHistoryIndex() < 0)
+            {
+                return;
+            }
+
+            var record = _recipeHistory[_recipeHistoryIndex];
+            TrySelectRecipeFromHistory(record);
         }
 
         /// <summary>
         /// Attempts to select recipe from history using a history entry.
         /// </summary>
-        private void TrySelectRecipeFromHistory(HistoryEntry entry)
+        private void TrySelectRecipeFromHistory(HistoryRecord record)
         {
-            if(!_prototypeManager.TryIndex(entry.ConstructionProtoId, out var constructionProto))
+            if(!_prototypeManager.TryIndex(record.ConstructionProtoId, out var constructionProto))
                 return;
 
-            _constructionView.TrySelectCategory(entry.CategoryId);
+            _constructionView.TrySelectCategory(record.CategoryId);
 
             var isGridView = _constructionView.GridViewButtonPressed;
             if (isGridView)
             {
                 if (_gridRecipeButtons.TryGetValue(constructionProto.ID, out var button))
                 {
-                    // toggle the button to simulate the event
-                    button.Pressed = true;
-                    // let the handler handle the rest
-                    OnGridViewButtonToggled(constructionProto, button, true);
-                    // _constructionView.TrySelectGridViewButton(constructionProto.ID, button);
+                    // use the press handler here it does exactly what we want.
+                    OnGridViewButtonToggled(constructionProto, button);
                 }
             }
             else
@@ -553,7 +548,7 @@ namespace Content.Client.Construction.UI
                 _constructionView.TrySelectListViewButton(constructionProto.ID);
             }
 
-            PopulateInfo(constructionProto);
+            OnViewRecipeSelected(this, constructionProto, appendToHistory:false);
             SyncRecipeHistoryButtons();
         }
 
@@ -562,13 +557,35 @@ namespace Content.Client.Construction.UI
         /// </summary>
         private void SyncRecipeHistoryButtons()
         {
-            if (_recipeHistoryIndex == -1)
+            if (ClampRecipeHistoryIndex() < 0)
             {
+                _constructionView.TogglePreviousRecipeButton(false);
+                _constructionView.ToggleNextRecipeButton(false);
                 return;
             }
 
             _constructionView.TogglePreviousRecipeButton(_recipeHistoryIndex > 0);
             _constructionView.ToggleNextRecipeButton(_recipeHistoryIndex < _recipeHistory.Count - 1);
+        }
+
+        /// <summary>
+        /// Clamps recipe history index to bounds of the recipes history list and writes it.
+        /// If there are no history entries, the index is set to -1.
+        /// </summary>
+        ///  <returns>Resulting index.</returns>
+        private int ClampRecipeHistoryIndex()
+        {
+            switch (_recipeHistory.Count)
+            {
+                case 0:
+                    _recipeHistoryIndex = -1;
+                    break;
+                case >0:
+                    _recipeHistoryIndex = int.Clamp(_recipeHistoryIndex, 0, _recipeHistory.Count - 1);
+                    break;
+            }
+
+            return _recipeHistoryIndex;
         }
 
         #endregion
@@ -788,21 +805,21 @@ namespace Content.Client.Construction.UI
 /// <summary>
 /// Represents a construction menu history entry.
 /// </summary>
-internal struct HistoryEntry : IEquatable<HistoryEntry>
+internal struct HistoryRecord : IEquatable<HistoryRecord>
 {
-    public bool Equals(HistoryEntry other)
+    public bool Equals(HistoryRecord other)
     {
         return this == other;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is HistoryEntry other && Equals(other);
+        return obj is HistoryRecord other && Equals(other);
     }
 
     public override int GetHashCode()
     {
-        return ConstructionProtoId.GetHashCode();
+        return HashCode.Combine(ConstructionProtoId.GetHashCode(), CategoryId.GetHashCode());
     }
 
     public ProtoId<ConstructionPrototype> ConstructionProtoId;
@@ -813,12 +830,13 @@ internal struct HistoryEntry : IEquatable<HistoryEntry>
     public int CategoryId;
     public string Category;
 
-    public static bool operator == (HistoryEntry left, HistoryEntry right)
+    public static bool operator == (HistoryRecord left, HistoryRecord right)
     {
-        return left.ConstructionProtoId.Equals(right.ConstructionProtoId);
+        return left.ConstructionProtoId.Equals(right.ConstructionProtoId)
+            &&  left.CategoryId == right.CategoryId;
     }
 
-    public static bool operator != (HistoryEntry left, HistoryEntry right)
+    public static bool operator != (HistoryRecord left, HistoryRecord right)
     {
         return !left.ConstructionProtoId.Equals(right.ConstructionProtoId);
     }

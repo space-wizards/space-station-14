@@ -50,7 +50,7 @@ namespace Content.Client.Construction.UI
         void ResetPlacement();
         bool TrySelectCategory(int categoryId);
         bool TrySelectListViewButton(ProtoId<ConstructionPrototype> constructionProtoId);
-        bool TrySelectGridViewButton(ProtoId<ConstructionPrototype> constructionProtoId, ContainerButton button);
+        bool TrySelectGridViewButton(ContainerButton button, ContainerButton? previousButton);
         void TogglePreviousRecipeButton(bool enabled);
         void ToggleNextRecipeButton(bool enabled);
         void UpdateGridViewButtonStyle(BaseButton button, bool selected);
@@ -226,7 +226,7 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Attempts to select a recipe by its ID. Only works when in list view.
+        /// Attempts to select specified list view button using recipe ID. Only works when in list view.
         /// </summary>
         /// <returns>Whether it was successful.</returns>
         public bool TrySelectListViewButton(ProtoId<ConstructionPrototype> constructionProtoId)
@@ -247,12 +247,10 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Attempts to select a recipe by its ID. Only works when in grid view.
-        ///
-        /// <b>Note: Doesn't trigger events.</b>
+        /// Attempts to select specified grid view button using recipe ID. Only works when in grid view.
         /// </summary>
         /// <returns>Whether it was successful.</returns>
-        public bool TrySelectGridViewButton(ProtoId<ConstructionPrototype> constructionProtoId, ContainerButton button)
+        public bool TrySelectGridViewButton(ContainerButton button, ContainerButton? previousButton)
         {
             var isGridView = GridViewButtonPressed;
             if (!isGridView)
@@ -260,8 +258,11 @@ namespace Content.Client.Construction.UI
                 return false;
             }
 
-            // previousButton.Pressed = false;
-            // UpdateGridViewButtonStyle(previousButton, false);
+            if (previousButton is not null && previousButton != button)
+            {
+                previousButton.Pressed = false;
+                UpdateGridViewButtonStyle(previousButton, false);
+            }
 
             button.Pressed = true;
             UpdateGridViewButtonStyle(button, true);
