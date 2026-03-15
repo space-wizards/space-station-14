@@ -3817,8 +3817,31 @@
   url: https://github.com/space-wizards/space-station-14/pull/42909
 - author: sowelipililimute
   changes:
-  - message: Internal code changes to damage handling may result in slightly different
-      numbers for some medicines and/or some attacks.
+  - message: Underlying technical work for future medical improvements have resulted
+      in the following changes to better accomodate future development. Please note
+      that these changes are not representative of the final product and that the
+      medical balance will receive a major overhaul once limb and organ damage are
+      fully implemented.
+    type: Tweak
+  - message: Species now regenerate -0.05 of brute types individually (from -0.02).
+    type: Tweak
+  - message: Several mobs and weapons previously dealing split brute damage now deal singular damage types.
+    type: Tweak
+  - message: Several reagents previously dealing split brute damage now deals singular damage types.
+    type: Tweak
+  - message: Several reagents previously healing split brute damage now evenly heals instead.
+    type: Tweak
+  - message: Spiders now regenerate -0.03 of brute and burn types individually (from -0.02).
+    type: Tweak
+  - message: Skeletons now evenly heal when using milk.
+    type: Tweak
+  - message: Tomato killers now heal evenly when splashed with water, blood, or robust harvest.
+    type: Tweak
+  - message: Tricordrazine now evenly heals both brute, burn and toxin.
+    type: Tweak
+  - message: Desoxyephedrine now deals slighlty more blunt damage (to offset tricordazine changes).
+    type: Tweak
+  - message: Crusher mark leech hits now heal 5 of each brute category on hit (was 7).
     type: Tweak
   id: 9549
   time: '2026-02-27T06:33:44.0000000+00:00'
