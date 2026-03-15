@@ -15,7 +15,7 @@
       types:
         Blunt: 1
   - type: TimedDespawn
-    lifetime: 120
+    lifetime: 600
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
@@ -43,7 +43,8 @@
     tileBreakScale: 2
   - type: TileFrictionModifier
     modifier: 0
-
+  - type: RadarTracked
+    size: 1.1
 
 - type: entity
   parent: BaseMeteor
@@ -80,7 +81,9 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-
+  - type: RadarTracked
+    size: 0.7
+    
 - type: entity
   parent: BaseMeteor
   id: MeteorSmall
@@ -120,6 +123,8 @@
         minSpawn: 2
         maxSpawn: 4
         spawnAfter: 0.5
+  - type: RadarTracked
+    size: 0.9
 
 - type: entity
   parent: BaseMeteor
@@ -189,7 +194,9 @@
         minSpawn: 5
         maxSpawn: 8
         spawnAfter: 0.5
-
+  - type: RadarTracked
+    size: 1.3
+    
 - type: entity
   parent: BaseMeteor
   id: MeteorUrist
@@ -351,3 +358,5 @@
             min: 1
             max: 5
       - !type:ExplodeBehavior
+  - type: RadarTracked
+    size: 0.7

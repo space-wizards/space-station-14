@@ -1,25 +1,25 @@
 using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
-using Robust.Server.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Content.Shared.Station;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly SharedStationSystem _station = default!;
 
     protected override void Added(EntityUid uid, MeteorSwarmComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -52,10 +52,12 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
             return;
 
         var mapId = Transform(grid).MapID;
-        var playableArea = _physics.GetWorldAABB(grid);
 
-        var minimumDistance = (playableArea.TopRight - playableArea.Center).Length() + 50f;
-        var maximumDistance = minimumDistance + 100f;
+        var playableArea = _physics.GetWorldAABB(grid);
+        var playableRadius = (playableArea.TopRight - playableArea.Center).Length();
+
+        var minimumDistance = playableRadius + component.MinMaxDist.Min; // gotta be far enough for players to react
+        var maximumDistance = playableRadius + component.MinMaxDist.Max;
 
         var center = playableArea.Center;
 
@@ -78,7 +80,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
             var subOffset = subOffsetAngle.RotateVec(new Vector2( (playableArea.TopRight - playableArea.Center).Length() / 3 * RobustRandom.NextFloat(), 0));
 
             var spawnPosition = new MapCoordinates(center + offset + subOffset, mapId);
-            var meteor = Spawn(spawnProto, spawnPosition);
+            var meteor = Spawn(spawnProto, spawnPosition, rotation: subOffsetAngle);
             var physics = Comp<PhysicsComponent>(meteor);
             _physics.ApplyLinearImpulse(meteor, -offset.Normalized() * component.MeteorVelocity * physics.Mass, body: physics);
         }

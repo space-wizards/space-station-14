@@ -5,23 +5,22 @@ using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
-using Content.Shared.Tag;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Power;
 using Content.Shared.Shuttles.UI.MapObjects;
+using Content.Shared.Tag;
 using Content.Shared.Timing;
-using Robust.Server.GameObjects;
+using Content.Shared.UserInterface;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Utility;
-using Content.Shared.UserInterface;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -36,7 +35,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
 
     private EntityQuery<MetaDataComponent> _metaQuery;
@@ -262,15 +261,16 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         NavInterfaceState navState;
         ShuttleMapInterfaceState mapState;
         dockState ??= GetDockState();
+        var tracked = GetTracked();
 
         if (shuttleGridUid != null && entity != null)
         {
-            navState = GetNavState(entity.Value, dockState.Docks);
+            navState = GetNavState(entity.Value, dockState.Docks, tracked);
             mapState = GetMapState(shuttleGridUid.Value);
         }
         else
         {
-            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>());
+            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), new List<TrackedPoint>());
             mapState = new ShuttleMapInterfaceState(
                 FTLState.Invalid,
                 default,
@@ -306,6 +306,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         {
             RemovePilot(uid, comp);
         }
+        RefreshShuttleConsoles(); // Needed to network meteors and docks.
     }
 
     protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
@@ -382,14 +383,19 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// <summary>
     /// Specific for a particular shuttle.
     /// </summary>
-    public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?, TransformComponent?> entity, Dictionary<NetEntity, List<DockingPortState>> docks)
+    public NavInterfaceState GetNavState(
+        Entity<RadarConsoleComponent?,
+        TransformComponent?> entity,
+        Dictionary<NetEntity, List<DockingPortState>> docks,
+        List<TrackedPoint> tracked)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks);
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, tracked);
 
         return GetNavState(
             entity,
             docks,
+            tracked,
             entity.Comp2.Coordinates,
             entity.Comp2.LocalRotation);
     }
@@ -397,17 +403,19 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public NavInterfaceState GetNavState(
         Entity<RadarConsoleComponent?, TransformComponent?> entity,
         Dictionary<NetEntity, List<DockingPortState>> docks,
+        List<TrackedPoint> tracked,
         EntityCoordinates coordinates,
         Angle angle)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks);
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks, tracked);
 
         return new NavInterfaceState(
             entity.Comp1.MaxRange,
             GetNetCoordinates(coordinates),
             angle,
-            docks);
+            docks,
+            tracked);
     }
 
     /// <summary>
@@ -444,5 +452,27 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             stateDuration,
             beacons ?? new List<ShuttleBeaconObject>(),
             exclusions ?? new List<ShuttleExclusionObject>());
+    }
+
+    /// <summary>
+    /// Creates a list of tracked entity information to pass to client. We do this on server due to PVS.
+    /// </summary>
+    ///
+    public List<TrackedPoint> GetTracked()
+    {
+        var result = new List<TrackedPoint>();
+        var query = AllEntityQuery<RadarTrackedComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var comp, out var xform))
+        {
+            result.Add(new TrackedPoint(
+                _transform.ToMapCoordinates(xform.Coordinates).Position,
+                comp.Shape,
+                comp.Angle + _transform.GetWorldRotation(uid),
+                comp.Size,
+                comp.RadarColor
+                ));
+        }
+        return result;
     }
 }
