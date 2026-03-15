@@ -419,18 +419,20 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <param name="pickOverflows">Whether or not to pick from the overflow list.</param>
     /// <param name="disallowedJobs">A set of disallowed jobs, if any.</param>
     /// <returns>The selected job, if any.</returns>
-    public ProtoId<JobPrototype>? PickBestAvailableJobWithPriority(EntityUid station, IReadOnlyDictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities, bool pickOverflows, IReadOnlySet<ProtoId<JobPrototype>>? disallowedJobs = null)
+    public ProtoId<JobPrototype>? PickBestAvailableJobWithPriority(EntityUid station, IReadOnlyDictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities, bool pickOverflows, IReadOnlySet<ProtoId<JobPrototype>> disallowedJobs)
     {
         if (station == EntityUid.Invalid)
             return null;
 
         var available = GetAvailableJobs(station);
+        if (pickOverflows)
+            available = available.Union(GetOverflowJobs(station));
+
         bool TryPick(JobPriority priority, [NotNullWhen(true)] out ProtoId<JobPrototype>? jobId)
         {
             var filtered = jobPriorities
                 .Where(p =>
                             p.Value == priority
-                            && disallowedJobs != null
                             && !disallowedJobs.Contains(p.Key)
                             && available.Contains(p.Key))
                 .Select(p => p.Key)
@@ -461,14 +463,7 @@ public sealed partial class StationJobsSystem : EntitySystem
             return picked;
         }
 
-        if (!pickOverflows)
-            return null;
-
-        var overflows = GetOverflowJobs(station);
-        if (overflows.Count == 0)
-            return null;
-
-        return _random.Pick(overflows);
+        return null;
     }
 
     #endregion Public API
