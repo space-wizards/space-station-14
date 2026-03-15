@@ -862,6 +862,22 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
+- type: entity
+  id: BorgModuleCleanades
+  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  name: cleanade launcher cyborg module
+  description: Advanced janitorial module containing an integrated cleanade launcher, for heavy-duty stain removal.
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+    - state: icon-cleanade
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponLauncherCleanadeJaniborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: cleanade-module }
+
 # medical modules
 - type: entity
   id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
