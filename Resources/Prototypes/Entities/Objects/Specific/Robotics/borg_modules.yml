@@ -1520,6 +1520,44 @@
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleRemoteExplosive
+  name: remote explosive xenoborg module
+  description: Module with three xenoborg remote explosives.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-access-breaker
+  - type: ItemBorgModule
+    hands:
+    - item: NetworkConfigurator
+    - item: RemoteSignallerAdvanced
+    - item: XenoC4
+      hand:
+        emptyLabel: borg-slot-xenoborg-explosives-empty
+        emptyRepresentative: XenoC4
+        whitelist:
+         tags:
+         - XenoborgC4
+    - item: XenoC4
+      hand:
+        emptyLabel: borg-slot-xenoborg-explosives-empty
+        emptyRepresentative: XenoC4
+        whitelist:
+          tags:
+          - XenoborgC4
+    - item: XenoC4
+      hand:
+        emptyLabel: borg-slot-xenoborg-explosives-empty
+        emptyRepresentative: XenoC4
+        whitelist:
+          tags:
+          - XenoborgC4
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-explosive-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleFireExtinguisher
   name: fire extinguisher xenoborg module
   description: Module with a self-refueling fire extinguisher.

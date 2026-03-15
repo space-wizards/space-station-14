@@ -1570,6 +1570,9 @@
   id: XenoborgCrystal # MaterialStorage whitelist: Mothership core
 
 - type: Tag
+  id: XenoborgC4 #Storage whitelist for c4 module
+
+- type: Tag
   id: XenoborgGhostrole # spawn whitelist : SpawnPointGhostRoleXenoborg
 
 - type: Tag
