@@ -440,6 +440,17 @@
     event: !type:GravityJumpEvent {}
 
 - type: entity
+  parent: ActionGravityJump
+  id: ActionJumpBoost
+  name: Jump boost
+  components:
+  - type: Action
+    useDelay: 16
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: xenoborg-jump-module
+
+- type: entity
   parent: BaseAction
   id: ActionVulpkaninGravityJump
   name: Leap
