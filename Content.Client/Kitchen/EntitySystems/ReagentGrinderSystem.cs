@@ -7,6 +7,7 @@ namespace Content.Client.Kitchen.EntitySystems;
 public sealed class ReagentGrinderSystem : SharedReagentGrinderSystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+
     public override void Initialize()
     {
         base.Initialize();
