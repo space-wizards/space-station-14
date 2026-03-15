@@ -39,7 +39,57 @@
   sprites:
   - sprite: Mobs/Customization/scars.rsi
     state: scar_chest
-
+    
+- type: marking
+  id: ScarSternotomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth, Arachnid, Diona]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_sternotomy
+    
+- type: marking
+  id: ScarHepatectomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth, Arachnid, Diona]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_hepatectomy
+    
+- type: marking
+  id: ScarLaparotomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Diona]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_laparotomy
+    
+- type: marking
+  id: ScarLaparotomyNavelless
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth, Arachnid] #moths and arachnids don't have belly buttons
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_navelless-laparotomy
+    
+- type: marking
+  id: ScarNephrectomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth, Arachnid, Diona]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_nephrectomy
+    
 - type: marking
   id: ScarNeck
   bodyPart: Head

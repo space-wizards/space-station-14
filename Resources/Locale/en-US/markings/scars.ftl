@@ -13,6 +13,21 @@ marking-ScarTopSurgeryLong = Top Surgery Scar (Long)
 marking-ScarChest-scar_chest = Chest Scar
 marking-ScarChest = Chest Scar
 
+marking-ScarSternotomy-scar_sternotomy = Sternotomy Scar
+marking-ScarSternotomy = Sternotomy Scar
+
+marking-ScarLaparotomy-scar_laparotomy = Laparotomy Scar
+marking-ScarLaparotomy = Laparotomy Scar
+
+marking-ScarLaparotomyNavelless-scar_navelless-laparotomy = Laparotomy Scar
+marking-ScarLaparotomyNavelless = Laparotomy Scar
+
+marking-ScarHepatectomy-scar_hepatectomy = Hepatectomy Scar
+marking-ScarHepatectomy = Hepatectomy Scar
+
+marking-ScarNephrectomy-scar_nephrectomy = Nephrectomy Scar 
+marking-ScarNephrectomy = Nephrectomy Scar
+
 marking-ScarNeck-scar_neck = Neck Scar
 marking-ScarNeck = Neck Scar
 
