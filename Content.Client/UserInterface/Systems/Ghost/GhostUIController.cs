@@ -43,6 +43,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.PlayerAttached += OnPlayerAttached;
         system.PlayerDetached += OnPlayerDetached;
         system.GhostWarpsResponse += OnWarpsResponse;
+        system.GhostnadoResponse += OnGhostnadoResponse;
         system.GhostRoleCountUpdated += OnRoleCountUpdated;
     }
 
@@ -53,7 +54,13 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.PlayerAttached -= OnPlayerAttached;
         system.PlayerDetached -= OnPlayerDetached;
         system.GhostWarpsResponse -= OnWarpsResponse;
+        system.GhostnadoResponse -= OnGhostnadoResponse;
         system.GhostRoleCountUpdated -= OnRoleCountUpdated;
+    }
+
+    private void OnWindowOpened()
+    {
+        OnGhostnado(false);
     }
 
     public void UpdateGui()
@@ -100,6 +107,11 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         window.Populate();
     }
 
+    private void OnGhostnadoResponse(GhostnadoResponseEvent msg)
+    {
+        Gui?.TargetWindow.UpdateGhostnadoButton(msg.EntityFound);
+    }
+
     private void OnRoleCountUpdated(GhostUpdateGhostRoleCountEvent msg)
     {
         UpdateGui();
@@ -111,9 +123,9 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         _net.SendSystemNetworkMessage(msg);
     }
 
-    private void OnGhostnadoClicked()
+    private void OnGhostnado(bool warp = true)
     {
-        var msg = new GhostnadoRequestEvent();
+        var msg = new GhostnadoRequestEvent(warp);
         _net.SendSystemNetworkMessage(msg);
     }
 
@@ -126,7 +138,8 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
-        Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
+        Gui.TargetWindow.OnGhostnado += OnGhostnado;
+        Gui.TargetWindow.OnOpen += OnWindowOpened;
 
         UpdateGui();
     }
