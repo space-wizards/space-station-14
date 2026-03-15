@@ -25,3 +25,15 @@
     ears: ClothingHeadsetGrey
     neck: ClothingHeadHatFlowerWreath
     outerClothing: ClothingOuterClownPriest
+
+- type: startingGear
+  id: ConvertedClownGear
+  equipment:
+    shoes: ClothingShoesClownOrganic
+    mask: ClothingClownMaskOrganic
+
+- type: startingGear
+  id: ConvertedMimeGear
+  equipment:
+    mask: ClothingMaskMimeOrganic
+    gloves: OrganicWhiteGloves

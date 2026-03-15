@@ -524,3 +524,15 @@ entity-effect-guidebook-plant-mutate-chemicals =
         [1] Mutates
         *[other] mutate
     } a plant to produce {$name}
+
+entity-effect-guidebook-clown-conversion =
+    { $chance ->
+        [1] Converts
+        *[other] convert
+    } an individual into a clown if they are not already clumsy or mute
+
+entity-effect-guidebook-mime-conversion =
+    { $chance ->
+        [1] Converts
+        *[other] convert
+    } an individual into a mime if they are not already clumsy or mute

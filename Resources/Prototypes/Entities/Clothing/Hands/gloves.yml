@@ -691,3 +691,35 @@
   - type: Tag
     tags:
     - Kangaroo
+
+- type: entity
+  parent: Clothing
+  id: OrganicWhiteGloves
+  name: organic white gloves
+  description: Close inspection of these ordinary-looking white gloves reveals they are made from thick layers of leathery skin. Ewww...
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
+    layers:
+    - state: icon
+      color: "#EAE8E8"
+  - type: Clothing
+    slots: [gloves]
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+        color: "#EAE8E8"
+  - type: Item
+    size: Small
+    storedRotation: -90
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#EAE8E8"
+      right:
+      - state: inhand-right
+        color: "#EAE8E8"
+  - type: Tag
+    tags:
+    - WhitelistChameleon
