@@ -57,13 +57,20 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (options.Count == 0)
             return;
 
-        if (!TryUseCharge((uid, component)))
-            return;
-
         // not predicted as this is in server due to random
         // TODO: use predicted random and move to shared?
         var (actId, action, comp) = _random.Pick(options);
-        _actions.PerformAction(args.User, (actId, action), predicted: false);
+
+        if (EmptyCharges((uid, component)))
+        {
+            return;
+        }
+
+        if (_actions.TryPerformAction(args.User, (actId, action), predicted: false))
+        {
+            RemoveCharge((uid, component));
+        }
+
         args.Handled = true;
     }
 
@@ -72,16 +79,16 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.ActionEntities is not {} actionEnts)
+        if (component.ActionEntities is not { } actionEnts)
         {
-            if (!TryComp<ActionsContainerComponent>(uid,  out var actionsContainerComponent))
+            if (!TryComp<ActionsContainerComponent>(uid, out var actionsContainerComponent))
                 return;
 
             actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
         }
 
         // First, try entity target actions
-        if (args.Target is {} target)
+        if (args.Target is { } target)
         {
             var entOptions = GetValidActions<EntityTargetActionComponent>(actionEnts, args.CanReach);
             for (var i = entOptions.Count - 1; i >= 0; i--)
@@ -93,12 +100,19 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
             if (entOptions.Count > 0)
             {
-                if (!TryUseCharge((uid, component)))
+                if (EmptyCharges((uid, component)))
+                {
                     return;
+                }
 
                 var (actionId, action, _) = _random.Pick(entOptions);
                 _actions.SetEventTarget(actionId, target);
-                _actions.PerformAction(args.User, (actionId, action), predicted: false);
+
+                if (_actions.TryPerformAction(args.User, (actionId, action), predicted: false))
+                {
+                    RemoveCharge((uid, component));
+                }
+
                 args.Handled = true;
                 return;
             }
@@ -113,19 +127,27 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         if (options.Count == 0)
+        {
             return;
+        }
 
-        if (!TryUseCharge((uid, component)))
+        if (EmptyCharges((uid, component)))
+        {
             return;
+        }
 
         var (actId, comp, world) = _random.Pick(options);
-        if (world.Event is {} worldEv)
+        if (world.Event is { } worldEv)
         {
             worldEv.Target = args.ClickLocation;
             worldEv.Entity = HasComp<EntityTargetActionComponent>(actId) ? args.Target : null;
         }
 
-        _actions.PerformAction(args.User, (actId, comp), world.Event, predicted: false);
+        if (_actions.TryPerformAction(args.User, (actId, comp), predicted: false))
+        {
+            RemoveCharge((uid, component));
+        }
+
         args.Handled = true;
     }
 
@@ -151,16 +173,25 @@ public sealed class ActionOnInteractSystem : EntitySystem
         return valid;
     }
 
-    private bool TryUseCharge(Entity<ActionOnInteractComponent> ent)
+    private bool EmptyCharges(Entity<ActionOnInteractComponent> ent)
     {
         if (!ent.Comp.RequiresCharge)
-            return true;
-
-        Entity<LimitedChargesComponent?> charges = ent.Owner;
-        if (_charges.IsEmpty(charges))
+        {
             return false;
+        }
 
-        _charges.TryUseCharge(charges);
-        return true;
+        return _charges.IsEmpty(ent.Owner);
+    }
+
+    // No interaction, no charge removal
+    private void RemoveCharge(Entity<ActionOnInteractComponent> ent)
+    {
+        if (!ent.Comp.RequiresCharge)
+        {
+            return;
+        }
+
+        _charges.AddCharges(ent.Owner, -1);
+        return;
     }
 }
