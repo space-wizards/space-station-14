@@ -19,6 +19,19 @@
   showRoundEnd: false
 
 - type: feedbackPopup
+  id: ForceVentCrittersToAttackFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Played an antagonist vent critter role?[/bold]"
+  description: >-
+    If you've played or interacted with a player-controlled antagonist vent critter (spiders, slimes, clown spiders), please leave your feedback on how the new auto-attack feature went.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/force-vent-critters-to-attack-feedback/26861"
+  showRoundEnd: true
+  ruleWhitelist:
+    components:
+      - VentHordeRule
+
+- type: feedbackPopup
   id: PlayingAsMothershipCoreFeedback
   popupOrigin: wizden_master
   title: "[bold]Playing as [color=deepskyblue]mothership[/color] core[/bold]"
@@ -43,4 +56,3 @@
   ruleWhitelist:
     components:
     - XenoborgsRule
-
