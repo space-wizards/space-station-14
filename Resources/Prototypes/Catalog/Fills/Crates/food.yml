@@ -146,11 +146,11 @@
       entity_storage: !type:AllSelector
         children:
         - id: FoodSnackRaisins
-          amount: 4
+          amount: 6
         - id: FoodSnackChocolate
           amount: 6
         - id: FoodSnackPistachios
-          amount: 4
+          amount: 2
         - id: ReagentContainerFlour
           amount: 3
         - id: ReagentContainerSugar
@@ -159,6 +159,8 @@
           amount: 3
         - id: DrinkMilkCarton
           amount: 2
+        - id: DrinkSoyMilkCarton
+          amount: 1
         - id: FoodContainerEgg
           amount: 2
         - id: FoodBoxCloth
