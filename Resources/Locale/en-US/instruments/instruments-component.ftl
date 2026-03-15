@@ -7,14 +7,29 @@ instruments-component-menu-no-midi-support = MIDI support is currently not
                                              If on Linux, you may need to install
                                              FluidSynth or a development package
                                              for FluidSynth.
-instruments-component-menu-input-button = MIDI Input
-instruments-component-menu-band-button = Join Band
-instruments-component-menu-play-button = Play MIDI
+instruments-component-menu-configuration-collapsible-header = Configuration
+instruments-component-menu-midi-source-button = MIDI Source
+instruments-component-menu-unknown-midi-source-button = Unknown
+instruments-component-menu-input-midi-source-button = Input
+instruments-component-menu-band-midi-source-button = Band
+instruments-component-menu-file-midi-source-button = Files
+instruments-component-menu-play-stop-button = Play/Stop
 instruments-component-menu-loop-button = Loop
-instruments-component-menu-channels-button = Channels
-instruments-component-menu-stop-button = Stop
-instruments-component-band-menu = Choose band leader
-instrument-component-band-refresh = Refresh
+instruments-component-menu-shuffle-button = Shuffle
+instruments-component-menu-channels-label = Channels
+instruments-component-menu-files-no-track-selected = No file selected...
+instruments-component-menu-files-add-button = Add
+instruments-component-menu-files-remove-button = Remove
+instruments-component-menu-files-rename-button = Rename
+instruments-component-menu-files-rename-dialog-title = Rename file
+instruments-component-menu-files-rename-dialog-prompt = New name
+instruments-component-menu-files-list-label = Files
+instruments-component-menu-files-filter = Filter...
+instruments-component-menu-files-error = Operation failed due to an unexpected error.
+instruments-component-menu-input-notice-label = Connect a MIDI device to your PC
+                                                and play some music.
+instruments-component-band-title-label = Bands
+instruments-component-band-refresh = Refresh
 instruments-component-channels-menu = MIDI Channel Selection
 instrument-component-channel-name = MIDI Channel {$number}
 instruments-component-channels-all-button = All
