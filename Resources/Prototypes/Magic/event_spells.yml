@@ -58,6 +58,10 @@
         orGroup: Guns
       - id: WeaponShotgunBulldog
         orGroup: Guns
+      - id: WeaponChemLaser
+        orGroup: Guns
+      - id: WeaponChemMultilaser
+        orGroup: Guns
       - id: WeaponShotgunDoubleBarreled
         orGroup: Guns
       - id: WeaponShotgunEnforcer
