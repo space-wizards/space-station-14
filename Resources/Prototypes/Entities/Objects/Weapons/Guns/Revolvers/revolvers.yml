@@ -32,6 +32,7 @@
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
   - type: UseDelay
     delay: 0.66
+  - type: SmartEquipPickupStorage
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container

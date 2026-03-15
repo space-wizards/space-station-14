@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -32,6 +33,7 @@ public sealed class SmartEquipSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt, handle: false, outsidePrediction: false))
@@ -113,7 +115,9 @@ public sealed class SmartEquipSystem : EntitySystem
         //    - without hand item: fail
         // 2) has an item, and that item is a storage item
         //    - with hand item: try to put it in storage
-        //    - without hand item: try to take the last stored item and put it in our hands
+        //    - without hand item:
+        //      - if item has SmartEquipPickupStorageComponent - try to pick up it
+        //      - try to take the last stored item and put it in our hands
         // 3) has an item, and that item is an item slots holder
         //    - with hand item: get the highest priority item slot with a valid whitelist and try to insert it
         //    - without hand item: get the highest priority item slot with an item and try to eject it
@@ -145,6 +149,14 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // case 2 (storage item):
+        if (HasComp<SmartEquipPickupStorageComponent>(slotItem) && handItem == null
+            && _inventory.CanUnequip(uid, equipmentSlot, out var _))
+        {
+            if (_inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true)
+                && _hands.TryPickup(uid, slotItem, handsComp: hands))
+                return;
+        }
+
         if (TryComp<StorageComponent>(slotItem, out var storage))
         {
             switch (handItem)
