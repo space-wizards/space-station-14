@@ -53,4 +53,16 @@ public sealed partial class PortalComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public bool RandomTeleport = true;
+
+    /// <summary>
+    /// Creates pathfind portals so that AI can build a route through the portals.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool NavPortal = true;
+
+    /// <summary>
+    /// Stores identifiers for all PortalPaths for pathfinding navigation
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public Dictionary<EntityUid, int> NavPortalHandles = new();
 }
