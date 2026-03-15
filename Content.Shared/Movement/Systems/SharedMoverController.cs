@@ -71,6 +71,7 @@ public abstract partial class SharedMoverController : VirtualController
     private float _minDamping;
     private float _airDamping;
     private float _offGridDamping;
+    private float _frictionModifier;
 
     /// <summary>
     /// Cache the mob movement calculation to re-use elsewhere.
@@ -108,6 +109,8 @@ public abstract partial class SharedMoverController : VirtualController
 
         InitializeInput();
         InitializeRelay();
+
+        Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
         Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
         Subs.CVar(_configManager, CCVars.MinFriction, value => _minDamping = value, true);
         Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
@@ -254,7 +257,7 @@ public abstract partial class SharedMoverController : VirtualController
         ContentTileDefinition? tileDef = null;
 
         var touching = false;
-        // Whether we use tilefriction or not
+        // Should we use tile friction or not?
         if (weightless || inAirHelpless)
         {
             // Find the speed we should be moving at and make sure we're not trying to move faster than that
@@ -291,6 +294,7 @@ public abstract partial class SharedMoverController : VirtualController
         }
         else
         {
+            // Should we ignore the friction of the tile we're standing on?
             if (MapGridQuery.TryComp(xform.GridUid, out var gridComp)
                 && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile)
                 && physicsComponent.BodyStatus == BodyStatus.OnGround)
@@ -303,12 +307,12 @@ public abstract partial class SharedMoverController : VirtualController
 
             if (wishDir != Vector2.Zero)
             {
-                friction = moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
+                friction = moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction * _frictionModifier;
                 friction *= tileDef?.MobFriction ?? tileDef?.Friction ?? 1f;
             }
             else
             {
-                friction = moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
+                friction = moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput * _frictionModifier;
                 friction *= tileDef?.Friction ?? 1f;
             }
 
