@@ -17,10 +17,14 @@ namespace Content.IntegrationTests.Tests.Station;
 [TestOf(typeof(StationJobsSystem))]
 public sealed class StationJobsTest
 {
-    private const string StationMapId = "FooStation";
+    private const string StationMapId = "TFooStation";
+    private const string PidgeonStationMapId = "TBarStation";
 
     [TestPrototypes]
     private const string Prototypes = $@"
+- type: playTimeTracker
+  id: PlayTimeDummyFoogly
+
 - type: playTimeTracker
   id: PlayTimeDummyAssistant
 
@@ -35,6 +39,9 @@ public sealed class StationJobsTest
 
 - type: playTimeTracker
   id: PlayTimeDummyChaplain
+
+- type: playTimeTracker
+  id: PlayTimeDummyLibrarian
 
 - type: gameMap
   id: {StationMapId}
@@ -52,6 +59,27 @@ public sealed class StationJobsTest
             TAssistant: [-1, -1]
             TCaptain: [5, 5]
             TClown: [5, 6]
+            TLibrarian: [1, 1]
+
+- type: gameMap
+  id: {PidgeonStationMapId}
+  minPlayers: 0
+  mapName: {PidgeonStationMapId}
+  mapPath: /Maps/Test/empty.yml
+  stations:
+    Station:
+      mapNameTemplate: {PidgeonStationMapId}
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationJobs
+          availableJobs:
+            TAssistant: [10, 10]
+            TChaplain: [10, 10]
+            TFoogly: [10, 10]
+
+- type: job
+  id: TFoogly
+  playTimeTracker: PlayTimeDummyFoogly
 
 - type: job
   id: TAssistant
@@ -75,15 +103,22 @@ public sealed class StationJobsTest
 - type: job
   id: TChaplain
   playTimeTracker: PlayTimeDummyChaplain
+
+- type: job
+  id: TLibrarian
+  weight: 10
+  playTimeTracker: PlayTimeDummyLibrarian
 ";
 
-    private const int StationCount = 100;
+    private const int StationCount = 10;
     private const int CaptainCount = StationCount;
-    private const int PlayerCount = 2000;
+    private const int PlayerCount = 209;    // Test handling of player count that doesn't divide evenly
     private const int TotalPlayers = PlayerCount + CaptainCount;
 
     [Test]
-    public async Task AssignJobsTest()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task AssignJobsTest(bool roundStart)
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -118,7 +153,7 @@ public sealed class StationJobsTest
 
             var start = new Stopwatch();
             start.Start();
-            var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+            var assigned = stationJobs.AssignJobs(fakePlayers, stations, roundStart);
             Assert.That(assigned, Is.Not.Empty);
             var time = start.Elapsed.TotalMilliseconds;
             logmill.Info($"Took {time} ms to distribute {TotalPlayers} players.");
@@ -131,26 +166,126 @@ public sealed class StationJobsTest
                         .Where(x => x.Value.Item2 == station)
                         .ToDictionary(x => x.Key, x => x.Value);
 
-                    // Each station should have SOME players.
-                    Assert.That(assignedHere, Is.Not.Empty);
-                    // And it should have at least the minimum players to be considered a "fair" share, as they're all the same.
-                    Assert.That(assignedHere, Has.Count.GreaterThanOrEqualTo(TotalPlayers / stations.Count), "Station has too few players.");
-                    // And it shouldn't have ALL the players, either.
-                    Assert.That(assignedHere, Has.Count.LessThan(TotalPlayers), "Station has too many players.");
-                    // And there should be *A* captain, as there's one player with captain enabled per station.
-                    Assert.That(assignedHere.Where(x => x.Value.Item1 == "TCaptain").ToList(), Has.Count.EqualTo(1));
+                    using (Assert.EnterMultipleScope())
+                    {
+                        // Each station should have at least the minimum players to be considered a "fair" share, as they're all the same.
+                        Assert.That(assignedHere, Has.Count.GreaterThanOrEqualTo(TotalPlayers / stations.Count), "Station has too few players.");
+                        // And it shouldn't have ALL the players, either.
+                        Assert.That(assignedHere, Has.Count.LessThan(TotalPlayers), "Station has too many players.");
+                        // And there should be *A* captain, as there's one player with captain enabled per station.
+                        Assert.That(assignedHere.Where(x => x.Value.Item1 == "TCaptain").ToList(), Has.Count.EqualTo(1));
+                    }
                 }
 
-                // All clown players have assistant as a higher priority.
-                Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TClown"));
-                // Mime isn't an open job-slot at round-start.
-                Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TMime"));
-                // All players have slots they can fill.
-                Assert.That(assigned.Values, Has.Count.EqualTo(TotalPlayers), $"Expected {TotalPlayers} players.");
-                // There must be assistants present.
-                Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TAssistant"));
-                // There must be captains present, too.
-                Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
+                if (roundStart)
+                {
+                    // All clown players have assistant as a higher priority.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TClown"));
+                    // Mime isn't an open job-slot at round-start.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TMime"));
+                    // No one wants to be a librarian.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TLibrarian"));
+                    // All players have slots they can fill.
+                    Assert.That(assigned.Values, Has.Count.EqualTo(TotalPlayers), $"Expected {TotalPlayers} players.");
+                    // There must be assistants present.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TAssistant"));
+                    // There must be captains present, too.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
+                }
+                else
+                {
+                    // All clown players have mime as a higher priority.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TClown"));
+                    // There should be mimes. Many mimes.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TMime"));
+                    // No one wants to be a librarian.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TLibrarian"));
+                    // All players have slots they can fill.
+                    Assert.That(assigned.Values, Has.Count.EqualTo(TotalPlayers), $"Expected {TotalPlayers} players.");
+                    // All assistant players have mime as a higher priority.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Not.Contain("TAssistant"));
+                    // There must be captains present, too.
+                    Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
+                }
+            });
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task AssignJobsNoPlayersTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
+        var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+
+        List<EntityUid> stations = new();
+        await server.WaitPost(() =>
+        {
+            for (var i = 0; i < StationCount; i++)
+            {
+                stations.Add(stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo {StationCount}"));
+            }
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>();
+            Assert.That(fakePlayers, Is.Empty);
+
+            var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+            Assert.That(assigned, Is.Empty);
+
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task AssignJobsInsufficientSlotsTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
+        var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+
+        List<EntityUid> stations = new();
+        await server.WaitPost(() =>
+        {
+            for (var i = 0; i < StationCount; i++)
+            {
+                stations.Add(stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo {StationCount}"));
+            }
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            stationJobs.GetRoundStartJobs(stations[0]).TryGetValue("TClown", out var slots);
+            Assert.That(slots, Is.Not.Null);
+
+            var roundStartClownSlots = (int)slots!;
+            var totalClownSlots = roundStartClownSlots * StationCount;
+            var clownPlayerCount = totalClownSlots * 2;
+            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
+                .AddJob("TClown", JobPriority.High, clownPlayerCount);
+
+            var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+
+            Assert.Multiple(() =>
+            {
+                var assignedJobs = assigned.Values.Select(x => x.Item1).ToHashSet();
+                // There must be clowns, and only clowns.
+                Assert.That(assignedJobs, Is.EquivalentTo(["TClown"]));
+                // There must be as many clowns as the stations have room for.
+                Assert.That(assigned.Values, Has.Count.EqualTo(totalClownSlots), $"Expected {totalClownSlots} players assigned.");
             });
         });
         await pair.CleanReturnAsync();
@@ -192,7 +327,7 @@ public sealed class StationJobsTest
                 Assert.That(stationJobs.TryGetJobSlot(station, "TClown", out var clownSlots), "Could not get the number of TClown slots.");
                 Assert.That(clownSlots, Is.EqualTo(0));
                 Assert.That(!stationJobs.TryAdjustJobSlot(station, "TCaptain", -9999), "Was able to adjust TCaptain by -9999 without clamping.");
-                Assert.That(stationJobs.TryAdjustJobSlot(station, "TCaptain", -9999, false, true), "Could not adjust TCaptain by -9999.");
+                Assert.That(stationJobs.TryAdjustJobSlot(station, "TCaptain", -9999, clamp: true), "Could not adjust TCaptain by -9999.");
                 Assert.That(stationJobs.TryGetJobSlot(station, "TCaptain", out var captainSlots), "Could not get the number of TCaptain slots.");
                 Assert.That(captainSlots, Is.EqualTo(0));
             });
@@ -238,15 +373,64 @@ public sealed class StationJobsTest
 
                         foreach (var (job, array) in ((StationJobsComponent) comp).SetupAvailableJobs)
                         {
-                            Assert.That(array.Length, Is.EqualTo(2));
-                            Assert.That(array[0] is -1 or >= 0);
-                            Assert.That(array[1] is -1 or >= 0);
+                            Assert.That(array, Has.Length.EqualTo(2));
+                            Assert.That(array[0], Is.EqualTo(-1).Or.GreaterThanOrEqualTo(0));
+                            Assert.That(array[1], Is.EqualTo(-1).Or.GreaterThanOrEqualTo(0));
                             Assert.That(invalidJobs, Does.Not.Contain(job), $"Station {stationId} contains job prototype {job} which cannot be present roundstart.");
                         }
                     }
                 }
             });
         });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    [Description("Ensures that job selection adheres to the pidgeonhole principle, evenly distributing between job options.")]
+    public async Task PidgeonHoleTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var barStationProto = prototypeManager.Index<GameMapPrototype>(PidgeonStationMapId);
+        var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
+
+        EntityUid station = EntityUid.Invalid;
+        await server.WaitPost(() =>
+        {
+            station = stationSystem.InitializeNewStation(barStationProto.Stations["Station"], null, $"Bar {StationCount}");
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            // 4 players, for 3 jobs.
+            const int playerCount = 4;
+
+            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
+                .AddJob("TChaplain", JobPriority.Low, playerCount)
+                .AddPreference("TAssistant", JobPriority.Low)
+                .AddPreference("TFoogly", JobPriority.Low);
+
+            var assigned = stationJobs.AssignJobs(fakePlayers, [station]);
+
+            Assert.Multiple(() =>
+            {
+                // If the result is a superset of this, then every slot got at least one player.
+                Assert.That(
+                    assigned.Values,
+                    Is.SupersetOf(
+                        [
+                            (new ProtoId<JobPrototype>("TFoogly"), station),
+                            (new ProtoId<JobPrototype>("TAssistant"), station),
+                            (new ProtoId<JobPrototype>("TChaplain"), station)
+                        ])
+                );
+            });
+        });
+
         await pair.CleanReturnAsync();
     }
 }
