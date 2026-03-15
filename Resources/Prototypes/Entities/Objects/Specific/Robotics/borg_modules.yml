@@ -1625,8 +1625,6 @@
     layers:
     - state: xenoborg_scout
     - state: icon-xenoborg-jump
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-jump-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
