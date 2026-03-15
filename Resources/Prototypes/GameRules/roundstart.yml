@@ -6,6 +6,14 @@
 
 - type: entity
   parent: BaseGameRule
+  id: BaseRoundstartAntagRule
+  abstract: true
+  components:
+  - type: AntagSelection
+    selectionTime: PrePlayerSpawn
+
+- type: entity
+  parent: BaseGameRule
   id: RespawnDeadRule
   components:
   - type: RespawnDeadRule
@@ -134,7 +142,7 @@
     #- Vox
 
 - type: entity
-  parent: BaseNukeopsRule
+  parent: [ BaseNukeopsRule, BaseRoundstartAntagRule ]
   id: Nukeops
   components:
   - type: GameRule
@@ -142,61 +150,16 @@
   - type: LoadMapRule
     mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
-    selectionTime: PrePlayerSpawn
-    definitions:
-    - prefRoles: [ NukeopsCommander ]
-      fallbackRoles: [ Nukeops, NukeopsMedic ]
-      spawnerPrototype: SpawnPointNukeopsCommander
-      startingGear: SyndicateCommanderGearFull
-      roleLoadout:
-      - RoleSurvivalNukie
-      components:
-      - type: NukeOperative
-      - type: RandomMetadata
-        nameSegments:
-        - NamesSyndicateElite
-        nameFormat: name-format-nukie-commander
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      mindRoles:
-      - MindRoleNukeopsCommander
-    - prefRoles: [ NukeopsMedic ]
-      fallbackRoles: [ Nukeops, NukeopsCommander ]
-      spawnerPrototype: SpawnPointNukeopsMedic
-      startingGear: SyndicateOperativeMedicFull
-      roleLoadout:
-      - RoleSurvivalNukie
-      components:
-      - type: NukeOperative
-      - type: RandomMetadata
-        nameSegments:
-        - NamesSyndicateNormal
-        nameFormat: name-format-nukie-agent
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      mindRoles:
-      - MindRoleNukeopsMedic
-    - prefRoles: [ Nukeops ]
-      fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
-      spawnerPrototype: SpawnPointNukeopsOperative
-      max: 3
-      playerRatio: 10
-      startingGear: SyndicateOperativeGearFull
-      roleLoadout:
-      - RoleSurvivalNukie
-      components:
-      - type: NukeOperative
-      - type: RandomMetadata
-        nameSegments:
-        - NamesSyndicateNormal
-        nameFormat: name-format-nukie-operator
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      mindRoles:
-      - MindRoleNukeops
+    antags:
+    - !type:FixedAntagCount
+      proto: NukeopsCommander
+    - !type:FixedAntagCount
+      proto: NukeopsMedic
+    - !type:LinearAntagCount
+      proto: NukeopsOperative
+      range:
+        min: 1
+        max: 3
   - type: DynamicRuleCost
     cost: 200
 
@@ -218,7 +181,7 @@
     cost: 100
 
 - type: entity
-  parent: BaseTraitorRule
+  parent: [ BaseTraitorRule, BaseRoundstartAntagRule ]
   id: Traitor
   components:
   - type: GameRule
@@ -227,99 +190,61 @@
       min: 240
       max: 420
   - type: AntagSelection
-    selectionTime: IntraPlayerSpawn
-    definitions:
-    - prefRoles: [ Traitor ]
-      max: 8
-      playerRatio: 10
-      blacklist:
-        components:
-        - AntagImmune
-      lateJoinAdditional: false
-      mindRoles:
-      - MindRoleTraitor
+    lateJoinAdditional: true
+    antags:
+    - !type:LinearAntagCount
+      proto: Traitor
+      range:
+        min: 1
+        max: 8
 
 - type: entity
-  id: TraitorReinforcement
+  id: TraitorReinforcement # This shouldn't be in here but I'm not sure where to put it :(
   parent: BaseTraitorRule
   components:
   - type: TraitorRule
     giveUplink: false
-    giveCodewords: false # It would actually give them a different set of codewords than the regular traitors, anyway
     giveBriefing: false
   - type: AntagSelection
-    definitions:
-    - prefRoles: [ Traitor ]
-      mindRoles:
-      - MindRoleTraitorReinforcement
+    antags:
+    - !type:FixedAntagCount
+      proto: TraitorReinforcement
 
 - type: entity
   id: Changeling
-  parent: BaseGameRule
+  parent: [BaseGameRule, BaseRoundstartAntagRule]
   components:
   - type: GameRule
     minPlayers: 25
   - type: AntagSelection
     agentName: changeling-round-end-agent-name
-    selectionTime: IntraPlayerSpawn
-    definitions:
-    - prefRoles: [ Changeling ]
-      max: 3
+    antags:
+    - !type:LinearAntagCount
+      proto: Changeling
       playerRatio: 15
-      briefing:
-        text: changeling-role-greeting
-        color: Red
-        sound: /Audio/Ambience/Antag/changeling_start.ogg
-      components:
-      - type: ChangelingDevour
-      - type: ChangelingIdentity
-      - type: ChangelingTransform
-      - type: ActionGrant
-        actions:
-        - ActionChangelingStore
-      # TODO: Make it so the changeling gamerule changeling can inherit from the changeling store preset somehow
-      - type: Store
-        name: store-preset-name-changeling
-        categories:
-        - ChangelingAbilities
-        currencyWhitelist:
-        - ChangelingDNA
-        balance:
-          ChangelingDNA: 50
-      - type: UserInterface
-        interfaces:
-          enum.StoreUiKey.Key:
-            type: StoreBoundUserInterface
-            requireInputValidation: false
-      mindRoles:
-      - MindRoleChangeling
+      range:
+        min: 1
+        max: 3
   - type: AntagObjectives
     objectives:
     - ChangelingSurviveObjective
 
 - type: entity
   id: Revolutionary
-  parent: BaseGameRule
+  parent: [BaseGameRule, BaseRoundstartAntagRule]
   components:
   - type: GameRule
     minPlayers: 15
   - type: RevolutionaryRule
   - type: AntagSelection
-    selectionTime: IntraPlayerSpawn
-    definitions:
-    - prefRoles: [ HeadRev ]
-      max: 3
+    selectionTime: PrePlayerSpawn
+    antags:
+    - !type:LinearAntagCount
+      proto: HeadRev
       playerRatio: 15
-      briefing:
-        text: head-rev-role-greeting
-        color: CornflowerBlue
-        sound: "/Audio/Ambience/Antag/headrev_start.ogg"
-      startingGear: HeadRevGear
-      components:
-      - type: Revolutionary
-      - type: HeadRevolutionary
-      mindRoles:
-      - MindRoleHeadRevolutionary
+      range:
+        min: 1
+        max: 3
   - type: DynamicRuleCost
     cost: 200
 
@@ -348,49 +273,25 @@
     mapPath: /Maps/Nonstations/wizardsden.yml
   - type: RuleGrids
   - type: AntagSelection
+    agentName: wizard-round-end-name
+    antags:
+    - !type:FixedAntagCount
+      proto: Wizard
   - type: AntagLoadProfileRule
     speciesOverride: Human
 
 - type: entity
-  parent: BaseWizardRule
+  parent: [ BaseWizardRule, BaseRoundstartAntagRule ]
   id: Wizard
   components:
   - type: GameRule
     minPlayers: 10
-  - type: AntagSelection
-    agentName: wizard-round-end-name
-    selectionTime: PrePlayerSpawn
-    definitions:
-    - prefRoles: [ Wizard ]
-      max: 1
-      playerRatio: 1
-      spawnerPrototype: SpawnPointGhostWizard
-      roleLoadout:
-       - RoleSurvivalExtended
-      briefing:
-        text: wizard-role-greeting
-        color: Turquoise
-        # TODO: Need Wizard Start sound
-        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
-      startingGear: WizardBlueGear
-      # TODO: WizardComp as needed
-      components:
-      - type: NpcFactionMember
-        factions:
-        - Wizard
-      - type: RandomMetadata
-        nameSegments:
-        - NamesWizardFirst
-        - NamesWizardLast
-        nameFormat: name-format-wizard
-      mindRoles:
-      - MindRoleWizard
   - type: DynamicRuleCost
     cost: 150
 
 - type: entity
   id: Zombie
-  parent: BaseGameRule
+  parent: [ BaseGameRule, BaseRoundstartAntagRule]
   components:
   - type: GameRule
     minPlayers: 20
@@ -399,26 +300,12 @@
       max: 900
   - type: ZombieRule
   - type: AntagSelection
-    selectionTime: IntraPlayerSpawn
-    definitions:
-    - prefRoles: [ InitialInfected ]
-      max: 6
-      playerRatio: 10
-      blacklist:
-        components:
-        - ZombieImmune
-        - AntagImmune
-      briefing:
-        text: zombie-patientzero-role-greeting
-        color: Plum
-        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
-      components:
-      - type: PendingZombie
-      - type: ZombifyOnDeath
-      - type: IncurableZombie
-      - type: InitialInfected
-      mindRoles:
-      - MindRoleInitialInfected
+    antags:
+    - !type:LinearAntagCount
+      proto: InitialInfected
+      range:
+        min: 1
+        max: 6
   - type: DynamicRuleCost
     cost: 200
 
@@ -431,13 +318,6 @@
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/mothership.yml
-
-- type: entity
-  parent: BaseXenoborgsRule
-  id: Xenoborgs
-  components:
-  - type: GameRule
-    minPlayers: 30
   - type: AntagMultipleRoleSpawner
     antagRoleToPrototypes:
       MothershipCore: [ MothershipCore ]
@@ -445,22 +325,21 @@
     pickAndTake: true
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
-    definitions:
-    - prefRoles: [ MothershipCore ]
-      fallbackRoles: [ Xenoborg ]
-      spawnerPrototype: SpawnPointGhostRoleMothershipCore
-      mindRoles:
-      - MindRoleMothershipCore
-    - prefRoles: [ Xenoborg ]
-      fallbackRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointGhostRoleXenoborg
-      mindRoles:
-      - MindRoleXenoborg
-      min: 4
-      max: 4
+    antags:
+    - !type:FixedAntagCount
+      proto: MothershipCore
+    - !type:FixedAntagCount
+      proto: Xenoborg
+      count: 4
   - type: DynamicRuleCost
     cost: 200
 
+- type: entity
+  parent: [ BaseXenoborgsRule, BaseRoundstartAntagRule]
+  id: Xenoborgs
+  components:
+  - type: GameRule
+    minPlayers: 30
 
 # This rule makes the chosen players unable to get other antag rules, as a way to prevent metagaming job rolls.
 # Put this before antags assigned to station jobs, but after non-job antags (NukeOps/Wiz).
@@ -471,12 +350,24 @@
   - type: GameRule
     minPlayers: 5
   - type: AntagSelection
-    selectionTime: IntraPlayerSpawn # Pre-selection before jobs; assignment doesn't really matter though, we only care about the pre-selection to block other antags.
+    selectionTime: PrePlayerSpawn # Pre-selection before jobs; assignment doesn't really matter though, we only care about the pre-selection to block other antags.
     removeUponFailedSpawn: false
-    definitions:
-    - prefRoles: [ InitialInfected, Traitor, Thief, HeadRev ]
-      max: 2
+    antags:
+    - !type:LinearAntagCount
+      proto: DummyAntag
       playerRatio: 30
+      range:
+        min: 1
+        max: 2
+
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: DummyAntag
+  prefRoles: # Only Station bound roles.
+  - InitialInfected
+  - Traitor
+  - Thief
+  - HeadRev
 
 # event schedulers
 

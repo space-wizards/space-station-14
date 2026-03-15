@@ -4,15 +4,19 @@ using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
     public const float PresetFailedCooldownIncrease = 30f;
+
+    public const string DummyGameRule = "DummyNonAntag";
 
     /// <summary>
     /// The selected preset that will be used at the start of the next round.
@@ -193,16 +197,17 @@ public sealed partial class GameTicker
         _gameMapManager.SelectMapRandom();
     }
 
-    [PublicAPI]
     private bool AddGamePresetRules()
     {
         if (DummyTicker || Preset == null)
             return false;
 
         CurrentPreset = Preset;
+        var ignored = _cfg.GetCVar(CCVars.GameTickerIgnoredPresets).Split(",");
         foreach (var rule in Preset.Rules)
         {
-            AddGameRule(rule);
+            if (!ignored.Contains(rule))
+                AddGameRule(rule);
         }
 
         return true;
@@ -225,6 +230,33 @@ public sealed partial class GameTicker
         {
             StartGameRule(rule);
         }
+    }
+
+    [PublicAPI]
+    public int GetMinimumPlayerCount(ProtoId<GamePresetPrototype> proto)
+    {
+        if (!_prototypeManager.Resolve(proto, out var preset))
+            return 0;
+
+        return GetMinimumPlayerCount(preset);
+    }
+
+    [PublicAPI]
+    public int GetMinimumPlayerCount(GamePresetPrototype proto)
+    {
+        var min = proto.MinPlayers ?? 0;
+        foreach (var entProto in proto.Rules)
+        {
+            if (!_prototypeManager.Resolve(entProto, out var ent))
+                continue;
+
+            if (!ent.TryGetComponent<GameRuleComponent>(out var rule, Factory))
+                continue;
+
+            min = Math.Max(min, rule.MinPlayers);
+        }
+
+        return min;
     }
 
     private void IncrementRoundNumber()
