@@ -1,11 +1,37 @@
 ﻿<Document>
-  # Ban Types
+  # Notices, Bans, and Ban Durations
+  [color=SlateGray][italic]Revision A, 2026-02-27[/italic][/color]
 
-  Bans can be appealed at forum.ss14.io in the ban appeals section.
+  For more details, see the ban policy https://docs.spacestation14.com/en/community/admin/wizards-den-banning-policy.html
 
-  ## Role Ban
-  Also called a "job ban", this ban prevents your character from joining or late-joining a round as one or more jobs or roles. These are often used in response to problematic behavior in particular departments or address gross inexperience in important roles such as heads of staff. These bans do not mechanically prevent you from switching to the role during a round or acting as that role, but doing so is considered ban evasion.
+  You may request a ban for yourself for any reason and duration. Self-requested bans are uncounted on your ban record, overidden by other bans, and lifted on request.
 
-  ## Game Ban
-  Also called a "server ban", this ban prevents you from connecting to all Wizard's Den servers.
+  ## Notices
+  ### Note
+  Notes record info of admin interest about you.
+
+  ### Warning
+  Notes that warn you of problematic behaviour preceding a ban. [color=SlateGray](Not all rule breaks have warnings.)[/color]
+
+  ## Bans
+  ### Role Ban
+  Role bans prevent you from selecting and joining banned jobs or roles. [color=SlateGray](Switching to or acting as the banned role or job in a round is ban evasion.)[/color]
+
+  ### Server Ban
+  Server bans prevent you from connecting to all Wizard's Den servers.
+
+  ## Ban Durations
+  ### Temporary
+  Bans that lift after a duration of time or accepted appeal. [color=SlateGray](To check your remaining ban duration, hover over the banned job and role for role bans or connect to the server for server bans.)[/color]
+
+  ### Indefinite
+  Bans that lift after an accepted appeal. [color=SlateGray](Bans without durations are indefinite by default.)[/color]
+
+  ### Voucher
+  Indefinite bans whose appeal requires either:
+  - A six-month wait from the time of the ban and voucher of good behaviour from another server's admins.
+  - Proof of misjudgement.
+
+  ### Permanent
+  Indefinite bans whose appeal requires proof of misjudgement.
 </Document>

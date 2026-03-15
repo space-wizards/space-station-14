@@ -1,15 +1,24 @@
 ﻿<Document>
-  # Core Rule 6 - Do not attempt to evade bans
-  This is a zero tolerance rule.
+  # Core Rule 6 - Do not discuss or evade bans
+  [color=SlateGray][italic]Revision A, 2026-02-27[/italic][/color]
 
-  Almost all bans may be appealed on our forums at forum.ss14.io in the ban appeals section. This is generally the only acceptable way to contact the administration team to discuss your ban and revise it if it is inappropriate, including if it is mistakenly applied.
+  This is a zero-tolerance rule.
 
-  Any attempt to circumvent or bypass a game ban will result in a voucher ban. Attempting to evade role bans by gaining access to or working in the capacity of a job you are banned from will result in a game ban. These bans are applied even if the evasion attempt is unsuccessful.
+  You may appeal bans only at the Wizard's Den Forum category Ban Appeals https://forum.spacestation14.com/c/ban-appeals/appeals-game/40
 
-  ## Exceptions
-  There are no exemptions for evading or attempting to evade game bans. Antagonists who impersonate or take over a role which they are banned from to aid in their goals are not considered to be evading their role ban.
+  Along with the previous link, you may discuss bans only within:
+  - Wizard's Den Forum Game Admin Message https://forum.spacestation14.com/w/game-admin-message/
+  - Wizard's Den Discord channel #admin-questions https://discord.com/channels/310555209753690112/1125299494066597888
 
-  ## Additional Information
-  - [textlink="Ban Types" link="BanTypes"]
-  - [textlink="Ban Durations" link="BanDurations"]
+  You may act as or accept banned jobs and roles only when completing preexisting objectives.
+
+  ## Examples
+  [color=#449944]Appropriate:[/color]
+  - Refusing promotion to or door access for Head of Security while banned from security or command roles.
+  - Suiciding or spectating after revolutionary conversion while banned from revolutionary roles.
+
+  [color=#994444]Prohibited:[/color]
+  - Accepting promotion to or door access for Head of Security while banned from security or command roles.
+  - Playing after revolutionary conversion while banned from revolutionary roles.
+  - Discussing bans within ahelp.
 </Document>
