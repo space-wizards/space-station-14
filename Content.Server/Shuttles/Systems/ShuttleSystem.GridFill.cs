@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;
+using Content.Shared.Procedural;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Station.Components;
 using Robust.Shared.Collections;
@@ -87,12 +88,26 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
-        var dungeonProtoId = _random.Pick(group.Protos);
-
-        if (!_protoManager.Resolve(dungeonProtoId, out var dungeonProto))
+        var dungeonProtos = new List<DungeonConfigPrototype>();
+        foreach (var dungeonPackId in group.DungeonPacks)
         {
-            return false;
+            if (!_protoManager.Resolve(dungeonPackId, out var dungeonProto))
+            {
+                Log.Error(dungeonPackId + "is an invalid prototype.");
+                return false;
+            }
+
+            foreach (var configId in dungeonProto.DungeonConfigs)
+            {
+                if (_protoManager.Resolve(configId, out var configProto))
+                {
+                    dungeonProtos.Add(configProto);
+                }
+            }
         }
+        var dungeonProtoId = _random.Pick(dungeonProtos);
+
+
 
         var targetPhysics = _physicsQuery.Comp(targetGrid);
         var spawnCoords = new EntityCoordinates(targetGrid, targetPhysics.LocalCenter);
@@ -108,7 +123,7 @@ public sealed partial class ShuttleSystem
         var spawnedGrid = _mapManager.CreateGridEntity(mapId);
 
         _transform.SetMapCoordinates(spawnedGrid, new MapCoordinates(Vector2.Zero, mapId));
-        _dungeon.GenerateDungeon(dungeonProto, spawnedGrid.Owner, spawnedGrid.Comp, Vector2i.Zero, _random.Next(), spawnCoords);
+        _dungeon.GenerateDungeon(dungeonProtoId, spawnedGrid.Owner, spawnedGrid.Comp, Vector2i.Zero, _random.Next(), spawnCoords);
 
         spawned = spawnedGrid.Owner;
         return true;
@@ -118,9 +133,9 @@ public sealed partial class ShuttleSystem
     {
         spawned = EntityUid.Invalid;
 
-        if (group.Paths.Count == 0)
+        if (group.GridPacks.Count == 0)
         {
-            Log.Error($"Found no paths for GridSpawn");
+            Log.Error($"Found no grid packs for GridSpawn");
             return false;
         }
 
@@ -129,10 +144,15 @@ public sealed partial class ShuttleSystem
         // Round-robin so we try to avoid dupes where possible.
         if (paths.Count == 0)
         {
-            paths.AddRange(group.Paths);
+            foreach (var gridPackId in group.GridPacks)
+            {
+                if (_protoManager.Resolve(gridPackId, out var gridPack))
+                {
+                    paths.AddRange(gridPack.GridPaths);
+                }
+            }
             _random.Shuffle(paths);
         }
-
         var path = paths[^1];
         paths.RemoveAt(paths.Count - 1);
 
