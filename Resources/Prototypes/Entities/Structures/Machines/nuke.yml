@@ -120,6 +120,20 @@
 
 - type: entity
   parent: NuclearBomb
+  id: NuclearBombNanotrasen
+  suffix: Nanotrasen
+  components:
+  - type: NanotrasenNuke
+
+- type: entity
+  parent: NuclearBomb
+  id: NuclearBombSyndicate
+  suffix: Syndicate
+  components:
+  - type: SyndicateNuke
+
+- type: entity
+  parent: NuclearBomb
   id: NuclearBombUnanchored
   suffix: unanchored
   components:
@@ -127,6 +141,11 @@
     anchored: false
   - type: Physics
     bodyType: Dynamic
+
+- type: entity
+  parent: [ NuclearBombUnanchored, NuclearBombSyndicate ]
+  id: NuclearBombSyndicateUnanchored
+  suffix: Syndicate, Unanchored
 
 - type: entity
   parent: StorageTank

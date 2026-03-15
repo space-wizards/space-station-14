@@ -21,8 +21,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         var query = EntityQueryEnumerator<PinpointerComponent, SpriteComponent>();
         while (query.MoveNext(out var uid, out var pinpointer, out var sprite))
         {
-            if (!pinpointer.HasTarget)
-                continue;
             var eye = _eyeManager.CurrentEye;
             var angle = pinpointer.ArrowAngle + eye.Rotation;
 

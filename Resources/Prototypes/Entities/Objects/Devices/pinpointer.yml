@@ -58,8 +58,10 @@
   parent: [ PinpointerBase, BaseCommandContraband ]
   components:
   - type: Pinpointer
-    component: NukeDisk
-    targetName: nuclear authentication disk
+    allTargets:
+    - !type:PinpointerComponentTarget
+      name: nuclear authentication disk
+      target: NukeDisk
 
 - type: entity
   name: syndicate pinpointer
@@ -92,8 +94,17 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    component: NukeDisk
-    targetName: nuclear authentication disk
+    targetLimit: 3
+    allTargets:
+    - !type:PinpointerComponentTarget
+      name: nuclear authentication disk
+      target: NukeDisk
+    - !type:PinpointerComponentTarget
+      name: syndicate nuclear fission explosive
+      target: SyndicateNuke
+    - !type:PinpointerComponentTarget
+      name: nanotrasen nuclear fission explosive
+      target: NanotrasenNuke
 
 - type: entity
   name: universal pinpointer
@@ -126,7 +137,7 @@
   - type: Icon
     state: pinpointer-way
   - type: Pinpointer
-    updateTargetName: true
+    targetLimit: 6
     canRetarget: true
 
 - type: entity
@@ -161,8 +172,10 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    component: ResearchServer
-    targetName: the station
+    allTargets:
+    - !type:PinpointerComponentTarget
+      target: ResearchServer
+      name: the station
 
 - type: entity
   parent: [ PinpointerBase, BaseXenoborgContraband ]
@@ -195,8 +208,10 @@
   - type: Icon
     state: pinpointer-xenoborg
   - type: Pinpointer
-    component: MothershipCore
-    targetName: the Mothership
+    allTargets:
+    - !type:PinpointerComponentTarget
+      target: MothershipCore
+      name: the Mothership
 
 - type: entity
   parent: BaseItem
@@ -231,6 +246,10 @@
     layers:
     - state: pinpointer-xenoborg-repaired
       map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: [ "enum.PinpointerLayers.Screen" ]
+      shader: unshaded
+      visible: false
   - type: Icon
     state: pinpointer-xenoborg-repaired
   - type: Construction
