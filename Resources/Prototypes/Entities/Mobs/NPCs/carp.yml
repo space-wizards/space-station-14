@@ -178,6 +178,15 @@
       mindRoles:
       - MindRoleGhostRoleTeamAntagonistFlock
     - type: GhostTakeoverAvailable
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        70: Dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 8
+          Slash: 9
     - type: HTN
       rootTask:
         task: DragonCarpCompound
@@ -187,6 +196,7 @@
     - type: Temperature
     - type: TemperatureDamage
       heatDamageThreshold: 1200
+
 - type: entity
   id: MobCarpDungeon
   parent: MobCarp
