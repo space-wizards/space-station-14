@@ -243,6 +243,15 @@
   - type: AccessReader
     access: [["Command"]]
 
+# Wall button intended to be mapped in EVA Storage rooms to open and bolt the doors (so Command can let crew grab suits in case of emergency).
+# We make this its own prototype since it's intended to be mapped on every station, and being its own prototype makes it easier to update the name/sprite/etc in the future.
+# We don't use LockableButtonEVA as the parent here because we only want Command staff to have the formal authority to all-access the room.
+- type: entity
+  parent: LockableButtonCommand
+  id: LockableButtonCommandEmergencyEVA
+  name: emergency EVA Storage access
+  description: It's a button that bolts open the EVA Storage room's doors.
+
 - type: entity
   parent: LockableButton
   id: LockableButtonCryogenics
@@ -426,6 +435,14 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+
+- type: entity
+  parent: LockableButton
+  id: LockableButtonEVA
+  suffix: EVA
+  components:
+  - type: AccessReader
+    access: [["External"], ["Command"]]
 
 - type: entity
   parent: LockableButton
