@@ -39,10 +39,16 @@ rcd-component-windows-and-grilles = Windows and grilles
 rcd-component-airlocks = Airlocks
 rcd-component-electrical = Electrical
 rcd-component-lighting = Lighting
-
+rcd-component-xenoborg-walls-and-flooring = Walls and flooring
+rcd-component-xenoborg-windows-and-grilles = Windows and grilles
 
 ### Prototype names (note: constructable items will be puralized)
 
 rcd-component-deconstruct = deconstruct
 rcd-component-floor-steel = steel tile
 rcd-component-plating = hull plate
+
+### Xenoborg prototype names
+
+rcd-component-floor-xenoborg = xenoborg tile
+rcd-component-floor-blue-circuit = blue circuit tile

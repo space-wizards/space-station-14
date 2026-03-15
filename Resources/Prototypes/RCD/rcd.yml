@@ -277,3 +277,110 @@
   collisionMask: Impassable
   rotation: User
   fx: EffectRCDConstruct0
+
+# Xenoborg
+- type: rcd
+  id: AirlockXenoborgLocked
+  category: Main
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_airlock.png
+  mode: ConstructObject
+  prototype: AirlockXenoborgLocked
+  cost: 4
+  delay: 4
+  collisionMask: FullTileMask
+  rotation: Camera
+  fx: EffectRCDConstruct4
+
+- type: rcd
+  id: WallXenoborg
+  category: XenoborgWallsAndFlooring
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_wall.png
+  mode: ConstructObject
+  prototype: WallXenoborg
+  cost: 4
+  delay: 4
+  collisionMask: FullTileMask
+  rotation: Fixed
+  fx: EffectRCDConstruct4
+
+- type: rcd
+  id: XenoborgGrille # so that it can fit in its own category...
+  category: XenoborgWindowsAndGrilles
+  sprite: /Textures/Interface/Radial/RCD/grille.png
+  mode: ConstructObject
+  prototype: Grille #it's just a grille, really
+  cost: 4
+  delay: 2
+  collisionMask: Impassable
+  rotation: Fixed
+  fx: EffectRCDConstruct2
+
+- type: rcd
+  id: XenoborgWindow
+  category: XenoborgWindowsAndGrilles
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_window.png
+  mode: ConstructObject
+  prototype: XenoborgWindow
+  cost: 4
+  delay: 3
+  collisionMask: Impassable
+  rules:
+  - IsWindow
+  rotation: User
+  fx: EffectRCDConstruct3
+
+- type: rcd
+  id: FloorXenoborg
+  category: XenoborgWallsAndFlooring
+  name: rcd-component-floor-xenoborg
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_tile.png
+  mode: ConstructTile
+  prototype: FloorXenoborg
+  cost: 1
+  delay: 1
+  collisionMask: InteractImpassable
+  rules:
+  - CanBuildOnEmptyTile
+  fx: EffectRCDConstruct1
+
+- type: rcd
+  id: FloorXenoborgBlueCircuit #again, it's just blue circuit floor
+  category: XenoborgWallsAndFlooring
+  name: rcd-component-floor-blue-circuit
+  sprite: /Textures/Interface/Radial/RCD/blue_circuit_tile.png
+  mode: ConstructTile
+  prototype: FloorBlueCircuit
+  cost: 1
+  delay: 1
+  collisionMask: InteractImpassable
+  rules:
+  - CanBuildOnEmptyTile
+  fx: EffectRCDConstruct1
+
+- type: rcd
+  id: XenoborgPlating # . . .
+  category: XenoborgWallsAndFlooring
+  name: rcd-component-plating
+  sprite: /Textures/Interface/Radial/RCD/plating.png
+  mode: ConstructTile
+  prototype: PlatingRCD
+  cost: 1
+  delay: 1
+  collisionMask: InteractImpassable
+  rules:
+  - CanBuildOnEmptyTile
+  fx: EffectRCDConstruct1
+
+- type: rcd
+  id: PoweredlightBlue
+  category: Lighting
+  sprite: /Textures/Interface/Radial/RCD/tube_light_blue.png
+  mode: ConstructObject
+  prototype: PoweredlightBlue
+  cost: 2
+  delay: 1
+  collisionMask: TabletopMachineMask
+  collisionBounds: "-0.23,-0.49,0.23,-0.36"
+  rotation: User
+  fx: EffectRCDConstruct1
+  allowMultiDirection: true

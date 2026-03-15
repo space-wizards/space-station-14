@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/cdbcb1e858b11f083994a7a269ed67ef5b452ce9, inflatable module by FungiFellow (GitHub), Module actions by Scarky0. chem, adv-chem, and adv-mining by mubururu_, xenoborg actions by Samuka-C (github), advclown by ThatGuyUSA.  c20r and esword by RedBookcase on Github, artistry-module by Kittygyat, with help from TiniestShark",
+    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/cdbcb1e858b11f083994a7a269ed67ef5b452ce9, inflatable module by FungiFellow (GitHub), Module actions by Scarky0. chem, adv-chem, and adv-mining by mubururu_, xenoborg actions by Samuka-C (github), advclown & xenoborg RCD by ThatGuyUSA, c20r and esword by RedBookcase on Github, artistry-module by Kittygyat, with help from TiniestShark",
     "size": {
         "x": 32,
         "y": 32
@@ -143,9 +143,6 @@
             "name":"xenoborg-door-remote-module"
         },
         {
-            "name":"xenoborg-extinguisher-module"
-        },
-        {
             "name":"xenoborg-eye-module"
         },
         {
@@ -168,6 +165,9 @@
         },
         {
             "name":"xenoborg-projector-module"
+        },
+        {
+            "name":"xenoborg-rcd-module"
         },
         {
             "name":"xenoborg-space-movement-module"
