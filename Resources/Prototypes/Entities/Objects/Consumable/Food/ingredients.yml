@@ -64,6 +64,10 @@
     damage:
       types:
         Blunt: 0
+  - type: ExaminableSolution
+    solution: food
+    examinableWhileClosed: false
+    heldOnly: true
 
 - type: entity
   abstract: true
@@ -267,6 +271,13 @@
           Quantity: 20
   - type: Edible
     edible: Drink # slurping sounds!
+    solution: food
+    destroyOnEmpty: false
+    utensil: None
+  - type: Openable
+    sound:
+      collection: pop
+    closeable: true
 
 - type: entity
   parent: ReagentPacketBase
@@ -295,6 +306,13 @@
   - type: Tag
     tags:
       - Mayo
+  - type: Openable
+    closeable: true
+  - type: Edible
+    edible: Drink # slurping sounds!
+    solution: food
+    destroyOnEmpty: false
+    utensil: None
 
 # - type: entity
 #   parent: ReagentPacketBase
