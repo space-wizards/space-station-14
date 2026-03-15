@@ -74,6 +74,9 @@ public abstract class SharedCrematoriumSystem : EntitySystem
 
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || storage.Open)
             return;
+        //hack fix to prevent use from within, should have been caught by args.CanAccess
+        if (storage.Contents.Contains(args.User))
+            return;
 
         if (HasComp<ActiveCrematoriumComponent>(uid))
             return;
