@@ -1,5 +1,7 @@
 using Content.Server.Interaction;
 using Content.Shared.Physics;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
@@ -8,14 +10,23 @@ public sealed partial class TargetInLOSPrecondition : HTNPrecondition
     [Dependency] private readonly IEntityManager _entManager = default!;
     private InteractionSystem _interaction = default!;
 
-    [DataField("targetKey")]
+    /// <summary>
+    /// Key for retrieving the current target from the NPCBlackboard.
+    /// </summary>
+    [DataField]
     public string TargetKey = "Target";
 
-    [DataField("rangeKey")]
+    /// <summary>
+    /// Key for retrieving the max distance checked from the NPCBlackboard.
+    /// </summary>
+    [DataField]
     public string RangeKey = "RangeKey";
 
-    [DataField("opaqueKey")]
-    public bool UseOpaqueForLOSChecksKey = true;
+    /// <summary>
+    /// Collision group(s) that block line of sight to the target.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(FlagSerializer<CollisionLayer>))]
+    public int BlockingGroup = (int)(CollisionGroup.Impassable | CollisionGroup.InteractImpassable);
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
@@ -31,8 +42,6 @@ public sealed partial class TargetInLOSPrecondition : HTNPrecondition
             return false;
 
         var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
-        var collisionGroup = UseOpaqueForLOSChecksKey ? CollisionGroup.Opaque : (CollisionGroup.Impassable | CollisionGroup.InteractImpassable);
-
-        return _interaction.InRangeUnobstructed(owner, target, range, collisionGroup);
+        return _interaction.InRangeUnobstructed(owner, target, range, (CollisionGroup)BlockingGroup);
     }
 }
