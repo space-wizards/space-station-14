@@ -52,30 +52,53 @@
 
 - type: startingGear
   id: SyndicateReinforcementMedic
-  parent: SyndicateOperativeClothing
   equipment:
-    pocket1: WeaponPistolViper
+    jumpsuit: ClothingUniformJumpsuitOperative
+    shoes: ClothingShoesColorRed
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatSurgcapPurple
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackDuffelMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: HandheldHealthAnalyzer
+    pocket2: PillCanisterBicaridine
   inhand:
     - MedkitCombatFilled
-
+  storage:
+    back:
+    - Defibrillator
+    - CigPackSyndicate
+    - UniformScrubsColorPurple
+    - ChemistryBottleToxin
+    - ChemistryBottleNecrosol
+    - Syringe
+    - Syringe
+    
 - type: startingGear
   id: SyndicateReinforcementSpy
-  parent: SyndicateOperativeClothing
   equipment:
-    id: AgentIDCard
-    mask: ClothingMaskGasVoiceChameleon
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpack
+    shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesColorBlack
     pocket1: WeaponPistolViper
-
+    pocket2: VoiceMaskImplanter
+  inhand:
+    - ClothingBackpackChameleonFillAgent
 - type: startingGear
   id: SyndicateReinforcementThief
   parent: SyndicateOperativeClothing
   equipment:
     pocket1: WeaponPistolViper
+    pocket2: MagazinePistolHighCapacity
   inhand:
     - ToolboxSyndicateFilled
   storage:
     back:
     - SyndicateJawsOfLife
+    - CameraBug
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear
