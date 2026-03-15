@@ -137,7 +137,7 @@
   suffix: directional
   components:
   - type: WallMount
-    arc: 175
+    arc: 112
   - type: Construction
     graph: SignalSwitchDirectionalGraph
     node: SignalSwitchDirectionalNode
@@ -149,7 +149,7 @@
   suffix: directional
   components:
   - type: WallMount
-    arc: 175
+    arc: 112
   - type: Construction
     graph: SignalButtonDirectionalGraph
     node: SignalButtonDirectionalNode
@@ -161,7 +161,7 @@
   suffix: directional
   components:
   - type: WallMount
-    arc: 175
+    arc: 112
   - type: Construction
     graph: LightSwitchDirectionalGraph
     node: LightSwitchDirectionalNode
