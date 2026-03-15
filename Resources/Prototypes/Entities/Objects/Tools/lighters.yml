@@ -83,7 +83,7 @@
     fuelLitCost: 0.1
     tankSafe: true
   - type: HeaterTool
-    heatPerUse: 20
+    conductivity: 0.2
     maxTemperature: 350
     doAfterDelay: 2.5
   - type: WelderHeater
@@ -195,7 +195,7 @@
     fuelLitCost: 0.1
     tankSafe: true
   - type: HeaterTool
-    heatPerUse: 25
+    conductivity: 0.25
     maxTemperature: 380
     doAfterDelay: 2.2
   - type: WelderHeater

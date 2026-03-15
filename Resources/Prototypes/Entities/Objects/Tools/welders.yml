@@ -91,6 +91,7 @@
     qualities: Welding
   - type: Welder
   - type: HeaterTool
+    conductivity: 1.0
   - type: WelderHeater
   - type: PointLight
     enabled: false
@@ -146,7 +147,7 @@
   - type: Tool
     speedModifier: 1.3
   - type: HeaterTool
-    heatPerUse: 200
+    conductivity: 2.0
   - type: WelderHeater
 
 - type: entity
@@ -160,7 +161,7 @@
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
   - type: HeaterTool
-    heatPerUse: 300
+    conductivity: 3.0
     maxTemperature: 600
   - type: WelderHeater
   - type: SolutionContainerManager

@@ -31,17 +31,19 @@ public sealed class HeaterToolSystem : EntitySystem
         if (args.Handled || args.Target == null || !args.CanReach)
             return;
 
-        var heaterAttempt = new HeaterAttemptEvent(args.User);
-        RaiseLocalEvent(ent, ref heaterAttempt);
-        if (heaterAttempt.Cancelled)
+        var ev = new HeaterAttemptEvent(args.User);
+        RaiseLocalEvent(ent, ref ev);
+        if (ev.Cancelled)
             return;
 
-        var heatableAttempt = new HeatableAttemptEvent(args.User);
-        RaiseLocalEvent(args.Target.Value, ref heatableAttempt);
-        if (heatableAttempt.Cancelled)
+        RaiseLocalEvent(args.Target.Value, ref ev);
+        if (ev.Cancelled)
             return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterDelay,
+        // If frequency is 2.0, the delay is 0.5x.
+        var delay = ent.Comp.DoAfterDelay / Math.Max(0.01f, ev.FrequencyMultiplier);
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay,
             new HeaterToolDoAfterEvent(), ent,
             target: args.Target,
             used: ent)
@@ -65,9 +67,13 @@ public sealed class HeaterToolSystem : EntitySystem
 
         var toolUid = args.Used.Value;
 
-        var heaterAttempt = new HeaterAttemptEvent(args.User);
-        RaiseLocalEvent(toolUid, ref heaterAttempt);
-        if (heaterAttempt.Cancelled)
+        var ev = new HeaterAttemptEvent(args.User);
+        RaiseLocalEvent(toolUid, ref ev);
+        if (ev.Cancelled)
+            return;
+
+        RaiseLocalEvent(args.Target.Value, ref ev);
+        if (ev.Cancelled)
             return;
 
         var shouldRepeat = false;
@@ -80,11 +86,9 @@ public sealed class HeaterToolSystem : EntitySystem
                 continue;
 
             var heatContainer = new HeatContainer(heatCap, solution.Temperature);
-            var energy = ent.Comp.HeatPerUse * (float) args.Args.Delay.TotalSeconds;
-
-            // Limit heat to max temperature
-            var dQ = heatContainer.ConductHeatToTempQuery(ent.Comp.MaxTemperature);
-            var heatToApply = Math.Min(energy, Math.Max(0, dQ));
+            
+            // Heat is conducted from the tool (MaxTemperature) to the container.
+            var heatToApply = heatContainer.ConductHeatQuery(ent.Comp.MaxTemperature, (float) args.Args.Delay.TotalSeconds, ent.Comp.Conductivity);
 
             if (heatToApply <= 0)
                 continue;

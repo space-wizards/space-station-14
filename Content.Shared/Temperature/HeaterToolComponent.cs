@@ -10,10 +10,11 @@ namespace Content.Shared.Temperature;
 public sealed partial class HeaterToolComponent : Component
 {
     /// <summary>
-    ///     How much thermal energy is added per do-after step.
+    ///     The thermal conductance of the tool. 
+    ///     This determines how fast heat is transferred to the target based on temperature difference.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float HeatPerUse = 100f;
+    public float Conductivity = 10f;
 
     /// <summary>
     ///     The maximum temperature the tool can heat a target to.
