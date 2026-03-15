@@ -280,7 +280,7 @@
         - id: DrinkDrGibbJug
         - id: DrinkEnergyDrinkJug
         - id: DrinkGreenTeaJug
-        - id: DrinkIceJug
+        - id: DrinkIceBucket
         - id: DrinkJuiceLimeCartonXL
         - id: DrinkJuiceOrangeCartonXL
         - id: DrinkLemonLimeJug
@@ -308,7 +308,6 @@
         - id: DrinkCoffeeLiqueurBottleFull
         - id: DrinkCognacBottleFull
         - id: DrinkGinBottleFull
-        - id: DrinkMeadJug
         - id: DrinkRumBottleFull
         - id: DrinkTequilaBottleFull
         - id: DrinkVermouthBottleFull

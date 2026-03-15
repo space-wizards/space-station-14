@@ -409,8 +409,6 @@
     - Wine
     - DrinkBottle
 
-# Extra large bottles
-
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkBeerGrowler # todo Needs to be renamed DrinkBeerBottleFullGrowler
@@ -420,10 +418,9 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
         reagents:
         - ReagentId: Beer
-          Quantity: 150
+          Quantity: 100
   - type: Label
     currentLabel: reagent-name-beer
   - type: Sprite
@@ -446,10 +443,9 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
         reagents:
         - ReagentId: Ale
-          Quantity: 150
+          Quantity: 100
   - type: Label
     currentLabel: reagent-name-ale
   - type: Sprite

@@ -827,3 +827,7 @@ CrateVendingMachineRestockGetmoreChocolateCorpFilled: VendingMachineRestockGetmo
 CrateVendingMachineRestockChangFilled: VendingMachineRestockChang
 CrateVendingMachineRestockDiscountDansFilled: VendingMachineRestockDiscountDans
 CrateVendingMachineRestockDonutFilled: VendingMachineRestockDonut
+
+# 2026-03-15
+DrinkIceJug: DrinkIceBucket
+DrinkMeadJug: null
