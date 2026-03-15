@@ -5,7 +5,6 @@ using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Random;
 using System.Linq;
-using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 
@@ -24,7 +23,6 @@ public sealed class IonStormSystem : EntitySystem
     /// </summary>
     public void IonStormTarget(Entity<SiliconLawProviderComponent, IonStormTargetComponent> ent, bool adminlog = true)
     {
-        var lawBound = ent.Comp1;
         var target = ent.Comp2;
 
         if (!_robustRandom.Prob(target.Chance))
@@ -37,7 +35,7 @@ public sealed class IonStormSystem : EntitySystem
         // try to swap it out with a random lawset
         if (_robustRandom.Prob(target.RandomLawsetChance))
         {
-            var lawsets = _proto.Index<WeightedRandomPrototype>(target.RandomLawsets);
+            var lawsets = _proto.Index(target.RandomLawsets);
             var lawset = lawsets.Pick(_robustRandom);
             laws = _siliconLaw.GetLawset(lawset);
         }
@@ -89,7 +87,8 @@ public sealed class IonStormSystem : EntitySystem
         }
         else
         {
-            laws.Laws.Insert(0, new SiliconLaw
+            laws.Laws.Insert(0,
+                new SiliconLaw
             {
                 LawString = newLaw,
                 Order = -1,
