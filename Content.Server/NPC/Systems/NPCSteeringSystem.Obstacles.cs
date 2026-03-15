@@ -202,14 +202,14 @@ public sealed partial class NPCSteeringSystem
 
     private void GetObstacleEntities(PathPoly poly, int mask, int layer, List<EntityUid> ents)
     {
-        // TODO: Can probably re-use this from pathfinding or something
-        if (!TryComp<MapGridComponent>(poly.GraphUid, out var grid))
-        {
-            return;
-        }
+        var intersecting = _entSetPool.Get();
+        _lookup.GetLocalEntitiesIntersecting(poly.GraphUid, poly.Box, intersecting, flags: LookupFlags.Dynamic | LookupFlags.Static);
 
-        foreach (var ent in _mapSystem.GetLocalAnchoredEntities(poly.GraphUid, grid, poly.Box))
+        foreach (var ent in intersecting)
         {
+            if (ent == poly.GraphUid)
+                continue;
+
             if (!_physicsQuery.TryGetComponent(ent, out var body) ||
                 !body.Hard ||
                 !body.CanCollide ||
@@ -220,6 +220,8 @@ public sealed partial class NPCSteeringSystem
 
             ents.Add(ent);
         }
+
+        _entSetPool.Return(intersecting);
     }
 
     private enum SteeringObstacleStatus : byte
