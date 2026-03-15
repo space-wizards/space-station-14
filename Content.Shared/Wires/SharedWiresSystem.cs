@@ -4,7 +4,10 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Systems;
 using Content.Shared.UserInterface;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Wires;
 
@@ -15,6 +18,7 @@ public abstract class SharedWiresSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedToolSystem Tool = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
     public override void Initialize()
     {
@@ -24,6 +28,7 @@ public abstract class SharedWiresSystem : EntitySystem
         SubscribeLocalEvent<WiresPanelComponent, WirePanelDoAfterEvent>(OnPanelDoAfter);
         SubscribeLocalEvent<WiresPanelComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WiresPanelComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<WiresPanelComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
 
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenActivatableUI);
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, PanelChangedEvent>(OnActivatableUIPanelChanged);
@@ -94,6 +99,32 @@ public abstract class SharedWiresSystem : EntitySystem
                 }
             }
         }
+    }
+
+    private void OnGetVerbs(Entity<WiresPanelComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!IsPanelOpen(ent.Owner))
+            return;
+
+        var actor = args.User;
+        var verb = new AlternativeVerb
+        {
+            Text = Loc.GetString("wires-panel-verb-view-panel"),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/screwdriver.png")),
+            Act = () => OpenUserInterface(ent, actor),
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    public void OpenUserInterface(EntityUid uid, EntityUid actor)
+    {
+        UI.OpenUi(uid, WiresUiKey.Key, actor);
+    }
+
+    public void OpenUserInterface(EntityUid uid, ICommonSession player)
+    {
+        UI.OpenUi(uid, WiresUiKey.Key, player);
     }
 
     public void ChangePanelVisibility(EntityUid uid, WiresPanelComponent component, bool visible)
