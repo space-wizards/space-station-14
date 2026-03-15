@@ -1,0 +1,31 @@
+- type: entity
+  parent: [ BaseStructure, BaseSyndicateContraband ]
+  id: HijackBeacon
+  name: hijack beacon
+  description: A device that bypasses the firewall on Nanotrasen-brand Automated Trade Stations.
+  components:
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: HijackBeacon
+    reward: Telecrystal10
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Tools/hijack_beacon.rsi
+    noRot: true
+    layers:
+    - state: extraction_point
