@@ -178,6 +178,9 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Update the reagent grinder BUI for the client.
+    /// </summary>
     public virtual void UpdateUi(EntityUid uid) { }
 
     private void OnStartMessage(Entity<ReagentGrinderComponent> ent, ref ReagentGrinderStartMessage message)
@@ -257,7 +260,9 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         Dirty(ent);
         UpdateUi(ent);
 
-        if (_net.IsServer) // can't cancel predicted audio
+        // Unpredicted because we don't have the user in the update loop
+        // TODO: Make the audio API sane https://github.com/space-wizards/RobustToolbox/issues/6436
+        if (_net.IsServer)
             ent.Comp.AudioStream = _audioSystem.PlayPvs(sound, ent,
             AudioParams.Default.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))?.Entity; //slightly higher pitched
     }
