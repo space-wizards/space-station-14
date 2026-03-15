@@ -6,6 +6,7 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Resist.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Storage.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 

@@ -294,6 +294,7 @@
     - id: NukeDiskFake
     - id: DiceBag
     - id: SpectralLocator
+    - id: Magic9Ball
     - id: BarberScissors
     - id: SprayFlowerPin
     - id: ClothingShoesSkates

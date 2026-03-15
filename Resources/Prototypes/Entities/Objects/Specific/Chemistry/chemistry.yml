@@ -648,6 +648,7 @@
     solutions:
       food:
         maxVol: 20
+        canReact: false
   - type: ExplosionResistance
     damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
