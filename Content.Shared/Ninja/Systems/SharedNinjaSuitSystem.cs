@@ -1,7 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Emp;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
@@ -18,8 +18,8 @@ namespace Content.Shared.Ninja.Systems;
 public abstract class SharedNinjaSuitSystem : EntitySystem
 {
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -168,7 +168,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         // mark the user as not wearing a suit
         _ninja.AssignSuit(user, null);
         // disable glove abilities
-        if (user.Comp.Gloves is {} uid)
+        if (user.Comp.Gloves is { } uid)
             _toggle.TryDeactivate(uid, user: user);
     }
 }

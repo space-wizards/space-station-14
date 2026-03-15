@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Interface/Misc/pointing.rsi
     state: pointing
-    drawDepth: Overlays
+    drawdepth: Overlays
     noRot: true
   - type: PointingArrow
     duration: 4

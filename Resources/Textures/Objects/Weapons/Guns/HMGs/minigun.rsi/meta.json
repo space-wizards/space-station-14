@@ -1,31 +1,39 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/a39e3f3f1f351e3be5ae955c4de3a2e8889e191b",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "holstered"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Assets taken from /tg/station 13 at https://github.com/tgstation/tgstation/commit/a39e3f3f1f351e3be5ae955c4de3a2e8889e191b. inhand-left, inhand-right by K-Dynamic (github).",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "notholstered"
-    },
-    {
-      "name": "base",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "icon"
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "holstered"
+        },
+        {
+            "name": "notholstered"
+        },
+        {
+            "name": "base",
+            "delays": [
+                [
+                0.1,
+                0.1,
+                0.1,
+                0.1
+                ]
+            ]
+        }
+    ]
 }

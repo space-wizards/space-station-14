@@ -1,4 +1,4 @@
-using Content.Shared.Hands.Components;
+using Content.Server.Hands.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.Preconditions;
@@ -18,14 +18,18 @@ public sealed partial class ActiveHandComponentPrecondition : HTNPrecondition
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        if (!blackboard.TryGetValue<Hand>(NPCBlackboard.ActiveHand, out var hand, _entManager) || hand.HeldEntity == null)
+        if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.Owner, out var owner, _entManager) ||
+            !blackboard.TryGetValue<string>(NPCBlackboard.ActiveHand, out var hand, _entManager))
         {
             return Invert;
         }
 
+        if (!_entManager.System<HandsSystem>().TryGetHeldItem(owner, hand, out var entity))
+            return Invert;
+
         foreach (var comp in Components)
         {
-            var hasComp = _entManager.HasComponent(hand.HeldEntity, comp.Value.Component.GetType());
+            var hasComp = _entManager.HasComponent(entity, comp.Value.Component.GetType());
 
             if (!hasComp ||
                 Invert && hasComp)

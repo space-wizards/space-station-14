@@ -1,8 +1,8 @@
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Shared.Noise;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Parallax.Biomes.Layers;
 
@@ -10,8 +10,8 @@ namespace Content.Shared.Parallax.Biomes.Layers;
 public sealed partial class BiomeDecalLayer : IBiomeWorldLayer
 {
     /// <inheritdoc/>
-    [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
-    public List<string> AllowedTiles { get; private set; } = new();
+    [DataField]
+    public List<ProtoId<ContentTileDefinition>> AllowedTiles { get; private set; } = new();
 
     /// <summary>
     /// Divide each tile up by this amount.
@@ -29,6 +29,6 @@ public sealed partial class BiomeDecalLayer : IBiomeWorldLayer
     /// <inheritdoc/>
     [DataField("invert")] public bool Invert { get; private set; } = false;
 
-    [DataField("decals", required: true, customTypeSerializer:typeof(PrototypeIdListSerializer<DecalPrototype>))]
-    public List<string> Decals = new();
+    [DataField(required: true)]
+    public List<ProtoId<DecalPrototype>> Decals = new();
 }

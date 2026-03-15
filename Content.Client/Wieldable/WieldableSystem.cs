@@ -29,7 +29,10 @@ public sealed class WieldableSystem : SharedWieldableSystem
             return;
 
         if (_gameTiming.IsFirstTimePredicted)
+        {
             cursorOffsetComp.CurrentPosition = Vector2.Zero;
+            cursorOffsetComp.TargetPosition = Vector2.Zero;
+        }
     }
 
     public void OnGetEyeOffset(Entity<CursorOffsetRequiresWieldComponent> entity, ref HeldRelayedEvent<GetEyeOffsetRelayedEvent> args)

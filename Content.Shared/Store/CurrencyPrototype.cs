@@ -11,7 +11,7 @@ namespace Content.Shared.Store;
 ///     This is separate to the cargo ordering system.
 /// </summary>
 [Prototype]
-[DataDefinition, Serializable, NetSerializable]
+[DataDefinition]
 public sealed partial class CurrencyPrototype : IPrototype
 {
     [ViewVariables]
@@ -23,18 +23,18 @@ public sealed partial class CurrencyPrototype : IPrototype
     /// doesn't necessarily refer to the full name of the currency, only
     /// that which is displayed to the user.
     /// </summary>
-    [DataField("displayName")]
+    [DataField]
     public string DisplayName { get; private set; } = string.Empty;
 
     /// <summary>
     /// The physical entity of the currency
     /// </summary>
-    [DataField("cash", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<FixedPoint2, EntityPrototype>))]
-    public Dictionary<FixedPoint2, string>? Cash { get; private set; }
+    [DataField]
+    public Dictionary<FixedPoint2, EntProtoId>? Cash { get; private set; }
 
     /// <summary>
     /// Whether or not this currency can be withdrawn from a shop by a player. Requires a valid entityId.
     /// </summary>
-    [DataField("canWithdraw")]
+    [DataField]
     public bool CanWithdraw { get; private set; } = true;
 }

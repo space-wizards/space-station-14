@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "scar_chest, scar_eye_left, scar_eye_right, scar_top_surgery_long and scar_top_surgery_short drawn by Ubaser, scar_neck, scar_chest_bullets, scar_stomach_bullets, scar_face_1 and scar_face_2 drawn by Ktyria(discord)",
+  "copyright": "scar_chest, scar_eye_left, scar_eye_right, scar_top_surgery_long and scar_top_surgery_short drawn by Ubaser, scar_neck, scar_chest_bullets, scar_stomach_bullets, scar_face_1 and scar_face_2 drawn by Ktyria(discord), scar_eye_left_small and scar_eye_right_small modified from scar_eye_left and scar_eye_right by Boaz1111(github).",
   "size": {
     "x": 32,
     "y": 32
@@ -45,6 +45,14 @@
     },
     {
         "name": "scar_face_2",
+        "directions": 4
+    }, 
+    {
+        "name": "scar_eye_left_small",
+        "directions": 4
+    }, 
+    {
+        "name": "scar_eye_right_small",
         "directions": 4
     }
   ]

@@ -3,10 +3,7 @@
   id: PaintingBase
   abstract: true
   components:
-  - type: WallMount
-    arc: 360
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/paintings.rsi
 
 - type: entity
@@ -187,4 +184,4 @@
   description: This painting is a sad clown! It sparks joy.
   components:
   - type: Sprite
-    state: painting19  
+    state: painting19

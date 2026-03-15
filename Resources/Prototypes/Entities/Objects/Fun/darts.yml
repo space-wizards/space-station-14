@@ -1,8 +1,8 @@
 - type: entity
-  name: dart
-  description: Light throwing dart for playing darts. Don't get in the eye!
   parent: BaseItem
   id: Dart
+  name: dart
+  description: Light throwing dart for playing darts. Don't get in the eye!
   components:
   - type: EmbeddableProjectile
     minimumSpeed: 3
@@ -66,7 +66,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 30 #excess damage avoids cost of spawning entities.
+        damage: 50 #excess damage avoids cost of spawning entities.
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -121,13 +121,13 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 7
+        maxVol: 10
   - type: SolutionInjectOnEmbed
-    transferAmount: 7
+    transferAmount: 10
     blockSlots: NONE
     solution: melee
   - type: SolutionTransfer
-    maxTransferAmount: 7
+    maxTransferAmount: 10
 
 - type: entity
   name: dartboard

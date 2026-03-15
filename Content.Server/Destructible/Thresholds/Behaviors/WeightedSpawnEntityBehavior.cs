@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Spawners;
+using Robust.Shared.Random;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
@@ -19,6 +20,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
 {
+    private static readonly EntProtoId TempEntityProtoId = "TemporaryEntityForTimedDespawnSpawners";
+
     /// <summary>
     /// A table of entities with assigned weights to randomly pick from
     /// </summary>
@@ -64,7 +67,7 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
         if (SpawnAfter != 0)
         {
             // if it fails to get the spawner, this won't ever work so just return
-            if (!system.PrototypeManager.TryIndex("TemporaryEntityForTimedDespawnSpawners", out var tempSpawnerProto))
+            if (!system.PrototypeManager.Resolve(TempEntityProtoId, out var tempSpawnerProto))
                 return;
 
             // spawn the spawner, assign it a lifetime, and assign the entity that it will spawn when despawned

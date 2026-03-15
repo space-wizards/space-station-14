@@ -96,7 +96,7 @@ public sealed partial class NPCCombatSystem
                 _combat.SetInCombatMode(uid, true, combatMode);
             }
 
-            if (!_gun.TryGetGun(uid, out var gunUid, out var gun))
+            if (!_gun.TryGetGun(uid, out var gun))
             {
                 comp.Status = CombatStatus.NoWeapon;
                 comp.ShootAccumulator = 0f;
@@ -104,12 +104,12 @@ public sealed partial class NPCCombatSystem
             }
 
             var ammoEv = new GetAmmoCountEvent();
-            RaiseLocalEvent(gunUid, ref ammoEv);
+            RaiseLocalEvent(gun, ref ammoEv);
 
             if (ammoEv.Count == 0)
             {
                 // Recharging then?
-                if (_rechargeQuery.HasComponent(gunUid))
+                if (_rechargeQuery.HasComponent(gun))
                 {
                     continue;
                 }
@@ -191,7 +191,7 @@ public sealed partial class NPCCombatSystem
 
             if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var gridUid, out var mapGrid))
             {
-                targetCordinates = new EntityCoordinates(gridUid, mapGrid.WorldToLocal(targetSpot));
+                targetCordinates = new EntityCoordinates(gridUid, _map.WorldToLocal(gridUid, mapGrid, targetSpot));
             }
             else
             {
@@ -200,12 +200,12 @@ public sealed partial class NPCCombatSystem
 
             comp.Status = CombatStatus.Normal;
 
-            if (gun.NextFire > _timing.CurTime)
+            if (gun.Comp.NextFire > _timing.CurTime)
             {
                 return;
             }
 
-            _gun.AttemptShoot(uid, gunUid, gun, targetCordinates);
+            _gun.AttemptShoot(uid, gun, targetCordinates, comp.Target);
         }
     }
 }
