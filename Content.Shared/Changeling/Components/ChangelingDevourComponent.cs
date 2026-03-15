@@ -82,12 +82,6 @@ public sealed partial class ChangelingDevourComponent : Component
     public TimeSpan DevourConsumeTime = TimeSpan.FromSeconds(10);
 
     /// <summary>
-    /// Damage cap that a target is allowed to be caused due to IdentityConsumption
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float DevourConsumeDamageCap = 350f;
-
-    /// <summary>
     /// The Currently active devour sound in the world
     /// </summary>
     [DataField]
@@ -99,7 +93,7 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier DamagePerTick = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new ()
         {
             { "Slash", 10},
             { "Piercing", 10 },

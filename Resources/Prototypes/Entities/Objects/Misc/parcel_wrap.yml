@@ -45,8 +45,6 @@
   abstract: true
   parent: BasePaperLabelable # We use this instead of BasePaperLabelableVisualized because WrappedParcel needs its own GenericVisualizer component for the parcel itself, and WrappedParcelHumanoid currently doesn't have label sprites at all
   id: BaseWrappedParcel
-  name: wrapped parcel
-  description: Something wrapped up in paper. I wonder what's inside...
   components:
   - type: Physics
     bodyType: Dynamic
@@ -99,6 +97,8 @@
 - type: entity
   parent: [ BaseItem, BaseWrappedParcel ]
   id: WrappedParcel
+  name: wrapped parcel
+  description: Something wrapped up in paper. I wonder what's inside...
   components:
   - type: Appearance
   - type: GenericVisualizer
@@ -134,6 +134,7 @@
 - type: entity
   parent: BaseWrappedParcel
   id: WrappedParcelHumanoid
+  name: wrapped parcel
   description: Something wrapped up in paper. It's suspiciously human-shaped.
   components:
   - type: Physics
