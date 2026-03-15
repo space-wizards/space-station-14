@@ -17,11 +17,17 @@ public sealed partial class ItemToggleOnTriggerComponent : BaseXOnTriggerCompone
     public bool CanActivate = true;
 
     /// <summary>
-    /// Can the item be toggled on using the trigger?
+    /// Can the item be toggled off using the trigger?
     /// If both this and CanActivate are true then the trigger will toggle between states.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CanDeactivate = true;
+
+    /// <summary>
+    /// Does this trigger require the user to have <see cref="ComplexInteractionComponent"/>?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ConsciousAction = true;
 
     /// <summary>
     /// Can the audio and popups be predicted?
