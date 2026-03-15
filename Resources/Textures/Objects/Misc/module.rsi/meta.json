@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, generic, service, command, science, security, medical, supply, and engineering taken from shiptest at https://github.com/shiptest-ss13/Shiptest/pull/1473, additional sprites created by EmoGarbage404, cpu_syndicate sprite derived from previous examples and created by Alpaccalypse at https://github.com/space-wizards/space-station-14/pull/34104, cpu_wizard by ScarKy0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, generic, service, command, science, security, medical, supply, and engineering taken from shiptest at https://github.com/shiptest-ss13/Shiptest/pull/1473, additional sprites created by EmoGarbage404, cpu_syndicate sprite derived from previous examples and created by Alpaccalypse at https://github.com/space-wizards/space-station-14/pull/34104, cpu_wizard by ScarKy0, datadisk_t2_marks, datadisk_t3_marks, datadisk_t2_border and datadisk_t3_border by aliser",
   "size": {
     "x": 32,
     "y": 32
@@ -231,6 +231,18 @@
     },
     {
       "name": "datadisk_label"
+    },
+    {
+      "name": "datadisk_t2_marks"
+    },
+    {
+      "name": "datadisk_t3_marks"
+    },
+    {
+      "name": "datadisk_t2_border"
+    },
+    {
+      "name": "datadisk_t3_border"
     },
     {
       "name": "depositbox"
