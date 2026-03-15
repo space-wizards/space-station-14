@@ -1,6 +1,8 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
+using Content.Shared.Administration.Events;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
@@ -12,11 +14,13 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration;
 
 namespace Content.Server.Mind;
 
 public sealed class MindSystem : SharedMindSystem
 {
+    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
@@ -24,12 +28,30 @@ public sealed class MindSystem : SharedMindSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
+    private const AdminFlags DebugControlFlags = AdminFlags.Admin | AdminFlags.Debug | AdminFlags.Fun;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
         SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
+
+        SubscribeNetworkEvent<DebugControlEntityEvent>(OnControlEntity);
+    }
+
+    private void OnControlEntity(DebugControlEntityEvent msg, EntitySessionEventArgs args)
+    {
+        var user = args.SenderSession.AttachedEntity;
+        var target = GetEntity(msg.Target);
+
+        if (user is null || !target.IsValid())
+            return;
+
+        if (!_admin.HasAdminFlag(user.Value, DebugControlFlags))
+            return;
+
+        ControlMob(user.Value, target);
     }
 
     private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
@@ -162,12 +184,18 @@ public sealed class MindSystem : SharedMindSystem
 
         if (owned.HasValue)
         {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            _adminLogger.Add(
+                LogType.Mind,
+                LogImpact.Low,
                 $"{session.Name} returned to {ToPrettyString(owned.Value)}");
         }
     }
 
-    public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
+    public override void TransferTo(
+        EntityUid mindId,
+        EntityUid? entity,
+        bool ghostCheckOverride = false,
+        bool createGhost = true,
         MindComponent? mind = null)
     {
         if (mind == null && !Resolve(mindId, ref mind))
