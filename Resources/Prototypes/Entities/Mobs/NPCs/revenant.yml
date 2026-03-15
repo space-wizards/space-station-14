@@ -32,8 +32,6 @@
       - Ghost
   - type: ContentEye
     maxZoom: 1.2, 1.2
-  - type: NameIdentifier
-    group: GenericNumber
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-revenant-name
@@ -80,6 +78,11 @@
     - NamesRevenantAdjective
     - NamesRevenantTheme
     nameFormat: name-format-revenant
+  - type: NameIdentifier
+    group: null  # Strips the numeric identifier from the revenant's name, since they already have randomly-generated names anyway
+  - type: Grammar
+    attributes:
+      proper: true
   - type: Speech
     speechVerb: Ghost
   - type: Reactive
