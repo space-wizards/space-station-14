@@ -716,7 +716,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, SlicingRefinableBase]
   id: ClothingUniformJumpskirtWeb
   name: web jumpskirt
   description: Makes it clear that you are one with the webs.
@@ -725,9 +725,8 @@
     sprite: Clothing/Uniforms/Jumpskirt/web.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/web.rsi
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialWebSilk1
       amount: 8
   - type: FlavorProfile

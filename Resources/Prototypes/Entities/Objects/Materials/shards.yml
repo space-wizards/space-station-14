@@ -4,7 +4,9 @@
   id: ShardBase
   description: It's a shard of some unknown material.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+      - Slicing
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite

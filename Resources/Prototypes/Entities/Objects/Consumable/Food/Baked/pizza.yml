@@ -21,8 +21,6 @@
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
-  - type: SliceableFood
-    count: 8
   - type: Item
     size: Normal
     shape:
@@ -66,7 +64,7 @@
 
 - type: entity
   name: margherita pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaMargherita
   description: The flavor of Italy.
   components:
@@ -78,8 +76,10 @@
   - type: Sprite
     layers:
     - state: margherita
-  - type: SliceableFood
-    slice: FoodPizzaMargheritaSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaMargheritaSlice
+      amount: 8
 
 - type: entity
   name: slice of margherita pizza
@@ -100,7 +100,7 @@
 
 - type: entity
   name: meat pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaMeat
   description: Greasy pizza with delicious meat.
   components:
@@ -113,8 +113,10 @@
   - type: Sprite
     layers:
     - state: meat
-  - type: SliceableFood
-    slice: FoodPizzaMeatSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaMeatSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -146,7 +148,7 @@
 
 - type: entity
   name: mushroom pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaMushroom
   description: Very special pizza.
   components:
@@ -158,8 +160,10 @@
   - type: Sprite
     layers:
     - state: mushroom
-  - type: SliceableFood
-    slice: FoodPizzaMushroomSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaMushroomSlice
+      amount: 8
 
 - type: entity
   name: slice of mushroom pizza
@@ -181,7 +185,7 @@
 
 - type: entity
   name: vegetable pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaVegetable
   description: The station's vegetarians will thank you for making this.
   components:
@@ -196,8 +200,10 @@
   - type: Sprite
     layers:
     - state: vegetable
-  - type: SliceableFood
-    slice: FoodPizzaVegetableSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaVegetableSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -246,7 +252,7 @@
 
 - type: entity
   name: donk-pocket pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaDonkpocket
   description: Who thought this would be a good idea?
   components:
@@ -256,8 +262,10 @@
   - type: Sprite
     layers:
     - state: donkpocket
-  - type: SliceableFood
-    slice: FoodPizzaDonkpocketSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaDonkpocketSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -309,7 +317,7 @@
 
 - type: entity
   name: dank pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaDank
   description: The hippie's pizza of choice.
   components:
@@ -322,8 +330,10 @@
   - type: Sprite
     layers:
     - state: dank
-  - type: SliceableFood
-    slice: FoodPizzaDankSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaDankSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -364,7 +374,7 @@
 
 - type: entity
   name: sassysage pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaSassysage
   description: You can really smell the sassiness.
   components:
@@ -377,8 +387,10 @@
   - type: Sprite
     layers:
     - state: sassysage
-  - type: SliceableFood
-    slice: FoodPizzaSassysageSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaSassysageSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -410,7 +422,7 @@
 
 - type: entity
   name: Hawaiian pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaPineapple
   description: Makes people burst into tears. Tears of joy or sadness depends on the person's fondness for pineapple.
   components:
@@ -424,8 +436,10 @@
   - type: Sprite
     layers:
     - state: pineapple
-  - type: SliceableFood
-    slice: FoodPizzaPineappleSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaPineappleSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -459,7 +473,7 @@
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
 - type: entity
   name: Arnold's pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaArnold
   description: Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni.
   components:
@@ -473,8 +487,10 @@
   - type: Sprite
     layers:
     - state: arnold
-  - type: SliceableFood
-    slice: FoodPizzaArnoldSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaArnoldSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -531,7 +547,7 @@
     - Slice
 # Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
 
-#TODO: Make this do poison damage and make cut pizza slices eventually rot into this.
+#TODO: Make this do poison damage and make cut pizza refineResult: eventually rot into this.
 - type: entity
   name: slice of moldy pizza
   parent: FoodPizzaSliceBase
@@ -567,7 +583,7 @@
 
 - type: entity
   name: spicy rock pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaUranium
   description: Spicy pizza covered in peppers and uranium.
   components:
@@ -580,8 +596,10 @@
   - type: Sprite
     layers:
     - state: uranium-pizza
-  - type: SliceableFood
-    slice: FoodPizzaUraniumSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaUraniumSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -642,7 +660,7 @@
 
 - type: entity
   name: cotton pizza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaCotton
   description: Flat fabric cotton dough with cotton topping. Incredible.
   components:
@@ -655,8 +673,10 @@
     - state: cotton-pizza
   - type: Edible
     requiresSpecialDigestion: true
-  - type: SliceableFood
-    slice: FoodPizzaCottonSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaCottonSlice
+      amount: 8
   - type: Tag
     tags:
     - ClothMade
@@ -707,7 +727,7 @@
 
 - type: entity
   name: world peazza
-  parent: FoodPizzaBase
+  parent: [FoodPizzaBase, SlicingRefinableFoodBase]
   id: FoodPizzaWorldpeas
   description: Modern diplomacy in the shape of a disc.
   components:
@@ -718,8 +738,10 @@
   - type: Sprite
     layers:
     - state: worldpeas
-  - type: SliceableFood
-    slice: FoodPizzaWorldpeasSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPizzaWorldpeasSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:

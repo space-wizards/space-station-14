@@ -3,7 +3,7 @@
 
 - type: entity
   name: Ian
-  parent: MobCorgi
+  parent: [MobCorgi, SlicingRefinableBase]
   id: MobCorgiIan
   description: Favorite pet corgi.
   components:
@@ -39,8 +39,8 @@
     attributes:
       proper: true
       gender: male
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatCorgi
       amount: 2
     - id: MaterialHideCorgi
@@ -53,7 +53,7 @@
 
 - type: entity
   name: Old Ian
-  parent: MobCorgiIan
+  parent: [MobCorgiIan, SlicingRefinableBase]
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
   components:
@@ -69,8 +69,8 @@
         Base: old_ian_dead
       Dead:
         Base: old_ian_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatCorgi
       amount: 2
     - id: SheetSteel1
@@ -138,7 +138,7 @@
 
 - type: entity
   name: Puppy Ian
-  parent: MobCorgiPuppy
+  parent: [MobCorgiPuppy, SlicingRefinableBase]
   id: MobCorgiIanPup
   description: Favourite puppy corgi. Awww.
   components:
@@ -146,8 +146,8 @@
     attributes:
       proper: true
       gender: male
-  - type: Butcherable # A puppy? You monster...
-    spawned:
+  - type: ToolRefinable # A puppy? You monster...
+    refineResult:
     - id: FoodMeatCorgi
       amount: 2
     - id: MaterialHideCorgi
@@ -241,7 +241,7 @@
 
 - type: entity
   name: Bingus
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobBingus
   description: Bingus my beloved...
   components:
@@ -274,8 +274,8 @@
         Base: bingus_dead
       Dead:
         Base: bingus_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 2
   - type: InteractionPopup
@@ -298,7 +298,7 @@
 
 - type: entity
   name: McGriff
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
@@ -344,8 +344,8 @@
         Base: mcgriff_dead
       Dead:
         Base: mcgriff_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 2
   - type: ReplacementAccent
@@ -374,7 +374,7 @@
 
 - type: entity
   name: Paperwork
-  parent: MobSloth
+  parent: [MobSloth, SlicingRefinableBase]
   id: MobPaperwork
   description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
   components:
@@ -392,8 +392,8 @@
         Base: paperwork_dead
       Dead:
         Base: paperwork_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -408,7 +408,7 @@
 
 - type: entity
   name: Walter
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, SlicingRefinableBase]
   id: MobWalter
   description: He likes chems and treats. Walter.
   components:
@@ -441,8 +441,8 @@
         Base: walter_dead
       Dead:
         Base: walter_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 3
   - type: ReplacementAccent
@@ -581,7 +581,7 @@
 
 - type: entity
   name: Renault
-  parent: MobFox
+  parent: [MobFox, SlicingRefinableBase]
   id: MobFoxRenault
   description: The captain's trustworthy fox.
   components:
@@ -592,8 +592,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       collection: Fox
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 3
     - id: Telecrystal5
@@ -611,7 +611,7 @@
 
 - type: entity
   name: Hamlet
-  parent: MobHamster
+  parent: [MobHamster, SlicingRefinableBase]
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
@@ -643,8 +643,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 1
   - type: Grammar
@@ -779,7 +779,7 @@
 - type: entity
   name: Smile
   id: MobSlimesPet
-  parent: [MobAdultSlimes, StripableInventoryBase]
+  parent: [MobAdultSlimes, StripableInventoryBase, SlicingRefinableBase]
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
@@ -819,8 +819,8 @@
         BaseUnshaded: aslime-_3
       Dead:
         Base: rainbow_baby_slime_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSlime
       amount: 1
     - id: MaterialSmileExtract
@@ -873,7 +873,6 @@
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 3

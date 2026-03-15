@@ -74,7 +74,7 @@
 - type: entity
   name: space bear
   id: MobBearSpace
-  parent: MobSpaceBasic
+  parent: [MobSpaceBasic, SlicingRefinableBase]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -95,8 +95,8 @@
         Base: bear_dead
       Dead:
         Base: bear_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatBear
       amount: 3
     - id: MaterialHideBear
@@ -186,7 +186,7 @@
 - type: entity
   name: space spider
   id: MobSpiderSpace
-  parent: MobSpaceBasic
+  parent: [MobSpaceBasic, SlicingRefinableBase]
   description: It's so glowing, it looks dangerous.
   components:
   - type: Sprite
@@ -211,8 +211,8 @@
         BaseUnshaded: glow
       Dead:
         Base: spacespider_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSpider
       amount: 2
     - id: EggSpider
@@ -286,7 +286,7 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: MobSpaceBasic
+  parent: [MobSpaceBasic, SlicingRefinableBase]
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
     - type: Sprite
@@ -314,8 +314,8 @@
           BaseUnshaded: glow
         Dead:
           Base: dead_spacecobra
-    - type: Butcherable
-      spawned:
+    - type: ToolRefinable
+      refineResult:
         - id: FoodMeatSnake
           amount: 2
         - id: UraniumOre1
@@ -386,6 +386,7 @@
   parent:
   - SimpleSpaceMobBase
   - BaseMobAnimal
+  - SlicingRefinableBase
   id: MobSnail
   name: snail
   description: Revolting unless you're french.
@@ -487,10 +488,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSnail
-      amount: 1
   - type: Tag
     tags:
     - Trash

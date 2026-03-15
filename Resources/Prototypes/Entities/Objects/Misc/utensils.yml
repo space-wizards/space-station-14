@@ -140,7 +140,10 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
-
+  - type: Tool
+    speedModifier: 0.15
+    qualities:
+    - Slicing
 
 - type: entity
   parent: UtensilBase

@@ -327,13 +327,12 @@
 
 - type: entity
   id: BedsheetWhite
-  parent: BedsheetBase
+  parent: [BedsheetBase, SlicingRefinableBase]
   name: white bedsheet
   components:
-  - type: Butcherable
-    spawned:
-    - id: ClothingOuterGhostSheet #ghostly!
-      amount: 1
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingOuterGhostSheet #ghostly! 👻👻👻
   - type: Sprite
     state: sheetwhite
   - type: Clothing

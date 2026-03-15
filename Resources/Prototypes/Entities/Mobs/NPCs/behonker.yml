@@ -1,6 +1,6 @@
 - type: entity
   name: behonker
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, SlicingRefinableBase ]
   id: BaseMobBehonker
   abstract: true
   description: A floating demon aspect of the honkmother.
@@ -91,12 +91,11 @@
       updateInterval: 0.25
       metabolizerTypes: [ Dragon ]
       stages: [ Digestion, Bloodstream ]
-    - type: Butcherable
-      spawned:
-        - id: MaterialBananium1
-          amount: 2
-        - id: WeaponBehonkerLaser
-          amount: 1
+    - type: ToolRefinable
+      refineResult:
+      - id: MaterialBananium1
+        amount: 2
+      - id: WeaponBehonkerLaser
     - type: MeleeWeapon
       soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -122,14 +121,14 @@
   id: MobBehonkerElectrical
   suffix: "Pyro"
   components:
-    - type: PyroclasticAnomaly
-    - type: TempAffectingAnomaly
-      tempChangePerSecond: 25
-      hotspotExposeTemperature: 1000
-    - type: GasProducerAnomaly
-      releasedGas: 3
-      releaseOnMaxSeverity: true
-      spawnRadius: 0
+  - type: PyroclasticAnomaly
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: 25
+    hotspotExposeTemperature: 1000
+  - type: GasProducerAnomaly
+    releasedGas: 3
+    releaseOnMaxSeverity: true
+    spawnRadius: 0
 
 - type: entity
   name: behonker

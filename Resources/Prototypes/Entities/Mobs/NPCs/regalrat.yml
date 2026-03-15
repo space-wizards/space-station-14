@@ -1,7 +1,7 @@
 - type: entity
   name: rat king
   id: MobRatKing
-  parent: [ BaseMobRat, SimpleMobBase, MobCombat ]
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, SlicingRefinableBase]
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
@@ -108,8 +108,8 @@
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: MobPrice
@@ -125,7 +125,8 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Sharp
+  - type: Tool
+    qualities: Slicing # Should work 🙏🙏🙏🙏
 
 - type: entity
   id: MobRatKingBuff
@@ -167,7 +168,7 @@
 - type: entity
   name: rat servant
   id: MobRatServant
-  parent: [ BaseMobRat, SimpleMobBase, MobCombat ]
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, SlicingRefinableBase]
   description: He's da mini rat. He don't make da roolz.
   categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
@@ -275,8 +276,8 @@
         Base: dead
       Dead:
         Base: splat
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatRat
       amount: 1
   - type: Vocal

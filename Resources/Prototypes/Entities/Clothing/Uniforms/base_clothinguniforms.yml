@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [Clothing, SlicingRefinableBase]
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite
@@ -9,9 +9,8 @@
     slots: [innerclothing]
     equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialCloth1
       amount: 3
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering

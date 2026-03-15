@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, SlicingRefinableBase ]
   id: BaseMobFlesh
   name: aberrant flesh
   description: A shambling mass of flesh, animated through anomalous energy.
@@ -43,10 +43,9 @@
   - type: Stamina
     baseCritThreshold: 50
     animationThreshold: 25
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
-      amount: 1
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
@@ -205,7 +204,7 @@
         Blunt: 10
 
 - type: entity
-  parent: [ SimpleSpaceMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, MobCombat, SlicingRefinableBase ]
   id: BaseMobFleshSalvage #This one is immune to space!
   name: aberrant flesh
   suffix: "Salvage Ruleset"
@@ -245,10 +244,9 @@
   - type: Stamina
     baseCritThreshold: 50
     animationThreshold: 25
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
-      amount: 1
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:

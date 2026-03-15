@@ -79,6 +79,7 @@
   - MobBloodstream
   - MobFlammable
   - MobCombat
+  - SlicingRefinableBase
   name: tomato killer
   description: Looks like it's not you eating tomatoes today, it's the tomatoes eating you.
   components:
@@ -160,8 +161,8 @@
         Base: alive
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatTomato
       amount: 2
   - type: Destructible

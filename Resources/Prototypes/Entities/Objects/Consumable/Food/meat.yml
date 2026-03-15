@@ -74,7 +74,7 @@
 # Raw
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeat
   name: raw meat
   description: A slab of raw meat.
@@ -89,9 +89,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatCutlet
+      amount: 3
   - type: InternalTemperature
     conductivity: 0.43
   - type: Construction
@@ -110,7 +111,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatHuman
   name: raw human meat
   description: Gross.
@@ -123,9 +124,10 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatCutlet
+      amount: 3
   - type: Item
     storedOffset: -2,1
     inhandVisuals:
@@ -207,7 +209,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatBear
   name: raw bear meat
   description: A very manly slab of raw bear meat.
@@ -222,9 +224,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatBearCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatBearCutlet
+      amount: 3
   - type: Construction
     graph: BearSteak
     node: start
@@ -240,7 +243,7 @@
         color: "#934C64"
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatPenguin
   name: raw penguin meat
   description: A slab of raw penguin meat. Can be used as a substitute for fish in recipes.
@@ -255,9 +258,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatPenguinCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatPenguinCutlet
+      amount: 3
   - type: Construction
     graph: PenguinSteak
     node: start
@@ -271,7 +275,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatChicken
   name: raw chicken meat
   description: A slab of raw chicken. Remember to wash your hands!
@@ -286,9 +290,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatChickenCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatChickenCutlet
+      amount: 3
   - type: InternalTemperature
     conductivity: 0.41
   - type: Construction
@@ -304,7 +309,7 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatDuck
   name: raw duck meat
   description: A slab of raw duck. Remember to wash your hands!
@@ -319,9 +324,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDuckCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatDuckCutlet
+      amount: 3
   - type: Construction
     graph: DuckSteak
     node: start
@@ -422,7 +428,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatDragon
   name: dragon flesh
   description: The dense meat of the space-era apex predator is oozing with its mythical ichor. Ironically, best eaten raw.
@@ -447,9 +453,10 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 10
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDragonCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatDragonCutlet
+      amount: 3
   - type: Construction
     graph: DragonSteak
     node: start
@@ -463,7 +470,7 @@
       - state: dragon-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatRat
   name: raw rat meat
   description: Prime meat from maintenance!
@@ -478,9 +485,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 3
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatCutlet
+      amount: 3
   - type: Item
     storedOffset: -2,1
     inhandVisuals:
@@ -490,7 +498,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatLizard
   name: raw lizard meat
   description: Delicious dino damage.
@@ -505,9 +513,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatLizardCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatLizardCutlet
+      amount: 3
   - type: Construction
     graph: LizardSteak
     node: start
@@ -564,7 +573,7 @@
       - state: rotten-inhand-right
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatSpider
   name: raw spider meat
   description: A slab of spider meat. That's so Kafkaesque.
@@ -579,9 +588,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatSpiderCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatSpiderCutlet
+      amount: 3
   - type: Item
     storedOffset: 0,2
     heldPrefix: spider
@@ -673,7 +683,7 @@
 
 - type: entity
   # not raw since acid kills bacteria or something, same as xeno
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatXeno
   name: raw xeno meat
   description: A slab of xeno meat, dripping with acid.
@@ -694,9 +704,10 @@
         reagents:
         - ReagentId: SulfuricAcid
           Quantity: 20
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatXenoCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatXenoCutlet
+      amount: 3
   - type: Item
     storedOffset: -2,1
     inhandVisuals:
@@ -743,16 +754,17 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatTomato
   name: killer tomato meat
   description: A slice from a huge tomato.
   components:
   - type: Sprite
     state: tomato
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatTomatoCutlet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatTomatoCutlet
+      amount: 3
   - type: StaticPrice
     price: 100
   - type: Item
@@ -764,7 +776,7 @@
       - state: tomato-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatSalami
   name: salami
   description: A large tube of salami. Best not to ask what went into it.
@@ -778,8 +790,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/salami.rsi
     state: salami
-  - type: SliceableFood
-    slice: FoodMeatSalamiSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatSalamiSlice
   - type: MeleeWeapon
     wideAnimationRotation: 100
     damage:
@@ -792,7 +805,7 @@
         Blunt: 2
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatClown
   name: meat clown
   description: A delicious, round piece of meat clown. How horrifying.
@@ -809,8 +822,9 @@
     - Meat
   - type: Sprite
     state: clown
-  - type: SliceableFood
-    slice: FoodMeatSalamiSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatSalamiSlice
 
 - type: entity
   parent: FoodMeatBase
@@ -917,7 +931,7 @@
         color: "#E2AE7C"
 
 - type: entity
-  parent: FoodMeatRawBase
+  parent: [FoodMeatRawBase, SlicingRefinableFoodBase]
   id: FoodMeatAnomaly
   name: anomalous meat mass
   description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
@@ -932,10 +946,11 @@
           Quantity: 90
         - ReagentId: Fat
           Quantity: 90
-  - type: SliceableFood
-    count: 10
-    sliceTime: 5
-    slice: FoodMeat #That's... So much meat
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeat #That's... So much meat
+      amount: 10
+    refineTime: 5
   - type: InternalTemperature
     conductivity: 0.43
   - type: Construction
@@ -992,7 +1007,7 @@
     - Meat
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatCooked
   name: steak
   description: A cooked slab of meat. Smells primal.
@@ -1013,9 +1028,10 @@
           Quantity: 10
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatCutletCooked
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatCutletCooked
+      amount: 3
   - type: Construction
     graph: MeatSteak
     node: meat steak
@@ -1076,7 +1092,7 @@
         color: "#5B3E2A"
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatBearCooked
   name: cooked bear
   description: A well-cooked slab of bear meat. Tough, but tasty with the right sides.
@@ -1097,9 +1113,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatBearCutletCooked
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatBearCutletCooked
+      amount: 3
   - type: Construction
     graph: BearSteak
     node: filet migrawr
@@ -1112,7 +1129,7 @@
     heldPrefix: meatball
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatPenguinCooked
   name: penguin filet
   description: A cooked filet of penguin. Can be used as a substitute for fish in recipes.
@@ -1132,9 +1149,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatPenguinCutletCooked
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatPenguinCutletCooked
+      amount: 3
   - type: Construction
     graph: PenguinSteak
     node: cooked penguin
@@ -1153,7 +1171,7 @@
         color: "#F7E3A3"
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatChickenCooked
   name: cooked chicken
   description: A cooked piece of chicken. Best used in other recipes.
@@ -1173,9 +1191,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatChickenCutletCooked
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatChickenCutletCooked
+      amount: 3
   - type: Construction
     graph: ChickenSteak
     node: cooked chicken
@@ -1251,7 +1270,7 @@
           Quantity: 3
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatDuckCooked
   name: cooked duck
   description: A cooked piece of duck. Best used in other recipes.
@@ -1271,9 +1290,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDuckCutletCooked
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatDuckCutletCooked
+      amount: 3
   - type: Construction
     graph: DuckSteak
     node: cooked duck
@@ -1408,7 +1428,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatLizardCooked
   name: lizard steak
   description: Cooked, tough lizard meat.
@@ -1429,9 +1449,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatLizardCutletCooked
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatLizardCutletCooked
+      amount: 3
   - type: Construction
     graph: LizardSteak
     node: lizard steak
@@ -1589,7 +1610,7 @@
         color: "#5B3E2A"
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatAnomalyCooked
   name: anomalous steak
   description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
@@ -1609,10 +1630,11 @@
           Quantity: 100
         - ReagentId: Protein
           Quantity: 50
-  - type: SliceableFood
-    count: 10
-    sliceTime: 5
-    slice: FoodMeatCooked
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatCooked
+      amount: 10
+    refineTime: 5
   - type: Construction
     graph: AnomalyMeatSteak
     node: anomaly steak
@@ -1627,7 +1649,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, SlicingRefinableFoodBase]
   id: FoodMeatDragonCooked
   name: dragon steak
   description: Pouring ketchup on this is considered a capital crime on most stations.
@@ -1650,9 +1672,10 @@
           Quantity: 6
         - ReagentId: Protein
           Quantity: 6
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDragonCutletCooked
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatDragonCutletCooked
+      amount: 3
   - type: Construction
     graph: DragonSteak
     node: dragon steak

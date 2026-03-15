@@ -642,7 +642,7 @@
           Quantity: 0.5
 
 - type: entity
-  parent: FoodBakedBase
+  parent: [FoodBakedBase, SlicingRefinableFoodBase]
   id: FoodBakedBrownieBatch
   name: brownies
   description: A pan of brownies.
@@ -666,9 +666,10 @@
           Quantity: 30
         - ReagentId: Theobromine
           Quantity: 18
-  - type: SliceableFood
-    count: 6
-    slice: FoodBakedBrownie
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBakedBrownie
+      amount: 6
 
 - type: entity
   name: brownie
@@ -698,7 +699,7 @@
     - Slice
 
 - type: entity
-  parent: FoodBakedBase
+  parent: [FoodBakedBase, SlicingRefinableFoodBase]
   id: FoodBakedCannabisBrownieBatch
   name: special brownies
   description: A pan of "special" brownies.
@@ -725,9 +726,10 @@
           Quantity: 18
         - ReagentId: THC
           Quantity: 150
-  - type: SliceableFood
-    count: 6
-    slice: FoodBakedCannabisBrownie
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBakedCannabisBrownie
+      amount: 6
 
 - type: entity
   parent: FoodBakedBase

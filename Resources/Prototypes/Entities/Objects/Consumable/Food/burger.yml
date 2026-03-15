@@ -2,7 +2,7 @@
 # Bun
 
 - type: entity
-  parent: FoodBreadSliceBase
+  parent: [FoodBreadSliceBase, SlicingRefinableFoodBase]
   id: FoodBreadBun
   name: bun
   description: A hamburger bun. Round and convenient to hold.
@@ -18,13 +18,10 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6.66 # 1/3 of a loaf of bread, technically losing 0.01 nutriment per batch of three buns over making bread loaves/slices
-  - type: Butcherable
-    butcherDelay: 1
-    spawned:
-      - id: FoodBreadBunTop
-        amount: 1
-      - id: FoodBreadBunBottom
-        amount: 1
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadBunTop
+    - id: FoodBreadBunBottom
 
 - type: entity
   parent: FoodBreadSliceBase
