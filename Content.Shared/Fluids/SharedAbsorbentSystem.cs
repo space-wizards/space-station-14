@@ -80,8 +80,9 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         if (other > FixedPoint2.Zero)
             ent.Comp.Progress[otherColor] = other.Float();
 
+        // Fill the empty part of the reagents bar with Color.Transparent (so that the background is visible in the UI)
         if (solution.AvailableVolume > FixedPoint2.Zero)
-            ent.Comp.Progress[Color.DarkGray] = solution.AvailableVolume.Float();
+            ent.Comp.Progress[Color.Transparent] = solution.AvailableVolume.Float();
 
         Dirty(ent);
         _item.VisualsChanged(ent);
