@@ -218,6 +218,7 @@
     enabled: true
     tags:
     - Xenoborg
+    - Mothership
   - type: LockingWhitelist
     blacklist:
       components:
@@ -225,6 +226,7 @@
     whitelist:
       components:
       - BorgChassis
+      - CommunicationsConsole
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:

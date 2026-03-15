@@ -757,6 +757,42 @@
 
 - type: entity
   parent: ComputerComms
+  id: XenoborgComputerComms
+  name: xenoborg communications computer
+  description: A computer capable of remotely interfering into the station's communications systems. Using this to make an announcement will alert the station to your presence.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_xenoborg
+    - map: ["computerLayerKeys"]
+      state: xenoborg_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: AccessReader
+    access: [[ "Mothership" ]]
+  - type: Lock
+    unlockOnClick: false
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-xenoborg
+    color: "#2288ff"
+    canShuttle: false
+    global: true #announce to everyone that resistance is futile
+    announceSentBy: false
+    sound: /Audio/Announcements/war.ogg
+  - type: Computer
+    board: XenoborgsCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 4.0
+    color: "#F317F3"
+
+- type: entity
+  parent: ComputerComms
   id: CentcommComputerComms
   name: central command communications computer
   description: A computer used to make world wide announcements via keyboard. The superior cousin of the regular communications computer.

@@ -16,6 +16,7 @@ using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -35,6 +36,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly LockSystem _lockSystem = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -175,6 +177,9 @@ namespace Content.Server.Communications
 
         private bool CanUse(EntityUid user, EntityUid console)
         {
+            if (HasComp<LockComponent>(console) && !_lockSystem.IsLocked(console))
+                return true;
+
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent))
             {
                 return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);

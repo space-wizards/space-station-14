@@ -389,6 +389,17 @@
     prototype: WizardComputerComms
 
 - type: entity
+  parent: [ BaseComputerCircuitboard, BaseXenoborgContraband ]
+  id: XenoborgsCommsComputerCircuitboard
+  name: wizard communications computer board
+  description: A computer printed circuit board for a xenoborg communications console.
+  components:
+  - type: Sprite
+    state: cpu_xenoborg
+  - type: ComputerBoard
+    prototype: XenoborgComputerComms
+
+- type: entity
   parent: [ BaseComputerCircuitboard, BaseCentcommContraband ]
   id: CentcommCommsComputerCircuitboard
   name: central command communications computer board
