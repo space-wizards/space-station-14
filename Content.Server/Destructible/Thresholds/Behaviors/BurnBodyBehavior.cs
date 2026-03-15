@@ -1,39 +1,39 @@
-﻿using Content.Shared.Body.Components;
+﻿using JetBrains.Annotations;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed partial class BurnBodyBehavior : IThresholdBehavior
+public sealed partial class BurnBodyBehavior : EntitySystem, IThresholdBehavior
 {
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+
     /// <summary>
     ///     The popup displayed upon destruction.
     /// </summary>
     [DataField]
     public LocId PopupMessage = "bodyburn-text-others";
 
-    public void Execute(EntityUid bodyId, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid bodyId, EntityUid? cause = null)
     {
-        var transformSystem = system.EntityManager.System<TransformSystem>();
-        var inventorySystem = system.EntityManager.System<InventorySystem>();
-        var sharedPopupSystem = system.EntityManager.System<SharedPopupSystem>();
-
-        if (system.EntityManager.TryGetComponent<InventoryComponent>(bodyId, out var comp))
+        if (HasComp<InventoryComponent>(bodyId))
         {
-            foreach (var item in inventorySystem.GetHandOrInventoryEntities(bodyId))
+            foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
             {
-                transformSystem.DropNextTo(item, bodyId);
+                _transform.DropNextTo(item, bodyId);
             }
         }
 
-        var bodyIdentity = Identity.Entity(bodyId, system.EntityManager);
-        sharedPopupSystem.PopupCoordinates(Loc.GetString(PopupMessage, ("name", bodyIdentity)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
+        var bodyIdentity = Identity.Entity(bodyId, EntityManager);
+        _popup.PopupCoordinates(Loc.GetString(PopupMessage, ("name", bodyIdentity)), _transform.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
 
-        system.EntityManager.QueueDeleteEntity(bodyId);
+        QueueDel(bodyId);
     }
 }

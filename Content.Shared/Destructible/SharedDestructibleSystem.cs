@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Systems;
+using Content.Shared.Destructible.Thresholds;
 
 namespace Content.Shared.Destructible;
 
@@ -6,6 +7,8 @@ public abstract class SharedDestructibleSystem : EntitySystem
 {
     // TODO: I don't really like this but this is out of scope to re-do destructible triggers while refactoring damageable
     [Dependency] public readonly DamageableSystem Damageable = default!;
+
+    public new IEntityManager EntityManager => base.EntityManager;
 
     /// <summary>
     /// Force entity to be destroyed and deleted.
@@ -31,6 +34,18 @@ public abstract class SharedDestructibleSystem : EntitySystem
     {
         var eventArgs = new BreakageEventArgs();
         RaiseLocalEvent(owner, eventArgs);
+    }
+
+    // Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.
+    /// <summary>
+    ///     Event raised when a <see cref="DamageThreshold"/> is reached.
+    /// </summary>
+    public sealed class DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
+        : EntityEventArgs
+    {
+        public readonly DestructibleComponent Parent = parent;
+
+        public readonly DamageThreshold Threshold = threshold;
     }
 }
 

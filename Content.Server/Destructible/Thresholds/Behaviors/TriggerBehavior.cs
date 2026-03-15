@@ -1,18 +1,21 @@
-﻿using Content.Shared.Trigger.Systems;
+﻿using Content.Shared.Destructible.Thresholds.Behaviors;
+using Content.Shared.Trigger.Systems;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 [DataDefinition]
-public sealed partial class TriggerBehavior : IThresholdBehavior
+public sealed partial class TriggerBehavior : EntitySystem, IThresholdBehavior
 {
+    [Dependency] private readonly TriggerSystem _trigger = default!;
+
     /// <summary>
     /// The trigger key to use when triggering.
     /// </summary>
     [DataField]
     public string? KeyOut { get; set; } = TriggerSystem.DefaultTriggerKey;
 
-    public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, EntityUid? cause = null)
     {
-        system.TriggerSystem.Trigger(owner, cause, KeyOut);
+        _trigger.Trigger(owner, cause, KeyOut);
     }
 }
