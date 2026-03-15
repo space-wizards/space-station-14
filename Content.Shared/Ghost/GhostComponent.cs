@@ -54,7 +54,7 @@ public sealed partial class GhostComponent : Component
     /// May not reflect actual time of death if this entity has been paused,
     /// but will give an accurate length of time <i>since</i> death.
     /// </remarks>
-    [DataField, AutoPausedField]
+    [DataField, AutoPausedField, AutoNetworkedField]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
     /// <summary>
