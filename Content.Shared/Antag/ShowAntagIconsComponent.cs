@@ -6,4 +6,4 @@ namespace Content.Shared.Antag;
 /// Determines whether Someone can see antags icons
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ShowAntagIconsComponent: Component;
+public sealed partial class ShowAntagIconsComponent : Component;

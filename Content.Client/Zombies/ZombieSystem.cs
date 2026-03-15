@@ -1,7 +1,5 @@
 using System.Linq;
 using Content.Shared.Body;
-using Content.Shared.Ghost;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
 using Robust.Client.GameObjects;
@@ -38,17 +36,17 @@ public sealed class ZombieSystem : SharedZombieSystem
         args.StatusIcons.Add(iconPrototype);
     }
 
-    private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
+    private void OnStartup(Entity<ZombieComponent> ent, ref ComponentStartup args)
     {
-        if (HasComp<VisualBodyComponent>(uid))
+        if (HasComp<VisualBodyComponent>(ent))
             return;
 
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
         for (var i = 0; i < sprite.AllLayers.Count(); i++)
         {
-            _sprite.LayerSetColor((uid, sprite), i, component.SkinColor);
+            _sprite.LayerSetColor((ent, sprite), i, ent.Comp.SkinColor);
         }
     }
 }
