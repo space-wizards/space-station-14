@@ -1,7 +1,7 @@
 ﻿using Content.Server.Objectives.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
-using Content.Shared.Cuffs.Components;
+using Content.Shared.Cuffs;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
@@ -15,6 +15,7 @@ namespace Content.Server.Objectives.Systems;
 public sealed class HijackShuttleConditionSystem : EntitySystem
 {
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -38,7 +39,7 @@ public sealed class HijackShuttleConditionSystem : EntitySystem
             return 0f;
 
         // You're not escaping if you're restrained!
-        if (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0)
+        if (_cuffable.IsCuffed(mind.OwnedEntity.Value))
             return 0f;
 
         // There no emergency shuttles
@@ -62,7 +63,6 @@ public sealed class HijackShuttleConditionSystem : EntitySystem
     {
         var gridPlayers = Filter.BroadcastGrid(shuttleGridId).Recipients;
         var humanoids = GetEntityQuery<HumanoidProfileComponent>();
-        var cuffable = GetEntityQuery<CuffableComponent>();
         EntityQuery<MobStateComponent>();
 
         var agentOnShuttle = false;
@@ -90,9 +90,7 @@ public sealed class HijackShuttleConditionSystem : EntitySystem
             if (isPersonIncapacitated) // Allow dead and crit
                 continue;
 
-            var isPersonCuffed =
-                cuffable.TryGetComponent(player.AttachedEntity.Value, out var cuffed)
-                && cuffed.CuffedHandCount > 0;
+            var isPersonCuffed = _cuffable.IsCuffed(player.AttachedEntity.Value);
             if (isPersonCuffed) // Allow handcuffed
                 continue;
 

@@ -3,14 +3,12 @@ using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Cuffs;
 
 public sealed class CuffableSystem : SharedCuffableSystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
@@ -18,46 +16,36 @@ public sealed class CuffableSystem : SharedCuffableSystem
         base.Initialize();
 
         SubscribeLocalEvent<CuffableComponent, ComponentShutdown>(OnCuffableShutdown);
-        SubscribeLocalEvent<CuffableComponent, ComponentHandleState>(OnCuffableHandleState);
     }
 
-    private void OnCuffableShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)
+    private void OnCuffableShutdown(Entity<CuffableComponent> entity, ref ComponentShutdown args)
     {
-        if (TryComp<SpriteComponent>(uid, out var sprite))
-            _sprite.LayerSetVisible((uid, sprite), HumanoidVisualLayers.Handcuffs, false);
+        if (TryComp<SpriteComponent>(entity, out var sprite))
+            _sprite.LayerSetVisible((entity, sprite), HumanoidVisualLayers.Handcuffs, false);
     }
 
-    private void OnCuffableHandleState(EntityUid uid, CuffableComponent component, ref ComponentHandleState args)
+    protected override void UpdateCuffState(Entity<CuffableComponent> entity)
     {
-        if (args.Current is not CuffableComponentState cuffState)
+        base.UpdateCuffState(entity);
+
+        if (!TryComp<SpriteComponent>(entity, out var sprite))
             return;
 
-        component.CanStillInteract = cuffState.CanStillInteract;
-        _actionBlocker.UpdateCanMove(uid);
-
-        var ev = new CuffedStateChangeEvent();
-        RaiseLocalEvent(uid, ref ev);
-
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
-            return;
-        var cuffed = cuffState.NumHandsCuffed > 0;
-        _sprite.LayerSetVisible((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffed);
+        _sprite.LayerSetVisible((entity, sprite), HumanoidVisualLayers.Handcuffs, entity.Comp.Cuffed);
 
         // if they are not cuffed, that means that we didn't get a valid color,
         // iconstate, or RSI. that also means we don't need to update the sprites.
-        if (!cuffed)
+        if (GetLastCuffOrNull(entity.AsNullable()) is not { } cuff)
             return;
-        _sprite.LayerSetColor((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
 
-        if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
-        {
-            component.CurrentRSI = cuffState.RSI;
-            _sprite.LayerSetRsi((uid, sprite), _sprite.LayerMapGet((uid, sprite), HumanoidVisualLayers.Handcuffs), new ResPath(component.CurrentRSI), cuffState.IconState);
-        }
-        else
-        {
-            _sprite.LayerSetRsiState((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.IconState);
-        }
+        _sprite.LayerSetColor((entity, sprite), HumanoidVisualLayers.Handcuffs, cuff.Comp.Color);
+
+        if (Equals(entity.Comp.CurrentRSI, cuff.Comp.CuffedRSI) || cuff.Comp.CuffedRSI == null) // we don't want to keep loading the same RSI
+            return;
+
+        entity.Comp.CurrentRSI = cuff.Comp.CuffedRSI;
+        var state = entity.Comp.State != null && cuff.Comp.ValidStates.Contains(entity.Comp.State) ? entity.Comp.State : CuffableComponent.DefaultState;
+        _sprite.LayerSetRsi((entity, sprite), _sprite.LayerMapGet((entity, sprite), HumanoidVisualLayers.Handcuffs), new ResPath(entity.Comp.CurrentRSI), state);
     }
 }
 

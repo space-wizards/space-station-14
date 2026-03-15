@@ -137,6 +137,8 @@
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
+  - type: Cuffable
+    state: arachnid
 
 - type: entity
   parent: OrganBase

@@ -82,21 +82,27 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 
                 // Test to ensure cuffed players register the handcuffs
                 cuffableSys.TryAddNewCuffs(human, human, cuffs, cuffed);
-                Assert.That(cuffed.CuffedHandCount, Is.GreaterThan(0), "Handcuffing a player did not result in their hands being cuffed");
+                Assert.That(cuffed.Cuffed, "Handcuffing a player did not result in their hands being cuffed");
 
-                // Test to ensure a player with 4 hands will still only have 2 hands cuffed
+                // Test to ensure a player with 4 hands will still be cuffed
                 AddHand(entityManager.GetNetEntity(human), host);
                 AddHand(entityManager.GetNetEntity(human), host);
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(cuffed.CuffedHandCount, Is.EqualTo(2));
                     Assert.That(hands.SortedHands, Has.Count.EqualTo(4));
+                    Assert.That(!cuffed.CanStillInteract, "Player was cuffed but could still interact.");
+                    Assert.That(cuffed.Container.ContainedEntities, Has.Count.EqualTo(1));
                 });
 
-                // Test to give a player with 4 hands 2 sets of cuffs
+                // Test to ensure that no new cuffs were added when we tried cuffing again.
                 cuffableSys.TryAddNewCuffs(human, human, secondCuffs, cuffed);
-                Assert.That(cuffed.CuffedHandCount, Is.EqualTo(4), "Player doesn't have correct amount of hands cuffed");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(cuffed.Cuffed, "Player became uncuffed upon adding new cuffs");
+                    Assert.That(!cuffed.CanStillInteract, "Player was cuffed but could still interact.");
+                    Assert.That(cuffed.Container.ContainedEntities, Has.Count.EqualTo(1));
+                });
             });
 
             await pair.CleanReturnAsync();
