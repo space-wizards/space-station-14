@@ -305,7 +305,7 @@
       sprite: Clothing/Ears/Headsets/wizard.rsi
 
 - type: entity
-  parent: [ClothingHeadset, BaseMajorContraband]
+  parent: [ClothingHeadset, BaseHighlyIllegalContraband]
   id: ClothingHeadsetNinja
   name: green headset
   description: Who could refuse to wear this stylish black and green headset?
