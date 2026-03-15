@@ -230,7 +230,8 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
     {
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
 
-        args.WorldHandle.DrawTextureRect(res.TemperatureTarget.Texture, args.WorldBounds);
+        if (res.TemperatureTarget != null)
+            args.WorldHandle.DrawTextureRect(res.TemperatureTarget.Texture, args.WorldBounds);
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
@@ -240,9 +241,9 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
         base.DisposeBehavior();
     }
 
-    internal sealed class CachedResources : IDisposable
+    private sealed class CachedResources : IDisposable
     {
-        public IRenderTexture TemperatureTarget = default!;
+        public IRenderTexture? TemperatureTarget;
 
         public void Dispose()
         {
