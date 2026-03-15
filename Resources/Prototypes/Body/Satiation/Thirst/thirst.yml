@@ -1,0 +1,62 @@
+- type: satiation
+  id: NormalSatiationThirst
+  baseDecayRate: 0.1
+  maximumValue: 600
+  keys:
+    Overhydrated: 600
+    Okay: 450
+    Thirsty: 300
+    Parched: 150
+    Dead: 0
+  startingValueMinimum: Thirsty
+  startingValueMaximum: Okay
+  decayModifiers:
+    Overhydrated: 1.2
+    Okay: 1.0
+    Thirsty: 0.8
+    Parched: 0.6
+  speedModifiers:
+    Parched: 0.75
+  alertCategory: Thirst
+  alerts:
+    Thirsty: Thirsty
+    Parched: Parched
+  icons:
+    Overhydrated: ThirstIconOverhydrated
+    Okay: null
+    Thirsty: ThirstIconThirsty
+    Parched: ThirstIconParched
+
+- type: satiation
+  id: MouseThirst
+  parent: NormalSatiationThirst
+  baseDecayRate: 0.04
+  maximumValue: 35
+  keys:
+    Overhydrated: 35
+    Okay: 25
+    Thirsty: 15
+    Parched: 10
+    Dead: 0
+
+- type: satiation
+  id: MouseAdmemeThirst
+  parent: MouseThirst
+  baseDecayRate: 10
+
+- type: satiation
+  id: SimpleMobBaseThirst
+  parent: NormalSatiationThirst
+  baseDecayRate: 0.04
+  maximumValue: 200
+  keys:
+    Overhydrated: 200
+    Okay: 150
+    Thirsty: 100
+    Parched: 50
+    Dead: 0
+
+- type: satiation
+  id: DionaThirst
+  parent: NormalSatiationThirst
+  baseDecayRate: 0.0083

@@ -59,22 +59,12 @@
       types:
         Slash: 12
         Piercing: 8
-  - type: Hunger # probably should be prototyped
-    thresholds:
-      Overfed: 200
-      Okay: 150
-      Peckish: 100
-      Starving: 50
-      Dead: 0
-    baseDecayRate: 0.01666666666
-  - type: Thirst
-    thresholds:
-      OverHydrated: 600
-      Okay: 450
-      Thirsty: 300
-      Parched: 150
-      Dead: 0
-    baseDecayRate: 0.1
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: RegalRatHunger
+      Thirst:
+        prototype: NormalSatiationThirst
   - type: DamageStateVisuals
     states:
       Alive:
@@ -250,22 +240,12 @@
       types:
         Slash: 5
         Piercing: 3
-  - type: Hunger # probably should be prototyped
-    thresholds:
-      Overfed: 200
-      Okay: 150
-      Peckish: 100
-      Starving: 50
-      Dead: 0
-    baseDecayRate: 0.01666666666
-  - type: Thirst
-    thresholds:
-      OverHydrated: 600
-      Okay: 450
-      Thirsty: 300
-      Parched: 150
-      Dead: 0
-    baseDecayRate: 0.1
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: RegalRatHunger
+      Thirst:
+        prototype: NormalSatiationThirst
   - type: DamageStateVisuals
     states:
       Alive:
