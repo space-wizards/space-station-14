@@ -124,10 +124,42 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
 
             if (vizComp.TravelFlash != null)
             {
-                var coords = fromCoordinates.Offset(shotAngle.ToVec() * (distance + 0.5f) / 2);
-                var netCoords = GetNetCoordinates(coords);
+                var muzzleFlashLength = vizComp.MuzzleFlash != null ? 1.0f : 0.0f;
+                // Impact is only 0.5 because you *want* the middle of the sprite to be centered (unlike the muzzle flash)
+                var impactFlashLength = vizComp.ImpactFlash != null ? 0.5f : 0.0f;
 
-                sprites.Add((netCoords, shotAngle, vizComp.TravelFlash, distance - 1.5f));
+                var actualDistance = distance - muzzleFlashLength - impactFlashLength;
+
+                var segments = (float) Math.Round(actualDistance);
+
+                // Amount to scale each segment by so it actually fits the entire distance.
+                var scaler = actualDistance / segments;
+
+                // Edge case, just have one segment scaled to the correct length.
+                if (segments == 0)
+                {
+                    scaler = actualDistance;
+                    segments = 1;
+                }
+
+                // The sprites are one unit distance, if that changes for some reason 1.0f should be changed to reflect that.
+                var segmentLength = 1.0f * scaler;
+
+                for (var i = 0; i < segments; i++)
+                {
+                    var coords = fromCoordinates;
+
+                    // If there is a muzzle flash, bring make it start at that offset.
+                    if (vizComp.MuzzleFlash != null)
+                        coords = coords.Offset(shotAngle.ToVec());
+
+                    // Offset by half of the (scaled) sprite length so it starts on the edge of the sprite not the middle
+                    coords = coords.Offset((shotAngle.ToVec() * segmentLength) / 2);
+
+                    coords = coords.Offset(shotAngle.ToVec() * i * segmentLength);
+
+                    sprites.Add((GetNetCoordinates(coords), shotAngle, vizComp.TravelFlash, scaler));
+                }
             }
         }
 
