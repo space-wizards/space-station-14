@@ -1,23 +1,24 @@
 - type: entity
-  name: Donkpocket Box Spawner
-  id: DonkpocketBoxSpawner
   parent: MarkerBase
+  id: DonkpocketBoxSpawner
+  name: Donkpocket Box Spawner
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-          state: box
-    - type: RandomSpawner
-      prototypes:
-        - FoodBoxDonkpocket
-        - FoodBoxDonkpocketSpicy
-        - FoodBoxDonkpocketTeriyaki
-        - FoodBoxDonkpocketPizza
-        - FoodBoxDonkpocketStonk
-        - FoodBoxDonkpocketBerry
-        - FoodBoxDonkpocketHonk
-        - FoodBoxDonkpocketDink
-        - FoodBoxDonkpocketMoth
-      chance: 0.5
-      offset: 0.0
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+        state: box
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      prob: 0.5
+      children:
+      - id: FoodBoxDonkpocket
+      - id: FoodBoxDonkpocketSpicy
+      - id: FoodBoxDonkpocketTeriyaki
+      - id: FoodBoxDonkpocketPizza
+      - id: FoodBoxDonkpocketStonk
+      - id: FoodBoxDonkpocketBerry
+      - id: FoodBoxDonkpocketHonk
+      - id: FoodBoxDonkpocketDink
+      - id: FoodBoxDonkpocketMoth
+    offset: 0.0
