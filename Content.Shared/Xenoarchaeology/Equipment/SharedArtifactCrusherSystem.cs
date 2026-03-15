@@ -34,7 +34,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArtifactCrusherComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<ArtifactCrusherComponent, StorageAfterOpenEvent>(OnStorageAfterOpen);
+        SubscribeLocalEvent<ArtifactCrusherComponent, StorageBeforeOpenEvent>(OnStorageBeforeOpen);
         SubscribeLocalEvent<ArtifactCrusherComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<ArtifactCrusherComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ArtifactCrusherComponent, GotEmaggedEvent>(OnEmagged);
@@ -47,7 +47,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         ent.Comp.OutputContainer = ContainerSystem.EnsureContainer<Container>(ent, ent.Comp.OutputContainerName);
     }
 
-    private void OnStorageAfterOpen(Entity<ArtifactCrusherComponent> ent, ref StorageAfterOpenEvent args)
+    private void OnStorageBeforeOpen(Entity<ArtifactCrusherComponent> ent, ref StorageBeforeOpenEvent args)
     {
         StopCrushing(ent);
         ContainerSystem.EmptyContainer(ent.Comp.OutputContainer);
@@ -110,13 +110,15 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
     public void StartCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent, EntityUid? user = null)
     {
-        var (uid, crusher, _) = ent;
+        var (uid, crusher, storage) = ent;
 
         if (crusher.Crushing)
             return;
 
         if (crusher.AutoLock)
             _popup.PopupPredicted(Loc.GetString("artifact-crusher-autolocks-enable"), uid, user);
+
+        MarkCrusherTarget(storage.Contents.ContainedEntities, uid);
 
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
@@ -136,6 +138,9 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
         if (early)
             ent.Comp.CrushingSoundEntity = AudioSystem.Stop(ent.Comp.CrushingSoundEntity);
+
+        if (TryComp<EntityStorageComponent>(ent, out var storageComp))
+            UnmarkCrusherTarget(storageComp.Contents.ContainedEntities);
 
         Dirty(ent, ent.Comp);
     }
@@ -165,6 +170,29 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
             if (crusher.CrushEndTime < _timing.CurTime)
                 FinishCrushing((uid, crusher, storage));
+        }
+    }
+
+    /// <summary>
+    /// Helper method to apply <see cref="ArtifactCrusherTargetComponent" /> to targets.
+    /// </summary>
+    private void MarkCrusherTarget(IEnumerable<EntityUid> targets, EntityUid uid)
+    {
+        foreach (var target in targets)
+        {
+            var crusherTarget = EnsureComp<ArtifactCrusherTargetComponent>(target);
+            crusherTarget.Crusher = uid;
+        }
+    }
+
+    /// <summary>
+    /// Helper method to remove <see cref="ArtifactCrusherTargetComponent" /> from targets.
+    /// </summary>
+    private void UnmarkCrusherTarget(IEnumerable<EntityUid> targets)
+    {
+        foreach (var target in targets)
+        {
+            RemCompDeferred<ArtifactCrusherTargetComponent>(target);
         }
     }
 }
