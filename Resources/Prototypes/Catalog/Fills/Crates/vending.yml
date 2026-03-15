@@ -190,8 +190,8 @@
 - type: entity
   parent: CratePlastic
   id: CrateVendingMachineRestockSmokesFilled
-  name: ShadyCigs restock crate
-  description: Contains two restock boxes for the ShadyCigs vending machine.
+  name: Cigs and drugs restock crate
+  description: Contains two restock boxes for the ShadyCigs or Drugs vending machines.
   components:
   - type: EntityTableContainerFill
     containers:
