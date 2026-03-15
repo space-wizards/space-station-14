@@ -335,7 +335,7 @@
   - type: PayloadCase
   - type: Construction
     graph: ModularGrenadeGraph
-    node: emptyCase
+    node: wiredCase
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
