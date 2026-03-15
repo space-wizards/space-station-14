@@ -196,6 +196,13 @@ public abstract partial class SharedMindSystem : EntitySystem
         return null;
     }
 
+    public EntityUid? GetMind(EntityUid uid, out MindComponent? mind, MindContainerComponent? container = null)
+    {
+        var mindUid = GetMind(uid, container);
+        TryComp(mindUid, out mind);
+        return mindUid;
+    }
+
     public Entity<MindComponent> CreateMind(NetUserId? userId, string? name = null)
     {
         var mindId = Spawn(_mindProto, MapCoordinates.Nullspace);
