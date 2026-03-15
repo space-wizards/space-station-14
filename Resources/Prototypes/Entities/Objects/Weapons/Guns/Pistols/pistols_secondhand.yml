@@ -1,0 +1,33 @@
+# Second-hand (worn/damaged) pistol variants for the Second Hand uplink tab.
+
+# Worn Viper: semi-auto only, warped barrel.
+- type: entity
+  parent: WeaponPistolViper
+  id: WeaponPistolViperWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: Gun
+    fireRate: 3
+    minAngle: 6
+    maxAngle: 18
+    angleIncrease: 3
+  - type: GunJam
+    prob: 0.7
+    jamChance: 0.1
+
+# Worn Cobra: blown suppressor baffles, sluggish slide.
+- type: entity
+  parent: WeaponPistolCobra
+  id: WeaponPistolCobraWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: Gun
+    fireRate: 2
+    minAngle: 6
+    maxAngle: 18
+    angleIncrease: 3
+  - type: GunJam
+    prob: 0.7
+    jamChance: 0.2

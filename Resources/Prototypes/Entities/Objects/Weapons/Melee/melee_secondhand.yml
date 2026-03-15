@@ -1,0 +1,43 @@
+# Second-hand (worn/damaged) melee weapon variants for the Second Hand uplink tab.
+
+# Worn energy sword: loose power connector, blade cuts out on swing.
+- type: entity
+  parent: EnergySword
+  id: EnergySwordWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: LoosePowerConnector
+
+# Worn energy dagger: same loose connector issue, same pen disguise intact.
+- type: entity
+  parent: EnergyDagger
+  id: EnergyDaggerWorn
+  suffix: Second Hand, E-Dagger
+  components:
+  - type: RandomDefects
+  - type: LoosePowerConnector
+
+# Partial throwing knives kit: 3-8 knives depending on what's left in the box.
+- type: entity
+  parent: ThrowingKnivesKit
+  id: ThrowingKnivesKitWorn
+  suffix: Second Hand
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ThrowingKnife  # always
+        - id: ThrowingKnife  # always
+        - id: ThrowingKnife  # always
+        - id: ThrowingKnife
+          prob: 0.5
+        - id: ThrowingKnife
+          prob: 0.5
+        - id: ThrowingKnife
+          prob: 0.5
+        - id: ThrowingKnife
+          prob: 0.5
+        - id: ThrowingKnife
+          prob: 0.5

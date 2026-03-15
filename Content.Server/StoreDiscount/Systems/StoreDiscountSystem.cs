@@ -386,11 +386,13 @@ public sealed class StoreDiscountSystem : EntitySystem
 /// <param name="TargetUser">EntityUid of store entity owner.</param>
 /// <param name="Store">EntityUid of store entity.</param>
 /// <param name="UseDiscounts">Marker, if store should have discounts.</param>
+/// <param name="UseSecondHand">Marker, if store should have a second-hand (worn/damaged items) tab.</param>
 /// <param name="Listings">List of available listings items.</param>
 [ByRefEvent]
 public record struct StoreInitializedEvent(
     EntityUid TargetUser,
     EntityUid Store,
     bool UseDiscounts,
+    bool UseSecondHand,
     IReadOnlyList<ListingDataWithCostModifiers> Listings
 );

@@ -1,0 +1,113 @@
+# Second-hand (defective) grenade/explosive variants for the Second Hand uplink tab.
+
+- type: entity
+  parent: ExGrenade
+  id: ExGrenadeWorn
+  suffix: Second Hand
+  components:
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 5
+    intensitySlope: 3
+    totalIntensity: 40
+    canCreateVacuum: false
+  - type: RandomFuse
+    minDelay: 1.5
+    maxDelay: 9
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeWorn
+  suffix: Second Hand
+  components:
+  - type: SmokeOnTrigger
+    keysIn:
+    - timer
+    duration: 10
+    spreadAmount: 20
+  - type: RandomFuse
+    minDelay: 1.5
+    maxDelay: 9
+
+- type: entity
+  parent: GrenadeShrapnel
+  id: GrenadeShrapnelWorn
+  suffix: Second Hand
+  components:
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterLethal
+    capacity: 15
+  - type: RandomFuse
+    minDelay: 1.75
+    maxDelay: 10.5
+
+- type: entity
+  parent: GrenadeIncendiary
+  id: GrenadeIncendiaryWorn
+  suffix: Second Hand
+  components:
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterIncendiary
+    capacity: 15
+  - type: TimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+    delay: 3.5
+  - type: RandomFuse
+    minDelay: 1.75
+    maxDelay: 10.5
+
+- type: entity
+  parent: MobGrenadePenguin
+  id: MobGrenadePenguinWorn
+  suffix: Second Hand
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 2.5
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 7
+    intensitySlope: 3
+    totalIntensity: 80
+  - type: RandomFuse
+    minDelay: 5
+    maxDelay: 30
+
+- type: entity
+  parent: PenExploding
+  id: PenExplodingWorn
+  suffix: Second Hand, Exploding
+  components:
+  - type: TimerTrigger
+    delay: 4
+    examinable: false
+  - type: RandomFuse
+    minDelay: 2
+    maxDelay: 12
+
+- type: entity
+  parent: SyndieMiniBomb
+  id: SyndieMiniBombWorn
+  suffix: Second Hand
+  components:
+  - type: TimerTrigger
+    delay: 5
+  - type: RandomFuse
+    minDelay: 5
+    maxDelay: 15
+
+- type: entity
+  parent: SingularityGrenade
+  id: SingularityGrenadeWorn
+  suffix: Second Hand
+  components:
+  - type: TwoStageTrigger
+    triggerDelay: 5
+  - type: RandomFuse
+    minDelay: 1.5
+    maxDelay: 9

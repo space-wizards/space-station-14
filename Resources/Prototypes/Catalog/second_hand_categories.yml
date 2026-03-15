@@ -1,0 +1,13 @@
+- type: secondHandCategory
+  id: commonSecondHand # Standard budget worn items - sidearms, magazines
+  weight: 65
+
+- type: secondHandCategory
+  id: rareSecondHand # Mid-tier worn items - SMGs, grenades
+  weight: 30
+  maxItems: 3
+
+- type: secondHandCategory
+  id: veryRareSecondHand # Occasionally a worn higher-end item slips in
+  weight: 5
+  maxItems: 1

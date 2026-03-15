@@ -1,0 +1,51 @@
+# Second-hand (partial) magazine variants for the Second Hand uplink tab.
+# Each spawns with a random round count between half and full capacity.
+
+- type: entity
+  parent: MagazinePistolHighCapacity
+  id: MagazinePistolHighCapacityWorn
+  suffix: Second Hand
+  components:
+  - type: RandomAmmoFill
+
+- type: entity
+  parent: MagazinePistolSubMachineGun
+  id: MagazinePistolSubMachineGunWorn
+  suffix: Second Hand
+  components:
+  - type: RandomAmmoFill
+
+- type: entity
+  parent: MagazinePistolCaselessRifle
+  id: MagazinePistolCaselessRifleWorn
+  suffix: Second Hand
+  components:
+  - type: RandomAmmoFill
+
+- type: entity
+  parent: MagazineShotgun
+  id: MagazineShotgunWorn
+  suffix: Second Hand
+  components:
+  - type: RandomAmmoFill
+
+- type: entity
+  parent: MagazineShotgunSlug
+  id: MagazineShotgunSlugWorn
+  suffix: Second Hand
+  components:
+  - type: RandomAmmoFill
+
+- type: entity
+  parent: MagazineRifle
+  id: MagazineRifleWorn
+  suffix: Second Hand
+  components:
+  - type: RandomAmmoFill
+
+- type: entity
+  parent: MagazineBoxLightRifle
+  id: MagazineBoxLightRifleWorn
+  suffix: Second Hand
+  components:
+  - type: RandomAmmoFill

@@ -1,0 +1,11 @@
+# Second-hand (defective) power device variants for the Second Hand uplink tab.
+
+# Faulty power sink: drains at half the normal rate.
+- type: entity
+  parent: PowerSink
+  id: PowerSinkWorn
+  suffix: Second Hand
+  components:
+  - type: PowerConsumer
+    voltage: High
+    drawRate: 5000000

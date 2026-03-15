@@ -1,0 +1,33 @@
+# Second-hand (partial-dose) medical variants for the Second Hand uplink tab.
+
+# Worn combat medipen: roughly half the normal chemical payload.
+# The reservoir seal is degraded and some reagent has evaporated.
+- type: entity
+  parent: CombatMedipen
+  id: CombatMedipenWorn
+  suffix: Second Hand
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 12
+        - ReagentId: TranexamicAcid
+          Quantity: 3
+
+# Worn hyperzine injector: roughly half the normal hyperzine dose.
+# The cartridge was partially used and then resealed.
+- type: entity
+  parent: Stimpack
+  id: StimpackWorn
+  suffix: Second Hand
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 15

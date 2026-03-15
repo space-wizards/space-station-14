@@ -1,0 +1,19 @@
+# Second-hand (worn/damaged) LMG variants for the Second Hand uplink tab.
+
+# Worn L6 SAW: worn bolt carrier, overheated barrel, reduced fire rate and wield bonus.
+- type: entity
+  parent: WeaponLightMachineGunL6
+  id: WeaponLightMachineGunL6Worn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: Gun
+    fireRate: 6
+    minAngle: 30
+    maxAngle: 55
+  - type: GunWieldBonus
+    minAngle: -12
+    maxAngle: -12
+  - type: GunJam
+    prob: 0.6
+    jamChance: 0.10
