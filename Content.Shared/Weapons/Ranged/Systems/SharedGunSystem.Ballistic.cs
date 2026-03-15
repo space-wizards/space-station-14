@@ -34,6 +34,8 @@ public abstract partial class SharedGunSystem
 
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, MapInitEvent>(OnBallisticRefillerMapInit);
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, EmpPulseEvent>(OnRefillerEmpPulsed);
+
+        SubscribeLocalEvent<BallisticAmmoInteractLoaderComponent, AfterInteractEvent>(OnBallisticAmmoLoad);
     }
 
     private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent _)
@@ -324,11 +326,19 @@ public abstract partial class SharedGunSystem
         bool suppressInsertionSound = false
     )
     {
-        if (!CanInsertBallistic(entity, inserted))
+        var ammoEv = new BeforeAmmoLoadedEvent();
+        RaiseLocalEvent(inserted, ref ammoEv);
+
+        if (!ammoEv.CanLoad)
             return false;
 
-        entity.Comp.Entities.Add(inserted);
-        Containers.Insert(inserted, entity.Comp.Container);
+        var ammo = ammoEv.AmmoOverride ?? inserted;
+
+        if (!CanInsertBallistic(entity, ammo))
+            return false;
+
+        entity.Comp.Entities.Add(ammo);
+        Containers.Insert(ammo, entity.Comp.Container);
         if (!suppressInsertionSound)
         {
             Audio.PlayPredicted(entity.Comp.SoundInsert, entity, user);
@@ -367,6 +377,21 @@ public abstract partial class SharedGunSystem
             return;
 
         PauseSelfRefill(entity, args.Duration);
+    }
+
+    private void OnBallisticAmmoLoad(Entity<BallisticAmmoInteractLoaderComponent> ent, ref AfterInteractEvent args)
+    {
+        if (args.Handled || args.Target == null)
+            return;
+
+        if (!TryComp<BallisticAmmoProviderComponent>(ent, out var ballisticAmmoProviderComp))
+            return;
+
+        if (TryBallisticInsert(
+                (ent, ballisticAmmoProviderComp),
+                args.Target.Value,
+                args.User))
+            args.Handled = true;
     }
 
     private void UpdateBallistic(float frameTime)
