@@ -19,7 +19,7 @@
           radius: 0.30
         density: 80
         mask:
-        - MobMask
+        - SmallMobMask
         layer:
         - MobLayer
   - type: MobThresholds
