@@ -1,5 +1,4 @@
 #nullable enable
-using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Damage;
@@ -10,7 +9,6 @@ using Content.Shared.Medical.Healing;
 using Content.IntegrationTests.Utility;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
 using Content.Shared.Body.Systems;
 using Content.Shared.Body.Components;
 
