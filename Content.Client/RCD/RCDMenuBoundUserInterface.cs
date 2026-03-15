@@ -44,7 +44,6 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             return;
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
-        _menu.Track(Owner);
         var models = ConvertToButtons(rcd.AvailablePrototypes);
         _menu.SetButtons(models);
 
@@ -142,7 +141,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
     {
         string tooltip;
 
-        if (proto.Mode is RcdMode.ConstructTile or RcdMode.ConstructObject
+        if (proto.Mode != RcdMode.ConstructTile && proto.Mode != RcdMode.Deconstruct
             && proto.Prototype != null
             && _prototypeManager.TryIndex(proto.Prototype, out var entProto)) // don't use Resolve because this can be a tile
         {
