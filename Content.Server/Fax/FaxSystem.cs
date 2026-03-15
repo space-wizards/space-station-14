@@ -99,6 +99,16 @@ public sealed class FaxSystem : EntitySystem
             ProcessPrintingAnimation(uid, frameTime, fax);
             ProcessInsertingAnimation(uid, frameTime, fax);
             ProcessSendingTimeout(uid, frameTime, fax);
+
+        if (fax.RefreshDelay > 0)
+        {
+            fax.RefreshDelay -= frameTime;
+            if (fax.RefreshDelay <= 0)
+            {
+                Refresh(uid, fax);
+            }
+        }
+
         }
     }
 
@@ -210,6 +220,11 @@ public sealed class FaxSystem : EntitySystem
             UpdateAppearance(uid, component);
 
         _itemSlotsSystem.SetLock(uid, component.PaperSlot, !args.Powered); // Lock slot when power is off
+
+        if (args.Powered)
+        {
+            Refresh(uid, component);
+        }
     }
 
     private void OnInteractUsing(EntityUid uid, FaxMachineComponent component, InteractUsingEvent args)
@@ -273,6 +288,7 @@ public sealed class FaxSystem : EntitySystem
                 case FaxConstants.FaxPingCommand:
                     var isForSyndie = _emag.CheckFlag(uid, EmagType.Interaction) &&
                                       args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
+
                     if (!isForSyndie && !component.ResponsePings)
                         return;
 
@@ -602,8 +618,10 @@ public sealed class FaxSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid);
         _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
 
+        var receiverName = component.FaxName ?? Loc.GetString("fax-machine-popup-source-unknown");
+
         if (component.NotifyAdmins)
-            NotifyAdmins(faxName);
+            NotifyAdmins(faxName, receiverName);
 
         component.PrintingQueue.Enqueue(printout);
     }
@@ -644,9 +662,9 @@ public sealed class FaxSystem : EntitySystem
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid):tool} printed {ToPrettyString(printed):subject}: {printout.Content}");
     }
 
-    private void NotifyAdmins(string faxName)
+    private void NotifyAdmins(string faxName, string receiverName)
     {
-        _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
+        _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("sender", faxName), ("receiver", receiverName)));
         _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
     }
 }
