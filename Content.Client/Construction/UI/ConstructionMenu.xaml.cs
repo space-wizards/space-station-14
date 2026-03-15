@@ -48,9 +48,9 @@ namespace Content.Client.Construction.UI
         void ClearRecipeInfo();
         void SetRecipeInfo(string name, string description, EntityPrototype? targetPrototype, bool isItem, bool isFavorite);
         void ResetPlacement();
-        bool TrySelectCategory(int categoryId);
-        bool TrySelectListViewButton(ProtoId<ConstructionPrototype> constructionProtoId);
-        bool TrySelectGridViewButton(ContainerButton button, ContainerButton? previousButton);
+        void TrySelectCategory(int categoryId);
+        void TrySelectListViewButton(ProtoId<ConstructionPrototype> constructionProtoId);
+        void TrySelectGridViewButton(ContainerButton button, ContainerButton? previousButton);
         void TogglePreviousRecipeButton(bool enabled);
         void ToggleNextRecipeButton(bool enabled);
         void UpdateGridViewButtonStyle(BaseButton button, bool selected);
@@ -212,50 +212,47 @@ namespace Content.Client.Construction.UI
         /// Attempts to select category by its ID.
         /// </summary>
         /// <returns>Whether it was successful.</returns>
-        public bool TrySelectCategory(int categoryId)
+        public void TrySelectCategory(int categoryId)
         {
             // do nothing if category is already selected
             if (OptionCategories.SelectedId == categoryId)
             {
-                return true;
+                return;
             }
 
             OnCategorySelected(categoryId);
-
-            return true;
         }
 
         /// <summary>
         /// Attempts to select specified list view button using recipe ID. Only works when in list view.
         /// </summary>
         /// <returns>Whether it was successful.</returns>
-        public bool TrySelectListViewButton(ProtoId<ConstructionPrototype> constructionProtoId)
+        public void TrySelectListViewButton(ProtoId<ConstructionPrototype> constructionProtoId)
         {
             var isGridView = GridViewButtonPressed;
             if (isGridView)
-                return false;
+                return;
 
             if (!ListViewRecipes.Data.TryFirstOrDefault(
                     data => ((ConstructionMenuListData)data).ConstructionProto.ID == constructionProtoId,
                     out var matchingData))
             {
-                return false;
+                return;
             }
 
             ListViewRecipes.Select(matchingData);
-            return true;
         }
 
         /// <summary>
         /// Attempts to select specified grid view button using recipe ID. Only works when in grid view.
         /// </summary>
         /// <returns>Whether it was successful.</returns>
-        public bool TrySelectGridViewButton(ContainerButton button, ContainerButton? previousButton)
+        public void TrySelectGridViewButton(ContainerButton button, ContainerButton? previousButton)
         {
             var isGridView = GridViewButtonPressed;
             if (!isGridView)
             {
-                return false;
+                return;
             }
 
             if (previousButton is not null && previousButton != button)
@@ -266,8 +263,6 @@ namespace Content.Client.Construction.UI
 
             button.Pressed = true;
             UpdateGridViewButtonStyle(button, true);
-
-            return true;
         }
 
         /// <summary>
