@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Crude Oil
-  changes:
-  - message: Removed 'Activate Holopad Projector' verb from the station AI core.
-    type: Fix
-  id: 9067
-  time: '2025-10-11T00:03:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39937
-- author: Hitlinemoss
-  changes:
-  - message: Ice now satiates thirst.
-    type: Tweak
-  - message: Ice now evaporates.
-    type: Tweak
-  id: 9068
-  time: '2025-10-11T00:20:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40149
 - author: slarticodefast
   changes:
   - message: The artifact analysis console no longer breaks when trying to link it
@@ -4007,3 +3991,17 @@
   id: 9577
   time: '2026-03-15T13:59:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40834
+- author: Velken
+  changes:
+  - message: Crew manifest names can now appear in ion storm laws.
+    type: Add
+  id: 9578
+  time: '2026-03-15T16:08:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42629
+- author: Verin, Centronias
+  changes:
+  - message: Character saving is no longer broken by erroneous hair.
+    type: Fix
+  id: 9579
+  time: '2026-03-15T16:08:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43170
