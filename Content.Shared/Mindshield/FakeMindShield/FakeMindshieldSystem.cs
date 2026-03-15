@@ -1,8 +1,10 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Implants;
 using Content.Shared.Mindshield.Components;
+using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -13,6 +15,8 @@ public sealed class FakeMindShieldSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
     private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
@@ -23,12 +27,24 @@ public sealed class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
         SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
     }
+    private void ShowTogglePopup(EntityUid uid, FakeMindShieldComponent comp)
+    {
+        if (!_net.IsServer)
+            return;
+
+        var message = comp.IsEnabled
+            ? Loc.GetString("fake-mindshield-enabled")
+            : Loc.GetString("fake-mindshield-disabled");
+
+        _popup.PopupEntity(message, uid, uid, PopupType.Small);
+    }
 
     private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)
     {
         comp.IsEnabled = !comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
+        ShowTogglePopup(uid, comp);
         Dirty(uid, comp);
     }
 
@@ -59,6 +75,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
 
             component.IsEnabled = args.ChameleonOutfit.HasMindShield;
             _actions.SetToggled(action, args.ChameleonOutfit.HasMindShield);
+            ShowTogglePopup(uid, component);
             Dirty(uid, component);
 
             if (actionComp.UseDelay != null)
