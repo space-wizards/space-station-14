@@ -86,6 +86,10 @@
     - Flashed
     - RadiationProtection
     - Adrenaline
+  - type: AutoEmote
+    emotes:
+    - NaturalSneeze
+    - NaturalCough
   - type: Identity
   - type: IdExaminable
   - type: Internals
