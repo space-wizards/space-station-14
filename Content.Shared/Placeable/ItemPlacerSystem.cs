@@ -28,7 +28,13 @@ public sealed class ItemPlacerSystem : EntitySystem
             return;
 
         if (TryComp<CollisionWakeComponent>(args.OtherEntity, out var wakeComp))
+        {
+            var stored = EnsureComp<StoredCollisionWakeComponent>(args.OtherEntity);
+            stored.OriginalEnabled = wakeComp.Enabled;
+            Dirty(args.OtherEntity, stored);
+
             _wake.SetEnabled(args.OtherEntity, false, wakeComp);
+        }
 
         var count = comp.PlacedEntities.Count;
         if (comp.MaxEntities == 0 || count < comp.MaxEntities)
@@ -48,8 +54,16 @@ public sealed class ItemPlacerSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, ItemPlacerComponent comp, ref EndCollideEvent args)
     {
+        if (_whitelistSystem.IsWhitelistFail(comp.Whitelist, args.OtherEntity))
+            return;
+
         if (TryComp<CollisionWakeComponent>(args.OtherEntity, out var wakeComp))
-            _wake.SetEnabled(args.OtherEntity, true, wakeComp);
+        {
+            var originalEnabled = TryComp<StoredCollisionWakeComponent>(args.OtherEntity, out var stored)
+                ? stored.OriginalEnabled : true;
+            _wake.SetEnabled(args.OtherEntity, originalEnabled, wakeComp);
+            RemCompDeferred<StoredCollisionWakeComponent>(args.OtherEntity);
+        }
 
         comp.PlacedEntities.Remove(args.OtherEntity);
 
