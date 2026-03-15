@@ -6,7 +6,7 @@ using Robust.Shared.Toolshed;
 
 namespace Content.Server.Access;
 
-[ToolshedCommand, AdminCommand(AdminFlags.Mapping)]
+[ToolshedCommand(Name = "addaccesslog"), AdminCommand(AdminFlags.Mapping)]
 public sealed class AddAccessLogCommand : ToolshedCommand
 {
     [CommandImplementation]
