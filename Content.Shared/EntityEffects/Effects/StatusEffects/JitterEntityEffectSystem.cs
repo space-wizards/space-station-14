@@ -25,6 +25,8 @@ public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<Status
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Jitter : EntityEffectBase<Jitter>
 {
+    //todo update fields
+
     [DataField]
     public float Amplitude = 10.0f;
 
@@ -40,6 +42,7 @@ public sealed partial class Jitter : EntityEffectBase<Jitter>
     [DataField]
     public bool Refresh = true;
 
+    //todo this could be improved to describe strength
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-jittering", ("chance", Probability));
 }

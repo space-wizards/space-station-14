@@ -4,6 +4,7 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Random;
 
+// todo namespace
 namespace Content.Client.Jittering
 {
     public sealed class JitteringSystem : SharedJitteringSystem
@@ -12,7 +13,7 @@ namespace Content.Client.Jittering
         [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
         [Dependency] private readonly SpriteSystem _sprite = default!;
 
-        private readonly float[] _sign = { -1, 1 };
+        private readonly float[] _sign = { -1, 1 }; //todo no
         private readonly string _jitterAnimationKey = "jittering";
 
         public override void Initialize()
@@ -24,6 +25,7 @@ namespace Content.Client.Jittering
             SubscribeLocalEvent<JitteringComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         }
 
+        // Start the animation
         private void OnStartup(EntityUid uid, JitteringComponent jittering, ComponentStartup args)
         {
             if (!TryComp(uid, out SpriteComponent? sprite))
@@ -35,6 +37,7 @@ namespace Content.Client.Jittering
             _animationPlayer.Play((uid, animationPlayer), GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
+        // End the animation
         private void OnShutdown(EntityUid uid, JitteringComponent jittering, ComponentShutdown args)
         {
             if (TryComp(uid, out AnimationPlayerComponent? animationPlayer))
@@ -44,6 +47,7 @@ namespace Content.Client.Jittering
                 _sprite.SetOffset((uid, sprite), jittering.StartOffset);
         }
 
+        // repeat the animation
         private void OnAnimationCompleted(EntityUid uid, JitteringComponent jittering, AnimationCompletedEvent args)
         {
             if (args.Key != _jitterAnimationKey)
@@ -57,8 +61,12 @@ namespace Content.Client.Jittering
                 _animationPlayer.Play((uid, animationPlayer), GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
+        /// <summary>
+        /// Creates and returns the animation to play on the sprite.
+        /// </summary>
         private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
         {
+            // todo redundant capped amplitude
             var amplitude = MathF.Min(4f, jittering.Amplitude / 100f + 1f) / 10f;
             var offset = new Vector2(_random.NextFloat(amplitude / 4f, amplitude),
                 _random.NextFloat(amplitude / 4f, amplitude / 3f));
