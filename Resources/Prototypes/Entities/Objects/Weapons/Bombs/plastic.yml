@@ -143,3 +143,6 @@
   - type: ExplodeOnTrigger
     keysIn:
     - timer
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
