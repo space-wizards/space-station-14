@@ -1,8 +1,5 @@
-using System;
 using System.Linq;
 using System.Numerics;
-using Content.Shared.EntityEffects.Effects;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
