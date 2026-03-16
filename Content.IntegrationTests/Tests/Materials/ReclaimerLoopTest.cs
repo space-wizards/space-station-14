@@ -3,9 +3,13 @@ using Content.Server.Materials;
 using Content.Shared.Materials;
 using Content.IntegrationTests.Utility;
 using Robust.Shared.Prototypes;
-using System.Linq;
-using Robust.Shared.Utility;
+using Content.Shared.DeviceLinking;
 using System.Collections.Generic;
+using Content.Server.StationEvents.Components;
+using Content.Shared.Whitelist;
+using Robust.Shared.Map;
+using Robust.Shared.GameObjects;
+using System.Diagnostics;
 
 
 namespace Content.IntegrationTests.Tests.Materials;
@@ -20,6 +24,8 @@ namespace Content.IntegrationTests.Tests.Materials;
 public sealed class ReclaimerLoopTest : InteractionTest
 {
     private static string[] _reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
+    protected override string PlayerPrototype => "MobHuman"; // The default test mob only has one hand
+
 
     /// <summary>
     /// For each entity that recycles into materials, recycle it and check that
@@ -30,44 +36,83 @@ public sealed class ReclaimerLoopTest : InteractionTest
     [TestOf(typeof(MaterialReclaimerComponent))]
     public async Task ReclaimingLoopTest(string reclaimerID)
     {
-        // var materialReclaimerSystem = SEntMan.System<MaterialReclaimerSystem>();
+        var materialReclaimerSystem = SEntMan.System<SharedMaterialReclaimerSystem>();
+        var entityWhitelistSystem = SEntMan.System<EntityWhitelistSystem>();
+
+        await AddAtmosphere(); //so the urist player can breathe
+
+        //Spawn the reclaimer
+        var reclaimerNetEnt = await SpawnTarget(reclaimerID, PlayerCoords);
+        var reclaimComp = Comp<MaterialReclaimerComponent>();
+        var reclaimUID = SEntMan.GetEntity(reclaimerNetEnt);
 
         //go through all recyclable items, compile a list of produceable materials
         List<string> produceableMaterials = [];
         foreach (string itemID in GameDataScrounger.EntitiesWithComponent("PhysicalComposition"))
         {
+            //Wish there was a cleaner way to do this. spawners mess the system up something fierce
+            if (itemID.Contains("Spawner"))
+                continue;
+
             EntityPrototype item = ProtoMan.Index(itemID);
-            await Server.WaitAssertion(() =>
+            // Debug.WriteLine($"Trying item {itemID}");
+            var currentScrap = await Spawn(itemID);
+            var currentScrapUid = SEntMan.GetEntity(currentScrap);
+            var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
+            //If it's on the whitelist for the reclaimer, and not on its blacklist
+            if (entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
             {
-                item.TryGetComponent<PhysicalCompositionComponent>(out var compositionComp, Factory);
-                foreach ((var mat, var value) in compositionComp.MaterialComposition) //for each material they spawn
+                foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition) //for each material they spawn
                 {
+                    ProtoId<MaterialPrototype> matAsProto = ProtoMan.Index<MaterialPrototype>(mat);
                     //If its not already in producedMaterials, add it
-                    if (!produceableMaterials.Contains(mat))
+                    if (!produceableMaterials.Contains(matAsProto))
                     {
-                        produceableMaterials.Add(mat);
+                        produceableMaterials.Add(matAsProto);
                     }
                 }
-            });
+                await Delete(currentScrapUid);
+            }
         }
 
+        // Power the reclaimer
+        await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
+        await RunTicks(1);
+
+        //Set reclaimer to enabled
+        materialReclaimerSystem.SetReclaimerEnabled(reclaimUID, true);
+        //Assert reclaimer enabled
+        Assert.That(reclaimComp.Enabled,
+        "The reclaimer did not get or stay enabled");
+
+        // //put a floor tile down
+        await InteractUsing("FloorTileItemSteelCheckerDark");
+
         //For each produceable Material, assert that it is not recyclable (and would thus cause a recycling loop)
-        foreach (string material in produceableMaterials)
+        foreach (ProtoId<MaterialPrototype> material in produceableMaterials)
         {
+            EntProtoId? matStack = ProtoMan.Index(material).StackEntity;
+            Assert.That(matStack, Is.Not.Null,
+            $"The material, {material}, did not have a stackentity associated with it. You may need to add a stackEntity to its Reagents/Materials yml file.");
 
-            //Spawn the reclaimer at the player coords, so we're right above it for the drop
-            var reclaimerNetEnt = await SpawnTarget(reclaimerID, PlayerCoords);
+            var matInHands = await PlaceInHands(matStack);
+            var matInHandsUid = SEntMan.GetEntity(matInHands);
 
-            // Power the reclaimer
-            await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
-            await RunTicks(1);
+            //Check that it's on the whitelist and not on the blacklist, if so, continue with the next item
+            if (!entityWhitelistSystem.CheckBoth(matInHandsUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
+                continue;
 
-            await InteractUsing(material);
+            //Assert we're holding material
+            Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.EqualTo(matInHandsUid),
+            $"The material, {matStack}, never got put in our hands.");
+
+            await Interact();
 
             //Assert Hands not empty
             Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Not.EqualTo(null),
-            $"The material that should not have been reclaimed, {material}, is no longer in our hands.");
+            $"The material that should not have been reclaimed, {matStack}, is no longer in our hands. The reclaimer was {reclaimerID}");
         }
 
+        Debug.WriteLine($"Finished!");
     }
 }
