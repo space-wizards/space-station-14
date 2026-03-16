@@ -99,7 +99,14 @@ public partial record struct CookingIngredients
     /// <param name="count">How much of the solid to add. 1 by default.</param>
     public readonly void AddSolid(EntProtoId solidId, int count = 1)
     {
-        Solids[solidId] = Solids.GetValueOrDefault(solidId) + count;
+        if (count == 0)
+            return;
+
+        var newCount = Solids.GetValueOrDefault(solidId) + count;
+        if (newCount > 0)
+            Solids[solidId] = newCount;
+        else
+            Solids.Remove(solidId);
     }
 
     /// <summary>
@@ -109,7 +116,14 @@ public partial record struct CookingIngredients
     /// <param name="count">How many stacks to add.</param>
     public readonly void AddMaterial(ProtoId<StackPrototype> materialId, int count)
     {
-        Materials[materialId] = Materials.GetValueOrDefault(materialId) + count;
+        if (count == 0)
+            return;
+
+        var newCount = Materials.GetValueOrDefault(materialId) + count;
+        if (newCount > 0)
+            Materials[materialId] = newCount;
+        else
+            Materials.Remove(materialId);
     }
 
     /// <summary>
@@ -119,7 +133,14 @@ public partial record struct CookingIngredients
     /// <param name="quantity">The volume of the reagent to add.</param>
     public readonly void AddReagent(ProtoId<ReagentPrototype> reagentId, FixedPoint2 quantity)
     {
-        Reagents[reagentId] = Reagents.GetValueOrDefault(reagentId) + quantity;
+        if (quantity == 0)
+            return;
+
+        var newQuantity = Reagents.GetValueOrDefault(reagentId) + quantity;
+        if (newQuantity > 0)
+            Reagents[reagentId] = newQuantity;
+        else
+            Reagents.Remove(reagentId);
     }
 
     /// <summary>
