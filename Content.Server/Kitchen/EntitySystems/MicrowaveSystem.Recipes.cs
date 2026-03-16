@@ -69,7 +69,7 @@ public sealed partial class MicrowaveSystem
     /// <returns>
     ///     The first valid recipe we can use. If there is none, this is (null, 0).
     /// </returns>
-    private (FoodRecipePrototype? recipe, uint count) GetRecipe(Entity<MicrowaveComponent> microwave, CookingIngredients ingredients)
+    public (FoodRecipePrototype? recipe, uint count) GetRecipe(Entity<MicrowaveComponent> microwave, CookingIngredients ingredients)
     {
         var recipes = GetRecipesForMicrowave(microwave.Owner);
         var cookTime = microwave.Comp.CurrentCookTimerTime;
