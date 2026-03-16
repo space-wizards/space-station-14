@@ -174,16 +174,13 @@ public sealed partial class MicrowaveSystem
     /// <returns>How many stacks we should remove from the available stack entity.</returns>
     private static int SpendMaterialQuantity(int availableStacks,
         ProtoId<StackPrototype> stackId,
-        Dictionary<ProtoId<StackPrototype>, int> remainingMaterials)
+        CookingIngredients ingredientsToSpend)
     {
-        var remaining = remainingMaterials[stackId];
-        var spent = Math.Min(availableStacks, remaining);
-        remaining -= spent;
+        if (!ingredientsToSpend.Materials.TryGetValue(stackId, out var remaining))
+            return 0;
 
-        if (remaining == 0)
-            remainingMaterials.Remove(stackId);
-        else
-            remainingMaterials[stackId] = remaining;
+        var spent = Math.Min(availableStacks, remaining);
+        ingredientsToSpend.AddMaterial(stackId, -spent);
 
         return spent;
     }
@@ -199,16 +196,13 @@ public sealed partial class MicrowaveSystem
     /// <returns>How much we should reduce the available reagent volume by.</returns>
     private static FixedPoint2 SpendReagentQuantity(FixedPoint2 availableQuantity,
         ProtoId<ReagentPrototype> reagent,
-        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> remainingReagents)
+        CookingIngredients ingredientsToSpend)
     {
-        var remaining = remainingReagents[reagent];
-        var spent = FixedPoint2.Min(availableQuantity, remaining);
-        remaining -= spent;
+        if (!ingredientsToSpend.Reagents.TryGetValue(reagent, out var remaining))
+            return 0;
 
-        if (remaining == FixedPoint2.Zero)
-            remainingReagents.Remove(reagent);
-        else
-            remainingReagents[reagent] = remaining;
+        var spent = FixedPoint2.Min(availableQuantity, remaining);
+        ingredientsToSpend.AddReagent(reagent, -spent);
 
         return spent;
     }
@@ -224,15 +218,12 @@ public sealed partial class MicrowaveSystem
     private void SubtractSolidContents(EntityUid item,
         EntProtoId itemProto,
         Container container,
-        Dictionary<EntProtoId, int> materialsToSpend)
+        CookingIngredients ingredientsToSpend)
     {
-        if (!materialsToSpend.ContainsKey(itemProto))
+        if (!ingredientsToSpend.Solids.ContainsKey(itemProto))
             return;
 
-        materialsToSpend[itemProto] -= 1;
-        if (materialsToSpend[itemProto] <= 0)
-            materialsToSpend.Remove(itemProto);
-
+        ingredientsToSpend.AddSolid(itemProto, -1);
         _container.Remove(item, container);
         QueueDel(item);
     }
@@ -250,12 +241,12 @@ public sealed partial class MicrowaveSystem
     /// <param name="ent">The stack entity.</param>
     /// <param name="materialsToSpend">A dictionary of recipe materials that still need to be spent.</param>
     private void SubtractMaterialContents(Entity<StackComponent> ent,
-        Dictionary<ProtoId<StackPrototype>, int> materialsToSpend)
+        CookingIngredients ingredientsToSpend)
     {
         var stack = ent.Comp;
         var stackId = stack.StackTypeId;
         var startingQuantity = stack.Count;
-        var quantityToRemove = SpendMaterialQuantity(startingQuantity, stackId, materialsToSpend);
+        var quantityToRemove = SpendMaterialQuantity(startingQuantity, stackId, ingredientsToSpend);
 
         _stack.ReduceCount(ent.AsNullable(), quantityToRemove);
     }
@@ -275,9 +266,9 @@ public sealed partial class MicrowaveSystem
     /// <param name="reagentsToSpend">A dictionary of reagents that still need to be spent.</param>
     private void SubtractReagentContents(Entity<SolutionComponent> solutionEntity,
         Solution solution,
-        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagentsToSpend)
+        CookingIngredients ingredientsToSpend)
     {
-        var reagentsToProcess = reagentsToSpend.Keys.ToList();
+        var reagentsToProcess = ingredientsToSpend.Reagents.Keys.ToList();
 
         foreach (var reagent in reagentsToProcess)
         {
@@ -285,7 +276,7 @@ public sealed partial class MicrowaveSystem
             if (availableQuantity == 0)
                 continue;
 
-            var quantityToRemove = SpendReagentQuantity(availableQuantity, reagent, reagentsToSpend);
+            var quantityToRemove = SpendReagentQuantity(availableQuantity, reagent, ingredientsToSpend);
             _solutionContainer.RemoveReagent(solutionEntity, reagent, quantityToRemove);
         }
     }
@@ -356,7 +347,7 @@ public sealed partial class MicrowaveSystem
                 && TryGetSolidId(item, out var solidId)
                 && solidsToSpend.ContainsKey(solidId.Value))
             {
-                SubtractSolidContents(item, solidId.Value, component.Storage, solidsToSpend);
+                SubtractSolidContents(item, solidId.Value, component.Storage, portioned);
                 continue;
                 // We're exiting early here; if the solid ingredient is removed from the container,
                 // then we shouldn't be attempting to use its material stack or reagents.
@@ -366,7 +357,7 @@ public sealed partial class MicrowaveSystem
                 && TryGetMaterialId(item, out var materialId, out var stack)
                 && materialsToSpend.ContainsKey(materialId.Value))
             {
-                SubtractMaterialContents(stack.Value, materialsToSpend);
+                SubtractMaterialContents(stack.Value, portioned);
                 if (Deleted(stack) || stack.Value.Comp.Count <= 0)
                     continue;
                 // We're exiting early here - if the stack is empty, then the stack entity
@@ -376,9 +367,7 @@ public sealed partial class MicrowaveSystem
             if (reagentsToSpend.Count > 0
                 && TryGetUsableIngredientSolution(item, out var solutionEntity, out var solution)
                 && solution.Volume > 0)
-                SubtractReagentContents(solutionEntity.Value,
-                    solution,
-                    reagentsToSpend);
+                SubtractReagentContents(solutionEntity.Value, solution, portioned);
         }
     }
 }
