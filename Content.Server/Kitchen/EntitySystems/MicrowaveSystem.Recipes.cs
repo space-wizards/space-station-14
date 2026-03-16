@@ -208,13 +208,13 @@ public sealed partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Removes a solid ingredient that is used in a recipe, removing it from a dictionary of
+    ///     Removes a solid ingredient that is used in a recipe, removing it from the dictionary of
     ///     remaining solids that still need to be spent in the recipe.
     /// </summary>
     /// <param name="item">The entity to remove.</param>
     /// <param name="itemProto">The solid ID of the ingredient.</param>
     /// <param name="container">The microwave's ingredient storage container.</param>
-    /// <param name="materialsToSpend">A dictionary of recipe solids that still need to be spent.</param>
+    /// <param name="ingredientsToSpend">The struct representing ingredients we still need to spend.</param>
     private void SubtractSolidContents(EntityUid item,
         EntProtoId itemProto,
         Container container,
@@ -231,7 +231,7 @@ public sealed partial class MicrowaveSystem
     /// <summary>
     ///     Given a dictionary of remaining material stacks that need to be spent in a recipe, this function
     ///     reduces a stack entity's count by however many stacks need to be spent. This also removes the
-    ///     material stack count from the remaining materials dictionary.
+    ///     material stack count from our remaining ingredients.
     /// </summary>
     /// <remarks>
     ///     If a recipe calls for two stacks of plasma sheets, and you put 5 sheets in the microwave, then
@@ -239,7 +239,7 @@ public sealed partial class MicrowaveSystem
     ///     be removed from the remaining materials dictionary.
     /// </remarks>
     /// <param name="ent">The stack entity.</param>
-    /// <param name="materialsToSpend">A dictionary of recipe materials that still need to be spent.</param>
+    /// <param name="ingredientsToSpend">The struct representing ingredients we still need to spend.</param>
     private void SubtractMaterialContents(Entity<StackComponent> ent,
         CookingIngredients ingredientsToSpend)
     {
@@ -254,7 +254,7 @@ public sealed partial class MicrowaveSystem
     /// <summary>
     ///     Given a dictionary of remaining reagents that still need to be spent in a recipe, this function iterates
     ///     over a solution's contents and subtracts reagents according to the reagents to spend. This also removes
-    ///     it from the "remaining reagents to spend" dictionary accordingly.
+    ///     it from our remaining ingredients.
     /// </summary>
     /// <remarks>
     ///     Say you still have 6u mayonnaise remaining, and the solution has 10u mayonnaise, then 6u of
@@ -263,7 +263,7 @@ public sealed partial class MicrowaveSystem
     /// </remarks>
     /// <param name="solutionEntity">The solution entity.</param>
     /// <param name="solution">The solution itself.</param>
-    /// <param name="reagentsToSpend">A dictionary of reagents that still need to be spent.</param>
+    /// <param name="ingredientsToSpend">The struct representing ingredients we still need to spend.</param>
     private void SubtractReagentContents(Entity<SolutionComponent> solutionEntity,
         Solution solution,
         CookingIngredients ingredientsToSpend)
@@ -335,10 +335,10 @@ public sealed partial class MicrowaveSystem
     /// <param name="count">How many times this recipe is spent in ingredient volumes.</param>
     private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe, uint count = 1)
     {
-        var portioned = recipe.Ingredients * count;
-        var solidsToSpend = portioned.Solids;
-        var materialsToSpend = portioned.Materials;
-        var reagentsToSpend = portioned.Reagents;
+        var ingredientsToSpend = recipe.Ingredients * count;
+        var solidsToSpend = ingredientsToSpend.Solids;
+        var materialsToSpend = ingredientsToSpend.Materials;
+        var reagentsToSpend = ingredientsToSpend.Reagents;
         var microwaveItems = component.Storage.ContainedEntities.ToArray();
 
         foreach (var item in microwaveItems)
@@ -347,7 +347,7 @@ public sealed partial class MicrowaveSystem
                 && TryGetSolidId(item, out var solidId)
                 && solidsToSpend.ContainsKey(solidId.Value))
             {
-                SubtractSolidContents(item, solidId.Value, component.Storage, portioned);
+                SubtractSolidContents(item, solidId.Value, component.Storage, ingredientsToSpend);
                 continue;
                 // We're exiting early here; if the solid ingredient is removed from the container,
                 // then we shouldn't be attempting to use its material stack or reagents.
@@ -357,7 +357,7 @@ public sealed partial class MicrowaveSystem
                 && TryGetMaterialId(item, out var materialId, out var stack)
                 && materialsToSpend.ContainsKey(materialId.Value))
             {
-                SubtractMaterialContents(stack.Value, portioned);
+                SubtractMaterialContents(stack.Value, ingredientsToSpend);
                 if (Deleted(stack) || stack.Value.Comp.Count <= 0)
                     continue;
                 // We're exiting early here - if the stack is empty, then the stack entity
@@ -367,7 +367,7 @@ public sealed partial class MicrowaveSystem
             if (reagentsToSpend.Count > 0
                 && TryGetUsableIngredientSolution(item, out var solutionEntity, out var solution)
                 && solution.Volume > 0)
-                SubtractReagentContents(solutionEntity.Value, solution, portioned);
+                SubtractReagentContents(solutionEntity.Value, solution, ingredientsToSpend);
         }
     }
 }
