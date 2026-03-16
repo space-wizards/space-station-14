@@ -27,7 +27,7 @@ public sealed partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Given a recipe, a list of available ingredietns, and a cooking time, this functions
+    ///     Given a recipe, a list of available ingredients, and a cooking time, this functions
     ///     gets how many times we can make this given recipe.
     /// </summary>
     /// <param name="recipe">A cooking recipe.</param>
