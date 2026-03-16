@@ -1062,4 +1062,12 @@
   id: 129
   time: '2026-03-07T20:26:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43102
+- author: Sapphic_bee
+  changes:
+  - message: On Exo, the AI north and south external cameras are now connected to
+      power.
+    type: Fix
+  id: 130
+  time: '2026-03-15T00:02:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43143
 Order: 2

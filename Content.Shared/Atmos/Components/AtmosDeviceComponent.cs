@@ -1,7 +1,4 @@
-using Content.Server.Atmos.Components;
-using Content.Shared.Atmos.Components;
-
-namespace Content.Server.Atmos.Piping.Components;
+namespace Content.Shared.Atmos.Components;
 
 /// <summary>
 ///     Component for atmos devices which are updated in line with atmos, as part of a <see cref="GridAtmosphereComponent"/>
