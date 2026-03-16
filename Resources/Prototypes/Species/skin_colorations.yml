@@ -22,17 +22,23 @@
 
 - type: skinColoration
   id: VulpkaninColors
-  strategy: !type:HueRangedClampedHsvColoration
-    ranges:
-    # Red(0) to Greenish(90)
-    - hueRange: [0, 0.25]
-      saturation: [0, 0.9]
-      value: [0.2, 0.9]
-    # Greenish(90) to Pink(340)
-    - hueRange: [ 0.25, 0.97 ]
-      saturation: [ 0, 0.6 ]
+  strategy: !type:HueNodeClampedHsvColoration
+    nodes:
+    - hue: 0 # From red to orange slowly increase saturation. (0.75 -> 0.9)
+      saturation: [ 0, 0.75 ]
       value: [ 0.2, 0.9 ]
-    # Pink(340) to Red(360)
-    - hueRange: [ 0.97, 1 ]
+    - hue: 0.05 # From orange to yellow, keep it the same. (0.9 -> 0.8)
       saturation: [ 0, 0.9 ]
       value: [ 0.2, 0.9 ]
+    - hue: 0.1666 # From yellow to green, slowly decrease it. (0.8 -> 0.65)
+      saturation: [ 0, 0.8 ]
+      value: [ 0.2, 0.9 ]
+    - hue: 0.33 # From green to pink keep it the same. (0.65 -> 0.65)
+      saturation: [ 0, 0.65 ]
+      value: [ 0.2, 0.90 ]
+    - hue: 0.94 # From pink, increase saturation for red. (0.65 -> 0.75)
+      saturation: [ 0, 0.65 ]
+      value: [ 0.2, 0.90 ]
+    - hue: 1 # Red
+      saturation: [ 0, 0.75 ]
+      value: [ 0.2, 0.90 ]
