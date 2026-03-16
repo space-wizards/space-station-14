@@ -586,6 +586,7 @@
   description: A webby material.
   suffix: Full
   components:
+  - type: Material
   - type: PhysicalComposition
     materialComposition:
       WebSilk: 100
