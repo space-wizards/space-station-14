@@ -1527,7 +1527,7 @@
   - type: Sprite
     layers:
     - state: xenoborg_engi
-    - state: icon-xenoborg-access-breaker
+    - state: icon-xenoborg-remote-explosive
   - type: ItemBorgModule
     hands:
     - item: NetworkConfigurator
