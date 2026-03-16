@@ -51,6 +51,7 @@ public sealed partial class GasPipeManifoldSystem : EntitySystem
             return;
 
         var pipeNames = ent.Comp.InletNames.Union(ent.Comp.OutletNames);
+        var pipeCount = pipeNames.Count();
 
         foreach (var pipeName in pipeNames)
         {
@@ -58,8 +59,8 @@ public sealed partial class GasPipeManifoldSystem : EntitySystem
                 continue;
 
             var pipeLocal = pipe.Air.Clone();
-            pipeLocal.Multiply(pipe.Volume / pipe.Air.Volume);
-            pipeLocal.Volume = pipe.Volume;
+            pipeLocal.Multiply(pipe.Volume * pipeCount / pipe.Air.Volume);
+            pipeLocal.Volume = pipe.Volume * pipeCount;
 
             args.GasMixtures.Add((Name(ent), pipeLocal));
             break;

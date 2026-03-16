@@ -20,10 +20,6 @@
   name: lathe-category-parts
 
 - type: latheCategory
-  id: Tiles
-  name: lathe-category-tiles
-
-- type: latheCategory
   id: Tools
   name: lathe-category-tools
 
@@ -79,28 +75,40 @@
 
 # Cutter machine
 - type: latheCategory
+  id: Tiles
+  name: lathe-category-tiles
+
+- type: latheCategory
+  id: Circuit
+  name: lathe-category-circuit-tile
+
+- type: latheCategory
   id: Concrete
-  name: lathe-category-concrete
+  name: lathe-category-concrete-tile
 
 - type: latheCategory
   id: Dark
-  name: lathe-category-dark
+  name: lathe-category-dark-tile
+
+- type: latheCategory
+  id: Faux
+  name: lathe-category-faux-tile
 
 - type: latheCategory
   id: Maints
-  name: lathe-category-maints
+  name: lathe-category-maints-tile
 
 - type: latheCategory
   id: Steel
-  name: lathe-category-steel
+  name: lathe-category-steel-tile
 
 - type: latheCategory
   id: White
-  name: lathe-category-white
+  name: lathe-category-white-tile
 
 - type: latheCategory
   id: Wood
-  name: lathe-category-wood
+  name: lathe-category-wood-tile
 
 - type: latheCategory
   id: Marble

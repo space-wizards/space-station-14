@@ -1,13 +1,15 @@
 # Bowls
 
 - type: entity
-  name: bowl
   parent: ReagentContainerBase
   id: FoodBowlBig
+  name: bowl
   description: A simple bowl, used for soups and salads.
   components:
   - type: Item
-    storedRotation: -90
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -21,10 +23,11 @@
       visible: false
   - type: MixableSolution
     solution: food
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: food
-    useSound:
-      path: /Audio/Items/drink.ogg
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: DamageOnLand
     damage:
       types:
@@ -65,11 +68,15 @@
     - Trash
 
 - type: entity
-  name: broken bowl
   parent: BaseItem
   id: FoodBowlBigTrash
+  name: broken bowl
   description: A simple bowl, broken and useless.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl-trash

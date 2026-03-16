@@ -41,9 +41,9 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
             if (!Colors.TryGetValue(uid, out var color))
             {
                 color = new Color(
-                    _random.Next(0, 255),
-                    _random.Next(0, 255),
-                    _random.Next(0, 255));
+                    _random.NextByte(0, 255),
+                    _random.NextByte(0, 255),
+                    _random.NextByte(0, 255));
                 Colors.Add(uid, color);
             }
 

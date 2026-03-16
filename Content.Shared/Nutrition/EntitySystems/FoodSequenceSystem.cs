@@ -45,7 +45,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (!TryComp<FoodSequenceStartPointComponent>(args.Start, out var start))
             return;
 
-        if (!_proto.TryIndex(args.Proto, out var elementProto))
+        if (!_proto.Resolve(args.Proto, out var elementProto))
             return;
 
         if (!ent.Comp.OnlyFinal || elementProto.Final || start.FoodLayers.Count == start.MaxLayers)
@@ -97,7 +97,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             return;
 
         _solutionContainer.RemoveAllSolution(resultSoln.Value); //Remove all YML reagents
-        resultSoln.Value.Comp.Solution.MaxVolume = startSoln.Value.Comp.Solution.MaxVolume;
+        _solutionContainer.SetCapacity(resultSoln.Value, startSoln.Value.Comp.Solution.MaxVolume);
         _solutionContainer.TryAddSolution(resultSoln.Value, startSolution);
 
         MergeFlavorProfiles(start, result);
@@ -118,7 +118,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (!element.Comp1.Entries.TryGetValue(start.Comp.Key, out var elementProto))
             return false;
 
-        if (!_proto.TryIndex(elementProto, out var elementIndexed))
+        if (!_proto.Resolve(elementProto, out var elementIndexed))
             return false;
 
         //if we run out of space, we can still put in one last, final finishing element.
@@ -185,7 +185,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         var nameCounter = 1;
         foreach (var proto in existedContentNames)
         {
-            if (!_proto.TryIndex(proto, out var protoIndexed))
+            if (!_proto.Resolve(proto, out var protoIndexed))
                 continue;
 
             if (protoIndexed.Name is null)

@@ -59,7 +59,7 @@ public sealed partial class EmergencyConsoleWindow : FancyWindow,
         // TODO: Loc and cvar for this.
         _earlyLaunchTime = scc.EarlyLaunchTime;
 
-        AuthorizationsContainer.DisposeAllChildren();
+        AuthorizationsContainer.RemoveAllChildren();
         var remainingAuths = scc.AuthorizationsRequired - scc.Authorizations.Count;
         AuthorizationCount.Text = Loc.GetString("emergency-shuttle-ui-remaining", ("remaining", remainingAuths));
 
