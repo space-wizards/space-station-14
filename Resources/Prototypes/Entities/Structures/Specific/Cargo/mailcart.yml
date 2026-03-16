@@ -19,6 +19,7 @@
       whitelist:
         components:
         - Delivery
+        - WrappedParcel
         tags:
         - Paper
         - Document
