@@ -75,6 +75,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   parent: [FragileGrenadeBase, ProjectileGrenadeBase, BaseSyndicateContraband]
@@ -107,6 +109,9 @@
     positional: true
   - type: StaticPrice
     price: 1500
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   parent: [FragileGrenadeBase, ProjectileGrenadeBase, BaseSyndicateContraband]

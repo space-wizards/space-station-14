@@ -41,6 +41,8 @@
   - type: AnimationPlayer
   - type: TimerTriggerVisuals
     unprimedSprite: base
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

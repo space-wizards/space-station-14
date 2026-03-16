@@ -49,24 +49,24 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
 
     protected override void OnAppearanceChange(EntityUid uid, TimerTriggerVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null
-        || !TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
-            return;
-
-        if (!AppearanceSystem.TryGetData<TriggerVisualState>(uid, TriggerVisuals.VisualState, out var state, args.Component))
-            state = TriggerVisualState.Unprimed;
-
-        switch (state)
+        if (args.Sprite != null
+            && TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
         {
-            case TriggerVisualState.Primed:
-                if (!AnimationSystem.HasRunningAnimation(uid, animPlayer, TimerTriggerVisualsComponent.AnimationKey))
-                    AnimationSystem.Play((uid, animPlayer), comp.PrimingAnimation, TimerTriggerVisualsComponent.AnimationKey);
-                break;
-            case TriggerVisualState.Unprimed:
-                SpriteSystem.LayerSetRsiState((uid, args.Sprite), TriggerVisualLayers.Base, comp.UnprimedSprite);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            if (!AppearanceSystem.TryGetData<TriggerVisualState>(uid, TriggerVisuals.VisualState, out var state, args.Component))
+                state = TriggerVisualState.Unprimed;
+
+            switch (state)
+            {
+                case TriggerVisualState.Primed:
+                    if (!AnimationSystem.HasRunningAnimation(uid, animPlayer, TimerTriggerVisualsComponent.AnimationKey))
+                        AnimationSystem.Play((uid, animPlayer), comp.PrimingAnimation, TimerTriggerVisualsComponent.AnimationKey);
+                    break;
+                case TriggerVisualState.Unprimed:
+                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), TriggerVisualLayers.Base, comp.UnprimedSprite);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         // in-hand visuals
@@ -75,7 +75,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
 
     private void OnGetHeldVisuals(EntityUid uid, TimerTriggerVisualsComponent component, GetInhandVisualsEvent args)
     {
-        if (component.InHandPrimedName == null)
+        if (component.InHandPrimedName == null || component.InHandUnprimedName == null)
             return;
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
@@ -89,7 +89,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
 
         var layer = new PrototypeLayerData();
 
-        // Selects inhand sprites to load based on primed state, e.g. inhand-right or inhand-right-primed
+        // Selects inhand sprites to load based on primed state, e.g. inhand-right-unprimed or inhand-right-primed
         var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
         var key = heldPrefix + args.Location.ToString().ToLowerInvariant();
         key += (state == TriggerVisualState.Unprimed) ? component.InHandUnprimedName : component.InHandPrimedName;

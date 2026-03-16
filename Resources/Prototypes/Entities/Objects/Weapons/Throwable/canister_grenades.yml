@@ -22,6 +22,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   parent: [ BaseCivilianContraband, SmokeGrenade ]
@@ -41,6 +43,9 @@
       reagents:
       - ReagentId: SpaceCleaner
         Quantity: 30
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   parent: SmokeGrenade
@@ -79,6 +84,9 @@
     smokePrototype: AluminiumMetalFoam
   - type: StaticPrice
     price: 350
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   parent: [ BaseEngineeringContraband, VolatileGrenadeBase, TimerGrenadeBase ] # Prevent inheriting DeleteOnTrigger from SmokeGrenade

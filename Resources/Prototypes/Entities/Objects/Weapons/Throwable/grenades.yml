@@ -107,6 +107,8 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
   - type: StaticPrice
     price: 2000
 
@@ -176,6 +178,8 @@
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
   - type: EmitSoundOnTrigger
     keysIn:
     - timer
@@ -287,6 +291,9 @@
         - stageTwo
   - type: StaticPrice
     price: 1000
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   name: the nuclear option
@@ -370,6 +377,9 @@
           # Unprimed: <Use state determined by enum.ConstructionVisuals.Layer>
   - type: StaticPrice
     price: 75
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   name: EMP grenade
@@ -389,9 +399,6 @@
     - trigger
   - type: StaticPrice
     price: 666 # 2000 for 3, I love fractions
-  - type: TimerTriggerVisuals
-    inHandPrimedName: -primed
-    inHandUnprimedName: -unprimed #TODO: PUT IN PARENT ENTITY
 
 - type: entity
   name: holy hand grenade
