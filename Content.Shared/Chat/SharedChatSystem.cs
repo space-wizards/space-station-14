@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
@@ -57,6 +58,7 @@ public abstract class SharedChatSystem : EntitySystem
     private void CacheRadios()
     {
         _keyCodes = _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>()
+            .Where(x => x.KeyCode != '\0')
             .ToFrozenDictionary(x => x.KeyCode);
     }
 
