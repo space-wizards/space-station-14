@@ -6,16 +6,14 @@ using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
-public abstract class SharedGasTankSystem : EntitySystem
+public abstract class SharedGasTankSystem : GasMaxPressureSystem<GasTankComponent>
 {
     [Dependency] private   readonly SharedActionsSystem _actions = default!;
-    [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedContainerSystem _containers = default!;
     [Dependency] private   readonly SharedInternalsSystem _internals = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
@@ -48,9 +46,9 @@ public abstract class SharedGasTankSystem : EntitySystem
 
     private void OnGasTankSetPressure(Entity<GasTankComponent> ent, ref GasTankSetPressureMessage args)
     {
-        var pressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxOutputPressure);
+        var pressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxReleasePressure);
 
-        ent.Comp.OutputPressure = pressure;
+        ent.Comp.ReleasePressure = pressure;
         Dirty(ent);
         UpdateUserInterface(ent);
     }
@@ -81,7 +79,7 @@ public abstract class SharedGasTankSystem : EntitySystem
         if (component.IsConnected)
             args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
 
-        args.PushMarkup(Loc.GetString(component.IsValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
+        args.PushMarkup(Loc.GetString(component.ReleaseValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
     }
 
     private void OnActionToggle(Entity<GasTankComponent> gasTank, ref ToggleActionEvent args)
@@ -101,7 +99,7 @@ public abstract class SharedGasTankSystem : EntitySystem
         var user = args.User;
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = entity.Comp.IsValveOpen ? Loc.GetString("comp-gas-tank-close-valve") : Loc.GetString("comp-gas-tank-open-valve"),
+            Text = entity.Comp.ReleaseValveOpen ? Loc.GetString("comp-gas-tank-close-valve") : Loc.GetString("comp-gas-tank-open-valve"),
             Act = () =>
             {
                 ToggleValve(entity, user: user);
@@ -112,24 +110,15 @@ public abstract class SharedGasTankSystem : EntitySystem
 
     public void ToggleValve(Entity<GasTankComponent> entity, EntityUid? user = null)
     {
-        ToggleValve(entity, !entity.Comp.IsValveOpen, user);
-    }
-
-    public void ToggleValve(Entity<GasTankComponent> entity, bool open, EntityUid? user = null)
-    {
-        // Don't dirty if we don't have to! Don't play the sound if we're already open!
-        if (entity.Comp.IsValveOpen == open)
-            return;
-
-        entity.Comp.IsValveOpen = open;
-        _audio.PlayPredicted(entity.Comp.ValveSound, entity, user);
+        entity.Comp.ReleaseValveOpen = !entity.Comp.ReleaseValveOpen;
+        Audio.PlayPredicted(entity.Comp.ValveSound, entity, user);
         Dirty(entity);
     }
 
     public bool CanConnectToInternals(Entity<GasTankComponent> ent)
     {
         TryGetInternalsComp(ent, out _, out var internalsComp, ent.Comp.User);
-        return internalsComp != null && internalsComp.BreathTools.Count != 0 && !ent.Comp.IsValveOpen;
+        return internalsComp != null && internalsComp.BreathTools.Count != 0 && !ent.Comp.ReleaseValveOpen;
     }
 
     public bool ConnectToInternals(Entity<GasTankComponent> ent, EntityUid? user = null)
@@ -156,8 +145,8 @@ public abstract class SharedGasTankSystem : EntitySystem
         if (!component.IsConnected)
             return false;
 
-        component.DisconnectStream = _audio.Stop(component.DisconnectStream);
-        component.ConnectStream = _audio.PlayPredicted(component.ConnectSound, owner, user)?.Entity;
+        component.DisconnectStream = Audio.Stop(component.DisconnectStream);
+        component.ConnectStream = Audio.PlayPredicted(component.ConnectSound, owner, user)?.Entity;
         UpdateUserInterface(ent);
         return true;
     }
@@ -225,8 +214,8 @@ public abstract class SharedGasTankSystem : EntitySystem
         if (internalsUid != null && internalsComp != null)
             _internals.DisconnectTank((internalsUid.Value, internalsComp), forced: forced);
 
-        component.ConnectStream = _audio.Stop(component.ConnectStream);
-        component.DisconnectStream = _audio.PlayPredicted(component.DisconnectSound, owner, user)?.Entity;
+        component.ConnectStream = Audio.Stop(component.ConnectStream);
+        component.DisconnectStream = Audio.PlayPredicted(component.DisconnectSound, owner, user)?.Entity;
         UpdateUserInterface(ent);
         return true;
     }

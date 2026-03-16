@@ -242,6 +242,35 @@ public abstract partial class SharedAtmosphereSystem
     public abstract float GetMass(float[] moles);
 
     /// <summary>
+    /// Calculates the amount of volume transferred from one gas mixture to another over time based on flow rate.
+    /// <see cref="GetFlowVolume(GasMixture,GasMixture,float)"/>
+    /// </summary>
+    /// <param name="mix1">A <see cref="GasMixture"/></param>
+    /// <param name="mix2">Another <see cref="GasMixture"/></param>
+    /// <param name="area">The area of transfer, in square meters. One tile of movement is about one square meter.</param>
+    /// <param name="dt">delta time, or how much time is passing/has passed.</param>
+    /// <returns>
+    /// The volume of gas being moved over dt in Litres.
+    /// If the value is positive it's in the direction of mix1->mix2,
+    /// If it's negative it's in the direction of mix2 -> mix1
+    /// </returns>
+    /// <remarks>I'm assuming C is always 1 because I'm lazy, you can precalculate it and pass it with the area if you really care.</remarks>
+    [PublicAPI]
+    public double GetDischargeVolume(GasMixture mix1, GasMixture mix2, float area, float dt)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(dt);
+        return dt * GetFlowVolume(mix1, mix2, area);
+    }
+
+    /// <see cref="GetDischargeVolume(GasMixture,GasMixture,float,float)"/>
+    [PublicAPI]
+    public double GetDischargeVolume(GasMixture mix1, float deltaP, float area, float dt)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(dt);
+        return dt * GetFlowVolume(mix1, deltaP, area);
+    }
+
+    /// <summary>
     /// Calculates the flow volume between two gas mixtures.
     /// Q = C × A × √(2 × ΔP / ρ)
     /// Q is the volumetric airflow rate
@@ -310,6 +339,32 @@ public abstract partial class SharedAtmosphereSystem
             return 0;
 
         return Math.Sqrt(2 * deltaP * mix1.Volume / GetMass(mix1));
+    }
+
+    public GasMixture? ReleaseGasPressure(GasMixture mixture, float pressure, float dt)
+    {
+
+        // TODO: Logic :)
+        return mixture;
+    }
+
+    public GasMixture? ReleaseGasAt(GasMixture mixture, float deltaP, float targetPressure)
+    {
+        if (deltaP <= 0)
+            return null;
+
+        // TODO: Logic :)
+        return mixture;
+    }
+
+    public void ReleaseGasAt(GasMixture mixture, GasMixture? output, float targetPressure)
+    {
+        var outputStartingPressure = output?.Pressure ?? 0;
+
+        if (outputStartingPressure > mixture.Pressure)
+            return;
+
+        // TODO: Logic :)
     }
 
     /// <summary>

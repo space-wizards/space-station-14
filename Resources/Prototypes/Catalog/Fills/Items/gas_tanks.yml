@@ -204,15 +204,61 @@
       temperature: 293.15
 
 - type: entity
-  id: MaxCap
   parent: AirTank
-  suffix: Max Cap
+  id: MaxCap
+  suffix: DEBUG, Max Cap
   components:
   - type: GasTank
-    outputPressure: 0
     air:
       volume: 5
       moles:
-        Oxygen: 1.0
-        Tritium: 1.0
+        Oxygen: 1.0 # If trit fire burn ratio is ever changed, this value will need to be adjusted.
+        Tritium: 0.5
+      temperature: 373.149
+
+- type: entity
+  parent: EmergencyFunnyOxygenTank
+  id: MaxCapSmall
+  suffix: DEBUG, Max Cap
+  components:
+  - type: GasTank
+    air:
+      volume: 1.5
+      moles:
+        Oxygen: 0.41027581
+        Tritium: 0.205137905
+      temperature: 373.149
+
+- type: entity
+  parent: AirTank
+  id: MaxCapSilly
+  name: max cap
+  suffix: DEBUG, Max Cap, Impossible
+  components:
+  - type: GasTank
+    air:
+      volume: 5
+      moles:
+        Oxygen: 6
+        Tritium: 3
+      temperature: 373.149
+
+- type: entity
+  parent: AirTank
+  id: MaxCapBluespace
+  name: max cap
+  suffix: DEBUG, Max Cap, Canister
+  components:
+  - type: Explosive
+    maxIntensity: 200
+  - type: GasTank
+    maxReleasePressure: 1013.25
+    safetyPressure: 5066.25
+    overpressure: 10132.5
+    outputPressure: 0
+    air:
+      volume: 1500
+      moles:
+        Oxygen: 1400
+        Tritium: 700
       temperature: 373.149

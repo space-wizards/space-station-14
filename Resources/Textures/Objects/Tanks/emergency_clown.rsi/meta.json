@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/ff8df99906ab1909674680b9973bd3c909080360. Storage by TiniestShark (Github)",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/ff8df99906ab1909674680b9973bd3c909080360. Storage by TiniestShark (Github). Integrity stages by Princess-Cheeseballs (Github)",
     "size": {
         "x": 32,
         "y": 32
@@ -73,6 +73,12 @@
         {
             "name": "equipped-SUITSTORAGE",
             "directions": 4
+        },
+        {
+            "name": "mask"
+        },
+        {
+            "name": "integrity-unshaded-0"
         }
     ]
 }
