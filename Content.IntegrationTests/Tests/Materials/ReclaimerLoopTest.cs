@@ -3,13 +3,9 @@ using Content.Server.Materials;
 using Content.Shared.Materials;
 using Content.IntegrationTests.Utility;
 using Robust.Shared.Prototypes;
-using Content.Shared.DeviceLinking;
 using System.Collections.Generic;
-using Content.Server.StationEvents.Components;
 using Content.Shared.Whitelist;
-using Robust.Shared.Map;
-using Robust.Shared.GameObjects;
-using System.Diagnostics;
+
 
 
 namespace Content.IntegrationTests.Tests.Materials;
@@ -24,9 +20,6 @@ namespace Content.IntegrationTests.Tests.Materials;
 public sealed class ReclaimerLoopTest : InteractionTest
 {
     private static string[] _reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
-    protected override string PlayerPrototype => "MobHuman"; // The default test mob only has one hand
-
-
     /// <summary>
     /// For each entity that recycles into materials, recycle it and check that
     /// </summary>
@@ -59,8 +52,9 @@ public sealed class ReclaimerLoopTest : InteractionTest
             var currentScrap = await Spawn(itemID);
             var currentScrapUid = SEntMan.GetEntity(currentScrap);
             var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
-            //If it's on the whitelist for the reclaimer, and not on its blacklist
-            if (entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
+            //If it's on the whitelist for the reclaimer, and not on its blacklist. also checks if the reclaimer
+            if (entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist) &&
+            reclaimComp.ReclaimMaterials)
             {
                 foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition) //for each material they spawn
                 {
@@ -71,8 +65,8 @@ public sealed class ReclaimerLoopTest : InteractionTest
                         produceableMaterials.Add(matAsProto);
                     }
                 }
-                await Delete(currentScrapUid);
             }
+            await Delete(currentScrapUid);
         }
 
         // Power the reclaimer
@@ -98,10 +92,6 @@ public sealed class ReclaimerLoopTest : InteractionTest
             var matInHands = await PlaceInHands(matStack);
             var matInHandsUid = SEntMan.GetEntity(matInHands);
 
-            //Check that it's on the whitelist and not on the blacklist, if so, continue with the next item
-            if (!entityWhitelistSystem.CheckBoth(matInHandsUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
-                continue;
-
             //Assert we're holding material
             Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.EqualTo(matInHandsUid),
             $"The material, {matStack}, never got put in our hands.");
@@ -112,7 +102,5 @@ public sealed class ReclaimerLoopTest : InteractionTest
             Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Not.EqualTo(null),
             $"The material that should not have been reclaimed, {matStack}, is no longer in our hands. The reclaimer was {reclaimerID}");
         }
-
-        Debug.WriteLine($"Finished!");
     }
 }
