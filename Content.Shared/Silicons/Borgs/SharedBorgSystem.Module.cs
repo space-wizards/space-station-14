@@ -37,21 +37,37 @@ public abstract partial class SharedBorgSystem
     #region BorgModule
     private void OnModuleExamine(Entity<BorgModuleComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.BorgFitTypes == null)
-            return;
-
-        if (ent.Comp.BorgFitTypes.Count == 0)
-            return;
-
-        var typeList = new List<string>();
-
-        foreach (var type in ent.Comp.BorgFitTypes)
+        if (ent.Comp.BorgFitTypes != null && ent.Comp.BorgFitTypes.Count > 0)
         {
-            typeList.Add(Loc.GetString(type));
+            var typeList = new List<string>();
+
+            foreach (var type in ent.Comp.BorgFitTypes)
+            {
+                typeList.Add(Loc.GetString(type));
+            }
+
+            var types = ContentLocalizationManager.FormatList(typeList);
+            args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
         }
 
-        var types = ContentLocalizationManager.FormatList(typeList);
-        args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
+        if (ent.Comp.ModuleType != null)
+        {
+            var type = Loc.GetString(ent.Comp.ModuleType);
+            args.PushMarkup(Loc.GetString("borg-module-type", ("type", type)));
+        }
+
+        if (ent.Comp.IncompatibleTypes != null && ent.Comp.IncompatibleTypes.Count > 0)
+        {
+            var typeList = new List<string>();
+
+            foreach (var type in ent.Comp.IncompatibleTypes)
+            {
+                typeList.Add(Loc.GetString(type));
+            }
+
+            var types = ContentLocalizationManager.FormatList(typeList);
+            args.PushMarkup(Loc.GetString("borg-module-type-incompatible", ("types", types)));
+        }
     }
 
     private void OnModuleGotInserted(Entity<BorgModuleComponent> module, ref EntGotInsertedIntoContainerMessage args)

@@ -24,3 +24,8 @@ module-type-engi-weapon = [color= #edd45b]engi weapon[/color]
 module-type-heavy-weapon = [color= #d62020]heavy weapon[/color]
 module-type-scout-weapon = [color= #6a6b6f]scout weapon[/color]
 module-type-stealth-weapon = [color= #ff00cc]stealth weapon[/color]
+
+module-type-engi-weapon-colorless = engi weapon
+module-type-heavy-weapon-colorless = heavy weapon
+module-type-scout-weapon-colorless = scout weapon
+module-type-stealth-weapon-colorless = stealth weapon
