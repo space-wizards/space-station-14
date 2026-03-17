@@ -98,15 +98,19 @@ namespace Content.Server.Atmos.EntitySystems
             if (environment != null)
                 _atmosphereSystem.Merge(environment, removed);
 
-            var strength = removed.Pressure * removed.Volume * Atmospherics.kPaToKg_m2;
-            if (strength > 0)
-            {
-                var dir = _random.NextAngle().ToWorldVec();
-                _throwing.TryThrow(entity, dir * strength, strength);
-            }
+            // If we wouldn't produce a sound, don't throw or play a sound.
+            if (deltaP < MinimumSoundValvePressure)
+                return;
 
-            if (deltaP >= MinimumSoundValvePressure)
-                Audio.PlayPvs(entity.Comp.ReleaseSound, entity);
+            Audio.PlayPvs(entity.Comp.ReleaseSound, entity);
+
+            var strength = removed.Pressure * removed.Volume * Atmospherics.kPaToKg_m2;
+
+            if (strength <= 0)
+                return;
+
+            var dir = _random.NextAngle().ToWorldVec();
+            _throwing.TryThrow(entity, dir * strength, strength);
         }
 
         public GasMixture RemoveAirAtPressure(Entity<GasTankComponent> gasTank, float pressure, float volume)

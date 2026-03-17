@@ -124,8 +124,8 @@
     - type: MaxPressureVisuals
       integrityMask: mask-grey
     - type: GasCanister
-      maxIntegrity: 15 # 3 times stronger than a gas tank
-      integrity: 15
+      maxIntegrity: 25 # 5 times stronger than a gas tank
+      integrity: 25
       maxReleasePressure: 1013.25
       safetyPressure: 5066.25
       overpressure: 15198.75 # Purposefully high because cans react really fucking fast, may need to redo this value if reactions change!
@@ -773,7 +773,7 @@
 
 - type: entity
   parent: GasCanister
-  id: MaxCapCanister # As of writing canisters currently have about 7500 explosive intensity. 75% the total damage of a syndicate bomb.
+  id: MaxCapCanister # As of writing canisters currently have about 9000 explosive intensity. 95% the total damage of a syndicate bomb but spread across a larger area.
   name: max cap in a can
   suffix: DEBUG, Max Cap
   components:

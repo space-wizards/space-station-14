@@ -21,6 +21,8 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
+    private const float ReleaseArea = 0.05f; // 500cm^2 Number chosen for balance reasons. It's quite large, but so are gas canisters (holding 1.5 cubic meters of gas!)
+
     public override void Initialize()
     {
         base.Initialize();
@@ -105,7 +107,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
         if (entity.Comp.SafetyValveOpen)
         {
             var environment = _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true);
-            _atmos.FlowGas(entity.Comp.Air, environment, args.dt, 0.10f);
+            _atmos.FlowGas(entity.Comp.Air, environment, args.dt, ReleaseArea);
             if (entity.Comp.Air.Pressure < entity.Comp.SafetyPressure)
                 ToggleSafetyValve(entity, false);
         }
@@ -115,7 +117,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
                 ? _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true)
                 : CompOrNull<GasTankComponent>(entity.Comp.GasTankSlot.Item.Value)?.Air;
 
-            _atmos.FlowGas(entity.Comp.Air, output, entity.Comp.ReleasePressure, args.dt,0.10f);
+            _atmos.FlowGas(entity.Comp.Air, output, entity.Comp.ReleasePressure, args.dt,ReleaseArea);
         }
 
         // If last pressure is very close to the current pressure, do nothing.
