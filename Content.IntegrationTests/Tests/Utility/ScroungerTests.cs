@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Parallax.Data;
 using Content.IntegrationTests.Pair;
 using Content.IntegrationTests.Utility;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Utility;
 
