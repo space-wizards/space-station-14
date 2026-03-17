@@ -43,14 +43,14 @@
     - map: [ "back" ]
     - map: [ "suitstorage" ]
 
-    # Stuff that goes in front of basic equipment
+    # Stuff that goes in front of equipment
     - map: [ "enum.HumanoidVisualLayers.Tail" ]
     - map: [ "enum.HumanoidVisualLayers.TailOverlay" ]
 
     # Neck equipment (scafs, mantles, cloaks)
     - map: [ "neck" ]
 
-    # Stuff that goes in front of neck equipment
+    # Stuff that goes in front of neck and all other equipment
     - map: [ "enum.HumanoidVisualLayers.SnoutCover" ]
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
     - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
