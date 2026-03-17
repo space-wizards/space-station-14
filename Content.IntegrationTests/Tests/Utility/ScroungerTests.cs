@@ -1,3 +1,5 @@
+using System.Linq;
+using Content.IntegrationTests.Pair;
 using Content.IntegrationTests.Utility;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -7,6 +9,24 @@ namespace Content.IntegrationTests.Tests.Utility;
 [TestOf(typeof(GameDataScrounger))]
 public sealed class ScroungerTests
 {
+    private TestPair _pair;
+
+    // TODO: Implement scrounger support for types. Should be easier as we genuinely can just use ReflectionManager.
+    private static Type[] _prototypeTypes = [typeof(EntityPrototype)];
+
+    [OneTimeSetUp]
+    public async Task SetUp()
+    {
+        _pair = await PoolManager.GetServerClient();
+    }
+
+    [OneTimeTearDown]
+    public async Task TearDown()
+    {
+        // We never actually run anything on the pair, so we can just give it back always.
+        await _pair.CleanReturnAsync();
+    }
+
     [Test]
     [Description("Assert that the data scrounger finds prototypes by type successfully.")]
     public void ScroungeByType()
@@ -45,5 +65,20 @@ public sealed class ScroungerTests
         var items = GameDataScrounger.EntitiesWithComponent("Item");
 
         Assert.That(items, Is.Not.Empty);
+    }
+
+    [Test]
+    [Description("Assert that the discovered prototypes correspond precisely with the real set of prototypes, minus test suite prototypes.")]
+    [TestCaseSource(nameof(_prototypeTypes))]
+    public void Prototypes_gh43275(Type t)
+    {
+        var protoMan = _pair.Server.ProtoMan;
+
+        var scroungedProtos = GameDataScrounger.PrototypesOfKind(t);
+        var realProtos = protoMan.EnumeratePrototypes(t)
+            .Select(x => x.ID)
+            .Where(x => !_pair.IsTestPrototype(t, x));
+
+        Assert.That(scroungedProtos, Is.EquivalentTo(realProtos));
     }
 }

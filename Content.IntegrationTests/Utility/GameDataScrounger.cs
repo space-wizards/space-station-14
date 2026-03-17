@@ -83,10 +83,20 @@ public static partial class GameDataScrounger
     public static string[] PrototypesOfKind<T>()
         where T : IPrototype
     {
-        if (typeof(T).GetCustomAttribute<PrototypeAttribute>() is { Type: { } ty })
+        return PrototypesOfKind(typeof(T));
+    }
+
+    /// <summary>
+    ///     Gets all prototypes of the given type kind.
+    /// </summary>
+    public static string[] PrototypesOfKind(Type t)
+    {
+        Assert.That(t.IsAssignableTo(t));
+
+        if (t.GetCustomAttribute<PrototypeAttribute>() is { Type: { } ty })
             return PrototypesOfKind(ty);
 
-        return PrototypesOfKind(PrototypeUtility.CalculatePrototypeName(typeof(T).Name));
+        return PrototypesOfKind(PrototypeUtility.CalculatePrototypeName(t.Name));
     }
 
     /// <summary>
@@ -158,11 +168,12 @@ public static partial class GameDataScrounger
 
         var resDir = ContentResources();
         Assert.That(Directory.Exists($"{resDir}/Prototypes"));
+        Assert.That(Directory.Exists($"{resDir}/../RobustToolbox/Resources/EnginePrototypes"));
 
         var ignoreList = GetIgnoredPrototypes(resDir);
 
         // Start with our root directory. We use this as a stack of directories to traverse.
-        var explorationStack = new List<string>() { $"{resDir}/Prototypes" };
+        var explorationStack = new List<string>() { $"{resDir}/Prototypes", $"{resDir}/../RobustToolbox/Resources/EnginePrototypes" };
 
         while (explorationStack.Count > 0)
         {
