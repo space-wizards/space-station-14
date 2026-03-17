@@ -89,7 +89,10 @@ public sealed partial class LawDisplay : Control
                     case SharedChatSystem.CommonChannel:
                         _chatManager.SendMessage($"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
                     default:
-                        _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
+                        var radioPrefix = radioChannelProto.KeyCode is { } keyCode
+                            ? $"{SharedChatSystem.RadioChannelPrefix}{keyCode} "
+                            : string.Empty;
+                        _chatManager.SendMessage($"{radioPrefix}{lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
                 }
                 _nextAllowedPress[radioChannelButton] = _timing.CurTime + PressCooldown;
             };

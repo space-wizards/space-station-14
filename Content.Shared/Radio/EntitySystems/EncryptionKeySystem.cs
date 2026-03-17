@@ -224,9 +224,9 @@ public sealed partial class EncryptionKeySystem : EntitySystem
 
             var key = id == SharedChatSystem.CommonChannel
                 ? SharedChatSystem.RadioCommonPrefix.ToString()
-                : proto.KeyCode == '\0'
+                : proto.KeyCode == null
                     ? string.Empty
-                    : $"{SharedChatSystem.RadioChannelPrefix}{proto.KeyCode}";
+                    : $"{SharedChatSystem.RadioChannelPrefix}{proto.KeyCode.Value}";
 
             examineEvent.PushMarkup(Loc.GetString(channelFTLPattern,
                 ("color", proto.Color),

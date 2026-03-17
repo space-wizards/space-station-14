@@ -58,8 +58,8 @@ public abstract class SharedChatSystem : EntitySystem
     private void CacheRadios()
     {
         _keyCodes = _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>()
-            .Where(x => x.KeyCode != '\0')
-            .ToFrozenDictionary(x => x.KeyCode);
+            .Where(x => x.KeyCode != null)
+            .ToFrozenDictionary(x => x.KeyCode!.Value);
     }
 
     /// <summary>
