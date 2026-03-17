@@ -38,35 +38,39 @@ public sealed class ReclaimerLoopTest : InteractionTest
         var reclaimerNetEnt = await SpawnTarget(reclaimerID, PlayerCoords);
         var reclaimComp = Comp<MaterialReclaimerComponent>();
         var reclaimUID = SEntMan.GetEntity(reclaimerNetEnt);
+        var reclaimsMaterials = reclaimComp.ReclaimMaterials;
 
+        //if the reclaimer has reclaimsMaterials and is able to produce materials
         //go through all recyclable items, compile a list of produceable materials
-        List<string> produceableMaterials = [];
-        foreach (string itemID in GameDataScrounger.EntitiesWithComponent("PhysicalComposition"))
+        List<string> produceableMaterials = []; //If reclaimMaterials is false, this will stay empty
+        if (reclaimsMaterials)
         {
-            //Wish there was a cleaner way to do this. spawners mess the system up something fierce
-            if (itemID.Contains("Spawner"))
-                continue;
-
-            EntityPrototype item = ProtoMan.Index(itemID);
-            // Debug.WriteLine($"Trying item {itemID}");
-            var currentScrap = await Spawn(itemID);
-            var currentScrapUid = SEntMan.GetEntity(currentScrap);
-            var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
-            //If it's on the whitelist for the reclaimer, and not on its blacklist. also checks if the reclaimer
-            if (entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist) &&
-            reclaimComp.ReclaimMaterials)
+            foreach (string itemID in GameDataScrounger.EntitiesWithComponent("PhysicalComposition"))
             {
-                foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition) //for each material they spawn
+                //Wish there was a cleaner way to do this. spawners mess the system up something fierce
+                if (itemID.Contains("Spawner"))
+                    continue;
+
+                EntityPrototype item = ProtoMan.Index(itemID);
+                // Debug.WriteLine($"Trying item {itemID}");
+                var currentScrap = await Spawn(itemID);
+                var currentScrapUid = SEntMan.GetEntity(currentScrap);
+                var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
+                //If it's on the whitelist for the reclaimer, and not on its blacklist. also checks if the reclaimer
+                if (entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
                 {
-                    ProtoId<MaterialPrototype> matAsProto = ProtoMan.Index<MaterialPrototype>(mat);
-                    //If its not already in producedMaterials, add it
-                    if (!produceableMaterials.Contains(matAsProto))
+                    foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition) //for each material they spawn
                     {
-                        produceableMaterials.Add(matAsProto);
+                        ProtoId<MaterialPrototype> matAsProto = ProtoMan.Index<MaterialPrototype>(mat);
+                        //If its not already in producedMaterials, add it
+                        if (!produceableMaterials.Contains(matAsProto))
+                        {
+                            produceableMaterials.Add(matAsProto);
+                        }
                     }
                 }
+                await Delete(currentScrapUid);
             }
-            await Delete(currentScrapUid);
         }
 
         // Power the reclaimer
