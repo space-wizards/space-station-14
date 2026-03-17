@@ -280,6 +280,8 @@ namespace Content.Client.Viewport
             Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
             coords = Vector2.Transform(coords, matrix);
 
+            coords = Vector2.Clamp(coords, Vector2.Zero, (Vector2)_viewport!.Size);
+
             return _viewport!.LocalToWorld(coords);
         }
 
@@ -293,6 +295,8 @@ namespace Content.Client.Viewport
 
             Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
             coords = Vector2.Transform(coords, matrix);
+
+            coords = Vector2.Clamp(coords, Vector2.Zero, (Vector2)_viewport!.Size);
 
             var ev = new PixelToMapEvent(coords, this, _viewport!);
             _entityManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
