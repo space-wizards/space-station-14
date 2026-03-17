@@ -348,6 +348,11 @@ public readonly partial struct AlarmThresholdSetting: IEquatable<AlarmThresholdS
         return true;
     }
 
+    public override bool Equals(object? obj)
+    {
+        return obj is AlarmThresholdSetting ats && Equals(ats);
+    }
+
     public static bool operator ==(AlarmThresholdSetting lhs, AlarmThresholdSetting rhs)
     {
         return lhs.Equals(rhs);
@@ -383,9 +388,21 @@ public enum AtmosMonitorLimitType //<todo.eoin Very similar to the above...
 // fields you can find this prototype in
 public enum AtmosMonitorThresholdType
 {
-    Temperature,
-    Pressure,
-    Gas
+    Temperature = 0,
+    Pressure = 1,
+    Gas = 2
+}
+
+/// <summary>
+/// Bitflags version of <see cref="AtmosMonitorThresholdType"/>
+/// </summary>
+[Flags]
+public enum AtmosMonitorThresholdTypeFlags
+{
+    None = 0,
+    Temperature = 1 << 0,
+    Pressure = 1 << 1,
+    Gas = 1 << 2,
 }
 
 [Serializable, NetSerializable]

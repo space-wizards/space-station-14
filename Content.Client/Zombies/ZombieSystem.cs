@@ -1,6 +1,6 @@
 using System.Linq;
+using Content.Shared.Body;
 using Content.Shared.Ghost;
-using Content.Shared.Humanoid;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
@@ -12,6 +12,7 @@ namespace Content.Client.Zombies;
 public sealed class ZombieSystem : SharedZombieSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -39,7 +40,7 @@ public sealed class ZombieSystem : SharedZombieSystem
 
     private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
     {
-        if (HasComp<HumanoidAppearanceComponent>(uid))
+        if (HasComp<VisualBodyComponent>(uid))
             return;
 
         if (!TryComp<SpriteComponent>(uid, out var sprite))
@@ -47,7 +48,7 @@ public sealed class ZombieSystem : SharedZombieSystem
 
         for (var i = 0; i < sprite.AllLayers.Count(); i++)
         {
-            sprite.LayerSetColor(i, component.SkinColor);
+            _sprite.LayerSetColor((uid, sprite), i, component.SkinColor);
         }
     }
 }

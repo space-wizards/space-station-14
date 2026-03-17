@@ -1,11 +1,9 @@
-using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
-using Content.Server.Advertise;
-using Content.Server.Advertise.Components;
+using Content.Server.Advertise.EntitySystems;
+using Content.Shared.Advertise.Components;
 using Content.Shared.Arcade;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -31,7 +29,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityManager.EntityQueryEnumerator<BlockGameArcadeComponent>();
+        var query = EntityQueryEnumerator<BlockGameArcadeComponent>();
         while (query.MoveNext(out var _, out var blockGame))
         {
             blockGame.Game?.GameTick(frameTime);
@@ -54,12 +52,12 @@ public sealed class BlockGameArcadeSystem : EntitySystem
     private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, AfterActivatableUIOpenEvent args)
     {
         if (component.Player == null)
-            component.Player = args.Actor;
+            component.Player = args.User;
         else
-            component.Spectators.Add(args.Actor);
+            component.Spectators.Add(args.User);
 
-        UpdatePlayerStatus(uid, args.Actor, component);
-        component.Game?.UpdateNewPlayerUI(args.Actor);
+        UpdatePlayerStatus(uid, args.User, component);
+        component.Game?.UpdateNewPlayerUI(args.User);
     }
 
     private void OnAfterUiClose(EntityUid uid, BlockGameArcadeComponent component, BoundUIClosedEvent args)

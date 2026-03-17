@@ -33,6 +33,7 @@
   components:
   - type: RadioMicrophone
     broadcastChannel: Security
+    listenRange: 1
   - type: RadioSpeaker
     channels:
     - Security

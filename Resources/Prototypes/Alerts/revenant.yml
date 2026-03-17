@@ -10,7 +10,7 @@
 
 - type: alert
   id: Corporeal
-  icons: [ /Textures/Mobs/Ghosts/revenant.rsi/icon.png ]
+  icons: [ { sprite: /Textures/Mobs/Ghosts/revenant.rsi, state: icon } ]
   name: alerts-revenant-corporeal-name
   description: alerts-revenant-corporeal-desc
 
@@ -18,12 +18,15 @@
   id: AlertEssenceSpriteView
   categories: [ HideSpawnMenu ]
   components:
+  - type: GenericCounterAlert
+    centerGlyph: false
+    hideLeadingZeroes: false
   - type: Sprite
     sprite: /Textures/Interface/Alerts/essence_counter.rsi
     layers:
     - map: [ "enum.AlertVisualLayers.Base" ]
-    - map: [ "enum.RevenantVisualLayers.Digit1" ]
-    - map: [ "enum.RevenantVisualLayers.Digit2" ]
-      offset: 0.125, 0
-    - map: [ "enum.RevenantVisualLayers.Digit3" ]
+    - map: [ "1" ]
       offset: 0.25, 0
+    - map: [ "10" ]
+      offset: 0.125, 0
+    - map: [ "100" ]

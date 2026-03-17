@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa. Chevrechaud created by Github user deathride58, croissant taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7ffd61b6fa6a6183daa8900f9a490f46f7a81955. Muffin-chocolate, muffin-banana and muffin-cherry sprites modified from the original muffin sprite by RumiTiger. Chevrechaud-cotton and croissant-cotton created by JuneSzalkowska. Grilled-cheese created by AdipemDragon, take from tgstation at commit https://github.com/tgstation/tgstation/commit/716c6db05ab9df28fee81ceb7cf2b6c25f21176d.",
+    "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa. Chevrechaud created by Github user deathride58, croissant taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7ffd61b6fa6a6183daa8900f9a490f46f7a81955. Muffin-chocolate, muffin-banana and muffin-cherry sprites modified from the original muffin sprite by RumiTiger. Chevrechaud-cotton and croissant-cotton created by JuneSzalkowska. Grilled-cheese created by AdipemDragon, take from tgstation at commit https://github.com/tgstation/tgstation/commit/716c6db05ab9df28fee81ceb7cf2b6c25f21176d. Grilled-cheese-cotton modified from grilled-cheese by MadeOfHeartAndStone on Discord.",
     "size": {
         "x": 32,
         "y": 32
@@ -177,6 +177,9 @@
         },
         {
             "name": "grilled-cheese"
+        },
+        {
+            "name": "grilled-cheese-cotton"
         }
     ]
 }

@@ -410,7 +410,7 @@ namespace Content.IntegrationTests.Tests.Networking
             {
                 var uid = GetEntity(message.Uid);
 
-                var component = EntityManager.GetComponent<PredictionTestComponent>(uid);
+                var component = Comp<PredictionTestComponent>(uid);
                 var old = component.Foo;
                 if (Allow)
                 {

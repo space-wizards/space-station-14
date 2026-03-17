@@ -1,0 +1,20 @@
+<Control
+    xmlns="https://spacestation14.io"
+    xmlns:viewport="clr-namespace:Content.Client.Viewport"
+    MouseFilter="Stop">
+    <PanelContainer StyleClasses="BackgroundDark" Name="AdminCameraWindowRoot" Access="Public">
+        <BoxContainer Orientation="Vertical" Access="Public">
+            <!-- Camera -->
+            <Control VerticalExpand="True" Name="CameraViewBox">
+                <viewport:ScalingViewport Name="CameraView"
+                                          MinSize="100 100"
+                                          MouseFilter="Ignore" />
+            </Control>
+            <!-- Controller buttons -->
+            <BoxContainer Orientation="Horizontal" Margin="5 5 5 5">
+                <Button StyleClasses="OpenRight" Name="FollowButton" HorizontalExpand="True" Access="Public" Text="{Loc 'admin-camera-window-follow'}" />
+                <Button StyleClasses="OpenLeft" Name="PopControl" HorizontalExpand="True" Access="Public" Text="{Loc 'admin-camera-window-pop-out'}" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

@@ -43,7 +43,6 @@
       map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
       shader: unshaded
       visible: false
-  - type: ParticleAcceleratorPart
   - type: ParticleAcceleratorPartVisuals
     stateBase: unlit
   - type: Construction

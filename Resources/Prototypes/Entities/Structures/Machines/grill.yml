@@ -17,7 +17,7 @@
   - type: ApcPowerReceiver
     powerLoad: 0 # off by default
   - type: EntityHeater
-    settingSound: 
+    settingSound:
       path: /Audio/Weapons/click.ogg
       params:
         volume: -6
@@ -29,6 +29,7 @@
   - type: PlaceableSurface
   - type: Machine
     board: ElectricGrillMachineCircuitboard
+  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.EntityHeaterVisuals.Setting:

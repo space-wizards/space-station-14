@@ -92,4 +92,24 @@ namespace Content.Shared.Chat
 
         AdminRelated = Admin | AdminAlert | AdminChat,
     }
+
+    /// <summary>
+    /// Contains extension methods for <see cref="ChatChannel"/>
+    /// </summary>
+    public static class ChatChannelExt
+    {
+        /// <summary>
+        /// Gets a string representation of a chat channel.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when this channel does not have a string representation set.</exception>
+        public static string GetString(this ChatChannel channel)
+        {
+            return channel switch
+            {
+                ChatChannel.OOC => Loc.GetString("chat-channel-humanized-ooc"),
+                ChatChannel.AdminChat => Loc.GetString("chat-channel-humanized-admin"),
+                _ => throw new ArgumentOutOfRangeException(nameof(channel), channel, null)
+            };
+        }
+    }
 }

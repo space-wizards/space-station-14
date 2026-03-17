@@ -2,7 +2,7 @@
 # ideally it would be dynamic and work by actually sparking the solution but that doesnt exist yet :(
 # with that you could make napalm ied instead of welding fuel with no additional complexity
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMinorContraband ]
   id: FireBomb
   name: fire bomb
   description: A weak, improvised incendiary device.
@@ -15,8 +15,9 @@
     - state: fuel
     - state: wires
   - type: Item
-    sprite: Objects/Consumable/Drinks/cola.rsi
-  - type: OnUseTimerTrigger
+    sprite: Objects/Weapons/Bombs/ied.rsi
+  - type: TriggerOnUse
+  - type: TimerTrigger
     delay: 5
     examinable: false
     initialBeepDelay: 0
@@ -34,6 +35,8 @@
     maxIntensity: 3
     canCreateVacuum: false
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Appearance
   - type: AnimationPlayer
   - type: TimerTriggerVisuals
@@ -55,7 +58,7 @@
 
 # has igniter but no fuel or wires
 - type: entity
-  parent: DrinkColaCanEmpty
+  parent: [ DrinkColaCanEmpty, BaseMinorContraband ]
   id: FireBombEmpty
   name: fire bomb
   suffix: empty

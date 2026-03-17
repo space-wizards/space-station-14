@@ -1,33 +1,50 @@
-﻿# Non-fungible apes, anyone?
+# Non-fungible apes, anyone?
 - type: nameIdentifierGroup
   id: Monkey
-  prefix: MK
+  format: name-identifier-format-monkey
 
 - type: nameIdentifierGroup
   id: Kobold
-  prefix: KB
+  format: name-identifier-format-kobold
 
 - type: nameIdentifierGroup
   id: Holoparasite
-  prefix: HOLO
+  format: name-identifier-format-holoparasite
 
 - type: nameIdentifierGroup
   id: MMI
-  prefix: MMI
+  format: name-identifier-format-mmi
   minValue: 100
   maxValue: 999
 
 - type: nameIdentifierGroup
   id: PositronicBrain
-  prefix: PB
+  format: name-identifier-format-positronic-brain
   minValue: 10
   maxValue: 99
 
 - type: nameIdentifierGroup
   id: Silicon
-  prefix: Si
+  format: name-identifier-format-silicon
   minValue: 1000
   maxValue: 9999
+
+- type: nameIdentifierGroup
+  id: Xenoborg
+  format: name-identifier-format-xenoborg
+  minValue: 1000
+  maxValue: 9999
+
+- type: nameIdentifierGroup
+  id: StationAi
+  format: name-identifier-format-station-ai
+  minValue: 100
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: XenoArtifactNode
+  minValue: 0
+  maxValue: 999
 
 # Used to suffix a number to any mob to identify player controlled mob griefing.
 - type: nameIdentifierGroup
@@ -40,6 +57,6 @@
 
 - type: nameIdentifierGroup
   id: CargoTelepads
-  prefix: TELE
+  format: name-identifier-format-telepad
   minValue: 0
   maxValue: 999

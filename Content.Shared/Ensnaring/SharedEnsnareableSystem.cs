@@ -1,7 +1,4 @@
-using System.Linq;
 using Content.Shared.Alert;
-using Content.Shared.Body.Part;
-using Content.Shared.Body.Systems;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -31,12 +28,11 @@ public abstract class SharedEnsnareableSystem : EntitySystem
     [Dependency] private   readonly MovementSpeedModifierSystem _speedModifier = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
-    [Dependency] private   readonly SharedBodySystem _body = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private   readonly SharedHandsSystem _hands = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private   readonly StaminaSystem _stamina = default!;
+    [Dependency] private   readonly SharedStaminaSystem _stamina = default!;
 
     public override void Initialize()
     {
@@ -56,7 +52,6 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         SubscribeLocalEvent<EnsnaringComponent, StepTriggerAttemptEvent>(AttemptStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, StepTriggeredOffEvent>(OnStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, ThrowDoHitEvent>(OnThrowHit);
-        SubscribeLocalEvent<EnsnaringComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
 
     protected virtual void OnEnsnareInit(Entity<EnsnareableComponent> ent, ref ComponentInit args)
@@ -189,11 +184,6 @@ public abstract class SharedEnsnareableSystem : EntitySystem
             TryFree(uid, args.Actor, entity, ensnaring);
             return;
         }
-    }
-
-    private void OnAttemptPacifiedThrow(Entity<EnsnaringComponent> ent, ref AttemptPacifiedThrowEvent args)
-    {
-        args.Cancel("pacified-cannot-throw-snare");
     }
 
     private void OnRemoveEnsnareAlert(Entity<EnsnareableComponent> ent, ref RemoveEnsnareAlertEvent args)

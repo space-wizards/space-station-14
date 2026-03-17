@@ -1,19 +1,5 @@
-﻿- type: dataset
-  id: ATVDescriptions
+﻿- type: localizedDataset
+  id: DescriptionsATV
   values:
-  - All-Tile Vehicle.
-  - Ant-Thwarting Vehicle.
-  - Any-Time Vegetable.
-  - Actually-Two Vehicles.
-  - Any-Typed Variable.
-  - Assisted-Trauma Vehicle.
-  - Algorithm-Transmitted Virus.
-  - Alcoholic-Toddler Vacancy.
-  - Asshole-Tearing Volcano.
-  - A-Tele Vision.
-  - Awkward-Tweaking Vagabond.
-  - Art-Tragedy Volunteer.
-  - Automatic-Taco Vacancy.
-  - Another-Terrific View.
-  - All-The Virgins.
-  - A-Terrible Vehicle.
+    prefix: descriptions-atv-dataset-
+    count: 16

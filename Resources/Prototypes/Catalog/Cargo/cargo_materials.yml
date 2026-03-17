@@ -40,11 +40,46 @@
 
 - type: cargoProduct
   id: MaterialPlasteel
+  name: cargoproduct-name-material-plasteel
+  description: cargoproduct-description-material-plasteel
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
     state: plasteel_3
-  product: CrateMaterialPlasteel
-  cost: 4800
+  product: SheetPlasteel
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 1600
+  category: cargoproduct-category-name-materials
+  group: market
+
+- type: cargoProduct
+  id: MaterialGold
+  name: cargoproduct-name-material-gold
+  description: cargoproduct-description-material-gold
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: gold_3
+  product: IngotGold
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 3225
+  category: cargoproduct-category-name-materials
+  group: market
+
+- type: cargoProduct
+  id: MaterialSilver
+  name: cargoproduct-name-material-silver
+  description: cargoproduct-description-material-silver
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: silver_3
+  product: IngotSilver
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 2580
   category: cargoproduct-category-name-materials
   group: market
 
@@ -64,7 +99,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: plasma_3
   product: CrateMaterialPlasma
-  cost: 2000
+  cost: 1500
   category: cargoproduct-category-name-materials
   group: market
 
@@ -74,7 +109,7 @@
     sprite: Objects/Materials/materials.rsi
     state: cardboard_3
   product: CrateMaterialCardboard
-  cost: 750
+  cost: 330
   category: cargoproduct-category-name-materials
   group: market
 
@@ -84,7 +119,27 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: paper_3
   product: CrateMaterialPaper
-  cost: 1000
+  cost: 185
+  category: cargoproduct-category-name-materials
+  group: market
+
+- type: cargoProduct
+  id: MaterialBasic
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: generic_materials
+  product: CrateMaterialBasicResource
+  cost: 1660
+  category: cargoproduct-category-name-materials
+  group: market
+
+- type: cargoProduct
+  id: MaterialSilo
+  icon:
+    sprite: Structures/Machines/silo.rsi
+    state: silo
+  product: CrateMaterialSilo
+  cost: 5000
   category: cargoproduct-category-name-materials
   group: market
 
@@ -106,4 +161,14 @@
   product: WaterTankFull
   cost: 1000
   category: cargoproduct-category-name-materials
+  group: market
+
+- type: cargoProduct
+  id: AirGrenade
+  icon:
+    sprite: Objects/Weapons/Grenades/airboom.rsi
+    state: icon
+  product: CrateAirGrenade
+  cost: 2500
+  category: cargoproduct-category-name-atmospherics
   group: market

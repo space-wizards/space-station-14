@@ -42,7 +42,6 @@
   [color=#a4885c]Generic[/color] modules add versatility. They can be fitted into any chassis, granting useful tools such as crowbars, GPS, and the ability to interact with cables. [bold]The generic cyborg chassis can fit up to five additional modules.[/bold]
   <Box>
     <GuideEntityEmbed Entity="BorgModuleCable" Caption="Cable"/>
-    <GuideEntityEmbed Entity="BorgModuleGPS" Caption="GPS"/>
     <GuideEntityEmbed Entity="BorgModuleFireExtinguisher" Caption="Fire Extinguisher"/>
   </Box>
   <Box>
@@ -56,7 +55,7 @@
     <GuideEntityEmbed Entity="BorgModuleMining" Caption="Mining"/>
     <GuideEntityEmbed Entity="BorgModuleCleaning" Caption="Cleaning"/>
     <GuideEntityEmbed Entity="BorgModuleService" Caption="Service"/>
-    <GuideEntityEmbed Entity="BorgModuleTreatment" Caption="Treatment"/>
+    <GuideEntityEmbed Entity="BorgModuleChemical" Caption="Chemical"/>
   </Box>
   <Box>
     [italic]Examples of specialized modules. Note the housing and circuit board colors.

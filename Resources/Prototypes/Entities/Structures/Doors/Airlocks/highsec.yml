@@ -6,9 +6,14 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: StationAiWhitelist
   - type: InteractionOutline
   - type: Sprite
+    snapCardinals: true
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
     layers:
     - state: closed
@@ -37,6 +42,10 @@
       shader: unshaded
       visible: false
       map: ["enum.ElectrifiedLayers.Sparks"]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -115,9 +124,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
   - type: Construction
     graph: Airlock
     node: highSecDoor
@@ -125,3 +131,5 @@
     tags:
       - HighSecDoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because this construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door

@@ -1,0 +1,81 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "basic",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.6
+                ]
+            ]
+        },
+        {
+            "name": "basic_attack",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "ranged",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.6
+                ]
+            ]
+        },
+        {
+            "name": "ranged_attack",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "strong",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.6
+                ]
+            ]
+        },
+        {
+            "name": "strong_attack",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "EngBot",
+            "directions": 4
+        }
+    ]
+}

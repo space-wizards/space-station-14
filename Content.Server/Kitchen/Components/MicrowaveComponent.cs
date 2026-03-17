@@ -111,16 +111,4 @@ namespace Content.Server.Kitchen.Components
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public bool CanMicrowaveIdsSafely = true;
     }
-
-    public sealed class BeingMicrowavedEvent : HandledEntityEventArgs
-    {
-        public EntityUid Microwave;
-        public EntityUid? User;
-
-        public BeingMicrowavedEvent(EntityUid microwave, EntityUid? user)
-        {
-            Microwave = microwave;
-            User = user;
-        }
-    }
 }

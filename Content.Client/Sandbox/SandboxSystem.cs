@@ -83,6 +83,11 @@ namespace Content.Client.Sandbox
             RaiseNetworkEvent(new MsgSandboxSuicide());
         }
 
+        public void ToggleThermalVision()
+        {
+            RaiseNetworkEvent(new MsgSandboxThermalVision());
+        }
+
         public bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!SandboxAllowed)
@@ -90,7 +95,7 @@ namespace Content.Client.Sandbox
 
             // Try copy entity.
             if (uid.IsValid()
-                && EntityManager.TryGetComponent(uid, out MetaDataComponent? comp)
+                && TryComp(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {
                 if (comp.EntityPrototype == null || comp.EntityPrototype.HideSpawnMenu || comp.EntityPrototype.Abstract)

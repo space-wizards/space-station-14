@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Changed sprites taken from infinity baystation 12, https://github.com/infinitystation/Baystation12/blob/073f678cdce92edb8fcd55f9ffc9f0523bf31506/icons/obj/grenade.dmi",
+  "copyright": "Changed sprites taken from infinity baystation 12, https://github.com/infinitystation/Baystation12/blob/073f678cdce92edb8fcd55f9ffc9f0523bf31506/icons/obj/grenade.dmi. Inhands by TiniestShark (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -19,6 +19,14 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
     }
   ]
 }

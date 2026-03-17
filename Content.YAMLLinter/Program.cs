@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
+using Content.IntegrationTests.Utility;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -17,6 +18,7 @@ namespace Content.YAMLLinter
     {
         private static async Task<int> Main(string[] _)
         {
+            GameDataScrounger.NoScrounging = true; // Ugly hack for YAML Linter.
             PoolManager.Startup();
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -36,7 +38,9 @@ namespace Content.YAMLLinter
             {
                 foreach (var errorNode in errorHashset)
                 {
-                    Console.WriteLine($"::error file={file},line={errorNode.Node.Start.Line},col={errorNode.Node.Start.Column}::{file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column})  {errorNode.ErrorReason}");
+                    // TODO YAML LINTER Fix inheritance
+                    // If a parent/abstract prototype has na error, this will misreport the file name (but with the correct line/column).
+                    Console.WriteLine($"::error in {file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column})  {errorNode.ErrorReason}");
                 }
             }
 
@@ -143,22 +147,24 @@ namespace Content.YAMLLinter
             foreach (var (key, val) in clientErrors.YamlErrors)
             {
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
-                if (newErrors.Count == 0)
-                    continue;
-
-                if (yamlErrors.TryGetValue(key, out var errors))
-                    errors.UnionWith(val.Where(n => n.AlwaysRelevant));
-                else
-                    yamlErrors[key] = newErrors;
 
                 // Include any errors that relate to client-only types
                 foreach (var errorNode in val)
                 {
-                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !serverTypes.Contains(fieldNotFoundNode.FieldType.Name))
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode
+                        && !serverTypes.Contains(fieldNotFoundNode.FieldType.Name))
                     {
                         newErrors.Add(errorNode);
                     }
                 }
+
+                if (newErrors.Count == 0)
+                    continue;
+
+                if (yamlErrors.TryGetValue(key, out var errors))
+                    errors.UnionWith(newErrors);
+                else
+                    yamlErrors[key] = newErrors;
             }
 
             // Finally, combine the prototype ID field errors.

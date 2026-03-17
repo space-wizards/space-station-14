@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Cargo.Components;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class CargoBountyConsoleComponent : Component
 {
     /// <summary>
@@ -44,6 +44,18 @@ public sealed partial class CargoBountyConsoleComponent : Component
     /// </summary>
     [DataField("denySound")]
     public SoundSpecifier DenySound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_two.ogg");
+
+    /// <summary>
+    /// The time at which the console will be able to make the denial sound again.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextDenySoundTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between playing a denial sound.
+    /// </summary>
+    [DataField]
+    public TimeSpan DenySoundDelay = TimeSpan.FromSeconds(2);
 }
 
 [NetSerializable, Serializable]

@@ -15,6 +15,9 @@
   - Syringe
   - PillCanister
   - HandLabeler
+  - ChemistryEmptyVial
+  - ChemistryEmptyVialSmall
+  - Dropper
 
 - type: latheRecipePack
   parent: BasicChemistryStatic
@@ -43,6 +46,9 @@
   - DiseaseSwab
   - BodyBag
   - WhiteCane
+  - OffsetCane
+  - OffsetCaneWood
+  - JetInjector
 
 - type: latheRecipePack
   id: RollerBedsStatic
@@ -92,6 +98,9 @@
   - SyringeCryostasis
   - BluespaceBeaker
   - SyringeBluespace
+  - LauncherSyringe
+  - MiniSyringe
+  - AdvancedJetInjector
 
 - type: latheRecipePack
   id: MedicalBoards

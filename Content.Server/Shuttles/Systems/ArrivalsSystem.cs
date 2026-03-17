@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration;
+using Content.Server.Antag;
 using Content.Server.Chat.Managers;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
@@ -12,13 +12,13 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
-using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
@@ -26,20 +26,17 @@ using Content.Shared.Parallax.Biomes;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tiles;
-using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -65,6 +62,7 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
     private EntityQuery<PendingClockInComponent> _pendingQuery;
     private EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery;
@@ -227,7 +225,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
             if (component.FirstRun)
             {
-                var station = _station.GetLargestGrid(Comp<StationDataComponent>(component.Station));
+                var station = _station.GetLargestGrid(component.Station);
                 sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
@@ -277,6 +275,9 @@ public sealed class ArrivalsSystem : EntitySystem
 
             if (ArrivalsGodmode)
                 RemCompDeferred<GodmodeComponent>(pUid);
+
+            if (_actor.TryGetSession(pUid, out var session) && session is not null)
+                _antag.TryMakeLateJoinAntag(session);
         }
     }
 
@@ -447,6 +448,26 @@ public sealed class ArrivalsSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Check if an entity is on the arrivals grid.
+    /// </summary>
+    /// <param name="entity">Entity to check.</param>
+    /// <returns>True if the entity is on the arrivals grid. Returns false if not on arrivals, or there is no arrivals grid.</returns>
+    public bool IsOnArrivals(Entity<TransformComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        if (!TryGetArrivals(out var arrivals))
+            return false;
+
+        var arrivalsGridUid = Transform(arrivals).GridUid;
+        if (!arrivalsGridUid.HasValue)
+            return false;
+
+        return entity.Comp.GridUid == Transform(arrivals).GridUid;
+    }
+
     public TimeSpan? NextShuttleArrival()
     {
         var query = EntityQueryEnumerator<ArrivalsShuttleComponent>();
@@ -473,7 +494,7 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             while (query.MoveNext(out var uid, out var comp, out var shuttle, out var xform))
             {
-                if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
+                if (comp.NextTransfer > curTime)
                     continue;
 
                 var tripTime = _shuttles.DefaultTravelTime + _shuttles.DefaultStartupTime;
@@ -489,7 +510,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 // Go to station
                 else
                 {
-                    var targetGrid = _station.GetLargestGrid(data);
+                    var targetGrid = _station.GetLargestGrid(comp.Station);
 
                     if (targetGrid != null)
                         _shuttles.FTLToDock(uid, shuttle, targetGrid.Value);

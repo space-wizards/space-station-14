@@ -10,37 +10,37 @@
               amount: 5
               doAfter: 1
             - tag: SuitEVA
-              name: an EVA suit
+              name: construction-graph-tag-eva-suit
               icon:
                 sprite: Clothing/OuterClothing/Suits/eva.rsi
                 state: icon
               doAfter: 1
             - tag: HelmetEVA
-              name: an EVA helmet
+              name: construction-graph-tag-eva-helmet
               icon:
                 sprite: Clothing/Head/Helmets/eva.rsi
                 state: icon
               doAfter: 1
             - tag: CrayonPurple
-              name: purple crayon
+              name: construction-graph-tag-purple-crayon
               icon:
                 sprite: Objects/Fun/crayons.rsi
                 state: purple
               doAfter: 1
             - tag: CrayonRed
-              name: red crayon
+              name: construction-graph-tag-red-crayon
               icon:
                 sprite: Objects/Fun/crayons.rsi
                 state: red
               doAfter: 1
             - tag: CrayonYellow
-              name: yellow crayon
+              name: construction-graph-tag-yellow-crayon
               icon:
                 sprite: Objects/Fun/crayons.rsi
                 state: yellow
               doAfter: 1
             - tag: ClownRecorder
-              name: clown recorder
+              name: construction-graph-tag-clown-recorder
               icon:
                 sprite: Objects/Fun/clownrecorder.rsi
                 state: icon

@@ -12,6 +12,8 @@ public sealed class RandomMetadataSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
+    private readonly List<(string, object)> _outputSegments = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -26,13 +28,13 @@ public sealed class RandomMetadataSystem : EntitySystem
 
         if (component.NameSegments != null)
         {
-            _metaData.SetEntityName(uid, GetRandomFromSegments(component.NameSegments, component.NameSeparator), meta);
+            _metaData.SetEntityName(uid, GetRandomFromSegments(component.NameSegments, component.NameFormat), meta);
         }
 
         if (component.DescriptionSegments != null)
         {
             _metaData.SetEntityDescription(uid,
-                GetRandomFromSegments(component.DescriptionSegments, component.DescriptionSeparator), meta);
+                GetRandomFromSegments(component.DescriptionSegments, component.DescriptionFormat), meta);
         }
     }
 
@@ -40,31 +42,18 @@ public sealed class RandomMetadataSystem : EntitySystem
     /// Generates a random string from segments and a separator.
     /// </summary>
     /// <param name="segments">The segments that it will be generated from</param>
-    /// <param name="separator">The separator that will be inbetween each segment</param>
+    /// <param name="format">The format string used to combine the segments.</param>
     /// <returns>The newly generated string</returns>
     [PublicAPI]
-    public string GetRandomFromSegments(List<string> segments, string? separator)
+    public string GetRandomFromSegments(List<ProtoId<LocalizedDatasetPrototype>> segments, LocId format)
     {
-        var outputSegments = new List<string>();
-        foreach (var segment in segments)
+        _outputSegments.Clear();
+        for (var i = 0; i < segments.Count; ++i)
         {
-            if (_prototype.TryIndex<LocalizedDatasetPrototype>(segment, out var localizedProto))
-            {
-                outputSegments.Add(_random.Pick(localizedProto));
-            }
-            else if (_prototype.TryIndex<DatasetPrototype>(segment, out var proto))
-            {
-                var random = _random.Pick(proto.Values);
-                if (Loc.TryGetString(random, out var localizedSegment))
-                    outputSegments.Add(localizedSegment);
-                else
-                    outputSegments.Add(random);
-            }
-            else if (Loc.TryGetString(segment, out var localizedSegment))
-                outputSegments.Add(localizedSegment);
-            else
-                outputSegments.Add(segment);
+            var localizedProto = _prototype.Index(segments[i]);
+            _outputSegments.Add(($"part{i}", _random.Pick(localizedProto)));
         }
-        return string.Join(separator, outputSegments);
+
+        return Loc.GetString(format, _outputSegments.ToArray());
     }
 }

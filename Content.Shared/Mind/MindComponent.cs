@@ -1,8 +1,7 @@
-using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mind;
@@ -55,6 +54,9 @@ public sealed partial class MindComponent : Component
     [ViewVariables]
     public bool IsVisitingEntity => VisitingEntity != null;
 
+    /// <summary>
+    /// The entity that this mind may be currently visiting. Used, for example, to allow admin ghosting to not make the owner's body catatonic, as opposed to when normally ghosting.
+    /// </summary>
     [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
     public EntityUid? VisitingEntity { get; set; }
 
@@ -97,10 +99,16 @@ public sealed partial class MindComponent : Component
     public bool PreventSuicide { get; set; }
 
     /// <summary>
-    ///     Mind Role Entities belonging to this Mind
+    /// Mind Role Entities belonging to this Mind are stored in this container.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public List<EntityUid> MindRoles = new List<EntityUid>();
+    [ViewVariables]
+    public Container MindRoleContainer = default!;
+
+    /// <summary>
+    /// The id for the MindRoleContainer.
+    /// </summary>
+    [ViewVariables]
+    public const string MindRoleContainerId = "mind_roles";
 
     /// <summary>
     ///     The mind's current antagonist/special role, or lack thereof;
@@ -109,10 +117,8 @@ public sealed partial class MindComponent : Component
     public ProtoId<RoleTypePrototype> RoleType = "Neutral";
 
     /// <summary>
-    ///     The session of the player owning this mind.
-    ///     Can be null, in which case the player is currently not logged in.
+    ///     The role's subtype, shown only to admins to help with antag categorization
     /// </summary>
-    [ViewVariables, Access(typeof(SharedMindSystem), typeof(SharedGameTicker))]
-    // TODO remove this after moving IPlayerManager functions to shared
-    public ICommonSession? Session { get; set; }
+    [DataField]
+    public LocId? Subtype;
 }

@@ -1,4 +1,5 @@
 - type: entity
+  parent: BaseWallmount
   categories: [ HideSpawnMenu ]
   id: BaseAPC
   name: APC
@@ -15,16 +16,12 @@
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#3db83b"
     castShadows: false
     netsync: false
-  - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]
-  - type: InteractionOutline
-  - type: Transform
-    anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Power/apc.rsi
@@ -59,6 +56,11 @@
   - type: Appearance
   - type: ApcVisuals
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
     maxCharge: 50000
     startingCharge: 0
   - type: ExaminableBattery
@@ -89,6 +91,8 @@
     interfaces:
       enum.ApcUiKey.Key:
         type: ApcBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
     key: enum.ApcUiKey.Key
@@ -102,6 +106,10 @@
     supplyRampRate: 500
   - type: WallMount
   - type: WiresPanel
+  - type: Wires
+    alwaysRandomize: true
+    boardName: wires-board-name-apc
+    layoutId: APC
   - type: WiresVisuals
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -150,6 +158,7 @@
 
 # APC under construction
 - type: entity
+  parent: BaseWallmountMetallic
   categories: [ HideSpawnMenu ]
   id: APCFrame
   name: APC frame
@@ -157,21 +166,12 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Transform
-    anchored: true
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Power/apc.rsi
     state: frame
   - type: Construction
     graph: APC
     node: apcFrame
-  - type: WallMount
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -240,3 +240,14 @@
   - type: Battery
     maxCharge: 200000
     startingCharge: 200000
+
+- type: entity
+  parent: BaseAPC
+  id: APCXenoborg
+  suffix: Basic, 50kJ, Xenoborg
+  components:
+  - type: Battery
+    maxCharge: 50000
+    startingCharge: 50000
+  - type: AccessReader
+    access: [["Xenoborg"]]

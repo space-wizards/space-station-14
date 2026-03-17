@@ -1,15 +1,19 @@
 using Content.Shared.Inventory;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Storage.Components;
+namespace Content.Shared.Storage.Components;
 
 /// <summary>
 /// Applies an ongoing pickup area around the attached entity.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
+[AutoGenerateComponentPause]
 public sealed partial class MagnetPickupComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("nextScan")]
     [AutoPausedField]
+    [AutoNetworkedField]
     public TimeSpan NextScan = TimeSpan.Zero;
 
     /// <summary>

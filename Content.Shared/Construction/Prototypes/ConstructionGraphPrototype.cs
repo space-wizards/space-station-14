@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction.Prototypes
 {
-    [Prototype("constructionGraph")]
+    [Prototype]
     public sealed partial class ConstructionGraphPrototype : IPrototype, ISerializationHooks
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();

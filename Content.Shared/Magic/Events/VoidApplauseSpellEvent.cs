@@ -1,15 +1,12 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Magic.Events;
 
-public sealed partial class VoidApplauseSpellEvent : EntityTargetActionEvent, ISpeakSpell
+public sealed partial class VoidApplauseSpellEvent : EntityTargetActionEvent
 {
-    [DataField]
-    public string? Speech { get; private set; }
-
     /// <summary>
     ///     Emote to use.
     /// </summary>

@@ -20,7 +20,8 @@
         mask:
         - MachineMask
         layer:
-        - WallLayer
+        - MachineLayer
+        - InteractImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

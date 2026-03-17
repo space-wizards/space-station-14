@@ -18,7 +18,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: MaterialWoodPlank
               amount: 3
           steps:

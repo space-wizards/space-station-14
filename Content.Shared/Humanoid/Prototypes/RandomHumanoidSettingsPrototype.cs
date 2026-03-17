@@ -6,7 +6,7 @@ namespace Content.Shared.Humanoid.Prototypes;
 /// <summary>
 ///     This is what is used to change a humanoid spawned by RandomHumanoidSystem in Content.Server.
 /// </summary>
-[Prototype("randomHumanoidSettings")]
+[Prototype]
 public sealed partial class RandomHumanoidSettingsPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;
@@ -21,7 +21,7 @@ public sealed partial class RandomHumanoidSettingsPrototype : IPrototype, IInher
     /// <summary>
     ///     Whether the humanoid's name should take from the randomized profile or not.
     /// </summary>
-    [DataField("randomizeName")]
+    [DataField]
     public bool RandomizeName { get; private set; } = true;
 
     /// <summary>

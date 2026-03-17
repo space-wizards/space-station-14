@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
-using Content.Shared.Body.Part;
+using Content.Shared.Body;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -18,14 +18,10 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultMixingCategory = "DummyMix";
-    [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultGrindCategory = "DummyGrind";
-    [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultJuiceCategory = "DummyJuice";
-    [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultCondenseCategory = "DummyCondense";
+    private static readonly ProtoId<MixingCategoryPrototype> DefaultMixingCategory = "DummyMix";
+    private static readonly ProtoId<MixingCategoryPrototype> DefaultGrindCategory = "DummyGrind";
+    private static readonly ProtoId<MixingCategoryPrototype> DefaultJuiceCategory = "DummyJuice";
+    private static readonly ProtoId<MixingCategoryPrototype> DefaultCondenseCategory = "DummyCondense";
 
     private readonly Dictionary<string, List<ReagentSourceData>> _reagentSources = new();
 
@@ -94,11 +90,11 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             if (entProto.Abstract || usedNames.Contains(entProto.Name))
                 continue;
 
-            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent))
+            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent, EntityManager.ComponentFactory))
                 continue;
 
             //these bloat the hell out of blood/fat
-            if (entProto.HasComponent<BodyPartComponent>())
+            if (entProto.HasComponent<OrganComponent>())
                 continue;
 
             //these feel obvious...
@@ -120,8 +116,8 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             }
 
 
-            if (extractableComponent.GrindableSolution is { } grindableSolutionId &&
-                entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager) &&
+            if (extractableComponent.GrindableSolutionName is { } grindableSolutionId &&
+                entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager, EntityManager.ComponentFactory) &&
                 _solutionContainer.TryGetSolution(manager, grindableSolutionId, out var grindableSolution))
             {
                 var data = new ReagentEntitySourceData(

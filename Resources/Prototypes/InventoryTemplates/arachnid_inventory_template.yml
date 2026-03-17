@@ -1,4 +1,4 @@
-﻿- type: inventoryTemplate
+- type: inventoryTemplate
   id: arachnid
   slots:
     - name: shoes
@@ -81,6 +81,9 @@
       uiWindowPos: 3,0
       strippingWindowPos: 0,5
       displayName: Back
+      blacklist:
+        tags:
+        - PetOnly
 
     - name: pocket4
       slotTexture: web

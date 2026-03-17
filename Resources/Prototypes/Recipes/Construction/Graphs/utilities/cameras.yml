@@ -20,7 +20,7 @@
               doAfter: 1
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 2
             - !type:DeleteEntity {}
@@ -47,7 +47,7 @@
             - !type:AllWiresCut {}
             - !type:WirePanel {}
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 2
             - !type:DeleteEntity {}

@@ -59,13 +59,13 @@ namespace Content.Client.Gameplay
 
             // Version number watermark.
             _version = new Label();
+            _version.FontColorOverride = Color.FromHex("#FFFFFF20");
             _version.Text = _changelog.GetClientVersion();
-            _version.Visible = VersionVisible();
             UserInterfaceManager.PopupRoot.AddChild(_version);
-            _configurationManager.OnValueChanged(CCVars.HudVersionWatermark, (show) => { _version.Visible = VersionVisible(); });
-            _configurationManager.OnValueChanged(CCVars.ForceClientHudVersionWatermark, (show) => { _version.Visible = VersionVisible(); });
+            _configurationManager.OnValueChanged(CCVars.HudVersionWatermark, (show) => { _version.Visible = VersionVisible(); }, true);
+            _configurationManager.OnValueChanged(CCVars.ForceClientHudVersionWatermark, (show) => { _version.Visible = VersionVisible(); }, true);
             // TODO make this centered or something
-            LayoutContainer.SetPosition(_version, new Vector2(800, 0));
+            LayoutContainer.SetPosition(_version, new Vector2(70, 0));
         }
 
         // This allows servers to force the watermark on clients

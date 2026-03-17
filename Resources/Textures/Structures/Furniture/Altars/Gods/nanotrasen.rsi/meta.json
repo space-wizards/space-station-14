@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/TauCetiStation/TauCetiClassic/pull/5184/commits/7489ad4520ddf83968c467cd587bde2c821e10a6",
+  "copyright": "Originals taken from https://github.com/TauCetiStation/TauCetiClassic/pull/5184/commits/7489ad4520ddf83968c467cd587bde2c821e10a6, modified by Booblesnoot in https://github.com/space-wizards/space-station-14/pull/35685",
   "states": [
     {
       "name": "nanotrasen"

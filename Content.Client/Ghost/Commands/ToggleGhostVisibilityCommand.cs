@@ -2,25 +2,17 @@
 
 namespace Content.Client.Ghost.Commands;
 
-public sealed class ToggleGhostVisibilityCommand : IConsoleCommand
+public sealed class ToggleGhostVisibilityCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntitySystemManager _entSysMan = default!;
+    [Dependency] private readonly GhostSystem _ghost = default!;
 
-    public string Command => "toggleghostvisibility";
-    public string Description => "Toggles ghost visibility on the client.";
-    public string Help => "toggleghostvisibility [bool]";
+    public override string Command => "toggleghostvisibility";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var ghostSystem = _entSysMan.GetEntitySystem<GhostSystem>();
-
         if (args.Length != 0 && bool.TryParse(args[0], out var visibility))
-        {
-            ghostSystem.ToggleGhostVisibility(visibility);
-        }
+            _ghost.ToggleGhostVisibility(visibility);
         else
-        {
-            ghostSystem.ToggleGhostVisibility();
-        }
+            _ghost.ToggleGhostVisibility();
     }
 }

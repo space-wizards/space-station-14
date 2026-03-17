@@ -180,7 +180,7 @@ public sealed class ChangeCvarCommand : IConsoleCommand
                 var oldValue = _configurationManager.GetCVar<object>(cvar);
                 _configurationManager.SetCVar(cvar, parsed);
                 _adminLogManager.Add(LogType.AdminCommands,
-                    LogImpact.High,
+                    LogImpact.Extreme,
                     $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValue.ToString()} to {parsed.ToString()}"
                     );
 

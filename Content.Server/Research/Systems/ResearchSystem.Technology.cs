@@ -2,6 +2,7 @@ using Content.Shared.Database;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research.Systems;
 
@@ -119,15 +120,17 @@ public sealed partial class ResearchSystem
         }
 
         component.UnlockedTechnologies.Add(technology.ID);
+        var addedRecipes = new List<string>();
         foreach (var unlock in technology.RecipeUnlocks)
         {
             if (component.UnlockedRecipes.Contains(unlock))
                 continue;
             component.UnlockedRecipes.Add(unlock);
+            addedRecipes.Add(unlock);
         }
         Dirty(uid, component);
 
-        var ev = new TechnologyDatabaseModifiedEvent();
+        var ev = new TechnologyDatabaseModifiedEvent(addedRecipes);
         RaiseLocalEvent(uid, ref ev);
     }
 
@@ -163,9 +166,9 @@ public sealed partial class ResearchSystem
             return;
         component.MainDiscipline = null;
         component.CurrentTechnologyCards = new List<string>();
-        component.SupportedDisciplines = new List<string>();
-        component.UnlockedTechnologies = new List<string>();
-        component.UnlockedRecipes = new List<string>();
+        component.SupportedDisciplines = new List<ProtoId<TechDisciplinePrototype>>();
+        component.UnlockedTechnologies = new List<ProtoId<TechnologyPrototype>>();
+        component.UnlockedRecipes = new List<ProtoId<LatheRecipePrototype>>();
         Dirty(uid, component);
     }
 }

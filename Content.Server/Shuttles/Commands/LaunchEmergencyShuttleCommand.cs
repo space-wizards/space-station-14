@@ -9,16 +9,14 @@ namespace Content.Server.Shuttles.Commands;
 /// Early launches in the emergency shuttle.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class LaunchEmergencyShuttleCommand : IConsoleCommand
+public sealed class LaunchEmergencyShuttleCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntitySystemManager _sysManager = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _shuttleSystem = default!;
 
-    public string Command => "launchemergencyshuttle";
-    public string Description => Loc.GetString("emergency-shuttle-command-launch-desc");
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "launchemergencyshuttle";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var system = _sysManager.GetEntitySystem<EmergencyShuttleSystem>();
-        system.EarlyLaunch();
+        _shuttleSystem.EarlyLaunch();
     }
 }

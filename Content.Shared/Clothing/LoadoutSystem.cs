@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared.Body.Systems;
+using Content.Shared.Body;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -29,7 +29,7 @@ public sealed class LoadoutSystem : EntitySystem
         base.Initialize();
 
         // Wait until the character has all their organs before we give them their loadout
-        SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit, after: [typeof(SharedBodySystem)]);
+        SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit, after: [typeof(InitialBodySystem)]);
     }
 
     public static string GetJobPrototype(string? loadout)
@@ -44,7 +44,7 @@ public sealed class LoadoutSystem : EntitySystem
     {
         EntProtoId? proto = null;
 
-        if (_protoMan.TryIndex(loadout.StartingGear, out var gear))
+        if (_protoMan.Resolve(loadout.StartingGear, out var gear))
         {
             proto = GetFirstOrNull(gear);
         }
@@ -65,12 +65,12 @@ public sealed class LoadoutSystem : EntitySystem
 
         if (count == 1)
         {
-            if (gear.Equipment.Count == 1 && _protoMan.TryIndex<EntityPrototype>(gear.Equipment.Values.First(), out var proto))
+            if (gear.Equipment.Count == 1 && _protoMan.Resolve(gear.Equipment.Values.First(), out var proto))
             {
                 return proto.ID;
             }
 
-            if (gear.Inhand.Count == 1 && _protoMan.TryIndex<EntityPrototype>(gear.Inhand[0], out proto))
+            if (gear.Inhand.Count == 1 && _protoMan.Resolve(gear.Inhand[0], out proto))
             {
                 return proto.ID;
             }
@@ -90,10 +90,10 @@ public sealed class LoadoutSystem : EntitySystem
 
     public string GetName(LoadoutPrototype loadout)
     {
-        if (loadout.DummyEntity is not null && _protoMan.TryIndex<EntityPrototype>(loadout.DummyEntity, out var proto))
+        if (loadout.DummyEntity is not null && _protoMan.Resolve(loadout.DummyEntity, out var proto))
             return proto.Name;
 
-        if (_protoMan.TryIndex(loadout.StartingGear, out var gear))
+        if (_protoMan.Resolve(loadout.StartingGear, out var gear))
         {
             return GetName(gear);
         }
@@ -150,7 +150,7 @@ public sealed class LoadoutSystem : EntitySystem
     {
         // First, randomly pick a startingGear profile from those specified, and equip it.
         if (startingGear != null && startingGear.Count > 0)
-            _station.EquipStartingGear(uid, _random.Pick(startingGear));
+            _station.EquipStartingGear(uid, _random.Pick(startingGear), false);
 
         if (loadoutGroups == null)
         {
@@ -177,11 +177,8 @@ public sealed class LoadoutSystem : EntitySystem
 
     public HumanoidCharacterProfile GetProfile(EntityUid? uid)
     {
-        if (TryComp(uid, out HumanoidAppearanceComponent? appearance))
-        {
-            return HumanoidCharacterProfile.DefaultWithSpecies(appearance.Species);
-        }
-
-        return HumanoidCharacterProfile.Random();
+        return TryComp<HumanoidProfileComponent>(uid, out var profile)
+            ? HumanoidCharacterProfile.DefaultWithSpecies(profile.Species, profile.Sex)
+            : HumanoidCharacterProfile.Random();
     }
 }

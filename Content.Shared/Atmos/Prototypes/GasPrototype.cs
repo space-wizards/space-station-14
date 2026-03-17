@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Atmos.Prototypes
 {
-    [Prototype("gas")]
+    [Prototype]
     public sealed partial class GasPrototype : IPrototype
     {
         [DataField("name")] public string Name { get; set; } = "";
@@ -83,5 +83,21 @@ namespace Content.Shared.Atmos.Prototypes
 
         [DataField("pricePerMole")]
         public float PricePerMole { get; set; } = 0;
+
+        /// <summary>
+        /// Whether the gas is considered to be flammable.
+        /// This is used generically across Atmospherics to determine
+        /// if things like hotspots are allowed to ignite if an
+        /// oxidizer is present.
+        /// </summary>
+        [DataField]
+        public bool IsFuel;
+
+        /// <summary>
+        /// Whether the gas is considered to be an oxidizer.
+        /// Same reasoning as <see cref="IsFuel"/> but for oxidizers.
+        /// </summary>
+        [DataField]
+        public bool IsOxidizer;
     }
 }

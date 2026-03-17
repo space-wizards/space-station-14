@@ -141,11 +141,8 @@ public sealed partial class StoreMenu : DefaultWindow
         else if (listing.ProductAction != null)
         {
             var actionId = _entityManager.Spawn(listing.ProductAction);
-            if (_entityManager.System<ActionsSystem>().TryGetActionData(actionId, out var action) &&
-                action.Icon != null)
-            {
-                texture = spriteSys.Frame0(action.Icon);
-            }
+            if (_entityManager.System<ActionsSystem>().GetAction(actionId)?.Comp?.Icon is {} icon)
+                texture = spriteSys.Frame0(icon);
         }
 
         var listingInStock = GetListingPriceString(listing);

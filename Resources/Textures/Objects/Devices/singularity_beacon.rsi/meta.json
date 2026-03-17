@@ -1,20 +1,65 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "tgstation at https://github.com/tgstation/tgstation/blob/c46d689e2b300bdc8c5b153855b1a5bbb2c5b168/icons/obj/singularity.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon",
-      "delays": [
-        [
-          0.1,
-          0.1
-        ]
-      ]
-    }
-  ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "tgstation at https://github.com/tgstation/tgstation/blob/c46d689e2b300bdc8c5b153855b1a5bbb2c5b168/icons/obj/singularity.dmi, inhands by mubururu_ (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+
+    ]
 }
