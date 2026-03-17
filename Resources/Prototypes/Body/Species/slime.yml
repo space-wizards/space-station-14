@@ -116,7 +116,6 @@
   - type: PassiveDamage # Around 8 damage a minute healed
     allowedStates:
     - Alive
-    damageCap: 65
     damage:
       types:
         Heat: -0.14
