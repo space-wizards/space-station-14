@@ -13,6 +13,10 @@ panic_bunker.enable_without_admins = true
 panic_bunker.show_reason = true
 panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on Wizard's Den Lizard or Wizard's Den Leviathan until you have more playtime."
 
+[looc]
+enabled = false
+
+
 # IPIntel stuff
 ipintel_enabled = true
 ipintel_contact_email = "support@spacestation14.com"
