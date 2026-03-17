@@ -5,7 +5,7 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 ///     A flag enum representing a side of a testpair.
 /// </summary>
 [Flags]
-public enum Side
+public enum Side : byte
 {
     /// <summary>
     ///     Bitflag representing the client side of a testpair.
