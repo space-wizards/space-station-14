@@ -56,6 +56,32 @@
             ]
         },
         {
+            "name": "equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-SUITSTORAGE",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
             "name": "mask"
         },
         {
