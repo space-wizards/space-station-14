@@ -73,9 +73,5 @@ public sealed class MaxPressureVisualsSystem : EntitySystem
         {
             _sprite.LayerSetRsiState((entity, sprite), MaxPressureVisualLayers.BaseUnshaded, $"{entity.Comp.IntegrityState}-unshaded-0");
         }
-
-
-
-
     }
 }
