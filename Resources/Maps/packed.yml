@@ -4,8 +4,8 @@ meta:
   engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/17/2026 13:05:36
-  entityCount: 15960
+  time: 03/17/2026 13:32:15
+  entityCount: 15982
 maps:
 - 126
 grids:
@@ -12292,6 +12292,51 @@ entities:
     - type: Transform
       pos: 36.5,-32.5
       parent: 2
+  - uid: 15346
+    components:
+    - type: Transform
+      pos: 48.5,-44.5
+      parent: 2
+  - uid: 15347
+    components:
+    - type: Transform
+      pos: 48.5,-45.5
+      parent: 2
+  - uid: 15348
+    components:
+    - type: Transform
+      pos: 48.5,-46.5
+      parent: 2
+  - uid: 15349
+    components:
+    - type: Transform
+      pos: 49.5,-44.5
+      parent: 2
+  - uid: 15350
+    components:
+    - type: Transform
+      pos: 49.5,-45.5
+      parent: 2
+  - uid: 15351
+    components:
+    - type: Transform
+      pos: 49.5,-46.5
+      parent: 2
+  - uid: 15352
+    components:
+    - type: Transform
+      pos: 50.5,-44.5
+      parent: 2
+  - uid: 15353
+    components:
+    - type: Transform
+      pos: 50.5,-45.5
+      parent: 2
+  - uid: 15354
+    components:
+    - type: Transform
+      pos: 50.5,-46.5
+      parent: 2
   - uid: 15792
     components:
     - type: Transform
@@ -23487,10 +23532,45 @@ entities:
     - type: Transform
       pos: 27.5,-31.5
       parent: 2
+  - uid: 15333
+    components:
+    - type: Transform
+      pos: 46.5,-44.5
+      parent: 2
   - uid: 15334
     components:
     - type: Transform
       pos: 28.5,-32.5
+      parent: 2
+  - uid: 15340
+    components:
+    - type: Transform
+      pos: 47.5,-44.5
+      parent: 2
+  - uid: 15341
+    components:
+    - type: Transform
+      pos: 48.5,-44.5
+      parent: 2
+  - uid: 15342
+    components:
+    - type: Transform
+      pos: 49.5,-44.5
+      parent: 2
+  - uid: 15343
+    components:
+    - type: Transform
+      pos: 50.5,-44.5
+      parent: 2
+  - uid: 15344
+    components:
+    - type: Transform
+      pos: 50.5,-45.5
+      parent: 2
+  - uid: 15345
+    components:
+    - type: Transform
+      pos: 50.5,-46.5
       parent: 2
   - uid: 15402
     components:
@@ -38349,6 +38429,11 @@ entities:
     - type: Transform
       pos: 22.5,7.5
       parent: 2
+  - uid: 12882
+    components:
+    - type: Transform
+      pos: 46.5,-47.5
+      parent: 2
   - uid: 12886
     components:
     - type: Transform
@@ -38378,6 +38463,11 @@ entities:
     components:
     - type: Transform
       pos: 52.5,-44.5
+      parent: 2
+  - uid: 12993
+    components:
+    - type: Transform
+      pos: 46.5,-46.5
       parent: 2
   - uid: 13005
     components:
@@ -39276,6 +39366,16 @@ entities:
       rot: 3.141592653589793 rad
       pos: 26.5,-32.5
       parent: 2
+  - uid: 15355
+    components:
+    - type: Transform
+      pos: 46.5,-45.5
+      parent: 2
+  - uid: 15356
+    components:
+    - type: Transform
+      pos: 46.5,-44.5
+      parent: 2
   - uid: 15361
     components:
     - type: Transform
@@ -39364,6 +39464,21 @@ entities:
     components:
     - type: Transform
       pos: -12.5,-40.5
+      parent: 2
+  - uid: 15979
+    components:
+    - type: Transform
+      pos: 46.5,-43.5
+      parent: 2
+  - uid: 15980
+    components:
+    - type: Transform
+      pos: 46.5,-42.5
+      parent: 2
+  - uid: 15981
+    components:
+    - type: Transform
+      pos: 47.5,-42.5
       parent: 2
 - proto: Cautery
   entities:
@@ -43297,7 +43412,7 @@ entities:
       pos: 59.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -19015.096
+      secondsUntilStateChange: -19101.06
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -49153,7 +49268,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -66308.88
+      secondsUntilStateChange: -66394.85
       state: Closing
   - uid: 9362
     components:
@@ -69864,11 +69979,6 @@ entities:
     - type: Transform
       pos: 11.5,45.5
       parent: 2
-  - uid: 12882
-    components:
-    - type: Transform
-      pos: 36.5,-37.5
-      parent: 2
   - uid: 12900
     components:
     - type: Transform
@@ -72181,7 +72291,7 @@ entities:
       pos: 12.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -4480.8306
+      secondsUntilStateChange: -4566.7964
       state: Closing
   - uid: 5750
     components:
@@ -83919,17 +84029,17 @@ entities:
       fixtures: {}
 - proto: SignFire
   entities:
-  - uid: 12993
-    components:
-    - type: Transform
-      pos: 45.5,-49.5
-      parent: 2
-    - type: Fixtures
-      fixtures: {}
   - uid: 13618
     components:
     - type: Transform
       pos: 51.5,-44.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 15982
+    components:
+    - type: Transform
+      pos: 47.5,-47.5
       parent: 2
     - type: Fixtures
       fixtures: {}
