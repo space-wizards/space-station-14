@@ -79,7 +79,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
 
         //Set reclaimer to enabled
         materialReclaimerSystem.SetReclaimerEnabled(reclaimUID, true);
-        //Assert reclaimer enabled
+        //Assert that reclaimer enabled
         Assert.That(reclaimComp.Enabled,
         "The reclaimer did not get or stay enabled");
 
