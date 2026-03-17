@@ -5,7 +5,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
-using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Database;
@@ -88,7 +87,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
         Audio.PlayPvs(entity.Comp.ValveSound, entity);
     }
 
-    protected override void DevicedUpdate(Entity<GasCanisterComponent> entity, ref AtmosDeviceUpdateEvent args)
+    protected override void DeviceUpdated(Entity<GasCanisterComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
         _atmos.React(entity.Comp.Air, entity.Comp);
 

@@ -1,4 +1,5 @@
 ﻿using Content.Client.Atmos.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
@@ -6,7 +7,8 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Atmos.EntitySystems;
 
 /// <summary>
-/// This handles...
+/// This system handles sprite changes for a <see cref="IGasMaxPressureHolder"/>
+/// with a <see cref="MaxPressureVisualsComponent"/> when its <see cref="IGasMaxPressureHolder.Integrity"/> changes.
 /// </summary>
 public sealed class MaxPressureVisualsSystem : EntitySystem
 {

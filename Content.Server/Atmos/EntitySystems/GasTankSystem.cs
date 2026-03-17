@@ -5,165 +5,156 @@ using Content.Shared.Cargo;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
-namespace Content.Server.Atmos.EntitySystems
+namespace Content.Server.Atmos.EntitySystems;
+
+[UsedImplicitly]
+public sealed class GasTankSystem : SharedGasTankSystem
 {
-    [UsedImplicitly]
-    public sealed class GasTankSystem : SharedGasTankSystem
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+
+    private const float MinimumSoundValvePressure = 10.0f;
+    private const float ReleaseArea = 0.0001f; // About 1cm^2
+
+    public override void Initialize()
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly ThrowingSystem _throwing = default!;
+        base.Initialize();
+        SubscribeLocalEvent<GasTankComponent, EntParentChangedMessage>(OnParentChange);
+        SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
+        SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
+    }
 
-        private const float MinimumSoundValvePressure = 10.0f;
-        private const float ReleaseArea = 0.0001f; // About 1cm^2
-
-        public override void Initialize()
+    protected override void DeviceUpdated(Entity<GasTankComponent> entity, ref AtmosDeviceUpdateEvent args)
+    {
+        // Release gas if valve is open
+        // Disconnect from internals if valve is open
+        if (entity.Comp.ReleaseValveOpen)
         {
-            base.Initialize();
-            SubscribeLocalEvent<GasTankComponent, EntParentChangedMessage>(OnParentChange);
-            SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
-            SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
+            DisconnectFromInternals(entity);
+            ReleaseGas(entity, args.dt);
         }
-
-        protected override void DevicedUpdate(Entity<GasTankComponent> entity, ref AtmosDeviceUpdateEvent args)
+        else if (entity.Comp.CheckUser)
         {
-            // Release gas if valve is open
-            // Disconnect from internals if valve is open
-            if (entity.Comp.ReleaseValveOpen)
+            entity.Comp.CheckUser = false;
+            if (Transform(entity).ParentUid != entity.Comp.User)
             {
                 DisconnectFromInternals(entity);
-                ReleaseGas(entity, args.dt);
             }
-            else if (entity.Comp.CheckUser)
+        }
+
+        Atmos.React(entity.Comp.Air, entity.Comp);
+
+        if ((entity.Comp.IsConnected || entity.Comp.ReleaseValveOpen) && UI.IsUiOpen(entity.Owner, SharedGasTankUiKey.Key))
+            UpdateUserInterface(entity);
+    }
+
+    public override void UpdateUserInterface(Entity<GasTankComponent> ent)
+    {
+        var (owner, component) = ent;
+        UI.SetUiState(owner,
+            SharedGasTankUiKey.Key,
+            new GasTankBoundUserInterfaceState
             {
-                entity.Comp.CheckUser = false;
-                if (Transform(entity).ParentUid != entity.Comp.User)
-                {
-                    DisconnectFromInternals(entity);
-                }
-            }
+                TankPressure = component.Air.Pressure
+            });
+    }
 
-            Atmos.React(entity.Comp.Air, entity.Comp);
+    private void OnParentChange(EntityUid uid, GasTankComponent component, ref EntParentChangedMessage args)
+    {
+        // When an item is moved from hands -> pockets, the container removal briefly dumps the item on the floor.
+        // So this is a shitty fix, where the parent check is just delayed. But this really needs to get fixed
+        // properly at some point.
+        component.CheckUser = true;
+    }
 
-            if ((entity.Comp.IsConnected || entity.Comp.ReleaseValveOpen) && UI.IsUiOpen(entity.Owner, SharedGasTankUiKey.Key))
-                UpdateUserInterface(entity);
-        }
+    /// <summary>
+    /// Tries to release gas through the pressure release valve.
+    /// </summary>
+    /// <param name="entity">The gas tank entity releasing gas</param>
+    /// <param name="dt">The amount of time since the last update</param>
+    /// <returns></returns>
+    private void ReleaseGas(Entity<GasTankComponent> entity, float dt)
+    {
+        var environment = _atmosphereSystem.GetContainingMixture(entity.Owner, false, true);
 
-        public override void UpdateUserInterface(Entity<GasTankComponent> ent)
-        {
-            var (owner, component) = ent;
-            UI.SetUiState(owner,
-                SharedGasTankUiKey.Key,
-                new GasTankBoundUserInterfaceState
-                {
-                    TankPressure = component.Air.Pressure
-                });
-        }
+        var deltaP = environment == null
+            ? entity.Comp.Air.Pressure
+            : entity.Comp.Air.Pressure - environment.Pressure;
 
-        private void OnParentChange(EntityUid uid, GasTankComponent component, ref EntParentChangedMessage args)
-        {
-            // When an item is moved from hands -> pockets, the container removal briefly dumps the item on the floor.
-            // So this is a shitty fix, where the parent check is just delayed. But this really needs to get fixed
-            // properly at some point.
-            component.CheckUser = true;
-        }
+        // Cap deltaP by the maximum output pressure of the tank.
+        if (deltaP < entity.Comp.SafetyPressure)
+            deltaP = Math.Min(entity.Comp.ReleasePressure, deltaP);
 
-        /// <summary>
-        /// Tries to release gas through the pressure release valve.
-        /// </summary>
-        /// <param name="entity">The gas tank entity releasing gas</param>
-        /// <param name="dt">The amount of time since the last update</param>
-        /// <returns></returns>
-        private void ReleaseGas(Entity<GasTankComponent> entity, float dt)
-        {
-            var environment = _atmosphereSystem.GetContainingMixture(entity.Owner, false, true);
+        var removed = _atmosphereSystem.FlowGas(entity.Comp.Air, deltaP, dt, ReleaseArea);
 
-            var deltaP = environment == null
-                ? entity.Comp.Air.Pressure
-                : entity.Comp.Air.Pressure - environment.Pressure;
+        if (removed == null)
+            return;
 
-            // Cap deltaP by the maximum output pressure of the tank.
-            if (deltaP < entity.Comp.SafetyPressure)
-                deltaP = Math.Min(entity.Comp.ReleasePressure, deltaP);
+        if (environment != null)
+            _atmosphereSystem.Merge(environment, removed);
 
-            var removed = _atmosphereSystem.FlowGas(entity.Comp.Air, deltaP, dt, ReleaseArea);
+        // If we wouldn't produce a sound, don't throw or play a sound.
+        if (deltaP < MinimumSoundValvePressure)
+            return;
 
-            if (removed == null)
-                return;
+        Audio.PlayPvs(entity.Comp.ReleaseSound, entity);
 
-            if (environment != null)
-                _atmosphereSystem.Merge(environment, removed);
+        var strength = removed.Pressure * removed.Volume * Atmospherics.kPaToKg_m2;
 
-            // If we wouldn't produce a sound, don't throw or play a sound.
-            if (deltaP < MinimumSoundValvePressure)
-                return;
+        if (strength <= 0)
+            return;
 
-            Audio.PlayPvs(entity.Comp.ReleaseSound, entity);
+        var dir = _random.NextAngle().ToWorldVec();
+        _throwing.TryThrow(entity, dir * strength, strength);
+    }
 
-            var strength = removed.Pressure * removed.Volume * Atmospherics.kPaToKg_m2;
+    public GasMixture RemoveAirOutput(Entity<GasTankComponent> gasTank, float volume)
+    {
+        var mixture = _atmosphereSystem.RemoveVolumeAtPressure(gasTank.Comp.Air, volume, gasTank.Comp.ReleasePressure);
+        // We resize the volume because lungs breathe in volume rather than being pressure based atm.
+        // If we don't do this, they won't consume all of the outputted gas or will consume way too much.
+        mixture.Volume = volume;
+        return mixture;
+    }
 
-            if (strength <= 0)
-                return;
+    public GasMixture RemoveAir(Entity<GasTankComponent> gasTank, float amount)
+    {
+        return gasTank.Comp.Air.Remove(amount);
+    }
 
-            var dir = _random.NextAngle().ToWorldVec();
-            _throwing.TryThrow(entity, dir * strength, strength);
-        }
+    public void AssumeAir(Entity<GasTankComponent> ent, GasMixture giver)
+    {
+        _atmosphereSystem.Merge(ent.Comp.Air, giver);
+        CheckStatus(ent);
+    }
 
-        public GasMixture RemoveAirAtPressure(Entity<GasTankComponent> gasTank, float pressure, float volume)
-        {
-            var molesNeeded = pressure * volume / (Atmospherics.R * gasTank.Comp.Air.Temperature);
+    protected override void SafetyMeasures(Entity<GasTankComponent> entity)
+    {
+        if (entity.Comp.ReleaseValveOpen)
+            return;
 
-            return RemoveAir(gasTank, molesNeeded);
-        }
+        ToggleValve(entity);
+        if (entity.Comp.SafetyAlert != null)
+            _popup.PopupEntity(Loc.GetString(entity.Comp.SafetyAlert), entity, PopupType.LargeCaution);
 
-        public GasMixture RemoveAirOutput(Entity<GasTankComponent> gasTank, float volume)
-        {
-            var mixture = RemoveAirAtPressure(gasTank, gasTank.Comp.ReleasePressure, volume);
-            // We resize the volume because lungs breathe in volume rather than being pressure based atm.
-            // If we don't do this, they won't consume all of the outputted gas or will consume way too much.
-            mixture.Volume = volume;
-            return mixture;
-        }
+        Dirty(entity);
+    }
 
-        public GasMixture RemoveAir(Entity<GasTankComponent> gasTank, float amount)
-        {
-            return gasTank.Comp.Air.Remove(amount);
-        }
+    /// <summary>
+    /// Returns the gas mixture for the gas analyzer
+    /// </summary>
+    private void OnAnalyzed(EntityUid uid, GasTankComponent component, GasAnalyzerScanEvent args)
+    {
+        args.GasMixtures ??= new List<(string, GasMixture?)>();
+        args.GasMixtures.Add((Name(uid), component.Air));
+    }
 
-        public void AssumeAir(Entity<GasTankComponent> ent, GasMixture giver)
-        {
-            _atmosphereSystem.Merge(ent.Comp.Air, giver);
-            CheckStatus(ent);
-        }
-
-        protected override void SafetyMeasures(Entity<GasTankComponent> entity)
-        {
-            if (entity.Comp.ReleaseValveOpen)
-                return;
-
-            ToggleValve(entity);
-            if (entity.Comp.SafetyAlert != null)
-                _popup.PopupEntity(Loc.GetString(entity.Comp.SafetyAlert), entity, PopupType.LargeCaution);
-
-            Dirty(entity);
-        }
-
-        /// <summary>
-        /// Returns the gas mixture for the gas analyzer
-        /// </summary>
-        private void OnAnalyzed(EntityUid uid, GasTankComponent component, GasAnalyzerScanEvent args)
-        {
-            args.GasMixtures ??= new List<(string, GasMixture?)>();
-            args.GasMixtures.Add((Name(uid), component.Air));
-        }
-
-        private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)
-        {
-            args.Price += _atmosphereSystem.GetPrice(component.Air);
-        }
+    private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)
+    {
+        args.Price += _atmosphereSystem.GetPrice(component.Air);
     }
 }

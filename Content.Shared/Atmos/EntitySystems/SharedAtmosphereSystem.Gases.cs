@@ -79,7 +79,6 @@ public abstract partial class SharedAtmosphereSystem
         }
 
         Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
-        Array.Resize(ref _gasMolarMasses, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
         for (var i = 0; i < GasPrototypes.Length; i++)
         {
@@ -426,8 +425,18 @@ public abstract partial class SharedAtmosphereSystem
 
         targetPressure = Math.Min(targetPressure, mixture.Pressure);
 
-        var molesNeeded = targetPressure * volume / (Atmospherics.R * mixture.Temperature);
+        return RemoveVolumeAtPressure(mixture, volume, targetPressure);
+    }
 
+    /// <summary>
+    /// Removes a specified volume of gas from a mixture, at a specific pressure.
+    /// </summary>
+    /// <param name="mixture">mixture of gas</param>
+    /// <param name="volume">volume we're attempting to remove</param>
+    /// <param name="pressure">pressure that volume will be removed at.</param>
+    public GasMixture RemoveVolumeAtPressure(GasMixture mixture, float volume, float pressure)
+    {
+        var molesNeeded = pressure * volume / (Atmospherics.R * mixture.Temperature);
         return mixture.Remove(molesNeeded);
     }
 
@@ -444,7 +453,7 @@ public abstract partial class SharedAtmosphereSystem
 
 
     /// <summary>
-    /// Calculates the moels that must be transferred from
+    /// Calculates the moles that must be transferred from
     /// <see cref="gasMixture1"/> to <see cref="gasMixture2"/> to equalize pressure.
     /// </summary>
     public float MolesToEqualizePressure(GasMixture gasMixture1, GasMixture gasMixture2)

@@ -1,7 +1,11 @@
-﻿namespace Content.Client.Atmos.Components;
+﻿using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
+
+namespace Content.Client.Atmos.Components;
 
 /// <summary>
-/// This is used for...
+/// This listens to appearance changes from <see cref="GasMaxPressureSystem{T}"/>
+/// and applies sprite changes to a gas holder currently experiencing <see cref="IGasMaxPressureHolder.Integrity"/> loss.
 /// </summary>
 [RegisterComponent]
 public sealed partial class MaxPressureVisualsComponent : Component

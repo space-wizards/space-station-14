@@ -39,7 +39,7 @@ public abstract class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPr
     {
         // We don't update our atmos device if it's in the process of being deleted.
         if (CheckStatus(entity))
-            DevicedUpdate(entity, ref args);
+            DeviceUpdated(entity, ref args);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public abstract class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPr
     /// </summary>
     /// <param name="entity">Gas holding atmos device.</param>
     /// <param name="args"><see cref="AtmosDeviceUpdateEvent"/></param>
-    protected abstract void DevicedUpdate(Entity<T> entity, ref AtmosDeviceUpdateEvent args);
+    protected abstract void DeviceUpdated(Entity<T> entity, ref AtmosDeviceUpdateEvent args);
 
     /// <summary>
     /// Handler for when this atmos device is about to break due to exceeding its maximum pressure too many times

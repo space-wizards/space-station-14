@@ -717,13 +717,8 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Attempts to cause an overpressure detonation on an entity, with an optional explosion.
+    /// Gets the potential energy from overpressure between two gas mixtures.
     /// </summary>
-    /// <param name="gasEntity">Entity that is going to be fugcking exploding</param>
-    /// <param name="mix1">Mixture that is doing the overpressure</param>
-    /// <param name="environment">Environment we're gonna be dumping our gas and energy into</param>
-    /// <param name="explode">Whether or not we want to actually explode or just break.</param>
-    /// <param name="debris">Optional debris entity to spawn.</param>
     /// <returns>Returns the potential energy of the overpressure in Joules.</returns>
     [PublicAPI]
     public float GetOverPressure(EntityUid gasEntity, GasMixture mix1, GasMixture environment, bool explode = false, EntProtoId? debris = null)
