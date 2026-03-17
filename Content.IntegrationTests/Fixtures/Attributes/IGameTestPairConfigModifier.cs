@@ -1,5 +1,4 @@
 #nullable enable
-using System.Collections.Generic;
 
 namespace Content.IntegrationTests.Fixtures.Attributes;
 
@@ -10,8 +9,17 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 /// </summary>
 public interface IGameTestPairConfigModifier
 {
+    /// <summary>
+    ///     Whether this modifier is exclusive and should conflict with other exclusive modifers.
+    ///     Essentially, yell if other IGameTestPairConfigModifier attributes are present if this is set.
+    /// </summary>
     bool Exclusive { get; }
 
+    /// <summary>
+    ///     Called when GameTest needs its <see cref="PoolSettings"/> modified by the modifier.
+    /// </summary>
+    /// <param name="test">The test we're applying to.</param>
+    /// <param name="settings">The settings object to modify.</param>
     void ApplyToPairSettings(GameTest test, ref PoolSettings settings);
 }
 

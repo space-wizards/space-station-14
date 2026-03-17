@@ -7,7 +7,7 @@ using NUnit.Framework.Internal.Commands;
 namespace Content.IntegrationTests.Fixtures.Attributes;
 
 /// <summary>
-///     Ensures a test method runs on the given side (client or server).
+///     Ensures a test method runs on the given side (client or server, not neither nor both).
 /// </summary>
 /// <remarks>
 ///     This only works for <see cref="GameTest"/> fixtures.

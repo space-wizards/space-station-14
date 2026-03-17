@@ -21,8 +21,7 @@ namespace Content.IntegrationTests.Fixtures;
 /// <para>
 ///     A test fixture with an integrated <see cref="GameTest.Pair">test pair</see>,
 ///     proxy methods for efficient test writing, utilities for ensuring tests clean up correctly,
-///     and dependency injection
-///     (<see cref="SystemAttribute"/> and <see cref="SidedDependencyAttribute"/>).
+///     and dependency injection (<see cref="SidedDependencyAttribute"/>).
 /// </para>
 /// <para>
 ///     Tests using GameTest support some additional class and method level attributes, namely
@@ -166,7 +165,7 @@ public abstract partial class GameTest
         Pair = await PoolManager.GetServerClient(settings, new NUnitTestContextWrap(testContext, TestContext.Out));
 
         Task.WaitAll(
-            Server.WaitPost(() => { ServerThread = Thread.CurrentThread; }),
+            Server.WaitPost(() => ServerThread = Thread.CurrentThread),
             Client.WaitPost(() => ClientThread = Thread.CurrentThread)
         );
 
