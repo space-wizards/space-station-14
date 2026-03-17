@@ -2,6 +2,7 @@ using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
+using Content.Shared.Alert;
 using Content.Shared.Dragon;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
@@ -13,6 +14,7 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Dragon;
 
@@ -29,6 +31,8 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
@@ -43,6 +47,8 @@ public sealed partial class DragonSystem : EntitySystem
     private const int RiftTileRadius = 2;
 
     private const int RiftsAllowed = 3;
+
+    private TimeSpan _thresholdCheck;
 
     public override void Initialize()
     {
@@ -89,8 +95,34 @@ public sealed partial class DragonSystem : EntitySystem
                 if (TryComp<DragonRiftComponent>(lastRift, out var rift) && rift.State != DragonRiftState.Finished)
                 {
                     comp.RiftAccumulator = 0f;
+                    _alerts.ClearAlert(uid, comp.RiftTimerAlert);
                     continue;
                 }
+            }
+
+            if (!_alerts.IsShowingAlert(uid, comp.RiftTimerAlert))
+            {
+                var cooldown = (_timing.CurTime, _timing.CurTime + TimeSpan.FromSeconds(comp.RiftMaxAccumulator));
+                _alerts.ShowAlert(uid, comp.RiftTimerAlert, cooldown: cooldown);
+            }
+            else if (_thresholdCheck <= _timing.CurTime)
+            {
+                if (_alerts.TryGetAlertState(uid, new AlertKey(comp.RiftTimerAlert, null), out var state))
+                {
+                    short curSeverity = 1;
+
+                    if (comp.RiftMaxAccumulator - comp.RiftAccumulator < comp.RiftTimerThresholds[RiftTimerThreshold.Red])
+                        curSeverity = 3;
+                    else if (comp.RiftMaxAccumulator - comp.RiftAccumulator < comp.RiftTimerThresholds[RiftTimerThreshold.Orange])
+                        curSeverity = 2;
+
+                    if (curSeverity != state.Severity && state.Cooldown != null)
+                    {
+                        _alerts.UpdateAlert(uid, comp.RiftTimerAlert, curSeverity, state.Cooldown.Value.endTime);
+                    }
+                }
+
+                _thresholdCheck = _timing.CurTime + comp.RiftTimerThresholdCheckInterval;
             }
 
             if (!_mobState.IsDead(uid))
