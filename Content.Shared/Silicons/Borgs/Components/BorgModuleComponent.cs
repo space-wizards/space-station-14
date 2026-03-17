@@ -34,6 +34,18 @@ public sealed partial class BorgModuleComponent : Component
     /// </summary>
     [DataField]
     public HashSet<LocId>? BorgFitTypes;
+
+    /// <summary>
+    /// Type of module, used for examine text and to identify it as part of a module group
+    /// </summary>
+    [DataField]
+    public LocId? ModuleType;
+
+    /// <summary>
+    /// List of module groups incompatible with this module
+    /// </summary>
+    [DataField]
+    public HashSet<LocId>? IncompatibleTypes;
 }
 
 /// <summary>
