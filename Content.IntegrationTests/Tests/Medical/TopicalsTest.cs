@@ -52,7 +52,7 @@ public sealed class TopicalsTest : InteractionTest
         emptyDamageSpecifier.ClampMax(0);
         DamageSpecifier damageAmount;
 
-        await AddAtmosphere(); // prevent everyone from suffocating
+        await AddAtmosphere(); // prevent anyone from suffocating
 
         //Spawn a new urist, with empty health
         var urist = await SpawnTarget(MobHuman);
