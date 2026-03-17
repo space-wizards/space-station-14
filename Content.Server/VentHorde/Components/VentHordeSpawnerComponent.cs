@@ -54,16 +54,16 @@ public sealed partial class VentHordeSpawnerComponent : Component
     /// Plays on loop when a vent is selected as a spawner.
     /// </summary>
     [DataField]
-    public SoundSpecifier PassiveSound = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg")
+    public SoundSpecifier PassiveSound = new SoundPathSpecifier("/Audio/Machines/vent_creak.ogg")
     {
-        Params = AudioParams.Default.WithVolume(-3f),
+        Params = AudioParams.Default.WithVolume(3f),
     };
 
     /// <summary>
     /// Plays when the entities are thrown out of the vent.
     /// </summary>
     [DataField]
-    public SoundSpecifier EndSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg")
+    public SoundSpecifier EndSound = new SoundPathSpecifier("/Audio/Machines/vent_emerge.ogg")
     {
         Params = AudioParams.Default.WithVolume(-3f),
     };

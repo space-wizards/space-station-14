@@ -214,3 +214,13 @@
   license: "CC-BY-3.0"
   copyright: "Created by Tomlija, converted to OGG and modified by themias."
   source: "https://freesound.org/people/Tomlija/sounds/99565/"
+
+- files: ["vent_creak.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by squarfington, converted to OGG and rebalanced by Minemoder5000 (github)"
+  source: "https://freesound.org/people/squarfington/sounds/815606/"
+
+- files: ["vent_emerge.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by conath, converted to OGG and cropped by Minemoder5000 (github)"
+  source: "https://freesound.org/people/squarfington/sounds/815606/"
