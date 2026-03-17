@@ -227,7 +227,7 @@ public abstract partial class SharedBorgSystem
                 if (!TryComp<BorgModuleComponent>(containedModuleUid, out var borgModuleComponent))
                     continue;
 
-                if (borgModuleComponent.IncompatibleTypes == null)
+                if (borgModuleComponent.IncompatibleTypes == null || borgModuleComponent.IncompatibleTypes.Count == 0)
                     continue;
 
                 if (borgModuleComponent.IncompatibleTypes.Contains(module.Comp.ModuleType.Value))
