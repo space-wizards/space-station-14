@@ -249,7 +249,6 @@ public static partial class GameDataScrounger
                     //       and not for parenting. However no such prototype exists in the game as of writing and solving
                     //       this is mildly nontrivial.
 
-                    // We use exact equality to match what serialization does.
                     if (bool.TryParse(abstractNode.Value, out var res) && res)
                         @abstract = true;
                 }
