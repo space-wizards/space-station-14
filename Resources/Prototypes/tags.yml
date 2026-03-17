@@ -322,13 +322,13 @@
   id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
 
 - type: Tag
-  id: ClownMask # CargoBounty: BountyClownCostume. ConstructionGraph: Honker, BananaClownMask
+  id: ClownMask # ConstructionGraph: Honker, BananaClownMask
 
 - type: Tag
   id: ClownRecorder # ConstructionGraph: ClownHardsuit
 
 - type: Tag
-  id: ClownShoes # CargoBounty: BountyClownCostume. ConstructionGraph: Honker, BananaClownShoes
+  id: ClownShoes # ConstructionGraph: Honker, BananaClownShoes
 
 - type: Tag
   id: ClownSuit # ConstructionGraph: BananaClownJumpsuit
@@ -488,6 +488,9 @@
 
 - type: Tag
   id: DoorElectronicsConfigurator # Used by ActivatableUIComponent on entity DoorElectronics to whitelist a tagged tool to open the UI.
+
+- type: Tag
+  id: DoorRemoteWhitelist # Doors with this tag can be interacted with door remotes
 
 - type: Tag
   id: DrinkBottle # Storage whitelist: BoozeDispenserEmpty, SodaDispenserEmpty
