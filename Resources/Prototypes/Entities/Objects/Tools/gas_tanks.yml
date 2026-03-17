@@ -38,7 +38,7 @@
   - type: AtmosDevice
     requireAnchored: false
     joinSystem: true
-  - type: GasTank # As of currently writing, tanks have an explosion intensity of about 125, which they should stay around.
+  - type: GasTank
     outputPressure: 21.3
     air:
       # If gas tank volume is changed, adjust MinimumTritiumOxyburnEnergy in Atmospherics.cs by the same proportions
@@ -111,7 +111,7 @@
     storedSprite:
       state: storage
       sprite: Objects/Tanks/emergency.rsi
-  - type: GasTank # As of currently writing, mini tanks have an explosion intensity of about 40.
+  - type: GasTank
     overpressure: 1519.875 # Poorly manufactured, they also lose pressure quickly so this makes exploding them easier, at the cost of the explosion being smaller.
     air:
       volume: 0.66
@@ -159,7 +159,7 @@
     storedSprite:
       state: storage
       sprite: Objects/Tanks/emergency_extended.rsi
-  - type: GasTank # As of currently writing, extended tanks currently have an explosive intensity of about 65
+  - type: GasTank
     air:
       volume: 1.5
       temperature: 293.15
@@ -195,7 +195,7 @@
     storedSprite:
       state: storage
       sprite: Objects/Tanks/emergency_double.rsi
-  - type: GasTank # As of currently writing, extended tanks currently have an explosive intensity of about 85
+  - type: GasTank
     air:
       volume: 2.5
       temperature: 293.15

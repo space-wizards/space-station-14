@@ -128,14 +128,14 @@
       integrity: 15
       maxReleasePressure: 1013.25
       safetyPressure: 5066.25
-      overpressure: 15198.75 # Purposefully high because cans react really fucking fast, redo this value when reactions change!
+      overpressure: 15198.75 # Purposefully high because cans react really fucking fast, may need to redo this value if reactions change!
       gasTankSlot:
         name: comp-gas-canister-slot-name-gas-tank
         ejectOnBreak: true
         whitelist:
           components:
             - GasTank
-    - type: Explosive # As of writing canisters currently do about 7500 explosive intensity.
+    - type: Explosive
       explosionType: Minibomb # Mostly a pressure wave explosive so primarily blunt damage
       maxIntensity: 100
       tileBreakScale: 0.2 # Keeps the can from spacing all the hot gas it has now vented :). If this proves to be too much it can be removed.
@@ -773,7 +773,7 @@
 
 - type: entity
   parent: GasCanister
-  id: MaxCapCanister
+  id: MaxCapCanister # As of writing canisters currently have about 7500 explosive intensity.
   name: max cap in a can
   suffix: DEBUG, Max Cap
   components:

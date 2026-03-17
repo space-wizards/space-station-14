@@ -205,7 +205,7 @@
 
 - type: entity
   parent: AirTank
-  id: MaxCap
+  id: MaxCap # As of currently writing, tanks have an explosion intensity of about 125, which is about as powerful as an explosive grenade.
   suffix: DEBUG, Max Cap
   components:
   - type: GasTank
@@ -217,21 +217,8 @@
       temperature: 373.149
 
 - type: entity
-  parent: EmergencyFunnyOxygenTank
-  id: MaxCapFunny
-  suffix: DEBUG, Max Cap
-  components:
-  - type: GasTank
-    air:
-      volume: 0.66
-      moles:
-        Oxygen:  0.1805213564
-        Tritium: 0.0902606782
-      temperature: 373.149
-
-- type: entity
   parent: EmergencyOxygenTank
-  id: MaxCapSmall
+  id: MaxCapSmall # As of currently writing, mini tanks have an explosion intensity of about 40.
   suffix: DEBUG, Max Cap
   components:
   - type: GasTank
@@ -244,7 +231,7 @@
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
-  id: MaxCapSmallEx
+  id: MaxCapSmallEx # As of currently writing, extended tanks currently have an explosive intensity of about 65
   suffix: DEBUG, Max Cap
   components:
   - type: GasTank
@@ -257,7 +244,7 @@
 
 - type: entity
   parent: DoubleEmergencyOxygenTank
-  id: MaxCapSmallDouble
+  id: MaxCapSmallDouble # As of currently writing, extended tanks currently have an explosive intensity of about 85
   suffix: DEBUG, Max Cap
   components:
   - type: GasTank
