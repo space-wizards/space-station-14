@@ -2,8 +2,9 @@ using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
-using System.Linq;
+using Content.IntegrationTests.Utility;
 using Content.Shared.Guidebook;
+using Robust.Shared.Localization;
 
 namespace Content.IntegrationTests.Tests.Guidebook;
 
@@ -13,8 +14,12 @@ namespace Content.IntegrationTests.Tests.Guidebook;
 [TestOf(typeof(DocumentParsingManager))]
 public sealed class GuideEntryPrototypeTests
 {
+    private static string[] _guideEntries = GameDataScrounger.PrototypesOfKind<GuideEntryPrototype>();
+
     [Test]
-    public async Task ValidatePrototypeContents()
+    [TestCaseSource(nameof(_guideEntries))]
+    [Description("Ensures a given guidebook entry is valid, checking the document/etc.")]
+    public async Task Validate(string protoKey)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var client = pair.Client;
@@ -22,20 +27,15 @@ public sealed class GuideEntryPrototypeTests
         var protoMan = client.ResolveDependency<IPrototypeManager>();
         var resMan = client.ResolveDependency<IResourceManager>();
         var parser = client.ResolveDependency<DocumentParsingManager>();
-        var prototypes = protoMan.EnumeratePrototypes<GuideEntryPrototype>().ToList();
+        var proto = protoMan.Index<GuideEntryPrototype>(protoKey);
 
-        foreach (var proto in prototypes)
+        await client.WaitAssertion(() =>
         {
-            await client.WaitAssertion(() =>
-            {
-                using var reader = resMan.ContentFileReadText(proto.Text);
-                var text = reader.ReadToEnd();
-                Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse guidebook: {proto.Id}");
-            });
+            using var reader = resMan.ContentFileReadText(proto.Text);
+            var text = reader.ReadToEnd();
 
-            // Avoid styleguide update limit
-            await client.WaitRunTicks(1);
-        }
+            Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse the guide entry's document.");
+        });
 
         await pair.CleanReturnAsync();
     }
