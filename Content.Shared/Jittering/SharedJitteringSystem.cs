@@ -73,11 +73,11 @@ namespace Content.Shared.Jittering
             {
                 var jittering = Comp<JitteringComponent>(uid);
 
-                if(forceValueChange || jittering.Amplitude < amplitude)
-                    jittering.Amplitude = amplitude;
-
-                if (forceValueChange || jittering.Frequency < frequency)
-                    jittering.Frequency = frequency;
+                // if(forceValueChange || jittering.Amplitude < amplitude)
+                //     jittering.Amplitude = amplitude;
+                //
+                // if (forceValueChange || jittering.Frequency < frequency)
+                //     jittering.Frequency = frequency;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Content.Shared.Jittering
         public void AddJitter(EntityUid uid, float amplitude = 10f, float frequency = 4f)
         {
             var jitter = EnsureComp<JitteringComponent>(uid);
-            jitter.Amplitude = amplitude;
+            jitter.Radius = amplitude; //todo
             jitter.Frequency = frequency;
             Dirty(uid, jitter);
         }

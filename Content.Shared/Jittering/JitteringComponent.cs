@@ -12,17 +12,20 @@ namespace Content.Shared.Jittering;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JitteringComponent : Component
 {
+    /// <remarks> Not recommended to make this larger than 300. </remarks>
+    // [DataField, AutoNetworkedField]
+    // public float Amplitude { get; set; }
+
     /// <summary>
     /// How far the sprite will travel from the entity's actual position.
     /// </summary>
-    /// <remarks> Not recommended to make this larger than 300. </remarks>
     [DataField, AutoNetworkedField]
-    public float Amplitude { get; set; }
+    public float Radius = 0.25f;
 
     /// <summary>
     /// How many jitters will be preformed per second.
     /// </summary>
-    /// <remarks> Not recommended to make this larger than 10. </remarks>
+    /// <remarks> Not recommended to make this larger than 10.</remarks>
     [DataField, AutoNetworkedField]
     public float Frequency { get; set; }
 

@@ -13,7 +13,6 @@ namespace Content.Client.Jittering
         [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
         [Dependency] private readonly SpriteSystem _sprite = default!;
 
-        private readonly float[] _sign = { -1, 1 }; //todo no
         private readonly string _jitterAnimationKey = "jittering";
 
         public override void Initialize()
@@ -22,33 +21,34 @@ namespace Content.Client.Jittering
 
             SubscribeLocalEvent<JitteringComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<JitteringComponent, ComponentShutdown>(OnShutdown);
+
             SubscribeLocalEvent<JitteringComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         }
 
         // Start the animation
-        private void OnStartup(EntityUid uid, JitteringComponent jittering, ComponentStartup args)
+        private void OnStartup(Entity<JitteringComponent> ent, ref ComponentStartup args)
         {
-            if (!TryComp(uid, out SpriteComponent? sprite))
+            if (!TryComp<SpriteComponent>(ent, out var sprite))
                 return;
 
-            var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
+            var animationPlayer = EnsureComp<AnimationPlayerComponent>(ent);
 
-            jittering.StartOffset = sprite.Offset;
-            _animationPlayer.Play((uid, animationPlayer), GetAnimation(jittering, sprite), _jitterAnimationKey);
+            ent.Comp.StartOffset = sprite.Offset;
+            _animationPlayer.Play((ent, animationPlayer), GetAnimation(ent.Comp, sprite), _jitterAnimationKey);
         }
 
         // End the animation
-        private void OnShutdown(EntityUid uid, JitteringComponent jittering, ComponentShutdown args)
+        private void OnShutdown(Entity<JitteringComponent> ent, ref ComponentShutdown args)
         {
-            if (TryComp(uid, out AnimationPlayerComponent? animationPlayer))
-                _animationPlayer.Stop(uid, animationPlayer, _jitterAnimationKey);
+            if (TryComp<AnimationPlayerComponent>(ent, out var animationPlayer))
+                _animationPlayer.Stop(ent, animationPlayer, _jitterAnimationKey);
 
-            if (TryComp(uid, out SpriteComponent? sprite))
-                _sprite.SetOffset((uid, sprite), jittering.StartOffset);
+            if (TryComp<SpriteComponent>(ent, out var sprite))
+                _sprite.SetOffset((ent, sprite), ent.Comp.StartOffset);
         }
 
         // repeat the animation
-        private void OnAnimationCompleted(EntityUid uid, JitteringComponent jittering, AnimationCompletedEvent args)
+        private void OnAnimationCompleted(Entity<JitteringComponent> ent, ref AnimationCompletedEvent args)
         {
             if (args.Key != _jitterAnimationKey)
                 return;
@@ -56,9 +56,9 @@ namespace Content.Client.Jittering
             if (!args.Finished)
                 return;
 
-            if (TryComp(uid, out AnimationPlayerComponent? animationPlayer)
-                && TryComp(uid, out SpriteComponent? sprite))
-                _animationPlayer.Play((uid, animationPlayer), GetAnimation(jittering, sprite), _jitterAnimationKey);
+            if (TryComp<AnimationPlayerComponent>(ent, out var animationPlayer)
+                && TryComp<SpriteComponent>(ent, out var sprite))
+                _animationPlayer.Play((ent, animationPlayer), GetAnimation(ent.Comp, sprite), _jitterAnimationKey);
         }
 
         /// <summary>
@@ -66,31 +66,22 @@ namespace Content.Client.Jittering
         /// </summary>
         private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
         {
-            // todo redundant capped amplitude
-            var amplitude = MathF.Min(4f, jittering.Amplitude / 100f + 1f) / 10f;
-            var offset = new Vector2(_random.NextFloat(amplitude / 4f, amplitude),
-                _random.NextFloat(amplitude / 4f, amplitude / 3f));
+            var offset = _random.NextVector2(jittering.Radius);
 
-            offset.X *= _random.Pick(_sign);
-            offset.Y *= _random.Pick(_sign);
-
+            // If we're in the same quadrant as our last location, invert the offset
+            // Reduces repetitive behavior and increases large movements
             if (Math.Sign(offset.X) == Math.Sign(jittering.LastJitter.X)
-                || Math.Sign(offset.Y) == Math.Sign(jittering.LastJitter.Y))
+                && Math.Sign(offset.Y) == Math.Sign(jittering.LastJitter.Y))
             {
-                // If the sign is the same as last time on both axis we flip one randomly
-                // to avoid jitter staying in one quadrant too much.
-                if (_random.Prob(0.5f))
-                    offset.X *= -1;
-                else
-                    offset.Y *= -1;
+                offset = -offset;
             }
+
+            jittering.LastJitter = offset;
 
             var length = 0f;
             // avoid dividing by 0 so animations don't try to be infinitely long
             if (jittering.Frequency > 0)
                 length = 1f / jittering.Frequency;
-
-            jittering.LastJitter = offset;
 
             return new Animation()
             {
