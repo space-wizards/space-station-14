@@ -864,10 +864,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 25
         reagents:
         - ReagentId: Fiber
-          Quantity: 40
+          Quantity: 20
   - type: Tag
     tags:
     - ClothMade
