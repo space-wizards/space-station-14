@@ -9,7 +9,7 @@ public sealed partial class DiskConsoleComponent : Component
     /// <summary>
     /// How much it costs to print a disk
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int PricePerDisk = 1000;
 
     /// <summary>
@@ -21,7 +21,7 @@ public sealed partial class DiskConsoleComponent : Component
     /// <summary>
     /// How long it takes to print <see cref="DiskPrototype"/>
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan PrintDuration = TimeSpan.FromSeconds(1);
 
     /// <summary>

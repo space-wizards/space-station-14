@@ -63,7 +63,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
             ent.Comp.Tier = tier;
         }
 
-        //get a list of every distinct recipe in all the technologies.
+        // get a list of every distinct recipe in all the technologies.
         var bundles = new HashSet<(ProtoId<LatheRecipePrototype> recipe, ProtoId<TechDisciplinePrototype> discipline)>();
         foreach (var tech in _protoMan.EnumeratePrototypes<TechnologyPrototype>())
         {
@@ -84,7 +84,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
             return;
         }
 
-        //pick one
+        // pick one
         var bundle = _random.Pick(bundles);
         ent.Comp.Discipline = bundle.discipline;
         ent.Comp.Recipes = [];
@@ -107,11 +107,10 @@ public sealed class TechnologyDiskSystem : EntitySystem
     /// </summary>
     private void TrySetTierVisuals(Entity<TechnologyDiskComponent> ent)
     {
-        var tier = ent.Comp.Tier;
-        if (!tier.HasValue)
+        if (ent.Comp.Tier is not { } tier)
             return;
 
-        _appearance.SetData(ent.Owner, TechDiskVisuals.Tier, tier.Value);
+        _appearance.SetData(ent.Owner, TechDiskVisuals.Tier, tier);
     }
 
     /// <summary>
@@ -119,7 +118,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
     /// </summary>
     private void TrySetDisciplineVisuals(Entity<TechnologyDiskComponent> ent)
     {
-        if (!_protoMan.TryIndex(ent.Comp.Discipline, out var discipline))
+        if (!_protoMan.Resolve(ent.Comp.Discipline, out var discipline))
             return;
 
         _appearance.SetData(ent.Owner, TechDiskVisuals.Discipline, discipline.ID);
@@ -148,7 +147,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
     private void OnExamine(Entity<TechnologyDiskComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp is { Tier: not null, Discipline: not null }
-            && _protoMan.TryIndex(ent.Comp.Discipline, out var disciplineProto))
+            && _protoMan.Resolve(ent.Comp.Discipline, out var disciplineProto))
         {
             var desc = Loc.GetString("tech-disk-examine-desc",
                 ("tier", ent.Comp.Tier),
