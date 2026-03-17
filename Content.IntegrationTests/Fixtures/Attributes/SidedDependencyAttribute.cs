@@ -15,7 +15,7 @@ public sealed class SidedDependencyAttribute : Attribute
 
         if (side is not Side.Client and not Side.Server)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException($"Expected either the client or the server as a side, got {side}.");
         }
     }
 

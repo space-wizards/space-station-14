@@ -24,7 +24,7 @@ public abstract partial class GameTest
     public void PreTestAddOverride(Side side, string cVar, object value)
     {
         // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-        if (Pair is null)
+        if (_setupDone)
             throw new NotSupportedException("Cannot use PreTest functions after test SetUp.");
 
         if (side is Side.Neither)

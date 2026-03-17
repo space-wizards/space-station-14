@@ -7,11 +7,21 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 [Flags]
 public enum Side
 {
+    /// <summary>
+    ///     Bitflag representing the client side of a testpair.
+    /// </summary>
     Client = 1,
+    /// <summary>
+    ///     Bitflag representing the server side of a testpair.
+    /// </summary>
     Server = 2,
 
-    // A special value meant as a default for attributes, and NOTHING ELSE.
+    /// <summary>
+    ///     A value indicating no side was specified. You shouldn't use this outside of checking for it as an error.
+    /// </summary>
     Neither = 0,
-    // A special value representing both sides.
+    /// <summary>
+    ///     A value indicating both sides were specified.
+    /// </summary>
     Both = Client | Server,
 }

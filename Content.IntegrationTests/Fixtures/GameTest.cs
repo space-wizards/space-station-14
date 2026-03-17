@@ -126,6 +126,8 @@ public abstract partial class GameTest
     /// </summary>
     public TestMapData? TestMap => Pair.TestMap;
 
+    private bool _setupDone = false;
+
     /// <summary>
     ///     Primary setup task for the fixture.
     ///     Custom setup must run after this.
@@ -180,14 +182,15 @@ public abstract partial class GameTest
             await attribute.ApplyToTest(this);
         }
 
+        _setupDone = true;
+
         await DoPreTestOverrides();
 
         await Pair.RunUntilSynced();
     }
 
     /// <summary>
-    ///     Injects <see cref="SidedDependencyAttribute"/> and <see cref="SystemAttribute"/> dependencies into the
-    ///     target object.
+    ///     Injects <see cref="SidedDependencyAttribute"/> dependencies into the target object.
     /// </summary>
     /// <remarks>
     ///     This is called on the GameTest itself automatically. Don't call it twice on the same object.
@@ -226,7 +229,7 @@ public abstract partial class GameTest
         try
         {
             // In some cool future we might be able to make this only throw out the pair
-            // if the test threw exceptions. But that'd require fixing all of them to do cleanup properly.
+            // if the test threw exceptions. But that'd require fixing all of them to do cleanup properly on failure.
             //
             // So not yet.
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)

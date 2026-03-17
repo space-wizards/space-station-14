@@ -173,7 +173,6 @@ public abstract partial class GameTest
     /// <summary>
     ///     Asynchronously spawns an entity on the server.
     /// </summary>
-    /// <returns></returns>
     public async Task<EntityUid> Spawn(string? id)
     {
         var ent = EntityUid.Invalid;
@@ -186,7 +185,6 @@ public abstract partial class GameTest
     /// <summary>
     ///     Asynchronously spawns an entity on the server at the given position.
     /// </summary>
-    /// <returns></returns>
     public async Task<EntityUid> SpawnAtPosition(string? id, EntityCoordinates coords)
     {
         var ent = EntityUid.Invalid;
@@ -195,7 +193,6 @@ public abstract partial class GameTest
 
         return ent;
     }
-
 
     /// <summary>
     ///     Deletes an entity on the server immediately.
