@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost;
 
@@ -93,6 +94,16 @@ public sealed partial class GhostComponent : Component
     /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
     [DataField, AutoNetworkedField]
     public Color Color = Color.White;
+}
+
+/// <summary>
+/// Ghost sprites dependent on damage by the player body
+/// </summary>
+/// <remarks>Used to change a ghost sprite to better visually represent their cause of death</remarks>
+[Serializable, NetSerializable]
+public enum GhostVisuals : byte
+{
+    Damage
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }
