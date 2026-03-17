@@ -17,7 +17,7 @@ public abstract partial class SharedAtmosphereSystem
      */
 
     /// <summary>
-    /// Cached array of gas specific heats
+    /// Cached array of gas specific heats.
     /// </summary>
     public float[] GasSpecificHeats => _gasSpecificHeats;
 
@@ -71,11 +71,9 @@ public abstract partial class SharedAtmosphereSystem
             // Log an error if the corresponding prototype isn't found
             if (!ProtoMan.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
             {
-                Log.Error(
-                    $"Failed to find corresponding {nameof(GasPrototype)} for gas ID {(int)gas} ({gas}) with expected ID \"{gas.ToString()}\". Is your prototype named correctly?");
+                Log.Error($"Failed to find corresponding {nameof(GasPrototype)} for gas ID {(int)gas} ({gas}) with expected ID \"{gas.ToString()}\". Is your prototype named correctly?");
                 continue;
             }
-
             GasPrototypes[idx] = gasPrototype;
             GasReagents[idx] = gasPrototype.Reagent;
         }
@@ -128,7 +126,7 @@ public abstract partial class SharedAtmosphereSystem
     /// considered ignitable, for both oxidizer and fuel.</param>
     /// <returns>True if the <see cref="GasMixture"/> is ignitable, otherwise, false.</returns>
     [PublicAPI]
-    public bool IsMixtureIgnitable(GasMixture mixture, float epsilon = 0.001f)
+    public bool IsMixtureIgnitable(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
     {
         return IsMixtureFuel(mixture, epsilon) && IsMixtureOxidizer(mixture, epsilon);
     }
@@ -141,7 +139,7 @@ public abstract partial class SharedAtmosphereSystem
     /// is considered fuel.</param>
     /// <returns>True if the <see cref="GasMixture"/> is fuel, otherwise, false.</returns>
     [PublicAPI]
-    public abstract bool IsMixtureFuel(GasMixture mixture, float epsilon = 0.001f);
+    public abstract bool IsMixtureFuel(GasMixture mixture, float epsilon = Atmospherics.Epsilon);
 
     /// <summary>
     /// Determines if a <see cref="GasMixture"/> has oxidizer gases in it or not.
@@ -151,7 +149,7 @@ public abstract partial class SharedAtmosphereSystem
     /// is considered an oxidizer.</param>
     /// <returns>True if the <see cref="GasMixture"/> is an oxidizer, otherwise, false.</returns>
     [PublicAPI]
-    public abstract bool IsMixtureOxidizer(GasMixture mixture, float epsilon = 0.001f);
+    public abstract bool IsMixtureOxidizer(GasMixture mixture, float epsilon = Atmospherics.Epsilon);
 
     /// <summary>
     /// Calculates the heat capacity for a <see cref="GasMixture"/>.
@@ -172,25 +170,37 @@ public abstract partial class SharedAtmosphereSystem
     }
 
     /// <summary>
-    ///     Calculates the thermal energy for a gas mixture.
+    /// Calculates the thermal energy for a <see cref="GasMixture"/>.
     /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to calculate the thermal
+    /// energy of.</param>
+    /// <returns>The <see cref="GasMixture"/>'s thermal energy in joules.</returns>
+    [PublicAPI]
     public float GetThermalEnergy(GasMixture mixture)
     {
         return mixture.Temperature * GetHeatCapacity(mixture);
     }
 
     /// <summary>
-    ///     Calculates the thermal energy for a gas mixture, using a cached heat capacity value.
+    /// Calculates the thermal energy for a gas mixture,
+    /// using a provided cached heat capacity value.
     /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to calculate the thermal energy of.</param>
+    /// <param name="cachedHeatCapacity">A cached heat capacity value for the gas mixture,
+    /// to avoid redundant heat capacity calculations.</param>
+    /// <returns>The <see cref="GasMixture"/>'s thermal energy in joules.</returns>
+    [PublicAPI]
     public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
     {
         return mixture.Temperature * cachedHeatCapacity;
     }
 
     /// <summary>
-    ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
-    ///     The <see cref="giver"/> gas mixture is not modified by this method.
+    /// Merges one <see cref="GasMixture"/> into another, modifying the receiver.
     /// </summary>
+    /// <param name="receiver">The <see cref="GasMixture"/> to merge into. This will be modified.</param>
+    /// <param name="giver">The <see cref="GasMixture"/> to merge from. This will not be modified.</param>
+    [PublicAPI]
     public void Merge(GasMixture receiver, GasMixture giver)
     {
         if (receiver.Immutable)
@@ -211,8 +221,12 @@ public abstract partial class SharedAtmosphereSystem
     }
 
     /// <summary>
-    ///     Performs reactions for a given gas mixture on an optional holder.
+    /// Performs reactions for a given gas mixture on an optional holder.
     /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to perform reactions on.</param>
+    /// <param name="holder"><see cref="IGasMixtureHolder"/> that holds the <see cref="GasMixture"/>.
+    /// used by Atmospherics to determine locality for certain reaction effects.</param>
+    /// <returns>The <see cref="ReactionResult"/> of the reactions performed.</returns>
     [PublicAPI]
     public abstract ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder);
 

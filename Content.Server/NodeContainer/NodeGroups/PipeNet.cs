@@ -24,7 +24,7 @@ public sealed class PipeNet : BaseNodeGroup, IPipeNet
 
         if (Grid == null)
         {
-            // This is probably due to a cannister or something like that being spawned in space.
+            // This is probably due to a canister or something like that being spawned in space.
             return;
         }
 

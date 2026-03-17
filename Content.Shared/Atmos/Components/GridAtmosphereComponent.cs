@@ -6,23 +6,46 @@ using Content.Shared.NodeContainer.NodeGroups;
 namespace Content.Shared.Atmos.Components;
 
 /// <summary>
-///     Internal Atmos class. Use <see cref="SharedAtmosphereSystem"/> to interact with atmos instead.
+/// Internal <see cref="SharedAtmosphereSystem"/> class for storing all grid data.
+/// If you need to access this data, use the API methods in the <see cref="SharedAtmosphereSystem"/>/server
+/// instead of trying to scour this component or others for the data you need.
 /// </summary>
 [RegisterComponent, Serializable,
  Access(typeof(SharedAtmosphereSystem), typeof(SharedGasTileOverlaySystem), typeof(SharedAtmosDebugOverlaySystem))]
 public sealed partial class GridAtmosphereComponent : Component
 {
+    /// <summary>
+    /// Whether the grid is being updated by Atmospherics.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool Simulated { get; set; } = true;
+    public bool Simulated = true;
 
+    /// <summary>
+    /// Indicator for if Atmospherics has delegated the processing of this
+    /// grid to another tick due to the time budget running out.
+    /// </summary>
+    /// <example>If true, Atmospherics is not finished
+    /// processing the current stage and has yielded processing
+    /// to the next tick.</example>
     [ViewVariables]
-    public bool ProcessingPaused { get; set; }
+    public bool ProcessingPaused;
 
+    /// <summary>
+    /// Timer used to delay processing for every AtmosTick.
+    /// No, Atmospherics cannot tick every frame.
+    /// </summary>
+    /// TODO: Replace with TimeSpan please.
     [ViewVariables]
-    public float Timer { get; set; }
+    public float Timer;
 
+    /// <summary>
+    /// Integer that is incremented every time the grid is processed by Atmospherics.
+    /// Used in multiple subsystems to prevent double-copy/processing of data.
+    /// </summary>
+    /// <remarks>Do not set to zero by default.
+    /// You will break roundstart atmos otherwise.</remarks>
     [ViewVariables]
-    public int UpdateCounter { get; set; } = 1; // DO NOT SET TO ZERO BY DEFAULT! It will break roundstart atmos...
+    public int UpdateCounter = 1;
 
     [ViewVariables]
     [IncludeDataField(customTypeSerializer:typeof(TileAtmosCollectionSerializer))]
