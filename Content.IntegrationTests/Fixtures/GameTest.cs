@@ -1,4 +1,5 @@
 #nullable enable
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -34,6 +35,7 @@ namespace Content.IntegrationTests.Fixtures;
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 [Property(TestProperties.TestFrameKind, nameof(GameTest))]
+[SuppressMessage("Structure", "NUnit1028:The non-test method is public")]
 public abstract partial class GameTest
 {
     /// <summary>
