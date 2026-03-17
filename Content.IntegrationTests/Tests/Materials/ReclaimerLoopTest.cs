@@ -32,7 +32,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
         var materialReclaimerSystem = SEntMan.System<SharedMaterialReclaimerSystem>();
         var entityWhitelistSystem = SEntMan.System<EntityWhitelistSystem>();
 
-        await AddAtmosphere(); //so the urist player can breathe
+        await AddAtmosphere(); //so the player can breathe
 
         //Spawn the reclaimer
         var reclaimerNetEnt = await SpawnTarget(reclaimerID, PlayerCoords);
