@@ -38,7 +38,7 @@
   - type: AtmosDevice
     requireAnchored: false
     joinSystem: true
-  - type: GasTank # As of currently writing, tanks have an explosion intensity of about 100, which they should stay around.
+  - type: GasTank # As of currently writing, tanks have an explosion intensity of about 125, which they should stay around.
     outputPressure: 21.3
     air:
       # If gas tank volume is changed, adjust MinimumTritiumOxyburnEnergy in Atmospherics.cs by the same proportions
@@ -48,6 +48,7 @@
   - type: Explosive
     explosionType: Minibomb # Mostly a pressure wave explosive so primarily blunt damage
     maxIntensity: 20
+    tileBreakScale: 0.2
   - type: MeleeWeapon
     wideAnimationRotation: 45
     attackRate: 0.8
@@ -110,15 +111,11 @@
     storedSprite:
       state: storage
       sprite: Objects/Tanks/emergency.rsi
-  - type: GasTank # As of currently writing, mini tanks have an explosion intensity of about 50. 
-    maxIntegrity: 2 # Incredibly weak
-    integrity: 2 # Incredibly weak
-    overpressure: 1519.875 # Poorly manufactured, they also lose pressure quickly so this makes exploding them easier, at the cost of the explosion being tiny.
+  - type: GasTank # As of currently writing, mini tanks have an explosion intensity of about 40.
+    overpressure: 1519.875 # Poorly manufactured, they also lose pressure quickly so this makes exploding them easier, at the cost of the explosion being smaller.
     air:
       volume: 0.66
       temperature: 293.15
-  - type: MaxPressureVisuals
-    steps: 2
   - type: Clothing
     sprite: Objects/Tanks/emergency.rsi
     slots:
@@ -162,7 +159,7 @@
     storedSprite:
       state: storage
       sprite: Objects/Tanks/emergency_extended.rsi
-  - type: GasTank
+  - type: GasTank # As of currently writing, extended tanks currently have an explosive intensity of about 65
     air:
       volume: 1.5
       temperature: 293.15
@@ -198,7 +195,7 @@
     storedSprite:
       state: storage
       sprite: Objects/Tanks/emergency_double.rsi
-  - type: GasTank
+  - type: GasTank # As of currently writing, extended tanks currently have an explosive intensity of about 85
     air:
       volume: 2.5
       temperature: 293.15
@@ -227,7 +224,7 @@
     sprite: Objects/Tanks/emergency_double_red.rsi
 
 - type: entity
-  parent: ExtendedEmergencyOxygenTank
+  parent: EmergencyOxygenTank
   id: EmergencyFunnyOxygenTank
   name: funny emergency oxygen tank
   description: An easily portable tank for emergencies. Contains very little oxygen with an extra of funny gas, rated for survival use only. It can hold 0.66 L of gas.
@@ -241,11 +238,6 @@
       sprite: Objects/Tanks/emergency_clown.rsi
   - type: Clothing
     sprite: Objects/Tanks/emergency_clown.rsi
-  - type: GasTank
-    maxIntegrity: 1 # Honk
-    integrity: 1 # Honk
-  - type: MaxPressureVisuals
-    steps: 1 # Honk
 
 - type: entity
   parent: GasTankRoundBase

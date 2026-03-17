@@ -110,7 +110,12 @@ public abstract class SharedGasTankSystem : GasMaxPressureSystem<GasTankComponen
 
     public void ToggleValve(Entity<GasTankComponent> entity, EntityUid? user = null)
     {
-        entity.Comp.ReleaseValveOpen = !entity.Comp.ReleaseValveOpen;
+        ToggleValve(entity, !entity.Comp.ReleaseValveOpen, user);
+    }
+
+    public void ToggleValve(Entity<GasTankComponent> entity, bool open, EntityUid? user = null)
+    {
+        entity.Comp.ReleaseValveOpen = open;
         Audio.PlayPredicted(entity.Comp.ValveSound, entity, user);
         Dirty(entity);
     }

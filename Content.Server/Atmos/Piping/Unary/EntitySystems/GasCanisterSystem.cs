@@ -71,11 +71,11 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
 
     protected override void SafetyMeasures(Entity<GasCanisterComponent> entity)
     {
-        entity.Comp.ReleasePressure = entity.Comp.MaxReleasePressure;
-        if (entity.Comp.ReleaseValveOpen)
+        if (entity.Comp.SafetyValveOpen)
             return;
 
-        ToggleValve(entity);
+        entity.Comp.SafetyValveOpen = true;
+        Audio.PlayPvs(entity.Comp.ValveSound, entity);
         if (entity.Comp.SafetyAlert != null)
             _popup.PopupEntity(Loc.GetString(entity.Comp.SafetyAlert), entity, PopupType.LargeCaution);
     }
@@ -96,18 +96,25 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
             MixContainerWithPipeNet(entity.Comp.Air, net.Air);
         }
 
-        // Release valve is open, release gas.
-        if (entity.Comp.ReleaseValveOpen)
+        // If safety valve is open, we release gas through there ignoring other outputs.
+        if (entity.Comp.SafetyValveOpen)
+        {
+            var environment = _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true);
+            _atmos.FlowGas(entity.Comp.Air, environment, args.dt, 0.10f);
+        }
+        else if (entity.Comp.ReleaseValveOpen)  // Release valve is open, release gas.
         {
             if (entity.Comp.GasTankSlot.Item != null)
             {
                 var gasTank = Comp<GasTankComponent>(entity.Comp.GasTankSlot.Item.Value);
-                _atmos.ReleaseGasTo(entity.Comp.Air, gasTank.Air, entity.Comp.ReleasePressure);
+                _atmos.FlowGas(entity.Comp.Air, gasTank.Air, entity.Comp.ReleasePressure, args.dt,0.10f);
+                //_atmos.ReleaseGasTo(entity.Comp.Air, gasTank.Air, entity.Comp.ReleasePressure);
             }
             else
             {
                 var environment = _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true);
-                _atmos.ReleaseGasTo(entity.Comp.Air, environment, entity.Comp.ReleasePressure);
+                _atmos.FlowGas(entity.Comp.Air, environment, entity.Comp.ReleasePressure, args.dt, 0.10f);
+                //_atmos.ReleaseGasTo(entity.Comp.Air, environment, entity.Comp.ReleasePressure);
             }
         }
 

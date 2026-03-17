@@ -19,6 +19,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly ThrowingSystem _throwing = default!;
 
         private const float MinimumSoundValvePressure = 10.0f;
+        private const float ReleaseArea = 0.0001f; // About 1cm^2
 
         public override void Initialize()
         {
@@ -85,12 +86,14 @@ namespace Content.Server.Atmos.EntitySystems
                 ? entity.Comp.Air.Pressure
                 : entity.Comp.Air.Pressure - environment.Pressure;
 
-            if (deltaP <= 0)
-                return;
-
             // Cap deltaP by the maximum output pressure of the tank.
-            deltaP = Math.Min(entity.Comp.ReleasePressure, deltaP);
-            var removed = RemoveAirPressure(entity, deltaP, dt);
+            if (deltaP < entity.Comp.SafetyPressure)
+                deltaP = Math.Min(entity.Comp.ReleasePressure, deltaP);
+
+            var removed = _atmosphereSystem.FlowGas(entity.Comp.Air, deltaP, dt, ReleaseArea);
+
+            if (removed == null)
+                return;
 
             if (environment != null)
                 _atmosphereSystem.Merge(environment, removed);
@@ -103,13 +106,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             if (deltaP >= MinimumSoundValvePressure)
-                Audio.PlayPvs(entity.Comp.RuptureSound, entity);
-        }
-
-        // TODO: Move this to SharedAtmosSystem or AtmosSystem...
-        public GasMixture RemoveAirPressure(Entity<GasTankComponent> gasTank, float pressure, float dt)
-        {
-            return RemoveAirAtPressure(gasTank, pressure, (float)_atmosphereSystem.GetDischargeVolume(gasTank.Comp.Air, pressure, 0.01f, dt));
+                Audio.PlayPvs(entity.Comp.ReleaseSound, entity);
         }
 
         public GasMixture RemoveAirAtPressure(Entity<GasTankComponent> gasTank, float pressure, float volume)
@@ -141,7 +138,6 @@ namespace Content.Server.Atmos.EntitySystems
 
         protected override void SafetyMeasures(Entity<GasTankComponent> entity)
         {
-            entity.Comp.ReleasePressure = entity.Comp.MaxReleasePressure;
             if (entity.Comp.ReleaseValveOpen)
                 return;
 

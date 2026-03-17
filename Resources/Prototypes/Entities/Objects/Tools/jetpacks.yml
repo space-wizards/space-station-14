@@ -205,14 +205,10 @@
         - suitStorage
         - Belt
     - type: GasTank
-      maxIntegrity: 2 # Incredibly weak
-      integrity: 2 # Incredibly weak
       overpressure: 1519.875 # Poorly manufactured, they also lose pressure quickly so this makes exploding them easier, at the cost of the explosion being tiny.
       outputPressure: 42.6
       air:
         volume: 1.5
-    - type: MaxPressureVisuals
-      steps: 2
 
 # Filled mini
 - type: entity

@@ -218,7 +218,33 @@
 
 - type: entity
   parent: EmergencyFunnyOxygenTank
+  id: MaxCapFunny
+  suffix: DEBUG, Max Cap
+  components:
+  - type: GasTank
+    air:
+      volume: 0.66
+      moles:
+        Oxygen:  0.1805213564
+        Tritium: 0.0902606782
+      temperature: 373.149
+
+- type: entity
+  parent: EmergencyOxygenTank
   id: MaxCapSmall
+  suffix: DEBUG, Max Cap
+  components:
+  - type: GasTank
+    air:
+      volume: 0.66
+      moles:
+        Oxygen:  0.1805213564
+        Tritium: 0.0902606782
+      temperature: 373.149
+
+- type: entity
+  parent: ExtendedEmergencyOxygenTank
+  id: MaxCapSmallEx
   suffix: DEBUG, Max Cap
   components:
   - type: GasTank
@@ -227,6 +253,19 @@
       moles:
         Oxygen: 0.41027581
         Tritium: 0.205137905
+      temperature: 373.149
+
+- type: entity
+  parent: DoubleEmergencyOxygenTank
+  id: MaxCapSmallDouble
+  suffix: DEBUG, Max Cap
+  components:
+  - type: GasTank
+    air:
+      volume: 2.5
+      moles:
+        Oxygen:  0.68379301666
+        Tritium: 0.34189650833
       temperature: 373.149
 
 - type: entity

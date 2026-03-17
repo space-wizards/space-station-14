@@ -20,6 +20,9 @@ public sealed partial class GasCanisterComponent : GasMaxPressureHolderComponent
     [DataField]
     public ItemSlot GasTankSlot = new();
 
+    [DataField]
+    public bool SafetyValveOpen;
+
     /// <summary>
     ///     Last recorded pressure, for appearance-updating purposes.
     /// </summary>
