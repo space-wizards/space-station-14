@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using Content.Client.Parallax.Data;
 using Content.IntegrationTests.Pair;
 using Content.IntegrationTests.Utility;
 using Robust.Shared.Prototypes;
@@ -11,8 +13,7 @@ public sealed class ScroungerTests
 {
     private TestPair _pair;
 
-    // TODO: Implement scrounger support for types. Should be easier as we genuinely can just use ReflectionManager.
-    private static Type[] _prototypeTypes = [typeof(EntityPrototype)];
+    private static IEnumerable<Type> PrototypeTypes => GameDataScrounger.FindTypesWithAttribute<PrototypeAttribute>();
 
     [OneTimeSetUp]
     public async Task SetUp()
@@ -69,10 +70,13 @@ public sealed class ScroungerTests
 
     [Test]
     [Description("Assert that the discovered prototypes correspond precisely with the real set of prototypes, minus test suite prototypes.")]
-    [TestCaseSource(nameof(_prototypeTypes))]
+    [TestCaseSource(nameof(PrototypeTypes))]
     public void Prototypes_gh43275(Type t)
     {
-        var protoMan = _pair.Server.ProtoMan;
+        // TODO: EntryPoint based check for this, in another PR.
+        var clientSided = t.FullName!.StartsWith("Robust.Client") || t.FullName.StartsWith("Content.Client");
+
+        var protoMan = clientSided ? _pair.Client.ProtoMan : _pair.Server.ProtoMan;
 
         var scroungedProtos = GameDataScrounger.PrototypesOfKind(t);
         var realProtos = protoMan.EnumeratePrototypes(t)

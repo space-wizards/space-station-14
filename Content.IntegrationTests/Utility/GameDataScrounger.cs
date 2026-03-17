@@ -64,6 +64,11 @@ public static partial class GameDataScrounger
     /// </summary>
     private static Dictionary<string, EntityMetadata>? _entitiesMetaIndex = null;
 
+    /// <summary>
+    ///     Our personal reflection manager.
+    /// </summary>
+    private static readonly TestReflectionManager ReflectionManager = ConstructTestReflectionManager();
+
     private sealed class EntityMetadata
     {
         public required string Id;
@@ -111,7 +116,10 @@ public static partial class GameDataScrounger
         {
             Scrounge();
 
-            return _prototypeIndex[kind].ToArray();
+            if (_prototypeIndex.TryGetValue(kind, out var value))
+                return value.ToArray();
+
+            return Array.Empty<string>(); // Nothin'.
         }
     }
 
