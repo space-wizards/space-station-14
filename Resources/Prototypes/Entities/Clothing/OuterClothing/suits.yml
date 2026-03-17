@@ -110,7 +110,6 @@
     slots: WITHOUT_POCKET
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
   - type: HideLayerClothing
     slots:
@@ -145,7 +144,7 @@
     - Tail
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseMajorContraband]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseHighlyIllegalContraband]
   id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
@@ -189,6 +188,8 @@
     noPowerPopup: ninja-no-power
   # core ninja suit stuff
   - type: NinjaSuit
+  - type: EmpResistance
+    strengthMultiplier: 0
   - type: UseDelay
     delay: 5 # disable time
   - type: PowerCellSlot
@@ -286,8 +287,9 @@
     slots: WITHOUT_POCKET
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
+  - type: AddAccentClothing
+    accent: BarkAccent
 
 - type: entity
   parent: ClothingOuterBase

@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Body.Systems;
 using Content.Server.Buckle.Systems;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
@@ -8,7 +7,8 @@ using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Gibbing;
 using Content.Shared.Light.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Salvage;
@@ -42,7 +42,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BiomeSystem _biomes = default!;
-    [Dependency] private readonly BodySystem _bobby = default!;
+    [Dependency] private readonly GibbingSystem _gibbing = default!;
     [Dependency] private readonly BuckleSystem _buckle = default!;
     [Dependency] private readonly DamageableSystem _damageSys = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
@@ -104,7 +104,12 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         EnsureComp<ShuttleComponent>(ev.EntityUid);
-        EnsureComp<ImplicitRoofComponent>(ev.EntityUid);
+
+        // This and RoofComponent should be mutually exclusive, so ImplicitRoof should be removed if the grid has RoofComponent
+        if (HasComp<RoofComponent>(ev.EntityUid))
+            RemComp<ImplicitRoofComponent>(ev.EntityUid);
+        else
+            EnsureComp<ImplicitRoofComponent>(ev.EntityUid);
     }
 
     private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
