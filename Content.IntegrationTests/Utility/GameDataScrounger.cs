@@ -231,7 +231,7 @@ public static partial class GameDataScrounger
                     //       this is mildly nontrivial.
 
                     // We use exact equality to match what serialization does.
-                    if (abstractNode.Value == "true")
+                    if (abstractNode.Value?.Equals("true", StringComparison.InvariantCultureIgnoreCase) ?? false)
                         @abstract = true;
                 }
 
