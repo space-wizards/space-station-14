@@ -49,7 +49,7 @@
       required: false
 
 - type: entity
-  parent: MothSpeciesAppearance
+  parent: BaseSpeciesAppearance
   id: AppearanceMoth
   name: moth appearance
   components:
