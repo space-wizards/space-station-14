@@ -37,7 +37,7 @@ public sealed class RunOnSideAttribute : Attribute, IWrapTestMethod, IImplyFixtu
 
     private sealed class SidedTestCommand : DelegatingTestCommand
     {
-        private Side _side;
+        private readonly Side _side;
 
         public SidedTestCommand(TestCommand inner, Side side) : base(inner)
         {
