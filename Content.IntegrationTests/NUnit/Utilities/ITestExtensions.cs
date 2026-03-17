@@ -6,7 +6,7 @@ namespace Content.IntegrationTests.NUnit.Utilities;
 public static class ITestExtensions
 {
     extension<T>(T test)
-        where T: ITest
+        where T : ITest
     {
         /// <summary>
         ///     Ensures the given fixture is a <see cref="GameTest"/>, and if not gives a nice error message.
