@@ -773,7 +773,7 @@
 
 - type: entity
   parent: GasCanister
-  id: MaxCapCanister # As of writing canisters currently have about 7500 explosive intensity.
+  id: MaxCapCanister # As of writing canisters currently have about 7500 explosive intensity. 75% the total damage of a syndicate bomb.
   name: max cap in a can
   suffix: DEBUG, Max Cap
   components:
