@@ -74,10 +74,15 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
         if (entity.Comp.SafetyValveOpen)
             return;
 
-        entity.Comp.SafetyValveOpen = true;
-        Audio.PlayPvs(entity.Comp.ValveSound, entity);
+        ToggleSafetyValve(entity, open: true);
         if (entity.Comp.SafetyAlert != null)
             _popup.PopupEntity(Loc.GetString(entity.Comp.SafetyAlert), entity, PopupType.LargeCaution);
+    }
+
+    private void ToggleSafetyValve(Entity<GasCanisterComponent> entity, bool open)
+    {
+        entity.Comp.SafetyValveOpen = true;
+        Audio.PlayPvs(entity.Comp.ValveSound, entity);
     }
 
     protected override void DevicedUpdate(Entity<GasCanisterComponent> entity, ref AtmosDeviceUpdateEvent args)
@@ -101,21 +106,16 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
         {
             var environment = _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true);
             _atmos.FlowGas(entity.Comp.Air, environment, args.dt, 0.10f);
+            if (entity.Comp.Air.Pressure < entity.Comp.SafetyPressure)
+                ToggleSafetyValve(entity, false);
         }
         else if (entity.Comp.ReleaseValveOpen)  // Release valve is open, release gas.
         {
-            if (entity.Comp.GasTankSlot.Item != null)
-            {
-                var gasTank = Comp<GasTankComponent>(entity.Comp.GasTankSlot.Item.Value);
-                _atmos.FlowGas(entity.Comp.Air, gasTank.Air, entity.Comp.ReleasePressure, args.dt,0.10f);
-                //_atmos.ReleaseGasTo(entity.Comp.Air, gasTank.Air, entity.Comp.ReleasePressure);
-            }
-            else
-            {
-                var environment = _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true);
-                _atmos.FlowGas(entity.Comp.Air, environment, entity.Comp.ReleasePressure, args.dt, 0.10f);
-                //_atmos.ReleaseGasTo(entity.Comp.Air, environment, entity.Comp.ReleasePressure);
-            }
+            var output = entity.Comp.GasTankSlot.Item == null
+                ? _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true)
+                : CompOrNull<GasTankComponent>(entity.Comp.GasTankSlot.Item.Value)?.Air;
+
+            _atmos.FlowGas(entity.Comp.Air, output, entity.Comp.ReleasePressure, args.dt,0.10f);
         }
 
         // If last pressure is very close to the current pressure, do nothing.
