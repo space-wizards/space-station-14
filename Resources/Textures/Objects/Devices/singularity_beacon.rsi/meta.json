@@ -17,29 +17,7 @@
             ]
         },
         {
-            "name": "inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ],
-                [
-                    0.1,
-                    0.1
-                ],
-                [
-                    0.1,
-                    0.1
-                ],
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "inhand-right",
+            "name": "inhand",
             "directions": 4,
             "delays": [
                 [
@@ -60,6 +38,5 @@
                 ]
             ]
         }
-
     ]
 }
