@@ -98,10 +98,13 @@ public sealed class ParallaxManager : IParallaxManager
             }
             else
             {
-                layers = await Task.WhenAll(
+                // Explicitly allocate params array to avoid sandbox violation since C# 14.
+                var tasks = new[]
+                {
                     LoadParallaxLayers(parallaxPrototype.Layers, loadedLayers, cancel),
-                    LoadParallaxLayers(parallaxPrototype.LayersLQ, loadedLayers, cancel)
-                );
+                    LoadParallaxLayers(parallaxPrototype.LayersLQ, loadedLayers, cancel),
+                };
+                layers = await Task.WhenAll(tasks);
             }
 
             cancel.ThrowIfCancellationRequested();

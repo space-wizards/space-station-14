@@ -1,7 +1,6 @@
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mobs.Components
 {

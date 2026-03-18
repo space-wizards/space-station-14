@@ -1,271 +1,286 @@
 - type: entity
-  id: CrateNPCBee
   parent: CrateLivestock
+  id: CrateNPCBee
   name: crate of bees
   description: A crate containing a swarm of eight bees.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobBee
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobBee
         amount: 8
 
 - type: entity
-  id: CrateNPCButterflies
   parent: CrateLivestock
+  id: CrateNPCButterflies
   name: crate of butterflies
   description: A crate containing five butterflies.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobButterfly
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobButterfly
         amount: 5
 
 - type: entity
-  id: CrateNPCCat
   parent: CrateLivestock
+  id: CrateNPCCat
   name: cat crate
   description: A crate containing a single cat.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobCat
-        prob: 1
-        orGroup: MobCat
-      - id: MobCatCalico
-        prob: 1
-        orGroup: MobCat
-      - id: MobCatCaracal
-        prob: 0.5
-        orGroup: MobCat
-      - id: MobCatKitten
-        prob: 0.25
-        orGroup: MobCat
-      - id: MobBingus
-        prob: 0.005
-        orGroup: MobCat
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:GroupSelector
+        children:
+        - id: MobCat
+        - id: MobCatCalico
+        - id: MobCatCaracal
+          weight: 0.5
+        - id: MobCatKitten
+          weight: 0.25
+        - id: MobBingus
+          weight: 0.005
 
 - type: entity
-  id: CrateNPCChicken
   parent: CrateLivestock
+  id: CrateNPCChicken
   name: chicken crate
   description: A crate containing four fully grown chickens.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobChicken
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobChicken
         amount: 4
 
 - type: entity
-  id: CrateNPCCrab
   parent: CrateLivestock
+  id: CrateNPCCrab
   name: crab crate
   description: A crate containing three huge crabs.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobCrab
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobCrab
         amount: 3
 
 - type: entity
-  id: CrateNPCDuck
   parent: CrateLivestock
+  id: CrateNPCDuck
   name: duck crate
   description: A crate containing six fully grown ducks.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobDuckMallard
-        amount: 1
-      - id: MobDuckBrown
-        amount: 1
-      - id: MobDuckWhite
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: MobDuckMallard
+        - id: MobDuckBrown
+        - id: MobDuckWhite
+          amount: 2
 
 - type: entity
-  id: CrateNPCCorgi
   parent: CrateLivestock
+  id: CrateNPCCorgi
   name: corgi crate
   description: A crate containing a single corgi.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobCorgi
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobCorgi
 
 - type: entity
-  id: CrateNPCPuppyCorgi
   parent: CrateLivestock
+  id: CrateNPCPuppyCorgi
   name: puppy corgi crate
   description: A crate containing a single puppy corgi. Awww.
   components:
-  - type: StorageFill
-    contents:
-    - id: MobCorgiPuppy
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobCorgiPuppy
 
 - type: entity
-  id: CrateNPCCow
   parent: CrateLivestock
+  id: CrateNPCCow
   name: cow crate
   description: A crate containing a single cow.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobCow
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobCow
 
 - type: entity
-  id: CrateNPCGoat
   parent: CrateLivestock
+  id: CrateNPCGoat
   name: goat crate
   description: A crate containing a single goat.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobGoat
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobGoat
 
 - type: entity
-  id: CrateNPCGoose
   parent: CrateLivestock
+  id: CrateNPCGoose
   name: goose crate
   description: A crate containing two geese.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobGoose
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobGoose
         amount: 2
 
 - type: entity
-  id: CrateNPCGorilla
   parent: CrateLivestock
+  id: CrateNPCGorilla
   name: gorilla crate
   description: A crate containing a single gorilla.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobGorilla
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobGorilla
 
 - type: entity
-  id: CrateNPCMonkeyCube
   parent: CrateGenericSteel
+  id: CrateNPCMonkeyCube
   name: monkey cube crate
   description: A crate containing single box of monkey cubes.
   components:
-  - type: StorageFill
-    contents:
-      - id: MonkeyCubeBox
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MonkeyCubeBox
 
 - type: entity
-  id: CrateNPCKoboldCube
   parent: CrateGenericSteel
+  id: CrateNPCKoboldCube
   name: kobold cube crate
   description: A crate containing single box of kobold cubes.
   components:
-  - type: StorageFill
-    contents:
-      - id: KoboldCubeBox
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: KoboldCubeBox
 
 - type: entity
-  id: CrateNPCMouse
   parent: CrateLivestock
+  id: CrateNPCMouse
   name: mice crate
   description: A crate containing five mice.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobMouse
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobMouse
         amount: 5
 
 - type: entity
-  id: CrateNPCParrot
   parent: CrateLivestock
+  id: CrateNPCParrot
   name: parrot crate
   description: A crate containing three parrots.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobParrot
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobParrot
         amount: 3
 
 - type: entity
-  id: CrateNPCPenguin
   parent: CrateLivestock
+  id: CrateNPCPenguin
   name: penguin crate
   description: A crate containing two penguins.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobPenguin
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobPenguin
         amount: 2
 
 - type: entity
-  id: CrateNPCPig
   parent: CrateLivestock
+  id: CrateNPCPig
   name: pig crate
   description: A crate containing a single pig.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobPig
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobPig
 
 - type: entity
-  id: CrateNPCSnake
   parent: CrateLivestock
+  id: CrateNPCSnake
   name: snake crate
   description: A crate containing three snakes.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobSnake
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobSnake
         amount: 3
 
 - type: entity
-  id: CrateNPCHamster
   parent: CrateRodentCage
+  id: CrateNPCHamster
   suffix: Filled
   components:
-    - type: StorageFill
-      contents:
-        - id: MobHamster
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobHamster
 
 - type: entity
-  id: CrateNPCHamlet
   parent: CrateRodentCage
+  id: CrateNPCHamlet
   suffix: Hamlet
   components:
-    - type: StorageFill
-      contents:
-        - id: MobHamsterHamlet
-          prob: 1
-          orGroup: MobHamsterHamlet
-        - id: MobHamsterHamletSlippery
-          prob: 0.001
-          orGroup: MobHamsterHamlet
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:GroupSelector
+        children:
+          - id: MobHamsterHamlet
+          - id: MobHamsterHamletSlippery
+            weight: 0.001
 
 - type: entity
-  id: CrateNPCLizard
   parent: CrateLivestock
+  id: CrateNPCLizard
   name: lizard crate
   description: A crate containing a lizard.
   components:
-    - type: StorageFill
-      contents:
-        - id: MobLizard
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobLizard
 
 - type: entity
-  id: CrateNPCKangaroo
   parent: CrateLivestock
+  id: CrateNPCKangaroo
   name: kangaroo crate
   description: A crate containing a kangaroo.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobKangaroo
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobKangaroo
 
 - type: entity
-  id: CrateNPCMothroach
   parent: CrateLivestock
+  id: CrateNPCMothroach
   name: crate of mothroaches
   description: A crate containing four mothroaches.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobMothroach
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobMothroach
         amount: 4

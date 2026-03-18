@@ -28,7 +28,7 @@
       0: Alive
       120: Dead
   - type: Stamina
-    critThreshold: 120
+    baseCritThreshold: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -349,8 +349,10 @@
     speedModifierThresholds:
       50: 0.4
   - type: Bloodstream
-    bloodReagent: Water
-    chemicalMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 100
   - type: StatusEffects
     allowed:
     - Electrocution
@@ -386,31 +388,31 @@
     solution: bloodstream
 
 - type: entity
-  name: Reagent Slime Spawner
-  id: ReagentSlimeSpawner
   parent: MarkerBase
+  id: ReagentSlimeSpawner
+  name: Reagent Slime Spawner
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Mobs/Aliens/elemental.rsi
-          state: alive
-    - type: RandomSpawner
-      prototypes:
-        - ReagentSlime
-        - ReagentSlimeBeer
-        - ReagentSlimePax
-        - ReagentSlimeNocturine
-        - ReagentSlimeTHC
-        - ReagentSlimeBicaridine
-        - ReagentSlimeToxin
-        - ReagentSlimeNapalm
-        - ReagentSlimeOmnizine
-        - ReagentSlimeMuteToxin
-        - ReagentSlimeNorepinephricAcid
-        - ReagentSlimeEphedrine
-        - ReagentSlimeRobustHarvest
-      chance: 1
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Mobs/Aliens/elemental.rsi
+        state: alive
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: ReagentSlime
+      - id: ReagentSlimeBeer
+      - id: ReagentSlimePax
+      - id: ReagentSlimeNocturine
+      - id: ReagentSlimeTHC
+      - id: ReagentSlimeBicaridine
+      - id: ReagentSlimeToxin
+      - id: ReagentSlimeNapalm
+      - id: ReagentSlimeOmnizine
+      - id: ReagentSlimeMuteToxin
+      - id: ReagentSlimeNorepinephricAcid
+      - id: ReagentSlimeEphedrine
+      - id: ReagentSlimeRobustHarvest
 
 - type: entity
   id: ReagentSlimeBeer
@@ -418,7 +420,10 @@
   suffix: Beer
   components:
   - type: Bloodstream
-    bloodReagent: Beer
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Beer
+        Quantity: 100
   - type: PointLight
     color: "#cfa85f"
   - type: Sprite
@@ -435,7 +440,10 @@
   suffix: Pax
   components:
   - type: Bloodstream
-    bloodReagent: Pax
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Pax
+        Quantity: 100
   - type: PointLight
     color: "#AAAAAA"
   - type: Sprite
@@ -455,7 +463,10 @@
   suffix: Nocturine
   components:
   - type: Bloodstream
-    bloodReagent: Nocturine
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Nocturine
+        Quantity: 100
   - type: PointLight
     color: "#128e80"
   - type: Sprite
@@ -475,7 +486,10 @@
   suffix: THC
   components:
   - type: Bloodstream
-    bloodReagent: THC
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: THC
+        Quantity: 100
   - type: PointLight
     color: "#808080"
   - type: Sprite
@@ -492,7 +506,10 @@
   suffix: Bicaridine
   components:
   - type: Bloodstream
-    bloodReagent: Bicaridine
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Bicaridine
+        Quantity: 100
   - type: PointLight
     color: "#ffaa00"
   - type: Sprite
@@ -509,7 +526,10 @@
   suffix: Toxin
   components:
   - type: Bloodstream
-    bloodReagent: Toxin
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 100
   - type: PointLight
     color: "#cf3600"
   - type: Sprite
@@ -526,7 +546,10 @@
   suffix: Napalm
   components:
   - type: Bloodstream
-    bloodReagent: Napalm
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Napalm
+        Quantity: 100
   - type: PointLight
     color: "#FA00AF"
   - type: Sprite
@@ -543,7 +566,10 @@
   suffix: Omnizine
   components:
   - type: Bloodstream
-    bloodReagent: Omnizine
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Omnizine
+        Quantity: 100
   - type: PointLight
     color: "#fcf7f9"
   - type: Sprite
@@ -560,7 +586,10 @@
   suffix: Mute Toxin
   components:
   - type: Bloodstream
-    bloodReagent: MuteToxin
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: MuteToxin
+        Quantity: 100
   - type: PointLight
     color: "#0f0f0f"
   - type: Sprite
@@ -577,7 +606,10 @@
   suffix: Norepinephric Acid
   components:
   - type: Bloodstream
-    bloodReagent: NorepinephricAcid
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: NorepinephricAcid
+        Quantity: 100
   - type: PointLight
     color: "#96a8b5"
   - type: Sprite
@@ -594,7 +626,10 @@
   suffix: Ephedrine
   components:
   - type: Bloodstream
-    bloodReagent: Ephedrine
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Ephedrine
+        Quantity: 100
   - type: PointLight
     color: "#D2FFFA"
   - type: Sprite
@@ -611,7 +646,10 @@
   suffix: Robust Harvest
   components:
   - type: Bloodstream
-    bloodReagent: RobustHarvest
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: RobustHarvest
+        Quantity: 100
   - type: PointLight
     color: "#3e901c"
   - type: Sprite
