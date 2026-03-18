@@ -15,7 +15,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
         SubscribeLocalEvent<GasCanisterComponent, AfterAutoHandleStateEvent>(OnGasState);
     }
 
-    protected override void DevicedUpdate(Entity<GasCanisterComponent> entity, ref AtmosDeviceUpdateEvent args)
+    protected override void DeviceUpdated(Entity<GasCanisterComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
         // Atmos not predicted :(
         throw new NotImplementedException();
