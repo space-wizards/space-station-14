@@ -48,7 +48,7 @@ public sealed partial class AtmosphereSystem
         NumericsHelpers.Multiply(moles, GasMolarMasses, tmp);
 
         // Conversion of grams to kilograms.
-        return NumericsHelpers.HorizontalAdd(tmp) * 0.001f;
+        return NumericsHelpers.HorizontalAdd(tmp) * Atmospherics.gToKg;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

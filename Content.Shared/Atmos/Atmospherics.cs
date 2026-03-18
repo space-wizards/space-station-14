@@ -105,6 +105,11 @@ namespace Content.Shared.Atmos
         public const float NitrogenMolesGasMiner = MolesCellGasMiner * NitrogenStandard;
 
         /// <summary>
+        /// Converts Grams to Kilograms.
+        /// </summary>
+        public const float gToKg = 0.001f;
+
+        /// <summary>
         /// Convert kPa to Kg/m^2
         /// </summary>
         public const float kPaToKg_m2 = 0.00980665f;
