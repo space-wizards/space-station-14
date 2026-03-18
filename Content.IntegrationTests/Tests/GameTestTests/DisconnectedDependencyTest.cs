@@ -1,3 +1,4 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Robust.Client.GameObjects;
