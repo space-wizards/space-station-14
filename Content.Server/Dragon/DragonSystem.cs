@@ -100,12 +100,8 @@ public sealed partial class DragonSystem : EntitySystem
                 }
             }
 
-            if (!_alerts.IsShowingAlert(uid, comp.RiftTimerAlert))
-            {
-                var cooldown = (_timing.CurTime, _timing.CurTime + TimeSpan.FromSeconds(comp.RiftMaxAccumulator));
-                _alerts.ShowAlert(uid, comp.RiftTimerAlert, cooldown: cooldown);
-            }
-            else if (_thresholdCheck <= _timing.CurTime)
+            // update the rift alert from blue -> orange -> red
+            if (_thresholdCheck <= _timing.CurTime)
             {
                 if (_alerts.TryGetAlertState(uid, new AlertKey(comp.RiftTimerAlert, null), out var state))
                 {
@@ -117,9 +113,7 @@ public sealed partial class DragonSystem : EntitySystem
                         curSeverity = 2;
 
                     if (curSeverity != state.Severity && state.Cooldown != null)
-                    {
                         _alerts.UpdateAlert(uid, comp.RiftTimerAlert, curSeverity, state.Cooldown.Value.endTime);
-                    }
                 }
 
                 _thresholdCheck = _timing.CurTime + comp.RiftTimerThresholdCheckInterval;
@@ -141,6 +135,8 @@ public sealed partial class DragonSystem : EntitySystem
     {
         Roar(uid, component);
         _actions.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);
+
+        StartRiftTimerAlert((uid, component));
     }
 
     private void OnShutdown(EntityUid uid, DragonComponent component, ComponentShutdown args)
@@ -202,6 +198,8 @@ public sealed partial class DragonSystem : EntitySystem
 
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
+
+        _alerts.ClearAlert(uid, component.RiftTimerAlert);
     }
 
     // TODO: just make this a move speed modifier component???
@@ -289,6 +287,8 @@ public sealed partial class DragonSystem : EntitySystem
                 break;
             }
         }
+
+        StartRiftTimerAlert((uid, comp));
     }
 
     /// <summary>
@@ -303,5 +303,31 @@ public sealed partial class DragonSystem : EntitySystem
         comp.WeakenedAccumulator = comp.WeakenedDuration;
         _movement.RefreshMovementSpeedModifiers(uid);
         _popup.PopupEntity(Loc.GetString("carp-rift-destroyed"), uid, uid);
+
+        StartRiftTimerAlert((uid, comp));
+    }
+
+    /// <summary>
+    /// Adds the rift timer alert, if necessary
+    /// </summary>
+    /// <param name="ent"></param>
+    private void StartRiftTimerAlert(Entity<DragonComponent> ent)
+    {
+        if (_alerts.IsShowingAlert(ent.Owner, ent.Comp.RiftTimerAlert))
+            return;
+
+        if (ent.Comp.Rifts.Count >= RiftsAllowed)
+            return;
+
+        if (ent.Comp.Rifts.Count > 0)
+        {
+            var lastRift = ent.Comp.Rifts[^1];
+
+            if (TryComp<DragonRiftComponent>(lastRift, out var rift) && rift.State != DragonRiftState.Finished)
+                return;
+        }
+
+        var cooldown = (_timing.CurTime, _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.RiftMaxAccumulator));
+        _alerts.ShowAlert(ent.Owner, ent.Comp.RiftTimerAlert, 1, cooldown);
     }
 }

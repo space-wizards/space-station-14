@@ -126,5 +126,5 @@ alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
 alerts-prying-name = Prying
 alerts-prying-desc = You can innately pry doors open using alternative interaction.
 
-alerts-dragon-rift-timer-name = Rift Timer
-alerts-dragon-rift-timer-desc = Open a rift before the time runs out!
+alerts-dragon-rift-timer-name = Summon Rift Timer
+alerts-dragon-rift-timer-desc = Summon a rift before the time runs out!

@@ -84,7 +84,7 @@ namespace Content.Server.Dragon
         public Dictionary<RiftTimerThreshold, float> RiftTimerThresholds = new()
         {
             { RiftTimerThreshold.Blue, 300f },
-            { RiftTimerThreshold.Orange, 180f },
+            { RiftTimerThreshold.Orange, 150f },
             { RiftTimerThreshold.Red, 60f }
         };
     }
