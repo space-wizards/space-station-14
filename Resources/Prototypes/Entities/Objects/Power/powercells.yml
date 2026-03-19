@@ -277,6 +277,8 @@
   components:
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,3,5
   - type: MultiHandedItem
   - type: SolutionContainerManager
     solutions:
