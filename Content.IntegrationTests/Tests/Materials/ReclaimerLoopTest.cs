@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Materials;
 public sealed class ReclaimerLoopTest : InteractionTest
 {
     //ProtoIDs we need
-    private static readonly EntProtoId APCPid = "APCBasic";
+    private static readonly EntProtoId APCid = "APCBasic";
     private static readonly EntProtoId FloorTileID = "FloorTileItemSteelCheckerDark";
 
     private static readonly string[] Reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
@@ -73,7 +73,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
         }
 
         // Power the reclaimer
-        await SpawnEntity(APCPid, SEntMan.GetCoordinates(TargetCoords));
+        await SpawnEntity(APCid, SEntMan.GetCoordinates(TargetCoords));
         await RunTicks(1);
         //Set reclaimer to enabled
         await Server.WaitPost(() =>
@@ -96,7 +96,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
                 $"The material, {material}, did not have a stackentity associated with it. You may need to add a stackEntity to its Reagents/Materials yml file.");
 
             var matInHands = await PlaceInHands(matStack);
-            var matInHandsUid = SEntMan.GetEntity(matInHands);
+            var matInHandsUid = ToServer(matInHands);
 
             //Assert we're holding material
             Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.EqualTo(matInHandsUid),
