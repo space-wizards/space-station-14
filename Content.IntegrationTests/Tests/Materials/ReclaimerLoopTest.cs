@@ -105,7 +105,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
             await Interact();
 
             //Assert Hands not empty
-            Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Not.EqualTo(null),
+            Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Not.Null,
                 $"The material that should not have been reclaimed, {matStack}, is no longer in our hands. The reclaimer was {reclaimerID}");
         }
     }
