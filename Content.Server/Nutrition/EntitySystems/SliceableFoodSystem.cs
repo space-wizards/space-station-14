@@ -83,14 +83,13 @@ public sealed class SliceableFoodSystem : EntitySystem
             return false;
 
         var sliceVolume = solution.Volume / FixedPoint2.New(entity.Comp2.TotalCount);
-        var xform = entity.Comp1;
 
         if (_container.TryGetContainingContainer(entity.Comp1.ParentUid, entity, out var container))
             _container.Remove((entity.Owner, entity.Comp1, null), container);
 
         for (var i = 0; i < entity.Comp2.TotalCount; i++)
         {
-            var sliceUid = Slice(entity.Comp2, xform, container);
+            var sliceUid = Slice(entity, container);
 
             var lostSolution =
                 _solutionContainer.SplitSolution(soln.Value, sliceVolume);
@@ -111,10 +110,12 @@ public sealed class SliceableFoodSystem : EntitySystem
     /// Create a new slice in the world and returns its entity.
     /// The solutions must be set afterwards.
     /// </summary>
-    public EntityUid Slice(SliceableFoodComponent slice, TransformComponent xform, BaseContainer? container)
+    public EntityUid Slice(Entity<TransformComponent?, SliceableFoodComponent?> entity, BaseContainer? container)
     {
-        var coords = _transform.GetMapCoordinates(xform);
-        var sliceUid = Spawn(slice.Slice, coords);
+        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
+            return EntityUid.Invalid;
+
+        var sliceUid = Spawn(entity.Comp2.Slice, _transform.GetMapCoordinates((entity, entity.Comp1)));
 
         // try putting the slice into the container if the food being sliced is in a container!
         // this lets you do things like slice a pizza up inside of a hot food cart without making a food-everywhere mess
