@@ -119,11 +119,7 @@ public sealed class SliceableFoodSystem : EntitySystem
 
         // try putting the slice into the container if the food being sliced is in a container!
         // this lets you do things like slice a pizza up inside of a hot food cart without making a food-everywhere mess
-        if (container != null)
-        {
-            _container.Insert(sliceUid, container);
-        }
-        else
+        if (container == null || !_container.Insert(sliceUid, container))
         {
             _transform.SetLocalRotation(sliceUid, 0);
             var randVect = _random.NextVector2(2.0f, 2.5f);
