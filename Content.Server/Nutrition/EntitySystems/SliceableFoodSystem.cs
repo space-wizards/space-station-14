@@ -1,20 +1,20 @@
 using Content.Server.DoAfter;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Nutrition;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Nutrition;
+using Content.Shared.Nutrition.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Content.Shared.Destructible;
+using Robust.Shared.Random;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -83,9 +83,14 @@ public sealed class SliceableFoodSystem : EntitySystem
             return false;
 
         var sliceVolume = solution.Volume / FixedPoint2.New(entity.Comp2.TotalCount);
-        for (int i = 0; i < entity.Comp2.TotalCount; i++)
+        var xform = entity.Comp1;
+
+        if (_container.TryGetContainingContainer(entity.Comp1.ParentUid, entity, out var container))
+            _container.Remove((entity.Owner, entity.Comp1, null), container);
+
+        for (var i = 0; i < entity.Comp2.TotalCount; i++)
         {
-            var sliceUid = Slice(entity, user);
+            var sliceUid = Slice(entity.Comp2, xform, container);
 
             var lostSolution =
                 _solutionContainer.SplitSolution(soln.Value, sliceVolume);
@@ -106,20 +111,20 @@ public sealed class SliceableFoodSystem : EntitySystem
     /// Create a new slice in the world and returns its entity.
     /// The solutions must be set afterwards.
     /// </summary>
-    public EntityUid Slice(Entity<TransformComponent?, SliceableFoodComponent?> entity, EntityUid user)
+    public EntityUid Slice(SliceableFoodComponent slice, TransformComponent xform, BaseContainer? container)
     {
-        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
-            return EntityUid.Invalid;
-
-        var sliceUid = Spawn(entity.Comp2.Slice, _transform.GetMapCoordinates((entity, entity.Comp1)));
+        var coords = _transform.GetMapCoordinates(xform);
+        var sliceUid = Spawn(slice.Slice, coords);
 
         // try putting the slice into the container if the food being sliced is in a container!
         // this lets you do things like slice a pizza up inside of a hot food cart without making a food-everywhere mess
-        _transform.DropNextTo(sliceUid, entity);
-        _transform.SetLocalRotation(sliceUid, 0);
-
-        if (!_container.IsEntityOrParentInContainer(sliceUid))
+        if (container != null)
         {
+            _container.Insert(sliceUid, container);
+        }
+        else
+        {
+            _transform.SetLocalRotation(sliceUid, 0);
             var randVect = _random.NextVector2(2.0f, 2.5f);
             if (TryComp<PhysicsComponent>(sliceUid, out var physics))
                 _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
