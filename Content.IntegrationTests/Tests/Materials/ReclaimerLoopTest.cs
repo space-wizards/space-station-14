@@ -63,7 +63,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
                 if (item.Components.ContainsKey("RandomSprite")) //spawners and random items mess things up quicklyEntityTableSpawner
                     continue;
                 var currentScrap = await Spawn(itemID);
-                var currentScrapUid = SEntMan.GetEntity(currentScrap);
+                var currentScrapUid = ToServer(currentScrap);
                 var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
 
                 //If it's on the whitelist for the reclaimer, and not on its blacklist.
