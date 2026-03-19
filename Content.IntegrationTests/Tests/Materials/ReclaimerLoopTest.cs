@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests.Materials;
 public sealed class ReclaimerLoopTest : InteractionTest
 {
     //ProtoIDs we need
-    private static readonly EntProtoId APCPid = "APCbasic";
+    private static readonly EntProtoId APCPid = "APCBasic";
     private static readonly EntProtoId FloorTileID = "FloorTileItemSteelCheckerDark";
 
     private static string[] _reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
@@ -99,7 +99,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
             var matInHandsUid = SEntMan.GetEntity(matInHands);
 
             //Assert we're holding material
-            Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.EqualTo(matInHandsUid),
+            Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.EqualTo(matInHandsUid),
             $"The material, {matStack}, never got put in our hands.");
 
             await Interact();
