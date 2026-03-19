@@ -90,6 +90,7 @@ public partial record struct CookingIngredients
     ///     A dictionary of reagent quantities.
     /// </summary>
     [DataField]
+    // TODO: Use ReagentQuantity[]
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents { get; private set; } = new();
 
     /// <summary>
