@@ -29,14 +29,13 @@ public sealed class ReclaimerLoopTest : InteractionTest
     private static readonly EntProtoId FloorTileID = "FloorTileItemSteelCheckerDark";
 
     private static string[] _reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
-    /// <summary>
-    /// For each entity that recycles into materials, recycle it and check that
-    /// </summary>
+
     [Test]
     [TestCaseSource(nameof(_reclaimers))]
     [TestOf(typeof(MaterialReclaimerSystem))]
     [TestOf(typeof(MaterialReclaimerComponent))]
-    public async Task ReclaimingLoopTest(string reclaimerID)
+    [Description("For every material that a reclaimer can spawn, make sure that it cannot get stuck in a loop of spawning then recycling.")]
+    public async Task MaterialSpawnLoopTest(string reclaimerID)
     {
         var materialReclaimerSystem = SEntMan.System<SharedMaterialReclaimerSystem>();
         var entityWhitelistSystem = SEntMan.System<EntityWhitelistSystem>();
