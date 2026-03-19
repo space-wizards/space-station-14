@@ -21,14 +21,14 @@ public abstract partial class SharedAtmosphereSystem
     /// </summary>
     public float[] GasSpecificHeats => _gasSpecificHeats;
 
-    private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+    private float[] _gasSpecificHeats = new float[Atmospherics.AdjustedNumberOfGases];
 
     /// <summary>
     /// Cached array of gas specific mols
     /// </summary>
     public float[] GasMolarMasses => _gasMolarMasses;
 
-    private float[] _gasMolarMasses = new float[Atmospherics.TotalNumberOfGases];
+    private float[] _gasMolarMasses = new float[Atmospherics.AdjustedNumberOfGases];
 
     /// <summary>
     /// Mask used to determine if a gas is flammable or not.
@@ -77,8 +77,6 @@ public abstract partial class SharedAtmosphereSystem
             GasPrototypes[idx] = gasPrototype;
             GasReagents[idx] = gasPrototype.Reagent;
         }
-
-        Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
         for (var i = 0; i < GasPrototypes.Length; i++)
         {
