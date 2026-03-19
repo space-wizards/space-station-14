@@ -77,6 +77,6 @@ namespace Content.Server.Dragon
         /// The solution to place into the smoke (mostly just needed for color)
         /// </summary>
         [DataField]
-        public Solution SmokeSolution = new Solution("Blood", 1);
+        public Solution SmokeSolution = new ([new("Blood", 1)]);
     }
 }
