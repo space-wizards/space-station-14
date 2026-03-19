@@ -5,6 +5,7 @@ using Content.Server.Materials;
 using Content.Shared.Whitelist;
 using Content.Shared.Materials;
 using Robust.Shared.Prototypes;
+using Robust.Shared.GameObjects;
 
 
 
@@ -41,13 +42,15 @@ public sealed class ReclaimerLoopTest : InteractionTest
         await AddAtmosphere(); //so the player can breathe
 
         //Spawn the reclaimer
-        var reclaimerNetEnt = await SpawnTarget(reclaimerID, PlayerCoords);
-        var reclaimComp = Comp<MaterialReclaimerComponent>();
-        var reclaimUID = SEntMan.GetEntity(reclaimerNetEnt);
+        await SpawnTarget(reclaimerID, PlayerCoords);
+        Assert.That(STarget, Is.Not.Null,
+            "STarget was null, did the reclaimer spawn correctly?");
+        var reclaimComp = Comp<MaterialReclaimerComponent>(Target);
+        //If the reclaimer can produce materials
         var reclaimsMaterials = reclaimComp.ReclaimMaterials;
 
         //if the reclaimer has reclaimsMaterials and is able to produce materials
-        //go through all recyclable items, compile a list of produceable materials
+        //go through all recyclable items, compile a HashSet of produceable materials
         HashSet<string> produceableMaterials = new HashSet<string>(); //If reclaimMaterials is false, this will stay empty
         if (reclaimsMaterials)
         {
@@ -80,7 +83,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
         await RunTicks(1);
 
         //Set reclaimer to enabled
-        materialReclaimerSystem.SetReclaimerEnabled(reclaimUID, true);
+        materialReclaimerSystem.SetReclaimerEnabled((EntityUid)STarget, true);
         //Assert that reclaimer enabled
         Assert.That(reclaimComp.Enabled,
         "The reclaimer did not get or stay enabled");
