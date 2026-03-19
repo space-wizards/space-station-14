@@ -6,16 +6,8 @@ using Content.Shared.Whitelist;
 using Content.Shared.Materials;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameObjects;
-using Content.Server.Spawners.Components;
-using Content.Shared.Sprite;
-
-
-
-
-
 
 namespace Content.IntegrationTests.Tests.Materials;
-
 
 /// <summary>
 /// Tests to prevent Recycler loops, where the product of one recycling can be recycled again.
@@ -60,7 +52,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
             foreach (string itemID in itemsWithPhysicalComposition)
             {
                 EntityPrototype item = ProtoMan.Index(itemID);
-                if (item.Components.ContainsKey("RandomSprite")) //spawners and random items mess things up quicklyEntityTableSpawner
+                if (item.Components.ContainsKey("RandomSprite") || item.Components.ContainsKey("EntityTableSpawner")) //spawners and random items mess things up quickly
                     continue;
                 var currentScrap = await Spawn(itemID);
                 var currentScrapUid = ToServer(currentScrap);
