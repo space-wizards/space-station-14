@@ -45,7 +45,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
 
         //if the reclaimer has reclaimsMaterials and is able to produce materials
         //go through all recyclable items, compile a HashSet of produceable materials
-        HashSet<string> produceableMaterials = new HashSet<string>(); //If reclaimMaterials is false, this will stay empty
+        HashSet<string> produceableMaterials = []; //If reclaimMaterials is false, this will stay empty
         if (reclaimsMaterials)
         {
             foreach (var proto in ProtoMan.EnumeratePrototypes<EntityPrototype>())
