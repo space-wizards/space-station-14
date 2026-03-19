@@ -20,10 +20,10 @@ public sealed class ReclaimerLoopTest : InteractionTest
     private static readonly EntProtoId APCPid = "APCBasic";
     private static readonly EntProtoId FloorTileID = "FloorTileItemSteelCheckerDark";
 
-    private static string[] _reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
+    private static readonly string[] Reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
 
     [Test]
-    [TestCaseSource(nameof(_reclaimers))]
+    [TestCaseSource(nameof(Reclaimers))]
     [TestOf(typeof(MaterialReclaimerSystem))]
     [TestOf(typeof(MaterialReclaimerComponent))]
     [Description("For every material that a reclaimer can spawn, make sure that it cannot get stuck in a loop of spawning then recycling.")]
