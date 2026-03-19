@@ -91,7 +91,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
         //For each produceable Material, assert that it is not recyclable (and would thus cause a recycling loop)
         foreach (ProtoId<MaterialPrototype> material in produceableMaterials)
         {
-            EntProtoId? matStack = ProtoMan.Index(material).StackEntity;
+            var matStack = ProtoMan.Index(material).StackEntity;
             Assert.That(matStack, Is.Not.Null,
                 $"The material, {material}, did not have a stackentity associated with it. You may need to add a stackEntity to its Reagents/Materials yml file.");
 
