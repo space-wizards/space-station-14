@@ -48,13 +48,13 @@ public sealed class ReclaimerLoopTest : InteractionTest
         HashSet<string> produceableMaterials = new HashSet<string>(); //If reclaimMaterials is false, this will stay empty
         if (reclaimsMaterials)
         {
-            var itemsWithPhysicalComposition = GameDataScrounger.EntitiesWithComponent("PhysicalComposition");
-            foreach (string itemID in itemsWithPhysicalComposition)
+            foreach (var proto in ProtoMan.EnumeratePrototypes<EntityPrototype>())
             {
-                EntityPrototype item = ProtoMan.Index(itemID);
-                if (item.Components.ContainsKey("RandomSprite") || item.Components.ContainsKey("EntityTableSpawner")) //spawners and random items mess things up quickly
+                if (!proto.Components.ContainsKey("PhysicalComposition")) //we dont care about items that dont recycle into anything physical
                     continue;
-                var currentScrap = await Spawn(itemID);
+                if (proto.Components.ContainsKey("RandomSprite") || proto.Components.ContainsKey("EntityTableSpawner")) //spawners and random items mess things up quickly
+                    continue;
+                var currentScrap = await Spawn(proto.ID);
                 var currentScrapUid = ToServer(currentScrap);
                 var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
 
