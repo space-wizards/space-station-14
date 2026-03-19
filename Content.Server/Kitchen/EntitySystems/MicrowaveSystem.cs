@@ -111,27 +111,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             UpdateMicrowave((uid, active, microwave), frameTime);
     }
 
-    private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
-    {
-        if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
-            return;
-        SetAppearance(ent.Owner, MicrowaveVisualState.Cooking, microwaveComponent);
-
-        microwaveComponent.PlayingStream =
-            _audio.PlayPvs(microwaveComponent.LoopingSound, ent, AudioParams.Default.WithLoop(true).WithMaxDistance(5))?.Entity;
-        _powerState.SetWorkingState(ent.Owner, true);
-    }
-
-    private void OnCookStop(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
-    {
-        if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
-            return;
-
-        SetAppearance(ent.Owner, MicrowaveVisualState.Idle, microwaveComponent);
-        microwaveComponent.PlayingStream = _audio.Stop(microwaveComponent.PlayingStream);
-        _powerState.SetWorkingState(ent.Owner, false);
-    }
-
     private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
     {
         // this really does have to be in ComponentInit

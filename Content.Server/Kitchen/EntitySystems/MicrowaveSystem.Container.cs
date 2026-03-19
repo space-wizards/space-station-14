@@ -11,25 +11,6 @@ namespace Content.Server.Kitchen.EntitySystems;
 public sealed partial class MicrowaveSystem
 {
     /// <summary>
-    ///     Adds ActivelyMicrowavedComponent to entities inserted into an active microwave.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
-    {
-        var microwavedComp = AddComp<ActivelyMicrowavedComponent>(args.Entity);
-        microwavedComp.Microwave = ent.Owner;
-    }
-
-    /// <summary>
-    ///     Removes ActivelyMicrowavedComponent from entities removed from an active microwave.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
-    {
-        RemCompDeferred<ActivelyMicrowavedComponent>(args.Entity);
-    }
-
-    /// <summary>
     ///     Updates the microwave UI when the microwave's solution changes.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
