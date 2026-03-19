@@ -182,7 +182,7 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags: [Backpack] # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -190,7 +190,7 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags: [Backpack] # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -210,7 +210,7 @@
   abstract: true
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags: [Backpack] # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -230,7 +230,7 @@
   abstract: true
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags: [Backpack] # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -251,6 +251,9 @@
     maxItemSize: Ginormous
     grid:
     - 0,0,15,7
+    blacklist:
+      tags:
+        - Backpack
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
   - type: HeldSpeedModifier
