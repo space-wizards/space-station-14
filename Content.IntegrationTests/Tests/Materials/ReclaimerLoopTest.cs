@@ -12,8 +12,7 @@ using Robust.Shared.Prototypes;
 
 
 namespace Content.IntegrationTests.Tests.Materials;
-//ProtoIDs we may need
-// private static readonly EntProtoId DefibrillatorProtoId = "Defibrillator";
+
 
 /// <summary>
 /// Tests to prevent Recycler loops, where the product of one recycling can be recycled again.
@@ -22,6 +21,10 @@ namespace Content.IntegrationTests.Tests.Materials;
 [TestOf(typeof(MaterialReclaimerComponent))]
 public sealed class ReclaimerLoopTest : InteractionTest
 {
+    //ProtoIDs we need
+    private static readonly EntProtoId APCPid = "APCbasic";
+    private static readonly EntProtoId FloorTileID = "FloorTileItemSteelCheckerDark";
+
     private static string[] _reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
     /// <summary>
     /// For each entity that recycles into materials, recycle it and check that
@@ -55,7 +58,6 @@ public sealed class ReclaimerLoopTest : InteractionTest
                     continue;
 
                 EntityPrototype item = ProtoMan.Index(itemID);
-                // Debug.WriteLine($"Trying item {itemID}");
                 var currentScrap = await Spawn(itemID);
                 var currentScrapUid = SEntMan.GetEntity(currentScrap);
                 var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
@@ -63,7 +65,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
                 if (entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
                 {
                     //for each material they spawn
-                    foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition) 
+                    foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition)
                     {
                         ProtoId<MaterialPrototype> matAsProto = ProtoMan.Index<MaterialPrototype>(mat);
                         produceableMaterials.Add(matAsProto);
@@ -74,7 +76,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
         }
 
         // Power the reclaimer
-        await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
+        await SpawnEntity(APCPid, SEntMan.GetCoordinates(TargetCoords));
         await RunTicks(1);
 
         //Set reclaimer to enabled
@@ -84,7 +86,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
         "The reclaimer did not get or stay enabled");
 
         // //put a floor tile down
-        await InteractUsing("FloorTileItemSteelCheckerDark");
+        await InteractUsing(FloorTileID);
 
         //For each produceable Material, assert that it is not recyclable (and would thus cause a recycling loop)
         foreach (ProtoId<MaterialPrototype> material in produceableMaterials)
