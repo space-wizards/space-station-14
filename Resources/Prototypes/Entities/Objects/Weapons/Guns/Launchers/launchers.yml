@@ -13,6 +13,8 @@
     - Back
   - type: Item
     size: Ginormous
+    shape:
+      - 0,0,6,3
   - type: StaticPrice
     price: 500
   - type: ContainerContainer
@@ -156,6 +158,11 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    shape:
+    - 0,1,7,2
+    - 3,0,4,0
+    - 2,3,4,3
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
