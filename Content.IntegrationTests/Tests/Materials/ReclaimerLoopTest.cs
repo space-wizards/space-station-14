@@ -1,10 +1,13 @@
-using Content.IntegrationTests.Tests.Interaction;
-using Content.Server.Materials;
-using Content.Shared.Materials;
-using Content.IntegrationTests.Utility;
-using Robust.Shared.Prototypes;
 using System.Collections.Generic;
+using Content.IntegrationTests.Tests.Interaction;
+using Content.IntegrationTests.Utility;
+using Content.Server.Materials;
 using Content.Shared.Whitelist;
+using Content.Shared.Materials;
+using Robust.Shared.Prototypes;
+
+
+
 
 
 
@@ -42,7 +45,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
 
         //if the reclaimer has reclaimsMaterials and is able to produce materials
         //go through all recyclable items, compile a list of produceable materials
-        List<string> produceableMaterials = []; //If reclaimMaterials is false, this will stay empty
+        HashSet<string> produceableMaterials = new HashSet<string>(); //If reclaimMaterials is false, this will stay empty
         if (reclaimsMaterials)
         {
             foreach (string itemID in GameDataScrounger.EntitiesWithComponent("PhysicalComposition"))
@@ -59,14 +62,11 @@ public sealed class ReclaimerLoopTest : InteractionTest
                 //If it's on the whitelist for the reclaimer, and not on its blacklist. also checks if the reclaimer
                 if (entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
                 {
-                    foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition) //for each material they spawn
+                    //for each material they spawn
+                    foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition) 
                     {
                         ProtoId<MaterialPrototype> matAsProto = ProtoMan.Index<MaterialPrototype>(mat);
-                        //If its not already in producedMaterials, add it
-                        if (!produceableMaterials.Contains(matAsProto))
-                        {
-                            produceableMaterials.Add(matAsProto);
-                        }
+                        produceableMaterials.Add(matAsProto);
                     }
                 }
                 await Delete(currentScrapUid);
