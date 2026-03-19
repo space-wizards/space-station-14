@@ -1060,4 +1060,11 @@
   id: 130
   time: '2026-03-15T00:02:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43143
+- author: rwrv1
+  changes:
+  - message: On Packed, updated the TEG burn chamber, separating it from the station.
+    type: Tweak
+  id: 131
+  time: '2026-03-19T07:44:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43278
 Order: 2

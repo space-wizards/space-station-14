@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: The ID card computer now has buttons to grant or revoke all access from
-      the target ID card.
-    type: Add
-  id: 9070
-  time: '2025-10-11T00:52:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39375
-- author: Centronias
-  changes:
-  - message: The HugBot, which is similar in purpose and construction to other small
-      robots like the CleanBot.
-    type: Add
-  id: 9071
-  time: '2025-10-11T01:05:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37557
 - author: PicklOH
   changes:
   - message: Added more Syndie ammo to the EMAG lathe inventory
@@ -3749,23 +3733,30 @@
     type: Tweak
   - message: Species now regenerate -0.05 of brute types individually (from -0.02).
     type: Tweak
-  - message: Several mobs and weapons previously dealing split brute damage now deal singular damage types.
+  - message: Several mobs and weapons previously dealing split brute damage now deal
+      singular damage types.
     type: Tweak
-  - message: Several reagents previously dealing split brute damage now deals singular damage types.
+  - message: Several reagents previously dealing split brute damage now deals singular
+      damage types.
     type: Tweak
-  - message: Several reagents previously healing split brute damage now evenly heals instead.
+  - message: Several reagents previously healing split brute damage now evenly heals
+      instead.
     type: Tweak
-  - message: Spiders now regenerate -0.03 of brute and burn types individually (from -0.02).
+  - message: Spiders now regenerate -0.03 of brute and burn types individually (from
+      -0.02).
     type: Tweak
   - message: Skeletons now evenly heal when using milk.
     type: Tweak
-  - message: Tomato killers now heal evenly when splashed with water, blood, or robust harvest.
+  - message: Tomato killers now heal evenly when splashed with water, blood, or robust
+      harvest.
     type: Tweak
   - message: Tricordrazine now evenly heals both brute, burn and toxin.
     type: Tweak
-  - message: Desoxyephedrine now deals slighlty more blunt damage (to offset tricordazine changes).
+  - message: Desoxyephedrine now deals slighlty more blunt damage (to offset tricordazine
+      changes).
     type: Tweak
-  - message: Crusher mark leech hits now heal 5 of each brute category on hit (was 7).
+  - message: Crusher mark leech hits now heal 5 of each brute category on hit (was
+      7).
     type: Tweak
   id: 9549
   time: '2026-02-27T06:33:44.0000000+00:00'
@@ -4015,3 +4006,26 @@
   id: 9580
   time: '2026-03-15T19:29:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42815
+- author: Eternally-Confused
+  changes:
+  - message: The chem guidebook now shows when chemicals adjust body temperature again
+    type: Fix
+  id: 9581
+  time: '2026-03-17T17:52:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42394
+- author: murolem
+  changes:
+  - message: Retextured technology disk to have the color of their discipline and
+      extra marks for each tier. Also increased sell price for higher-tier disks.
+    type: Tweak
+  id: 9582
+  time: '2026-03-17T23:05:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37719
+- author: Buunie099
+  changes:
+  - message: Fixed guidebook showing the wrong value for the maximum temperature of
+      hellfire heaters.
+    type: Tweak
+  id: 9583
+  time: '2026-03-18T06:31:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43285
