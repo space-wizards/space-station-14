@@ -1,6 +1,7 @@
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Item;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -9,63 +10,117 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Kitchen.Components
 {
+    /// <summary>
+    ///     A component applied to microwaves, which are used to heat entities/solutions
+    ///     and produce microwave recipes.
+    /// </summary>
     [RegisterComponent]
     public sealed partial class MicrowaveComponent : Component
     {
+        /// <summary>
+        ///     A multiplier applied to all microwave cooking timers.
+        /// </summary>
+        /// <remarks>
+        ///     If you set a microwave for 30 seconds, but have a CookTimeMultiplier of 0.5,
+        ///     recipes will be processed as if you're portioning for 30 seconds, but the
+        ///     microwave's timer will take 15 seconds instead. So, if you have a recipe with
+        ///     a cookTime of 10 seconds, you can still make that recipe 3 at a time.
+        /// </remarks>
         [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float CookTimeMultiplier = 1;
 
+        /// <summary>
+        ///     A multiplier for heat added to the contents of a microwave every frame.
+        /// </summary>
+        /// <remarks>
+        ///     The formula is (frame time * BaseHeatMultiplier).
+        ///     This is multiplied by <see cref="ObjectHeatMultiplier"/> when applied to entities
+        ///     that have a <see cref="TemperatureComponent"/> (as opposed to solutions).
+        /// </remarks>
         [DataField("baseHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float BaseHeatMultiplier = 100;
 
+        /// <summary>
+        ///     A multiplier for added heat on entities with a <see cref="TemperatureComponent"/>.
+        /// </summary>
         [DataField("objectHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float ObjectHeatMultiplier = 100;
 
+        /// <summary>
+        ///     An entity that is produced when an item is melted in the microwave.
+        /// </summary>
+        /// <remarks>
+        ///     The microwave will burn items that pass the <see cref="BurnWhenCookedWhitelist" />.
+        /// </remarks>
         [DataField("failureResult", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string BadRecipeEntityId = "FoodBadRecipe";
 
         #region  audio
+        /// <summary>
+        ///     A sound that is played when the microwave is activated.
+        /// </summary>
         [DataField("beginCookingSound")]
         public SoundSpecifier StartCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
 
+        /// <summary>
+        ///     A sound that is played when the microwave finishes.
+        /// </summary>
+        /// <remarks>
+        ///     Beep... beep... beep
+        /// </remarks>
         [DataField("foodDoneSound")]
         public SoundSpecifier FoodDoneSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
 
+        /// <summary>
+        ///     A sound that is played when a player navigates the microwave's UI - for example, selecting
+        ///     a new cooking time.
+        /// </summary>
         [DataField("clickSound")]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
-        [DataField("ItemBreakSound")]
-        public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
-
+        /// <summary>
+        ///     An audio stream for the microwave's "cooking" hum.
+        /// </summary>
         public EntityUid? PlayingStream;
 
+        /// <summary>
+        ///     The humming sound played when a microwave is actively cooking.
+        /// </summary>
         [DataField("loopingSound")]
         public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
         #endregion
 
+        /// <summary>
+        ///     Whether or not this microwave is broken.
+        /// </summary>
         [ViewVariables]
         public bool Broken;
 
+        /// <summary>
+        ///     A port used to activate the microwave via remote signal.
+        /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public ProtoId<SinkPortPrototype> OnPort = "On";
 
         /// <summary>
-        /// This is a fixed offset of 5.
-        /// The cook times for all recipes should be divisible by 5,with a minimum of 1 second.
-        /// For right now, I don't think any recipe cook time should be greater than 60 seconds.
+        ///     This is a fixed offset of 5.
+        ///     The cook times for all recipes should be divisible by 5, with a minimum of 1 second.
         /// </summary>
+        /// <remarks>
+        ///     For right now, I don't think any recipe cook time should be greater than 60 seconds.
+        /// </remarks>
         [DataField("currentCookTimerTime"), ViewVariables(VVAccess.ReadWrite)]
         public uint CurrentCookTimerTime = 0;
 
         /// <summary>
-        /// Tracks the elapsed time of the current cook timer.
+        ///     Tracks the elapsed time of the current cook timer.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan CurrentCookTimeEnd = TimeSpan.Zero;
 
         /// <summary>
-        /// The maximum number of seconds a microwave can be set to.
-        /// This is currently only used for validation and the client does not check this.
+        ///     The maximum number of seconds a microwave can be set to.
+        ///     This is currently only used for validation and the client does not check this.
         /// </summary>
         [DataField("maxCookTime"), ViewVariables(VVAccess.ReadWrite)]
         public uint MaxCookTime = 30;
@@ -76,38 +131,60 @@ namespace Content.Server.Kitchen.Components
         [DataField("temperatureUpperThreshold")]
         public float TemperatureUpperThreshold = 373.15f;
 
+        /// <summary>
+        ///     The index of the currently-selected "cook time" button.
+        /// </summary>
         public int CurrentCookTimeButtonIndex;
 
+        /// <summary>
+        ///     The microwave's contents container.
+        /// </summary>
         public Container Storage = default!;
 
+        /// <summary>
+        ///     The ID of the storage container for the microwave.
+        /// </summary>
         [DataField]
         public string ContainerId = "microwave_entity_container";
 
+        /// <summary>
+        ///     How many items the microwave can hold.
+        /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public int Capacity = 10;
 
+        /// <summary>
+        ///     The largest item size that can fit in the microwave.
+        /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
 
         /// <summary>
-        /// How frequently the microwave can malfunction.
+        ///     How frequently the microwave can malfunction.
         /// </summary>
         [DataField]
         public float MalfunctionInterval = 1.0f;
 
         /// <summary>
-        /// Chance of an explosion occurring when we microwave a metallic object
+        ///     Chance of an explosion occurring when we microwave a metallic object.
         /// </summary>
+        /// <remarks>
+        ///     This is rolled every <see cref="MalfunctionInterval"/>.
+        /// </remarks>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float ExplosionChance = .1f;
 
         /// <summary>
-        /// Chance of lightning occurring when we microwave a metallic object
+        ///     Chance of lightning occurring when we microwave a metallic object.
+        /// </summary>
+        /// <remarks>
+        ///     This is rolled every <see cref="MalfunctionInterval"/>.
+        /// </remarks>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float LightningChance = .75f;
 
         /// <summary>
-        /// If this microwave can give ids accesses without exploding
+        ///     If this microwave can give ID cards new accesses without exploding.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public bool CanMicrowaveIdsSafely = true;
