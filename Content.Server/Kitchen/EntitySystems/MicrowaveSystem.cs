@@ -36,6 +36,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Whitelist;
+using JetBrains.Annotations;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
@@ -102,6 +103,9 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
     }
 
+    /// <summary>
+    ///     Processes every active microwave's ongoing cooking operation.
+    /// </summary>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -111,22 +115,33 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             UpdateMicrowave((uid, active, microwave), frameTime);
     }
 
+    /// <summary>
+    ///     Initializes the microwave's storage container.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
     private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
     {
         // this really does have to be in ComponentInit
         ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
     }
 
+    /// <summary>
+    ///     Adds an "on" port to this microwave.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
     private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
     {
         _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
     }
 
     /// <summary>
-    /// Kills the user by microwaving their head
-    /// TODO: Make this not awful, it keeps any items attached to your head still on and you can revive someone and cogni them
-    /// so you have some dumb headless fuck running around. I've seen it happen.
+    ///     Kills the user by microwaving their head.
     /// </summary>
+    /// <remarks>
+    ///     TODO: Make this not awful, it keeps any items attached to your head still on and you can
+    ///     revive someone and cogni them so you have some dumb headless fuck running around. I've seen it happen.
+    /// </remarks>
+    /// <param name="ent">The microwave entity.</param>
     private void OnSuicideByEnvironment(Entity<MicrowaveComponent> ent, ref SuicideByEnvironmentEvent args)
     {
         if (args.Handled)
@@ -153,6 +168,11 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         args.Handled = true;
     }
 
+    /// <summary>
+    ///     When a microwave is broken, its appearance changes and it stops being usable for cooking.
+    ///     It will stop any ongoing cooking operations and empty its contents.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
     private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
     {
         ent.Comp.Broken = true;
@@ -162,6 +182,10 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         UpdateUserInterfaceState(ent);
     }
 
+    /// <summary>
+    ///     Stop cooking if the microwave loses power.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
     private void OnPowerChanged(Entity<MicrowaveComponent> ent, ref PowerChangedEvent args)
     {
         if (!args.Powered)
@@ -173,23 +197,38 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         UpdateUserInterfaceState(ent);
     }
 
-    private void OnAnchorChanged(EntityUid uid, MicrowaveComponent component, ref AnchorStateChangedEvent args)
+    /// <summary>
+    ///     Empty the microwave if it is unanchored.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnAnchorChanged(Entity<MicrowaveComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
-            _container.EmptyContainer(component.Storage);
+            _container.EmptyContainer(ent.Comp.Storage);
     }
 
+    /// <summary>
+    ///     Turns the microwave on if its "on" port is activated.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
     private void OnSignalReceived(Entity<MicrowaveComponent> ent, ref SignalReceivedEvent args)
     {
-        if (args.Port != ent.Comp.OnPort)
-            return;
-
         if (ent.Comp.Broken || !_power.IsPowered(ent))
             return;
 
-        Wzhzhzh(ent, null);
+        if (args.Port == ent.Comp.OnPort)
+            Wzhzhzh(ent, null);
     }
 
+    /// <summary>
+    ///     Heats up the contents of an active microwave. Has a random chance of exploding if the microwave
+    ///     is currently malfunctioning. Also finishes cooking, if the microwave timer expires.
+    /// </summary>
+    /// <remarks>
+    ///     This is called once per frame by <see cref="Update"/>.
+    /// </remarks>
+    /// <param name="ent">The microwave entity.</param>
+    /// <param name="time">The amount of time elapsed.</param>
     private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
     {
         var active = ent.Comp1;
@@ -203,6 +242,13 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             CompleteCooking(ent);
     }
 
+    /// <summary>
+    ///     Updates the microwave's appearance state.
+    /// </summary>
+    /// <param name="uid">The microwave entity.</param>
+    /// <param name="state">The visual state of the microwave.</param>
+    /// <param name="component">The entity's microwave component.</param>
+    /// <param name="appearanceComponent">The microwave's appearance component.</param>
     public void SetAppearance(EntityUid uid,
         MicrowaveVisualState state,
         MicrowaveComponent? component = null,
@@ -215,6 +261,12 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         _appearance.SetData(uid, PowerDeviceVisuals.VisualState, display, appearanceComponent);
     }
 
+    /// <summary>
+    ///     Helper function to check if a microwave has ingredient contents.
+    /// </summary>
+    /// <param name="microwave">The microwave entity.</param>
+    /// <returns>Whether or not this microwave contains anything.</returns>
+    [PublicAPI]
     public static bool HasContents(Entity<MicrowaveComponent> microwave)
     {
         return microwave.Comp.Storage.ContainedEntities.Any();
@@ -223,7 +275,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     /// <summary>
     /// Explodes the microwave internally, turning it into a broken state, destroying its board, and spitting out its machine parts
     /// </summary>
-    /// <param name="ent"></param>
+    /// <param name="ent">The microwave entity.</param>
     public void Explode(Entity<MicrowaveComponent> ent)
     {
         ent.Comp.Broken = true; // Make broken so we stop processing stuff
@@ -239,27 +291,29 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     }
 
     /// <summary>
-    /// Handles the attempted cooking of unsafe objects
+    ///     Attempts to roll random "malfunction" events on a malfunctioning microwave on a given interval
+    ///     - usually 1 second. The microwave may shoot sparks or explode.
     /// </summary>
-    /// <remarks>
-    /// Returns false if the microwave didn't explode, true if it exploded.
-    /// </remarks>
+    /// <param name="ent">The microwave entity.</param>
     private void RollMalfunction(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
     {
-        if (ent.Comp1.MalfunctionTime == TimeSpan.Zero)
+        var active = ent.Comp1;
+        var microwave = ent.Comp2;
+
+        // Are we ready to roll a malfunction yet?
+        if (active.MalfunctionTime == TimeSpan.Zero
+            || active.MalfunctionTime > _gameTiming.CurTime)
             return;
 
-        if (ent.Comp1.MalfunctionTime > _gameTiming.CurTime)
-            return;
+        active.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(microwave.MalfunctionInterval);
 
-        ent.Comp1.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp2.MalfunctionInterval);
-        if (_random.Prob(ent.Comp2.ExplosionChance))
+        if (_random.Prob(microwave.ExplosionChance))
         {
-            Explode((ent, ent.Comp2));
-            return;  // microwave is fucked, stop the cooking.
+            Explode((ent, microwave));
+            return;
         }
 
-        if (_random.Prob(ent.Comp2.LightningChance))
-            _lightning.ShootRandomLightnings(ent, 1.0f, 2, ent.Comp2.MalfunctionSpark, triggerLightningEvents: false);
+        if (_random.Prob(microwave.LightningChance))
+            _lightning.ShootRandomLightnings(ent, 1.0f, 2, microwave.MalfunctionSpark, triggerLightningEvents: false);
     }
 }
