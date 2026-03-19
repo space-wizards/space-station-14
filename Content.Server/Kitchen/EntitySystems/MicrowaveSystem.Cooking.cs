@@ -8,7 +8,9 @@ namespace Content.Server.Kitchen.EntitySystems;
 public sealed partial class MicrowaveSystem
 {
     /// <summary>
-    /// Starts Cooking
+    ///     Start up the microwave. This processes each item in the microwave to experience microwave "on-cooking"
+    ///     effects, attempts to retrieve a microwave recipe with its valid ingredients, and activates the
+    ///     microwave visually.
     /// </summary>
     /// <remarks>
     /// It does not make a "wzhzhzh" sound, it makes a "mmmmmmmm" sound!
@@ -38,6 +40,15 @@ public sealed partial class MicrowaveSystem
         UpdateUserInterfaceState(microwave);
     }
 
+    /// <summary>
+    ///     Turns a single entity in the microwave into a failed "burned mess" recipe.
+    /// </summary>
+    /// <remarks>
+    ///     This happens to entities that pass <see cref="MicrowaveComponent.BurnWhenCookedWhitelist"/>
+    ///     when microwaved.
+    /// </remarks>
+    /// <param name="microwave">The microwave entity.</param>
+    /// <param name="item">The entity to burn.</param>
     private void CreateBurnedMess(Entity<MicrowaveComponent> microwave, EntityUid item)
     {
         var junk = Spawn(microwave.Comp.BadRecipeEntityId, Transform(microwave).Coordinates);
@@ -46,15 +57,26 @@ public sealed partial class MicrowaveSystem
         Del(item);
     }
 
+    /// <summary>
+    ///     Processes a single entity in the microwave. This modifies / results in three
+    ///     different parameters related to the operation: if the microwave should malfunction,
+    ///     if the microwave should stop, and if the entity is still usable as an ingredient.
+    /// </summary>
+    /// <param name="microwave">The microwave entity.</param>
+    /// <param name="item">The entity being microwaved.</param>
+    /// <param name="user">The entity activating the microwave.</param>
+    /// <param name="malfunctioning">Whether or not this microwave is malfunctioning.</param>
+    /// <param name="shouldStopMicrowave">Whether or not this microwave should stop.</param>
+    /// <param name="shouldRemoveFromIngredients">Whether or not this entity remains a valid ingredient.</param>
     private void MicrowaveItem(Entity<MicrowaveComponent> microwave,
         EntityUid item,
         EntityUid? user,
         ref bool malfunctioning,
         out bool shouldStopMicrowave,
-        out bool shouldRemoveFromContents)
+        out bool shouldRemoveFromIngredients)
     {
         shouldStopMicrowave = false;
-        shouldRemoveFromContents = false;
+        shouldRemoveFromIngredients = false;
 
         // Special item-in-microwave interactions. Certain "being microwaved' interactions
         // may cancel out any actual cooking, so this may early exit.
@@ -72,11 +94,29 @@ public sealed partial class MicrowaveSystem
 
         if (_whitelist.IsWhitelistPass(microwave.Comp.BurnWhenCookedWhitelist, item))
         {
-            shouldRemoveFromContents = true;
+            shouldRemoveFromIngredients = true;
             CreateBurnedMess(microwave, item);
         }
     }
 
+    /// <summary>
+    ///     Iterates over the contents of a microwave and performs some on-microwaved effects.
+    ///     Plastic items will melt and turn into burned messes.
+    ///     Metal items will cause the microwave to malfunction.
+    /// </summary>
+    /// <remarks>
+    ///     This also raises a BeingMicrowavedEvent on each item in the microwave. The result of
+    ///     this event may cause us to exit early and proceed with cooking - for example, an
+    ///     entity that causes the microwave to explode when microwaved.
+    ///
+    ///     If cooking is not cancelled, the items inside will gain `ActiveMicrowaveComponent.`.
+    /// </remarks>
+    /// <param name="microwave">The microwave entity.</param>
+    /// <param name="contents">The contents of the microwave.</param>
+    /// <param name="user">The entity that is activating the microwave.</param>
+    /// <param name="malfunctioning">Whether or not the microwave is malfunctioning.</param>
+    /// <param name="ingredientContents">A list of entities usable as ingredients.</param>
+    /// <returns>Wheteher or not we can proceed to use the microwave.</returns>
     private bool ProcessContents(Entity<MicrowaveComponent> microwave,
         IReadOnlyList<EntityUid> contents,
         EntityUid? user,
@@ -92,12 +132,12 @@ public sealed partial class MicrowaveSystem
                 user,
                 ref malfunctioning,
                 out var shouldExit,
-                out var shouldRemoveFromContents);
+                out var shouldRemoveFromIngredients);
 
             if (shouldExit)
                 return false;
 
-            if (shouldRemoveFromContents)
+            if (shouldRemoveFromIngredients)
                 ingredientContents.Remove(item);
         }
 
@@ -110,6 +150,12 @@ public sealed partial class MicrowaveSystem
         return true;
     }
 
+    /// <summary>
+    ///     Starts up the microwave cooking operation, setting the starting time and recipe of the microwave.
+    /// </summary>
+    /// <param name="microwave">The microwave entity.</param>
+    /// <param name="recipe">The recipe and portion count associated with this operaton.</param>
+    /// <param name="malfunctioning">Whether or not this microwave is malfunctioning.</param>
     private void ActivateMicrowave(Entity<MicrowaveComponent> microwave,
         (FoodRecipePrototype? recipe, uint count) recipe,
         bool malfunctioning)
@@ -133,8 +179,7 @@ public sealed partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Adds temperature to every item in the microwave,
-    ///     based on the time it took to microwave.
+    ///     Adds temperature to every item in the microwave based on the time it took to microwave.
     /// </summary>
     /// <param name="component">The microwave that is heating up.</param>
     /// <param name="time">The time on the microwave, in seconds.</param>
@@ -160,6 +205,11 @@ public sealed partial class MicrowaveSystem
         }
     }
 
+    /// <summary>
+    ///     Finishes a cooking operation in the microwave, resulting in a finished food recipe,
+    ///     the ejection of all remaining ingredients, and a sound cue.
+    /// </summary>
+    /// <param name="ent">The micorawve entity.</param>
     private void CompleteCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
     {
         var active = ent.Comp1;
@@ -171,11 +221,18 @@ public sealed partial class MicrowaveSystem
 
         microwave.CurrentCookTimeEnd = TimeSpan.Zero;
         _container.EmptyContainer(microwave.Storage);
-        _audio.PlayPvs(microwave.FoodDoneSound, ent);
+        _audio.PlayPvs(microwave.FoodDoneSound, ent); // beep... beep... beep
         UpdateUserInterfaceState(microwaveEnt);
         StopCooking(microwaveEnt);
     }
 
+    /// <summary>
+    ///     Completes a recipe in a microwave, removing its relevant ingredient contents
+    ///     from the microwave and producing finished dish entities in their place.
+    /// </summary>
+    /// <param name="microwave">The microwave entity.</param>
+    /// <param name="recipe">The recipe we are using.</param>
+    /// <param name="count">The number of recipe portions to produce.</param>
     private void ProduceFinishedRecipe(Entity<MicrowaveComponent> microwave,
         FoodRecipePrototype recipe,
         uint count = 1)
@@ -187,12 +244,18 @@ public sealed partial class MicrowaveSystem
             Spawn(recipe.Result, coords);
     }
 
+    /// <summary>
+    ///     Removes components from a microwave and its contents related to active microwave use.
+    /// </summary>
+    /// <remarks>
+    ///     When the ActiveMicrowaveComponent is removed, it will trigger <see cref="OnCookStop"/> on shutdown.
+    /// </remarks>
+    /// <param name="ent">The microwave entity.</param>
     private void StopCooking(Entity<MicrowaveComponent> ent)
     {
         RemCompDeferred<ActiveMicrowaveComponent>(ent);
+
         foreach (var solid in ent.Comp.Storage.ContainedEntities)
-        {
             RemCompDeferred<ActivelyMicrowavedComponent>(solid);
-        }
     }
 }
