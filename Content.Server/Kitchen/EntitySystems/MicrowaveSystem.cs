@@ -116,6 +116,17 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     }
 
     /// <summary>
+    ///     Helper function to check if a microwave has ingredient contents.
+    /// </summary>
+    /// <param name="microwave">The microwave entity.</param>
+    /// <returns>Whether or not this microwave contains anything.</returns>
+    [PublicAPI]
+    public static bool HasContents(Entity<MicrowaveComponent> microwave)
+    {
+        return microwave.Comp.Storage.ContainedEntities.Any();
+    }
+
+    /// <summary>
     ///     Initializes the microwave's storage container.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
@@ -249,7 +260,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     /// <param name="state">The visual state of the microwave.</param>
     /// <param name="component">The entity's microwave component.</param>
     /// <param name="appearanceComponent">The microwave's appearance component.</param>
-    public void SetAppearance(Entity<MicrowaveComponent?> ent,
+    private void SetAppearance(Entity<MicrowaveComponent?> ent,
         MicrowaveVisualState state,
         AppearanceComponent? appearanceComponent = null)
     {
@@ -261,17 +272,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             PowerDeviceVisuals.VisualState,
             display,
             appearanceComponent);
-    }
-
-    /// <summary>
-    ///     Helper function to check if a microwave has ingredient contents.
-    /// </summary>
-    /// <param name="microwave">The microwave entity.</param>
-    /// <returns>Whether or not this microwave contains anything.</returns>
-    [PublicAPI]
-    public static bool HasContents(Entity<MicrowaveComponent> microwave)
-    {
-        return microwave.Comp.Storage.ContainedEntities.Any();
     }
 
     /// <summary>

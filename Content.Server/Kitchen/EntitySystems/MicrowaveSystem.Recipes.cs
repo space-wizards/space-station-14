@@ -7,6 +7,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Stacks;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -34,6 +35,7 @@ public sealed partial class MicrowaveSystem
     /// <param name="ingredients">The ingredients we have available.</param>
     /// <param name="cookTime">How long we are cooking for.</param>
     /// <returns>How many portions of the recipe can be made.</returns>
+    [PublicAPI]
     public static uint GetRecipePortions(FoodRecipePrototype recipe,
         CookingIngredients ingredients,
         uint cookTime)
@@ -69,6 +71,7 @@ public sealed partial class MicrowaveSystem
     /// <returns>
     ///     The first valid recipe we can use. If there is none, this is (null, 0).
     /// </returns>
+    [PublicAPI]
     public (FoodRecipePrototype? recipe, uint count) GetRecipe(Entity<MicrowaveComponent> microwave, CookingIngredients ingredients)
     {
         var recipes = GetRecipesForMicrowave(microwave.Owner);
