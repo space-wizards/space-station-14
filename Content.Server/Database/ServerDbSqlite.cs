@@ -319,11 +319,18 @@ namespace Content.Server.Database
 
         protected override IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
-            IQueryable<AdminLogEvent> query = db.AdminLogEvent.Include(log => log.Payload);
-            if (filter?.Search != null)
-                query = query.Where(log => EF.Functions.Like(log.Payload.Message, $"%{filter.Search}%"));
+            // Only join Payload when search is active. Downstream callers
+            // (GetAdminLogMessages, GetAdminLogs, GetAdminLogsJson) add their own
+            // .Include(log => log.Payload) when they need it, so we avoid forcing
+            // the join for non-search queries.
+            if (!string.IsNullOrWhiteSpace(filter?.Search))
+            {
+                return db.AdminLogEvent
+                    .Include(log => log.Payload)
+                    .Where(log => EF.Functions.Like(log.Payload.Message, $"%{filter.Search}%"));
+            }
 
-            return query;
+            return db.AdminLogEvent;
         }
 
         public override async Task<int> AddAdminNote(AdminNote note)

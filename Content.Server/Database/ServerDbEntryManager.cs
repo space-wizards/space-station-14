@@ -26,7 +26,20 @@ public sealed partial class ServerDbEntryManager
     /// This value is cached when first requested. Do not re-use this entity; if you need data like the rounds,
     /// request it manually with <see cref="IServerDbManager.AddOrGetServer"/>.
     /// </remarks>
-    public Task<Server> ServerEntity => _serverEntityTask ??= GetServerEntity();
+    /// <summary>
+    /// Returns the cached server entity task, or starts a new one if the previous attempt failed.
+    /// </summary>
+    public Task<Server> ServerEntity
+    {
+        get
+        {
+            // Keep the cached task if it completed successfully. Re-start if it failed or was never run.
+            if (_serverEntityTask is { IsCompletedSuccessfully: true })
+                return _serverEntityTask;
+
+            return _serverEntityTask = GetServerEntity();
+        }
+    }
 
     private async Task<Server> GetServerEntity()
     {

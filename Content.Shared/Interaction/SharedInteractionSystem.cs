@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -53,26 +54,28 @@ namespace Content.Shared.Interaction
     [UsedImplicitly]
     public abstract partial class SharedInteractionSystem : EntitySystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private ISharedChatManager _chat = default!;
-        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private EntityLookupSystem _lookup = default!;
-        [Dependency] private SharedHandsSystem _hands = default!;
-        [Dependency] private InventorySystem _inventory = default!;
-        [Dependency] private PullingSystem _pullSystem = default!;
-        [Dependency] private RotateToFaceSystem _rotateToFaceSystem = default!;
-        [Dependency] private SharedContainerSystem _containerSystem = default!;
-        [Dependency] private SharedMapSystem _map = default!;
-        [Dependency] private SharedPhysicsSystem _broadphase = default!;
-        [Dependency] private SharedTransformSystem _transform = default!;
-        [Dependency] private SharedVerbSystem _verbSystem = default!;
-        [Dependency] private SharedPopupSystem _popupSystem = default!;
-        [Dependency] private SharedUserInterfaceSystem _ui = default!;
-        [Dependency] private SharedStrippableSystem _strippable = default!;
-        [Dependency] private SharedPlayerRateLimitManager _rateLimit = default!;
-        [Dependency] private TagSystem _tagSystem = default!;
-        [Dependency] private UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly ISharedPlayerManager _player = default!;
+        [Dependency] private readonly ISharedChatManager _chat = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly PullingSystem _pullSystem = default!;
+        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
+        [Dependency] private readonly SharedPhysicsSystem _broadphase = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+        [Dependency] private readonly SharedStrippableSystem _strippable = default!;
+        [Dependency] private readonly SharedPlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         [Dependency] private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery = default!;
         [Dependency] private EntityQuery<FixturesComponent> _fixtureQuery = default!;
@@ -506,7 +509,35 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(user, ev);
             if (ev.Handled)
             {
-                _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}, but it was handled by another system");
+                Guid[]? players = null;
+                Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
+                if (_player.TryGetSessionByEntity(user, out var userSession))
+                {
+                    players = [userSession.UserId.UserId];
+                    playerRoles = new Dictionary<Guid, AdminLogEntityRole>
+                    {
+                        [userSession.UserId.UserId] = AdminLogEntityRole.Actor
+                    };
+                }
+
+                _adminLogger.AddStructured(
+                    LogType.InteractHand,
+                    LogImpact.Low,
+                    $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}, but it was handled by another system",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        user = (int) user,
+                        target = (int) target,
+                        interactionType = LogType.InteractHand.ToString(),
+                        handled = true
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(target, AdminLogEntityRole.Target),
+                    ],
+                    playerRoles: playerRoles);
                 return;
             }
 
@@ -518,7 +549,35 @@ namespace Content.Shared.Interaction
             var userMessage = new UserInteractHandEvent(user, target);
             RaiseLocalEvent(user, userMessage, true);
 
-            _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
+            Guid[]? postInteractPlayers = null;
+            Dictionary<Guid, AdminLogEntityRole>? postInteractPlayerRoles = null;
+            if (_player.TryGetSessionByEntity(user, out var postInteractUserSession))
+            {
+                postInteractPlayers = [postInteractUserSession.UserId.UserId];
+                postInteractPlayerRoles = new Dictionary<Guid, AdminLogEntityRole>
+                {
+                    [postInteractUserSession.UserId.UserId] = AdminLogEntityRole.Actor
+                };
+            }
+
+            _adminLogger.AddStructured(
+                LogType.InteractHand,
+                LogImpact.Low,
+                $"{user} interacted with {target}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    user = (int) user,
+                    target = (int) target,
+                    interactionType = LogType.InteractHand.ToString(),
+                    handled = false
+                }),
+                players: postInteractPlayers,
+                entities:
+                [
+                    new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(target, AdminLogEntityRole.Target),
+                ],
+                playerRoles: postInteractPlayerRoles);
             DoContactInteraction(user, target, message);
             if (message.Handled || userMessage.Handled)
                 return;
@@ -542,17 +601,67 @@ namespace Content.Shared.Interaction
 
             if (target != null)
             {
-                _adminLogger.Add(
+                Guid[]? players = null;
+                Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
+                if (_player.TryGetSessionByEntity(user, out var userSession))
+                {
+                    players = [userSession.UserId.UserId];
+                    playerRoles = new Dictionary<Guid, AdminLogEntityRole>
+                    {
+                        [userSession.UserId.UserId] = AdminLogEntityRole.Actor
+                    };
+                }
+
+                _adminLogger.AddStructured(
                     LogType.InteractUsing,
                     LogImpact.Low,
-                    $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}");
+                    $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        user = (int) user,
+                        target = (int) target,
+                        used = (int) used,
+                        interactionType = LogType.InteractUsing.ToString()
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(target.Value, AdminLogEntityRole.Target),
+                        new AdminLogEntityRef(used, AdminLogEntityRole.Tool),
+                    ],
+                    playerRoles: playerRoles);
             }
             else
             {
-                _adminLogger.Add(
+                Guid[]? players = null;
+                Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
+                if (_player.TryGetSessionByEntity(user, out var userSession))
+                {
+                    players = [userSession.UserId.UserId];
+                    playerRoles = new Dictionary<Guid, AdminLogEntityRole>
+                    {
+                        [userSession.UserId.UserId] = AdminLogEntityRole.Actor
+                    };
+                }
+
+                _adminLogger.AddStructured(
                     LogType.InteractUsing,
                     LogImpact.Low,
-                    $"{ToPrettyString(user):user} interacted with *nothing* using {ToPrettyString(used):used}");
+                    $"{ToPrettyString(user):user} interacted with *nothing* using {ToPrettyString(used):used}",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        user = (int) user,
+                        used = (int) used,
+                        interactionType = LogType.InteractUsing.ToString()
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(used, AdminLogEntityRole.Tool),
+                    ],
+                    playerRoles: playerRoles);
             }
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed, checkDeletion: false))
@@ -1041,10 +1150,36 @@ namespace Content.Shared.Interaction
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user, used))
                 return false;
 
-            _adminLogger.Add(
+            Guid[]? players = null;
+            Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
+            if (_player.TryGetSessionByEntity(user, out var userSession))
+            {
+                players = [userSession.UserId.UserId];
+                playerRoles = new Dictionary<Guid, AdminLogEntityRole>
+                {
+                    [userSession.UserId.UserId] = AdminLogEntityRole.Actor
+                };
+            }
+
+            _adminLogger.AddStructured(
                 LogType.InteractUsing,
                 LogImpact.Low,
-                $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}");
+                $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    user = (int) user,
+                    target = (int) target,
+                    used = (int) used,
+                    interactionType = LogType.InteractUsing.ToString()
+                }),
+                players: players,
+                entities:
+                [
+                    new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(target, AdminLogEntityRole.Target),
+                    new AdminLogEntityRef(used, AdminLogEntityRole.Tool),
+                ],
+                playerRoles: playerRoles);
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, canReach: true, checkDeletion: false))
                 return true;
@@ -1175,7 +1310,36 @@ namespace Content.Shared.Interaction
             {
                 DoContactInteraction(user, used);
                 if (!activateMsg.WasLogged)
-                    _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+                {
+                    Guid[]? players = null;
+                    Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
+                    if (_player.TryGetSessionByEntity(user, out var userSession))
+                    {
+                        players = [userSession.UserId.UserId];
+                        playerRoles = new Dictionary<Guid, AdminLogEntityRole>
+                        {
+                            [userSession.UserId.UserId] = AdminLogEntityRole.Actor
+                        };
+                    }
+
+                    _adminLogger.AddStructured(
+                        LogType.InteractActivate,
+                        LogImpact.Low,
+                        $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}",
+                        JsonSerializer.SerializeToDocument(new
+                        {
+                            user = (int) user,
+                            used = (int) used,
+                            interactionType = LogType.InteractActivate.ToString()
+                        }),
+                        players: players,
+                        entities:
+                        [
+                            new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                            new AdminLogEntityRef(used, AdminLogEntityRole.Subject),
+                        ],
+                        playerRoles: playerRoles);
+                }
 
                 if (delayComponent != null)
                     _useDelay.TryResetDelay(used, component: delayComponent);
@@ -1193,7 +1357,34 @@ namespace Content.Shared.Interaction
             if (delayComponent != null)
                 _useDelay.TryResetDelay(used, component: delayComponent);
 
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            Guid[]? postActivatePlayers = null;
+            Dictionary<Guid, AdminLogEntityRole>? postActivatePlayerRoles = null;
+            if (_player.TryGetSessionByEntity(user, out var postActivateUserSession))
+            {
+                postActivatePlayers = [postActivateUserSession.UserId.UserId];
+                postActivatePlayerRoles = new Dictionary<Guid, AdminLogEntityRole>
+                {
+                    [postActivateUserSession.UserId.UserId] = AdminLogEntityRole.Actor
+                };
+            }
+
+            _adminLogger.AddStructured(
+                LogType.InteractActivate,
+                LogImpact.Low,
+                $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    user = (int) user,
+                    used = (int) used,
+                    interactionType = LogType.InteractActivate.ToString()
+                }),
+                players: postActivatePlayers,
+                entities:
+                [
+                    new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(used, AdminLogEntityRole.Subject),
+                ],
+                playerRoles: postActivatePlayerRoles);
             return true;
         }
         #endregion

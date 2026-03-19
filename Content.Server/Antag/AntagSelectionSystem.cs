@@ -633,10 +633,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         AntagSpecifierPrototype prototype,
         ICommonSession player)
     {
-        // Get a valid entity to initialize
-        if (!TryGetAntagEntity(gameRule, prototype, player, out var antagEnt))
-        {
-            DeSelectSession(gameRule, prototype, player);
+        _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session:player} become the antagonist: {ToPrettyString(ent):subject}");
+
+        if (checkPref && !ValidAntagPreference(session, def.PrefRoles))
             return false;
         }
 
@@ -660,8 +659,28 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         ICommonSession player,
         [NotNullWhen(true)]out EntityUid? antagEnt)
     {
-        antagEnt = GetAntagEntity(gameRule, prototype, player);
-        return antagEnt != null;
+        if (def.SpawnerPrototype is not { } proto)
+            return null;
+
+        var spawner = Spawn(def.SpawnerPrototype);
+        if (!TryValidSpawnPosition(ent, spawner))
+        {
+            Log.Error($"Found no valid positions to place antag spawner {ToPrettyString(spawner)} prototype: {proto}");
+            Del(spawner);
+            return null;
+        }
+
+        if (!TryComp<GhostRoleAntagSpawnerComponent>(spawner, out var spawnerComp))
+        {
+            Log.Error($"Antag spawner {spawner} does not have a {nameof(GhostRoleAntagSpawnerComponent)}.");
+            _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {ToPrettyString(spawner):subject} in gamerule {ToPrettyString(ent):tool} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
+            Del(spawner);
+            return null;
+        }
+
+        spawnerComp.Rule = ent;
+        spawnerComp.Definition = def;
+        return spawner;
     }
 
     /// <summary>
@@ -684,8 +703,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!TryGetValidSpawnPosition(gameRule, prototype, out var coordinates, player))
             return player.AttachedEntity;
 
-        if (TrySpawnAntagonist(gameRule, prototype, player, coordinates.Value, out var entity))
-            return entity;
+        Log.Debug($"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
+        _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session:player} as antagonist: {ToPrettyString(ent):subject}");
+    }
 
         if (player.AttachedEntity is not { } uid)
         {
@@ -801,7 +821,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         Log.Debug($"Assigned {ToPrettyString(antag):target}, mind {ToPrettyString(mind):target} as antagonist: {ToPrettyString(gameRule):user}");
         _adminLogger.Add(LogType.AntagSelection, $"Assigned {ToPrettyString(antag):target}, mind {ToPrettyString(mind):target} as antagonist: {ToPrettyString(gameRule):user}");
 
-        SendBriefing(player, prototype.Briefing);
+            Log.Debug($"Assigned {ToPrettyString(curMind)} as antagonist: {ToPrettyString(ent)}");
+            _adminLogger.Add(LogType.AntagSelection, $"Assigned {ToPrettyString(curMind):actor} as antagonist: {ToPrettyString(ent):subject}");
+        }
 
         var afterEv = new AfterAntagEntitySelectedEvent(player, antag, gameRule, prototype);
         RaiseLocalEvent(gameRule, ref afterEv, true);

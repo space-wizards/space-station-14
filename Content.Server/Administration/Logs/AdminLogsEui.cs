@@ -1,7 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
@@ -19,17 +20,20 @@ namespace Content.Server.Administration.Logs;
 
 public sealed partial class AdminLogsEui : BaseEui
 {
-    [Dependency] private IAdminLogManager _adminLogs = default!;
-    [Dependency] private IAdminManager _adminManager = default!;
-    [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private IConfigurationManager _configuration = default!;
-    [Dependency] private IEntityManager _e = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly ServerDbEntryManager _serverDbEntry = default!;
 
     private readonly ISawmill _sawmill;
 
     private int _clientBatchSize;
     private bool _isLoading = true;
     private readonly Dictionary<Guid, string> _players = new();
+    private readonly Dictionary<int, string> _servers = new();
     private int _roundLogs;
     private CancellationTokenSource _logSendCancellation = new();
     private LogFilter _filter;
@@ -60,6 +64,11 @@ public sealed partial class AdminLogsEui : BaseEui
 
         _adminManager.OnPermsChanged += OnPermsChanged;
 
+        // Resolve our own server ID so the initial filter is scoped correctly
+        // before the client sends its first explicit LogsRequest.
+        if (_filter.ServerId == null)
+            _filter.ServerId = (await _serverDbEntry.ServerEntity).Id;
+
         var roundId = _filter.Round ?? CurrentRoundId;
         await LoadFromDb(roundId);
     }
@@ -81,15 +90,14 @@ public sealed partial class AdminLogsEui : BaseEui
     {
         if (_isLoading)
         {
-            return new AdminLogsEuiState(CurrentRoundId, new Dictionary<Guid, string>(), 0)
+            return new AdminLogsEuiState(CurrentRoundId, new Dictionary<Guid, string>(), 0,
+                new Dictionary<int, string>())
             {
                 IsLoading = true
             };
         }
 
-        var state = new AdminLogsEuiState(CurrentRoundId, _players, _roundLogs);
-
-        return state;
+        return new AdminLogsEuiState(CurrentRoundId, _players, _roundLogs, _servers);
     }
 
     public override async void HandleMessage(EuiMessageBase msg)
@@ -109,9 +117,18 @@ public sealed partial class AdminLogsEui : BaseEui
 
                 _logSendCancellation.Cancel();
                 _logSendCancellation = new CancellationTokenSource();
+
+                // Resolve the requested server ID.
+                // null, use the current server.
+                // Explicit ID, use that server.
+                // The server-side always enforces a server scope so logs from unrelated
+                // servers are never leaked.
+                var serverId = request.ServerId ?? (await _serverDbEntry.ServerEntity).Id;
+
                 _filter = new LogFilter
                 {
                     CancellationToken = _logSendCancellation.Token,
+                    ServerId = serverId,
                     Round = request.RoundId,
                     Search = request.Search,
                     Types = request.Types,
@@ -122,6 +139,8 @@ public sealed partial class AdminLogsEui : BaseEui
                     AnyPlayers = request.AnyPlayers,
                     AllPlayers = request.AllPlayers,
                     IncludeNonPlayers = request.IncludeNonPlayers,
+                    DateOrder = request.DateOrder,
+                    AnyEntities = request.AnyEntities,
                     LastLogId = null,
                     Limit = _clientBatchSize
                 };
@@ -165,14 +184,16 @@ public sealed partial class AdminLogsEui : BaseEui
         {
             filter.LogsSent += logs.Count;
 
-            var largestId = filter.DateOrder switch
+            var cursorIndex = _filter.DateOrder switch
             {
                 DateOrder.Ascending => 0,
                 DateOrder.Descending => ^1,
                 _ => throw new ArgumentOutOfRangeException(nameof(filter.DateOrder), filter.DateOrder, null)
             };
 
-            filter.LastLogId = logs[largestId].Id;
+            var cursorLog = logs[cursorIndex];
+            _filter.LastLogId = cursorLog.Id;
+            _filter.LastOccurredAt = cursorLog.Date;
         }
 
         var message = new NewLogs(logs, replace, logs.Count >= filter.Limit);
@@ -205,17 +226,19 @@ public sealed partial class AdminLogsEui : BaseEui
 
         var round = _adminLogs.Round(roundId);
         var count = _adminLogs.CountLogs(roundId);
-        await Task.WhenAll(round, count);
+        var servers = _db.GetAllServers();
+        await Task.WhenAll(round, count, servers);
 
         var players = (await round).Players
             .ToDictionary(player => player.UserId, player => player.LastSeenUserName);
 
         _players.Clear();
-
         foreach (var (id, name) in players)
-        {
             _players.Add(id, name);
-        }
+
+        _servers.Clear();
+        foreach (var server in await servers)
+            _servers[server.Id] = server.Name;
 
         _roundLogs = await count;
 

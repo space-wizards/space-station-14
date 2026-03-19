@@ -799,7 +799,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
             var server = await db.DbContext.Server
-                .Where(server => server.Name.Equals(serverName))
+                .Where(s => s.Name.Equals(serverName) && s.Id > 0)
                 .SingleOrDefaultAsync();
 
             if (server != default)
@@ -826,12 +826,23 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return new ServerRecord(server.Id, server.Name);
         }
 
+        public async Task<List<ServerRecord>> GetAllServers()
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.Server
+                .AsNoTracking()
+                .OrderBy(s => s.Name)
+                .Select(s => new ServerRecord(s.Id, s.Name))
+                .ToListAsync();
+        }
+
         public async Task AddAdminLogs(List<AdminLogEventWriteData> logs)
         {
             const int maxRetryAttempts = 5;
             var initialRetryDelay = TimeSpan.FromSeconds(5);
 
             DebugTools.Assert(logs.All(x => x.RoundId > 0), "Adding logs with invalid round ids.");
+            DebugTools.Assert(logs.All(x => x.ServerId > 0), "Adding logs with invalid server ids.");
 
             var attempt = 0;
             var retryDelay = initialRetryDelay;
@@ -841,11 +852,14 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 try
                 {
                     await using var db = await GetDb();
+                    await using var tx = await db.DbContext.Database.BeginTransactionAsync();
+
                     var headers = new List<AdminLogEvent>(logs.Count);
                     foreach (var log in logs)
                     {
                         var header = new AdminLogEvent
                         {
+                            ServerId = log.ServerId,
                             RoundId = log.RoundId,
                             Type = log.Type,
                             Impact = log.Impact,
@@ -857,6 +871,27 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
                     db.DbContext.AdminLogEvent.AddRange(headers);
                     await db.DbContext.SaveChangesAsync();
+
+                    for (var i = 0; i < headers.Count; i++)
+                    {
+                        logs[i].LogId = headers[i].Id;
+                    }
+
+                    var dimKeys = new HashSet<(int ServerId, int RoundId, int EntityUid)>();
+                    foreach (var log in logs)
+                    {
+                        foreach (var entity in log.Entities)
+                            dimKeys.Add((log.ServerId, log.RoundId, entity.EntityUid));
+                    }
+
+                    // Single batch query to load all existing entity dimensions.
+                    var existingDims = dimKeys.Count == 0
+                        ? new Dictionary<(int, int, int), AdminLogEntityDimension>()
+                        : await db.DbContext.AdminLogEntityDimension
+                            .Where(d => dimKeys.Select(k => k.ServerId).Distinct().Contains(d.ServerId)
+                                     && dimKeys.Select(k => k.RoundId).Distinct().Contains(d.RoundId)
+                                     && dimKeys.Select(k => k.EntityUid).Distinct().Contains(d.EntityUid))
+                            .ToDictionaryAsync(d => (d.ServerId, d.RoundId, d.EntityUid));
 
                     for (var i = 0; i < logs.Count; i++)
                     {
@@ -872,15 +907,22 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
                         foreach (var player in log.Players)
                         {
+                            // Use the caller-supplied role if available,
+                            // otherwise fall back to Actor as the default participation role.
+                            var playerRole = log.PlayerRoles != null && log.PlayerRoles.TryGetValue(player, out var r)
+                                ? r
+                                : AdminLogEntityRole.Actor;
+
                             db.DbContext.AdminLogEventParticipant.Add(new AdminLogEventParticipant
                             {
                                 EventId = header.Id,
+                                ServerId = log.ServerId,
                                 RoundId = log.RoundId,
                                 OccurredAt = log.OccurredAt,
                                 Type = log.Type,
                                 Impact = log.Impact,
                                 PlayerUserId = player,
-                                Role = AdminLogEntityRole.Actor,
+                                Role = playerRole,
                             });
                         }
 
@@ -889,6 +931,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                             db.DbContext.AdminLogEventParticipant.Add(new AdminLogEventParticipant
                             {
                                 EventId = header.Id,
+                                ServerId = log.ServerId,
                                 RoundId = log.RoundId,
                                 OccurredAt = log.OccurredAt,
                                 Type = log.Type,
@@ -897,37 +940,42 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                                 Role = entity.Role,
                             });
 
-                            var dim = await db.DbContext.AdminLogEntityDimension.FindAsync(log.RoundId, entity.EntityUid);
-                            if (dim == null)
-                            {
-                                db.DbContext.AdminLogEntityDimension.Add(new AdminLogEntityDimension
-                                {
-                                    RoundId = log.RoundId,
-                                    EntityUid = entity.EntityUid,
-                                    PrototypeId = entity.PrototypeId,
-                                    EntityName = entity.EntityName,
-                                });
-                            }
-                            else
+                            var dimKey = (log.ServerId, log.RoundId, entity.EntityUid);
+                            if (existingDims.TryGetValue(dimKey, out var dim))
                             {
                                 dim.PrototypeId = entity.PrototypeId ?? dim.PrototypeId;
                                 dim.EntityName = entity.EntityName ?? dim.EntityName;
                             }
+                            else
+                            {
+                                var newDim = new AdminLogEntityDimension
+                                {
+                                    ServerId = log.ServerId,
+                                    RoundId = log.RoundId,
+                                    EntityUid = entity.EntityUid,
+                                    PrototypeId = entity.PrototypeId,
+                                    EntityName = entity.EntityName,
+                                };
+                                db.DbContext.AdminLogEntityDimension.Add(newDim);
+                                // Track newly added dimensions so subsequent logs
+                                // in this batch can update them instead of adding duplicates.
+                                existingDims[dimKey] = newDim;
+                            }
                         }
                     }
                     await db.DbContext.SaveChangesAsync();
+                    await tx.CommitAsync();
                     _opsLog.Debug($"Successfully saved {logs.Count} admin logs.");
                     break;
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (ex is not OperationCanceledException)
                 {
                     attempt += 1;
                     _opsLog.Error($"Attempt {attempt} failed to save logs: {ex}");
 
                     if (attempt >= maxRetryAttempts)
                     {
-                        _opsLog.Error($"Max retry attempts reached. Failed to save {logs.Count} admin logs.");
-                        throw;
+                        throw new InvalidOperationException($"Max retry attempts reached. Failed to save {logs.Count} admin logs.", ex);
                     }
 
                     _opsLog.Warning($"Retrying in {retryDelay.TotalSeconds} seconds...");
@@ -944,6 +992,11 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             // Save me from SQLite
             var query = StartAdminLogsQuery(db, filter);
+
+            if (filter?.ServerId != null)
+            {
+                query = query.Where(log => log.ServerId == filter.ServerId);
+            }
 
             if (filter == null)
             {
@@ -975,29 +1028,148 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 query = query.Where(log => log.OccurredAt > filter.After);
             }
 
-            if (filter.AnyPlayers != null)
+            var participants = db.AdminLogEventParticipant.AsQueryable();
+
+            if (filter.ServerId != null)
+                participants = participants.Where(p => p.ServerId == filter.ServerId);
+
+            if (filter.Round != null)
+                participants = participants.Where(p => p.RoundId == filter.Round);
+
+            if (filter.Types != null)
+                participants = participants.Where(p => filter.Types.Contains(p.Type));
+
+            if (filter.Impacts != null)
+                participants = participants.Where(p => filter.Impacts.Contains(p.Impact));
+
+            if (filter.Before != null)
+                participants = participants.Where(p => p.OccurredAt < filter.Before);
+
+            if (filter.After != null)
+                participants = participants.Where(p => p.OccurredAt > filter.After);
+
+            var hasPlayerFiltering = filter.AnyPlayers != null
+                || filter.AllPlayers != null
+                || !filter.IncludePlayers
+                || filter.IncludeNonPlayers;
+
+            if (hasPlayerFiltering)
             {
-                query = query.Where(log => log.Participants.Any(p => p.PlayerUserId != null && filter.AnyPlayers.Contains(p.PlayerUserId.Value)));
+                var playerParticipants = participants.Where(p => p.PlayerUserId != null);
+                var anyPlayerEventIds = playerParticipants.Select(p => p.EventId).Distinct();
+
+                IQueryable<int> matchedPlayerEventIds = anyPlayerEventIds;
+
+                if (filter.AnyPlayers != null)
+                {
+                    matchedPlayerEventIds = playerParticipants
+                        .Where(p => filter.AnyPlayers.Contains(p.PlayerUserId!.Value))
+                        .Select(p => p.EventId)
+                        .Distinct();
+                }
+
+                if (filter.AllPlayers != null)
+                {
+                    // Use a single GROUP BY / HAVING COUNT(DISTINCT) set-intersection instead of
+                    // the old loop that composed N nested IN(subquery) clauses (one per player).
+                    // The old approach produced O(N)-deep query plans that could time out with 3+
+                    // players; this translates to a single semi-join the planner handles well.
+                    //
+                    // cap at 10 players to prevent degenerate HAVING expressions.
+                    var allPlayers = filter.AllPlayers.Length > 10
+                        ? filter.AllPlayers[..10]
+                        : filter.AllPlayers;
+
+                    var requiredCount = allPlayers.Length;
+                    matchedPlayerEventIds = playerParticipants
+                        .Where(p => allPlayers.Contains(p.PlayerUserId!.Value))
+                        .GroupBy(p => p.EventId)
+                        .Where(g => g.Select(p => p.PlayerUserId).Distinct().Count() >= requiredCount)
+                        .Select(g => g.Key);
+                }
+
+                query = query.Where(log =>
+                    (filter.IncludePlayers && matchedPlayerEventIds.Contains(log.Id))
+                    || (filter.IncludeNonPlayers && !anyPlayerEventIds.Contains(log.Id)));
             }
 
-            if (filter.AnyEntities != null)
-            {
-                query = query.Where(log => log.Participants.Any(p => p.EntityUid != null && filter.AnyEntities.Contains(p.EntityUid.Value)));
-            }
+            var hasEntityFiltering = filter.AnyEntities != null
+                || filter.AllEntities != null
+                || filter.EntityRoles != null;
 
-            if (filter.EntityRoles != null)
+            if (hasEntityFiltering)
             {
-                query = query.Where(log => log.Participants.Any(p => filter.EntityRoles.Contains(p.Role)));
+                var entityParticipants = participants.Where(p => p.EntityUid != null);
+                IQueryable<int> matchedEntityEventIds = entityParticipants
+                    .Select(p => p.EventId)
+                    .Distinct();
+
+                if (filter.AnyEntities != null)
+                {
+                    matchedEntityEventIds = entityParticipants
+                        .Where(p => filter.AnyEntities.Contains(p.EntityUid!.Value))
+                        .Select(p => p.EventId)
+                        .Distinct();
+                }
+
+                if (filter.AllEntities != null)
+                {
+                    foreach (var entityUid in filter.AllEntities)
+                    {
+                        var requiredEntityEventIds = entityParticipants
+                            .Where(p => p.EntityUid == entityUid)
+                            .Select(p => p.EventId);
+
+                        matchedEntityEventIds = matchedEntityEventIds
+                            .Where(eventId => requiredEntityEventIds.Contains(eventId));
+                    }
+                }
+
+                if (filter.EntityRoles != null)
+                {
+                    matchedEntityEventIds = entityParticipants
+                        .Where(p => filter.EntityRoles.Contains(p.Role))
+                        .Select(p => p.EventId)
+                        .Distinct()
+                        .Where(eventId => matchedEntityEventIds.Contains(eventId));
+                }
+
+                query = query.Where(log => matchedEntityEventIds.Contains(log.Id));
             }
 
             if (filter.LastLogId != null)
             {
-                query = filter.DateOrder switch
+                // When both LastOccurredAt and LastLogId are provided, use a compound
+                // (OccurredAt, Id) cursor so Postgres can seek directly into the
+                // (ServerId, OccurredAt, Id) composite index instead of scanning.
+                if (filter.LastOccurredAt != null)
                 {
-                    DateOrder.Ascending => query.Where(log => log.Id > filter.LastLogId),
-                    DateOrder.Descending => query.Where(log => log.Id < filter.LastLogId),
-                    _ => throw new ArgumentOutOfRangeException(nameof(filter), $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
-                };
+                    var cursorTime = filter.LastOccurredAt.Value;
+                    var cursorId = filter.LastLogId.Value;
+
+                    query = filter.DateOrder switch
+                    {
+                        DateOrder.Ascending => query.Where(log =>
+                            log.OccurredAt > cursorTime ||
+                            (log.OccurredAt == cursorTime && log.Id > cursorId)),
+                        DateOrder.Descending => query.Where(log =>
+                            log.OccurredAt < cursorTime ||
+                            (log.OccurredAt == cursorTime && log.Id < cursorId)),
+                        _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                            $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+                    };
+                }
+                else
+                {
+                    // Fallback: Id-only cursor for backward compatibility.
+                    query = filter.DateOrder switch
+                    {
+                        DateOrder.Ascending => query.Where(log => log.Id > filter.LastLogId),
+                        DateOrder.Descending => query.Where(log => log.Id < filter.LastLogId),
+                        _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                            $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+                    };
+                }
             }
 
             query = filter.DateOrder switch
@@ -1018,7 +1190,10 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var query = GetAdminLogsQuery(db.DbContext, filter);
 
-            await foreach (var message in query.Include(log => log.Payload).Select(log => log.Payload.Message).AsAsyncEnumerable())
+            await foreach (var message in query
+                               .AsNoTracking()
+                               .Select(log => log.Payload.Message)
+                               .AsAsyncEnumerable())
             {
                 yield return message;
             }
@@ -1027,37 +1202,75 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = GetAdminLogsQuery(db.DbContext, filter).Include(log => log.Payload).Include(log => log.Participants);
+            var query = GetAdminLogsQuery(db.DbContext, filter).AsNoTracking();
 
-            var logs = await query.ToListAsync();
+            var logs = await query
+                .Select(log => new
+                {
+                    log.Id,
+                    log.ServerId,
+                    log.RoundId,
+                    log.Type,
+                    log.Impact,
+                    log.OccurredAt,
+                    Message = log.Payload.Message
+                })
+                .ToListAsync();
+
+            var logIds = logs.Select(log => log.Id).ToArray();
+            var participants = logIds.Length == 0
+                ? []
+                : await db.DbContext.AdminLogEventParticipant
+                    .AsNoTracking()
+                    .Where(p => logIds.Contains(p.EventId))
+                    .Select(p => new
+                    {
+                        p.EventId,
+                        p.PlayerUserId,
+                        p.EntityUid,
+                        p.Role
+                    })
+                    .ToListAsync();
+
+            var participantsByEvent = participants
+                .GroupBy(p => p.EventId)
+                .ToDictionary(group => group.Key, group => group.ToArray());
+
             var roundIds = logs.Select(log => log.RoundId).Distinct().ToArray();
-            var entityUids = logs
-                .SelectMany(log => log.Participants)
+            var entityUids = participants
                 .Where(p => p.EntityUid != null)
                 .Select(p => p.EntityUid!.Value)
                 .Distinct()
                 .ToArray();
 
-            var dimensions = entityUids.Length == 0 || roundIds.Length == 0
-                ? new Dictionary<(int RoundId, int EntityUid), AdminLogEntityDimension>()
+            var serverIds = logs.Select(log => log.ServerId).Distinct().ToArray();
+
+            var dimensions = entityUids.Length == 0 || roundIds.Length == 0 || serverIds.Length == 0
+                ? new Dictionary<(int ServerId, int RoundId, int EntityUid), AdminLogEntityDimension>()
                 : await db.DbContext.AdminLogEntityDimension
-                    .Where(dim => roundIds.Contains(dim.RoundId) && entityUids.Contains(dim.EntityUid))
-                    .ToDictionaryAsync(dim => (dim.RoundId, dim.EntityUid));
+                    .Where(dim => serverIds.Contains(dim.ServerId) && roundIds.Contains(dim.RoundId) && entityUids.Contains(dim.EntityUid))
+                    .ToDictionaryAsync(dim => (dim.ServerId, dim.RoundId, dim.EntityUid));
+
+            var servers = await db.DbContext.Server
+                .Where(server => serverIds.Contains(server.Id))
+                .ToDictionaryAsync(server => server.Id, server => server.Name);
 
             foreach (var log in logs)
             {
-                var players = log.Participants.Where(p => p.PlayerUserId != null).Select(p => p.PlayerUserId!.Value).Distinct().ToArray();
-                var entityRows = log.Participants.Where(p => p.EntityUid != null).ToArray();
+                var logParticipants = participantsByEvent.GetValueOrDefault(log.Id, []);
+                var players = logParticipants.Where(p => p.PlayerUserId != null).Select(p => p.PlayerUserId!.Value).Distinct().ToArray();
+                var entityRows = logParticipants.Where(p => p.EntityUid != null).ToArray();
                 var entities = new SharedAdminLogEntity[entityRows.Length];
+                var serverName = servers.GetValueOrDefault(log.ServerId, "unknown");
 
                 for (var i = 0; i < entityRows.Length; i++)
                 {
                     var row = entityRows[i];
-                    dimensions.TryGetValue((log.RoundId, row.EntityUid!.Value), out var dim);
+                    dimensions.TryGetValue((log.ServerId, log.RoundId, row.EntityUid!.Value), out var dim);
                     entities[i] = new SharedAdminLogEntity(row.EntityUid!.Value, row.Role, dim?.PrototypeId, dim?.EntityName);
                 }
 
-                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.OccurredAt, log.Payload.Message, players, entities);
+                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities);
             }
         }
 
@@ -1066,16 +1279,24 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var query = GetAdminLogsQuery(db.DbContext, filter);
 
-            await foreach (var json in query.Include(log => log.Payload).Select(log => log.Payload.Json).AsAsyncEnumerable())
+            await foreach (var json in query
+                               .AsNoTracking()
+                               .Select(log => log.Payload.Json)
+                               .AsAsyncEnumerable())
             {
                 yield return json;
             }
         }
 
-        public async Task<int> CountAdminLogs(int round)
+        public async Task<int> CountAdminLogs(int round, int? serverId = null)
         {
             await using var db = await GetDb();
-            return await db.DbContext.AdminLogEvent.CountAsync(log => log.RoundId == round);
+
+            var query = db.DbContext.AdminLogEvent.Where(log => log.RoundId == round);
+            if (serverId != null)
+                query = query.Where(log => log.ServerId == serverId);
+
+            return await query.CountAsync();
         }
 
         #endregion

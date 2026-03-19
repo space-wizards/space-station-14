@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Content.Shared.Database;
@@ -11,6 +11,8 @@ namespace Content.Server.Administration.Logs;
 /// Structured admin log payload NOT IMPLEMENTED
 /// </summary>
 public sealed record StructuredAdminLogEvent(
+    int ServerId,
+    string ServerName,
     int RoundId,
     int LogId,
     LogType Type,

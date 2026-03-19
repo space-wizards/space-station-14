@@ -562,13 +562,13 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
             {
                 AdminLogger.Add(LogType.MeleeHit,
                     LogImpact.Medium,
-                    $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):subject} using their hands and dealt {damageResult.GetTotal():damage} damage");
+                    $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):target} using their hands and dealt {damageResult.GetTotal():damage} damage");
             }
             else
             {
                 AdminLogger.Add(LogType.MeleeHit,
                     LogImpact.Medium,
-                    $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):subject} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.GetTotal():damage} damage");
+                    $"{ToPrettyString(user):actor} melee attacked (light) {ToPrettyString(target.Value):target} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.GetTotal():damage} damage");
             }
 
         }
@@ -690,6 +690,9 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         }
 
         var appliedDamage = new DamageSpecifier();
+        // Track which entities actually took damage so we can emit ONE compound log after
+        // the loop instead of N individual logs (one per target).
+        var hitEntities = new List<EntityUid>(targets.Count);
 
         for (var i = targets.Count - 1; i >= 0; i--)
         {
@@ -719,19 +722,42 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                 }
 
                 appliedDamage += damageResult;
+                hitEntities.Add(entity);
+            }
+        }
 
-                if (meleeUid == user)
-                {
-                    AdminLogger.Add(LogType.MeleeHit,
-                        LogImpact.Medium,
-                        $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using their hands and dealt {damageResult.GetTotal():damage} damage");
-                }
-                else
-                {
-                    AdminLogger.Add(LogType.MeleeHit,
-                        LogImpact.Medium,
-                        $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.GetTotal():damage} damage");
-                }
+        // Emit a single compound log for the entire wide attack.
+        // Single-target: identical format to the old per-target log (1 log = 1 log, no change).
+        // Multi-target: ONE log listing all hit entities, saving N-1 log entries per swing.
+        if (hitEntities.Count == 1)
+        {
+            if (meleeUid == user)
+            {
+                AdminLogger.Add(LogType.MeleeHit,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(hitEntities[0]):target} using their hands and dealt {appliedDamage.GetTotal():damage} damage");
+            }
+            else
+            {
+                AdminLogger.Add(LogType.MeleeHit,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(hitEntities[0]):target} using {ToPrettyString(meleeUid):tool} and dealt {appliedDamage.GetTotal():damage} damage");
+            }
+        }
+        else if (hitEntities.Count > 1)
+        {
+            var names = string.Join(", ", hitEntities.Select(e => ToPrettyString(e)));
+            if (meleeUid == user)
+            {
+                AdminLogger.Add(LogType.MeleeHit,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(user):actor} melee attacked (heavy) {hitEntities.Count} targets using their hands, hitting {names} for {appliedDamage.GetTotal():damage} total damage");
+            }
+            else
+            {
+                AdminLogger.Add(LogType.MeleeHit,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(user):actor} melee attacked (heavy) {hitEntities.Count} targets using {ToPrettyString(meleeUid):tool}, hitting {names} for {appliedDamage.GetTotal():damage} total damage");
             }
 
             if (TerminatingOrDeleted(entity))
@@ -930,8 +956,6 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         }
 
         Interaction.DoContactInteraction(user, target);
-        AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
-
         AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
 
         _audio.PlayPvs(combatMode.DisarmSuccessSound, target.Value, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));

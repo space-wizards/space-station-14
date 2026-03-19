@@ -1,3 +1,5 @@
+﻿using System.Linq;
+using System.Text.Json;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
@@ -24,6 +26,7 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -44,17 +47,19 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class IngestionSystem : EntitySystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private FlavorProfileSystem _flavorProfile = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private SharedHandsSystem _hands = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     // Body Component Dependencies
     [Dependency] private BodySystem _body = default!;
@@ -281,12 +286,52 @@ public sealed partial class IngestionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("edible-force-feed", ("user", userName), ("verb", GetEdibleVerb(food))), args.User, entity);
 
             // logging
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(args.User):user} is forcing {ToPrettyString(entity):target} to eat {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}");
+            GetActorVictimPlayerData(args.User, entity.Owner, out var players, out var playerRoles);
+            _adminLogger.AddStructured(
+                LogType.ForceFeed,
+                LogImpact.Medium,
+                $"{ToPrettyString(args.User):user} is forcing {ToPrettyString(entity):target} to eat {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    actor = (int) args.User,
+                    victim = (int) entity.Owner,
+                    tool = (int) food,
+                    stage = "attempt",
+                    foodSolution = SerializeSolutionForAdminLog(foodSolution)
+                }),
+                players: players,
+                entities:
+                [
+                    new AdminLogEntityRef(args.User, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(entity.Owner, AdminLogEntityRole.Victim),
+                    new AdminLogEntityRef(food, AdminLogEntityRole.Tool),
+                ],
+                playerRoles: playerRoles);
         }
         else
         {
             // log voluntary eating
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(entity):target} is eating {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}");
+            GetActorVictimPlayerData(entity.Owner, entity.Owner, out var players, out var playerRoles);
+            _adminLogger.AddStructured(
+                LogType.Ingestion,
+                LogImpact.Low,
+                $"{ToPrettyString(entity):target} is eating {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    actor = (int) entity.Owner,
+                    victim = (int) entity.Owner,
+                    tool = (int) food,
+                    stage = "attempt",
+                    foodSolution = SerializeSolutionForAdminLog(foodSolution)
+                }),
+                players: players,
+                entities:
+                [
+                    new AdminLogEntityRef(entity.Owner, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(entity.Owner, AdminLogEntityRole.Victim),
+                    new AdminLogEntityRef(food, AdminLogEntityRole.Tool),
+                ],
+                playerRoles: playerRoles);
         }
     }
 
@@ -464,7 +509,27 @@ public sealed partial class IngestionSystem : EntitySystem
 
             // log successful forced feeding
             // TODO: Use correct verb
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity):food}");
+            GetActorVictimPlayerData(args.User, args.Target, out var players, out var playerRoles);
+            _adminLogger.AddStructured(
+                LogType.ForceFeed,
+                LogImpact.Medium,
+                $"{ToPrettyString(entity):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity):food}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    actor = (int) args.User,
+                    victim = (int) args.Target,
+                    tool = (int) entity.Owner,
+                    stage = "success",
+                    consumed = SerializeSolutionForAdminLog(args.Split)
+                }),
+                players: players,
+                entities:
+                [
+                    new AdminLogEntityRef(args.User, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(args.Target, AdminLogEntityRole.Victim),
+                    new AdminLogEntityRef(entity.Owner, AdminLogEntityRole.Tool),
+                ],
+                playerRoles: playerRoles);
         }
         else
         {
@@ -477,7 +542,27 @@ public sealed partial class IngestionSystem : EntitySystem
             // TODO: Use correct verb
             // the past tense is tricky here
             // localized admin logs when?
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity):food}");
+            GetActorVictimPlayerData(args.User, args.Target, out var players, out var playerRoles);
+            _adminLogger.AddStructured(
+                LogType.Ingestion,
+                LogImpact.Low,
+                $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity):food}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    actor = (int) args.User,
+                    victim = (int) args.Target,
+                    tool = (int) entity.Owner,
+                    stage = "success",
+                    consumed = SerializeSolutionForAdminLog(args.Split)
+                }),
+                players: players,
+                entities:
+                [
+                    new AdminLogEntityRef(args.User, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(args.Target, AdminLogEntityRole.Victim),
+                    new AdminLogEntityRef(entity.Owner, AdminLogEntityRole.Tool),
+                ],
+                playerRoles: playerRoles);
         }
 
         // BREAK OUR UTENSILS
@@ -535,5 +620,50 @@ public sealed partial class IngestionSystem : EntitySystem
     {
         if (IsEmpty(entity))
             args.Cancelled = true;
+    }
+
+    private void GetActorVictimPlayerData(
+        EntityUid actor,
+        EntityUid victim,
+        out Guid[]? players,
+        out Dictionary<Guid, AdminLogEntityRole>? playerRoles)
+    {
+        players = null;
+        playerRoles = null;
+
+        if (_player.TryGetSessionByEntity(actor, out var actorSession))
+        {
+            players = [actorSession.UserId.UserId];
+            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
+            {
+                [actorSession.UserId.UserId] = AdminLogEntityRole.Actor
+            };
+        }
+
+        if (!_player.TryGetSessionByEntity(victim, out var victimSession))
+            return;
+
+        if (players == null)
+            players = [victimSession.UserId.UserId];
+        else if (players[0] != victimSession.UserId.UserId)
+            players = [players[0], victimSession.UserId.UserId];
+
+        playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
+        if (!playerRoles.ContainsKey(victimSession.UserId.UserId))
+            playerRoles[victimSession.UserId.UserId] = AdminLogEntityRole.Victim;
+    }
+
+    private static object SerializeSolutionForAdminLog(Solution solution)
+    {
+        return new
+        {
+            volume = solution.Volume,
+            maxVolume = solution.MaxVolume,
+            reagents = solution.Contents.Select(reagent => new
+            {
+                id = reagent.Reagent.Prototype,
+                quantity = reagent.Quantity,
+            }),
+        };
     }
 }

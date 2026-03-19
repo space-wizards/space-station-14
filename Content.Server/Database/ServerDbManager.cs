@@ -214,11 +214,12 @@ namespace Content.Server.Database
         #region Admin Logs
 
         Task<Server> AddOrGetServer(string serverName);
+        Task<List<ServerRecord>> GetAllServers();
         Task AddAdminLogs(List<AdminLogEventWriteData> logs);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
         IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
-        Task<int> CountAdminLogs(int round);
+        Task<int> CountAdminLogs(int round, int? serverId = null);
 
         #endregion
 
@@ -735,6 +736,12 @@ namespace Content.Server.Database
             return server;
         }
 
+        public Task<List<ServerRecord>> GetAllServers()
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAllServers());
+        }
+
         public Task AddAdminLogs(List<AdminLogEventWriteData> logs)
         {
             DbWriteOpsMetric.Inc();
@@ -759,10 +766,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetAdminLogsJson(filter));
         }
 
-        public Task<int> CountAdminLogs(int round)
+        public Task<int> CountAdminLogs(int round, int? serverId = null)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.CountAdminLogs(round));
+            return RunDbCommand(() => _db.CountAdminLogs(round, serverId));
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)

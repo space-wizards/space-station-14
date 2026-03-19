@@ -35,6 +35,7 @@ public sealed partial class AdminLogsEui : BaseEui
         LogsControl = LogsWindow.Logs;
 
         LogsControl.LogSearch.OnTextEntered += _ => RequestLogs();
+        LogsControl.EntityUidSearch.OnTextEntered += _ => RequestLogs();
         LogsControl.RefreshButton.OnPressed += _ => RequestLogs();
         LogsControl.NextButton.OnPressed += _ => NextLogs();
         LogsControl.PopOutButton.OnPressed += _ => PopOut();
@@ -66,18 +67,36 @@ public sealed partial class AdminLogsEui : BaseEui
 
     private void RequestLogs()
     {
+        // Parse entity UID search: comma- or space-separated.
+        int[]? anyEntities = null;
+        var entityText = LogsControl.EntitySearch;
+        if (!string.IsNullOrWhiteSpace(entityText))
+        {
+            anyEntities = entityText
+                .Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => int.TryParse(s.Trim(), out var uid) ? (int?) uid : null)
+                .Where(uid => uid.HasValue)
+                .Select(uid => uid!.Value)
+                .ToArray();
+
+            if (anyEntities.Length == 0)
+                anyEntities = null;
+        }
+
         var request = new LogsRequest(
             LogsControl.SelectedRoundId,
             LogsControl.Search,
             LogsControl.SelectedTypes.ToHashSet(),
-            null,
+            LogsControl.SelectedImpacts.ToHashSet(),
             null,
             null,
             LogsControl.SelectedPlayers.Count != 0,
             LogsControl.SelectedPlayers.ToArray(),
             null,
             LogsControl.IncludeNonPlayerLogs,
-            DateOrder.Descending);
+            DateOrder.Descending,
+            serverId: LogsControl.SelectedServerId,
+            anyEntities: anyEntities);
 
         SendMessage(request);
     }
@@ -100,7 +119,11 @@ public sealed partial class AdminLogsEui : BaseEui
         var file = await _dialogManager.SaveFile(new FileDialogFilters(new FileDialogFilters.Group("csv")));
 
         if (file == null)
+        {
+            _currentlyExportingLogs = false;
+            LogsControl.ExportLogs.Disabled = false;
             return;
+        }
 
         try
         {
@@ -205,6 +228,7 @@ public sealed partial class AdminLogsEui : BaseEui
 
         LogsControl.SetCurrentRound(s.RoundId);
         LogsControl.SetPlayers(s.Players);
+        LogsControl.SetServers(s.Servers);
         LogsControl.UpdateCount(round: s.RoundLogs);
 
         if (!FirstState)

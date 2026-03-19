@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Content.Shared.Database;
 
 namespace Content.Shared.Administration.Logs;
@@ -16,4 +17,13 @@ public interface ISharedAdminLogManager
     void Add(LogType type, LogImpact impact, [InterpolatedStringHandlerArgument("")] ref LogStringHandler handler);
 
     void Add(LogType type, [InterpolatedStringHandlerArgument("")] ref LogStringHandler handler);
+
+    void AddStructured(
+        LogType type,
+        LogImpact impact,
+        string message,
+        JsonDocument json,
+        IReadOnlyCollection<Guid>? players = null,
+        IReadOnlyCollection<AdminLogEntityRef>? entities = null,
+        IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null);
 }

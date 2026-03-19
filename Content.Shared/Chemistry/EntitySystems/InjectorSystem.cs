@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
@@ -20,6 +21,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -31,16 +33,18 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// <seealso cref="InjectorModePrototype"/>
 public sealed partial class InjectorSystem : EntitySystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedForensicsSystem _forensics = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private OpenableSystem _openable = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private ReactiveSystem _reactiveSystem = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private StandingStateSystem _standingState = default!;
-    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly StandingStateSystem _standingState = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -223,13 +227,51 @@ public sealed partial class InjectorSystem : EntitySystem
         {
             if (activeMode.Behavior.HasFlag(InjectorBehavior.Draw))
             {
-                _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from themselves.");
+                GetActorVictimPlayerData(user, user, out var players, out var playerRoles);
+                _adminLogger.AddStructured(
+                    LogType.ForceFeed,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from themselves.",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        actor = (int) user,
+                        victim = (int) user,
+                        tool = (int) injector.Owner,
+                        attemptedTransferAmount = amount,
+                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Victim),
+                        new AdminLogEntityRef(injector.Owner, AdminLogEntityRole.Tool),
+                    ],
+                    playerRoles: playerRoles);
             }
             else
             {
-                _adminLogger.Add(LogType.Ingestion,
-                    $"{ToPrettyString(user):user} is attempting to inject themselves with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}.");
+                GetActorVictimPlayerData(user, user, out var players, out var playerRoles);
+                _adminLogger.AddStructured(
+                    LogType.Ingestion,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(user):user} is attempting to inject themselves with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}.",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        actor = (int) user,
+                        victim = (int) user,
+                        tool = (int) injector.Owner,
+                        attemptedTransferAmount = amount,
+                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Victim),
+                        new AdminLogEntityRef(injector.Owner, AdminLogEntityRole.Tool),
+                    ],
+                    playerRoles: playerRoles);
             }
         }
         else
@@ -241,13 +283,51 @@ public sealed partial class InjectorSystem : EntitySystem
 
             if (activeMode.Behavior.HasFlag(InjectorBehavior.Draw))
             {
-                _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from {ToPrettyString(target):target}");
+                GetActorVictimPlayerData(user, target, out var players, out var playerRoles);
+                _adminLogger.AddStructured(
+                    LogType.ForceFeed,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from {ToPrettyString(target):target}",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        actor = (int) user,
+                        victim = (int) target,
+                        tool = (int) injector.Owner,
+                        attemptedTransferAmount = amount,
+                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
+                        new AdminLogEntityRef(injector.Owner, AdminLogEntityRole.Tool),
+                    ],
+                    playerRoles: playerRoles);
             }
             else
             {
-                _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to inject {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}");
+                GetActorVictimPlayerData(user, target, out var players, out var playerRoles);
+                _adminLogger.AddStructured(
+                    LogType.ForceFeed,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(user):user} is attempting to inject {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        actor = (int) user,
+                        victim = (int) target,
+                        tool = (int) injector.Owner,
+                        attemptedTransferAmount = amount,
+                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
+                        new AdminLogEntityRef(injector.Owner, AdminLogEntityRole.Tool),
+                    ],
+                    playerRoles: playerRoles);
             }
         }
 
@@ -534,7 +614,26 @@ public sealed partial class InjectorSystem : EntitySystem
             _audio.PlayPredicted(activeMode.InjectSound, injector, user);
 
         // Log what happened.
-        _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(injector):using}");
+        GetActorVictimPlayerData(user, target, out var players, out var playerRoles);
+        _adminLogger.AddStructured(
+            LogType.ForceFeed,
+            LogImpact.Medium,
+            $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(injector):using}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                actor = (int) user,
+                victim = (int) target,
+                tool = (int) injector.Owner,
+                transferredSolution = SerializeSolutionForAdminLog(removedSolution)
+            }),
+            players: players,
+            entities:
+            [
+                new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
+                new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
+                new AdminLogEntityRef(injector.Owner, AdminLogEntityRole.Tool),
+            ],
+            playerRoles: playerRoles);
 
         AfterInject(injector, user, target);
         return true;
@@ -699,6 +798,51 @@ public sealed partial class InjectorSystem : EntitySystem
             ToggleMode(injector, user, proto, false);
             return;
         }
+    }
+
+    private void GetActorVictimPlayerData(
+        EntityUid actor,
+        EntityUid victim,
+        out Guid[]? players,
+        out Dictionary<Guid, AdminLogEntityRole>? playerRoles)
+    {
+        players = null;
+        playerRoles = null;
+
+        if (_player.TryGetSessionByEntity(actor, out var actorSession))
+        {
+            players = [actorSession.UserId.UserId];
+            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
+            {
+                [actorSession.UserId.UserId] = AdminLogEntityRole.Actor
+            };
+        }
+
+        if (!_player.TryGetSessionByEntity(victim, out var victimSession))
+            return;
+
+        if (players == null)
+            players = [victimSession.UserId.UserId];
+        else if (players[0] != victimSession.UserId.UserId)
+            players = [players[0], victimSession.UserId.UserId];
+
+        playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
+        if (!playerRoles.ContainsKey(victimSession.UserId.UserId))
+            playerRoles[victimSession.UserId.UserId] = AdminLogEntityRole.Victim;
+    }
+
+    private static object SerializeSolutionForAdminLog(Solution solution)
+    {
+        return new
+        {
+            volume = solution.Volume,
+            maxVolume = solution.MaxVolume,
+            reagents = solution.Contents.Select(reagent => new
+            {
+                id = reagent.Reagent.Prototype,
+                quantity = reagent.Quantity,
+            }),
+        };
     }
     #endregion Injecting/Drawing
 

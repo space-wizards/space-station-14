@@ -1,22 +1,25 @@
 using System.Text.Json;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Containers;
 
 public sealed partial class ThrowInsertContainerSystem : EntitySystem
 {
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedContainerSystem _containerSystem = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -53,6 +56,10 @@ public sealed partial class ThrowInsertContainerSystem : EntitySystem
         if (args.Component.Thrower != null)
         {
             var thrower = args.Component.Thrower.Value;
+            Guid[]? players = null;
+            if (_player.TryGetSessionByEntity(thrower, out var session))
+                players = [session.UserId.UserId];
+
             _adminLogger.AddStructured(
                 LogType.Landed,
                 LogImpact.Low,
@@ -63,6 +70,7 @@ public sealed partial class ThrowInsertContainerSystem : EntitySystem
                     thrower = (int) thrower,
                     container = (int) ent.Owner
                 }),
+                players: players,
                 entities:
                 [
                     new AdminLogEntityRef(thrower, AdminLogEntityRole.Actor),

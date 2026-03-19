@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Frozen;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration.Logs;
@@ -9,6 +10,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
+using static Robust.Client.UserInterface.Controls.OptionButton;
 
 namespace Content.Client.Administration.UI.Logs;
 
@@ -22,6 +24,39 @@ public sealed partial class AdminLogsControl : Control
     private readonly Comparer<AdminLogPlayerButton> _adminLogPlayerButtonComparer =
         Comparer<AdminLogPlayerButton>.Create((a, b) =>
             string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+
+    /// <summary>
+    /// Log types that are hidden in "Essentials" view because they produce high-frequency
+    /// events during normal gameplay.
+    /// </summary>
+    private static readonly FrozenSet<LogType> NoisyTypes = new HashSet<LogType>
+    {
+        // this needs tuning
+        LogType.InteractHand,
+        LogType.InteractActivate,
+        LogType.InteractUsing,
+        LogType.Pickup,
+        LogType.Drop,
+        LogType.Throw,
+        LogType.Landed,
+        LogType.Storage,
+        LogType.CombatModeToggle,
+        LogType.Slip,
+        LogType.CrayonDraw,
+        LogType.Verb,
+        LogType.Tile,
+        LogType.RCD,
+        LogType.Anchor,
+        LogType.Unanchor,
+    }.ToFrozenSet();
+
+    private bool _isCuratedView = true;
+
+    // Sentinel value used in the server OptionButton to represent "all servers".
+    private const int AllServersId = -1;
+
+    // Maps OptionButton item index → server ID.
+    private readonly List<int> _serverOptionIds = new();
 
     public AdminLogsControl()
     {
@@ -46,6 +81,10 @@ public sealed partial class AdminLogsControl : Control
 
         ResetRoundButton.OnPressed += ResetRoundPressed;
 
+        ServerSelector.OnItemSelected += ServerSelectorChanged;
+
+        CuratedViewButton.OnPressed += CuratedViewToggled;
+
         SetImpacts(Enum.GetValues<LogImpact>().OrderBy(impact => impact).ToArray());
         SetTypes(Enum.GetValues<LogType>());
     }
@@ -60,6 +99,10 @@ public sealed partial class AdminLogsControl : Control
     public bool IncludeNonPlayerLogs { get; set; }
     public bool ShowMetadata { get; set; } = true;
 
+    public int? SelectedServerId { get; private set; }
+
+    public string EntitySearch => EntityUidSearch.Text.Trim();
+
     public HashSet<LogType> SelectedTypes { get; } = new();
 
     public HashSet<Guid> SelectedPlayers { get; } = new();
@@ -73,6 +116,79 @@ public sealed partial class AdminLogsControl : Control
         CurrentRound = round;
         ResetRoundButton.Text = Loc.GetString("admin-logs-reset-with-id", ("id", round));
         UpdateResetButton();
+    }
+
+    /// <summary>
+    /// Rebuilds the server selector dropdown from the server list provided by the server-side EUI state.
+    /// The first entry is always the current server
+    /// </summary>
+    public void SetServers(Dictionary<int, string> servers)
+    {
+        var previousId = SelectedServerId;
+
+        ServerSelector.Clear();
+        _serverOptionIds.Clear();
+
+        // Current server
+        ServerSelector.AddItem(Loc.GetString("admin-logs-server-current"));
+        _serverOptionIds.Add(AllServersId);
+
+        foreach (var (id, name) in servers.OrderBy(kv => kv.Value))
+        {
+            ServerSelector.AddItem(name);
+            _serverOptionIds.Add(id);
+        }
+
+        // Restore previous selection if still present, else default to current.
+        var restoredIndex = previousId.HasValue
+            ? _serverOptionIds.IndexOf(previousId.Value)
+            : 0;
+        ServerSelector.SelectId(Math.Max(0, restoredIndex));
+        SelectedServerId = _serverOptionIds[ServerSelector.SelectedId] is var sel && sel == AllServersId
+            ? null
+            : sel;
+    }
+
+    private void ServerSelectorChanged(ItemSelectedEventArgs args)
+    {
+        var rawId = _serverOptionIds[args.Id];
+        SelectedServerId = rawId == AllServersId ? null : rawId;
+        // Changing server resets the round spinner to 0
+        // so the request goes to the newest round on that server.
+        RoundSpinBox.Value = 0;
+    }
+
+    /// <summary>
+    /// Applies the current curated-view state to the type button list.
+    /// In curated mode (<see cref="NoisyTypes"/> excluded) the type list only shows
+    /// investigation-relevant events. In "All" mode every type is selected.
+    /// </summary>
+    public void ApplyCuratedView()
+    {
+        if (_isCuratedView)
+        {
+            // Select everything EXCEPT the noisy types.
+            SetTypesSelection(NoisyTypes.ToHashSet(), invert: true);
+        }
+        else
+        {
+            // Select all types
+            SelectedTypes.Clear();
+            foreach (var control in TypesContainer.Children)
+            {
+                if (control is not AdminLogTypeButton type)
+                    continue;
+                type.Pressed = true;
+                SelectedTypes.Add(type.Type);
+            }
+            UpdateLogs();
+        }
+    }
+
+    private void CuratedViewToggled(ButtonEventArgs args)
+    {
+        _isCuratedView = args.Button.Pressed;
+        ApplyCuratedView();
     }
 
     public void SetRoundSpinBox(int round)
@@ -474,7 +590,9 @@ public sealed partial class AdminLogsControl : Control
             TypesContainer.AddChild(type);
         }
 
-        UpdateLogs();
+        // Re-apply the current view mode whenever the type list is rebuilt so the
+        // curated filter is maintained across round changes and server switches.
+        ApplyCuratedView();
     }
 
     public void SetPlayers(Dictionary<Guid, string> players)
@@ -529,7 +647,7 @@ public sealed partial class AdminLogsControl : Control
         {
             ref var log = ref span[i];
             var separator = new HSeparator();
-            var label = new AdminLogLabel(ref log, separator);
+            var label = new AdminLogLabel(ref log, separator, ShowMetadata);
             label.Visible = ShouldShowLog(label);
 
             TotalLogs++;
@@ -596,5 +714,8 @@ public sealed partial class AdminLogsControl : Control
         RoundSpinBox.ValueChanged -= RoundSpinBoxChanged;
 
         ResetRoundButton.OnPressed -= ResetRoundPressed;
+
+        ServerSelector.OnItemSelected -= ServerSelectorChanged;
+        CuratedViewButton.OnPressed -= CuratedViewToggled;
     }
 }

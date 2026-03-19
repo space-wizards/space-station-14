@@ -3,8 +3,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using Npgsql;
 
 namespace Content.Server.Database
 {
@@ -60,6 +58,15 @@ namespace Content.Server.Database
                         property.SetColumnType("timestamp with time zone");
                 }
             }
+
+            // Postgres-only GIN tsvector index on the log message for fast full-text search.
+            // Without this, every search requires computing to_tsvector() on the fly across
+            // potentially millions of payload rows.
+            modelBuilder.Entity<AdminLogEventPayload>()
+                .HasIndex(p => p.Message)
+                .HasDatabaseName("IX_admin_log_event_payload_message_gin")
+                .HasMethod("GIN")
+                .HasAnnotation("Npgsql:TsVectorConfig", "english");
         }
 
         public override IQueryable<AdminLogEvent> SearchLogs(IQueryable<AdminLogEvent> query, string searchText)
@@ -69,12 +76,16 @@ namespace Content.Server.Database
 
         public override int CountAdminLogs()
         {
-            using var command = new NpgsqlCommand("SELECT reltuples FROM pg_class WHERE relname = 'admin_log';", (NpgsqlConnection?) Database.GetDbConnection());
+            // Use a fast statistical row estimate from pg_class instead of COUNT(*).
+            // reltuples is a float4, so we round rather than truncate to reduce drift at large counts.
+            // Database.ExecuteSqlRaw routes through EF's managed connection and avoids the
+            // race condition that arises when opening a raw NpgsqlConnection manually.
+            var result = Database
+                .SqlQueryRaw<double>("SELECT reltuples::double precision AS \"Value\" FROM pg_class WHERE relname = 'admin_log_event'")
+                .AsEnumerable()
+                .FirstOrDefault();
 
-            Database.GetDbConnection().Open();
-            var count = Convert.ToInt32((float) (command.ExecuteScalar() ?? 0));
-            Database.GetDbConnection().Close();
-            return count;
+            return (int) Math.Round(result);
         }
     }
 }

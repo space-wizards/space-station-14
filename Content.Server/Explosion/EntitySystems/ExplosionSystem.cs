@@ -1,6 +1,8 @@
+using System.Text.Json;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
@@ -21,7 +23,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
-using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -35,12 +36,14 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem : SharedExplosionSystem
 {
-    [Dependency] private IRobustRandom _robustRandom = default!;
-    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
@@ -246,8 +249,24 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
 
         if (user == null)
         {
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(uid):entity} exploded ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}");
+            _adminLogger.AddStructured(
+                LogType.Explosion,
+                LogImpact.High,
+                $"{ToPrettyString(uid):entity} exploded ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    explosive = (int) uid,
+                    explosionType = typeId,
+                    coordinates = posFound ? gridPos.ToString() : "[Grid or Map not found]",
+                    totalIntensity,
+                    slope,
+                    radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
+                }),
+                entities:
+                [
+                    new AdminLogEntityRef(uid, AdminLogEntityRole.Actor),
+                    new AdminLogEntityRef(uid, AdminLogEntityRole.Tool),
+                ]);
         }
         else
         {
@@ -255,10 +274,53 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             var logImpact = (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
                 ? LogImpact.Extreme
                 : LogImpact.High;
+
+            Guid[]? players = null;
+            if (_playerManager.TryGetSessionByEntity(user.Value, out var session))
+                players = [session.UserId.UserId];
+
             if (posFound)
-                _adminLogger.Add(LogType.Explosion, logImpact, $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:{gridPos:coordinates} with intensity {totalIntensity} slope {slope}");
+                _adminLogger.AddStructured(
+                    LogType.Explosion,
+                    logImpact,
+                    $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:{gridPos:coordinates} with intensity {totalIntensity} slope {slope}",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        actor = (int) user.Value,
+                        explosive = (int) uid,
+                        explosionType = typeId,
+                        coordinates = gridPos.ToString(),
+                        totalIntensity,
+                        slope,
+                        radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user.Value, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(uid, AdminLogEntityRole.Tool),
+                    ]);
             else
-                _adminLogger.Add(LogType.Explosion, logImpact, $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:[Grid or Map not found] with intensity {totalIntensity} slope {slope}");
+                _adminLogger.AddStructured(
+                    LogType.Explosion,
+                    logImpact,
+                    $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:[Grid or Map not found] with intensity {totalIntensity} slope {slope}",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        actor = (int) user.Value,
+                        explosive = (int) uid,
+                        explosionType = typeId,
+                        coordinates = "[Grid or Map not found]",
+                        totalIntensity,
+                        slope,
+                        radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
+                    }),
+                    players: players,
+                    entities:
+                    [
+                        new AdminLogEntityRef(user.Value, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(uid, AdminLogEntityRole.Tool),
+                    ]);
         }
     }
 
@@ -287,7 +349,32 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         }
 
         if (addLog) // dont log if already created a separate, more detailed, log.
-            _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
+        {
+            Guid[]? players = null;
+            if (cause is { } causeEntity && _playerManager.TryGetSessionByEntity(causeEntity, out var session))
+                players = [session.UserId.UserId];
+
+            _adminLogger.AddStructured(
+                LogType.Explosion,
+                LogImpact.High,
+                $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    cause = cause is null ? null : (int?) cause.Value,
+                    explosionType = typeId,
+                    coordinates = epicenter.ToString(),
+                    totalIntensity,
+                    slope,
+                    radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
+                }),
+                players: players,
+                entities: cause is { } source
+                    ?
+                    [
+                        new AdminLogEntityRef(source, AdminLogEntityRole.Actor),
+                    ]
+                    : []);
+        }
 
         // try to combine explosions on the same tile if they are the same type
         foreach (var queued in _queuedExplosions)

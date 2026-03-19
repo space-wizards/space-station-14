@@ -131,10 +131,32 @@ namespace Content.Server.Database
                 .HasForeignKey(log => log.RoundId);
 
             modelBuilder.Entity<AdminLogEvent>()
+                .HasOne(log => log.Server)
+                .WithMany()
+                .HasForeignKey(log => log.ServerId);
+
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.OccurredAt, log.Id });
+
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.RoundId, log.OccurredAt, log.Id });
+
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.Type, log.OccurredAt, log.Id });
+
+            modelBuilder.Entity<AdminLogEvent>()
                 .HasIndex(log => new { log.RoundId, log.OccurredAt, log.Id });
 
             modelBuilder.Entity<AdminLogEvent>()
                 .HasIndex(log => new { log.RoundId, log.Type, log.OccurredAt, log.Id });
+
+            // Impact-first index
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.Impact, log.OccurredAt, log.Id });
+
+            // Round-scoped impact index
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.RoundId, log.Impact, log.OccurredAt, log.Id });
 
             modelBuilder.Entity<AdminLogEventPayload>()
                 .HasOne(payload => payload.Event)
@@ -147,16 +169,33 @@ namespace Content.Server.Database
                 .HasForeignKey(participant => participant.EventId);
 
             modelBuilder.Entity<AdminLogEventParticipant>()
-                .HasIndex(p => new { p.RoundId, p.PlayerUserId, p.OccurredAt, p.EventId });
+                .HasOne(participant => participant.Server)
+                .WithMany()
+                .HasForeignKey(participant => participant.ServerId);
 
             modelBuilder.Entity<AdminLogEventParticipant>()
-                .HasIndex(p => new { p.RoundId, p.EntityUid, p.OccurredAt, p.EventId });
+                .HasIndex(p => new { p.ServerId, p.PlayerUserId, p.OccurredAt, p.EventId });
+
+            // Round-scoped player lookup
+            modelBuilder.Entity<AdminLogEventParticipant>()
+                .HasIndex(p => new { p.ServerId, p.RoundId, p.PlayerUserId, p.OccurredAt, p.EventId });
 
             modelBuilder.Entity<AdminLogEventParticipant>()
-                .HasIndex(p => new { p.RoundId, p.EntityUid, p.Role, p.OccurredAt, p.EventId });
+                .HasIndex(p => new { p.ServerId, p.EntityUid, p.OccurredAt, p.EventId });
+
+            modelBuilder.Entity<AdminLogEventParticipant>()
+                .HasIndex(p => new { p.ServerId, p.EntityUid, p.Role, p.OccurredAt, p.EventId });
 
             modelBuilder.Entity<AdminLogEntityDimension>()
-                .HasKey(d => new { d.RoundId, d.EntityUid });
+                .HasKey(d => new { d.ServerId, d.RoundId, d.EntityUid });
+
+            modelBuilder.Entity<AdminLogEntityDimension>()
+                .HasOne(dim => dim.Server)
+                .WithMany()
+                .HasForeignKey(dim => dim.ServerId);
+
+            modelBuilder.Entity<AdminLogEntityDimension>()
+                .HasIndex(dim => new { dim.ServerId, dim.EntityUid });
 
             modelBuilder.Entity<PlayTime>()
                 .HasIndex(v => new { v.PlayerId, Role = v.Tracker })
@@ -636,6 +675,9 @@ namespace Content.Server.Database
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [ForeignKey("Server")] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+
         [ForeignKey("Round")] public int RoundId { get; set; }
         public Round Round { get; set; } = default!;
 
@@ -667,6 +709,9 @@ namespace Content.Server.Database
 
         [Required] public int EventId { get; set; }
 
+        [Required] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+
         [Required] public int RoundId { get; set; }
 
         [Required] public DateTime OccurredAt { get; set; }
@@ -687,6 +732,9 @@ namespace Content.Server.Database
     [Table("admin_log_entity_dimension")]
     public class AdminLogEntityDimension
     {
+        [Required] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+
         [Required] public int RoundId { get; set; }
 
         [Required] public int EntityUid { get; set; }

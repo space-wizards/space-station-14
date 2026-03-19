@@ -83,6 +83,10 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.AdminLogEntityDimension", b =>
                 {
+                    b.Property<int>("ServerId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("server_id");
+
                     b.Property<int>("RoundId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("round_id");
@@ -99,8 +103,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("prototype_id");
 
-                    b.HasKey("RoundId", "EntityUid")
+                    b.HasKey("ServerId", "RoundId", "EntityUid")
                         .HasName("PK_admin_log_entity_dimension");
+
+                    b.HasIndex("ServerId", "EntityUid");
 
                     b.ToTable("admin_log_entity_dimension", (string)null);
                 });
@@ -124,6 +130,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("round_id");
 
+                    b.Property<int>("ServerId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("server_id");
+
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER")
                         .HasColumnName("type");
@@ -133,7 +143,17 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasIndex("RoundId", "OccurredAt", "Id");
 
+                    b.HasIndex("ServerId", "OccurredAt", "Id");
+
                     b.HasIndex("RoundId", "Type", "OccurredAt", "Id");
+
+                    b.HasIndex("ServerId", "Impact", "OccurredAt", "Id");
+
+                    b.HasIndex("ServerId", "RoundId", "OccurredAt", "Id");
+
+                    b.HasIndex("ServerId", "Type", "OccurredAt", "Id");
+
+                    b.HasIndex("ServerId", "RoundId", "Impact", "OccurredAt", "Id");
 
                     b.ToTable("admin_log_event", (string)null);
                 });
@@ -173,6 +193,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("round_id");
 
+                    b.Property<int>("ServerId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("server_id");
+
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER")
                         .HasColumnName("type");
@@ -183,11 +207,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasIndex("EventId")
                         .HasDatabaseName("IX_admin_log_event_participant_event_id");
 
-                    b.HasIndex("RoundId", "EntityUid", "OccurredAt", "EventId");
+                    b.HasIndex("ServerId", "EntityUid", "OccurredAt", "EventId");
 
-                    b.HasIndex("RoundId", "PlayerUserId", "OccurredAt", "EventId");
+                    b.HasIndex("ServerId", "PlayerUserId", "OccurredAt", "EventId");
 
-                    b.HasIndex("RoundId", "EntityUid", "Role", "OccurredAt", "EventId");
+                    b.HasIndex("ServerId", "EntityUid", "Role", "OccurredAt", "EventId");
+
+                    b.HasIndex("ServerId", "RoundId", "PlayerUserId", "OccurredAt", "EventId");
 
                     b.ToTable("admin_log_event_participant", (string)null);
                 });
@@ -1532,6 +1558,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Admin");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AdminLogEntityDimension", b =>
+                {
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany()
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_log_entity_dimension_server_server_id");
+
+                    b.Navigation("Server");
+                });
+
             modelBuilder.Entity("Content.Server.Database.AdminLogEvent", b =>
                 {
                     b.HasOne("Content.Server.Database.Round", "Round")
@@ -1541,7 +1579,16 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasConstraintName("FK_admin_log_event_round_round_id");
 
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany()
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_log_event_server_server_id");
+
                     b.Navigation("Round");
+
+                    b.Navigation("Server");
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminLogEventParticipant", b =>
@@ -1553,7 +1600,16 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasConstraintName("FK_admin_log_event_participant_admin_log_event_event_id");
 
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany()
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_log_event_participant_server_server_id");
+
                     b.Navigation("Event");
+
+                    b.Navigation("Server");
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminLogEventPayload", b =>

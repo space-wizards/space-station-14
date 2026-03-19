@@ -1,5 +1,7 @@
+using System.Text.Json;
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
+using Content.Shared.Administration.Logs;
 using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
@@ -16,12 +18,13 @@ namespace Content.Server.Projectiles;
 
 public sealed partial class ProjectileSystem : SharedProjectileSystem
 {
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private ColorFlashEffectSystem _color = default!;
-    [Dependency] private DamageableSystem _damageableSystem = default!;
-    [Dependency] private DestructibleSystem _destructibleSystem = default!;
-    [Dependency] private GunSystem _guns = default!;
-    [Dependency] private SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
+    [Dependency] private readonly GunSystem _guns = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
     public override void Initialize()
     {
@@ -65,11 +68,43 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
-            _adminLogger.Add(LogType.BulletHit,
-                LogImpact.Medium,
-                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
+            // Build player list from shooter session if available.
+            Guid[]? players = null;
+            if (_player.TryGetSessionByEntity(component.Shooter!.Value, out var shooterSession))
+                players = [shooterSession.UserId.UserId];
 
-            component.ProjectileSpent = !TryPenetrate((uid, component), damage, damageRequired);
+            var weapon = component.Weapon;
+            _adminLogger.AddStructured(
+                LogType.BulletHit,
+                LogImpact.Medium,
+                $"{ToPrettyString(component.Shooter!.Value):user} shot {ToPrettyString(uid):projectile} and hit {otherName:target} for {damage:damage} damage",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    shooter = (int) component.Shooter!.Value,
+                    projectile = (int) uid,
+                    weapon = weapon is { } w ? (int?) w : null,
+                    target = (int) target,
+                    totalDamage = damage?.GetTotal()
+                }),
+                players: players,
+                entities: weapon is { } weaponUid
+                    ? [
+                        new AdminLogEntityRef(component.Shooter!.Value, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(weaponUid, AdminLogEntityRole.Tool),
+                        new AdminLogEntityRef(uid, AdminLogEntityRole.Subject),
+                        new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
+                    ]
+                    : [
+                        new AdminLogEntityRef(component.Shooter!.Value, AdminLogEntityRole.Actor),
+                        new AdminLogEntityRef(uid, AdminLogEntityRole.Subject),
+                        new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
+                    ],
+                playerRoles: players != null && shooterSession != null
+                    ? new Dictionary<Guid, AdminLogEntityRole>
+                        { [shooterSession.UserId.UserId] = AdminLogEntityRole.Actor }
+                    : null);
+
+            component.ProjectileSpent = !TryPenetrate((uid, component), damage!, damageRequired);
         }
         else
         {

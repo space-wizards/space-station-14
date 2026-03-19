@@ -483,4 +483,24 @@ public enum LogType
     /// Events related to players connecting/disconnecting.
     /// </summary>
     Connection = 104,
+
+    /// <summary>
+    /// A player toggled combat mode.
+    /// </summary>
+    CombatModeToggle = 105,
+
+    /// <summary>
+    /// Condensed burst of repeated combat mode toggles.
+    /// </summary>
+    CombatModeToggleBurst = 106,
+
+    /// <summary>
+    /// Condensed burst of repeated low-value interaction attempts.
+    /// </summary>
+    InteractionRepeatBurst = 107,
+
+    /// <summary>
+    /// Condensed burst of repeated melee misses
+    /// </summary>
+    MeleeMissBurst = 108,
 }

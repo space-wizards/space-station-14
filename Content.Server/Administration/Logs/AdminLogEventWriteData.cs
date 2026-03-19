@@ -1,19 +1,27 @@
-﻿using System.Text.Json;
-using Content.Server.Database;
+using System.Text.Json;
 using Content.Shared.Database;
 
 namespace Content.Server.Administration.Logs;
 
 public sealed class AdminLogEventWriteData
 {
-    public required int RoundId { get; init; }
-    public required LogType Type { get; init; }
-    public required LogImpact Impact { get; init; }
-    public required DateTime OccurredAt { get; init; }
-    public required string Message { get; init; }
-    public required JsonDocument Json { get; init; }
-    public required List<Guid> Players { get; init; }
-    public required List<AdminLogEventEntityWriteData> Entities { get; init; }
+    public int LogId { get; set; }
+    public int ServerId { get; set; }
+    public string ServerName { get; set; } = string.Empty;
+    public int RoundId { get; set; }
+    public LogType Type { get; set; }
+    public LogImpact Impact { get; set; }
+    public DateTime OccurredAt { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public JsonDocument Json { get; set; } = default!;
+    public List<Guid> Players { get; set; } = default!;
+    public List<AdminLogEventEntityWriteData> Entities { get; set; } = default!;
+
+    /// <summary>
+    /// Tells the database what each player's role was in this event.
+    /// Null when there's only one player or the roles aren't known.
+    /// </summary>
+    public Dictionary<Guid, AdminLogEntityRole>? PlayerRoles { get; set; }
 }
 
 public sealed class AdminLogEventEntityWriteData

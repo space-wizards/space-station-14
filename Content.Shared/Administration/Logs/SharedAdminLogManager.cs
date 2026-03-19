@@ -1,4 +1,5 @@
-﻿using Content.Shared.Database;
+﻿using System.Text.Json;
+using Content.Shared.Database;
 
 namespace Content.Shared.Administration.Logs;
 
@@ -20,5 +21,22 @@ public partial class SharedAdminLogManager : ISharedAdminLogManager
     public virtual void Add(LogType type, ref LogStringHandler handler)
     {
         // noop
+    }
+
+    public virtual void AddStructured(
+        LogType type,
+        LogImpact impact,
+        string message,
+        JsonDocument json,
+        IReadOnlyCollection<Guid>? players = null,
+        IReadOnlyCollection<AdminLogEntityRef>? entities = null,
+        IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null)
+    {
+        var handler = new LogStringHandler(message.Length, 0, this, out var isEnabled);
+        if (!isEnabled)
+            return;
+
+        handler.AppendLiteral(message);
+        Add(type, impact, ref handler);
     }
 }

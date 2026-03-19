@@ -118,10 +118,10 @@ namespace Content.Server.Entry
             _log.GetSawmill("Storage").Level = LogLevel.Info;
             _log.GetSawmill("db.ef").Level = LogLevel.Info;
 
-            _adminLog.Initialize();
             _connection.Initialize();
             _dbManager.Init();
             _preferences.Init();
+            _adminLog.Initialize();
             _nodeFactory.Initialize();
             _netResMan.Initialize();
             _ghostKick.Initialize();

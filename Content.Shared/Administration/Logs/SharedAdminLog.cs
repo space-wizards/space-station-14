@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.Logs;
@@ -9,6 +9,8 @@ public readonly record struct SharedAdminLogEntity(int EntityUid, AdminLogEntity
 [Serializable, NetSerializable]
 public readonly record struct SharedAdminLog(
     int Id,
+    int ServerId,
+    string ServerName,
     LogType Type,
     LogImpact Impact,
     DateTime Date,

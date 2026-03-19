@@ -1,7 +1,7 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
-using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Shared.Map;
 using Robust.Shared.Placement;
@@ -47,6 +47,7 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
                     action = ev.PlacementEventAction.ToString(),
                     coordinates = ev.Coordinates.ToString()
                 }),
+                players: [actor!.UserId.UserId],
                 entities:
                 [
                     new AdminLogEntityRef(actorEntity.Value, AdminLogEntityRole.Actor),
@@ -65,15 +66,34 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
     {
         _player.TryGetSessionById(ev.PlacerNetUserId, out var actor);
         var actorEntity = actor?.AttachedEntity;
+        var tileName = _tileDefinitionManager[ev.TileType].Name;
 
         if (actorEntity != null)
-            _adminLogger.Add(LogType.Tile, LogImpact.Medium,
-                $"{ToPrettyString(actorEntity.Value):actor} used placement system to set tile {_tileDefinitionManager[ev.TileType].Name} at {ev.Coordinates}");
+        {
+            _adminLogger.AddStructured(
+                LogType.Tile,
+                LogImpact.Medium,
+                $"{ToPrettyString(actorEntity.Value):actor} used placement system to set tile {tileName} at {ev.Coordinates}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    actor = (int) actorEntity.Value,
+                    tile = tileName,
+                    coordinates = ev.Coordinates.ToString()
+                }),
+                players: [actor!.UserId.UserId],
+                entities: [new AdminLogEntityRef(actorEntity.Value, AdminLogEntityRole.Actor)],
+                playerRoles: new Dictionary<Guid, AdminLogEntityRole>
+                    { [actor.UserId.UserId] = AdminLogEntityRole.Actor });
+        }
         else if (actor != null)
+        {
             _adminLogger.Add(LogType.Tile, LogImpact.Medium,
-                $"{actor} used placement system to set tile {_tileDefinitionManager[ev.TileType].Name} at {ev.Coordinates}");
+                $"{actor:player} used placement system to set tile {tileName} at {ev.Coordinates}");
+        }
         else
+        {
             _adminLogger.Add(LogType.Tile, LogImpact.Medium,
-                $"Placement system set tile {_tileDefinitionManager[ev.TileType].Name} at {ev.Coordinates}");
+                $"Placement system set tile {tileName} at {ev.Coordinates}");
+        }
     }
 }
