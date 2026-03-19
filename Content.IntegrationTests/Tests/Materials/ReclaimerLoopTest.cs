@@ -2,10 +2,14 @@ using System.Collections.Generic;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Utility;
 using Content.Server.Materials;
-using Content.Shared.Whitelist;
 using Content.Shared.Materials;
+using Content.Shared.Prototypes;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameObjects;
+using Content.Shared.Sprite;
+using Content.Server.Spawners.Components;
+
 
 namespace Content.IntegrationTests.Tests.Materials;
 
@@ -31,6 +35,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
     {
         var materialReclaimerSystem = SEntMan.System<SharedMaterialReclaimerSystem>();
         var entityWhitelistSystem = SEntMan.System<EntityWhitelistSystem>();
+        var sCompFactory = Server.Resolve<IComponentFactory>();
 
         await AddAtmosphere(); //so the player can breathe
 
@@ -50,9 +55,11 @@ public sealed class ReclaimerLoopTest : InteractionTest
         {
             foreach (var proto in ProtoMan.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!proto.Components.ContainsKey("PhysicalComposition")) //we dont care about items that dont recycle into anything physical
+                //we dont care about items that dont recycle into anything physical
+                if (!proto.HasComponent<PhysicalCompositionComponent>(sCompFactory))
                     continue;
-                if (proto.Components.ContainsKey("RandomSprite") || proto.Components.ContainsKey("EntityTableSpawner")) //spawners and random items mess things up quickly
+                //spawners and random items mess things up quickly, avoid them too
+                if (proto.HasComponent<RandomSpriteComponent>(sCompFactory) || proto.HasComponent<EntityTableSpawnerComponent>(sCompFactory))
                     continue;
                 var currentScrap = await Spawn(proto.ID);
                 var currentScrapUid = ToServer(currentScrap);
