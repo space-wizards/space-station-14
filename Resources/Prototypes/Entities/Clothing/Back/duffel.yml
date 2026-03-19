@@ -248,9 +248,9 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxItemSize: Huge
+    maxItemSize: Ginormous
     grid:
-    - 0,0,19,9
+    - 0,0,15,7
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
   - type: HeldSpeedModifier
