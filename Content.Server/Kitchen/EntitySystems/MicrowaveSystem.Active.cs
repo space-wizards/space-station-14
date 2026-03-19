@@ -10,6 +10,10 @@ namespace Content.Server.Kitchen.EntitySystems;
 
 public sealed partial class MicrowaveSystem
 {
+    /// <summary>
+    ///     Adjusts a microwave's visuals, audio, and power draw when activated.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
     private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
     {
         if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
@@ -23,6 +27,10 @@ public sealed partial class MicrowaveSystem
         _powerState.SetWorkingState(ent.Owner, true);
     }
 
+    /// <summary>
+    ///     Adjusts a microwave's visuals, audio, and power draw when deactivated.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
     private void OnCookStop(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
     {
         if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
