@@ -176,7 +176,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
     {
         ent.Comp.Broken = true;
-        SetAppearance(ent, MicrowaveVisualState.Broken, ent.Comp);
+        SetAppearance(ent.AsNullable(), MicrowaveVisualState.Broken);
         StopCooking(ent);
         _container.EmptyContainer(ent.Comp.Storage);
         UpdateUserInterfaceState(ent);
@@ -190,7 +190,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     {
         if (!args.Powered)
         {
-            SetAppearance(ent, MicrowaveVisualState.Idle, ent.Comp);
+            SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
             StopCooking(ent);
         }
 
@@ -249,16 +249,18 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     /// <param name="state">The visual state of the microwave.</param>
     /// <param name="component">The entity's microwave component.</param>
     /// <param name="appearanceComponent">The microwave's appearance component.</param>
-    public void SetAppearance(EntityUid uid,
+    public void SetAppearance(Entity<MicrowaveComponent?> ent,
         MicrowaveVisualState state,
-        MicrowaveComponent? component = null,
         AppearanceComponent? appearanceComponent = null)
     {
-        if (!Resolve(uid, ref component, ref appearanceComponent, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, ref appearanceComponent, logMissing: false))
             return;
 
-        var display = component.Broken ? MicrowaveVisualState.Broken : state;
-        _appearance.SetData(uid, PowerDeviceVisuals.VisualState, display, appearanceComponent);
+        var display = ent.Comp.Broken ? MicrowaveVisualState.Broken : state;
+        _appearance.SetData(ent.Owner,
+            PowerDeviceVisuals.VisualState,
+            display,
+            appearanceComponent);
     }
 
     /// <summary>

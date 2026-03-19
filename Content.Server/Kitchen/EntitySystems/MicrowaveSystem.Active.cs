@@ -19,7 +19,7 @@ public sealed partial class MicrowaveSystem
         if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
             return;
 
-        SetAppearance(ent.Owner, MicrowaveVisualState.Cooking, microwaveComponent);
+        SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Cooking);
         var audioParams = AudioParams.Default.WithLoop(true).WithMaxDistance(5);
         var pvs = _audio.PlayPvs(microwaveComponent.LoopingSound, ent, audioParams);
         microwaveComponent.PlayingStream = pvs?.Entity;
@@ -36,7 +36,7 @@ public sealed partial class MicrowaveSystem
         if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
             return;
 
-        SetAppearance(ent.Owner, MicrowaveVisualState.Idle, microwaveComponent);
+        SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Idle);
         microwaveComponent.PlayingStream = _audio.Stop(microwaveComponent.PlayingStream);
 
         _powerState.SetWorkingState(ent.Owner, false);
