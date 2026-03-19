@@ -32,6 +32,13 @@
         Slash: 10
         Structural: 40
   - type: Item
+    shape:
+    - 1,0,2,0
+    - 1,0,1,5
+    - 0,0,0,1
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/fireaxe.rsi
     size: Ginormous
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
