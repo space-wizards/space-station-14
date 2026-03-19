@@ -28,7 +28,7 @@ public sealed partial class GunSystem
 
     private void OnSolutionChanged(Entity<SolutionAmmoProviderComponent> entity, ref SolutionContainerChangedEvent args)
     {
-        if (args.Solution.Name == entity.Comp.SolutionId)
+        if (args.SolutionId == entity.Comp.SolutionId)
             UpdateSolutionShots(entity, args.Solution);
     }
 

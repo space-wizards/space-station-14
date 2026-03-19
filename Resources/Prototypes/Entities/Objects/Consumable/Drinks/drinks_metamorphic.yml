@@ -12,9 +12,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
   - type: SolutionContainerManager
+  - type: SolutionFill
     solutions:
-      drink:
-        maxVol: 30
+    - SolutionDrinkSmall
   - type: SolutionContainerVisuals
     maxFillLevels: 9
     metamorphic: true

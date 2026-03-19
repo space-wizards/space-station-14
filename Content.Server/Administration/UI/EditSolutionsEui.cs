@@ -1,5 +1,4 @@
 using Content.Server.Administration.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -44,7 +43,7 @@ namespace Content.Server.Administration.UI
         {
             List<(string Name, NetEntity Solution)>? netSolutions;
 
-            if (_entityManager.TryGetComponent(Target, out SolutionContainerManagerComponent? container) && container.Containers.Count > 0)
+            if (_entityManager.TryGetComponent(Target, out SolutionContainerManagerComponent? container) && container.Solutions.Count > 0)
             {
                 netSolutions = new();
                 foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions((Target, container)))

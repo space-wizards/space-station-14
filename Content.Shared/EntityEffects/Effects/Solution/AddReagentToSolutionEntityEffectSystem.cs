@@ -40,7 +40,7 @@ public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentTo
     ///     Solution we're looking for
     /// </summary>
     [DataField(required: true)]
-    public string? Solution = "reagents";
+    public string Solution = "reagents";
 
     ///<summary>
     ///     A modifier for how much reagent we're creating.

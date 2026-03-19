@@ -35,7 +35,7 @@ public abstract partial class SharedSolutionContainerSystem
 
     public bool TryGetExtractableSolution(Entity<ExtractableComponent?, SolutionContainerManagerComponent?> entity, [NotNullWhen(true)] out Entity<SolutionComponent>? soln, [NotNullWhen(true)] out Solution? solution)
     {
-        if (!Resolve(entity, ref entity.Comp1, logMissing: false))
+        if (!Resolve(entity, ref entity.Comp1, logMissing: false) || entity.Comp1.GrindableSolution == null)
         {
             (soln, solution) = (default!, null);
             return false;
@@ -148,13 +148,22 @@ public abstract partial class SharedSolutionContainerSystem
 
     #region Static Methods
 
+    public static string ToPrettyString(Entity<SolutionComponent> solution)
+    {
+        return ToPrettyString(solution.Comp);
+    }
+
+    public static string ToPrettyString(SolutionComponent solution)
+    {
+        var sb = new StringBuilder($"{solution.Id}:");
+        sb.Append(ToPrettyString(solution.Solution));
+        return sb.ToString();
+    }
+
     public static string ToPrettyString(Solution solution)
     {
         var sb = new StringBuilder();
-        if (solution.Name == null)
-            sb.Append("[");
-        else
-            sb.Append($"{solution.Name}:[");
+        sb.Append("[");
         var first = true;
         foreach (var (id, quantity) in solution.Contents)
         {

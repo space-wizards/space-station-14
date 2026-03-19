@@ -12,6 +12,8 @@ namespace Content.Shared.Chemistry.Components.SolutionManager;
 [Access(typeof(SharedSolutionContainerSystem))]
 public sealed partial class SolutionContainerManagerComponent : Component
 {
+    public static readonly string DefaultContainerId = "solutions";
+
     /// <summary>
     /// The default amount of space that will be allocated for solutions in solution containers.
     /// Most solution containers will only contain 1-2 solutions.
@@ -23,7 +25,7 @@ public sealed partial class SolutionContainerManagerComponent : Component
     /// Actually accessing them must be done via <see cref="ContainerManagerComponent"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<string> Containers = new(DefaultCapacity);
+    public string Container = DefaultContainerId;
 
     /// <summary>
     /// The set of solutions to load onto this entity during mapinit.
@@ -31,6 +33,6 @@ public sealed partial class SolutionContainerManagerComponent : Component
     /// <remarks>
     /// Should be null after mapinit.
     /// </remarks>
-    [DataField, AutoNetworkedField]
-    public Dictionary<string, Solution>? Solutions = null;
+    [ViewVariables]
+    public Dictionary<string, Entity<SolutionComponent>> Solutions = new ();
 }

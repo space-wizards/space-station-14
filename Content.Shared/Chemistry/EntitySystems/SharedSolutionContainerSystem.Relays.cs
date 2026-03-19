@@ -46,13 +46,11 @@ public record struct SolutionContainerOverflowEvent(EntityUid SolutionEnt, Solut
 /// </summary>
 /// <typeparam name="TEvent"></typeparam>
 /// <param name="Event">The event that is being relayed.</param>
-/// <param name="ContainerEnt">The container entity that the event is being relayed to.</param>
-/// <param name="Name">The name of the solution entity that the event is being relayed from.</param>
+/// <param name="Solution">The container entity that the event is being relayed to.</param>
 [ByRefEvent]
-public record struct SolutionRelayEvent<TEvent>(TEvent Event, EntityUid ContainerEnt, string Name)
+public record struct SolutionRelayEvent<TEvent>(TEvent Event, Entity<SolutionComponent> Solution)
 {
-    public readonly EntityUid ContainerEnt = ContainerEnt;
-    public readonly string Name = Name;
+    public readonly Entity<SolutionComponent> Solution = Solution;
     public TEvent Event = Event;
 }
 
@@ -89,10 +87,13 @@ public abstract partial class SharedSolutionContainerSystem
         var (solutionId, solutionComp) = args.Solution;
         var solution = solutionComp.Solution;
 
-        UpdateAppearance(entity.Comp.Container, (solutionId, solutionComp, entity.Comp));
-
-        var relayEvent = new SolutionContainerChangedEvent(solution, entity.Comp.ContainerName);
+        var relayEvent = new SolutionContainerChangedEvent(solution, solutionComp.Id);
         RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
+
+        if (Timing.ApplyingState)
+            return;
+
+        UpdateAppearance(entity.Comp.Container, (solutionId, solutionComp));
     }
 
     protected virtual void OnSolutionOverflow(Entity<ContainedSolutionComponent> entity, ref SolutionOverflowEvent args)
@@ -112,13 +113,15 @@ public abstract partial class SharedSolutionContainerSystem
 
     private void RelaySolutionValEvent<TEvent>(EntityUid uid, ContainedSolutionComponent comp, TEvent @event)
     {
-        var relayEvent = new SolutionRelayEvent<TEvent>(@event, uid, comp.ContainerName);
+        var solution = Comp<SolutionComponent>(uid);
+        var relayEvent = new SolutionRelayEvent<TEvent>(@event, (uid, solution));
         RaiseLocalEvent(comp.Container, ref relayEvent);
     }
 
     private void RelaySolutionRefEvent<TEvent>(Entity<ContainedSolutionComponent> entity, ref TEvent @event)
     {
-        var relayEvent = new SolutionRelayEvent<TEvent>(@event, entity.Owner, entity.Comp.ContainerName);
+        var solution = Comp<SolutionComponent>(entity);
+        var relayEvent = new SolutionRelayEvent<TEvent>(@event, (entity, solution));
         RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
         @event = relayEvent.Event;
     }

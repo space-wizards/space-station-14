@@ -1,0 +1,72 @@
+﻿- type: entity
+  id: Solution
+  name: solution
+  components:
+  - type: Solution
+    id: solution
+
+# Of note, the below are unused because maxVolume hasn't been moved from the solution prototype to the Component itself.
+# These exist as a reference for other solutions to use for sizing until that change has been made.
+
+- type: entity
+  parent: Solution
+  id: SolutionTiny
+  components:
+  - type: Solution
+    solution:
+      maxVol: 30
+
+- type: entity
+  parent: Solution
+  id: SolutionSmall
+  components:
+  - type: Solution
+    solution:
+      maxVol: 60
+
+- type: entity
+  parent: SolutionSmall
+  id: SolutionDrinkSmall
+  components:
+  - type: Solution
+    id: drink
+
+- type: entity
+  parent: Solution
+  id: SolutionNormal
+  components:
+  - type: Solution
+    solution:
+      maxVol: 120
+
+- type: entity
+  parent: Solution
+  id: SolutionLarge
+  components:
+  - type: Solution
+    solution:
+      maxVol: 240
+
+- type: entity
+  parent: Solution
+  id: SolutionHuge
+  components:
+  - type: Solution
+    solution:
+      maxVol: 480
+
+- type: entity
+  parent: Solution
+  id: SolutionGinormous
+  components:
+  - type: Solution
+    solution:
+      maxVol: 960
+
+- type: entity
+  parent: Solution
+  id: SolutionWaow
+  components:
+  - type: Solution
+    solution:
+      maxVol: 1920
