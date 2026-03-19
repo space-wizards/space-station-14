@@ -322,6 +322,9 @@
     maxItemSize: Ginormous
     grid:
     - 0,0,15,7
+    blacklist:
+      tags:
+        - Backpack
 - type: entity
   parent: ClothingBackpackClown
   id: ClothingBackpackCluwne
