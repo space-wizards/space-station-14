@@ -6,6 +6,7 @@ using Content.Shared.Whitelist;
 using Content.Shared.Materials;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameObjects;
+using Content.Server.Spawners.Components;
 
 
 
@@ -56,18 +57,19 @@ public sealed class ReclaimerLoopTest : InteractionTest
         {
             foreach (string itemID in GameDataScrounger.EntitiesWithComponent("PhysicalComposition"))
             {
-                //Wish there was a cleaner way to do this. spawners mess the system up something fierce
-                if (itemID.Contains("Spawner"))
+                //spawners mess the system up something fierce
+                if (HasComp<EntityTableSpawnerComponent>())
                     continue;
 
                 EntityPrototype item = ProtoMan.Index(itemID);
                 var currentScrap = await Spawn(itemID);
                 var currentScrapUid = SEntMan.GetEntity(currentScrap);
                 var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
-                //If it's on the whitelist for the reclaimer, and not on its blacklist. also checks if the reclaimer
+
+                //If it's on the whitelist for the reclaimer, and not on its blacklist.
                 if (entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
                 {
-                    //for each material they spawn
+                    //for each material it produces, add it to the HashSet
                     foreach ((var mat, var value) in currentScrapCompositionComp.MaterialComposition)
                     {
                         ProtoId<MaterialPrototype> matAsProto = ProtoMan.Index<MaterialPrototype>(mat);
