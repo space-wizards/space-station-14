@@ -7,6 +7,7 @@ using Content.Shared.Materials;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameObjects;
 using Content.Server.Spawners.Components;
+using Content.Shared.Sprite;
 
 
 
@@ -55,13 +56,12 @@ public sealed class ReclaimerLoopTest : InteractionTest
         HashSet<string> produceableMaterials = new HashSet<string>(); //If reclaimMaterials is false, this will stay empty
         if (reclaimsMaterials)
         {
-            foreach (string itemID in GameDataScrounger.EntitiesWithComponent("PhysicalComposition"))
+            var itemsWithPhysicalComposition = GameDataScrounger.EntitiesWithComponent("PhysicalComposition");
+            foreach (string itemID in itemsWithPhysicalComposition)
             {
-                //spawners mess the system up something fierce
-                if (HasComp<EntityTableSpawnerComponent>())
-                    continue;
-
                 EntityPrototype item = ProtoMan.Index(itemID);
+                if (item.Components.ContainsKey("RandomSprite")) //spawners and random items mess things up quicklyEntityTableSpawner
+                    continue;
                 var currentScrap = await Spawn(itemID);
                 var currentScrapUid = SEntMan.GetEntity(currentScrap);
                 var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
