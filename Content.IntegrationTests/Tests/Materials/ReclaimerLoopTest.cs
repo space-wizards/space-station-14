@@ -92,7 +92,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
         Assert.That(reclaimComp.Enabled,
             "The reclaimer did not get or stay enabled");
 
-        // //put a floor tile down
+        //put a floor tile down
         await InteractUsing(FloorTileID);
 
         //For each produceable Material, assert that it is not recyclable (and would thus cause a recycling loop)
