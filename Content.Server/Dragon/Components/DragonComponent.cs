@@ -80,6 +80,9 @@ namespace Content.Server.Dragon
         [DataField]
         public TimeSpan RiftTimerThresholdCheckInterval = TimeSpan.FromSeconds(3f);
 
+        /// <summary>
+        /// The time threshold for changing the alert icon color
+        /// </summary>
         [DataField]
         public Dictionary<RiftTimerThreshold, float> RiftTimerThresholds = new()
         {
@@ -89,6 +92,9 @@ namespace Content.Server.Dragon
         };
     }
 
+    /// <summary>
+    /// The different color thresholds for the rift timer alert
+    /// </summary>
     public enum RiftTimerThreshold : byte
     {
         Blue = 1 << 1,
