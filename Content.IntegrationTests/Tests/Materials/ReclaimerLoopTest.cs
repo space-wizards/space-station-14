@@ -83,12 +83,16 @@ public sealed class ReclaimerLoopTest : InteractionTest
         // Power the reclaimer
         await SpawnEntity(APCPid, SEntMan.GetCoordinates(TargetCoords));
         await RunTicks(1);
-
         //Set reclaimer to enabled
-        materialReclaimerSystem.SetReclaimerEnabled((EntityUid)STarget, true);
+        await Server.WaitPost(() =>
+        {
+            materialReclaimerSystem.SetReclaimerEnabled((EntityUid)STarget, true);
+        });
+
         //Assert that reclaimer enabled
         Assert.That(reclaimComp.Enabled,
         "The reclaimer did not get or stay enabled");
+
 
         // //put a floor tile down
         await InteractUsing(FloorTileID);
