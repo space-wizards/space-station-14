@@ -3,13 +3,18 @@ using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
+using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Overlays;
 using Content.Shared.Radio.Components;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Laws;
@@ -19,6 +24,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Silicons.Laws;
@@ -33,6 +39,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IonLawSystem _ionLaw = default!;
 
     private static readonly ProtoId<SiliconLawsetPrototype> DefaultCrewLawset = "Crewsimov";
 
@@ -48,10 +57,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawBoundComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
-        SubscribeLocalEvent<SiliconLawProviderComponent, IonStormLawsEvent>(OnIonStormLaws);
         SubscribeLocalEvent<SiliconLawProviderComponent, MindAddedMessage>(OnLawProviderMindAdded);
         SubscribeLocalEvent<SiliconLawProviderComponent, MindRemovedMessage>(OnLawProviderMindRemoved);
         SubscribeLocalEvent<SiliconLawProviderComponent, SiliconEmaggedEvent>(OnEmagLawsAdded);
+
+        SubscribeLocalEvent<IonStormSiliconLawComponent, IonStormEvent>(OnIonStormEvent);
     }
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
@@ -129,26 +139,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         args.Laws = component.Lawset;
 
         args.Handled = true;
-    }
-
-    private void OnIonStormLaws(EntityUid uid, SiliconLawProviderComponent component, ref IonStormLawsEvent args)
-    {
-        // Emagged borgs are immune to ion storm
-        if (!_emag.CheckFlag(uid, EmagType.Interaction))
-        {
-            component.Lawset = args.Lawset;
-
-            // gotta tell player to check their laws
-            NotifyLawsChanged(uid, component.LawUploadSound);
-
-            // Show the silicon has been subverted.
-            component.Subverted = true;
-
-            // new laws may allow antagonist behaviour so make it clear for admins
-            if(_mind.TryGetMind(uid, out var mindId, out _))
-                EnsureSubvertedSiliconRole(mindId);
-
-        }
     }
 
     private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref SiliconEmaggedEvent args)
@@ -312,6 +302,124 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
                 Dirty(update, crewIconComp);
             }
             SetLaws(lawset.Laws, update, provider.LawUploadSound);
+        }
+    }
+
+    private void OnIonStormEvent(EntityUid uid, IonStormSiliconLawComponent component, ref IonStormEvent args)
+    {
+        if (!TryComp<SiliconLawBoundComponent>(uid, out var lawBound))
+            return;
+
+        if (!TryComp<IonStormSiliconLawComponent>(uid, out var target))
+            return;
+
+        var laws = GetLaws(uid, lawBound);
+        if (laws.Laws.Count == 0)
+            return;
+
+        // try to swap it out with a random lawset
+        if (_robustRandom.Prob(target.RandomLawsetChance))
+        {
+            var lawsets = _prototype.Index<WeightedRandomPrototype>(target.IonRandomLawsets);
+            var lawset = lawsets.Pick(_robustRandom);
+            laws = GetLawset(lawset);
+        }
+        // clone it so not modifying stations lawset
+        laws = laws.Clone();
+
+        // shuffle them all
+        if (_robustRandom.Prob(target.ShuffleChance))
+        {
+            // hopefully work with existing glitched laws if there are multiple ion storms
+            var baseOrder = FixedPoint2.New(1);
+            foreach (var law in laws.Laws)
+            {
+                if (law.Order < baseOrder)
+                    baseOrder = law.Order;
+            }
+
+            _robustRandom.Shuffle(laws.Laws);
+
+            // change order based on shuffled position
+            for (int i = 0; i < laws.Laws.Count; i++)
+            {
+                laws.Laws[i].Order = baseOrder + i;
+            }
+        }
+
+        // see if we can remove a random law
+        if (laws.Laws.Count > 0 && _robustRandom.Prob(target.RemoveChance))
+        {
+            var i = _robustRandom.Next(laws.Laws.Count);
+            laws.Laws.RemoveAt(i);
+        }
+
+        // generate a new law...
+        var newLaw = _ionLaw.GetIonLaw();
+
+        if (string.IsNullOrEmpty(newLaw))
+            return;
+
+        // see if the law we add will replace a random existing law or be a new glitched order one
+        if (laws.Laws.Count > 0 && _robustRandom.Prob(target.ReplaceChance))
+        {
+            var i = _robustRandom.Next(laws.Laws.Count);
+            laws.Laws[i] = new SiliconLaw()
+            {
+                LawString = newLaw,
+                Order = laws.Laws[i].Order
+            };
+        }
+        else
+        {
+            laws.Laws.Insert(0, new SiliconLaw
+            {
+                LawString = newLaw,
+                Order = -1,
+                LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10)))
+            });
+        }
+
+        // sets all unobfuscated laws' indentifier in order from highest to lowest priority
+        // This could technically override the Obfuscation from the code above, but it seems unlikely enough to basically never happen
+        int orderDeduction = -1;
+
+        for (int i = 0; i < laws.Laws.Count; i++)
+        {
+            var notNullIdentifier = laws.Laws[i].LawIdentifierOverride ?? (i - orderDeduction).ToString();
+
+            if (notNullIdentifier.Any(char.IsSymbol))
+            {
+                orderDeduction += 1;
+            }
+            else
+            {
+                laws.Laws[i].LawIdentifierOverride = (i - orderDeduction).ToString();
+            }
+        }
+
+        // adminlog is used to prevent adminlog spam.
+        if (args.Adminlog)
+            _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(uid):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
+
+        // laws unique to this silicon, dont use station laws anymore
+        var lawProvider = EnsureComp<SiliconLawProviderComponent>(uid);
+
+        // Emagged borgs are immune to ion storm
+        if (!_emag.CheckFlag(uid, EmagType.Interaction))
+        {
+            lawProvider.Lawset = laws;
+
+            // gotta tell player to check their laws
+            NotifyLawsChanged(uid, lawProvider.LawUploadSound);
+
+            // Show the silicon has been subverted.
+            lawProvider.Subverted = true;
+
+            // new laws may allow antagonist behaviour so make it clear for admins
+            if(_mind.TryGetMind(uid, out var mindId, out _))
+                EnsureSubvertedSiliconRole(mindId);
+
         }
     }
 }
