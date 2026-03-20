@@ -140,13 +140,9 @@ public sealed class TargetOutlineSystem : EntitySystem
             // Check the predicate
             var valid = Predicate?.Invoke(entity) ?? true;
 
-            // check the entity whitelist
-            if (valid && Whitelist != null)
-                valid = _whitelistSystem.IsWhitelistPass(Whitelist, entity);
-
-            // check the entity blacklist
-            if (valid && Blacklist != null)
-                valid = _whitelistSystem.IsWhitelistFailOrNull(Blacklist, entity);
+            // check whitelist and blacklist
+            if (valid)
+                valid = _whitelistSystem.CheckBoth(entity, Blacklist, Whitelist);
 
             // and check the cancellable event
             if (valid && ValidationEvent != null)
