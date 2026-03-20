@@ -1,4 +1,5 @@
 - type: entity
+  parent: BaseWallmountMetallic
   id: WeaponEnergyTurretControlPanelFrame
   name: sentry turret control panel assembly
   description: An incomplete wall-mounted assembly for a sentry turret control panel.
@@ -10,9 +11,6 @@
     sprite: Structures/Wallmounts/turret_controls.rsi
     layers:
     - state: base
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -28,11 +26,6 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Transform
-    anchored: true
-  - type: WallMount
-  - type: Clickable
-  - type: InteractionOutline
   - type: ContainerContainer
     containers:
       board: !type:Container
@@ -41,10 +34,6 @@
     node: frame
     containers:
     - board
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
 
 - type: entity
   abstract: true

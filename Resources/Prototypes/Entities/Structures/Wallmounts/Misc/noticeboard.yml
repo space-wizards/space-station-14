@@ -5,7 +5,6 @@
   description: Is there a job for a witcher?
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/noticeboard.rsi
     layers:
       - state: noticeboard
