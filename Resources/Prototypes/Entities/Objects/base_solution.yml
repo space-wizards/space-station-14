@@ -150,6 +150,10 @@
       maxVol: 15
 
 - type: entity
+  parent: [SolutionDrink, SolutionVeryTiny]
+  id: SolutionDrinkVeryTiny
+
+- type: entity
   parent: [SolutionFood, SolutionVeryTiny]
   id: SolutionFoodVeryTiny
 
@@ -182,6 +186,10 @@
   - type: Solution
     solution:
       maxVol: 30
+
+- type: entity
+  parent: [SolutionDrink, SolutionTiny]
+  id: SolutionDrinkTiny
 
 - type: entity
   parent: [SolutionFood, SolutionTiny]

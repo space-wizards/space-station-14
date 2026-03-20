@@ -35,10 +35,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     inHandsMaxFillLevels: 4
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 30
+    - SolutionDrinkTiny
   - type: SolutionTransfer
     maxTransferAmount: 30
   - type: StaticPrice
@@ -81,10 +80,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     inHandsMaxFillLevels: 4
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 10
+    - SolutionDrinkVeryTiny
   - type: SolutionTransfer
     maxTransferAmount: 10
   - type: StaticPrice
@@ -114,16 +112,22 @@
   components:
   - type: Label
     currentLabel: reagent-name-vestine
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Vestine
-          Quantity: 30
+    - SolutionVialVestine
   - type: Tag
     tags: &TagVial # Remove trash tag when we have a filled solution
     - CentrifugeCompatible
+
+- type: entity
+  parent: SolutionDrinkTiny
+  id: SolutionVialVestine
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Vestine
+        Quantity: 30
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -132,15 +136,21 @@
   components:
   - type: Label
     currentLabel: reagent-name-radium
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 10
-        reagents:
-          - ReagentId: Radium
-            Quantity: 5
+    - SolutionVialRadium
   - type: Tag
     tags: *TagVial
+
+- type: entity
+  parent: SolutionDrinkVeryTiny
+  id: SolutionVialRadium
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Radium
+        Quantity: 5
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -149,15 +159,21 @@
   components:
   - type: Label
     currentLabel: reagent-name-chlorine
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 10
-        reagents:
-          - ReagentId: Chlorine
-            Quantity: 5
+    - SolutionVialChlorine
   - type: Tag
     tags: *TagVial
+
+- type: entity
+  parent: SolutionDrinkVeryTiny
+  id: SolutionVialChlorine
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Chlorine
+        Quantity: 5
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -166,12 +182,18 @@
   components:
   - type: Label
     currentLabel: reagent-name-plasma
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 10
-        reagents:
-          - ReagentId: Plasma
-            Quantity: 10
+    - SolutionVialPlasma
   - type: Tag
     tags: *TagVial
+
+- type: entity
+  parent: SolutionDrinkVeryTiny
+  id: SolutionVialPlasma
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Plasma
+        Quantity: 15

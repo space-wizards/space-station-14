@@ -3,28 +3,27 @@
   parent: BaseItem
   id: BaseHandheldMixer
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      mixer:
-        maxVol: 10
+    - SolutionTiny
   - type: MixableSolution
-    solution: mixer
+    solution: solution
   - type: RefillableSolution
-    solution: mixer
+    solution: solution
   - type: DrainableSolution
-    solution: mixer
+    solution: solution
   - type: ExaminableSolution
-    solution: mixer
+    solution: solution
     exactVolume: true
   - type: DrawableSolution
-    solution: mixer
+    solution: solution
   - type: InjectableSolution
-    solution: mixer
+    solution: solution
   - type: Spillable
-    solution: mixer
+    solution: solution
   - type: SolutionTransfer
   - type: SolutionItemStatus
-    solution: mixer
+    solution: solution
   - type: Appearance
   - type: DnaSubstanceTrace
   - type: ReactionMixer
