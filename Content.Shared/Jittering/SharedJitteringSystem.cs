@@ -88,7 +88,7 @@ namespace Content.Shared.Jittering
         public void AddJitter(EntityUid uid, float amplitude = 10f, float frequency = 4f)
         {
             var jitter = EnsureComp<JitteringComponent>(uid);
-            jitter.Radius = amplitude; //todo
+            jitter.MaxRadius = amplitude; //todo
             jitter.Frequency = frequency;
             Dirty(uid, jitter);
         }

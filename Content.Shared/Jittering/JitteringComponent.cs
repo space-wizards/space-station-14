@@ -12,34 +12,53 @@ namespace Content.Shared.Jittering;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JitteringComponent : Component
 {
-    /// <remarks> Not recommended to make this larger than 300. </remarks>
-    // [DataField, AutoNetworkedField]
-    // public float Amplitude { get; set; }
-
-    /// <summary>
-    /// How far the sprite will travel from the entity's actual position.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float Radius = 0.25f;
-
     /// <summary>
     /// How many jitters will be preformed per second.
     /// </summary>
-    /// <remarks> Not recommended to make this larger than 10.</remarks>
     [DataField, AutoNetworkedField]
-    public float Frequency { get; set; }
+    public float Frequency = 3;
+
+    /// <summary>
+    /// Distance scalar.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float Amplitude = 1;
+
+    /// <summary>
+    /// The maximum distance the sprite will travel from the entity's actual position.
+    /// </summary>
+    [DataField]
+    public float MaxRadius = 0.25f;
+
+    /// <summary>
+    /// The minimum distance to travel from the origin.
+    /// </summary>
+    [DataField]
+    public float MinRadius;
+
+    /// <summary>
+    /// A linear transformation to apply to X.
+    /// </summary>
+    [DataField]
+    public Vector2 XSheer = Vector2.UnitX;
+
+    /// <summary>
+    /// A linear transformation to apply to Y.
+    /// </summary>
+    [DataField]
+    public Vector2 YSheer = Vector2.UnitY;
 
     /// <summary>
     /// The current position of the sprite.
     /// </summary>
-    [ViewVariables]
-    public Vector2 LastJitter { get; set; }
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Vector2 LastJitter;
 
     // todo I don't like this :o(
     /// <summary>
     /// The offset that an entity had before jittering started,
     /// so that we can reset it properly.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadOnly)]
     public Vector2 StartOffset = Vector2.Zero;
 }
