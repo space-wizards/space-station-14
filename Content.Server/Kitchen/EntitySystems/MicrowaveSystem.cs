@@ -181,7 +181,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
                     _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
 
-                if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
+                if (!TryComp<SolutionManagerComponent>(entity, out var solutions))
                     continue;
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
                 {

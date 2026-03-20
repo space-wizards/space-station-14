@@ -91,13 +91,9 @@
       right:
       - state: inhand-right-flame
         shader: unshaded
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 25
-        maxVol: 25
+    - SolutionToolWelderIndsutrial
   - type: SolutionTransfer
     transferAmount: 5
     canChangeTransferAmount: false
@@ -114,7 +110,7 @@
     heldOnly: true
     exactVolume: true
   - type: SolutionRegeneration
-    solution: Welder
+    solution: welder
     generated:
       reagents:
       - ReagentId: WeldingFuel

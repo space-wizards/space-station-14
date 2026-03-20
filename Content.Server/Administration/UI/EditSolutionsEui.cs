@@ -43,7 +43,7 @@ namespace Content.Server.Administration.UI
         {
             List<(string Name, NetEntity Solution)>? netSolutions;
 
-            if (_entityManager.TryGetComponent(Target, out SolutionContainerManagerComponent? container) && container.Solutions.Count > 0)
+            if (_entityManager.TryGetComponent(Target, out SolutionManagerComponent? container) && container.Solutions.Count > 0)
             {
                 netSolutions = new();
                 foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions((Target, container)))

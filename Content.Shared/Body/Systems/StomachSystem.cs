@@ -16,7 +16,7 @@ public sealed class StomachSystem : EntitySystem
         EntityUid uid,
         Solution solution,
         StomachComponent? stomach = null,
-        SolutionContainerManagerComponent? solutions = null)
+        SolutionManagerComponent? solutions = null)
     {
         return Resolve(uid, ref stomach, ref solutions, logMissing: false)
             && _solutionContainerSystem.ResolveSolution((uid, solutions), DefaultSolutionName, ref stomach.Solution, out var stomachSolution)
@@ -28,7 +28,7 @@ public sealed class StomachSystem : EntitySystem
         EntityUid uid,
         Solution solution,
         StomachComponent? stomach = null,
-        SolutionContainerManagerComponent? solutions = null)
+        SolutionManagerComponent? solutions = null)
     {
         if (!Resolve(uid, ref stomach, ref solutions, logMissing: false)
             || !_solutionContainerSystem.ResolveSolution((uid, solutions), DefaultSolutionName, ref stomach.Solution)

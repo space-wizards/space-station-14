@@ -20,10 +20,9 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      chamber:
-        maxVol: 50 #10 shots
+    - SolutionGunSmall # 12 shots
   - type: SolutionAmmoProvider
     solutionId: chamber
     proto: BulletWaterShot
@@ -86,10 +85,9 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      chamber:
-        maxVol: 100 #20 shots
+    - SolutionGunNormal # 24 shots
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     layers:
@@ -125,10 +123,9 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      chamber:
-        maxVol: 500 #100 shots
+    - SolutionGunLarge # 48 shots
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     layers:
@@ -140,8 +137,8 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     size: Large
-    shape: # SMG size.
-    - 0,0,2,1
+    shape: # Rifle Size.
+    - 0,0,2,2
   - type: RandomSprite
     getAllGroups: true
     available:

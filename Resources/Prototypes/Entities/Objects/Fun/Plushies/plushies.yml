@@ -39,17 +39,23 @@
     requiresSpecialDigestion: true
     useSound: *BasePlushieSound
     delay: 2
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
+    - SolutionFoodPlushSmall
   - type: Tag
     tags:
     - Payload
     - ClothMade
+
+- type: entity
+  parent: SolutionFoodSmall
+  id: SolutionFoodPlushSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 30
 
 - type: entity
   parent: BasePlushie
@@ -148,20 +154,10 @@
     size: Normal
     sprite: Objects/Fun/Plushies/bee.rsi
   - type: Extractable
-    grindableSolutionName: bee
-  - type: SolutionContainerManager
+    grindableSolutionName: food
+  - type: SolutionManager
     solutions:
-      bee:
-        reagents:
-        - ReagentId: GroundBee
-          Quantity: 10
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: GroundBee
-          Quantity: 5
-        - ReagentId: Fiber
-          Quantity: 5
+    - SolutionFoodPlushBeeSmall
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/bee.rsi
@@ -170,6 +166,16 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: BeePlushie
+
+- type: entity
+  parent: SolutionFoodPlushSmall
+  id: SolutionFoodPlushBeeSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: GroundBee
+        Quantity: 5
 
 - type: entity
   parent: BasePlushie
@@ -362,15 +368,9 @@
       reagents:
       - ReagentId: JuiceThatMakesYouWeh
         Quantity: 30
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
-        - ReagentId: JuiceThatMakesYouWeh
-          Quantity: 10
+    - SolutionFoodPlushWehSmall
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/lizard.rsi
@@ -386,6 +386,16 @@
     - Payload
     - ClothMade
     - PlushieLizard
+
+- type: entity
+  parent: SolutionFoodPlushSmall
+  id: SolutionFoodPlushWehSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 10
 
 - type: entity
   parent: BasePlushie
@@ -549,15 +559,9 @@
       reagents:
       - ReagentId: JuiceThatMakesYouHew
         Quantity: 30
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
-        - ReagentId: JuiceThatMakesYouHew
-          Quantity: 10
+    - SolutionFoodPlushHewSmall
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/lizard.rsi
@@ -568,10 +572,19 @@
     entries:
       CottonBurger: InversedLizardPlushie
 
+- type: entity
+  parent: SolutionFoodPlushSmall
+  id: SolutionFoodPlushHewSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouHew
+        Quantity: 10
 
 - type: entity
   parent: BasePlushie
-  id: PlushieDiona
+  id: PlushieDiona # TODO Better way of doing the flowering visuals. Probably make it an "AppearanceChangeEntityEffect" on reactive?
   name: diona plushie
   description: An adorable stuffed toy that resembles a diona. Love water and cuddles. Do not wet!
   components:
@@ -599,13 +612,6 @@
     soundHit: *PlushieDionaSound
   - type: Edible
     useSound: *PlushieDionaSound
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 11
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
   - type: RefillableSolution
     solution: food
   - type: SolutionContainerVisuals
@@ -621,7 +627,7 @@
       effects:
       - !type:AddReagentToSolution
         reagent: Water
-        solution: plushie
+        solution: food
   - type: Fixtures
     fixtures:
       fix1:

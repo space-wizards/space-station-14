@@ -33,7 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void CheckSolutions(Entity<TrashOnSolutionEmptyComponent> entity)
         {
-            if (!HasComp<SolutionContainerManagerComponent>(entity))
+            if (!HasComp<SolutionManagerComponent>(entity))
                 return;
 
             if (_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))

@@ -28,16 +28,9 @@
       - ExCable
     overTile: true
   - type: Appearance
-  - type: Extractable
-    grindableSolutionName: excable
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      mvcable:
-        reagents:
-        - ReagentId: Thermite
-          Quantity: 3
-        - ReagentId: Charcoal
-          Quantity: 2
+    - SolutionCompositeCableDet
   - type: Damageable
     damageContainer: StructuralInorganic
   - type: Destructible # should have the same general explosive behavior as in cables.yml & detonator.yml
@@ -75,6 +68,18 @@
       # - Window
       # - Wall
   # - type: StickyVisualizer
+
+- type: entity
+  parent: SolutionCompositeSmallStackable
+  id: SolutionCompositeCableDet
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Thermite
+        Quantity: 3
+      - ReagentId: Charcoal
+        Quantity: 2
 
 - type: entity
   parent: CableDetStack

@@ -124,13 +124,9 @@
   - type: HTN
     rootTask:
       task: FirebotCompound
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      spray:
-        maxVol: 10
-        reagents:
-        - ReagentId: Water
-          Quantity: 10
+    - SolutionFireExtinguisherMini
   - type: SolutionRegeneration
     solution: spray
     generated:
@@ -288,10 +284,9 @@
     preserve:
       - Water
     quantity: 10
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      absorbed:
-        maxVol: 50
+    - SolutionMopSmall
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3

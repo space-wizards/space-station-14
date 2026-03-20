@@ -16,6 +16,7 @@
     stackType: Cable
   - type: Sprite
     sprite: Objects/Tools/cable-coils.rsi
+  - type: Appearance
   - type: Item
     sprite: Objects/Tools/cable-coils.rsi
     size: Small
@@ -36,6 +37,8 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Extractable
+    grindableSolutionName: composite
   - type: Destructible
     thresholds:
     - trigger:
@@ -69,19 +72,23 @@
   - type: CablePlacer
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: hvcable
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      hvcable:
-        reagents:
-        - ReagentId: Iron
-          Quantity: 3
-        - ReagentId: Copper
-          Quantity: 2
-        - ReagentId: Carbon #steel-reinforced
-          Quantity: 1
+    - SolutionCompositeCableHV
+
+- type: entity
+  parent: SolutionCompositeSmallStackable
+  id: SolutionCompositeCableHV
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Iron
+        Quantity: 2.5
+      - ReagentId: Copper
+        Quantity: 2
+      - ReagentId: Carbon #steel-reinforced
+        Quantity: 0.5
 
 - type: entity
   parent: CableHVStack
@@ -123,21 +130,25 @@
     - state: coilmv-30
       map: ["base"]
   - type: Item
-    heldPrefix: coilmv
+    heldPrefix: composite
   - type: CablePlacer
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: mvcable
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      mvcable:
-        reagents:
-        - ReagentId: Iron
-          Quantity: 3
-        - ReagentId: Copper
-          Quantity: 2
+    - SolutionCompositeCable
+
+- type: entity
+  parent: SolutionCompositeSmallStackable
+  id: SolutionCompositeCable
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Iron
+        Quantity: 3
+      - ReagentId: Copper
+        Quantity: 2
 
 - type: entity
   parent: CableMVStack
@@ -182,17 +193,9 @@
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: lvcable
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      lvcable:
-        reagents:
-        - ReagentId: Iron
-          Quantity: 3
-        - ReagentId: Copper
-          Quantity: 2
+    - SolutionCompositeCable
 
 - type: entity
   parent: CableApcStack

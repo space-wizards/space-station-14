@@ -11,8 +11,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
-  - type: SolutionContainerManager
-  - type: SolutionFill
+  - type: SolutionManager
     solutions:
     - SolutionDrinkSmall
   - type: SolutionContainerVisuals

@@ -9,16 +9,17 @@
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,2,2
   - type: Clothing
     sprite: Objects/Tools/bucket.rsi
     slots:
     - HEAD
     quickEquip: false
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 250
+    - SolutionDrinkLarge
   - type: SolutionTransfer
     transferAmount: 100
     maxTransferAmount: 100
@@ -41,7 +42,6 @@
   name: internal tank
   description: The internal reservoir of a custodial cyborg, capable of holding a entire mop bucket worth of water.
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 500
+    - SolutionDrinkHuge

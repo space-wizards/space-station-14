@@ -136,7 +136,7 @@ public sealed partial class FoodHasReagent : FoodMetamorphRule
 
     public override bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients)
     {
-        if (!entMan.TryGetComponent<SolutionContainerManagerComponent>(food, out var solMan))
+        if (!entMan.TryGetComponent<SolutionManagerComponent>(food, out var solMan))
             return false;
 
         var solutionMan = entMan.System<SharedSolutionContainerSystem>();

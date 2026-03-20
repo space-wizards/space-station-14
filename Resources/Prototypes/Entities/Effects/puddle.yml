@@ -1,4 +1,5 @@
 # TODO: Fix - The idea is that blood and vomit is potentially not tile-bound versions of puddles(?)
+# TODO: Replace this whole thing with a SolutionFillComponent that uses a reagent table.
 - type: entity
   id: PuddleTemporary
   parent: Puddle
@@ -7,6 +8,18 @@
   - type: Transform
     anchored: true
     noRot: false
+  - type: SolutionManager
+    solutions:
+    - SolutionPuddle
+
+- type: entity
+  parent: Solution
+  id: SolutionPuddle
+  components:
+  - type: Solution
+    id: puddle
+    solution:
+      maxVol: 1000 # Puddles really shouldn't have a max volume, but if I set it to 0 they will break atm. This will be removed at a later date.
 
 - type: entity
   id: PuddleSmear
@@ -18,117 +31,170 @@
   parent: PuddleTemporary
   suffix: Vomit
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Vomit
-          Quantity: 10
+    - SolutionPuddleVomit
+
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleVomit
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Vomit
+        Quantity: 10
 
 - type: entity
   id: PuddleEgg
   parent: PuddleTemporary
   suffix: Egg
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Egg
-          Quantity: 6 # same as when cooking
+    - SolutionPuddleEgg
+
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleEgg
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Egg
+        Quantity: 6 # same as when cooking
 
 - type: entity
   id: PuddleTomato
   parent: PuddleTemporary
   suffix: Tomato
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 10
+    - SolutionPuddleJuiceTomato
+
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleJuiceTomato
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceTomato
+        Quantity: 10
 
 - type: entity
   parent: PuddleTemporary
   id: PuddleBloodSmall
   suffix: Blood (5u)
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Blood
-          Quantity: 5
+    - SolutionPuddleBloodSmall
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleBloodSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 5
 
 - type: entity
   parent: PuddleTemporary
   id: PuddleBlood
   suffix: Blood (30u)
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Blood
-          Quantity: 30
+    - SolutionPuddleBlood
+
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleBlood
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 30
 
 - type: entity
   parent: PuddleTemporary
   id: PuddleFluorosulfuricAcidSmall
   suffix: FluorosulfuricAcid (5u)
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: FluorosulfuricAcid
-          Quantity: 5
+    - SolutionPuddleFluorosulfuricAcidSmall
+
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleFluorosulfuricAcidSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: FluorosulfuricAcid
+        Quantity: 5
 
 - type: entity
   parent: PuddleTemporary
   id: PuddleFluorosulfuricAcid
   suffix: FluorosulfuricAcid (15u)
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: FluorosulfuricAcid
-          Quantity: 15
+    - SolutionPuddleFluorosulfuricAcid
+
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleFluorosulfuricAcid
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: FluorosulfuricAcid
+        Quantity: 15
 
 - type: entity
   id: PuddleWatermelon
   parent: PuddleTemporary
   suffix: Watermelon
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: JuiceWatermelon
-          Quantity: 30
+    - SolutionPuddleJuiceWatermelon
+
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleJuiceWatermelon
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceWatermelon
+        Quantity: 30
 
 - type: entity
   id: PuddleFlour
   parent: PuddleTemporary
   suffix: Flour
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Flour
-          Quantity: 15
+    - SolutionPuddleFlour
+
+- type: entity
+  parent: SolutionPuddle
+  id: SolutionPuddleFlour
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Flour
+        Quantity: 15
 
 - type: entity
   id: PuddleSparkle
@@ -189,10 +255,9 @@
     - walls
     base: splat
     mode: CardinalFlags
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      puddle:
-        maxVol: 1000
+    - SolutionPuddle
   - type: Puddle
   - type: MixableSolution
     solution: puddle

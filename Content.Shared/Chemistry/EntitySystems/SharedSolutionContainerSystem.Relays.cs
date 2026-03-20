@@ -126,7 +126,7 @@ public abstract partial class SharedSolutionContainerSystem
         @event = relayEvent.Event;
     }
 
-    private void RelaySolutionContainerEvent<TEvent>(EntityUid uid, SolutionContainerManagerComponent comp, TEvent @event)
+    private void RelaySolutionContainerEvent<TEvent>(EntityUid uid, SolutionManagerComponent comp, TEvent @event)
     {
         foreach (var (name, soln) in EnumerateSolutions((uid, comp)))
         {
@@ -135,7 +135,7 @@ public abstract partial class SharedSolutionContainerSystem
         }
     }
 
-    private void RelaySolutionContainerEvent<TEvent>(Entity<SolutionContainerManagerComponent> entity, ref TEvent @event)
+    private void RelaySolutionContainerEvent<TEvent>(Entity<SolutionManagerComponent> entity, ref TEvent @event)
     {
         foreach (var (name, soln) in EnumerateSolutions((entity.Owner, entity.Comp)))
         {

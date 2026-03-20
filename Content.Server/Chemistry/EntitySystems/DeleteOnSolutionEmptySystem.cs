@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
 
         public void CheckSolutions(Entity<DeleteOnSolutionEmptyComponent> entity)
         {
-            if (!TryComp(entity, out SolutionContainerManagerComponent? solutions))
+            if (!TryComp(entity, out SolutionManagerComponent? solutions))
                 return;
 
             if (_solutionContainerSystem.TryGetSolution((entity.Owner, solutions), entity.Comp.Solution, out _, out var solution))

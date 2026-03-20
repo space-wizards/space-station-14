@@ -77,14 +77,10 @@
     soundHit:
       collection: MetalThud
   - type: RefillableSolution
-    solution: Welder
-  - type: SolutionContainerManager
+    solution: welder
+  - type: SolutionManager
     solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 100
-        maxVol: 100
+    - SolutionToolWelder
   - type: Tool
     useSound:
       collection: Welder
@@ -107,6 +103,17 @@
     temperature: 700
 
 - type: entity
+  parent: SolutionWelderSmall
+  id: SolutionToolWelder
+  components:
+  - type: Solution
+    solution:
+      maxVol: 100 # TODO: This needs to be dropped to 30
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 100
+
+- type: entity
   name: industrial welding tool
   parent: Welder
   id: WelderIndustrial
@@ -116,13 +123,20 @@
     sprite: Objects/Tools/welder_industrial.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrial.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 250
-        maxVol: 250
+    - SolutionToolWelderIndsutrial
+
+- type: entity
+  parent: SolutionWelderNormal
+  id: SolutionToolWelderIndsutrial
+  components:
+  - type: Solution
+    solution:
+      maxVol: 250 # TODO: This needs to be dropped to 60
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 250
 
 - type: entity
   name: advanced industrial welding tool
@@ -134,13 +148,9 @@
     sprite: Objects/Tools/welder_industrialadv.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrialadv.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 250
-        maxVol: 250
+    - SolutionToolWelderIndsutrial
   - type: Tool
     speedModifier: 1.3
 
@@ -154,25 +164,31 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 1000
-        maxVol: 1000
+    - SolutionToolWelderExperimental
   - type: PointLight
     enabled: false
     radius: 1.5
     color: lightblue
   - type: SolutionRegeneration
-    solution: Welder
+    solution: welder
     generated:
       reagents:
       - ReagentId: WeldingFuel
         Quantity: 1
   - type: RequiresEyeProtection
     statusEffectTime: 5 # less harmful; sunglasses can block it
+
+- type: entity
+  parent: SolutionWelderGinormous # Bluespace technology
+  id: SolutionToolWelderExperimental
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 480 # Literally infinite so this number basically doesn't matter, also this should be a battery tbqh.
 
 - type: entity
   name: emergency welding tool
@@ -187,19 +203,36 @@
     sprite: Objects/Tools/welder_mini.rsi
   - type: RefillableSolution
     solution: Welder
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 50
-        maxVol: 50
+    - SolutionToolWelderMiniEmergency
   - type: Tool
     speedModifier: 0.7
   - type: PointLight
     enabled: false
     radius: 1.0
     color: orange
+
+- type: entity
+  parent: SolutionWelderTiny
+  id: SolutionToolWelderMiniEmergency # TODO, replace with below :(
+  components:
+  - type: Solution
+    solution:
+      maxVol: 50 # TODO: This needs to be dropped to 15
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 50
+
+- type: entity
+  parent: SolutionWelderTiny
+  id: SolutionToolWelderMini
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 15
 
 - type: entity
   parent: [ Welder, BaseXenoborgContraband ]
@@ -213,7 +246,7 @@
     fuelConsumption: 2
     fuelLitCost: 1
   - type: SolutionRegeneration
-    solution: Welder
+    solution: welder
     generated:
       reagents:
       - ReagentId: WeldingFuel

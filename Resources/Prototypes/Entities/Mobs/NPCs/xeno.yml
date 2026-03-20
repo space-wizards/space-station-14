@@ -403,12 +403,9 @@
     damage:
       types:
         Piercing: 5
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      melee:
-        reagents:
-        - ReagentId: Toxin
-          Quantity: 50
+    - SolutionVenomPurpleSnake
   - type: MeleeChemicalInjector
     solution: melee
   - type: Fixtures
@@ -429,6 +426,16 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+
+- type: entity
+  parent: SolutionVenom
+  id: SolutionVenomPurpleSnake
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 30
 
 - type: entity
   name: space adder
@@ -565,15 +572,23 @@
   - type: Tag
     tags:
     - CannotSuicide
-  - type: SolutionContainerManager # Being hit speeds you up so you can escape
+  - type: SolutionManager # Being hit speeds you up so you can escape
     solutions:
-      bite:
-        reagents:
-        - ReagentId: Stimulants
-          Quantity: 50
-        - ReagentId: TranexamicAcid
-          Quantity: 50
+    - SolutionVenomDale
   - type: MeleeChemicalInjector
     transferAmount: 1
-    solution: bite
+    solution: melee
     pierceArmor: true
+
+- type: entity
+  parent: SolutionVenom
+  id: SolutionVenomDale
+  components:
+  - type: Solution
+    solution:
+      maxVol: 100
+      reagents:
+      - ReagentId: Stimulants
+        Quantity: 50
+      - ReagentId: TranexamicAcid
+        Quantity: 50

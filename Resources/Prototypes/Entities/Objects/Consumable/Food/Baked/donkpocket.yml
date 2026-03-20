@@ -42,6 +42,18 @@
     state: plain
 
 - type: entity
+  parent: SolutionFoodTiny
+  id: SolutionFoodDonkpocketWarm
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 11
+      - ReagentId: Omnizine
+        Quantity: 4 # Halve this again when eating reagents isn't half as effective :tm:
+
+- type: entity
   name: warm donk-pocket
   parent: FoodDonkpocket
   id: FoodDonkpocketWarm
@@ -54,13 +66,7 @@
       - cheap
   - type: SolutionContainerManager
     solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Omnizine
-          Quantity: 2
+    - SolutionFoodDonkpocketWarm
 
 - type: entity
   name: dank-pocket

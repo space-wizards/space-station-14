@@ -134,13 +134,9 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      magic9ball:
-        maxVol: 20
-        reagents:
-        - ReagentId: Ethanol
-          Quantity: 20
+    - SolutionMagic9Ball
   - type: Damageable
     damageContainer: Inorganic
   - type: DamageOnLand
@@ -168,9 +164,19 @@
           params:
             volume: -4
       - !type:SpillBehavior
-        solution: magic9ball
+        solution: solution
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
+
+- type: entity
+  parent: SolutionTiny
+  id: SolutionMagic9Ball
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ethanol
+        Quantity: 30

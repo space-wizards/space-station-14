@@ -95,15 +95,22 @@
     - type: FlavorProfile
       flavors:
       - fiber
-    - type: SolutionContainerManager
+    - type: SolutionManager
       solutions:
-        food:
-          reagents:
-          - ReagentId: Nutriment
-            Quantity: 0.1
+      - SolutionFoodKudzu
     - type: Tag
       tags:
       - Ruminant
+
+- type: entity
+  parent: SolutionFood
+  id: SolutionFoodKudzu
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 0.1
 
 - type: entity
   id: WeakKudzu
@@ -252,14 +259,9 @@
       ignoreWhitelist:
         tags:
         - Flesh
-    - type: SolutionContainerManager
+    - type: SolutionManager
       solutions:
-        food:
-          reagents:
-          - ReagentId: Razorium
-            Quantity: 2
-          - ReagentId: Protein
-            Quantity: 1
+      - SolutionFoodMeatKudzu
     - type: AutoEmote # Meat Kudzu used to have respirator, but couldn't breathe so all it would do is gasp.
       emotes:
       - MeatGasp
@@ -267,6 +269,19 @@
       tags:
       - Meat
       - Ruminant
+
+- type: entity
+  parent: SolutionFood
+  id: SolutionFoodMeatKudzu
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Razorium
+        Quantity: 2
+      - ReagentId: Protein
+        Quantity: 1
+
 
 - type: entity
   name: dark haze

@@ -14,7 +14,7 @@
       task: SimpleHostileCompound #todo custom argocyte AI
   - type: Sprite
     sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
   - type: ReplacementAccent
     accent: xeno
   - type: Bloodstream

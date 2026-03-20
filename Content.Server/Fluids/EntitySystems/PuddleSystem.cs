@@ -295,7 +295,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         bool sound = true,
         bool checkForOverflow = true,
         PuddleComponent? puddleComponent = null,
-        SolutionContainerManagerComponent? sol = null)
+        SolutionManagerComponent? sol = null)
     {
         if (!Resolve(puddleUid, ref puddleComponent, ref sol))
             return false;

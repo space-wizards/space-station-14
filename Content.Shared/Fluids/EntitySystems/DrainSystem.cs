@@ -130,7 +130,7 @@ public sealed class DrainSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DrainComponent, SolutionContainerManagerComponent>();
+        var query = EntityQueryEnumerator<DrainComponent, SolutionManagerComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var drain, out var manager))
         {
@@ -202,7 +202,7 @@ public sealed class DrainSystem : EntitySystem
     private void OnExamined(Entity<DrainComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange ||
-            !HasComp<SolutionContainerManagerComponent>(ent) ||
+            !HasComp<SolutionManagerComponent>(ent) ||
             !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
         {
             return;

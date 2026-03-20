@@ -41,14 +41,21 @@
     flavors:
     - chewy
     - bitter
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: MindbreakerToxin
-          Quantity: 2
+    - SolutionFoodCrayon
+
+- type: entity
+  parent: SolutionFoodVeryTiny
+  id: SolutionFoodCrayon # mmm grayons...
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: MindbreakerToxin
+        Quantity: 10
 
 # special crayons
 

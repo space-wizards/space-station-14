@@ -34,14 +34,14 @@ public sealed class MetabolizerSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     private EntityQuery<OrganComponent> _organQuery;
-    private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
+    private EntityQuery<SolutionManagerComponent> _solutionQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _organQuery = GetEntityQuery<OrganComponent>();
-        _solutionQuery = GetEntityQuery<SolutionContainerManagerComponent>();
+        _solutionQuery = GetEntityQuery<SolutionManagerComponent>();
 
         SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MetabolizerComponent, BodyRelayedEvent<ApplyMetabolicMultiplierEvent>>(OnApplyMetabolicMultiplier);
@@ -95,7 +95,7 @@ public sealed class MetabolizerSystem : EntitySystem
     }
 
     private bool LookupSolution(
-        Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent,
+        Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent,
         MetabolismSolutionEntry solutionData,
         bool lookupTransfer,
         [NotNullWhen(true)] out Solution? solution,
@@ -135,7 +135,7 @@ public sealed class MetabolizerSystem : EntitySystem
         return false;
     }
 
-    private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage)
+    private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage)
     {
         if (!ent.Comp1.Solutions.TryGetValue(stage, out var solutionData))
             return;
@@ -268,7 +268,7 @@ public sealed class MetabolizerSystem : EntitySystem
         }
     }
 
-    private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent)
+    private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent)
     {
         _organQuery.Resolve(ent, ref ent.Comp2, logMissing: false);
 

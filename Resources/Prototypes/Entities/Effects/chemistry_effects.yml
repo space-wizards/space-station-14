@@ -25,12 +25,21 @@
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader
     id: Smoke
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      solutionArea:
-        maxVol: 600
-        canReact: false
-
+    - SolutionFoam
+        
+- type: entity
+  parent: Solution
+  id: SolutionFoam
+  components:
+  - type: Solution
+    id: solutionArea
+    solution:
+    #  maxVol: 600 TODO Test to see if it breaks with no max vol, otherwise set max vol and leave a comment
+      canReact: false
+    
+ 
 - type: entity
   parent: BaseFoam
   id: Smoke

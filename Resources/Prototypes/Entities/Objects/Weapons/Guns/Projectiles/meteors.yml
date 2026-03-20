@@ -199,13 +199,9 @@
   components:
   - type: Sprite
     state: human_pixel
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      blood:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Blood
-          Quantity: 1000
+    - SolutionMeteorUrist
   - type: Explosive
     totalIntensity: 25
   - type: Destructible
@@ -222,13 +218,23 @@
           params:
             volume: 10
       - !type:SpillBehavior
-        solution: blood
+        solution: solution
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeatHuman:
             min: 1
             max: 2
       - !type:ExplodeBehavior
+
+- type: entity
+  parent: SolutionHuge
+  id: SolutionMeteorUrist
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 480
 
 # Cow Meteor
 - type: entity
@@ -242,13 +248,9 @@
     state: cow_pixel
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      milk:
-        maxVol: 500
-        reagents:
-        - ReagentId: Milk
-          Quantity: 500
+    - SolutionMeteorCow
   - type: Destructible
     thresholds:
     - trigger:
@@ -261,7 +263,7 @@
         sound:
           path: /Audio/Animals/cow_moo.ogg
       - !type:SpillBehavior
-        solution: milk
+        solution: solution
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeat:
@@ -271,6 +273,16 @@
             min: 1
             max: 2
       - !type:ExplodeBehavior
+
+- type: entity
+  parent: SolutionHuge
+  id: SolutionMeteorCow
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Milk
+        Quantity: 480
 
 # Clown Meteor
 - type: entity
@@ -284,13 +296,9 @@
     state: clown_pixel
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      laughter:
-        maxVol: 500
-        reagents:
-        - ReagentId: Laughter
-          Quantity: 500
+    - SolutionMeteorClown
   - type: Destructible
     thresholds:
     - trigger:
@@ -303,7 +311,7 @@
         sound:
           path: /Audio/Items/bikehorn.ogg
       - !type:SpillBehavior
-        solution: laughter
+        solution: solution
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeatClown:
@@ -317,6 +325,16 @@
             max: 1
       - !type:ExplodeBehavior
 
+- type: entity
+  parent: SolutionHuge
+  id: SolutionMeteorClown
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Laughter
+        Quantity: 480
+
 # Potato Meteor
 - type: entity
   parent: BaseMeteor
@@ -328,13 +346,9 @@
     state: potato
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      ketchup:
-        maxVol: 100
-        reagents:
-        - ReagentId: Ketchup
-          Quantity: 100
+    - SolutionMeteorPotato
   - type: Destructible
     thresholds:
     - trigger:
@@ -344,10 +358,20 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:SpillBehavior
-        solution: ketchup
+        solution: solution
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMealFries:
             min: 1
             max: 5
       - !type:ExplodeBehavior
+
+- type: entity
+  parent: SolutionNormal
+  id: SolutionMeteorPotato
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ketchup
+        Quantity: 120

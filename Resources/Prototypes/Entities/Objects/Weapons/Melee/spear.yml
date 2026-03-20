@@ -58,10 +58,9 @@
   - type: Construction
     graph: Spear
     node: spear
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      melee:
-        maxVol: 2
+    - SolutionDart
   - type: MeleeChemicalInjector
     solution: melee
   - type: RefillableSolution

@@ -9,10 +9,18 @@
       - Ruminant
       - Wheat
       - BananaPeel
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      stomach:
-        maxVol: 80
+    - SolutionStomachRuminant
+
+- type: entity
+  parent: Solution
+  id: SolutionStomachRuminant
+  components:
+  - type: Solution
+    id: stomach
+    solution:
+      maxVol: 80
 
 - type: entity
   id: BaseMobRuminant

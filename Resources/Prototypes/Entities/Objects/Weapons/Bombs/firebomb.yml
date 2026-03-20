@@ -96,15 +96,21 @@
     - state: base
       map: ["enum.OpenableVisuals.Layer"]
     - state: fuel
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 30
+    - SolutionFireBomb
   - type: Construction
     node: fuel
     defaultTarget: firebomb
   - type: Tag
     tags: []
+
+- type: entity
+  parent: SolutionDrinkSmall
+  id: SolutionFireBomb
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 60

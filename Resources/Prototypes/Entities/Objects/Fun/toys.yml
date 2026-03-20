@@ -76,15 +76,22 @@
     flavors:
     - plastic
   - type: Edible
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: Nothing
-          Quantity: 100
+    - SolutionFoodToySmall
   - type: Tag
     tags:
     - Banana
+
+- type: entity
+  parent: SolutionFoodSmall
+  id: SolutionFoodToySmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nothing
+        Quantity: 30
 
 - type: entity
   parent: DrinkBase
@@ -109,18 +116,24 @@
     consumptionUnit: 10
   - type: Item
     sprite: Objects/Fun/glue.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: SpaceGlue
-          Quantity: 100
+    - SolutionDrinkGlueSmall
   - type: Openable
     sound:
       collection: packetOpenSounds
   - type: TrashOnSolutionEmpty
     solution: drink
+
+- type: entity
+  parent: SolutionDrinkSmall
+  id: SolutionDrinkGlueSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceGlue
+        Quantity: 60
 
 - type: entity
   parent: DrinkBase
@@ -137,13 +150,9 @@
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: SpaceLube
-          Quantity: 100
+    - SolutionDrinkLubeSmall
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
@@ -153,6 +162,16 @@
   - type: Lube
   - type: TrashOnSolutionEmpty
     solution: drink
+
+- type: entity
+  parent: SolutionDrinkSmall
+  id: SolutionDrinkLubeSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 60
 
 - type: entity
   parent: [ BaseItem, MobCombat ]
@@ -205,13 +224,9 @@
     sprite: error.rsi
     state: error
   - type: Edible
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 26
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+    - SolutionFoodError
   - type: Slippery
     slipData:
       knockdownTime: 3
@@ -238,6 +253,18 @@
         density: 30
         mask:
         - ItemMask
+
+- type: entity
+  parent: Solution
+  id: SolutionFoodError
+  components:
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 26 # I'm assuming these values are some kind of reference so I'm leaving them as is
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
 
 - type: entity
   parent: BaseItem

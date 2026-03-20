@@ -131,16 +131,23 @@
   - type: CartridgeAmmo
     proto: PelletShotgunTranquilizer
   - type: ChemicalAmmo
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      ammo:
-        reagents:
-        - ReagentId: ChloralHydrate
-          Quantity: 7
+    - SolutionPelletShotgunTranquilizer
   - type: SolutionTransfer
     maxTransferAmount: 7
   - type: SpentAmmoVisuals
     state: "tranquilizer"
+
+- type: entity
+  parent: SolutionAmmoVeryTiny
+  id: SolutionPelletShotgunTranquilizer
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: ChloralHydrate
+        Quantity: 7.5
 
 - type: entity
   parent: [ BaseShellShotgun, BaseSecurityContraband ]

@@ -151,7 +151,7 @@ namespace Content.Server.Forensics
         public List<string> GetSolutionsDNA(EntityUid uid)
         {
             List<string> list = new();
-            if (TryComp<SolutionContainerManagerComponent>(uid, out var comp))
+            if (TryComp<SolutionManagerComponent>(uid, out var comp))
             {
                 foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, comp)))
                 {

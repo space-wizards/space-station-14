@@ -114,13 +114,9 @@
     tags:
     - Burnt
     - Trash
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 50
-        reagents:
-        - ReagentId: Ash
-          Quantity: 10
+    - SolutionFoodAsh
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
@@ -128,6 +124,16 @@
     solution: food
   - type: Extractable
     grindableSolutionName: food
+
+- type: entity
+  parent: SolutionFoodTiny
+  id: SolutionFoodAsh
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ash
+        Quantity: 15
 
 - type: entity
   parent: Ash
@@ -142,15 +148,19 @@
       tags:
         - Trash
         - Ectoplasm
-    - type: SolutionContainerManager
+    - type: SolutionManager
       solutions:
-        food:
-          maxVol: 50
-          reagents:
-            - ReagentId: Ash
-              Quantity: 25
-            - ReagentId: Necrosol
-              Quantity: 25
+      - SolutionFoodEctoplasm
     - type: GuideHelp
       guides:
       - MinorAntagonists
+
+- type: entity
+  parent: SolutionFoodAsh
+  id: SolutionFoodEctoplasm
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fresium
+        Quantity: 15

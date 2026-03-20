@@ -127,12 +127,9 @@
         Base: dead
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: GroundBee
-          Quantity: 1
+    - SolutionBee
   - type: Butcherable
     spawned:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
@@ -167,6 +164,17 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
+
+- type: entity
+  parent: Solution
+  id: SolutionBee
+  components:
+  - type: Solution
+    id: food
+    solution:
+      reagents:
+      - ReagentId: GroundBee
+        Quantity: 1
 
 - type: entity
   name: bee
@@ -413,12 +421,9 @@
     baseDecayRate: 0.25
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: Slime
-          Quantity: 5
+    - SolutionFoodRoach
   - type: Butcherable
     spawned:
     - id: FoodMeatSlime
@@ -454,6 +459,16 @@
     damage:
       types:
         Piercing: 0
+
+- type: entity
+  parent: SolutionFood
+  id: SolutionFoodRoach
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 5
 
 - type: entity
   name: glockroach
@@ -834,12 +849,9 @@
         Base: dead
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 1
+    - SolutionButterfly
   - type: Butcherable
     spawned:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
@@ -865,6 +877,17 @@
       - !type:GibBehavior
         recursive: false
   - type: ZombieImmune
+
+- type: entity
+  parent: Solution
+  id: SolutionButterfly
+  components:
+  - type: Solution
+    id: food
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 1
 
 - type: entity
   name: cow
@@ -909,13 +932,9 @@
         Base: dead
       Dead:
         Base: dead
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      udder:
-        maxVol: 250
-        reagents:
-        - ReagentId: Milk
-          Quantity: 30
+    - SolutionUdder
   - type: Udder
     reagentId: Milk
     quantityPerUpdate: 25
@@ -948,6 +967,18 @@
     guides:
     - Chef
     - FoodRecipes
+
+- type: entity
+  parent: Solution
+  id: SolutionUdder
+  components:
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 240
+      reagents:
+      - ReagentId: Milk
+        Quantity: 30
 
 - type: entity
   name: crab
@@ -1062,15 +1093,10 @@
         Base: dead
       Dead:
         Base: dead
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      udder:
-        maxVol: 250
-        reagents:
-        - ReagentId: MilkGoat
-          Quantity: 30
-      wool:
-        maxVol: 250
+    - SolutionUdderGoat
+    - SolutionWool
   - type: Udder
     reagentId: MilkGoat
     quantityPerUpdate: 25
@@ -1117,6 +1143,27 @@
   - type: HTN
     rootTask:
       task: RuminantHostileCompound
+
+- type: entity
+  parent: SolutionUdder
+  id: SolutionUdderGoat
+  components:
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 240
+      reagents:
+      - ReagentId: MilkGoat
+        Quantity: 30
+
+- type: entity
+  parent: Solution
+  id: SolutionWool
+  components:
+  - type: Solution
+    id: wool
+    solution:
+      maxVol: 240
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -1834,12 +1881,9 @@
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
+    - SolutionMouse
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -1907,6 +1951,17 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
+
+- type: entity
+  parent: Solution
+  id: SolutionMouse
+  components:
+  - type: Solution
+    id: food
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 5
 
 - type: entity
   parent: MobMouse
@@ -2025,14 +2080,9 @@
       reagents:
       - ReagentId: UnstableMutagen
         Quantity: 50
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
-        - ReagentId: Uranium
-          Quantity: 10
+    - SolutionMouseRadioactive
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -2042,6 +2092,16 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Zombie
+
+- type: entity
+  parent: SolutionMouse
+  id: SolutionMouseRadioactive
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 10
 
 - type: entity
   name: lizard #Weh
@@ -2526,10 +2586,9 @@
     thresholds:
       0: Alive
       90: Dead
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      melee:
-        maxVol: 30
+    - SolutionVenom
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -3513,16 +3572,9 @@
     baseDecayRate: 0.3
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Blood
-          Quantity: 55
-        - ReagentId: Fat
-          Quantity: 5
+    - SolutionHamster
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -3585,6 +3637,21 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
+
+- type: entity
+  parent: Solution
+  id: SolutionHamster
+  components:
+  - type: Solution
+    id: food
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Blood # TODO Instead of this, eat from the bloodstream directly
+        Quantity: 55
+      - ReagentId: Fat
+        Quantity: 5
 
 - type: entity
   name: pig

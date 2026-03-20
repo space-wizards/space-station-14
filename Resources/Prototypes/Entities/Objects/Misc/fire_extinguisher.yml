@@ -12,13 +12,9 @@
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: Normal
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      spray:
-        maxVol: 100
-        reagents:
-        - ReagentId: Water
-          Quantity: 100
+    - SolutionFireExtinguisher
   - type: RefillableSolution
     solution: spray
   - type: DrainableSolution
@@ -74,6 +70,16 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+      
+- type: entity
+  parent: SolutionSprayNormal
+  id: SolutionFireExtinguisher
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 120
 
 - type: entity
   parent: FireExtinguisher
@@ -81,13 +87,19 @@
   name: maneuvering jet
   description: Based on fire extinguisher technology, the maneuvering jet is... well yes, its just a bigger fire extinguisher.
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      spray:
-        maxVol: 200
-        reagents:
-        - ReagentId: Water
-          Quantity: 200
+    - SolutionFireExtinguisherLarge
+
+- type: entity
+  parent: SolutionSprayLarge
+  id: SolutionFireExtinguisherLarge
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 240
 
 - type: entity
   name: extinguisher spray
@@ -121,13 +133,9 @@
   - type: Item
     sprite: Objects/Misc/fire_extinguisher_mini.rsi
     size: Small
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      spray:
-        maxVol: 30
-        reagents:
-        - ReagentId: Water
-          Quantity: 30
+    - SolutionFireExtinguisherMini
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:
@@ -139,6 +147,16 @@
     materialComposition:
       Steel: 50
       Glass: 40
+      
+- type: entity
+  parent: SolutionSpraySmall
+  id: SolutionFireExtinguisherMini
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 60
 
 # used for a engi xenoborg module
 - type: entity

@@ -57,15 +57,9 @@
       reagents:
       - ReagentId: SpaceDrugs
         Quantity: 10
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 2
+    - SolutionFoodSpaceshroom
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillSpaceshroom
@@ -97,6 +91,18 @@
   - type: Tag
     tags:
     - Mushroom
+
+- type: entity
+  parent: SolutionFoodSmall
+  id: SolutionFoodSpaceshroom
+  components:
+  - type: Solution
+    solution:
+      reagents: # 20u out of 60u space, with 10-15 extra from solution random fill
+      - ReagentId: Nutriment
+        Quantity: 12
+      - ReagentId: Vitamin
+        Quantity: 8
 
 - type: weightedRandomFillSolution
   id: RandomFillSpaceshroom
@@ -132,15 +138,9 @@
   - type: FlavorProfile
     flavors:
       - spaceshroomcooked
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
+    - SolutionFoodSpaceshroomCooked
   - type: Sprite
     sprite: Objects/Misc/spaceshroom.rsi
     state: spaceshroom_cooked
@@ -150,3 +150,15 @@
   - type: Construction
     graph: CookedSpaceshroom
     node: cooked spaceshroom
+
+- type: entity
+  parent: SolutionFoodSmall
+  id: SolutionFoodSpaceshroomCooked
+  components:
+  - type: Solution
+    solution:
+      reagents: # Cooked means no drugs I guess? Lame!
+      - ReagentId: Nutriment
+        Quantity: 20
+      - ReagentId: Vitamin
+        Quantity: 10

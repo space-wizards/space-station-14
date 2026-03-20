@@ -71,10 +71,9 @@
   - type: MeleeRequiresWield
   - type: AltFireMelee
     attackType: Heavy
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      melee:
-        maxVol: 2
+    - SolutionDart
   - type: MeleeChemicalInjector
     solution: melee
   - type: RefillableSolution

@@ -17,15 +17,11 @@
     drawdepth: BelowFloor
     layers:
       - state: shoreline_water
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      pool:
-        maxVol: 9999999 #.inf seems to break the whole yaml file, but would definitely be preferable.
-        reagents:
-        - ReagentId: Water
-          Quantity: 9999999
+    - SolutionTileWater
   - type: SolutionRegeneration
-    solution: tank
+    solution: pool
     generated:
       reagents:
       - ReagentId: Water
@@ -63,3 +59,14 @@
   - type: TileEntityEffect
     effects:
     - !type:Extinguish
+
+- type: entity
+  parent: SolutionTile
+  id: SolutionTileWater
+  components:
+  - type: Solution
+    id: pool
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 7680 #

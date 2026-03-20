@@ -254,10 +254,9 @@
   id: OrganSlimePersonCore
   name: sentient slime core
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      stomach:
-        maxVol: 50.0
+    - SolutionStomach
   - type: Stomach
   - type: Metabolizer
     maxReagents: 6

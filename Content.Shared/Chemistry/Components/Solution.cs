@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.Components
     {
         // This is a list because it is actually faster to add and remove reagents from
         // a list than a dictionary, though contains-reagent checks are slightly slower,
-        [DataField("reagents")]
+        [DataField("reagents"), AlwaysPushInheritance]
         public List<ReagentQuantity> Contents;
 
         /// <summary>

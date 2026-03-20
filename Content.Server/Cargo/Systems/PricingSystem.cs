@@ -238,7 +238,7 @@ public sealed class PricingSystem : EntitySystem
         return price;
     }
 
-    private double GetSolutionsPrice(Entity<SolutionContainerManagerComponent?> entity)
+    private double GetSolutionsPrice(Entity<SolutionManagerComponent?> entity)
     {
         var price = 0.0;
         if (!Resolve(entity, ref entity.Comp))

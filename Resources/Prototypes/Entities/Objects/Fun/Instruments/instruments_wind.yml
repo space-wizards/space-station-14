@@ -24,13 +24,21 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/saxophone.rsi
   - type: Extractable
-    grindableSolutionName: sax
-  - type: SolutionContainerManager
+    grindableSolutionName: instrument
+  - type: SolutionManager
     solutions:
-      sax:
-        reagents:
-          - ReagentId: Saxoite
-            Quantity: 10
+    - SolutionBrassInstrument
+
+- type: entity
+  parent: Solution # Based on material balance and not container balance so no size parent.
+  id: SolutionBrassInstrument
+  components:
+  - type: Solution
+    id: instrument
+    solution:
+      reagents:
+      - ReagentId: Brass
+        Quantity: 10
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -49,7 +57,7 @@
     slots:
     - neck
   - type: ActivatableUI
-    inHandsOnly: false  
+    inHandsOnly: false
 
 - type: entity
   parent: BaseWoodwindInstrument

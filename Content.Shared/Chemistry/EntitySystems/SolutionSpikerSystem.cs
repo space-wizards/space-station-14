@@ -39,8 +39,8 @@ public sealed class SolutionSpikerSystem : EntitySystem
     /// <param name="user">User spiking the target solution.</param>
     private bool TrySpike(EntityUid source, EntityUid target, EntityUid user, RefillableSolutionComponent? spikableTarget = null,
         SolutionSpikerComponent? spikableSource = null,
-        SolutionContainerManagerComponent? managerSource = null,
-        SolutionContainerManagerComponent? managerTarget = null)
+        SolutionManagerComponent? managerSource = null,
+        SolutionManagerComponent? managerTarget = null)
     {
         if (!Resolve(source, ref spikableSource, ref managerSource, false)
             || !Resolve(target, ref spikableTarget, ref managerTarget, false)

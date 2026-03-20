@@ -243,12 +243,9 @@
       types:
         Piercing: 6
         Poison: 4
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      melee:
-        reagents:
-        - ReagentId: ChloralHydrate
-          Quantity: 80
+    - SolutionVenomSpiderSpace
   - type: MeleeChemicalInjector
     solution: melee
     transferAmount: 4
@@ -275,6 +272,16 @@
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
+
+- type: entity
+  parent: SolutionVenom
+  id: SolutionVenomSpiderSpace
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: ChloralHydrate
+        Quantity: 30
 
 - type: entity
   id: MobSpiderSpaceSalvage
@@ -349,12 +356,9 @@
         types:
           Piercing: 6
           Poison: 4
-    - type: SolutionContainerManager
+    - type: SolutionManager
       solutions:
-        melee:
-          reagents:
-          - ReagentId: NorepinephricAcid
-            Quantity: 90
+      - SolutionVenomCobraSpace
     - type: MeleeChemicalInjector
       solution: melee
       transferAmount: 6
@@ -374,6 +378,16 @@
     - type: StealthOnMove
       passiveVisibilityRate: -0.25
       movementVisibilityRate: 0.25
+
+- type: entity
+  parent: SolutionVenom
+  id: SolutionVenomCobraSpace
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: NorepinephricAcid
+        Quantity: 30
 
 - type: entity
   id: MobCobraSpaceSalvage
@@ -481,12 +495,9 @@
     baseDecayRate: 0.1
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
+    - SolutionMouse
   - type: Butcherable
     spawned:
     - id: FoodMeatSnail

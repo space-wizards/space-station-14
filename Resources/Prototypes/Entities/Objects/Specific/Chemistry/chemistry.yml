@@ -21,10 +21,9 @@
     damage:
       types:
         Blunt: 0
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
+    - SolutionBeakerSmall
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -121,10 +120,9 @@
     damage:
       types:
         Blunt: 0
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
+    - SolutionBeakerSmall
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -190,13 +188,19 @@
   components:
   - type: Label
     currentLabel: reagent-name-cryoxadone
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: Cryoxadone
-          Quantity: 50
+    - SolutionBeakerCryoxadoneSmall
+
+- type: entity
+  parent: SolutionBeakerSmall
+  id: SolutionBeakerCryoxadoneSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 60
 
 - type: entity
   parent: Beaker
@@ -205,13 +209,19 @@
   components:
   - type: Label
     currentLabel: reagent-name-arithrazine
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: Arithrazine
-          Quantity: 50
+    - SolutionBeakerArithrazineSmall
+
+- type: entity
+  parent: SolutionBeakerSmall
+  id: SolutionBeakerArithrazineSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Arithrazine
+        Quantity: 60
 
 - type: entity
   parent: Beaker
@@ -220,13 +230,19 @@
   components:
   - type: Label
     currentLabel: reagent-name-sigynate
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: Sigynate
-          Quantity: 50
+    - SolutionBeakerSigynateSmall
+
+- type: entity
+  parent: SolutionBeakerSmall
+  id: SolutionBeakerSigynateSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Sigynate
+        Quantity: 60
 
 - type: entity
   parent: Beaker
@@ -235,13 +251,19 @@
   components:
   - type: Label
     currentLabel: reagent-name-phalanximine
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: Phalanximine
-          Quantity: 50
+    - SolutionBeakerPhalanximineSmall
+          
+- type: entity
+  parent: SolutionBeakerSmall
+  id: SolutionBeakerPhalanximineSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Phalanximine
+        Quantity: 60
 
 - type: entity
   parent: Beaker
@@ -250,13 +272,19 @@
   components:
   - type: Label
     currentLabel: reagent-name-diphenhydramine
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: Diphenhydramine
-          Quantity: 50
+    - SolutionBeakerDiphenhydramineSmall
+          
+- type: entity
+  parent: SolutionBeakerSmall
+  id: SolutionBeakerDiphenhydramineSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Diphenhydramine
+        Quantity: 60
 
 - type: entity
   parent: Beaker
@@ -265,13 +293,19 @@
   components:
   - type: Label
     currentLabel: reagent-name-bruizine
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: Bruizine
-          Quantity: 50
+    - SolutionBeakerBruizineSmall
+          
+- type: entity
+  parent: SolutionBeakerSmall
+  id: SolutionBeakerBruizineSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Bruizine
+        Quantity: 60
 
 - type: entity
   parent: Beaker
@@ -280,13 +314,19 @@
   components:
   - type: Label
     currentLabel: reagent-name-lacerinol
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: Lacerinol
-          Quantity: 50
+    - SolutionBeakerLacerinolSmall
+          
+- type: entity
+  parent: SolutionBeakerSmall
+  id: SolutionBeakerLacerinolSmall
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Lacerinol
+        Quantity: 60
 
 - type: entity
   name: large beaker
@@ -306,10 +346,9 @@
   - type: Item
     size: Normal
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 100
+    - SolutionBeakerNormal
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -336,11 +375,9 @@
       - state: beakernoreact
   - type: SolutionContainerVisuals
     maxFillLevels: 0
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 60
-        canReact: false
+    - SolutionBeakerCryoSmall
 
 - type: entity
   name: bluespace beaker
@@ -356,10 +393,9 @@
       - state: beakerbluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      beaker:
-        maxVol: 1000
+    - SolutionBeakerGinormous
 
 - type: entity
   name: dropper
@@ -374,10 +410,9 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injector:
-        maxVol: 5
+    - SolutionInjectorTiny
   - type: Injector
     ignoreMobs: true
     ignoreClosed: false
@@ -415,7 +450,7 @@
   parent: Dropper
   id: BorgDropper
   name: hydraulic pipette
-  description: State-of-the-art hydraulic dropper built for cyborgs. It features a higher capacity than hand-powered droppers, able to hold 15 units of liquid.
+  description: State-of-the-art hydraulic dropper built for cyborgs.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
@@ -424,10 +459,9 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injector:
-        maxVol: 15
+    - SolutionInjectorTiny
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 
@@ -452,10 +486,9 @@
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/syringe.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injector:
-        maxVol: 15
+    - SolutionInjectorTiny
   - type: Injector
     activeModeProtoId: SyringeDrawMode
     allowedModes:
@@ -500,10 +533,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
       - state: syringeproj
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injector:
-        maxVol: 5
+    - SolutionInjectorVeryTiny
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
@@ -575,10 +607,9 @@
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: bluespace_base0
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injector:
-        maxVol: 100
+    - SolutionInjectorLarge
   - type: Injector
     activeModeProtoId: BluespaceSyringeDrawMode
     allowedModes:
@@ -608,16 +639,9 @@
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: cryo_base0
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injector:
-        maxVol: 10
-        canReact: false
-  - type: Injector
-    activeModeProtoId: CryostasisSyringeDrawMode
-    allowedModes:
-    - CryostasisSyringeInjectMode
-    - CryostasisSyringeDrawMode
+    - SolutionInjectorCryoTiny
   - type: Tag
     tags:
     - Syringe
@@ -644,11 +668,9 @@
   - type: BadFood
   - type: FlavorProfile
     ignoreReagents: []
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 20
-        canReact: false
+    - SolutionPill
   - type: ExplosionResistance
     damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable

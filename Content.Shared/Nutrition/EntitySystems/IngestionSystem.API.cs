@@ -298,7 +298,7 @@ public sealed partial class IngestionSystem
     /// <param name="user">The entity trying to make the ingestion happening, not necessarily the one eating</param>
     /// <param name="solution">Solution we're returning</param>
     /// <param name="time">The time it takes us to eat this entity</param>
-    public bool CanAccessSolution(Entity<SolutionContainerManagerComponent?> ingested,
+    public bool CanAccessSolution(Entity<SolutionManagerComponent?> ingested,
         EntityUid user,
         [NotNullWhen(true)] out Entity<SolutionComponent>? solution,
         out TimeSpan? time)
