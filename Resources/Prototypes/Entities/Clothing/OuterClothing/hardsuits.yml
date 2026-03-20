@@ -540,7 +540,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,4
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
@@ -627,7 +627,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,4
+    - 0,0,3,3
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -796,7 +796,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,4
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: ExplosionResistance
@@ -830,7 +830,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,4
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: PressureProtection

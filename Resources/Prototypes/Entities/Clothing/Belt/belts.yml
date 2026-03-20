@@ -126,6 +126,7 @@
     size: Ginormous
     shape:
     - 0,0,4,1
+
 - type: entity
   parent: [ClothingBeltStorageBase, BaseSyndicateContraband]
   id: ClothingBeltSyndieHolster

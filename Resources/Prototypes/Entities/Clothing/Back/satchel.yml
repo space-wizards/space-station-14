@@ -201,7 +201,8 @@
     - 0,0,15,7
     blacklist:
       tags:
-        - Backpack
+      - Backpack
+
 - type: entity
   parent: ClothingBackpackSatchelHolding
   id: ClothingBackpackSatchelAdmin
