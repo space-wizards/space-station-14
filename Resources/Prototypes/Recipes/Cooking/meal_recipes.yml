@@ -598,9 +598,10 @@
     reagents:
       TableSalt: 5
       Blackpepper: 5
+    materials:
+      MetalRod: 1
     solids:
       FoodDough: 1
-      PartRodMetal1: 1
 
 - type: microwaveMealRecipe
   id: RecipeButteredToast
