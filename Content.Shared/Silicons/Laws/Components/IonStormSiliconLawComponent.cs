@@ -43,9 +43,3 @@ public sealed partial class IonStormSiliconLawComponent : Component
     [DataField]
     public float ShuffleChance = 0.2f;
 }
-
-/// <summary>
-/// Raised on an ion storm target to modify its laws.
-/// </summary>
-[ByRefEvent]
-public record struct IonStormLawsEvent(SiliconLawset Lawset);
