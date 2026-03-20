@@ -343,11 +343,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // laws unique to this silicon, dont use station laws anymore
         var lawProvider = EnsureComp<SiliconLawProviderComponent>(uid);
 
-        // Emagged borgs are immune to ion storm
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-            return;
-
-        SetLawset(uid, lawProvider, laws);
+        SetAlteredLawset(uid, lawProvider, laws);
     }
 
     /// <summary>
@@ -466,14 +462,18 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Sets and notifies the lawset of law'd entity
+    /// Sets and notifies the lawset of law'd entity.
+    /// Prefer using <see cref="SetLaws"/> on non silicon.
     /// </summary>
     /// <param name="uid">Entity you would like to set</param>
     /// <param name="lawProvider">The law provider of the entity</param>
     /// <param name="laws">The lawset you would like to set the provider to</param>
-    /// <param name="checkEmag">Optionally disable emag checking for law'd entities that cannot be emagged</param>
-    public void SetLawset(EntityUid uid, SiliconLawProviderComponent lawProvider, SiliconLawset laws)
+    public void SetAlteredLawset(EntityUid uid, SiliconLawProviderComponent lawProvider, SiliconLawset laws)
     {
+        // Emagged borgs are immune to ion storm
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
         lawProvider.Lawset = laws;
 
         // gotta tell player to check their laws
