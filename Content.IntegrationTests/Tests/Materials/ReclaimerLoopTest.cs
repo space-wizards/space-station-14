@@ -7,11 +7,8 @@ using Content.Shared.Materials;
 using Content.Shared.Prototypes;
 using Content.Shared.Sprite;
 using Content.Shared.Whitelist;
-using Robust.Shared.Prototypes;
 using Robust.Shared.GameObjects;
-
-
-
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Materials;
 
