@@ -334,7 +334,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         RandomReplaceOrAddLaw(target.ReplaceChance, ref laws, newLaw);
 
-        ReorderLaws(ref laws);
+        ReorderObfuscatedLaws(ref laws);
 
         // adminlog is used to prevent adminlog spam.
         if (args.Adminlog)
@@ -343,9 +343,19 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // laws unique to this silicon, dont use station laws anymore
         var lawProvider = EnsureComp<SiliconLawProviderComponent>(uid);
 
-        CheckEmagged(uid, lawProvider, laws);
+        // Emagged borgs are immune to ion storm
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        SetLawset(uid, lawProvider, laws);
     }
 
+    /// <summary>
+    /// Has a chance to swap referenced lawset with provided lawset list
+    /// </summary>
+    /// <param name="chance">The chance it will swap the lawset to a new one</param>
+    /// <param name="laws">The lawset you might swap</param>
+    /// <param name="randomLawset">The lookup table for acceptable lawsets</param>
     public void SwapRandomLawset(float chance, ref SiliconLawset laws, ProtoId<WeightedRandomPrototype> randomLawset)
     {
         // try to swap it out with a random lawset
@@ -357,6 +367,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         laws = GetLawset(lawset);
     }
 
+    /// <summary>
+    /// Has a chance to shuffle referenced lawset
+    /// </summary>
+    /// <param name="chance">The chance to shuffle</param>
+    /// <param name="laws">The lawset you might shuffle</param>
     public void ShuffleLaws(float chance, ref SiliconLawset laws)
     {
         // shuffle them all
@@ -380,6 +395,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         }
     }
 
+    /// <summary>
+    /// Has a chance to remove a random law from a referenced lawset
+    /// </summary>
+    /// <param name="chance">The chance to remove a law</param>
+    /// <param name="laws">The lawset you might remove from</param>
     public void RemoveRandomLaw(float chance, ref SiliconLawset laws)
     {
         // see if we can remove a random law
@@ -389,6 +409,14 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         var i = _robustRandom.Next(laws.Laws.Count);
         laws.Laws.RemoveAt(i);
     }
+
+    /// <summary>
+    /// Has a chance to replace or add a given law to the referenced lawset
+    /// </summary>
+    /// <param name="chance">The chance to do the replacement</param>
+    /// <param name="laws">The lawset you might replace from</param>
+    /// <param name="newLaw">The string of the new law</param>
+    /// <returns></returns>
     public bool RandomReplaceOrAddLaw(float chance, ref SiliconLawset laws, string newLaw)
     {
         // see if the law we add will replace a random existing law or be a new glitched order one
@@ -414,7 +442,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         return true;
     }
 
-    private static void ReorderLaws(ref SiliconLawset laws)
+    /// <summary>
+    /// Reorders the obfuscated laws in referenced lawset so it properly follows law priority in the display
+    /// </summary>
+    /// <param name="laws">The lawset you would like to reorder</param>
+    private static void ReorderObfuscatedLaws(ref SiliconLawset laws)
     {
         // sets all unobfuscated laws' indentifier in order from highest to lowest priority
         // This could technically override the Obfuscation from the code above, but it seems unlikely enough to basically never happen
@@ -435,12 +467,15 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         }
     }
 
-    private void CheckEmagged(EntityUid uid, SiliconLawProviderComponent lawProvider, SiliconLawset laws)
+    /// <summary>
+    /// Sets and notifies the lawset of law'd entity
+    /// </summary>
+    /// <param name="uid">Entity you would like to set</param>
+    /// <param name="lawProvider">The law provider of the entity</param>
+    /// <param name="laws">The lawset you would like to set the provider to</param>
+    /// <param name="checkEmag">Optionally disable emag checking for law'd entities that cannot be emagged</param>
+    private void SetLawset(EntityUid uid, SiliconLawProviderComponent lawProvider, SiliconLawset laws)
     {
-        // Emagged borgs are immune to ion storm
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-            return;
-
         lawProvider.Lawset = laws;
 
         // gotta tell player to check their laws
