@@ -1,0 +1,39 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:style="clr-namespace:Content.Client.Stylesheets"
+    Resizable="False"
+    CanKeyboardFocus="True">
+    <!-- Main -->
+    <BoxContainer Orientation="Horizontal" Margin="10 10 10 30">
+        <!-- Buttons, highscore, etc -->
+        <BoxContainer Orientation="Vertical" Margin="0 0 5 0">
+            <Button Name="NewGameButton" Access="Public" Text="{Loc 'kudzu-crush-new-game-button-label'}" />
+        </BoxContainer>
+
+        <!-- Grid -->
+        <PanelContainer HorizontalAlignment="Center" VerticalAlignment="Center">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered" VerticalAlignment="Center" MinSize="31 31" />
+
+                <GridContainer Name="Grid" HSeparationOverride="0" VSeparationOverride="0" />
+        </PanelContainer>
+    </BoxContainer>
+
+    <!-- Footer -->
+    <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+        <PanelContainer StyleClasses="LowDivider" />
+        <BoxContainer Orientation="Horizontal" Margin="10 0 5 0" VerticalAlignment="Bottom">
+            <Label Text="{Loc 'kudzu-crush-footer-flavor-left'}" StyleClasses="WindowFooterText" />
+            <Label Text="{Loc 'kudzu-crush-footer-flavor-right'}" StyleClasses="WindowFooterText"
+                    HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 2 0" />
+            <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                    VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

@@ -16907,7 +16907,7 @@ entities:
     - type: Transform
       pos: 3.5,29.5
       parent: 60
-- proto: BlockGameArcade
+- proto: KudzuCrushArcade
   entities:
   - uid: 5304
     components:
@@ -16921,7 +16921,7 @@ entities:
     - type: Transform
       pos: 52.5,50.5
       parent: 60
-- proto: BlockGameArcadeComputerCircuitboard
+- proto: KudzuCrushArcadeComputerCircuitboard
   entities:
   - uid: 7606
     components:

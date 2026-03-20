@@ -1086,7 +1086,7 @@ entities:
     - type: Transform
       pos: -8.5,6.5
       parent: 1
-- proto: BlockGameArcade
+- proto: KudzuCrushArcade
   entities:
   - uid: 1157
     components:

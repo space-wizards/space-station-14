@@ -9,3 +9,33 @@
     - /Audio/Machines/Arcade/sting_04.ogg
     - /Audio/Machines/Arcade/sting_05.ogg
     - /Audio/Machines/Arcade/sting_06.ogg
+
+- type: soundCollection
+  id: ArcadeNewGame
+  files:
+    - /Audio/Effects/Arcade/newgame.ogg
+
+- type: soundCollection
+  id: ArcadeWin
+  files:
+    - /Audio/Effects/Arcade/win.ogg
+
+- type: soundCollection
+  id: ArcadeLose
+  files:
+    - /Audio/Effects/Arcade/gameover.ogg
+
+- type: soundCollection
+  id: SpaceVillainAttack
+  files:
+    - /Audio/Effects/Arcade/player_attack.ogg
+
+- type: soundCollection
+  id: SpaceVillainHeal
+  files:
+    - /Audio/Effects/Arcade/player_heal.ogg
+
+- type: soundCollection
+  id: SpaceVillainCharge
+  files:
+    - /Audio/Effects/Arcade/player_charge.ogg

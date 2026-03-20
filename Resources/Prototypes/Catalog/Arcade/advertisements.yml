@@ -1,8 +1,14 @@
 - type: localizedDataset
-  id: BlockGameAds
+  id: LastFighterAds
   values:
-    prefix: advertisement-block-game-
-    count: 13
+    prefix: advertisement-last-fighter-
+    count: 1
+
+- type: localizedDataset
+  id: KudzuCrushAds
+  values:
+    prefix: advertisement-kudzu-crush-
+    count: 12
 
 - type: localizedDataset
   id: SpaceVillainAds

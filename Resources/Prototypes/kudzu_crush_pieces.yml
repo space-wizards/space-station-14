@@ -1,0 +1,99 @@
+#  XX
+# XX
+#  X
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceF
+  color: red
+  cells: ["1,0", "2,0", "0,1", "1,1", "1,2"]
+
+# X
+# X
+# X
+# X
+# X
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceI
+  color: red
+  cells: ["0,0", "0,1", "0,2", "0,3", "0,4"]
+
+# X
+# X
+# X
+# XX
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceL
+  color: red
+  cells: ["0,0", "0,1", "0,2", "0,3", "1,3"]
+
+#  X
+#  X
+# XX
+# X
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceN
+  color: red
+  cells: ["1,0", "1,1", "0,2", "1,2", "0,3"]
+
+# XX
+# XX
+# X
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceP
+  color: red
+  cells: ["0,0", "1,0", "0,1", "1,1", "0,2"]
+
+# XXX
+#  X
+#  X
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceT
+  color: red
+  cells: ["0,0", "1,0", "2,0", "1,1", "1,2"]
+
+# X X
+# XXX
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceU
+  color: red
+  cells: ["0,0", "2,0", "0,1", "1,1", "2,1"]
+
+#   X
+#   X
+# XXX
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceV
+  color: red
+  cells: ["2,0", "2,1", "0,2", "1,2", "2,2"]
+
+#   X
+#  XX
+# XX
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceW
+  color: red
+  cells: ["2,0", "1,1", "2,1", "0,2", "1,2"]
+
+#  X
+# XXX
+#  X
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceX
+  color: red
+  cells: ["1,0", "0,1", "1,1", "2,1", "1,2"]
+
+#  X
+# XX
+#  X
+#  X
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceY
+  color: red
+  cells: ["1,0", "0,1", "1,1", "1,2", "1,2"]
+
+# XX
+#  X
+#  XX
+- type: kudzuCrushPiece
+  id: KudzuCrushPieceZ
+  color: red
+  cells: ["0,0", "1,0", "1,1", "1,2", "2,2"]
