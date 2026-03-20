@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
@@ -37,37 +38,32 @@ public abstract partial class SharedBorgSystem
     #region BorgModule
     private void OnModuleExamine(Entity<BorgModuleComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.BorgFitTypes != null && ent.Comp.BorgFitTypes.Count > 0)
+        if (FormatHashSet(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
+            args.PushMarkup(list);
+
+        if (FormatHashSet(ent.Comp.ModuleTypes, "module-type-incompatible", "types", out list))
+            args.PushMarkup(list);
+    }
+
+    private bool FormatHashSet(HashSet<LocId>? hash, string messageId, string listId, [NotNullWhen(true)] out string? formattedList)
+    {
+        formattedList = null;
+
+        if (hash == null || hash.Count == 0)
+            return false;
+
+        var entryList = new List<string>();
+
+        foreach (var entry in hash)
         {
-            var typeList = new List<string>();
-
-            foreach (var type in ent.Comp.BorgFitTypes)
-            {
-                typeList.Add(Loc.GetString(type));
-            }
-
-            var types = ContentLocalizationManager.FormatList(typeList);
-            args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
+            entryList.Add(Loc.GetString(entry));
         }
 
-        if (ent.Comp.ModuleType != null)
-        {
-            var type = Loc.GetString(ent.Comp.ModuleType);
-            args.PushMarkup(Loc.GetString("borg-module-type", ("type", type)));
-        }
+        var entries = ContentLocalizationManager.FormatList(entryList);
 
-        if (ent.Comp.IncompatibleTypes != null && ent.Comp.IncompatibleTypes.Count > 0)
-        {
-            var typeList = new List<string>();
+        formattedList = Loc.GetString(messageId, (listId, entries));
+        return true;
 
-            foreach (var type in ent.Comp.IncompatibleTypes)
-            {
-                typeList.Add(Loc.GetString(type));
-            }
-
-            var types = ContentLocalizationManager.FormatList(typeList);
-            args.PushMarkup(Loc.GetString("borg-module-type-incompatible", ("types", types)));
-        }
     }
 
     private void OnModuleGotInserted(Entity<BorgModuleComponent> module, ref EntGotInsertedIntoContainerMessage args)

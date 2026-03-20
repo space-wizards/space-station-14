@@ -220,21 +220,16 @@ public abstract partial class SharedBorgSystem
             return false;
         }
 
-        if (module.Comp.ModuleType != null)
+        if (module.Comp.IncompatibleModuleTags != null)
         {
             foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
             {
                 if (!TryComp<BorgModuleComponent>(containedModuleUid, out var borgModuleComponent))
                     continue;
 
-                if (borgModuleComponent.IncompatibleTypes == null || borgModuleComponent.IncompatibleTypes.Count == 0)
-                    continue;
-
-                if (borgModuleComponent.IncompatibleTypes.Contains(module.Comp.ModuleType.Value))
+                if (_whitelist.IsWhitelistFail(module.Comp.IncompatibleModuleTags, containedModuleUid))
                 {
-                    //need to get the colorless variant, cuz popup doesn't strip out tags, nor supports color
-                    var type = Loc.GetString(module.Comp.ModuleType + "-colorless");
-                    _popup.PopupClient(Loc.GetString("borg-module-type-incompatible", ("types", type)), chassis.Owner, user);
+                    _popup.PopupClient(Loc.GetString("borg-module-incompatible-type"), chassis.Owner, user);
                     return false;
                 }
             }

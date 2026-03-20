@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -36,16 +37,17 @@ public sealed partial class BorgModuleComponent : Component
     public HashSet<LocId>? BorgFitTypes;
 
     /// <summary>
-    /// Type of module, used for examine text and to identify it as part of a module group
+    /// List of module groups this module is a part of
+    /// This only affects examine text. The actual tag-based whitelist is defined in <see cref="ExclusiveModuleTags"/>
     /// </summary>
     [DataField]
-    public LocId? ModuleType;
+    public HashSet<LocId>? ModuleTypes;
 
     /// <summary>
-    /// List of module groups incompatible with this module
+    /// List of module tags this module is incompatible with
     /// </summary>
     [DataField]
-    public HashSet<LocId>? IncompatibleTypes;
+    public EntityWhitelist? IncompatibleModuleTags;
 }
 
 /// <summary>

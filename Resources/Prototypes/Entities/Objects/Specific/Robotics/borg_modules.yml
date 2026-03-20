@@ -393,14 +393,20 @@
         color: "#962023"
 
 - type: entity
+  abstract: true
   parent: BaseXenoborgModuleHeavy
   id: BaseXenoborgModuleHeavyWeapon
-  abstract: true
   components:
   - type: BorgModule
-    moduleType: module-type-heavy-weapon
-    incompatibleTypes:
+    moduleTypes:
       - module-type-heavy-weapon
+    incompatibleModuleTags:
+      tags:
+        - XenoborgModuleHeavyWeapon
+  - type: Tag
+    tags:
+     - XenoborgModuleHeavy
+     - XenoborgModuleHeavyWeapon
 
 - type: entity
   parent: BaseBorgModule
