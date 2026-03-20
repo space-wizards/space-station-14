@@ -417,7 +417,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <param name="laws">The lawset you might replace from</param>
     /// <param name="newLaw">The string of the new law</param>
     /// <returns></returns>
-    public bool RandomReplaceOrAddLaw(float chance, ref SiliconLawset laws, string newLaw)
+    public void RandomReplaceOrAddLaw(float chance, ref SiliconLawset laws, string newLaw)
     {
         // see if the law we add will replace a random existing law or be a new glitched order one
         if (laws.Laws.Count > 0 && _robustRandom.Prob(chance))
@@ -438,15 +438,13 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
                 LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10)))
             });
         }
-
-        return true;
     }
 
     /// <summary>
     /// Reorders the obfuscated laws in referenced lawset so it properly follows law priority in the display
     /// </summary>
     /// <param name="laws">The lawset you would like to reorder</param>
-    private static void ReorderObfuscatedLaws(ref SiliconLawset laws)
+    public static void ReorderObfuscatedLaws(ref SiliconLawset laws)
     {
         // sets all unobfuscated laws' indentifier in order from highest to lowest priority
         // This could technically override the Obfuscation from the code above, but it seems unlikely enough to basically never happen
@@ -474,7 +472,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <param name="lawProvider">The law provider of the entity</param>
     /// <param name="laws">The lawset you would like to set the provider to</param>
     /// <param name="checkEmag">Optionally disable emag checking for law'd entities that cannot be emagged</param>
-    private void SetLawset(EntityUid uid, SiliconLawProviderComponent lawProvider, SiliconLawset laws)
+    public void SetLawset(EntityUid uid, SiliconLawProviderComponent lawProvider, SiliconLawset laws)
     {
         lawProvider.Lawset = laws;
 
