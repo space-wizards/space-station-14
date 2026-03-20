@@ -39,8 +39,10 @@
       - Janitor
       - Kitchen
       - Lawyer
+      - Library
       - Maintenance
       - Medical
+      - Newsroom
       - Quartermaster
       - Research
       - ResearchDirector
@@ -114,8 +116,10 @@
     - Janitor
     - Kitchen
     - Lawyer
+    - Library
     - Maintenance
     - Medical
+    - Newsroom
     - Quartermaster
     - Research
     - ResearchDirector
