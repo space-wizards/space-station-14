@@ -15,7 +15,6 @@ namespace Content.Shared.Damage.Systems;
 public abstract class SharedGodmodeSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -69,13 +68,6 @@ public abstract class SharedGodmodeSystem : EntitySystem
 
     public virtual void EnableGodmode(EntityUid uid, GodmodeComponent? godmode = null)
     {
-        godmode ??= EnsureComp<GodmodeComponent>(uid);
-
-        if (TryComp<DamageableComponent>(uid, out var damageable))
-        {
-            godmode.OldDamage = new DamageSpecifier(damageable.Damage);
-        }
-
         // Rejuv to cover other stuff
         RaiseLocalEvent(uid, new RejuvenateEvent());
     }
@@ -84,11 +76,6 @@ public abstract class SharedGodmodeSystem : EntitySystem
     {
         if (!Resolve(uid, ref godmode, false))
             return;
-
-        if (TryComp<DamageableComponent>(uid, out var damageable) && godmode.OldDamage != null)
-        {
-            _damageable.SetDamage(uid, damageable, godmode.OldDamage);
-        }
 
         RemComp<GodmodeComponent>(uid);
     }

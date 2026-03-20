@@ -335,7 +335,7 @@
       - HEAD
   - type: PointLight
     radius: 1.2
-    energy: 1.5
+    energy: 2.7
     color: "#4faffb"
     slots:
 

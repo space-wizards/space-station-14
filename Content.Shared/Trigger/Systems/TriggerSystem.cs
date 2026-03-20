@@ -3,7 +3,9 @@ using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.EntityTable;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Mind;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.Timing;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Whitelist;
@@ -39,6 +41,8 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly SharedRoleSystem _role = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
 
     public const string DefaultTriggerKey = "trigger";
@@ -63,15 +67,16 @@ public sealed partial class TriggerSystem : EntitySystem
     /// <param name="trigger">The entity that has the components that should be triggered.</param>
     /// <param name="user">The user of the trigger. Some effects may target the user instead of the trigger entity.</param>
     /// <param name="key">A key string to allow multiple, independent triggers on the same entity. If null then all triggers will activate.</param>
+    /// <param name="predicted">Whether or not this trigger is being predicted</param>
     /// <returns>Whether or not the trigger has sucessfully activated an effect.</returns>
-    public bool Trigger(EntityUid trigger, EntityUid? user = null, string? key = null)
+    public bool Trigger(EntityUid trigger, EntityUid? user = null, string? key = null, bool predicted = true)
     {
         var attemptTriggerEvent = new AttemptTriggerEvent(user, key);
         RaiseLocalEvent(trigger, ref attemptTriggerEvent);
         if (attemptTriggerEvent.Cancelled)
             return false;
 
-        var triggerEvent = new TriggerEvent(user, key);
+        var triggerEvent = new TriggerEvent(user, key, predicted);
         RaiseLocalEvent(trigger, ref triggerEvent, true);
         return triggerEvent.Handled;
     }
@@ -107,6 +112,7 @@ public sealed partial class TriggerSystem : EntitySystem
         ent.Comp.NextTrigger = curTime + ent.Comp.Delay;
         var delay = ent.Comp.InitialBeepDelay ?? ent.Comp.BeepInterval;
         ent.Comp.NextBeep = curTime + delay;
+        ent.Comp.User = user;
         Dirty(ent);
 
         var ev = new ActiveTimerTriggerEvent(user);
