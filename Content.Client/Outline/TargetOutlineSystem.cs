@@ -144,11 +144,15 @@ public sealed class TargetOutlineSystem : EntitySystem
             if (valid && Whitelist != null)
                 valid = _whitelistSystem.IsWhitelistPass(Whitelist, entity);
 
+            // check the entity blacklist
+            if (valid && Blacklist != null)
+                valid = _whitelistSystem.IsWhitelistFailOrNull(Blacklist, entity);
+
             // and check the cancellable event
             if (valid && ValidationEvent != null)
             {
                 ValidationEvent.Uncancel();
-                RaiseLocalEvent(entity, (object) ValidationEvent, broadcast: false);
+                RaiseLocalEvent(entity, (object)ValidationEvent, broadcast: false);
                 valid = !ValidationEvent.Cancelled;
             }
 
@@ -171,13 +175,13 @@ public sealed class TargetOutlineSystem : EntitySystem
             {
                 var origin = _transformSystem.GetWorldPosition(player);
                 var target = _transformSystem.GetWorldPosition(entity);
-                valid = (origin - target).LengthSquared() <= Range;
+                valid = (origin - target).LengthSquared() <= Range * Range;
             }
 
             if (sprite.PostShader != null &&
                 sprite.PostShader != _shaderTargetValid &&
                 sprite.PostShader != _shaderTargetInvalid)
-                return;
+                continue;
 
             // highlight depending on whether its in or out of range
             sprite.PostShader = valid ? _shaderTargetValid : _shaderTargetInvalid;
