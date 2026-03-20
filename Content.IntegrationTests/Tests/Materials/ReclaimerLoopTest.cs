@@ -2,13 +2,15 @@ using System.Collections.Generic;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Utility;
 using Content.Server.Materials;
+using Content.Server.Spawners.Components;
 using Content.Shared.Materials;
 using Content.Shared.Prototypes;
+using Content.Shared.Sprite;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameObjects;
-using Content.Shared.Sprite;
-using Content.Server.Spawners.Components;
+
+
 
 
 namespace Content.IntegrationTests.Tests.Materials;
