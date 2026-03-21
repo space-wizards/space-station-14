@@ -15,15 +15,15 @@ namespace Content.Shared.Speech.Components;
 public sealed partial class VocalComponent : Component
 {
     /// <summary>
-    ///     Emote sounds prototype id for each sex (not gender).
-    ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
+    ///     List of user selectable voices in the menu, with associated Loc.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public Dictionary<ProtoId<EmoteSoundsPrototype>, string>? Voices;
 
     /// <summary>
-    /// Gives the voice system a default to base off of.
+    ///     Emote sounds prototype id for each sex (not gender).
+    ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
