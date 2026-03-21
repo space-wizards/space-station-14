@@ -41,6 +41,7 @@ public sealed class VocalSystem : EntitySystem
 
         var targetComp = EnsureComp<VocalComponent>(target);
         targetComp.Voices = source.Comp.Voices;
+        targetComp.Default = source.Comp.Default;
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
         targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
@@ -114,10 +115,13 @@ public sealed class VocalSystem : EntitySystem
 
     private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
-        if (component.Voices == null)
+        if (component.Voices == null && component.Default == null)
             return;
 
-        protoId ??= CompOrNull<HumanoidProfileComponent>(uid)?.Voice ?? "MaleHuman";
+        var humanoid = CompOrNull<HumanoidProfileComponent>(uid);
+
+        var sex = humanoid?.Sex ?? Sex.Unsexed;
+        protoId ??= humanoid?.Voice ?? component.Default[sex];
 
         if (!_proto.HasIndex(protoId))
             return;
