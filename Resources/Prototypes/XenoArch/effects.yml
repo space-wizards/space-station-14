@@ -1189,8 +1189,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table:
-        id: RandomArtifactSpawner
+      table: !type:NestedSelector
+        tableId: RandomArtifactTable
 
 - type: entity
   id: XenoArtifactShuffle
