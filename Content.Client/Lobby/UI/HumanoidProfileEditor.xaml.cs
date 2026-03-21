@@ -169,7 +169,7 @@ namespace Content.Client.Lobby.UI
             VoiceButton.OnItemSelected += args =>
             {
                 VoiceButton.SelectId(args.Id);
-                SetVoice((Sex) args.Id);
+                SetVoice(_voices[args.Id]);
             };
 
             #endregion

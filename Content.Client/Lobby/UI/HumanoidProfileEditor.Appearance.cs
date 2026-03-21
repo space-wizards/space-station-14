@@ -1,9 +1,11 @@
 using System.Linq;
 using Content.Client.UserInterface.Systems.Guidebook;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Guidebook;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
+using Content.Shared.Speech.Components;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -16,6 +18,7 @@ public sealed partial class HumanoidProfileEditor
 
     private ColorSelectorSliders _rgbSkinColorSelector;
     private List<SpeciesPrototype> _species = new();
+    private List<ProtoId<EmoteSoundsPrototype>> _voices = new ();
     private static readonly ProtoId<GuideEntryPrototype> DefaultSpeciesGuidebook = "Species";
 
     public void UpdateSpeciesGuidebookIcon()
@@ -95,6 +98,36 @@ public sealed partial class HumanoidProfileEditor
 
         _markingsModel.SetOrganEyeColor(Profile.Appearance.EyeColor);
         EyeColorPicker.SetData(Profile.Appearance.EyeColor);
+    }
+
+    private void UpdateVoiceControls()
+    {
+        if (Profile == null)
+            return;
+
+        VoiceButton.Clear();
+        _voices.Clear();
+
+        _prototypeManager.TryIndex(Profile?.Species, out var speciesPrototype);
+        _prototypeManager.TryIndex(speciesPrototype?.Prototype, out var mob);
+        VocalComponent? vocalComponent = null;
+        mob?.Components.TryGetComponent(_entManager.ComponentFactory, out vocalComponent);
+        var voices = vocalComponent?.Sounds;
+
+        var voicesNames = voices?.Keys.ToList() ?? [];
+        if (voices?.Values.ToList() is { } voiceIds)
+            _voices.AddRange(voiceIds);
+
+        for (var i = 0; i < voices?.Count; i++)
+        {
+            var name = Loc.GetString(voicesNames[i]);
+            VoiceButton.AddItem(name, i);
+
+            if (Profile?.Voice.Equals(_voices[i]) == true)
+            {
+                VoiceButton.SelectId(i);
+            }
+        }
     }
 
     private void UpdateSkinColor()
@@ -201,7 +234,7 @@ public sealed partial class HumanoidProfileEditor
     private void SetSex(Sex newSex)
     {
         Profile = Profile?.WithSex(newSex);
-        // for convenience, default to most common gender when new sex is selected
+        // for convenience, default to most common gender and voice when new sex is selected
         switch (newSex)
         {
             case Sex.Male:
@@ -215,9 +248,21 @@ public sealed partial class HumanoidProfileEditor
                 break;
         }
 
+        if (_prototypeManager.TryIndex(Profile?.Species, out var speciesPrototype) &&
+            HumanoidCharacterProfile.GetDefaultSoundsFromSex(speciesPrototype, newSex, _prototypeManager, _entManager) is { } voice)
+            Profile?.WithVoice(voice);
+
         UpdateGenderControls();
+        UpdateVoiceControls();
         _markingsModel.SetOrganSexes(newSex);
         ReloadPreview();
+    }
+
+    private void SetVoice(ProtoId<EmoteSoundsPrototype> newVoice)
+    {
+        Profile = Profile?.WithVoice(newVoice);
+        ReloadPreview();
+        IsDirty = true;
     }
 
     private void SetGender(Gender newGender)

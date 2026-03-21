@@ -209,12 +209,23 @@ namespace Content.Server.Database
             var appearance = humanoid.Appearance;
             var dataNode = _serialization.WriteValue(appearance.Markings, alwaysWrite: true, notNullableOverride: true);
 
+            var voice = humanoid.Voice;
+            // Try last-ditch converting to default
+            if (humanoid.Voice == null)
+            {
+                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+
+                if (prototypeManager.TryIndex(humanoid.Species, out var prototype))
+                    voice = HumanoidCharacterProfile.GetDefaultSoundsFromSex(prototype, humanoid.Sex, prototypeManager, entityManager);
+            }
+
             profile.CharacterName = humanoid.Name;
             profile.FlavorText = humanoid.FlavorText;
             profile.Species = humanoid.Species;
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
-            profile.Voice = (humanoid.PreferredVoice ?? humanoid.Sex).ToString();
+            profile.Voice = voice.ToString();
             profile.Gender = humanoid.Gender.ToString();
             profile.EyeColor = appearance.EyeColor.ToHex();
             profile.SkinColor = appearance.SkinColor.ToHex();

@@ -2,11 +2,13 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Speech.Components;
 using Content.Shared.Traits;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -87,7 +89,7 @@ namespace Content.Shared.Preferences
         public Sex Sex { get; private set; } = Sex.Male;
 
         [DataField]
-        public Sex? PreferredVoice { get; set; }
+        public ProtoId<EmoteSoundsPrototype>? Voice { get; set; }
 
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
@@ -132,7 +134,7 @@ namespace Content.Shared.Preferences
             string species,
             int age,
             Sex sex,
-            Sex? preferredVoice,
+            ProtoId<EmoteSoundsPrototype>? voice,
             Gender gender,
             HumanoidCharacterAppearance appearance,
             SpawnPriorityPreference spawnPriority,
@@ -147,7 +149,7 @@ namespace Content.Shared.Preferences
             Species = species;
             Age = age;
             Sex = sex;
-            PreferredVoice = preferredVoice;
+            Voice = voice;
             Gender = gender;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
@@ -179,7 +181,7 @@ namespace Content.Shared.Preferences
                 other.Species,
                 other.Age,
                 other.Sex,
-                other.PreferredVoice,
+                other.Voice,
                 other.Gender,
                 other.Appearance.Clone(),
                 other.SpawnPriority,
@@ -239,14 +241,17 @@ namespace Content.Shared.Preferences
             species ??= HumanoidCharacterProfile.DefaultSpecies;
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var sex = Sex.Unsexed;
             var age = 18;
+            var voice = "MaleHuman"; // Banishing someone to no voice would be unfortunate
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
+                voice = GetDefaultSoundsFromSex(speciesPrototype, sex, prototypeManager, entityManager);
             }
 
             var gender = Gender.Epicene;
@@ -267,7 +272,7 @@ namespace Content.Shared.Preferences
             {
                 Name = name,
                 Sex = sex,
-                PreferredVoice = sex,
+                Voice = voice,
                 Age = age,
                 Gender = gender,
                 Species = species,
@@ -295,9 +300,9 @@ namespace Content.Shared.Preferences
             return new(this) { Sex = sex };
         }
 
-        public HumanoidCharacterProfile WithVoice(Sex voice)
+        public HumanoidCharacterProfile WithVoice(ProtoId<EmoteSoundsPrototype> voice)
         {
-            return new (this) { PreferredVoice = voice };
+            return new (this) { Voice = voice };
         }
 
         public HumanoidCharacterProfile WithGender(Gender gender)
@@ -493,6 +498,7 @@ namespace Content.Shared.Preferences
         {
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
+            var entityManager = collection.Resolve<IEntityManager>();
 
             if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
             {
@@ -508,13 +514,7 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
-            var voice = PreferredVoice switch
-            {
-                Sex.Male => Sex.Male,
-                Sex.Female => Sex.Female,
-                Sex.Unsexed => Sex.Unsexed,
-                _ => sex // Invalid enum values.
-            };
+            var voice = GetDefaultSoundsFromSex(speciesPrototype, sex, prototypeManager, entityManager);
 
             // ensure the species can be that sex and their age fits the founds
             if (!speciesPrototype.Sexes.Contains(sex))
@@ -625,7 +625,7 @@ namespace Content.Shared.Preferences
             FlavorText = flavortext;
             Age = age;
             Sex = sex;
-            PreferredVoice = voice;
+            Voice = voice;
             Gender = gender;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
@@ -746,7 +746,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(Species);
             hashCode.Add(Age);
             hashCode.Add((int)Sex);
-            hashCode.Add(PreferredVoice);
+            hashCode.Add(Voice);
             hashCode.Add((int)Gender);
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
@@ -839,6 +839,15 @@ namespace Content.Shared.Preferences
             var collection = IoCManager.Instance;
             profile.EnsureValid(session, collection!);
             return profile;
+        }
+
+        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromSex(SpeciesPrototype speciesPrototype, Sex sex, IPrototypeManager prototypeManager, IEntityManager entityManager)
+        {
+            var mob = prototypeManager.Index(speciesPrototype.Prototype);
+            // This SHOULD never fail
+            if (mob.Components.TryGetComponent<VocalComponent>(entityManager.ComponentFactory, out var voiceComponent) && voiceComponent.DefaultSounds[sex] is var defaultSound)
+                return defaultSound;
+            return null;
         }
     }
 }

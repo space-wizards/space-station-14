@@ -1,3 +1,4 @@
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
@@ -15,6 +16,9 @@ public sealed partial class HumanoidProfileComponent : Component
 {
     [DataField, AutoNetworkedField]
     public Gender Gender;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<EmoteSoundsPrototype>? Voice;
 
     [DataField, AutoNetworkedField]
     public Sex Sex;

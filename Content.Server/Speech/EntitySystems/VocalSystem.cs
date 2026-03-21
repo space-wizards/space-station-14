@@ -112,19 +112,16 @@ public sealed class VocalSystem : EntitySystem
         return _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), component.ScreamId);
     }
 
-    private void LoadSounds(EntityUid uid, VocalComponent component, Sex? voice = null)
+    private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? voice = null)
     {
         if (component.Sounds == null)
             return;
 
-        voice ??= CompOrNull<HumanoidProfileComponent>(uid)?.PreferredVoice ?? Sex.Unsexed;
+        voice ??= CompOrNull<HumanoidProfileComponent>(uid)?.Voice ?? "MaleHuman";
 
-        if (!component.Sounds.TryGetValue(voice.Value, out var protoId))
+        if (!_proto.HasIndex(voice))
             return;
 
-        if (!_proto.HasIndex(protoId))
-            return;
-
-        component.EmoteSounds = protoId;
+        component.EmoteSounds = voice;
     }
 }

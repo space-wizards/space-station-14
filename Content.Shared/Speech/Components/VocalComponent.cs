@@ -21,7 +21,14 @@ public sealed partial class VocalComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>>? Sounds;
+    public Dictionary<string, ProtoId<EmoteSoundsPrototype>>? Sounds;
+
+    /// <summary>
+    /// Gives the voice system a default to base off of.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>> DefaultSounds;
 
     [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     [AutoNetworkedField]
