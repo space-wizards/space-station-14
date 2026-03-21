@@ -162,11 +162,17 @@
     currentLabel: reagent-aloxadone
   - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Aloxadone
-          Quantity: 30
+    - SolutionBottleAloxadone
+
+- type: entity
+  parent: SolutionDrinkTiny
+  id: SolutionBottleAloxadone
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Aloxadone
+        Quantity: 30
 
 - type: entity
   id: ChemistryBottleAmbuzol
@@ -786,11 +792,7 @@
     currentLabel: reagent-name-mannitol
   - type: SolutionManager
     solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Mannitol
-          Quantity: 30
+    - SolutionBottleMannitol
 
 - type: entity
   parent: SolutionDrinkTiny

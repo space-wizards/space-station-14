@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: Solution # Not abstract because it's a fallback for missing solution protos!
-  categories: [ HideSpawnMenu, Inheritable ] # TODO: Dont forget to remove this when you make solutions which exist outside of managers!
+  categories: [ HideSpawnMenu ]
   name: solution
   components:
   - type: Solution
