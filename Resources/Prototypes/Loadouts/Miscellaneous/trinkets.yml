@@ -203,6 +203,13 @@
   groupBy: "pin"
 
 - type: loadout
+  id: ClothingNeckPolyPin
+  storage:
+    back:
+    - ClothingNeckPolyPin
+  groupBy: "pin"
+
+- type: loadout
   id: ClothingNeckOmnisexualPin
   storage:
     back:
