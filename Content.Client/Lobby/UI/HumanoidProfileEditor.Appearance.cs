@@ -118,6 +118,9 @@ public sealed partial class HumanoidProfileEditor
         if (voices?.Values.ToList() is { } voiceIds)
             _voices.AddRange(voiceIds);
 
+        if (Profile?.Voice is { } voice && !_voices.Contains(voice) && HumanoidCharacterProfile.GetDefaultSoundsFromSex(speciesPrototype, Profile.Sex, _prototypeManager, _entManager) is { } newVoice)
+            SetVoice(newVoice);
+
         for (var i = 0; i < voices?.Count; i++)
         {
             var name = Loc.GetString(voicesNames[i]);
@@ -221,6 +224,7 @@ public sealed partial class HumanoidProfileEditor
         // In case there's species restrictions for loadouts
         RefreshLoadouts();
         UpdateSexControls(); // update sex for new species
+        UpdateVoiceControls();
         UpdateSpeciesGuidebookIcon();
         ReloadPreview();
     }
@@ -250,7 +254,7 @@ public sealed partial class HumanoidProfileEditor
 
         if (_prototypeManager.TryIndex(Profile?.Species, out var speciesPrototype) &&
             HumanoidCharacterProfile.GetDefaultSoundsFromSex(speciesPrototype, newSex, _prototypeManager, _entManager) is { } voice)
-            Profile?.WithVoice(voice);
+            SetVoice(voice);
 
         UpdateGenderControls();
         UpdateVoiceControls();
