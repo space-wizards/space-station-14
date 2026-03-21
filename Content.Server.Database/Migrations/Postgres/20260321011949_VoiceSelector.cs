@@ -14,8 +14,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "voice",
                 table: "profile",
                 type: "text",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         /// <inheritdoc />

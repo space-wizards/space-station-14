@@ -1126,7 +1126,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnName("species");
 
                     b.Property<string>("Voice")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("voice");
 

@@ -1063,7 +1063,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("species");
 
                     b.Property<string>("Voice")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("voice");
 

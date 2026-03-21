@@ -14,8 +14,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "voice",
                 table: "profile",
                 type: "TEXT",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         /// <inheritdoc />
