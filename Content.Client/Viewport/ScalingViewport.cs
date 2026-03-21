@@ -337,6 +337,59 @@ namespace Content.Client.Viewport
 
             DebugTools.AssertNotNull(_viewport);
         }
+
+        /// <summary>
+        /// Checks if the given screen-space pixel position falls within the actual rendered game area.
+        /// </summary>
+        public bool IsInDrawArea(Vector2 screenPos)
+        {
+            var localPos = screenPos - GlobalPixelPosition;
+            var drawBox = GetDrawBox();
+
+            return drawBox.Contains(new Vector2i((int)Math.Floor(localPos.X), (int)Math.Floor(localPos.Y)));
+        }
+
+        /// <summary>
+        /// Tries to convert screen pixel coordinates to map coordinates, but only if the position is within the visible draw area.
+        /// Returns false if the point is outside the draw area.
+        /// </summary>
+        public bool TryScreenToMap(Vector2 screenPos, out MapCoordinates mapCoords)
+        {
+            mapCoords = default;
+
+            if (_eye is null)
+                return false;
+
+            EnsureViewportCreated();
+
+            if (!IsInDrawArea(screenPos))
+                return false;
+
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            var localCoords = Vector2.Transform(screenPos, matrix);
+            mapCoords = _viewport!.LocalToWorld(localCoords);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Converts screen pixel coordinates to map coordinates, clamped to the visible draw area.
+        /// If the point is outside, the result is clamped to the nearest edge.
+        /// </summary>
+        public MapCoordinates ClampedScreenToMap(Vector2 screenPos)
+        {
+            if (_eye is null)
+                return default;
+
+            EnsureViewportCreated();
+
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            var localCoords = Vector2.Transform(screenPos, matrix);
+
+            var clampedLocal = Vector2.Clamp(localCoords, Vector2.Zero, (Vector2)_viewport!.Size);
+
+            return _viewport.LocalToWorld(clampedLocal);
+        }
     }
 
     /// <summary>
