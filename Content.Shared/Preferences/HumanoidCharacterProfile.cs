@@ -300,7 +300,7 @@ namespace Content.Shared.Preferences
             return new(this) { Sex = sex };
         }
 
-        public HumanoidCharacterProfile WithVoice(ProtoId<EmoteSoundsPrototype> voice)
+        public HumanoidCharacterProfile WithVoice(ProtoId<EmoteSoundsPrototype>? voice)
         {
             return new (this) { Voice = voice };
         }
@@ -514,7 +514,10 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
-            var voice = GetDefaultSoundsFromSex(speciesPrototype, sex, prototypeManager, entityManager);
+            var voice = Voice;
+
+            if (!prototypeManager.HasIndex(voice))
+                voice = GetDefaultSoundsFromSex(speciesPrototype, sex, prototypeManager, entityManager);
 
             // ensure the species can be that sex and their age fits the founds
             if (!speciesPrototype.Sexes.Contains(sex))
