@@ -289,3 +289,12 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
 
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakPoly
+  name: parrot's cloak
+  description: The heart represents a love of crackers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/poly.rsi
+

@@ -263,6 +263,20 @@
     equippedPrefix: goldautism
 
 - type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckPolyPin
+  name: polyamorous pin
+  description: Be poly do crime.
+  components:
+  - type: Sprite
+    state: poly
+  - type: Clothing
+    equippedPrefix: poly
+  - type: ChameleonClothing
+    default: ClothingNeckPolyPin
+
+
+- type: entity
   parent: BaseItem
   id: SprayFlowerPin
   name: flower pin
