@@ -23,11 +23,26 @@ public abstract class SharedGasCanisterSystem : EntitySystem
         SubscribeLocalEvent<GasCanisterComponent, EntRemovedFromContainerMessage>(OnCanisterContainerModified);
         SubscribeLocalEvent<GasCanisterComponent, ItemSlotInsertAttemptEvent>(OnCanisterInsertAttempt);
         SubscribeLocalEvent<GasCanisterComponent, ComponentStartup>(OnCanisterStartup);
+        SubscribeLocalEvent<GasCanisterComponent, MapInitEvent>(OnCanisterMapInit);
+        SubscribeLocalEvent<GasCanisterComponent, BoundUIOpenedEvent>(OnCanisterUIOpened);
 
         // Bound UI subscriptions
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterHoldingTankEjectMessage>(OnHoldingTankEjectMessage);
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleasePressureMessage>(OnCanisterChangeReleasePressure);
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleaseValveMessage>(OnCanisterChangeReleaseValve);
+    }
+
+    private void OnCanisterUIOpened(Entity<GasCanisterComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        // Fixes all canisters not populating UI elements before MapInit. Mappers rejoice
+        // We still need to DirtyUI after MapInit because this has latency, bad UX for players.
+        DirtyUI(ent.Owner, ent);
+    }
+
+    private void OnCanisterMapInit(Entity<GasCanisterComponent> ent, ref MapInitEvent args)
+    {
+        // Fixes empty canisters not populating UI elements
+        DirtyUI(ent.Owner, ent);
     }
 
     private void OnCanisterStartup(Entity<GasCanisterComponent> ent, ref ComponentStartup args)
