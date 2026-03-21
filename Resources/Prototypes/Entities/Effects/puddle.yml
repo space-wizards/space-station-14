@@ -8,18 +8,6 @@
   - type: Transform
     anchored: true
     noRot: false
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddle
-
-- type: entity
-  parent: Solution
-  id: SolutionPuddle
-  components:
-  - type: Solution
-    id: puddle
-    solution:
-      maxVol: 1000 # Puddles really shouldn't have a max volume, but if I set it to 0 they will break atm. This will be removed at a later date.
 
 - type: entity
   id: PuddleSmear
@@ -30,14 +18,6 @@
   id: PuddleVomit
   parent: PuddleTemporary
   suffix: Vomit
-  components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleVomit
-
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleVomit
   components:
   - type: Solution
     solution:
@@ -50,14 +30,6 @@
   parent: PuddleTemporary
   suffix: Egg
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleEgg
-
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleEgg
-  components:
   - type: Solution
     solution:
       reagents:
@@ -68,14 +40,6 @@
   id: PuddleTomato
   parent: PuddleTemporary
   suffix: Tomato
-  components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleJuiceTomato
-
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleJuiceTomato
   components:
   - type: Solution
     solution:
@@ -88,13 +52,6 @@
   id: PuddleBloodSmall
   suffix: Blood (5u)
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleBloodSmall
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleBloodSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -105,14 +62,6 @@
   parent: PuddleTemporary
   id: PuddleBlood
   suffix: Blood (30u)
-  components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleBlood
-
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleBlood
   components:
   - type: Solution
     solution:
@@ -125,14 +74,6 @@
   id: PuddleFluorosulfuricAcidSmall
   suffix: FluorosulfuricAcid (5u)
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleFluorosulfuricAcidSmall
-
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleFluorosulfuricAcidSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -143,14 +84,6 @@
   parent: PuddleTemporary
   id: PuddleFluorosulfuricAcid
   suffix: FluorosulfuricAcid (15u)
-  components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleFluorosulfuricAcid
-
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleFluorosulfuricAcid
   components:
   - type: Solution
     solution:
@@ -163,14 +96,6 @@
   parent: PuddleTemporary
   suffix: Watermelon
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleJuiceWatermelon
-
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleJuiceWatermelon
-  components:
   - type: Solution
     solution:
       reagents:
@@ -181,14 +106,6 @@
   id: PuddleFlour
   parent: PuddleTemporary
   suffix: Flour
-  components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddleFlour
-
-- type: entity
-  parent: SolutionPuddle
-  id: SolutionPuddleFlour
   components:
   - type: Solution
     solution:
@@ -217,8 +134,9 @@
       color: "#FFFFFF80"
 
 - type: entity
-  name: puddle
+  parent: SolutionTile
   id: Puddle
+  name: puddle
   description: A puddle of liquid.
   placement:
     mode: SnapgridCenter
@@ -255,10 +173,9 @@
     - walls
     base: splat
     mode: CardinalFlags
-  - type: SolutionManager
-    solutions:
-    - SolutionPuddle
   - type: Puddle
+  - type: Solution
+    id: puddle
   - type: MixableSolution
     solution: puddle
   - type: Appearance

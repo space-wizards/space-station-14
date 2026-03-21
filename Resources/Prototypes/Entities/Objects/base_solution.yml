@@ -144,18 +144,29 @@
 - type: entity
   parent: Solution
   id: SolutionVeryTiny # For things smaller than tiny
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
       maxVol: 15
 
 - type: entity
+  abstract: true
+  parent: SolutionVeryTiny
+  id: SolutionItemVeryTiny
+  components:
+  - type: Item
+    size: Tiny
+
+- type: entity
   parent: [SolutionDrink, SolutionVeryTiny]
   id: SolutionDrinkVeryTiny
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionFood, SolutionVeryTiny]
   id: SolutionFoodVeryTiny
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: Solution
@@ -166,26 +177,46 @@
       maxVol: 7.5
 
 - type: entity
+  abstract: true
+  parent: SolutionToolVeryTiny
+  id: SolutionItemToolVeryTiny
+  components:
+  - type: Item
+    size: Tiny
+
+- type: entity
   parent: [SolutionInjector, SolutionToolVeryTiny]
   id: SolutionInjectorVeryTiny
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionAmmo, SolutionToolVeryTiny]
   id: SolutionAmmoVeryTiny
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionWelder, SolutionToolVeryTiny]
   id: SolutionWelderVeryTiny
+  categories: [ HideSpawnMenu ]
 
 ## Tiny
 
 - type: entity
   parent: Solution
   id: SolutionTiny
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
       maxVol: 30
+
+- type: entity
+  abstract: true
+  parent: SolutionTiny
+  id: SolutionItemTiny
+  components:
+  - type: Item
+    size: Tiny
 
 - type: entity
   parent: [SolutionDrink, SolutionTiny]
@@ -196,7 +227,8 @@
   id: SolutionFoodTiny
 
 - type: entity
-  parent: SolutionFoodTiny
+  abstract: true
+  parent: [SolutionFood, SolutionItemTiny]
   id: SolutionPill
   components:
   - type: Solution
@@ -206,26 +238,39 @@
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
   id: SolutionVenom
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionComposite, SolutionTiny]
   id: SolutionCompositeTiny
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: Solution
   id: SolutionToolTiny
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
       maxVol: 15
 
 - type: entity
+  abstract: true
+  parent: SolutionToolTiny
+  id: SolutionItemToolTiny
+  components:
+  - type: Item
+    size: Tiny
+
+- type: entity
   parent: [SolutionInjector, SolutionToolTiny]
   id: SolutionInjectorTiny
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionInjectorCryo, SolutionToolTiny]
   id: SolutionInjectorCryoTiny
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionHypospray, SolutionToolTiny]
@@ -238,12 +283,14 @@
 - type: entity
   parent: [SolutionWelder, SolutionToolTiny]
   id: SolutionWelderTiny
+  categories: [ HideSpawnMenu ]
 
 ## Small
 
 - type: entity
   parent: Solution
   id: SolutionSmall
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -252,50 +299,63 @@
 - type: entity
   parent: [SolutionBeaker, SolutionSmall]
   id: SolutionBeakerSmall
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionBeakerCryo, SolutionSmall]
   id: SolutionBeakerCryoSmall
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionDrink, SolutionSmall]
   id: SolutionDrinkSmall
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionFood, SolutionSmall]
   id: SolutionFoodSmall
+  categories: [ HideSpawnMenu ]
 
 - type: entity
+  abstract: true
   parent: [SolutionSpray, SolutionSmall]
   id: SolutionSpraySmall
 
 - type: entity
+  abstract: true
   parent: [SolutionVapor, SolutionSmall]
   id: SolutionVaporSmall
 
 - type: entity
   parent: [SolutionMop, SolutionSmall]
   id: SolutionMopSmall
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionComposite, SolutionSmall]
   id: SolutionCompositeSmall
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionGun, SolutionSmall]
   id: SolutionGunSmall
+  categories: [ HideSpawnMenu ]
 
 - type: entity
+  abstract: true
   parent: SolutionComposite
   id: SolutionCompositeSmallStackable
   components:
   - type: Solution
     solution:
       maxVol: 5
+  - type: Item
+    size: Small
 
 - type: entity
   parent: Solution
   id: SolutionToolSmall
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -304,6 +364,7 @@
 - type: entity
   parent: [SolutionHypospray, SolutionToolSmall]
   id: SolutionHypospraySmall
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -312,12 +373,14 @@
 - type: entity
   parent: [SolutionWelder, SolutionToolSmall]
   id: SolutionWelderSmall
+  categories: [ HideSpawnMenu ]
 
 ## Normal
 
 - type: entity
   parent: Solution
   id: SolutionNormal
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -326,18 +389,22 @@
 - type: entity
   parent: [SolutionBeaker, SolutionNormal]
   id: SolutionBeakerNormal
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionSpray, SolutionNormal]
   id: SolutionSprayNormal
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionGun, SolutionNormal]
   id: SolutionGunNormal
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: Solution
   id: SolutionToolNormal
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -346,32 +413,43 @@
 - type: entity
   parent: [SolutionWelder, SolutionToolNormal]
   id: SolutionWelderNormal
+  categories: [ HideSpawnMenu ]
 
 ## Large
 
 - type: entity
   parent: Solution
   id: SolutionLarge
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
       maxVol: 240
 
 - type: entity
+  parent: [SolutionFood, SolutionLarge]
+  id: SolutionFoodLarge
+  categories: [ HideSpawnMenu ]
+
+- type: entity
   parent: [SolutionDrink, SolutionLarge]
   id: SolutionDrinkLarge
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionSpray, SolutionLarge]
   id: SolutionSprayLarge
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionGun, SolutionLarge]
   id: SolutionGunLarge
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: Solution
   id: SolutionToolLarge
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -380,16 +458,19 @@
 - type: entity
   parent: [SolutionInjector, SolutionToolLarge]
   id: SolutionInjectorLarge
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [SolutionWelder, SolutionToolLarge]
   id: SolutionWelderLarge
+  categories: [ HideSpawnMenu ]
 
 ## Huge
 
 - type: entity
   parent: Solution
   id: SolutionHuge
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -398,12 +479,14 @@
 - type: entity
   parent: [SolutionDrink, SolutionHuge]
   id: SolutionDrinkHuge
+  categories: [ HideSpawnMenu ]
 
 ## Huge Ginormous
 
 - type: entity
   parent: Solution
   id: SolutionGinormous
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -412,10 +495,12 @@
 - type: entity
   parent: [SolutionBeaker, SolutionGinormous]
   id: SolutionBeakerGinormous
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: Solution
   id: SolutionToolGinormous
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -424,10 +509,12 @@
 - type: entity
   parent: [SolutionWelder, SolutionToolGinormous]
   id: SolutionWelderGinormous
+  categories: [ HideSpawnMenu ]
 
 ## Below sizes are for solutions attached to entities bigger than Ginormous
 
 - type: entity
+  abstract: true
   parent: Solution
   id: SolutionTile # Tile Anchored, Cannot be moved. Anything more than this and you should just not impose a max volume.
   components:

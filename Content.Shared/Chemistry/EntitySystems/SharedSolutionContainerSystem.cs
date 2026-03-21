@@ -70,6 +70,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
 
+    private EntityQuery<SolutionComponent> _solutionQuery;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -87,9 +89,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
 
         SubscribeLocalEvent<SolutionManagerComponent, MapInitEvent>(OnManagerMapInit);
-        SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown); ;
+        SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
+
+        _solutionQuery = GetEntityQuery<SolutionComponent>();
     }
 
     /// <summary>
@@ -171,6 +175,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (ev.ContainerEntity.HasValue)
             container = ev.ContainerEntity.Value;
 
+        if (_solutionQuery.TryComp(container, out var comp) && comp.Id == name)
+        {
+            entity = (container.Owner, comp);
+            return true;
+        }
+
         if (!Resolve(container, ref container.Comp, false)) // TODO: LOGMISSING: TRUE, ONLY HERE SO I CAN DEBUG YAML CHANGES
             return false;
 
@@ -245,8 +255,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionManagerComponent?> entity, bool includeSelf = true)
     {
-        if (includeSelf && TryComp(entity, out SolutionComponent? solutionComp))
-            yield return (null, (entity.Owner, solutionComp));
+        if (includeSelf && _solutionQuery.TryComp(entity, out var solutionComp))
+            yield return (solutionComp.Id, (entity.Owner, solutionComp));
 
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             yield break;
@@ -1061,7 +1071,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
         foreach (var solution in container.ContainedEntities)
         {
-            var sol = Comp<SolutionComponent>(solution);
+            var sol = _solutionQuery.Comp(solution);
             entity.Comp.Solutions.TryAdd(sol.Id, (solution, sol));
         }
     }
@@ -1075,7 +1085,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     private void OnSolutionAdded(Entity<SolutionManagerComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
         // Container networking jank
-        if (args.Container.ID != entity.Comp.Container || !TryComp<SolutionComponent>(args.Entity, out var solution))
+        if (args.Container.ID != entity.Comp.Container || !_solutionQuery.TryComp(args.Entity, out var solution))
             return;
 
         EnsureComp<ContainedSolutionComponent>(args.Entity, out var contained);
@@ -1086,7 +1096,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)
     {
         // Container networking jank
-        if (args.Container.ID != entity.Comp.Container || !TryComp<SolutionComponent>(args.Entity, out var solution))
+        if (args.Container.ID != entity.Comp.Container || !_solutionQuery.TryComp(args.Entity, out var solution))
             return;
 
         RemComp<ContainedSolutionComponent>(args.Entity);
@@ -1112,6 +1122,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         string name,
         out Entity<SolutionComponent> solutionEntity)
     {
+        if (_solutionQuery.TryComp(entity, out var comp) && comp.Id == name)
+        {
+            solutionEntity = (entity.Owner, comp);
+            return true;
+        }
+
         // Ensure we have a SolutionManagerComponent
         // EnsureComp should ensure a container and fill that container with default spawns!
         if (entity.Comp == null)
@@ -1165,7 +1181,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var uid = EntityManager.CreateEntityUninitialized(solution);
 
         // If you pass in a ProtoId without a SolutionComponent that's your own damn fault!
-        var comp = Comp<SolutionComponent>(uid);
+        var comp = _solutionQuery.Comp(uid);
         return (uid, comp);
     }
 

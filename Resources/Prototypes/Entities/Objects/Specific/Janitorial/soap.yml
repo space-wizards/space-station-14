@@ -42,13 +42,9 @@
         density: 10
         mask:
         - ItemMask
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      soap:
-        maxVol: 50
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 50
+    - SolutionSoap
   - type: SolutionTransfer
     transferAmount: 10
     minTransferAmount: 1
@@ -68,6 +64,23 @@
   - type: CleansForensics
   - type: Residue
     residueAdjective: residue-slippery
+
+- type: entity
+  parent: SolutionFoodSmall
+  id: SolutionSoapBase
+  components:
+  - type: Solution
+    id: soap
+
+- type: entity
+  parent: SolutionSoapBase
+  id: SolutionSoap
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SoapReagent
+        Quantity: 60
 
 - type: entity
   parent: BaseSoap
@@ -94,15 +107,23 @@
     fillBaseName: nt-
   - type: Item
     heldPrefix: nt
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      soap:
-        maxVol: 100
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 100
+    - SolutionSoapNT
   - type: Residue
     residueColor: residue-grey
+
+- type: entity
+  parent: SolutionSoapBase
+  id: SolutionSoapNT
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SoapReagent
+        Quantity: 55
+      - ReagentId: Plasma
+        Quantity: 5
 
 - type: entity
   parent: BaseSoap
@@ -156,13 +177,9 @@
   description: A tiny piece of syndicate soap.
   categories: [ HideSpawnMenu ]
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      soap:
-        maxVol: 1.5 # 50 / 30 = 1.666
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 1.5
+    - SolutionSoaplet
   - type: SolutionContainerVisuals
     maxFillLevels: 0
   - type: Sprite
@@ -201,6 +218,18 @@
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-red
+    
+- type: entity
+  parent: SolutionFood
+  id: SolutionSoaplet
+  components:
+  - type: Solution
+    id: soap
+    solution:
+      maxVol: 2 # 60 / 30 = 2
+      reagents:
+      - ReagentId: SoapReagent
+        Quantity: 2
 
 - type: entity
   parent: BaseSoap
@@ -241,12 +270,19 @@
       launchForwardsMultiplier: 3.0
   - type: Item
     heldPrefix: omega
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      soap:
-        maxVol: 240 #In the Greek alphabet, Omega is the 24th letter
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 240
+    - SolutionSoapOmega
   - type: Residue
     residueColor: residue-blue
+
+- type: entity
+  parent: SolutionFoodLarge
+  id: SolutionSoapOmega
+  components:
+  - type: Solution
+    id: soap
+    solution:
+      reagents:
+      - ReagentId: SoapReagent
+        Quantity: 240 #In the Greek alphabet, Omega is the 24th letter

@@ -35,6 +35,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Chemistry.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Administration.Systems
@@ -573,7 +574,7 @@ namespace Content.Server.Administration.Systems
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                HasComp<SolutionManagerComponent>(args.Target))
+                (HasComp<SolutionManagerComponent>(args.Target) || HasComp<SolutionComponent>(args.Target)))
             {
                 Verb verb = new()
                 {

@@ -41,21 +41,15 @@ namespace Content.Server.Administration.UI
 
         public override EuiStateBase GetNewState()
         {
-            List<(string Name, NetEntity Solution)>? netSolutions;
+            List<(string Name, NetEntity Solution)> netSolutions = new();
 
-            if (_entityManager.TryGetComponent(Target, out SolutionManagerComponent? container) && container.Solutions.Count > 0)
+            foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions(Target))
             {
-                netSolutions = new();
-                foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions((Target, container)))
-                {
-                    if (name is null || !_entityManager.TryGetNetEntity(solution, out var netSolution))
+                if (name is null || !_entityManager.TryGetNetEntity(solution, out var netSolution))
                         continue;
 
-                    netSolutions.Add((name, netSolution.Value));
-                }
+                netSolutions.Add((name, netSolution.Value));
             }
-            else
-                netSolutions = null;
 
             return new EditSolutionsEuiState(_entityManager.GetNetEntity(Target), netSolutions, _gameTiming.CurTick);
         }
