@@ -74,6 +74,14 @@
 
   You can also use [color=yellow][bold][keybind="Drop"][/bold][/color] to release pulled entities from your active hand.
 
+  ### Carrying
+  You can [color=cyan]fireman carry[/color] a [color=cyan]downed[/color] or incapacitated mob over your shoulder.
+  - [color=cyan]Pull[/color] a downed mob, then [color=cyan]pull again[/color] to pick them up.
+  - You can also right-click a downed mob and select [bold]Fireman carry[/bold].
+  - Carrying takes [bold]both hands[/bold] and slows you down.
+  - To drop them, use [color=yellow][bold][keybind="Drop"][/bold][/color] or right-click and select [bold]Drop[/bold].
+  - You drop them automatically if you get stunned, downed, or go critical. They also get dropped if they recover.
+
   ## Interactions
   The game features [bold]six[/bold] types of context-sensitive interactions, accessible through different methods.
 

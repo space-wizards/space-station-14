@@ -137,6 +137,8 @@
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
   - type: Puller
+  - type: Carrier
+  - type: Carriable
   - type: Speech
     speechSounds: Alto
   - type: DamageForceSay
