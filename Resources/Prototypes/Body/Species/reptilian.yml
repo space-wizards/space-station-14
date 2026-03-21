@@ -133,6 +133,9 @@
     proto: lizard
   - type: Vocal
     sounds:
+      Masculine: MaleReptilian
+      Feminine: FemaleReptilian
+    default:
       Male: MaleReptilian
       Female: FemaleReptilian
       Unsexed: MaleReptilian

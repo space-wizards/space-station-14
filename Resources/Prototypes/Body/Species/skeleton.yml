@@ -104,7 +104,7 @@
     speechVerb: Skeleton
   - type: ZombieImmune
   - type: Vocal
-    sounds:
+    default:
       Male: Skeleton
       Female: Skeleton
       Unsexed: Skeleton

@@ -841,11 +841,14 @@ namespace Content.Shared.Preferences
             return profile;
         }
 
-        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromSex(SpeciesPrototype speciesPrototype, Sex sex, IPrototypeManager prototypeManager, IEntityManager entityManager)
+        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromSex(SpeciesPrototype? speciesPrototype, Sex sex, IPrototypeManager prototypeManager, IEntityManager entityManager)
         {
+            if (speciesPrototype == null)
+                return null;
+
             var mob = prototypeManager.Index(speciesPrototype.Prototype);
             // This SHOULD never fail
-            if (mob.Components.TryGetComponent<VocalComponent>(entityManager.ComponentFactory, out var voiceComponent) && voiceComponent.DefaultSounds[sex] is var defaultSound)
+            if (mob.Components.TryGetComponent<VocalComponent>(entityManager.ComponentFactory, out var voiceComponent) && voiceComponent.Default[sex] is var defaultSound)
                 return defaultSound;
             return null;
         }

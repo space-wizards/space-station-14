@@ -172,6 +172,8 @@
     proto: vox
   - type: Vocal
     sounds:
+      Neutral: UnisexVox
+    default:
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox

@@ -132,6 +132,8 @@
     allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
     sounds:
+      Neutral: UnisexArachnid
+    default:
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid

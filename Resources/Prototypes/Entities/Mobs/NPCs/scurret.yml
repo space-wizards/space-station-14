@@ -49,7 +49,7 @@
       amount: 4
   # They wawa!
   - type: Vocal
-    sounds:
+    default:
       Male: Scurret
       Female: Scurret
       Unsexed: Scurret

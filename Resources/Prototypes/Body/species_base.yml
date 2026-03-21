@@ -142,6 +142,9 @@
   - type: DamageForceSay
   - type: Vocal
     sounds:
+      Masculine: MaleHuman
+      Feminine: FemaleHuman
+    default:
       Male: MaleHuman
       Female: FemaleHuman
       Unsexed: MaleHuman

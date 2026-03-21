@@ -154,6 +154,8 @@
     allowedEmotes: ['Chirp']
   - type: Vocal
     sounds:
+      Neutral: UnisexDiona
+    default:
       Male: UnisexDiona
       Female: UnisexDiona
       Unsexed: UnisexDiona

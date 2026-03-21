@@ -162,7 +162,7 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: MothAccent
   - type: Vocal
-    sounds:
+    default:
       Male: UnisexMoth
       Female: UnisexMoth
       Unsexed: UnisexMoth

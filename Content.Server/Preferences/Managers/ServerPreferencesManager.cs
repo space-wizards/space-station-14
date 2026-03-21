@@ -41,6 +41,7 @@ namespace Content.Server.Preferences.Managers
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly MarkingManager _marking = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         // Cache player prefs on the server so we don't need as much async hell related to them.
         private readonly Dictionary<NetUserId, PlayerPrefData> _cachedPlayerPrefs =
@@ -110,8 +111,15 @@ namespace Content.Server.Preferences.Managers
                 new Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>();
 
             var species = profile.Species;
-            if (!_prototypeManager.HasIndex<SpeciesPrototype>(species))
+            if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
                 species = HumanoidCharacterProfile.DefaultSpecies;
+
+            var voice = HumanoidCharacterProfile.GetDefaultSoundsFromSex(speciesPrototype,
+                sex,
+                _prototypeManager,
+                _entityManager);
+            if (profile.Voice is { } profileVoice)
+                voice = profileVoice;
 
             if (profile.OrganMarkings?.RootElement is { } element)
             {
@@ -173,6 +181,7 @@ namespace Content.Server.Preferences.Managers
                 species,
                 profile.Age,
                 sex,
+                voice,
                 gender,
                 new HumanoidCharacterAppearance
                 (

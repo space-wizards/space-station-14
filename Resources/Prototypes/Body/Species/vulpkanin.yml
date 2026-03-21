@@ -160,6 +160,9 @@
     allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl' ]
   - type: Vocal
     sounds:
+      Masculine: MaleVulpkanin
+      Feminine: FemaleVulpkanin
+    default:
       Male: MaleVulpkanin
       Female: FemaleVulpkanin
       Unsexed: MaleVulpkanin

@@ -108,6 +108,9 @@
     proto: slime
   - type: Vocal
     sounds:
+      Masculine: MaleSlime
+      Feminine: FemaleSlime
+    default:
       Male: MaleSlime
       Female: FemaleSlime
       Unsexed: MaleSlime
