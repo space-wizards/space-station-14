@@ -21,7 +21,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
+    [Dependency] private readonly SurveillanceCameraMapSystem _cameraMapSystem = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -270,6 +270,8 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         }
 
         UpdateVisuals(camera, component);
+
+        _cameraMapSystem.UpdateCameraMarker((camera, component));
     }
 
     public void AddActiveViewer(EntityUid camera, EntityUid player, EntityUid? monitor = null, SurveillanceCameraComponent? component = null, ActorComponent? actor = null)

@@ -104,3 +104,73 @@
     transmitFrequencyId: SurveillanceCamera
   - type: WiredNetworkConnection
   - type: SurveillanceCameraMonitor
+
+- type: entity
+  parent: BaseItem
+  id: Magic9Ball
+  name: magic 9 ball
+  description: An endless source of wisdom... Now with a speaker included!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balls/magic9ball.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: TriggerOnActivate
+  - type: TriggerOnSignal
+  - type: UseDelay
+    delay: 5
+  - type: UseDelayOnTrigger
+  - type: UseDelayTriggerCondition
+  - type: SpeakOnTrigger
+    pack: Magic9Ball
+  - type: Speech
+    speechSounds: Pai
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 20
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: SolutionContainerManager
+    solutions:
+      magic9ball:
+        maxVol: 20
+        reagents:
+        - ReagentId: Ethanol
+          Quantity: 20
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: EmitSoundOnLand
+    sound:
+      collection: GlassBreak
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpillBehavior
+        solution: magic9ball
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50

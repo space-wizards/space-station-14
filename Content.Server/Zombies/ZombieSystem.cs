@@ -262,7 +262,7 @@ namespace Content.Server.Zombies
                     _damageable.TryChangeDamage(args.User, entity.Comp.HealingOnBite, true, false);
 
                     // If we cannot infect the living target, the zed will just heal itself.
-                    if (HasComp<ZombieImmuneComponent>(uid) || cannotSpread || _random.Prob(GetZombieInfectionChance(uid, entity.Comp)))
+                    if (HasComp<ZombieImmuneComponent>(uid) || cannotSpread || !_random.Prob(GetZombieInfectionChance(uid, entity.Comp)))
                         continue;
 
                     EnsureComp<PendingZombieComponent>(uid);
@@ -295,16 +295,9 @@ namespace Content.Server.Zombies
             if (!Resolve(source, ref zombiecomp))
                 return false;
 
-            foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
-            {
-                _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
-                _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
-            }
-            if (TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
-            {
-                appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
-            }
-            _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
+            _visualBody.ApplyProfiles(target, zombiecomp.BeforeZombifiedProfiles);
+            _visualBody.ApplyMarkings(target, zombiecomp.BeforeZombifiedMarkings);
+
             _bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
 
             return true;
