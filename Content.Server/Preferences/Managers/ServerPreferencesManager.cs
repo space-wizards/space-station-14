@@ -114,10 +114,7 @@ namespace Content.Server.Preferences.Managers
             if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
                 species = HumanoidCharacterProfile.DefaultSpecies;
 
-            var voice = HumanoidCharacterProfile.GetDefaultSoundsFromSex(speciesPrototype,
-                sex,
-                _prototypeManager,
-                _entityManager);
+            var voice = HumanoidCharacterProfile.GetDefaultSoundsFromPrototype(speciesPrototype, sex, _prototypeManager, _entityManager);
             if (profile.Voice is { } profileVoice)
                 voice = profileVoice;
 

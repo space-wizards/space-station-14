@@ -216,8 +216,7 @@ namespace Content.Server.Database
                 var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                if (prototypeManager.TryIndex(humanoid.Species, out var prototype))
-                    voice = HumanoidCharacterProfile.GetDefaultSoundsFromSex(prototype, humanoid.Sex, prototypeManager, entityManager);
+                voice = HumanoidCharacterProfile.GetDefaultSoundsFromSpecies(humanoid.Species, humanoid.Sex, prototypeManager, entityManager);
             }
 
             profile.CharacterName = humanoid.Name;

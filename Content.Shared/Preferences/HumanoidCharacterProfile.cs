@@ -251,7 +251,7 @@ namespace Content.Shared.Preferences
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
-                voice = GetDefaultSoundsFromSex(speciesPrototype, sex, prototypeManager, entityManager);
+                voice = GetDefaultSoundsFromPrototype(speciesPrototype, sex, prototypeManager, entityManager);
             }
 
             var gender = Gender.Epicene;
@@ -514,10 +514,11 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
-            var voice = Voice;
+            var voices = GetVocalFromSpecies(Species, prototypeManager, entityManager)?.Sounds?.Keys.ToList() ?? [];
 
-            if (!prototypeManager.HasIndex(voice))
-                voice = GetDefaultSoundsFromSex(speciesPrototype, sex, prototypeManager, entityManager);
+            var voice = Voice;
+            if (voice is not { } real || !voices.Contains(real) && !prototypeManager.HasIndex(voice))
+                voice = GetDefaultSoundsFromPrototype(speciesPrototype, sex, prototypeManager, entityManager);
 
             // ensure the species can be that sex and their age fits the founds
             if (!speciesPrototype.Sexes.Contains(sex))
@@ -844,16 +845,53 @@ namespace Content.Shared.Preferences
             return profile;
         }
 
-        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromSex(SpeciesPrototype? speciesPrototype, Sex sex, IPrototypeManager prototypeManager, IEntityManager entityManager)
+        // These exist solely because it needs like 4 operations to do one thing
+        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromSpecies(ProtoId<SpeciesPrototype>? speciesId,
+            Sex? sex,
+            IPrototypeManager prototypeManager,
+            IEntityManager entityManager)
         {
-            if (speciesPrototype == null)
+            prototypeManager.TryIndex(speciesId, out var prototype);
+            return GetDefaultSoundsFromPrototype(prototype, sex, prototypeManager, entityManager);
+        }
+
+        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromPrototype(SpeciesPrototype? speciesPrototype,
+            Sex? sex,
+            IPrototypeManager prototypeManager,
+            IEntityManager entityManager)
+        {
+            var vocalComponent = GetVocalFromPrototype(speciesPrototype, prototypeManager, entityManager);
+            return GetDefaultSoundsFromVocal(vocalComponent, sex, prototypeManager, entityManager);
+        }
+
+        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromVocal(VocalComponent? vocalComponent,
+            Sex? sex,
+            IPrototypeManager prototypeManager,
+            IEntityManager entityManager)
+        {
+            if (sex is not { } real)
                 return null;
 
-            var mob = prototypeManager.Index(speciesPrototype.Prototype);
-            // This SHOULD never fail
-            if (mob.Components.TryGetComponent<VocalComponent>(entityManager.ComponentFactory, out var voiceComponent) && voiceComponent.Default[sex] is var defaultSound)
-                return defaultSound;
-            return null;
+            return vocalComponent?.Default[real];
+        }
+
+        public static VocalComponent? GetVocalFromSpecies(ProtoId<SpeciesPrototype>? speciesId,
+            IPrototypeManager prototypeManager,
+            IEntityManager entityManager)
+        {
+            prototypeManager.TryIndex(speciesId, out var speciesPrototype);
+            return GetVocalFromPrototype(speciesPrototype, prototypeManager, entityManager);
+        }
+
+        public static VocalComponent? GetVocalFromPrototype(SpeciesPrototype? speciesPrototype,
+            IPrototypeManager prototypeManager,
+            IEntityManager entityManager)
+        {
+            prototypeManager.TryIndex(speciesPrototype?.Prototype, out var entityPrototype);
+            VocalComponent? vocalComponent = null;
+            entityPrototype?.Components.TryGetComponent(entityManager.ComponentFactory,
+                out vocalComponent);
+            return vocalComponent;
         }
     }
 }
