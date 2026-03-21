@@ -182,3 +182,53 @@
         Caustic: 0.95
   - type: ExplosionResistance
     damageCoefficient: 0.4
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHelmetYariloMask
+  name: Yarilo Mask
+  description: solnce
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Hats/Yarilomask.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Hats/Yarilomask.rsi
+  - type: Armor #This is intentionally not spaceproof, when the time comes to port the values from SS13 this should be buffed from what it was.
+    modifiers:
+      coefficients:
+        Blunt: 0.50
+        Slash: 0.80
+        Piercing: 0.80
+        Heat: 0.80
+        Radiation: 0.80
+        Caustic: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHelmetDireCrusHelmet
+  name: Dire Crusade Helmet
+  description: very evil
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Hats/DireCrusHelmet.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Hats/DireCrusHelmet.rsi
+  - type: Armor #This is intentionally not spaceproof, when the time comes to port the values from SS13 this should be buffed from what it was.
+    modifiers:
+      coefficients:
+        Blunt: 0.50
+        Slash: 0.80
+        Piercing: 0.80
+        Heat: 0.80
+        Radiation: 0.80
+        Caustic: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.4

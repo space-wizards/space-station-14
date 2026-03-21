@@ -190,3 +190,59 @@
     reflectProb: 0.1
     spread: 75
     reflectingInHands: false
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterIronArmor
+  name: Iron Armor
+  description: minecraft
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Suit/IronArmor.rsi
+    state : icon
+  - type: Item
+    size: Medium
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Suit/IronArmor.rsi
+    state : equipped-OUTERCLOTHING
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.5
+        Piercing: 0.7
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Reflect
+    reflectProb: 0.1
+    spread: 75
+    reflectingInHands: false
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterRadiantPilot
+  name: Radiant Pilot
+  description: drushina peruna
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Suit/RadiantPilot.rsi
+    state : icon
+  - type: Item
+    size: Medium
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Suit/RadiantPilot.rsi
+    state : equipped-OUTERCLOTHING
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.5
+        Piercing: 0.7
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Reflect
+    reflectProb: 0.1
+    spread: 75
+    reflectingInHands: false
