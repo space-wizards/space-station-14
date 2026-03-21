@@ -219,6 +219,7 @@
     spread: 75
     reflectingInHands: false
 
+
 - type: entity
   parent: ClothingOuterArmorBase
   id: ClothingOuterRadiantPilot
@@ -246,7 +247,8 @@
     reflectProb: 0.1
     spread: 75
     reflectingInHands: false
-
+    
+- type: entity
   id: ClothingOuterBabaTapaRadSuit
   name: BTAPA LP's suit.
   description: devyati shlyapnaya sobaka.
