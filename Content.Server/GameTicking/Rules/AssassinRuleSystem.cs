@@ -57,7 +57,7 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
 
     protected override void ActiveTick(EntityUid uid, AssassinRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
-        Sawmill.Debug($"AssassinRule ActiveTick for {ToPrettyString(uid)}");
+        
         // only run when scheduled
         var now = Timing.CurTime;
         if (component.NextRoundEndCheck.HasValue && component.NextRoundEndCheck > now)

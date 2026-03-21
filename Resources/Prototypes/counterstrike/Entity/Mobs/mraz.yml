@@ -1,0 +1,59 @@
+- type: entity
+  name: Mraz
+  parent: [ SimpleMobBase, MobCombat, MobLuntik ]
+  id: MobMraz
+  description: god.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: base
+      sprite: Objects/counterstrike/Mobs/mraz.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: base
+      Critical:
+        Base: base
+      Dead:
+        Base: dead
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    attackRate: 1.0
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 5
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+    - Revolutionary
+    - Wizard
+    - Xeno
+    - Dragon
+    - Xenoborg
+    - SimpleHostile
+    - AllHostile
+  - type: FactionException
+  - type: NPCRetaliation
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      70: Critical
+      71: Dead
+  - type: Bloodstream
+    bloodMaxVolume: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 300
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
