@@ -4,7 +4,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Speech.Components;
 
@@ -21,7 +20,7 @@ public sealed partial class VocalComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public Dictionary<string, ProtoId<EmoteSoundsPrototype>>? Sounds;
+    public Dictionary<ProtoId<EmoteSoundsPrototype>, string>? Voices;
 
     /// <summary>
     /// Gives the voice system a default to base off of.

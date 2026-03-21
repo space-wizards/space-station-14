@@ -132,9 +132,9 @@
   - type: TypingIndicator
     proto: lizard
   - type: Vocal
-    sounds:
-      Masculine: MaleReptilian
-      Feminine: FemaleReptilian
+    voices:
+      MaleReptilian: humanoid-profile-editor-voice-masculine
+      FemaleReptilian: humanoid-profile-editor-voice-feminine
     default:
       Male: MaleReptilian
       Female: FemaleReptilian

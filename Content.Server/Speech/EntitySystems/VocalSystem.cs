@@ -40,7 +40,7 @@ public sealed class VocalSystem : EntitySystem
             return;
 
         var targetComp = EnsureComp<VocalComponent>(target);
-        targetComp.Sounds = source.Comp.Sounds;
+        targetComp.Voices = source.Comp.Voices;
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
         targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
@@ -112,16 +112,16 @@ public sealed class VocalSystem : EntitySystem
         return _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), component.ScreamId);
     }
 
-    private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? voice = null)
+    private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
-        if (component.Sounds == null)
+        if (component.Voices == null)
             return;
 
-        voice ??= CompOrNull<HumanoidProfileComponent>(uid)?.Voice ?? "MaleHuman";
+        protoId ??= CompOrNull<HumanoidProfileComponent>(uid)?.Voice ?? "MaleHuman";
 
-        if (!_proto.HasIndex(voice))
+        if (!_proto.HasIndex(protoId))
             return;
 
-        component.EmoteSounds = voice;
+        component.EmoteSounds = protoId;
     }
 }

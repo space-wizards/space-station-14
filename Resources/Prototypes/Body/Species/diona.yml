@@ -153,8 +153,8 @@
     speechVerb: Plant
     allowedEmotes: ['Chirp']
   - type: Vocal
-    sounds:
-      Neutral: UnisexDiona
+    voices:
+      UnisexDiona: humanoid-profile-editor-voice-neutral
     default:
       Male: UnisexDiona
       Female: UnisexDiona

@@ -171,8 +171,8 @@
   - type: TypingIndicator
     proto: vox
   - type: Vocal
-    sounds:
-      Neutral: UnisexVox
+    voices:
+      UnisexVox: humanoid-profile-editor-voice-neutral
     default:
       Male: UnisexVox
       Female: UnisexVox

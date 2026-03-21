@@ -40,8 +40,8 @@ public sealed class HumanoidProfileTests
             Assert.That(humanoidComponent.Gender, Is.EqualTo(Gender.Neuter));
             Assert.That(humanoidComponent.Species, Is.EqualTo(Vox));
 
-            Assert.That(voiceComponent.Sounds, Is.Not.Null, message: "the MobHuman spawned by this test needs to have sex-specific sound set");
-            Assert.That(voiceComponent.Sounds![Sex.Female], Is.EqualTo(voiceComponent.EmoteSounds));
+            Assert.That(voiceComponent.Voices, Is.Not.Null, message: "the MobHuman spawned by this test needs to have sex-specific sound set");
+            Assert.That(voiceComponent.Voices!["MaleHuman"], Is.EqualTo(voiceComponent.EmoteSounds));
         });
 
         await pair.CleanReturnAsync();

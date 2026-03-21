@@ -110,10 +110,10 @@ public sealed partial class HumanoidProfileEditor
 
         _prototypeManager.TryIndex(Profile.Species, out var speciesPrototype);
         var voices = HumanoidCharacterProfile.GetVocalFromPrototype(speciesPrototype, _prototypeManager, _entManager)
-            ?.Sounds;
+            ?.Voices;
 
-        var voicesNames = voices?.Keys.ToList() ?? [];
-        if (voices?.Values.ToList() is { } voiceIds)
+        var voicesNames = voices?.Values.ToList() ?? [];
+        if (voices?.Keys.ToList() is { } voiceIds)
             _voices.AddRange(voiceIds);
 
         if (Profile?.Voice is { } voice && !_voices.Contains(voice) &&

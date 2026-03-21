@@ -514,7 +514,7 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
-            var voices = GetVocalFromSpecies(Species, prototypeManager, entityManager)?.Sounds?.Keys.ToList() ?? [];
+            var voices = GetVocalFromSpecies(Species, prototypeManager, entityManager)?.Voices?.Keys.ToList() ?? [];
 
             var voice = Voice;
             if (voice is not { } real || !voices.Contains(real) && !prototypeManager.HasIndex(voice))

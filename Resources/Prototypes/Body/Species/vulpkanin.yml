@@ -159,9 +159,9 @@
     speechVerb: Vulpkanin
     allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl' ]
   - type: Vocal
-    sounds:
-      Masculine: MaleVulpkanin
-      Feminine: FemaleVulpkanin
+    voices:
+      MaleVulpkanin: humanoid-profile-editor-voice-masculine
+      FemaleVulpkanin: humanoid-profile-editor-voice-feminine
     default:
       Male: MaleVulpkanin
       Female: FemaleVulpkanin

@@ -588,8 +588,8 @@
   - type: ZombieAccentOverride
     accent: zombieMoth
   - type: Vocal
-    sounds:
-      Neutral: UnisexMoth
+    voices:
+      UnisexMoth: humanoid-profile-editor-voice-neutral
     default:
       Male: UnisexMoth
       Female: UnisexMoth
