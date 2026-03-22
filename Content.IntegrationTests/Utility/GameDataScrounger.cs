@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Utility;
 /// </summary>
 /// <remarks>
 /// <para>
-///     This does not include engine prototypes, nor anything generated at runtime, as it's made to be simple and fast
+///     This does not include test-provided prototypes, nor anything generated at runtime, as it's made to be simple and fast
 ///     for usage during test framework startup where we cannot afford to initialize all of <see cref="ISerializationManager"/>.
 /// </para>
 /// <para>
@@ -96,7 +96,7 @@ public static partial class GameDataScrounger
     /// </summary>
     public static string[] PrototypesOfKind(Type t)
     {
-        Assert.That(t.IsAssignableTo(t));
+        Assert.That(t.IsAssignableTo(typeof(IPrototype)));
 
         if (t.GetCustomAttribute<PrototypeAttribute>() is { Type: { } ty })
             return PrototypesOfKind(ty);
