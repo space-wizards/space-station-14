@@ -10,6 +10,8 @@
       - state: icon
     - type: Flash
       stunTime: 3000
+      # it can not be without a melee attack
+      flashOnUse: false
     - type: LimitedCharges
       maxCharges: 4
       charges: 4
