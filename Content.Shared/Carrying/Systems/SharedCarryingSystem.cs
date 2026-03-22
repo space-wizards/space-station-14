@@ -55,7 +55,7 @@ public abstract class SharedCarryingSystem : EntitySystem
         SubscribeLocalEvent<CarriableComponent, GetVerbsEvent<InteractionVerb>>(AddCarryVerb);
         SubscribeLocalEvent<BeingCarriedComponent, GetVerbsEvent<InteractionVerb>>(AddDropVerb);
 
-        // Pull → pull again on a downed target escalates to carry
+        // Pull → toggle again on an incapacitated target escalates to carry
         SubscribeLocalEvent<CarriableComponent, AttemptStopPullingEvent>(OnAttemptStopPulling);
 
         SubscribeLocalEvent<CarrierComponent, DragDropTargetEvent>(OnDragDropTarget);
@@ -127,25 +127,21 @@ public abstract class SharedCarryingSystem : EntitySystem
         if (args.Cancelled || _isTransitioning)
             return;
 
-        // TogglePull calls TryStopPull without a user — fall back to PullableComponent.Puller
-        var carrier = args.User;
-        if (carrier == null && TryComp<PullableComponent>(uid, out var pullable))
-            carrier = pullable.Puller;
-
-        if (carrier == null)
+        // System-initiated stops (User == null) like virtual-item deletion or
+        // container insertion should pass through without escalation.
+        if (args.User == null)
             return;
 
-        if (!TryComp<CarrierComponent>(carrier.Value, out var carrierComp))
+        if (!TryComp<CarrierComponent>(args.User.Value, out var carrierComp))
             return;
 
-        if (!CanCarry(carrier.Value, uid))
+        if (!CanCarry(args.User.Value, uid))
             return;
 
-        // Must cancel on every prediction tick, not just the first, for consistency
         args.Cancelled = true;
 
         if (_timing.IsFirstTimePredicted)
-            StartCarryDoAfter(carrier.Value, uid, carrierComp);
+            StartCarryDoAfter(args.User.Value, uid, carrierComp);
     }
 
     #endregion
@@ -188,7 +184,7 @@ public abstract class SharedCarryingSystem : EntitySystem
         if (_standing.IsDown(carrier) || _mobState.IsIncapacitated(carrier))
             return false;
 
-        if (!_standing.IsDown(target) && !_mobState.IsIncapacitated(target))
+        if (!_mobState.IsIncapacitated(target))
             return false;
 
         if (!_actionBlocker.CanInteract(carrier, target))
@@ -306,8 +302,10 @@ public abstract class SharedCarryingSystem : EntitySystem
         Dirty(carrier, carrierComp);
         Dirty(target, carriableComp);
 
-        RemCompDeferred<ActiveCarrierComponent>(carrier);
-        RemCompDeferred<BeingCarriedComponent>(target);
+        // Remove immediately (not deferred) so event handlers like OnCarriedCanMove
+        // and OnCarriedStood don't fire after the drop is complete.
+        RemComp<BeingCarriedComponent>(target);
+        RemComp<ActiveCarrierComponent>(carrier);
 
         _virtualItem.DeleteInHandsMatching(carrier, target);
 

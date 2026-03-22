@@ -314,3 +314,6 @@ Resources/MapImages
 CLAUDE.md
 .serena/
 /docs/
+
+# Deploy
+deploy.sh
