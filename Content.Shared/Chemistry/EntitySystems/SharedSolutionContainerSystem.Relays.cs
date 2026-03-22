@@ -8,22 +8,6 @@ namespace Content.Shared.Chemistry.EntitySystems;
 #region Events
 
 /// <summary>
-/// This event alerts system that the solution was changed
-/// </summary>
-[ByRefEvent]
-public record struct SolutionContainerChangedEvent
-{
-    public readonly Solution Solution;
-    public readonly string SolutionId;
-
-    public SolutionContainerChangedEvent(Solution solution, string solutionId)
-    {
-        SolutionId = solutionId;
-        Solution = solution;
-    }
-}
-
-/// <summary>
 /// An event raised when more reagents are added to a (managed) solution than it can hold.
 /// </summary>
 [ByRefEvent]
@@ -85,10 +69,8 @@ public abstract partial class SharedSolutionContainerSystem
     protected virtual void OnSolutionChanged(Entity<ContainedSolutionComponent> entity, ref SolutionChangedEvent args)
     {
         var (solutionId, solutionComp) = args.Solution;
-        var solution = solutionComp.Solution;
 
-        var relayEvent = new SolutionContainerChangedEvent(solution, solutionComp.Id);
-        RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
+        RaiseLocalEvent(entity.Comp.Container, ref args);
 
         if (Timing.ApplyingState)
             return;

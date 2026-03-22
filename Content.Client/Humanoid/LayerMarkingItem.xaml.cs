@@ -103,7 +103,7 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
             ColorsContainer.Visible = false;
         }
 
-        if (_markingsModel.TryGetMarking(_organ, _layer, _markingPrototype.ID) is { } marking &&
+        if (_markingsModel.GetMarking(_organ, _layer, _markingPrototype.ID) is { } marking &&
             _colorSliders is { } sliders)
         {
             for (var i = 0; i < _markingPrototype.Sprites.Count; i++)
@@ -144,7 +144,7 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
         if (_colorSliders is not null)
             return;
 
-        if (_markingsModel.TryGetMarking(_organ, _layer, _markingPrototype.ID) is not { } marking)
+        if (_markingsModel.GetMarking(_organ, _layer, _markingPrototype.ID) is not { } marking)
             return;
 
         _colorSliders = new();

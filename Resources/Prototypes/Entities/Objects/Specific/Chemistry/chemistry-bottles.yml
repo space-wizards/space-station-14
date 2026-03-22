@@ -29,9 +29,10 @@
     solution: drink
     destroyOnEmpty: false
     utensil: None
-  - type: SolutionManager
+  - type: SolutionContainerManager
     solutions:
-    - SolutionDrinkTiny
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
   - type: MixableSolution
     solution: drink
   - type: RefillableSolution
@@ -159,15 +160,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-aloxadone
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleAloxadone
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleAloxadone
-  components:
+    currentLabel: reagent-name-aloxadone
   - type: Solution
     solution:
       reagents:
@@ -180,15 +173,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-ambuzol
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleAmbuzol
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleAmbuzol
-  components:
+    currentLabel: reagent-name-ambuzol
   - type: Solution
     solution:
       reagents:
@@ -201,15 +186,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-ambuzol-plus
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleAmbuzolPlus
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleAmbuzolPlus
-  components:
+    currentLabel: reagent-name-ambuzol-plus
   - type: Solution
     solution:
       reagents:
@@ -223,14 +200,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-arithrazine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleArithrazine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleArithrazine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -243,15 +212,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-barozine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleBarozine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleBarozine
-  components:
+    currentLabel: reagent-name-barozine
   - type: Solution
     solution:
       reagents:
@@ -265,14 +226,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-bicaridine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleBicaridine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleBicaridine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -285,15 +238,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-bruizine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleBruizine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleBruizine
-  components:
+    currentLabel: reagent-name-bruizine
   - type: Solution
     solution:
       reagents:
@@ -306,15 +251,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-cognizine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleCognizine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleCognizine
-  components:
+    currentLabel: reagent-name-cognizine
   - type: Solution
     solution:
       reagents:
@@ -328,14 +265,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-cryoxadone
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleCryoxadone
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleCryoxadone
-  components:
   - type: Solution
     solution:
       reagents:
@@ -349,14 +278,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-cryptobiolin
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleCryptobiolin
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleCryptobiolin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -370,14 +291,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dermaline
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleDermaline
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleDermaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -391,14 +304,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dexalin
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleDexalin
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleDexalin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -412,14 +317,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dexalin-plus
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleDexalinPlus
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleDexalinPlus
-  components:
   - type: Solution
     solution:
       reagents:
@@ -433,14 +330,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-diphenhydramine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleDiphenhydramine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleDiphenhydramine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -454,14 +343,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-diphenylmethylamine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleDiphenylmethylamine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleDiphenylmethylamine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -475,14 +356,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-doxarubixadone
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleDoxarubixadone
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleDoxarubixadone
-  components:
   - type: Solution
     solution:
       reagents:
@@ -496,14 +369,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dylovene
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleDylovene
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleDylovene
-  components:
   - type: Solution
     solution:
       reagents:
@@ -517,14 +382,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-epinephrine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleEpinephrine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleEpinephrine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -538,14 +395,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ethyloxyephedrine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleEthyloxyephedrine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleEthyloxyephedrine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -559,14 +408,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ethylredoxrazine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleEthylredoxrazine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleEthylredoxrazine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -580,14 +421,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-haloperidol
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleHaloperidol
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleHaloperidol
-  components:
   - type: Solution
     solution:
       reagents:
@@ -601,14 +434,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-holywater
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleHolywater
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleHolywater
-  components:
   - type: Solution
     solution:
       reagents:
@@ -622,14 +447,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-hyronalin
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleHyronalin
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleHyronalin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -643,14 +460,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-inaprovaline
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleInaprovaline
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleInaprovaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -664,14 +473,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-insuzine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleInsuzine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleInsuzine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -685,14 +486,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ipecac
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleIpecac
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleIpecac
-  components:
   - type: Solution
     solution:
       reagents:
@@ -706,14 +499,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-kelotane
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleKelotane
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleKelotane
-  components:
   - type: Solution
     solution:
       reagents:
@@ -727,14 +512,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-lacerinol
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleLacerinol
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleLacerinol
-  components:
   - type: Solution
     solution:
       reagents:
@@ -748,14 +525,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-leporazine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleLeporazine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleLeporazine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -769,14 +538,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-lipozine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleLipozine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleLipozine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -790,14 +551,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-mannitol
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleMannitol
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleMannitol
-  components:
   - type: Solution
     solution:
       reagents:
@@ -810,15 +563,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-oculine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleOculine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleOculine
-  components:
+    currentLabel: reagent-name-oculine
   - type: Solution
     solution:
       reagents:
@@ -832,14 +577,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-omnizine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleOmnizine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleOmnizine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -852,15 +589,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-opporozidone
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleOpporozidone
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleOpporozidone
-  components:
+    currentLabel: reagent-name-opporozidone
   - type: Solution
     solution:
       reagents:
@@ -874,14 +603,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-phalanximine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePhalanximine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePhalanximine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -895,14 +616,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-polypyrylium-oligomers
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePolypyryliumOligomers
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePolypyryliumOligomers
-  components:
   - type: Solution
     solution:
       reagents:
@@ -911,19 +624,11 @@
 
 - type: entity
   id: ChemistryBottlePotassiumIodide
-  suffix: iodide
+  suffix: potassium iodide
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
     currentLabel: reagent-name-potassium-iodide
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePotassiumIodide
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePotassiumIodide
-  components:
   - type: Solution
     solution:
       reagents:
@@ -937,14 +642,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-psicodine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePsicodine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePsicodine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -953,19 +650,11 @@
 
 - type: entity
   id: ChemistryBottlePulpedBananaPeel
-  suffix: pulped-banana-peel
+  suffix: pulped banana peel
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
     currentLabel: reagent-name-pulped-banana-peel
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePulpedBananaPeel
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePulpedBananaPeel
-  components:
   - type: Solution
     solution:
       reagents:
@@ -979,14 +668,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-puncturase
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePuncturase
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePuncturase
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1000,14 +681,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-pyrazine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePyrazine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePyrazine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1021,14 +694,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-saline
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleSaline
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleSaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1042,14 +707,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-siderlac
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleSiderlac
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleSiderlac
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1063,14 +720,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sigynate
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleSigynate
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleSigynate
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1084,14 +733,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-stellibinin
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleStellibinin
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleStellibinin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1105,14 +746,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-synaptizine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleSynaptizine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleSynaptizine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1125,15 +758,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-tranexamic-acid
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleTranexamicAcid
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleTranexamicAcid
-  components:
+    currentLabel: reagent-name-tranexamic-acid
   - type: Solution
     solution:
       reagents:
@@ -1147,14 +772,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-tricordrazine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleTricordrazine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleTricordrazine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1168,14 +785,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ultravasculine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleUltravasculine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleUltravasculine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1189,14 +798,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-charcoal
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleCharcoal
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleCharcoal
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1212,14 +813,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-robust-harvest
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleRobustHarvest
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleRobustHarvest
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1233,14 +826,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-e-z-nutrient
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleEZNutrient
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleEZNutrient
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1254,14 +839,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-left4-zed
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleLeft4Zed
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleLeft4Zed
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1275,14 +852,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-unstable-mutagen
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleUnstableMutagen
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleUnstableMutagen
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1296,14 +865,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-nocturine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleNocturine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleNocturine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1317,14 +878,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ephedrine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleEphedrine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleEphedrine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1338,14 +891,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-pax
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePax
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePax
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1359,14 +904,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-mute-toxin
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleMuteToxin
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleMuteToxin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1380,14 +917,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-lead
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleLead
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleLead
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1401,14 +930,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-toxin
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleToxin
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleToxin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1422,14 +943,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-laughter
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleLaughter
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleLaughter
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1444,14 +957,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-aluminium
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleAluminium
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleAluminium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1465,14 +970,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-carbon
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleCarbon
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleCarbon
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1486,14 +983,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-chlorine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleChlorine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleChlorine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1507,14 +996,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-copper
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleCopper
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleCopper
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1528,14 +1009,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ethanol
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleEthanol
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleEthanol
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1549,14 +1022,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-fluorine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleFluorine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleFluorine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1570,14 +1035,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-hydrogen
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleHydrogen
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleHydrogen
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1591,14 +1048,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-iodine
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleIodine
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleIodine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1612,14 +1061,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-iron
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleIron
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleIron
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1633,14 +1074,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-lithium
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleLithium
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleLithium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1654,14 +1087,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-mercury
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleMercury
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleMercury
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1675,14 +1100,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-nitrogen
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleNitrogen
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleNitrogen
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1696,14 +1113,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-oxygen
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleOxygen
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleOxygen
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1717,14 +1126,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-phosphorus
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePhosphorus
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePhosphorus
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1738,14 +1139,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-potassium
-  - type: SolutionManager
-    solutions:
-    - SolutionBottlePotassium
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottlePotassium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1759,14 +1152,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-radium
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleRadium
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleRadium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1780,14 +1165,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-silicon
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleSilicon
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleSilicon
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1801,14 +1178,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sodium
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleSodium
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleSodium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1822,14 +1191,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sugar
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleSugar
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleSugar
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1843,14 +1204,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sulfur
-  - type: SolutionManager
-    solutions:
-    - SolutionBottleSulfur
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionBottleSulfur
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1946,7 +1299,6 @@
     - id: ChemistryBottleLeporazine
     - id: ChemistryBottleLipozine
     - id: ChemistryBottleMannitol
-    - id: ChemistryBottleNecrosol
     - id: ChemistryBottleOculine
     - id: ChemistryBottleOmnizine
     - id: ChemistryBottleOpporozidone

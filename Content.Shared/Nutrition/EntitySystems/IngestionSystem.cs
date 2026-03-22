@@ -83,7 +83,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         // Verbs
         SubscribeLocalEvent<EdibleComponent, GetVerbsEvent<AlternativeVerb>>(AddEdibleVerbs);
-        SubscribeLocalEvent<EdibleComponent, SolutionContainerChangedEvent>(OnSolutionContainerChanged);
+        SubscribeLocalEvent<EdibleComponent, SolutionChangedEvent>(OnSolutionContainerChanged);
 
         // Misc
         SubscribeLocalEvent<EdibleComponent, AttemptShakeEvent>(OnAttemptShake);
@@ -161,7 +161,7 @@ public sealed partial class IngestionSystem : EntitySystem
         _appearance.SetData(entity, FoodVisuals.Visual, drainAvailable.Float(), entity.Comp2);
     }
 
-    private void OnSolutionContainerChanged(Entity<EdibleComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionContainerChanged(Entity<EdibleComponent> entity, ref SolutionChangedEvent args)
     {
         UpdateAppearance(entity);
     }
@@ -377,7 +377,7 @@ public sealed partial class IngestionSystem : EntitySystem
         var afterEv = new IngestedEvent(args.User, entity, split, forceFed, beforeEv.Transfer >= beforeEv.Max);
         RaiseLocalEvent(food, ref afterEv);
 
-        _stomach.TryTransferSolution(stomachToUse.Value.Owner, split, stomachToUse);
+        _stomach.TryTransferSolution((stomachToUse.Value, stomachToUse.Value.Comp), split);
 
         if (!afterEv.Destroy)
         {

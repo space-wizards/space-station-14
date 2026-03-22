@@ -23,9 +23,13 @@ namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
 /// The event raised whenever a solution entity is modified.
+/// Raised on the solution entity itself then relayed to the <see cref="SolutionContainerManagerComponent"/> if it exists.
 /// </summary>
 /// <remarks>
 /// Raised after chemcial reactions and <see cref="SolutionOverflowEvent"/> are handled.
+/// This is always raised on the client when handling the component state so that we can update UIs accordingly.
+/// You might need an IGameTiming.ApplyingState guard to prevent mispredicts if the changes from your subscription are
+/// networked with the same game state.
 /// </remarks>
 /// <param name="Solution">The solution entity that has been modified.</param>
 [ByRefEvent]
@@ -71,6 +75,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
 
     private EntityQuery<SolutionComponent> _solutionQuery;
+    private EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
 
     public override void Initialize()
     {
@@ -78,6 +83,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         InitializeRelays();
 
+        // TODO: We probably don't need to separate Startup and MapInit due to EnsureSolution...
         SubscribeLocalEvent<SolutionManagerComponent, ComponentStartup>(OnManagerStartup);
 
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
@@ -478,6 +484,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
 
         solution.MaxVolume = capacity;
+        UpdateChemicals(soln);
+    }
+
+    /// <summary>
+    /// Sets whether or not the given solution entity can react and dirties it.
+    /// </summary>
+    public void SetCanReact(Entity<SolutionComponent> soln, bool canReact)
+    {
+        soln.Comp.Solution.CanReact = canReact;
         UpdateChemicals(soln);
     }
 

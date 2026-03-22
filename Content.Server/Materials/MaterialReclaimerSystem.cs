@@ -73,17 +73,15 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             return;
 
         // if we're trying to get a solution out of the reclaimer, don't destroy it
-        if (entity.Comp.SolutionContainerId != null &&
-            _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.SolutionContainerId, out _, out var outputSolution))
+        if (_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.SolutionContainerId, out _, out var outputSolution) && outputSolution.Contents.Any())
         {
-            if (TryComp<SolutionManagerComponent>(args.Used, out var managerComponent) &&
-                _solutionContainer.EnumerateSolutions((args.Used, managerComponent)).Any(s => s.Solution.Comp.Solution.AvailableVolume > 0))
+            if (_solutionContainer.EnumerateSolutions(args.Used).Any(s => s.Solution.Comp.Solution.AvailableVolume > 0))
             {
                 if (_openable.IsClosed(args.Used))
                     return;
 
                 if (TryComp<SolutionTransferComponent>(args.Used, out var transfer) &&
-                    transfer.CanReceive)
+                    transfer.CanSend)
                     return;
             }
         }

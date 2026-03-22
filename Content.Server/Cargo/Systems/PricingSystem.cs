@@ -95,6 +95,45 @@ public sealed class PricingSystem : EntitySystem
         args.Price += component.Price * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
+    private double GetSolutionPrice(EntityUid entity)
+    {
+        var price = 0.0;
+
+        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(entity))
+        {
+            var solution = soln.Comp.Solution;
+            foreach (var (reagent, quantity) in solution.Contents)
+            {
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
+                    continue;
+
+                // TODO check ReagentData for price information?
+                price += (float) quantity * reagentProto.PricePerUnit;
+            }
+        }
+
+        return price;
+    }
+
+    private double GetSolutionPrice(SolutionContainerManagerComponent component)
+    {
+        var price = 0.0;
+
+        foreach (var (_, prototype) in _solutionContainerSystem.EnumerateSolutions(component))
+        {
+            foreach (var (reagent, quantity) in prototype.Contents)
+            {
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
+                    continue;
+
+                // TODO check ReagentData for price information?
+                price += (float) quantity * reagentProto.PricePerUnit;
+            }
+        }
+
+        return price;
+    }
+
     private double GetMaterialPrice(PhysicalCompositionComponent component)
     {
         double price = 0;
@@ -238,17 +277,15 @@ public sealed class PricingSystem : EntitySystem
         return price;
     }
 
-    private double GetSolutionsPrice(Entity<SolutionManagerComponent?> entity)
+    private double GetSolutionsPrice(EntityUid uid)
     {
         var price = 0.0;
-        if (!Resolve(entity, ref entity.Comp))
-            return price;
 
-        var meta = MetaData(entity);
+        var meta = MetaData(uid);
         if (meta.EntityLifeStage < EntityLifeStage.MapInitialized)
             return GetSolutionsPrice(meta.EntityPrototype);
 
-        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, entity.Comp)))
+        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(uid))
         {
             var solution = soln.Comp.Solution;
             foreach (var (reagent, quantity) in solution.Contents)

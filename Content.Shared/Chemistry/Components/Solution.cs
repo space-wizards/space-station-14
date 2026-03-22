@@ -181,6 +181,11 @@ namespace Content.Shared.Chemistry.Components
             return new Solution(this);
         }
 
+        public override string ToString()
+        {
+            return string.Join("; ", Contents);
+        }
+
         [AssertionMethod]
         public void ValidateSolution()
         {

@@ -41,12 +41,12 @@ namespace Content.Server.Administration.UI
 
         public override EuiStateBase GetNewState()
         {
-            List<(string Name, NetEntity Solution)> netSolutions = new();
+            List<(string Name, NetEntity Solution)>? netSolutions = new();
 
             foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions(Target))
             {
                 if (name is null || !_entityManager.TryGetNetEntity(solution, out var netSolution))
-                        continue;
+                    continue;
 
                 netSolutions.Add((name, netSolution.Value));
             }

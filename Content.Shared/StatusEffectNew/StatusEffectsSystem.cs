@@ -23,7 +23,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     private EntityQuery<StatusEffectContainerComponent> _containerQuery;
     private EntityQuery<StatusEffectComponent> _effectQuery;
 
-    public static HashSet<string> StatusEffectPrototypes = [];
+    public readonly HashSet<string> StatusEffectPrototypes = [];
 
     public override void Initialize()
     {
@@ -227,7 +227,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
         var endTime = delay == null ? _timing.CurTime + duration : _timing.CurTime + delay + duration;
         SetStatusEffectEndTime((effect.Value, effectComp), endTime);
-        var startTime = delay == null ? TimeSpan.Zero : _timing.CurTime + delay.Value;
+        var startTime = delay == null ? _timing.CurTime : _timing.CurTime + delay.Value;
         SetStatusEffectStartTime(effect.Value, startTime);
 
         TryApplyStatusEffect((statusEffect.Value, effectComp));

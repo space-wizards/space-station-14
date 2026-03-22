@@ -74,7 +74,7 @@ namespace Content.Server.Administration.Systems
         {
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SolutionManagerComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
+            SubscribeLocalEvent<SolutionManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
         private void GetVerbs(GetVerbsEvent<Verb> ev)
@@ -589,7 +589,7 @@ namespace Content.Server.Administration.Systems
         }
 
         #region SolutionsEui
-        private void OnSolutionChanged(Entity<SolutionManagerComponent> entity, ref SolutionContainerChangedEvent args)
+        private void OnSolutionChanged(Entity<SolutionManagerComponent> entity, ref SolutionChangedEvent args)
         {
             foreach (var list in _openSolutionUis.Values)
             {

@@ -130,7 +130,8 @@ public sealed class DrainSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DrainComponent, SolutionManagerComponent>();
+        // TODO: Drains should just use SolutionComponent for their buffer!
+        var query = EntityQueryEnumerator<DrainComponent, SolutionContainerManagerComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var drain, out var manager))
         {
@@ -201,12 +202,9 @@ public sealed class DrainSystem : EntitySystem
 
     private void OnExamined(Entity<DrainComponent> ent, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange ||
-            !HasComp<SolutionManagerComponent>(ent) ||
-            !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
-        {
+        if (!args.IsInDetailsRange
+            || !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
             return;
-        }
 
         var text = drainSolution.AvailableVolume != 0
             ? Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume))
@@ -246,10 +244,7 @@ public sealed class DrainSystem : EntitySystem
         if (args.Target == null)
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, ent.Owner.GetHashCode());
-        var rand = new System.Random(seed);
-        if (!rand.Prob(ent.Comp.UnclogProbability))
+        if (!SharedRandomExtensions.PredictedProb(_timing, ent.Comp.UnclogProbability, GetNetEntity(ent)))
         {
             _popup.PopupPredicted(Loc.GetString("drain-component-unclog-fail", ("object", args.Target.Value)), args.Target.Value, args.User);
             return;
