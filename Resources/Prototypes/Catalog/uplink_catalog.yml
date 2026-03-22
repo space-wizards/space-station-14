@@ -2275,6 +2275,6 @@
   description: uplink-travel-camera-desc
   productEntity: TravelCamera
   cost:
-  Telecrystal: 2
+    Telecrystal: 2
   categories:
   - UplinkDisruption

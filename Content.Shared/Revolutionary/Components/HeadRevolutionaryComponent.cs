@@ -28,5 +28,5 @@ public sealed partial class HeadRevolutionaryComponent : Component
     /// Which entity tags that indicate if an item can flash and convert another player.
     /// </summary>
     [DataField("tags")]
-    public List<ProtoId<TagPrototype>> ConvertItemTags = ["ConvertItem"];
+    public List<ProtoId<TagPrototype>> ConvertItemTags = new(["ConvertItem"]);
 }

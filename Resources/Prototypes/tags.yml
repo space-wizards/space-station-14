@@ -379,9 +379,6 @@
   id: ConvertItem
 
 - type: Tag
-  id: Cow
-
-- type: Tag
   id: Cow # Reproductive partner key
 
 - type: Tag

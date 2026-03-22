@@ -12,6 +12,8 @@
       stunTime: 3000
       # it can not be without a melee attack
       flashOnUse: false
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Misc/camera_snap.ogg
     - type: LimitedCharges
       maxCharges: 4
       charges: 4
