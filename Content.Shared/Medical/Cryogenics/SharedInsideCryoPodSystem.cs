@@ -26,6 +26,6 @@ public abstract partial class SharedCryoPodSystem
 
     private void OnBeforeHeatExchange(Entity<InsideCryoPodComponent> entity, ref BeforeHeatExchangeEvent args)
     {
-        args.Conductance *= entity.Comp.ConductanceMod;
+        args.HeatTransferModifier *= entity.Comp.ConductanceMod;
     }
 }
