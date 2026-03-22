@@ -344,7 +344,7 @@ namespace Content.Client.Atmos.UI
 
                 // Add to the gas bar //TODO: highlight the currently hover one
                 gasBar.AddEntry(gasEntry.Amount, gasProto.Color, tooltip: Loc.GetString("gas-analyzer-window-molarity-percentage-text",
-                    ("gasName", gasProto.Name),
+                    ("gasName", Loc.GetString(gasProto.Name)),
                     ("amount", $"{gasEntry.Amount:0.##}"),
                     ("percentage", $"{(gasEntry.Amount / totalGasAmount * 100):0.#}")));
             }
