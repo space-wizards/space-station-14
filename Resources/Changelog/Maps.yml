@@ -1045,16 +1045,6 @@
   id: 127
   time: '2026-02-28T06:56:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43061
-- author: Samuka
-  changes:
-  - message: Removed recycler and conveyor from the xenoborg mothership.
-    type: Remove
-  - message: Changed the starting materials of the xenoborg mothership to include
-      xenoborg crystals.
-    type: Tweak
-  id: 128
-  time: '2026-03-04T09:08:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/43007
 - author: TytosB
   changes:
   - message: several changes to Serpentcrest, salv area rework.
@@ -1062,4 +1052,19 @@
   id: 129
   time: '2026-03-07T20:26:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43102
+- author: Sapphic_bee
+  changes:
+  - message: On Exo, the AI north and south external cameras are now connected to
+      power.
+    type: Fix
+  id: 130
+  time: '2026-03-15T00:02:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43143
+- author: rwrv1
+  changes:
+  - message: On Packed, updated the TEG burn chamber, separating it from the station.
+    type: Tweak
+  id: 131
+  time: '2026-03-19T07:44:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43278
 Order: 2
