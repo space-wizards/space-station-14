@@ -69,4 +69,38 @@ public static partial class HeatContainerHelpers
 
         return result;
     }
+
+    /// <summary>
+    /// Determines the temperature at which two <see cref="HeatContainer"/>s equalize when combined into a single container.
+    /// Order does not matter when using this method.
+    /// </summary>
+    /// <param name="cA">The first <see cref="HeatContainer"/>.</param>
+    /// <param name="cB">The second <see cref="HeatContainer"/>.</param>
+    /// <returns>The temperature at which these two heat containers are expected to equalize.</returns>
+    [PublicAPI, Pure]
+    public static float EqualizationTemperature(HeatContainer cA, HeatContainer cB)
+    {
+        return (cA.InternalEnergy + cB.InternalEnergy) / (cA.HeatCapacity + cA.HeatCapacity);
+    }
+
+    /// <summary>
+    /// Determines the temperature at which a given number of <see cref="HeatContainer"/>s equalize when combined into a single container.
+    /// Order does not matter when using this method.
+    /// </summary>
+    /// <param name="cN">An array of <see cref="HeatContainer"/>s we're equalizing the temperatures of.</param>
+    [PublicAPI, Pure]
+    public static float EqualizationTemperature(params HeatContainer[] cN)
+    {
+        ArgumentOutOfRangeException.ThrowIfLessThan(cN.Length, 2);
+        var totalHeatCapacity = 0f;
+        var totalEnergy = 0f;
+
+        foreach (var c in cN)
+        {
+            totalHeatCapacity += c.HeatCapacity;
+            totalEnergy += c.InternalEnergy;
+        }
+
+        return totalEnergy / totalHeatCapacity;
+    }
 }

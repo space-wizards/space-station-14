@@ -15,10 +15,13 @@ public static partial class HeatContainerHelpers
     /// </summary>
     /// <param name="c">The <see cref="HeatContainer"/> to add or remove energy.</param>
     /// <param name="dQ">The energy in joules to add or remove.</param>
+    /// /// <returns>The change in heat as a result of this exchange.</returns>
     [PublicAPI]
-    public static void AddHeat(this ref HeatContainer c, float dQ)
+    public static float AddHeat(this ref HeatContainer c, float dQ)
     {
+        var before = c.InternalEnergy;
         c.Temperature = c.AddHeatQuery(dQ);
+        return c.InternalEnergy - before;
     }
 
     /// <summary>

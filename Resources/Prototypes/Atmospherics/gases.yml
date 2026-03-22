@@ -22,7 +22,7 @@
 - type: gas
   id: CarbonDioxide
   name: gases-co2
-  specificHeat: 40
+  specificHeat: 37
   heatCapacityRatio: 1.3
   molarMass: 44
   color: 4e4e4e

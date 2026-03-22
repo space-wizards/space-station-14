@@ -35,7 +35,7 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
             if (!power.Powered)
                 continue;
 
-            // don't divide by total entities since it's a big grill
+            // divide by total entities to encourage the use of multiple grills
             // excess would just be wasted in the air but that's not worth simulating
             // if you want a heater thermomachine just use that...
             var energy = power.PowerReceived * deltaTime;

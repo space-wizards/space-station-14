@@ -34,7 +34,7 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
     {
         base.OnMapInit(entity, ref args);
 
-        // Force test fails for species so they don't spawn cold!
+        // Make sure entities don't spawn cold!
         if (_thermalRegulatorQuery.TryComp(entity, out var comp))
             entity.Comp.HeatContainer.Temperature = comp.NormalBodyTemperature;
     }
@@ -68,9 +68,8 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
             return;
 
         // TODO ATMOS: Atmos heat containers!!!
-        // We purposefully do not change the gas mixture's heat because it will cause vacuums to heat up to be 20x hotter than the core of the sun.
         var atmosContainer = new HeatContainer(_atmosphere.GetHeatCapacity(args.GasMixture, false), args.GasMixture.Temperature);
-        ConductHeat(entity.AsNullable(), ref atmosContainer, args.DeltaTime, 1f);
+        ConductHeat(entity.AsNullable(), ref atmosContainer, args.DeltaTime, args.ConductivityMod);
         args.GasMixture.Temperature = atmosContainer.Temperature;
     }
 
@@ -90,7 +89,8 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
 
     private void OnBeforeHeatExchange(Entity<TemperatureProtectionComponent> entity, ref BeforeHeatExchangeEvent args)
     {
-        args.Conductance *= entity.Comp.Coefficient;
+        // TODO: Proper coverage modifiers!!! This should be its own system which relays to inventory and then based on coverage spits out a modifier!
+        args.HeatTransferModifier *= entity.Comp.Coefficient;
     }
 
     private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)

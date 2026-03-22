@@ -104,21 +104,22 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         UpdateProcessing(frameTime);
         UpdateHighPressure(frameTime);
 
-        _exposedTimer += frameTime;
-
-        if (_exposedTimer < ExposedUpdateDelay)
-            return;
+        var delay = TimeSpan.FromSeconds(ExposedUpdateDelay);
 
         var query = EntityQueryEnumerator<AtmosExposedComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out _, out var transform))
+        while (query.MoveNext(out var uid, out var exposed, out var transform))
         {
+            if (exposed.LastExposure + delay < _gameTiming.CurTime)
+                continue;
+
             var air = GetContainingMixture((uid, transform));
 
             if (air == null)
                 continue;
 
-            var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, air, transform, RealAtmosTime());
+            var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, air, transform, ExposedUpdateDelay, exposed.ExposedArea);
             RaiseLocalEvent(uid, ref updateEvent);
+            exposed.LastExposure = _gameTiming.CurTime;
         }
 
         _exposedTimer -= ExposedUpdateDelay;

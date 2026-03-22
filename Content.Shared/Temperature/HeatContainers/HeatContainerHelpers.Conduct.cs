@@ -119,7 +119,8 @@ public static partial class HeatContainerHelpers
     public static float ConductHeatQuery(this ref HeatContainer c1, ref HeatContainer c2, float deltaTime, float g)
     {
         var dQ = g * (c2.Temperature - c1.Temperature) * deltaTime;
-        var dQMax = Math.Min(Math.Abs(c1.ConductHeatToTempQuery(c2.Temperature)), Math.Abs(c2.ConductHeatToTempQuery(c1.Temperature)));
+        var equalizationTemp = EqualizationTemperature(c1, c2);
+        var dQMax = Math.Min(Math.Abs(c1.ConductHeatToTempQuery(equalizationTemp)), Math.Abs(c2.ConductHeatToTempQuery(equalizationTemp)));
 
         // Clamp the transferred heat amount in case we are overshooting the equilibrium temperature because our time step was too large.
         return Math.Clamp(dQ, -dQMax, dQMax);

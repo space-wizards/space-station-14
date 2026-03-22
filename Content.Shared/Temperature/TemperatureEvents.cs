@@ -5,9 +5,9 @@ namespace Content.Shared.Temperature;
 /// <summary>
 /// This event is raised before heat is exchanged so that the conductance of the exchange can be changed.
 /// </summary>
-/// <param name="Conductance"></param>
+/// <param name="HeatTransferModifier">A multiplicative modifier for heat transfers on the entity this event is being raised to.</param>
 [ByRefEvent]
-public record struct BeforeHeatExchangeEvent(float Conductance) : IInventoryRelayEvent
+public record struct BeforeHeatExchangeEvent(float HeatTransferModifier = 1f) : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 }
@@ -22,4 +22,5 @@ public record struct TemperatureChangedEvent(float CurrentTemperature, float Las
 {
     public readonly float CurrentTemperature = CurrentTemperature;
     public readonly float LastTemperature = LastTemperature;
+    public readonly float TemperatureDelta = CurrentTemperature - LastTemperature;
 }

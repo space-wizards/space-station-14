@@ -9,15 +9,22 @@ namespace Content.Shared.Atmos;
 /// <param name="coordinates">The coordinates of the entity that is being exposed.</param>
 /// <param name="mixture">The gas mixture that the entity is exposed to.</param>
 /// <param name="transform">The xform of the entity that is being exposed.</param>
+/// <param name="deltaTime">Amount of time since the last AtmosExposedUpdateEvent, in seconds.</param>
+/// <param name="conductivityMod">A modifier for thermal conductivity between the exposed entity and the atmosphere.
+/// Typically equal to <see cref="AtmosExposedComponent.ExposedArea"/></param>
 [ByRefEvent]
 public readonly struct AtmosExposedUpdateEvent(
     EntityCoordinates coordinates,
     GasMixture mixture,
-    TransformComponent transform)
+    TransformComponent transform,
+    float deltaTime,
+    float conductivityMod)
 {
     public readonly EntityCoordinates Coordinates = coordinates;
     public readonly GasMixture GasMixture = mixture;
     public readonly TransformComponent Transform = transform;
+    public readonly float DeltaTime = deltaTime;
+    public readonly float ConductivityMod = conductivityMod;
 }
 
 /// <summary>

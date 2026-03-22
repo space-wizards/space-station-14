@@ -17,7 +17,9 @@ namespace Content.Shared.Atmos.Prototypes
         public string ID { get; private set; } = default!;
 
         /// <summary>
-        ///     Specific heat for gas.
+        /// Specific heat for gas.
+        /// This isn't actually specific heat since it's by mols and not by mass :)
+        /// Someone will fix it at a later date:tm:
         /// </summary>
         [DataField("specificHeat")]
         public float SpecificHeat { get; private set; }
