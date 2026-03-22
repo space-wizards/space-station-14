@@ -13,10 +13,10 @@ public sealed class PhotographySystem: EntitySystem {
     public override void Initialize() {
         base.Initialize();
         SubscribeLocalEvent<PictureTakerComponent, MeleeHitEvent>(OnCameraMeleeHit);
-        SubscribeLocalEvent<PhotographyComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<PhotographComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamined(EntityUid uid, PhotographyComponent component, ExaminedEvent args)
+    private void OnExamined(EntityUid uid, PhotographComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
         {
@@ -62,7 +62,7 @@ public sealed class PhotographySystem: EntitySystem {
 
             var spawned = Spawn(ent.Comp.Photographs[_rng.Next(0, ent.Comp.Photographs.Count)]);
             var metadata = MetaData(spawned);
-            var comp = new PhotographyComponent(name, text);
+            var comp = new PhotographComponent(name, text);
             AddComp(spawned, comp);
             _hands.PickupOrDrop(args.User, spawned, dropNear: true);
             // we only do the first entity

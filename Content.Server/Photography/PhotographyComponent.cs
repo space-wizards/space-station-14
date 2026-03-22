@@ -2,11 +2,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Photography;
 /// <summary>
-///  Represents the photography data on an picture
+///  Represents the photograph data on an picture
 /// </summary>
 [RegisterComponent]
 
-public sealed partial class PhotographyComponent: Component
+public sealed partial class PhotographComponent: Component
 {
     /// <summary>
     /// The description of the photographed object
@@ -18,7 +18,7 @@ public sealed partial class PhotographyComponent: Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string Name;
-    public PhotographyComponent(string name, FormattedMessage descText)
+    public PhotographComponent(string name, FormattedMessage descText)
     {
         Text = descText;
         Name = name;
