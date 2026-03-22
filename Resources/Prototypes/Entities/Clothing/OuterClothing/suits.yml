@@ -132,11 +132,11 @@
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: GroupExamine
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodRad
-    slot: head
+    clothingPrototypes:
+      head: ClothingHeadHatHoodRad
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
   - type: HideLayerClothing
@@ -259,7 +259,7 @@
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
@@ -276,10 +276,11 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodIan
+    clothingPrototypes:
+      head: ClothingHeadHatHoodIan
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: Construction
     graph: ClothingOuterSuitIan
     node: suit
@@ -305,10 +306,11 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodCarp
+    clothingPrototypes:
+      head: ClothingHeadHatHoodCarp
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: HideLayerClothing
     slots:
     - Tail
@@ -326,7 +328,8 @@
     heatingCoefficient: 0.01
     coolingCoefficient: 0.01
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitCarp
+    clothingPrototypes:
+      head: ClothingHeadHelmetHardsuitCarp
   - type: StaticPrice
     price: 1500
 
