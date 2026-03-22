@@ -6,9 +6,9 @@
     - !type:GroupSelector
       weight: 75
       children:
-      - !type:NestedSelector
-        weight: 3 # rather rare
-        tableId: TravelCamera
+      - !type:AllSelector
+        children:
+        - id: TravelCamera
       - !type:NestedSelector
         weight: 5 # Roughly 7% chance
         tableId: AllToysTable

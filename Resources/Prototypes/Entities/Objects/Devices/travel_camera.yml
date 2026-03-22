@@ -20,14 +20,13 @@
       layers:
       - state: icon
     - type: Flash
-      stunTime: 3000
       # it can not be without a melee attack
       flashOnUse: false
       sound: !type:SoundPathSpecifier
         path: /Audio/Misc/camera_snap.ogg
     - type: LimitedCharges
       maxCharges: 4
-      charges: 4
+      lastCharges: 4
     - type: MeleeWeapon
       wideAnimationRotation: 180
       damage:
