@@ -121,7 +121,9 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/chaplain_hoodie.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodChaplainHood
+    clothingPrototypes:
+      head:
+      - ClothingHeadHatHoodChaplainHood
 
 - type: entity
   parent: ClothingOuterBase

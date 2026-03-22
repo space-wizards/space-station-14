@@ -30,6 +30,7 @@ verb-categories-fax = Set Destination
 verb-categories-power-level = Power Level
 verb-categories-adjust = Adjust
 verb-categories-select-target = Set Target
+verb-categories-toggle-clothing = Toggle Clothing
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close
