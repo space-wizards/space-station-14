@@ -61,7 +61,7 @@
   # all below are for egg cooking/exploding
   - type: AtmosExposed
   - type: Temperature
-    thermalConductance: 1
+    thermalConductivity: 1
     heatContainer:
       temperature: 293.15
       heatCapacity: 15000

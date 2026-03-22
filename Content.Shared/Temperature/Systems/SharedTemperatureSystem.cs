@@ -151,7 +151,7 @@ public abstract class SharedTemperatureSystem : EntitySystem
         var conductance = entity.Comp.ThermalConductivity * heatTransferMod;
         if (!ignoreHeatResistance)
         {
-            var ev = new BeforeHeatExchangeEvent(heatTransferMod);
+            var ev = new BeforeHeatExchangeEvent();
             RaiseLocalEvent(entity, ref ev);
             conductance *= ev.HeatTransferModifier;
         }

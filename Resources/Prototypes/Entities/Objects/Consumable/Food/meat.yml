@@ -41,7 +41,7 @@
   # let air cook and freeze meat for cooking and preservation
   - type: AtmosExposed
   - type: Temperature
-    thermalConductance: 1
+    thermalConductivity: 1
     heatContainer:
       heatCapacity: 750
   - type: TemperatureDamage

@@ -43,7 +43,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly DamageableSystem _damage = default!;
 
     private const float ExposedUpdateDelay = 1f;
-    private float _exposedTimer = 0f;
 
     private EntityQuery<GridAtmosphereComponent> _atmosQuery;
     private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery;
@@ -109,7 +108,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         var query = EntityQueryEnumerator<AtmosExposedComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var exposed, out var transform))
         {
-            if (exposed.LastExposure + delay < _gameTiming.CurTime)
+            if (exposed.LastExposure + delay > _gameTiming.CurTime)
                 continue;
 
             var air = GetContainingMixture((uid, transform));
@@ -121,8 +120,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
             RaiseLocalEvent(uid, ref updateEvent);
             exposed.LastExposure = _gameTiming.CurTime;
         }
-
-        _exposedTimer -= ExposedUpdateDelay;
     }
 
     private void CacheDecals()
