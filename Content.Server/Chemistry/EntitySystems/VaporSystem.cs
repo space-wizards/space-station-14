@@ -39,9 +39,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(Entity<VaporComponent> entity, ref StartCollideEvent args)
         {
-            if (!TryComp(entity.Owner, out SolutionContainerManagerComponent? contents)) return;
-
-            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, contents)))
+            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(entity.Owner))
             {
                 var solution = soln.Comp.Solution;
                 _reactive.DoEntityReaction(args.OtherEntity, solution, ReactionMethod.Touch);
@@ -102,6 +100,7 @@ namespace Content.Server.Chemistry.EntitySystems
             base.Update(frameTime);
 
             // Enumerate over all VaporComponents
+            // TODO: Vapor should just use SolutionComponent and not be capable of having multiple solutions.
             var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var vaporComp, out var container, out var xform))
             {

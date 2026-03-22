@@ -34,7 +34,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         SubscribeLocalEvent<PressurizedSolutionComponent, ShakeEvent>(OnShake);
         SubscribeLocalEvent<PressurizedSolutionComponent, OpenableOpenedEvent>(OnOpened);
         SubscribeLocalEvent<PressurizedSolutionComponent, LandEvent>(OnLand);
-        SubscribeLocalEvent<PressurizedSolutionComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
+        SubscribeLocalEvent<PressurizedSolutionComponent, SolutionChangedEvent>(OnSolutionUpdate);
     }
 
     /// <summary>
@@ -265,13 +265,13 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         SprayOrAddFizziness(entity, entity.Comp.SprayChanceModOnLand, entity.Comp.FizzinessAddedOnLand);
     }
 
-    private void OnSolutionUpdate(Entity<PressurizedSolutionComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionUpdate(Entity<PressurizedSolutionComponent> entity, ref SolutionChangedEvent args)
     {
         // The changes are already networked as part of the same game state.
         if (_timing.ApplyingState)
             return;
 
-        if (args.SolutionId != entity.Comp.Solution)
+        if (args.Solution.Comp.Solution.Name != entity.Comp.Solution)
             return;
 
         // If the solution is no longer capable of being fizzy, clear any built up fizziness

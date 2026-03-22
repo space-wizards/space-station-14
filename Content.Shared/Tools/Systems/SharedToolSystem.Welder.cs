@@ -59,7 +59,7 @@ public abstract partial class SharedToolSystem
 
     public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
     {
-        if (!Resolve(uid, ref welder, ref solutionContainer))
+        if (!Resolve(uid, ref welder))
             return default;
 
         if (!SolutionContainerSystem.TryGetSolution(
@@ -209,6 +209,7 @@ public abstract partial class SharedToolSystem
 
     private void UpdateWelders()
     {
+        // TODO: Same as the other EntityQueryEnumerators...
         var query = EntityQueryEnumerator<WelderComponent, SolutionContainerManagerComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var welder, out var solutionContainer))

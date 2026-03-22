@@ -130,6 +130,7 @@ public sealed class DrainSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        // TODO: Drains should just use SolutionComponent for their buffer!
         var query = EntityQueryEnumerator<DrainComponent, SolutionContainerManagerComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var drain, out var manager))
@@ -201,12 +202,9 @@ public sealed class DrainSystem : EntitySystem
 
     private void OnExamined(Entity<DrainComponent> ent, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange ||
-            !HasComp<SolutionContainerManagerComponent>(ent) ||
-            !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
-        {
+        if (!args.IsInDetailsRange
+            || !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
             return;
-        }
 
         var text = drainSolution.AvailableVolume != 0
             ? Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume))

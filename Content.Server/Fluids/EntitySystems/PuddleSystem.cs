@@ -294,13 +294,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         Solution addedSolution,
         bool sound = true,
         bool checkForOverflow = true,
-        PuddleComponent? puddleComponent = null,
-        SolutionContainerManagerComponent? sol = null)
+        PuddleComponent? puddleComponent = null)
     {
-        if (!Resolve(puddleUid, ref puddleComponent, ref sol))
+        if (!Resolve(puddleUid, ref puddleComponent))
             return false;
-
-        _solutionContainerSystem.EnsureAllSolutions((puddleUid, sol));
 
         if (addedSolution.Volume == 0 ||
             !_solutionContainerSystem.ResolveSolution(puddleUid, puddleComponent.SolutionName,

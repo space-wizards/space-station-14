@@ -109,25 +109,21 @@ public sealed class MetabolizerSystem : EntitySystem
 
         if (lookupTransfer ? solutionData.TransferSolutionOnBody : solutionData.SolutionOnBody)
         {
-            if (ent.Comp2?.Body is { } body)
-            {
-                if (!_solutionQuery.TryComp(body, out var bodySolution))
-                    return false;
-
-                solutionOwner = body;
-                return _solutionContainerSystem.TryGetSolution((body, bodySolution), solutionName, out solutionEntity, out solution);
-            }
-        }
-        else
-        {
-            if (!_solutionQuery.Resolve(ent, ref ent.Comp3, logMissing: false))
+            if (ent.Comp2?.Body is not { } body)
                 return false;
 
-            solutionOwner = ent;
-            return _solutionContainerSystem.TryGetSolution((ent, ent), solutionName, out solutionEntity, out solution);
+            if (!_solutionContainerSystem.TryGetSolution(body, solutionName, out solutionEntity, out solution))
+                return false;
+
+            solutionOwner = body;
+            return true;
         }
 
-        return false;
+        if (!_solutionContainerSystem.TryGetSolution((ent, ent.Comp3), solutionName, out solutionEntity, out solution))
+            return false;
+
+        solutionOwner = ent;
+        return true;
     }
 
     private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage)
@@ -267,6 +263,7 @@ public sealed class MetabolizerSystem : EntitySystem
     private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent)
     {
         _organQuery.Resolve(ent, ref ent.Comp2, logMissing: false);
+        _solutionQuery.Resolve(ent, ref ent.Comp3, logMissing: false);
 
         foreach (var stage in ent.Comp1.Stages)
         {

@@ -27,9 +27,7 @@ namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
 /// The event raised whenever a solution entity is modified.
-/// Raised on the solution entity itself.
-/// If you want to subscribe with the entity containing the solution entity
-/// then use <see cref="SolutionContainerChangedEvent"/> instead.
+/// Raised on the solution entity itself then relayed to the <see cref="SolutionContainerManagerComponent"/> if it exists.
 /// </summary>
 /// <remarks>
 /// Raised after chemcial reactions and <see cref="SolutionOverflowEvent"/> are handled.
@@ -78,7 +76,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+
+    private EntityQuery<SolutionComponent> _solutionQuery;
+    private EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
 
     public override void Initialize()
     {
@@ -86,8 +86,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         InitializeRelays();
 
-        SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
-        SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
+        SubscribeLocalEvent<SolutionComponent, AfterAutoHandleStateEvent>(OnSolutionHandleState);
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnSolutionStartup);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
@@ -101,20 +100,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentShutdown>(OnContainerManagerShutdown);
             SubscribeLocalEvent<ContainedSolutionComponent, ComponentShutdown>(OnContainedSolutionShutdown);
         }
+
+        _solutionQuery = GetEntityQuery<SolutionComponent>();
+        _solutionContainerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
     }
 
-    private void OnSolutionGetState(Entity<SolutionComponent> ent, ref ComponentGetState args)
+    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        args.State = new SolutionComponentState(ent.Comp.Solution);
-    }
-
-    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
-    {
-        if (args.Current is not SolutionComponentState cast)
-            return;
-
-        ent.Comp.Solution = cast.Solution.Clone();
-
         // Always raise the event on the client so that we can update UIs accordingly.
         var changedEv = new SolutionChangedEvent(ent);
         RaiseLocalEvent(ent, ref changedEv);
@@ -226,7 +218,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return false;
         }
 
-        if (!TryComp(uid, out SolutionComponent? comp))
+        if (!_solutionQuery.TryComp(uid, out var comp))
         {
             entity = null;
             if (!errorOnMissing)
@@ -258,10 +250,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionContainerManagerComponent?> container, bool includeSelf = true)
     {
-        if (includeSelf && TryComp(container, out SolutionComponent? solutionComp))
+        if (includeSelf && _solutionQuery.TryComp(container, out var solutionComp))
             yield return (null, (container.Owner, solutionComp));
 
-        if (!Resolve(container, ref container.Comp, logMissing: false))
+        if (!_solutionContainerQuery.Resolve(container, ref container.Comp, logMissing: false))
             yield break;
 
         foreach (var name in container.Comp.Containers)
@@ -273,7 +265,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 continue;
 
             if (ContainerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId)
-                yield return (name, (solutionId, Comp<SolutionComponent>(solutionId)));
+                yield return (name, (solutionId, _solutionQuery.Comp(solutionId)));
         }
     }
 
@@ -1191,7 +1183,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
         else
         {
-            solutionComp = Comp<SolutionComponent>(solutionId);
+            solutionComp = _solutionQuery.Comp(solutionId);
             DebugTools.Assert(TryComp(solutionId, out ContainedSolutionComponent? relation) && relation.Container == uid && relation.ContainerName == name);
             DebugTools.Assert(solutionComp.Solution.Name == name);
 

@@ -41,7 +41,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InsideReagentGrinderComponent, SolutionContainerChangedEvent>(OnBeakerSolutionContainerChanged);
+        SubscribeLocalEvent<InsideReagentGrinderComponent, SolutionChangedEvent>(OnBeakerSolutionContainerChanged);
 
         SubscribeLocalEvent<ReagentGrinderComponent, ComponentStartup>(OnGrinderStartup);
         SubscribeLocalEvent<ReagentGrinderComponent, ContainerIsRemovingAttemptEvent>(OnEntRemovingAttempt);
@@ -56,7 +56,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         SubscribeLocalEvent<ReagentGrinderComponent, ReagentGrinderEjectChamberContentMessage>(OnEjectChamberContentMessage);
     }
 
-    private void OnBeakerSolutionContainerChanged(Entity<InsideReagentGrinderComponent> ent, ref SolutionContainerChangedEvent args)
+    private void OnBeakerSolutionContainerChanged(Entity<InsideReagentGrinderComponent> ent, ref SolutionChangedEvent args)
     {
         // Update the UI if the reagents inside the beaker are changed.
         // This is needed in case the component state for the container is applied before that of the solution container
