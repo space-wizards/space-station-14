@@ -6,6 +6,15 @@
   components:
     # aptly named component for picture taking
     - type: PictureTaker
+      photographs:
+        # they will be instanced when the camera takes a picture
+        - Photograph
+        - PhotographRed
+        - PhotographBlue
+        - PhotographGreen
+        - PhotographYellow
+        - PhotographPurple
+        - PhotographRainbow
     - type: Sprite
       sprite: Objects/Devices/travel_camera.rsi
       layers:
@@ -38,13 +47,68 @@
     - type: Tag
       tags:
       - WhitelistChameleon
-
+# we have a parent so that if we need to add components later on its easier
 - type: entity
-  name: photography
-  id: Photography
+  name: photograph
+  id: Photograph
   parent: BasePaper
   components:
   - type: Sprite
-    sprite: Objects/Devices/travel_camera.rsi
+    sprite: Objects/Misc/photograph.rsi
     layers:
-    - state: icon
+    - state: black
+- type: entity
+  name: photograph
+  id: PhotographRed
+  parent: Photograph
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/photograph.rsi
+    layers:
+    - state: red
+- type: entity
+  name: photograph
+  id: PhotographBlue
+  parent: Photograph
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/photograph.rsi
+    layers:
+    - state: blue
+- type: entity
+  name: photograph
+  id: PhotographGreen
+  parent: Photograph
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/photograph.rsi
+    layers:
+    - state: green
+- type: entity
+  name: photograph
+  id: PhotographYellow
+  parent: Photograph
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/photograph.rsi
+    layers:
+    - state: yellow
+- type: entity
+  name: photograph
+  id: PhotographPurple
+  parent: Photograph
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/photograph.rsi
+    layers:
+    - state: purple
+- type: entity
+  name: photograph
+  id: PhotographRainbow
+  parent: Photograph
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/photograph.rsi
+    layers:
+    - state: rainbow
+
