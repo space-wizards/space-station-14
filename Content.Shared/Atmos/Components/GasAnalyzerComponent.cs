@@ -1,101 +1,103 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Components;
 
+/// <summary>
+/// Used for gas analyzers, an item that shows players the gas contents of an atmos
+/// device they use it on or of the tile they are standing on.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class GasAnalyzerComponent : Component
 {
-    [ViewVariables]
+    /// <summary>
+    /// The target entity currently being analyzed.
+    /// </summary>
+    [DataField]
     public EntityUid? Target;
 
-    [ViewVariables]
+    /// <summary>
+    /// The current user of the gas analyzer.
+    /// </summary>
+    [DataField]
     public EntityUid User;
 
-    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Is the analyzer currently active?
+    /// </summary>
+    [DataField]
     public bool Enabled;
-
-    [Serializable, NetSerializable]
-    public enum GasAnalyzerUiKey
-    {
-        Key,
-    }
-
-    /// <summary>
-    /// Atmospheric data is gathered in the system and sent to the user
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class GasAnalyzerUserMessage : BoundUserInterfaceMessage
-    {
-        public string DeviceName;
-        public NetEntity DeviceUid;
-        public bool DeviceFlipped;
-        public string? Error;
-        public GasMixEntry[] NodeGasMixes;
-        public GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string deviceName, NetEntity deviceUid, bool deviceFlipped, string? error = null)
-        {
-            NodeGasMixes = nodeGasMixes;
-            DeviceName = deviceName;
-            DeviceUid = deviceUid;
-            DeviceFlipped = deviceFlipped;
-            Error = error;
-        }
-    }
-
-    /// <summary>
-    /// Contains information on a gas mix entry, turns into a tab in the UI
-    /// </summary>
-    [Serializable, NetSerializable]
-    public struct GasMixEntry
-    {
-        /// <summary>
-        /// Name of the tab in the UI
-        /// </summary>
-        public readonly string Name;
-        public readonly float Volume;
-        public readonly float Pressure;
-        public readonly float Temperature;
-        public readonly GasEntry[]? Gases;
-
-        public GasMixEntry(string name, float volume, float pressure, float temperature, GasEntry[]? gases = null)
-        {
-            Name = name;
-            Volume = volume;
-            Pressure = pressure;
-            Temperature = temperature;
-            Gases = gases;
-        }
-    }
-
-    /// <summary>
-    /// Individual gas entry data for populating the UI
-    /// </summary>
-    [Serializable, NetSerializable]
-    public struct GasEntry
-    {
-        public readonly string Name;
-        public readonly float Amount;
-        public readonly string Color;
-
-        public GasEntry(string name, float amount, string color)
-        {
-            Name = name;
-            Amount = amount;
-            Color = color;
-        }
-
-        public override string ToString()
-        {
-            // e.g. "Plasma: 2000 mol"
-            return Loc.GetString(
-                "gas-entry-info",
-                 ("gasName", Name),
-                 ("gasAmount", Amount));
-        }
-    }
 }
 
+/// <summary>
+/// Atmospheric data is gathered in the system and sent to the user.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string deviceName, NetEntity deviceUid, bool deviceFlipped) : BoundUserInterfaceMessage
+{
+    public string DeviceName = deviceName;
+    public NetEntity DeviceUid = deviceUid;
+    public bool DeviceFlipped = deviceFlipped;
+    public GasMixEntry[] NodeGasMixes = nodeGasMixes;
+}
+
+/// <summary>
+/// Contains information on a gas mix entry, turns into a tab in the UI.
+/// </summary>
+[Serializable, NetSerializable]
+public struct GasMixEntry(string name, float volume, float pressure, float temperature, GasEntry[]? gases = null)
+{
+    /// <summary>
+    /// Name of the tab in the UI.
+    /// </summary>
+    public readonly string Name = name;
+    /// <summary>
+    /// Volume of this gas mixture.
+    /// </summary>
+    public readonly float Volume = volume;
+    /// <summary>
+    /// Pressure of this gas mixture.
+    /// </summary>
+    public readonly float Pressure = pressure;
+    /// <summary>
+    /// Temperature of this gas mixture.
+    /// </summary>
+    public readonly float Temperature = temperature;
+    /// <summary>
+    /// The gases contained in this gas mixture.
+    /// The gases below a certain mol threshold are not included.
+    /// </summary>
+    public readonly GasEntry[]? Gases = gases;
+}
+
+/// <summary>
+/// Individual gas entry data for populating the UI.
+/// </summary>
+[Serializable, NetSerializable]
+public readonly struct GasEntry(Gas gas, float amount)
+{
+    /// <summary>
+    /// The gas this entry represents.
+    /// </summary>
+    public readonly Gas Gas = gas;
+    /// <summary>
+    /// The gas amount in mol.
+    /// </summary>
+    public readonly float Amount = amount;
+}
+
+/// <summary>
+/// Key for the GasAnalyzerBoundUserInterface.
+/// </summary>
+[Serializable, NetSerializable]
+public enum GasAnalyzerUiKey
+{
+    Key,
+}
+
+/// <summary>
+/// Individual gas entry data for populating the UI
+/// </summary>
 [Serializable, NetSerializable]
 public enum GasAnalyzerVisuals : byte
 {

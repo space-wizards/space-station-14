@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -256,18 +255,17 @@ public sealed class GasAnalyzerSystem : EntitySystem
     {
         var gases = new List<GasEntry>();
 
+        if (mixture == null)
+            return [];
+
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
-            var gas = _atmo.GetGas(i);
+            var gas = (Gas)i;
 
-            if (mixture?[i] <= UIMinMoles)
+            if (mixture[i] <= UIMinMoles)
                 continue;
 
-            if (mixture != null)
-            {
-                var gasName = Loc.GetString(gas.Name);
-                gases.Add(new GasEntry(gasName, mixture[i], gas.Color));
-            }
+            gases.Add(new GasEntry(gas, mixture[i]));
         }
 
         var gasesOrdered = gases.OrderByDescending(gas => gas.Amount);
