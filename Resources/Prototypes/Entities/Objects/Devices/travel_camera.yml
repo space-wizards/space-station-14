@@ -1,0 +1,35 @@
+- type: entity
+  name: travel camera
+  parent: Clothing
+  id: TravelCamera
+  description: A picture says more than a thousand words. Comes with an ultrabright flash and internal photo roll, so make sure every snap counts!
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/travel_camera.rsi
+      layers:
+      - state: icon
+    - type: Flash
+      aoeFlashDuration: null
+      stunTime: 3000
+    - type: LimitedCharges
+      maxCharges: 4
+      charges: 4
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      damage:
+        types:
+          Blunt: 0 # melee weapon to allow flashing individual targets
+      angle: 10
+    - type: Item
+      size: Small
+      sprite: Objects/Devices/travel_camera.rsi
+    - type: UseDelay
+    - type: StaticPrice
+      price: 100
+    - type: Clothing
+      slots:
+      - neck
+      sprite: Objects/Devices/travel_camera.rsi
+    - type: Tag
+      tags:
+      - WhitelistChameleon
