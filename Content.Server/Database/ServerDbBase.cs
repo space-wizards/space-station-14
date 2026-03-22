@@ -1663,6 +1663,110 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         }
 
+        #region Admin Helps
+
+        public async Task<int> AddAdminHelp(int roundId, Guid playerUserId, DateTime createdAt)
+        {
+            await using var db = await GetDb();
+
+            var adminHelp = new AdminHelp
+            {
+                RoundId = roundId,
+                PlayerUserId = playerUserId,
+                CreatedAt = createdAt,
+                ClosedAt = null
+            };
+
+            db.DbContext.AdminHelp.Add(adminHelp);
+            await db.DbContext.SaveChangesAsync();
+
+            return adminHelp.Id;
+        }
+
+        public async Task<int> AddAdminHelpMessage(AdminHelpMessage message)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.AdminHelpMessage.Add(message);
+            await db.DbContext.SaveChangesAsync();
+
+            return message.Id;
+        }
+
+        public async Task CloseAdminHelp(int adminHelpId, DateTime closedAt)
+        {
+            await using var db = await GetDb();
+
+            var adminHelp = await db.DbContext.AdminHelp.SingleOrDefaultAsync(ah => ah.Id == adminHelpId);
+            if (adminHelp != null)
+            {
+                adminHelp.ClosedAt = closedAt;
+                await db.DbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<AdminHelpMessage>> GetAdminHelpMessages(int adminHelpId)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.AdminHelpMessage
+                .Where(m => m.AdminHelpId == adminHelpId)
+                .OrderBy(m => m.SentAt)
+                .ToListAsync();
+        }
+
+        public async Task<AdminHelp?> GetAdminHelp(int adminHelpId)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.AdminHelp
+                .Include(ah => ah.Messages)
+                .Include(ah => ah.Player)
+                .Include(ah => ah.Round)
+                .SingleOrDefaultAsync(ah => ah.Id == adminHelpId);
+        }
+
+        public async Task<List<AdminHelp>> GetAdminHelpsForPlayer(Guid playerUserId)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.AdminHelp
+                .Where(ah => ah.PlayerUserId == playerUserId)
+                .Include(ah => ah.Messages)
+                .Include(ah => ah.Round)
+                .OrderByDescending(ah => ah.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetOrCreateActiveAdminHelp(int roundId, Guid playerUserId, DateTime createdAt)
+        {
+            await using var db = await GetDb();
+
+            // Try to find an existing open ahelp for this player in this round
+            var existingAdminHelp = await db.DbContext.AdminHelp
+                .Where(ah => ah.RoundId == roundId && ah.PlayerUserId == playerUserId && ah.ClosedAt == null)
+                .FirstOrDefaultAsync();
+
+            if (existingAdminHelp != null)
+                return existingAdminHelp.Id;
+
+            // Create a new one if none exists
+            var adminHelp = new AdminHelp
+            {
+                RoundId = roundId,
+                PlayerUserId = playerUserId,
+                CreatedAt = createdAt,
+                ClosedAt = null
+            };
+
+            db.DbContext.AdminHelp.Add(adminHelp);
+            await db.DbContext.SaveChangesAsync();
+
+            return adminHelp.Id;
+        }
+
+        #endregion
+
         private static async Task<IEnumerable<TResult>> AsyncSelect<T, TResult>(
             IEnumerable<T>? enumerable,
             Func<T, Task<TResult>> selector)

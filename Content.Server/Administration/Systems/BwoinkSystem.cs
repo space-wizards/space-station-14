@@ -684,6 +684,9 @@ namespace Content.Server.Administration.Systems
 
             LogBwoink(msg);
 
+            // Save the message to the database
+            SaveAdminHelpMessageToDatabase(message.UserId, senderSession.UserId, message.Text, senderAHelpAdmin);
+
             var admins = GetTargetAdmins();
 
             // Notify all admins
@@ -859,6 +862,63 @@ namespace Content.Server.Administration.Systems
             /// Did we relay this interaction to OnCall previously.
             /// </summary>
             public bool OnCall;
+        }
+
+        /// <summary>
+        /// Saves an admin help message to the database.
+        /// </summary>
+        private async void SaveAdminHelpMessageToDatabase(NetUserId playerUserId, NetUserId senderUserId, string messageText, bool senderWasAdmin)
+        {
+            try
+            {
+                // Get or create the admin help conversation for this player in the current round
+                var adminHelpId = await _dbManager.GetOrCreateActiveAdminHelp(
+                    _gameTicker.RoundId,
+                    playerUserId.UserId,
+                    DateTime.UtcNow
+                );
+
+                // Get the controlled entity UID for the sender (null if in lobby)
+                int? controlledEntityUid = null;
+                if (_minds.TryGetMind(senderUserId, out var mindId, out var mindComponent))
+                {
+                    if (mindComponent.CurrentEntity != null)
+                    {
+                        controlledEntityUid = (int)mindComponent.CurrentEntity.Value.Id;
+                    }
+                }
+
+                // Determine round state
+                var roundState = _gameTicker.RunLevel switch
+                {
+                    GameRunLevel.PreRoundLobby => Content.Shared.Database.AdminHelpRoundState.PreRoundLobby,
+                    GameRunLevel.InRound => Content.Shared.Database.AdminHelpRoundState.InRound,
+                    GameRunLevel.PostRound => Content.Shared.Database.AdminHelpRoundState.PostRound,
+                    _ => Content.Shared.Database.AdminHelpRoundState.PreRoundLobby
+                };
+
+                // Check if the player being ahelped is online
+                var playerOnline = _playerManager.TryGetSessionById(playerUserId, out _);
+
+                // Create and save the message
+                var ahelpMessage = new Content.Server.Database.AdminHelpMessage
+                {
+                    AdminHelpId = adminHelpId,
+                    SenderUserId = senderUserId.UserId,
+                    Message = messageText,
+                    SentAt = DateTime.UtcNow,
+                    SenderWasAdmin = senderWasAdmin,
+                    ControlledEntityUid = controlledEntityUid,
+                    RoundState = roundState,
+                    PlayerOnlineStatus = playerOnline
+                };
+
+                await _dbManager.AddAdminHelpMessage(ahelpMessage);
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to save admin help message to database: {ex}");
+            }
         }
     }
 

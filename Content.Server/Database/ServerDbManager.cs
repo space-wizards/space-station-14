@@ -309,6 +309,63 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Admin Helps
+
+        /// <summary>
+        /// Creates a new admin help conversation for a player in a specific round.
+        /// </summary>
+        /// <param name="roundId">The round ID.</param>
+        /// <param name="playerUserId">The player being ahelped.</param>
+        /// <param name="createdAt">When the conversation was created.</param>
+        /// <returns>The ID of the created admin help.</returns>
+        Task<int> AddAdminHelp(int roundId, Guid playerUserId, DateTime createdAt);
+
+        /// <summary>
+        /// Adds a message to an admin help conversation.
+        /// </summary>
+        /// <param name="message">The message to add.</param>
+        /// <returns>The ID of the created message.</returns>
+        Task<int> AddAdminHelpMessage(AdminHelpMessage message);
+
+        /// <summary>
+        /// Closes an admin help conversation.
+        /// </summary>
+        /// <param name="adminHelpId">The admin help ID to close.</param>
+        /// <param name="closedAt">When it was closed.</param>
+        Task CloseAdminHelp(int adminHelpId, DateTime closedAt);
+
+        /// <summary>
+        /// Gets all messages for a specific admin help conversation.
+        /// </summary>
+        /// <param name="adminHelpId">The admin help ID.</param>
+        /// <returns>List of messages.</returns>
+        Task<List<AdminHelpMessage>> GetAdminHelpMessages(int adminHelpId);
+
+        /// <summary>
+        /// Gets an admin help conversation by ID.
+        /// </summary>
+        /// <param name="adminHelpId">The admin help ID.</param>
+        /// <returns>The admin help or null if not found.</returns>
+        Task<AdminHelp?> GetAdminHelp(int adminHelpId);
+
+        /// <summary>
+        /// Gets all admin help conversations for a specific player.
+        /// </summary>
+        /// <param name="playerUserId">The player's user ID.</param>
+        /// <returns>List of admin helps.</returns>
+        Task<List<AdminHelp>> GetAdminHelpsForPlayer(Guid playerUserId);
+
+        /// <summary>
+        /// Gets or creates an active (open) admin help for a player in the current round.
+        /// </summary>
+        /// <param name="roundId">The current round ID.</param>
+        /// <param name="playerUserId">The player being ahelped.</param>
+        /// <param name="createdAt">When to set as created time if creating new.</param>
+        /// <returns>The admin help ID.</returns>
+        Task<int> GetOrCreateActiveAdminHelp(int roundId, Guid playerUserId, DateTime createdAt);
+
+        #endregion
+
         #region DB Notifications
 
         void SubscribeToNotifications(Action<DatabaseNotification> handler);
@@ -976,6 +1033,48 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.CleanIPIntelCache(range));
+        }
+
+        public Task<int> AddAdminHelp(int roundId, Guid playerUserId, DateTime createdAt)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddAdminHelp(roundId, playerUserId, createdAt));
+        }
+
+        public Task<int> AddAdminHelpMessage(AdminHelpMessage message)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddAdminHelpMessage(message));
+        }
+
+        public Task CloseAdminHelp(int adminHelpId, DateTime closedAt)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.CloseAdminHelp(adminHelpId, closedAt));
+        }
+
+        public Task<List<AdminHelpMessage>> GetAdminHelpMessages(int adminHelpId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAdminHelpMessages(adminHelpId));
+        }
+
+        public Task<AdminHelp?> GetAdminHelp(int adminHelpId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAdminHelp(adminHelpId));
+        }
+
+        public Task<List<AdminHelp>> GetAdminHelpsForPlayer(Guid playerUserId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAdminHelpsForPlayer(playerUserId));
+        }
+
+        public Task<int> GetOrCreateActiveAdminHelp(int roundId, Guid playerUserId, DateTime createdAt)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetOrCreateActiveAdminHelp(roundId, playerUserId, createdAt));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)

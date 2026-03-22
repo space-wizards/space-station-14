@@ -49,6 +49,8 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
+        public DbSet<AdminHelp> AdminHelp { get; set; } = null!;
+        public DbSet<AdminHelpMessage> AdminHelpMessage { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -294,6 +296,48 @@ namespace Content.Server.Database
                 .OwnsOne(p => p.HWId)
                 .Property(p => p.Type)
                 .HasDefaultValue(HwidType.Legacy);
+
+            // AdminHelp relationships
+            modelBuilder.Entity<AdminHelp>()
+                .HasOne(ah => ah.Round)
+                .WithMany()
+                .HasForeignKey(ah => ah.RoundId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AdminHelp>()
+                .HasOne(ah => ah.Player)
+                .WithMany()
+                .HasForeignKey(ah => ah.PlayerUserId)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AdminHelp>()
+                .HasIndex(ah => ah.PlayerUserId);
+
+            modelBuilder.Entity<AdminHelp>()
+                .HasIndex(ah => ah.RoundId);
+
+            modelBuilder.Entity<AdminHelpMessage>()
+                .HasOne(m => m.AdminHelp)
+                .WithMany(ah => ah.Messages)
+                .HasForeignKey(m => m.AdminHelpId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AdminHelpMessage>()
+                .HasOne(m => m.Sender)
+                .WithMany()
+                .HasForeignKey(m => m.SenderUserId)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<AdminHelpMessage>()
+                .HasIndex(m => m.AdminHelpId);
+
+            modelBuilder.Entity<AdminHelpMessage>()
+                .HasIndex(m => m.SenderUserId);
+
+            modelBuilder.Entity<AdminHelpMessage>()
+                .HasIndex(m => m.SentAt);
 
             ModelBan.OnModelCreating(modelBuilder);
         }
@@ -1053,5 +1097,108 @@ namespace Content.Server.Database
         /// The score IPIntel returned
         /// </summary>
         public float Score { get; set; }
+    }
+
+    /// <summary>
+    /// Represents an admin help (ahelp) conversation/exchange for a specific player in a round.
+    /// </summary>
+    [Index(nameof(PlayerUserId))]
+    [Index(nameof(RoundId))]
+    public class AdminHelp
+    {
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The round in which this ahelp occurred.
+        /// </summary>
+        [ForeignKey("Round")]
+        public int RoundId { get; set; }
+        public Round Round { get; set; } = default!;
+
+        /// <summary>
+        /// The player who is being ahelped (the subject of the conversation).
+        /// </summary>
+        [Required, ForeignKey("Player")]
+        public Guid PlayerUserId { get; set; }
+        public Player Player { get; set; } = default!;
+
+        /// <summary>
+        /// When the ahelp conversation was created (first message sent).
+        /// </summary>
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// When the ahelp conversation was closed/resolved. Null if still open.
+        /// </summary>
+        public DateTime? ClosedAt { get; set; }
+
+        /// <summary>
+        /// All messages in this ahelp conversation.
+        /// </summary>
+        public List<AdminHelpMessage> Messages { get; set; } = new();
+    }
+
+    /// <summary>
+    /// Represents an individual message within an admin help conversation.
+    /// </summary>
+    [Index(nameof(AdminHelpId))]
+    [Index(nameof(SenderUserId))]
+    [Index(nameof(SentAt))]
+    public class AdminHelpMessage
+    {
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The ahelp conversation this message belongs to.
+        /// </summary>
+        [Required, ForeignKey("AdminHelp")]
+        public int AdminHelpId { get; set; }
+        public AdminHelp AdminHelp { get; set; } = default!;
+
+        /// <summary>
+        /// The user who sent this message.
+        /// </summary>
+        [Required, ForeignKey("Sender")]
+        public Guid SenderUserId { get; set; }
+        public Player Sender { get; set; } = default!;
+
+        /// <summary>
+        /// The message text content.
+        /// </summary>
+        [Required, MaxLength(4096)]
+        public string Message { get; set; } = string.Empty;
+
+        /// <summary>
+        /// When the message was sent.
+        /// </summary>
+        [Required]
+        public DateTime SentAt { get; set; }
+
+        /// <summary>
+        /// Whether the sender had admin status when they sent the message.
+        /// </summary>
+        [Required]
+        public bool SenderWasAdmin { get; set; }
+
+        /// <summary>
+        /// The entity UID that the sender was controlling when they sent the message.
+        /// Null if they were in the lobby or not controlling an entity.
+        /// </summary>
+        public int? ControlledEntityUid { get; set; }
+
+        /// <summary>
+        /// The state of the round when the message was sent.
+        /// </summary>
+        [Required]
+        public AdminHelpRoundState RoundState { get; set; }
+
+        /// <summary>
+        /// Whether the player being ahelped was online when this message was sent.
+        /// </summary>
+        [Required]
+        public bool PlayerOnlineStatus { get; set; }
     }
 }

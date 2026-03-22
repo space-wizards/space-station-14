@@ -92,6 +92,101 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("admin_flag", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AdminHelp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("admin_help_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ClosedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("closed_at");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<int>("RoundId")
+                        .HasColumnType("integer")
+                        .HasColumnName("round_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_admin_help");
+
+                    b.HasIndex("PlayerUserId")
+                        .HasDatabaseName("IX_admin_help_player_user_id");
+
+                    b.HasIndex("RoundId")
+                        .HasDatabaseName("IX_admin_help_round_id");
+
+                    b.ToTable("admin_help", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminHelpMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("admin_help_message_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdminHelpId")
+                        .HasColumnType("integer")
+                        .HasColumnName("admin_help_id");
+
+                    b.Property<int?>("ControlledEntityUid")
+                        .HasColumnType("integer")
+                        .HasColumnName("controlled_entity_uid");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("message");
+
+                    b.Property<bool>("PlayerOnlineStatus")
+                        .HasColumnType("boolean")
+                        .HasColumnName("player_online_status");
+
+                    b.Property<byte>("RoundState")
+                        .HasColumnType("smallint")
+                        .HasColumnName("round_state");
+
+                    b.Property<Guid>("SenderUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("sender_user_id");
+
+                    b.Property<bool>("SenderWasAdmin")
+                        .HasColumnType("boolean")
+                        .HasColumnName("sender_was_admin");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("sent_at");
+
+                    b.HasKey("Id")
+                        .HasName("PK_admin_help_message");
+
+                    b.HasIndex("AdminHelpId")
+                        .HasDatabaseName("IX_admin_help_message_admin_help_id");
+
+                    b.HasIndex("SenderUserId")
+                        .HasDatabaseName("IX_admin_help_message_sender_user_id");
+
+                    b.HasIndex("SentAt")
+                        .HasDatabaseName("IX_admin_help_message_sent_at");
+
+                    b.ToTable("admin_help_message", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
                 {
                     b.Property<int>("RoundId")
@@ -1478,6 +1573,50 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Admin");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AdminHelp", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_help_player_player_user_id");
+
+                    b.HasOne("Content.Server.Database.Round", "Round")
+                        .WithMany()
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_help_round_round_id");
+
+                    b.Navigation("Player");
+
+                    b.Navigation("Round");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminHelpMessage", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminHelp", "AdminHelp")
+                        .WithMany("Messages")
+                        .HasForeignKey("AdminHelpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_help_message_admin_help_admin_help_id");
+
+                    b.HasOne("Content.Server.Database.Player", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_help_message_player_sender_user_id");
+
+                    b.Navigation("AdminHelp");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
                 {
                     b.HasOne("Content.Server.Database.Round", "Round")
@@ -2012,6 +2151,11 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
                     b.Navigation("Flags");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminHelp", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
