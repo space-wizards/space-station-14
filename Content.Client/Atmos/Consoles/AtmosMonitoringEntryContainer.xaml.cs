@@ -20,14 +20,14 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
 
     private readonly IEntityManager _entManager;
     private readonly IResourceCache _cache;
-    private readonly SharedAtmosphereSystem _atmossphere;
+    private readonly SharedAtmosphereSystem _atmosphere;
 
     public AtmosMonitoringEntryContainer(AtmosMonitoringConsoleEntry data)
     {
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _cache = IoCManager.Resolve<IResourceCache>();
-        _atmossphere = _entManager.System<SharedAtmosphereSystem>();
+        _atmosphere = _entManager.System<SharedAtmosphereSystem>();
 
         Data = data;
 
@@ -135,7 +135,7 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
                 var gasPercent = (FixedPoint2)0f;
                 gasPercent = percent * 100f;
 
-                var gasAbbreviation = Loc.GetString(_atmossphere.GetGas(gas).Abbreviation);
+                var gasAbbreviation = Loc.GetString(_atmosphere.GetGas(gas).Abbreviation);
 
                 var gasLabel = new Label()
                 {

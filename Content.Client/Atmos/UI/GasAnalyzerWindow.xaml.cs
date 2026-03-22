@@ -17,13 +17,13 @@ namespace Content.Client.Atmos.UI
     [GenerateTypedNameReferences]
     public sealed partial class GasAnalyzerWindow : DefaultWindow
     {
-        private readonly SharedAtmosphereSystem _atmossphere;
+        private readonly SharedAtmosphereSystem _atmosphere;
         private NetEntity _currentEntity = NetEntity.Invalid;
 
         public GasAnalyzerWindow()
         {
             RobustXamlLoader.Load(this);
-            _atmossphere = IoCManager.Resolve<IEntityManager>().System<SharedAtmosphereSystem>();
+            _atmosphere = IoCManager.Resolve<IEntityManager>().System<SharedAtmosphereSystem>();
         }
 
         public void Populate(GasAnalyzerUserMessage msg)
@@ -323,7 +323,7 @@ namespace Content.Client.Atmos.UI
             for (var j = 0; j < gasMix.Gases.Length; j++)
             {
                 var gasEntry = gasMix.Gases[j];
-                var gasProto = _atmossphere.GetGas(gasEntry.Gas);
+                var gasProto = _atmosphere.GetGas(gasEntry.Gas);
                 // Add to the table
                 tableKey.AddChild(new Label
                 {

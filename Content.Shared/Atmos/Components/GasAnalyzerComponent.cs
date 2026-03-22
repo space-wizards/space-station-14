@@ -20,7 +20,7 @@ public sealed partial class GasAnalyzerComponent : Component
     /// The current user of the gas analyzer.
     /// </summary>
     [DataField]
-    public EntityUid User;
+    public EntityUid? User;
 
     /// <summary>
     /// Is the analyzer currently active?
@@ -45,45 +45,45 @@ public sealed class GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string de
 /// Contains information on a gas mix entry, turns into a tab in the UI.
 /// </summary>
 [Serializable, NetSerializable]
-public struct GasMixEntry(string name, float volume, float pressure, float temperature, GasEntry[]? gases = null)
+public readonly record struct GasMixEntry(string Name, float Volume, float Pressure, float Temperature, GasEntry[]? Gases = null)
 {
     /// <summary>
     /// Name of the tab in the UI.
     /// </summary>
-    public readonly string Name = name;
+    public readonly string Name = Name;
     /// <summary>
     /// Volume of this gas mixture.
     /// </summary>
-    public readonly float Volume = volume;
+    public readonly float Volume = Volume;
     /// <summary>
     /// Pressure of this gas mixture.
     /// </summary>
-    public readonly float Pressure = pressure;
+    public readonly float Pressure = Pressure;
     /// <summary>
     /// Temperature of this gas mixture.
     /// </summary>
-    public readonly float Temperature = temperature;
+    public readonly float Temperature = Temperature;
     /// <summary>
     /// The gases contained in this gas mixture.
     /// The gases below a certain mol threshold are not included.
     /// </summary>
-    public readonly GasEntry[]? Gases = gases;
+    public readonly GasEntry[]? Gases = Gases;
 }
 
 /// <summary>
 /// Individual gas entry data for populating the UI.
 /// </summary>
 [Serializable, NetSerializable]
-public readonly struct GasEntry(Gas gas, float amount)
+public readonly record struct GasEntry(Gas Gas, float Amount)
 {
     /// <summary>
     /// The gas this entry represents.
     /// </summary>
-    public readonly Gas Gas = gas;
+    public readonly Gas Gas = Gas;
     /// <summary>
     /// The gas amount in mol.
     /// </summary>
-    public readonly float Amount = amount;
+    public readonly float Amount = Amount;
 }
 
 /// <summary>

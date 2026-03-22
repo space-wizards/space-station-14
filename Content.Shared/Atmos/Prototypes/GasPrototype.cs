@@ -28,7 +28,7 @@ public sealed partial class GasPrototype : IPrototype
     public LocId Name;
 
     /// <summary>
-    /// The abbreviation of the name. For example
+    /// The abbreviation of the name. For example O₂ for Oxygen.
     /// Used for UI purposes.
     /// </summary>
     [DataField(required: true)]
@@ -69,6 +69,7 @@ public sealed partial class GasPrototype : IPrototype
     /// <summary>
     /// Visibility for this gas will be max after this value.
     /// </summary>
+    [ViewVariables]
     public float GasMolesVisibleMax => GasMolesVisible * GasVisibilityFactor;
 
     /// <summary>
