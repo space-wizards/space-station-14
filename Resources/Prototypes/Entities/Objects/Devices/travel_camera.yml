@@ -9,7 +9,6 @@
       layers:
       - state: icon
     - type: Flash
-      aoeFlashDuration: null
       stunTime: 3000
     - type: LimitedCharges
       maxCharges: 4

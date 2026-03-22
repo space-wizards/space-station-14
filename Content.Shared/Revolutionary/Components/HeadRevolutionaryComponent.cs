@@ -2,7 +2,7 @@ using Content.Shared.Antag;
 using Robust.Shared.GameStates;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
-
+using Content.Shared.Tag;
 namespace Content.Shared.Revolutionary.Components;
 
 /// <summary>
@@ -28,5 +28,5 @@ public sealed partial class HeadRevolutionaryComponent : Component
     /// Which entity tags that indicate if an item can flash and convert another player.
     /// </summary>
     [DataField("tags")]
-    public string[] ConvertItemTags = { "ConvertItem" };
+    public List<ProtoId<TagPrototype>> ConvertItemTags = ["ConvertItem"];
 }
