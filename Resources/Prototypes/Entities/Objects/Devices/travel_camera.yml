@@ -4,6 +4,8 @@
   id: TravelCamera
   description: A picture says more than a thousand words. Comes with an ultrabright flash and internal photo roll, so make sure every snap counts!
   components:
+    # aptly named component for picture taking
+    - type: PictureTaker
     - type: Sprite
       sprite: Objects/Devices/travel_camera.rsi
       layers:
@@ -36,3 +38,13 @@
     - type: Tag
       tags:
       - WhitelistChameleon
+
+- type: entity
+  name: photography
+  id: Photography
+  parent: BasePaper
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/travel_camera.rsi
+    layers:
+    - state: icon
