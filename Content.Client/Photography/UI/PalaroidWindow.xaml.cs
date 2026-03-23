@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using System.Numerics;
+using System.Text;
 
 namespace Content.Client.Photography.UI
 {
@@ -57,14 +58,82 @@ namespace Content.Client.Photography.UI
                 ("keybind", _inputManager.GetKeyFunctionButtonString(EngineKeyFunctions.MultilineTextSubmit)));
         }
 
-        public void SetPhoto(string photoRichText)
+        public void SetPhoto(byte[]? rawData, float fontSize)
         {
-            if (string.IsNullOrEmpty(photoRichText))
+            if (rawData == null || rawData.Length < 54)
+            {
+                PolaroidImage.SetMessage(new FormattedMessage());
                 return;
+            }
+
+            var richText = GenerateMarkupFromBmp(rawData, fontSize);
 
             var msg = new FormattedMessage();
-            msg.AddMarkupPermissive(photoRichText);
+            msg.AddMarkupPermissive(richText);
             PolaroidImage.SetMessage(msg, null, null);
+        }
+
+        private string GenerateMarkupFromBmp(byte[] bmpBytes, float fontSize)
+        {
+            int dataOffset = BitConverter.ToInt32(bmpBytes, 10);
+            int imgWidth = BitConverter.ToInt32(bmpBytes, 18);
+            int imgHeight = Math.Abs(BitConverter.ToInt32(bmpBytes, 22));
+            short bpp = BitConverter.ToInt16(bmpBytes, 28);
+
+            if (bpp != 24 && bpp != 32)
+                return "";
+
+            int bytesPerPixel = bpp / 8;
+            int rowStride = ((imgWidth * bytesPerPixel) + 3) & ~3;
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"[font=\"Picture\" size={fontSize}]");
+
+            for (int y = 0; y < imgHeight; y++)
+            {
+                int bmpY = imgHeight - 1 - y;
+                int count = 0;
+                string currentHex = "";
+
+                for (int x = 0; x < imgWidth; x++)
+                {
+                    int pixelIndex = dataOffset + (bmpY * rowStride) + (x * bytesPerPixel);
+
+                    byte b = bmpBytes[pixelIndex];
+                    byte g = bmpBytes[pixelIndex + 1];
+                    byte r = bmpBytes[pixelIndex + 2];
+
+                    string hexColor = $"{r:X2}{g:X2}{b:X2}";
+
+                    if (x == 0)
+                    {
+                        currentHex = hexColor;
+                        count = 1;
+                    }
+                    else if (hexColor == currentHex)
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        AppendColorBlock(sb, currentHex, count);
+                        currentHex = hexColor;
+                        count = 1;
+                    }
+                }
+                AppendColorBlock(sb, currentHex, count);
+                sb.AppendLine();
+            }
+
+            sb.AppendLine("[/font]");
+            return sb.ToString();
+        }
+
+        private void AppendColorBlock(StringBuilder sb, string hexColor, int count)
+        {
+            sb.Append($"[color=#{hexColor}]");
+            sb.Append('0', count);
+            sb.Append("[/color]");
         }
 
         public void Populate(PaperComponent.PaperBoundUserInterfaceState state)

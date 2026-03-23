@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Painted by qrwas",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "palaroid_paper"
+    },
+    {
+      "name": "palaroid_paper_image"
+    }
+  ]
+}

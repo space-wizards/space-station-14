@@ -6,11 +6,13 @@ namespace Content.Shared.Photography;
 public sealed class CameraPhotoCapturedEvent : HandledEntityEventArgs
 {
     public NetEntity CameraNetUid;
-    public string GeneratedText;
+    public byte[] PhotoBytes;
+    public float FontSize;
 
-    public CameraPhotoCapturedEvent(NetEntity cameraUid, string text)
+    public CameraPhotoCapturedEvent(NetEntity cameraUid, byte[] photoBytes, float fontSize)
     {
         CameraNetUid = cameraUid;
-        GeneratedText = text;
+        PhotoBytes = photoBytes;
+        FontSize = fontSize;
     }
 }

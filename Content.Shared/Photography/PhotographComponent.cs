@@ -6,5 +6,7 @@ namespace Content.Shared.Photography;
 public sealed partial class PhotographComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public string ImageText = "";
+    public byte[]? RawData;
+    [DataField, AutoNetworkedField]
+    public float FontSize = 3f;
 }

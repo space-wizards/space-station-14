@@ -5,9 +5,9 @@
   description: 'Palaroid paper, used for taking pictures with a Palaroid camera.'
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: Objects/Misc/palaroid.rsi
     layers:
-    - state: paper
+    - state: palaroid_paper
     - state: paper_words
       map: ["enum.PaperVisualLayers.Writing"]
       visible: false

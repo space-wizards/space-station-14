@@ -34,7 +34,7 @@ public sealed class PolaroidBoundUserInterface : BoundUserInterface
         if (_window == null || state is not PolaroidBoundUserInterfaceState castState)
             return;
 
-        _window.SetPhoto(castState.PhotoRichText);
+        _window.SetPhoto(castState.RawData, castState.FontSize);
 
         var paperState = new PaperBoundUserInterfaceState(
             castState.CaptionText,

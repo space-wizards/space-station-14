@@ -8,17 +8,19 @@ namespace Content.Shared.Photography;
 [Serializable, NetSerializable]
 public sealed class PolaroidBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public readonly string PhotoRichText;
+    public readonly byte[]? RawData;
     public readonly string CaptionText;
     public readonly PaperAction Mode;
     public readonly List<StampDisplayInfo> StampedBy;
+    public readonly float FontSize;
 
-    public PolaroidBoundUserInterfaceState(string photoRichText, string captionText, PaperAction mode, List<StampDisplayInfo> stampedBy)
+    public PolaroidBoundUserInterfaceState(byte[]? rawData, string captionText, PaperAction mode, List<StampDisplayInfo> stampedBy, float fontSize)
     {
-        PhotoRichText = photoRichText;
+        RawData = rawData;
         CaptionText = captionText;
         Mode = mode;
         StampedBy = stampedBy;
+        FontSize = fontSize;
     }
 }
 

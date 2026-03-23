@@ -28,6 +28,15 @@ public sealed class PhotographySystem : EntitySystem
         if (player == null)
             return;
 
+        // maybe this should be cvar value
+        const int maxSizeBytes = 100 * 1024;
+
+        if (ev.PhotoBytes.Length > maxSizeBytes)
+        {
+            Logger.Warning($"Player {args.SenderSession.Name} send many bytes: {ev.PhotoBytes.Length}");
+            return;
+        }
+
         var cameraUid = GetEntity(ev.CameraNetUid);
 
         if (!Exists(cameraUid))
@@ -42,7 +51,8 @@ public sealed class PhotographySystem : EntitySystem
 
         if (TryComp<PhotographComponent>(photoEntity, out var photoComp))
         {
-            photoComp.ImageText = ev.GeneratedText;
+            photoComp.RawData = ev.PhotoBytes;
+            photoComp.FontSize = ev.FontSize;
             Dirty(photoEntity, photoComp);
         }
     }
@@ -61,10 +71,11 @@ public sealed class PhotographySystem : EntitySystem
             return;
 
         var state = new PolaroidBoundUserInterfaceState(
-            photo.ImageText,
+            photo.RawData,
             paper.Content,
             paper.Mode,
-            paper.StampedBy
+            paper.StampedBy,
+            photo.FontSize
         );
 
         _uiSystem.SetUiState(uid, PolaroidUiKey.Key, state);
