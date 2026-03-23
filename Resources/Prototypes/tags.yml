@@ -375,9 +375,6 @@
 - type: Tag
   id: CottonBurger # Food sequence key
 
-- type: Tag #indicates that revs can use this item to convert
-  id: ConvertItem
-
 - type: Tag
   id: Cow # Reproductive partner key
 

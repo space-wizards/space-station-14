@@ -175,9 +175,7 @@
       guides:
       - Security
       - Antagonists
-    - type: Tag
-      tags:
-        - ConvertItem
+    - type: CanConvert
 
 - type: entity
   name: flash
