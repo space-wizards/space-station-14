@@ -17,8 +17,7 @@
         - PhotographRainbow
     - type: Sprite
       sprite: Objects/Devices/travel_camera.rsi
-      layers:
-      - state: icon
+      state: icon
     - type: Flash
       # it can not be without a melee attack
       flashOnUse: false
@@ -26,7 +25,6 @@
         path: /Audio/Misc/camera_snap.ogg
     - type: LimitedCharges
       maxCharges: 4
-      lastCharges: 4
     - type: MeleeWeapon
       wideAnimationRotation: 180
       damage:
