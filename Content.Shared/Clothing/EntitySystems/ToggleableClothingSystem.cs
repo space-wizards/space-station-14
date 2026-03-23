@@ -54,10 +54,18 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
     private void GetRelayedVerbs(EntityUid uid, ToggleableClothingComponent component, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
     {
-        OnGetVerbs(uid, component, args.Args);
+        GetVerbs(uid, null, component, args.Args);
     }
 
     private void OnGetVerbs(EntityUid uid, ToggleableClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
+    {
+        GetVerbs(uid, null, component, args);
+    }
+
+    private void GetVerbs(EntityUid uid,
+        EntityUid? targetClothing,
+        ToggleableClothingComponent component,
+        GetVerbsEvent<EquipmentVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.Container == null)
             return;
@@ -74,9 +82,9 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
 
         // Handle the case of only a single kind specially so there's no needless nesting.
-        if (component.ClothingUids.Count == 1)
+        if (component.ClothingUids.Count == 1 || targetClothing != null)
         {
-            var targetClothing = component.ClothingUids.First().Key;
+            var target = targetClothing ?? component.ClothingUids.First().Key;
 
             var verb = new EquipmentVerb()
             {
@@ -87,34 +95,34 @@ public sealed class ToggleableClothingSystem : EntitySystem
             if (args.User == wearer)
             {
                 verb.EventTarget = uid;
-                verb.ExecutionEventArgs = new ToggleClothingEvent(target: targetClothing) { Performer = args.User };
+                verb.ExecutionEventArgs = new ToggleClothingEvent(target: target) { Performer = args.User };
             }
             else
             {
-                verb.Act = () => StartDoAfter(args.User, uid, targetClothing, Transform(uid).ParentUid, component);
+                verb.Act = () => StartDoAfter(args.User, uid, target, Transform(uid).ParentUid, component);
             }
 
             args.Verbs.Add(verb);
         }
         else
         {
-            foreach (var (targetClothing, slot) in component.ClothingUids)
+            foreach (var (target, slot) in component.ClothingUids)
             {
                 var verb = new EquipmentVerb()
                 {
                     Text = Loc.GetString(text),
-                    IconEntity = GetNetEntity(targetClothing),
+                    IconEntity = GetNetEntity(target),
                     Category = VerbCategory.ToggleClothing,
                 };
 
                 if (args.User == wearer)
                 {
                     verb.EventTarget = uid;
-                    verb.ExecutionEventArgs = new ToggleClothingEvent(target: targetClothing) { Performer = args.User };
+                    verb.ExecutionEventArgs = new ToggleClothingEvent(target: target) { Performer = args.User };
                 }
                 else
                 {
-                    verb.Act = () => StartDoAfter(args.User, uid, targetClothing, Transform(uid).ParentUid, component);
+                    verb.Act = () => StartDoAfter(args.User, uid, target, Transform(uid).ParentUid, component);
                 }
 
                 args.Verbs.Add(verb);
@@ -151,8 +159,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
     private void OnGetAttachedStripVerbsEvent(EntityUid uid, AttachedClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
-        // redirect to the attached entity.
-        OnGetVerbs(component.AttachedUid, Comp<ToggleableClothingComponent>(component.AttachedUid), args);
+        // Use the parents GetVerbs but specify that this child is the target.
+        GetVerbs(component.AttachedUid, uid, Comp<ToggleableClothingComponent>(component.AttachedUid), args);
     }
 
     private void OnDoAfterComplete(EntityUid uid, ToggleableClothingComponent component, ToggleClothingDoAfterEvent args)
