@@ -6,15 +6,10 @@
   components:
     # aptly named component for picture taking
     - type: PictureTaker
-      photographs:
-        # they will be instanced when the camera takes a picture
-        - PhotographBlack
-        - PhotographRed
-        - PhotographBlue
-        - PhotographGreen
-        - PhotographYellow
-        - PhotographPurple
-        - PhotographRainbow
+      photographs: !type:GroupSelector
+        children:
+        - !type:NestedSelector
+          tableId: TravelCameraPhotographs
     - type: Sprite
       sprite: Objects/Devices/travel_camera.rsi
       state: icon
@@ -120,3 +115,16 @@
     sprite: Objects/Misc/photograph.rsi
     layers:
     - state: rainbow
+
+- type: entityTable
+  id: TravelCameraPhotographs
+  table: !type:GroupSelector
+    children:
+    # they will be instanced when the camera takes a picture
+    - id: PhotographBlack
+    - id: PhotographRed
+    - id: PhotographBlue
+    - id: PhotographGreen
+    - id: PhotographYellow
+    - id: PhotographPurple
+    - id: PhotographRainbow

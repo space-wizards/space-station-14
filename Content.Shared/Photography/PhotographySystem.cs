@@ -1,19 +1,23 @@
 using System.Linq;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
+using Content.Shared.EntityTable;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
-namespace Content.Server.Photography;
+namespace Content.Shared.Photography;
 public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
-    [Dependency] private readonly IRobustRandom _rng = default!;
+    [Dependency] private readonly EntityTableSystem _tables = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     public override void Initialize() {
         base.Initialize();
         SubscribeLocalEvent<PictureTakerComponent, MeleeHitEvent>(OnCameraMeleeHit);
@@ -42,9 +46,13 @@ public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
         {
             return;
         }
-
+        // this rng should be the same on the client and on the server
+        var rng = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner));
+        var tableResult = _tables.GetSpawns(ent.Comp.Photographs, rng);
+        // so we dont have multiple enumeration
+        var entProtoIds = tableResult.ToList();
         // no photographs...
-        if (!ent.Comp.Photographs.Any())
+        if (!entProtoIds.Any())
         {
             return;
         }
@@ -63,16 +71,19 @@ public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
             var text = _examine.GetExamineText(entity, ent.Owner);
             var name = Name(Identity.Entity(entity, _ent));
 
-
-            var spawned = Spawn(ent.Comp.Photographs[_rng.Next(0, ent.Comp.Photographs.Count)]);
-            var metadata = MetaData(spawned);
-            var comp = new PhotographComponent
+            foreach (var prototype in entProtoIds)
             {
-                Name = name,
-                Text = text,
-            };
-            AddComp(spawned, comp);
-            _hands.PickupOrDrop(args.User, spawned, dropNear: true);
+                // we generate an individual photograph (there should be only one tough)
+                var spawned = Spawn(prototype);
+                var metadata = MetaData(spawned);
+                var comp = new PhotographComponent
+                {
+                    Name = name,
+                    Text = text,
+                };
+                AddComp(spawned, comp);
+                _hands.PickupOrDrop(args.User, spawned, dropNear: true);
+            }
             // we only do the first entity
             return;
         }

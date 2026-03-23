@@ -4,7 +4,7 @@ namespace Content.Server.Revolutionary.Components;
 /// This is a marker component that indicates that a flash can be used to convert to the cause.
 /// </summary>
 [RegisterComponent]
-public sealed partial class CanConvert : Component
+public sealed partial class CanConvertComponent : Component
 {
 
 }
