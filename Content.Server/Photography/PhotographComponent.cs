@@ -6,7 +6,7 @@ namespace Content.Server.Photography;
 /// </summary>
 [RegisterComponent]
 
-public sealed partial class PhotographComponent: Component
+public sealed partial class PhotographComponent : Component
 {
     /// <summary>
     /// The description of the photographed object
