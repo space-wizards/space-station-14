@@ -66,7 +66,11 @@ public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
 
             var spawned = Spawn(ent.Comp.Photographs[_rng.Next(0, ent.Comp.Photographs.Count)]);
             var metadata = MetaData(spawned);
-            var comp = new PhotographComponent(name, text);
+            var comp = new PhotographComponent
+            {
+                Name = name,
+                Text = text,
+            };
             AddComp(spawned, comp);
             _hands.PickupOrDrop(args.User, spawned, dropNear: true);
             // we only do the first entity

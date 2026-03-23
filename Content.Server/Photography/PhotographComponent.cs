@@ -20,9 +20,4 @@ public sealed partial class PhotographComponent : Component
 
     [DataField, AutoNetworkedField]
     public string Name;
-    public PhotographComponent(string name, FormattedMessage descText)
-    {
-        Text = descText;
-        Name = name;
-    }
 }
