@@ -2,6 +2,7 @@
 using Content.Server.Database;
 using Content.Server.Players.JobWhitelist;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -17,6 +18,7 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IAuditLogManager _auditLog = default!;
 
     public override string Command => "jobwhitelistadd";
 
@@ -55,6 +57,20 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
             }
 
             _jobWhitelist.AddWhitelist(guid, job);
+
+            var playerRecord = await _db.GetPlayerRecordByUserId(guid);
+            if (playerRecord != null)
+            {
+                _auditLog.Add(
+                    shell.Player?.UserId.UserId,
+                    AuditLogAction.RoleWhitelistAdd,
+                    $"{player} ({guid}) added to role whitelist for {jobPrototype.LocalizedName} ({job.Id})",
+                    new { PlayerName = player, PlayerId = guid, RoleId = job.Id, RoleName = jobPrototype.LocalizedName },
+                    targetUserId: guid,
+                    targetEntityType: "RoleWhitelist",
+                    targetEntityId: $"{guid}:{job.Id}");
+            }
+
             shell.WriteLine(Loc.GetString("cmd-jobwhitelistadd-added",
                 ("player", player),
                 ("jobId", job.Id),
@@ -145,6 +161,7 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IAuditLogManager _auditLog = default!;
 
     public override string Command => "jobwhitelistremove";
 
@@ -183,6 +200,21 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
             }
 
             _jobWhitelist.RemoveWhitelist(guid, job);
+
+            // Only log if player exists in database (prevents FK constraint errors)
+            var playerRecord = await _db.GetPlayerRecordByUserId(guid);
+            if (playerRecord != null)
+            {
+                _auditLog.Add(
+                    shell.Player?.UserId.UserId,
+                    AuditLogAction.RoleWhitelistRemove,
+                    $"{player} ({guid}) removed from role whitelist for {jobPrototype.LocalizedName} ({job.Id})",
+                    new { PlayerName = player, PlayerId = guid, RoleId = job.Id, RoleName = jobPrototype.LocalizedName },
+                    targetUserId: guid,
+                    targetEntityType: "RoleWhitelist",
+                    targetEntityId: $"{guid}:{job.Id}");
+            }
+
             shell.WriteLine(Loc.GetString("cmd-jobwhitelistremove-removed",
                 ("player", player),
                 ("jobId", job.Id),

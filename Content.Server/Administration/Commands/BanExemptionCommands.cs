@@ -2,6 +2,7 @@
 using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
@@ -11,6 +12,7 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
 {
     [Dependency] private readonly IServerDbManager _dbManager = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+    [Dependency] private readonly IAuditLogManager _auditLog = default!;
 
     public override string Command => "ban_exemption_update";
 
@@ -43,7 +45,19 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
             return;
         }
 
+        var oldFlags = await _dbManager.GetBanExemption(playerData.UserId);
+
         await _dbManager.UpdateBanExemption(playerData.UserId, flags);
+
+        _auditLog.Add(
+            shell.Player?.UserId.UserId,
+            AuditLogAction.BanExemptionUpdate,
+            $"{playerData.Username} ({playerData.UserId}) ban exemption updated: {oldFlags} -> {flags}",
+            new { OldFlags = oldFlags.ToString(), NewFlags = flags.ToString(), PlayerName = playerData.Username },
+            targetUserId: playerData.UserId,
+            targetEntityType: "BanExemption",
+            targetEntityId: playerData.UserId.ToString());
+
         shell.WriteLine(LocalizationManager.GetString(
             "cmd-ban_exemption_update-success",
             ("player", player),

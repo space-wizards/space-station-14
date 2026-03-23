@@ -1637,6 +1637,64 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return db.DbContext.Database.HasPendingModelChanges();
         }
 
+        #region Audit Logs
+
+        public async Task SaveAuditLog(AuditLog auditLog)
+        {
+            await using var db = await GetDb();
+            db.DbContext.AuditLog.Add(auditLog);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<AuditLog>> GetAuditLogs(
+            AuditLogFilter filter,
+            CancellationToken cancellationToken = default)
+        {
+            await using var db = await GetDb(cancellationToken);
+
+            var query = db.DbContext.AuditLog
+                .Include(log => log.Admin)
+                .Include(log => log.TargetUser)
+                .Include(log => log.Server)
+                .AsQueryable();
+
+            if (filter.AdminUserId.HasValue)
+                query = query.Where(log => log.AdminUserId == filter.AdminUserId.Value);
+
+            if (filter.TargetUserId.HasValue)
+                query = query.Where(log => log.TargetUserId == filter.TargetUserId.Value);
+
+            if (filter.ActionType.HasValue)
+                query = query.Where(log => log.ActionType == filter.ActionType.Value);
+
+            if (!string.IsNullOrEmpty(filter.TargetEntityType))
+                query = query.Where(log => log.TargetEntityType == filter.TargetEntityType);
+
+            if (!string.IsNullOrEmpty(filter.TargetEntityId))
+                query = query.Where(log => log.TargetEntityId == filter.TargetEntityId);
+
+            if (filter.DateFrom.HasValue)
+                query = query.Where(log => log.Timestamp >= filter.DateFrom.Value);
+
+            if (filter.DateTo.HasValue)
+                query = query.Where(log => log.Timestamp <= filter.DateTo.Value);
+
+            if (!string.IsNullOrEmpty(filter.SearchText))
+                query = query.Where(log => EF.Functions.Like(log.Message, $"%{filter.SearchText}%"));
+
+            query = query.OrderByDescending(log => log.Timestamp);
+
+            if (filter.Offset.HasValue)
+                query = query.Skip(filter.Offset.Value);
+
+            if (filter.Limit.HasValue)
+                query = query.Take(filter.Limit.Value);
+
+            return await query.ToListAsync(cancellationToken);
+        }
+
+        #endregion
+
         protected abstract Task<DbGuard> GetDb(
             CancellationToken cancel = default,
             [CallerMemberName] string? name = null);

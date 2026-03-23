@@ -309,6 +309,13 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Audit Logs
+
+        Task SaveAuditLog(AuditLog auditLog);
+        Task<List<AuditLog>> GetAuditLogs(AuditLogFilter filter, CancellationToken cancellationToken = default);
+
+        #endregion
+
         #region DB Notifications
 
         void SubscribeToNotifications(Action<DatabaseNotification> handler);
@@ -1006,6 +1013,18 @@ namespace Content.Server.Database
                     handler(notification);
                 }
             }
+        }
+
+        public Task SaveAuditLog(AuditLog auditLog)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SaveAuditLog(auditLog));
+        }
+
+        public Task<List<AuditLog>> GetAuditLogs(AuditLogFilter filter, CancellationToken cancellationToken = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAuditLogs(filter, cancellationToken));
         }
 
         public Task<bool> HasPendingModelChanges()

@@ -49,6 +49,7 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
+        public DbSet<AuditLog> AuditLog { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -296,6 +297,7 @@ namespace Content.Server.Database
                 .HasDefaultValue(HwidType.Legacy);
 
             ModelBan.OnModelCreating(modelBuilder);
+            ModelAuditLog.OnModelCreating(modelBuilder);
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -519,6 +521,8 @@ namespace Content.Server.Database
         public List<Ban> AdminServerBansCreated { get; set; } = null!;
         public List<Ban> AdminServerBansLastEdited { get; set; } = null!;
         public List<RoleWhitelist> JobWhitelists { get; set; } = null!;
+        public List<AuditLog> AuditLogsCreated { get; set; } = null!;
+        public List<AuditLog> AuditLogsReceived { get; set; } = null!;
     }
 
     [Table("whitelist")]
@@ -611,6 +615,9 @@ namespace Content.Server.Database
 
         [InverseProperty(nameof(ConnectionLog.Server))]
         public List<ConnectionLog> ConnectionLogs { get; set; } = default!;
+
+        [InverseProperty(nameof(AuditLog.Server))]
+        public List<AuditLog> AuditLogs { get; set; } = default!;
     }
 
     [Index(nameof(Type))]

@@ -75,6 +75,10 @@ namespace Content.Server.Database
                 .Property(log => log.Json)
                 .HasConversion(jsonStringConverter);
 
+            modelBuilder.Entity<AuditLog>()
+                .Property(log => log.JsonData)
+                .HasConversion(jsonStringConverter);
+
             modelBuilder.Entity<Profile>()
                 .Property(log => log.Markings)
                 .HasConversion(jsonByteArrayConverter);

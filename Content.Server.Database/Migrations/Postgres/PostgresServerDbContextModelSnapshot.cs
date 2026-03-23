@@ -519,6 +519,79 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AuditLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("audit_log_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<byte>("ActionType")
+                        .HasColumnType("smallint")
+                        .HasColumnName("action_type");
+
+                    b.Property<Guid?>("AdminUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("admin_user_id");
+
+                    b.Property<JsonDocument>("JsonData")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("json_data");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)")
+                        .HasColumnName("message");
+
+                    b.Property<int?>("ServerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
+
+                    b.Property<string>("TargetEntityId")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("target_entity_id");
+
+                    b.Property<string>("TargetEntityType")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("target_entity_type");
+
+                    b.Property<Guid?>("TargetUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("target_user_id");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("timestamp");
+
+                    b.HasKey("Id")
+                        .HasName("PK_audit_log");
+
+                    b.HasIndex("ActionType")
+                        .HasDatabaseName("IX_audit_log_action_type");
+
+                    b.HasIndex("AdminUserId")
+                        .HasDatabaseName("IX_audit_log_admin_user_id");
+
+                    b.HasIndex("ServerId")
+                        .HasDatabaseName("IX_audit_log_server_id");
+
+                    b.HasIndex("TargetUserId")
+                        .HasDatabaseName("IX_audit_log_target_user_id");
+
+                    b.HasIndex("Timestamp")
+                        .HasDatabaseName("IX_audit_log_timestamp");
+
+                    b.HasIndex("TargetEntityType", "TargetEntityId");
+
+                    b.ToTable("audit_log", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Ban", b =>
                 {
                     b.Property<int>("Id")
@@ -1674,6 +1747,35 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AuditLog", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "Admin")
+                        .WithMany("AuditLogsCreated")
+                        .HasForeignKey("AdminUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_audit_log_player_admin_user_id");
+
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany("AuditLogs")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_audit_log_server_server_id");
+
+                    b.HasOne("Content.Server.Database.Player", "TargetUser")
+                        .WithMany("AuditLogsReceived")
+                        .HasForeignKey("TargetUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_audit_log_player_target_user_id");
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("Server");
+
+                    b.Navigation("TargetUser");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Ban", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", "CreatedBy")
@@ -2080,6 +2182,10 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Navigation("AdminWatchlistsReceived");
 
+                    b.Navigation("AuditLogsCreated");
+
+                    b.Navigation("AuditLogsReceived");
+
                     b.Navigation("JobWhitelists");
                 });
 
@@ -2116,6 +2222,8 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.Server", b =>
                 {
+                    b.Navigation("AuditLogs");
+
                     b.Navigation("ConnectionLogs");
 
                     b.Navigation("Rounds");
