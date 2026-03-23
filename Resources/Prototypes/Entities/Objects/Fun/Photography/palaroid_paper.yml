@@ -1,0 +1,29 @@
+- type: entity
+  name: Palaroid Paper
+  parent: BasePaper
+  id: PalaroidPaper
+  description: 'Palaroid paper, used for taking pictures with a Palaroid camera.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: Paper
+  - type: Photograph
+  - type: PaperLabelType
+  - type: ActivatableUI
+    key: enum.PolaroidUiKey.Key
+    requiresComplex: false
+  - type: UserInterface
+    interfaces:
+      enum.PolaroidUiKey.Key:
+        type: PolaroidBoundUserInterface
+  - type: FaxableObject
+  - type: PaperVisuals
+  - type: StationAiWhitelist

@@ -1,0 +1,12 @@
+- type: entity
+  name: Camera
+  id: PhotoCamera
+  parent: BaseItem
+  description: Makes wonderful 3x3 tile pixel shots.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/cd.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Camera

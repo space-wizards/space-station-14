@@ -1,0 +1,37 @@
+<photo:PalaroidWindow xmlns="https://spacestation14.io"
+    xmlns:photo="clr-namespace:Content.Client.Photography.UI"
+    xmlns:paper="clr-namespace:Content.Client.Paper.UI"
+    MouseFilter="Stop" Resizable="True" MinSize="470 550"
+    SetSize="470 550">
+
+    <BoxContainer Name="ContentsRoot" Orientation="Vertical">
+        <PanelContainer VerticalAlignment="Top" HorizontalAlignment="Right">
+            <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"/>
+        </PanelContainer>
+
+        <PanelContainer Name="PaperBackground" VerticalExpand="True" HorizontalExpand="True">
+            <ScrollContainer Name="ScrollingContents" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False">
+                <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True">
+                    <BoxContainer Name="InnerContainer" Orientation="Vertical" VerticalAlignment="Stretch">
+
+                        <PanelContainer HorizontalAlignment="Stretch">
+                            <BoxContainer Name="PhotoBox" Orientation="Vertical">
+                                <RichTextLabel Name="PolaroidImage" HorizontalAlignment="Center" MinSize="288 288"/>
+                                <RichTextLabel Name="WrittenTextLabel" StyleClasses="PaperWrittenText" HorizontalAlignment="Center"/>
+                                <BoxContainer Name="InputContainer" Orientation="Vertical">
+                                    <TextEdit Name="Input" StyleClasses="PaperLineEdit" MinHeight="40" Access="Public" />
+                                </BoxContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+
+                        <Label Name="FillStatus" StyleClasses="LabelSecondaryColor" HorizontalAlignment="Center"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </ScrollContainer>
+        </PanelContainer>
+
+        <BoxContainer Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="SaveButton" />
+        </BoxContainer>
+    </BoxContainer>
+</photo:PalaroidWindow>
