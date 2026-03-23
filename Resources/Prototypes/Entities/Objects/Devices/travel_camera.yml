@@ -45,6 +45,7 @@
   name: photograph
   id: Photograph
   parent: BasePaper
+  abstract: true
 
 - type: entity
   name: photograph
