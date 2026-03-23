@@ -2,14 +2,16 @@ using System.Linq;
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Photography;
-public sealed class PhotographySystem: EntitySystem {
+public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IRobustRandom _rng = default!;
+    [Dependency] private readonly IEntityManager _ent = default!;
     public override void Initialize() {
         base.Initialize();
         SubscribeLocalEvent<PictureTakerComponent, MeleeHitEvent>(OnCameraMeleeHit);
@@ -57,7 +59,7 @@ public sealed class PhotographySystem: EntitySystem {
         foreach (var entity in args.HitEntities)
         {
             var text = _examine.GetExamineText(entity, ent.Owner);
-            var name = Name(entity);
+            var name = Name(Identity.Entity(entity, _ent));
 
 
             var spawned = Spawn(ent.Comp.Photographs[_rng.Next(0, ent.Comp.Photographs.Count)]);
