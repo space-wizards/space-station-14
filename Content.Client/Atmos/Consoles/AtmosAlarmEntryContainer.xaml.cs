@@ -23,7 +23,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
 
     private readonly IEntityManager _entManager;
     private readonly IResourceCache _cache;
-    private readonly SharedAtmosphereSystem _atmossphere;
+    private readonly SharedAtmosphereSystem _atmosphere;
 
 
     private Dictionary<AtmosAlarmType, string> _alarmStrings = new Dictionary<AtmosAlarmType, string>()
@@ -40,7 +40,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
 
         _entManager = IoCManager.Resolve<IEntityManager>();
         _cache = IoCManager.Resolve<IResourceCache>();
-        _atmossphere = _entManager.System<SharedAtmosphereSystem>();
+        _atmosphere = _entManager.System<SharedAtmosphereSystem>();
 
         NetEntity = uid;
         Coordinates = coordinates;
@@ -153,7 +153,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
                     foreach ((var gas, (var mol, var percent, var alert)) in keyValuePairs)
                     {
                         FixedPoint2 gasPercent = percent * 100f;
-                        var gasAbbreviation = Loc.GetString(_atmossphere.GetGas(gas).Abbreviation);
+                        var gasAbbreviation = Loc.GetString(_atmosphere.GetGas(gas).Abbreviation);
 
                         var gasLabel = new Label()
                         {
