@@ -55,6 +55,7 @@ public sealed class PhotographySystem : EntitySystem
         if (ev.PhotoBytes.Length > maxSizeBytes)
         {
             Logger.Warning($"Player {args.SenderSession.Name} sent too many bytes: {ev.PhotoBytes.Length}");
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(player.Value):player} attempted to capture a photo that was too large ({ev.PhotoBytes.Length} bytes)");
             return;
         }
 
