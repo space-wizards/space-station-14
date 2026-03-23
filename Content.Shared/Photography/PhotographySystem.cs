@@ -11,19 +11,26 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Photography;
-public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
+/// <summary>
+/// Handles everything related to photography.
+/// </summary>
+public sealed class PhotographySystem : Robust.Shared.GameObjects.EntitySystem
+{
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly EntityTableSystem _tables = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    public override void Initialize() {
+    public override void Initialize()
+    {
         base.Initialize();
         SubscribeLocalEvent<PictureTakerComponent, MeleeHitEvent>(OnCameraMeleeHit);
         SubscribeLocalEvent<PhotographComponent, ExaminedEvent>(OnExamined);
     }
-
+    /// <summary>
+    /// Combines the stored data inside of PhotographComponent into the description of the photograph itself.
+    /// </summary>
     private void OnExamined(EntityUid uid, PhotographComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -39,8 +46,11 @@ public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
         }
 
     }
-
-    private void OnCameraMeleeHit(Entity<PictureTakerComponent> ent, ref MeleeHitEvent args) {
+    /// <summary>
+    /// Processes the entity hit by a camera and prints a picture of them.
+    /// </summary>
+    private void OnCameraMeleeHit(Entity<PictureTakerComponent> ent, ref MeleeHitEvent args)
+    {
         // nothing was hit
         if (!args.IsHit)
         {
@@ -49,9 +59,10 @@ public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
         // this rng should be the same on the client and on the server
         var rng = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner));
         var tableResult = _tables.GetSpawns(ent.Comp.Photographs, rng);
-        // so we dont have multiple enumeration
+        // so we dont reuse an iterator multiple times
         var entProtoIds = tableResult.ToList();
         // no photographs...
+        // if we are not going to spawn anything might as well not do the rest of the computations
         if (!entProtoIds.Any())
         {
             return;
@@ -84,7 +95,7 @@ public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
                 AddComp(spawned, comp);
                 _hands.PickupOrDrop(args.User, spawned, dropNear: true);
             }
-            // we only do the first entity
+            // we only do the first entity, otherwise hitting many at once will produce multiple pictures
             return;
         }
     }

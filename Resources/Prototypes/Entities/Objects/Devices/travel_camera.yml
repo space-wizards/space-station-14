@@ -1,56 +1,56 @@
 - type: entity
-  name: travel camera
   parent: Clothing
   id: TravelCamera
+  name: travel camera
   description: A picture says more than a thousand words. Comes with an ultrabright flash and internal photo roll, so make sure every snap counts!
   components:
     # aptly named component for picture taking
-    - type: PictureTaker
-      photographs: !type:GroupSelector
-        children:
-        - !type:NestedSelector
-          tableId: TravelCameraPhotographs
-    - type: Sprite
-      sprite: Objects/Devices/travel_camera.rsi
-      state: icon
-    - type: Flash
-      # it can not be without a melee attack
-      flashOnUse: false
-      sound: !type:SoundPathSpecifier
-        path: /Audio/Misc/camera_snap.ogg
-    - type: LimitedCharges
-      maxCharges: 4
-    - type: MeleeWeapon
-      wideAnimationRotation: 180
-      damage:
-        types:
-          Blunt: 0 # melee weapon to allow flashing individual targets
-      angle: 10
-    - type: Item
-      size: Small
-      sprite: Objects/Devices/travel_camera.rsi
-    - type: UseDelay
-    - type: StaticPrice
-      price: 100
-    - type: Clothing
-      slots:
-      - neck
-      sprite: Objects/Devices/travel_camera.rsi
-    - type: Tag
-      tags:
-      - WhitelistChameleon
+  - type: PictureTaker
+    photographs: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: TravelCameraPhotographs
+  - type: Sprite
+    sprite: Objects/Devices/travel_camera.rsi
+    state: icon
+  - type: Flash
+    # it can not be without a melee attack
+    flashOnUse: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Misc/camera_snap.ogg
+  - type: LimitedCharges
+    maxCharges: 4
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 0 # melee weapon to allow flashing individual targets
+    angle: 10
+  - type: Item
+    size: Small
+    sprite: Objects/Devices/travel_camera.rsi
+  - type: UseDelay
+  - type: StaticPrice
+    price: 100
+  - type: Clothing
+    slots:
+    - neck
+    sprite: Objects/Devices/travel_camera.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 # we have a parent so that if we need to add components later on its easier
 - type: entity
-  name: photograph
-  id: Photograph
-  parent: BasePaper
   abstract: true
+  parent: BasePaper
+  id: Photograph
+  name: photograph
 
 - type: entity
-  name: photograph
-  id: PhotographBlack
   parent: Photograph
+  id: PhotographBlack
+  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -58,9 +58,9 @@
     - state: black
 
 - type: entity
-  name: photograph
-  id: PhotographRed
   parent: Photograph
+  id: PhotographRed
+  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -68,9 +68,9 @@
     - state: red
 
 - type: entity
-  name: photograph
-  id: PhotographBlue
   parent: Photograph
+  id: PhotographBlue
+  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -78,9 +78,9 @@
     - state: blue
 
 - type: entity
-  name: photograph
-  id: PhotographGreen
   parent: Photograph
+  id: PhotographGreen
+  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -88,9 +88,9 @@
     - state: green
 
 - type: entity
-  name: photograph
-  id: PhotographYellow
   parent: Photograph
+  id: PhotographYellow
+  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -98,9 +98,9 @@
     - state: yellow
 
 - type: entity
-  name: photograph
-  id: PhotographPurple
   parent: Photograph
+  id: PhotographPurple
+  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -108,9 +108,9 @@
     - state: purple
 
 - type: entity
-  name: photograph
-  id: PhotographRainbow
   parent: Photograph
+  id: PhotographRainbow
+  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
