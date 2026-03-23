@@ -25,7 +25,6 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
     private readonly IResourceCache _cache;
     private readonly SharedAtmosphereSystem _atmosphere;
 
-
     private Dictionary<AtmosAlarmType, string> _alarmStrings = new Dictionary<AtmosAlarmType, string>()
     {
         [AtmosAlarmType.Invalid] = "atmos-alerts-window-invalid-state",
