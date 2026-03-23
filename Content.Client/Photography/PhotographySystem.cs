@@ -1,21 +1,13 @@
-using Content.Client.Interactable.Components;
 using Content.Client.Outline;
-using Content.Client.Viewport;
-using Content.Shared.Hands;
 using Content.Shared.Interaction;
-using Content.Shared.Inventory.Events;
-using Content.Shared.Item;
 using Content.Shared.Photography;
 using Robust.Client.Graphics;
-using Robust.Client.State;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-using System.ComponentModel;
 using System.IO;
 using System.Numerics;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Content.Client.Photography;
@@ -24,7 +16,6 @@ public sealed class PhotographySystem : EntitySystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly InteractionOutlineSystem _interactionOutlineSystem = default!;
     [Dependency] private readonly IClyde _clyde = default!;
