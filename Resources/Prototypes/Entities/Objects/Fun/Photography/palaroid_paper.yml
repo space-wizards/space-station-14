@@ -1,6 +1,6 @@
 - type: entity
   name: Palaroid Paper
-  parent: BasePaper
+  parent: BaseItem
   id: PalaroidPaper
   description: 'Palaroid paper, used for taking pictures with a Palaroid camera.'
   components:
@@ -8,11 +8,8 @@
     sprite: Objects/Misc/palaroid.rsi
     layers:
     - state: palaroid_paper
-    - state: paper_words
+    - state: palaroid_paper_image
       map: ["enum.PaperVisualLayers.Writing"]
-      visible: false
-    - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: Paper
   - type: Photograph

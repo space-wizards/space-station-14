@@ -1,6 +1,10 @@
+using Content.Server.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Paper;
 using Content.Shared.Photography;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Photography;
 
@@ -9,6 +13,9 @@ public sealed class PhotographySystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -24,26 +31,38 @@ public sealed class PhotographySystem : EntitySystem
         ev.Handled = true;
 
         var player = args.SenderSession.AttachedEntity;
-
         if (player == null)
             return;
 
-        // maybe this should be cvar value
-        const int maxSizeBytes = 100 * 1024;
+        var cameraUid = GetEntity(ev.CameraNetUid);
 
-        if (ev.PhotoBytes.Length > maxSizeBytes)
+        if (!TryComp<CameraComponent>(cameraUid, out var camera))
+            return;
+
+        var currentTime = _timing.CurTime;
+
+        if (currentTime < camera.NextPhotoTime)
         {
-            Logger.Warning($"Player {args.SenderSession.Name} send many bytes: {ev.PhotoBytes.Length}");
             return;
         }
 
-        var cameraUid = GetEntity(ev.CameraNetUid);
-
-        if (!Exists(cameraUid))
+        if (camera.CurrentPhotos <= 0)
+        {
             return;
+        }
+
+        const int maxSizeBytes = 100 * 1024;
+        if (ev.PhotoBytes.Length > maxSizeBytes)
+        {
+            Logger.Warning($"Player {args.SenderSession.Name} sent too many bytes: {ev.PhotoBytes.Length}");
+            return;
+        }
+
+        camera.CurrentPhotos--;
+        camera.NextPhotoTime = currentTime + camera.Cooldown;
+        Dirty(cameraUid, camera);
 
         var coords = Transform(player.Value).Coordinates;
-
         var photoEntity = Spawn("PalaroidPaper", coords);
 
         _metaDataSystem.SetEntityName(photoEntity, _loc.GetString("photography-picture-name"));
@@ -54,6 +73,8 @@ public sealed class PhotographySystem : EntitySystem
             photoComp.RawData = ev.PhotoBytes;
             Dirty(photoEntity, photoComp);
         }
+        _audio.PlayPvs(camera.PrintSound, cameraUid);
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player.Value):player} created a new photograph {ToPrettyString(photoEntity):photo} using {ToPrettyString(cameraUid):camera}");
     }
 
     private void OnUIOpened(Entity<PhotographComponent> ent, ref BoundUIOpenedEvent args)
