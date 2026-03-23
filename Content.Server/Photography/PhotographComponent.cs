@@ -17,6 +17,7 @@ public sealed partial class PhotographComponent : Component
     /// <summary>
     ///  The name of the photographed object
     /// </summary>
+
     [DataField, AutoNetworkedField]
     public string Name;
     public PhotographComponent(string name, FormattedMessage descText)
