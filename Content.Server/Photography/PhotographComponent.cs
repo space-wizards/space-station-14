@@ -13,6 +13,7 @@ public sealed partial class PhotographComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public FormattedMessage Text;
+
     /// <summary>
     ///  The name of the photographed object
     /// </summary>
