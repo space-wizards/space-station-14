@@ -6,7 +6,7 @@ namespace Content.Shared.Photography;
 public sealed partial class CameraComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public float ImageSize = 3f;
+    public float ImageRes = 1f;
     [DataField, AutoNetworkedField]
     public int TargetWidth = 3;
 }

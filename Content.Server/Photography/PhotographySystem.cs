@@ -52,7 +52,6 @@ public sealed class PhotographySystem : EntitySystem
         if (TryComp<PhotographComponent>(photoEntity, out var photoComp))
         {
             photoComp.RawData = ev.PhotoBytes;
-            photoComp.FontSize = ev.FontSize;
             Dirty(photoEntity, photoComp);
         }
     }
@@ -74,8 +73,7 @@ public sealed class PhotographySystem : EntitySystem
             photo.RawData,
             paper.Content,
             paper.Mode,
-            paper.StampedBy,
-            photo.FontSize
+            paper.StampedBy
         );
 
         _uiSystem.SetUiState(uid, PolaroidUiKey.Key, state);

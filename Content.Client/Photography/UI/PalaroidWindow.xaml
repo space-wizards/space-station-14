@@ -1,37 +1,30 @@
 <photo:PalaroidWindow xmlns="https://spacestation14.io"
     xmlns:photo="clr-namespace:Content.Client.Photography.UI"
-    xmlns:paper="clr-namespace:Content.Client.Paper.UI"
-    MouseFilter="Stop" Resizable="True" MinSize="470 550"
-    SetSize="470 550">
+    MouseFilter="Stop" Resizable="False">
 
-    <BoxContainer Name="ContentsRoot" Orientation="Vertical">
-        <PanelContainer VerticalAlignment="Top" HorizontalAlignment="Right">
-            <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"/>
-        </PanelContainer>
+    <PanelContainer Name="PolaroidBackground">
+        <BoxContainer Orientation="Vertical" Margin="15 15 15 30">
 
-        <PanelContainer Name="PaperBackground" VerticalExpand="True" HorizontalExpand="True">
-            <ScrollContainer Name="ScrollingContents" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False">
-                <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True">
-                    <BoxContainer Name="InnerContainer" Orientation="Vertical" VerticalAlignment="Stretch">
+            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextureButton Name="CloseButton" StyleClasses="windowCloseButton" Margin="0 -5 -5 5"/>
+            </BoxContainer>
 
-                        <PanelContainer HorizontalAlignment="Stretch">
-                            <BoxContainer Name="PhotoBox" Orientation="Vertical">
-                                <RichTextLabel Name="PolaroidImage" HorizontalAlignment="Center" MinSize="288 288"/>
-                                <RichTextLabel Name="WrittenTextLabel" StyleClasses="PaperWrittenText" HorizontalAlignment="Center"/>
-                                <BoxContainer Name="InputContainer" Orientation="Vertical">
-                                    <TextEdit Name="Input" StyleClasses="PaperLineEdit" MinHeight="40" Access="Public" />
-                                </BoxContainer>
-                            </BoxContainer>
-                        </PanelContainer>
+            <TextureRect Name="PolaroidImage" HorizontalAlignment="Center" MinSize="288 288" Stretch="KeepAspectCentered"/>
 
-                        <Label Name="FillStatus" StyleClasses="LabelSecondaryColor" HorizontalAlignment="Center"/>
-                    </BoxContainer>
-                </PanelContainer>
-            </ScrollContainer>
-        </PanelContainer>
+            <Control MinSize="0 15" />
 
-        <BoxContainer Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Name="SaveButton" />
+            <RichTextLabel Name="WrittenTextLabel" StyleClasses="PaperWrittenText" HorizontalAlignment="Center" MaxWidth="288"/>
+
+            <BoxContainer Name="InputContainer" Orientation="Vertical" MaxWidth="288" HorizontalAlignment="Center">
+                <TextEdit Name="Input" StyleClasses="PaperLineEdit" MinHeight="40" Access="Public" />
+
+                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 0 0">
+                    <Label Name="FillStatus" StyleClasses="LabelSecondaryColor" VerticalAlignment="Center" Margin="0 0 10 0"/>
+                    <Button Name="SaveButton" />
+                </BoxContainer>
+            </BoxContainer>
+
         </BoxContainer>
-    </BoxContainer>
+    </PanelContainer>
+
 </photo:PalaroidWindow>

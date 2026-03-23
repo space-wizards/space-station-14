@@ -9,10 +9,9 @@ public sealed class CameraPhotoCapturedEvent : HandledEntityEventArgs
     public byte[] PhotoBytes;
     public float FontSize;
 
-    public CameraPhotoCapturedEvent(NetEntity cameraUid, byte[] photoBytes, float fontSize)
+    public CameraPhotoCapturedEvent(NetEntity cameraUid, byte[] photoBytes)
     {
         CameraNetUid = cameraUid;
         PhotoBytes = photoBytes;
-        FontSize = fontSize;
     }
 }
