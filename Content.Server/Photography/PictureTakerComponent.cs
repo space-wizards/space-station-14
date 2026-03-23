@@ -8,6 +8,9 @@ namespace Content.Server.Photography;
 [RegisterComponent]
 public sealed partial class PictureTakerComponent: Component
 {
+    /// <summary>
+    /// The entities that will be instanced & given a PhotographComponent to when the PictureTakerComponent's entity is used to bash something. Only one of these will be chosen, at random, each time.
+    /// </summary>
     [DataField]
     public List<EntProtoId> Photographs;
 }
