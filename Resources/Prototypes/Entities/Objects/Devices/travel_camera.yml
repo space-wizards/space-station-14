@@ -44,11 +44,13 @@
     - type: Tag
       tags:
       - WhitelistChameleon
+
 # we have a parent so that if we need to add components later on its easier
 - type: entity
   name: photograph
   id: Photograph
   parent: BasePaper
+
 - type: entity
   name: photograph
   id: PhotographBlack
@@ -58,6 +60,7 @@
     sprite: Objects/Misc/photograph.rsi
     layers:
     - state: black
+
 - type: entity
   name: photograph
   id: PhotographRed
@@ -67,6 +70,7 @@
     sprite: Objects/Misc/photograph.rsi
     layers:
     - state: red
+
 - type: entity
   name: photograph
   id: PhotographBlue
@@ -76,6 +80,7 @@
     sprite: Objects/Misc/photograph.rsi
     layers:
     - state: blue
+
 - type: entity
   name: photograph
   id: PhotographGreen
@@ -85,6 +90,7 @@
     sprite: Objects/Misc/photograph.rsi
     layers:
     - state: green
+
 - type: entity
   name: photograph
   id: PhotographYellow
@@ -94,6 +100,7 @@
     sprite: Objects/Misc/photograph.rsi
     layers:
     - state: yellow
+
 - type: entity
   name: photograph
   id: PhotographPurple
@@ -103,6 +110,7 @@
     sprite: Objects/Misc/photograph.rsi
     layers:
     - state: purple
+
 - type: entity
   name: photograph
   id: PhotographRainbow
@@ -112,4 +120,3 @@
     sprite: Objects/Misc/photograph.rsi
     layers:
     - state: rainbow
-
