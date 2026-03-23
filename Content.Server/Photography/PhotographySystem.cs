@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -10,6 +11,7 @@ namespace Content.Server.Photography;
 public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly IRobustRandom _rng = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
     public override void Initialize() {
@@ -47,13 +49,13 @@ public sealed class PhotographySystem: Robust.Shared.GameObjects.EntitySystem {
             return;
         }
         {
-            if (TryComp(ent.Owner, out LimitedChargesComponent? comp))
+
+            if (_charges.IsEmpty(ent.Owner))
             {
-                if (comp.LastCharges == 0)
-                {
-                    // no charges, we can't print anymore
-                    return;
-                }
+
+                // no charges, we can't print anymore
+                return;
+
             }
         }
         foreach (var entity in args.HitEntities)
