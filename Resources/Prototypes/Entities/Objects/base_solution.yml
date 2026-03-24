@@ -151,14 +151,6 @@
       maxVol: 15
 
 - type: entity
-  abstract: true
-  parent: SolutionVeryTiny
-  id: SolutionItemVeryTiny
-  components:
-  - type: Item
-    size: Tiny
-
-- type: entity
   parent: [SolutionDrink, SolutionVeryTiny]
   id: SolutionDrinkVeryTiny
   categories: [ HideSpawnMenu ]
@@ -175,14 +167,6 @@
   - type: Solution
     solution:
       maxVol: 7.5
-
-- type: entity
-  abstract: true
-  parent: SolutionToolVeryTiny
-  id: SolutionItemToolVeryTiny
-  components:
-  - type: Item
-    size: Tiny
 
 - type: entity
   parent: [SolutionInjector, SolutionToolVeryTiny]
@@ -211,14 +195,6 @@
       maxVol: 30
 
 - type: entity
-  abstract: true
-  parent: SolutionTiny
-  id: SolutionItemTiny
-  components:
-  - type: Item
-    size: Tiny
-
-- type: entity
   parent: [SolutionDrink, SolutionTiny]
   id: SolutionDrinkTiny
 
@@ -228,7 +204,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionItemTiny]
+  parent: [SolutionFood, SolutionTiny]
   id: SolutionPill
   components:
   - type: Solution
@@ -253,14 +229,6 @@
   - type: Solution
     solution:
       maxVol: 15
-
-- type: entity
-  abstract: true
-  parent: SolutionToolTiny
-  id: SolutionItemToolTiny
-  components:
-  - type: Item
-    size: Tiny
 
 - type: entity
   parent: [SolutionInjector, SolutionToolTiny]

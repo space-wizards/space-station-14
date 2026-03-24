@@ -1,4 +1,5 @@
 - type: entity
+  parent: SolutionTile
   id: FloorWaterEntity
   name: water
   description: A real thirst quencher.
@@ -17,9 +18,12 @@
     drawdepth: BelowFloor
     layers:
       - state: shoreline_water
-  - type: SolutionManager
-    solutions:
-    - SolutionTileWater
+  - type: Solution
+    id: pool
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 7680
   - type: SolutionRegeneration
     solution: pool
     generated:
@@ -59,14 +63,3 @@
   - type: TileEntityEffect
     effects:
     - !type:Extinguish
-
-- type: entity
-  parent: SolutionTile
-  id: SolutionTileWater
-  components:
-  - type: Solution
-    id: pool
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 7680 #

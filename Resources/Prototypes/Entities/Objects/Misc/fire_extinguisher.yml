@@ -1,6 +1,6 @@
 - type: entity
   name: fire extinguisher
-  parent: BaseItem
+  parent: [BaseItem, SolutionFireExtinguisher]
   id: FireExtinguisher
   description: It extinguishes fires.
   components:
@@ -70,7 +70,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
-      
+
 - type: entity
   parent: SolutionSprayNormal
   id: SolutionFireExtinguisher
@@ -82,7 +82,7 @@
         Quantity: 120
 
 - type: entity
-  parent: FireExtinguisher
+  parent: [SolutionFireExtinguisherLarge, FireExtinguisher]
   id: BorgFireExtinguisher
   name: maneuvering jet
   description: Based on fire extinguisher technology, the maneuvering jet is... well yes, its just a bigger fire extinguisher.
@@ -121,7 +121,7 @@
 
 - type: entity
   name: pocket fire extinguisher
-  parent: FireExtinguisher
+  parent: [SolutionFireExtinguisherMini, FireExtinguisher]
   id: FireExtinguisherMini
   description: A light and compact fibreglass-framed model fire extinguisher. It holds less water than its bigger brother.
   components:
@@ -147,7 +147,7 @@
     materialComposition:
       Steel: 50
       Glass: 40
-      
+
 - type: entity
   parent: SolutionSpraySmall
   id: SolutionFireExtinguisherMini

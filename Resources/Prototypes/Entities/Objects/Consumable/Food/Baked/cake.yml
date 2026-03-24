@@ -1039,7 +1039,7 @@
 - type: entity
   name: cak
   id: MobCatCake
-  parent: EdibleBase
+  parent: FoodBase
   description: It's a cake. It's a cat. It's a cak.
   components:
   - type: FlavorProfile

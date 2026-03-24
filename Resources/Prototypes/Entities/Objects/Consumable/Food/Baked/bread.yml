@@ -922,7 +922,7 @@
 - type: entity
   name: bread dog
   id: MobBreadDog
-  parent: EdibleBase
+  parent: FoodBase
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
   - type: FlavorProfile

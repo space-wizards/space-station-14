@@ -39,23 +39,15 @@
     requiresSpecialDigestion: true
     useSound: *BasePlushieSound
     delay: 2
-  - type: SolutionManager
-    solutions:
-    - SolutionFoodPlushSmall
-  - type: Tag
-    tags:
-    - Payload
-    - ClothMade
-
-- type: entity
-  parent: SolutionFoodSmall
-  id: SolutionFoodPlushSmall
-  components:
   - type: Solution
     solution:
       reagents:
       - ReagentId: Fiber
         Quantity: 30
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
 
 - type: entity
   parent: BasePlushie
@@ -155,9 +147,11 @@
     sprite: Objects/Fun/Plushies/bee.rsi
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionManager
-    solutions:
-    - SolutionFoodPlushBeeSmall
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: GroundBee
+        Quantity: 5
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/bee.rsi
@@ -166,16 +160,6 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: BeePlushie
-
-- type: entity
-  parent: SolutionFoodPlushSmall
-  id: SolutionFoodPlushBeeSmall
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: GroundBee
-        Quantity: 5
 
 - type: entity
   parent: BasePlushie
@@ -335,8 +319,9 @@
       CottonBurger: ArachnidPlushie
 
 - type: entity
+  abstract: true # Here to prevent unwanted solution inheritance.
   parent: BasePlushie
-  id: PlushieLizard #Weh!
+  id: BasePlushieLizard #Weh!
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentComm as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
   components:
@@ -363,14 +348,6 @@
     transferAmount: 10
   - type: MeleeWeapon
     soundHit: *PlushieLizardSound
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: JuiceThatMakesYouWeh
-        Quantity: 30
-  - type: SolutionManager
-    solutions:
-    - SolutionFoodPlushWehSmall
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/lizard.rsi
@@ -388,9 +365,14 @@
     - PlushieLizard
 
 - type: entity
-  parent: SolutionFoodPlushSmall
-  id: SolutionFoodPlushWehSmall
+  parent: BasePlushieLizard
+  id: PlushieLizard #Weh!
   components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
   - type: Solution
     solution:
       reagents:
@@ -528,7 +510,7 @@
       CottonBurger: SpaceLizardPlushie
 
 - type: entity
-  parent: PlushieLizard
+  parent: BasePlushieLizard
   id: PlushieLizardInversed #Hew!
   name: drazil plushie
   description: An adorable stuffed toy that resembles a lizardperson from an inversed dimension. Hew!
@@ -559,9 +541,11 @@
       reagents:
       - ReagentId: JuiceThatMakesYouHew
         Quantity: 30
-  - type: SolutionManager
-    solutions:
-    - SolutionFoodPlushHewSmall
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouHew
+        Quantity: 10
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/lizard.rsi
@@ -571,16 +555,6 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: InversedLizardPlushie
-
-- type: entity
-  parent: SolutionFoodPlushSmall
-  id: SolutionFoodPlushHewSmall
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: JuiceThatMakesYouHew
-        Quantity: 10
 
 - type: entity
   parent: BasePlushie

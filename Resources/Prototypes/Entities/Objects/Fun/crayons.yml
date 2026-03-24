@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [BaseItem, SolutionFoodVeryTiny] # Crayons are less pourous than most foods, so we just assume they have less capacity.
   id: CrayonInedible
   name: crayon
   description: A colourful crayon. A forbidden flavor.
@@ -41,14 +41,6 @@
     flavors:
     - chewy
     - bitter
-  - type: SolutionManager
-    solutions:
-    - SolutionFoodCrayon
-
-- type: entity
-  parent: SolutionFoodVeryTiny
-  id: SolutionFoodCrayon # mmm grayons...
-  components:
   - type: Solution
     solution:
       reagents:

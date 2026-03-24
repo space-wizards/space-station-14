@@ -116,7 +116,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             }
 
 
-            if (extractableComponent.GrindableSolution is { } grindableSolutionId &&
+            if (extractableComponent.GrindableSolutionName is { } grindableSolutionId &&
                 _solutionContainer.TryGetSolution(entProto, grindableSolutionId, out var grindableSolution))
             {
                 var data = new ReagentEntitySourceData(

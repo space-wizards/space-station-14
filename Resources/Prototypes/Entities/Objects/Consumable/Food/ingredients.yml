@@ -315,7 +315,7 @@
 
 - type: entity
   abstract: true
-  parent: FoodBase
+  parent: FoodBaseTrash
   id: FoodBakingBase
   description: Used in various recipes.
   components:

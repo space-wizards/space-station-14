@@ -111,7 +111,7 @@
     speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
 
 - type: entity
-  parent: MobSiliconBase
+  parent: [MobSiliconBase, SolutionFireExtinguisherMini]
   id: MobFireBot
   name: firebot
   description: A little fire extinguishing bot. He looks rather anxious.
@@ -125,9 +125,6 @@
   - type: HTN
     rootTask:
       task: FirebotCompound
-  - type: SolutionManager
-    solutions:
-    - SolutionFireExtinguisherMini
   - type: SolutionRegeneration
     solution: spray
     generated:
@@ -259,7 +256,7 @@
     canCreateVacuum: false
 
 - type: entity
-  parent: MobSiliconBase
+  parent: [MobSiliconBase, SolutionMopSmall]
   id: MobCleanBot
   name: cleanbot
   description: The creep of automation now threatening space janitors.
@@ -285,9 +282,6 @@
     preserve:
       - Water
     quantity: 10
-  - type: SolutionManager
-    solutions:
-    - SolutionMopSmall
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3

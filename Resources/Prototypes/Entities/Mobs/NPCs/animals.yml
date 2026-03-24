@@ -84,7 +84,7 @@
 
 - type: entity
   name: bee
-  parent: [ SimpleMobBase, FlyingMobBase ]
+  parent: [ SimpleMobBase, FlyingMobBase, SolutionFoodTiny ]
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
@@ -127,9 +127,11 @@
         Base: dead
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionManager
-    solutions:
-    - SolutionBee
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: GroundBee
+        Quantity: 1
   - type: Butcherable
     spawned:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
@@ -164,17 +166,6 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
-
-- type: entity
-  parent: Solution
-  id: SolutionBee
-  components:
-  - type: Solution
-    id: food
-    solution:
-      reagents:
-      - ReagentId: GroundBee
-        Quantity: 1
 
 - type: entity
   name: bee
@@ -362,7 +353,7 @@
 
 - type: entity
   name: cockroach
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, SolutionFoodTiny]
   id: MobCockroach
   description: This station is just crawling with bugs.
   components:
@@ -421,9 +412,11 @@
     baseDecayRate: 0.25
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionManager
-    solutions:
-    - SolutionFoodRoach
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 5
   - type: Butcherable
     spawned:
     - id: FoodMeatSlime
@@ -459,16 +452,6 @@
     damage:
       types:
         Piercing: 0
-
-- type: entity
-  parent: SolutionFood
-  id: SolutionFoodRoach
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Slime
-        Quantity: 5
 
 - type: entity
   name: glockroach
@@ -808,7 +791,7 @@
 
 - type: entity
   name: butterfly
-  parent: [ SimpleMobBase, FlyingMobBase ]
+  parent: [ SimpleMobBase, FlyingMobBase, SolutionFoodTiny ]
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
@@ -851,9 +834,11 @@
         Base: dead
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionManager
-    solutions:
-    - SolutionButterfly
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 1
   - type: Butcherable
     spawned:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
@@ -879,17 +864,6 @@
       - !type:GibBehavior
         recursive: false
   - type: ZombieImmune
-
-- type: entity
-  parent: Solution
-  id: SolutionButterfly
-  components:
-  - type: Solution
-    id: food
-    solution:
-      reagents:
-      - ReagentId: UncookedAnimalProteins
-        Quantity: 1
 
 - type: entity
   name: cow
@@ -975,7 +949,7 @@
   id: SolutionUdder
   components:
   - type: Solution
-    id: food
+    id: food # TODO This should really use a different id...
     solution:
       maxVol: 240
       reagents:
@@ -1775,9 +1749,7 @@
 
 - type: entity
   name: mouse
-  parent:
-  - SimpleMobBase
-  - BaseMobAnimal
+  parent: [SimpleMobBase, BaseMobAnimal, SolutionVermin]
   id: MobMouse
   description: Squeak!
   components:
@@ -1809,7 +1781,6 @@
       movement:
         state: mouse-0
   - type: Item
-    size: Tiny
     heldPrefix: 0
   - type: Clothing
     quickEquip: false
@@ -1885,9 +1856,6 @@
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionManager
-    solutions:
-    - SolutionMouse
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -1957,11 +1925,10 @@
         recursive: false
 
 - type: entity
-  parent: Solution
-  id: SolutionMouse
+  parent: SolutionFoodTiny
+  id: SolutionVermin
   components:
   - type: Solution
-    id: food
     solution:
       reagents:
       - ReagentId: UncookedAnimalProteins
@@ -1982,22 +1949,6 @@
         Asphyxiation: 4
         Slash: 7
         Blunt: 3
-
-- type: entity
-  parent: MobMouse
-  id: MobMouseAdmeme
-  suffix: Admeme
-  components:
-  # allow admeme mouse to eat pills
-  - type: IgnoreBadFood
-  # intended for swarms that eat pills so only temporary
-  - type: TimedDespawn
-    lifetime: 60
-  - type: Hunger
-    baseDecayRate: 10 # always hungry
-    starvingSlowdownModifier: 1
-  - type: Thirst
-    baseDecayRate: 10 # always thirsty
 
 - type: entity
   parent: MobMouse
@@ -2084,9 +2035,11 @@
       reagents:
       - ReagentId: UnstableMutagen
         Quantity: 50
-  - type: SolutionManager
-    solutions:
-    - SolutionMouseRadioactive
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 10
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -2096,16 +2049,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Zombie
-
-- type: entity
-  parent: SolutionMouse
-  id: SolutionMouseRadioactive
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Uranium
-        Quantity: 10
 
 - type: entity
   name: lizard #Weh
@@ -3580,9 +3523,16 @@
     baseDecayRate: 0.3
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionManager
-    solutions:
-    - SolutionHamster
+  - type: Solution
+    id: food
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Blood # TODO Instead of this, eat from the bloodstream directly
+        Quantity: 55
+      - ReagentId: Fat
+        Quantity: 5
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -3645,21 +3595,6 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
-
-- type: entity
-  parent: Solution
-  id: SolutionHamster
-  components:
-  - type: Solution
-    id: food
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-      - ReagentId: Blood # TODO Instead of this, eat from the bloodstream directly
-        Quantity: 55
-      - ReagentId: Fat
-        Quantity: 5
 
 - type: entity
   name: pig

@@ -3,7 +3,7 @@
 # Inheritors are an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [BaseItem, SolutionDrink]
   id: DrinkBase
   components:
   - type: Sprite

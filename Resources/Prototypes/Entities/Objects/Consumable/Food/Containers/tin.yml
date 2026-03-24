@@ -4,7 +4,7 @@
 # trash prototypes use "trash" state
 - type: entity
   abstract: true
-  parent: [FoodBase, FoodOpenableBase]
+  parent: [FoodBaseTrash, FoodOpenableBase]
   id: FoodTinBase
   name: tin
   description: A tin of something, sealed tight.

@@ -397,9 +397,7 @@
     - type: SalvageMobRestrictions
 
 - type: entity
-  parent:
-  - SimpleSpaceMobBase
-  - BaseMobAnimal
+  parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin]
   id: MobSnail
   name: snail
   description: Revolting unless you're french.
@@ -495,9 +493,6 @@
     baseDecayRate: 0.1
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionManager
-    solutions:
-    - SolutionMouse
   - type: Butcherable
     spawned:
     - id: FoodMeatSnail

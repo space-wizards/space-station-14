@@ -958,7 +958,7 @@
 # Cooked
 
 - type: entity
-  parent: FoodBase
+  parent: FoodBaseTrash
   id: MaterialSmileExtract
   name: smile extract
   description: It's a real panacea. But at what cost?

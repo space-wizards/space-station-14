@@ -34,7 +34,7 @@
   id: FoodProduceBase
   abstract: true
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
   - type: Sprite
     state: produce
   - type: Produce

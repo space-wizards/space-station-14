@@ -25,17 +25,10 @@
     sprite: Objects/Fun/Instruments/saxophone.rsi
   - type: Extractable
     grindableSolutionName: instrument
-  - type: SolutionManager
-    solutions:
-    - SolutionBrassInstrument
-
-- type: entity
-  parent: Solution # Based on material balance and not container balance so no size parent.
-  id: SolutionBrassInstrument
-  components:
   - type: Solution
     id: instrument
     solution:
+      maxVol: 20 # Based on material balance and not container balance so no size parent.
       reagents:
       - ReagentId: Brass
         Quantity: 10
