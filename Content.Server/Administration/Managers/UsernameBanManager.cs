@@ -36,7 +36,6 @@ public interface IUsernameBanManager
 public sealed class UsernameBanManager : IUsernameBanManager, IPostInjectInit
 {
     [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
