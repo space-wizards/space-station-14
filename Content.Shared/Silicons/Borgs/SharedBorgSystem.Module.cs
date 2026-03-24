@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
@@ -55,14 +56,7 @@ public abstract partial class SharedBorgSystem
         if (hash == null || hash.Count == 0)
             return false;
 
-        var entryList = new List<string>();
-
-        foreach (var entry in hash)
-        {
-            entryList.Add(Loc.GetString(entry));
-        }
-
-        var entries = ContentLocalizationManager.FormatList(entryList);
+        var entries = ContentLocalizationManager.FormatList([.. hash.Select(s => Loc.GetString(s))]);
 
         formattedList = Loc.GetString(messageId, (listId, entries));
         return true;
