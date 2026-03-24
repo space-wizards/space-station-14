@@ -20,8 +20,14 @@ public abstract class SharedEscalatedGrabSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PullableComponent, PullGrabEscalateAttemptEvent>(OnEscalateAttempt);
         SubscribeLocalEvent<PullableComponent, AttemptStopPullingEvent>(OnAttemptStopPulling);
         SubscribeLocalEvent<GrabStateComponent, PullStoppedMessage>(OnPullStopped);
+    }
+
+    private void OnEscalateAttempt(EntityUid uid, PullableComponent component, ref PullGrabEscalateAttemptEvent args)
+    {
+        TryEscalate(args.Puller, args.Pulled);
     }
 
     private void OnAttemptStopPulling(EntityUid uid, PullableComponent component, ref AttemptStopPullingEvent args)
@@ -29,18 +35,12 @@ public abstract class SharedEscalatedGrabSystem : EntitySystem
         if (args.Cancelled || args.User == null)
             return;
 
-        var puller = args.User.Value;
-
-        // Already escalated on this target, block release.
-        if (TryComp<GrabStateComponent>(puller, out var state) && state.Target == uid)
+        // Release keybind clears escalation and lets the pull stop.
+        if (args.Force)
         {
-            args.Cancelled = true;
+            ClearEscalation(args.User.Value);
             return;
         }
-
-        // Escalate instead of releasing.
-        if (TryEscalate(puller, uid))
-            args.Cancelled = true;
     }
 
     private void OnPullStopped(EntityUid uid, GrabStateComponent component, PullStoppedMessage args)

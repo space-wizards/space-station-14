@@ -11,6 +11,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Mobs;
@@ -75,6 +76,7 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullerComponent, EntGotInsertedIntoContainerMessage>(OnPullerContainerInsert);
         SubscribeLocalEvent<PullerComponent, EntityUnpausedEvent>(OnPullerUnpaused);
         SubscribeLocalEvent<PullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
+        SubscribeLocalEvent<VirtualItemComponent, DroppedEvent>(OnVirtualItemDropped);
         SubscribeLocalEvent<PullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<PullerComponent, DropHandItemsEvent>(OnDropHandItems);
         SubscribeLocalEvent<PullerComponent, StopPullingAlertEvent>(OnStopPullingAlert);
@@ -258,6 +260,18 @@ public sealed class PullingSystem : EntitySystem
         }
     }
 
+    private void OnVirtualItemDropped(EntityUid uid, VirtualItemComponent component, DroppedEvent args)
+    {
+        if (!TryComp<PullerComponent>(args.User, out var puller))
+            return;
+
+        if (puller.Pulling != component.BlockingEntity)
+            return;
+
+        if (TryComp(component.BlockingEntity, out PullableComponent? pullable))
+            TryStopPull(component.BlockingEntity, pullable, user: args.User, force: true);
+    }
+
     private void AddPullVerbs(EntityUid uid, PullableComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -428,7 +442,7 @@ public sealed class PullingSystem : EntitySystem
             return;
         }
 
-        TryStopPull(pullerComp.Pulling.Value, pullableComp, user: player);
+        TryStopPull(pullerComp.Pulling.Value, pullableComp, user: player, force: true);
     }
 
     public bool CanPull(EntityUid puller, EntityUid pullableUid, PullerComponent? pullerComp = null)
@@ -484,7 +498,9 @@ public sealed class PullingSystem : EntitySystem
 
         if (pullable.Comp.Puller == pullerUid)
         {
-            return TryStopPull(pullable, pullable.Comp, user: pullerUid);
+            var ev = new PullGrabEscalateAttemptEvent(pullerUid, pullable.Owner);
+            RaiseLocalEvent(pullable.Owner, ref ev);
+            return true;
         }
 
         return TryStartPull(pullerUid, pullable, pullableComp: pullable);
@@ -598,14 +614,14 @@ public sealed class PullingSystem : EntitySystem
         return true;
     }
 
-    public bool TryStopPull(EntityUid pullableUid, PullableComponent pullable, EntityUid? user = null)
+    public bool TryStopPull(EntityUid pullableUid, PullableComponent pullable, EntityUid? user = null, bool force = false)
     {
         var pullerUidNull = pullable.Puller;
 
         if (pullerUidNull == null)
             return true;
 
-        var msg = new AttemptStopPullingEvent(user);
+        var msg = new AttemptStopPullingEvent(user, force);
         RaiseLocalEvent(pullableUid, ref msg, true);
 
         if (msg.Cancelled)
