@@ -12,15 +12,15 @@ command-description-xenoartifact-unlockAllNodes =
 command-description-xenoartifact-createNode =
     Create node in artifact (new on depth 0 or attach next to existing one).
 command-description-xenoartifact-createNodeAtDepth =
-    Create node in artifact.
+    Add a new node to the given artifact.
 command-description-xenoartifact-spawnArtWithNode =
-    Spawns xeno artifact with single node, with set trigger and effect
+    Spawns a new xeno artifact with single node with the given trigger and effect.
 command-description-xenoartifact-unlockNode =
-    Marks node as unlocked.
+    Marks a node as unlocked.
 command-description-xenoartifact-removeNode =
-    Removes node from xeno artifact.
+    Removes a node from a xeno artifact.
 command-description-xenoartifact-addEdge =
-    Adds edge between nodes of xeno artifact.
+    Adds an edge between two nodes of a xeno artifact.
 
 command-spawnartifactwithnode-spawn-artifact-item-hint = use hand-held artifact
 command-spawnartifactwithnode-spawn-artifact-structure-hint = use structure-like stationary artifact

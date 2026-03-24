@@ -20,9 +20,10 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
 public sealed class XenoArtifactCommand : ToolshedCommand
 {
-    [Dependency] private readonly IEntitySystemManager _entitySystemManager = null!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = null!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    private XenoArtifactSystem? _artifact;
+    
     public static readonly EntProtoId ArtifactPrototype = "BaseXenoArtifact";
 
     /// <summary> List existing artifacts. </summary>
@@ -82,12 +83,12 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     [CommandImplementation("totalResearch")]
     public int TotalResearch([PipedArgument] EntityUid artifactEntityUid)
     {
-        var artiSys = EntityManager.System<XenoArtifactSystem>();
+        _artifact ??= EntityManager.System<XenoArtifactSystem>();
         var comp = EntityManager.GetComponent<XenoArtifactComponent>(artifactEntityUid);
 
         var sum = 0;
 
-        var nodes = artiSys.GetAllNodes((artifactEntityUid, comp));
+        var nodes = _artifact.GetAllNodes((artifactEntityUid, comp));
         foreach (var node in nodes)
         {
             sum += node.Comp.ResearchValue;
@@ -112,20 +113,20 @@ public sealed class XenoArtifactCommand : ToolshedCommand
             Del(ent);
         }
 
-        return (float) sum / n;
+        return (float)sum / n;
     }
 
     /// <summary> Unlocks all nodes of artifact. </summary>
     [CommandImplementation("unlockAllNodes")]
     public void UnlockAllNodes([PipedArgument] EntityUid artifactEntityUid)
     {
-        var artiSys = EntityManager.System<XenoArtifactSystem>();
+        _artifact ??= EntityManager.System<XenoArtifactSystem>();
         var comp = EntityManager.GetComponent<XenoArtifactComponent>(artifactEntityUid);
 
-        var nodes = artiSys.GetAllNodes((artifactEntityUid, comp));
+        var nodes = _artifact.GetAllNodes((artifactEntityUid, comp));
         foreach (var node in nodes)
         {
-            artiSys.SetNodeUnlocked((node, node.Comp));
+            _artifact.SetNodeUnlocked((node, node.Comp));
         }
     }
 
@@ -142,7 +143,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         CreateNode(artifact, effect, trigger);
     }
 
-    /// <summary> Create node in artifact. </summary>
+    /// <summary> Add a new node to the given artifact. </summary>
     [CommandImplementation("createNodeAtDepth")]
     public void CreateNodeAtDepth(
         [CommandArgument(typeof(XenoArtifactNodeParser))] (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple,
@@ -153,7 +154,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         CreateNode(tuple.Artifact, effect, trigger, tuple.Node);
     }
 
-    /// <summary> Spawns artifact with specified node. </summary>
+    /// <summary> Spawns a new xeno artifact with single node with the given trigger and effect. </summary>
     [CommandImplementation("spawnArtWithNode")]
     public void SpawnArtifactWithNode(
         [CommandArgument] ICommonSession target,
@@ -174,29 +175,29 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         CreateNode((entity, artifactComp), effect, trigger);
     }
 
-    /// <summary> Marks node as unlocked. </summary>
+    /// <summary> Marks a node as unlocked. </summary>
     [CommandImplementation("unlockNode")]
     public void UnlockNode(
         [CommandArgument(typeof(XenoArtifactNodeParser))]
         (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple
     )
     {
-        var artifactSystem = _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
-        artifactSystem.SetNodeUnlocked(tuple.Node.AsNullable());
+        _artifact ??= EntitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact.SetNodeUnlocked(tuple.Node.AsNullable());
     }
 
-    /// <summary> Removes node from xeno artifact. </summary>
+    /// <summary> Removes a node from a xeno artifact. </summary>
     [CommandImplementation("removeNode")]
     public void RemoveNode(
         [CommandArgument(typeof(XenoArtifactNodeParser))]
         (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple
     )
     {
-        var artifactSystem = _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
-        artifactSystem.RemoveNode(tuple.Artifact.AsNullable(), tuple.Node.AsNullable());
+        _artifact ??= EntitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact.RemoveNode(tuple.Artifact.AsNullable(), tuple.Node.AsNullable());
     }
 
-    /// <summary> Adds edge between nodes of xeno artifact. </summary>
+    /// <summary> Adds an edge between two nodes of a xeno artifact. </summary>
     [CommandImplementation("addEdge")]
     public void AddEdge(
         [CommandArgument(typeof(XenoArtifactNodeParser))]
@@ -206,11 +207,11 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     )
     {
         // no inter-artifact edges or self-connects allowed
-        if(from.Artifact.Owner != to.Artifact.Owner || from.Node.Owner == to.Node.Owner)
+        if (from.Artifact.Owner != to.Artifact.Owner || from.Node.Owner == to.Node.Owner)
             return;
 
-        var artifactSystem = _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
-        artifactSystem.AddEdge(from.Artifact.AsNullable(), from.Node, to.Node);
+        _artifact = EntitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact.AddEdge(from.Artifact.AsNullable(), from.Node, to.Node);
     }
 
     private void CreateNode(
@@ -226,18 +227,18 @@ public sealed class XenoArtifactCommand : ToolshedCommand
             depth = node.Value.Comp.Depth + 1;
         }
 
-        var artifactSystem = _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact ??= EntitySystemManager.GetEntitySystem<XenoArtifactSystem>();
         if (!_prototypeManager.Resolve(trigger, out var triggerPrototype))
             return;
 
-        var createdNode = artifactSystem.CreateNode(artifact, effect.Id, triggerPrototype, depth);
+        var createdNode = _artifact.CreateNode(artifact, effect.Id, triggerPrototype, depth);
         if (node.HasValue)
         {
-            artifactSystem.AddEdge(artifact.AsNullable(), node.Value, createdNode);
+            _artifact.AddEdge(artifact.AsNullable(), node.Value, createdNode);
         }
         else
         {
-            artifactSystem.RebuildXenoArtifactMetaData(artifact.AsNullable());
+            _artifact.RebuildXenoArtifactMetaData(artifact.AsNullable());
         }
     }
 
@@ -246,9 +247,11 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     /// </summary>
     public sealed class XenoArtifactNodeParser : CustomTypeParser<(Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>)>
     {
-        [Dependency] private readonly IEntityManager _entityManager = null!;
-        [Dependency] private readonly ToolshedManager _toolshedManager = null!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = null!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly ToolshedManager _toolshedManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
+        private XenoArtifactSystem? _artifact;
 
         /// <inheritdoc />
         public override bool TryParse(ParserContext parser, out (Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>) result)
@@ -269,30 +272,30 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         /// <inheritdoc />
         public override CompletionResult? TryAutocomplete(ParserContext ctx, CommandArgument? arg)
         {
-            if(!_toolshedManager.TryParse<Entity<XenoArtifactComponent>>(ctx, out var artifactEnt))
+            if (!_toolshedManager.TryParse<Entity<XenoArtifactComponent>>(ctx, out var artifactEnt))
             {
                 return GetHintedEntities<XenoArtifactComponent>(arg);
             }
 
             var hint = ToolshedCommand.GetArgHint(arg, typeof(Entity<XenoArtifactNodeComponent>));
 
-            var xenoArtifactSystem = _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
-            var list = xenoArtifactSystem.GetAllNodes(artifactEnt)
-                                         .Select(
-                                             node =>
-                                             {
-                                                 var metadata = _entityManager.GetComponent<MetaDataComponent>(node);
-                                                 var entDescription = Loc.GetString(metadata.EntityDescription);
-                                                 return new CompletionOption(
-                                                     node.Owner.ToString(),
-                                                     Loc.GetString(
-                                                         "command-xenoartifact-common-node-hint",
-                                                         ("depth", node.Comp.Depth),
-                                                         ("nodeId", xenoArtifactSystem.GetNodeId(node.Owner)),
-                                                         ("nodeDetail", entDescription)
-                                                     )
-                                                 );
-                                             });
+            _artifact ??= _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+            var list = _artifact.GetAllNodes(artifactEnt)
+                                .Select(
+                                    node =>
+                                    {
+                                        var metadata = _entityManager.GetComponent<MetaDataComponent>(node);
+                                        var entDescription = Loc.GetString(metadata.EntityDescription);
+                                        return new CompletionOption(
+                                            node.Owner.ToString(),
+                                            Loc.GetString(
+                                                "command-xenoartifact-common-node-hint",
+                                                ("depth", node.Comp.Depth),
+                                                ("nodeId", _artifact.GetNodeId(node.Owner)),
+                                                ("nodeDetail", entDescription)
+                                            )
+                                        );
+                                    });
 
             return CompletionResult.FromHintOptions(list, hint);
         }
@@ -372,6 +375,8 @@ public sealed class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;
 
+    private XenoArtifactSystem? _artifact;
+
     public override bool TryParse(ParserContext ctx, out ProtoId<EntityPrototype> result)
     {
         var protoId = ctx.GetWord();
@@ -399,8 +404,8 @@ public sealed class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>
     {
         var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
 
-        var artifact = _systemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact ??= _systemManager.GetEntitySystem<XenoArtifactSystem>();
 
-        return CompletionResult.FromHintOptions(artifact.EffectPrototypes, hint);
+        return CompletionResult.FromHintOptions(_artifact.EffectPrototypeIds, hint);
     }
 }

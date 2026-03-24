@@ -24,7 +24,8 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    public HashSet<string> EffectPrototypes = [];
+    /// <summary> Cached EntProtoIds of all XenoArtifactEffect prototypes. Used for text hints. </summary>
+    public HashSet<string> EffectPrototypeIds = [];
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -52,13 +53,13 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
 
     private void ReloadEffectCache()
     {
-        EffectPrototypes.Clear();
+        EffectPrototypeIds.Clear();
 
         foreach (var entityPrototype in PrototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
             if (entityPrototype is { Abstract: false, Parents: not null }
                 && Array.IndexOf(entityPrototype.Parents, ArtifactEffectBaseProtoId.Id) != -1)
-                EffectPrototypes.Add(entityPrototype.ID);
+                EffectPrototypeIds.Add(entityPrototype.ID);
         }
     }
 
