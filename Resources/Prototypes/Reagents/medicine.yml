@@ -663,6 +663,13 @@
             - !type:ReagentCondition
               reagent: Ambuzol
               min: 10
+    Digestion:
+      effects:
+        - !type:CureZombieInfection
+          conditions:
+            - !type:ReagentCondition
+              reagent: Ambuzol
+              min: 10
 
 - type: reagent
   id: AmbuzolPlus
@@ -681,6 +688,14 @@
             - !type:ReagentCondition
               reagent: AmbuzolPlus
               min: 5
+    Digestion:
+      effects:
+      - !type:CureZombieInfection
+        innoculate: true
+        conditions:
+        - !type:ReagentCondition
+          reagent: AmbuzolPlus
+          min: 5
 
 - type: reagent
   id: PulpedBananaPeel
