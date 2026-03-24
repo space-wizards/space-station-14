@@ -1576,28 +1576,28 @@
   id: XenoborgModuleEngi # Cyborg module category for evil engineer xenoborg
 
 - type: Tag
-  id: XenoborgModuleEngiWeapon # Module group for engineer xenoborg weapons
+  id: XenoborgModuleGeneric # Cyborg module category for evil xenoborg
 
 - type: Tag
-  id: XenoborgModuleGeneric # Cyborg module category for evil xenoborg
+  id: XenoborgModuleGroupEngiWeapon # Module group for engineer xenoborg weapons
+
+- type: Tag
+  id: XenoborgModuleGroupHeavyWeapon # Module group for heavy xenoborg weapons
+
+- type: Tag
+  id: XenoborgModuleGroupScoutWeapon # Module group for scout xenoborg weapons
+
+- type: Tag
+  id: XenoborgModuleGroupStealthWeapon # Module group for stealth xenoborg weapons
 
 - type: Tag
   id: XenoborgModuleHeavy # Cyborg module category for evil heavy xenoborg
 
 - type: Tag
-  id: XenoborgModuleHeavyWeapon # Module group for heavy xenoborg weapons
-
-- type: Tag
   id: XenoborgModuleScout # Cyborg module category for evil scout xenoborg
 
 - type: Tag
-  id: XenoborgModuleScoutWeapon # Module group for scout xenoborg weapons
-
-- type: Tag
   id: XenoborgModuleStealth # Cyborg module category for evil stealth xenoborg
-
-- type: Tag
-  id: XenoborgModuleStealthWeapon # Module group for stealth xenoborg weapons
 
 ## Y ##
 ## Z ##

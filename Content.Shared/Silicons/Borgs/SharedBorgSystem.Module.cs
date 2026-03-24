@@ -38,14 +38,17 @@ public abstract partial class SharedBorgSystem
     #region BorgModule
     private void OnModuleExamine(Entity<BorgModuleComponent> ent, ref ExaminedEvent args)
     {
-        if (FormatHashSet(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
-            args.PushMarkup(list);
+        using (args.PushGroup(nameof(BorgModuleComponent)))
+        {
+            if (TryFormatHashSet(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
+                args.PushMarkup(list);
 
-        if (FormatHashSet(ent.Comp.ModuleTypes, "module-type-incompatible", "types", out list))
-            args.PushMarkup(list);
+            if (TryFormatHashSet(ent.Comp.ModuleTypes, "module-type-incompatible", "types", out list))
+                args.PushMarkup(list);
+        }
     }
 
-    private bool FormatHashSet(HashSet<LocId>? hash, string messageId, string listId, [NotNullWhen(true)] out string? formattedList)
+    private bool TryFormatHashSet(HashSet<LocId>? hash, string messageId, string listId, [NotNullWhen(true)] out string? formattedList)
     {
         formattedList = null;
 

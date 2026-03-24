@@ -400,13 +400,13 @@
   - type: BorgModule
     moduleTypes:
       - module-type-heavy-weapon
-    incompatibleModuleTags:
+    compatibleModulesBlacklist:
       tags:
-        - XenoborgModuleHeavyWeapon
+        - XenoborgModuleGroupHeavyWeapon
   - type: Tag
     tags:
      - XenoborgModuleHeavy
-     - XenoborgModuleHeavyWeapon
+     - XenoborgModuleGroupHeavyWeapon
 
 - type: entity
   parent: BaseBorgModule

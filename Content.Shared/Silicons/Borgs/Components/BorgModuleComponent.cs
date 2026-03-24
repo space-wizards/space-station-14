@@ -47,7 +47,7 @@ public sealed partial class BorgModuleComponent : Component
     /// List of module tags this module is incompatible with
     /// </summary>
     [DataField]
-    public EntityWhitelist? IncompatibleModuleTags;
+    public EntityWhitelist? CompatibleModulesBlacklist;
 }
 
 /// <summary>
