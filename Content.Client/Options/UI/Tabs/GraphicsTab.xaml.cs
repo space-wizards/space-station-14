@@ -29,7 +29,7 @@ public sealed partial class GraphicsTab : Control
             SharpnessSlider,
             0,
             20,
-            (_, value) => Loc.GetString("ui-options-sharpness-value", ("strength", value / 10f)));
+            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value / 10f)));
 
         Control.AddOptionDropDown(
             CVars.DisplayUIScale,
