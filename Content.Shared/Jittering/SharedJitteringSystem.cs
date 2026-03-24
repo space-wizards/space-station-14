@@ -1,6 +1,5 @@
 using Content.Shared.Rejuvenate;
-using Content.Shared.StatusEffect;
-using Robust.Shared.Timing;
+using Content.Shared.StatusEffectNew;
 
 // todo big picture
 // check for stacking jitters in new status effects
@@ -13,16 +12,7 @@ namespace Content.Shared.Jittering
     /// </summary>
     public abstract class SharedJitteringSystem : EntitySystem
     {
-        [Dependency] protected readonly IGameTiming GameTiming = default!;
-        [Dependency] protected readonly StatusEffectsSystem StatusEffects = default!; // todo
-
-        // todo die
-        public float MaxAmplitude = 300f;
-        public float MinAmplitude = 1f;
-
-        // todo die
-        public float MaxFrequency = 10f;
-        public float MinFrequency = 1f;
+        [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
         public override void Initialize()
         {
@@ -40,7 +30,6 @@ namespace Content.Shared.Jittering
         // todo make remark clearer
         /// <summary>
         /// Applies a jitter effect to the specified entity.
-        /// You can apply this to any entity whatsoever, so be careful what you use it on!
         /// </summary>
         /// <remarks>
         /// If the entity is already jittering, the jitter values will be updated but only if they're greater
@@ -60,16 +49,19 @@ namespace Content.Shared.Jittering
                             float frequency = 4f,
                             bool forceValueChange = false,
                             StatusEffectsComponent? status = null)
+        // public void DoJitter(EntityUid uid,
+        // TimeSpan time,
+        // bool refresh,
+        // float amplitude = 10f,
+        // float frequency = 4f,
+        // bool forceValueChange = false,
+        //     StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false))
                 return;
 
             // todo
-            amplitude = Math.Clamp(amplitude, MinAmplitude, MaxAmplitude);
-            frequency = Math.Clamp(frequency, MinFrequency, MaxFrequency);
-
-            // todo
-            if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status))
+            if (_statusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status))
             {
                 var jittering = Comp<JitteringComponent>(uid);
 

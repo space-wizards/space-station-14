@@ -83,17 +83,15 @@ namespace Content.Client.Jittering
             }
 
             // Hack together a matrix because there's no node validator for Matrix3x2
-            // Apply it to the offset to create an oval (or line) of potential destinations
             var matrix = Matrix3x2.Create(jittering.XSheer, jittering.YSheer, Vector2.Zero);
             offset = Vector2.Transform(offset, matrix);
 
-            if (jittering.Frequency == 0)
-                return new Animation();
+            jittering.LastJitter = offset;
 
             // avoid dividing by 0 so animations don't try to be infinitely long
             var length = jittering.Frequency <= 0 ? 0f : 1f / jittering.Frequency;
 
-            var ani = new Animation()
+            return new Animation()
             {
                 Length = TimeSpan.FromSeconds(length),
                 AnimationTracks =
@@ -104,18 +102,12 @@ namespace Content.Client.Jittering
                         Property = nameof(SpriteComponent.Offset),
                         KeyFrames =
                         {
-                            // Start at our current location
                             new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f),
-                            // Subtract the previous offset from our current location, then add the new offset
-                            // this is still bulldozing fuck
-                            new AnimationTrackProperty.KeyFrame(sprite.Offset - jittering.LastJitter + offset, length),
+                            new AnimationTrackProperty.KeyFrame(jittering.StartOffset + offset, length),
                         }
                     }
                 }
             };
-
-            jittering.LastJitter = offset;
-            return ani;
         }
     }
 }

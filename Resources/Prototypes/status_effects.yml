@@ -11,7 +11,7 @@
 - type: statusEffect
   id: SlowedDown
 
-- type: statusEffect
+- type: statusEffect #todo
   id: Jitter
   alwaysAllowed: true
 
