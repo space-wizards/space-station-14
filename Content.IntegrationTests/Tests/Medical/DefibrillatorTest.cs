@@ -47,7 +47,7 @@ public sealed class DefibrillatorTest : InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(targetMobState.CurrentState, Is.EqualTo(MobState.Alive), "Target mob was not alive when spawned.");
-            Assert.That(targetDamageable.TotalDamage, Is.EqualTo(FixedPoint2.Zero), "Target mob was damaged when spawned.");
+            Assert.That(damageableSystem.GetTotalDamage(STarget!.Value), Is.EqualTo(FixedPoint2.Zero), "Target mob was damaged when spawned.");
         });
 
         // Get the damage needed to kill or crit the target.
@@ -64,7 +64,7 @@ public sealed class DefibrillatorTest : InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(targetMobState.CurrentState, Is.EqualTo(MobState.Dead), "Target mob did not die from deadly damage amount.");
-            Assert.That(targetDamageable.TotalDamage, Is.EqualTo(deathThreshold), "Target mob had the wrong total damage amount after being killed.");
+            Assert.That(damageableSystem.GetTotalDamage(STarget!.Value), Is.EqualTo(deathThreshold), "Target mob had the wrong total damage amount after being killed.");
         });
 
         // Spawn a defib and activate it.
@@ -82,7 +82,7 @@ public sealed class DefibrillatorTest : InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(targetMobState.CurrentState, Is.EqualTo(MobState.Dead), "Target mob was revived despite being over the death damage threshold.");
-            Assert.That(targetDamageable.TotalDamage, Is.GreaterThan(deathThreshold), "Target mob did not take damage from being defibrillated.");
+            Assert.That(damageableSystem.GetTotalDamage(STarget!.Value), Is.GreaterThan(deathThreshold), "Target mob did not take damage from being defibrillated.");
         });
 
         // Set the damage halfway between the crit and death thresholds so that the target can be revived.
