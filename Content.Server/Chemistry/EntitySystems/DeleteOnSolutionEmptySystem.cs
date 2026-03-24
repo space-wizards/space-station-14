@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
         public void OnSolutionChange(Entity<DeleteOnSolutionEmptyComponent> entity, ref SolutionChangedEvent args)
         {
             var solution = args.Solution.Comp.Solution;
-            if (solution.Name != entity.Comp.Solution)
+            if (args.Solution.Comp.Id != entity.Comp.Solution)
                 return;
 
             if (solution.Volume <= 0)

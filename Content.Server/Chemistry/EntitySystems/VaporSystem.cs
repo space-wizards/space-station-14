@@ -101,7 +101,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Enumerate over all VaporComponents
             // TODO: Vapor should just use SolutionComponent and not be capable of having multiple solutions.
-            var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
+            var query = EntityQueryEnumerator<VaporComponent, SolutionManagerComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var vaporComp, out var container, out var xform))
             {
                 // Return early if we're not active

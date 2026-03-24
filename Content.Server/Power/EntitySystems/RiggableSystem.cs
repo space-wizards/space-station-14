@@ -49,7 +49,7 @@ public sealed class RiggableSystem : EntitySystem
 
     private void OnSolutionChanged(Entity<RiggableComponent> entity, ref SolutionChangedEvent args)
     {
-        if (args.Solution.Comp.Solution.Name != entity.Comp.Solution)
+        if (args.Solution.Comp.Id != entity.Comp.Solution)
             return;
 
         var wasRigged = entity.Comp.IsRigged;

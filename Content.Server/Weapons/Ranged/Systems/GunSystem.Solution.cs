@@ -28,8 +28,8 @@ public sealed partial class GunSystem
 
     private void OnSolutionChanged(Entity<SolutionAmmoProviderComponent> entity, ref SolutionChangedEvent args)
     {
-        if (args.Solution.Comp.SolutionId == entity.Comp.SolutionId)
-            UpdateSolutionShots(entity, args.Solution);
+        if (args.Solution.Comp.Id == entity.Comp.SolutionId)
+            UpdateSolutionShots(entity, args.Solution.Comp.Solution);
     }
 
     protected override void UpdateSolutionShots(Entity<SolutionAmmoProviderComponent> ent, Solution? solution = null)

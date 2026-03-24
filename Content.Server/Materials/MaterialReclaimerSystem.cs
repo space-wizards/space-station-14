@@ -69,7 +69,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
     private void OnInteractUsing(Entity<MaterialReclaimerComponent> entity, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || entity.Comp.SolutionContainerId == null)
             return;
 
         // if we're trying to get a solution out of the reclaimer, don't destroy it
