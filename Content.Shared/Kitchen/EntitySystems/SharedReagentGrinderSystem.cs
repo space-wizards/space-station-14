@@ -356,10 +356,11 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         switch (program)
         {
             case GrinderProgram.Grind:
-                if (_solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolutionName, out _, out var solution))
-                {
+                if (ent.Comp.GrindableSolutionName is not { } solutionId)
+                    return null;
+
+                if (_solutionContainersSystem.TryGetSolution(ent.Owner, solutionId, out _, out var solution))
                     return solution;
-                }
                 break;
             case GrinderProgram.Juice:
                 return ent.Comp.JuiceSolution;

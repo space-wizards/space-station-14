@@ -271,7 +271,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        if (args.Solution.Comp.Solution.Name != entity.Comp.Solution)
+        if (args.Solution.Comp.Id != entity.Comp.Solution)
             return;
 
         // If the solution is no longer capable of being fizzy, clear any built up fizziness

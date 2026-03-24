@@ -131,7 +131,7 @@ public sealed class DrainSystem : EntitySystem
         base.Update(frameTime);
 
         // TODO: Drains should just use SolutionComponent for their buffer!
-        var query = EntityQueryEnumerator<DrainComponent, SolutionContainerManagerComponent>();
+        var query = EntityQueryEnumerator<DrainComponent, SolutionManagerComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var drain, out var manager))
         {

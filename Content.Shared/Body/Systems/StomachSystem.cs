@@ -11,7 +11,7 @@ public sealed class StomachSystem : EntitySystem
 
     public const string DefaultSolutionName = "stomach";
 
-    public bool CanTransferSolution(Entity<StomachComponent?, SolutionContainerManagerComponent?> entity, Solution solution)
+    public bool CanTransferSolution(Entity<StomachComponent?, SolutionManagerComponent?> entity, Solution solution)
     {
         return Resolve(entity, ref entity.Comp1, logMissing: false)
             && _solutionContainerSystem.ResolveSolution((entity, entity.Comp2), DefaultSolutionName, ref entity.Comp1.Solution, out var stomachSolution)
@@ -19,7 +19,7 @@ public sealed class StomachSystem : EntitySystem
             && stomachSolution.CanAddSolution(solution);
     }
 
-    public bool TryTransferSolution(Entity<StomachComponent?, SolutionContainerManagerComponent?> entity, Solution solution)
+    public bool TryTransferSolution(Entity<StomachComponent?, SolutionManagerComponent?> entity, Solution solution)
     {
         if (!Resolve(entity, ref entity.Comp1, logMissing: false)
             || !_solutionContainerSystem.ResolveSolution((entity, entity.Comp2), DefaultSolutionName, ref entity.Comp1.Solution)

@@ -35,7 +35,7 @@ public abstract partial class SharedSolutionContainerSystem
 
     public bool TryGetExtractableSolution(Entity<ExtractableComponent?, SolutionManagerComponent?> entity, [NotNullWhen(true)] out Entity<SolutionComponent>? soln, [NotNullWhen(true)] out Solution? solution)
     {
-        if (!Resolve(entity, ref entity.Comp1, logMissing: false) || entity.Comp1.GrindableSolution == null)
+        if (!Resolve(entity, ref entity.Comp1, logMissing: false) || entity.Comp1.GrindableSolutionName == null)
         {
             (soln, solution) = (default!, null);
             return false;

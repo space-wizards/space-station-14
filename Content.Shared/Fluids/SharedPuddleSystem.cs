@@ -120,7 +120,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        if (args.Solution.Comp.Solution.Name != entity.Comp.SolutionName)
+        if (args.Solution.Comp.Id != entity.Comp.SolutionName)
             return;
 
         if (args.Solution.Comp.Solution.Volume <= 0)
