@@ -46,7 +46,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         // TODO: Use ContainerFill dog
         if (light.HasLampOnSpawn != null)
         {
-            var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+            var entity = Spawn(light.HasLampOnSpawn, Comp<TransformComponent>(uid).Coordinates);
             ContainerSystem.Insert(entity, light.LightBulbContainer);
         }
         // need this to update visualizers
