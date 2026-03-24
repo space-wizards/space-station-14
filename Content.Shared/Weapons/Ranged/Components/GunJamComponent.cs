@@ -18,7 +18,7 @@ public sealed partial class GunJamDefectComponent : DefectComponent
     [DataField, AutoNetworkedField]
     public bool IsJammed;
 
-    // Per-shot probability (0–1) of jamming after a successful shot.
+    // Per-shot probability (0-1) of jamming after a successful shot.
     [DataField]
     public float JamChance = 0.05f;
 

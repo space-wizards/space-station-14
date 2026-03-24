@@ -9,9 +9,9 @@ namespace Content.Shared.Defects.Systems;
 
 /// <summary>
 /// Applies randomised spread to guns with GunSpreadDefectComponent.
-/// Angle deltas are computed at MapInit (sampled absolute - base) and then
-/// added via GunRefreshModifiersEvent, composing correctly with wield bonuses
-/// and other modifiers without requiring direct GunComponent write access.
+/// Angle deltas are computed at MapInit (sampled absolute - base) and applied
+/// via GunRefreshModifiersEvent, so they compose correctly with wield bonuses
+/// without needing direct GunComponent write access.
 /// </summary>
 public sealed class GunSpreadDefectSystem : EntitySystem
 {
@@ -56,7 +56,7 @@ public sealed class GunSpreadDefectSystem : EntitySystem
             _gunSystem.RefreshModifiers((ent.Owner, gun));
         }
 
-        // Multiplier-based spread (e.g. Hushpup) — GunSpreadModifierComponent
+        // Multiplier-based spread (e.g. Hushpup). GunSpreadModifierComponent
         // has no Access restriction so it can be written directly.
         if (def.SpreadMultiplierMin.HasValue && def.SpreadMultiplierMax.HasValue)
         {
@@ -76,16 +76,12 @@ public sealed class GunSpreadDefectSystem : EntitySystem
             args.MaxAngle = args.MinAngle;
     }
 
-    // Samples from a normal distribution: mean = midpoint, stdDev = 25% of range.
-    // ~68% of rolls land in the middle 50%; extremes are rare.
+    // Samples from a normal distribution centred between min and max,
+    // clamped so the result never escapes the provided range.
     private float SampleGaussian(float min, float max)
     {
         var mean = (min + max) * 0.5f;
         var stdDev = (max - min) * 0.25f;
-        float u1;
-        do { u1 = _random.NextFloat(); } while (u1 == 0f);
-        var u2 = _random.NextFloat();
-        var z = MathF.Sqrt(-2f * MathF.Log(u1)) * MathF.Cos(MathF.PI * 2f * u2);
-        return Math.Clamp(mean + z * stdDev, min, max);
+        return Math.Clamp((float) _random.NextGaussian(mean, stdDev), min, max);
     }
 }

@@ -13,7 +13,7 @@ public sealed partial class LoosePowerConnectorDefectComponent : DefectComponent
         DefectLabel = "faulty power connector";
     }
 
-    // Per-swing probability (0–1) of the weapon powering off.
+    // Per-swing probability of the weapon powering off.
     [DataField]
     public float PowerFailChance = 0.15f;
 

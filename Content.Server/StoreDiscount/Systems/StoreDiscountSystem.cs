@@ -81,7 +81,7 @@ public sealed class StoreDiscountSystem : EntitySystem
         // and their cost
 
         var prototypes = _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>();
-        var categoriesWithCumulativeWeight = new CategoriesWithCumulativeWeightMap(prototypes);
+        var categoriesWithCumulativeWeight = new CumulativeWeightMap<DiscountCategoryPrototype>(prototypes);
         var uniqueListingItemCountByCategory = PickCategoriesToRoll(totalAvailableDiscounts, categoriesWithCumulativeWeight);
 
         return RollItems(listings, uniqueListingItemCountByCategory);
@@ -106,7 +106,7 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// <returns>Map: <b>count</b> of different listing items to be discounted, by discount category.</returns>
     private Dictionary<ProtoId<DiscountCategoryPrototype>, int> PickCategoriesToRoll(
         int totalAvailableDiscounts,
-        CategoriesWithCumulativeWeightMap categoriesWithCumulativeWeightMap
+        CumulativeWeightMap<DiscountCategoryPrototype> categoriesWithCumulativeWeightMap
     )
     {
         var chosenDiscounts = new Dictionary<ProtoId<DiscountCategoryPrototype>, int>();
@@ -287,97 +287,6 @@ public sealed class StoreDiscountSystem : EntitySystem
         return false;
     }
 
-    /// <summary> Map for holding discount categories with their calculated cumulative weight.  </summary>
-    private sealed record CategoriesWithCumulativeWeightMap
-    {
-        private readonly List<DiscountCategoryPrototype> _categories;
-        private readonly List<int> _weights;
-        private int _totalWeight;
-
-        /// <summary>
-        /// Creates map, filtering out categories that could not be picked (no weight, no max items).
-        /// Calculates cumulative weights by summing each next category weight with sum of all previous ones.
-        /// </summary>
-        public CategoriesWithCumulativeWeightMap(IEnumerable<DiscountCategoryPrototype> prototypes)
-        {
-            var asArray = prototypes.ToArray();
-            _weights = new (asArray.Length);
-            _categories = new(asArray.Length);
-
-            var currentIndex = 0;
-            _totalWeight = 0;
-            for (var i = 0; i < asArray.Length; i++)
-            {
-                var category = asArray[i];
-                if (category.MaxItems <= 0 || category.Weight <= 0)
-                {
-                    continue;
-                }
-
-                _categories.Add(category);
-
-                if (currentIndex == 0)
-                {
-                    _totalWeight = category.Weight;
-                }
-                else
-                {
-                    // cumulative weight of last discount category is total weight of all categories
-                    _totalWeight += category.Weight;
-                }
-                _weights.Add(_totalWeight);
-
-                currentIndex++;
-            }
-        }
-
-        /// <summary>
-        /// Removes category and all of its effects on other items in map:
-        /// decreases cumulativeWeight of every category that is following current one, and then
-        /// reduces total cumulative count by that category weight, so it won't affect next rolls in any way.
-        /// </summary>
-        public void Remove(DiscountCategoryPrototype discountCategory)
-        {
-            var indexToRemove = _categories.IndexOf(discountCategory);
-            if (indexToRemove == -1)
-            {
-                return;
-            }
-
-            for (var i = indexToRemove + 1; i < _categories.Count; i++)
-            {
-                _weights[i]-= discountCategory.Weight;
-            }
-
-            _totalWeight -= discountCategory.Weight;
-            _categories.RemoveAt(indexToRemove);
-            _weights.RemoveAt(indexToRemove);
-        }
-
-        /// <summary>
-        /// Roll category respecting categories weight.
-        /// </summary>
-        /// <remarks>
-        /// We rolled random point inside range of 0 and 'total weight' to pick category respecting category weights
-        /// now we find index of category we rolled. If category cumulative weight is less than roll -
-        /// we rolled other category, skip and try next.
-        /// </remarks>
-        /// <param name="random">Random number generator.</param>
-        /// <returns>Rolled category, or null if no category could be picked based on current map state.</returns>
-        public DiscountCategoryPrototype? RollCategory(IRobustRandom random)
-        {
-            var roll = random.Next(_totalWeight);
-            for (int i = 0; i < _weights.Count; i++)
-            {
-                if (roll < _weights[i])
-                {
-                    return _categories[i];
-                }
-            }
-
-            return null;
-        }
-    }
 }
 
 /// <summary>

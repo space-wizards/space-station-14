@@ -2,8 +2,7 @@ namespace Content.Shared.Defects.Components;
 
 /// <summary>
 /// Forces the gun into semi-automatic mode at spawn by overwriting AvailableModes
-/// and SelectedMode on GunComponent. Only meaningful on guns that have FullAuto
-/// in their available modes — add this component only to those prototypes.
+/// and SelectedMode on GunComponent. Only meaningful on guns that have FullAuto.
 /// </summary>
 [RegisterComponent]
 public sealed partial class BentSwitchDefectComponent : DefectComponent

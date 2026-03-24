@@ -8,14 +8,14 @@
   components:
   - type: RandomDefects
   - type: LoosePowerConnectorDefect
-    prob: 0.55
+    prob: 0.75
+  - type: ReducedDamageDefect
+    prob: 0.70
   - type: DamageUserDefect
-    prob: 0.40
+    prob: 0.15
     damage:
       types:
         Heat: 5
-  - type: ReducedDamageDefect
-    prob: 0.55
 
 # Worn energy dagger: same defect pool as energy sword.
 - type: entity
@@ -25,12 +25,12 @@
   components:
   - type: RandomDefects
   - type: LoosePowerConnectorDefect
-    prob: 0.55
+    prob: 0.75
+  - type: ReducedDamageDefect
+    prob: 0.70
   - type: DamageUserDefect
-    prob: 0.40
+    prob: 0.15
     damage:
       types:
         Heat: 5
-  - type: ReducedDamageDefect
-    prob: 0.55
 

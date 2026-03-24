@@ -446,7 +446,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
 /// </summary>
 [Prototype]
 [DataDefinition]
-public sealed partial class DiscountCategoryPrototype : IPrototype
+public sealed partial class DiscountCategoryPrototype : IPrototype, IWeightedCategory
 {
     [ViewVariables]
     [IdDataField]

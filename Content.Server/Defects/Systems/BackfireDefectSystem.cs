@@ -8,7 +8,7 @@ namespace Content.Server.Defects.Systems;
 /// <summary>
 /// Triggers a localised explosion at the gun's position on a per-shot roll.
 /// The explosion is centred on the weapon tile so it naturally damages anyone
-/// standing there, including the shooter — no direct damage application needed.
+/// standing there, including the shooter.
 /// </summary>
 public sealed class BackfireDefectSystem : EntitySystem
 {

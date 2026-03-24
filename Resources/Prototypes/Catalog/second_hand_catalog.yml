@@ -103,18 +103,6 @@
   cost:
     Telecrystal: 2
 
-# --- DISRUPTION ---
-
-- type: listing
-  id: UplinkSecondHandPowerSinkWorn
-  name: uplink-second-hand-power-sink-worn-name
-  description: uplink-second-hand-power-sink-worn-desc
-  icon: { sprite: /Textures/Objects/Power/powersink.rsi, state: powersink }
-  productEntity: PowerSinkWorn
-  secondHandCategory: veryRareSecondHand
-  cost:
-    Telecrystal: 4
-
 # --- MELEE ---
 
 

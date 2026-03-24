@@ -33,16 +33,19 @@ public sealed class DefectSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        // Roll each defect — collect failures, then remove them.
+        // Roll for each possible defect
         var toRemove = new List<Type>();
         foreach (var comp in AllComps(ent.Owner))
         {
+            // Grab all the defects components
             if (comp is not DefectComponent defect)
                 continue;
 
+            // Data check make sure probability isnt impossible value
             if (defect.Prob >= 1.0f)
                 continue;
 
+            // Roll the probability
             if (!_random.Prob(defect.Prob))
                 toRemove.Add(comp.GetType());
         }

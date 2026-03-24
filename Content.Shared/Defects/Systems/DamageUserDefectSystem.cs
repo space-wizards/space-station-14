@@ -7,7 +7,7 @@ namespace Content.Shared.Defects.Systems;
 
 /// <summary>
 /// Burns the wielder for a small amount of heat damage on every melee swing.
-/// Fires regardless of whether the attack connects — the handle is always exposed.
+/// Fires regardless of whether the attack connects - only use on Melee weapons
 /// </summary>
 public sealed class DamageUserDefectSystem : EntitySystem
 {

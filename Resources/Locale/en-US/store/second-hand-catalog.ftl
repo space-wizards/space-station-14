@@ -88,11 +88,6 @@ uplink-second-hand-pen-exploding-worn-desc = A pen with a corroded detonator cir
 uplink-second-hand-minibomb-worn-name = Rusty Minibomb
 uplink-second-hand-minibomb-worn-desc = A syndicate minibomb with a corroded detonator. The fuse is unpredictable — somewhere between 5 and 15 seconds. Same blast radius. More time to think about what you've done.
 
-# Disruption
-
-uplink-second-hand-power-sink-worn-name = Faulty Power Sink
-uplink-second-hand-power-sink-worn-desc = A power sink with a corroded intake coil. Drains the station's high-voltage grid at half the normal rate. Still crashes power infrastructure — just takes about twice as long to do it. Patience is a virtue.
-
 # Tools
 
 uplink-second-hand-c4-worn-name = Degraded C-4

@@ -11,16 +11,16 @@
     fireRate: 3
     angleIncrease: 3
   - type: GunJamDefect
-    prob: 0.55
+    prob: 0.70
     jamChance: 0.12
   - type: GunSpreadDefect
-    prob: 0.55
+    prob: 0.70
     minAngleMin: 5
     minAngleMax: 18
     maxAngleMin: 18
     maxAngleMax: 28
   - type: BackfireDefect
-    prob: 0.20
+    prob: 0.10
     backfireChance: 0.04
     totalIntensity: 0.25
     maxIntensity: 0.2
@@ -36,16 +36,16 @@
     fireRate: 2
     angleIncrease: 3
   - type: GunJamDefect
-    prob: 0.55
+    prob: 0.70
     jamChance: 0.15
   - type: GunSpreadDefect
-    prob: 0.55
+    prob: 0.70
     minAngleMin: 5
     minAngleMax: 18
     maxAngleMin: 18
     maxAngleMax: 28
   - type: BackfireDefect
-    prob: 0.20
+    prob: 0.10
     backfireChance: 0.04
     totalIntensity: 0.25
     maxIntensity: 0.2

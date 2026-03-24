@@ -16,18 +16,18 @@ public sealed partial class GunSpreadDefectComponent : DefectComponent
         DefectLabel = "warped barrel";
     }
 
-    // --- YAML config: target angle ranges (absolute degrees) ---
+    // Target angle ranges (absolute degrees)
     [DataField] public Angle? MinAngleMin;
     [DataField] public Angle? MinAngleMax;
     [DataField] public Angle? MaxAngleMin;
     [DataField] public Angle? MaxAngleMax;
 
-    // --- Runtime: deltas computed at MapInit (sampled target - base angle) ---
+    // Deltas computed at MapInit (sampled target - base angle) 
     // Added to args.MinAngle/MaxAngle in GunRefreshModifiersEvent.
     [DataField] public Angle MinAngleDelta;
     [DataField] public Angle MaxAngleDelta;
 
-    // --- Multiplier-based spread (for ammo-spread weapons like the Hushpup) ---
+    // Multiplier-based spread (for ammo-spread weapons like the Hushpup)
     [DataField] public float? SpreadMultiplierMin;
     [DataField] public float? SpreadMultiplierMax;
 }

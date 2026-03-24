@@ -7,9 +7,8 @@ namespace Content.Server.Defects.Systems;
 
 /// <summary>
 /// Zaps the user when they successfully use the item on a target.
-/// Insulation is handled automatically by the electrocution system —
-/// combat gloves, captain's gloves, and similar insulated items will
-/// absorb or reduce the shock with no extra logic needed here.
+/// Insulation is handled automatically by the electrocution system.
+/// Combat gloves, Captain's gloves, and similar insulated items will block the zap.
 /// </summary>
 public sealed class StaticShockDefectSystem : EntitySystem
 {
@@ -29,9 +28,11 @@ public sealed class StaticShockDefectSystem : EntitySystem
         if (args.Target == null)
             return;
 
+        // Do nothing if we don't roll above our probability
         if (!_random.Prob(ent.Comp.ShockChance))
             return;
 
+        // Zap
         _electrocution.TryDoElectrocution(
             args.User,
             ent.Owner,

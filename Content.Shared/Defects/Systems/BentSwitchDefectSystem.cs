@@ -7,8 +7,7 @@ namespace Content.Shared.Defects.Systems;
 /// <summary>
 /// At MapInit, forces any gun with FullAuto in its available modes into
 /// semi-automatic only via SharedGunSystem.SetAvailableModes.
-/// If the gun has no FullAuto mode the component is a no-op.
-/// Runs after DefectSystem so only surviving (rolled-in) defects are processed.
+/// Does nothing on guns that don't have FullAuto.
 /// </summary>
 public sealed class BentSwitchDefectSystem : EntitySystem
 {

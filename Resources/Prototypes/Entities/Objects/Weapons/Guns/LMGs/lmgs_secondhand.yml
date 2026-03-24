@@ -13,16 +13,16 @@
     minAngle: -12
     maxAngle: -12
   - type: GunJamDefect
-    prob: 0.55
+    prob: 0.40
     jamChance: 0.12
   - type: GunSpreadDefect
-    prob: 0.55
+    prob: 0.40
     minAngleMin: 20
     minAngleMax: 42
     maxAngleMin: 42
     maxAngleMax: 70
   - type: BackfireDefect
-    prob: 0.20
+    prob: 0.10
     backfireChance: 0.02
     totalIntensity: 0.75
     maxIntensity: 0.5

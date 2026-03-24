@@ -19,11 +19,11 @@ public sealed partial class StaticShockDefectComponent : DefectComponent
     [DataField]
     public float ShockChance = 0.50f;
 
-    // Shock damage (in Shock damage type) applied to the user.
+    // Damage to apply
     [DataField]
     public int ShockDamage = 10;
 
-    // How long the stun / jitter effect lasts.
+    // Stun duration
     [DataField]
     public TimeSpan StunTime = TimeSpan.FromSeconds(1.5);
 }

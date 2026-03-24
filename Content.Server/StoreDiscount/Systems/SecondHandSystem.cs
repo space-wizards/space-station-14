@@ -8,11 +8,14 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StoreDiscount.Systems;
 
+/// <summary>
 /// Populates the Second Hand tab of an uplink with a random selection of worn/damaged syndicate items.
 /// Mirrors the structure of <see cref="StoreDiscountSystem"/> but for second-hand item listings.
+/// </summary>
 public sealed class SecondHandSystem : EntitySystem
 {
     private static readonly ProtoId<StoreCategoryPrototype> SecondHandStoreCategoryKey = "SecondHandItems";
+    // Number of second-hand items shown per uplink per round.
     private const int MinSecondHandItems = 8;
     private const int MaxSecondHandItems = 14;
 
@@ -27,7 +30,10 @@ public sealed class SecondHandSystem : EntitySystem
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
     }
 
-    /// Removes a second-hand item from the tab after it is purchased (one-purchase-only).
+    /// <summary>
+    /// Removes a second-hand listing from the tab once its purchase count is exhausted.
+    /// Second-hand items are one-per-uplink; the category is stripped so the listing disappears.
+    /// </summary>
     private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
     {
         var (storeId, purchasedItem) = ev;
@@ -45,7 +51,9 @@ public sealed class SecondHandSystem : EntitySystem
         purchasedItem.Categories.Remove(SecondHandStoreCategoryKey);
     }
 
-    /// Populates the Second Hand tab if the store was initialized with second-hand items enabled.
+    /// <summary>
+    /// Populates the Second Hand tab when the store is initialized, if second-hand items are enabled for this uplink.
+    /// </summary>
     private void OnStoreInitialized(ref StoreInitializedEvent ev)
     {
         if (!ev.UseSecondHand)
@@ -64,22 +72,29 @@ public sealed class SecondHandSystem : EntitySystem
         secondHandComp.SecondHandItems = selectedItems;
     }
 
-    /// Selects a weighted random set of second-hand listings from the full catalog.
+    /// <summary>
+    /// Selects a random set of second-hand listings from the full catalog using weighted category sampling.
+    /// Total item count is rolled uniformly in [<see cref="MinSecondHandItems"/>, <see cref="MaxSecondHandItems"/>].
+    /// </summary>
     private IReadOnlyList<StoreSecondHandData> SelectSecondHandItems(
         IReadOnlyCollection<ListingDataWithCostModifiers> fullCatalog)
     {
         var prototypes = _prototypeManager.EnumeratePrototypes<SecondHandCategoryPrototype>();
-        var categoryWeightMap = new SecondHandCategoryWeightMap(prototypes);
+        var categoryWeightMap = new CumulativeWeightMap<SecondHandCategoryPrototype>(prototypes);
 
         var totalItems = _random.Next(MinSecondHandItems, MaxSecondHandItems + 1);
         var countByCategory = PickCategoriesToRoll(totalItems, categoryWeightMap);
         return RollItems(fullCatalog, countByCategory);
     }
 
-    /// Determines how many items to draw from each second-hand category using weighted random selection.
+    /// <summary>
+    /// Rolls <paramref name="totalItems"/> category slots using weighted random selection.
+    /// A category is removed from the pool once it hits its <see cref="SecondHandCategoryPrototype.MaxItems"/> cap,
+    /// so remaining rolls redistribute to the other categories automatically.
+    /// </summary>
     private Dictionary<ProtoId<SecondHandCategoryPrototype>, int> PickCategoriesToRoll(
         int totalItems,
-        SecondHandCategoryWeightMap weightMap)
+        CumulativeWeightMap<SecondHandCategoryPrototype> weightMap)
     {
         var chosen = new Dictionary<ProtoId<SecondHandCategoryPrototype>, int>();
         for (var i = 0; i < totalItems; i++)
@@ -99,7 +114,10 @@ public sealed class SecondHandSystem : EntitySystem
         return chosen;
     }
 
-    /// Picks the specific listings to activate for each category.
+    /// <summary>
+    /// Picks specific listings from each category's pool using the counts determined by <see cref="PickCategoriesToRoll"/>.
+    /// If a category has fewer available listings than requested, all available listings are used.
+    /// </summary>
     private IReadOnlyList<StoreSecondHandData> RollItems(
         IEnumerable<ListingDataWithCostModifiers> fullCatalog,
         Dictionary<ProtoId<SecondHandCategoryPrototype>, int> countByCategory)
@@ -128,12 +146,13 @@ public sealed class SecondHandSystem : EntitySystem
         return result;
     }
 
-    /// Adds the SecondHandItems category to the selected listings and to the store's category whitelist.
+    /// <summary>
+    /// Makes selected listings visible in the Second Hand tab and enables the tab on the store.
+    /// </summary>
     private void ApplySecondHandItems(
         StoreComponent storeComp,
         IReadOnlyList<StoreSecondHandData> selectedItems)
     {
-        // Allow the store to show the SecondHandItems tab.
         storeComp.Categories.Add(SecondHandStoreCategoryKey);
 
         foreach (var data in selectedItems)
@@ -158,6 +177,10 @@ public sealed class SecondHandSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Groups all second-hand-eligible listings from the catalog by their <see cref="SecondHandCategoryPrototype"/> ID.
+    /// Listings without a <c>SecondHandCategory</c> are skipped.
+    /// </summary>
     private static Dictionary<ProtoId<SecondHandCategoryPrototype>, List<ListingDataWithCostModifiers>>
         GroupSecondHandListingsByCategory(IEnumerable<ListingDataWithCostModifiers> catalog)
     {
@@ -179,6 +202,9 @@ public sealed class SecondHandSystem : EntitySystem
         return grouped;
     }
 
+    /// <summary>
+    /// Finds the <see cref="StoreSecondHandData"/> entry for a purchased listing, if it was a second-hand item.
+    /// </summary>
     private static bool TryGetSecondHandData(
         IReadOnlyList<StoreSecondHandData> items,
         ListingDataWithCostModifiers purchased,
@@ -197,58 +223,4 @@ public sealed class SecondHandSystem : EntitySystem
         return false;
     }
 
-    /// Weighted category selection map, mirrors <see cref="StoreDiscountSystem"/>'s inner class.
-    private sealed record SecondHandCategoryWeightMap
-    {
-        private readonly List<SecondHandCategoryPrototype> _categories;
-        private readonly List<int> _weights;
-        private int _totalWeight;
-
-        public SecondHandCategoryWeightMap(IEnumerable<SecondHandCategoryPrototype> prototypes)
-        {
-            var asArray = prototypes.ToArray();
-            _categories = new(asArray.Length);
-            _weights = new(asArray.Length);
-            _totalWeight = 0;
-
-            foreach (var category in asArray)
-            {
-                if (category.MaxItems <= 0 || category.Weight <= 0)
-                    continue;
-
-                _totalWeight += category.Weight;
-                _categories.Add(category);
-                _weights.Add(_totalWeight);
-            }
-        }
-
-        public void Remove(SecondHandCategoryPrototype category)
-        {
-            var index = _categories.IndexOf(category);
-            if (index == -1)
-                return;
-
-            for (var i = index + 1; i < _categories.Count; i++)
-                _weights[i] -= category.Weight;
-
-            _totalWeight -= category.Weight;
-            _categories.RemoveAt(index);
-            _weights.RemoveAt(index);
-        }
-
-        public SecondHandCategoryPrototype? RollCategory(IRobustRandom random)
-        {
-            if (_totalWeight <= 0)
-                return null;
-
-            var roll = random.Next(_totalWeight);
-            for (var i = 0; i < _weights.Count; i++)
-            {
-                if (roll < _weights[i])
-                    return _categories[i];
-            }
-
-            return null;
-        }
-    }
 }

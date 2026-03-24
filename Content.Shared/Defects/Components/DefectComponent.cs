@@ -8,13 +8,12 @@ namespace Content.Shared.Defects.Components;
 // rolls Prob at MapInit and removes defects that fail.
 public abstract partial class DefectComponent : Component
 {
-    // Probability (0–1) that this defect is present at spawn.
+    // Probability that this defect is present at spawn.
     [DataField]
     public float Prob = 1.0f;
 
-    // Short label describing this defect, appended to the item description
-    // by SecondHandNamingSystem after defect rolling. Each concrete defect
-    // sets its own default; can be overridden in YAML per-entity.
+    // Short label appended to the item description by DefectSystem after rolling.
+    // Each concrete defect sets its own default; can be overridden in YAML.
     [DataField]
     public string DefectLabel = string.Empty;
 }

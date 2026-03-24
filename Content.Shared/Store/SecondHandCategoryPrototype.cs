@@ -7,7 +7,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Prototype]
 [DataDefinition]
-public sealed partial class SecondHandCategoryPrototype : IPrototype
+public sealed partial class SecondHandCategoryPrototype : IPrototype, IWeightedCategory
 {
     [ViewVariables]
     [IdDataField]
