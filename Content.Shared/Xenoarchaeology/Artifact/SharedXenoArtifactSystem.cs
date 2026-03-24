@@ -25,7 +25,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <summary> Cached EntProtoIds of all XenoArtifactEffect prototypes. Used for text hints. </summary>
-    public HashSet<string> EffectPrototypeIds = [];
+    public readonly HashSet<string> EffectPrototypeIds = [];
 
     /// <inheritdoc/>
     public override void Initialize()
