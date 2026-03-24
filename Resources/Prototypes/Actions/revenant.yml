@@ -6,6 +6,18 @@
 
 - type: entity
   parent: BaseAction
+  id: ActionRevenantAppear
+  name: Apparate
+  description: Reveal yourself.
+  components:
+  - type: Action
+    useDelay: 15
+    icon: Interface/Actions/eyeopen.png
+  - type: InstantAction
+    event: !type:RevenantAppearActionEvent
+
+- type: entity
+  parent: BaseAction
   id: ActionRevenantDefile
   name: Defile
   description: Costs 30 Essence.
