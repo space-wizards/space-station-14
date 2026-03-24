@@ -1423,6 +1423,191 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("uploaded_resource_log", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.UsernameBanExact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("username_ban_exact_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<string>("CustomMessage")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("custom_message");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("deleted");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<Guid?>("DeletedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("deleted_by_id");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_edited_at");
+
+                    b.Property<Guid?>("LastEditedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("last_edited_by_id");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)")
+                        .HasColumnName("note");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("username");
+
+                    b.HasKey("Id")
+                        .HasName("PK_username_ban_exact");
+
+                    b.HasIndex("CreatedById")
+                        .HasDatabaseName("IX_username_ban_exact_created_by_id");
+
+                    b.HasIndex("DeletedById")
+                        .HasDatabaseName("IX_username_ban_exact_deleted_by_id");
+
+                    b.HasIndex("LastEditedById")
+                        .HasDatabaseName("IX_username_ban_exact_last_edited_by_id");
+
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasDatabaseName("IX_username_ban_exact_username");
+
+                    b.ToTable("username_ban_exact", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.UsernameBanRegex", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("username_ban_regex_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AutoEscalate")
+                        .HasColumnType("boolean")
+                        .HasColumnName("auto_escalate");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<string>("CustomMessage")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("custom_message");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("deleted");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<Guid?>("DeletedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("deleted_by_id");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_edited_at");
+
+                    b.Property<Guid?>("LastEditedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("last_edited_by_id");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)")
+                        .HasColumnName("note");
+
+                    b.Property<string>("Pattern")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("pattern");
+
+                    b.HasKey("Id")
+                        .HasName("PK_username_ban_regex");
+
+                    b.HasIndex("CreatedById")
+                        .HasDatabaseName("IX_username_ban_regex_created_by_id");
+
+                    b.HasIndex("DeletedById")
+                        .HasDatabaseName("IX_username_ban_regex_deleted_by_id");
+
+                    b.HasIndex("LastEditedById")
+                        .HasDatabaseName("IX_username_ban_regex_last_edited_by_id");
+
+                    b.ToTable("username_ban_regex", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.UsernameBanWhitelist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("username_ban_whitelist_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("note");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("username");
+
+                    b.HasKey("Id")
+                        .HasName("PK_username_ban_whitelist");
+
+                    b.HasIndex("CreatedById")
+                        .HasDatabaseName("IX_username_ban_whitelist_created_by_id");
+
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasDatabaseName("IX_username_ban_whitelist_username");
+
+                    b.ToTable("username_ban_whitelist", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -1990,6 +2175,78 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasConstraintName("FK_unban_ban_ban_id");
 
                     b.Navigation("Ban");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.UsernameBanExact", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_username_ban_exact_player_created_by_id");
+
+                    b.HasOne("Content.Server.Database.Player", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_username_ban_exact_player_deleted_by_id");
+
+                    b.HasOne("Content.Server.Database.Player", "LastEditedBy")
+                        .WithMany()
+                        .HasForeignKey("LastEditedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_username_ban_exact_player_last_edited_by_id");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DeletedBy");
+
+                    b.Navigation("LastEditedBy");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.UsernameBanRegex", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_username_ban_regex_player_created_by_id");
+
+                    b.HasOne("Content.Server.Database.Player", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_username_ban_regex_player_deleted_by_id");
+
+                    b.HasOne("Content.Server.Database.Player", "LastEditedBy")
+                        .WithMany()
+                        .HasForeignKey("LastEditedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_username_ban_regex_player_last_edited_by_id");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DeletedBy");
+
+                    b.Navigation("LastEditedBy");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.UsernameBanWhitelist", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_username_ban_whitelist_player_created_by_id");
+
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("PlayerRound", b =>

@@ -58,6 +58,7 @@ internal static class ServerContentIoC
         deps.Register<IGameMapManager, GameMapManager>();
         deps.Register<RulesManager, RulesManager>();
         deps.Register<IBanManager, BanManager>();
+        deps.Register<IUsernameBanManager, UsernameBanManager>();
         deps.Register<ContentNetworkResourceManager>();
         deps.Register<IAdminNotesManager, AdminNotesManager>();
         deps.Register<GhostKickManager>();

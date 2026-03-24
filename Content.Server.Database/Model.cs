@@ -49,6 +49,9 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
+        public DbSet<UsernameBanRegex> UsernameBanRegex { get; set; } = null!;
+        public DbSet<UsernameBanWhitelist> UsernameBanWhitelist { get; set; } = null!;
+        public DbSet<UsernameBanExact> UsernameBanExact { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -294,6 +297,56 @@ namespace Content.Server.Database
                 .OwnsOne(p => p.HWId)
                 .Property(p => p.Type)
                 .HasDefaultValue(HwidType.Legacy);
+
+            // Username bans
+            modelBuilder.Entity<UsernameBanRegex>()
+                .HasOne(u => u.CreatedBy)
+                .WithMany()
+                .HasForeignKey(u => u.CreatedById)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UsernameBanRegex>()
+                .HasOne(u => u.LastEditedBy)
+                .WithMany()
+                .HasForeignKey(u => u.LastEditedById)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UsernameBanRegex>()
+                .HasOne(u => u.DeletedBy)
+                .WithMany()
+                .HasForeignKey(u => u.DeletedById)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UsernameBanWhitelist>()
+                .HasOne(u => u.CreatedBy)
+                .WithMany()
+                .HasForeignKey(u => u.CreatedById)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UsernameBanExact>()
+                .HasOne(u => u.CreatedBy)
+                .WithMany()
+                .HasForeignKey(u => u.CreatedById)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UsernameBanExact>()
+                .HasOne(u => u.LastEditedBy)
+                .WithMany()
+                .HasForeignKey(u => u.LastEditedById)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UsernameBanExact>()
+                .HasOne(u => u.DeletedBy)
+                .WithMany()
+                .HasForeignKey(u => u.DeletedById)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             ModelBan.OnModelCreating(modelBuilder);
         }
@@ -757,7 +810,9 @@ namespace Content.Server.Database
         /// Results from rejected connections with external API checking tools
         IPChecks = 5,
         /// Results from rejected connections who are authenticated but have no modern hwid associated with them.
-        NoHwid = 6
+        NoHwid = 6,
+        /// Results from rejected connections with a banned username.
+        UsernameBan = 7
     }
 
     public class ServerBanHit

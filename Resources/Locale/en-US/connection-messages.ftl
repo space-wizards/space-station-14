@@ -62,3 +62,6 @@ ipintel-unknown = This server uses an auditing system with external verification
 ipintel-suspicious = You seem to be attempting to connect using a datacenter, proxy, VPN or otherwise suspicious connection. For administrative reasons, we do not allow these connections to play. If you have a VPN or similar enabled, please turn it off and attempt to reconnect or contact the administration team of the server for assistance on how to continue if you believe this is false or require using these services to play.
 
 hwid-required = Your client has refused to send a hardware id. Please contact the administration team for further assistance.
+
+username-ban-message = Your username is not permitted on this server.
+username-ban-auto-escalated = Username '{$username}' ({$userId}) was auto-escalated to a server ban due to matching pattern: {$pattern}

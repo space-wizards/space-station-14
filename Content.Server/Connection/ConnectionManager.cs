@@ -63,6 +63,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IHttpClientHolder _http = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IUsernameBanManager _usernameBanManager = default!;
 
         private GameTicker? _ticker;
 
@@ -80,6 +81,7 @@ namespace Content.Server.Connection
             _sawmill = _logManager.GetSawmill("connections");
 
             _ipintel = new IPIntel.IPIntel(new IPIntelApi(_http, _cfg), _db, _cfg, _logManager, _chatManager, _gameTiming);
+            _usernameBanManager.Initialize();
 
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
@@ -210,6 +212,15 @@ namespace Content.Server.Connection
         private async Task<(ConnectionDenyReason, string, List<BanDef>? bansHit)?> ShouldDeny(
             NetConnectingArgs e)
         {
+            // Check username bans first
+            var (isUsernameBanned, usernameBanMessage, autoEscalate) =
+                await _usernameBanManager.CheckUsernameAsync(e.UserName, e.UserId);
+
+            if (isUsernameBanned)
+            {
+                return (ConnectionDenyReason.UsernameBan, usernameBanMessage!, null);
+            }
+
             // Check if banned.
             var addr = e.IP.Address;
             var userId = e.UserId;

@@ -122,3 +122,37 @@ public sealed record PlayerRecord(
 public sealed record RoundRecord(int Id, DateTimeOffset? StartDate, ServerRecord Server);
 
 public sealed record ServerRecord(int Id, string Name);
+
+public sealed record UsernameBanRegexRecord(
+    int Id,
+    string Pattern,
+    string? Note,
+    string? CustomMessage,
+    bool AutoEscalate,
+    PlayerRecord? CreatedBy,
+    DateTimeOffset CreatedAt,
+    PlayerRecord? LastEditedBy,
+    DateTimeOffset? LastEditedAt,
+    bool Deleted,
+    PlayerRecord? DeletedBy,
+    DateTimeOffset? DeletedAt);
+
+public sealed record UsernameBanWhitelistRecord(
+    int Id,
+    string Username,
+    string? Note,
+    PlayerRecord? CreatedBy,
+    DateTimeOffset CreatedAt);
+
+public sealed record UsernameBanExactRecord(
+    int Id,
+    string Username,
+    string? Note,
+    string? CustomMessage,
+    PlayerRecord? CreatedBy,
+    DateTimeOffset CreatedAt,
+    PlayerRecord? LastEditedBy,
+    DateTimeOffset? LastEditedAt,
+    bool Deleted,
+    PlayerRecord? DeletedBy,
+    DateTimeOffset? DeletedAt);

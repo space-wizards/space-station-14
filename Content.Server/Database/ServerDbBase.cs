@@ -1619,6 +1619,275 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
+        #region Username Bans
+
+        public async Task<List<UsernameBanRegexRecord>> GetAllUsernameRegexBansAsync()
+        {
+            await using var db = await GetDb();
+
+            var bans = await db.DbContext.UsernameBanRegex
+                .Include(b => b.CreatedBy)
+                .Include(b => b.LastEditedBy)
+                .Include(b => b.DeletedBy)
+                .Where(b => !b.Deleted)
+                .ToListAsync();
+
+            return bans.Select(ToUsernameBanRegexRecord).ToList();
+        }
+
+        public async Task<List<UsernameBanWhitelistRecord>> GetAllUsernameWhitelistsAsync()
+        {
+            await using var db = await GetDb();
+
+            var whitelists = await db.DbContext.UsernameBanWhitelist
+                .Include(w => w.CreatedBy)
+                .ToListAsync();
+
+            return whitelists.Select(ToUsernameBanWhitelistRecord).ToList();
+        }
+
+        public async Task<List<UsernameBanExactRecord>> GetAllUsernameExactBansAsync()
+        {
+            await using var db = await GetDb();
+
+            var bans = await db.DbContext.UsernameBanExact
+                .Include(b => b.CreatedBy)
+                .Include(b => b.LastEditedBy)
+                .Include(b => b.DeletedBy)
+                .Where(b => !b.Deleted)
+                .ToListAsync();
+
+            return bans.Select(ToUsernameBanExactRecord).ToList();
+        }
+
+        public async Task<UsernameBanRegexRecord?> GetUsernameRegexBanAsync(int id)
+        {
+            await using var db = await GetDb();
+
+            var ban = await db.DbContext.UsernameBanRegex
+                .Include(b => b.CreatedBy)
+                .Include(b => b.LastEditedBy)
+                .Include(b => b.DeletedBy)
+                .SingleOrDefaultAsync(b => b.Id == id);
+
+            return ban != null ? ToUsernameBanRegexRecord(ban) : null;
+        }
+
+        public async Task<UsernameBanWhitelistRecord?> GetUsernameWhitelistAsync(int id)
+        {
+            await using var db = await GetDb();
+
+            var whitelist = await db.DbContext.UsernameBanWhitelist
+                .Include(w => w.CreatedBy)
+                .SingleOrDefaultAsync(w => w.Id == id);
+
+            return whitelist != null ? ToUsernameBanWhitelistRecord(whitelist) : null;
+        }
+
+        public async Task<UsernameBanExactRecord?> GetUsernameExactBanAsync(int id)
+        {
+            await using var db = await GetDb();
+
+            var ban = await db.DbContext.UsernameBanExact
+                .Include(b => b.CreatedBy)
+                .Include(b => b.LastEditedBy)
+                .Include(b => b.DeletedBy)
+                .SingleOrDefaultAsync(b => b.Id == id);
+
+            return ban != null ? ToUsernameBanExactRecord(ban) : null;
+        }
+
+        public async Task<int> AddUsernameRegexBanAsync(string pattern, string? note, string? customMessage, bool autoEscalate, NetUserId? adminId)
+        {
+            await using var db = await GetDb();
+
+            var ban = new UsernameBanRegex
+            {
+                Pattern = pattern,
+                Note = note,
+                CustomMessage = customMessage,
+                AutoEscalate = autoEscalate,
+                CreatedById = adminId?.UserId,
+                CreatedAt = DateTime.UtcNow,
+                Deleted = false
+            };
+
+            db.DbContext.UsernameBanRegex.Add(ban);
+            await db.DbContext.SaveChangesAsync();
+
+            return ban.Id;
+        }
+
+        public async Task<int> AddUsernameWhitelistAsync(string username, string? note, NetUserId? adminId)
+        {
+            await using var db = await GetDb();
+
+            var whitelist = new UsernameBanWhitelist
+            {
+                Username = username,
+                Note = note,
+                CreatedById = adminId?.UserId,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            db.DbContext.UsernameBanWhitelist.Add(whitelist);
+            await db.DbContext.SaveChangesAsync();
+
+            return whitelist.Id;
+        }
+
+        public async Task<int> AddUsernameExactBanAsync(string username, string? note, string? customMessage, NetUserId? adminId)
+        {
+            await using var db = await GetDb();
+
+            var ban = new UsernameBanExact
+            {
+                Username = username,
+                Note = note,
+                CustomMessage = customMessage,
+                CreatedById = adminId?.UserId,
+                CreatedAt = DateTime.UtcNow,
+                Deleted = false
+            };
+
+            db.DbContext.UsernameBanExact.Add(ban);
+            await db.DbContext.SaveChangesAsync();
+
+            return ban.Id;
+        }
+
+        public async Task EditUsernameRegexBanAsync(int id, string pattern, string? note, string? customMessage, bool autoEscalate, NetUserId editedBy)
+        {
+            await using var db = await GetDb();
+
+            var ban = await db.DbContext.UsernameBanRegex
+                .SingleOrDefaultAsync(b => b.Id == id);
+
+            if (ban == null)
+                throw new InvalidOperationException($"Username regex ban with ID {id} not found");
+
+            ban.Pattern = pattern;
+            ban.Note = note;
+            ban.CustomMessage = customMessage;
+            ban.AutoEscalate = autoEscalate;
+            ban.LastEditedById = editedBy.UserId;
+            ban.LastEditedAt = DateTime.UtcNow;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task EditUsernameExactBanAsync(int id, string username, string? note, string? customMessage, NetUserId editedBy)
+        {
+            await using var db = await GetDb();
+
+            var ban = await db.DbContext.UsernameBanExact
+                .SingleOrDefaultAsync(b => b.Id == id);
+
+            if (ban == null)
+                throw new InvalidOperationException($"Username exact ban with ID {id} not found");
+
+            ban.Username = username;
+            ban.Note = note;
+            ban.CustomMessage = customMessage;
+            ban.LastEditedById = editedBy.UserId;
+            ban.LastEditedAt = DateTime.UtcNow;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteUsernameRegexBanAsync(int id, NetUserId deletedBy)
+        {
+            await using var db = await GetDb();
+
+            var ban = await db.DbContext.UsernameBanRegex
+                .SingleOrDefaultAsync(b => b.Id == id);
+
+            if (ban == null)
+                throw new InvalidOperationException($"Username regex ban with ID {id} not found");
+
+            ban.Deleted = true;
+            ban.DeletedById = deletedBy.UserId;
+            ban.DeletedAt = DateTime.UtcNow;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteUsernameWhitelistAsync(int id)
+        {
+            await using var db = await GetDb();
+
+            var whitelist = await db.DbContext.UsernameBanWhitelist
+                .SingleOrDefaultAsync(w => w.Id == id);
+
+            if (whitelist == null)
+                throw new InvalidOperationException($"Username whitelist with ID {id} not found");
+
+            db.DbContext.UsernameBanWhitelist.Remove(whitelist);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteUsernameExactBanAsync(int id, NetUserId deletedBy)
+        {
+            await using var db = await GetDb();
+
+            var ban = await db.DbContext.UsernameBanExact
+                .SingleOrDefaultAsync(b => b.Id == id);
+
+            if (ban == null)
+                throw new InvalidOperationException($"Username exact ban with ID {id} not found");
+
+            ban.Deleted = true;
+            ban.DeletedById = deletedBy.UserId;
+            ban.DeletedAt = DateTime.UtcNow;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        private UsernameBanRegexRecord ToUsernameBanRegexRecord(UsernameBanRegex ban)
+        {
+            return new UsernameBanRegexRecord(
+                ban.Id,
+                ban.Pattern,
+                ban.Note,
+                ban.CustomMessage,
+                ban.AutoEscalate,
+                MakePlayerRecord(ban.CreatedBy),
+                NormalizeDatabaseTime(ban.CreatedAt),
+                MakePlayerRecord(ban.LastEditedBy),
+                ban.LastEditedAt != null ? NormalizeDatabaseTime(ban.LastEditedAt.Value) : null,
+                ban.Deleted,
+                MakePlayerRecord(ban.DeletedBy),
+                ban.DeletedAt != null ? NormalizeDatabaseTime(ban.DeletedAt.Value) : null);
+        }
+
+        private UsernameBanWhitelistRecord ToUsernameBanWhitelistRecord(UsernameBanWhitelist whitelist)
+        {
+            return new UsernameBanWhitelistRecord(
+                whitelist.Id,
+                whitelist.Username,
+                whitelist.Note,
+                MakePlayerRecord(whitelist.CreatedBy),
+                NormalizeDatabaseTime(whitelist.CreatedAt));
+        }
+
+        private UsernameBanExactRecord ToUsernameBanExactRecord(UsernameBanExact ban)
+        {
+            return new UsernameBanExactRecord(
+                ban.Id,
+                ban.Username,
+                ban.Note,
+                ban.CustomMessage,
+                MakePlayerRecord(ban.CreatedBy),
+                NormalizeDatabaseTime(ban.CreatedAt),
+                MakePlayerRecord(ban.LastEditedBy),
+                ban.LastEditedAt != null ? NormalizeDatabaseTime(ban.LastEditedAt.Value) : null,
+                ban.Deleted,
+                MakePlayerRecord(ban.DeletedBy),
+                ban.DeletedAt != null ? NormalizeDatabaseTime(ban.DeletedAt.Value) : null);
+        }
+
+        #endregion
+
         public abstract Task SendNotification(DatabaseNotification notification);
 
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.

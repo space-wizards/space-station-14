@@ -309,6 +309,29 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Username Bans
+
+        Task<List<UsernameBanRegexRecord>> GetAllUsernameRegexBansAsync();
+        Task<List<UsernameBanWhitelistRecord>> GetAllUsernameWhitelistsAsync();
+        Task<List<UsernameBanExactRecord>> GetAllUsernameExactBansAsync();
+
+        Task<UsernameBanRegexRecord?> GetUsernameRegexBanAsync(int id);
+        Task<UsernameBanWhitelistRecord?> GetUsernameWhitelistAsync(int id);
+        Task<UsernameBanExactRecord?> GetUsernameExactBanAsync(int id);
+
+        Task<int> AddUsernameRegexBanAsync(string pattern, string? note, string? customMessage, bool autoEscalate, NetUserId? adminId);
+        Task<int> AddUsernameWhitelistAsync(string username, string? note, NetUserId? adminId);
+        Task<int> AddUsernameExactBanAsync(string username, string? note, string? customMessage, NetUserId? adminId);
+
+        Task EditUsernameRegexBanAsync(int id, string pattern, string? note, string? customMessage, bool autoEscalate, NetUserId editedBy);
+        Task EditUsernameExactBanAsync(int id, string username, string? note, string? customMessage, NetUserId editedBy);
+
+        Task DeleteUsernameRegexBanAsync(int id, NetUserId deletedBy);
+        Task DeleteUsernameWhitelistAsync(int id);
+        Task DeleteUsernameExactBanAsync(int id, NetUserId deletedBy);
+
+        #endregion
+
         #region DB Notifications
 
         void SubscribeToNotifications(Action<DatabaseNotification> handler);
@@ -976,6 +999,90 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.CleanIPIntelCache(range));
+        }
+
+        public Task<List<UsernameBanRegexRecord>> GetAllUsernameRegexBansAsync()
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAllUsernameRegexBansAsync());
+        }
+
+        public Task<List<UsernameBanWhitelistRecord>> GetAllUsernameWhitelistsAsync()
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAllUsernameWhitelistsAsync());
+        }
+
+        public Task<List<UsernameBanExactRecord>> GetAllUsernameExactBansAsync()
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAllUsernameExactBansAsync());
+        }
+
+        public Task<UsernameBanRegexRecord?> GetUsernameRegexBanAsync(int id)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetUsernameRegexBanAsync(id));
+        }
+
+        public Task<UsernameBanWhitelistRecord?> GetUsernameWhitelistAsync(int id)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetUsernameWhitelistAsync(id));
+        }
+
+        public Task<UsernameBanExactRecord?> GetUsernameExactBanAsync(int id)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetUsernameExactBanAsync(id));
+        }
+
+        public Task<int> AddUsernameRegexBanAsync(string pattern, string? note, string? customMessage, bool autoEscalate, NetUserId? adminId)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddUsernameRegexBanAsync(pattern, note, customMessage, autoEscalate, adminId));
+        }
+
+        public Task<int> AddUsernameWhitelistAsync(string username, string? note, NetUserId? adminId)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddUsernameWhitelistAsync(username, note, adminId));
+        }
+
+        public Task<int> AddUsernameExactBanAsync(string username, string? note, string? customMessage, NetUserId? adminId)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddUsernameExactBanAsync(username, note, customMessage, adminId));
+        }
+
+        public Task EditUsernameRegexBanAsync(int id, string pattern, string? note, string? customMessage, bool autoEscalate, NetUserId editedBy)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.EditUsernameRegexBanAsync(id, pattern, note, customMessage, autoEscalate, editedBy));
+        }
+
+        public Task EditUsernameExactBanAsync(int id, string username, string? note, string? customMessage, NetUserId editedBy)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.EditUsernameExactBanAsync(id, username, note, customMessage, editedBy));
+        }
+
+        public Task DeleteUsernameRegexBanAsync(int id, NetUserId deletedBy)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.DeleteUsernameRegexBanAsync(id, deletedBy));
+        }
+
+        public Task DeleteUsernameWhitelistAsync(int id)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.DeleteUsernameWhitelistAsync(id));
+        }
+
+        public Task DeleteUsernameExactBanAsync(int id, NetUserId deletedBy)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.DeleteUsernameExactBanAsync(id, deletedBy));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)
