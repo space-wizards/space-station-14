@@ -64,11 +64,13 @@
   Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/color] (or place) an item from your hand within arm's reach.
   \n[color=cyan]Throw[/color] items to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color].
 
-  ### Pulling and pushing
-  You can pull movable [bold]entities[/bold] — items, objects, and mobs such as players, as long as you have an empty hand.
+  ### Pulling, pushing, and grabbing
+  You can pull movable [bold]entities[/bold] (items, objects, and mobs) as long as you have an empty hand.
   - Use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] to start [color=cyan]pulling[/color].
   - [color=cyan]Push[/color] pulled entities to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
-  - To [color=cyan]release[/color], press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] or pull the same entity again.
+  - To [color=cyan]release[/color], press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color].
+
+  While pulling someone, use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on them again to escalate to an [color=cyan]aggressive grab[/color]. This holds the target in place and prevents them from being released by toggling pull.
 
   You can also use [color=yellow][bold][keybind="Drop"][/bold][/color] to release pulled entities from your active hand.
 

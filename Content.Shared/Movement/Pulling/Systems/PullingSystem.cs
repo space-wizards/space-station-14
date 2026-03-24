@@ -484,7 +484,7 @@ public sealed class PullingSystem : EntitySystem
 
         if (pullable.Comp.Puller == pullerUid)
         {
-            return TryStopPull(pullable, pullable.Comp);
+            return TryStopPull(pullable, pullable.Comp, user: pullerUid);
         }
 
         return TryStartPull(pullerUid, pullable, pullableComp: pullable);

@@ -25,7 +25,7 @@ The following are the controls you'll need for regular gameplay:
 
 - Drop held items with [color=yellow][bold][keybind="Drop"][/bold][/color] or throw them using [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color]
 
-- Pull and release things with [color=yellow][bold][keybind="TryPullObject"][/bold][/color] and [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color]
+- Pull things with [color=yellow][bold][keybind="TryPullObject"][/bold][/color] and release with [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color]. Pull again while holding someone to escalate to an [bold]aggressive grab[/bold]
 
 A more comprehensive list can be found on the [textlink="controls" link="Controls"] page.
 
