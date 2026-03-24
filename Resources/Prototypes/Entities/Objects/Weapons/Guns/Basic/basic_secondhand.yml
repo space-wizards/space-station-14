@@ -6,5 +6,8 @@
   id: WeaponEnergyCrossbowWorn
   suffix: Second Hand
   components:
+  - type: RandomDefects
+  - type: SimpleDefect
+    defectLabel: "failing charge coil"
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 15

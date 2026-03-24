@@ -560,6 +560,18 @@ public abstract partial class SharedGunSystem : EntitySystem
         Physics.ApplyLinearImpulse(user, -impulseVector, body: user.Comp);
     }
 
+    /// <summary>
+    /// Forces a gun into the specified available fire modes, also correcting SelectedMode if needed.
+    /// Used by defect systems that need to restrict modes without direct component write access.
+    /// </summary>
+    public void SetAvailableModes(Entity<GunComponent> gun, SelectiveFire modes)
+    {
+        gun.Comp.AvailableModes = modes;
+        if ((gun.Comp.SelectedMode & modes) == 0)
+            gun.Comp.SelectedMode = modes;
+        Dirty(gun, gun.Comp);
+    }
+
     public void RefreshModifiers(Entity<GunComponent?> gun)
     {
         if (!Resolve(gun, ref gun.Comp))

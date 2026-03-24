@@ -9,8 +9,6 @@
   - type: RandomDefects
   - type: Gun
     fireRate: 5
-    minAngle: 28
-    maxAngle: 42
     shotsPerBurst: 5
     availableModes:
     - Burst
@@ -21,10 +19,22 @@
   - type: GunWieldBonus
     minAngle: -10
     maxAngle: -10
-  - type: GunJam
-    prob: 0.6
-    jamChance: 0.08
-  - type: GunBurstVariance
-    prob: 0.6
+  - type: GunJamDefect
+    prob: 0.40
+    jamChance: 0.10
+  - type: GunBurstVarianceDefect
+    prob: 0.40
     minShots: 2
     maxShots: 7
+  - type: GunSpreadDefect
+    prob: 0.40
+    minAngleMin: 20
+    minAngleMax: 38
+    maxAngleMin: 38
+    maxAngleMax: 56
+  - type: BackfireDefect
+    prob: 0.20
+    backfireChance: 0.025
+    totalIntensity: 0.4
+    maxIntensity: 0.25
+  - type: BentSwitchDefect

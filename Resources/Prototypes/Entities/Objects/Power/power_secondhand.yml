@@ -6,6 +6,9 @@
   id: PowerSinkWorn
   suffix: Second Hand
   components:
+  - type: RandomDefects
+  - type: SimpleDefect
+    defectLabel: "corroded intake coil"
   - type: PowerConsumer
     voltage: High
     drawRate: 5000000

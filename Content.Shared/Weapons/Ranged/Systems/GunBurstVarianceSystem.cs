@@ -5,7 +5,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-// Randomizes shots-per-burst each time a burst completes for guns with GunBurstVarianceComponent.
+// Randomizes shots-per-burst each time a burst completes for guns with GunBurstVarianceDefectComponent.
 public sealed class GunBurstVarianceSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -16,12 +16,12 @@ public sealed class GunBurstVarianceSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GunBurstVarianceComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<GunBurstVarianceComponent, GunRefreshModifiersEvent>(OnRefreshModifiers);
-        SubscribeLocalEvent<GunBurstVarianceComponent, GunShotEvent>(OnGunShot);
+        SubscribeLocalEvent<GunBurstVarianceDefectComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GunBurstVarianceDefectComponent, GunRefreshModifiersEvent>(OnRefreshModifiers);
+        SubscribeLocalEvent<GunBurstVarianceDefectComponent, GunShotEvent>(OnGunShot);
     }
 
-    private void OnMapInit(Entity<GunBurstVarianceComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<GunBurstVarianceDefectComponent> ent, ref MapInitEvent args)
     {
         if (_net.IsClient)
             return;
@@ -33,7 +33,7 @@ public sealed class GunBurstVarianceSystem : EntitySystem
             _gun.RefreshModifiers(ent.Owner);
     }
 
-    private void OnRefreshModifiers(Entity<GunBurstVarianceComponent> ent, ref GunRefreshModifiersEvent args)
+    private void OnRefreshModifiers(Entity<GunBurstVarianceDefectComponent> ent, ref GunRefreshModifiersEvent args)
     {
         if (ent.Comp.CurrentShots <= 0)
             return;
@@ -41,7 +41,7 @@ public sealed class GunBurstVarianceSystem : EntitySystem
         args.ShotsPerBurst = ent.Comp.CurrentShots;
     }
 
-    private void OnGunShot(Entity<GunBurstVarianceComponent> ent, ref GunShotEvent args)
+    private void OnGunShot(Entity<GunBurstVarianceDefectComponent> ent, ref GunShotEvent args)
     {
         if (!TryComp<GunComponent>(ent.Owner, out var gun))
             return;

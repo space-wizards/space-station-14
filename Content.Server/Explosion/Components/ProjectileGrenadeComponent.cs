@@ -1,4 +1,5 @@
-﻿using Content.Server.Explosion.EntitySystems;
+﻿using Content.Server.Defects.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
@@ -6,7 +7,7 @@ namespace Content.Server.Explosion.Components;
 /// <summary>
 /// Grenades that, when triggered, explode into projectiles
 /// </summary>
-[RegisterComponent, Access(typeof(ProjectileGrenadeSystem))]
+[RegisterComponent, Access(typeof(ProjectileGrenadeSystem), typeof(RandomExplosiveYieldDefectSystem))]
 public sealed partial class ProjectileGrenadeComponent : Component
 {
     public Container Container = default!;

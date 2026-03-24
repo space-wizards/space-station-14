@@ -11,4 +11,10 @@ public abstract partial class DefectComponent : Component
     // Probability (0–1) that this defect is present at spawn.
     [DataField]
     public float Prob = 1.0f;
+
+    // Short label describing this defect, appended to the item description
+    // by SecondHandNamingSystem after defect rolling. Each concrete defect
+    // sets its own default; can be overridden in YAML per-entity.
+    [DataField]
+    public string DefectLabel = string.Empty;
 }

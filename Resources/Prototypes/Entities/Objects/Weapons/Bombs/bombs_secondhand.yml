@@ -7,6 +7,9 @@
   id: C4Worn
   suffix: Second Hand
   components:
+  - type: RandomDefects
+  - type: SimpleDefect
+    defectLabel: "sluggish detonator circuit"
   - type: TimerTrigger
     keysIn:
     - trigger

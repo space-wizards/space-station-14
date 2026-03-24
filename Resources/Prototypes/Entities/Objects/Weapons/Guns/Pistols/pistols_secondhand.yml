@@ -9,12 +9,21 @@
   - type: RandomDefects
   - type: Gun
     fireRate: 3
-    minAngle: 6
-    maxAngle: 18
     angleIncrease: 3
-  - type: GunJam
-    prob: 0.7
-    jamChance: 0.1
+  - type: GunJamDefect
+    prob: 0.55
+    jamChance: 0.12
+  - type: GunSpreadDefect
+    prob: 0.55
+    minAngleMin: 5
+    minAngleMax: 18
+    maxAngleMin: 18
+    maxAngleMax: 28
+  - type: BackfireDefect
+    prob: 0.20
+    backfireChance: 0.04
+    totalIntensity: 0.25
+    maxIntensity: 0.2
 
 # Worn Cobra: blown suppressor baffles, sluggish slide.
 - type: entity
@@ -25,9 +34,18 @@
   - type: RandomDefects
   - type: Gun
     fireRate: 2
-    minAngle: 6
-    maxAngle: 18
     angleIncrease: 3
-  - type: GunJam
-    prob: 0.7
-    jamChance: 0.2
+  - type: GunJamDefect
+    prob: 0.55
+    jamChance: 0.15
+  - type: GunSpreadDefect
+    prob: 0.55
+    minAngleMin: 5
+    minAngleMax: 18
+    maxAngleMin: 18
+    maxAngleMax: 28
+  - type: BackfireDefect
+    prob: 0.20
+    backfireChance: 0.04
+    totalIntensity: 0.25
+    maxIntensity: 0.2

@@ -9,8 +9,6 @@
   - type: RandomDefects
   - type: Gun
     fireRate: 1
-    minAngle: 8
-    maxAngle: 16
     selectedMode: FullAuto
     availableModes:
     - FullAuto
@@ -19,9 +17,21 @@
   - type: GunWieldBonus
     minAngle: -4
     maxAngle: -8
-  - type: GunJam
-    prob: 0.75
-    jamChance: 0.18
+  - type: GunJamDefect
+    prob: 0.55
+    jamChance: 0.15
+  - type: GunSpreadDefect
+    prob: 0.55
+    minAngleMin: 6
+    minAngleMax: 16
+    maxAngleMin: 16
+    maxAngleMax: 26
+  - type: BackfireDefect
+    prob: 0.20
+    backfireChance: 0.05
+    totalIntensity: 0.5
+    maxIntensity: 0.4
+  - type: BentSwitchDefect
 
 # Worn Hushpup: blown suppressor baffles, gummed action, doubled spread.
 - type: entity
@@ -32,8 +42,15 @@
   - type: RandomDefects
   - type: Gun
     fireRate: 1
-  - type: GunSpreadModifier
-    spread: 2.4
-  - type: GunJam
-    prob: 0.7
-    jamChance: 0.18
+  - type: GunJamDefect
+    prob: 0.55
+    jamChance: 0.15
+  - type: GunSpreadDefect
+    prob: 0.55
+    spreadMultiplierMin: 1.8
+    spreadMultiplierMax: 4.5
+  - type: BackfireDefect
+    prob: 0.20
+    backfireChance: 0.05
+    totalIntensity: 0.5
+    maxIntensity: 0.4

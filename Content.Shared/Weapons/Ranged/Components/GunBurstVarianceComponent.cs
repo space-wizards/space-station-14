@@ -6,11 +6,12 @@ namespace Content.Shared.Weapons.Ranged.Components;
 // Randomizes shots-per-burst on a per-burst basis. A burst-mode gun with this component
 // fires a different number of rounds each trigger pull, within [MinShots, MaxShots].
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class GunBurstVarianceComponent : DefectComponent
+public sealed partial class GunBurstVarianceDefectComponent : DefectComponent
 {
-    public GunBurstVarianceComponent()
+    public GunBurstVarianceDefectComponent()
     {
         Prob = 0.6f;
+        DefectLabel = "erratic trigger group";
     }
 
     // Minimum shots per burst (inclusive).

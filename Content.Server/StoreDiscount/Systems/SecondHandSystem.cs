@@ -13,8 +13,8 @@ namespace Content.Server.StoreDiscount.Systems;
 public sealed class SecondHandSystem : EntitySystem
 {
     private static readonly ProtoId<StoreCategoryPrototype> SecondHandStoreCategoryKey = "SecondHandItems";
-    private const int MinSecondHandItems = 5;
-    private const int MaxSecondHandItems = 10;
+    private const int MinSecondHandItems = 8;
+    private const int MaxSecondHandItems = 14;
 
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

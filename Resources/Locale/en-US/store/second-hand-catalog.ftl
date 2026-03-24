@@ -45,25 +45,25 @@ uplink-second-hand-edagger-worn-desc = A dark ink pen with a loose power connect
 
 # Ammo
 uplink-second-hand-magazine-viper-worn-name = Worn Viper Magazine (.35 auto)
-uplink-second-hand-magazine-viper-worn-desc = A 15-round Viper magazine with a damaged spring and bent feed lips. Between 7 and 15 rounds remain — how many is anyone's guess until you check.
+uplink-second-hand-magazine-viper-worn-desc = A .35 auto Viper magazine with a damaged spring and bent feed lips. Someone clearly had questionable taste in ammunition — expect a mix of standard, incendiary, uranium, practice, and maybe a foam dart or two. Free.
 
 uplink-second-hand-magazine-smg-worn-name = Worn SMG Magazine (.35 auto)
-uplink-second-hand-magazine-smg-worn-desc = A 30-round SMG magazine with a cracked polymer housing and a sticky follower. Somewhere between 15 and 30 rounds remain. Check before you commit.
+uplink-second-hand-magazine-smg-worn-desc = A .35 auto SMG magazine with a cracked housing and sticky follower. The previous owner raided a comedy store — mix of standard, incendiary, uranium, practice, and foam darts inside. Check before you commit. Free.
 
 uplink-second-hand-magazine-caseless-worn-name = Worn Caseless Rifle Magazine (.20 caseless)
-uplink-second-hand-magazine-caseless-worn-desc = A 10-round caseless magazine with corroded internals. Between 5 and 10 rounds remain. Half a magazine is still half a magazine.
+uplink-second-hand-magazine-caseless-worn-desc = A .25 caseless magazine with corroded internals. Loaded with a questionable mix of standard, practice, and the occasional foam dart-tipped caseless round. Free.
 
 uplink-second-hand-magazine-shotgun-worn-name = Worn Shotgun Drum (12ga pellet)
-uplink-second-hand-magazine-shotgun-worn-desc = A 12-gauge drum with a spring that's mostly given up. Between 4 and 8 shells remain. The rest rattle uselessly or never made it in at all.
+uplink-second-hand-magazine-shotgun-worn-desc = A 12-gauge pellet drum with a spring that's mostly given up. Whoever loaded this used whatever was on hand — expect pellets, slugs, incendiary, beanbag, and uranium shells in no particular order. Free.
 
 uplink-second-hand-magazine-shotgun-slug-worn-name = Worn Shotgun Drum (12ga slug)
-uplink-second-hand-magazine-shotgun-slug-worn-desc = A 12-gauge slug drum with a partially seized feed mechanism. Between 4 and 8 slugs remain — which is enough to ruin someone's day.
+uplink-second-hand-magazine-shotgun-slug-worn-desc = A 12-gauge slug drum with a partially seized feed mechanism. Someone topped it off with whatever fit — slugs, pellets, incendiary, and beanbag rounds mixed in. Free.
 
 uplink-second-hand-magazine-rifle-worn-name = Worn Rifle Magazine (.30 rifle)
-uplink-second-hand-magazine-rifle-worn-desc = A 25-round rifle magazine with a cracked polymer shell. Between 12 and 25 rounds remain. The follower drags but it feeds.
+uplink-second-hand-magazine-rifle-worn-desc = A .20 rifle magazine with a cracked polymer shell. Loaded with a scavenged mix of standard, incendiary, uranium, practice rounds, and the occasional foam dart. Free.
 
 uplink-second-hand-magazine-box-light-rifle-worn-name = Worn Light Rifle Box (.30 LR)
-uplink-second-hand-magazine-box-light-rifle-worn-desc = A 60-round box magazine that's been through it. Between 30 and 60 rounds remain — the rest are corroded, deformed, or just missing. Still a lot of ammo either way.
+uplink-second-hand-magazine-box-light-rifle-worn-desc = A 100-round .30 light rifle belt box that's been through it. Previous owner had eclectic taste — standard, incendiary, uranium, practice rounds, and foam darts, mixed throughout. Free.
 
 # Explosives
 uplink-second-hand-exgrenade-worn-name = Dud Explosive Grenade
@@ -102,14 +102,6 @@ uplink-second-hand-c4-worn-desc = A block of C-4 with a sluggish detonator circu
 
 uplink-second-hand-emag-worn-name = Worn Cryptographic Sequencer
 uplink-second-hand-emag-worn-desc = A cryptographic sequencer with corroded contacts and a failing power circuit. Holds a single charge at a time before needing to recharge. Make it count.
-
-# Medical
-
-uplink-second-hand-combat-medipen-worn-name = Worn Combat Medipen
-uplink-second-hand-combat-medipen-worn-desc = A combat medipen with a degraded reservoir seal — about half the chemical payload has evaporated. Still treats most damage types, just less aggressively. Better than nothing when you're bleeding out.
-
-uplink-second-hand-stimpack-worn-name = Worn Stimpack
-uplink-second-hand-stimpack-worn-desc = A hyperzine injector with a partially depleted cartridge. Delivers roughly half the normal dose. Still gets you moving fast — just for less time.
 
 # Kits
 

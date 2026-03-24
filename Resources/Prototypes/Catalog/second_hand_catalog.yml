@@ -155,8 +155,7 @@
   description: uplink-second-hand-magazine-viper-worn-desc
   productEntity: MagazinePistolHighCapacityWorn
   secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
+  cost: {}
 
 - type: listing
   id: UplinkSecondHandMagazineSMGWorn
@@ -164,8 +163,7 @@
   description: uplink-second-hand-magazine-smg-worn-desc
   productEntity: MagazinePistolSubMachineGunWorn
   secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
+  cost: {}
 
 - type: listing
   id: UplinkSecondHandMagazineCaselessRifleWorn
@@ -173,8 +171,7 @@
   description: uplink-second-hand-magazine-caseless-worn-desc
   productEntity: MagazinePistolCaselessRifleWorn
   secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
+  cost: {}
 
 - type: listing
   id: UplinkSecondHandMagazineShotgunWorn
@@ -183,8 +180,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: pellets }
   productEntity: MagazineShotgunWorn
   secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
+  cost: {}
 
 - type: listing
   id: UplinkSecondHandMagazineShotgunSlugWorn
@@ -193,8 +189,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: slug }
   productEntity: MagazineShotgunSlugWorn
   secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
+  cost: {}
 
 - type: listing
   id: UplinkSecondHandMagazineRifleWorn
@@ -202,8 +197,7 @@
   description: uplink-second-hand-magazine-rifle-worn-desc
   productEntity: MagazineRifleWorn
   secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
+  cost: {}
 
 - type: listing
   id: UplinkSecondHandMagazineBoxLightRifleWorn
@@ -211,8 +205,7 @@
   description: uplink-second-hand-magazine-box-light-rifle-worn-desc
   productEntity: MagazineBoxLightRifleWorn
   secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
+  cost: {}
 
 # --- EXPLOSIVES ---
 
@@ -311,26 +304,6 @@
   secondHandCategory: rareSecondHand
   cost:
     Telecrystal: 2
-
-# --- MEDICAL ---
-
-- type: listing
-  id: UplinkSecondHandCombatMedipenWorn
-  name: uplink-second-hand-combat-medipen-worn-name
-  description: uplink-second-hand-combat-medipen-worn-desc
-  productEntity: CombatMedipenWorn
-  secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
-
-- type: listing
-  id: UplinkSecondHandStimpackWorn
-  name: uplink-second-hand-stimpack-worn-name
-  description: uplink-second-hand-stimpack-worn-desc
-  productEntity: StimpackWorn
-  secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 1
 
 # --- KITS ---
 

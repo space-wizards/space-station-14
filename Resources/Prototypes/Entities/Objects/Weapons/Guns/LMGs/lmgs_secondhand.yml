@@ -9,11 +9,21 @@
   - type: RandomDefects
   - type: Gun
     fireRate: 6
-    minAngle: 30
-    maxAngle: 55
   - type: GunWieldBonus
     minAngle: -12
     maxAngle: -12
-  - type: GunJam
-    prob: 0.6
-    jamChance: 0.10
+  - type: GunJamDefect
+    prob: 0.55
+    jamChance: 0.12
+  - type: GunSpreadDefect
+    prob: 0.55
+    minAngleMin: 20
+    minAngleMax: 42
+    maxAngleMin: 42
+    maxAngleMax: 70
+  - type: BackfireDefect
+    prob: 0.20
+    backfireChance: 0.02
+    totalIntensity: 0.75
+    maxIntensity: 0.5
+  - type: BentSwitchDefect

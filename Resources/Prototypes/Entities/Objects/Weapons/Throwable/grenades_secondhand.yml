@@ -5,27 +5,33 @@
   id: ExGrenadeWorn
   suffix: Second Hand
   components:
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 5
-    intensitySlope: 3
-    totalIntensity: 40
-    canCreateVacuum: false
-  - type: RandomFuse
+  - type: RandomDefects
+  - type: TimerTrigger
+    examinable: false
+  - type: RandomFuseDefect
     minDelay: 1.5
     maxDelay: 9
+  - type: RandomExplosiveYieldDefect
+    prob: 0.7
+    maxIntensityMin: 3
+    maxIntensityMax: 7
+    totalIntensityMin: 25
+    totalIntensityMax: 60
 
 - type: entity
   parent: SmokeGrenade
   id: SmokeGrenadeWorn
   suffix: Second Hand
   components:
+  - type: RandomDefects
+  - type: TimerTrigger
+    examinable: false
   - type: SmokeOnTrigger
     keysIn:
     - timer
     duration: 10
     spreadAmount: 20
-  - type: RandomFuse
+  - type: RandomFuseDefect
     minDelay: 1.5
     maxDelay: 9
 
@@ -34,21 +40,25 @@
   id: GrenadeShrapnelWorn
   suffix: Second Hand
   components:
+  - type: RandomDefects
+  - type: TimerTrigger
+    examinable: false
   - type: ProjectileGrenade
     fillPrototype: PelletClusterLethal
-    capacity: 15
-  - type: RandomFuse
+  - type: RandomFuseDefect
     minDelay: 1.75
     maxDelay: 10.5
+  - type: RandomExplosiveYieldDefect
+    prob: 0.7
+    capacityMin: 8
+    capacityMax: 20
 
 - type: entity
   parent: GrenadeIncendiary
   id: GrenadeIncendiaryWorn
   suffix: Second Hand
   components:
-  - type: ProjectileGrenade
-    fillPrototype: PelletClusterIncendiary
-    capacity: 15
+  - type: RandomDefects
   - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -57,36 +67,48 @@
     initialBeepDelay: 0
     beepInterval: 2
     delay: 3.5
-  - type: RandomFuse
+    examinable: false
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterIncendiary
+  - type: RandomFuseDefect
     minDelay: 1.75
     maxDelay: 10.5
+  - type: RandomExplosiveYieldDefect
+    prob: 0.7
+    capacityMin: 8
+    capacityMax: 20
 
 - type: entity
   parent: MobGrenadePenguin
   id: MobGrenadePenguinWorn
   suffix: Second Hand
   components:
+  - type: RandomDefects
+  - type: TimerTrigger
+    examinable: false
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 7
-    intensitySlope: 3
-    totalIntensity: 80
-  - type: RandomFuse
+  - type: RandomFuseDefect
     minDelay: 5
     maxDelay: 30
+  - type: RandomExplosiveYieldDefect
+    prob: 0.7
+    maxIntensityMin: 4
+    maxIntensityMax: 9
+    totalIntensityMin: 55
+    totalIntensityMax: 110
 
 - type: entity
   parent: PenExploding
   id: PenExplodingWorn
   suffix: Second Hand, Exploding
   components:
+  - type: RandomDefects
   - type: TimerTrigger
     delay: 4
     examinable: false
-  - type: RandomFuse
+  - type: RandomFuseDefect
     minDelay: 2
     maxDelay: 12
 
@@ -95,9 +117,11 @@
   id: SyndieMiniBombWorn
   suffix: Second Hand
   components:
+  - type: RandomDefects
   - type: TimerTrigger
     delay: 5
-  - type: RandomFuse
+    examinable: false
+  - type: RandomFuseDefect
     minDelay: 5
     maxDelay: 15
 
@@ -106,8 +130,11 @@
   id: SingularityGrenadeWorn
   suffix: Second Hand
   components:
+  - type: RandomDefects
+  - type: TimerTrigger
+    examinable: false
   - type: TwoStageTrigger
     triggerDelay: 5
-  - type: RandomFuse
+  - type: RandomFuseDefect
     minDelay: 1.5
     maxDelay: 9

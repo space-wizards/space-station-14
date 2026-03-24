@@ -9,14 +9,23 @@
   - type: RandomDefects
   - type: Gun
     fireRate: 0.3
-    minAngle: 2
-    maxAngle: 6
   - type: GunWieldBonus
     minAngle: -2
     maxAngle: -4
-  - type: GunJam
-    prob: 0.5
-    jamChance: 0.10
+  - type: GunJamDefect
+    prob: 0.55
+    jamChance: 0.15
+  - type: GunSpreadDefect
+    prob: 0.55
+    minAngleMin: 1
+    minAngleMax: 6
+    maxAngleMin: 6
+    maxAngleMax: 14
+  - type: BackfireDefect
+    prob: 0.20
+    backfireChance: 0.06
+    totalIntensity: 0.6
+    maxIntensity: 0.5
 
 # Worn Mosin: cosmoline-gummed action, cracked stock, sticky bolt.
 - type: entity
@@ -27,11 +36,20 @@
   - type: RandomDefects
   - type: Gun
     fireRate: 0.5
-    minAngle: 1
-    maxAngle: 4
   - type: GunWieldBonus
     minAngle: -1
     maxAngle: -2
-  - type: GunJam
-    prob: 0.7
-    jamChance: 0.25
+  - type: GunJamDefect
+    prob: 0.55
+    jamChance: 0.22
+  - type: GunSpreadDefect
+    prob: 0.55
+    minAngleMin: 0.5
+    minAngleMax: 4
+    maxAngleMin: 4
+    maxAngleMax: 9
+  - type: BackfireDefect
+    prob: 0.20
+    backfireChance: 0.06
+    totalIntensity: 0.75
+    maxIntensity: 0.6
