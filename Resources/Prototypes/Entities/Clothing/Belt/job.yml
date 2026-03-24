@@ -123,6 +123,8 @@
     sprite: Clothing/Belt/janitor.rsi
   - type: Storage
     maxItemSize: Large
+    grid:
+      - 0,0,8,1
     whitelist:
       tags:
       - Wrench
