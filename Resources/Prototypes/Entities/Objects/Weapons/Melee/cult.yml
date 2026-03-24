@@ -32,7 +32,7 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_blade.rsi
     state: icon
@@ -58,8 +58,8 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
-      - Sawing
+    - Slicing
+    - Sawing
   - type: Tag
     tags:
     - FireAxe

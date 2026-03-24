@@ -194,8 +194,8 @@
       stash: !type:ContainerSlot {}
 
 - type: entity
-  id: SlicingRefinableBase
   abstract: true
+  id: SlicingRefinableBase
   components:
     - type: ToolRefinable
       qualityNeeded: Slicing
@@ -210,8 +210,8 @@
         path: /Audio/Items/Culinary/chop.ogg
 
 - type: entity
-  id: SlicingRefinableFoodBase
   parent: SlicingRefinableBase
   abstract: true
+  id: SlicingRefinableFoodBase
   components:
     - type: ToolRefinableSolution
