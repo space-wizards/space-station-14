@@ -4,6 +4,7 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 

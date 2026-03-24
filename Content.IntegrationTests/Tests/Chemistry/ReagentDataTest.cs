@@ -8,7 +8,7 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 
 [TestFixture]
 [TestOf(typeof(ReagentData))]
-public sealed class ReagentDataTest : InteractionTest
+public sealed class ReagentDataTest
 {
     [Test]
     public async Task ReagentDataIsSerializable()

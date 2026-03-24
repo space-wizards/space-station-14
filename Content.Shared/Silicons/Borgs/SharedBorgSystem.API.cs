@@ -236,6 +236,15 @@ public abstract partial class SharedBorgSystem
             }
         }
 
+        var attemptEv = new BorgModuleInsertAttemptEvent(module.Owner);
+        RaiseLocalEvent(chassis, ref attemptEv);
+
+        if (attemptEv.Cancelled)
+        {
+            _popup.PopupClient(attemptEv.Reason, chassis.Owner, user);
+            return false;
+        }
+
         return true;
     }
 

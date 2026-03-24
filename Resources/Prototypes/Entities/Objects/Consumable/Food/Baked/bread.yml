@@ -999,8 +999,8 @@
       path: /Audio/Animals/dog_bark1.ogg
     hidden: true
     damage:
-      groups:
-        Brute: 1
+      types:
+        Blunt: 1
 
 - type: entity
   parent: FoodBreadBase

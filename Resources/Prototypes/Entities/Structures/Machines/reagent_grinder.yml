@@ -3,7 +3,6 @@
   parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: reagent grinder
   description: From BlenderTech. Will It Blend? Let's find out!
-  suffix: grinder/juicer
   components:
   - type: ReagentGrinder
   - type: ActivatableUI
@@ -57,6 +56,26 @@
       inputContainer: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+
+- type: entity
+  id: KitchenReagentGrinderBeaker
+  parent: KitchenReagentGrinder
+  suffix: beaker
+  components:
+  - type: ContainerFill
+    containers:
+      beakerSlot:
+      - Beaker
+
+- type: entity
+  id: KitchenReagentGrinderBeakerLarge
+  parent: KitchenReagentGrinder
+  suffix: large beaker
+  components:
+  - type: ContainerFill
+    containers:
+      beakerSlot:
+      - LargeBeaker
 
 - type: entity
   parent: Recycler #too different so different parent

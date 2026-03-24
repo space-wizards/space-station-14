@@ -9,6 +9,7 @@ borg-mind-removed = {CAPITALIZE($name)} shut off!
 borg-module-too-many = There's not enough room for another module...
 borg-module-duplicate = This module is already installed in this cyborg.
 borg-module-whitelist-deny = This module doesn't fit in this type of cyborg...
+borg-module-incompatible = This module isn't compatible with {THE($existing)}.
 
 borg-module-action-name = Activate {$moduleName}
 borg-module-action-description = Select the {$moduleName}, enabling you to use the tools it provides.

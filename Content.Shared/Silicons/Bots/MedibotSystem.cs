@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
@@ -25,6 +26,7 @@ public sealed class MedibotSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -107,14 +109,14 @@ public sealed class MedibotSystem : EntitySystem
             return false;
         }
 
-        var total = damageable.TotalDamage;
+        var total = _damageable.GetTotalDamage((target, damageable));
         if (total == 0 && !HasComp<EmaggedComponent>(medibot))
         {
             _popup.PopupClient(Loc.GetString("medibot-target-healthy"), medibot, medibot);
             return false;
         }
 
-        if (!TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) || !treatment.IsValid(total) && !manual) return false;
+        if (!TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) || !manual) return false;
 
         return true;
     }

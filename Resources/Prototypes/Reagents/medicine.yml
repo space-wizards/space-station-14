@@ -39,8 +39,8 @@
           reagent: Dylovene
           min: 20
         damage:
-          groups:
-            Brute: 2
+          types:
+            Blunt: 2
       - !type:Jitter
         conditions:
         - !type:ReagentCondition
@@ -133,8 +133,7 @@
         damage:
           types:
             Radiation: -3
-          groups:
-            Brute: 1.5
+            Blunt: 1.5
 
 - type: reagent
   id: Bicaridine
@@ -246,8 +245,7 @@
           types:
             Asphyxiation: 1
             Cold: 2
-          groups:
-            Brute: 0.5
+            Blunt: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentCondition
@@ -344,9 +342,17 @@
           types:
             Asphyxiation: -3
             Poison: -0.5
-          groups:
-            Brute: -0.5
-            Burn: -0.5
+      - !type:EvenHealthChange
+        conditions:
+          # they gotta be in crit first
+        - !type:MobStateCondition
+          mobstate: Critical
+        - !type:ReagentCondition
+          reagent: Epinephrine
+          max: 20
+        damage:
+          Brute: -0.5
+          Burn: -0.5
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -626,12 +632,10 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -3.5
-          types:
-            Asphyxiation: -2.5
+          Brute: -1.75
+          Airloss: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -812,18 +816,11 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:HealthChange
-        conditions:
-        - !type:TotalDamageCondition
-          max: 50
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -1
-          types:
-            Poison: -0.5 ##Should be about what it was when it healed the toxin group
-            Heat: -0.33
-            Shock: -0.33
-            Cold: -0.33
+          Brute: -1
+          Burn: -1
+          Toxin: -0.5
 
 - type: reagent
   id: Lipozine
@@ -887,8 +884,8 @@
           min: 0
           max: 20
         damage:
-          groups:
-            Brute: 1.5
+          types:
+            Blunt: 1.5
       - !type:EvenHealthChange
         conditions:
         - !type:ReagentCondition
@@ -902,8 +899,8 @@
           reagent: Ultravasculine
           min: 20
         damage:
-          groups:
-            Brute: 6
+          types:
+            Blunt: 6
       - !type:AdjustReagent
         conditions:
         - !type:ReagentCondition
@@ -1160,8 +1157,6 @@
         factor: 3
       - !type:HealthChange
         conditions:
-        - !type:TotalDamageCondition
-          max: 50
         damage:
           types:
             Blunt: -0.2
@@ -1312,53 +1307,9 @@
         conditions:
         - !type:TemperatureCondition
           max: 213.0
-        - !type:TotalDamageCondition
-          min: 199.9
         damage:
-          Brute: -2
-          Burn: -2
-      - !type:EvenHealthChange
-        conditions:
-        - !type:TemperatureCondition
-          max: 213.0
-        - !type:TotalDamageCondition
-          min: 500
-        damage:
-          Brute: -4
-          Burn: -4
-
-- type: reagent
-  id: Necrosol
-  name: reagent-name-necrosol
-  group: Medicine
-  desc: reagent-desc-necrosol
-  physicalDesc: reagent-physical-desc-necrotic
-  flavor: medicine
-  color: "#86a5bd"
-  worksOnTheDead: true
-  plantMetabolism:
-  - !type:PlantAdjustToxins
-    amount: -5
-  - !type:PlantAdjustHealth
-    amount: 5
-  - !type:PlantCryoxadone {}
-  metabolisms:
-    Bloodstream:
-      effects:
-        - !type:EvenHealthChange
-          conditions:
-          - !type:TemperatureCondition
-            max: 213.0
-          damage:
-            Brute: -2
-            Burn: -2
-        - !type:HealthChange
-          conditions:
-          - !type:TemperatureCondition
-            max: 213.0
-          damage:
-            types:
-              Poison: -2
+          Brute: -3
+          Burn: -3
 
 - type: reagent
   id : Aloxadone

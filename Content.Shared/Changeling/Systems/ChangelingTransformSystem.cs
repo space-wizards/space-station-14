@@ -141,7 +141,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     {
         args.Handled = true;
 
-        if (EntityManager.EntityExists(ent.Comp.CurrentTransformSound))
+        if (Exists(ent.Comp.CurrentTransformSound))
             _audio.Stop(ent.Comp.CurrentTransformSound);
 
         if (args.Cancelled)

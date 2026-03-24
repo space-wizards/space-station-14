@@ -3,6 +3,8 @@
   id: WeaponCroissant
   suffix: Weapon
   components:
+  - type: Item
+    sprite: null # Should be removed if croissant receives an inhand sprite
   - type: Fixtures
     fixtures:
       fix1:

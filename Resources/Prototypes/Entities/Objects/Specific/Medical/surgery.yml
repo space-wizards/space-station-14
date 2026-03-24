@@ -209,8 +209,8 @@
     heldPrefix: improv
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 10
+      types:
+        Slash: 10
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
@@ -228,8 +228,8 @@
     heldPrefix: electric
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 15
+      types:
+        Slash: 15
     soundHit:
       path: /Audio/Items/drill_hit.ogg
   - type: Tool

@@ -18,8 +18,7 @@ public sealed class StartEndGameRulesTest
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Dirty = true,
-            DummyTicker = false,
-            Map = PoolManager.TestStation
+            DummyTicker = false
         });
         var server = pair.Server;
         await server.WaitIdleAsync();

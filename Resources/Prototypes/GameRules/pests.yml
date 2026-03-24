@@ -7,6 +7,7 @@
     - id: SnailMigrationLowPop
     - id: CockroachMigration
     - id: MouseMigration
+    - id: RandomCritterHorde
 
 - type: entityTable
   id: SpicyPestEventsTable
@@ -22,9 +23,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6
     duration: 50
@@ -45,14 +43,11 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6
     duration: 50
     minimumPlayers: 30 # Hopefully this is enough for the Rat King's potential Army (it was not, raised from 15 -> 30)
-  - type: VentCrittersRule
+  - type: VentCrittersRule # We don't use Horde here to make RK spawns less predictable.
     entries:
     - id: MobMouse
       prob: 0.02
@@ -71,9 +66,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -90,9 +82,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -109,9 +98,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6
     duration: 50
@@ -126,3 +112,37 @@
       prob: 0.002
     - id: MobSnailInstantDeath
       prob: 0.00001 #  ~ 1:2000 snails
+
+- type: entity
+  parent: BaseStationEventShortDelay
+  id: RandomCritterHorde # My deepest apologies, Mr. Secoff. You just wasted your time :)
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-horde-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 15
+    weight: 6 # Slightly more common than other hordes
+    duration: 5
+    maxDuration: 20
+    reoccurrenceDelay: 15 # Shorter because this event is basically a nat zero on the round. It only exists to potentially confuse security or the crew
+  - type: VentHordeRule
+    table: !type:GroupSelector
+      rolls: 3,5
+      children:
+      - !type:GroupSelector
+        children: # Increased chances for special snails on purpose. Makes it a bit more interesting.
+        - id: MobSnail
+        - id: MobSnailSpeed
+        - id: MobSnailMoth
+      - !type:GroupSelector
+        children: # Increased chances for special roaches on purpose. Makes it a bit more interesting.
+        - id: MobCockroach
+        - id: MobMothroach
+        - id: MobMoproach
+          weight: 0.5
+      - !type:GroupSelector
+        children:
+        - id: MobMouse
+        - id: MobMouse1
+        - id: MobMouse2

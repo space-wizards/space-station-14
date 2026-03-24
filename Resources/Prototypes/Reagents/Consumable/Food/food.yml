@@ -29,12 +29,11 @@
   metabolisms:
     Metabolites: #This makes it not compete with medicines, a large bonus for something that can heal
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         probability: 0.5
         damage:
-          groups:
-            Brute: -0.5
-            Burn: -0.5
+          Brute: -0.5
+          Burn: -0.5
       # Helps you stop bleeding to an extent.
       - !type:ModifyBleed
         amount: -0.25
@@ -58,11 +57,10 @@
   metabolisms:
     Metabolites:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         probability: 0.5
         damage:
-          groups:
-            Brute: -0.4
+          Brute: -0.4
       - !type:ModifyBloodLevel
         amount: 1 # weaker than iron but pretty good all things considered
       - !type:SatiateHunger

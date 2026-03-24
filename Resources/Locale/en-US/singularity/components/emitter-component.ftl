@@ -15,6 +15,6 @@ emitter-component-current-type = The current selected type is: [color=yellow]{$t
 emitter-component-type-set = Type set to: {$type}
 
 emitter-destroyed-broadcast = A powered emitter {$location} has been destroyed.
-emitter-deconstructed-broadcast = A powered {$location} has been deconstructed.
-emitter-unlocked-broadcast = A powered {$location} has been unlocked.
-emitter-unpowered-broadcast = A powered {$location} has lost power.
+emitter-deconstructed-broadcast = A powered emitter {$location} has been deconstructed.
+emitter-unlocked-broadcast = A powered emitter {$location} has been unlocked.
+emitter-unpowered-broadcast = A powered emitter {$location} has lost power.
