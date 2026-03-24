@@ -406,14 +406,6 @@
     state: pill16
   - type: Label
     currentLabel: dexalin 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillDexalin
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillDexalin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -446,14 +438,6 @@
     state: pill10
   - type: Label
     currentLabel: dylovene 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillDylovene
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillDylovene
-  components:
   - type: Solution
     solution:
       reagents:
@@ -486,14 +470,6 @@
     state: pill17
   - type: Label
     currentLabel: hyronalin 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillHyronalin
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillHyronalin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -526,14 +502,6 @@
     state: pill9
   - type: Label
     currentLabel: potassium iodide 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillPotassiumIodide
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillPotassiumIodide
-  components:
   - type: Solution
     solution:
       reagents:
@@ -566,14 +534,6 @@
     state: pill14
   - type: Label
     currentLabel: iron 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillIron
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillIron
-  components:
   - type: Solution
     solution:
       reagents:
@@ -592,14 +552,6 @@
     state: pill13
   - type: Label
     currentLabel: copper 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillCopper
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillCopper
-  components:
   - type: Solution
     solution:
       reagents:
@@ -646,14 +598,6 @@
     state: pill4
   - type: Label
     currentLabel: kelotane 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillKelotane
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillKelotane
-  components:
   - type: Solution
     solution:
       reagents:
@@ -686,14 +630,6 @@
     state: pill8
   - type: Label
     currentLabel: dermaline 10u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillDermaline
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillDermaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -719,14 +655,6 @@
   parent: Pill
   id: PillSpaceDrugs
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPillSpaceDrugs
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillSpaceDrugs
-  components:
   - type: Solution
     solution:
       reagents:
@@ -745,14 +673,6 @@
     state: pill3
   - type: Label
     currentLabel: tricordrazine 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillTricordrazine
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillTricordrazine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -785,14 +705,6 @@
     state: pill5
   - type: Label
     currentLabel: bicaridine 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillBicaridine
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillBicaridine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -825,14 +737,6 @@
     state: pill21
   - type: Label
     currentLabel: charcoal 20u
-  - type: SolutionManager
-    solutions:
-    - SolutionPillCharcoal
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillCharcoal
-  components:
   - type: Solution
     solution:
       reagents:
@@ -858,14 +762,6 @@
   parent: Pill
   id: PillRomerol
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPillRomerol
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillRomerol
-  components:
   - type: Solution
     solution:
       reagents:
@@ -876,14 +772,6 @@
   name: ambuzol pill
   parent: Pill
   id: PillAmbuzol
-  components:
-    - type: SolutionManager
-      solutions:
-      - SolutionPillAmbuzol
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillAmbuzol
   components:
   - type: Solution
     solution:
@@ -896,18 +784,10 @@
   parent: Pill
   id: PillAmbuzolPlus
   components:
-    - type: Pill
-      pillType: 2
-    - type: Sprite
-      state: pill3
-    - type: SolutionManager
-      solutions:
-      - SolutionPillAmbuzolPlus
-
-- type: entity
-  parent: SolutionPill
-  id: SolutionPillAmbuzolPlus
-  components:
+  - type: Pill
+    pillType: 2
+  - type: Sprite
+    state: pill3
   - type: Solution
     solution:
       reagents:
@@ -967,14 +847,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ephedrine
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorEphedrine
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorEphedrine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -988,14 +860,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-inaprovaline
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorInaprovaline
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorInaprovaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1009,14 +873,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-tranexamic-acid
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorTranexamicAcid
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorTranexamicAcid
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1030,14 +886,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-bicaridine
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorBicaridine
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorBicaridine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1051,14 +899,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dermaline
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorDermaline
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorDermaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1072,14 +912,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-hyronalin
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorHyronalin
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorHyronalin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1093,14 +925,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ipecac
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorIpecac
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorIpecac
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1114,14 +938,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ambuzol
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorAmbuzol
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorAmbuzol
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1135,14 +951,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sigynate
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorSigynate
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorSigynate
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1156,14 +964,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ethylredoxrazine
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorEthylredoxrazine
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorEthylredoxrazine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1177,14 +977,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-phalanximine
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorPhalanximine
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorPhalanximine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1198,14 +990,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-saline
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorSaline
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorSaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1220,14 +1004,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-romerol
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorRomerol
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorRomerol
-  components:
   - type: Solution
     solution:
       reagents:
@@ -1241,14 +1017,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-stimulants
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorStimulants
-
-- type: entity
-  parent: SolutionInjectorTiny
-  id: SolutionInjectorStimulants
-  components:
   - type: Solution
     solution:
       reagents:

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,6 +15,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -66,6 +68,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public static readonly EntProtoId DefaultSolution = "Solution";
 
     [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected readonly INetManager Net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
     [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
@@ -75,16 +78,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
 
     private EntityQuery<SolutionComponent> _solutionQuery;
-    private EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
+    private EntityQuery<SolutionManagerComponent> _solutionManagerQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
         InitializeRelays();
-
-        // TODO: We probably don't need to separate Startup and MapInit due to EnsureSolution...
-        SubscribeLocalEvent<SolutionManagerComponent, ComponentStartup>(OnManagerStartup);
 
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnSolutionStartup);
@@ -94,12 +94,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
 
-        SubscribeLocalEvent<SolutionManagerComponent, MapInitEvent>(OnManagerMapInit);
+        SubscribeLocalEvent<SolutionManagerComponent, ComponentStartup>(OnManagerStartup);
         SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
 
         _solutionQuery = GetEntityQuery<SolutionComponent>();
+        _solutionManagerQuery = GetEntityQuery<SolutionManagerComponent>();
     }
 
     /// <summary>
@@ -187,7 +188,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return true;
         }
 
-        if (!Resolve(container, ref container.Comp, false)) // TODO: LOGMISSING: TRUE, ONLY HERE SO I CAN DEBUG YAML CHANGES
+        if (!_solutionManagerQuery.Resolve(container, ref container.Comp, false)) // TODO: LOGMISSING: TRUE, ONLY HERE SO I CAN DEBUG YAML CHANGES
             return false;
 
         if (container.Comp.Solutions.TryGetValue(name, out var solution))
@@ -264,7 +265,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (includeSelf && _solutionQuery.TryComp(entity, out var solutionComp))
             yield return (solutionComp.Id, (entity.Owner, solutionComp));
 
-        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+        if (!_solutionManagerQuery.Resolve(entity, ref entity.Comp, logMissing: false))
             yield break;
 
         foreach (var (id, solution) in entity.Comp.Solutions)
@@ -302,7 +303,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     private bool TryGetSolutionFill(Entity<SolutionManagerComponent?> entity, [NotNullWhen(true)] out List<EntProtoId>? fill)
     {
         fill = null;
-        if (!Resolve(entity, ref entity.Comp))
+        if (!_solutionManagerQuery.Resolve(entity, ref entity.Comp))
             return false;
 
         fill = entity.Comp.SolutionEnts;
@@ -1071,23 +1072,16 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
-    // We don't care about parents so ComponentStartup is fine
+    /// <remarks>
+    /// We want all our solutions spawned before MapInit.
+    /// They should only ever be attached to this entity so spawning them before MapInit should be fine.
+    /// </remarks>
     private void OnManagerStartup(Entity<SolutionManagerComponent> entity, ref ComponentStartup args)
     {
-        var contianer = ContainerSystem.EnsureContainer<Container>(entity, entity.Comp.Container);
+        var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
         foreach (var solution in entity.Comp.SolutionEnts)
         {
-            CreateSolution(solution, contianer);
-        }
-    }
-
-    private void OnManagerMapInit(Entity<SolutionManagerComponent> entity, ref MapInitEvent args)
-    {
-        var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
-        foreach (var solution in container.ContainedEntities)
-        {
-            var sol = _solutionQuery.Comp(solution);
-            entity.Comp.Solutions.TryAdd(sol.Id, (solution, sol));
+            CreateSolution(solution, container);
         }
     }
 
@@ -1103,9 +1097,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (args.Container.ID != entity.Comp.Container || !_solutionQuery.TryComp(args.Entity, out var solution))
             return;
 
+        // Don't add a solution entity with the same id as this entity's solution if it exists!
+        DebugTools.Assert(!TryComp<SolutionComponent>(entity, out var sol) || sol.Id != solution.Id);
+
         EnsureComp<ContainedSolutionComponent>(args.Entity, out var contained);
         contained.Container = entity.Owner;
-        entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution));
+
+        // Throw if we already have a solution with the same ID. Only throw on server to avoid prediction causing issues.
+        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)) && Net.IsServer)
+            Log.Error($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
     }
 
     private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)

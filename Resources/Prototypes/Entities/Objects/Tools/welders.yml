@@ -1,20 +1,11 @@
 - type: entity
-  name: welding tool
-  parent: BaseItem
-  id: Welder
-  description: "Melts anything as long as it's fueled, don't forget your eye protection!"
+  abstract: true
+  parent: [SolutionWelder, BaseItem]
+  id: BaseWelder
   components:
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/welder_drop.ogg
-  - type: Sprite
-    sprite: Objects/Tools/welder.rsi
-    layers:
-    - state: icon
-    - state: welder_flame
-      visible: false
-      shader: unshaded
-      map: ["enum.ToggleableVisuals.Layer"]
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:
@@ -50,8 +41,8 @@
     deactivatedSoundOnHitNoDamage:
       collection: MetalThud
     activatedDamage:
-        types:
-            Heat: 8
+      types:
+        Heat: 8
   - type: ItemToggleSize
     activatedSize: Large
   - type: ItemToggleHot
@@ -78,9 +69,6 @@
       collection: MetalThud
   - type: RefillableSolution
     solution: welder
-  - type: SolutionManager
-    solutions:
-    - SolutionToolWelder
   - type: Tool
     useSound:
       collection: Welder
@@ -103,7 +91,22 @@
     temperature: 700
 
 - type: entity
-  parent: SolutionWelderSmall
+  parent: [SolutionToolWelder, BaseWelder]
+  id: Welder
+  name: welding tool
+  description: "Melts anything as long as it's fueled, don't forget your eye protection!"
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    layers:
+    - state: icon
+    - state: welder_flame
+      visible: false
+      shader: unshaded
+      map: [ "enum.ToggleableVisuals.Layer" ]
+
+- type: entity
+  parent: [SolutionWelder, SolutionSmall]
   id: SolutionToolWelder
   components:
   - type: Solution
@@ -115,7 +118,7 @@
 
 - type: entity
   name: industrial welding tool
-  parent: Welder
+  parent: [SolutionToolWelderIndsutrial, BaseWelder]
   id: WelderIndustrial
   description: "An industrial welder with over double the fuel capacity."
   components:
@@ -123,12 +126,9 @@
     sprite: Objects/Tools/welder_industrial.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrial.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionToolWelderIndsutrial
 
 - type: entity
-  parent: SolutionWelderNormal
+  parent: [SolutionWelder, SolutionToolNormal]
   id: SolutionToolWelderIndsutrial
   components:
   - type: Solution
@@ -148,15 +148,12 @@
     sprite: Objects/Tools/welder_industrialadv.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrialadv.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionToolWelderIndsutrial
   - type: Tool
     speedModifier: 1.3
 
 - type: entity
   name: experimental welding tool
-  parent: Welder
+  parent: [SolutionToolWelderExperimental, BaseWelder]
   id: WelderExperimental
   description: "An experimental welder capable of self-fuel generation and less harmful to the eyes."
   components:
@@ -164,9 +161,6 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionToolWelderExperimental
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -181,7 +175,7 @@
     statusEffectTime: 5 # less harmful; sunglasses can block it
 
 - type: entity
-  parent: SolutionWelderGinormous # Bluespace technology
+  parent: [SolutionWelder, SolutionToolGinormous] # Bluespace technology
   id: SolutionToolWelderExperimental
   components:
   - type: Solution
@@ -192,7 +186,7 @@
 
 - type: entity
   name: emergency welding tool
-  parent: Welder
+  parent: [SolutionToolWelderMiniEmergency, BaseWelder]
   id: WelderMini
   description: "A miniature welder used during emergencies."
   components:
@@ -202,10 +196,7 @@
     size: Tiny
     sprite: Objects/Tools/welder_mini.rsi
   - type: RefillableSolution
-    solution: Welder
-  - type: SolutionManager
-    solutions:
-    - SolutionToolWelderMiniEmergency
+    solution: welder
   - type: Tool
     speedModifier: 0.7
   - type: PointLight
@@ -214,7 +205,7 @@
     color: orange
 
 - type: entity
-  parent: SolutionWelderTiny
+  parent: [SolutionWelder, SolutionTiny]
   id: SolutionToolWelderMiniEmergency # TODO, replace with below :(
   components:
   - type: Solution
@@ -225,7 +216,7 @@
         Quantity: 50
 
 - type: entity
-  parent: SolutionWelderTiny
+  parent: [SolutionWelder, SolutionToolTiny]
   id: SolutionToolWelderMini
   components:
   - type: Solution

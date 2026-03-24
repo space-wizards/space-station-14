@@ -5,6 +5,14 @@
   components:
   - type: Solution
 
+- type: entity
+  id: SolutionCryo
+  categories: [ HideSpawnMenu ]
+  name: solution
+  components:
+  - type: Solution
+    canReact: false
+
 # Solution Types
 
 - type: entity
@@ -17,29 +25,11 @@
 
 - type: entity
   abstract: true
-  parent: SolutionBeaker
-  id: SolutionBeakerCryo
-  components:
-  - type: Solution
-    solution:
-      canReact: false
-
-- type: entity
-  abstract: true
   parent: Solution
   id: SolutionInjector
   components:
   - type: Solution
     id: injector
-
-- type: entity
-  abstract: true
-  parent: SolutionInjector
-  id: SolutionInjectorCryo
-  components:
-  - type: Solution
-    solution:
-      canReact: false
 
 - type: entity
   abstract: true
@@ -151,37 +141,12 @@
       maxVol: 15
 
 - type: entity
-  parent: [SolutionDrink, SolutionVeryTiny]
-  id: SolutionDrinkVeryTiny
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionFood, SolutionVeryTiny]
-  id: SolutionFoodVeryTiny
-  categories: [ HideSpawnMenu ]
-
-- type: entity
   parent: Solution
   id: SolutionToolVeryTiny
   components:
   - type: Solution
     solution:
       maxVol: 7.5
-
-- type: entity
-  parent: [SolutionInjector, SolutionToolVeryTiny]
-  id: SolutionInjectorVeryTiny
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionAmmo, SolutionToolVeryTiny]
-  id: SolutionAmmoVeryTiny
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionWelder, SolutionToolVeryTiny]
-  id: SolutionWelderVeryTiny
-  categories: [ HideSpawnMenu ]
 
 ## Tiny
 
@@ -195,33 +160,6 @@
       maxVol: 30
 
 - type: entity
-  parent: [SolutionDrink, SolutionTiny]
-  id: SolutionDrinkTiny
-
-- type: entity
-  parent: [SolutionFood, SolutionTiny]
-  id: SolutionFoodTiny
-
-- type: entity
-  abstract: true
-  parent: [SolutionFood, SolutionTiny]
-  id: SolutionPill
-  components:
-  - type: Solution
-    solution:
-      maxVol: 20
-
-- type: entity
-  parent: [SolutionWeapon, SolutionTiny]
-  id: SolutionVenom
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionComposite, SolutionTiny]
-  id: SolutionCompositeTiny
-  categories: [ HideSpawnMenu ]
-
-- type: entity
   parent: Solution
   id: SolutionToolTiny
   categories: [ HideSpawnMenu ]
@@ -229,29 +167,6 @@
   - type: Solution
     solution:
       maxVol: 15
-
-- type: entity
-  parent: [SolutionInjector, SolutionToolTiny]
-  id: SolutionInjectorTiny
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionInjectorCryo, SolutionToolTiny]
-  id: SolutionInjectorCryoTiny
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionHypospray, SolutionToolTiny]
-  id: SolutionHyposprayTiny
-  components:
-  - type: Solution
-    solution:
-      maxVol: 10
-
-- type: entity
-  parent: [SolutionWelder, SolutionToolTiny]
-  id: SolutionWelderTiny
-  categories: [ HideSpawnMenu ]
 
 ## Small
 
@@ -264,49 +179,10 @@
     solution:
       maxVol: 60
 
-- type: entity
-  parent: [SolutionBeaker, SolutionSmall]
-  id: SolutionBeakerSmall
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionBeakerCryo, SolutionSmall]
-  id: SolutionBeakerCryoSmall
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionDrink, SolutionSmall]
-  id: SolutionDrinkSmall
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionFood, SolutionSmall]
-  id: SolutionFoodSmall
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  abstract: true
-  parent: [SolutionSpray, SolutionSmall]
-  id: SolutionSpraySmall
-
-- type: entity
-  abstract: true
-  parent: [SolutionVapor, SolutionSmall]
-  id: SolutionVaporSmall
-
+# TODO: Move to Mops!!!
 - type: entity
   parent: [SolutionMop, SolutionSmall]
   id: SolutionMopSmall
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionComposite, SolutionSmall]
-  id: SolutionCompositeSmall
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionGun, SolutionSmall]
-  id: SolutionGunSmall
   categories: [ HideSpawnMenu ]
 
 - type: entity
@@ -329,20 +205,6 @@
     solution:
       maxVol: 30
 
-- type: entity
-  parent: [SolutionHypospray, SolutionToolSmall]
-  id: SolutionHypospraySmall
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Solution
-    solution:
-      maxVol: 20
-
-- type: entity
-  parent: [SolutionWelder, SolutionToolSmall]
-  id: SolutionWelderSmall
-  categories: [ HideSpawnMenu ]
-
 ## Normal
 
 - type: entity
@@ -355,21 +217,6 @@
       maxVol: 120
 
 - type: entity
-  parent: [SolutionBeaker, SolutionNormal]
-  id: SolutionBeakerNormal
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionSpray, SolutionNormal]
-  id: SolutionSprayNormal
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionGun, SolutionNormal]
-  id: SolutionGunNormal
-  categories: [ HideSpawnMenu ]
-
-- type: entity
   parent: Solution
   id: SolutionToolNormal
   categories: [ HideSpawnMenu ]
@@ -377,11 +224,6 @@
   - type: Solution
     solution:
       maxVol: 60
-
-- type: entity
-  parent: [SolutionWelder, SolutionToolNormal]
-  id: SolutionWelderNormal
-  categories: [ HideSpawnMenu ]
 
 ## Large
 
@@ -395,26 +237,6 @@
       maxVol: 240
 
 - type: entity
-  parent: [SolutionFood, SolutionLarge]
-  id: SolutionFoodLarge
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionDrink, SolutionLarge]
-  id: SolutionDrinkLarge
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionSpray, SolutionLarge]
-  id: SolutionSprayLarge
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionGun, SolutionLarge]
-  id: SolutionGunLarge
-  categories: [ HideSpawnMenu ]
-
-- type: entity
   parent: Solution
   id: SolutionToolLarge
   categories: [ HideSpawnMenu ]
@@ -422,16 +244,6 @@
   - type: Solution
     solution:
       maxVol: 120
-
-- type: entity
-  parent: [SolutionInjector, SolutionToolLarge]
-  id: SolutionInjectorLarge
-  categories: [ HideSpawnMenu ]
-
-- type: entity
-  parent: [SolutionWelder, SolutionToolLarge]
-  id: SolutionWelderLarge
-  categories: [ HideSpawnMenu ]
 
 ## Huge
 
@@ -461,11 +273,6 @@
       maxVol: 960
 
 - type: entity
-  parent: [SolutionBeaker, SolutionGinormous]
-  id: SolutionBeakerGinormous
-  categories: [ HideSpawnMenu ]
-
-- type: entity
   parent: Solution
   id: SolutionToolGinormous
   categories: [ HideSpawnMenu ]
@@ -473,11 +280,6 @@
   - type: Solution
     solution:
       maxVol: 480
-
-- type: entity
-  parent: [SolutionWelder, SolutionToolGinormous]
-  id: SolutionWelderGinormous
-  categories: [ HideSpawnMenu ]
 
 ## Below sizes are for solutions attached to entities bigger than Ginormous
 

@@ -23,7 +23,7 @@
 ## Entities
 
 - type: entity
-  parent: BaseChemistryVial
+  parent: [SolutionTiny, BaseChemistryVial]
   id: ChemistryEmptyVial
   name: vial
   description: A small vial.
@@ -35,9 +35,6 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     inHandsMaxFillLevels: 4
-  - type: SolutionManager
-    solutions:
-    - SolutionDrinkTiny
   - type: SolutionTransfer
     maxTransferAmount: 30
   - type: StaticPrice
@@ -68,7 +65,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: BaseChemistryVial
+  parent: [SolutionVeryTiny, BaseChemistryVial]
   id: ChemistryEmptyVialSmall
   name: mini vial
   description: A smaller vial.
@@ -80,9 +77,6 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     inHandsMaxFillLevels: 4
-  - type: SolutionManager
-    solutions:
-    - SolutionDrinkVeryTiny
   - type: SolutionTransfer
     maxTransferAmount: 10
   - type: StaticPrice
@@ -112,22 +106,14 @@
   components:
   - type: Label
     currentLabel: reagent-name-vestine
-  - type: SolutionManager
-    solutions:
-    - SolutionVialVestine
-  - type: Tag
-    tags: &TagVial # Remove trash tag when we have a filled solution
-    - CentrifugeCompatible
-
-- type: entity
-  parent: SolutionDrinkTiny
-  id: SolutionVialVestine
-  components:
   - type: Solution
     solution:
       reagents:
       - ReagentId: Vestine
         Quantity: 30
+  - type: Tag
+    tags: &TagVial # Remove trash tag when we have a filled solution
+    - CentrifugeCompatible
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -136,21 +122,13 @@
   components:
   - type: Label
     currentLabel: reagent-name-radium
-  - type: SolutionManager
-    solutions:
-    - SolutionVialRadium
-  - type: Tag
-    tags: *TagVial
-
-- type: entity
-  parent: SolutionDrinkVeryTiny
-  id: SolutionVialRadium
-  components:
   - type: Solution
     solution:
       reagents:
       - ReagentId: Radium
         Quantity: 5
+  - type: Tag
+    tags: *TagVial
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -159,21 +137,13 @@
   components:
   - type: Label
     currentLabel: reagent-name-chlorine
-  - type: SolutionManager
-    solutions:
-    - SolutionVialChlorine
-  - type: Tag
-    tags: *TagVial
-
-- type: entity
-  parent: SolutionDrinkVeryTiny
-  id: SolutionVialChlorine
-  components:
   - type: Solution
     solution:
       reagents:
       - ReagentId: Chlorine
         Quantity: 5
+  - type: Tag
+    tags: *TagVial
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -182,18 +152,10 @@
   components:
   - type: Label
     currentLabel: reagent-name-plasma
-  - type: SolutionManager
-    solutions:
-    - SolutionVialPlasma
-  - type: Tag
-    tags: *TagVial
-
-- type: entity
-  parent: SolutionDrinkVeryTiny
-  id: SolutionVialPlasma
-  components:
   - type: Solution
     solution:
       reagents:
       - ReagentId: Plasma
         Quantity: 15
+  - type: Tag
+    tags: *TagVial

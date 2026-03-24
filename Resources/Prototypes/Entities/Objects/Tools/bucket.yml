@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsFill ]
+  parent: [ SolutionLarge, DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsFill ]
   id: Bucket
   name: bucket
   description: It's a boring old bucket.
@@ -17,9 +17,6 @@
     slots:
     - HEAD
     quickEquip: false
-  - type: SolutionManager
-    solutions:
-    - SolutionDrinkLarge
   - type: SolutionTransfer
     transferAmount: 100
     maxTransferAmount: 100
@@ -37,11 +34,7 @@
       Plastic: 50
 
 - type: entity
-  parent: Bucket
+  parent: [SolutionHuge, Bucket]
   id: BorgBucket
   name: internal tank
   description: The internal reservoir of a custodial cyborg, capable of holding a entire mop bucket worth of water.
-  components:
-  - type: SolutionManager
-    solutions:
-    - SolutionDrinkHuge

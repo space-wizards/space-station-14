@@ -1,11 +1,8 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [SolutionToolSmall, BaseItem]
   id: BaseHandheldGrinder
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionToolSmall
   - type: SolutionTransfer
   - type: DrawableSolution
     solution: solution

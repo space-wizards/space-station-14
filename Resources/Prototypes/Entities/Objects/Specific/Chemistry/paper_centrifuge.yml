@@ -1,11 +1,8 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [SolutionTiny, BaseItem]
   id: BaseHandheldMixer
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionTiny
   - type: MixableSolution
     solution: solution
   - type: RefillableSolution

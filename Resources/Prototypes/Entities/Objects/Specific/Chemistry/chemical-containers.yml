@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsAll ]
+  parent: [ SolutionLarge, DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsAll ]
   id: Jug
   name: jug
   description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
@@ -9,9 +9,6 @@
   - type: Item
     size: Large
     sprite: Objects/Specific/Chemistry/jug.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionDrinkLarge
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     inHandsMaxFillLevels: 5
@@ -30,14 +27,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-puncturase-tranexamic
-  - type: SolutionManager
-    solutions:
-    - SolutionJugPunctTranex
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugPunctTranex
-  components:
   - type: Solution
     solution:
       reagents:
@@ -53,14 +42,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-pyrazine-dermaline
-  - type: SolutionManager
-    solutions:
-    - SolutionJugPyraDerma
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugPyraDerma
-  components:
   - type: Solution
     solution:
       reagents:
@@ -76,14 +57,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dexalin-plus-saline
-  - type: SolutionManager
-    solutions:
-    - SolutionJugDexSaline
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugDexSaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -99,14 +72,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-tricordrazine
-  - type: SolutionManager
-    solutions:
-    - SolutionJugTricordrazine
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugTricordrazine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -120,14 +85,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-blood
-  - type: SolutionManager
-    solutions:
-    - SolutionJugBlood
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugBlood
-  components:
   - type: Solution
     solution:
       reagents:
@@ -141,14 +98,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-water
-  - type: SolutionManager
-    solutions:
-    - SolutionJugWater
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugWater
-  components:
   - type: Solution
     solution:
       reagents:
@@ -163,14 +112,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-carbon
-  - type: SolutionManager
-    solutions:
-    - SolutionJugCarbon
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugCarbon
-  components:
   - type: Solution
     solution:
       reagents:
@@ -185,14 +126,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-iodine
-  - type: SolutionManager
-    solutions:
-    - SolutionJugIodine
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugIodine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -207,14 +140,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-fluorine
-  - type: SolutionManager
-    solutions:
-    - SolutionJugFluorine
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugFluorine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -229,14 +154,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-chlorine
-  - type: SolutionManager
-    solutions:
-    - SolutionJugChlorine
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugChlorine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -251,14 +168,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-aluminium
-  - type: SolutionManager
-    solutions:
-    - SolutionJugAluminium
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugAluminium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -273,14 +182,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-phosphorus
-  - type: SolutionManager
-    solutions:
-    - SolutionJugPhosphorus
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugPhosphorus
-  components:
   - type: Solution
     solution:
       reagents:
@@ -295,14 +196,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sulfur
-  - type: SolutionManager
-    solutions:
-    - SolutionJugSulfur
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugSulfur
-  components:
   - type: Solution
     solution:
       reagents:
@@ -317,14 +210,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-silicon
-  - type: SolutionManager
-    solutions:
-    - SolutionJugSilicon
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugSilicon
-  components:
   - type: Solution
     solution:
       reagents:
@@ -339,14 +224,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-hydrogen
-  - type: SolutionManager
-    solutions:
-    - SolutionJugHydrogen
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugHydrogen
-  components:
   - type: Solution
     solution:
       reagents:
@@ -361,14 +238,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-lithium
-  - type: SolutionManager
-    solutions:
-    - SolutionJugLithium
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugLithium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -383,14 +252,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sodium
-  - type: SolutionManager
-    solutions:
-    - SolutionJugSodium
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugSodium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -405,14 +266,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-potassium
-  - type: SolutionManager
-    solutions:
-    - SolutionJugPotassium
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugPotassium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -427,14 +280,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-radium
-  - type: SolutionManager
-    solutions:
-    - SolutionJugRadium
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugRadium
-  components:
   - type: Solution
     solution:
       reagents:
@@ -449,14 +294,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-iron
-  - type: SolutionManager
-    solutions:
-    - SolutionJugIron
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugIron
-  components:
   - type: Solution
     solution:
       reagents:
@@ -471,14 +308,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-copper
-  - type: SolutionManager
-    solutions:
-    - SolutionJugCopper
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugCopper
-  components:
   - type: Solution
     solution:
       reagents:
@@ -493,14 +322,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-gold
-  - type: SolutionManager
-    solutions:
-    - SolutionJugGold
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugGold
-  components:
   - type: Solution
     solution:
       reagents:
@@ -515,14 +336,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-mercury
-  - type: SolutionManager
-    solutions:
-    - SolutionJugMercury
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugMercury
-  components:
   - type: Solution
     solution:
       reagents:
@@ -537,14 +350,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-silver
-  - type: SolutionManager
-    solutions:
-    - SolutionJugSilver
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugSilver
-  components:
   - type: Solution
     solution:
       reagents:
@@ -559,14 +364,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-ethanol
-  - type: SolutionManager
-    solutions:
-    - SolutionJugEthanol
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugEthanol
-  components:
   - type: Solution
     solution:
       reagents:
@@ -581,14 +378,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sugar
-  - type: SolutionManager
-    solutions:
-    - SolutionJugSugar
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugSugar
-  components:
   - type: Solution
     solution:
       reagents:
@@ -603,14 +392,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-nitrogen
-  - type: SolutionManager
-    solutions:
-    - SolutionJugNitrogen
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugNitrogen
-  components:
   - type: Solution
     solution:
       reagents:
@@ -625,14 +406,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-oxygen
-  - type: SolutionManager
-    solutions:
-    - SolutionJugOxygen
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugOxygen
-  components:
   - type: Solution
     solution:
       reagents:
@@ -647,14 +420,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-plant-b-gone
-  - type: SolutionManager
-    solutions:
-    - SolutionJugPlantBGone
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugPlantBGone
-  components:
   - type: Solution
     solution:
       reagents:
@@ -669,14 +434,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-welding-fuel
-  - type: SolutionManager
-    solutions:
-    - SolutionJugWeldingFuel
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugWeldingFuel
-  components:
   - type: Solution
     solution:
       reagents:
@@ -691,14 +448,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-bicaridine
-  - type: SolutionManager
-    solutions:
-    - SolutionJugBicaridine
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugBicaridine
-  components:
   - type: Solution
     solution:
       reagents:
@@ -713,14 +462,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-puncturase
-  - type: SolutionManager
-    solutions:
-    - SolutionJugPuncturase
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugPuncturase
-  components:
   - type: Solution
     solution:
       reagents:
@@ -735,14 +476,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dermaline
-  - type: SolutionManager
-    solutions:
-    - SolutionJugDermaline
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugDermaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -757,14 +490,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dylovene
-  - type: SolutionManager
-    solutions:
-    - SolutionJugDylovene
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugDylovene
-  components:
   - type: Solution
     solution:
       reagents:
@@ -779,14 +504,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-tranexamic-acid
-  - type: SolutionManager
-    solutions:
-    - SolutionJugTranexamicAcid
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugTranexamicAcid
-  components:
   - type: Solution
     solution:
       reagents:
@@ -801,14 +518,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-hyronalin
-  - type: SolutionManager
-    solutions:
-    - SolutionJugHyronalin
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugHyronalin
-  components:
   - type: Solution
     solution:
       reagents:
@@ -823,14 +532,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-saline
-  - type: SolutionManager
-    solutions:
-    - SolutionJugSaline
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugSaline
-  components:
   - type: Solution
     solution:
       reagents:
@@ -845,14 +546,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-dexalin-plus
-  - type: SolutionManager
-    solutions:
-    - SolutionJugDexalinPlus
-
-- type: entity
-  parent: SolutionDrinkLarge
-  id: SolutionJugDexalinPlus
-  components:
   - type: Solution
     solution:
       reagents:

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [SolutionBeaker, SolutionSmall, BaseItem]
   id: BaseBeaker
   abstract: true
   components:
@@ -21,9 +21,6 @@
     damage:
       types:
         Blunt: 0
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerSmall
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -98,7 +95,7 @@
   - type: DnaSubstanceTrace
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionBeaker, SolutionSmall, BaseItem]
   id: BaseBeakerMetallic
   abstract: true
   components:
@@ -120,9 +117,6 @@
     damage:
       types:
         Blunt: 0
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerSmall
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -188,14 +182,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-cryoxadone
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerCryoxadoneSmall
-
-- type: entity
-  parent: SolutionBeakerSmall
-  id: SolutionBeakerCryoxadoneSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -209,14 +195,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-arithrazine
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerArithrazineSmall
-
-- type: entity
-  parent: SolutionBeakerSmall
-  id: SolutionBeakerArithrazineSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -230,14 +208,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-sigynate
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerSigynateSmall
-
-- type: entity
-  parent: SolutionBeakerSmall
-  id: SolutionBeakerSigynateSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -251,14 +221,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-phalanximine
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerPhalanximineSmall
-          
-- type: entity
-  parent: SolutionBeakerSmall
-  id: SolutionBeakerPhalanximineSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -272,14 +234,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-diphenhydramine
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerDiphenhydramineSmall
-          
-- type: entity
-  parent: SolutionBeakerSmall
-  id: SolutionBeakerDiphenhydramineSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -293,14 +247,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-bruizine
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerBruizineSmall
-          
-- type: entity
-  parent: SolutionBeakerSmall
-  id: SolutionBeakerBruizineSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -314,14 +260,6 @@
   components:
   - type: Label
     currentLabel: reagent-name-lacerinol
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerLacerinolSmall
-          
-- type: entity
-  parent: SolutionBeakerSmall
-  id: SolutionBeakerLacerinolSmall
-  components:
   - type: Solution
     solution:
       reagents:
@@ -330,7 +268,7 @@
 
 - type: entity
   name: large beaker
-  parent: BaseBeaker
+  parent: [SolutionNormal, BaseBeaker]
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
   components:
@@ -346,9 +284,6 @@
   - type: Item
     size: Normal
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerNormal
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -363,7 +298,7 @@
 
 - type: entity
   name: cryostasis beaker
-  parent: BaseBeakerMetallic
+  parent: [SolutionCryo, BaseBeakerMetallic]
   description: Used to contain chemicals or solutions without reactions.
   id: CryostasisBeaker
   components:
@@ -375,13 +310,10 @@
       - state: beakernoreact
   - type: SolutionContainerVisuals
     maxFillLevels: 0
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerCryoSmall
 
 - type: entity
   name: bluespace beaker
-  parent: BaseBeakerMetallic
+  parent: [SolutionGinormous, BaseBeakerMetallic]
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:
@@ -393,13 +325,10 @@
       - state: beakerbluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
-  - type: SolutionManager
-    solutions:
-    - SolutionBeakerGinormous
 
 - type: entity
   name: dropper
-  parent: BaseItem
+  parent: [SolutionInjector, SolutionToolTiny, BaseItem]
   description: Used to transfer small amounts of chemical solution between containers.
   id: Dropper
   components:
@@ -410,9 +339,6 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorTiny
   - type: Injector
     ignoreMobs: true
     ignoreClosed: false
@@ -459,15 +385,12 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorTiny
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 
 - type: entity
   name: syringe
-  parent: BaseItem
+  parent: [SolutionInjector, SolutionToolTiny, BaseItem]
   description: Used to draw blood samples from mobs, or to inject them with reagents.
   id: BaseSyringe
   abstract: true
@@ -486,9 +409,6 @@
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/syringe.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorTiny
   - type: Injector
     activeModeProtoId: SyringeDrawMode
     allowedModes:
@@ -522,7 +442,7 @@
 
 - type: entity
   name: mini syringe
-  parent: Syringe
+  parent: [SolutionToolVeryTiny, Syringe]
   description: A regular syringe, reshaped to fit inside of a gun.
   id: MiniSyringe
   components:
@@ -533,9 +453,6 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
       - state: syringeproj
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorVeryTiny
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
@@ -593,7 +510,7 @@
 
 - type: entity
   id: SyringeBluespace
-  parent: BaseSyringe
+  parent: [SolutionToolLarge, BaseSyringe]
   name: bluespace syringe
   description: Injecting with advanced bluespace technology.
   components:
@@ -607,9 +524,6 @@
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: bluespace_base0
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorLarge
   - type: Injector
     activeModeProtoId: BluespaceSyringeDrawMode
     allowedModes:
@@ -625,7 +539,7 @@
 
 - type: entity
   id: SyringeCryostasis
-  parent: BaseSyringe
+  parent: [SolutionCryo, BaseSyringe]
   name: cryostasis syringe
   description: A syringe used to contain chemicals or solutions without reactions.
   components:
@@ -639,9 +553,6 @@
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: cryo_base0
-  - type: SolutionManager
-    solutions:
-    - SolutionInjectorCryoTiny
   - type: Tag
     tags:
     - Syringe
@@ -649,7 +560,7 @@
 
 - type: entity
   name: pill
-  parent: BaseItem
+  parent: [SolutionPill, BaseItem]
   id: Pill
   description: It's not a suppository.
   components:
@@ -668,9 +579,6 @@
   - type: BadFood
   - type: FlavorProfile
     ignoreReagents: []
-  - type: SolutionManager
-    solutions:
-    - SolutionPill
   - type: ExplosionResistance
     damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
@@ -694,6 +602,15 @@
   - type: Tag
     tags:
     - Pill
+
+- type: entity
+  abstract: true
+  parent: [SolutionFood, SolutionTiny]
+  id: SolutionPill
+  components:
+  - type: Solution
+    solution:
+      maxVol: 20
 
 - type: entity
   name: pill canister

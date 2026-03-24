@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseItem, SolutionFoodVeryTiny] # Crayons are less pourous than most foods, so we just assume they have less capacity.
+  parent: [SolutionFood, SolutionVeryTiny, BaseItem] # Crayons are less pourous than most foods, so we just assume they have less capacity.
   id: CrayonInedible
   name: crayon
   description: A colourful crayon. A forbidden flavor.

@@ -274,7 +274,7 @@
     proto: spider
 
 - type: entity
-  parent: SolutionVenom
+  parent: [SolutionWeapon, SolutionTiny]
   id: SolutionVenomSpiderSpace
   components:
   - type: Solution
@@ -380,7 +380,7 @@
       movementVisibilityRate: 0.25
 
 - type: entity
-  parent: SolutionVenom
+  parent: [SolutionWeapon, SolutionTiny]
   id: SolutionVenomCobraSpace
   components:
   - type: Solution

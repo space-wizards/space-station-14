@@ -42,7 +42,7 @@
     state: plain
 
 - type: entity
-  parent: SolutionFoodTiny
+  parent: [SolutionFood, SolutionTiny]
   id: SolutionFoodDonkpocketWarm
   components:
   - type: Solution

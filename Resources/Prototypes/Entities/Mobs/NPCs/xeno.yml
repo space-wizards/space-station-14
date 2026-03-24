@@ -428,7 +428,7 @@
     - FootstepSound
 
 - type: entity
-  parent: SolutionVenom
+  parent: [SolutionWeapon, SolutionTiny]
   id: SolutionVenomPurpleSnake
   components:
   - type: Solution
@@ -581,12 +581,11 @@
     pierceArmor: true
 
 - type: entity
-  parent: SolutionVenom
+  parent: [SolutionWeapon, SolutionNormal]
   id: SolutionVenomDale
   components:
   - type: Solution
     solution:
-      maxVol: 100
       reagents:
       - ReagentId: Stimulants
         Quantity: 50

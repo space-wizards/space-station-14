@@ -41,7 +41,7 @@
 
 - type: entity
   name: spaceshroom
-  parent: FoodProduceBase
+  parent: [SolutionSmall, FoodProduceBase]
   id: FoodSpaceshroom
   description: A wild mushroom. There's no telling what effect it could have...
   components:
@@ -57,9 +57,13 @@
       reagents:
       - ReagentId: SpaceDrugs
         Quantity: 10
-  - type: SolutionManager
-    solutions:
-    - SolutionFoodSpaceshroom
+  - type: Solution
+    solution:
+      reagents: # 20u out of 60u space, with 10-15 extra from solution random fill
+      - ReagentId: Nutriment
+        Quantity: 12
+      - ReagentId: Vitamin
+        Quantity: 8
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillSpaceshroom
@@ -91,18 +95,6 @@
   - type: Tag
     tags:
     - Mushroom
-
-- type: entity
-  parent: SolutionFoodSmall
-  id: SolutionFoodSpaceshroom
-  components:
-  - type: Solution
-    solution:
-      reagents: # 20u out of 60u space, with 10-15 extra from solution random fill
-      - ReagentId: Nutriment
-        Quantity: 12
-      - ReagentId: Vitamin
-        Quantity: 8
 
 - type: weightedRandomFillSolution
   id: RandomFillSpaceshroom
@@ -152,7 +144,7 @@
     node: cooked spaceshroom
 
 - type: entity
-  parent: SolutionFoodSmall
+  parent: [SolutionFood, SolutionSmall]
   id: SolutionFoodSpaceshroomCooked
   components:
   - type: Solution

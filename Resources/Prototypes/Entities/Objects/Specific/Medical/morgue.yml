@@ -100,7 +100,7 @@
 #   snap: Center
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionFood, SolutionTiny, BaseItem]
   id: Ash
   name: ash
   description: This used to be something, but now it's not.
@@ -114,9 +114,11 @@
     tags:
     - Burnt
     - Trash
-  - type: SolutionManager
-    solutions:
-    - SolutionFoodAsh
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ash
+        Quantity: 15
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
@@ -126,41 +128,23 @@
     grindableSolutionName: food
 
 - type: entity
-  parent: SolutionFoodTiny
-  id: SolutionFoodAsh
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Ash
-        Quantity: 15
-
-- type: entity
   parent: Ash
   id: Ectoplasm
   name: ectoplasm
   description: Much less deadly in this form.
   components:
-    - type: Sprite
-      sprite: Mobs/Ghosts/revenant.rsi
-      state: ectoplasm
-    - type: Tag
-      tags:
-        - Trash
-        - Ectoplasm
-    - type: SolutionManager
-      solutions:
-      - SolutionFoodEctoplasm
-    - type: GuideHelp
-      guides:
-      - MinorAntagonists
-
-- type: entity
-  parent: SolutionFoodAsh
-  id: SolutionFoodEctoplasm
-  components:
+  - type: Sprite
+    sprite: Mobs/Ghosts/revenant.rsi
+    state: ectoplasm
+  - type: Tag
+    tags:
+      - Trash
+      - Ectoplasm
   - type: Solution
     solution:
       reagents:
       - ReagentId: Fresium
         Quantity: 15
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists

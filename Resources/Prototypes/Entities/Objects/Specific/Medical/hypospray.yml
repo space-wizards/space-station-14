@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [SolutionHypospraySmall, BaseItem]
   id: BaseHypospray
   components:
   - type: Injector
@@ -18,7 +18,23 @@
   - type: Appearance
 
 - type: entity
-  parent: [BaseHypospray, BaseGrandTheftContraband]
+  parent: [SolutionHypospray, SolutionToolSmall]
+  id: SolutionHypospraySmall
+  components:
+  - type: Solution
+    solution:
+      maxVol: 20
+
+- type: entity
+  parent: [SolutionHypospray, SolutionToolTiny]
+  id: SolutionHyposprayTiny
+  components:
+  - type: Solution
+    solution:
+      maxVol: 10
+
+- type: entity
+  parent: [SolutionToolSmall, BaseHypospray, BaseGrandTheftContraband]
   id: Hypospray
   name: hypospray
   description: A sterile injector for rapid administration of drugs to patients.
@@ -33,9 +49,6 @@
       visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionHypospraySmall
   - type: RefillableSolution
     solution: hypospray
   - type: UseDelay
@@ -74,7 +87,7 @@
     solutionName: hypospray
 
 - type: entity
-  parent: BaseHypospray
+  parent: [SolutionHyposprayTiny, BaseHypospray]
   id: BorgHypo
   name: borghypo
   description: A sterile injector for rapid administration of drugs to patients. This integrated model is specialized for use by medical borgs.
@@ -89,9 +102,6 @@
       visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionHyposprayTiny
   - type: RefillableSolution
     solution: hypospray
   - type: SolutionContainerVisuals
@@ -119,9 +129,9 @@
     sprite: Objects/Specific/Medical/jetinjector.rsi
   - type: UseDelay
     delay: 1.5
-  - type: SolutionManager
-    solutions:
-    - SolutionJetInjector
+  - type: Solution
+    solution:
+      maxVol: 15 # Same as a syringe
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: jetinjector_filled
@@ -135,15 +145,7 @@
     - JetInjectorInjectMode
 
 - type: entity
-  parent: SolutionHypospray
-  id: SolutionJetInjector
-  components:
-  - type: Solution
-    solution:
-      maxVol: 15
-
-- type: entity
-  parent: JetInjector
+  parent: [SolutionHypospraySmall, JetInjector]
   id: AdvancedJetInjector
   name: advanced jet injector
   description: A pristine, fashionable, high quality injector. Allows for a faster injection, with a slightly larger capacity.
@@ -158,9 +160,6 @@
       visible: false
   - type: Item
     sprite: Objects/Specific/Medical/advanced_jetinjector.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionHypospraySmall
   - type: SolutionContainerVisuals
     maxFillLevels: 4
   - type: Injector
@@ -176,22 +175,14 @@
   suffix: Admeme
   description: The ultimate application of bluespace technology and rapid chemical administration.
   components:
-    - type: SolutionManager
-      solutions:
-      - SolutionAdminHypo
-    - type: UseDelay
-      delay: 0.0
-
-- type: entity
-  parent: SolutionHypospray
-  id: SolutionAdminHypo
-  components:
   - type: Solution
     solution:
-      maxVol: 3000
+      maxVol: 3000 # Badmin abuse
+  - type: UseDelay
+    delay: 0.0
 
 - type: entity
-  parent: BaseHypospray
+  parent: [BaseHypospray] # I plan to resize medipens to 1x2 eventually:tm:
   id: ChemicalMedipen
   name: chemical medipen
   description: A single-dose, non-refillable medipen.
@@ -215,9 +206,6 @@
         color: "#439822"
       - state: base-colorB-inhand-right
     size: Tiny
-  - type: SolutionManager
-    solutions:
-    - SolutionHypospraySmall # I plan to resize medipens to 1x2 eventually:tm:
   - type: Injector
     currentTransferAmount: null
     activeModeProtoId: HyposprayInjectMode
@@ -251,14 +239,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: medipen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenEmergency
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenEmergency
-  components:
   - type: Solution
     solution:
       reagents:
@@ -294,14 +274,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: penacid_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenPoison
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenPoison
-  components:
   - type: Solution
     solution:
       reagents:
@@ -337,14 +309,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: bicpen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenBrute
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenBrute
-  components:
   - type: Solution
     solution:
       reagents:
@@ -380,14 +344,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: dermpen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenBurn
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenBurn
-  components:
   - type: Solution
     solution:
       reagents:
@@ -423,14 +379,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: arithpen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenRad
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenRad
-  components:
   - type: Solution
     solution:
       reagents:
@@ -466,14 +414,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: punctpen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenPunc
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenPunc
-  components:
   - type: Solution
     solution:
       reagents:
@@ -481,6 +421,8 @@
         Quantity: 12
       - ReagentId: TranexamicAcid
         Quantity: 5
+      - ReagentId: Nothing # Needed for visuals to work, idk what else to put here :P
+        Quantity: 3
 
 - type: entity
   parent: ChemicalMedipen
@@ -509,14 +451,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: pyrapen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenPyra
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenPyra
-  components:
   - type: Solution
     solution:
       reagents:
@@ -552,14 +486,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: dexpen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenAirloss
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenAirloss
-  components:
   - type: Solution
     solution:
       reagents:
@@ -595,14 +521,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: hypovolemic_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenSpace
-
-- type: entity
-  parent: SolutionHypospraySmall
-  id: SolutionMedipenSpace
-  components:
   - type: Solution
     solution:
       reagents:
@@ -612,7 +530,11 @@
         Quantity: 10
 
 - type: entity
-  parent: [ChemicalMedipen, BaseSyndicateContraband]
+  parent: [SolutionToolSmall, ChemicalMedipen, BaseSyndicateContraband]
+  id: SyndicateMedipen # Interdyne gets more capacity
+
+- type: entity
+  parent: SyndicateMedipen
   id: Stimpack
   name: hyperzine injector
   description: A chemical injector containing a large shot of pure hyperzine. For when it's time to throw down. Effects last for about 60 seconds.
@@ -636,9 +558,11 @@
     layers:
     - state: stimpen
       map: ["enum.SolutionContainerLayers.Fill"]
-  - type: SolutionManager
-    solutions:
-    - SolutionStimulants
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Stimulants
+        Quantity: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -647,17 +571,7 @@
     price: 1500
 
 - type: entity
-  parent: [SolutionHypospray, SolutionToolSmall] # Interdyne gets more capacity
-  id: SolutionStimulants
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Stimulants
-        Quantity: 30
-
-- type: entity
-  parent: [ChemicalMedipen, BaseSyndicateContraband]
+  parent: [ SolutionToolTiny, SyndicateMedipen ]
   id: StimpackMini
   name: hyperzine microinjector
   description: A chemical microinjector containing a small shot of pure hyperzine. Effects last for about 30 seconds.
@@ -681,9 +595,11 @@
     layers:
     - state: microstimpen
       map: ["enum.SolutionContainerLayers.Fill"]
-  - type: SolutionManager
-    solutions:
-    - SolutionStimulantsMini
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Stimulants
+        Quantity: 15
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -692,17 +608,7 @@
     price: 583 # 3500 for 6 as a freaky fraction
 
 - type: entity
-  parent: [SolutionHypospray, SolutionToolTiny] # Interdyne gets more capacity
-  id: SolutionStimulantsMini
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Stimulants
-        Quantity: 15
-
-- type: entity
-  parent: [ChemicalMedipen, BaseSyndicateContraband]
+  parent: SyndicateMedipen
   id: CombatMedipen
   name: combat medipen
   description: A single-dose, non-refillable medipen containing a chemical cocktail that treats most forms of damage.
@@ -728,16 +634,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: morphen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionMedipenCombat
-  - type: StaticPrice
-    price: 1500
-
-- type: entity
-  parent: [SolutionHypospray, SolutionToolSmall] # Interdyne gets more capacity
-  id: SolutionMedipenCombat
-  components:
   - type: Solution
     solution:
       reagents:
@@ -745,15 +641,14 @@
         Quantity: 25
       - ReagentId: TranexamicAcid
         Quantity: 5
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
-  parent: Pen # It is just like normal pen, isn't it?
+  parent: [SolutionHyposprayTiny, Pen] # It is just like normal pen, isn't it?
   id: Hypopen
   suffix: Hypopen
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionHyposprayTiny
   - type: RefillableSolution
     solution: hypospray
     refillTime: 0.75
@@ -807,14 +702,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: medipen_empty
-  - type: SolutionManager
-    solutions:
-    - SolutionWehBloat
-
-- type: entity
-  parent: SolutionHypospray 
-  id: SolutionWehBloat
-  components:
   - type: Solution
     solution:
       maxVol: 60

@@ -84,7 +84,7 @@
 
 - type: entity
   name: bee
-  parent: [ SimpleMobBase, FlyingMobBase, SolutionFoodTiny ]
+  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase ]
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
@@ -353,7 +353,7 @@
 
 - type: entity
   name: cockroach
-  parent: [SimpleMobBase, SolutionFoodTiny]
+  parent: [SolutionFood, SolutionTiny, SimpleMobBase]
   id: MobCockroach
   description: This station is just crawling with bugs.
   components:
@@ -791,7 +791,7 @@
 
 - type: entity
   name: butterfly
-  parent: [ SimpleMobBase, FlyingMobBase, SolutionFoodTiny ]
+  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase ]
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
@@ -1925,7 +1925,7 @@
         recursive: false
 
 - type: entity
-  parent: SolutionFoodTiny
+  parent: [SolutionFood, SolutionTiny]
   id: SolutionVermin
   components:
   - type: Solution
@@ -2537,7 +2537,7 @@
       90: Dead
   - type: SolutionManager
     solutions:
-    - SolutionVenom
+    - SolutionVenomSpider
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -2599,6 +2599,11 @@
         Heat: -0.03
         Cold: -0.03
         Shock: -0.03
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpider
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: MobSpiderBase

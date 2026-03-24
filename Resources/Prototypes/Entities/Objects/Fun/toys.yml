@@ -64,7 +64,7 @@
   - type: Dumpable
 
 - type: entity
-  parent: [FoodProduceBase, SolutionFoodSmall]
+  parent: [SolutionSmall, FoodProduceBase]
   id: PlasticBanana
   name: banana
   suffix: Plastic
@@ -191,7 +191,7 @@
     sprite: Objects/Fun/mrdips.rsi
 
 - type: entity
-  parent: [ BaseItem, SolutionFoodSmall ]
+  parent: [ SolutionFood, SolutionSmall, BaseItem ]
   id: Error
   name: error
   description: Hmmmm. Something went wrong.

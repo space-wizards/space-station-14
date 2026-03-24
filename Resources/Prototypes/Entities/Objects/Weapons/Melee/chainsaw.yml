@@ -38,20 +38,5 @@
     - 0,0,2,2
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
-  - type: RefillableSolution
-    solution: Welder
-  - type: SolutionManager
-    solutions:
-    - SolutionChainsawFuel # I'm pretty sure this thing doesn't even consume fuel???
   - type: UseDelay
     delay: 1
-
-- type: entity
-  parent: SolutionWelderLarge
-  id: SolutionChainsawFuel
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: WeldingFuel
-        Quantity: 120

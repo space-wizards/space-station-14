@@ -11,9 +11,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
-  - type: SolutionManager
-    solutions:
-    - SolutionDrinkSmall
   - type: SolutionContainerVisuals
     maxFillLevels: 9
     metamorphic: true

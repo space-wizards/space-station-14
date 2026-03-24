@@ -1,6 +1,6 @@
 - type: entity
   name: lamp
-  parent: BaseItem
+  parent: [SolutionToolWelderIndsutrial, BaseItem]
   id: ArabianLamp
   description: Why the heck won't this piece of junk open!?
   components:
@@ -91,9 +91,6 @@
       right:
       - state: inhand-right-flame
         shader: unshaded
-  - type: SolutionManager
-    solutions:
-    - SolutionToolWelderIndsutrial
   - type: SolutionTransfer
     transferAmount: 5
     canChangeTransferAmount: false

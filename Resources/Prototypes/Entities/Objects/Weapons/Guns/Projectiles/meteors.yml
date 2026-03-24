@@ -191,6 +191,11 @@
         spawnAfter: 0.5
 
 - type: entity
+  abstract: true
+  parent: [SolutionHuge, BaseMeteor]
+  id: BaseSolutionMeteor
+
+- type: entity
   parent: BaseMeteor
   id: MeteorUrist
   name: Urist McMeteor
@@ -199,9 +204,11 @@
   components:
   - type: Sprite
     state: human_pixel
-  - type: SolutionManager
-    solutions:
-    - SolutionMeteorUrist
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 480
   - type: Explosive
     totalIntensity: 25
   - type: Destructible
@@ -226,19 +233,9 @@
             max: 2
       - !type:ExplodeBehavior
 
-- type: entity
-  parent: SolutionHuge
-  id: SolutionMeteorUrist
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Blood
-        Quantity: 480
-
 # Cow Meteor
 - type: entity
-  parent: BaseMeteor
+  parent: BaseSolutionMeteor
   id: MeteorCow
   name: Cosmic cow
   description: Moo-ving at relativistic speeds!
@@ -248,9 +245,11 @@
     state: cow_pixel
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionManager
-    solutions:
-    - SolutionMeteorCow
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Milk
+        Quantity: 480
   - type: Destructible
     thresholds:
     - trigger:
@@ -274,19 +273,9 @@
             max: 2
       - !type:ExplodeBehavior
 
-- type: entity
-  parent: SolutionHuge
-  id: SolutionMeteorCow
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Milk
-        Quantity: 480
-
 # Clown Meteor
 - type: entity
-  parent: BaseMeteor
+  parent: BaseSolutionMeteor
   id: MeteorClown
   name: Honksteroid
   description: The final honkening!
@@ -296,9 +285,11 @@
     state: clown_pixel
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionManager
-    solutions:
-    - SolutionMeteorClown
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Laughter
+        Quantity: 480
   - type: Destructible
     thresholds:
     - trigger:
@@ -325,19 +316,9 @@
             max: 1
       - !type:ExplodeBehavior
 
-- type: entity
-  parent: SolutionHuge
-  id: SolutionMeteorClown
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Laughter
-        Quantity: 480
-
 # Potato Meteor
 - type: entity
-  parent: BaseMeteor
+  parent: BaseSolutionMeteor
   id: MeteorPotato
   name: Space potato
   description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
@@ -346,9 +327,11 @@
     state: potato
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionManager
-    solutions:
-    - SolutionMeteorPotato
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ketchup
+        Quantity: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -365,13 +348,3 @@
             min: 1
             max: 5
       - !type:ExplodeBehavior
-
-- type: entity
-  parent: SolutionNormal
-  id: SolutionMeteorPotato
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Ketchup
-        Quantity: 120

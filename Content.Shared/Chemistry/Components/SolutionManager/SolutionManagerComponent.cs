@@ -6,7 +6,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
-/// <para>A map of the solution entities contained within this entity.</para>
+/// <para>Allows for an entity to have and manage multiple solutions.</para>
+/// <para>Spawns additional solutions from their prototypes, and stores them in a container.</para>
+/// <para>Also used in the case another component spawns a solution for this entity.</para>
 /// <para>Every solution entity this maps should have a <see cref="SolutionComponent"/> to track its state and a <see cref="ContainedSolutionComponent"/> to track its container.</para>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
@@ -16,14 +18,13 @@ public sealed partial class SolutionManagerComponent : Component
     public static readonly string DefaultContainerId = "solutions";
 
     /// <summary>
-    /// The names of each solution container attached to this entity.
-    /// Actually accessing them must be done via <see cref="ContainerManagerComponent"/>.
+    /// The names of the container for solutions attached to this entity.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string Container = DefaultContainerId;
 
     /// <summary>
-    /// A cache of solutions
+    /// A cache of solutions currently attached to this entity.
     /// </summary>
     [ViewVariables]
     public Dictionary<string, Entity<SolutionComponent>> Solutions = new ();

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [SolutionWelder, BaseItem]
   id: BaseLighter
   name: basic lighter
   components:
@@ -25,9 +25,6 @@
   - type: UseDelay
   - type: RefillableSolution
     solution: Welder
-  - type: SolutionManager
-    solutions:
-    - SolutionLighter
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:
@@ -46,7 +43,7 @@
   - type: PhysicalComposition
 
 - type: entity
-  parent: SolutionWelderVeryTiny
+  parent: [SolutionWelder, SolutionToolVeryTiny]
   id: SolutionLighter
   components:
   - type: Solution
@@ -57,7 +54,7 @@
 
 - type: entity
   name: basic lighter
-  parent: BaseLighter
+  parent: [SolutionLighter, BaseLighter]
   id: Lighter
   description: "A simple plastic cigarette lighter."
   components:
@@ -206,7 +203,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseLighter
+  parent: [SolutionToolWelderMini, BaseLighter]
   id: BaseBrandedLighter
   components:
   - type: ItemToggle
@@ -219,9 +216,6 @@
       path: /Audio/Items/Lighters/zippo_close.ogg
       params:
         volume: -5
-  - type: SolutionManager
-    solutions:
-    - SolutionToolWelderMini
   - type: Sprite
     layers:
     - state: icon
@@ -328,9 +322,6 @@
       damage:
         types:
           Heat: 2
-  - type: SolutionManager
-    solutions:
-    - SolutionLighter
 
 - type: entity
   parent: [BaseBrandedLighter, BaseSyndicateContraband]
@@ -398,14 +389,6 @@
     color: blue
   - type: RefillableSolution
     solution: welder
-  - type: SolutionManager
-    solutions:
-    - SolutionLighterPlasma
-
-- type: entity
-  parent: SolutionWelderTiny
-  id: SolutionLighterPlasma
-  components:
   - type: Solution
     solution:
       reagents:
@@ -413,7 +396,7 @@
         Quantity: 15
 
 - type: entity
-  parent: [BaseBrandedLighter, BaseCentcommContraband]
+  parent: [SolutionGinormous, BaseBrandedLighter, BaseCentcommContraband]
   id: CentCommFlippo
   name: Gilded CentComm Flippo
   description: "An Ornate, jade embossed and gilded flippo frame containing a bluespace powered jet. The latch is secured by a miniature access reader that only responds to CentComm officials. The nicest lighter known to man."
@@ -437,9 +420,11 @@
     color: Gold
   - type: RefillableSolution
     solution: Welder
-  - type: SolutionManager
-    solutions:
-    - SolutionLighterCentcomm
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Plasma
+        Quantity: 480
   - type: Tool
     useSound:
       collection: Welder
@@ -453,16 +438,6 @@
   - type: Lock
   - type: AccessReader
     access: [["CentralCommand"]]
-
-- type: entity
-  parent: SolutionWelderGinormous
-  id: SolutionLighterCentcomm
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Plasma
-        Quantity: 480
 
 - type: entity
   parent: [BaseBrandedLighter, BaseMajorContraband]
@@ -569,7 +544,6 @@
     - Meat
   - type: SolutionManager
     solutions:
-    - SolutionWelderMini
     - SolutionFoodDonkpocketWarm
   - type: FlavorProfile
     flavors:

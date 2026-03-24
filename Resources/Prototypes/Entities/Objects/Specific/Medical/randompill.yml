@@ -96,9 +96,6 @@
   id: StrangePill
   description: This unusual pill bears no markings. There's no telling what it contains.
   components:
-  - type: SolutionManager
-    solutions:
-    - SolutionPill
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillStrangePill

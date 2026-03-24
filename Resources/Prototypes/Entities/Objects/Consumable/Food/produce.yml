@@ -2,11 +2,10 @@
 # For produce that can't be immediately eaten
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionFood, BaseItem]
   id: ProduceBase
   abstract: true
   components:
-  - type: SolutionContainerManager
   - type: Sprite
     state: produce
   - type: Produce
@@ -34,7 +33,6 @@
   id: FoodProduceBase
   abstract: true
   components:
-  - type: SolutionManager
   - type: Sprite
     state: produce
   - type: Produce
