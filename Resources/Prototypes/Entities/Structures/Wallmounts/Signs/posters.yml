@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: BaseSign
   id: PosterBase
-  abstract: true
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/posters.rsi
@@ -34,6 +34,9 @@
             min: 1
             max: 1
         offset: 0
+  - type: Construction
+    graph: PosterGraph
+    node: poster
 
 - type: entity
   parent: BaseSign
@@ -56,6 +59,9 @@
           path: /Audio/Effects/poster_broken.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: PosterGraph
+    node: tornPoster
 
 # Contraband
 - type: entity
