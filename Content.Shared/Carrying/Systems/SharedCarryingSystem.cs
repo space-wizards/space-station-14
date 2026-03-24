@@ -3,6 +3,8 @@ using Content.Shared.Carrying.Components;
 using Content.Shared.Carrying.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.EscalatedGrab;
+using Content.Shared.EscalatedGrab.Systems;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -14,7 +16,6 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
@@ -31,6 +32,7 @@ namespace Content.Shared.Carrying.Systems;
 public abstract class SharedCarryingSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedEscalatedGrabSystem _grab = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
@@ -55,10 +57,8 @@ public abstract class SharedCarryingSystem : EntitySystem
         SubscribeLocalEvent<CarriableComponent, GetVerbsEvent<InteractionVerb>>(AddCarryVerb);
         SubscribeLocalEvent<BeingCarriedComponent, GetVerbsEvent<InteractionVerb>>(AddDropVerb);
 
-        // Pull → toggle again on an incapacitated target escalates to carry
-        SubscribeLocalEvent<CarriableComponent, AttemptStopPullingEvent>(OnAttemptStopPulling);
-
-        SubscribeLocalEvent<CarrierComponent, DragDropTargetEvent>(OnDragDropTarget);
+        SubscribeLocalEvent<CarriableComponent, DragDropDraggedEvent>(OnDragDropDragged);
+        SubscribeLocalEvent<CarriableComponent, CanDropDraggedEvent>(OnCanDropDragged);
         SubscribeLocalEvent<CarrierComponent, CanDropTargetEvent>(OnCanDropTarget);
         SubscribeLocalEvent<CarrierComponent, CarryDoAfterEvent>(OnCarryDoAfter);
         SubscribeLocalEvent<ActiveCarrierComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
@@ -120,33 +120,19 @@ public abstract class SharedCarryingSystem : EntitySystem
 
     #endregion
 
-    #region Grab Escalation
-
-    private void OnAttemptStopPulling(EntityUid uid, CarriableComponent component, ref AttemptStopPullingEvent args)
-    {
-        if (args.Cancelled || _isTransitioning)
-            return;
-
-        // System-initiated stops (User == null) like virtual-item deletion or
-        // container insertion should pass through without escalation.
-        if (args.User == null)
-            return;
-
-        if (!TryComp<CarrierComponent>(args.User.Value, out var carrierComp))
-            return;
-
-        if (!CanCarry(args.User.Value, uid))
-            return;
-
-        args.Cancelled = true;
-
-        if (_timing.IsFirstTimePredicted)
-            StartCarryDoAfter(args.User.Value, uid, carrierComp);
-    }
-
-    #endregion
-
     #region Drag-Drop
+
+    private void OnCanDropDragged(EntityUid uid, CarriableComponent component, ref CanDropDraggedEvent args)
+    {
+        if (args.Target != args.User)
+            return;
+
+        if (CanCarry(args.User, uid))
+        {
+            args.CanDrop = true;
+            args.Handled = true;
+        }
+    }
 
     private void OnCanDropTarget(EntityUid uid, CarrierComponent component, ref CanDropTargetEvent args)
     {
@@ -154,15 +140,18 @@ public abstract class SharedCarryingSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnDragDropTarget(EntityUid uid, CarrierComponent component, ref DragDropTargetEvent args)
+    private void OnDragDropDragged(EntityUid uid, CarriableComponent component, ref DragDropDraggedEvent args)
     {
-        if (args.Handled || args.User != uid)
+        if (args.Handled || args.Target != args.User)
             return;
 
-        if (!CanCarry(uid, args.Dragged))
+        if (!CanCarry(args.User, uid))
             return;
 
-        StartCarryDoAfter(uid, args.Dragged, component);
+        if (!TryComp<CarrierComponent>(args.User, out var carrierComp))
+            return;
+
+        StartCarryDoAfter(args.User, uid, carrierComp);
         args.Handled = true;
     }
 
@@ -190,8 +179,12 @@ public abstract class SharedCarryingSystem : EntitySystem
         if (!_actionBlocker.CanInteract(carrier, target))
             return false;
 
-        // If the carrier is currently pulling the target, that pull's virtual item
-        // will be freed when the pull stops during Carry(), so count it as available.
+        // Requires an aggressive grab on the target.
+        if (!_grab.HasStage(carrier, target, GrabStage.Aggressive))
+            return false;
+
+        // The pull's virtual item will be freed when the pull stops during Carry(),
+        // so count it as available.
         var freeHands = _hands.CountFreeHands(carrier);
         var pullingTarget = TryComp<PullerComponent>(carrier, out var pullerCheck) && pullerCheck.Pulling == target;
         var effectiveFreeHands = freeHands + (pullingTarget ? 1 : 0);
@@ -242,7 +235,7 @@ public abstract class SharedCarryingSystem : EntitySystem
             return;
 
         // Stop pulls before setting carry state. _isTransitioning prevents the pull's
-        // virtual item cleanup from cascading into OnVirtualItemDeleted → Drop().
+        // virtual item cleanup from cascading into OnVirtualItemDeleted, which calls Drop().
         _isTransitioning = true;
 
         if (TryComp<PullableComponent>(target, out var pullable) && pullable.Puller != null)

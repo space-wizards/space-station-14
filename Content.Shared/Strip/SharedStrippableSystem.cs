@@ -6,6 +6,7 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.EscalatedGrab.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -641,6 +642,10 @@ public abstract class SharedStrippableSystem : EntitySystem
     {
         // If the user drags a strippable thing onto themselves.
         if (args.Handled || args.Target != args.User)
+            return;
+
+        // Skip if the user has an escalated grab on this entity.
+        if (TryComp<GrabStateComponent>(args.User, out var grab) && grab.Target == uid)
             return;
 
         if (TryOpenStrippingUi(args.User, (uid, component)))

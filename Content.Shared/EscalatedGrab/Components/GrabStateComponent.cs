@@ -7,12 +7,12 @@ namespace Content.Shared.EscalatedGrab.Components;
 /// Added to a puller when their grab escalates beyond a standard pull.
 /// Tracks the current <see cref="GrabStage"/> and target entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GrabStateComponent : Component
 {
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public EntityUid Target;
 
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public GrabStage Stage = GrabStage.Aggressive;
 }
