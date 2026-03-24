@@ -228,8 +228,8 @@
     - id: FoodMeatDragon
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 12
+      types:
+        Piercing: 12
 
 - type: entity
   parent: BaseAction

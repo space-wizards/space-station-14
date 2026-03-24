@@ -164,6 +164,10 @@ public sealed partial class IngestionSystem : EntitySystem
 
     private void OnSolutionContainerChanged(Entity<EdibleComponent> entity, ref SolutionContainerChangedEvent args)
     {
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
         UpdateAppearance(entity);
     }
 

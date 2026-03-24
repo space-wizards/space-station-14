@@ -196,7 +196,7 @@
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSalvage
-  name: salvage hardsuit helmet
+  name: mining hardsuit helmet
   description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
   components:
   - type: Sprite

@@ -209,9 +209,8 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
                 _damageable.TryChangeDamage(target, ent.Comp.ZapHeal, true, origin: user);
 
             if (TryComp<MobThresholdsComponent>(target, out var targetThresholds) &&
-                TryComp<DamageableComponent>(target, out var targetDamageable) &&
                 _mobThreshold.TryGetThresholdForState(target, MobState.Dead, out var threshold, targetThresholds) &&
-                targetDamageable.TotalDamage < threshold)
+                _damageable.GetTotalDamage(target) < threshold)
             {
                 _mobState.ChangeMobState(target, MobState.Critical, targetMobState, user);
                 failedRevive = false;
