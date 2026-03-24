@@ -44,7 +44,7 @@ public abstract partial class SharedBorgSystem
             if (TryFormatHashSet(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
                 args.PushMarkup(list);
 
-            if (TryFormatHashSet(ent.Comp.ModuleTypes, "module-type-incompatible", "types", out list))
+            if (TryFormatHashSet(ent.Comp.ModuleTypes, "module-group-incompatible", "types", out list))
                 args.PushMarkup(list);
         }
     }

@@ -17,9 +17,9 @@ xenoborg-type-heavy = [color= #d62020]heavy xenoborgs[/color]
 xenoborg-type-scout = [color= #6a6b6f]scout xenoborgs[/color]
 xenoborg-type-stealth = [color= #ff00cc]stealth xenoborgs[/color]
 
-module-type-incompatible = This module is incompatible with other {$types} modules.
+module-group-incompatible = This module is incompatible with other {$types} modules.
 
-module-type-engi-weapon = [color= #edd45b]engi weapon[/color]
-module-type-heavy-weapon = [color= #d62020]heavy weapon[/color]
-module-type-scout-weapon = [color= #6a6b6f]scout weapon[/color]
-module-type-stealth-weapon = [color= #ff00cc]stealth weapon[/color]
+module-group-xenoborg-engi-weapon = [color= #edd45b]xenoborg engi weapon[/color]
+module-group-xenoborg-heavy-weapon = [color= #d62020]xenoborg heavy weapon[/color]
+module-group-xenoborg-scout-weapon = [color= #6a6b6f]xenoborg scout weapon[/color]
+module-group-xenoborg-stealth-weapon = [color= #ff00cc]xenoborg stealth weapon[/color]

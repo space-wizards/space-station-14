@@ -399,7 +399,7 @@
   components:
   - type: BorgModule
     moduleTypes:
-      - module-type-heavy-weapon
+      - module-group-xenoborg-heavy-weapon
     compatibleModulesBlacklist:
       tags:
         - XenoborgModuleGroupHeavyWeapon
