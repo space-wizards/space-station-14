@@ -117,15 +117,6 @@
 
 # --- MELEE ---
 
-- type: listing
-  id: UplinkSecondHandThrowingKnivesWorn
-  name: uplink-second-hand-throwing-knives-worn-name
-  description: uplink-second-hand-throwing-knives-worn-desc
-  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: throwing_knives }
-  productEntity: ThrowingKnivesKitWorn
-  secondHandCategory: commonSecondHand
-  cost:
-    Telecrystal: 2
 
 - type: listing
   id: UplinkSecondHandEnergySwordWorn
