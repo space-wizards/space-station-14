@@ -1,7 +1,7 @@
 - type: entity
   name: rat king
   id: MobRatKing
-  parent: [ BaseMobRat, SimpleMobBase, MobCombat, SlicingRefinableBase]
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, SlicingRefinableBase ]
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
@@ -126,7 +126,8 @@
     attributes:
       gender: male
   - type: Tool
-    qualities: Slicing # Should work 🙏🙏🙏🙏
+    qualities:
+      - Slicing
 
 - type: entity
   id: MobRatKingBuff
