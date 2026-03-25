@@ -1,10 +1,10 @@
-﻿# Defines the scurret, a small, agile sapient species intended for players who want to play as something similar to an ewok.
+# Defines the scurret, a small, agile sapient species intended for players who want to play as something similar to an ewok.
 # Although based on MobBaseAncestor, this species does not have a "developed" playable species it is an ancestor to.
 
 - type: entity
   name: scurret
   id: MobBaseScurret
-  parent: MobBaseAncestor
+  parent: [MobBaseAncestor, SlicingRefinableBase]
   abstract: true
   components:
   # Custom names
@@ -42,8 +42,8 @@
     heatDamageThreshold: 360
     coldDamageThreshold: 285
   # Good eatin', you monster.
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 4
   # They wawa!

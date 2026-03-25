@@ -216,7 +216,7 @@
   name: steel-cap log
   description: Steel doesn't grow on trees! It grows on mushrooms, of course.
   id: SteelLog
-  parent: [ ProduceBase, SlicingRefinableBase ]
+  parent: [ProduceBase, SlicingRefinableBase]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/steelcap.rsi
@@ -333,7 +333,7 @@
 
 - type: entity
   name: banana
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodBanana
   description: Rich in potassium.
   components:
@@ -343,8 +343,8 @@
   - type: Edible
     trash:
     - TrashBananaPeel
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: TrashBananaPeel
   - type: SolutionContainerManager
     solutions:
@@ -377,7 +377,7 @@
 
 - type: entity
   name: mimana
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodMimana
   description: Mime's favorite.
   components:
@@ -388,8 +388,8 @@
   - type: Edible
     trash:
     - TrashMimanaPeel
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: TrashMimanaPeel
   - type: SolutionContainerManager
     solutions:
@@ -827,7 +827,7 @@
 
 - type: entity
   name: pineapple
-  parent: [ FoodProduceBase, SlicingRefinableBase ]
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodPineapple
   description: Mmm, tropical.
   components:
@@ -1209,7 +1209,7 @@
 
 - type: entity
   name: ear of corn
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodCorn
   description: Needs some butter! And some cooking...
   components:
@@ -1219,8 +1219,8 @@
   - type: Edible
     trash:
     - FoodCornTrash
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCornTrash #no idea why you'd ever do this, but it's just here for consistency
   - type: SolutionContainerManager
     solutions:
@@ -1277,7 +1277,7 @@
 
 - type: entity
   name: onion
-  parent: [ FoodProduceBase, SlicingRefinableBase ]
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodOnion
   description: Nothing to cry over.
   components:
@@ -1311,7 +1311,7 @@
 
 - type: entity
   name: red onion
-  parent: [ FoodProduceBase, SlicingRefinableBase ]
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodOnionRed
   description: Purple despite the name.
   components:
@@ -1799,7 +1799,7 @@
 
 - type: entity
   name: glasstle
-  parent: [ FoodProduceBase, SlicingRefinableBase ]
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodGlasstle
   description: A fragile crystal plant with lot of spiky thorns.
   components:
@@ -1904,7 +1904,7 @@
 
 - type: entity
   name: gatfruit
-  parent: [ FoodProduceBase, BaseSyndicateContraband ]
+  parent: [FoodProduceBase, BaseSyndicateContraband, SlicingRefinableBase]
   id: FoodGatfruit
   description: A delicious, gun-shaped fruit with a thick wooden stem.
   components:
@@ -1927,8 +1927,8 @@
   - type: Edible
     trash:
     - WeaponRevolverPython
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: WeaponRevolverPython
   - type: Tag
     tags:
@@ -1940,7 +1940,7 @@
 
 - type: entity
   name: capfruit
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodRealCapfruit
   description: A soft but smooth gun-shaped fruit.
   components:
@@ -1965,8 +1965,8 @@
   - type: Edible
     trash:
     - RevolverCapGun
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: RevolverCapGun
   - type: Tag
     tags:
@@ -1987,8 +1987,8 @@
   - type: Edible
     trash:
     - RevolverCapGunFake
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: RevolverCapGunFake
 
 - type: entity
@@ -2382,7 +2382,7 @@
 
 - type: entity
   name: bungo fruit
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodBungo
   description: The humble bungo fruit.
   components:
@@ -2392,8 +2392,8 @@
   - type: Edible
     trash:
     - FoodBungoPit
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodBungoPit
   - type: SolutionContainerManager
     solutions:
@@ -2517,7 +2517,7 @@
 
 - type: entity
   name: pumpkin
-  parent: [ FoodProduceBase, SlicingRefinableBase ]
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodPumpkin
   description: A large, orange... berry. Seriously.
   components:
@@ -2619,7 +2619,7 @@
   name: cotton boll
   description: Moth people's favorite snack, and just as fluffy as them.
   id: CottonBol
-  parent: [ FoodProduceBase, SlicingRefinableBase ]
+  parent: [FoodProduceBase, SlicingRefinableBase]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
@@ -2652,7 +2652,7 @@
   name: pyrotton boll
   description: This will probably set you on fire.
   id: PyrottonBol
-  parent: [ FoodProduceBase, SlicingRefinableBase ]
+  parent: [FoodProduceBase, SlicingRefinableBase]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
@@ -2687,7 +2687,7 @@
 
 - type: entity
   name: cherry
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, SlicingRefinableBase]
   id: FoodCherry
   description: Juicy red cherry with a pit inside.
   components:
@@ -2697,8 +2697,8 @@
   - type: Edible
     trash:
     - TrashCherryPit
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: TrashCherryPit
   - type: SolutionContainerManager
     solutions:

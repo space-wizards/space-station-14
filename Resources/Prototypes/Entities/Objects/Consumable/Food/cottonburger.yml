@@ -1,7 +1,7 @@
 # Cotton Bun
 
 - type: entity
-  parent: FoodBreadSliceBase
+  parent: [FoodBreadSliceBase, SlicingRefinableBase]
   id: FoodCottonBun
   name: cotton bun
   description: A cotton hamburger bun. Soft, round and convenient to hold.
@@ -21,13 +21,11 @@
           Quantity: 3.33
         - ReagentId: Fiber
           Quantity: 3.33
-  - type: Butcherable
+  - type: ToolRefinable
     butcherDelay: 1
-    spawned:
+    refineResult:
     - id: FoodCottonBunTop
-      amount: 1
     - id: FoodCottonBunBottom
-      amount: 1
   - type: Tag
     tags:
     - ClothMade

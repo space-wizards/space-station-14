@@ -18,8 +18,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 
 namespace Content.Shared.Tools.Systems;
 
