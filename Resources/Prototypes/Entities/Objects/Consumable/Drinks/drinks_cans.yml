@@ -4,6 +4,9 @@
   parent: [ DrinkBaseMaterialMetal, SolutionSmall, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ]
   id: DrinkCanBase
   components:
+  - type: Solution
+    solution:
+      maxVol: 40 # Cans are about 330ml which translates to about 40u
   - type: SolutionManager
     solutions:
     - SolutionCanComposite
@@ -75,7 +78,7 @@
     solution:
       reagents:
       - ReagentId: Cola
-        Quantity: 60
+        Quantity: 40
 
 # created when taking apart an ied
 - type: entity
@@ -99,7 +102,7 @@
     solution:
       reagents:
       - ReagentId: IcedTea
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
   - type: Item
@@ -115,7 +118,7 @@
     solution:
       reagents:
       - ReagentId: LemonLime
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
   - type: Item
@@ -131,7 +134,7 @@
     solution:
       reagents:
       - ReagentId: LemonLimeCranberry
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemon-lime-cranberry.rsi
   - type: Item
@@ -180,7 +183,7 @@
     solution:
       reagents:
       - ReagentId: GrapeSoda
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/purple_can.rsi
   - type: Item
@@ -196,7 +199,7 @@
     solution:
       reagents:
       - ReagentId: RootBeer
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rootbeer.rsi
   - type: Item
@@ -216,7 +219,7 @@
     solution:
       reagents:
       - ReagentId: SodaWater
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater.rsi
   - type: Item
@@ -232,7 +235,7 @@
     solution:
       reagents:
       - ReagentId: SpaceMountainWind
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
   - type: Item
@@ -248,7 +251,7 @@
     solution:
       reagents:
       - ReagentId: SpaceUp
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up.rsi
   - type: Item
@@ -264,7 +267,7 @@
     solution:
       reagents:
       - ReagentId: SolDry
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sol_dry.rsi
   - type: Item
@@ -280,7 +283,7 @@
     solution:
       reagents:
       - ReagentId: Starkist
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/starkist.rsi
   - type: Item
@@ -296,7 +299,7 @@
     solution:
       reagents:
       - ReagentId: TonicWater
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic.rsi
   - type: Item
@@ -312,7 +315,7 @@
     solution:
       reagents:
       - ReagentId: FourteenLoko
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
   - type: Item
@@ -328,7 +331,7 @@
     solution:
       reagents:
       - ReagentId: ChangelingSting
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
   - type: Item
@@ -344,7 +347,7 @@
     solution:
       reagents:
       - ReagentId: DrGibb
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Item
@@ -360,9 +363,9 @@
     solution:
       reagents:
       - ReagentId: Stimulants
-        Quantity: 15
+        Quantity: 10
       - ReagentId: NuclearCola
-        Quantity: 40
+        Quantity: 25
       - ReagentId: Ice
         Quantity: 5
   - type: Sprite
@@ -380,7 +383,7 @@
     solution:
       reagents:
       - ReagentId: EnergyDrink
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
   - type: Item
@@ -396,7 +399,7 @@
     solution:
       reagents:
       - ReagentId: ShamblersJuice
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
   - type: Item
@@ -412,7 +415,7 @@
     solution:
       reagents:
       - ReagentId: PwrGame
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
   - type: Item
@@ -428,7 +431,7 @@
     solution:
       reagents:
       - ReagentId: Beer
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer_can.rsi
   - type: Item
@@ -448,7 +451,7 @@
     solution:
       reagents:
       - ReagentId: Wine
-        Quantity: 60
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wine_can.rsi
   - type: Item
