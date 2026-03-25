@@ -6,7 +6,7 @@
             <BoxContainer>
                 <RichTextLabel Text="{Loc 'gas-tank-window-tank-pressure-label'}"/>
                 <RichTextLabel Text=" "/>
-                <RichTextLabel Name="PressureLabel"/>
+                <RichTextLabel Name="PressureValue"/>
             </BoxContainer>
             <BoxContainer Margin="0 7 0 0">
                 <BoxContainer MinSize="200 0">

@@ -24,26 +24,35 @@ public sealed partial class GasTankWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         OutputSetting.IsValid = pressure => pressure is >= 0 or <= 3000;
-        UpdateTankPressure(0);
 
         OutputSetting.OnValueChanged += (args) => OnOutputPressure?.Invoke(args.Value);
         InternalsToggle.OnPressed += _ => OnToggleInternals?.Invoke();
     }
 
-    public void UpdateTankPressure(float tankPressure)
+    public void PostInitSetup()
     {
-        PressureLabel.Text = Loc.GetString("gas-tank-window-tank-pressure-value", ("tankPressure", $"{tankPressure:0.##}"));
+        Title = _entManager.GetComponent<MetaDataComponent>(Entity).EntityName;
+        var tankComp = _entManager.GetComponent<GasTankComponent>(Entity);
+        OutputSetting.Value = tankComp.OutputPressure;
+        SetPressureLabel(tankComp.Air.Pressure);
+    }
+
+    private void SetPressureLabel(float pressure)
+    {
+        PressureValue.Text = Loc.GetString("gas-tank-window-tank-pressure-value", ("tankPressure", $"{pressure:0.##}"));
     }
 
     public void UpdateState(GasTankBoundUserInterfaceState state)
     {
-        UpdateTankPressure(state.TankPressure);
+        SetPressureLabel(state.TankPressure);
     }
 
     public void Update(bool canConnectInternals, bool internalsConnected, float outputPressure)
     {
         InternalsToggle.Disabled = !canConnectInternals;
-        InternalsLabel.Text = Loc.GetString(Loc.GetString(internalsConnected ? "gas-tank-window-internal-connected" : "gas-tank-window-internal-disconnected"));
+        InternalsLabel.Text = Loc.GetString(internalsConnected
+            ? "gas-tank-window-internal-connected"
+            : "gas-tank-window-internal-disconnected");
         if (!OutputSetting.HasKeyboardFocus())
             // Don't update release pressure if we're currently editing it
             OutputSetting.Value = outputPressure;
