@@ -13,6 +13,9 @@ using Content.Shared.Roles;
 using Content.Shared.Station;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Storage;
+using Content.Server.Storage.EntitySystems;
 
 namespace Content.Server.Clothing.Systems;
 
@@ -23,6 +26,8 @@ public sealed class OutfitSystem : EntitySystem
     [Dependency] private readonly HandsSystem _handSystem = default!;
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedStationSpawningSystem _spawningSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private readonly StorageSystem _storageSystem = default!;
 
     public bool SetOutfit(EntityUid target, string gear, Action<EntityUid, EntityUid>? onEquipped = null, bool unremovable = false)
     {
@@ -65,6 +70,33 @@ public sealed class OutfitSystem : EntitySystem
                     EnsureComp<UnremoveableComponent>(equipmentEntity);
 
                 onEquipped?.Invoke(target, equipmentEntity);
+            }
+        }
+
+        if (startingGear.Storage.Count > 0)
+        {
+            var coords = Comp<TransformComponent>(target).Coordinates;
+            foreach (var (slotName, storageContainers) in startingGear.Storage)
+            {
+                if (storageContainers.Count == 0)
+                    continue;
+
+                if (_invSystem.TryGetSlotEntity(target, slotName, out var slotEnt) && TryComp(slotEnt, out StorageComponent? storage))
+                {
+                    foreach (var storageContainer in storageContainers)
+                    {
+                        var spawnedEntity = Spawn(storageContainer, coords);
+                        _storageSystem.Insert(slotEnt.Value, spawnedEntity, out _, user: null, storageComp: storage, playSound: false);
+                    }
+                }
+                else if (_invSystem.TryGetSlotEntity(target, slotName, out var slotEnt2) && TryComp(slotEnt2, out ItemSlotsComponent? itemSlots))
+                {
+                    foreach (var storageContainer in storageContainers)
+                    {
+                        var spawnedEntity = Spawn(storageContainer, coords);
+                        _itemSlotsSystem.TryInsertEmpty((slotEnt2.Value, itemSlots), spawnedEntity, null, excludeUserAudio: true);
+                    }
+                }
             }
         }
 
