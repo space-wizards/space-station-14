@@ -175,13 +175,13 @@ public static partial class GameDataScrounger
             return;
 
         var resDir = ContentResources();
-        Assert.That(Directory.Exists($"{resDir}/Prototypes"));
-        Assert.That(Directory.Exists($"{resDir}/../RobustToolbox/Resources/EnginePrototypes"));
+        Assert.That(Directory.Exists($"{resDir}{ResPath.SystemSeparator}Prototypes"));
+        Assert.That(Directory.Exists($"{resDir}{ResPath.SystemSeparator}..{ResPath.SystemSeparator}RobustToolbox{ResPath.SystemSeparator}Resources{ResPath.SystemSeparator}EnginePrototypes"));
 
         var ignoreList = GetIgnoredPrototypes(resDir);
 
         // Start with our root directory. We use this as a stack of directories to traverse.
-        var explorationStack = new List<string>() { $"{resDir}/Prototypes", $"{resDir}/../RobustToolbox/Resources/EnginePrototypes" };
+        var explorationStack = new List<string>() { $"{resDir}{ResPath.SystemSeparator}Prototypes", $"{resDir}{ResPath.SystemSeparator}..{ResPath.SystemSeparator}RobustToolbox{ResPath.SystemSeparator}Resources{ResPath.SystemSeparator}EnginePrototypes" };
 
         while (explorationStack.Count > 0)
         {
@@ -377,7 +377,7 @@ public static partial class GameDataScrounger
                     if (entry is not YamlScalarNode { Value: {} value })
                         throw new Exception($"An entry in {path} is not a valid YAML scalar/string literal. Entry: {entry}");
 
-                    ignores.Add(value);
+                    ignores.Add($"{resDir}{value.Replace(ResPath.Separator, ResPath.SystemSeparator)}");
                 }
             }
         }
