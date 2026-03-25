@@ -22,7 +22,7 @@
         - ReagentId: Fiber
           Quantity: 3.33
   - type: ToolRefinable
-    butcherDelay: 1
+    refineTime: 1
     refineResult:
     - id: FoodCottonBunTop
     - id: FoodCottonBunBottom
