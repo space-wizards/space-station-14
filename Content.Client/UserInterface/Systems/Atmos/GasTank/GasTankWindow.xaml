@@ -1,0 +1,25 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Resizable="False">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" Margin="10 4 10 0">
+            <BoxContainer>
+                <RichTextLabel Text="{Loc 'gas-tank-window-tank-pressure-label'}"/>
+                <RichTextLabel Text=" "/>
+                <RichTextLabel Name="PressureLabel"/>
+            </BoxContainer>
+            <BoxContainer Margin="0 7 0 0">
+                <BoxContainer MinSize="200 0">
+                    <RichTextLabel Text="{Loc 'gas-tank-window-internal-label'}" />
+                    <RichTextLabel Text=" "/>
+                    <RichTextLabel Name="InternalsLabel" Text="{Loc 'gas-tank-window-internal-disconnected'}"/>
+                </BoxContainer>
+                <Button Name="InternalsToggle" Text="{Loc 'gas-tank-window-internals-toggle-button'}"/>
+            </BoxContainer>
+            <Control MinSize="0 10"></Control>
+            <Label Text="{Loc 'gas-tank-window-output-pressure-label'}" HorizontalAlignment="Center" />
+            <FloatSpinBox Name="OutputSetting" Margin="25 0 25 10"></FloatSpinBox>
+        </BoxContainer>
+        <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 25"/>
+    </BoxContainer>
+</controls:FancyWindow>

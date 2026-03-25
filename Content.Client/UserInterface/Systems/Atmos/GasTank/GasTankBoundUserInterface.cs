@@ -1,7 +1,6 @@
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank
@@ -33,8 +32,8 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         {
             base.Open();
             _window = this.CreateWindow<GasTankWindow>();
+            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
             _window.Entity = Owner;
-            _window.SetTitle(EntMan.GetComponent<MetaDataComponent>(Owner).EntityName);
             _window.OnOutputPressure += SetOutputPressure;
             _window.OnToggleInternals += ToggleInternals;
         }
