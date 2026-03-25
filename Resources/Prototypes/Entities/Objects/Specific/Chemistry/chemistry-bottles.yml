@@ -1,6 +1,6 @@
 - type: entity
   name: bottle
-  parent: BaseItem
+  parent: [SolutionDrink, SolutionTiny, BaseItem] # This solution name is hardcoded in ChemMasterComponent
   id: BaseChemistryEmptyBottle
   abstract: true
   description: A small bottle.
@@ -29,10 +29,6 @@
     solution: drink
     destroyOnEmpty: false
     utensil: None
-  - type: SolutionContainerManager
-    solutions:
-      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
-        maxVol: 30
   - type: MixableSolution
     solution: drink
   - type: RefillableSolution
