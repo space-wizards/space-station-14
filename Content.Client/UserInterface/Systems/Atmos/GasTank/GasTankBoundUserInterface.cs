@@ -6,16 +6,12 @@ using Robust.Client.UserInterface;
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank;
 
 [UsedImplicitly]
-public sealed class GasTankBoundUserInterface : BoundUserInterface
+public sealed class GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private GasTankWindow? _window;
 
-    public GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
-
-    public void SetOutputPressure(float value)
+    private void SetOutputPressure(float value)
     {
         SendPredictedMessage(new GasTankSetPressureMessage
         {
@@ -23,7 +19,7 @@ public sealed class GasTankBoundUserInterface : BoundUserInterface
         });
     }
 
-    public void ToggleInternals()
+    private void ToggleInternals()
     {
         SendPredictedMessage(new GasTankToggleInternalsMessage());
     }
@@ -50,12 +46,5 @@ public sealed class GasTankBoundUserInterface : BoundUserInterface
 
         if (state is GasTankBoundUserInterfaceState cast)
             _window?.UpdateState(cast);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        _window?.Close();
     }
 }
