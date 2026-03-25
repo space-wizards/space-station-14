@@ -42,7 +42,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
-  - type: SolutionContainerManager
+  - type: Solution
     solution:
       reagents:
       - ReagentId: SpaceLube
@@ -133,7 +133,7 @@
   name: delicious mopwata
   description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
   components:
-  - type: SolutionContainerManager
+  - type: Solution
     solution:
       reagents:
       - ReagentId: Mopwata
