@@ -3,21 +3,14 @@
 - type: entity
   abstract: true
   parent: [ DrinkBaseMaterialGlass, DrinkBase, DrinkBaseOpenable ]
-  id: DrinkBottleGlassBaseFull
-  suffix: Full
+  id: DrinkBottleGlassBase
   components:
-  - type: Item
-    size: Normal
   - type: Openable
     sound:
       collection: bottleOpenSounds
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi # fallback
   - type: Tool
@@ -56,19 +49,36 @@
 
 - type: entity
   abstract: true
-  parent: DrinkBottleGlassBaseFull
-  id: DrinkBottleGlassSmallBaseFull
+  parent: [ SolutionNormal, DrinkBottleGlassBase ]
+  id: DrinkBottleGlassBaseFull
+  suffix: Full
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
+  - type: Item
+    size: Normal
+
+- type: entity
+  abstract: true
+  parent: [ SolutionSmall, DrinkBottleGlassBase ]
+  id: DrinkBottleGlassSmallBaseFull
+  suffix: Full
+  components:
   - type: Item
     size: Small
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi # fallback
   - type: FitsInDispenser
     solution: drink
+
+- type: entity
+  abstract: true
+  parent: [ SolutionLarge, DrinkBottleGlassBase ]
+  id: DrinkBottleGlassLargeBaseFull
+  suffix: Full
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,3
 
 # Large Glass Bottles
 
@@ -78,12 +88,11 @@
   name: Jailbreaker Verte
   description: One sip of this and you just know you're gonna have a good time.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Absinthe
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Absinthe
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-absinthe
   - type: Sprite
@@ -95,12 +104,11 @@
   name: Miss Blue Curaçao
   description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: BlueCuracao
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: BlueCuracao
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-blue-curacao
   - type: Sprite
@@ -119,12 +127,11 @@
   name: bottle of nothing
   description: A bottle filled with nothing.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Nothing
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nothing
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-nothing
   - type: Sprite
@@ -136,12 +143,11 @@
   name: champagne bottle
   description: Only people devoid of imagination can't find an excuse for champagne.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Champagne
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Champagne
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-champagne
   - type: Sprite
@@ -157,12 +163,11 @@
   name: cognac bottle
   description: A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Cognac
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Cognac
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-cognac
   - type: Sprite
@@ -174,12 +179,11 @@
   name: Briar Rose grenadine syrup bottle
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Grenadine
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Grenadine
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-grenadine
   - type: Sprite
@@ -198,12 +202,11 @@
   name: Griffeater gin
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Gin
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Gin
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-gin
   - type: Sprite
@@ -215,12 +218,11 @@
   name: Gildlager bottle
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Gildlager
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Gildlager
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-gildlager
   - type: Sprite
@@ -232,12 +234,11 @@
   name: coffee liqueur bottle
   description: The great taste of coffee with none of the benifits.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: CoffeeLiqueur
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: CoffeeLiqueur
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-coffeeliqueur
   - type: Sprite
@@ -249,12 +250,11 @@
   name: Emeraldine melon liquor
   description: A bottle of 46 proof Emeraldine melon liquor. Sweet and light.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: MelonLiquor
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: MelonLiquor
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-melon-liquor
   - type: Sprite
@@ -273,12 +273,11 @@
   name: Wrapp Artiste Patrón bottle
   description: Silver laced tequila, served in space night clubs across the galaxy.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Patron
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Patron
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-patron
   - type: Sprite
@@ -290,12 +289,11 @@
   name: Warlock's Velvet bottle
   description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: PoisonWine
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: PoisonWine
+        Quantity: 120
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
   - type: Tag
@@ -309,12 +307,11 @@
   name: Captain Pete's Cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Rum
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Rum
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-rum
   - type: Sprite
@@ -326,12 +323,11 @@
   name: Caccavo Guaranteed Quality tequila bottle
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Tequila
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Tequila
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-tequila
   - type: Sprite
@@ -343,12 +339,11 @@
   name: Goldeneye vermouth bottle
   description: Sweet, sweet dryness!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Vermouth
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Vermouth
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-vermouth
   - type: Sprite
@@ -360,12 +355,11 @@
   name: vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Vodka
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Vodka
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-vodka
   - type: Sprite
@@ -377,12 +371,11 @@
   name: Uncle Git's Special Reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Whiskey
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Whiskey
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-whiskey
   - type: Sprite
@@ -394,12 +387,11 @@
   name: Doublebearded Bearded Special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Wine
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Wine
+        Quantity: 120
   - type: Label
     currentLabel: reagent-name-wine
   - type: Sprite
@@ -409,21 +401,19 @@
     - Wine
     - DrinkBottle
 
-# Extra large bottles
+# Large bottles
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottleGlassLargeBaseFull]
   id: DrinkBeerGrowler # todo Needs to be renamed DrinkBeerBottleFullGrowler
   name: beer growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Beer
-          Quantity: 150
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Beer
+        Quantity: 240
   - type: Label
     currentLabel: reagent-name-beer
   - type: Sprite
@@ -438,18 +428,16 @@
     - DrinkBottle
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottleGlassLargeBaseFull]
   id: DrinkAleBottleFullGrowler
   name: Magm-Ale growler
   description: A true dorf's drink of choice. XL growler bottle.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Ale
-          Quantity: 150
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ale
+        Quantity: 240
   - type: Label
     currentLabel: reagent-name-ale
   - type: Sprite
@@ -468,12 +456,11 @@
   name: beer bottle # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Beer
-          Quantity: 50
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Beer
+        Quantity: 60
   - type: Label
     currentLabel: reagent-name-beer
   - type: Sprite
@@ -492,12 +479,11 @@
   name: Magm-Ale bottle
   description: A true dorf's drink of choice.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Ale
-          Quantity: 50
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ale
+        Quantity: 60
   - type: Label
     currentLabel: reagent-name-ale
   - type: Sprite
@@ -513,12 +499,11 @@
   name: small sake bottle
   description: The regret of the next morning seems to be nipping on the bottle too.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Sake
-          Quantity: 50
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Sake
+        Quantity: 60
   - type: Label
     currentLabel: reagent-name-sake
   - type: Sprite

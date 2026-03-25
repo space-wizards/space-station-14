@@ -38,6 +38,8 @@
   components:
   - type: Item
     size: Large
+    shape:
+    - 0,0,1,3
   - type: Tag
     tags:
     - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
