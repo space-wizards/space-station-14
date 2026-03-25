@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Client.UserInterface.Controls;
+﻿using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Timing;

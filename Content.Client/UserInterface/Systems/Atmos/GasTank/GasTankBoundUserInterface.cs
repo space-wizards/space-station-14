@@ -47,4 +47,12 @@ public sealed class GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
         if (state is GasTankBoundUserInterfaceState cast)
             _window?.UpdateState(cast);
     }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        _window?.OnOutputPressure -= SetOutputPressure;
+        _window?.OnToggleInternals -= ToggleInternals;
+    }
 }
