@@ -122,6 +122,14 @@
 - type: entity
   abstract: true
   parent: Solution
+  id: SolutionDrain
+  components:
+  - type: Solution
+    id: drainBuffer
+
+- type: entity
+  abstract: true
+  parent: Solution
   id: SolutionWelder # TODO Refactor fuel usage to comply with welders becoming 30u-60u
   components:
   - type: Solution
@@ -134,6 +142,14 @@
   components:
   - type: Solution
     id: composite
+
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionLube
+  components:
+  - type: Solution
+    id: lube # For autolathes to run faster or slower
 
 # Solution Sizes
 
@@ -304,7 +320,30 @@
     solution:
       maxVol: 480
 
-## Below sizes are for solutions attached to entities bigger than Ginormous
+## Below sizes are for solutions attached to entities bigger than Ginormous, aka not items or maybe two handed?
+
+# List of sizes neede still
+## Small
+# 50 - Cryopod buffer, Generator
+
+## Large
+# 200 - Soil
+
+## Huge
+# 400 - GasCondenser
+# 500 - Water Cooler
+
+## Ginormous
+# 500 - ChemicalBarrel
+# 600 - MopBucket
+# 800 - Trolley
+
+## IDK
+# 1000 - Wall Welding Fuel Dispenser
+# 1500 - Chem Anom, Fuel Tank, Water Tank
+# 3000 - Nuclear Tap
+# 5000 - HighCap Fuel Tank, CleanerDispenser
+# 10000 - HighCap Water Tank
 
 - type: entity
   abstract: true

@@ -43,8 +43,6 @@
   - type: SolutionManager
     solutions:
     - SolutionMopNormal
-  - type: DrainableSolution
-    solution: drainBuffer
   - type: InteractionPopup
     interactSuccessString: petting-success-cleanbot
     interactFailureString: petting-failure-cleanbot
