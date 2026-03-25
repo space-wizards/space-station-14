@@ -14,13 +14,12 @@
     - SolutionStomachRuminant
 
 - type: entity
-  parent: Solution
+  parent: SolutionStomach
   id: SolutionStomachRuminant
   components:
   - type: Solution
-    id: stomach
     solution:
-      maxVol: 80
+      maxVol: 240
 
 - type: entity
   id: BaseMobRuminant

@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.Components
     {
         // This is a list because it is actually faster to add and remove reagents from
         // a list than a dictionary, though contains-reagent checks are slightly slower,
-        [DataField("reagents"), AlwaysPushInheritance]
+        [DataField("reagents")]
         public List<ReagentQuantity> Contents;
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Content.Shared.Chemistry.Components
             DebugTools.Assert(!Contents.Any(x => x.Quantity <= FixedPoint2.Zero));
 
             // No duplicate reagents iDs
-            DebugTools.Assert(Contents.Select(x => x.Reagent).ToHashSet().Count == Contents.Count, $"Soltuon: {this}, contained duplcate contents {Contents}");
+            DebugTools.Assert(Contents.Select(x => x.Reagent).ToHashSet().Count == Contents.Count, $"Solution: {this}, contained duplcate contents {Contents}");
 
             // If it isn't flagged as dirty, check heat capacity is correct.
             if (!_heatCapacityDirty)

@@ -399,7 +399,7 @@
   - type: Solution
     id: stomach
     solution:
-      maxVol: 50
+      maxVol: 150 # 1.25 liters which is average for a human
 
 - type: entity
   parent: OrganBase

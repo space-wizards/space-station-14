@@ -58,6 +58,14 @@
 - type: entity
   abstract: true
   parent: Solution
+  id: SolutionSmokable
+  components:
+  - type: Solution
+    id: smokable
+
+- type: entity
+  abstract: true
+  parent: Solution
   id: SolutionWeapon
   components:
   - type: Solution
@@ -98,6 +106,14 @@
 - type: entity
   abstract: true
   parent: Solution
+  id: SolutionTank
+  components:
+  - type: Solution
+    id: tank
+
+- type: entity
+  abstract: true
+  parent: Solution
   id: SolutionMop
   components:
   - type: Solution
@@ -119,7 +135,6 @@
   - type: Solution
     id: composite
 
-
 # Solution Sizes
 
 ## Of note, maxVol will be moved out of the Solution class into the SolutionComponent in the future
@@ -127,7 +142,7 @@
 ## So a beaker will use solutions with a parent of SolutionSmall and a large beaker uses SolutionNormal
 ## Items with utility or tool functionality should generally inherit from one sizer smaller than their item size.
 ## It's fine to fine tune these values for specific applications, but generally you shouldn't go above the value the most relevant parent would have.
-## Lastly, 60u equals about 1 litre. It was random before but that's the conversion now.
+## Lastly, 120u equals about 1 liter. It was random before but that's the conversion now.
 
 ## Very Tiny
 
@@ -143,6 +158,7 @@
 - type: entity
   parent: Solution
   id: SolutionToolVeryTiny
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -179,16 +195,11 @@
     solution:
       maxVol: 60
 
-# TODO: Move to Mops!!!
-- type: entity
-  parent: [SolutionMop, SolutionSmall]
-  id: SolutionMopSmall
-  categories: [ HideSpawnMenu ]
-
 - type: entity
   abstract: true
   parent: SolutionComposite
   id: SolutionCompositeSmallStackable
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -215,6 +226,18 @@
   - type: Solution
     solution:
       maxVol: 120
+
+- type: entity
+  abstract: true
+  parent: SolutionComposite
+  id: SolutionCompositeNormalStackable
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 10
+  - type: Item
+    size: Normal
 
 - type: entity
   parent: Solution
@@ -261,7 +284,7 @@
   id: SolutionDrinkHuge
   categories: [ HideSpawnMenu ]
 
-## Huge Ginormous
+## Ginormous
 
 - type: entity
   parent: Solution
@@ -287,6 +310,7 @@
   abstract: true
   parent: Solution
   id: SolutionTile # Tile Anchored, Cannot be moved. Anything more than this and you should just not impose a max volume.
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:

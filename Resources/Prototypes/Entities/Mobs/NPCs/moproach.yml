@@ -42,7 +42,7 @@
     quantity: 10
   - type: SolutionManager
     solutions:
-    - SolutionMopSmall
+    - SolutionMopNormal
   - type: DrainableSolution
     solution: drainBuffer
   - type: InteractionPopup

@@ -203,7 +203,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: SulfurBlood
-        Quantity: 300
+        Quantity: 600
 
 - type: entity
   parent: OrganBase

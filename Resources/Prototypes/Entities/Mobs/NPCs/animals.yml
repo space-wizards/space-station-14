@@ -1932,7 +1932,7 @@
     solution:
       reagents:
       - ReagentId: UncookedAnimalProteins
-        Quantity: 5
+        Quantity: 15
 
 - type: entity
   parent: MobMouse
@@ -2038,6 +2038,8 @@
   - type: Solution
     solution:
       reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 5
       - ReagentId: Uranium
         Quantity: 10
   - type: Butcherable
@@ -2107,7 +2109,6 @@
   - type: Tag
     tags:
     - VimPilot
-
 
 - type: entity
   name: slug

@@ -319,9 +319,8 @@
       CottonBurger: ArachnidPlushie
 
 - type: entity
-  abstract: true # Here to prevent unwanted solution inheritance.
   parent: BasePlushie
-  id: BasePlushieLizard #Weh!
+  id: PlushieLizard #Weh!
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentComm as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
   components:
@@ -363,11 +362,6 @@
     - Payload
     - ClothMade
     - PlushieLizard
-
-- type: entity
-  parent: BasePlushieLizard
-  id: PlushieLizard #Weh!
-  components:
   - type: Extractable
     juiceSolution:
       reagents:
@@ -376,6 +370,8 @@
   - type: Solution
     solution:
       reagents:
+      - ReagentId: Fiber
+        Quantity: 20
       - ReagentId: JuiceThatMakesYouWeh
         Quantity: 10
 
@@ -510,7 +506,7 @@
       CottonBurger: SpaceLizardPlushie
 
 - type: entity
-  parent: BasePlushieLizard
+  parent: PlushieLizard
   id: PlushieLizardInversed #Hew!
   name: drazil plushie
   description: An adorable stuffed toy that resembles a lizardperson from an inversed dimension. Hew!
@@ -544,6 +540,8 @@
   - type: Solution
     solution:
       reagents:
+      - ReagentId: Fiber
+        Quantity: 20
       - ReagentId: JuiceThatMakesYouHew
         Quantity: 10
   - type: Clothing

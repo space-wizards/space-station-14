@@ -580,7 +580,7 @@
     count: 1
 
 - type: entity
-  parent: MaterialBase
+  parent: [SolutionCompositeNormalStackable, MaterialBase]
   id: MaterialWebSilk
   name: silk
   description: A webby material.
@@ -603,17 +603,12 @@
     ignoreReagents:
       - Fiber
   - type: Extractable
-    juiceSolution:
+    grindableSolutionName: food
+  - type: Solution
+    solution:
       reagents:
       - ReagentId: Fiber
-        Quantity: 3
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 3
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 3
+        Quantity: 10
   - type: Tag
     tags:
       - ClothMade
