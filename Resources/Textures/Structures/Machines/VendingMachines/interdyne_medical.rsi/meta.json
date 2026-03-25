@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/1516a728931b4985c1e86f0c5995a5aa1554a1ad and modified by Swept & IproduceWidgets (github), Interdyne themed normal-unshaded, eject-unshaded, deny-unshaded by Conflee based on design by Smugman, off-civilian modified by wonderfulnewworld (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ],
+	  "copyright": "Smugman, Conflee",
+	  "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "broken",
+	  "copyright": "TG Station, Swept, IproduceWidgets",
+	  "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "deny-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ],
+	  "copyright": "Smugman, Conflee",
+	  "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "off",
+	  "copyright": "TG Station, Swept, IproduceWidgets",
+	  "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "off-civilian",
+	  "copyright": "TG Station, Swept, IproduceWidgets, wonderfulnewworld",
+	  "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "panel",
+	  "copyright": "TG Station, Swept, IproduceWidgets",
+	  "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "eject-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.4,
+          0.1
+        ]
+      ],
+	  "copyright": "Smugman, Conflee",
+	  "license": "CC-BY-SA-3.0"
+    }
+  ]
+}

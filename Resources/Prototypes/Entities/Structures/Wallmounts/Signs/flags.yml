@@ -50,3 +50,48 @@
   components:
   - type: Sprite
     state: pirate_flag
+
+- type: entity
+  parent: BaseFlag
+  id: CybersunFlag
+  name: CyberSun flag
+  description: Paper, Suit, Progress.
+  components:
+  - type: Sprite
+    state: cybersun
+
+- type: entity
+  parent: BaseFlag
+  id: InterdyneFlag
+  name: Interdyne Pharmaceutics flag
+  description: For Everyone's Health.
+  components:
+  - type: Sprite
+    state: interdyne
+
+- type: entity
+  parent: BaseFlag
+  id: InterdyneSyndicateFlag
+  name: Interdyne Pharmaceutics flag?
+  description: F-r Ev_ry.ne' Hea_th.
+  components:
+  - type: Sprite
+    state: interdyne_syndicate
+
+- type: entity
+  parent: BaseFlag
+  id: DonkFlag
+  name: DONK CO flag
+  description: Put a DONK on it!
+  components:
+  - type: Sprite
+    state: donk
+
+- type: entity
+  parent: BaseFlag
+  id: WaffleCoFlag
+  name: Waffle Corp flag
+  description: Reliable and Delicious.
+  components:
+  - type: Sprite
+    state: waffleco

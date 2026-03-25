@@ -4,8 +4,8 @@ meta:
   engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/13/2026 03:24:55
-  entityCount: 29094
+  time: 03/25/2026 07:19:18
+  entityCount: 29118
 maps:
 - 1
 grids:
@@ -791,7 +791,6 @@ entities:
             891: 53,32
             892: 55,32
             893: 55,31
-            958: -6,-50
             967: -44,-37
             968: -54,-22
             972: -40,-13
@@ -2012,6 +2011,7 @@ entities:
             2955: -26,-45
             4743: 10,-45
             4744: 13,-45
+            5140: 10,-51
         - node:
             cleanable: True
             color: '#52B4E996'
@@ -2021,7 +2021,6 @@ entities:
             923: -11,-51
             924: -10,-51
             955: 9,-51
-            956: 10,-51
         - node:
             color: '#79150096'
             id: BrickTileWhiteLineN
@@ -3129,117 +3128,126 @@ entities:
             3876: 19.34431,0.9643941
             3877: 25.359936,-1.0043559
         - node:
-            cleanable: True
             color: '#3EB38896'
             id: HalfTileOverlayGreyscale
           decals:
-            1237: -50,1
-            1238: -48,1
-            1239: -46,1
+            5058: -50,1
+            5059: -48,1
+            5060: -46,1
+            5062: -41,1
+            5063: -39,1
         - node:
-            cleanable: True
             color: '#52B4E996'
             id: HalfTileOverlayGreyscale
           decals:
-            932: -14,-51
-            933: -8,-51
-            934: -16,-51
-            935: -18,-51
-            936: -20,-51
-            937: -22,-51
-            938: -24,-51
-            939: -2,-51
-            940: 2,-51
-            943: -4,-51
-            945: 4,-51
-            946: 6,-51
-            947: 8,-51
-            948: 11,-51
-            949: 13,-51
-            950: 15,-51
-            951: 17,-51
-            952: 19,-51
-            957: -6,-51
-            1121: 23,-51
+            5076: -14,-51
+            5077: -16,-51
+            5078: -18,-51
+            5079: -20,-51
+            5080: -22,-51
+            5081: -24,-51
+            5082: -26,-51
+            5083: -28,-51
+            5102: -8,-51
+            5103: -6,-51
+            5104: -4,-51
+            5105: -2,-51
+            5123: 2,-51
+            5124: 4,-51
+            5125: 6,-51
+            5126: 8,-51
+            5127: 11,-51
+            5128: 13,-51
+            5129: 15,-51
+            5130: 17,-51
+            5131: 19,-51
+            5132: 23,-51
+        - node:
+            color: '#52B4E996'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            5084: -28,-53
+            5085: -26,-53
+            5086: -24,-53
+            5087: -22,-53
+            5088: -22,-53
+            5089: -20,-53
+            5090: -18,-53
+            5091: -18,-53
+            5092: -16,-53
+            5093: -14,-53
+            5094: -12,-53
+            5097: -8,-53
+            5098: -6,-53
+            5133: 23,-53
+            5134: 21,-53
+            5135: 19,-53
+            5136: 17,-53
+            5137: 15,-53
+            5138: 13,-53
+            5139: 11,-53
         - node:
             cleanable: True
             color: '#52B4E996'
             id: HalfTileOverlayGreyscale180
           decals:
-            1091: -24,-53
             1092: -22,-53
-            1093: -20,-53
             1094: -18,-53
-            1095: -16,-53
-            1096: -14,-53
-            1097: -12,-53
-            1099: -6,-53
-            1100: -8,-53
             1102: 9,-54
-            1114: 11,-53
-            1115: 13,-53
-            1116: 15,-53
-            1117: 17,-53
-            1118: 19,-53
-            1120: 21,-53
-            1122: 23,-53
         - node:
-            cleanable: True
             color: '#A4610696'
             id: HalfTileOverlayGreyscale180
           decals:
-            1206: 42,-34
-            1207: 40,-34
-            1208: 38,-34
-            1209: 36,-34
+            5155: 42,-34
+            5156: 40,-34
+            5157: 38,-34
+            5158: 36,-34
         - node:
-            cleanable: True
             color: '#FA750096'
             id: HalfTileOverlayGreyscale180
           decals:
-            1123: 2,-53
-            1124: 4,-53
-            1125: 6,-53
-            1126: 8,-53
+            5146: 8,-53
+            5147: 8,-53
+            5148: 6,-53
+            5149: 4,-53
+            5150: 2,-53
         - node:
-            cleanable: True
             color: '#52B4E996'
             id: HalfTileOverlayGreyscale270
           decals:
-            1064: -1,-50
-            1065: -1,-48
-            1066: -1,-46
-            1067: -1,-44
-            1068: -1,-42
-            1069: -1,-40
-            1088: -1,-60
-            1089: -1,-58
-            1090: -1,-56
+            5099: -1,-56
+            5100: -1,-58
+            5101: -1,-60
+            5110: -1,-50
+            5112: -1,-46
+            5113: -1,-48
+            5114: -1,-40
+            5115: -1,-42
+            5116: -1,-44
         - node:
             color: '#EFB34196'
             id: HalfTileOverlayGreyscale270
           decals:
-            1247: -53,4
-            1248: -53,2
-            1249: -53,0
+            5072: -53,4
+            5073: -53,2
+            5074: -53,0
+            5075: -53,-2
         - node:
-            cleanable: True
             color: '#3EB38896'
             id: HalfTileOverlayGreyscale90
           decals:
-            1242: -51,2
-            1243: -51,4
+            5056: -51,4
+            5057: -51,2
         - node:
-            cleanable: True
             color: '#52B4E996'
             id: HalfTileOverlayGreyscale90
           decals:
-            1070: 1,-40
-            1071: 1,-42
-            1072: 1,-44
-            1073: 1,-46
-            1074: 1,-48
-            1075: 1,-50
+            5117: 1,-50
+            5118: 1,-48
+            5119: 1,-46
+            5120: 1,-44
+            5121: 1,-42
+            5122: 1,-40
         - node:
             color: '#8D1C9996'
             id: HalfTileOverlayGreyscale90
@@ -3255,34 +3263,37 @@ entities:
             2496: 44,-7
             2497: 44,-9
         - node:
+            color: '#A4610696'
+            id: HalfTileOverlayGreyscale90
+          decals:
+            5159: 44,-26
+            5160: 44,-28
+            5161: 44,-30
+            5162: 44,-32
+            5163: 44,-20
+            5164: 44,-17
+            5165: 44,-18
+        - node:
             cleanable: True
             color: '#A4610696'
             id: HalfTileOverlayGreyscale90
           decals:
-            1184: 44,-18
             1185: 44,-11
             1186: 44,-12
             1187: 44,-13
             1188: 44,-14
             1189: 44,-15
             1190: 44,-16
-            1191: 44,-17
             1192: 44,-19
-            1201: 44,-32
-            1202: 44,-30
-            1203: 44,-28
-            1204: 44,-26
-            1205: 44,-20
             1211: 33,-35
         - node:
-            cleanable: True
             color: '#FA750096'
             id: HalfTileOverlayGreyscale90
           decals:
-            1129: 1,-54
-            1130: 1,-56
-            1131: 1,-58
-            1132: 1,-60
+            5151: 1,-60
+            5152: 1,-58
+            5153: 1,-56
+            5154: 1,-54
         - node:
             color: '#FFFFFFFF'
             id: LoadingArea
@@ -3390,6 +3401,11 @@ entities:
           decals:
             213: 41,25
         - node:
+            color: '#3EB38896'
+            id: QuarterTileOverlayGreyscale
+          decals:
+            5068: -51,6
+        - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale
           decals:
@@ -3423,9 +3439,9 @@ entities:
             1704: 17,-44
             1705: 17,-45
             1712: 17,-40
-            2118: -1,-51
             2864: -5,-42
             2871: -4,-42
+            5141: -1,-51
         - node:
             color: '#820000FF'
             id: QuarterTileOverlayGreyscale
@@ -3515,6 +3531,11 @@ entities:
             2887: 5,-47
             2888: 6,-47
         - node:
+            color: '#EFB34196'
+            id: QuarterTileOverlayGreyscale
+          decals:
+            5069: -53,6
+        - node:
             color: '#F9801D82'
             id: QuarterTileOverlayGreyscale
           decals:
@@ -3537,6 +3558,11 @@ entities:
           decals:
             211: 40,25
             214: 41,25
+        - node:
+            color: '#3EB38896'
+            id: QuarterTileOverlayGreyscale180
+          decals:
+            5067: -51,6
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale180
@@ -3672,7 +3698,7 @@ entities:
             color: '#FA750096'
             id: QuarterTileOverlayGreyscale180
           decals:
-            2120: 1,-53
+            5143: 1,-53
         - node:
             color: '#FED83D82'
             id: QuarterTileOverlayGreyscale180
@@ -3809,6 +3835,11 @@ entities:
             1401: 5,-48
             2890: 5,-47
         - node:
+            color: '#EFB34196'
+            id: QuarterTileOverlayGreyscale270
+          decals:
+            5071: -53,6
+        - node:
             color: '#F9801D82'
             id: QuarterTileOverlayGreyscale270
           decals:
@@ -3827,11 +3858,11 @@ entities:
             212: 40,25
             215: 41,25
         - node:
-            cleanable: True
             color: '#3EB38896'
             id: QuarterTileOverlayGreyscale90
           decals:
-            1245: -51,1
+            5065: -51,1
+            5066: -51,6
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale90
@@ -3867,7 +3898,6 @@ entities:
             1709: 16,-42
             1710: 16,-41
             1711: 16,-40
-            2119: 1,-51
             2862: -5,-42
             2870: -4,-42
             4754: 11,-47
@@ -3876,6 +3906,7 @@ entities:
             4760: 10,-48
             4761: 11,-48
             4762: 12,-48
+            5142: 1,-51
         - node:
             cleanable: True
             color: '#52B4E996'
@@ -3959,6 +3990,11 @@ entities:
             1403: 12,-44
             2885: 4,-47
             2886: 5,-47
+        - node:
+            color: '#EFB34196'
+            id: QuarterTileOverlayGreyscale90
+          decals:
+            5070: -53,6
         - node:
             color: '#F9161DFF'
             id: QuarterTileOverlayGreyscale90
@@ -4064,22 +4100,10 @@ entities:
             1005: 41,10
             1006: 41,14
         - node:
-            color: '#EFB34196'
-            id: ThreeQuarterTileOverlayGreyscale
-          decals:
-            1246: -53,6
-        - node:
-            cleanable: True
             color: '#A4610696'
             id: ThreeQuarterTileOverlayGreyscale180
           decals:
-            1200: 44,-34
-        - node:
-            cleanable: True
-            color: '#3EB38896'
-            id: ThreeQuarterTileOverlayGreyscale90
-          decals:
-            1244: -51,6
+            5166: 44,-34
         - node:
             color: '#52B4E996'
             id: WarnCornerGreyscaleNE
@@ -12774,6 +12798,11 @@ entities:
     - type: Transform
       pos: 20.5,-49.5
       parent: 2
+  - uid: 29118
+    components:
+    - type: Transform
+      pos: 18.5,-40.5
+      parent: 2
 - proto: AirlockMedicalGlassLocked
   entities:
   - uid: 1673
@@ -17994,11 +18023,6 @@ entities:
       parent: 2
 - proto: Barricade
   entities:
-  - uid: 283
-    components:
-    - type: Transform
-      pos: -0.5,-40.5
-      parent: 2
   - uid: 617
     components:
     - type: Transform
@@ -76249,6 +76273,43 @@ entities:
     - type: Transform
       pos: 1.7310164,54.553185
       parent: 2
+- proto: CybersunFlag
+  entities:
+  - uid: 1209
+    components:
+    - type: Transform
+      pos: 44.5,2.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29112
+    components:
+    - type: Transform
+      pos: 46.5,12.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29113
+    components:
+    - type: Transform
+      pos: 60.5,10.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29114
+    components:
+    - type: Transform
+      pos: 51.5,-7.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29115
+    components:
+    - type: Transform
+      pos: 51.5,2.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: CybersunFlippo
   entities:
   - uid: 27004
@@ -82496,6 +82557,43 @@ entities:
     - type: Transform
       pos: 3.5,10.5
       parent: 2
+- proto: DonkFlag
+  entities:
+  - uid: 29105
+    components:
+    - type: Transform
+      pos: 41.5,-18.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29106
+    components:
+    - type: Transform
+      pos: 47.5,-18.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29107
+    components:
+    - type: Transform
+      pos: 55.5,-29.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29109
+    components:
+    - type: Transform
+      pos: 53.5,-44.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29111
+    components:
+    - type: Transform
+      pos: 65.5,-18.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: DonkpocketBoxSpawner
   entities:
   - uid: 5870
@@ -125563,6 +125661,50 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+- proto: InterdyneFlag
+  entities:
+  - uid: 283
+    components:
+    - type: Transform
+      pos: -8.5,-49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 478
+    components:
+    - type: Transform
+      pos: -12.5,-49.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29100
+    components:
+    - type: Transform
+      pos: 11.5,-58.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29101
+    components:
+    - type: Transform
+      pos: -1.5,-42.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29103
+    components:
+    - type: Transform
+      pos: -24.5,-53.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29104
+    components:
+    - type: Transform
+      pos: 23.5,-53.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: InterdyneFlippo
   entities:
   - uid: 26997
@@ -125575,6 +125717,15 @@ entities:
     - type: Transform
       pos: 14.795712,-58.50051
       parent: 2
+- proto: InterdyneSyndicateFlag
+  entities:
+  - uid: 29098
+    components:
+    - type: Transform
+      pos: -4.5,-55.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: IronRock
   entities:
   - uid: 62
@@ -132995,7 +133146,7 @@ entities:
     components:
     - type: MetaData
       desc: A marble stele celebrating 300 years of business for the Gorlex Maurauders, we should probably have this removed soon...
-      name: Gorlex Security Consulting 300th Anneversery commemoration
+      name: Gorlex Maurauders 300th anneversary commemoration
     - type: Transform
       pos: 0.5,1.5
       parent: 2
@@ -135996,6 +136147,13 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 29108
+    components:
+    - type: Transform
+      pos: 58.5,-27.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: PosterContrabandEAT
   entities:
   - uid: 2916
@@ -136134,20 +136292,6 @@ entities:
       fixtures: {}
 - proto: PosterContrabandInterdyne
   entities:
-  - uid: 21548
-    components:
-    - type: Transform
-      pos: -12.5,-49.5
-      parent: 2
-    - type: Fixtures
-      fixtures: {}
-  - uid: 21549
-    components:
-    - type: Transform
-      pos: -8.5,-49.5
-      parent: 2
-    - type: Fixtures
-      fixtures: {}
   - uid: 21550
     components:
     - type: Transform
@@ -136182,6 +136326,15 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,-55.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+- proto: PosterContrabandInterdyneSyndicate
+  entities:
+  - uid: 29099
+    components:
+    - type: Transform
+      pos: -4.5,-59.5
       parent: 2
     - type: Fixtures
       fixtures: {}
@@ -136377,6 +136530,15 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+- proto: PosterContrabandWaffleCorpTwo
+  entities:
+  - uid: 29110
+    components:
+    - type: Transform
+      pos: 45.5,-41.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: PosterContrabandWehWatches
   entities:
   - uid: 9799
@@ -136429,6 +136591,13 @@ entities:
     components:
     - type: Transform
       pos: 8.5,-47.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29117
+    components:
+    - type: Transform
+      pos: 18.5,-41.5
       parent: 2
     - type: Fixtures
       fixtures: {}
@@ -152349,6 +152518,13 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 29102
+    components:
+    - type: Transform
+      pos: -27.5,-40.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: SignNews
   entities:
   - uid: 7028
@@ -152565,14 +152741,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 44.5,13.5
-      parent: 2
-    - type: Fixtures
-      fixtures: {}
-  - uid: 8570
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 44.5,2.5
       parent: 2
     - type: Fixtures
       fixtures: {}
@@ -159701,6 +159869,13 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 29116
+    components:
+    - type: Transform
+      pos: -52.5,7.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: SyndieHandyFlag
   entities:
   - uid: 24208
@@ -164633,39 +164808,28 @@ entities:
     - type: Transform
       pos: -11.5,-2.5
       parent: 2
-- proto: VendingMachineMedical
+- proto: VendingMachineMedicalSyndicate
   entities:
-  - uid: 478
+  - uid: 6970
     components:
-    - type: MetaData
-      name: Syndimed plus
     - type: Transform
       pos: 7.5,-39.5
       parent: 2
-  - uid: 1209
+  - uid: 8570
     components:
-    - type: MetaData
-      name: Syndimed plus
     - type: Transform
       pos: -21.5,-44.5
       parent: 2
-  - uid: 6970
+  - uid: 21548
     components:
-    - type: MetaData
-      name: Syndimed plus
     - type: Transform
       pos: -2.5,-42.5
       parent: 2
-  - uid: 24328
+  - uid: 21549
     components:
-    - type: MetaData
-      name: SyndiMed Plus
     - type: Transform
       pos: -15.5,-41.5
       parent: 2
-    - type: AccessReader
-      accessListsOriginal:
-      - - Medical
 - proto: VendingMachineMediDrobe
   entities:
   - uid: 6815
@@ -164857,6 +165021,40 @@ entities:
     - type: Transform
       pos: -12.5,-54.5
       parent: 2
+- proto: VendingMachineWallMedicalCivilianSyndicate
+  entities:
+  - uid: 29095
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -38.5,-4.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29096
+    components:
+    - type: Transform
+      pos: 4.5,5.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 29097
+    components:
+    - type: Transform
+      pos: 34.5,46.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+- proto: VendingMachineWallMedicalSyndicate
+  entities:
+  - uid: 24328
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,42.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: VendingMachineWinter
   entities:
   - uid: 7071

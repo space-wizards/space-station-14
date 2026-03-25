@@ -635,6 +635,24 @@
   - type: Sprite
     state: poster66_contraband
 
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandInterdyneSyndicate
+  name: "Interdyne Pharmaceutics?"
+  description: "A blood-red colored version of a Interdyne Pharmaceutics advertisement. 'become the captain of your soul!'"
+  components:
+  - type: Sprite
+    state: poster67_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandWaffleCorpTwo
+  name: "Waffle Corp: Affordable, effecient, Practical."
+  description: "A poster for Waffle Corp. Why does a waffle company make firearms...?"
+  components:
+  - type: Sprite
+    state: poster68_contraband
+
 # Legit
 - type: entity
   parent: PosterBase
@@ -1240,3 +1258,5 @@
   components:
   - type: Sprite
     state: originmap
+
+

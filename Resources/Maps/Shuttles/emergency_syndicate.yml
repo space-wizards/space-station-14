@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 268.0.0
+  engineVersion: 272.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/22/2025 00:21:49
-  entityCount: 656
+  time: 03/25/2026 16:05:32
+  entityCount: 657
 maps: []
 grids:
 - 1
@@ -195,6 +195,8 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
 - proto: AirlockCargoGlassLocked
   entities:
   - uid: 446
@@ -1365,12 +1367,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,-20.5
       parent: 1
-  - uid: 443
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 4.5,-20.5
-      parent: 1
 - proto: Chair
   entities:
   - uid: 120
@@ -1762,6 +1758,24 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,-4.5
+      parent: 1
+    - type: Fixtures
+      fixtures: {}
+- proto: ClosetWallEmergencyN2
+  entities:
+  - uid: 658
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.5,-12.5
+      parent: 1
+    - type: Fixtures
+      fixtures: {}
+  - uid: 659
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 7.5,-12.5
       parent: 1
     - type: Fixtures
       fixtures: {}
@@ -3273,7 +3287,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,-14.5
       parent: 1
-    - type: DeviceNetwork
     - type: Fixtures
       fixtures: {}
   - uid: 634
@@ -3502,12 +3515,10 @@ entities:
     - type: Transform
       pos: 4.445096,-5.35236
       parent: 1
-- proto: VendingMachineMedical
+- proto: VendingMachineMedicalSyndicate
   entities:
-  - uid: 571
+  - uid: 572
     components:
-    - type: MetaData
-      name: Syndimed plus
     - type: Transform
       pos: -1.5,-10.5
       parent: 1
@@ -3525,24 +3536,20 @@ entities:
     - type: Transform
       pos: 0.5,-17.5
       parent: 1
-- proto: VendingMachineWallMedical
+- proto: VendingMachineWallMedicalCivilianSyndicate
   entities:
-  - uid: 572
+  - uid: 573
     components:
-    - type: MetaData
-      name: Interdyne medical vendor
     - type: Transform
-      pos: -1.5,-9.5
+      pos: 2.5,-14.5
       parent: 1
     - type: Fixtures
       fixtures: {}
-  - uid: 573
+  - uid: 657
     components:
-    - type: MetaData
-      name: Interdyne medical vendor
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 2.5,-14.5
+      pos: -1.5,-9.5
       parent: 1
     - type: Fixtures
       fixtures: {}

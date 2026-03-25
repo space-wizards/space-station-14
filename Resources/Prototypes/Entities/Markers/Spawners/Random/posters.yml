@@ -95,6 +95,8 @@
       - PosterContrabandExoAcid
       - PosterContrabandExoRun
       - PosterContrabandExoChomp
+      - PosterContrabandInterdyneSyndicate
+      - PosterContrabandWaffleCorpTwo
     chance: 1
 
 - type: entity
