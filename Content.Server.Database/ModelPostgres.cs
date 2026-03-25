@@ -59,14 +59,19 @@ namespace Content.Server.Database
                 }
             }
 
-            // Postgres-only GIN tsvector index on the log message for fast full-text search.
-            // Without this, every search requires computing to_tsvector() on the fly across
-            // potentially millions of payload rows.
+            // Stored generated tsvector column on the log message for fast full-text search.
+            // PostgreSQL materializes to_tsvector('english', message) at insert time so
+            // SS14.Admin queries never recompute it per row. The GIN index enables sub-ms (ideally)
+            // @@ lookups across millions of payload rows.
+            // SQLite ignores this property (see ModelSqlite.cs).
             modelBuilder.Entity<AdminLogEventPayload>()
-                .HasIndex(p => p.Message)
-                .HasDatabaseName("IX_admin_log_event_payload_message_gin")
-                .HasMethod("GIN")
-                .HasAnnotation("Npgsql:TsVectorConfig", "english");
+                .HasGeneratedTsVectorColumn(
+                    p => p.SearchVector,
+                    "english",
+                    p => p.Message)
+                .HasIndex(p => p.SearchVector)
+                .HasDatabaseName("IX_admin_log_event_payload_search_vector_gin")
+                .HasMethod("GIN");
         }
     }
 }

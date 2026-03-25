@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using Content.Shared.Database;
+﻿using Content.Shared.Database;
 
 namespace Content.Shared.Administration.Logs;
 
@@ -27,7 +26,7 @@ public partial class SharedAdminLogManager : ISharedAdminLogManager
         LogType type,
         LogImpact impact,
         string message,
-        JsonDocument json,
+        object? payload,
         IReadOnlyCollection<Guid>? players = null,
         IReadOnlyCollection<AdminLogEntityRef>? entities = null,
         IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null)

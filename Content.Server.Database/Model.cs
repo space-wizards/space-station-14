@@ -7,9 +7,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
-using Content.Server.Database.Migrations.Postgres;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -692,6 +692,13 @@ namespace Content.Server.Database
         [Key] public int EventId { get; set; }
         [Required] public string Message { get; set; } = default!;
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
+
+        /// <summary>
+        ///     Postgres stored generated column: <c>to_tsvector('english', message)</c>.
+        ///     Cached at insert time
+        /// </summary>
+        public NpgsqlTsVector SearchVector { get; set; } = default!;
+
         [ForeignKey(nameof(EventId))] public AdminLogEvent Event { get; set; } = default!;
     }
 

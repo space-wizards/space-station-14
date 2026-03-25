@@ -249,14 +249,21 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("message");
 
+                    b.Property<NpgsqlTsVector>("SearchVector")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("tsvector")
+                        .HasColumnName("search_vector")
+                        .HasAnnotation("Npgsql:TsVectorConfig", "english")
+                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "Message" });
+
                     b.HasKey("EventId")
                         .HasName("PK_admin_log_event_payload");
 
-                    b.HasIndex("Message")
-                        .HasDatabaseName("IX_admin_log_event_payload_message_gin")
-                        .HasAnnotation("Npgsql:TsVectorConfig", "english");
+                    b.HasIndex("SearchVector")
+                        .HasDatabaseName("IX_admin_log_event_payload_search_vector_gin");
 
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Message"), "GIN");
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("SearchVector"), "GIN");
 
                     b.ToTable("admin_log_event_payload", (string)null);
                 });

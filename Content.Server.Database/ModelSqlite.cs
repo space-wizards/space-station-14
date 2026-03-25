@@ -75,6 +75,11 @@ namespace Content.Server.Database
                 .Property(log => log.Json)
                 .HasConversion(jsonStringConverter);
 
+            // SearchVector is a PostgreSQL-only stored generated tsvector column.
+            // SQLite has no equivalent — ignore it.
+            modelBuilder.Entity<AdminLogEventPayload>()
+                .Ignore(p => p.SearchVector);
+
             modelBuilder.Entity<Profile>()
                 .Property(log => log.Markings)
                 .HasConversion(jsonByteArrayConverter);
