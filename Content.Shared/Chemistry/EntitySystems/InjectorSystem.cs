@@ -1,4 +1,4 @@
-using System.Text.Json;
+
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
@@ -231,15 +231,15 @@ public sealed partial class InjectorSystem : EntitySystem
                 _adminLogger.AddStructured(
                     LogType.ForceFeed,
                     LogImpact.Medium,
-                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from themselves.",
-                    JsonSerializer.SerializeToDocument(new
+                    $"{user:user} is attempting to draw {amount} units from themselves.",
+                    new
                     {
                         actor = (int) user,
                         victim = (int) user,
                         tool = (int) injector.Owner,
                         attemptedTransferAmount = amount,
                         injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
-                    }),
+                    },
                     players: players,
                     entities:
                     [
@@ -255,15 +255,15 @@ public sealed partial class InjectorSystem : EntitySystem
                 _adminLogger.AddStructured(
                     LogType.Ingestion,
                     LogImpact.Medium,
-                    $"{ToPrettyString(user):user} is attempting to inject themselves with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}.",
-                    JsonSerializer.SerializeToDocument(new
+                    $"{user:user} is attempting to inject themselves with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}.",
+                    new
                     {
                         actor = (int) user,
                         victim = (int) user,
                         tool = (int) injector.Owner,
                         attemptedTransferAmount = amount,
                         injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
-                    }),
+                    },
                     players: players,
                     entities:
                     [
@@ -287,15 +287,15 @@ public sealed partial class InjectorSystem : EntitySystem
                 _adminLogger.AddStructured(
                     LogType.ForceFeed,
                     LogImpact.Medium,
-                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from {ToPrettyString(target):target}",
-                    JsonSerializer.SerializeToDocument(new
+                    $"{user:user} is attempting to draw {amount} units from {target:target}",
+                    new
                     {
                         actor = (int) user,
                         victim = (int) target,
                         tool = (int) injector.Owner,
                         attemptedTransferAmount = amount,
                         injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
-                    }),
+                    },
                     players: players,
                     entities:
                     [
@@ -311,15 +311,15 @@ public sealed partial class InjectorSystem : EntitySystem
                 _adminLogger.AddStructured(
                     LogType.ForceFeed,
                     LogImpact.Medium,
-                    $"{ToPrettyString(user):user} is attempting to inject {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}",
-                    JsonSerializer.SerializeToDocument(new
+                    $"{user:user} is attempting to inject {target:target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}",
+                    new
                     {
                         actor = (int) user,
                         victim = (int) target,
                         tool = (int) injector.Owner,
                         attemptedTransferAmount = amount,
                         injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
-                    }),
+                    },
                     players: players,
                     entities:
                     [
@@ -618,14 +618,14 @@ public sealed partial class InjectorSystem : EntitySystem
         _adminLogger.AddStructured(
             LogType.ForceFeed,
             LogImpact.Medium,
-            $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(injector):using}",
-            JsonSerializer.SerializeToDocument(new
+            $"{user:user} injected {target:target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {injector:using}",
+            new
             {
                 actor = (int) user,
                 victim = (int) target,
                 tool = (int) injector.Owner,
                 transferredSolution = SerializeSolutionForAdminLog(removedSolution)
-            }),
+            },
             players: players,
             entities:
             [

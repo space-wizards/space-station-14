@@ -46,9 +46,10 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public abstract partial class SharedStorageSystem : EntitySystem
 {
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] protected IRobustRandom Random = default!;
-    [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private   readonly IConfigurationManager _cfg = default!;
+    [Dependency] private   readonly IPrototypeManager _prototype = default!;
+    [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
 
     [Dependency] protected ActionBlockerSystem ActionBlocker = default!;
     [Dependency] private EntityLookupSystem _entityLookupSystem = default!;
@@ -729,10 +730,10 @@ public abstract partial class SharedStorageSystem : EntitySystem
         // If the user's active hand is empty, try pick up the item.
         if (!_sharedHandsSystem.TryGetActiveItem(player.AsNullable(), out var activeItem))
         {
-            _adminLog.Add(
+            _adminLogger.Add(
                 LogType.Storage,
                 LogImpact.Low,
-                $"{ToPrettyString(player):player} is attempting to take {ToPrettyString(item):item} out of {ToPrettyString(storage):storage}");
+                $"{player:player} is attempting to take {item:item} out of {storage:storage}");
 
             if (_sharedHandsSystem.TryPickupAnyHand(player, item, handsComp: player.Comp)
                 && storage.Comp.StorageRemoveSound != null
@@ -744,10 +745,10 @@ public abstract partial class SharedStorageSystem : EntitySystem
             return;
         }
 
-        _adminLog.Add(
+        _adminLogger.Add(
             LogType.Storage,
             LogImpact.Low,
-            $"{ToPrettyString(player):player} is interacting with {ToPrettyString(item):item} while it is stored in {ToPrettyString(storage):storage} using {ToPrettyString(activeItem):used}");
+            $"{player:player} is interacting with {item:item} while it is stored in {storage:storage} using {activeItem:used}");
 
         // Else, interact using the held item
         if (_interactionSystem.InteractUsing(player,
@@ -766,10 +767,10 @@ public abstract partial class SharedStorageSystem : EntitySystem
         if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item))
             return;
 
-        _adminLog.Add(
+        _adminLogger.Add(
             LogType.Storage,
             LogImpact.Low,
-            $"{ToPrettyString(player):player} is updating the location of {ToPrettyString(item):item} within {ToPrettyString(storage):storage}");
+            $"{player:player} is updating the location of {item:item} within {storage:storage}");
 
         TrySetItemStorageLocation(item!, storage!, msg.Location);
     }
@@ -824,10 +825,10 @@ public abstract partial class SharedStorageSystem : EntitySystem
         if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item, held: true))
             return;
 
-        _adminLog.Add(
+        _adminLogger.Add(
             LogType.Storage,
             LogImpact.Low,
-            $"{ToPrettyString(player):player} is inserting {ToPrettyString(item):item} into {ToPrettyString(storage):storage}");
+            $"{player:player} is inserting {item:item} into {storage:storage}");
         InsertAt(storage!, item!, msg.Location, out _, player, stackAutomatically: false);
     }
 
@@ -836,10 +837,10 @@ public abstract partial class SharedStorageSystem : EntitySystem
         if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item, held: true))
             return;
 
-        _adminLog.Add(
+        _adminLogger.Add(
             LogType.Storage,
             LogImpact.Low,
-            $"{ToPrettyString(player):player} is inserting {ToPrettyString(item):item} into {ToPrettyString(storage):storage}");
+            $"{player:player} is inserting {item:item} into {storage:storage}");
         InsertAt(storage!, item!, msg.Location, out _, player, stackAutomatically: false);
     }
 

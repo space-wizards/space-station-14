@@ -182,7 +182,7 @@ namespace Content.Server.RoundEnd
 
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
             if (requester != null)
-                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):player}{what}");
+                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {requester.Value:player}{what}");
             else
                 _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called{what}");
 
@@ -252,7 +252,7 @@ namespace Content.Server.RoundEnd
 
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
             if (requester != null)
-                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):player}{what}");
+                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {requester.Value:player}{what}");
             else
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled{what}");
 

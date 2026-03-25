@@ -28,12 +28,8 @@ public sealed partial class RehydratableSystem : EntitySystem
 
     private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionChangedEvent args)
     {
-        // The changes are already networked as part of the same game state.
-        if (_timing.ApplyingState)
-            return;
-
-        var quantity = _solutions.GetTotalPrototypeQuantity(ent.Owner, ent.Comp.CatalystPrototype);
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner)} was hydrated, now contains a solution of: {SharedSolutionContainerSystem.ToPrettyString(args.Solution.Comp.Solution)}.");
+        var quantity = _solutions.GetTotalPrototypeQuantity(ent, ent.Comp.CatalystPrototype);
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner} was hydrated, now contains a solution of: {SharedSolutionContainerSystem.ToPrettyString(args.Solution)}.");
         if (quantity != FixedPoint2.Zero && quantity >= ent.Comp.CatalystMinimum)
         {
             Expand(ent);
@@ -51,7 +47,7 @@ public sealed partial class RehydratableSystem : EntitySystem
         var randomMob = _random.Pick(comp.PossibleSpawns);
 
         var target = Spawn(randomMob, Transform(uid).Coordinates);
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner)} has been hydrated correctly and spawned: {ToPrettyString(target)}.");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner} has been hydrated correctly and spawned: {target}.");
 
         _popup.PopupEntity(Loc.GetString("rehydratable-component-expands-message", ("owner", uid)), target);
 

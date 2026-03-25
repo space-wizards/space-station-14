@@ -128,7 +128,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
             return;
 
         if (_itemSlots.TryEjectToHands(ent, holderSlot, user, true))
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} ejected a station AI holder from AI restoration console ({ToPrettyString(ent.Owner)})");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:user} ejected a station AI holder from AI restoration console ({ent.Owner})");
     }
 
     private void RepairStationAi(Entity<StationAiFixerConsoleComponent> ent, EntityUid user)
@@ -136,7 +136,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
         if (ent.Comp.ActionTarget == null)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} started a repair of {ToPrettyString(ent.Comp.ActionTarget)} using an AI restoration console ({ToPrettyString(ent.Owner)})");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:user} started a repair of {ent.Comp.ActionTarget} using an AI restoration console ({ent.Owner})");
         StartAction(ent, StationAiFixerConsoleAction.Repair);
     }
 
@@ -145,7 +145,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
         if (ent.Comp.ActionTarget == null)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user):user} started a purge of {ToPrettyString(ent.Comp.ActionTarget)} using {ToPrettyString(ent.Owner)}");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{user:user} started a purge of {ent.Comp.ActionTarget} using {ent.Owner}");
         StartAction(ent, StationAiFixerConsoleAction.Purge);
     }
 
@@ -154,7 +154,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
         if (!IsActionInProgress(ent))
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} canceled operation involving {ToPrettyString(ent.Comp.ActionTarget)} and {ToPrettyString(ent.Owner)} ({ent.Comp.ActionType} action)");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:user} canceled operation involving {ent.Comp.ActionTarget} and {ent.Owner} ({ent.Comp.ActionType} action)");
         StopAction(ent);
     }
 

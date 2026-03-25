@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Text.Json;
+using System.Linq;
+
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
@@ -290,15 +290,15 @@ public sealed partial class IngestionSystem : EntitySystem
             _adminLogger.AddStructured(
                 LogType.ForceFeed,
                 LogImpact.Medium,
-                $"{ToPrettyString(args.User):user} is forcing {ToPrettyString(entity):target} to eat {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}",
-                JsonSerializer.SerializeToDocument(new
+                $"{args.User:user} is forcing {entity:target} to eat {food:food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}",
+                new
                 {
                     actor = (int) args.User,
                     victim = (int) entity.Owner,
                     tool = (int) food,
                     stage = "attempt",
                     foodSolution = SerializeSolutionForAdminLog(foodSolution)
-                }),
+                },
                 players: players,
                 entities:
                 [
@@ -315,15 +315,15 @@ public sealed partial class IngestionSystem : EntitySystem
             _adminLogger.AddStructured(
                 LogType.Ingestion,
                 LogImpact.Low,
-                $"{ToPrettyString(entity):target} is eating {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}",
-                JsonSerializer.SerializeToDocument(new
+                $"{entity:target} is eating {food:food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}",
+                new
                 {
                     actor = (int) entity.Owner,
                     victim = (int) entity.Owner,
                     tool = (int) food,
                     stage = "attempt",
                     foodSolution = SerializeSolutionForAdminLog(foodSolution)
-                }),
+                },
                 players: players,
                 entities:
                 [
@@ -513,15 +513,15 @@ public sealed partial class IngestionSystem : EntitySystem
             _adminLogger.AddStructured(
                 LogType.ForceFeed,
                 LogImpact.Medium,
-                $"{ToPrettyString(entity):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity):food}",
-                JsonSerializer.SerializeToDocument(new
+                $"{entity:user} forced {args.User:target} to eat {entity:food}",
+                new
                 {
                     actor = (int) args.User,
                     victim = (int) args.Target,
                     tool = (int) entity.Owner,
                     stage = "success",
                     consumed = SerializeSolutionForAdminLog(args.Split)
-                }),
+                },
                 players: players,
                 entities:
                 [
@@ -546,15 +546,15 @@ public sealed partial class IngestionSystem : EntitySystem
             _adminLogger.AddStructured(
                 LogType.Ingestion,
                 LogImpact.Low,
-                $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity):food}",
-                JsonSerializer.SerializeToDocument(new
+                $"{args.User:target} ate {entity:food}",
+                new
                 {
                     actor = (int) args.User,
                     victim = (int) args.Target,
                     tool = (int) entity.Owner,
                     stage = "success",
                     consumed = SerializeSolutionForAdminLog(args.Split)
-                }),
+                },
                 players: players,
                 entities:
                 [

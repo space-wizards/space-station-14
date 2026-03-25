@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.EntityTable;
@@ -99,12 +99,12 @@ public sealed partial class TriggerSystem : EntitySystem
         if (user != null)
         {
             _adminLogger.Add(LogType.Trigger,
-                $"{ToPrettyString(user.Value):user} started a {ent.Comp.Delay} second timer trigger on entity {ToPrettyString(ent.Owner):timer}");
+                $"{user.Value:user} started a {ent.Comp.Delay} second timer trigger on entity {ent.Owner:timer}");
         }
         else
         {
             _adminLogger.Add(LogType.Trigger,
-                $"{ent.Comp.Delay} second timer trigger started on entity {ToPrettyString(ent.Owner):timer}");
+                $"{ent.Comp.Delay} second timer trigger started on entity {ent.Owner:timer}");
         }
 
         if (ent.Comp.Popup != null)
@@ -143,7 +143,7 @@ public sealed partial class TriggerSystem : EntitySystem
         if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             _appearance.SetData(ent.Owner, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
 
-        _adminLogger.Add(LogType.Trigger, $"A timer trigger was stopped before triggering on entity {ToPrettyString(ent.Owner):timer}");
+        _adminLogger.Add(LogType.Trigger, $"A timer trigger was stopped before triggering on entity {ent.Owner:timer}");
         return true;
     }
 

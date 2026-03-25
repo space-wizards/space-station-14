@@ -34,7 +34,8 @@ public sealed partial class PuddleSystem
 
         if (TrySplashSpillAt(entity.Owner, Transform(entity).Coordinates, out _, out var solution) && args.User != null)
         {
-            AdminLogger.Add(LogType.Landed,
+            //This needs a ToPrettyString fix
+            _adminLogger.Add(LogType.Landed,
                 $"{ToPrettyString(entity.Owner):entity} spilled a solution {SharedSolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
     }

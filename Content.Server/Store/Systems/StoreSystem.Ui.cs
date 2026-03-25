@@ -18,14 +18,16 @@ namespace Content.Server.Store.Systems;
 
 public sealed partial class StoreSystem
 {
-    [Dependency] private IAdminLogManager _admin = default!;
-    [Dependency] private ActionContainerSystem _actionContainer = default!;
-    [Dependency] private ActionsSystem _actions = default!;
-    [Dependency] private ActionUpgradeSystem _actionUpgrade = default!;
-    [Dependency] private NpcFactionSystem _npcFaction = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedHandsSystem _hands = default!;
-    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly ActionUpgradeSystem _actionUpgrade = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
 
     private void InitializeUi()
     {
@@ -228,9 +230,9 @@ public sealed partial class StoreSystem
             }
         }
 
-        _admin.Add(LogType.StorePurchase,
+        _adminLogger.Add(LogType.StorePurchase,
             logImpact,
-            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, ProtoMan)}\" from {ToPrettyString(uid)}{logExtraInfo}.");
+            $"{buyer:player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {uid}{logExtraInfo}.");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         if (msg.SoundSource != null && GetEntity(msg.SoundSource) != null)
@@ -306,7 +308,7 @@ public sealed partial class StoreSystem
         if (!component.RefundAllowed || component.BoughtEntities.Count == 0)
             return;
 
-        _admin.Add(LogType.StoreRefund, LogImpact.Low, $"{ToPrettyString(buyer):player} has refunded their purchases from {ToPrettyString(uid):store}");
+        _adminLogger.Add(LogType.StoreRefund, LogImpact.Low, $"{buyer:player} has refunded their purchases from {uid:store}");
 
         for (var i = component.BoughtEntities.Count - 1; i >= 0; i--)
         {

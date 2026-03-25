@@ -12,11 +12,11 @@ namespace Content.Shared.Containers;
 
 public sealed partial class DragInsertContainerSystem : EntitySystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLog = default!;
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private ClimbSystem _climb = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly ClimbSystem _climb = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
@@ -111,7 +111,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
                 {
                     Act = () =>
                     {
-                        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} emptied container {ToPrettyString(ent)}");
+                        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:player} emptied container {ent}");
                         var ents = _container.EmptyContainer(container);
                         foreach (var contained in ents)
                         {
@@ -145,7 +145,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
         if (!_container.Insert(target, container))
             return false;
 
-        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(target):player} into container {ToPrettyString(containerEntity)}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:player} inserted {target:player} into container {containerEntity}");
         return true;
     }
 

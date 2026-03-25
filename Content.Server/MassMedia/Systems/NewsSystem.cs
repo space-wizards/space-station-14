@@ -133,7 +133,7 @@ public sealed partial class NewsSystem : SharedNewsSystem
         {
             _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
-                $"{ToPrettyString(msg.Actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
+                $"{msg.Actor:actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
             );
 
             articles.RemoveAt(msg.ArticleNum);
@@ -219,7 +219,7 @@ public sealed partial class NewsSystem : SharedNewsSystem
             _adminLogger.Add(
                 LogType.Chat,
                 LogImpact.Medium,
-                $"{ToPrettyString(actor):actor} created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
+                $"{actor:actor} created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
         }
         else
         {

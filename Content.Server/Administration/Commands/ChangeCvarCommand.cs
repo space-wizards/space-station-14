@@ -17,9 +17,9 @@ namespace Content.Server.Administration.Commands;
 [AnyCommand]
 public sealed partial class ChangeCvarCommand : IConsoleCommand
 {
-    [Dependency] private IConfigurationManager _configurationManager = default!;
-    [Dependency] private IAdminLogManager _adminLogManager = default!;
-    [Dependency] private CVarControlManager _cVarControlManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly CVarControlManager _cVarControlManager = default!;
 
     /// <summary>
     /// Searches the list of cvars for a cvar that matches the search string.
@@ -179,7 +179,7 @@ public sealed partial class ChangeCvarCommand : IConsoleCommand
 
                 var oldValue = _configurationManager.GetCVar<object>(cvar);
                 _configurationManager.SetCVar(cvar, parsed);
-                _adminLogManager.Add(LogType.AdminCommands,
+                _adminLogger.Add(LogType.AdminCommands,
                     LogImpact.Extreme,
                     $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValue.ToString()} to {parsed.ToString()}"
                     );

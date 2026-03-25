@@ -1,5 +1,7 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
@@ -24,21 +26,22 @@ namespace Content.Shared.Medical;
 /// </summary>
 public abstract partial class SharedDefibrillatorSystem : EntitySystem
 {
-    [Dependency] private SharedChatSystem _chat = default!;
-    [Dependency] private DamageableSystem _damageable = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private SharedElectrocutionSystem _electrocution = default!;
-    [Dependency] private ISharedPlayerManager _player = default!;
-    [Dependency] private ItemToggleSystem _toggle = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private MobThresholdSystem _mobThreshold = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private PowerCellSystem _powerCell = default!;
-    [Dependency] private SharedRottingSystem _rotting = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private UseDelaySystem _useDelay = default!;
-    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedChatSystem _chat = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedRottingSystem _rotting = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private readonly HashSet<EntityUid> _interacters = new();
 
@@ -238,6 +241,8 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         // if we don't have enough power left for another shot, turn it off
         if (!_powerCell.HasActivatableCharge(ent.Owner))
             _toggle.TryDeactivate(ent.Owner);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:player} used defibrillator {ent.Owner:tool} on {target:target}");
 
         var ev = new TargetDefibrillatedEvent(user, (ent.Owner, ent.Comp));
         RaiseLocalEvent(target, ref ev);

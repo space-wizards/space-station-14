@@ -3,7 +3,9 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -26,17 +28,23 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 {
-    [Dependency] private SharedMapSystem _mapSystem = default!;
-    [Dependency] private ActionBlockerSystem _blocker = default!;
-    [Dependency] private AlertsSystem _alertsSystem = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private ShuttleSystem _shuttle = default!;
-    [Dependency] private StationSystem _station = default!;
-    [Dependency] private TagSystem _tags = default!;
-    [Dependency] private UserInterfaceSystem _ui = default!;
-    [Dependency] private SharedContentEyeSystem _eyeSystem = default!;
-    [Dependency] private EntityQuery<PilotComponent> _pilotQuery = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+
+    private EntityQuery<MetaDataComponent> _metaQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
+    private readonly HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
 
     private static readonly ProtoId<TagPrototype> CanPilotTag = "CanPilot";
 
@@ -329,6 +337,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         ActionBlockerSystem.UpdateCanMove(entity);
         pilotComponent.Position = Transform(entity).Coordinates;
         Dirty(entity, pilotComponent);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{entity:player} started piloting {uid:target}");
     }
 
     public void RemovePilot(EntityUid pilotUid, PilotComponent pilotComponent)
@@ -348,6 +358,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         _alertsSystem.ClearAlert(pilotUid, pilotComponent.PilotingAlert);
 
         _popup.PopupEntity(Loc.GetString("shuttle-pilot-end"), pilotUid, pilotUid);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{pilotUid:player} stopped piloting");
 
         if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
             RemComp<PilotComponent>(pilotUid);

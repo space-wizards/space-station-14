@@ -89,7 +89,7 @@ public sealed partial class GameTicker
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStarted, $"Added game rule {ruleEntity}");
         var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
 #if DEBUG
         _chatManager.SendAdminAlert(str);
@@ -180,7 +180,7 @@ public sealed partial class GameTicker
             {
                 _sawmill.Info($"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
                 _adminLogger.Add(LogType.EventStarted,
-                    $"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
+                    $"Queued start for game rule {ruleEntity} with delay {delayTime}");
 
                 var delayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
                 delayed.RuleStartTime = _gameTiming.CurTime + (delayTime);
@@ -203,7 +203,7 @@ public sealed partial class GameTicker
         }
 
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStarted, $"Started game rule {ruleEntity}");
 
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
         ruleData.ActivatedAt = _gameTiming.CurTime;
@@ -233,7 +233,7 @@ public sealed partial class GameTicker
         EnsureComp<EndedGameRuleComponent>(ruleEntity);
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ruleEntity}");
 
         var ev = new GameRuleEndedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);

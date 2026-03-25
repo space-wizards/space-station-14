@@ -2,6 +2,8 @@ using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Popups;
@@ -39,10 +41,16 @@ public sealed partial class DockingSystem : SharedDockingSystem
     [SubscribeLocalEvent]
     private void OnAutoClose(EntityUid uid, DockingComponent component, BeforeDoorAutoCloseEvent args)
     {
-        // We'll just pin the door open when docked.
-        if (component.Docked)
-            args.Cancel();
-    }
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+        [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly PathfindingSystem _pathfinding = default!;
+        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
+        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     [SubscribeLocalEvent]
     private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
@@ -83,8 +91,132 @@ public sealed partial class DockingSystem : SharedDockingSystem
             var otherDock = _dockingQuery.Comp(component.DockedWith.Value);
             DebugTools.Assert(otherDock.DockedWith != null);
 
-            Dock((uid, component), (component.DockedWith.Value, otherDock));
-            DebugTools.Assert(component.Docked && otherDock.Docked);
+        public void Undock(Entity<DockingComponent> dock)
+        {
+            if (dock.Comp.DockedWith == null)
+                return;
+
+            OnUndock(dock.Owner);
+            OnUndock(dock.Comp.DockedWith.Value);
+            Cleanup(dock.Owner, dock);
+            _console.RefreshShuttleConsoles();
+        }
+
+        private void OnUndock(EntityUid dockUid)
+        {
+            if (TerminatingOrDeleted(dockUid))
+                return;
+
+            if (TryComp<DoorBoltComponent>(dockUid, out var airlock))
+                _doorSystem.SetBoltsDown((dockUid, airlock), false);
+
+            if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
+                door.ChangeAirtight = true;
+        }
+
+        private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
+        {
+            if (!TryGetEntity(args.DockEntity, out var dockEnt) ||
+                !TryComp(dockEnt, out DockingComponent? dockComp))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"));
+                return;
+            }
+
+            var dock = (dockEnt.Value, dockComp);
+
+            if (!CanUndock(dock))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"));
+                return;
+            }
+
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} requested undocking of {dockEnt.Value:entity}");
+
+            Undock(dock);
+        }
+
+        private void OnRequestDock(EntityUid uid, ShuttleConsoleComponent component, DockRequestMessage args)
+        {
+            var console = _console.GetDroneConsole(uid);
+
+            if (console == null)
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            var shuttleUid = Transform(console.Value).GridUid;
+
+            if (!CanShuttleDock(shuttleUid))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            if (!TryGetEntity(args.DockEntity, out var ourDock) ||
+                !TryGetEntity(args.TargetDockEntity, out var targetDock) ||
+                !TryComp(ourDock, out DockingComponent? ourDockComp) ||
+                !TryComp(targetDock, out DockingComponent? targetDockComp))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            // Cheating?
+            if (!TryComp(ourDock, out TransformComponent? xformA) ||
+                xformA.GridUid != shuttleUid)
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            // TODO: Move the CanDock stuff to the port state and also validate that stuff
+            // Also need to check preventpilot + enabled / dockedwith
+            if (!CanDock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp)))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} requested docking of {ourDock.Value:entity} with {targetDock.Value:target}");
+
+            Dock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp));
+        }
+
+        public bool CanUndock(Entity<DockingComponent?> dock)
+        {
+            if (!Resolve(dock, ref dock.Comp) ||
+                !dock.Comp.Docked)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns true if both docks can connect. Does not consider whether the shuttle allows it.
+        /// </summary>
+        public bool CanDock(Entity<DockingComponent> dockA, Entity<DockingComponent> dockB)
+        {
+            if (dockA.Comp.DockedWith != null ||
+                dockB.Comp.DockedWith != null)
+            {
+                return false;
+            }
+
+            var xformA = Transform(dockA);
+            var xformB = Transform(dockB);
+
+            if (!xformA.Anchored || !xformB.Anchored)
+                return false;
+
+            var (worldPosA, worldRotA) = XformSystem.GetWorldPositionRotation(xformA);
+            var (worldPosB, worldRotB) = XformSystem.GetWorldPositionRotation(xformB);
+
+            return CanDock(new MapCoordinates(worldPosA, xformA.MapID), worldRotA,
+                new MapCoordinates(worldPosB, xformB.MapID), worldRotB);
         }
     }
 

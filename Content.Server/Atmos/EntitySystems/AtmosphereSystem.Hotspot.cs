@@ -224,10 +224,9 @@ public sealed partial class AtmosphereSystem
         {
             if (sparkSourceUid.HasValue)
             {
-                _adminLog.Add(LogType.Flammable,
+                _adminLogger.Add(LogType.Flammable,
                     LogImpact.High,
-                    $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: " +
-                    $"{tile.Air.ToPrettyString()}");
+                    $"Heat/spark of {sparkSourceUid.Value} caused atmos ignition of gas: {tile.Air.Temperature.ToString():temperature}K - {oxygen}mol Oxygen, {plasma}mol Plasma, {tritium}mol Tritium");
             }
 
             tile.Hotspot = new Hotspot

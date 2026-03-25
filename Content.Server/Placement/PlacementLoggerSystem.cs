@@ -56,10 +56,10 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
         }
         else if (actor != null)
             _adminLogger.Add(logType, LogImpact.Medium,
-                $"{actor:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}");
+                $"{actor:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ev.EditedEntity:subject} at {ev.Coordinates}");
         else
             _adminLogger.Add(logType, LogImpact.Medium,
-                $"Placement system {ev.PlacementEventAction.ToString().ToLower()}ed {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}");
+                $"Placement system {ev.PlacementEventAction.ToString().ToLower()}ed {ev.EditedEntity:subject} at {ev.Coordinates}");
     }
 
     private void OnTilePlacement(PlacementTileEvent ev)

@@ -1,4 +1,4 @@
-using System.Text.Json;
+
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -523,14 +523,14 @@ namespace Content.Shared.Interaction
                 _adminLogger.AddStructured(
                     LogType.InteractHand,
                     LogImpact.Low,
-                    $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}, but it was handled by another system",
-                    JsonSerializer.SerializeToDocument(new
+                    $"{user:user} interacted with {target:target}, but it was handled by another system",
+                    new
                     {
                         user = (int) user,
                         target = (int) target,
                         interactionType = LogType.InteractHand.ToString(),
                         handled = true
-                    }),
+                    },
                     players: players,
                     entities:
                     [
@@ -564,13 +564,13 @@ namespace Content.Shared.Interaction
                 LogType.InteractHand,
                 LogImpact.Low,
                 $"{user} interacted with {target}",
-                JsonSerializer.SerializeToDocument(new
+                new
                 {
                     user = (int) user,
                     target = (int) target,
                     interactionType = LogType.InteractHand.ToString(),
                     handled = false
-                }),
+                },
                 players: postInteractPlayers,
                 entities:
                 [
@@ -615,14 +615,14 @@ namespace Content.Shared.Interaction
                 _adminLogger.AddStructured(
                     LogType.InteractUsing,
                     LogImpact.Low,
-                    $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}",
-                    JsonSerializer.SerializeToDocument(new
+                    $"{user:user} interacted with {target:target} using {used:used}",
+                    new
                     {
                         user = (int) user,
                         target = (int) target,
                         used = (int) used,
                         interactionType = LogType.InteractUsing.ToString()
-                    }),
+                    },
                     players: players,
                     entities:
                     [
@@ -648,13 +648,13 @@ namespace Content.Shared.Interaction
                 _adminLogger.AddStructured(
                     LogType.InteractUsing,
                     LogImpact.Low,
-                    $"{ToPrettyString(user):user} interacted with *nothing* using {ToPrettyString(used):used}",
-                    JsonSerializer.SerializeToDocument(new
+                    $"{user:user} interacted with *nothing* using {used:used}",
+                    new
                     {
                         user = (int) user,
                         used = (int) used,
                         interactionType = LogType.InteractUsing.ToString()
-                    }),
+                    },
                     players: players,
                     entities:
                     [
@@ -1164,14 +1164,14 @@ namespace Content.Shared.Interaction
             _adminLogger.AddStructured(
                 LogType.InteractUsing,
                 LogImpact.Low,
-                $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}",
-                JsonSerializer.SerializeToDocument(new
+                $"{user:user} interacted with {target:target} using {used:used}",
+                new
                 {
                     user = (int) user,
                     target = (int) target,
                     used = (int) used,
                     interactionType = LogType.InteractUsing.ToString()
-                }),
+                },
                 players: players,
                 entities:
                 [
@@ -1325,13 +1325,13 @@ namespace Content.Shared.Interaction
                     _adminLogger.AddStructured(
                         LogType.InteractActivate,
                         LogImpact.Low,
-                        $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}",
-                        JsonSerializer.SerializeToDocument(new
+                        $"{user:user} activated {used:used}",
+                        new
                         {
                             user = (int) user,
                             used = (int) used,
                             interactionType = LogType.InteractActivate.ToString()
-                        }),
+                        },
                         players: players,
                         entities:
                         [
@@ -1371,13 +1371,13 @@ namespace Content.Shared.Interaction
             _adminLogger.AddStructured(
                 LogType.InteractActivate,
                 LogImpact.Low,
-                $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}",
-                JsonSerializer.SerializeToDocument(new
+                $"{user:user} activated {used:used}",
+                new
                 {
                     user = (int) user,
                     used = (int) used,
                     interactionType = LogType.InteractActivate.ToString()
-                }),
+                },
                 players: postActivatePlayers,
                 entities:
                 [

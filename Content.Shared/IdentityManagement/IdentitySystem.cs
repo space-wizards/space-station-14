@@ -25,15 +25,14 @@ namespace Content.Shared.IdentityManagement;
 /// </summary>
 public sealed partial class IdentitySystem : EntitySystem
 {
-    [Dependency] private GrammarSystem _grammarSystem = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ISharedAdminLogManager _adminLog = default!;
-    [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
-    [Dependency] private HumanoidProfileSystem _humanoidProfile = default!;
-    [Dependency] private SharedIdCardSystem _idCard = default!;
-    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
+    [Dependency] private readonly HumanoidProfileSystem _humanoidProfile = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
 
     // The name of the container holding the identity entity
     private const string SlotName = "identity";
@@ -213,7 +212,7 @@ public sealed partial class IdentitySystem : EntitySystem
 
         _metaData.SetEntityName(ident, name);
 
-        _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(ent)} changed identity to {name}");
+        _adminLogger.Add(LogType.Identity, LogImpact.Medium, $"{ent} changed identity to {name}");
         var identityChangedEvent = new IdentityChangedEvent(ent, ident);
         RaiseLocalEvent(ent, ref identityChangedEvent);
         SetIdentityCriminalIcon(ent);

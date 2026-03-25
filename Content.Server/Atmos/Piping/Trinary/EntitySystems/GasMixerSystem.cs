@@ -179,7 +179,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             mixer.Enabled = args.Enabled;
             _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
+                $"{args.Actor:player} set the power on {uid:device} to {args.Enabled}");
             DirtyUI(uid, mixer);
             UpdateAppearance(uid, mixer);
         }
@@ -188,7 +188,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             mixer.TargetPressure = Math.Clamp(args.Pressure, 0f, mixer.MaxTargetPressure);
             _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
+                $"{args.Actor:player} set the pressure on {uid:device} to {args.Pressure}kPa");
             DirtyUI(uid, mixer);
         }
 
@@ -199,7 +199,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             mixer.InletOneConcentration = nodeOne;
             mixer.InletTwoConcentration = 1.0f - mixer.InletOneConcentration;
             _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Actor):player} set the ratio on {ToPrettyString(uid):device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
+                $"{args.Actor:player} set the ratio on {uid:device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
             DirtyUI(uid, mixer);
         }
 

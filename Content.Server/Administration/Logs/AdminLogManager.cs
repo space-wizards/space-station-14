@@ -483,13 +483,19 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         LogType type,
         LogImpact impact,
         string message,
-        JsonDocument json,
+        object? payload,
         IReadOnlyCollection<Guid>? players = null,
         IReadOnlyCollection<AdminLogEntityRef>? entities = null,
         IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null)
     {
         if (!Enabled)
             return;
+
+        var json = payload is JsonDocument doc
+            ? doc
+            : payload != null
+                ? JsonSerializer.SerializeToDocument(payload)
+                : JsonSerializer.SerializeToDocument(new { });
 
         var preRound = _runLevel == GameRunLevel.PreRoundLobby;
         var count = preRound ? _preRoundLogQueue.Count : _logQueue.Count;

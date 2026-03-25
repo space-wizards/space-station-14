@@ -633,7 +633,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         AntagSpecifierPrototype prototype,
         ICommonSession player)
     {
-        _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session:player} become the antagonist: {ToPrettyString(ent):subject}");
+        _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session:player} become the antagonist: {ent:subject}");
 
         if (checkPref && !ValidAntagPreference(session, def.PrefRoles))
             return false;
@@ -673,7 +673,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!TryComp<GhostRoleAntagSpawnerComponent>(spawner, out var spawnerComp))
         {
             Log.Error($"Antag spawner {spawner} does not have a {nameof(GhostRoleAntagSpawnerComponent)}.");
-            _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {ToPrettyString(spawner):subject} in gamerule {ToPrettyString(ent):tool} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
+            _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {spawner:subject} in gamerule {ent:tool} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
             Del(spawner);
             return null;
         }
@@ -704,7 +704,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return player.AttachedEntity;
 
         Log.Debug($"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
-        _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session:player} as antagonist: {ToPrettyString(ent):subject}");
+        _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session:player} as antagonist: {ent:subject}");
     }
 
         if (player.AttachedEntity is not { } uid)
@@ -822,7 +822,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         _adminLogger.Add(LogType.AntagSelection, $"Assigned {ToPrettyString(antag):target}, mind {ToPrettyString(mind):target} as antagonist: {ToPrettyString(gameRule):user}");
 
             Log.Debug($"Assigned {ToPrettyString(curMind)} as antagonist: {ToPrettyString(ent)}");
-            _adminLogger.Add(LogType.AntagSelection, $"Assigned {ToPrettyString(curMind):actor} as antagonist: {ToPrettyString(ent):subject}");
+            _adminLogger.Add(LogType.AntagSelection, $"Assigned {curMind:actor} as antagonist: {ent:subject}");
         }
 
         var afterEv = new AfterAntagEntitySelectedEvent(player, antag, gameRule, prototype);

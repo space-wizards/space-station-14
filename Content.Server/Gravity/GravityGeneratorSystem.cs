@@ -1,13 +1,16 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Gravity;
 
 namespace Content.Server.Gravity;
 
 public sealed partial class GravityGeneratorSystem : SharedGravityGeneratorSystem
 {
-    [Dependency] private GravitySystem _gravitySystem = default!;
-    [Dependency] private SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly GravitySystem _gravitySystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -44,6 +47,8 @@ public sealed partial class GravityGeneratorSystem : SharedGravityGeneratorSyste
         {
             _gravitySystem.EnableGravity(xform.ParentUid, gravity);
         }
+
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"Gravity generator {ent:target} activated on grid {xform.ParentUid}");
     }
 
     private void OnDeactivated(Entity<GravityGeneratorComponent> ent, ref ChargedMachineDeactivatedEvent args)
@@ -57,6 +62,8 @@ public sealed partial class GravityGeneratorSystem : SharedGravityGeneratorSyste
         {
             _gravitySystem.RefreshGravity(xform.ParentUid, gravity);
         }
+
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"Gravity generator {ent:target} deactivated");
     }
 
     private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)

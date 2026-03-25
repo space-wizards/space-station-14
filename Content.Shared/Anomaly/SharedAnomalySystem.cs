@@ -26,18 +26,17 @@ namespace Content.Shared.Anomaly;
 
 public abstract partial class SharedAnomalySystem : EntitySystem
 {
-    [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] private INetManager _net = default!;
-    [Dependency] protected IRobustRandom Random = default!;
-    [Dependency] protected ISharedAdminLogManager AdminLog = default!;
-    [Dependency] protected SharedAudioSystem Audio = default!;
-    [Dependency] protected SharedAppearanceSystem Appearance = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] protected SharedPopupSystem Popup = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private SharedMapSystem _map = default!;
-
-    [Dependency] private EntityQuery<PhysicsComponent> _physQuery = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -93,7 +92,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
         var stability = Random.NextFloat(minStability, maxStability);
         ChangeAnomalyStability(uid, stability, component);
 
-        AdminLog.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
+        _adminLogger.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {uid} pulsed with severity {component.Severity}.");
         if (_net.IsServer)
             Audio.PlayPvs(component.PulseSound, uid);
 
@@ -133,7 +132,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
         if(!Resolve(ent, ref ent.Comp))
             return;
 
-        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(ent.Owner)} began to go supercritical.");
+        _adminLogger.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ent.Owner} began to go supercritical.");
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
 
@@ -195,9 +194,9 @@ public abstract partial class SharedAnomalySystem : EntitySystem
             // Logging before resolve, in case the anomaly has deleted itself.
             if (_net.IsServer)
                 Log.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-            AdminLog.Add(LogType.Anomaly,
+            _adminLogger.Add(LogType.Anomaly,
                 supercritical ? LogImpact.High : LogImpact.Low,
-                $"Anomaly {ToPrettyString(uid)} {(supercritical ? "went supercritical" : "decayed")}.");
+                $"Anomaly {uid} {(supercritical ? "went supercritical" : "decayed")}.");
         }
 
         if (!Resolve(uid, ref component))

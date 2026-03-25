@@ -20,7 +20,7 @@ namespace Content.Server.Administration.Logs;
 
 public sealed partial class AdminLogsEui : BaseEui
 {
-    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
@@ -177,8 +177,8 @@ public sealed partial class AdminLogsEui : BaseEui
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var logs = await Task.Run(async () => await _adminLogs.All(filter, _adminLogListPool.Get),
-            filter.CancellationToken);
+        var logs = await Task.Run(async () => await _adminLogger.All(_filter, _adminLogListPool.Get),
+            _filter.CancellationToken);
 
         if (logs.Count > 0)
         {
@@ -225,8 +225,8 @@ public sealed partial class AdminLogsEui : BaseEui
         StateDirty();
 
         var cancel = _logSendCancellation.Token;
-        var round = _adminLogs.Round(roundId);
-        var count = _adminLogs.CountLogs(roundId, cancel: cancel);
+        var round = _adminLogger.Round(roundId);
+        var count = _adminLogger.CountLogs(roundId, cancel: cancel);
         var servers = _db.GetAllServers();
         await Task.WhenAll(round, count, servers);
 

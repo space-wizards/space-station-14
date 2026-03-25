@@ -1,7 +1,9 @@
-﻿using Content.Server.DoAfter;
+using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
@@ -19,14 +21,15 @@ namespace Content.Server.Power.Generator;
 /// <seealso cref="PortableGeneratorComponent"/>
 public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSystem
 {
-    [Dependency] private UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private DoAfterSystem _doAfter = default!;
-    [Dependency] private AudioSystem _audio = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private GeneratorSystem _generator = default!;
-    [Dependency] private PowerSwitchableSystem _switchable = default!;
-    [Dependency] private ActiveGeneratorRevvingSystem _revving = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly GeneratorSystem _generator = default!;
+    [Dependency] private readonly PowerSwitchableSystem _switchable = default!;
+    [Dependency] private readonly ActiveGeneratorRevvingSystem _revving = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -50,16 +53,19 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
         if (fuelGenerator.On)
             return;
 
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} switched output on {uid:target}");
         _switchable.Cycle(uid, args.Actor);
     }
 
     private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)
     {
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} stopped generator {uid:target}");
         StopGenerator(uid, component, args.Actor);
     }
 
     private void GeneratorStartMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStartMessage args)
     {
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} started generator {uid:target}");
         StartGenerator(uid, component, args.Actor);
     }
 

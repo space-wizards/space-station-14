@@ -43,30 +43,32 @@ namespace Content.Server.Ghost
 {
     public sealed partial class GhostSystem : SharedGhostSystem
     {
-        [Dependency] private SharedActionsSystem _actions = default!;
-        [Dependency] private IAdminLogManager _adminLog = default!;
-        [Dependency] private SharedEyeSystem _eye = default!;
-        [Dependency] private FollowerSystem _followerSystem = default!;
-        [Dependency] private JobSystem _jobs = default!;
-        [Dependency] private EntityLookupSystem _lookup = default!;
-        [Dependency] private MindSystem _minds = default!;
-        [Dependency] private MobStateSystem _mobState = default!;
-        [Dependency] private SharedPhysicsSystem _physics = default!;
-        [Dependency] private ISharedPlayerManager _player = default!;
-        [Dependency] private TransformSystem _transformSystem = default!;
-        [Dependency] private VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private MetaDataSystem _metaData = default!;
-        [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
-        [Dependency] private IConfigurationManager _configurationManager = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        [Dependency] private SharedMindSystem _mind = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
-        [Dependency] private DamageableSystem _damageable = default!;
-        [Dependency] private SharedPopupSystem _popup = default!;
-        [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private TagSystem _tag = default!;
-        [Dependency] private NameModifierSystem _nameMod = default!;
-        [Dependency] private GhostSpriteStateSystem _ghostState = default!;
+        [Dependency] private readonly SharedActionsSystem _actions = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedEyeSystem _eye = default!;
+        [Dependency] private readonly FollowerSystem _followerSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly JobSystem _jobs = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly ISharedPlayerManager _player = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly SharedMindSystem _mind = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly TagSystem _tag = default!;
+        [Dependency] private readonly NameModifierSystem _nameMod = default!;
+        [Dependency] private readonly GhostSpriteStateSystem _ghostState = default!;
 
         [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
         [Dependency] private EntityQuery<FollowerComponent> _followerQuery = default!;
@@ -388,7 +390,7 @@ namespace Content.Server.Ghost
 
         private void WarpTo(EntityUid uid, EntityUid target)
         {
-            _adminLog.Add(LogType.GhostWarp, $"{ToPrettyString(uid)} ghost warped to {ToPrettyString(target)}");
+            _adminLogger.Add(LogType.GhostWarp, $"{uid} ghost warped to {target}");
 
             if ((TryComp(target, out WarpPointComponent? warp) && warp.Follow) || HasComp<MobStateComponent>(target))
             {
@@ -572,9 +574,9 @@ namespace Content.Server.Ghost
             if (playerEntity != null && viaCommand)
             {
                 if (forced)
-                    _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} was forced to ghost via command");
+                    _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:player} was forced to ghost via command");
                 else
-                    _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
+                    _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:player} is attempting to ghost via command");
             }
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
@@ -648,7 +650,7 @@ namespace Content.Server.Ghost
             }
 
             if (playerEntity != null)
-                _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
+                _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
             var ghost = SpawnGhost((mindId, mind), position, canReturn);
 

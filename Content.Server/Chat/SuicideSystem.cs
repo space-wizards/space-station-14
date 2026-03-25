@@ -52,7 +52,7 @@ public sealed partial class SuicideSystem : EntitySystem
         if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
             return false;
 
-        _adminLogger.Add(LogType.Mind, $"{ToPrettyString(victim):player} is attempting to suicide");
+        _adminLogger.Add(LogType.Mind, $"{victim:player} is attempting to suicide");
 
         ICommonSession? session = null;
 
@@ -81,7 +81,7 @@ public sealed partial class SuicideSystem : EntitySystem
         }
         else
         {
-            _adminLogger.Add(LogType.Mind, $"{ToPrettyString(victim):player} suicided.");
+            _adminLogger.Add(LogType.Mind, $"{victim:player} suicided.");
         }
         return true;
     }
