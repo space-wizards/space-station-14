@@ -215,11 +215,11 @@ namespace Content.Server.Database
 
         Task<Server> AddOrGetServer(string serverName);
         Task<List<ServerRecord>> GetAllServers();
-        Task AddAdminLogs(List<AdminLogEventWriteData> logs);
+        Task AddAdminLogs(List<AdminLogEventWriteData> logs, CancellationToken cancel = default);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
         IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
-        Task<int> CountAdminLogs(int round, int? serverId = null);
+        Task<int> CountAdminLogs(int round, int? serverId = null, CancellationToken cancel = default);
 
         #endregion
 
@@ -742,10 +742,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetAllServers());
         }
 
-        public Task AddAdminLogs(List<AdminLogEventWriteData> logs)
+        public Task AddAdminLogs(List<AdminLogEventWriteData> logs, CancellationToken cancel = default)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddAdminLogs(logs));
+            return RunDbCommand(() => _db.AddAdminLogs(logs, cancel));
         }
 
         public IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
@@ -766,10 +766,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetAdminLogsJson(filter));
         }
 
-        public Task<int> CountAdminLogs(int round, int? serverId = null)
+        public Task<int> CountAdminLogs(int round, int? serverId = null, CancellationToken cancel = default)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.CountAdminLogs(round, serverId));
+            return RunDbCommand(() => _db.CountAdminLogs(round, serverId, cancel));
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)

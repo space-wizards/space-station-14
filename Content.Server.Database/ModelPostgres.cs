@@ -68,24 +68,5 @@ namespace Content.Server.Database
                 .HasMethod("GIN")
                 .HasAnnotation("Npgsql:TsVectorConfig", "english");
         }
-
-        public override IQueryable<AdminLogEvent> SearchLogs(IQueryable<AdminLogEvent> query, string searchText)
-        {
-            return query.Where(log => EF.Functions.ToTsVector("english", log.Payload.Message).Matches(EF.Functions.PlainToTsQuery("english", searchText)));
-        }
-
-        public override int CountAdminLogs()
-        {
-            // Use a fast statistical row estimate from pg_class instead of COUNT(*).
-            // reltuples is a float4, so we round rather than truncate to reduce drift at large counts.
-            // Database.ExecuteSqlRaw routes through EF's managed connection and avoids the
-            // race condition that arises when opening a raw NpgsqlConnection manually.
-            var result = Database
-                .SqlQueryRaw<double>("SELECT reltuples::double precision AS \"Value\" FROM pg_class WHERE relname = 'admin_log_event'")
-                .AsEnumerable()
-                .FirstOrDefault();
-
-            return (int) Math.Round(result);
-        }
     }
 }

@@ -224,8 +224,9 @@ public sealed partial class AdminLogsEui : BaseEui
         _isLoading = true;
         StateDirty();
 
+        var cancel = _logSendCancellation.Token;
         var round = _adminLogs.Round(roundId);
-        var count = _adminLogs.CountLogs(roundId);
+        var count = _adminLogs.CountLogs(roundId, cancel: cancel);
         var servers = _db.GetAllServers();
         await Task.WhenAll(round, count, servers);
 

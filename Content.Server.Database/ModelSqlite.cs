@@ -89,11 +89,6 @@ namespace Content.Server.Database
                 .IsUnique();
         }
 
-        public override int CountAdminLogs()
-        {
-            return AdminLogEvent.Count();
-        }
-
         private static string InetToString(IPAddress address, int mask) {
             if (address.IsIPv4MappedToIPv6)
             {

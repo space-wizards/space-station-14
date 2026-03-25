@@ -355,12 +355,6 @@ namespace Content.Server.Database
             ModelCustomVoteLog.OnModelCreating(modelBuilder);
         }
 
-        public virtual IQueryable<AdminLogEvent> SearchLogs(IQueryable<AdminLogEvent> query, string searchText)
-        {
-            return query.Where(log => EF.Functions.Like(log.Payload.Message, "%" + searchText + "%"));
-        }
-
-        public abstract int CountAdminLogs();
     }
 
     public class Preference

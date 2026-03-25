@@ -954,13 +954,13 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         return Round(_currentRoundId);
     }
 
-    public async Task<int> CountLogs(int round, int? serverId = null)
+    public async Task<int> CountLogs(int round, int? serverId = null, CancellationToken cancel = default)
     {
         if (serverId == null && _serverId <= 0)
             await EnsureServerIdentity();
 
         var scopedServerId = serverId ?? (_serverId > 0 ? _serverId : null);
-        return await _db.CountAdminLogs(round, scopedServerId);
+        return await _db.CountAdminLogs(round, scopedServerId, cancel);
     }
 
     /// <summary>
