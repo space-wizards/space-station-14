@@ -533,8 +533,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table:
-        id: RandomFloraTree
+      table: !type:NestedSelector
+        tableId: FloraTreeTable
 
 - type: entity
   id: XenoArtifactChemicalPuddle
