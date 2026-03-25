@@ -72,14 +72,4 @@ public sealed partial class GasTankWindow : FancyWindow
         if (!InternalsToggle.Disabled)
             InternalsToggle.Disabled = _entManager.System<UseDelaySystem>().IsDelayed(Entity, id: SharedGasTankSystem.GasTankDelay);
     }
-
-    protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
-    {
-        return DragMode.Move;
-    }
-
-    protected override bool HasPoint(Vector2 point)
-    {
-        return false;
-    }
 }
