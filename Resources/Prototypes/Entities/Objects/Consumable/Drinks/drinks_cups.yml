@@ -1,9 +1,11 @@
 # A cup is a small container used to hold liquids for drinking.[1]
 - type: entity
   abstract: true
-  parent: [SolutionSmall, DrinkBase]
+  parent: [SolutionTiny, DrinkBase]
   id: DrinkBaseCup
   components:
+  - type: Item
+    size: Tiny
   - type: FitsInDispenser
     solution: drink
   - type: SolutionTransfer
