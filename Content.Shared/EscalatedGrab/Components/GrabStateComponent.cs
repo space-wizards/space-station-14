@@ -10,9 +10,10 @@ namespace Content.Shared.EscalatedGrab.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GrabStateComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid Target;
 
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public GrabStage Stage = GrabStage.Aggressive;
+
 }
