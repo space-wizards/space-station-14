@@ -4,7 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <inheritdoc cref="EntityEffect"/>
-[Serializable, NetSerializable]
 public sealed partial class SpawnEntityList : EntityEffectBase<SpawnEntityList>
 {
     /// <summary>
@@ -27,7 +26,7 @@ public sealed partial class SpawnEntityList : EntityEffectBase<SpawnEntityList>
     public bool AllowMessyPrediction = false;
 }
 
-[DataRecord]
+[DataRecord, Serializable, NetSerializable]
 public partial record struct EntityListSpawnSettingsEntry()
 {
     /// <summary>
@@ -38,7 +37,7 @@ public partial record struct EntityListSpawnSettingsEntry()
     public EntityListSpawnSettings Settings { get; set; } = new();
 }
 
-[DataRecord]
+[DataRecord, Serializable, NetSerializable]
 public partial record struct EntityListSpawnSettings()
 {
     /// <summary>
