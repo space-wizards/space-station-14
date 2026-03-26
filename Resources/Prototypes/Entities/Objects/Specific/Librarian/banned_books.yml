@@ -78,7 +78,6 @@
     targetUser: true
     effects: # This one is mostly just a troll
       - !type:SpawnEntityListEffect
-        allowMessyPrediction: true
         entries:
           - settings:
               maxAmount: 6

@@ -16,13 +16,6 @@ public sealed partial class SpawnEntityListEffect : EntityEffectBase<SpawnEntity
     /// </summary>
     [DataField]
     public float ResizeScale = 1.0f;
-
-    /// <summary>
-    /// If true, the spawned entities will "jitter" around as they are spawned in
-    /// Not usually great behavior, but does sometimes look cool.
-    /// </summary>
-    [DataField]
-    public bool AllowMessyPrediction = false;
 }
 
 [DataRecord]

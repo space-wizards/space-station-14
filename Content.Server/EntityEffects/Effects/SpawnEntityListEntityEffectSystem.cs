@@ -1,3 +1,5 @@
+using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -8,7 +10,7 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Numerics;
 
-namespace Content.Shared.EntityEffects.Effects;
+namespace Content.Server.EntityEffects.Effects;
 
 /// <summary>
 /// Randomly picks entities from a list or lists to be spawned. Based on anomaly entity spawns.
@@ -33,19 +35,9 @@ public sealed partial class SpawnEntityListEntityEffectSystem : EntityEffectSyst
             if (tiles == null)
                 return;
 
-            if (args.Effect.AllowMessyPrediction)
+            foreach (var tileref in tiles)
             {
-                foreach (var tileref in tiles)
-                {
-                    PredictedSpawnAtPosition(_random.Pick(entry.Spawns), _mapSystem.ToCenterCoordinates(tileref, grid));
-                }
-            }
-            else if (_net.IsServer)
-            {
-                foreach (var tileref in tiles)
-                {
-                    Spawn(_random.Pick(entry.Spawns), _mapSystem.ToCenterCoordinates(tileref, grid));
-                }
+                Spawn(_random.Pick(entry.Spawns), _mapSystem.ToCenterCoordinates(tileref, grid));
             }
         }
     }
