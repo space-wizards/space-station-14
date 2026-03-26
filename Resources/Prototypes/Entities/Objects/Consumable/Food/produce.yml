@@ -2,7 +2,7 @@
 # For produce that can't be immediately eaten
 
 - type: entity
-  parent: [SolutionFood, BaseItem]
+  parent: [SolutionFood, SolutionSmall, BaseItem]
   id: ProduceBase
   abstract: true
   components:
