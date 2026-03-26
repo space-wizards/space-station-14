@@ -1,8 +1,10 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <inheritdoc cref="EntityEffect"/>
+[Serializable, NetSerializable]
 public sealed partial class SpawnEntityList : EntityEffectBase<SpawnEntityList>
 {
     /// <summary>
