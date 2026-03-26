@@ -25,8 +25,6 @@ public sealed class BookHuntVariationPassRule : StationEventSystem<BookHuntVaria
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
-    //[Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     protected override void Started(EntityUid uid, BookHuntVariationPassRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
