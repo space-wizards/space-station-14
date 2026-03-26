@@ -1498,3 +1498,13 @@
   id: motivating
   flavorType: Base
   description: flavor-base-motivating
+
+- type: flavor
+  id: pear
+  flavorType: Complex
+  description: flavor-complex-pear
+
+- type: flavor
+  id: pearonade
+  flavorType: Complex
+  description: flavor-complex-pearonade

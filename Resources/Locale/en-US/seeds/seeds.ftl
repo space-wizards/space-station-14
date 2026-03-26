@@ -144,3 +144,5 @@ seeds-anomaly-berry-name = anomaly berry
 seeds-anomaly-berry-display-name = anomaly berries
 seeds-bloonion-name = bloonion
 seeds-bloonion-display-name = bloonion bulbs
+seeds-pear-name = pear
+seeds-pear-display-name = pear tree

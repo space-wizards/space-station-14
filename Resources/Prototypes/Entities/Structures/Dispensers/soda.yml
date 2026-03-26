@@ -43,6 +43,7 @@
         - id: DrinkIceJug
         - id: DrinkJuiceLimeCartonXL
         - id: DrinkJuiceOrangeCartonXL
+        - id: DrinkJuicePearCartonXL
         - id: DrinkLemonLimeJug
         - id: DrinkRootBeerJug
         - id: DrinkSodaWaterBottleFull

@@ -607,3 +607,23 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+
+- type: reagent
+  id: Pearonade
+  name: reagent-name-pearonade
+  parent: BaseDrink
+  desc: reagent-desc-pearonade
+  physicalDesc: reagent-physical-desc-refreshing
+  flavor: pearonade
+  color: "#e39a3a"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/pearonade.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2

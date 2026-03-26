@@ -2460,3 +2460,16 @@
     Fiber: 10
   solids:
     FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipePearTart
+  name: pear tart recipe
+  result: FoodTartPear
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodPear: 3
+    FoodPlateTin: 1

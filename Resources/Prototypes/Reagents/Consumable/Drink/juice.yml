@@ -164,3 +164,18 @@
   physicalDesc: reagent-physical-desc-sweet
   flavor: cherry
   color: "#84031a"
+
+- type: reagent
+  id: JuicePear
+  name: reagent-name-juice-pear
+  parent: BaseJuice
+  desc: reagent-desc-juice-pear
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: pear
+  color: "#f2d36b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/pearjuice.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false

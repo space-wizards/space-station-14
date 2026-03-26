@@ -25,6 +25,9 @@ reagent-desc-juice-grape = Freshly squeezed juice from red grapes. Quite sweet.
 reagent-name-juice-lemon = lemon juice
 reagent-desc-juice-lemon = This juice is VERY sour.
 
+reagent-name-juice-pear = pear juice
+reagent-desc-juice-pear = Has a little hint of honey.
+
 reagent-name-juice-lime = lime juice
 reagent-desc-juice-lime = The sweet-sour juice of limes.
 

@@ -2026,3 +2026,29 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: pear
+  name: seeds-pear-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pear-display-name
+  plantRsi: Objects/Specific/Hydroponics/pear.rsi
+  packetPrototype: PearSeeds
+  productPrototypes:
+    - FoodPear
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25

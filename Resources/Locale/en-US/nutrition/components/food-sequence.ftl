@@ -77,6 +77,7 @@ food-sequence-content-spacemans-trumpet = spaceman's trupmet
 food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
 food-sequence-content-anomaly-berry = anomaly berry
+food-sequence-content-pear = pear
 
 # BURGERS
 

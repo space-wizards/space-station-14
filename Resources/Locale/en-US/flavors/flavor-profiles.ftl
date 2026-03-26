@@ -115,6 +115,7 @@ flavor-complex-tomato = like tomatoes
 flavor-complex-corn = like corn
 flavor-complex-banana = like bananas
 flavor-complex-apple = like apples
+flavor-complex-pear = like pears
 flavor-complex-cotton = like cottons
 flavor-complex-bungo = like tropical sweetness
 flavor-complex-raisins = like dried grapes
@@ -330,6 +331,7 @@ flavor-complex-vodka-martini = like a spy movie from Russia
 flavor-complex-vodka-tonic = refreshingly bitter
 flavor-complex-coconut-rum = like nutty fermented sugar
 flavor-complex-bacchus-blessing = like a wall of bricks
+flavor-complex-pearonade = like a refreshing pear
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk
