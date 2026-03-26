@@ -14,14 +14,14 @@ namespace Content.Shared.EntityEffects.Effects;
 /// Randomly picks entities from a list or lists to be spawned. Based on anomaly entity spawns.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
-public sealed partial class SpawnEntityListEntityEffectSystem : EntityEffectSystem<TransformComponent, SpawnEntityList>
+public sealed partial class SpawnEntityListEntityEffectSystem : EntityEffectSystem<TransformComponent, SpawnEntityListEffect>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly INetManager _net = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<SpawnEntityList> args)
+    protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<SpawnEntityListEffect> args)
     {
         foreach (var entry in args.Effect.Entries)
         {

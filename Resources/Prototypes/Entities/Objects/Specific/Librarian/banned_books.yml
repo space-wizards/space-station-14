@@ -77,7 +77,7 @@
   - type: EntityEffectOnTrigger
     targetUser: true
     effects: # This one is mostly just a troll
-      - !type:SpawnEntityList
+      - !type:SpawnEntityListEffect
         allowMessyPrediction: true
         entries:
           - settings:
@@ -149,7 +149,7 @@
   - type: EntityEffectOnTrigger
     targetUser: true
     effects:
-      - !type:SpawnEntityList
+      - !type:SpawnEntityListEffect
         entries:
           - settings:
               minAmount: 3
