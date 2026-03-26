@@ -23,7 +23,7 @@
     includeExpired: false
     minimumSeverity: 1 # Low
     minimumNotes: 3
-    range: 14 # 14 Days
+    range: 30 # 30 Days
     action: Deny
     includeSecret: false
   - !type:ConditionManualWhitelistMembership # Allow whitelisted players
