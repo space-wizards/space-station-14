@@ -138,7 +138,7 @@
 - type: entity
   abstract: true
   parent: Solution
-  id: SolutionComposite # For sheets, divide their capacity by 12. For items, check how many sheets they are constructed from.
+  id: SolutionComposite
   components:
   - type: Solution
     id: composite
@@ -192,6 +192,18 @@
       maxVol: 30
 
 - type: entity
+  abstract: true
+  parent: [SolutionComposite, BaseItem]
+  id: SolutionCompositeTinyStackable
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 2.5
+  - type: Item
+    size: Tiny
+
+- type: entity
   parent: Solution
   id: SolutionToolTiny
   categories: [ HideSpawnMenu ]
@@ -213,7 +225,7 @@
 
 - type: entity
   abstract: true
-  parent: SolutionComposite
+  parent: [SolutionComposite, BaseItem]
   id: SolutionCompositeSmallStackable
   categories: [ HideSpawnMenu ]
   components:
@@ -245,7 +257,7 @@
 
 - type: entity
   abstract: true
-  parent: SolutionComposite
+  parent: [SolutionComposite, BaseItem]
   id: SolutionCompositeNormalStackable
   categories: [ HideSpawnMenu ]
   components:

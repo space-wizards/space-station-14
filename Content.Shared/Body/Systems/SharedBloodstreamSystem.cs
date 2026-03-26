@@ -422,6 +422,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {
+            // TODO: Fix this integer overflow!
             var error = referenceQuantity * referenceFactor - bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
             var adjustedAmount = amount * referenceQuantity / ent.Comp.BloodReferenceSolution.Volume;
 
