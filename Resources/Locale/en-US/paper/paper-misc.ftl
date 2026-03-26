@@ -70,3 +70,19 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Butter Slice x 1
       Glass Shard x 1
       Cook Time: 5 seconds
+
+book-text-bookhunt-hint = LOST RESTRICTED BOOK LEADS
+      - Never let anyone access the restricted section again, ever!
+      - Those books are potentially really DANGEROUS, especially in the hands of someone who doesn't know how to handle them safely! (most of the crew, let's be real)
+      - Need someplace to keep restricted books safe, probably will end up carrying them around
+      - Need to ask around, especially from Command
+      - CENTCOM DOES NOT NEED TO KNOW
+      - FIND ASAP
+
+      Possible Locations:
+      - Possibly shelved wrong? (does the crew just put books back on random shelves)
+      - Check dressers, people leave books in there all the time ... even Command does it
+      - Found a romance novel in a suit storage once, maybe lightning strikes twice
+      - ------------------------------------------------ (forget it)
+      - CHECK UNDER FLOOR TILES FOR WEIRD SATCHELS, NEED TRAY
+      - Space (really hoping it's not this one, or at least close to the station)

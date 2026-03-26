@@ -83,6 +83,29 @@
         state: narsian
 
 - type: entity
+  id: SpawnPointGhostBael
+  name: ghost role spawn point
+  suffix: bael
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-bael-name
+    description: ghost-role-information-bael-description
+    rules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobCatBaelFamiliar
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Mobs/Pets/cat.rsi
+        state: cat
+
+- type: entity
   categories: [ HideSpawnMenu, Spawner ]
   id: SpawnPointGhostNukeOperative
   name: ghost role spawn point

@@ -41,3 +41,12 @@
   components:
   - type: Paper
     content: book-text-combat-bakery-kit
+
+- type: entity
+  id: BookHuntLibrarianHint
+  name: "lost restricted book leads"
+  description: "Need to be found ASAP!" 
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-bookhunt-hint

@@ -1446,3 +1446,52 @@
   - type: SolutionInjectOnProjectileHit
     transferAmount: 1.5
     solution: bolt
+
+- type: entity
+  id: WeaponBookProjectile
+  categories: [ HideSpawnMenu ]
+  name: bladed page
+  description: Makes regular papercuts look tame. 
+  components:
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    deleteOnRemove: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Ammo
+    muzzleFlash: null
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: paperblade
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Slash: 4
+  - type: Physics
+    bodyType: Dynamic
+  - type: TileFrictionModifier
+    modifier: 0
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.10,0.1,0.30"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: TimedDespawn
+    lifetime: 30
+  - type: SolutionContainerManager
+    solutions:
+      page:
+        maxVol: 1.5
+        reagents:
+        - ReagentId: Hemorrhinol
+          Quantity: 1.5
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 1.5
+    solution: page

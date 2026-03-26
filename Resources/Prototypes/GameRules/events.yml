@@ -704,6 +704,24 @@
 
 - type: entity
   parent: BaseGameRule
+  id: BookHuntVariationPass
+  components:
+  - type: StationEvent
+    earliestStart: 0
+    duration: 1
+    minimumPlayers: 1
+    maxOccurrences: 1
+    weight: 10
+  - type: BookHuntVariationPassRule
+    bookPrototypes:
+      - BaelSummonBook
+      - EmergencyMedipenBook
+      - FleshAmbushBook
+      - ProjectileWeaponBook
+      - GreedBook
+
+- type: entity
+  parent: BaseGameRule
   id: DerelictEngineerCyborgSpawn
   components:
   - type: StationEvent
