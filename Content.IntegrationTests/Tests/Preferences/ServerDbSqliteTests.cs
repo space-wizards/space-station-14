@@ -1,19 +1,15 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
-using Content.Shared.GameTicking;
+using Content.Shared.Body;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
-using Content.Shared.Preferences.Loadouts;
-using Content.Shared.Preferences.Loadouts.Effects;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
-using Robust.Shared.Enums;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
@@ -77,6 +73,39 @@ namespace Content.IntegrationTests.Tests.Preferences
             var db = GetDb(pair.Server);
             // Database should be empty so a new GUID should do it.
             Assert.That(await db.GetPlayerPreferencesAsync(NewUserId()), Is.Null);
+
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task TestAppearanceValidationAndSave()
+        {
+            var pair = await PoolManager.GetServerClient();
+            var db = GetDb(pair.Server);
+            var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
+
+            var profile = CharlieCharlieson();
+            profile.Appearance.Markings["Head"] = new Dictionary<HumanoidVisualLayers, List<Marking>>
+            {
+                [HumanoidVisualLayers.Hair] = [],
+                [HumanoidVisualLayers.FacialHair] = [],
+            };
+            profile.Appearance.Markings["OrganFake"] = new Dictionary<HumanoidVisualLayers, List<Marking>>();
+
+            await pair.Server.WaitAssertion(() =>
+            {
+                var updated = HumanoidCharacterAppearance.EnsureValid(profile.Appearance, profile.Species, profile.Sex);
+                Assert.That(updated.Markings["Head"], Is.Empty);
+                Assert.That(updated.Markings.ContainsKey("OrganFake"), Is.False);
+                profile.Appearance = updated;
+            });
+
+            Assert.DoesNotThrowAsync(async () => await db.InitPrefsAsync(username, profile));
+
+            var preferences = (ServerPreferencesManager)pair.Server.ResolveDependency<IServerPreferencesManager>();
+            var prefs = await db.GetPlayerPreferencesAsync(username);
+            var fetchedProfile = preferences.ConvertProfiles(prefs!.Profiles.Find(p => p.Slot == 0));
+            Assert.That(fetchedProfile.MemberwiseEquals(profile));
 
             await pair.CleanReturnAsync();
         }
