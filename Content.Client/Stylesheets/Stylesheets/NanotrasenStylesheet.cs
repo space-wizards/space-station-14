@@ -8,6 +8,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Stylesheets;
 
+[Virtual]
 public partial class NanotrasenStylesheet : CommonStylesheet
 {
     public override string StylesheetName => "Nanotrasen";
