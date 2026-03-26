@@ -7,15 +7,14 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
-  id: ReagentContainerBase
+  parent: [SolutionFood, SolutionSmall, BaseItem]
+  id: ReagentContainerBase # Despite the name its basically only used for ingredients
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
+  - type: Solution
+    solution:
+      maxVol: 50
   - type: SolutionTransfer
     # This is potentially badly-handled due to 'drink opening',
     #  but it lets the flour be tampered with, refilled, etc.
@@ -35,6 +34,7 @@
     solution: food
   - type: TrashOnSolutionEmpty
     solution: food
+
 - type: entity
   abstract: true
   parent: ReagentContainerBase

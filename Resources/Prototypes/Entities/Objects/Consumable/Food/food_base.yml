@@ -3,7 +3,7 @@
 #
 - type: entity
   abstract: true
-  parent: [BaseItem, SolutionFood]
+  parent: [BaseItem, SolutionFood, SolutionSmall]
   id: FoodBase
   components:
   - type: FlavorProfile
