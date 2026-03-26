@@ -25,17 +25,13 @@ public partial class SharedAdminLogManager : ISharedAdminLogManager
     public virtual void AddStructured(
         LogType type,
         LogImpact impact,
-        string message,
-        object? payload,
+        ref LogStringHandler handler,
+        object? payload = null,
         IReadOnlyCollection<Guid>? players = null,
         IReadOnlyCollection<AdminLogEntityRef>? entities = null,
         IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null)
     {
-        var handler = new LogStringHandler(message.Length, 0, this, out var isEnabled);
-        if (!isEnabled)
-            return;
-
-        handler.AppendLiteral(message);
+        // Client-side fallback: just forward to Add() for the message.
         Add(type, impact, ref handler);
     }
 }

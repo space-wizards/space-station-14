@@ -106,8 +106,8 @@ public interface ISharedAdminLogManager
     void AddStructured(
         LogType type,
         LogImpact impact,
-        string message,
-        object? payload,
+        [InterpolatedStringHandlerArgument("")] ref LogStringHandler handler,
+        object? payload = null,
         IReadOnlyCollection<Guid>? players = null,
         IReadOnlyCollection<AdminLogEntityRef>? entities = null,
         IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null);
