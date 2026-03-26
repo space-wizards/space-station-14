@@ -1,5 +1,6 @@
 ﻿using Content.Server.Hands.Systems;
 using Content.Server.Preferences.Managers;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Hands.Components;
@@ -11,11 +12,10 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Storage;
-using Content.Server.Storage.EntitySystems;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Clothing.Systems;
 
@@ -81,7 +81,10 @@ public sealed class OutfitSystem : EntitySystem
                 if (storageContainers.Count == 0)
                     continue;
 
-                if (_invSystem.TryGetSlotEntity(target, slotName, out var slotEnt) && TryComp(slotEnt, out StorageComponent? storage))
+                if (!_invSystem.TryGetSlotEntity(target, slotName, out var slotEnt))
+                    continue;
+
+                if (TryComp<StorageComponent>(slotEnt, out var storage))
                 {
                     foreach (var storageContainer in storageContainers)
                     {
@@ -89,12 +92,12 @@ public sealed class OutfitSystem : EntitySystem
                         _storageSystem.Insert(slotEnt.Value, spawnedEntity, out _, user: null, storageComp: storage, playSound: false);
                     }
                 }
-                else if (_invSystem.TryGetSlotEntity(target, slotName, out var slotEnt2) && TryComp(slotEnt2, out ItemSlotsComponent? itemSlots))
+                else if (TryComp<ItemSlotsComponent>(slotEnt, out var itemSlots))
                 {
                     foreach (var storageContainer in storageContainers)
                     {
                         var spawnedEntity = Spawn(storageContainer, coords);
-                        _itemSlotsSystem.TryInsertEmpty((slotEnt2.Value, itemSlots), spawnedEntity, null, excludeUserAudio: true);
+                        _itemSlotsSystem.TryInsertEmpty((slotEnt.Value, itemSlots), spawnedEntity, null, excludeUserAudio: true);
                     }
                 }
             }
