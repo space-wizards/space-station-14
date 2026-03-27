@@ -102,7 +102,6 @@ public sealed class OutfitSystem : EntitySystem
 
         if (TryComp(target, out HandsComponent? handsComponent))
         {
-            coords = Comp<TransformComponent>(target).Coordinates;
             foreach (var prototype in startingGear.Inhand)
             {
                 var inhandEntity = Spawn(prototype, coords);
