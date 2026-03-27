@@ -1,8 +1,10 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.EntityTable;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Containers;
 
@@ -11,6 +13,7 @@ public sealed class ContainerFillSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
     public override void Initialize()
     {
@@ -69,14 +72,22 @@ public sealed class ContainerFillSystem : EntitySystem
             }
 
             var spawns = _entityTable.GetSpawns(table);
-            foreach (var proto in spawns)
+            var spawnedItems = from proto in spawns select Spawn(proto, coords);
+
+            var sortedItems = spawnedItems.OrderByDescending(spawn =>
             {
-                var spawn = Spawn(proto, coords);
-                if (!_containerSystem.Insert(spawn, container, containerXform: xform))
+                var comp = Comp<ItemComponent>(spawn);
+                _protoMan.TryIndex(comp.Size, out var itemSizeProto);
+                return itemSizeProto?.Weight;
+            });
+
+            foreach (var item in sortedItems)
+            {
+                if (!_containerSystem.Insert(item, container, containerXform: xform))
                 {
                     var alreadyContained = container.ContainedEntities.Count > 0 ? string.Join("\n", container.ContainedEntities.Select(e => $"\t - {ToPrettyString(e)}")) : "< empty >";
-                    Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(EntityTableContainerFillComponent)} failed to insert an entity: {ToPrettyString(spawn)}.\nCurrent contents:\n{alreadyContained}");
-                    _transform.AttachToGridOrMap(spawn);
+                    Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(EntityTableContainerFillComponent)} failed to insert an entity: {ToPrettyString(item)}.\nCurrent contents:\n{alreadyContained}");
+                    _transform.AttachToGridOrMap(item);
                     break;
                 }
             }
