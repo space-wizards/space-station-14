@@ -241,6 +241,7 @@
   - type: Actions
   - type: Alerts
   - type: BodyEmotes # Shhh... the trees are speaking
+    soundsId: DionaBodyEmotes
   - type: BlockMovement # They should never be moving!
     blockInteraction: false
     blockUse: false
@@ -266,7 +267,6 @@
   - type: Transform # Don't move even when pulling stuff
     anchored: true
   - type: MindContainer
-    soundsId: DionaBodyEmotes
   - type: Speech
     speechSounds: Alto
     speechVerb: Plant
