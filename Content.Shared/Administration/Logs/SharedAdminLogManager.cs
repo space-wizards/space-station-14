@@ -12,16 +12,6 @@ public partial class SharedAdminLogManager : ISharedAdminLogManager
 
     public virtual string ConvertName(string name) => name;
 
-    public virtual void Add(LogType type, LogImpact impact, ref LogStringHandler handler)
-    {
-        // noop
-    }
-
-    public virtual void Add(LogType type, ref LogStringHandler handler)
-    {
-        // noop
-    }
-
     public virtual void AddStructured(
         LogType type,
         LogImpact impact,
@@ -31,8 +21,6 @@ public partial class SharedAdminLogManager : ISharedAdminLogManager
         IReadOnlyCollection<AdminLogEntityRef>? entities = null,
         IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null)
     {
-        // Client-side fallback: just forward to Add() for the message.
-        Add(type, impact, ref handler);
     }
 
     public virtual void AddStructured(

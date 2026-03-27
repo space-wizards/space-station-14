@@ -10,7 +10,7 @@ namespace Content.Shared.Administration.Logs;
 ///
 ///     <para><b>Quick-start example:</b></para>
 ///     <code>
-///     _adminLogger.Add(LogType.Action, LogImpact.Medium,
+///     _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
 ///         $"{user:player} buckled {target:target} to {strap:subject}");
 ///     </code>
 ///
@@ -67,32 +67,16 @@ public interface ISharedAdminLogManager
     public IEntityManager EntityManager { get; }
 
     /// <summary>
-    ///     Records an admin log with the specified type, impact, and interpolated message.
+    ///     Records a structured admin log entry with an interpolated message, and optional
+    ///     explicit payload, entity references, and player role mappings.
     ///     <para>This is the primary method for recording admin logs.</para>
     ///     <example>
     ///     <code>
-    ///     _adminLogger.Add(LogType.Action, LogImpact.Medium,
+    ///     _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
     ///         $"{user:player} bolted {door:target}");
     ///     </code>
     ///     </example>
-    /// </summary>
-    void Add(LogType type, LogImpact impact, [InterpolatedStringHandlerArgument("")] ref LogStringHandler handler);
-
-    /// <summary>
-    ///     Records an admin log with the specified type and a default impact of
-    ///     <see cref="LogImpact.Medium"/>. See <see cref="Add(LogType, LogImpact, ref LogStringHandler)"/>
-    ///     for full documentation.
-    /// </summary>
-    void Add(LogType type, [InterpolatedStringHandlerArgument("")] ref LogStringHandler handler);
-
-    /// <summary>
-    ///     Records a fully pre-built structured log entry with an explicit payload object,
-    ///     entity references, and player role mappings.
-    ///
-    ///     <para>
-    ///     For most use cases, prefer <see cref="Add(LogType, LogImpact, ref LogStringHandler)"/>
-    ///     which handles entity extraction automatically.
-    ///     </para>
+    ///     <para>For explicit metadata control:</para>
     ///     <example>
     ///     <code>
     ///     _adminLogger.AddStructured(LogType.Stripping, LogImpact.Low,
@@ -113,7 +97,7 @@ public interface ISharedAdminLogManager
         IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null);
 
     /// <summary>
-    ///     Records a fully pre-built structured log entry with a default impact of
+    ///     Records a structured admin log entry with a default impact of
     ///     <see cref="LogImpact.Medium"/>.
     /// </summary>
     void AddStructured(

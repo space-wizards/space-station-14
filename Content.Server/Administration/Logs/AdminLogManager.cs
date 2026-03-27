@@ -420,65 +420,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
     }
 
-    public override void Add(LogType type, [System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("")] ref LogStringHandler handler)
-    {
-        Add(type, LogImpact.Medium, ref handler);
-    }
-
-    public override void Add(LogType type, LogImpact impact, [System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("")] ref LogStringHandler handler)
-    {
-        var message = handler.ToStringAndClear();
-        if (!Enabled)
-            return;
-
-        var preRound = _runLevel == GameRunLevel.PreRoundLobby;
-        var count = preRound ? _preRoundLogQueue.Count : _logQueue.Count;
-        if (count >= _dropThreshold)
-        {
-            Interlocked.Increment(ref _logsDropped);
-            return;
-        }
-
-        var json = JsonSerializer.SerializeToDocument(handler.Values, _jsonOptions);
-        var players = GetPlayers(handler.Values);
-        var entities = GetEntities(handler.Values, type);
-        var playerRoles = GetPlayerRoles(handler.Values, type);
-
-        // PostgreSQL does not support storing null chars in text values.
-        if (message.Contains('\0'))
-        {
-            _sawmill.Error($"Null character detected in admin log message '{message}'! LogType: {type}, LogImpact: {impact}");
-            message = message.Replace("\0", "");
-        }
-
-        var log = new AdminLogEventWriteData
-        {
-            ServerId = _serverId,
-            ServerName = _serverName,
-            RoundId = _currentRoundId,
-            Type = type,
-            Impact = impact,
-            OccurredAt = DateTime.UtcNow,
-            Message = message,
-            Json = json,
-            Players = players,
-            Entities = entities,
-            PlayerRoles = playerRoles,
-        };
-
-        DoAdminAlerts(players, message, impact, handler);
-
-        if (preRound)
-        {
-            _preRoundLogQueue.Enqueue(log);
-        }
-        else
-        {
-            _logQueue.Enqueue(log);
-            CacheLog(log);
-        }
-    }
-
     public override void AddStructured(
         LogType type,
         LogImpact impact,
@@ -573,11 +514,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             _logQueue.Enqueue(log);
             CacheLog(log);
         }
-    }
-
-    private List<Guid> GetPlayers(Dictionary<string, object?> values, int logId)
-    {
-        return GetPlayers(values);
     }
 
     private List<Guid> GetPlayers(Dictionary<string, object?> values)

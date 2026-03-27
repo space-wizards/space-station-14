@@ -39,7 +39,8 @@ public sealed class AddTests : GameTest
         {
             var entity = SSpawnAtPosition(null, coordinates);
 
-            _sAdminLogManager.Add(LogType.Unknown, $"{entity:Entity} test log: {guid}");
+            sAdminLogSystem.AddStructured(LogType.Unknown, $"{entity:Entity} test log: {guid}",
+                new { entity = (int) entity });
         });
 
         await PoolManager.WaitUntil(Server, async () =>
@@ -53,7 +54,6 @@ public sealed class AddTests : GameTest
             {
                 var root = json.RootElement;
 
-                // camelCased automatically
                 Assert.That(root.TryGetProperty("entity", out _), Is.True);
 
                 json.Dispose();
@@ -76,7 +76,8 @@ public sealed class AddTests : GameTest
         {
             var entity = SSpawnAtPosition(null, coordinates);
 
-            _sAdminLogManager.Add(LogType.Unknown, $"{entity} test log: {guid}");
+            sAdminLogSystem.AddStructured(LogType.Unknown, $"{entity} test log: {guid}",
+                new { entity = (int) entity, guid = guid });
         });
 
         SharedAdminLog log = default;
@@ -130,7 +131,7 @@ public sealed class AddTests : GameTest
 
             for (var i = 0; i < amount; i++)
             {
-                _sAdminLogManager.Add(LogType.Unknown, $"{entity:Entity} test log.");
+                sAdminLogSystem.AddStructured(LogType.Unknown, $"{entity:Entity} test log.");
             }
         });
 
@@ -153,7 +154,8 @@ public sealed class AddTests : GameTest
 
             Assert.DoesNotThrow(() =>
             {
-                _sAdminLogManager.Add(LogType.Unknown, $"{player:Player} test log.");
+                sAdminLogSystem.AddStructured(LogType.Unknown, $"{player:Player} test log.",
+                    players: new Guid[] { player.UserId });
             });
         });
 
@@ -247,7 +249,8 @@ public sealed class PreRoundAddTests : GameTest
 
         await Server.WaitPost(() =>
         {
-            _sAdminLogManager.Add(LogType.Unknown, $"test log: {guid}");
+            sAdminLogSystem.AddStructured(LogType.Unknown, $"test log: {guid}",
+                new { guid });
         });
 
         await Server.WaitPost(() =>
@@ -290,4 +293,78 @@ public sealed class PreRoundAddTests : GameTest
         }
     }
 
+    [Test]
+    public async Task DuplicatePlayerDoesNotThrowTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
+
+        var sPlayers = server.ResolveDependency<IPlayerManager>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+
+        var guid = Guid.NewGuid();
+
+        await server.WaitPost(() =>
+        {
+            var player = sPlayers.Sessions.Single();
+
+            sAdminLogSystem.AddStructured(LogType.Unknown, $"{player} {player} test log: {guid}");
+        });
+
+        await PoolManager.WaitUntil(server, async () =>
+        {
+            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            {
+                Search = guid.ToString()
+            });
+
+            if (logs.Count == 0)
+            {
+                return false;
+            }
+
+            return true;
+        });
+
+        await pair.CleanReturnAsync();
+        Assert.Pass();
+    }
+
+    [Test]
+    public async Task DuplicatePlayerIdDoesNotThrowTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
+
+        var sPlayers = server.ResolveDependency<IPlayerManager>();
+
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+
+        var guid = Guid.NewGuid();
+
+        await server.WaitPost(() =>
+        {
+            var player = sPlayers.Sessions.Single();
+
+            sAdminLogSystem.AddStructured(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
+        });
+
+        await PoolManager.WaitUntil(server, async () =>
+        {
+            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            {
+                Search = guid.ToString()
+            });
+
+            if (logs.Count == 0)
+            {
+                return false;
+            }
+
+            return true;
+        });
+
+        await pair.CleanReturnAsync();
+        Assert.Pass();
+    }
 }
