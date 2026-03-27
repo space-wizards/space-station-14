@@ -1,4 +1,8 @@
-﻿<controls:SplitBar xmlns="https://spacestation14.io"
-                   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                   Name="Bar">
-</controls:SplitBar>
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    <controls:SegmentedBarChart
+        HorizontalExpand="True"
+        VerticalExpand="True"
+        Name="Bar"
+        MinHeight="20"/>
+</Control>
