@@ -86,17 +86,17 @@ public sealed class OutfitSystem : EntitySystem
 
                 if (TryComp<StorageComponent>(slotEnt, out var storage))
                 {
-                    foreach (var storageContainer in storageContainers)
+                    foreach (var entProto in storageContainers)
                     {
-                        var spawnedEntity = Spawn(storageContainer, coords);
+                        var spawnedEntity = SpawnAtPosition(entProto, coords);
                         _storageSystem.Insert(slotEnt.Value, spawnedEntity, out _, user: null, storageComp: storage, playSound: false);
                     }
                 }
                 else if (TryComp<ItemSlotsComponent>(slotEnt, out var itemSlots))
                 {
-                    foreach (var storageContainer in storageContainers)
+                    foreach (var entProto in storageContainers)
                     {
-                        var spawnedEntity = Spawn(storageContainer, coords);
+                        var spawnedEntity = Spawn(entProto, coords);
                         _itemSlotsSystem.TryInsertEmpty((slotEnt.Value, itemSlots), spawnedEntity, null, excludeUserAudio: true);
                     }
                 }
