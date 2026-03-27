@@ -50,7 +50,7 @@ public sealed partial class BatteryInterfaceSystem : EntitySystem
         var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
         netBattery.CanCharge = args.On;
 
-        _adminLogger.Add(LogType.Action, $"{args.Actor:actor} set input breaker to {args.On} on {ent:target}");
+        _adminLogger.AddStructured(LogType.Action, $"{args.Actor:actor} set input breaker to {args.On} on {ent:target}");
     }
 
     private void HandleSetOutputBreaker(Entity<BatteryInterfaceComponent> ent, ref BatterySetOutputBreakerMessage args)
@@ -58,7 +58,7 @@ public sealed partial class BatteryInterfaceSystem : EntitySystem
         var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
         netBattery.CanDischarge = args.On;
 
-        _adminLogger.Add(LogType.Action, $"{args.Actor:actor} set output breaker to {args.On} on {ent:target}");
+        _adminLogger.AddStructured(LogType.Action, $"{args.Actor:actor} set output breaker to {args.On} on {ent:target}");
     }
 
     private void HandleSetChargeRate(Entity<BatteryInterfaceComponent> ent, ref BatterySetChargeRateMessage args)

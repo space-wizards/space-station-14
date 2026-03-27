@@ -111,4 +111,16 @@ public interface ISharedAdminLogManager
         IReadOnlyCollection<Guid>? players = null,
         IReadOnlyCollection<AdminLogEntityRef>? entities = null,
         IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null);
+
+    /// <summary>
+    ///     Records a fully pre-built structured log entry with a default impact of
+    ///     <see cref="LogImpact.Medium"/>.
+    /// </summary>
+    void AddStructured(
+        LogType type,
+        [InterpolatedStringHandlerArgument("")] ref LogStringHandler handler,
+        object? payload = null,
+        IReadOnlyCollection<Guid>? players = null,
+        IReadOnlyCollection<AdminLogEntityRef>? entities = null,
+        IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null);
 }

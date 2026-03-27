@@ -338,7 +338,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         pilotComponent.Position = Transform(entity).Coordinates;
         Dirty(entity, pilotComponent);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{entity:player} started piloting {uid:target}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{entity:player} started piloting {uid:target}");
     }
 
     public void RemovePilot(EntityUid pilotUid, PilotComponent pilotComponent)
@@ -359,7 +359,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         _popup.PopupEntity(Loc.GetString("shuttle-pilot-end"), pilotUid, pilotUid);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{pilotUid:player} stopped piloting");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{pilotUid:player} stopped piloting");
 
         if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
             RemComp<PilotComponent>(pilotUid);

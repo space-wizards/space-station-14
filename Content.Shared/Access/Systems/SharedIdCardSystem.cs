@@ -162,7 +162,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         if (player != null)
         {
-            _adminLogger.Add(LogType.Identity, LogImpact.Low,
+            _adminLogger.AddStructured(LogType.Identity, LogImpact.Low,
                 $"{player.Value:player} has changed the job title of {uid:entity} to {jobTitle} ");
         }
         return true;
@@ -185,7 +185,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         if (player != null)
         {
-            _adminLogger.Add(LogType.Identity, LogImpact.Low,
+            _adminLogger.AddStructured(LogType.Identity, LogImpact.Low,
                 $"{player.Value:player} has changed the job icon of {uid:entity} to {jobIcon} ");
         }
 
@@ -256,7 +256,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         if (player != null)
         {
-            _adminLogger.Add(LogType.Identity, LogImpact.Low,
+            _adminLogger.AddStructured(LogType.Identity, LogImpact.Low,
                 $"{player.Value:player} has changed the name of {uid:entity} to {fullName} ");
         }
         return true;

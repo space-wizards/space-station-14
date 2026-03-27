@@ -224,7 +224,7 @@ public sealed partial class AtmosphereSystem
         {
             if (sparkSourceUid.HasValue)
             {
-                _adminLogger.Add(LogType.Flammable,
+                _adminLogger.AddStructured(LogType.Flammable,
                     LogImpact.High,
                     $"Heat/spark of {sparkSourceUid.Value} caused atmos ignition of gas: {tile.Air.Temperature.ToString():temperature}K - {oxygen}mol Oxygen, {plasma}mol Plasma, {tritium}mol Tritium");
             }

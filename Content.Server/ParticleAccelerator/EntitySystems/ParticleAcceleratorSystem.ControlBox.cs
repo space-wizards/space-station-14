@@ -82,7 +82,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         if (user is { } player)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{player:player} has turned {uid} on");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{player:player} has turned {uid} on");
 
         comp.Enabled = true;
         UpdatePowerDraw(uid, comp);
@@ -104,7 +104,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         if (user is { } player)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{player:player} has turned {uid} off");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{player:player} has turned {uid} off");
 
         comp.Enabled = false;
         SetStrength(uid, ParticleAcceleratorPowerState.Standby, user, comp);
@@ -173,7 +173,7 @@ public sealed partial class ParticleAcceleratorSystem
                 _ => throw new IndexOutOfRangeException(nameof(strength)),
             };
 
-            _adminLogger.Add(LogType.Action, impact, $"{player:player} has set the strength of {uid} to {strength}");
+            _adminLogger.AddStructured(LogType.Action, impact, $"{player:player} has set the strength of {uid} to {strength}");
 
 
             var alertMinPowerState = (ParticleAcceleratorPowerState)_cfg.GetCVar(CCVars.AdminAlertParticleAcceleratorMinPowerState);

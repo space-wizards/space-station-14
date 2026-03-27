@@ -86,7 +86,7 @@ public sealed partial class PowerChargeSystem : EntitySystem
             return;
 
         if (user is { })
-            _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{user:player} set {uid:target} to {(on ? "on" : "off")}");
+            _adminLogger.AddStructured(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{user:player} set {uid:target} to {(on ? "on" : "off")}");
 
         component.SwitchedOn = on;
         UpdatePowerState(component, powerReceiver);

@@ -35,7 +35,7 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
         _adminLogger.AddStructured(
             LogType.CombatModeToggle,
             LogImpact.Low,
-            $"{ToPrettyString(entity):actor} toggled combat mode {(value ? "on" : "off")}",
+            $"{entity:actor} toggled combat mode {(value ? "on" : "off")}",
             JsonSerializer.SerializeToDocument(new
             {
                 entity = (int) entity,

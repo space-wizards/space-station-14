@@ -50,7 +50,7 @@ public sealed partial class IdCardSystem : SharedIdCardSystem
                     Spawn("FoodBadRecipe",
                         transformComponent.Coordinates);
                 }
-                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
                     $"{args.Microwave} burnt {uid:entity}");
                 QueueDel(uid);
                 return;
@@ -71,7 +71,7 @@ public sealed partial class IdCardSystem : SharedIdCardSystem
                 access.Tags.Clear();
                 Dirty(uid, access);
 
-                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
                     $"{args.Microwave} cleared access on {uid:entity}");
             }
             else
@@ -90,7 +90,7 @@ public sealed partial class IdCardSystem : SharedIdCardSystem
             access.Tags.Add(random.ID);
             Dirty(uid, access);
 
-            _adminLogger.Add(LogType.Action, LogImpact.High,
+            _adminLogger.AddStructured(LogType.Action, LogImpact.High,
                     $"{args.Microwave} added {random.ID} access to {uid:entity}");
 
         }

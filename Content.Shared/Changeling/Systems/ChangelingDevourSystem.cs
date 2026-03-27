@@ -282,7 +282,48 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        return !_changelingIdentity.TryGetDataFromOriginal(ent, devoured, out _);
+        args.Handled = true;
+        var target = args.Target;
+
+        if (target == ent.Owner)
+            return; // don't eat yourself
+
+        if (HasComp<RottingComponent>(target))
+        {
+            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-rotting"), args.Performer, args.Performer, PopupType.Medium);
+            return;
+        }
+
+        if (IsTargetProtected(target, ent))
+        {
+            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), ent, ent, PopupType.Medium);
+            return;
+        }
+
+        if (_net.IsServer)
+        {
+            var pvsSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise, ent);
+            if (pvsSound != null)
+                ent.Comp.CurrentDevourSound = pvsSound.Value.Entity;
+        }
+
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
+
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), ent, target: target, used: ent)
+        {
+            BreakOnMove = true,
+            BlockDuplicate = true,
+            DuplicateCondition = DuplicateConditions.None,
+        });
+
+        var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        var othersMessage = Loc.GetString("changeling-devour-begin-windup-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        _popupSystem.PopupPredicted(
+            selfMessage,
+            othersMessage,
+            args.Performer,
+            args.Performer,
+            PopupType.MediumCaution);
     }
 
     /// <summary>
@@ -323,7 +364,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         ent.Comp.NextTick = curTime + ent.Comp.DamageTimeBetweenTicks;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} began to devour {args.Target:player} identity");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} began to devour {args.Target:player} identity");
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
@@ -356,7 +397,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         if (!_mobState.IsDead((EntityUid)target))
         {
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player}  unsuccessfully devoured {args.Target:player}'s identity");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner:player}  unsuccessfully devoured {args.Target:player}'s identity");
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-consume-failed-not-dead"), args.User, args.User, PopupType.Medium);
             return;
         }
@@ -375,7 +416,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             && HasComp<HumanoidProfileComponent>(target)
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player}  successfully devoured {args.Target:player}'s identity");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner:player}  successfully devoured {args.Target:player}'s identity");
             _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target.Value);
 
             if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)

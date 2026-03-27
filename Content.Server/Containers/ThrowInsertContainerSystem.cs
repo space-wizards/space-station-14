@@ -63,7 +63,7 @@ public sealed partial class ThrowInsertContainerSystem : EntitySystem
             _adminLogger.AddStructured(
                 LogType.Landed,
                 LogImpact.Low,
-                $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(thrower):player} landed in {ToPrettyString(ent)}",
+                $"{args.Thrown} thrown by {thrower:player} landed in {ent}",
                 JsonSerializer.SerializeToDocument(new
                 {
                     thrown = (int) args.Thrown,

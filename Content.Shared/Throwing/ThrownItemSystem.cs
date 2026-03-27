@@ -124,7 +124,7 @@ namespace Content.Shared.Throwing
 
             // Assume it's uninteresting if it has no thrower. For now anyway.
             if (thrownItem.Thrower is not null)
-                _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{uid:entity} thrown by {thrownItem.Thrower.Value:thrower} landed.");
+                _adminLogger.AddStructured(LogType.Landed, LogImpact.Low, $"{uid:entity} thrown by {thrownItem.Thrower.Value:thrower} landed.");
 
             _broadphase.RegenerateContacts((uid, physics));
             var landEvent = new LandEvent(thrownItem.Thrower, playSound);
@@ -137,7 +137,7 @@ namespace Content.Shared.Throwing
         public void ThrowCollideInteraction(ThrownItemComponent component, EntityUid thrown, EntityUid target)
         {
             if (component.Thrower is not null)
-                _adminLogger.Add(LogType.ThrowHit, LogImpact.Low,
+                _adminLogger.AddStructured(LogType.ThrowHit, LogImpact.Low,
                     $"{thrown:thrown} thrown by {component.Thrower.Value:thrower} hit {target:target}.");
 
             var hitByEv = new ThrowHitByEvent(thrown, target, component);

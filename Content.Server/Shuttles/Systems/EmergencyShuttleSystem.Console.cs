@@ -246,7 +246,7 @@ public sealed partial class EmergencyShuttleSystem
         if (component.AuthorizedEntities.Count == 0)
             return;
 
-        _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL ALL by {args.Actor:user}");
+        _adminLogger.AddStructured(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL ALL by {args.Actor:user}");
         _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", component.AuthorizationsRequired)));
         component.AuthorizedEntities.Clear();
         UpdateAllEmergencyConsoles();
@@ -265,7 +265,7 @@ public sealed partial class EmergencyShuttleSystem
         if (!component.AuthorizedEntities.Remove(idCard.Owner))
             return;
 
-        _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Actor:user}");
+        _adminLogger.AddStructured(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Actor:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
         _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", remaining)));
         CheckForLaunch(component);
@@ -289,7 +289,7 @@ public sealed partial class EmergencyShuttleSystem
 
         component.AuthorizedEntities[idCardUid] = MetaData(idCard).EntityName;
 
-        _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Actor:user}");
+        _adminLogger.AddStructured(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Actor:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
 
         if (remaining > 0)
@@ -365,7 +365,7 @@ public sealed partial class EmergencyShuttleSystem
     {
         if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
 
-        _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle launch authorized");
+        _adminLogger.AddStructured(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle launch authorized");
         _consoleAccumulator = _authorizeTime;
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());

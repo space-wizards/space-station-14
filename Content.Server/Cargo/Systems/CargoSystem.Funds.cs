@@ -151,7 +151,7 @@ public sealed partial class CargoSystem
         Dirty(station, bank);
 
         _audio.PlayPvs(ent.Comp.SetDistributionSound, ent);
-        _adminLogger.Add(
+        _adminLogger.AddStructured(
             LogType.Action,
             LogImpact.Medium,
             $"{args.Actor:player} set station {station} fund distribution: {string.Join(',', bank.RevenueDistribution.Select(p => $"{p.Key}: {p.Value}").ToList())}, primary cut: {bank.PrimaryCut}, lockbox cut: {bank.LockboxCut}");

@@ -114,7 +114,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
         if (MindHasRole<JobRoleComponent>((mindId, mind), out var jobRole)
             && jobRole.Value.Comp1.JobPrototype != jobPrototype)
         {
-            _adminLogger.Add(LogType.Mind,
+            _adminLogger.AddStructured(LogType.Mind,
                 LogImpact.Low,
                 $"Job Role of {mind.OwnedEntity} changed from '{jobRole.Value.Comp1.JobPrototype}' to '{jobPrototype}'");
 
@@ -176,7 +176,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
         var name = Loc.GetString(protoEnt.Name);
         if (mind.OwnedEntity is not null)
         {
-            _adminLogger.Add(LogType.Mind,
+            _adminLogger.AddStructured(LogType.Mind,
                 LogImpact.Low,
                 $"{name} added to mind of {mind.OwnedEntity}");
         }
@@ -185,7 +185,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
             //TODO: This is not tied to the player on the Admin Log filters.
             //Probably only happens when Job Role is added on initial spawn, before the mind entity is put in a mob
             Log.Error($"{ToPrettyString(mindId)} does not have an OwnedEntity!");
-            _adminLogger.Add(LogType.Mind,
+            _adminLogger.AddStructured(LogType.Mind,
                 LogImpact.Low,
                 $"{name} added to {mindId}");
         }
@@ -263,19 +263,19 @@ public abstract partial class SharedRoleSystem : EntitySystem
         else
         {
             var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
-            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
+            _adminLogger.AddStructured(LogType.Mind, LogImpact.Medium, $"{error}");
         }
 
         if (comp.OwnedEntity is null)
         {
             Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
-            _adminLogger.Add(LogType.Mind,
+            _adminLogger.AddStructured(LogType.Mind,
                 LogImpact.Medium,
                 $"Role Type of {mind} changed to {roleTypeId}, {subtype}");
             return;
         }
 
-        _adminLogger.Add(LogType.Mind,
+        _adminLogger.AddStructured(LogType.Mind,
             LogImpact.High,
             $"Role Type of {comp.OwnedEntity} changed to {roleTypeId}, {subtype}");
     }
@@ -407,7 +407,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
         var message = new RoleRemovedEvent(mind.Owner, mind.Comp, update);
         RaiseLocalEvent(mind, message, true);
 
-        _adminLogger.Add(LogType.Mind,
+        _adminLogger.AddStructured(LogType.Mind,
             LogImpact.Low,
             $"All roles of type {logName} removed from mind of {mind.Comp.OwnedEntity}");
 

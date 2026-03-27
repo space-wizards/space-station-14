@@ -283,7 +283,7 @@ public sealed partial class SmokeSystem : EntitySystem
         if (_blood.TryAddToBloodstream((entity, bloodstream), transferSolution))
         {
             // Log solution addition by smoke
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{entity:target} ingested smoke {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");
+            _adminLogger.AddStructured(LogType.ForceFeed, LogImpact.Medium, $"{entity:target} ingested smoke {transferSolution}");
         }
     }
 

@@ -110,7 +110,7 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         };
 
         _deviceNetwork.QueuePacket(ent, args.Address, payload);
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Actor:user} disabled borg {data.Name} with address {args.Address}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.Actor:user} disabled borg {data.Name} with address {args.Address}");
     }
 
     private void OnDestroy(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleDestroyMessage args)
@@ -137,7 +137,7 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 
         var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Name));
         _radio.SendRadioMessage(ent, message, ent.Comp.RadioChannel, ent);
-        _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{args.Actor:user} destroyed borg {data.Name} with address {args.Address}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Extreme, $"{args.Actor:user} destroyed borg {data.Name} with address {args.Address}");
 
         ent.Comp.NextDestroy = now + ent.Comp.DestroyCooldown;
         Dirty(ent, ent.Comp);

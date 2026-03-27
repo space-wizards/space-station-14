@@ -61,7 +61,7 @@ public sealed partial class BypassLockSystem : EntitySystem
             return false;
         }
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low,
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Low,
             $"{user:user} is prying {target:target}'s lock open at {Transform(target).Coordinates:targetlocation}");
         return true;
     }

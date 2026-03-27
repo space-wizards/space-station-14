@@ -126,7 +126,7 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
 
         component.GestationEndTime = _timing.CurTime + component.GestationDuration;
         component.Gestating = true;
-        _adminLogger.Add(LogType.Action, $"{uid} (carrier) and {partner} (partner) successfully bred.");
+        _adminLogger.AddStructured(LogType.Action, $"{uid} (carrier) and {partner} (partner) successfully bred.");
         return true;
     }
 
@@ -198,7 +198,7 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
                 // Make sure the name prefix is applied
                 _nameMod.RefreshNameModifiers(offspring);
             }
-            _adminLogger.Add(LogType.Action, $"{uid} gave birth to {offspring}.");
+            _adminLogger.AddStructured(LogType.Action, $"{uid} gave birth to {offspring}.");
         }
 
         _popup.PopupEntity(Loc.GetString(component.BirthPopup, ("parent", Identity.Entity(uid, EntityManager))), uid);

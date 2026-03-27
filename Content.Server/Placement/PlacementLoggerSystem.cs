@@ -39,7 +39,7 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
             _adminLogger.AddStructured(
                 logType,
                 LogImpact.Medium,
-                $"{ToPrettyString(actorEntity.Value):actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}",
+                $"{actorEntity.Value:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ev.EditedEntity:subject} at {ev.Coordinates}",
                 JsonSerializer.SerializeToDocument(new
                 {
                     actor = (int) actorEntity.Value,
@@ -55,10 +55,10 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
                 ]);
         }
         else if (actor != null)
-            _adminLogger.Add(logType, LogImpact.Medium,
+            _adminLogger.AddStructured(logType, LogImpact.Medium,
                 $"{actor:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ev.EditedEntity:subject} at {ev.Coordinates}");
         else
-            _adminLogger.Add(logType, LogImpact.Medium,
+            _adminLogger.AddStructured(logType, LogImpact.Medium,
                 $"Placement system {ev.PlacementEventAction.ToString().ToLower()}ed {ev.EditedEntity:subject} at {ev.Coordinates}");
     }
 
@@ -73,7 +73,7 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
             _adminLogger.AddStructured(
                 LogType.Tile,
                 LogImpact.Medium,
-                $"{ToPrettyString(actorEntity.Value):actor} used placement system to set tile {tileName} at {ev.Coordinates}",
+                $"{actorEntity.Value:actor} used placement system to set tile {tileName} at {ev.Coordinates}",
                 JsonSerializer.SerializeToDocument(new
                 {
                     actor = (int) actorEntity.Value,
@@ -87,12 +87,12 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
         }
         else if (actor != null)
         {
-            _adminLogger.Add(LogType.Tile, LogImpact.Medium,
+            _adminLogger.AddStructured(LogType.Tile, LogImpact.Medium,
                 $"{actor:player} used placement system to set tile {tileName} at {ev.Coordinates}");
         }
         else
         {
-            _adminLogger.Add(LogType.Tile, LogImpact.Medium,
+            _adminLogger.AddStructured(LogType.Tile, LogImpact.Medium,
                 $"Placement system set tile {tileName} at {ev.Coordinates}");
         }
     }

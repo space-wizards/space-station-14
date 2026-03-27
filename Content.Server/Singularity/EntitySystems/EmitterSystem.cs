@@ -91,7 +91,7 @@ namespace Content.Server.Singularity.EntitySystems
                 }
 
                 var stateText = component.IsOn ? "on" : "off";
-                _adminLogger.Add(LogType.FieldGeneration,
+                _adminLogger.AddStructured(LogType.FieldGeneration,
                     component.IsOn ? LogImpact.Medium : LogImpact.High,
                     $"{args.User:player} toggled {uid:emitter} to {stateText}");
                 args.Handled = true;

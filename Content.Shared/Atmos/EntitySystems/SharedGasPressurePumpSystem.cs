@@ -70,7 +70,7 @@ public abstract partial class SharedGasPressurePumpSystem : EntitySystem
     private void OnToggleStatusMessage(Entity<GasPressurePumpComponent> ent, ref GasPressurePumpToggleStatusMessage args)
     {
         ent.Comp.Enabled = args.Enabled;
-        _adminLogger.Add(LogType.AtmosPowerChanged,
+        _adminLogger.AddStructured(LogType.AtmosPowerChanged,
             LogImpact.Medium,
             $"{args.Actor:player} set the power on {ent:device} to {args.Enabled}");
         Dirty(ent);
@@ -81,7 +81,7 @@ public abstract partial class SharedGasPressurePumpSystem : EntitySystem
     private void OnOutputPressureChangeMessage(Entity<GasPressurePumpComponent> ent, ref GasPressurePumpChangeOutputPressureMessage args)
     {
         ent.Comp.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
-        _adminLogger.Add(LogType.AtmosPressureChanged,
+        _adminLogger.AddStructured(LogType.AtmosPressureChanged,
             LogImpact.Medium,
             $"{args.Actor:player} set the pressure on {ent:device} to {args.Pressure}kPa");
         Dirty(ent);

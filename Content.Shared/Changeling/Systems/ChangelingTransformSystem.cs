@@ -103,9 +103,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent)?.Entity;
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} begun an attempt to transform into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player}) ");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} begun an attempt to transform into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player}) ");
         else
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(
             EntityManager,
@@ -233,9 +233,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             _cloning.CopyStatusEffects(targetIdentity, args.User, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ent.Owner:player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{ent.Owner:player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ent.Owner:player} successfully transformed into \"{Name(targetIdentity)}\"");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{ent.Owner:player} successfully transformed into \"{Name(targetIdentity)}\"");
         _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
 
         Dirty(ent);

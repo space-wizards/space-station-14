@@ -277,7 +277,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         // UHH GOOD LUCK
         if (targetGrid == null)
         {
-            _adminLogger.Add(
+            _adminLogger.AddStructured(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
                 $"Emergency shuttle {stationUid} unable to dock with station {stationUid}");
@@ -292,7 +292,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         ShuttleDockResultType resultType;
         if (_shuttle.TryFTLDock(stationShuttle.EmergencyShuttle.Value, shuttle, targetGrid.Value, out var config, DockTag))
         {
-            _adminLogger.Add(
+            _adminLogger.AddStructured(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
                 $"Emergency shuttle {stationUid} docked with stations");
@@ -303,7 +303,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         }
         else
         {
-            _adminLogger.Add(
+            _adminLogger.AddStructured(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
                 $"Emergency shuttle {stationUid} unable to find a valid docking port for {stationUid}");

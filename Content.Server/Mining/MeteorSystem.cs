@@ -39,7 +39,7 @@ public sealed partial class MeteorSystem : EntitySystem
         {
             threshold = mobThreshold.Value;
             if (HasComp<ActorComponent>(args.OtherEntity))
-                _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.OtherEntity:player} was struck by meteor {uid:ent} and killed instantly.");
+                _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.OtherEntity:player} was struck by meteor {uid:ent} and killed instantly.");
         }
         else if (_destructible.TryGetDestroyedAt(args.OtherEntity, out var destroyThreshold))
         {

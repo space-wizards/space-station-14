@@ -77,11 +77,11 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
 
         if (canister.ReleaseValveOpen)
         {
-            _adminLogger.Add(LogType.CanisterTankEjected, LogImpact.High, $"Player {args.Actor:player} ejected tank {item:tank} from {uid:canister} while the valve was open, releasing [{GetContainedGasesString((uid, canister))}] to atmosphere");
+            _adminLogger.AddStructured(LogType.CanisterTankEjected, LogImpact.High, $"Player {args.Actor:player} ejected tank {item:tank} from {uid:canister} while the valve was open, releasing [{GetContainedGasesString((uid, canister))}] to atmosphere");
         }
         else
         {
-            _adminLogger.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {args.Actor:player} ejected tank {item:tank} from {uid:canister}");
+            _adminLogger.AddStructured(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {args.Actor:player} ejected tank {item:tank} from {uid:canister}");
         }
 
         if (UI.TryGetUiState<GasCanisterBoundUserInterfaceState>(uid, GasCanisterUiKey.Key, out var lastState))
@@ -98,7 +98,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
     {
         var pressure = Math.Clamp(args.Pressure, canister.MinReleasePressure, canister.MaxReleasePressure);
 
-        _adminLogger.Add(LogType.CanisterPressure, LogImpact.Medium, $"{args.Actor:player} set the release pressure on {uid:canister} to {args.Pressure}");
+        _adminLogger.AddStructured(LogType.CanisterPressure, LogImpact.Medium, $"{args.Actor:player} set the release pressure on {uid:canister} to {args.Pressure}");
 
         canister.ReleasePressure = pressure;
         Dirty(uid, canister);
@@ -119,7 +119,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
                 containedGasDict.Add((Gas)i, entity.Comp.Air[i]);
         }
 
-        _adminLogger.Add(LogType.CanisterValve, impact, $"{args.Actor:player} set the valve on {uid:canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        _adminLogger.AddStructured(LogType.CanisterValve, impact, $"{args.Actor:player} set the valve on {uid:canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
 
         ToggleValve(entity, args.Valve, args.Actor);
         DirtyUI(entity);

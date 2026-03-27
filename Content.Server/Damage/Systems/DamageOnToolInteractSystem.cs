@@ -37,7 +37,7 @@ namespace Content.Server.Damage.Systems
             {
                 if (_damageableSystem.TryChangeDamage(args.Target, weldingDamage, out var dmg, origin: args.User))
                 {
-                    _adminLogger.Add(LogType.Damaged,
+                    _adminLogger.AddStructured(LogType.Damaged,
                         $"{args.User:user} used {args.Used:used} as a welder to deal {dmg.GetTotal():damage} damage to {args.Target:target}");
                 }
 
@@ -48,7 +48,7 @@ namespace Content.Server.Damage.Systems
             {
                 if (_damageableSystem.TryChangeDamage(args.Target, damage, out var dmg, origin: args.User))
                 {
-                    _adminLogger.Add(LogType.Damaged,
+                    _adminLogger.AddStructured(LogType.Damaged,
                         $"{args.User:user} used {args.Used:used} as a tool to deal {dmg.GetTotal():damage} damage to {args.Target:target}");
                 }
 

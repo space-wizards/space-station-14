@@ -108,12 +108,12 @@ namespace Content.Server.Verbs
 
             if (holding == null)
             {
-                _adminLogger.Add(LogType.Verb, verb.Impact,
+                _adminLogger.AddStructured(LogType.Verb, verb.Impact,
                         $"{user:user} {executionText} the [{verbText:verb}] verb targeting {target:target}");
             }
             else
             {
-                _adminLogger.Add(LogType.Verb, verb.Impact,
+                _adminLogger.AddStructured(LogType.Verb, verb.Impact,
                        $"{user:user} {executionText} the [{verbText:verb}] verb targeting {target:target} while holding {holding.Value:held}");
             }
         }

@@ -53,19 +53,19 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
         if (fuelGenerator.On)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} switched output on {uid:target}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{args.Actor:player} switched output on {uid:target}");
         _switchable.Cycle(uid, args.Actor);
     }
 
     private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} stopped generator {uid:target}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{args.Actor:player} stopped generator {uid:target}");
         StopGenerator(uid, component, args.Actor);
     }
 
     private void GeneratorStartMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStartMessage args)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} started generator {uid:target}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{args.Actor:player} started generator {uid:target}");
         StartGenerator(uid, component, args.Actor);
     }
 

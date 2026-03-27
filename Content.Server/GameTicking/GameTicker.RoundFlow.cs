@@ -508,7 +508,7 @@ namespace Content.Server.GameTicking
         public void ShowRoundEndScoreboard(string text = "")
         {
             // Log end of round
-            _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
+            _adminLogger.AddStructured(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
 
             //Tell every client the round has ended.
             var gamemodeTitle = CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty;

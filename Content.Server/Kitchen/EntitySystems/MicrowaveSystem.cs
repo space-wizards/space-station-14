@@ -475,7 +475,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 _container.EmptyContainer(machine.PartContainer);
             }
 
-            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
                 $"{ent} exploded from unsafe cooking!");
         }
         /// <summary>

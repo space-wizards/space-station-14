@@ -77,7 +77,7 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
             _adminLogger.AddStructured(
                 LogType.BulletHit,
                 LogImpact.Medium,
-                $"{ToPrettyString(component.Shooter!.Value):user} shot {ToPrettyString(uid):projectile} and hit {otherName:target} for {damage:damage} damage",
+                $"{component.Shooter!.Value:user} shot {uid:projectile} and hit {otherName:target} for {damage:damage} damage",
                 JsonSerializer.SerializeToDocument(new
                 {
                     shooter = (int) component.Shooter!.Value,

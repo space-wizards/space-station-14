@@ -389,7 +389,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         SetupUser(uid, toInsert.Value);
         _container.Insert(toInsert.Value, component.PilotSlot);
         UpdateAppearance(uid, component);
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{toInsert.Value:player} entered mech {uid:target}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{toInsert.Value:player} entered mech {uid:target}");
         return true;
     }
 
@@ -412,7 +412,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         RemoveUser(uid, pilot);
         _container.RemoveEntity(uid, pilot);
         UpdateAppearance(uid, component);
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{pilot:player} exited mech {uid:target}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{pilot:player} exited mech {uid:target}");
         return true;
     }
 

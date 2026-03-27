@@ -290,7 +290,7 @@ public sealed partial class IngestionSystem : EntitySystem
             _adminLogger.AddStructured(
                 LogType.ForceFeed,
                 LogImpact.Medium,
-                $"{args.User:user} is forcing {entity:target} to eat {food:food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}",
+                $"{args.User:user} is forcing {entity:target} to eat {food:food} {foodSolution}",
                 new
                 {
                     actor = (int) args.User,
@@ -315,7 +315,7 @@ public sealed partial class IngestionSystem : EntitySystem
             _adminLogger.AddStructured(
                 LogType.Ingestion,
                 LogImpact.Low,
-                $"{entity:target} is eating {food:food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}",
+                $"{entity:target} is eating {food:food} {foodSolution}",
                 new
                 {
                     actor = (int) entity.Owner,

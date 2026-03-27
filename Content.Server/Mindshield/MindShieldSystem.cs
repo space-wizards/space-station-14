@@ -53,7 +53,7 @@ public sealed partial class MindShieldSystem : EntitySystem
         if (_mindSystem.TryGetMind(implanted, out var mindId, out _) &&
             _roleSystem.MindRemoveRole<RevolutionaryRoleComponent>(mindId))
         {
-            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{implanted} was deconverted due to being implanted with a Mindshield.");
+            _adminLogger.AddStructured(LogType.Mind, LogImpact.Medium, $"{implanted} was deconverted due to being implanted with a Mindshield.");
         }
     }
 

@@ -289,13 +289,13 @@ namespace Content.Server.GameTicking
 
             if (lateJoin)
             {
-                _adminLogger.Add(LogType.LateJoin,
+                _adminLogger.AddStructured(LogType.LateJoin,
                     LogImpact.Medium,
                     $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {mob:entity} as a {jobName:jobName}.");
             }
             else
             {
-                _adminLogger.Add(LogType.RoundStartJoin,
+                _adminLogger.AddStructured(LogType.RoundStartJoin,
                     LogImpact.Medium,
                     $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {mob:entity} as a {jobName:jobName}.");
             }
@@ -366,7 +366,7 @@ namespace Content.Server.GameTicking
         public void Respawn(ICommonSession player)
         {
             _mind.WipeMind(player);
-            _adminLogger.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
+            _adminLogger.AddStructured(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
 
             if (LobbyEnabled)
                 PlayerJoinLobby(player);
@@ -429,7 +429,7 @@ namespace Content.Server.GameTicking
             if (makeObserver)
                 _roles.MindAddRole(mind.Value, "MindRoleObserver");
 
-            _adminLogger.Add(LogType.LateJoin,
+            _adminLogger.AddStructured(LogType.LateJoin,
                 LogImpact.Low,
                 $"{player.Name} late joined the round as an Observer with {ghost:entity}.");
         }

@@ -89,7 +89,7 @@ public sealed partial class GameTicker
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStarted, $"Added game rule {ruleEntity}");
+        _adminLogger.AddStructured(LogType.EventStarted, $"Added game rule {ruleEntity}");
         var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
 #if DEBUG
         _chatManager.SendAdminAlert(str);
@@ -179,7 +179,7 @@ public sealed partial class GameTicker
             if (delayTime > TimeSpan.Zero)
             {
                 _sawmill.Info($"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
-                _adminLogger.Add(LogType.EventStarted,
+                _adminLogger.AddStructured(LogType.EventStarted,
                     $"Queued start for game rule {ruleEntity} with delay {delayTime}");
 
                 var delayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
@@ -203,7 +203,7 @@ public sealed partial class GameTicker
         }
 
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStarted, $"Started game rule {ruleEntity}");
+        _adminLogger.AddStructured(LogType.EventStarted, $"Started game rule {ruleEntity}");
 
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
         ruleData.ActivatedAt = _gameTiming.CurTime;
@@ -233,7 +233,7 @@ public sealed partial class GameTicker
         EnsureComp<EndedGameRuleComponent>(ruleEntity);
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ruleEntity}");
+        _adminLogger.AddStructured(LogType.EventStopped, $"Ended game rule {ruleEntity}");
 
         var ev = new GameRuleEndedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -474,12 +474,12 @@ public sealed partial class GameTicker
 
             if (shell.Player != null)
             {
-                _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");
+                _adminLogger.AddStructured(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");
                 _chatManager.SendAdminAnnouncement(Loc.GetString("add-gamerule-admin", ("rule", rule), ("admin", shell.Player)));
             }
             else
             {
-                _adminLogger.Add(LogType.EventStarted, $"Unknown tried to add game rule [{rule}] via command");
+                _adminLogger.AddStructured(LogType.EventStarted, $"Unknown tried to add game rule [{rule}] via command");
             }
             var ent = AddGameRule(rule);
 
@@ -507,11 +507,11 @@ public sealed partial class GameTicker
                 continue;
             if (shell.Player != null)
             {
-                _adminLogger.Add(LogType.EventStopped, $"{shell.Player} tried to end game rule [{rule}] via command");
+                _adminLogger.AddStructured(LogType.EventStopped, $"{shell.Player} tried to end game rule [{rule}] via command");
             }
             else
             {
-                _adminLogger.Add(LogType.EventStopped, $"Unknown tried to end game rule [{rule}] via command");
+                _adminLogger.AddStructured(LogType.EventStopped, $"Unknown tried to end game rule [{rule}] via command");
             }
 
             EndGameRule(ruleEnt.Value);
@@ -534,7 +534,7 @@ public sealed partial class GameTicker
     private void ListGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
     {
         _sawmill.Info($"{shell.Player} tried to get list of game rules via command");
-        _adminLogger.Add(LogType.Action, $"{shell.Player} tried to get list of game rules via command");
+        _adminLogger.AddStructured(LogType.Action, $"{shell.Player} tried to get list of game rules via command");
         var message = GetGameRulesListMessage(false);
         shell.WriteLine(message);
     }

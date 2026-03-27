@@ -181,7 +181,7 @@ public sealed partial class CargoSystem
 
             TryRemoveBounty(station, bounty.Value, false);
             FillBountyDatabase(station);
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"Bounty \"{bounty.Value.Bounty}\" (id:{bounty.Value.Id}) was fulfilled");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"Bounty \"{bounty.Value.Bounty}\" (id:{bounty.Value.Id}) was fulfilled");
         }
     }
 
@@ -437,7 +437,7 @@ public sealed partial class CargoSystem
             return false;
         }
         component.Bounties.Add(new CargoBountyData(bounty, randomVal));
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {uid}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {uid}");
         component.TotalBounties++;
         return true;
     }

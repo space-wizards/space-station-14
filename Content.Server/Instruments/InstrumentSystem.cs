@@ -168,7 +168,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             .Where(t => t != null)
             .Select(t => t!.ToString()));
 
-        _adminLogger.Add(
+        _adminLogger.AddStructured(
             LogType.Instrument,
             LogImpact.Low,
             $"{args.SenderSession.AttachedEntity} set the midi channels for {uid} to {tracksString}");

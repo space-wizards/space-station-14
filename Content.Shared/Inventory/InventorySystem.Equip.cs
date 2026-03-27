@@ -207,9 +207,9 @@ public abstract partial class InventorySystem
         _movementSpeed.RefreshMovementSpeedModifiers(target);
 
         if (actor == target)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{actor:player} equipped {itemUid:entity} to {slot}");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{actor:player} equipped {itemUid:entity} to {slot}");
         else
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{actor:player} equipped {itemUid:entity} on {target:target} to {slot}");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{actor:player} equipped {itemUid:entity} on {target:target} to {slot}");
 
         return true;
     }
@@ -513,9 +513,9 @@ public abstract partial class InventorySystem
         _movementSpeed.RefreshMovementSpeedModifiers(target);
 
         if (actor == target)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{actor:player} unequipped item from {slot} on themselves");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{actor:player} unequipped item from {slot} on themselves");
         else
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{actor:player} unequipped item from {slot} on {target:target}");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{actor:player} unequipped item from {slot} on {target:target}");
 
         return true;
     }

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
@@ -179,7 +179,7 @@ public sealed partial class ChangeCvarCommand : IConsoleCommand
 
                 var oldValue = _configurationManager.GetCVar<object>(cvar);
                 _configurationManager.SetCVar(cvar, parsed);
-                _adminLogger.Add(LogType.AdminCommands,
+                _adminLogger.AddStructured(LogType.AdminCommands,
                     LogImpact.Extreme,
                     $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValue.ToString()} to {parsed.ToString()}"
                     );

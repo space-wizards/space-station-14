@@ -58,7 +58,7 @@ public sealed partial class GeneratorSystem : SharedGeneratorSystem
 
     private void OnEjectFuel(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorEjectFuelMessage args)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.Actor:player} ejected fuel from {uid:target}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{args.Actor:player} ejected fuel from {uid:target}");
         EmptyGenerator(uid);
     }
 
@@ -188,7 +188,7 @@ public sealed partial class GeneratorSystem : SharedGeneratorSystem
             component.MinTargetPower / 1000,
             component.MaxTargetPower / 1000) * 1000;
         
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} set target power on {uid:target} to {component.TargetPower}W");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{args.Actor:player} set target power on {uid:target} to {component.TargetPower}W");
     }
 
     public void SetFuelGeneratorOn(EntityUid uid, bool on, FuelGeneratorComponent? generator = null)

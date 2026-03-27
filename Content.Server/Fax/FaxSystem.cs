@@ -239,7 +239,7 @@ public sealed partial class FaxSystem : EntitySystem
                 return;
             }
 
-            _adminLogger.Add(LogType.Action,
+            _adminLogger.AddStructured(LogType.Action,
                 LogImpact.Low,
                 $"{args.User:user} renamed {uid:tool} from \"{component.FaxName}\" to \"{newName}\"");
             component.FaxName = newName;
@@ -442,7 +442,7 @@ public sealed partial class FaxSystem : EntitySystem
 
         // Unfortunately, since a paper entity does not yet exist, we have to emulate what LabelSystem will do.
         var nameWithLabel = (args.Label is { } label) ? $"{name} ({label})" : name;
-        _adminLogger.Add(LogType.Action,
+        _adminLogger.AddStructured(LogType.Action,
             LogImpact.Low,
             $"{args.Actor:actor} " +
             $"added print job to \"{component.FaxName}\" {uid:tool} " +
@@ -489,7 +489,7 @@ public sealed partial class FaxSystem : EntitySystem
 
         UpdateUserInterface(uid, component);
 
-        _adminLogger.Add(LogType.Action,
+        _adminLogger.AddStructured(LogType.Action,
             LogImpact.Low,
             $"{args.Actor:actor} " +
             $"added copy job to \"{component.FaxName}\" {uid:tool} " +
@@ -574,7 +574,7 @@ public sealed partial class FaxSystem : EntitySystem
 
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
-        _adminLogger.Add(LogType.Action,
+        _adminLogger.AddStructured(LogType.Action,
             LogImpact.Low,
             $"{args.Actor:actor} " +
             $"sent fax from \"{component.FaxName}\" {uid:tool} " +
@@ -641,7 +641,7 @@ public sealed partial class FaxSystem : EntitySystem
             _labelSystem.Label(printed, label);
         }
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {uid:tool} printed {printed:subject}: {printout.Content}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {uid:tool} printed {printed:subject}: {printout.Content}");
     }
 
     private void NotifyAdmins(string faxName)

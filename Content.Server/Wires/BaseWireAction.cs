@@ -72,7 +72,7 @@ public abstract partial class BaseWireAction : IWireAction
         var action = GetType().Name;
 
         // logs something like "... mended red POWR wire (PowerWireAction) in ...."
-        _adminLogger.Add(LogType.WireHacking, LogImpact.Medium, $"{player} {verb} {color} {name} wire ({action}) in {owner}");
+        _adminLogger.AddStructured(LogType.WireHacking, LogImpact.Medium, $"{player} {verb} {color} {name} wire ({action}) in {owner}");
         return true;
     }
 

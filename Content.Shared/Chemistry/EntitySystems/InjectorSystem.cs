@@ -255,7 +255,7 @@ public sealed partial class InjectorSystem : EntitySystem
                 _adminLogger.AddStructured(
                     LogType.Ingestion,
                     LogImpact.Medium,
-                    $"{user:user} is attempting to inject themselves with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}.",
+                    $"{user:user} is attempting to inject themselves with a solution {injectorSolution:solution}.",
                     new
                     {
                         actor = (int) user,
@@ -311,7 +311,7 @@ public sealed partial class InjectorSystem : EntitySystem
                 _adminLogger.AddStructured(
                     LogType.ForceFeed,
                     LogImpact.Medium,
-                    $"{user:user} is attempting to inject {target:target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}",
+                    $"{user:user} is attempting to inject {target:target} with a solution {injectorSolution:solution}",
                     new
                     {
                         actor = (int) user,
@@ -618,7 +618,7 @@ public sealed partial class InjectorSystem : EntitySystem
         _adminLogger.AddStructured(
             LogType.ForceFeed,
             LogImpact.Medium,
-            $"{user:user} injected {target:target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {injector:using}",
+            $"{user:user} injected {target:target} with a solution {removedSolution:removedSolution} using a {injector:using}",
             new
             {
                 actor = (int) user,

@@ -58,6 +58,6 @@ public sealed partial class OSay : LocalizedCommands
             return;
 
         _entityManager.System<ChatSystem>().TrySendInGameICMessage(source.Value, message, chatType, false);
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(shell.Player != null ? shell.Player.Name : "An administrator")} forced {source.Value} to {args[1]}: {message}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{(shell.Player != null ? shell.Player.Name : "An administrator")} forced {source.Value} to {args[1]}: {message}");
     }
 }

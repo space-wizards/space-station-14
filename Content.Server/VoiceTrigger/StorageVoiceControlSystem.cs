@@ -51,7 +51,7 @@ public sealed partial class StorageVoiceControlSystem : EntitySystem
             if (_storage.CanInsert(ent, activeItem.Value, out var failedReason))
             {
                 // We adminlog before insertion, otherwise the logger will attempt to pull info on an entity that no longer is present and throw an exception
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.Source} inserted {activeItem.Value} into {ent} via voice control");
+                _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{args.Source} inserted {activeItem.Value} into {ent} via voice control");
                 _storage.Insert(ent, activeItem.Value, out _);
                 return;
             }
@@ -60,7 +60,7 @@ public sealed partial class StorageVoiceControlSystem : EntitySystem
                 if (failedReason == null)
                     return;
                 _popup.PopupEntity(Loc.GetString(failedReason), ent, args.Source);
-                _adminLogger.Add(LogType.Action,
+                _adminLogger.AddStructured(LogType.Action,
                     LogImpact.Low,
                     $"{args.Source} failed to insert {activeItem.Value} into {ent} via voice control");
             }
@@ -92,7 +92,7 @@ public sealed partial class StorageVoiceControlSystem : EntitySystem
         EntityUid source)
     {
         _container.RemoveEntity(ent, item);
-        _adminLogger.Add(LogType.Action,
+        _adminLogger.AddStructured(LogType.Action,
             LogImpact.Low,
             $"{source} retrieved {item} from {ent} via voice control");
         _hands.TryPickup(source, item);

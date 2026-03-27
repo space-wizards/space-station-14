@@ -147,7 +147,7 @@ public sealed partial class ApcSystem : EntitySystem
         if (user != null)
         {
             var humanReadableState = apc.MainBreakerEnabled ? "Enabled" : "Disabled";
-            _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium,
+            _adminLogger.AddStructured(LogType.ItemConfigure, LogImpact.Medium,
                 $"{user:user} set the main breaker state of {uid:entity} to {humanReadableState:state}.");
         }
     }

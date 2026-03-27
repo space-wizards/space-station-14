@@ -29,7 +29,7 @@ public sealed partial class SignallerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.User:actor} triggered signaler {uid:tool}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{args.User:actor} triggered signaler {uid:tool}");
         _link.InvokePort(uid, component.Port);
         args.Handled = true;
     }

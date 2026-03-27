@@ -356,9 +356,9 @@ public abstract partial class SharedBuckleSystem
     private void Buckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
     {
         if (user == buckle.Owner)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:player} buckled themselves to {strap}");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{user:player} buckled themselves to {strap}");
         else if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:player} buckled {buckle} to {strap}");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{user:player} buckled {buckle} to {strap}");
 
         _audio.PlayPredicted(strap.Comp.BuckleSound, strap, user);
 
@@ -447,9 +447,9 @@ public abstract partial class SharedBuckleSystem
     private void Unbuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
     {
         if (user == buckle.Owner)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:user} unbuckled themselves from {strap:strap}");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{user:user} unbuckled themselves from {strap:strap}");
         else if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:user} unbuckled {buckle:target} from {strap:strap}");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{user:user} unbuckled {buckle:target} from {strap:strap}");
 
         _audio.PlayPredicted(strap.Comp.UnbuckleSound, strap, user);
 

@@ -275,7 +275,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         {
             TryDefuseBomb(wire.Owner, comp);
 
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
+            _adminLogger.AddStructured(LogType.Explosion, LogImpact.High,
                 $"{user:user} has defused {wire.Owner:entity}!");
         }
 

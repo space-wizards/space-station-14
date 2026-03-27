@@ -68,7 +68,7 @@ public sealed partial class TriggerSystem
 
         if (!string.IsNullOrWhiteSpace(component.KeyPhrase) && message.IndexOf(component.KeyPhrase, StringComparison.InvariantCultureIgnoreCase) is var index and >= 0)
         {
-            _adminLogger.Add(LogType.Trigger, LogImpact.Medium,
+            _adminLogger.AddStructured(LogType.Trigger, LogImpact.Medium,
                     $"A voice-trigger on {ent:entity} was triggered by {args.Source:speaker} speaking the key-phrase {component.KeyPhrase}.");
             Trigger(ent, args.Source, ent.Comp.KeyOut);
 
@@ -144,9 +144,9 @@ public sealed partial class TriggerSystem
         EnsureComp<ActiveListenerComponent>(ent).Range = ent.Comp.ListenRange;
 
         if (user == null)
-            _adminLogger.Add(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ent:entity} has started recording.");
+            _adminLogger.AddStructured(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ent:entity} has started recording.");
         else
-            _adminLogger.Add(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ent:entity} has started recording. User: {user.Value:user}");
+            _adminLogger.AddStructured(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ent:entity} has started recording. User: {user.Value:user}");
 
         _popup.PopupEntity(Loc.GetString("trigger-on-voice-start-recording"), ent);
     }
@@ -174,7 +174,7 @@ public sealed partial class TriggerSystem
         ent.Comp.IsRecording = false;
         Dirty(ent);
 
-        _adminLogger.Add(LogType.Trigger, LogImpact.Low,
+        _adminLogger.AddStructured(LogType.Trigger, LogImpact.Low,
                 $"A voice-trigger on {ent:entity} has recorded a new keyphrase: '{ent.Comp.KeyPhrase}'. Recorded from {source:speaker}");
 
         _popup.PopupEntity(Loc.GetString("trigger-on-voice-recorded", ("keyphrase", ent.Comp.KeyPhrase)), ent);
@@ -204,7 +204,7 @@ public sealed partial class TriggerSystem
         Dirty(ent);
         UpdateListening(ent);
 
-        _adminLogger.Add(LogType.Trigger, LogImpact.Low,
+        _adminLogger.AddStructured(LogType.Trigger, LogImpact.Low,
             $"A voice-trigger on {ent:entity} has been reset to default keyphrase: '{ent.Comp.KeyPhrase}'. User: {user:speaker}");
 
         _popup.PopupEntity(Loc.GetString("trigger-on-voice-set-default", ("keyphrase", ent.Comp.KeyPhrase)), ent);

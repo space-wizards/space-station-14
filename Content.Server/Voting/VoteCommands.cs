@@ -45,7 +45,7 @@ namespace Content.Server.Voting
 
             if (shell.Player != null && !_voteManager.CanCallVote(shell.Player, type))
             {
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} failed to start {type.ToString()} vote");
+                _adminLogger.AddStructured(LogType.Vote, LogImpact.Medium, $"{shell.Player} failed to start {type.ToString()} vote");
                 shell.WriteError(Loc.GetString("cmd-createvote-cannot-call-vote-now"));
                 return;
             }
@@ -104,9 +104,9 @@ namespace Content.Server.Voting
             options.SetInitiatorOrServer(shell.Player);
 
             if (shell.Player != null)
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
+                _adminLogger.AddStructured(LogType.Vote, LogImpact.Medium, $"{shell.Player} initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
             else
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
+                _adminLogger.AddStructured(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
 
             var vote = _voteManager.CreateVote(options);
 
@@ -123,12 +123,12 @@ namespace Content.Server.Voting
                 if (eventArgs.Winner == null)
                 {
                     var ties = string.Join(", ", eventArgs.Winners.Select(c => args[(int) c]));
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished as tie: {ties}");
+                    _adminLogger.AddStructured(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished as tie: {ties}");
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie", ("title", options.Title), ("ties", ties)));
                 }
                 else
                 {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
+                    _adminLogger.AddStructured(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win", ("title", options.Title), ("winner", args[(int) eventArgs.Winner])));
                 }
 
@@ -253,9 +253,9 @@ namespace Content.Server.Voting
             }
 
             if (shell.Player != null)
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} canceled vote: {vote.Title}");
+                _adminLogger.AddStructured(LogType.Vote, LogImpact.Medium, $"{shell.Player} canceled vote: {vote.Title}");
             else
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Canceled vote: {vote.Title}");
+                _adminLogger.AddStructured(LogType.Vote, LogImpact.Medium, $"Canceled vote: {vote.Title}");
             vote.Cancel();
         }
 

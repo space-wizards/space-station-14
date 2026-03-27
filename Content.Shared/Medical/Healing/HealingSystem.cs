@@ -101,12 +101,12 @@ public sealed partial class HealingSystem : EntitySystem
 
         if (target.Owner != args.User)
         {
-            _adminLogger.Add(LogType.Healed,
+            _adminLogger.AddStructured(LogType.Healed,
                 $"{args.User:user} healed {target.Owner:target} for {total:damage} damage");
         }
         else
         {
-            _adminLogger.Add(LogType.Healed,
+            _adminLogger.AddStructured(LogType.Healed,
                 $"{args.User:user} healed themselves for {total:damage} damage");
         }
 

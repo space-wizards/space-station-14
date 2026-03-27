@@ -92,7 +92,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
         var stability = Random.NextFloat(minStability, maxStability);
         ChangeAnomalyStability(uid, stability, component);
 
-        _adminLogger.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {uid} pulsed with severity {component.Severity}.");
+        _adminLogger.AddStructured(LogType.Anomaly, LogImpact.Medium, $"Anomaly {uid} pulsed with severity {component.Severity}.");
         if (_net.IsServer)
             Audio.PlayPvs(component.PulseSound, uid);
 
@@ -132,7 +132,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
         if(!Resolve(ent, ref ent.Comp))
             return;
 
-        _adminLogger.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ent.Owner} began to go supercritical.");
+        _adminLogger.AddStructured(LogType.Anomaly, LogImpact.High, $"Anomaly {ent.Owner} began to go supercritical.");
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
 
@@ -194,7 +194,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
             // Logging before resolve, in case the anomaly has deleted itself.
             if (_net.IsServer)
                 Log.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-            _adminLogger.Add(LogType.Anomaly,
+            _adminLogger.AddStructured(LogType.Anomaly,
                 supercritical ? LogImpact.High : LogImpact.Low,
                 $"Anomaly {uid} {(supercritical ? "went supercritical" : "decayed")}.");
         }

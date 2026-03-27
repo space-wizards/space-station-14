@@ -53,7 +53,7 @@ public abstract partial class SharedToolSystem
         if (!TryDeconstructWithToolQualities(tileRef, tool.Qualities))
             return;
 
-        _adminLogger.Add(
+        _adminLogger.AddStructured(
             LogType.LatticeCut,
             LogImpact.Medium,
             $"{args.User:player} used {ent} to edit the tile at {coords}");

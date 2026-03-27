@@ -107,7 +107,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         if (entity == null)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.High,
+        _adminLogger.AddStructured(LogType.Action, LogImpact.High,
             $"{attachedEntity:player} removed item {entity} from cryostorage-contained player " +
             $"{cryoContained:player}, stored in cryostorage {ent}");
 
@@ -217,7 +217,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         cryostorageComponent.StoredPlayers.Add(ent);
         Dirty(ent, comp);
         UpdateCryostorageUIState((cryostorageEnt.Value, cryostorageComponent));
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ent:player} was entered into cryostorage inside of {cryostorageEnt.Value}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{ent:player} was entered into cryostorage inside of {cryostorageEnt.Value}");
 
         if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
             return;
@@ -270,7 +270,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
 
         comp.GracePeriodEndTime = null;
         cryostorageComponent.StoredPlayers.Remove(uid);
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{entity:player} re-entered the game from cryostorage {cryostorage}");
+        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{entity:player} re-entered the game from cryostorage {cryostorage}");
         UpdateCryostorageUIState((cryostorage, cryostorageComponent));
     }
 

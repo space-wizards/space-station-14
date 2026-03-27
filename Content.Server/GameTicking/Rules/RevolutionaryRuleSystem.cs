@@ -160,7 +160,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
 
         if (ev.User != null)
         {
-            _adminLogger.Add(LogType.Mind,
+            _adminLogger.AddStructured(LogType.Mind,
                 LogImpact.Medium,
                 $"{ev.User.Value} converted {ev.Target} into a Revolutionary");
 
@@ -240,7 +240,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
                 _stun.TryUpdateParalyzeDuration(uid, stunTime);
                 RemCompDeferred<RevolutionaryComponent>(uid);
                 _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Entity(uid, EntityManager))), uid);
-                _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{uid} was deconverted due to all Head Revolutionaries dying.");
+                _adminLogger.AddStructured(LogType.Mind, LogImpact.Medium, $"{uid} was deconverted due to all Head Revolutionaries dying.");
 
                 if (!_mind.TryGetMind(uid, out var mindId, out var mind, mc))
                     continue;

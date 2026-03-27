@@ -227,7 +227,7 @@ public sealed partial class AccessOverriderSystem : SharedAccessOverriderSystem
         var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
         var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
 
-        _adminLogger.Add(LogType.Action, LogImpact.High,
+        _adminLogger.AddStructured(LogType.Action, LogImpact.High,
             $"{player:player} has modified {accessReaderEnt.Value:entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
         _accessReader.TrySetAccesses(accessReaderEnt.Value, newAccessList);

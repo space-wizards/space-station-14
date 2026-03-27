@@ -565,7 +565,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             if (tileCount > 10 && (totalMolesRemoved / tileCount) > 10)
-                _adminLogger.Add(LogType.ExplosiveDepressurization, LogImpact.High,
+                _adminLogger.AddStructured(LogType.ExplosiveDepressurization, LogImpact.High,
                     $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
             Array.Clear(_depressurizeTiles, 0, Atmospherics.MonstermosHardTileLimit);

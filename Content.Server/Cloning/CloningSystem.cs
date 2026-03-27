@@ -91,7 +91,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         _metaData.SetEntityDescription(clone.Value, Description(original));
         _identity.QueueIdentityUpdate(clone.Value); // We have to manually refresh the identity in case we did not raise events.
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
+        _adminLogger.AddStructured(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
         return true;
     }
 

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Database;
@@ -59,7 +59,7 @@ public sealed partial class CodewordSystem : EntitySystem
         EnsureComp<CodewordComponent>(codewordsContainer)
             .Codewords = codewords;
         manager.Codewords[faction] = codewordsContainer;
-        _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated for faction {faction}: {string.Join(", ", codewords)}");
+        _adminLogger.AddStructured(LogType.EventStarted, LogImpact.Low, $"Codewords generated for faction {faction}: {string.Join(", ", codewords)}");
 
         return codewords;
     }

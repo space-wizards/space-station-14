@@ -184,7 +184,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             beacon.Enabled == args.Enabled)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
             $"{args.Actor:player} configured NavMapBeacon \'{ent:entity}\' with text \'{args.Text}\', color {args.Color.ToHexNoAlpha()}, and {(args.Enabled ? "enabled" : "disabled")} it.");
 
         if (TryComp<WarpPointComponent>(ent, out var warpPoint))

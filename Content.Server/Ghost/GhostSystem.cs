@@ -390,7 +390,7 @@ namespace Content.Server.Ghost
 
         private void WarpTo(EntityUid uid, EntityUid target)
         {
-            _adminLogger.Add(LogType.GhostWarp, $"{uid} ghost warped to {target}");
+            _adminLogger.AddStructured(LogType.GhostWarp, $"{uid} ghost warped to {target}");
 
             if ((TryComp(target, out WarpPointComponent? warp) && warp.Follow) || HasComp<MobStateComponent>(target))
             {
@@ -574,9 +574,9 @@ namespace Content.Server.Ghost
             if (playerEntity != null && viaCommand)
             {
                 if (forced)
-                    _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:player} was forced to ghost via command");
+                    _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:player} was forced to ghost via command");
                 else
-                    _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:player} is attempting to ghost via command");
+                    _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:player} is attempting to ghost via command");
             }
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
@@ -650,7 +650,7 @@ namespace Content.Server.Ghost
             }
 
             if (playerEntity != null)
-                _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
+                _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
             var ghost = SpawnGhost((mindId, mind), position, canReturn);
 

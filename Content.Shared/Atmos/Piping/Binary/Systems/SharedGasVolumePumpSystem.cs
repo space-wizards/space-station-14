@@ -43,7 +43,7 @@ public abstract partial class SharedGasVolumePumpSystem : EntitySystem
     private void OnToggleStatusMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpToggleStatusMessage args)
     {
         pump.Enabled = args.Enabled;
-        _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+        _adminLogger.AddStructured(LogType.AtmosPowerChanged, LogImpact.Medium,
             $"{args.Actor:player} set the power on {uid:device} to {args.Enabled}");
 
         Dirty(uid, pump);
@@ -56,7 +56,7 @@ public abstract partial class SharedGasVolumePumpSystem : EntitySystem
         pump.TransferRate = Math.Clamp(args.TransferRate, 0f, pump.MaxTransferRate);
         Dirty(uid, pump);
         UpdateUi((uid, pump));
-        _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
+        _adminLogger.AddStructured(LogType.AtmosVolumeChanged, LogImpact.Medium,
             $"{args.Actor:player} set the transfer rate on {uid:device} to {args.TransferRate}");
     }
 

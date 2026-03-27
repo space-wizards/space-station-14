@@ -101,7 +101,7 @@ public abstract partial class SharedDoorSystem
         // Log bolt state changes if user is present
         if (user != null)
         {
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user.Value:player} set door bolt {(value ? "enabled" : "disabled")} on {ent:target}");
+            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{user.Value:player} set door bolt {(value ? "enabled" : "disabled")} on {ent:target}");
         }
 
         // used to reset the auto-close timer after unbolting

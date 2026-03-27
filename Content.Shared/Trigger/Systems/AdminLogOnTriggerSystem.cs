@@ -9,7 +9,7 @@ public sealed partial class AdminLogOnTriggerSystem : XOnTriggerSystem<AdminLogO
 
     protected override void OnTrigger(Entity<AdminLogOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        _adminLogger.Add(
+        _adminLogger.AddStructured(
             ent.Comp.LogType,
             ent.Comp.LogImpact,
             $"{args.User} sent a trigger using {ent}: {Loc.GetString(ent.Comp.Message)}"

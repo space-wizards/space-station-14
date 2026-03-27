@@ -266,9 +266,9 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
             return;
 
         if (userId != null)
-            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{userId.Value:actor} is linking defaults between {sourceUid:source} and {sinkUid:sink}");
+            _adminLogger.AddStructured(LogType.DeviceLinking, LogImpact.Low, $"{userId.Value:actor} is linking defaults between {sourceUid:source} and {sinkUid:sink}");
         else
-            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linking defaults between {sourceUid:source} and {sinkUid:sink}");
+            _adminLogger.AddStructured(LogType.DeviceLinking, LogImpact.Low, $"linking defaults between {sourceUid:source} and {sinkUid:sink}");
 
         var sourcePorts = GetSourcePorts(sourceUid, sourceComponent);
         var defaults = GetDefaults(sourcePorts);
@@ -424,9 +424,9 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
         if (linkedPorts.Contains((source, sink)))
         {
             if (userId != null)
-                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{userId.Value:actor} unlinked {sourceUid:source} {source} and {sinkUid:sink} {sink}");
+                _adminLogger.AddStructured(LogType.DeviceLinking, LogImpact.Low, $"{userId.Value:actor} unlinked {sourceUid:source} {source} and {sinkUid:sink} {sink}");
             else
-                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"unlinked {sourceUid:source} {source} and {sinkUid:sink} {sink}");
+                _adminLogger.AddStructured(LogType.DeviceLinking, LogImpact.Low, $"unlinked {sourceUid:source} {source} and {sinkUid:sink} {sink}");
 
             RaiseLocalEvent(sourceUid, new PortDisconnectedEvent(source));
             RaiseLocalEvent(sinkUid, new PortDisconnectedEvent(sink));
@@ -513,9 +513,9 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
     private void SendNewLinkEvent(EntityUid? user, EntityUid sourceUid, string source, EntityUid sinkUid, string sink)
     {
         if (user != null)
-            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{user.Value:actor} linked {sourceUid:source} {source} and {sinkUid:sink} {sink}");
+            _adminLogger.AddStructured(LogType.DeviceLinking, LogImpact.Low, $"{user.Value:actor} linked {sourceUid:source} {source} and {sinkUid:sink} {sink}");
         else
-            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linked {sourceUid:source} {source} and {sinkUid:sink} {sink}");
+            _adminLogger.AddStructured(LogType.DeviceLinking, LogImpact.Low, $"linked {sourceUid:source} {source} and {sinkUid:sink} {sink}");
 
         var newLinkEvent = new NewLinkEvent(user, sourceUid, source, sinkUid, sink);
         RaiseLocalEvent(sourceUid, newLinkEvent);

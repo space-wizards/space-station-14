@@ -38,13 +38,13 @@ public sealed partial class NotekeeperCartridgeSystem : EntitySystem
         if (message.Action == NotekeeperUiAction.Add)
         {
             component.Notes.Add(message.Note);
-            _adminLogger.Add(LogType.PdaInteract, LogImpact.Low,
+            _adminLogger.AddStructured(LogType.PdaInteract, LogImpact.Low,
                 $"{args.Actor} added a note to PDA: '{message.Note}' contained on: {uid}");
         }
         else
         {
             component.Notes.Remove(message.Note);
-            _adminLogger.Add(LogType.PdaInteract, LogImpact.Low,
+            _adminLogger.AddStructured(LogType.PdaInteract, LogImpact.Low,
                 $"{args.Actor} removed a note from PDA: '{message.Note}' was contained on: {uid}");
         }
 
