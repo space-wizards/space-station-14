@@ -73,39 +73,36 @@ public sealed class OutfitSystem : EntitySystem
             }
         }
 
-        if (startingGear.Storage.Count > 0)
+        var coords = Transform(target).Coordinates;
+        foreach (var (slotName, storageContainers) in startingGear.Storage)
         {
-            var coords = Comp<TransformComponent>(target).Coordinates;
-            foreach (var (slotName, storageContainers) in startingGear.Storage)
+            if (storageContainers.Count == 0)
+                continue;
+
+            if (!_invSystem.TryGetSlotEntity(target, slotName, out var slotEnt))
+                continue;
+
+            if (TryComp<StorageComponent>(slotEnt, out var storage))
             {
-                if (storageContainers.Count == 0)
-                    continue;
-
-                if (!_invSystem.TryGetSlotEntity(target, slotName, out var slotEnt))
-                    continue;
-
-                if (TryComp<StorageComponent>(slotEnt, out var storage))
+                foreach (var entProto in storageContainers)
                 {
-                    foreach (var entProto in storageContainers)
-                    {
-                        var spawnedEntity = SpawnAtPosition(entProto, coords);
-                        _storageSystem.Insert(slotEnt.Value, spawnedEntity, out _, user: null, storageComp: storage, playSound: false);
-                    }
+                    var spawnedEntity = SpawnAtPosition(entProto, coords);
+                    _storageSystem.Insert(slotEnt.Value, spawnedEntity, out _, user: null, storageComp: storage, playSound: false);
                 }
-                else if (TryComp<ItemSlotsComponent>(slotEnt, out var itemSlots))
+            }
+            else if (TryComp<ItemSlotsComponent>(slotEnt, out var itemSlots))
+            {
+                foreach (var entProto in storageContainers)
                 {
-                    foreach (var entProto in storageContainers)
-                    {
-                        var spawnedEntity = Spawn(entProto, coords);
-                        _itemSlotsSystem.TryInsertEmpty((slotEnt.Value, itemSlots), spawnedEntity, null, excludeUserAudio: true);
-                    }
+                    var spawnedEntity = Spawn(entProto, coords);
+                    _itemSlotsSystem.TryInsertEmpty((slotEnt.Value, itemSlots), spawnedEntity, null, excludeUserAudio: true);
                 }
             }
         }
 
         if (TryComp(target, out HandsComponent? handsComponent))
         {
-            var coords = Comp<TransformComponent>(target).Coordinates;
+            coords = Comp<TransformComponent>(target).Coordinates;
             foreach (var prototype in startingGear.Inhand)
             {
                 var inhandEntity = Spawn(prototype, coords);
