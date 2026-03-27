@@ -81,13 +81,13 @@ public sealed class ContainerFillSystem : EntitySystem
                 return itemSizeProto?.Weight;
             });
 
-            foreach (var item in sortedItems)
+            foreach (var spawn in sortedItems)
             {
-                if (!_containerSystem.Insert(item, container, containerXform: xform))
+                if (!_containerSystem.Insert(spawn, container, containerXform: xform))
                 {
                     var alreadyContained = container.ContainedEntities.Count > 0 ? string.Join("\n", container.ContainedEntities.Select(e => $"\t - {ToPrettyString(e)}")) : "< empty >";
-                    Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(EntityTableContainerFillComponent)} failed to insert an entity: {ToPrettyString(item)}.\nCurrent contents:\n{alreadyContained}");
-                    _transform.AttachToGridOrMap(item);
+                    Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(EntityTableContainerFillComponent)} failed to insert an entity: {ToPrettyString(spawn)}.\nCurrent contents:\n{alreadyContained}");
+                    _transform.AttachToGridOrMap(spawn);
                     break;
                 }
             }
