@@ -10,8 +10,8 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 public interface IGameTestPairConfigModifier
 {
     /// <summary>
-    ///     Whether this modifier is exclusive and should conflict with other exclusive modifers.
-    ///     Essentially, yell if other IGameTestPairConfigModifier attributes are present if this is set.
+    ///     Whether this modifier is exclusive and should conflict with other exclusive modifiers.
+    ///     Essentially, fail immediately if other IGameTestPairConfigModifier attributes are present if this is set.
     /// </summary>
     bool Exclusive { get; }
 

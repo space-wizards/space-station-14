@@ -29,9 +29,9 @@ public sealed class PairConfigAttribute(Type? sourceType, string sourceMember) :
     {
         var sourceType = SourceType ?? test.GetType();
 
-        var field = sourceType.GetProperty(SourceMember, PropertyBindingFlags);
+        var property = sourceType.GetProperty(SourceMember, PropertyBindingFlags);
 
-        if (field is null)
+        if (property is null)
         {
             if (sourceType.GetField(SourceMember, PropertyBindingFlags) is not null)
             {
@@ -42,10 +42,12 @@ public sealed class PairConfigAttribute(Type? sourceType, string sourceMember) :
             throw new ArgumentException($"Couldn't find static property {SourceMember} on {sourceType.Name}");
         }
 
-        if (!field.PropertyType.IsAssignableTo(typeof(PoolSettings)))
+        if (!property.PropertyType.IsAssignableTo(typeof(PoolSettings)))
+        {
             throw new ArgumentException(
                 $"{sourceType.Name}.{SourceMember} is not assignable to {nameof(PoolSettings)} and cannot be used.");
+        }
 
-        settings = (PoolSettings)field.GetValue(null)!;
+        settings = (PoolSettings)property.GetValue(null)!;
     }
 }

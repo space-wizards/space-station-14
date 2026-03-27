@@ -1,3 +1,4 @@
+#nullable enable
 using System.Reflection;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -35,7 +36,7 @@ public sealed class EnsureCVarAttribute(Side side, Type definitionType, string f
     {
         var cvar = LookupCVar();
 
-        test.PreTestAddOverride(side, cvar!.Name, value);
+        test.PreTestAddOverride(side, cvar.Name, value);
 
         return Task.CompletedTask;
     }
@@ -54,7 +55,7 @@ public sealed class EnsureCVarAttribute(Side side, Type definitionType, string f
                 $"Expected a CVar definition on {definitionType}.{fieldName}, but it was a {obj?.GetType().FullName ?? "null"}");
         }
 
-        if (value.GetType() != cvar!.DefaultValue.GetType())
+        if (value.GetType() != cvar.DefaultValue.GetType())
             throw new NotSupportedException($"Cannot set {cvar.Name} to {value}, it's the wrong type.");
 
         return cvar;

@@ -75,7 +75,7 @@ public sealed class ConstraintsTests : GameTest
 
     [Test]
     [TestOf(typeof(LifeStageConstraint))]
-    [Description("Entities that live entities do not count as deleted.")]
+    [Description("Entities that are alive do not count as deleted.")]
     [RunOnSide(Side.Server)]
     public void DeletedNegative()
     {

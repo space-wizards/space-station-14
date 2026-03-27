@@ -1,3 +1,4 @@
+#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.IntegrationTests.NUnit.Utilities;
 using Robust.Shared.GameObjects;
@@ -12,22 +13,23 @@ public static class ConstraintHelpers
     ///     A constraint implementation helper to convert TActual into an entityuid.
     /// </summary>
     /// <param name="t">The input value to try to get an entity uid from.</param>
+    /// <param name="instance">The integration test instance to resolve the entity from.</param>
     /// <param name="ent">The resulting entity uid.</param>
-    /// <param name="error">Whether TActual is recognized to begin with.</param>
+    /// <param name="validType">Whether TActual is recognized to begin with.</param>
     /// <typeparam name="TActual">The type to cast out of.</typeparam>
-    public static bool TryActualAsEnt<TActual>(TActual t, IIntegrationInstance instance, [NotNullWhen(true)] out EntityUid? ent, out bool error)
+    public static bool TryActualAsEnt<TActual>(TActual t, IIntegrationInstance instance, [NotNullWhen(true)] out EntityUid? ent, out bool validType)
     {
         if (t is EntityUid u)
         {
             ent = u;
-            error = false;
+            validType = false;
             return true;
         }
 
         if (t is IAsType<EntityUid> asTy)
         {
             ent = asTy.AsType();
-            error = false;
+            validType = false;
             return true;
         }
 
@@ -46,19 +48,19 @@ public static class ConstraintHelpers
                 throw new NotSupportedException($"{t.GetType()} is not a valid kind of IIntegrationInstance");
             }
 
-            error = false;
+            validType = false;
             return ent is not null;
         }
 
         if (t is null)
         {
             ent = null;
-            error = false;
+            validType = false;
             return false;
         }
 
         ent = null;
-        error = true; // Dunno what this type is!
+        validType = true; // Dunno what this type is!
         return false;
     }
 }
