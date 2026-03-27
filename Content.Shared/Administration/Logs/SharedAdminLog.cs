@@ -16,4 +16,5 @@ public readonly record struct SharedAdminLog(
     DateTime Date,
     string Message,
     Guid[] Players,
-    SharedAdminLogEntity[] Entities);
+    SharedAdminLogEntity[] Entities,
+    string[]? SampleMessages = null);

@@ -36,10 +36,13 @@ public sealed partial class AdminLogsEui : BaseEui
 
         LogsControl.LogSearch.OnTextEntered += _ => RequestLogs();
         LogsControl.EntityUidSearch.OnTextEntered += _ => RequestLogs();
-        LogsControl.RefreshButton.OnPressed += _ => RequestLogs();
+        LogsControl.SearchButton.OnPressed += _ => RequestLogs();
         LogsControl.NextButton.OnPressed += _ => NextLogs();
         LogsControl.PopOutButton.OnPressed += _ => PopOut();
         LogsControl.ExportLogs.OnPressed += _ => ExportLogs();
+
+        // Auto-request logs when the round changes
+        LogsControl.RoundSpinBox.ValueChanged += _ => RequestLogs();
 
         _sawmill = _log.GetSawmill("admin.logs.ui");
     }
@@ -95,7 +98,6 @@ public sealed partial class AdminLogsEui : BaseEui
             null,
             LogsControl.IncludeNonPlayerLogs,
             DateOrder.Descending,
-            serverId: LogsControl.SelectedServerId,
             anyEntities: anyEntities);
 
         SendMessage(request);
@@ -228,7 +230,7 @@ public sealed partial class AdminLogsEui : BaseEui
 
         LogsControl.SetCurrentRound(s.RoundId);
         LogsControl.SetPlayers(s.Players);
-        LogsControl.SetServers(s.Servers);
+        LogsControl.SetServerName(s.CurrentServerName);
         LogsControl.UpdateCount(round: s.RoundLogs);
 
         if (!FirstState)
@@ -238,7 +240,6 @@ public sealed partial class AdminLogsEui : BaseEui
 
         FirstState = false;
         LogsControl.SetRoundSpinBox(s.RoundId);
-        RequestLogs();
     }
 
     public override void HandleMessage(EuiMessageBase msg)

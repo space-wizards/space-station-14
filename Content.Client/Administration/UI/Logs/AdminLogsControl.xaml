@@ -2,26 +2,26 @@
          xmlns:aui="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <PanelContainer StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Horizontal">
-            <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Vertical" Margin="4">
                 <BoxContainer Orientation="Horizontal" MinWidth="400">
-                    <Label Text="{Loc admin-logs-server}"/>
-                    <OptionButton Name="ServerSelector" MinWidth="140"/>
-                    <aui:VSeparator/>
-                    <Label Text="{Loc admin-logs-round}"/>
-                    <SpinBox Name="RoundSpinBox" Value="0" MinWidth="120"/>
+                    <Label Text="{Loc admin-logs-browsing-prefix}" Margin="0 0 2 0"/>
+                    <SpinBox Name="RoundSpinBox" Access="Public" Value="0" MinWidth="100"/>
+                    <Label Text="{Loc admin-logs-browsing-on}" Margin="4 0 2 0"/>
+                    <Label Name="ServerLabel" StyleClasses="LabelKeyText" Margin="4 0"/>
                     <Control HorizontalExpand="True"/>
                     <Button Name="ResetRoundButton" Text="{Loc admin-logs-reset}" HorizontalAlignment="Right"
                             StyleClasses="OpenRight"/>
                 </BoxContainer>
+                <Control MinSize="0 4"/>
                 <BoxContainer Orientation="Horizontal" VerticalExpand="True">
                     <BoxContainer Orientation="Vertical" MinWidth="200">
                         <LineEdit Name="TypeSearch" Access="Public" StyleClasses="actionSearchBox"
                                   HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-types-placeholder}"/>
-                        <BoxContainer Orientation="Horizontal">
+                        <BoxContainer Orientation="Horizontal" Margin="0 2">
                             <Button Name="SelectAllTypesButton" Text="{Loc admin-logs-select-all}"
-                                    MinWidth="100" StyleClasses="ButtonSquare"/>
+                                    MinWidth="100" StyleClasses="OpenRight"/>
                             <Button Name="SelectNoTypesButton" Text="{Loc admin-logs-select-none}"
-                                    MinWidth="100" StyleClasses="ButtonSquare"/>
+                                    MinWidth="100" StyleClasses="OpenLeft"/>
                         </BoxContainer>
                         <ScrollContainer VerticalExpand="True">
                             <BoxContainer Name="TypesContainer" Access="Public" Orientation="Vertical"/>
@@ -32,40 +32,43 @@
                         <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
                                   HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
                         <Button Name="IncludeNonPlayersButton" Text="{Loc admin-logs-include-non-player}"
-                                MinWidth="100" StyleClasses="ButtonSquare" ToggleMode="True" />
-                        <BoxContainer Orientation="Horizontal">
+                                MinWidth="100" StyleClasses="ButtonSquare" ToggleMode="True" Margin="0 2"/>
+                        <BoxContainer Orientation="Horizontal" Margin="0 2">
                             <Button Name="SelectAllPlayersButton" Text="{Loc admin-logs-select-all}"
-                                    MinWidth="100" StyleClasses="ButtonSquare" />
+                                    MinWidth="100" StyleClasses="OpenRight"/>
                             <Button Name="SelectNoPlayersButton" Text="{Loc admin-logs-select-none}"
-                                    MinWidth="100" StyleClasses="ButtonSquare"/>
+                                    MinWidth="100" StyleClasses="OpenLeft"/>
                         </BoxContainer>
                         <ScrollContainer VerticalExpand="True">
                             <BoxContainer Name="PlayersContainer" Access="Public" Orientation="Vertical"/>
                         </ScrollContainer>
                     </BoxContainer>
-                    <aui:VSeparator/>
                 </BoxContainer>
             </BoxContainer>
-            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                <BoxContainer Name="TopRightContainer">
+            <aui:VSeparator/>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="4">
+                <BoxContainer Name="TopRightContainer" Orientation="Horizontal" Margin="0 0 0 2">
                     <BoxContainer Name="LogImpactContainer" Orientation="Horizontal"/>
-                    <Button Name="CuratedViewButton" Text="{Loc admin-logs-curated-view}" ToggleMode="True" Pressed="True"
-                            StyleClasses="ButtonSquare"/>
-                    <Button Name="ToggleMetadataButton" Text="{Loc admin-logs-toggle-metadata}" ToggleMode="True" Pressed="True"
+                    <Control MinSize="12 0"/>
+                    <Button Name="ToggleMetadataButton" Text="{Loc admin-logs-toggle-metadata}" ToggleMode="True"
                             StyleClasses="ButtonSquare"/>
                     <Control HorizontalExpand="True"/>
-                    <Label Name="Count" Access="Public"/>
+                    <Label Name="Count" Access="Public" Margin="4 0"/>
                     <Control HorizontalExpand="True"/>
-                    <Button Name="ExportLogs" Access="Public" Text="{Loc admin-logs-export}"/>
-                    <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"/>
+                    <Button Name="ExportLogs" Access="Public" Text="{Loc admin-logs-export}"
+                            StyleClasses="OpenRight"/>
+                    <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"
+                            StyleClasses="OpenLeft"/>
                 </BoxContainer>
-                <BoxContainer Orientation="Horizontal">
+                <BoxContainer Orientation="Horizontal" Margin="0 2">
                     <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"
                               HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-logs-placeholder}"/>
                     <LineEdit Name="EntityUidSearch" Access="Public" StyleClasses="actionSearchBox"
                               MinWidth="120" PlaceHolder="{Loc admin-logs-search-entity-uid-placeholder}"/>
-                    <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}" StyleClasses="ButtonSquare"/>
-                    <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}" StyleClasses="OpenLeft"/>
+                    <Button Name="SearchButton" Access="Public" Text="{Loc admin-logs-search-button}"
+                            StyleClasses="OpenRight"/>
+                    <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}"
+                            StyleClasses="OpenLeft"/>
                 </BoxContainer>
                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
                     <BoxContainer Name="LogsContainer" Access="Public" Orientation="Vertical" VerticalExpand="True"/>

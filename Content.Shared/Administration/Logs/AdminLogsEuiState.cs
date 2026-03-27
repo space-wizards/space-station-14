@@ -8,12 +8,13 @@ namespace Content.Shared.Administration.Logs;
 public sealed class AdminLogsEuiState : EuiStateBase
 {
     public AdminLogsEuiState(int roundId, Dictionary<Guid, string> players, int roundLogs,
-        Dictionary<int, string> servers)
+        Dictionary<int, string> servers, string currentServerName = "")
     {
         RoundId = roundId;
         Players = players;
         RoundLogs = roundLogs;
         Servers = servers;
+        CurrentServerName = currentServerName;
     }
 
     public bool IsLoading { get; set; }
@@ -25,6 +26,8 @@ public sealed class AdminLogsEuiState : EuiStateBase
     public int RoundLogs { get; }
 
     public Dictionary<int, string> Servers { get; }
+
+    public string CurrentServerName { get; }
 }
 
 public static class AdminLogsEuiMsg

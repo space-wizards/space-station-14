@@ -1221,7 +1221,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     log.Type,
                     log.Impact,
                     log.OccurredAt,
-                    Message = log.Payload.Message
+                    Message = log.Payload.Message,
+                    Json = log.Payload.Json
                 })
                 .ToListAsync(ct);
 
@@ -1278,7 +1279,29 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     entities[i] = new SharedAdminLogEntity(row.EntityUid!.Value, row.Role, dim?.PrototypeId, dim?.EntityName);
                 }
 
-                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities);
+                // Extract sample messages from condensed log JSON payloads.
+                string[]? sampleMessages = null;
+                if (log.Json != null)
+                {
+                    try
+                    {
+                        var root = log.Json.RootElement;
+                        if (root.TryGetProperty("condensed", out var condensedProp)
+                            && condensedProp.GetBoolean()
+                            && root.TryGetProperty("sample_messages", out var samplesElement))
+                        {
+                            sampleMessages = samplesElement.EnumerateArray()
+                                .Select(e => e.GetString() ?? "")
+                                .ToArray();
+                        }
+                    }
+                    catch
+                    {
+                        // Ignore malformed JSON.
+                    }
+                }
+
+                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities, sampleMessages);
             }
         }
 

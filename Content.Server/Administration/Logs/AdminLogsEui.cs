@@ -34,6 +34,7 @@ public sealed partial class AdminLogsEui : BaseEui
     private bool _isLoading = true;
     private readonly Dictionary<Guid, string> _players = new();
     private readonly Dictionary<int, string> _servers = new();
+    private string _currentServerName = "";
     private int _roundLogs;
     private CancellationTokenSource _logSendCancellation = new();
     private LogFilter _filter;
@@ -64,10 +65,12 @@ public sealed partial class AdminLogsEui : BaseEui
 
         _adminManager.OnPermsChanged += OnPermsChanged;
 
-        // Resolve our own server ID so the initial filter is scoped correctly
-        // before the client sends its first explicit LogsRequest.
+        // Resolve our own server ID and name so the initial filter is scoped
+        // correctly before the client sends its first explicit LogsRequest.
+        var serverEntity = await _serverDbEntry.ServerEntity;
         if (_filter.ServerId == null)
-            _filter.ServerId = (await _serverDbEntry.ServerEntity).Id;
+            _filter.ServerId = serverEntity.Id;
+        _currentServerName = serverEntity.Name;
 
         var roundId = _filter.Round ?? CurrentRoundId;
         await LoadFromDb(roundId);
@@ -91,13 +94,13 @@ public sealed partial class AdminLogsEui : BaseEui
         if (_isLoading)
         {
             return new AdminLogsEuiState(CurrentRoundId, new Dictionary<Guid, string>(), 0,
-                new Dictionary<int, string>())
+                new Dictionary<int, string>(), _currentServerName)
             {
                 IsLoading = true
             };
         }
 
-        return new AdminLogsEuiState(CurrentRoundId, _players, _roundLogs, _servers);
+        return new AdminLogsEuiState(CurrentRoundId, _players, _roundLogs, _servers, _currentServerName);
     }
 
     public override async void HandleMessage(EuiMessageBase msg)
@@ -118,18 +121,28 @@ public sealed partial class AdminLogsEui : BaseEui
                 _logSendCancellation.Cancel();
                 _logSendCancellation = new CancellationTokenSource();
 
-                // Resolve the requested server ID.
-                // null, use the current server.
-                // Explicit ID, use that server.
-                // The server-side always enforces a server scope so logs from unrelated
-                // servers are never leaked.
-                var serverId = request.ServerId ?? (await _serverDbEntry.ServerEntity).Id;
+                var roundId = request.RoundId ?? CurrentRoundId;
+
+                int resolvedServerId;
+                try
+                {
+                    resolvedServerId = await LoadFromDb(roundId);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
+                catch (Exception e)
+                {
+                    _sawmill.Error($"Failed to load admin logs for round {roundId}: {e}");
+                    return;
+                }
 
                 _filter = new LogFilter
                 {
                     CancellationToken = _logSendCancellation.Token,
-                    ServerId = serverId,
-                    Round = request.RoundId,
+                    ServerId = resolvedServerId,
+                    Round = roundId,
                     Search = request.Search,
                     Types = request.Types,
                     Impacts = request.Impacts,
@@ -145,10 +158,7 @@ public sealed partial class AdminLogsEui : BaseEui
                     Limit = _clientBatchSize
                 };
 
-                var roundId = _filter.Round ??= CurrentRoundId;
-                await LoadFromDb(roundId);
-
-                SendLogs(true, _filter);
+                SendLogs(true);
                 break;
             }
             case NextLogsRequest:
@@ -219,7 +229,7 @@ public sealed partial class AdminLogsEui : BaseEui
         _logSendCancellation.Dispose();
     }
 
-    private async Task LoadFromDb(int roundId)
+    private async Task<int> LoadFromDb(int roundId)
     {
         _isLoading = true;
         StateDirty();
@@ -230,7 +240,8 @@ public sealed partial class AdminLogsEui : BaseEui
         var servers = _db.GetAllServers();
         await Task.WhenAll(round, count, servers);
 
-        var players = (await round).Players
+        var resolvedRound = await round;
+        var players = resolvedRound.Players
             .ToDictionary(player => player.UserId, player => player.LastSeenUserName);
 
         _players.Clear();
@@ -241,9 +252,13 @@ public sealed partial class AdminLogsEui : BaseEui
         foreach (var server in await servers)
             _servers[server.Id] = server.Name;
 
+        _currentServerName = _servers.GetValueOrDefault(resolvedRound.ServerId, _currentServerName);
+
         _roundLogs = await count;
 
         _isLoading = false;
         StateDirty();
+
+        return resolvedRound.ServerId;
     }
 }

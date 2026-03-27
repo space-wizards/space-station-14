@@ -3,12 +3,9 @@ admin-logs-count = Showing {$showing}/{$total} of {$round}
 admin-logs-export = Export
 admin-logs-pop-out = Pop Out
 
-# Server
-admin-logs-server = Server{" "}
-admin-logs-server-current = (Current)
-
-# Round
-admin-logs-round = Round{" "}
+# Round selector
+admin-logs-browsing-prefix = Round{" "}
+admin-logs-browsing-on = {" "}on{" "}
 admin-logs-reset = Reset
 admin-logs-reset-with-id = Reset Round (#{$id})
 
@@ -22,9 +19,8 @@ admin-logs-search-players-placeholder = Search Players (OR)
 admin-logs-include-non-player = Include Non-players
 
 # Logs
-admin-logs-search-logs-placeholder = Search Logs
+admin-logs-search-logs-placeholder = Filter loaded · Enter to search
 admin-logs-search-entity-uid-placeholder = Entity UID(s)
-admin-logs-refresh = Refresh
+admin-logs-search-button = Search
 admin-logs-next = Next
-admin-logs-curated-view = Essentials
 admin-logs-toggle-metadata = Metadata
