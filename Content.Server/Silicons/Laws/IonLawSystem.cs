@@ -1,11 +1,11 @@
-﻿using Content.Shared.Dataset;
+﻿using Content.Server.StationRecords.Systems;
+using Content.Shared.Dataset;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Station;
+using Content.Shared.StationRecords;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
-using Content.Shared.StationRecords;
-using Content.Server.StationRecords.Systems;
 
 namespace Content.Server.Silicons.Laws;
 
