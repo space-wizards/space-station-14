@@ -616,6 +616,7 @@
   physicalDesc: reagent-physical-desc-refreshing
   flavor: pearonade
   color: "#e39a3a"
+  group: Drinks
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/pearonade.rsi
     state: icon_empty
