@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Utility;
-using Content.Server.Inventory;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Chameleon;
@@ -16,19 +14,20 @@ public sealed class ChameleonClothingTest : InteractionTest
 {
     private static readonly string[] ChameleonClothingEntities = GameDataScrounger.EntitiesWithComponent("ChameleonClothing");
 
-    protected override string PlayerPrototype => "MobHuman";
+    protected override string PlayerPrototype => "MobHuman"; // The interaction test dummy doesn't have inventory slots, so we grab a real mob that has them.
 
-    private const string JumpsuitId = "ClothingJumpsuitTest";
+    // A dummy clothing entity that we can use to fill slots that other slots depend on (i.e. jumpsuit)
+    private const string SlotFillerId = "ClothingDummySlotFiller";
 
     [TestPrototypes]
     private const string Prototypes = $@"
 - type: entity
-  name: {JumpsuitId}
-  id: {JumpsuitId}
+  name: {SlotFillerId}
+  id: {SlotFillerId}
   parent: Clothing
   components:
   - type: Clothing
-    slots: [innerclothing]
+    slots: [all]
 ";
 
     [TestCaseSource(nameof(ChameleonClothingEntities))]
@@ -37,16 +36,6 @@ public sealed class ChameleonClothingTest : InteractionTest
     {
         var chameleonClothingSys = Server.System<SharedChameleonClothingSystem>();
         var inventorySys = Server.System<InventorySystem>();
-        var spriteSys = Client.System<SpriteSystem>();
-
-        await Server.WaitPost(() =>
-        {
-            inventorySys.SpawnItemInSlot(SPlayer, "jumpsuit", JumpsuitId);
-        });
-
-        //var ent = await PlaceInHands(protoId);
-        //await UseInHand();
-        //Assert.That(HandSys.ActiveHandIsEmpty((SPlayer, Hands)), $"Failed to equip {protoId}");
 
         var ent = await Spawn(protoId);
 
@@ -58,6 +47,12 @@ public sealed class ChameleonClothingTest : InteractionTest
             var equipped = false;
             foreach (var slot in invComp.Slots)
             {
+                // If the slot depends on another slot being filled, stuff a dummy entity into it
+                if (!string.IsNullOrEmpty(slot.DependsOn) && !inventorySys.TryGetSlotEntity(SPlayer, slot.DependsOn, out _, invComp))
+                {
+                    inventorySys.SpawnItemInSlot(SPlayer, slot.DependsOn, SlotFillerId, force: true);
+                }
+
                 if (inventorySys.TryEquip(SPlayer, ToServer(ent), slot.Name))
                 {
                     equipped = true;
@@ -87,7 +82,6 @@ public sealed class ChameleonClothingTest : InteractionTest
 
                 // Wait for the client to catch up.
                 await Pair.RunUntilSynced();
-                var spriteComp = CEntMan.GetComponent<SpriteComponent>(ToClient(ent));
             }
         }
 
