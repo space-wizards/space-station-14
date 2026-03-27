@@ -113,7 +113,7 @@ public sealed partial class LogProbeCartridgeSystem : EntitySystem
         var paperComp = Comp<PaperComponent>(paper);
         _paper.SetContent((paper, paperComp), builder.ToString());
 
-        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{user:user} printed out LogProbe logs ({paper}) of {ent.Comp.EntityName}");
+        _adminLogger.AddStructured(LogType.EntitySpawn, LogImpact.Low, $"{user:user} printed out LogProbe logs ({paper}) of {ent.Comp.EntityName}");
     }
 
     private void UpdateUiState(Entity<LogProbeCartridgeComponent> ent, EntityUid loaderUid)
