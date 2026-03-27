@@ -1,53 +1,4 @@
 ﻿Entries:
-- author: PicklOH
-  changes:
-  - message: Added more Syndie ammo to the EMAG lathe inventory
-    type: Add
-  id: 9072
-  time: '2025-10-11T05:14:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40822
-- author: TrixxedHeart
-  changes:
-  - message: Updated Xenoarchaeology guidebook page to current system.
-    type: Tweak
-  id: 9073
-  time: '2025-10-11T17:32:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40621
-- author: HTMLSystem
-  changes:
-  - message: Added infectious anom sprites for moths and arachnids.
-    type: Add
-  id: 9074
-  time: '2025-10-11T18:01:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39508
-- author: ScarKy0
-  changes:
-  - message: Mice, cockroaches and other small mobs can no longer unwrap parcels.
-    type: Fix
-  id: 9075
-  time: '2025-10-11T21:32:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40838
-- author: Hitlinemoss
-  changes:
-  - message: Autolathes can now print durathread.
-    type: Add
-  id: 9076
-  time: '2025-10-11T21:46:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40837
-- author: cloudyias
-  changes:
-  - message: Added the ability for droppers to be printed via autolathes and medfabs
-    type: Add
-  id: 9077
-  time: '2025-10-11T23:15:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40074
-- author: jessicamaybe
-  changes:
-  - message: Added swabs and an emag inventory to the biogenerator
-    type: Tweak
-  id: 9078
-  time: '2025-10-12T00:15:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39037
 - author: SuperGDPWYL
   changes:
   - message: Added the Syndicate ID Card to the uplink for 1 TC.
@@ -4029,3 +3980,56 @@
   id: 9583
   time: '2026-03-18T06:31:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43285
+- author: ProPeperos
+  changes:
+  - message: Changed the hitbox of borg chargers, so they no longer get stuck in doorways.
+    type: Tweak
+  id: 9584
+  time: '2026-03-20T14:35:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43300
+- author: slarticodefast
+  changes:
+  - message: Fixed melee attack animations being rotated wrong if your camera is rotated.
+    type: Fix
+  id: 9585
+  time: '2026-03-21T17:02:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43307
+- author: SlartiBartFast, Verin
+  changes:
+  - message: Welders no longer perform an extra pass after a repair has completed.
+    type: Fix
+  id: 9586
+  time: '2026-03-22T22:57:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43321
+- author: mqole
+  changes:
+  - message: Flatpacks now use the collision of the flatpacked entity, so they can
+      be opened on tables and aren't blocked by ghosts.
+    type: Fix
+  id: 9587
+  time: '2026-03-24T20:25:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41849
+- author: Not-A-Chair
+  changes:
+  - message: Tricordrazine no longer heals radiation
+    type: Tweak
+  - message: . Tricordrazine no longer works on mobs in crit
+    type: Tweak
+  id: 9588
+  time: '2026-03-25T13:34:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43293
+- author: ArcaneValiance
+  changes:
+  - message: Ambuzol and Ambuzol Plus pills now properly cure and prevent infection
+      respectively.
+    type: Fix
+  id: 9589
+  time: '2026-03-25T13:49:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43331
+- author: salarua
+  changes:
+  - message: Chat dialogue now appears in curly quotes rather than straight quotes.
+    type: Tweak
+  id: 9590
+  time: '2026-03-27T17:53:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43350
