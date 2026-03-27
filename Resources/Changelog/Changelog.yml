@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: jessicamaybe
-  changes:
-  - message: Added swabs and an emag inventory to the biogenerator
-    type: Tweak
-  id: 9078
-  time: '2025-10-12T00:15:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39037
 - author: SuperGDPWYL
   changes:
   - message: Added the Syndicate ID Card to the uplink for 1 TC.
@@ -4033,3 +4026,10 @@
   id: 9589
   time: '2026-03-25T13:49:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43331
+- author: salarua
+  changes:
+  - message: Chat dialogue now appears in curly quotes rather than straight quotes.
+    type: Tweak
+  id: 9590
+  time: '2026-03-27T17:53:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43350
