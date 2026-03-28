@@ -9,7 +9,8 @@ namespace Content.Shared.RussStation.EscalatedGrab;
 public enum GrabStage : byte
 {
     /// <summary>
-    /// Standard pull. No <see cref="Components.GrabStateComponent"/> exists at this stage.
+    /// Standard pull. Returned by GetStage when no escalation is active
+    /// (no <see cref="Components.GrabStateComponent"/> on the puller).
     /// </summary>
     Pull = 0,
 

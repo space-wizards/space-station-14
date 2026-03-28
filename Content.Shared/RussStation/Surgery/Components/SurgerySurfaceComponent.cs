@@ -9,7 +9,7 @@ namespace Content.Shared.RussStation.Surgery.Components;
 public sealed partial class SurgerySurfaceComponent : Component
 {
     /// <summary>
-    /// Multiplier applied to surgery step durations. Lower = faster.
+    /// Multiplier applied to surgery step durations. Below 1.0 speeds things up, above 1.0 slows them down.
     /// </summary>
     [DataField]
     public float SpeedModifier = 0.5f;

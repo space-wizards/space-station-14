@@ -8,7 +8,7 @@ namespace Content.Shared.RussStation.Carrying.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class BeingCarriedComponent : Component
 {
-    // Saved on ComponentStartup so draw depth can be restored on ComponentRemove (client-side only).
+    // Saved by the client CarryingSystem on startup so draw depth can be restored when carrying ends.
     [ViewVariables]
     public int? OriginalDrawDepth;
 }

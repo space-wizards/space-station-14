@@ -50,8 +50,9 @@ public abstract class SharedEscalatedGrabSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to escalate the grab to the next stage.
-    /// Returns true if the grab was escalated or is already at max stage.
+    /// Escalates the grab to the next stage. Currently always succeeds
+    /// (returns true unconditionally), but the return value is kept for
+    /// future multi-stage gating.
     /// </summary>
     public bool TryEscalate(EntityUid puller, EntityUid target)
     {

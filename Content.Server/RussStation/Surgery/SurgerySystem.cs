@@ -321,18 +321,15 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         if (step.Effect != null)
             HandleEffect(args.User, patient, step.Effect);
 
-        // Advance step (unless repeatable)
+        // Advance step (unless repeatable).
+        // Repeatable steps with effects (like organ manipulation) need manual re-use,
+        // so only effect-less repeatable steps auto-repeat below.
         if (!step.Repeatable)
         {
             active.CurrentStep++;
             Dirty(patient, active);
         }
-        else if (step.Effect != null)
-        {
-            // Effect-based repeatable steps (e.g. organ manipulation) don't auto-repeat;
-            // the surgeon manually uses the tool or organ again.
-        }
-        else
+        else if (step.Effect == null)
         {
             // Auto-repeat if the step can still heal something
             args.Repeat = StepCanStillHeal(patient, step);
