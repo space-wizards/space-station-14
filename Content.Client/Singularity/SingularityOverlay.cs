@@ -1,10 +1,5 @@
 using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Enums;
-using Robust.Shared.Prototypes;
-using Content.Shared.CCVar;
-using Robust.Shared.Configuration;
 using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Singularity.Components;
