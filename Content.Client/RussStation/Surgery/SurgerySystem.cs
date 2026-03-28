@@ -40,8 +40,8 @@ public sealed class SurgerySystem : SharedSurgerySystem
                 ToolTip = Loc.GetString(proto.Name),
                 IconSpecifier = RadialMenuIconSpecifier.With(
                     new SpriteSpecifier.Rsi(
-                        new ResPath("/Textures/Objects/Specific/Medical/Surgery/surgery.rsi"),
-                        "scalpel_on")),
+                        new ResPath("/Textures/Objects/Specific/Medical/Surgery/scalpel.rsi"),
+                        "scalpel")),
             });
         }
 
