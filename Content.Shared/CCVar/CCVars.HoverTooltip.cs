@@ -1,3 +1,4 @@
+//HONK - Hover tooltip CVars (partial class in upstream dir, needs same namespace)
 using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
