@@ -17,11 +17,11 @@ public abstract partial class SharedAtmosphereSystem
      */
 
     /// <summary>
-    /// Cached array of gas specific heats.
+    /// Cached array of molar heat capacities of the gases.
     /// </summary>
-    public float[] GasSpecificHeats => _gasSpecificHeats;
+    public float[] GasMolarHeatCapacities => _gasMolarHeatCapacities;
 
-    private float[] _gasSpecificHeats = new float[Atmospherics.AdjustedNumberOfGases];
+    private float[] _gasMolarHeatCapacities = new float[Atmospherics.AdjustedNumberOfGases];
 
     /// <summary>
     /// Cached array of gas specific mols
@@ -88,7 +88,7 @@ public abstract partial class SharedAtmosphereSystem
              If you would like the unscaled specific heat, you'd need to multiply by HeatScale again.
              TODO ATMOS: please just make this 2 separate arrays instead of invoking multiplication every time.
              */
-            _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
+            _gasMolarHeatCapacities[i] = GasPrototypes[i].MolarHeatCapacity / HeatScale;
             _gasMolarMasses[i] = GasPrototypes[i].MolarMass;
 
             // """Mask""" built here. Used to determine if a gas is fuel/oxidizer or not decently quickly and clearly.
