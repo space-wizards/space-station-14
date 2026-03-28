@@ -14,7 +14,7 @@ public sealed class ChameleonClothingTest : GameTest
 {
     private static readonly string[] ChameleonClothingEntities = GameDataScrounger.EntitiesWithComponent("ChameleonClothing");
 
-    private static readonly EntProtoId PlayerMob = "MobHuman";
+    private static readonly EntProtoId PlayerMob = "MobHuman"; // We need a mob with inventory slots
 
     [SidedDependency(Side.Server)] private readonly SharedChameleonClothingSystem _chameleonClothingSys = null!;
     [SidedDependency(Side.Server)] private readonly InventorySystem _inventorySys = null!;
@@ -39,7 +39,9 @@ public sealed class ChameleonClothingTest : GameTest
     [TrackingIssue("https://github.com/space-wizards/space-station-14/issues/43365")]
     public async Task ActivateAllOptions(string protoId)
     {
+        // Spawn a test dummy who will equip the item.
         var player = await Spawn(PlayerMob);
+        // Spawn the item to test.
         var ent = await Spawn(protoId);
 
         var comp = SComp<ChameleonClothingComponent>(ent);
@@ -47,10 +49,11 @@ public sealed class ChameleonClothingTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
+            // Try to equip the item into each inventory slot until we find one that works.
             var equipped = false;
             foreach (var slot in invComp.Slots)
             {
-                // If the slot depends on another slot being filled, stuff a dummy entity into it
+                // If the slot depends on another slot being filled, stuff a dummy entity into it.
                 if (!string.IsNullOrEmpty(slot.DependsOn) && !_inventorySys.TryGetSlotEntity(player, slot.DependsOn, out _, invComp))
                 {
                     _inventorySys.SpawnItemInSlot(player, slot.DependsOn, SlotFillerId, force: true);
@@ -65,21 +68,22 @@ public sealed class ChameleonClothingTest : GameTest
             Assert.That(equipped, $"Failed to equip {protoId}");
         });
 
-        IEnumerable<EntProtoId>? options = default;
+        // Get all available appearance options.
+        IEnumerable<EntProtoId> options = default!;
         await Server.WaitPost(() =>
         {
             options = _chameleonClothingSys.GetValidTargets(comp.Slot, comp.RequireTag);
         });
-        Assert.That(options, Is.Not.Null);
 
         using (Assert.EnterMultipleScope())
         {
+            // Try to activate each appearance option.
             foreach (var option in options)
             {
                 TestContext.Out.WriteLine($"Testing option {option}");
                 await Server.WaitPost(() =>
                 {
-                    // Activate the chameleon option
+                    // Activate the chameleon appearance option.
                     _chameleonClothingSys.SetSelectedPrototype(ent, option);
                 });
 
