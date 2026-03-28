@@ -84,6 +84,10 @@
   - type: GuideHelp
     guides:
     - MedicalDoctor
+  # HONK START - Surgery surface speed modifier
+  - type: SurgerySurface
+    speedModifier: 0.7
+  # HONK END
 
 - type: entity
   parent: Bed

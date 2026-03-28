@@ -89,6 +89,9 @@
 - type: Tag
   id: Boll # MaterialStorage whitelist: Sheetifier
 
+
+- type: Tag
+  id: BoneSaw
 - type: Tag
   id: Book # Storage whitelist: BorgModuleService, BooksBag, Bookshelf. Blacklisting on various entities whitelisting PaperComponent
 
@@ -211,6 +214,9 @@
 - type: Tag
   id: Cake # CargoBounty blacklist: BountyFruit, BountyVegetable
 
+
+- type: Tag
+  id: Cautery
 - type: Tag
   id: Candle # Storage whitelist: BoxCandle
 
@@ -729,6 +735,9 @@
 - type: Tag
   id: HelmetEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit. PartAssembly: VimHarness. ItemMapper: VimHarness
 
+
+- type: Tag
+  id: Hemostat
 - type: Tag
   id: HideContextMenu # Used by client VerbSystem to exclude tagged entities from the right click menu.
 
@@ -1200,6 +1209,9 @@
 - type: Tag
   id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
 
+
+- type: Tag
+  id: Retractor
 - type: Tag
   id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
 
@@ -1243,6 +1255,9 @@
 
 - type: Tag
   id: SalvageScrap # CargoBounty: BountySalvageScrap
+
+- type: Tag
+  id: Scalpel
 
 - type: Tag
   id: Scarf # CargoBounty: BountyWarmCloth

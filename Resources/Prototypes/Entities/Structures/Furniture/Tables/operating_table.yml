@@ -11,3 +11,7 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/optable.rsi
     state: operating_table
+  # HONK START - Surgery surface speed modifier
+  - type: SurgerySurface
+    speedModifier: 0.5
+  # HONK END

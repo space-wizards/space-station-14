@@ -1,0 +1,6 @@
+- type: alert
+  id: SurgeryDraped
+  icons: [/Textures/@RussStation/Interface/Alerts/Surgery/draped.png]
+  clickEvent: !type:RemoveSurgeryDrapeAlertEvent
+  name: alerts-surgery-draped-name
+  description: alerts-surgery-draped-desc

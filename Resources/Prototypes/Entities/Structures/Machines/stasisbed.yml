@@ -65,3 +65,7 @@
     guides:
     - MedicalDoctor
   - type: PowerSwitch
+  # HONK START - Surgery surface speed modifier
+  - type: SurgerySurface
+    speedModifier: 0.7
+  # HONK END

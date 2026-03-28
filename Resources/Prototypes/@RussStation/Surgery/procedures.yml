@@ -1,0 +1,146 @@
+# Surgery Procedures
+
+- type: surgeryProcedure
+  id: TendWoundsBrute
+  name: surgery-procedure-tend-wounds-brute
+  description: Repair physical damage through surgery.
+  steps:
+    - tag: Scalpel
+      duration: 2.0
+      popup: surgery-step-incision
+      damage:
+        types:
+          Slash: 5
+      bleedModifier: 3.0
+    - tag: Retractor
+      duration: 1.5
+      popup: surgery-step-retract
+      damage:
+        types:
+          Blunt: 2
+    - tag: Hemostat
+      duration: 2.0
+      popup: surgery-step-treat-brute
+      repeatable: true
+      healingTotal: 10
+      healing:
+        types:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
+      bleedModifier: -1.0
+    - tag: Cautery
+      duration: 2.0
+      popup: surgery-step-cauterize
+      damage:
+        types:
+          Heat: 2
+      closesWound: true
+
+- type: surgeryProcedure
+  id: TendWoundsBurn
+  name: surgery-procedure-tend-wounds-burn
+  description: Treat burn damage through surgery.
+  steps:
+    - tag: Scalpel
+      duration: 2.0
+      popup: surgery-step-incision
+      damage:
+        types:
+          Slash: 5
+      bleedModifier: 3.0
+    - tag: Retractor
+      duration: 1.5
+      popup: surgery-step-retract
+      damage:
+        types:
+          Blunt: 2
+    - tag: Hemostat
+      duration: 2.0
+      popup: surgery-step-treat-burn
+      repeatable: true
+      healingTotal: 10
+      healing:
+        types:
+          Heat: 1
+          Shock: 1
+          Cold: 1
+          Caustic: 1
+      bleedModifier: -1.0
+    - tag: Cautery
+      duration: 2.0
+      popup: surgery-step-cauterize
+      damage:
+        types:
+          Heat: 2
+      closesWound: true
+
+- type: surgeryProcedure
+  id: OrganRemoval
+  name: surgery-procedure-organ-removal
+  description: Surgically remove an organ from the patient.
+  steps:
+    - tag: Scalpel
+      duration: 2.0
+      popup: surgery-step-incision
+      damage:
+        types:
+          Slash: 5
+      bleedModifier: 3.0
+    - tag: Retractor
+      duration: 1.5
+      popup: surgery-step-retract
+      damage:
+        types:
+          Blunt: 2
+    - tag: Hemostat
+      duration: 2.0
+      popup: surgery-step-clamp
+      bleedModifier: -3.0
+    - tag: BoneSaw
+      duration: 3.0
+      popup: surgery-step-saw
+      damage:
+        types:
+          Slash: 3
+    - tag: Hemostat
+      duration: 2.0
+      popup: surgery-step-remove-organ
+      effect: !type:RemoveOrganEffect {}
+    - tag: Cautery
+      duration: 2.0
+      popup: surgery-step-cauterize
+      damage:
+        types:
+          Heat: 2
+      closesWound: true
+
+- type: surgeryProcedure
+  id: OrganInsertion
+  name: surgery-procedure-organ-insertion
+  description: Surgically insert an organ into the patient.
+  steps:
+    - tag: Scalpel
+      duration: 2.0
+      popup: surgery-step-incision
+      damage:
+        types:
+          Slash: 5
+      bleedModifier: 3.0
+    - tag: Retractor
+      duration: 1.5
+      popup: surgery-step-retract
+      damage:
+        types:
+          Blunt: 2
+    - tag: Hemostat
+      duration: 2.0
+      popup: surgery-step-insert-organ
+      effect: !type:InsertOrganEffect {}
+    - tag: Cautery
+      duration: 2.0
+      popup: surgery-step-cauterize
+      damage:
+        types:
+          Heat: 2
+      closesWound: true

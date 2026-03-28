@@ -32,6 +32,12 @@
         Heat: 5
     soundHit:
       path: /Audio/Effects/lightburn.ogg
+  # HONK START - Surgery tool tag
+  - type: Tag
+    tags:
+    - SurgeryTool
+    - Cautery
+  # HONK END
 
 # Drill
 
@@ -57,6 +63,12 @@
       path: /Audio/Items/drill_hit.ogg
   - type: StaticPrice
     price: 40
+  # HONK START - Surgery tool tag
+  - type: Tag
+    tags:
+    - SurgeryTool
+    - BoneSaw
+  # HONK END
 
 # Scalpel
 
@@ -90,6 +102,12 @@
         Slash: 8
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  # HONK START - Surgery tool tag
+  - type: Tag
+    tags:
+    - SurgeryTool
+    - Scalpel
+  # HONK END
 
 - type: entity
   name: shiv
@@ -153,6 +171,12 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
     storedRotation: 90
+  # HONK START - Surgery tool tag
+  - type: Tag
+    tags:
+    - SurgeryTool
+    - Retractor
+  # HONK END
 
 - type: entity
   name: hemostat
@@ -165,6 +189,12 @@
   - type: Item
     heldPrefix: hemostat
     storedRotation: 90
+  # HONK START - Surgery tool tag
+  - type: Tag
+    tags:
+    - SurgeryTool
+    - Hemostat
+  # HONK END
 
   # - type: entity
   #   name: bone setter
@@ -194,6 +224,12 @@
   - type: Tool
     qualities:
       - Sawing
+  # HONK START - Surgery tool tag
+  - type: Tag
+    tags:
+    - SurgeryTool
+    - BoneSaw
+  # HONK END
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity
