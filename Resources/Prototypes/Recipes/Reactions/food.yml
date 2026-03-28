@@ -167,7 +167,7 @@
   conserveEnergy: false
   reactants:
     MilkSoy:
-      amount: 30
+      amount: 55
     Enzyme:
       amount: 5
       catalyst: true

@@ -894,7 +894,7 @@
 
 - type: entity
   name: cocoa beans
-  parent: [SolutionTiny, FoodProduceBase]
+  parent: FoodProduceBase
   id: FoodCocoaBeans
   description: You can never have too much chocolate!
   components:

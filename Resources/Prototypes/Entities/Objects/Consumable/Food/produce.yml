@@ -2,22 +2,29 @@
 # For produce that can't be immediately eaten
 
 - type: entity
-  parent: [SolutionFood, SolutionSmall, BaseItem]
-  id: ProduceBase
   abstract: true
+  parent: [SolutionFood, SolutionTiny, BaseItem] # Produce should be less efficient volume wise
+  id: ProduceBase
   components:
   - type: Sprite
     state: produce
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Extractable
     grindableSolutionName: food
 
 - type: entity
+  abstract: true
   parent: ProduceBase
   id: ProduceBaseRuminant
-  abstract: true
   components:
   # let cows eat raw produce like wheat and oats
   - type: Edible
@@ -29,7 +36,7 @@
 # For produce that can be immediately eaten
 
 - type: entity
-  parent: FoodInjectableBase
+  parent: [SolutionTiny, FoodInjectableBase]
   id: FoodProduceBase
   abstract: true
   components:
@@ -44,21 +51,20 @@
 # Subclasses
 
 - type: entity
+  parent: ProduceBaseRuminant
+  id: WheatBushel
   name: wheat bushel
   description: Sigh... wheat... a-grain?
-  id: WheatBushel
-  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Flour
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Flour
+        Quantity: 15
   - type: Produce
     seedId: wheat
   - type: Tag
@@ -67,21 +73,20 @@
     - Ruminant
 
 - type: entity
+  parent: ProduceBaseRuminant
+  id: MeatwheatBushel
   name: meatwheat bushel
   description: Some blood-drenched wheat stalks. You can crush them into what passes for meat if you squint hard enough.
-  id: MeatwheatBushel
-  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/meatwheat.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 15
   - type: SpawnItemsOnUse
     items:
       - id: FoodMeatWheat
@@ -91,21 +96,20 @@
     seedId: meatwheat
 
 - type: entity
+  parent: ProduceBaseRuminant
+  id: OatBushel
   name: oat bushel
   description: Eat oats, do squats.
-  id: OatBushel
-  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Oats
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Oats
+        Quantity: 15
   - type: Produce
     seedId: oat
   - type: Extractable
@@ -115,35 +119,33 @@
         Quantity: 5
 
 - type: entity
+  parent: ProduceBaseRuminant
+  id: Sugarcane
   name: sugarcane
   description: Sickly sweet.
-  id: Sugarcane
-  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Sugar
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 15
   - type: Produce
     seedId: sugarcane
 
 - type: entity
+  parent: ProduceBase
+  id: Papercane
   name: papercane roll
   description: Why do we even need to grow paper?
-  id: Papercane
-  parent: ProduceBase
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/papercane.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
   - type: Produce
     seedId: papercane
   - type: Log
@@ -159,17 +161,15 @@
   - type: FlavorProfile
     flavors:
       - peas
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 13
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Sugar
-          Quantity: 5
-        - ReagentId: Laughter
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Sugar
+        Quantity: 5
+      - ReagentId: Laughter
+        Quantity: 5
   - type: Extractable
     juiceSolution:
       reagents:
@@ -187,16 +187,15 @@
     - Ruminant
 
 - type: entity
+  parent: ProduceBase
+  id: Log
   name: tower-cap log
   description: It's better than bad, it's good!
-  id: Log
-  parent: ProduceBase
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/towercap.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
   - type: MeleeWeapon
     damage:
       types:
@@ -206,16 +205,15 @@
   - type: Log
 
 - type: entity
+  parent: ProduceBase
+  id: SteelLog
   name: steel-cap log
   description: Steel doesn't grow on trees! It grows on mushrooms, of course.
-  id: SteelLog
-  parent: ProduceBase
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/steelcap.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
   - type: MeleeWeapon
     damage:
       types:
@@ -227,10 +225,10 @@
     spawnCount: 1
 
 - type: entity
+  parent: ProduceBaseRuminant
+  id: Nettle
   name: nettle
   description: Stingy little prick.
-  id: Nettle
-  parent: ProduceBaseRuminant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/nettle.rsi
@@ -242,12 +240,12 @@
     damage:
       types:
         Heat: 10
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Histamine
-          Quantity: 3
+  - type: Solution
+    solution:
+      maxVol: 6
+      reagents:
+      - ReagentId: Histamine
+        Quantity: 3
   - type: Produce
     seedId: nettle
   - type: MeleeChemicalInjector
@@ -258,10 +256,10 @@
     grindableSolutionName: food
 
 - type: entity
+  parent: [ ProduceBase, BaseMajorContraband ]
+  id: DeathNettle
   name: death nettle
   description: This nettle's out for blood.
-  id: DeathNettle
-  parent: [ProduceBase, BaseMajorContraband]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/death_nettle.rsi
@@ -274,14 +272,13 @@
       types:
         Heat: 8
         Caustic: 8
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: SulfuricAcid
-          Quantity: 15
-        - ReagentId: FluorosulfuricAcid
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SulfuricAcid
+        Quantity: 7.5
+      - ReagentId: FluorosulfuricAcid
+        Quantity: 7.5
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
@@ -339,15 +336,15 @@
     butcheringType: Knife
     spawned:
     - id: TrashBananaPeel
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8
+      - ReagentId: Vitamin
+        Quantity: 2
+      - ReagentId: JuiceBanana
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: Item
@@ -385,15 +382,15 @@
     butcheringType: Knife
     spawned:
     - id: TrashMimanaPeel
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 7
-        reagents:
-        - ReagentId: MuteToxin
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8
+      - ReagentId: Vitamin
+        Quantity: 2
+      - ReagentId: MuteToxin
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/mimana.rsi
   - type: Item
@@ -404,7 +401,7 @@
     juiceSolution:
       reagents:
       - ReagentId: JuiceBanana
-        Quantity: 10
+        Quantity: 5
       - ReagentId: Nothing
         Quantity: 5
   - type: Tag
@@ -455,16 +452,14 @@
     - Trash
     - BananaPeel
     - Ruminant
-
     - WhitelistChameleon
     - HamsterWearable
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 4
-        reagents:
-        - ReagentId: PulpedBananaPeel
-          Quantity: 4
+  - type: Solution
+    solution:
+      maxVol: 7.5
+      reagents:
+      - ReagentId: PulpedBananaPeel
+        Quantity: 4
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
@@ -491,16 +486,15 @@
   - type: Item
     sprite: Objects/Specific/Hydroponics/banana.rsi
     heldPrefix: baked-peel
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: PulpedBananaPeel
-          Quantity: 1
-        - ReagentId: Bananadine
-          Quantity: 1
-        - ReagentId: Carbon
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: PulpedBananaPeel
+        Quantity: 1
+      - ReagentId: Bananadine
+        Quantity: 1
+      - ReagentId: Carbon
+        Quantity: 2
 
 - type: entity
   parent: TrashBananaPeel
@@ -551,17 +545,15 @@
     tags:
     - Carrot
     - Vegetable
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 12
-        reagents:
-        - ReagentId: JuiceCarrot
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Oculine
-          Quantity: 3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceCarrot
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 7
+      - ReagentId: Oculine
+        Quantity: 3
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Item
@@ -589,15 +581,15 @@
   - type: FlavorProfile
     flavors:
       - cabbage
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Water
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cabbage.rsi
   - type: Item
@@ -621,17 +613,15 @@
   - type: FlavorProfile
     flavors:
       - garlic
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 18
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Allicin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 6
+      - ReagentId: Vitamin
+        Quantity: 4
+      - ReagentId: Allicin
+        Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/garlic.rsi
   - type: Produce
@@ -653,15 +643,15 @@
   - type: FlavorProfile
     flavors:
       - sour
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 9
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: JuiceLemon
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
   - type: Item
@@ -691,15 +681,13 @@
   - type: FlavorProfile
     flavors:
       - lemoon
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Milk
-          Quantity: 16
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Milk
+        Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemoon.rsi
   - type: Item
@@ -785,17 +773,15 @@
   - type: FlavorProfile
     flavors:
       - truenature
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Haloperidol
-          Quantity: 5
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Haloperidol
+        Quantity: 5
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
     scale: 0.5,0.5
@@ -828,17 +814,15 @@
   - type: FlavorProfile
     flavors:
       - pineapple
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 16
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 2
-        - ReagentId: Water
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8
+      - ReagentId: Vitamin
+        Quantity: 2
+      - ReagentId: JuicePineapple
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Item
@@ -866,26 +850,12 @@
   - type: FlavorProfile
     flavors:
       - potatoes
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Item
     heldPrefix: produce
   - type: Produce
     seedId: potato
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: JuicePotato
-        Quantity: 10
   - type: Tag
     tags:
     - Potato
@@ -894,7 +864,6 @@
     entries:
       Burger: Potato
       Taco: Potato
-
 
 - type: entity
   name: tomato
@@ -905,10 +874,8 @@
   - type: FlavorProfile
     flavors:
       - tomato
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
+  - type: Solution
+    solution:
         reagents:
         - ReagentId: Nutriment
           Quantity: 7
@@ -964,17 +931,15 @@
   id: FoodBlueTomato
   description: This one is blue.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 24
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: SpaceLube
-          Quantity: 15
-        - ReagentId: Vitamin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: SpaceLube
+        Quantity: 15
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
   - type: Item
@@ -1015,15 +980,13 @@
   id: FoodBloodTomato
   description: Wait, that's not ketchup...
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Blood
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
   - type: Item
@@ -1068,15 +1031,6 @@
   - type: FlavorProfile
     flavors:
       - eggplant
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: Item
@@ -1097,15 +1051,6 @@
   - type: FlavorProfile
     flavors:
       - apple
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Item
@@ -1135,17 +1080,15 @@
     flavors:
       - apple
       - metallic
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: DoctorsDelight
-          Quantity: 13
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: DoctorsDelight
+        Quantity: 15
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/golden_apple.rsi
   - type: Item
@@ -1176,17 +1119,15 @@
   - type: FlavorProfile
     flavors:
       - chocolate
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: CocoaPowder
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 6
+      - ReagentId: Vitamin
+        Quantity: 3
+      - ReagentId: CocoaPowder
+        Quantity: 6
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cocoa.rsi
   - type: Produce
@@ -1216,15 +1157,13 @@
     butcheringType: Knife
     spawned:
     - id: FoodCornTrash #no idea why you'd ever do this, but it's just here for consistency
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Cornmeal
-          Quantity: 15
-        - ReagentId: Nutriment
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Cornmeal
+        Quantity: 15
+      - ReagentId: Nutriment
+        Quantity: 5
   - type: Tag
     tags:
     - Corn
@@ -1261,13 +1200,11 @@
   - type: Tag
     tags:
       - Trash
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Cornmeal
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Cornmeal
+        Quantity: 15
 
 - type: entity
   name: onion
@@ -1278,17 +1215,15 @@
   - type: FlavorProfile
     flavors:
       - onion
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 18
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Allicin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Allicin
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: Item
@@ -1311,17 +1246,15 @@
   - type: FlavorProfile
     flavors:
       - onion
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 18
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Allicin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Allicin
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: Item
@@ -1341,12 +1274,13 @@
   id: FoodMushroom
   description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 12
+      - ReagentId: Vitamin
+        Quantity: 8
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Item
@@ -1365,13 +1299,14 @@
   id: ProduceSliceBase
   abstract: true
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 3
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
+  - type: Solution
+    solution:
+      maxVol: 7.5
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2
+      - ReagentId: Vitamin
+        Quantity: 1
   - type: Sprite
     state: slice
   - type: Extractable
@@ -1416,17 +1351,15 @@
       - onion
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Allicin
-          Quantity: 1
-        - ReagentId: Vitamin
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 1
+      - ReagentId: Allicin
+        Quantity: 1
+      - ReagentId: Vitamin
+        Quantity: 1
   - type: Tag
     tags:
     - Vegetable
@@ -1447,17 +1380,15 @@
       - onion
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Allicin
-          Quantity: 1
-        - ReagentId: Vitamin
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 1
+      - ReagentId: Allicin
+        Quantity: 1
+      - ReagentId: Vitamin
+        Quantity: 1
   - type: Tag
     tags:
     - Vegetable
@@ -1476,17 +1407,15 @@
   - type: FlavorProfile
     flavors:
       - spicy
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 18
-        reagents:
-          - ReagentId: Nutriment
-            Quantity: 4
-          - ReagentId: CapsaicinOil
-            Quantity: 10
-          - ReagentId: Vitamin
-            Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 4
+      - ReagentId: CapsaicinOil
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chili.rsi
   - type: Item
@@ -1512,17 +1441,15 @@
     flavors:
       - spicy
       - cold
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 18
-        reagents:
-          - ReagentId: Nutriment
-            Quantity: 4
-          - ReagentId: FrostOil
-            Quantity: 10
-          - ReagentId: Vitamin
-            Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 4
+      - ReagentId: FrostOil
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chilly.rsi
   - type: Item
@@ -1544,15 +1471,13 @@
   - type: FlavorProfile
     flavors:
       - medicine
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20 ##I'm pretty sure this has to match the total of 100 potency yields
-        reagents:
-        - ReagentId: Aloe
-          Quantity: 10
-        - ReagentId: Dermaline
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Aloe
+        Quantity: 10
+      - ReagentId: Dermaline
+        Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/aloe.rsi
   - type: Item
@@ -1582,15 +1507,13 @@
   - type: FlavorProfile
     flavors:
       - medicine
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 22
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Bicaridine
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Bicaridine
+        Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/poppy.rsi
   - type: Produce
@@ -1614,15 +1537,13 @@
   - type: FlavorProfile
     flavors:
       - medicine
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 22
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Bicaridine
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Bicaridine
+        Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lily.rsi
   - type: Produce
@@ -1639,7 +1560,7 @@
 
 - type: entity
   name: lingzhi
-  parent: FoodProduceBase
+  parent: [SolutionSmall, FoodProduceBase]
   id: FoodLingzhi
   description: A potent medicinal mushroom. Don't go overboard.
   components:
@@ -1647,15 +1568,13 @@
     flavors:
       - mushroom
       - medicine
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 40
-        reagents:
-        - ReagentId: Ultravasculine
-          Quantity: 20
-        - ReagentId: Epinephrine
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ultravasculine
+        Quantity: 20
+      - ReagentId: Epinephrine
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lingzhi.rsi
   - type: Item
@@ -1682,19 +1601,17 @@
     flavors:
       - leafy
       - medicine
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Bicaridine
-          Quantity: 5
-        - ReagentId: Kelotane
-          Quantity: 5
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Bicaridine
+        Quantity: 5
+      - ReagentId: Kelotane
+        Quantity: 5
+      - ReagentId: Nutriment
+        Quantity: 3
+      - ReagentId: Vitamin
+        Quantity: 2
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
   - type: Item
@@ -1725,17 +1642,15 @@
     flavors:
       - leafy
       - medicine
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Omnizine
-          Quantity: 3
-        - ReagentId: SpaceDrugs
-          Quantity: 5
-        - ReagentId: Nutriment
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Omnizine
+        Quantity: 3
+      - ReagentId: SpaceDrugs
+        Quantity: 10
+      - ReagentId: Nutriment
+        Quantity: 2
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
   - type: Item
@@ -1758,20 +1673,18 @@
 
 - type: entity
   name: galaxythistle
-  parent: FoodProduceBase
+  parent: [SolutionSmall, FoodProduceBase]
   id: FoodGalaxythistle
   description: A medicinal plant used for its antitoxin.
   components:
   - type: FlavorProfile
     flavors:
       - medicine
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Stellibinin
-          Quantity: 25
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Stellibinin
+        Quantity: 30
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
   - type: Item
@@ -1791,7 +1704,7 @@
 
 - type: entity
   name: glasstle
-  parent: FoodProduceBase
+  parent: [SolutionSmall, FoodProduceBase]
   id: FoodGlasstle
   description: A fragile crystal plant with lot of spiky thorns.
   components:
@@ -1802,15 +1715,13 @@
   - type: FlavorProfile
     flavors:
       - sharp
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Razorium
-          Quantity: 15
-        - ReagentId: Desoxyephedrine
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Razorium
+        Quantity: 20
+      - ReagentId: Desoxyephedrine
+        Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/glasstle.rsi
   - type: Produce
@@ -1868,15 +1779,13 @@
   - type: FlavorProfile
     flavors:
       - mushroom
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Amatoxin
-          Quantity: 10
-        - ReagentId: Nutriment
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Amatoxin
+        Quantity: 10
+      - ReagentId: Nutriment
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
   - type: Item
@@ -1903,15 +1812,15 @@
   - type: FlavorProfile
     flavors:
       - gunpowder
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Sulfur
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Iron
+        Quantity: 5
+      - ReagentId: Sulfur
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/gatfruit.rsi
   - type: Produce
@@ -1940,15 +1849,15 @@
   - type: FlavorProfile
     flavors:
       - plastic
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Sulfur
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Iron
+        Quantity: 5
+      - ReagentId: Sulfur
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
   - type: Item
@@ -1996,12 +1905,11 @@
     sprite: Objects/Specific/Hydroponics/rice.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Rice
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Rice
+        Quantity: 15
   - type: Produce
     seedId: rice
 
@@ -2013,20 +1921,20 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/soybeans.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 4
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Protein
+        Quantity: 12
+      - ReagentId: Nutriment
+        Quantity: 8
   - type: Produce
     seedId: soybeans
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: MilkSoy
-        Quantity: 5
+        Quantity: 15
   - type: Tag
     tags:
     - Vegetable
@@ -2048,15 +1956,15 @@
     sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
   - type: Item
     heldPrefix: produce
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 4
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 1
-        - ReagentId: PolypyryliumOligomers
-          Quantity: 3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2
+      - ReagentId: Cellulose
+        Quantity: 10
+      - ReagentId: PolypyryliumOligomers
+        Quantity: 3
   - type: Produce
     seedId: spacemansTrumpet
   - type: Tag
@@ -2077,15 +1985,15 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/koibean.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 7
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: CarpoToxin
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Protein
+        Quantity: 12
+      - ReagentId: Nutriment
+        Quantity: 4
+      - ReagentId: CarpoToxin
+        Quantity: 4
   - type: Produce
     seedId: koibean
   - type: Extractable
@@ -2117,13 +2025,13 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 5
+        Quantity: 4
       - ReagentId: Vitamin
-        Quantity: 5
+        Quantity: 4
       - ReagentId: Sugar
-        Quantity: 5
+        Quantity: 4
       - ReagentId: Water
-        Quantity: 45
+        Quantity: 48
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/watermelon.rsi
   - type: Produce
@@ -2154,7 +2062,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: SliceableFood
-    count: 5
+    count: 4
     slice: FoodWatermelonSlice
   - type: Butcherable
     butcheringType: Knife
@@ -2166,7 +2074,7 @@
 
 - type: entity
   name: watermelon slice
-  parent: ProduceSliceBase
+  parent: [SolutionTiny, ProduceSliceBase]
   id: FoodWatermelonSlice
   description: Juicy green and red slice.
   components:
@@ -2177,22 +2085,22 @@
       - watermelon
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/watermelon.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Water
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 1
+      - ReagentId: Vitamin
+        Quantity: 1
+      - ReagentId: Sugar
+        Quantity: 1
+      - ReagentId: Water
+        Quantity: 12
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: JuiceWatermelon
-        Quantity: 4
+        Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -2210,23 +2118,23 @@
   description: The water within this melon has been blessed by some deity that's particularly fond of watermelon.
   components:
   - type: Item
-    size: Small
+    size: Normal
     heldPrefix: produce
   - type: FlavorProfile
     flavors:
       - holy
       - watermelon
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Holywater
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 4
+      - ReagentId: Vitamin
+        Quantity: 4
+      - ReagentId: Sugar
+        Quantity: 4
+      - ReagentId: Holywater
+        Quantity: 48
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/holymelon.rsi
   - type: Produce
@@ -2257,7 +2165,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: SliceableFood
-    count: 5
+    count: 4
     slice: FoodHolymelonSlice
   - type: Butcherable
     butcheringType: Knife
@@ -2269,7 +2177,7 @@
 
 - type: entity
   name: holymelon slice
-  parent: ProduceSliceBase
+  parent: [SolutionTiny, ProduceSliceBase]
   id: FoodHolymelonSlice
   description: Juicy golden and red slice.
   components:
@@ -2281,22 +2189,22 @@
       - watermelon
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/holymelon.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Holywater
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 1
+      - ReagentId: Vitamin
+        Quantity: 1
+      - ReagentId: Sugar
+        Quantity: 1
+      - ReagentId: Holywater
+        Quantity: 12
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Wine
-        Quantity: 4
+        Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -2316,15 +2224,15 @@
   - type: FlavorProfile
     flavors:
       - grape
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 9
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: JuiceGrape
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/grape.rsi
   - type: Item
@@ -2349,15 +2257,15 @@
   - type: FlavorProfile
     flavors:
       - berry
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 11
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: JuiceBerry
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/berries.rsi
   - type: Item
@@ -2393,15 +2301,13 @@
     butcheringType: Knife
     spawned:
     - id: FoodBungoPit
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Enzyme
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Enzyme
+        Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bungo.rsi
   - type: Produce
@@ -2431,15 +2337,14 @@
     tags:
     - Recyclable
     - Trash
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 7
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Bungotoxin
-          Quantity: 5
+  - type: Solution
+    solution:
+      maxVol: 7.5
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2
+      - ReagentId: Bungotoxin
+        Quantity: 5
   - type: Extractable
     grindableSolutionName: food
   - type: Seed
@@ -2456,15 +2361,13 @@
   - type: FlavorProfile
     flavors:
       - peas
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pea.rsi
   - type: Item
@@ -2488,17 +2391,15 @@
   - type: FlavorProfile
     flavors:
       - numbingtranquility
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 8
-        reagents:
-        - ReagentId: Happiness
-          Quantity: 3
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Pax
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Happiness
+        Quantity: 5
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Pax
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/world_pea.rsi
   - type: Item
@@ -2520,20 +2421,20 @@
   description: A large, orange... berry. Seriously.
   components:
   - type: Item
-    size: Small
+    size: Normal
     heldPrefix: produce
   - type: FlavorProfile
     flavors:
       - pumpkin
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: PumpkinFlesh
-          Quantity: 20
-        - ReagentId: Vitamin
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: PumpkinFlesh # Mostly empty space
+        Quantity: 20
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pumpkin.rsi
   - type: Produce
@@ -2575,17 +2476,19 @@
   - type: FlavorProfile
     flavors:
       - bluepumpkin
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Ammonia
-          Quantity: 10
-        - ReagentId: Chlorine
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: PumpkinFlesh # Mostly empty space
+        Quantity: 20
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Ammonia
+        Quantity: 10
+      - ReagentId: Chlorine
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 10
   - type: Extractable
     juiceSolution:
       reagents:
@@ -2627,12 +2530,13 @@
       - cotton
   - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
+      - ReagentId: Cellulose
+        Quantity: 10
   - type: Log
     spawnedPrototype: MaterialCotton1
     spawnCount: 2
@@ -2659,14 +2563,15 @@
       - pyrotton
   - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-        - ReagentId: Phlogiston
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
+      - ReagentId: Phlogiston
+        Quantity: 5
+      - ReagentId: Cellulose
+        Quantity: 5
   - type: Log
     spawnedPrototype: MaterialPyrotton1
     spawnCount: 2
@@ -2698,15 +2603,14 @@
     butcheringType: Knife
     spawned:
     - id: TrashCherryPit
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 8
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 3
+  - type: Solution
+    solution:
+      maxVol: 15
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 3.5
+      - ReagentId: Vitamin
+        Quantity: 3.5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cherry.rsi
   - type: Produce
@@ -2740,13 +2644,12 @@
     tags:
     - Recyclable
     - Trash
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 1
-        reagents:
-        - ReagentId: Toxin
-          Quantity: 1
+  - type: Solution
+    solution:
+      maxVol: 1
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 1
   - type: Extractable
     grindableSolutionName: food
   - type: Seed
@@ -2755,10 +2658,10 @@
   - type: BadFood
 
 - type: entity
+  parent: [SolutionNormal, FoodProduceBase] # Anomalously large
+  id: FoodAnomalyBerry
   name: anomaly berry
   description: A strange blue fruit. Something about it doesn't seem right.
-  parent: FoodProduceBase
-  id: FoodAnomalyBerry
   components:
   - type: FlavorProfile
     flavors:
@@ -2773,17 +2676,22 @@
   - type: Edible
     trash:
     - EffectAnomalyFloraBulb # Random loot
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 2
-        - ReagentId: Artifexium
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+      - ReagentId: Vitamin
+        Quantity: 20
+      - ReagentId: JuiceBerry
+        Quantity: 20
+      - ReagentId: Artifexium
+        Quantity: 1
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBerry
+        Quantity: 30
   - type: Tag
     tags:
     - Fruit
@@ -2795,7 +2703,7 @@
 - type: entity
   name: bloonion bulb
   description: A strange floating bulb.. Nothing worth crying over.
-  parent: BaseStructureDynamic
+  parent: [SolutionCryo, BaseStructureDynamic, ProduceBase]
   id: FoodBloonion
   components:
   - type: Appearance
@@ -2805,7 +2713,6 @@
     sprite: Objects/Specific/Hydroponics/bloonion.rsi
     state: produce
   - type: Item
-    size: Small
     sprite: Objects/Specific/Hydroponics/bloonion.rsi
     heldPrefix: produce
   - type: Produce
@@ -2818,22 +2725,19 @@
     flavors:
     - onion
     - strange
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 7
-        canReact: false
-        reagents:
-        - ReagentId: Potassium
-          Quantity: 1
-        - ReagentId: Phosphorus
-          Quantity: 1
-        - ReagentId: Sugar
-          Quantity: 1
-        - ReagentId: Allicin
-          Quantity: 4
-  - type: Extractable
-    grindableSolutionName: food
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Potassium
+        Quantity: 1
+      - ReagentId: Phosphorus
+        Quantity: 1
+      - ReagentId: Sugar
+        Quantity: 3
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Allicin
+        Quantity: 5
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
