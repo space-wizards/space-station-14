@@ -502,6 +502,11 @@
 - type: Tag
   id: DoorRemoteWhitelist # Doors with this tag can be interacted with door remotes
 
+# HONK START - Surgery tool tag
+- type: Tag
+  id: Drill
+# HONK END
+
 - type: Tag
   id: DrinkBottle # Storage whitelist: BoozeDispenserEmpty, SodaDispenserEmpty
 
