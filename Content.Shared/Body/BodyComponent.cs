@@ -1,3 +1,4 @@
+using Content.Shared.RussStation.Surgery.Systems; //HONK
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
@@ -9,7 +10,9 @@ namespace Content.Shared.Body;
 /// <seealso cref="BodySystem" />
 /// <seealso cref="SharedVisualBodySystem" />
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(BodySystem))]
+//HONK START - Surgery system needs access to Organs container
+[Access(typeof(BodySystem), typeof(SharedSurgerySystem))]
+//HONK END
 public sealed partial class BodyComponent : Component
 {
     public const string ContainerID = "body_organs";

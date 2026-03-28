@@ -1,15 +1,12 @@
 using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Body;
-using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.RussStation.Surgery;
@@ -20,18 +17,17 @@ using Content.Shared.Standing;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.RussStation.Surgery;
 
-public sealed class SurgerySystem : SharedSurgerySystem
+public sealed partial class SurgerySystem : SharedSurgerySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
@@ -49,6 +45,8 @@ public sealed class SurgerySystem : SharedSurgerySystem
 
         SubscribeNetworkEvent<SelectSurgeryProcedureEvent>(OnProcedureSelected);
         SubscribeNetworkEvent<SelectOrganEvent>(OnOrganSelected);
+
+        InitializeOrgans();
     }
 
     private void OnAfterInteract(Entity<BodyComponent> target, ref AfterInteractUsingEvent args)
@@ -143,6 +141,10 @@ public sealed class SurgerySystem : SharedSurgerySystem
 
     private void OnProcedureSelected(SelectSurgeryProcedureEvent ev, EntitySessionEventArgs args)
     {
+        // Validate sender
+        if (args.SenderSession.AttachedEntity is not { } surgeon)
+            return;
+
         if (!TryGetEntity(ev.Target, out var target))
             return;
 
@@ -150,6 +152,14 @@ public sealed class SurgerySystem : SharedSurgerySystem
             return;
 
         if (!ProtoManager.TryIndex<SurgeryProcedurePrototype>(ev.ProcedureId, out var proto))
+            return;
+
+        // Validate: surgeon must be in range of patient
+        if (!_interaction.InRangeUnobstructed(surgeon, target.Value))
+            return;
+
+        // No self-surgery
+        if (surgeon == target.Value)
             return;
 
         // Validate: patient must still be down and not already draped
@@ -176,7 +186,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
         var active = EnsureComp<ActiveSurgeryComponent>(target.Value);
         active.ProcedureId = ev.ProcedureId;
         active.CurrentStep = 0;
-        active.Surgeon = args.SenderSession.AttachedEntity;
+        active.Surgeon = surgeon;
         Dirty(target.Value, active);
 
         _popup.PopupEntity(
@@ -233,6 +243,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
         {
             NeedHand = true,
             BreakOnMove = true,
+            BreakOnHandChange = true,
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
@@ -253,6 +264,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
         {
             NeedHand = true,
             BreakOnMove = true,
+            BreakOnHandChange = true,
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
@@ -391,36 +403,6 @@ public sealed class SurgerySystem : SharedSurgerySystem
         RemComp<SurgeryDrapedComponent>(patient); // Triggers OnDrapedShutdown -> drops bedsheet
     }
 
-    private void TryInsertOrgan(EntityUid surgeon, EntityUid patient, EntityUid organ)
-    {
-        if (!TryComp<OrganComponent>(organ, out var organComp))
-            return;
-
-        if (!TryComp<BodyComponent>(patient, out var body) || body.Organs == null)
-            return;
-
-        // Block if the patient already has an organ of the same category
-        if (organComp.Category != null)
-        {
-            foreach (var existing in body.Organs.ContainedEntities)
-            {
-                if (TryComp<OrganComponent>(existing, out var existingOrgan) &&
-                    existingOrgan.Category == organComp.Category)
-                {
-                    _popup.PopupEntity(
-                        Loc.GetString("surgery-organ-already-exists", ("organ", MetaData(organ).EntityName)),
-                        patient, surgeon);
-                    return;
-                }
-            }
-        }
-
-        _container.Insert(organ, body.Organs, force: true);
-        _popup.PopupEntity(
-            Loc.GetString("surgery-organ-inserted", ("organ", MetaData(organ).EntityName)),
-            patient);
-    }
-
     private void HandleEffect(EntityUid? surgeon, EntityUid patient, ISurgeryEffect effect)
     {
         switch (effect)
@@ -440,33 +422,8 @@ public sealed class SurgerySystem : SharedSurgerySystem
                 break;
 
             case RemoveOrganEffect:
-                if (surgeon == null || !TryComp<ActorComponent>(surgeon, out var actor))
-                    return;
-
-                if (!TryComp<BodyComponent>(patient, out var body) || body.Organs == null)
-                    return;
-
-                var organs = new List<(NetEntity, string, string?)>();
-                foreach (var organ in body.Organs.ContainedEntities)
-                {
-                    // Skip limbs, only show internal organs
-                    if (!TryComp<OrganComponent>(organ, out var organComp))
-                        continue;
-
-                    if (IsLimbCategory(organComp.Category))
-                        continue;
-
-                    var meta = MetaData(organ);
-                    organs.Add((GetNetEntity(organ), meta.EntityName, meta.EntityPrototype?.ID));
-                }
-
-                if (organs.Count > 0)
-                    RaiseNetworkEvent(new OpenOrganMenuEvent(GetNetEntity(patient), organs), actor.PlayerSession);
-
+                OpenOrganRemovalMenu(surgeon, patient);
                 break;
-
-            // InsertOrganEffect is no longer used via HandleEffect;
-            // organ insertion is handled directly via TryInsertOrgan in OnAfterInteract.
         }
     }
 
@@ -487,37 +444,5 @@ public sealed class SurgerySystem : SharedSurgerySystem
         }
 
         return false;
-    }
-
-    private static bool IsLimbCategory(ProtoId<OrganCategoryPrototype>? category)
-    {
-        if (category == null)
-            return false;
-
-        return category.Value.Id is
-            "Torso" or "Head" or
-            "ArmLeft" or "ArmRight" or
-            "HandLeft" or "HandRight" or
-            "LegLeft" or "LegRight" or
-            "FootLeft" or "FootRight";
-    }
-
-    private void OnOrganSelected(SelectOrganEvent ev, EntitySessionEventArgs args)
-    {
-        if (!TryGetEntity(ev.Target, out var patient) || !TryGetEntity(ev.OrganId, out var organ))
-            return;
-
-        if (!TryComp<BodyComponent>(patient.Value, out var body) || body.Organs == null)
-            return;
-
-        if (body.Organs == null || !body.Organs.ContainedEntities.Contains(organ.Value))
-            return;
-
-        _container.Remove(organ.Value, body.Organs);
-        _xform.DropNextTo(organ.Value, patient.Value);
-
-        _popup.PopupEntity(
-            Loc.GetString("surgery-organ-removed", ("organ", MetaData(organ.Value).EntityName)),
-            patient.Value);
     }
 }

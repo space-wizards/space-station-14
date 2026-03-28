@@ -65,12 +65,6 @@ public sealed partial class SurgeryStep
     public bool Repeatable;
 
     /// <summary>
-    /// If true, this step stops all surgery-induced bleeding and ends the procedure.
-    /// </summary>
-    [DataField]
-    public bool ClosesWound;
-
-    /// <summary>
     /// The surgery effect to trigger when this step completes (e.g. organ removal).
     /// </summary>
     [DataField]
