@@ -17,6 +17,9 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+  - type: Solution
+    solution:
+      maxVol: 50
   - type: MixableSolution
     solution: food
   - type: Edible

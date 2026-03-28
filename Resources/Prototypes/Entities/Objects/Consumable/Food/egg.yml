@@ -24,7 +24,7 @@
         maxVol: 6
         reagents:
         - ReagentId: Egg
-          Quantity: 6
+          Quantity: 6 # About 50ml which is the expected size of an egg
   - type: DrawableSolution
     solution: food
   - type: SolutionSpiker

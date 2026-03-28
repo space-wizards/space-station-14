@@ -37,7 +37,7 @@ public sealed partial class EdibleComponent : Component
     /// How much of our solution is eaten on a do-after completion. Set to null to eat the whole thing.
     /// </summary>
     [DataField]
-    public FixedPoint2? TransferAmount = FixedPoint2.New(5);
+    public FixedPoint2? TransferAmount = FixedPoint2.New(10);
 
     /// <summary>
     /// Acceptable utensils to use

@@ -2196,7 +2196,7 @@
   time: 15
   solids:
     FoodButter: 1
-    LeavesCannabis: 6
+    LeavesCannabis: 1
 
 - type: microwaveMealRecipe
   id: RecipeCannabisBrownies

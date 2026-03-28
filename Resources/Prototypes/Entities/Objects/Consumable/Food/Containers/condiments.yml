@@ -118,7 +118,7 @@
   components:
   - type: Solution
     solution:
-      reagent:
+      reagents:
       - ReagentId: BbqSauce
         Quantity: 1
   - type: Icon
