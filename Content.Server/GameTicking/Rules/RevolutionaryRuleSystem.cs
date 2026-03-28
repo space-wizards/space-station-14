@@ -146,8 +146,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             !HasComp<HumanoidProfileComponent>(ev.Target) &&
             !alwaysConvertible ||
             !_mobState.IsAlive(ev.Target) ||
-            HasComp<ZombieComponent>(ev.Target) ||
-            ev.Used == null)
+            HasComp<ZombieComponent>(ev.Target))
         {
             return;
         }
