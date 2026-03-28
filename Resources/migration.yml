@@ -804,3 +804,7 @@ TowelColorYellow: null
 TowelColorMaroon: null
 TowelColorSilver: null
 TowelColorMime: null
+
+# 2026-03-06
+BlockGameAracde: KudzuCrushArcadeFilled
+BlockGameArcadeComputerCircuitboard: KudzuCrushArcadeComputerCircuitboard

@@ -128,6 +128,7 @@ ui-options-header-shuttle = Shuttle
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
 ui-options-header-general = General
+ui-options-header-arcade = Arcade
 ui-options-header-text-cursor = Text cursor
 ui-options-header-text-cursor-select = Text selecting
 ui-options-header-text-edit = Text editing
@@ -285,6 +286,12 @@ ui-options-function-shuttle-strafe-down = Strafe down
 ui-options-function-shuttle-rotate-left = Rotate left
 ui-options-function-shuttle-rotate-right = Rotate right
 ui-options-function-shuttle-brake = Brake
+
+ui-options-function-arcade-up = Up
+ui-options-function-arcade-down = Down
+ui-options-function-arcade-left = Left
+ui-options-function-arcade-right = Right
+ui-options-function-arcade-rotate = Rotate
 
 ui-options-function-text-cursor-left = Move cursor left
 ui-options-function-text-cursor-right = Move cursor right

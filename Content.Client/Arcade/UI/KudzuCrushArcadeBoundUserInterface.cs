@@ -2,6 +2,7 @@ using Content.Shared.Arcade.Components;
 using Content.Shared.Arcade.Enums;
 using Content.Shared.Arcade.Messages;
 using Content.Shared.Arcade.Messages.KudzuCrush;
+using Content.Shared.IdentityManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 
@@ -21,55 +22,43 @@ public sealed class KudzuCrushArcadeBoundUserInterface(EntityUid owner, Enum uiK
         base.Open();
 
         _window = this.CreateWindow<KudzuCrushArcadeWindow>();
-        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.Title = Identity.Name(Owner, EntMan);
         _window.NewGameButton.OnPressed += _ => SendPredictedMessage(new ArcadeNewGameMessage());
 
-        _window.OnAction += OnAction;
-
-        if (EntMan.TryGetComponent<KudzuCrushArcadeComponent>(Owner, out var kudzuCrush))
-            _window.CreateGrid(kudzuCrush.GridSize.X, kudzuCrush.Grid);
+        _window.OnAction += action =>
+        {
+            switch (action)
+            {
+                case KudzuCrushArcadeAction.Left:
+                    SendPredictedMessage(new KudzuCrushArcadeActionLeftMessage());
+                    break;
+                case KudzuCrushArcadeAction.Right:
+                    SendPredictedMessage(new KudzuCrushArcadeActionRightMessage());
+                    break;
+                case KudzuCrushArcadeAction.Drop:
+                    SendPredictedMessage(new KudzuCrushArcadeActionDropMessage());
+                    break;
+                case KudzuCrushArcadeAction.Rotate:
+                    SendPredictedMessage(new KudzuCrushArcadeActionRotateMessage());
+                    break;
+            }
+        };
 
         if (EntMan.TryGetComponent<ArcadeComponent>(Owner, out var arcade) && arcade.Player != _playerManager.LocalEntity)
             _window.SetUsability(false);
 
+        Update();
+
         _window.OpenCentered();
     }
 
-    private void OnAction(KudzuCrushArcadeAction action)
+    public override void Update()
     {
-        switch (action)
-        {
-            case KudzuCrushArcadeAction.Down:
-                SendPredictedMessage(new KudzuCrushArcadeActionDownMessage());
-                break;
-            case KudzuCrushArcadeAction.Left:
-                SendPredictedMessage(new KudzuCrushArcadeActionLeftMessage());
-                break;
-            case KudzuCrushArcadeAction.Right:
-                SendPredictedMessage(new KudzuCrushArcadeActionRightMessage());
-                break;
-            case KudzuCrushArcadeAction.Drop:
-                SendPredictedMessage(new KudzuCrushArcadeActionDropMessage());
-                break;
-            case KudzuCrushArcadeAction.Rotate:
-                SendPredictedMessage(new KudzuCrushArcadeActionRotateMessage());
-                break;
-        }
-    }
+        base.Update();
 
-    /// <summary>
-    ///
-    /// </summary>
-    public void CreateGrid(int gridWidth, KudzuCrushArcadeCell[] grid)
-    {
-        _window?.CreateGrid(gridWidth, grid);
-    }
+        if (_window is null || !EntMan.TryGetComponent(Owner, out KudzuCrushArcadeComponent? comp))
+            return;
 
-    /// <summary>
-    ///
-    /// </summary>
-    public void UpdateGridCell(int index, KudzuCrushArcadeCell cell)
-    {
-        _window?.UpdateGridCell(index, cell);
+        _window.UpdateGrid(comp.GridSize.X, comp.Grid);
     }
 }

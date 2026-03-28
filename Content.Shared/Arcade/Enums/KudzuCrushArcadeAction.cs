@@ -13,11 +13,6 @@ public enum KudzuCrushArcadeAction : byte
     /// <summary>
     ///
     /// </summary>
-    Down,
-
-    /// <summary>
-    ///
-    /// </summary>
     Left,
 
     /// <summary>

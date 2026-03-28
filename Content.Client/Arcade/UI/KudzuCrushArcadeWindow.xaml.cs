@@ -64,6 +64,8 @@ public sealed partial class KudzuCrushArcadeWindow : FancyWindow
         {
             Texture = spriteSystem.Frame0(new SpriteSpecifier.Rsi(new("Objects/Misc/kudzu.rsi"), "kudzu_33")),
         };
+
+        GrabKeyboardFocus();
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -73,12 +75,10 @@ public sealed partial class KudzuCrushArcadeWindow : FancyWindow
         if (!_usability || args.Handled)
             return;
 
-        if (args.Function == ContentKeyFunctions.ArcadeDown)
-        {
-            OnAction?.Invoke(KudzuCrushArcadeAction.Down);
-            args.Handle();
-        }
-        else if (args.Function == ContentKeyFunctions.ArcadeLeft)
+        if (!HasKeyboardFocus())
+            return;
+
+        if (args.Function == ContentKeyFunctions.ArcadeLeft)
         {
             OnAction?.Invoke(KudzuCrushArcadeAction.Left);
             args.Handle();
@@ -88,7 +88,7 @@ public sealed partial class KudzuCrushArcadeWindow : FancyWindow
             OnAction?.Invoke(KudzuCrushArcadeAction.Right);
             args.Handle();
         }
-        else if (args.Function == ContentKeyFunctions.ArcadeDrop)
+        else if (args.Function == ContentKeyFunctions.ArcadeDown)
         {
             OnAction?.Invoke(KudzuCrushArcadeAction.Drop);
             args.Handle();
@@ -106,41 +106,31 @@ public sealed partial class KudzuCrushArcadeWindow : FancyWindow
     public void SetUsability(bool value)
     {
         _usability = value;
+
+        NewGameButton.Disabled = !value;
     }
 
     /// <summary>
     ///
     /// </summary>
-    public void CreateGrid(int gridWidth, KudzuCrushArcadeCell[] grid)
+    public void UpdateGrid(int gridWidth, KudzuCrushArcadeCell[] grid)
     {
         Grid.Columns = gridWidth;
 
-        if (Grid.ChildCount == grid.Length)
-        {
-            for (var i = 0; i < grid.Length; i++)
-                ((PanelContainer)Grid.Children[i]).PanelOverride = CellToStyle(grid[i]);
-
-            return;
-        }
-
-        Grid.RemoveAllChildren();
-
         for (var i = 0; i < grid.Length; i++)
         {
+            if (i < Grid.ChildCount && Grid.Children[i] is PanelContainer { } panel)
+            {
+                panel.PanelOverride = CellToStyle(grid[i]);
+                continue;
+            }
+
             Grid.AddChild(new PanelContainer
             {
                 PanelOverride = CellToStyle(grid[i]),
                 MinSize = CellSize,
             });
         }
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public void UpdateGridCell(int index, KudzuCrushArcadeCell cell)
-    {
-        ((PanelContainer)Grid.Children[index]).PanelOverride = CellToStyle(cell);
     }
 
     /// <summary>

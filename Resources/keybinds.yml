@@ -523,21 +523,23 @@ binds:
 - function: ArcadeUp
   type: State
   key: Up
+  canRepeat: true
 - function: ArcadeDown
   type: State
   key: Down
+  canRepeat: true
 - function: ArcadeLeft
   type: State
   key: Left
+  canRepeat: true
 - function: ArcadeRight
   type: State
   key: Right
-- function: ArcadeDrop
-  type: State
-  key: Space
+  canRepeat: true
 - function: ArcadeRotate
   type: State
   key: Z
+  canRepeat: true
 - function: ToggleKnockdown
   type: State
   key: C

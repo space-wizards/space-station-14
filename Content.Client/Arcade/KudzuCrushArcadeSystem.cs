@@ -1,4 +1,3 @@
-using Content.Client.Arcade.UI;
 using Content.Shared.Arcade.Components;
 using Content.Shared.Arcade.Enums;
 using Content.Shared.Arcade.Systems;
@@ -10,19 +9,14 @@ public sealed partial class KudzuCrushArcadeSystem : SharedKudzuCrushArcadeSyste
 {
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
-    protected override void CreateUIGrid(Entity<KudzuCrushArcadeComponent> ent)
+    protected override void UpdateUi(Entity<KudzuCrushArcadeComponent> ent)
     {
-        if (_ui.TryGetOpenUi<KudzuCrushArcadeBoundUserInterface>(ent.Owner, ArcadeUiKey.Key, out var bui))
-        {
-            bui.CreateGrid(ent.Comp.GridSize.X, ent.Comp.Grid);
-        }
-    }
+        if (!Timing.IsFirstTimePredicted)
+            return;
 
-    protected override void UpdateUIGridCell(Entity<KudzuCrushArcadeComponent> ent, int index, KudzuCrushArcadeCell cell)
-    {
-        if (_ui.TryGetOpenUi<KudzuCrushArcadeBoundUserInterface>(ent.Owner, ArcadeUiKey.Key, out var bui))
-        {
-            bui.UpdateGridCell(index, cell);
-        }
+        if (!_ui.TryGetOpenUi(ent.Owner, ArcadeUiKey.Key, out var bui))
+            return;
+
+        bui.Update();
     }
 }

@@ -263,6 +263,13 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.ShuttleRotateRight);
             AddButton(ContentKeyFunctions.ShuttleBrake);
 
+            AddHeader("ui-options-header-arcade");
+            AddButton(ContentKeyFunctions.ArcadeUp);
+            AddButton(ContentKeyFunctions.ArcadeDown);
+            AddButton(ContentKeyFunctions.ArcadeLeft);
+            AddButton(ContentKeyFunctions.ArcadeRight);
+            AddButton(ContentKeyFunctions.ArcadeRotate);
+
             AddHeader("ui-options-header-map-editor");
             AddButton(EngineKeyFunctions.EditorPlaceObject);
             AddButton(EngineKeyFunctions.EditorCancelPlace);

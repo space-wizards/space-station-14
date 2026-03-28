@@ -25418,7 +25418,7 @@ entities:
       parent: 2
     - type: DeviceLinkSink
       invokeCounter: 1
-- proto: KudzuCrushArcade
+- proto: BlockGameArcade
   entities:
   - uid: 16181
     components:

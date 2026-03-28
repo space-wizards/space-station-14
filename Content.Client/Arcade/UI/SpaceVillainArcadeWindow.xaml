@@ -7,16 +7,19 @@
     MinSize="600 600"
     Resizable="False">
     <!-- Main -->
-    <BoxContainer Orientation="Vertical" Margin="10 10 10 30">
+    <BoxContainer Orientation="Vertical"
+            Margin="10 10 10 30">
         <!-- Enemy -->
-        <PanelContainer VerticalExpand="True" Margin="0 0 0 5">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
+        <PanelContainer VerticalExpand="True"
+                Margin="0 0 0 5">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
+            </PanelContainer.PanelOverride>
         </PanelContainer>
 
         <!-- Controls -->
-        <controls:StripeBack HorizontalExpand="True" MinHeight="150">
+        <controls:StripeBack HorizontalExpand="True"
+                MinHeight="150">
             <!-- Actions -->
             <BoxContainer Orientation="Vertical">
 
@@ -25,14 +28,24 @@
     </BoxContainer>
 
     <!-- Footer -->
-    <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
-        <PanelContainer StyleClasses="LowDivider" />
-        <BoxContainer Orientation="Horizontal" Margin="10 0 5 0" VerticalAlignment="Bottom">
-            <Label Text="{Loc 'space-villain-footer-flavor-left'}" StyleClasses="WindowFooterText" />
-            <Label Text="{Loc 'space-villain-footer-flavor-right'}" StyleClasses="WindowFooterText"
-                    HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 2 0" />
-            <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
-                    VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
+    <BoxContainer Orientation="Vertical"
+            VerticalAlignment="Bottom">
+        <PanelContainer StyleClasses="LowDivider"/>
+        <BoxContainer Orientation="Horizontal"
+                Margin="10 0 5 0"
+                VerticalAlignment="Bottom">
+            <Label Text="{Loc 'space-villain-footer-flavor-left'}"
+                    StyleClasses="WindowFooterText"/>
+            <Label Text="{Loc 'space-villain-footer-flavor-right'}"
+                    StyleClasses="WindowFooterText"
+                   HorizontalAlignment="Right"
+                    HorizontalExpand="True"
+                    Margin="0 0 2 0"/>
+            <TextureRect StyleClasses="NTLogoDark"
+                    Stretch="KeepAspectCentered"
+                         VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    SetSize="19 19"/>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

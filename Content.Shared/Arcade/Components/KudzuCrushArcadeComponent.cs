@@ -22,7 +22,7 @@ public sealed partial class KudzuCrushArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public TimeSpan UpdateCooldown = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
@@ -34,20 +34,26 @@ public sealed partial class KudzuCrushArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    [DataField]
     public Vector2i GridSize = new(14, 24);
 
     /// <summary>
     ///
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public int[]? FallingPieceCells;
+    [DataField, AutoNetworkedField]
+    public int[]? PieceCells;
 
     /// <summary>
     ///
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public int NextBagPiece = 0;
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsPieceFalling;
 
     /// <summary>
     ///

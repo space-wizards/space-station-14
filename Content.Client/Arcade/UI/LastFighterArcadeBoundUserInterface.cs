@@ -1,3 +1,4 @@
+using Content.Shared.IdentityManagement;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.UI;
@@ -14,7 +15,7 @@ public sealed class LastFighterArcadeBoundUserInterface(EntityUid owner, Enum ui
         base.Open();
 
         _window = this.CreateWindow<LastFighterArcadeWindow>();
-        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.Title = Identity.Name(Owner, EntMan);
         _window.OpenCentered();
     }
 }

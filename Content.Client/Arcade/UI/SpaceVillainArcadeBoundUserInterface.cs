@@ -1,3 +1,4 @@
+using Content.Shared.IdentityManagement;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.UI;
@@ -14,7 +15,7 @@ public sealed class SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum u
         base.Open();
 
         _window = this.CreateWindow<SpaceVillainArcadeWindow>();
-        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.Title = Identity.Name(Owner, EntMan);
         _window.OpenCentered();
     }
 }

@@ -3,7 +3,6 @@ using Content.Shared.Arcade.Enums;
 using Content.Shared.Arcade.Events;
 using Content.Shared.Arcade.Messages;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Arcade.Systems;
 
@@ -12,7 +11,6 @@ namespace Content.Shared.Arcade.Systems;
 /// </summary>
 public sealed partial class SharedArcadeSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
@@ -24,7 +22,6 @@ public sealed partial class SharedArcadeSystem : EntitySystem
         SubscribeLocalEvent<ArcadeEmitSoundOnWinComponent, ArcadeChangedStateEvent>(OnArcadeChangedStateWin);
         SubscribeLocalEvent<ArcadeEmitSoundOnLoseComponent, ArcadeChangedStateEvent>(OnArcadeChangedStateLose);
 
-        // BUI messages
         SubscribeLocalEvent<ArcadeComponent, ArcadeNewGameMessage>(OnArcadeNewGame);
 
         Subs.BuiEvents<ArcadeComponent>(ArcadeUiKey.Key, subs =>
@@ -68,9 +65,6 @@ public sealed partial class SharedArcadeSystem : EntitySystem
 
     private void OnBUIOpened(Entity<ArcadeComponent> ent, ref BoundUIOpenedEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         if (ent.Comp.Player.HasValue)
             return;
 
@@ -80,9 +74,6 @@ public sealed partial class SharedArcadeSystem : EntitySystem
 
     private void OnBUIClosed(Entity<ArcadeComponent> ent, ref BoundUIClosedEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         if (ent.Comp.Player != args.Actor)
             return;
 
@@ -90,6 +81,11 @@ public sealed partial class SharedArcadeSystem : EntitySystem
 
         ent.Comp.Player = null;
         DirtyField(ent.AsNullable(), nameof(ArcadeComponent.Player));
+    }
+
+    public bool IsPlayer(Entity<ArcadeComponent?> ent, EntityUid player)
+    {
+        return Resolve(ent, ref ent.Comp) && ent.Comp.Player == player;
     }
 
     /// <summary>

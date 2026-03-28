@@ -1,9 +1,9 @@
 using Content.Shared.Arcade.Components;
 using Content.Shared.Arcade.Enums;
 using Content.Shared.Arcade.Events;
+using Content.Shared.Arcade.Messages.KudzuCrush;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Arcade.Systems;
@@ -13,9 +13,10 @@ namespace Content.Shared.Arcade.Systems;
 /// </summary>
 public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedArcadeSystem _arcade = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    [Dependency] protected readonly IGameTiming Timing = default!;
 
     public override void Initialize()
     {
@@ -23,13 +24,18 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
 
         SubscribeLocalEvent<KudzuCrushArcadeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<KudzuCrushArcadeComponent, ArcadeChangedStateEvent>(OnArcadeChangedState);
+
+        SubscribeLocalEvent<KudzuCrushArcadeComponent, KudzuCrushArcadeActionLeftMessage>(OnActionLeft);
+        SubscribeLocalEvent<KudzuCrushArcadeComponent, KudzuCrushArcadeActionRightMessage>(OnActionRight);
+        SubscribeLocalEvent<KudzuCrushArcadeComponent, KudzuCrushArcadeActionDropMessage>(OnActionDrop);
+        SubscribeLocalEvent<KudzuCrushArcadeComponent, KudzuCrushArcadeActionRotateMessage>(OnActionRotate);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var curTime = _timing.CurTime;
+        var curTime = Timing.CurTime;
         var query = EntityQueryEnumerator<KudzuCrushArcadeComponent, ArcadeComponent>();
         while (query.MoveNext(out var uid, out var kudzuCrush, out var arcade))
         {
@@ -40,19 +46,25 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
                 continue;
 
             kudzuCrush.NextUpdate += kudzuCrush.UpdateCooldown;
+            DirtyField(uid, kudzuCrush, nameof(KudzuCrushArcadeComponent.NextUpdate));
 
-            if (TrySpawnNextPiece((uid, kudzuCrush)))
+            var ent = (uid, kudzuCrush);
+
+            if (TrySpawnNextPiece(ent))
                 continue;
 
-            if (TryMoveFallingPieceDown((uid, kudzuCrush)))
-                TryFreezeFallingPiece((uid, kudzuCrush));
+            ProcessAction(ent);
+
+            TryMoveFallingPieceDown(ent);
         }
     }
 
     private void OnComponentInit(Entity<KudzuCrushArcadeComponent> ent, ref ComponentInit args)
     {
         ent.Comp.Grid = new KudzuCrushArcadeCell[ent.Comp.GridSize.X * ent.Comp.GridSize.Y];
+        DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.Grid));
 
+        UpdateUi(ent);
     }
 
     private void OnArcadeChangedState(Entity<KudzuCrushArcadeComponent> ent, ref ArcadeChangedStateEvent args)
@@ -60,17 +72,96 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
         if (args.NewState != ArcadeGameState.NewGame)
             return;
 
-        ent.Comp.FallingPieceCells = null;
-        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateCooldown;
+        ent.Comp.PieceCells = null;
+        ent.Comp.NextUpdate = Timing.CurTime + ent.Comp.UpdateCooldown;
         ent.Comp.Grid.AsSpan().Clear();
         ent.Comp.NextBagPiece = 0;
+        ent.Comp.NextAction = KudzuCrushArcadeAction.None;
 
         // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-        RandomHelpers.Shuffle(rand, ent.Comp.PiecesBag);
+        SharedRandomExtensions.PredictedRandom(Timing, GetNetEntity(ent)).Shuffle(ent.Comp.PiecesBag);
 
-        CreateUIGrid(ent);
+        DirtyFields(ent.AsNullable(), null,
+            nameof(KudzuCrushArcadeComponent.PieceCells),
+            nameof(KudzuCrushArcadeComponent.NextUpdate),
+            nameof(KudzuCrushArcadeComponent.Grid),
+            nameof(KudzuCrushArcadeComponent.NextBagPiece),
+            nameof(KudzuCrushArcadeComponent.NextAction),
+            nameof(KudzuCrushArcadeComponent.PiecesBag));
+
+        UpdateUi(ent);
+    }
+
+    private void OnActionLeft(Entity<KudzuCrushArcadeComponent> ent, ref KudzuCrushArcadeActionLeftMessage args)
+    {
+        if (ent.Comp.IsPieceFalling)
+            return;
+
+        if (ent.Comp.PieceCells == null)
+            return;
+
+        if (ent.Comp.NextAction != KudzuCrushArcadeAction.None)
+            return;
+
+        if (!_arcade.IsPlayer(ent.Owner, args.Actor))
+            return;
+
+        ent.Comp.NextAction = KudzuCrushArcadeAction.Left;
+        DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.NextAction));
+    }
+
+    private void OnActionRight(Entity<KudzuCrushArcadeComponent> ent, ref KudzuCrushArcadeActionRightMessage args)
+    {
+        if (ent.Comp.IsPieceFalling)
+            return;
+
+        if (ent.Comp.PieceCells == null)
+            return;
+
+        if (ent.Comp.NextAction != KudzuCrushArcadeAction.None)
+            return;
+
+        if (!_arcade.IsPlayer(ent.Owner, args.Actor))
+            return;
+
+        ent.Comp.NextAction = KudzuCrushArcadeAction.Right;
+        DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.NextAction));
+    }
+
+    private void OnActionDrop(Entity<KudzuCrushArcadeComponent> ent, ref KudzuCrushArcadeActionDropMessage args)
+    {
+        if (ent.Comp.IsPieceFalling)
+            return;
+
+        if (ent.Comp.PieceCells == null)
+            return;
+
+        if (ent.Comp.NextAction != KudzuCrushArcadeAction.None)
+            return;
+
+        if (!_arcade.IsPlayer(ent.Owner, args.Actor))
+            return;
+
+        ent.Comp.NextAction = KudzuCrushArcadeAction.Drop;
+        DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.NextAction));
+    }
+
+    private void OnActionRotate(Entity<KudzuCrushArcadeComponent> ent, ref KudzuCrushArcadeActionRotateMessage args)
+    {
+        if (ent.Comp.IsPieceFalling)
+            return;
+
+        if (ent.Comp.PieceCells == null)
+            return;
+
+        if (ent.Comp.NextAction != KudzuCrushArcadeAction.None)
+            return;
+
+        if (!_arcade.IsPlayer(ent.Owner, args.Actor))
+            return;
+
+        ent.Comp.NextAction = KudzuCrushArcadeAction.Rotate;
+        DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.NextAction));
     }
 
     /// <summary>
@@ -78,7 +169,7 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
     /// </summary>
     private bool TrySpawnNextPiece(Entity<KudzuCrushArcadeComponent> ent)
     {
-        if (ent.Comp.FallingPieceCells != null)
+        if (ent.Comp.PieceCells != null)
             return false;
 
         var protoId = ent.Comp.PiecesBag[ent.Comp.NextBagPiece];
@@ -88,7 +179,7 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
             return false;
         }
 
-        ent.Comp.FallingPieceCells = new int[fallingPiece.Cells.Length];
+        ent.Comp.PieceCells = new int[fallingPiece.Cells.Length];
 
         var width = ent.Comp.GridSize.X;
         var gridWidthCenter = width / 2;
@@ -101,15 +192,13 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
             if (index < 0 || index > indexLimit)
             {
                 Log.Error($"Piece {protoId} can't fit into grid of {ToPrettyString(ent)}");
-                ent.Comp.FallingPieceCells = null;
+                ent.Comp.PieceCells = null;
 
                 return false;
             }
 
-            ent.Comp.FallingPieceCells[i] = index;
+            ent.Comp.PieceCells[i] = index;
             ent.Comp.Grid[index] = KudzuCrushArcadeCell.Block;
-
-            UpdateUIGridCell(ent, index, KudzuCrushArcadeCell.Block);
         }
 
         if (++ent.Comp.NextBagPiece >= ent.Comp.PiecesBag.Length - 1)
@@ -117,18 +206,17 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
             ent.Comp.NextBagPiece = 0;
 
             // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
-            var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-            var rand = new System.Random(seed);
-            RandomHelpers.Shuffle(rand, ent.Comp.PiecesBag);
+            SharedRandomExtensions.PredictedRandom(Timing, GetNetEntity(ent)).Shuffle(ent.Comp.PiecesBag);
 
-            //DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.PiecesBag));
+            DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.PiecesBag));
         }
 
-        //DirtyFields(ent.AsNullable(), null,
-        //    nameof(KudzuCrushArcadeComponent.NextBagPiece),
-        //    nameof(KudzuCrushArcadeComponent.FallingPieceCells),
-        //    nameof(KudzuCrushArcadeComponent.Grid),
-        //    nameof(KudzuCrushArcadeComponent.FallingPieceColor));
+        DirtyFields(ent.AsNullable(), null,
+            nameof(KudzuCrushArcadeComponent.NextBagPiece),
+            nameof(KudzuCrushArcadeComponent.PieceCells),
+            nameof(KudzuCrushArcadeComponent.Grid));
+
+        UpdateUi(ent);
 
         return true;
     }
@@ -136,30 +224,27 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
     /// <summary>
     ///
     /// </summary>
-    private bool TryMoveFallingPieceDown(Entity<KudzuCrushArcadeComponent> ent)
+    private void ProcessAction(Entity<KudzuCrushArcadeComponent> ent)
     {
-        if (ent.Comp.FallingPieceCells == null)
-            return false;
-
-        for (var i = 0; i < ent.Comp.FallingPieceCells.Length; i++)
+        switch (ent.Comp.NextAction)
         {
-            var index = ent.Comp.FallingPieceCells[i];
-            ent.Comp.Grid[index] = KudzuCrushArcadeCell.Empty;
-            UpdateUIGridCell(ent, index, KudzuCrushArcadeCell.Empty);
+            case KudzuCrushArcadeAction.Left:
+                TryMovePieceLeft(ent);
+                break;
+
+            case KudzuCrushArcadeAction.Right:
+                TryMovePieceRight(ent);
+                break;
+
+            case KudzuCrushArcadeAction.Drop:
+                break;
+
+            case KudzuCrushArcadeAction.Rotate:
+                break;
         }
 
-        for (var i = 0; i < ent.Comp.FallingPieceCells.Length; i++)
-        {
-            var newIndex = ent.Comp.FallingPieceCells[i] + ent.Comp.GridSize.X;
-            ent.Comp.Grid[newIndex] = KudzuCrushArcadeCell.Block;
-            UpdateUIGridCell(ent, newIndex, KudzuCrushArcadeCell.Block);
-
-            ent.Comp.FallingPieceCells[i] = newIndex;
-        }
-
-        // DirtyFields(ent.AsNullable(), null, nameof(KudzuCrushArcadeComponent.Grid), nameof(KudzuCrushArcadeComponent.FallingPieceCells));
-
-        return true;
+        ent.Comp.NextAction = KudzuCrushArcadeAction.None;
+        DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.NextAction));
     }
 
     /// <summary>
@@ -167,17 +252,19 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
     /// </summary>
     private bool TryFreezeFallingPiece(Entity<KudzuCrushArcadeComponent> ent)
     {
-        if (ent.Comp.FallingPieceCells == null)
+        if (!ent.Comp.IsPieceFalling)
             return false;
 
-        for (var i = 0; i < ent.Comp.FallingPieceCells.Length; i++)
-        {
-            var bottomIndex = ent.Comp.FallingPieceCells[i] + ent.Comp.GridSize.X;
-            if (bottomIndex >= ent.Comp.Grid.Length || ent.Comp.Grid[bottomIndex] == KudzuCrushArcadeCell.Block && !ent.Comp.FallingPieceCells.Contains(bottomIndex))
-            {
-                ent.Comp.FallingPieceCells = null;
+        if (ent.Comp.PieceCells == null)
+            return false;
 
-                // DirtyFields(ent.AsNullable(), null, nameof(KudzuCrushArcadeComponent.FallingPieceCells), nameof(KudzuCrushArcadeComponent.FallingPieceColor));
+        for (var i = 0; i < ent.Comp.PieceCells.Length; i++)
+        {
+            var bottomIndex = ent.Comp.PieceCells[i] + ent.Comp.GridSize.X;
+            if (bottomIndex >= ent.Comp.Grid.Length || ent.Comp.Grid[bottomIndex] == KudzuCrushArcadeCell.Block && !ent.Comp.PieceCells.Contains(bottomIndex))
+            {
+                ent.Comp.PieceCells = null;
+                DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.PieceCells));
 
                 return true;
             }
@@ -189,47 +276,97 @@ public abstract partial class SharedKudzuCrushArcadeSystem : EntitySystem
     /// <summary>
     ///
     /// </summary>
-    private bool TryShiftRowDown(Entity<KudzuCrushArcadeComponent> ent, int y)
+    private bool TryMovePieceLeft(Entity<KudzuCrushArcadeComponent> ent)
     {
-        if (y < 1 || y >= ent.Comp.GridSize.Y - 1)
+        if (ent.Comp.PieceCells == null)
             return false;
 
-        var srcRowStart = y * ent.Comp.GridSize.X;
-        var dstRowStart = (y + 1) * ent.Comp.GridSize.X;
+        if (ent.Comp.PieceCells[0] % ent.Comp.GridSize.X == 0)
+            return false;
 
-        var moved = false;
-        for (var x = 0; x < ent.Comp.GridSize.X; x++)
+        for (var i = 0; i < ent.Comp.PieceCells.Length; i++)
         {
-            var srcIndex = srcRowStart + x;
-            if (ent.Comp.Grid[srcIndex] != KudzuCrushArcadeCell.Empty)
-                continue;
-
-            var dstIndex = dstRowStart + x;
-            if (ent.Comp.Grid[dstIndex] == KudzuCrushArcadeCell.Block)
-                continue;
-
-            ent.Comp.Grid[dstIndex] = KudzuCrushArcadeCell.Block;
-            ent.Comp.Grid[srcIndex] = KudzuCrushArcadeCell.Empty;
-
-            UpdateUIGridCell(ent, dstIndex, KudzuCrushArcadeCell.Block);
-            UpdateUIGridCell(ent, srcIndex, KudzuCrushArcadeCell.Empty);
-
-            moved = true;
+            var index = ent.Comp.PieceCells[i];
+            ent.Comp.Grid[index] = KudzuCrushArcadeCell.Empty;
         }
 
-        //if (moved)
-        //    DirtyField(ent.AsNullable(), nameof(KudzuCrushArcadeComponent.Grid));
+        for (var i = 0; i < ent.Comp.PieceCells.Length; i++)
+        {
+            var newIndex = --ent.Comp.PieceCells[i];
+            ent.Comp.Grid[newIndex] = KudzuCrushArcadeCell.Block;
+        }
 
-        return moved;
+        DirtyFields(ent.AsNullable(), null, nameof(KudzuCrushArcadeComponent.Grid), nameof(KudzuCrushArcadeComponent.PieceCells));
+
+        UpdateUi(ent);
+
+        return true;
     }
 
     /// <summary>
     ///
     /// </summary>
-    protected virtual void CreateUIGrid(Entity<KudzuCrushArcadeComponent> ent) { }
+    private bool TryMovePieceRight(Entity<KudzuCrushArcadeComponent> ent)
+    {
+        if (ent.Comp.PieceCells == null)
+            return false;
+
+        if ((ent.Comp.PieceCells[^1] + 1) % ent.Comp.GridSize.X == 0)
+            return false;
+
+        for (var i = 0; i < ent.Comp.PieceCells.Length; i++)
+        {
+            var index = ent.Comp.PieceCells[i];
+            ent.Comp.Grid[index] = KudzuCrushArcadeCell.Empty;
+        }
+
+        for (var i = 0; i < ent.Comp.PieceCells.Length; i++)
+        {
+            var newIndex = ++ent.Comp.PieceCells[i];
+            ent.Comp.Grid[newIndex] = KudzuCrushArcadeCell.Block;
+        }
+
+        DirtyFields(ent.AsNullable(), null, nameof(KudzuCrushArcadeComponent.Grid), nameof(KudzuCrushArcadeComponent.PieceCells));
+
+        UpdateUi(ent);
+
+        return true;
+    }
 
     /// <summary>
     ///
     /// </summary>
-    protected virtual void UpdateUIGridCell(Entity<KudzuCrushArcadeComponent> ent, int index, KudzuCrushArcadeCell cell) { }
+    private bool TryMoveFallingPieceDown(Entity<KudzuCrushArcadeComponent> ent)
+    {
+        if (!ent.Comp.IsPieceFalling)
+            return false;
+
+        if (ent.Comp.PieceCells == null)
+            return false;
+
+        if (TryFreezeFallingPiece(ent))
+            return false;
+
+        for (var i = 0; i < ent.Comp.PieceCells.Length; i++)
+        {
+            var index = ent.Comp.PieceCells[i];
+            ent.Comp.Grid[index] = KudzuCrushArcadeCell.Empty;
+        }
+
+        for (var i = 0; i < ent.Comp.PieceCells.Length; i++)
+        {
+            var newIndex = ent.Comp.PieceCells[i] + ent.Comp.GridSize.X;
+            ent.Comp.Grid[newIndex] = KudzuCrushArcadeCell.Block;
+
+            ent.Comp.PieceCells[i] = newIndex;
+        }
+
+        DirtyFields(ent.AsNullable(), null, nameof(KudzuCrushArcadeComponent.Grid), nameof(KudzuCrushArcadeComponent.PieceCells));
+
+        UpdateUi(ent);
+
+        return true;
+    }
+
+    protected virtual void UpdateUi(Entity<KudzuCrushArcadeComponent> ent) { }
 }
