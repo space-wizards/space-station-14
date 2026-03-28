@@ -474,6 +474,15 @@
       Dead:
         Base: dead
   - type: Edible
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 8
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Water
+        Quantity: 4 #It makes saline if you add salt!
   - type: Thirst
     startingThirst: 25  # spawn with Okay thirst state
     thresholds:
@@ -493,10 +502,6 @@
     baseDecayRate: 0.1
   - type: Extractable
     grindableSolutionName: food
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatSnail
-      amount: 1
   - type: Tag
     tags:
     - Trash

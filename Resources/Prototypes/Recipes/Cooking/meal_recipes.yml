@@ -1098,7 +1098,7 @@
   reagents:
     Water: 10
   solids:
-    FoodMeatSnail: 1
+    MobSnail: 1
 
 - type: microwaveMealRecipe
   id: RecipeEscargotSoup
@@ -1924,7 +1924,7 @@
   group: Savory
   solids:
     FoodChiliPepper: 1
-    FoodMeatCutlet: 1
+    FoodMeatCutlet: 2
     FoodDoughTortillaFlat: 1
 
 # SALADS: These should be moved out of the microwave as soon as possible

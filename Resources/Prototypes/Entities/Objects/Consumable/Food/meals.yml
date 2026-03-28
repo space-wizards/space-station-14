@@ -185,7 +185,8 @@
   description: It's wafer thin.
   components:
   - type: Edible
-    trash: FoodPlateSmall
+    trash:
+    - FoodPlateSmall
   - type: Item
     storedOffset: 0,-1
   - type: FlavorProfile
