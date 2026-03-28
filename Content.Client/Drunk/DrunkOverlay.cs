@@ -1,7 +1,5 @@
 using Content.Shared.CCVar;
 using Content.Shared.Drunk;
-using Content.Shared.StatusEffect;
-using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -21,12 +19,16 @@ public sealed class DrunkOverlay : Overlay
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    private readonly Shared.StatusEffectNew.StatusEffectsSystem _statusEffectsSystem;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _drunkShader;
 
     public float CurrentBoozePower = 0.0f;
+    // Starting phase for the rotation effect.
+    // Needed so it doesn't always look the same for 0 motion.
+    public float Phase = 0f;
 
     private const float VisualThreshold = 10.0f;
     private const float PowerDivisor = 250.0f;
@@ -40,23 +42,22 @@ public sealed class DrunkOverlay : Overlay
 
     private const float BoozePowerScale = 8f;
 
-    private float _visualScale = 0;
-    private float _timeScale;
-    private float _phase1 = 1.0f;
-    private float _phase2 = 0.5f;
+    private float _visualScale = 0f;
+    private float _timeScale = 1f;
+    private float _distortionScale = 1f;
 
     public DrunkOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _statusEffectsSystem = _entityManager.System<Shared.StatusEffectNew.StatusEffectsSystem>();
         _drunkShader = _prototypeManager.Index(DrunkShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
     }
 
     private void OnReducedMotionChanged(bool reducedMotion)
     {
-        _timeScale = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.0f : 1.0f;
-        _phase1 = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.0f : 1.0f;
-        _phase2 = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.01f : 0.0f;
+        _timeScale = reducedMotion ? 0.0f : 1.0f;
+        _distortionScale = reducedMotion ? 4.0f : 1.0f; // Make the offset stronger to compensate the lack of motion.
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -67,15 +68,14 @@ public sealed class DrunkOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        var statusSys = _sysMan.GetEntitySystem<Shared.StatusEffectNew.StatusEffectsSystem>();
-        if (!statusSys.TryGetMaxTime<DrunkStatusEffectComponent>(playerEntity.Value, out var status))
+        if (!_statusEffectsSystem.TryGetMaxTime<DrunkStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
         var time = status.Item2;
 
-        var power = time == null ? MaxBoozePower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxBoozePower);
+        var power = time == null ? MaxBoozePower : (float)Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxBoozePower);
 
-        CurrentBoozePower += BoozePowerScale * (power - CurrentBoozePower) * args.DeltaSeconds / (power+1);
+        CurrentBoozePower += BoozePowerScale * (power - CurrentBoozePower) * args.DeltaSeconds / (power + 1);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -100,8 +100,8 @@ public sealed class DrunkOverlay : Overlay
         _drunkShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _drunkShader.SetParameter("boozePower", _visualScale);
         _drunkShader.SetParameter("timeScale", _timeScale);
-        _drunkShader.SetParameter("phase1", _phase1);
-        _drunkShader.SetParameter("phase2", _phase2);
+        _drunkShader.SetParameter("distortionScale", _distortionScale);
+        _drunkShader.SetParameter("phase", Phase);
         handle.UseShader(_drunkShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
