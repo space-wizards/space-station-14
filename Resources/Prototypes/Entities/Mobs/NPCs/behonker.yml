@@ -22,10 +22,10 @@
     - type: BatteryAmmoProvider
       proto: RedLaser
       fireCost: 62.5
-    - type: PredictedBattery
+    - type: Battery
       maxCharge: 1000
       startingCharge: 1000
-    - type: PredictedBatterySelfRecharger
+    - type: BatterySelfRecharger
       autoRechargeRate: 40
     - type: Gun
       fireRate: 0.75
@@ -90,9 +90,7 @@
       solutionOnBody: false
       updateInterval: 0.25
       metabolizerTypes: [ Dragon ]
-      groups:
-        - id: Medicine
-        - id: Poison
+      stages: [ Digestion, Bloodstream ]
     - type: Butcherable
       spawned:
         - id: MaterialBananium1
@@ -114,11 +112,10 @@
     - type: Input
       context: "human"
     - type: Bloodstream
-      bloodMaxVolume: 300
-      bloodReagents:
+      bloodReferenceSolution:
         reagents:
         - ReagentId: Laughter
-          Quantity: 1
+          Quantity: 300
 - type: entity
   name: behonker
   parent: BaseMobBehonker

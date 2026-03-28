@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Humanoid;
@@ -18,12 +19,11 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
     [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
     [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
 
     public MapId? PausedMapId;
-    private int _numberOfStoredIdentities = 0; // TODO: remove this
 
     public override void Initialize()
     {
@@ -94,16 +94,12 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         if (_net.IsClient)
             return null;
 
-        if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
+        if (!TryComp<HumanoidProfileComponent>(target, out var humanoid)
             || !_prototype.Resolve(humanoid.Species, out var speciesPrototype))
             return null;
 
         EnsurePausedMap();
-        // TODO: Setting the spawn location is a shitty bandaid to prevent admins from crashing our servers.
-        // Movercontrollers and mob collisions are currently being calculated even for paused entities.
-        // Spawning all of them in the same spot causes severe performance problems.
-        // Cryopods and Polymorph have the same problem.
-        var clone = Spawn(speciesPrototype.Prototype, new MapCoordinates(new Vector2(2 * _numberOfStoredIdentities++, 0), PausedMapId!.Value));
+        var clone = Spawn(speciesPrototype.Prototype, new MapCoordinates(Vector2.Zero, PausedMapId!.Value));
 
         var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(clone);
         storedIdentity.OriginalEntity = target; // TODO: network this once we have WeakEntityReference or the autonetworking source gen is fixed
@@ -111,7 +107,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         if (TryComp<ActorComponent>(target, out var actor))
             storedIdentity.OriginalSession = actor.PlayerSession;
 
-        _humanoidSystem.CloneAppearance(target, clone);
+        _visualBody.CopyAppearanceFrom(target, clone);
         _cloningSystem.CloneComponents(target, clone, settings);
 
         var targetName = _nameMod.GetBaseName(target);
