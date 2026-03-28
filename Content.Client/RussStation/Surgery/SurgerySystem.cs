@@ -27,7 +27,10 @@ public sealed class SurgerySystem : SharedSurgerySystem
         foreach (var procedureId in ev.ProcedureIds)
         {
             if (!ProtoManager.TryIndex<SurgeryProcedurePrototype>(procedureId, out var proto))
+            {
+                Log.Warning($"Server sent unknown surgery procedure prototype: {procedureId}");
                 continue;
+            }
 
             var id = procedureId;
             var target = ev.Target;

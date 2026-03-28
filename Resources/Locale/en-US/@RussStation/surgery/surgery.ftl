@@ -38,6 +38,15 @@ surgery-organ-removed = {CAPITALIZE(THE($organ))} has been removed.
 surgery-organ-inserted = {CAPITALIZE(THE($organ))} has been inserted.
 surgery-organ-already-exists = The patient already has {THE($organ)}.
 surgery-no-organ-in-hand = You need to be holding an organ in your other hand.
+surgery-organ-insert-failed = The organ cannot be inserted.
+surgery-organ-remove-failed = The organ could not be removed.
+surgery-no-organs-to-remove = There are no removable organs.
+
+## Validation
+surgery-already-draped = The patient is already draped for surgery.
+surgery-bedsheet-missing = The bedsheet is no longer available.
+surgery-procedure-invalid = The surgical procedure is no longer valid.
+surgery-busy = You are already doing something.
 
 ## Procedure Names
 surgery-procedure-tend-wounds-brute = Tend Wounds (Brute)

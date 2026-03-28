@@ -3,6 +3,7 @@ using Content.Shared.Body;
 using Content.Shared.Interaction;
 using Content.Shared.RussStation.Surgery;
 using Content.Shared.RussStation.Surgery.Components;
+using Content.Shared.RussStation.Surgery.Effects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -21,7 +22,10 @@ public sealed partial class SurgerySystem
             return;
 
         if (!TryComp<BodyComponent>(patient, out var body) || body.Organs == null)
+        {
+            _popup.PopupEntity(Loc.GetString("surgery-organ-insert-failed"), patient, surgeon);
             return;
+        }
 
         // Block if the patient already has an organ of the same category
         if (organComp.Category != null)
@@ -67,8 +71,13 @@ public sealed partial class SurgerySystem
             organs.Add((GetNetEntity(organ), meta.EntityName, meta.EntityPrototype?.ID));
         }
 
-        if (organs.Count > 0)
-            RaiseNetworkEvent(new OpenOrganMenuEvent(GetNetEntity(patient), organs), actor.PlayerSession);
+        if (organs.Count == 0)
+        {
+            _popup.PopupEntity(Loc.GetString("surgery-no-organs-to-remove"), patient, surgeon.Value);
+            return;
+        }
+
+        RaiseNetworkEvent(new OpenOrganMenuEvent(GetNetEntity(patient), organs), actor.PlayerSession);
     }
 
     private void OnOrganSelected(SelectOrganEvent ev, EntitySessionEventArgs args)
@@ -87,13 +96,30 @@ public sealed partial class SurgerySystem
         if (!TryComp<ActiveSurgeryComponent>(patient.Value, out var active) || active.Surgeon != surgeon)
             return;
 
+        // Validate the procedure is at an organ removal step
+        if (active.ProcedureId == null ||
+            !ProtoManager.TryIndex<SurgeryProcedurePrototype>(active.ProcedureId.Value, out var proto))
+            return;
+
+        if (active.CurrentStep >= proto.Steps.Count)
+            return;
+
+        var step = proto.Steps[active.CurrentStep];
+        if (step.Effect is not RemoveOrganEffect)
+            return;
+
         if (!TryComp<BodyComponent>(patient.Value, out var body) || body.Organs == null)
             return;
 
         if (!body.Organs.ContainedEntities.Contains(organ.Value))
             return;
 
-        _container.Remove(organ.Value, body.Organs);
+        if (!_container.Remove(organ.Value, body.Organs))
+        {
+            _popup.PopupEntity(Loc.GetString("surgery-organ-remove-failed"), patient.Value, surgeon);
+            return;
+        }
+
         _xform.DropNextTo(organ.Value, patient.Value);
 
         _popup.PopupEntity(
