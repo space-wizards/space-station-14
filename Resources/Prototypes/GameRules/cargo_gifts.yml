@@ -44,6 +44,7 @@
   - type: CargoGiftsRule
     description: cargo-gift-pizza-small
     dest: cargo-gift-dest-bar
+    announce: cargo-gift-pizza-small-announce
     gifts:
       FoodPizza: 1              # 4 pizzas
       FoodBarSupply: 1
@@ -62,6 +63,7 @@
   - type: CargoGiftsRule
     description: cargo-gift-pizza-large
     dest: cargo-gift-dest-bar
+    announce: cargo-gift-pizza-large-announce
     gifts:
       FoodPizza: 4              # 16 pizzas
       FoodBarSupply: 1
@@ -79,6 +81,7 @@
   - type: CargoGiftsRule
     description: cargo-gift-eng
     dest: cargo-gift-dest-eng
+    announce: cargo-gift-eng-announce
     gifts:
       EngineeringCableBulk: 1
       AirlockKit: 1
@@ -99,6 +102,7 @@
   - type: CargoGiftsRule
     description: cargo-gift-vending
     dest: cargo-gift-dest-supp
+    announce: cargo-gift-vending-announce
     gifts:
       CrateVendingMachineRestockHotDrinks: 3
       CrateVendingMachineRestockBooze: 1
@@ -119,6 +123,7 @@
   - type: CargoGiftsRule
     description: cargo-gift-cleaning
     dest: cargo-gift-dest-janitor
+    announce: cargo-gift-cleaning-announce
     gifts:
       ServiceJanitorial: 2
       ServiceLightsReplacement: 2
@@ -155,6 +160,7 @@
   - type: CargoGiftsRule
     description: cargo-gift-space-protection
     dest: cargo-gift-dest-supp
+    announce: cargo-gift-space-announce
     gifts:
       EmergencyInternalsLarge: 2
       EmergencyInflatablewall: 1
@@ -210,6 +216,7 @@
   - type: CargoGiftsRule
     description: cargo-gift-security-riot
     dest: cargo-gift-dest-sec
+    announce: cargo-gift-security-riot-announce
     gifts:
       SecurityRiot: 2
       SecurityRestraints: 2
