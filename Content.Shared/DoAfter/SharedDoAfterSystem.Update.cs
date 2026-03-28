@@ -10,8 +10,10 @@ namespace Content.Shared.DoAfter;
 public abstract partial class SharedDoAfterSystem : EntitySystem
 {
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
+#if EXCEPTION_TOLERANCE
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+#endif
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -35,7 +37,11 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 Update(uid, active, comp, time, xformQuery, handsQuery);
             }
             // ReSharper disable once RedundantCatchClause
+#if EXCEPTION_TOLERANCE
             catch (Exception e)
+#else
+            catch (Exception)
+#endif
             {
 #if EXCEPTION_TOLERANCE
                 // Doafter in question failed to complete..
@@ -158,7 +164,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         else
             RaiseLocalEvent(doAfter.AttemptEvent);
 
-        var ev = (CancellableEntityEventArgs) doAfter.AttemptEvent;
+        var ev = (CancellableEntityEventArgs)doAfter.AttemptEvent;
         if (!ev.Cancelled)
             return true;
 
@@ -200,7 +206,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.Used is { } used && !xformQuery.HasComponent(used))
             return true;
 
-        if (args.EventTarget is {Valid: true} eventTarget && !xformQuery.HasComponent(eventTarget))
+        if (args.EventTarget is { Valid: true } eventTarget && !xformQuery.HasComponent(eventTarget))
             return true;
 
         if (!xformQuery.TryGetComponent(args.User, out var userXform))
@@ -265,7 +271,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             // If an item was in the user's hand to begin with,
             // check if the user is no longer holding the item.
             if (args.BreakOnDropItem && doAfter.InitialItem != null && !_hands.IsHolding((args.User, hands), doAfter.InitialItem))
-                    return true;
+                return true;
 
             // If the user changes which hand is active at all, interrupt the do-after
             if (args.BreakOnHandChange && hands.ActiveHandId != doAfter.InitialHand)

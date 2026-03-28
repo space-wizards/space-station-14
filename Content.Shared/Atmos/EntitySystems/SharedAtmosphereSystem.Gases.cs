@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.Prototypes;
+using Content.Shared.Atmos.Reactions;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 
@@ -15,10 +16,10 @@ public abstract partial class SharedAtmosphereSystem
      */
 
     /// <summary>
-    /// Cached array of gas specific heats.
+    /// Cached array of molar heat capacities of the gases.
     /// </summary>
-    public float[] GasSpecificHeats => _gasSpecificHeats;
-    private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+    public float[] GasMolarHeatCapacities => _gasMolarHeatCapacities;
+    private float[] _gasMolarHeatCapacities = new float[Atmospherics.TotalNumberOfGases];
 
     /// <summary>
     /// Mask used to determine if a gas is flammable or not.
@@ -59,7 +60,7 @@ public abstract partial class SharedAtmosphereSystem
         {
             var idx = (int)gas;
             // Log an error if the corresponding prototype isn't found
-            if (!_prototypeManager.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
+            if (!ProtoMan.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
             {
                 Log.Error($"Failed to find corresponding {nameof(GasPrototype)} for gas ID {(int)gas} ({gas}) with expected ID \"{gas.ToString()}\". Is your prototype named correctly?");
                 continue;
@@ -68,7 +69,7 @@ public abstract partial class SharedAtmosphereSystem
             GasReagents[idx] = gasPrototype.Reagent;
         }
 
-        Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
+        Array.Resize(ref _gasMolarHeatCapacities, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
         for (var i = 0; i < GasPrototypes.Length; i++)
         {
@@ -80,7 +81,7 @@ public abstract partial class SharedAtmosphereSystem
              If you would like the unscaled specific heat, you'd need to multiply by HeatScale again.
              TODO ATMOS: please just make this 2 separate arrays instead of invoking multiplication every time.
              */
-            _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
+            _gasMolarHeatCapacities[i] = GasPrototypes[i].MolarHeatCapacity / HeatScale;
 
             // """Mask""" built here. Used to determine if a gas is fuel/oxidizer or not decently quickly and clearly.
             GasFuelMask[i] = GasPrototypes[i].IsFuel ? 1 : 0;
@@ -114,7 +115,7 @@ public abstract partial class SharedAtmosphereSystem
     /// considered ignitable, for both oxidizer and fuel.</param>
     /// <returns>True if the <see cref="GasMixture"/> is ignitable, otherwise, false.</returns>
     [PublicAPI]
-    public bool IsMixtureIgnitable(GasMixture mixture, float epsilon = 0.001f)
+    public bool IsMixtureIgnitable(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
     {
         return IsMixtureFuel(mixture, epsilon) && IsMixtureOxidizer(mixture, epsilon);
     }
@@ -127,7 +128,7 @@ public abstract partial class SharedAtmosphereSystem
     /// is considered fuel.</param>
     /// <returns>True if the <see cref="GasMixture"/> is fuel, otherwise, false.</returns>
     [PublicAPI]
-    public abstract bool IsMixtureFuel(GasMixture mixture, float epsilon = 0.001f);
+    public abstract bool IsMixtureFuel(GasMixture mixture, float epsilon = Atmospherics.Epsilon);
 
     /// <summary>
     /// Determines if a <see cref="GasMixture"/> has oxidizer gases in it or not.
@@ -137,7 +138,7 @@ public abstract partial class SharedAtmosphereSystem
     /// is considered an oxidizer.</param>
     /// <returns>True if the <see cref="GasMixture"/> is an oxidizer, otherwise, false.</returns>
     [PublicAPI]
-    public abstract bool IsMixtureOxidizer(GasMixture mixture, float epsilon = 0.001f);
+    public abstract bool IsMixtureOxidizer(GasMixture mixture, float epsilon = Atmospherics.Epsilon);
 
     /// <summary>
     /// Calculates the heat capacity for a <see cref="GasMixture"/>.
@@ -156,6 +157,67 @@ public abstract partial class SharedAtmosphereSystem
         // So if we want the un-scaled heat capacity, we have to multiply by the scale.
         return applyScaling ? scale : scale * HeatScale;
     }
+
+    /// <summary>
+    /// Calculates the thermal energy for a <see cref="GasMixture"/>.
+    /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to calculate the thermal
+    /// energy of.</param>
+    /// <returns>The <see cref="GasMixture"/>'s thermal energy in joules.</returns>
+    [PublicAPI]
+    public float GetThermalEnergy(GasMixture mixture)
+    {
+        return mixture.Temperature * GetHeatCapacity(mixture);
+    }
+
+    /// <summary>
+    /// Calculates the thermal energy for a gas mixture,
+    /// using a provided cached heat capacity value.
+    /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to calculate the thermal energy of.</param>
+    /// <param name="cachedHeatCapacity">A cached heat capacity value for the gas mixture,
+    /// to avoid redundant heat capacity calculations.</param>
+    /// <returns>The <see cref="GasMixture"/>'s thermal energy in joules.</returns>
+    [PublicAPI]
+    public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
+    {
+        return mixture.Temperature * cachedHeatCapacity;
+    }
+
+    /// <summary>
+    /// Merges one <see cref="GasMixture"/> into another, modifying the receiver.
+    /// </summary>
+    /// <param name="receiver">The <see cref="GasMixture"/> to merge into. This will be modified.</param>
+    /// <param name="giver">The <see cref="GasMixture"/> to merge from. This will not be modified.</param>
+    [PublicAPI]
+    public void Merge(GasMixture receiver, GasMixture giver)
+    {
+        if (receiver.Immutable)
+            return;
+
+        if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
+        {
+            var receiverHeatCapacity = GetHeatCapacity(receiver);
+            var giverHeatCapacity = GetHeatCapacity(giver);
+            var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
+            if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
+            {
+                receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
+            }
+        }
+
+        NumericsHelpers.Add(receiver.Moles, giver.Moles);
+    }
+
+    /// <summary>
+    /// Performs reactions for a given gas mixture on an optional holder.
+    /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to perform reactions on.</param>
+    /// <param name="holder"><see cref="IGasMixtureHolder"/> that holds the <see cref="GasMixture"/>.
+    /// used by Atmospherics to determine locality for certain reaction effects.</param>
+    /// <returns>The <see cref="ReactionResult"/> of the reactions performed.</returns>
+    [PublicAPI]
+    public abstract ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder);
 
     /// <summary>
     /// Gets the heat capacity for a <see cref="GasMixture"/>.
