@@ -90,7 +90,7 @@
         - ReagentId: Fat
           Quantity: 9
   - type: SliceableFood
-    count: 3
+    count: 4
     slice: FoodMeatCutlet
   - type: InternalTemperature
     conductivity: 0.43
@@ -1005,14 +1005,13 @@
   - type: Sprite
     layers:
     - state: plain-cooked
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Protein
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+      - ReagentId: Protein
+        Quantity: 10
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutletCooked

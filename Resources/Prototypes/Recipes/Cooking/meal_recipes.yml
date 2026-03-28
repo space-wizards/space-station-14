@@ -1304,7 +1304,7 @@
   time: 15
   group: Savory
   solids:
-    FoodDough: 1
+    FoodDoughSlice: 1
     FoodCheeseSlice: 2
     FoodChiliPepper: 1
     FoodMeatFish: 2
@@ -1318,7 +1318,7 @@
   reagents:
     TableSalt: 1
   solids:
-    FoodMeatFish: 2
+    FoodMeatFish: 1
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
@@ -1911,7 +1911,7 @@
   time: 15
   group: Savory
   reagents:
-    BbqSauce: 5
+    BbqSauce: 10
   solids:
     FoodMeat: 2
     FoodKebabSkewer: 1
@@ -1923,9 +1923,9 @@
   time: 20
   group: Savory
   solids:
-    FoodChiliPepper: 2
+    FoodChiliPepper: 1
     FoodMeatCutlet: 1
-    FoodCorn: 1
+    FoodDoughTortillaFlat: 1
 
 # SALADS: These should be moved out of the microwave as soon as possible
 - type: microwaveMealRecipe
@@ -2221,7 +2221,7 @@
   solids:
     FoodCorn: 1
     FoodPlate: 1
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipePeaSoup

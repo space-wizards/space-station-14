@@ -2108,22 +2108,22 @@
   description: Round green object that you can slice and eat.
   components:
   - type: Item
-    size: Small
+    size: Normal
     heldPrefix: produce
   - type: FlavorProfile
     flavors:
       - watermelon
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Water
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Sugar
+        Quantity: 5
+      - ReagentId: Water
+        Quantity: 45
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/watermelon.rsi
   - type: Produce

@@ -295,21 +295,6 @@
     tags:
       - Mayo
 
-# - type: entity
-#   parent: ReagentPacketBase
-#   id: ReagentContainerAllspice
-#   name: all-spice
-#   description:
-#   components:
-#   - type: Sprite
-#     state: spice
-#   - type: SolutionContainerManager
-#     maxVol: 10
-#     contents:
-#       reagents:
-#       - ReagentId: Allspice
-#         Quantity: 10
-
 # Baking
 
 - type: entity
@@ -458,7 +443,7 @@
     node: start
 
 - type: entity
-  parent: FoodDoughBase
+  parent: [SolutionTiny, FoodDoughBase]
   id: FoodDoughTortillaFlat
   name: flattened tortilla dough
   description: A flattened slice of tortilla dough, cook this to get a taco shell.
@@ -468,6 +453,11 @@
   - type: Construction
     graph: Tortilla
     node: flat
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
 
 - type: entity
   parent: FoodDoughBase
