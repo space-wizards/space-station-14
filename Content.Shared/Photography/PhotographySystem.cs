@@ -1,4 +1,3 @@
-using Content.Shared.Charges.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
@@ -8,7 +7,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Photography;
@@ -20,9 +18,7 @@ public sealed class PhotographySystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly EntityTableSystem _tables = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedFlashSystem _flash = default!;
     [Dependency] private readonly INetManager _net = default!;
 
