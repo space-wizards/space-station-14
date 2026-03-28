@@ -40,7 +40,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
                 ToolTip = Loc.GetString(proto.Name),
                 IconSpecifier = RadialMenuIconSpecifier.With(
                     new SpriteSpecifier.Rsi(
-                        new ResPath("/Textures/Objects/Specific/Medical/Surgery/scalpel.rsi"),
+                        new ResPath("Objects/Specific/Medical/Surgery/scalpel.rsi"),
                         "scalpel")),
             });
         }
@@ -65,17 +65,25 @@ public sealed class SurgerySystem : SharedSurgerySystem
 
         var buttons = new List<RadialMenuOptionBase>();
 
-        foreach (var (organId, name) in ev.Organs)
+        foreach (var (organId, name, protoId) in ev.Organs)
         {
             var id = organId;
             var target = ev.Target;
 
-            buttons.Add(new RadialMenuActionOption<NetEntity>(
+            var option = new RadialMenuActionOption<NetEntity>(
                 _ => OnOrganSelected(target, id),
                 id)
             {
-                ToolTip = name,
-            });
+                ToolTip = protoId != null ? $"{name} ({protoId})" : name,
+            };
+
+            if (protoId != null)
+            {
+                option.IconSpecifier = RadialMenuIconSpecifier.With(
+                    new SpriteSpecifier.EntityPrototype(protoId));
+            }
+
+            buttons.Add(option);
         }
 
         if (buttons.Count == 0)

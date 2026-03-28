@@ -79,6 +79,15 @@ public sealed class SurgerySystem : SharedSurgerySystem
             return;
         }
 
+        // Organ used on draped patient with active surgery -> insert directly
+        if (HasComp<OrganComponent>(used) && HasComp<SurgeryDrapedComponent>(target) &&
+            HasComp<ActiveSurgeryComponent>(target))
+        {
+            TryInsertOrgan(user, target, used);
+            args.Handled = true;
+            return;
+        }
+
         // Must be a surgical tool on a draped patient from here
         if (!_tags.HasTag(used, "SurgeryTool") || !HasComp<SurgeryDrapedComponent>(target))
             return;
@@ -284,6 +293,11 @@ public sealed class SurgerySystem : SharedSurgerySystem
             active.CurrentStep++;
             Dirty(patient, active);
         }
+        else if (step.Effect != null)
+        {
+            // Effect-based repeatable steps (e.g. organ manipulation) don't auto-repeat;
+            // the surgeon manually uses the tool or organ again.
+        }
         else
         {
             // Auto-repeat if the step can still heal something
@@ -377,6 +391,36 @@ public sealed class SurgerySystem : SharedSurgerySystem
         RemComp<SurgeryDrapedComponent>(patient); // Triggers OnDrapedShutdown -> drops bedsheet
     }
 
+    private void TryInsertOrgan(EntityUid surgeon, EntityUid patient, EntityUid organ)
+    {
+        if (!TryComp<OrganComponent>(organ, out var organComp))
+            return;
+
+        if (!TryComp<BodyComponent>(patient, out var body) || body.Organs == null)
+            return;
+
+        // Block if the patient already has an organ of the same category
+        if (organComp.Category != null)
+        {
+            foreach (var existing in body.Organs.ContainedEntities)
+            {
+                if (TryComp<OrganComponent>(existing, out var existingOrgan) &&
+                    existingOrgan.Category == organComp.Category)
+                {
+                    _popup.PopupEntity(
+                        Loc.GetString("surgery-organ-already-exists", ("organ", MetaData(organ).EntityName)),
+                        patient, surgeon);
+                    return;
+                }
+            }
+        }
+
+        _container.Insert(organ, body.Organs, force: true);
+        _popup.PopupEntity(
+            Loc.GetString("surgery-organ-inserted", ("organ", MetaData(organ).EntityName)),
+            patient);
+    }
+
     private void HandleEffect(EntityUid? surgeon, EntityUid patient, ISurgeryEffect effect)
     {
         switch (effect)
@@ -402,11 +446,18 @@ public sealed class SurgerySystem : SharedSurgerySystem
                 if (!TryComp<BodyComponent>(patient, out var body) || body.Organs == null)
                     return;
 
-                var organs = new List<(NetEntity, string)>();
+                var organs = new List<(NetEntity, string, string?)>();
                 foreach (var organ in body.Organs.ContainedEntities)
                 {
-                    var name = MetaData(organ).EntityName;
-                    organs.Add((GetNetEntity(organ), name));
+                    // Skip limbs, only show internal organs
+                    if (!TryComp<OrganComponent>(organ, out var organComp))
+                        continue;
+
+                    if (IsLimbCategory(organComp.Category))
+                        continue;
+
+                    var meta = MetaData(organ);
+                    organs.Add((GetNetEntity(organ), meta.EntityName, meta.EntityPrototype?.ID));
                 }
 
                 if (organs.Count > 0)
@@ -414,29 +465,8 @@ public sealed class SurgerySystem : SharedSurgerySystem
 
                 break;
 
-            case InsertOrganEffect:
-                if (surgeon == null)
-                    return;
-
-                foreach (var held in _hands.EnumerateHeld(surgeon.Value))
-                {
-                    if (!HasComp<OrganComponent>(held))
-                        continue;
-
-                    if (!TryComp<BodyComponent>(patient, out var patientBody) || patientBody.Organs == null)
-                        break;
-
-                    _container.Insert(held, patientBody.Organs);
-                    _popup.PopupEntity(
-                        Loc.GetString("surgery-organ-inserted", ("organ", MetaData(held).EntityName)),
-                        patient);
-                    return;
-                }
-
-                if (surgeon != null)
-                    _popup.PopupEntity(Loc.GetString("surgery-no-organ-in-hand"), patient, surgeon.Value);
-
-                break;
+            // InsertOrganEffect is no longer used via HandleEffect;
+            // organ insertion is handled directly via TryInsertOrgan in OnAfterInteract.
         }
     }
 
@@ -457,6 +487,19 @@ public sealed class SurgerySystem : SharedSurgerySystem
         }
 
         return false;
+    }
+
+    private static bool IsLimbCategory(ProtoId<OrganCategoryPrototype>? category)
+    {
+        if (category == null)
+            return false;
+
+        return category.Value.Id is
+            "Torso" or "Head" or
+            "ArmLeft" or "ArmRight" or
+            "HandLeft" or "HandRight" or
+            "LegLeft" or "LegRight" or
+            "FootLeft" or "FootRight";
     }
 
     private void OnOrganSelected(SelectOrganEvent ev, EntitySessionEventArgs args)

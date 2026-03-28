@@ -45,9 +45,9 @@ public sealed class SelectSurgeryProcedureEvent : EntityEventArgs
 public sealed class OpenOrganMenuEvent : EntityEventArgs
 {
     public NetEntity Target;
-    public List<(NetEntity OrganId, string Name)> Organs;
+    public List<(NetEntity OrganId, string Name, string? ProtoId)> Organs;
 
-    public OpenOrganMenuEvent(NetEntity target, List<(NetEntity OrganId, string Name)> organs)
+    public OpenOrganMenuEvent(NetEntity target, List<(NetEntity OrganId, string Name, string? ProtoId)> organs)
     {
         Target = target;
         Organs = organs;

@@ -36,10 +36,10 @@ surgery-step-repeat-done = The treatment has done all it can.
 ## Organ Operations
 surgery-organ-removed = {CAPITALIZE(THE($organ))} has been removed.
 surgery-organ-inserted = {CAPITALIZE(THE($organ))} has been inserted.
+surgery-organ-already-exists = The patient already has {THE($organ)}.
 surgery-no-organ-in-hand = You need to be holding an organ in your other hand.
 
 ## Procedure Names
 surgery-procedure-tend-wounds-brute = Tend Wounds (Brute)
 surgery-procedure-tend-wounds-burn = Tend Wounds (Burn)
-surgery-procedure-organ-removal = Organ Removal
-surgery-procedure-organ-insertion = Organ Insertion
+surgery-procedure-organ-manipulation = Organ Manipulation
