@@ -16,4 +16,10 @@ public sealed partial class AllowSuitStorageComponent : Component
     {
         Components = new[] {"Item"}
     };
+
+    /// <summary>
+    /// Examine string for enabling suit storage
+    /// </summary>
+    [DataField]
+    public LocId Examine = "examine-enable-suit-storage-base";
 }

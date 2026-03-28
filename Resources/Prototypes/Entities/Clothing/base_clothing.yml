@@ -33,6 +33,7 @@
   id: AllowSuitStorageClothingGasTanks
   components:
   - type: AllowSuitStorage
+    examine: "examine-enable-suit-storage-tank-only"
     whitelist:
       components:
       - GasTank
