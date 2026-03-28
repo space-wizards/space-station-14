@@ -610,13 +610,13 @@
 
 - type: reagent
   id: Pearonade
+  parent: BaseJuice
   name: reagent-name-pearonade
-  parent: BaseDrink
-  desc: reagent-desc-pearonade
-  physicalDesc: reagent-physical-desc-refreshing
-  flavor: pearonade
-  color: "#e39a3a"
   group: Drinks
+  desc: reagent-desc-pearonade
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: pearonade
+  color: "#E39A3A"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/pearonade.rsi
     state: icon_empty
@@ -624,7 +624,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drink:
+    Digestion:
       effects:
       - !type:SatiateThirst
         factor: 2
