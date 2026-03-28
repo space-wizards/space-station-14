@@ -31,6 +31,8 @@ namespace Content.Client.Singularity
 
         private readonly ShaderInstance _shader;
 
+        private bool _reducedMotion;
+
         public SingularityOverlay()
         {
             IoCManager.InjectDependencies(this);
@@ -38,6 +40,8 @@ namespace Content.Client.Singularity
             _shader.SetParameter("maxDistance", MaxDistance * EyeManager.PixelsPerMeter);
             _entMan.EventBus.SubscribeEvent<PixelToMapEvent>(EventSource.Local, this, OnProjectFromScreenToMap);
             ZIndex = 101; // Should be drawn after the placement overlay so admins placing items near the singularity can tell where they're going.
+
+            _configManager.OnValueChanged(CCVars.ReducedMotion, (b) => { _reducedMotion = b; }, invokeImmediately: true);
         }
 
         private readonly Vector2[] _positions = new Vector2[MaxCount];
@@ -47,6 +51,8 @@ namespace Content.Client.Singularity
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
         {
+            if (_reducedMotion)
+                return false;
             if (args.Viewport.Eye == null)
                 return false;
             if (_xformSystem is null && !_entMan.TrySystem(out _xformSystem))
@@ -87,9 +93,6 @@ namespace Content.Client.Singularity
             if (ScreenTexture == null || args.Viewport.Eye == null)
                 return;
 
-            if (_configManager.GetCVar(CCVars.ReducedMotion))
-                return;
-
             _shader?.SetParameter("renderScale", args.Viewport.RenderScale * args.Viewport.Eye.Scale);
             _shader?.SetParameter("count", _count);
             _shader?.SetParameter("position", _positions);
@@ -108,9 +111,9 @@ namespace Content.Client.Singularity
         /// </summary>
         private void OnProjectFromScreenToMap(ref PixelToMapEvent args)
         {   // Mostly copypasta from the singularity shader.
-            if (args.Viewport.Eye == null)
+            if (_reducedMotion)
                 return;
-            if (_configManager.GetCVar(CCVars.ReducedMotion))
+            if (args.Viewport.Eye == null)
                 return;
             var maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
             var finalCoords = args.VisiblePosition;
