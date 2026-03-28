@@ -1,23 +1,24 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Photography;
+
 /// <summary>
-///  Represents the photograph data on an picture
+/// Represents the photograph data on an picture.
 /// </summary>
-[RegisterComponent]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PhotographComponent : Component
 {
     /// <summary>
-    /// The description of the photographed object
+    /// The description of the photographed object.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public FormattedMessage Text = default!;
+    public FormattedMessage? Description;
 
     /// <summary>
-    ///  The name of the photographed object
+    /// The full text mentioning the name of the photographed object.
+    /// For example "This is a picture of Urist McHands"
     /// </summary>
-
     [DataField, AutoNetworkedField]
-    public string Name = default!;
+    public string? NameText;
 }

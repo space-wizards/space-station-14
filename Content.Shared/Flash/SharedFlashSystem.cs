@@ -72,7 +72,7 @@ public abstract class SharedFlashSystem : EntitySystem
         if (!ent.Comp.FlashOnMelee ||
             !args.IsHit ||
             !args.HitEntities.Any() ||
-            !UseFlash(ent, args.User))
+            !TryUseFlashItem(ent.AsNullable(), args.User))
         {
             return;
         }
@@ -86,7 +86,7 @@ public abstract class SharedFlashSystem : EntitySystem
 
     private void OnFlashUseInHand(Entity<FlashComponent> ent, ref UseInHandEvent args)
     {
-        if (!ent.Comp.FlashOnUse || args.Handled || !UseFlash(ent, args.User))
+        if (!ent.Comp.FlashOnUse || args.Handled || !TryUseFlashItem(ent.AsNullable(), args.User))
             return;
 
         args.Handled = true;
@@ -97,26 +97,29 @@ public abstract class SharedFlashSystem : EntitySystem
     // TODO: This is awful and all the different components for toggleable lights need to be unified and changed to use Itemtoggle
     private void OnLightToggle(Entity<FlashComponent> ent, ref LightToggleEvent args)
     {
-        if (!args.IsOn || !UseFlash(ent, null))
+        if (!args.IsOn || !TryUseFlashItem(ent.AsNullable(), null))
             return;
 
         FlashArea(ent.Owner, null, ent.Comp.Range, ent.Comp.AoeFlashDuration, ent.Comp.SlowTo, true, ent.Comp.Probability);
     }
 
     /// <summary>
-    /// Use charges and set the visuals.
+    /// Try to use charges, play the sound and set the visuals of a flash item.
+    /// This does not actually cause the flash status effect by itself, you will need to either call <see cref="Flash"/> or <see cref="FlashArea"/> as well.
     /// </summary>
     /// <returns>False if no charges are left or the flash is currently in use.</returns>
-    private bool UseFlash(Entity<FlashComponent> ent, EntityUid? user)
+    public bool TryUseFlashItem(Entity<FlashComponent?> ent, EntityUid? user)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
         if (_useDelay.IsDelayed(ent.Owner))
             return false;
 
         if (TryComp<LimitedChargesComponent>(ent.Owner, out var charges)
-            && _sharedCharges.IsEmpty((ent.Owner, charges)))
+            && !_sharedCharges.TryUseCharge((ent.Owner, charges)))
             return false;
 
-        _sharedCharges.TryUseCharge((ent.Owner, charges));
         _audio.PlayPredicted(ent.Comp.Sound, ent.Owner, user);
 
         var active = EnsureComp<ActiveFlashComponent>(ent.Owner);
@@ -126,7 +129,7 @@ public abstract class SharedFlashSystem : EntitySystem
 
         if (_sharedCharges.IsEmpty((ent.Owner, charges)))
         {
-            _appearance.SetData(ent.Owner, FlashVisuals.Burnt, true);
+            _appearance.SetData(ent.Owner, FlashVisuals.Burnt, true); // TODO: Reset if charges are refilled.
             _tag.AddTag(ent.Owner, TrashTag);
             _popup.PopupClient(Loc.GetString("flash-component-becomes-empty"), user);
         }

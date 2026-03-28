@@ -1,5 +1,5 @@
 - type: entity
-  parent: Clothing
+  parent: BaseItem
   id: TravelCamera
   name: travel camera
   description: A picture says more than a thousand words. Comes with an ultrabright flash and internal photo roll, so make sure every snap counts!
@@ -14,43 +14,32 @@
     sprite: Objects/Devices/travel_camera.rsi
     state: icon
   - type: Flash
-    # it can not be without a melee attack
-    flashOnUse: false
+    flashOnUse: false # handled by PhotographySystem
+    flashOnMelee: false # don't allow revolutionary conversion
     sound: !type:SoundPathSpecifier
       path: /Audio/Misc/camera_snap.ogg
   - type: LimitedCharges
     maxCharges: 4
-  - type: MeleeWeapon
-    wideAnimationRotation: 180
-    damage:
-      types:
-        Blunt: 0 # melee weapon to allow flashing individual targets
-    angle: 10
-  - type: Item
-    size: Small
-    sprite: Objects/Devices/travel_camera.rsi
+  - type: AutoRecharge
+    rechargeDuration: 60
   - type: UseDelay
   - type: StaticPrice
     price: 100
   - type: Clothing
     slots:
-    - neck
+    - NECK
     sprite: Objects/Devices/travel_camera.rsi
-  - type: Tag
-    tags:
-    - WhitelistChameleon
 
-# we have a parent so that if we need to add components later on its easier
+# we have a base prototype so that if we need to add components later on its easier
 - type: entity
   abstract: true
   parent: BasePaper
-  id: Photograph
+  id: BasePhotograph
   name: photograph
 
 - type: entity
-  parent: Photograph
+  parent: BasePhotograph
   id: PhotographBlack
-  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -58,9 +47,8 @@
     - state: black
 
 - type: entity
-  parent: Photograph
+  parent: BasePhotograph
   id: PhotographRed
-  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -68,9 +56,8 @@
     - state: red
 
 - type: entity
-  parent: Photograph
+  parent: BasePhotograph
   id: PhotographBlue
-  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -78,9 +65,8 @@
     - state: blue
 
 - type: entity
-  parent: Photograph
+  parent: BasePhotograph
   id: PhotographGreen
-  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -88,9 +74,8 @@
     - state: green
 
 - type: entity
-  parent: Photograph
+  parent: BasePhotograph
   id: PhotographYellow
-  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -98,9 +83,8 @@
     - state: yellow
 
 - type: entity
-  parent: Photograph
+  parent: BasePhotograph
   id: PhotographPurple
-  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -108,9 +92,8 @@
     - state: purple
 
 - type: entity
-  parent: Photograph
+  parent: BasePhotograph
   id: PhotographRainbow
-  name: photograph
   components:
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
@@ -121,7 +104,6 @@
   id: TravelCameraPhotographs
   table: !type:GroupSelector
     children:
-    # they will be instanced when the camera takes a picture
     - id: PhotographBlack
     - id: PhotographRed
     - id: PhotographBlue

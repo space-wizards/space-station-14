@@ -1,19 +1,19 @@
-using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.EntitySelectors;
-using Robust.Shared.Prototypes;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Photography;
+
 // since camera is taken...
 /// <summary>
-/// marks an entity as able to take pictures (when you smash other entities with it)
+/// Marks an entity as able to take pictures (when you smash other entities with it).
 /// </summary>
-[RegisterComponent]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class PictureTakerComponent : Component
 {
     /// <summary>
-    /// The entities that will be instanced & given a PhotographComponent to when the PictureTakerComponent's entity is used to bash something. Hopefully, only one of these will be chosen, at random, each time.
+    /// The entities that will be spawned & given a PhotographComponent when the owning entity is used.
+    /// The table should only select one item at a time.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityTableSelector Photographs = default!;
+    [DataField]
+    public EntityTableSelector? Photographs;
 }
