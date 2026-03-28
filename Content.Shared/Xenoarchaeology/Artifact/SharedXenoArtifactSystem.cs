@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Popups;
+using Content.Shared.Prototypes;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -14,8 +15,6 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 /// </summary>
 public abstract partial class SharedXenoArtifactSystem : EntitySystem
 {
-    private static readonly EntProtoId ArtifactEffectBaseProtoId = "BaseXenoArtifactEffect";
-
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
@@ -57,8 +56,8 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
 
         foreach (var entityPrototype in PrototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
-            if (entityPrototype is { Abstract: false, Parents: not null }
-                && Array.IndexOf(entityPrototype.Parents, ArtifactEffectBaseProtoId.Id) != -1)
+            // all effect prototypes are marked as nodes, as nodes are born from those prototypes
+            if (entityPrototype.HasComponent<XenoArtifactNodeComponent>() && !entityPrototype.Abstract)
                 EffectPrototypeIds.Add(entityPrototype.ID);
         }
     }
