@@ -118,7 +118,7 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 15
+        Quantity: 10
       - ReagentId: TableSalt
         Quantity: 2
 # Tastes like nachos.
@@ -144,7 +144,7 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 30
+        Quantity: 25
       - ReagentId: TableSalt
         Quantity: 2
 # Tastes like nachos, cheese.
@@ -171,7 +171,7 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 20
+        Quantity: 15
       - ReagentId: CapsaicinOil
         Quantity: 10
       - ReagentId: Vitamin
@@ -596,4 +596,4 @@
       - ReagentId: Vitamin
         Quantity: 15
       - ReagentId: Butter
-        Quantity: 5
+        Quantity: 2.5

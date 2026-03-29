@@ -327,7 +327,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionTiny, FoodBakingBase]
+  parent: [SolutionVeryTiny, FoodBakingBase]
   id: FoodDoughSliceBase
   components:
   - type: Item
@@ -345,7 +345,7 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 15
+        Quantity: 7.5
 
 - type: entity
   abstract: true
@@ -367,7 +367,7 @@
   - type: Sprite
     state: dough
   - type: SliceableFood
-    count: 4
+    count: 8
     slice: FoodDoughSlice
   - type: Construction
     graph: Pizza
@@ -406,7 +406,7 @@
   - type: Sprite
     state: cornmealdough
   - type: SliceableFood
-    count: 4
+    count: 8
     slice: FoodDoughCornmealSlice
 
 - type: entity
@@ -427,7 +427,7 @@
   - type: Sprite
     state: tortilladough
   - type: SliceableFood
-    count: 4
+    count: 8
     slice: FoodDoughTortillaSlice
 
 - type: entity
@@ -443,7 +443,7 @@
     node: start
 
 - type: entity
-  parent: [SolutionTiny, FoodDoughBase]
+  parent: [SolutionVeryTiny, FoodDoughBase]
   id: FoodDoughTortillaFlat
   name: flattened tortilla dough
   description: A flattened slice of tortilla dough, cook this to get a taco shell.
@@ -457,7 +457,7 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 15
+        Quantity: 7.5
 
 - type: entity
   parent: FoodDoughBase
@@ -472,7 +472,7 @@
   - type: Sprite
     state: cotton-dough
   - type: SliceableFood
-    count: 4
+    count: 8
     slice: FoodDoughCottonSlice
   - type: Construction
     graph: CottonPizza
@@ -511,9 +511,9 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 5
+        Quantity: 2.5
       - ReagentId: Fiber
-        Quantity: 10
+        Quantity: 5
 
 - type: entity
   parent: FoodDoughRopeBase
@@ -534,9 +534,9 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 5
+        Quantity: 2.5
       - ReagentId: Fiber
-        Quantity: 10
+        Quantity: 5
   - type: Tag
     tags:
      - ClothMade
@@ -672,7 +672,7 @@
       - ReagentId: Butter
         Quantity: 30
   - type: SliceableFood
-    count: 6
+    count: 12
     slice: FoodButterSlice
 
 - type: entity
@@ -687,10 +687,10 @@
     state: butter-slice
   - type: Solution
     solution:
-      maxVol: 10
+      maxVol: 5
       reagents:
       - ReagentId: Butter
-        Quantity: 5
+        Quantity: 2.5
   - type: Tag
     tags:
     - Slice

@@ -425,7 +425,7 @@
     Milk: 5
   solids:
     FoodDough: 1
-    FoodCheeseSlice: 2
+    FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeMeatBread
@@ -436,7 +436,7 @@
   solids:
     FoodDough: 1
     FoodMeatCutlet: 2
-    FoodCheeseSlice: 2
+    FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeMimanaBread
@@ -448,7 +448,7 @@
     Nothing: 5
   solids:
     FoodDough: 1
-    FoodMimana: 1
+    FoodMimana: 2
 
 - type: microwaveMealRecipe
   id: RecipeBread
@@ -487,7 +487,7 @@
   solids:
     FoodDough: 1
     FoodMeatSpiderCutlet: 2
-    FoodCheeseSlice: 2
+    FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeTofuBread
@@ -497,7 +497,7 @@
   group: Breads
   solids:
     FoodDough: 1
-    FoodTofu: 1
+    FoodTofuSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoMeatBread
@@ -568,7 +568,7 @@
   group: Breakfast
   reagents:
     Milk: 5
-    Egg: 12
+    Egg: 6
   solids:
     FoodBreadPlainSlice: 1
 

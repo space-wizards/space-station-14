@@ -19,7 +19,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        canReact: false # Dont want cause reactions inside tacos after merging ingredients
+        canReact: false # Dont want cause reactions inside tacos after merging ingredients, TODO KILL
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
