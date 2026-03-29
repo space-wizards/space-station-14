@@ -303,6 +303,14 @@
     state: horns_kobold_ears
 
 - type: marking
+  id: LizardHornsBackProtusion
+  bodyPart: HeadTop
+  groupWhitelist: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_back_protusion
+
+- type: marking
   id: LizardHornsFloppyKoboldEars
   bodyPart: HeadSide
   groupWhitelist: [Reptilian]
