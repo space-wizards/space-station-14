@@ -41,6 +41,7 @@ public sealed class ChameleonClothingTest : GameTest
     [TestOf(typeof(SharedChameleonClothingSystem))]
     [Description("Activates all available appearance options for a chameleon clothing item.")]
     [TrackingIssue("https://github.com/space-wizards/space-station-14/issues/43365")]
+    [Ignore("Client has missing RSI state errors when switching between certain options.")]
     public async Task ActivateAllOptions(string protoId)
     {
         // Spawn a test dummy who will equip the item.
