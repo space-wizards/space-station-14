@@ -204,6 +204,10 @@
       reagents:
       - ReagentId: SulfurBlood
         Quantity: 300
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_vulpkanin
 
 - type: entity
   parent: OrganBase
