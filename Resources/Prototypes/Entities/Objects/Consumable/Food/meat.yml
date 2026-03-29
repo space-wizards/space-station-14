@@ -306,7 +306,7 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 30
+        Quantity: 10
       - ReagentId: Bicaridine
         Quantity: 20
   - type: StaticPrice

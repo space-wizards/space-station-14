@@ -3,7 +3,7 @@
 
 - type: entity
   abstract: true
-  parent: FoodInjectableBase
+  parent: [SolutionNormal, FoodInjectableBase]
   id: FoodBreadBase
   components:
   - type: Item
@@ -16,16 +16,14 @@
   - type: Tag
     tags:
     - Bread
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 26
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 80
 
 - type: entity
-  parent: FoodBreadBase
+  parent: [SolutionVeryTiny, FoodBreadBase]
   id: FoodBreadSliceBase
   abstract: true
   components:
@@ -38,13 +36,11 @@
     tags:
     - Bread
     - Slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 8
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10 # 1/8 of a loaf of bread
 
 # Custom Bread Example
 
@@ -61,6 +57,7 @@
     - state: alpha-filling
       color: "#FF613F"
   - type: SliceableFood
+    count: 8
     slice: FoodBreadVolcanicSlice
 
 - type: entity
@@ -92,6 +89,7 @@
     layers:
     - state: banana
   - type: SliceableFood
+    count: 8
     slice: FoodBreadBananaSlice
   - type: Tag
     tags:
@@ -134,20 +132,19 @@
     layers:
     - state: cotton
   - type: SliceableFood
+    count: 8
     slice: FoodBreadCottonSlice
   - type: Tag
     tags:
     - ClothMade
     - Bread
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 26
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Fiber
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 40
+      - ReagentId: Fiber
+        Quantity: 40
 
 - type: entity
   name: cotton bread slice
@@ -169,15 +166,13 @@
     - ClothMade
     - Bread
     - Slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 8
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Fiber
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Fiber
+        Quantity: 10
 
 - type: entity
   name: cornbread
@@ -193,14 +188,8 @@
     layers:
     - state: cornbread
   - type: SliceableFood
+    count: 8
     slice: FoodBreadCornSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -216,13 +205,6 @@
   - type: Sprite
     layers:
     - state: cornbread-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
 
 - type: entity
   name: cream cheese bread
@@ -239,6 +221,7 @@
     layers:
     - state: creamcheese
   - type: SliceableFood
+    count: 8
     slice: FoodBreadCreamcheeseSlice
   - type: SolutionContainerManager
     solutions:
@@ -289,6 +272,7 @@
     layers:
     - state: meat
   - type: SliceableFood
+    count: 8
     slice: FoodBreadMeatSlice
   - type: SolutionContainerManager
     solutions:
@@ -347,6 +331,7 @@
     layers:
     - state: mimana
   - type: SliceableFood
+    count: 8
     slice: FoodBreadMimanaSlice
   - type: SolutionContainerManager
     solutions:
@@ -400,6 +385,7 @@
     layers:
     - state: plain
   - type: SliceableFood
+    count: 8
     slice: FoodBreadPlainSlice
 
 - type: entity
@@ -426,6 +412,7 @@
     layers:
     - state: sausage
   - type: SliceableFood
+    count: 8
     slice: FoodBreadSausageSlice
   - type: SolutionContainerManager
     solutions:
@@ -487,6 +474,7 @@
     layers:
     - state: spidermeat
   - type: SliceableFood
+    count: 8
     slice: FoodBreadMeatSpiderSlice
   - type: SolutionContainerManager
     solutions:
@@ -545,6 +533,7 @@
     layers:
     - state: tofu
   - type: SliceableFood
+    count: 8
     slice: FoodBreadTofuSlice
   - type: SolutionContainerManager
     solutions:
@@ -594,6 +583,7 @@
     layers:
     - state: xenomeat
   - type: SliceableFood
+    count: 8
     slice: FoodBreadMeatXenoSlice
   - type: SolutionContainerManager
     solutions:
@@ -930,6 +920,7 @@
     - meaty
     - bread
   - type: SliceableFood
+    count: 8
     slice: FoodBreadSausageSlice
   - type: SolutionContainerManager
     solutions:
