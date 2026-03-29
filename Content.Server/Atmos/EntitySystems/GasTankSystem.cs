@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -5,6 +6,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -15,10 +17,16 @@ public sealed class GasTankSystem : SharedGasTankSystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     private const float MinimumSoundValvePressure = 10.0f;
+
     private const float ReleaseArea = 0.0001f; // About 1cm^2
+
+    // A vector bias for throwing our gas tanks in radians. Averages about -43 degrees since the sprite is at a 45-degree angle.
+    private static readonly Vector2 ThrowVector = new (-1.0f, -0.5f);
 
     public override void Initialize()
     {
@@ -103,13 +111,20 @@ public sealed class GasTankSystem : SharedGasTankSystem
 
         Audio.PlayPvs(entity.Comp.ReleaseSound, entity);
 
-        var strength = removed.Pressure * removed.Volume * Atmospherics.kPaToKg_m2;
+        var strength = Atmos.GetOverPressure(removed) * Atmospherics.kPaToKg_m2;
 
         if (strength <= 0)
             return;
 
-        var dir = _random.NextAngle().ToWorldVec();
-        _throwing.TryThrow(entity, dir * strength, strength);
+        // TODO: I hate throwing system. I shouldn't need to do this boilerplate to get a nice looking throw
+        var rot = _xform.GetWorldRotation(entity);
+        var ang = _random.NextAngle(rot + ThrowVector.X, rot + ThrowVector.Y);
+
+        // We bias by angle to make sure it doesn't rotate too much and flies relatively straight.
+        _physics.ApplyAngularImpulse(entity, (float)(strength * ang));
+
+        // TODO ATMOS: If we can predict ReleaseGas at some point, we should have this apply an impulse to a person holding this gas tank.
+        _throwing.TryThrow(entity, ang.ToWorldVec() * strength, strength, doSpin: false);
     }
 
     public GasMixture RemoveAirOutput(Entity<GasTankComponent> gasTank, float volume)

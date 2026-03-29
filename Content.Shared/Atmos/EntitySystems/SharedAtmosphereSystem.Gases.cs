@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Atmos.Reactions;
@@ -254,12 +253,13 @@ public abstract partial class SharedAtmosphereSystem
 
     /// <summary>
     /// Calculates the amount of volume transferred from one gas mixture to another over time based on flow rate.
-    /// <see cref="GetFlowRate"/>
+    /// <see cref="GetFlowRate(GasMixture,GasMixture,float,float)"/>
     /// </summary>
     /// <param name="mix1">A <see cref="GasMixture"/></param>
     /// <param name="mix2">Another <see cref="GasMixture"/></param>
     /// <param name="area">The area of transfer, in square meters. One tile of movement is about one square meter.</param>
     /// <param name="dt">delta time, or how much time is passing/has passed.</param>
+    /// <param name="c">Discharge coefficient. An abstract modifier for friction and turbulence.</param>
     /// <returns>
     /// The volume of gas being moved over dt in Litres.
     /// If the value is positive it's in the direction of mix1->mix2,
@@ -267,32 +267,27 @@ public abstract partial class SharedAtmosphereSystem
     /// </returns>
     /// <remarks>I'm assuming C is always 1 because I'm lazy, you can precalculate it and pass it with the area if you really care.</remarks>
     [PublicAPI]
-    public double GetFlowVolume(GasMixture mix1, GasMixture mix2, float area, float dt)
+    public double GetFlowVolume(GasMixture mix1, GasMixture mix2, float area, float dt, float c = 1f)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(dt);
-        return dt * GetFlowRate(mix1, mix2, area);
+        return dt * GetFlowRate(mix1, mix2, area, c);
     }
 
-    /// <see cref="GetFlowVolume(GasMixture,GasMixture,float,float)"/>
+    /// <see cref="GetFlowVolume(GasMixture,GasMixture,float,float,float)"/>
     [PublicAPI]
-    public double GetFlowVolume(GasMixture mix1, float deltaP, float area, float dt)
+    public double GetFlowVolume(GasMixture mix1, float deltaP, float area, float dt, float c = 1f)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(dt);
-        return dt * GetFlowRate(mix1, deltaP, area);
+        return dt * GetFlowRate(mix1, deltaP, area, c);
     }
 
     /// <summary>
-    /// Calculates the flow volume between two gas mixtures.
-    /// Q = C × A × √(2 × ΔP / ρ)
-    /// Q is the volumetric airflow rate
-    /// C is the discharge coefficient
-    /// A is the cross-sectional area
-    /// ΔP is the measured pressure difference
-    /// ρ is the air density, adjusted for environmental conditions.
+    /// Calculates the volumetric flow rate between two gas mixtures.
     /// </summary>
     /// <param name="mix1">A <see cref="GasMixture"/></param>
     /// <param name="mix2">Another <see cref="GasMixture"/></param>
     /// <param name="area">The area of transfer, in square meters. One tile of movement is about one square meter.</param>
+    /// <param name="c">Discharge coefficient. An abstract modifier for friction and turbulence.</param>
     /// <returns>
     /// The volume of gas being moved in Litres / Second.
     /// If the value is positive it's in the direction of mix1->mix2,
@@ -300,38 +295,57 @@ public abstract partial class SharedAtmosphereSystem
     /// </returns>
     /// <remarks>I'm assuming C is always 1 because I'm lazy, you can precalculate it and pass it with the area if you really care.</remarks>
     [PublicAPI]
-    public double GetFlowRate(GasMixture mix1, GasMixture mix2, float area)
+    public double GetFlowRate(GasMixture mix1, GasMixture mix2, float area, float c = 1f)
     {
+        /*
+            Q = C × A × √(2 × ΔP / ρ)
+            Q is the volumetric airflow rate
+            C is the discharge coefficient
+            A is the cross-sectional area
+            ΔP is the measured pressure difference
+            ρ is the air density, adjusted for environmental conditions.
+            We can break this up into Q = A × V where V is the velocity of the gas.
+         */
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(area);
-        return area * GetFlowVelocity(mix1, mix2);
+        return area * GetFlowVelocity(mix1, mix2, c);
     }
 
-    /// <inhereitdoc cref="GetFlowRate(GasMixture,GasMixture,float)"/>
+    /// <inhereitdoc cref="GetFlowRate(GasMixture,GasMixture,float, float)"/>
     [PublicAPI]
-    public double GetFlowRate(GasMixture mix1, float deltaP, float area)
+    public double GetFlowRate(GasMixture mix1, float deltaP, float area, float c = 1f)
     {
+        /*
+            Q = C × A × √(2 × ΔP / ρ)
+            Q is the volumetric airflow rate
+            C is the discharge coefficient
+            A is the cross-sectional area
+            ΔP is the measured pressure difference
+            ρ is the air density, adjusted for environmental conditions.
+            We can break this up into Q = A × V where V is the velocity of the gas.
+         */
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(area);
-        return area * GetFlowVelocity(mix1, deltaP);
+        return area * GetFlowVelocity(mix1, deltaP, c);
     }
 
     /// <summary>
-    /// Calculates the flow velocity between two gas mixtures.
-    /// Useful for determining flow rate.
+    /// Calculates the flow velocity between two gas mixtures using Q = C × A × √(2 × ΔP / ρ) but without the A (area)
+    /// Useful for determining flow rate, or how fast a gas is moving.
     /// </summary>
     /// <param name="mix1">A <see cref="GasMixture"/></param>
     /// <param name="mix2">Another <see cref="GasMixture"/></param>
+    /// <param name="c">Discharge coefficient. An abstract modifier for friction and turbulence.</param>
     /// <returns>
     /// The velocity of gas movement between two mixtures in Meters / Second.
     /// If the value is positive it's in the direction of mix1->mix2,
     /// If it's negative it's in the direction of mix2 -> mix1
     /// </returns>
     [PublicAPI]
-    public double GetFlowVelocity(GasMixture mix1, GasMixture mix2)
+    public double GetFlowVelocity(GasMixture mix1, GasMixture mix2, float c = 1f)
     {
         if (mix1.Pressure > mix2.Pressure)
-            return GetFlowVelocity(mix1, mix1.Pressure - mix2.Pressure);
+            return GetFlowVelocity(mix1, mix1.Pressure - mix2.Pressure, c);
 
-        return -GetFlowVelocity(mix2, mix2.Pressure - mix1.Pressure);
+        return -GetFlowVelocity(mix2, mix2.Pressure - mix1.Pressure, c);
     }
 
     /// <summary>
@@ -339,29 +353,42 @@ public abstract partial class SharedAtmosphereSystem
     /// </summary>
     /// <param name="mix1">The mixture which is being allowed to flow</param>
     /// <param name="deltaP">The difference in pressure between this mixture and where it's flowing to</param>
+    /// <param name="c">Discharge coefficient. An abstract modifier for friction and turbulence.</param>
     /// <returns>
     /// The velocity of the gas leaving our mixture in Meters / Second.
     /// </returns>
     [PublicAPI]
-    public double GetFlowVelocity(GasMixture mix1, float deltaP)
+    public double GetFlowVelocity(GasMixture mix1, float deltaP, float c = 1f)
     {
+        /*
+            V = C × √(2 × ΔP / ρ)
+            V is the velocity of our gas
+            C is the discharge coefficient
+            ΔP is the measured pressure difference
+            ρ is the air density, adjusted for environmental conditions.
+            Density is equivalent to Mass / Volume, so we invert that to divide by density.
+         */
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(deltaP);
-        return Math.Sqrt(2 * deltaP * mix1.Volume / GetMass(mix1));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(c);
+        return c * Math.Sqrt(2 * deltaP * mix1.Volume / GetMass(mix1));
     }
 
     /// <summary>
-    /// Lets a volume of gas flow throw a specified area into another volume of gas over a period of time.
+    /// Lets a volume of gas flow throw a constrained area into another volume of gas over a period of time.
     /// </summary>
     /// <param name="mixture">Gas volume that is discharging some of its gas.</param>
     /// <param name="output">Gas volume that is receiving the discharge.</param>
-    /// <param name="dt">Time that the discharge occurs, should be as small as possible since it doesn't use calculus</param>
-    /// <param name="area">Area that our gas is traveling through, the larger the area the bigger the transfer.</param>
+    /// <param name="dt">Time that the discharge occurs in seconds, should be as small as possible since it doesn't use calculus</param>
+    /// <param name="area">Area that our gas is traveling through in m^2, the larger the area the bigger the transfer.
+    /// Default of 2m^2 since that's the area of a single face of an atmos tile.</param>
+    [PublicAPI]
     public void FlowGas(GasMixture mixture, GasMixture? output, float dt, float area)
     {
         FlowGas(mixture, output, mixture.Pressure, dt, area);
     }
 
     /// <inheritdoc cref="FlowGas(GasMixture,GasMixture?,float,float)"/>
+    [PublicAPI]
     public void FlowGas(GasMixture mixture, GasMixture? output, float pressure, float dt, float area)
     {
         if (output == null)
@@ -379,22 +406,32 @@ public abstract partial class SharedAtmosphereSystem
         Merge(output, removed);
     }
 
-    /// <inhereitdoc cref="FlowGas(GasMixture,GasMixture,float,float)"/>
-    public GasMixture? FlowGas(GasMixture mixture, float pressure, float dt, float area = 2f)
+    /// <summary>
+    /// Lets a volume of gas flow through constrained area at a constrained pressure delta.
+    /// </summary>
+    /// <param name="mixture">Mixture of gas that is currently flowing</param>
+    /// <param name="deltaP">Pressure our gas is able to flow at.</param>
+    /// <param name="dt">Time that the discharge occurs in seconds, should be as small as possible since it doesn't use calculus</param>
+    /// <param name="area">Area that our gas is traveling through in m^2, the larger the area the bigger the transfer.
+    /// Default of 2m^2 since that's the area of a single face of an atmos tile.</param>
+    /// <returns></returns>
+    [PublicAPI]
+    public GasMixture? FlowGas(GasMixture mixture, float deltaP, float dt, float area = 2f)
     {
-        if (pressure <= 0)
+        if (deltaP <= 0)
             return null;
 
-        return ReleaseGasAt(mixture, (float)GetFlowVolume(mixture, pressure, area, dt), pressure);
+        return ReleaseGasAt(mixture, (float)GetFlowVolume(mixture, deltaP, area, dt), deltaP);
     }
 
     /// <summary>
     /// Releases some volume of a gas mixture at a specified pressure.
     /// </summary>
     /// <param name="mixture">Mixture which is releasing gas.</param>
-    /// <param name="output">Mixture which is receiving gas</param>
+    /// <param name="output">Optional Mixture to receive gas</param>
     /// <param name="volume">Volume we are releasing</param>
     /// <param name="targetPressure">Pressure of the released volume.</param>
+    [PublicAPI]
     public void ReleaseGasAt(GasMixture mixture, GasMixture? output, float volume, float targetPressure)
     {
         if (output == null)
@@ -416,6 +453,8 @@ public abstract partial class SharedAtmosphereSystem
         Merge(mixture, removed);
     }
 
+    /// <inhereitdoc cref="ReleaseGasAt(GasMixture,GasMixture?,float,float)"/>
+    [PublicAPI]
     public GasMixture? ReleaseGasAt(GasMixture mixture, float volume, float targetPressure)
     {
         if (targetPressure <= 0)

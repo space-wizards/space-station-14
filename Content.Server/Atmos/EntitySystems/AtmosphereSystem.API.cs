@@ -716,16 +716,6 @@ public partial class AtmosphereSystem
         return contains;
     }
 
-    /// <summary>
-    /// Gets the potential energy from overpressure between two gas mixtures.
-    /// </summary>
-    /// <returns>Returns the potential energy of the overpressure in Joules.</returns>
-    [PublicAPI]
-    public float GetOverPressure(EntityUid gasEntity, GasMixture mix1, GasMixture environment, bool explode = false, EntProtoId? debris = null)
-    {
-        return (mix1.Pressure - environment.Pressure) * mix1.Volume;
-    }
-
     [ByRefEvent]
     private record struct SetSimulatedGridMethodEvent(
         EntityUid Grid,

@@ -108,11 +108,18 @@ public abstract class SharedGasTankSystem : GasMaxPressureSystem<GasTankComponen
         });
     }
 
+    /// <see cref="ToggleValve(Entity{GasTankComponent},bool,EntityUid?)"/>>
     public void ToggleValve(Entity<GasTankComponent> entity, EntityUid? user = null)
     {
         ToggleValve(entity, !entity.Comp.ReleaseValveOpen, user);
     }
 
+    /// <summary>
+    /// Toggles the release valve for this <see cref="GasTankComponent"/> open or closed
+    /// </summary>
+    /// <param name="entity">Entity whose valve we're toggling</param>
+    /// <param name="open">Whether we're opening or closing the valve</param>
+    /// <param name="user">Optional user who is performing the action.</param>
     public void ToggleValve(Entity<GasTankComponent> entity, bool open, EntityUid? user = null)
     {
         entity.Comp.ReleaseValveOpen = open;

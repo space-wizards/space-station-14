@@ -103,7 +103,7 @@ public abstract class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPr
             // Integrity failure, destroy ourselves!
             _destructible.DestroyEntity(entity);
 
-            var totalIntensity = (float)Math.Sqrt(pressure * entity.Comp.Air.Volume);
+            var totalIntensity = (float)Math.Sqrt(Atmos.GetOverPressure(entity.Comp.Air));
             if (_maxExplosivePower > 0 && _maxExplosivePower < totalIntensity)
                 totalIntensity = _maxExplosivePower;
 

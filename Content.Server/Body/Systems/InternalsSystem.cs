@@ -54,9 +54,9 @@ public sealed class InternalsSystem : SharedInternalsSystem
         if (AreInternalsWorking(ent))
         {
             var gasTank = Comp<GasTankComponent>(ent.Comp.GasTankEntity!.Value);
-            // TODO: This is an incredibly stupid workaround to stop Urist McHands from horfing all 5 litres of the gas tank in 10 seconds.
+            // TODO ATMOS: TODO BODY: This is an incredibly stupid workaround to stop Urist McHands from horfing all 5 litres of the gas tank in 10 seconds.
             args.Gas = _gasTank.RemoveAirOutput((ent.Comp.GasTankEntity.Value, gasTank), args.Respirator.BreathVolume);
-            // TODO: Should listen to gas tank updates instead I guess?
+            // TODO ATMOS: Should listen to gas tank updates instead I guess?
             _alerts.ShowAlert(ent.Owner, ent.Comp.InternalsAlert, GetSeverity(ent));
         }
     }

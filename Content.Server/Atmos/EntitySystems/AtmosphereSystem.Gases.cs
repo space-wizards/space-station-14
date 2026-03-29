@@ -151,14 +151,11 @@ namespace Content.Server.Atmos.EntitySystems
                 // Need at least 10 kPa difference to overcome friction in the mechanism.
                 return false;
 
-            if (!(mixture.TotalMoles > 0) || !(mixture.Temperature > 0))
-                return false;
+            if (!(mixture.TotalMoles > 0) || !(mixture.Temperature > 0)) return false;
 
             // We calculate the necessary moles to transfer with the ideal gas law.
-            var pressureDelta = MathF.Min(targetPressure - outputStartingPressure, inputStartingPressure - outputStartingPressure);
+            var pressureDelta = MathF.Min(targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure) / 2f);
             var transferMoles = pressureDelta * (output?.Volume ?? Atmospherics.CellVolume) / (mixture.Temperature * Atmospherics.R);
-            if (output != null)
-                transferMoles = Math.Min(transferMoles, MolesToEqualizePressure(mixture, output));
 
             // And now we transfer the gas.
             var removed = mixture.Remove(transferMoles);

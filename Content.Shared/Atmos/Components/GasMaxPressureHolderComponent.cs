@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Atmos.Components;
 
@@ -58,7 +57,7 @@ public abstract partial class GasMaxPressureHolderComponent : Component, IGasMax
     [DataField, AutoNetworkedField]
     public GasMixture Air { get; set; }
 
-    // TODO: Proper loud BANG sound, these are lethal concussive blast waves
+    // TODO ATMOS: Proper loud BANG sound, these are lethal concussive blast waves
     [DataField]
     public SoundSpecifier? RuptureSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
 
