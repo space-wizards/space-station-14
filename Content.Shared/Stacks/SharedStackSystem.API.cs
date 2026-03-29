@@ -8,6 +8,26 @@ namespace Content.Shared.Stacks;
 // Partial for public API functions.
 public abstract partial class SharedStackSystem
 {
+    #region Spawning
+
+    /// <summary>
+    /// Gets or spawns an entity with a stack count of 1.
+    /// Useful when you don't know if something is a stack, and want to make sure you just have a single entity.
+    /// </summary>
+    /// <param name="stackEnt">An entity to pop one count off the stack.</param>
+    /// <returns>An entity with a stack count of 1, or a non-stack.</returns>
+    [PublicAPI]
+    public EntityUid GetOne(Entity<StackComponent?> stackEnt)
+    {
+        if (!Resolve(stackEnt.Owner, ref stackEnt.Comp, logMissing: false) // If it's not a stack, you already have the one
+            || stackEnt.Comp.Count == 1) // If it's at one, just use this
+            return stackEnt.Owner;
+
+        TryUse(stackEnt, 1);
+        return SpawnNextToOrDrop(stackEnt.Comp.StackTypeId, stackEnt.Owner);
+    }
+
+    #endregion
     #region Merge Stacks
 
     /// <summary>
