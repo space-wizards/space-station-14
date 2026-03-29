@@ -16,7 +16,8 @@
     - reagents: [Water]
       methods: [Touch, Ingestion, Injection]
       effects:
-      - !type:AddToSolutionReaction
+      - !type:AddReagentToSolution
+        reagent: Water
         solution: cube
   - type: Rehydratable
   - type: CollisionWake
@@ -56,7 +57,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Food
+  - type: Edible
     solution: cube
   - type: FlavorProfile
     flavors:
@@ -186,7 +187,8 @@
     - reagents: [Blood]
       methods: [Touch, Ingestion, Injection]
       effects:
-      - !type:AddToSolutionReaction
+      - !type:AddReagentToSolution
+        reagent: Blood
         solution: cube
   - type: Rehydratable
     catalyst: Blood # blood is fuel

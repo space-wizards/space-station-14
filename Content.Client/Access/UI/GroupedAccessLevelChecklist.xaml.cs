@@ -119,11 +119,11 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
             if (_groupedAccessLevels.Count > 1)
             {
                 if (AccessGroupList.ChildCount == 0)
-                    accessGroupButton.AddStyleClass(StyleBase.ButtonOpenLeft);
+                    accessGroupButton.AddStyleClass(StyleClass.ButtonOpenLeft);
                 else if (_groupedAccessLevels.Count > 1 && AccessGroupList.ChildCount == (_groupedAccessLevels.Count - 1))
-                    accessGroupButton.AddStyleClass(StyleBase.ButtonOpenRight);
+                    accessGroupButton.AddStyleClass(StyleClass.ButtonOpenRight);
                 else
-                    accessGroupButton.AddStyleClass(StyleBase.ButtonOpenBoth);
+                    accessGroupButton.AddStyleClass(StyleClass.ButtonOpenBoth);
             }
 
             accessGroupButton.Pressed = _accessGroupTabIndex == orderedAccessGroups.IndexOf(accessGroup);
