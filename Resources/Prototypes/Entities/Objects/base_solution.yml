@@ -336,27 +336,21 @@
 ## Below sizes are for solutions attached to entities bigger than Ginormous, aka not items or maybe two handed?
 
 # List of sizes neede still
-## Small
-# 50 - Cryopod buffer, Generator
-
-## Large
-# 200 - Soil
 
 ## Huge
 # 400 - GasCondenser
-# 500 - Water Cooler
-
-## Ginormous
-# 500 - ChemicalBarrel
-# 600 - MopBucket
-# 800 - Trolley
 
 ## IDK
-# 1000 - Wall Welding Fuel Dispenser
-# 1500 - Chem Anom, Fuel Tank, Water Tank
 # 3000 - Nuclear Tap
-# 5000 - HighCap Fuel Tank, CleanerDispenser
-# 10000 - HighCap Water Tank
+
+- type: entity
+  parent: Solution
+  id: Solution3840 # I can't think of a better name, fight me
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 3840
 
 - type: entity
   abstract: true

@@ -105,10 +105,9 @@
   - type: EmptyOnMachineDeconstruct
     containers:
       - scanner-body
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injectionBuffer:
-        maxVol: 50
+    - SolutionCryoBuffer
   - type: CryoPod
   - type: CryoPodAir
   - type: Climbable # so that ejected bodies don't get stuck
@@ -118,6 +117,13 @@
   - type: GuideHelp
     guides:
     - Cryogenics
+
+- type: entity
+  parent: SolutionSmall
+  id: SolutionCryoBuffer
+  components:
+  - type: Solution
+    id: injectionBuffer
 
 - type: entity
   parent: BaseMachine
