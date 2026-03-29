@@ -16,21 +16,12 @@ public sealed class CreamPieSystem : SharedCreamPieSystem
         SubscribeLocalEvent<CreamPiedComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<CreamPiedComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<CreamPiedComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<CreamPiedComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
     }
 
     private void OnComponentInit(Entity<CreamPiedComponent> ent, ref ComponentInit args)
     {
-        if (ent.Comp.Sprite == null
-            || !TryComp<SpriteComponent>(ent, out var sprite)
-            || !TryComp<AppearanceComponent>(ent, out var appearance))
-            return;
-
-        // Add the sprite layer for the cream pied face that is specified in the component.
-        _sprite.LayerMapReserve((ent.Owner, sprite), CreamPiedVisualLayer.Key);
-        _sprite.LayerSetVisible((ent.Owner, sprite), CreamPiedVisualLayer.Key, false);
-        _sprite.LayerSetSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key, ent.Comp.Sprite);
-
-        UpdateAppearance(ent, sprite, appearance);
+        UpdateAppearance(ent);
     }
 
     private void OnComponentShutdown(Entity<CreamPiedComponent> ent, ref ComponentShutdown args)
@@ -40,16 +31,36 @@ public sealed class CreamPieSystem : SharedCreamPieSystem
 
     private void OnAppearanceChange(Entity<CreamPiedComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite != null)
-            UpdateAppearance(ent, args.Sprite, args.Component);
+        UpdateAppearance((ent.Owner, ent.Comp, args.Sprite, args.Component));
     }
 
-    private void UpdateAppearance(Entity<CreamPiedComponent> ent, SpriteComponent sprite, AppearanceComponent appearance)
+    private void OnAfterAutoHandleState(Entity<CreamPiedComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (!_sprite.LayerMapTryGet((ent.Owner, sprite), CreamPiedVisualLayer.Key, out var index, false))
+        // Update when the sprite datafield is changed so that changelings can transform properly.
+        UpdateAppearance(ent);
+    }
+
+    private void UpdateAppearance(Entity<CreamPiedComponent, SpriteComponent?, AppearanceComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp2, false) || !Resolve(ent, ref ent.Comp3, false))
             return;
 
-        _appearance.TryGetData<bool>(ent.Owner, CreamPiedVisuals.Creamed, out var creamPied, appearance);
-        _sprite.LayerSetVisible((ent.Owner, sprite), index, creamPied);
+        var creamPied = ent.Comp1;
+        var sprite = ent.Comp2;
+        var appearance = ent.Comp3;
+
+        // If there is no sprite to use, remove the layer. Otherwise ensure that it exists and set the visuals accordingly.
+        int index;
+        if (creamPied.Sprite == null)
+        {
+            _sprite.RemoveLayer((ent.Owner, sprite), CreamPiedVisualLayer.Key);
+            return;
+        }
+
+        index = _sprite.LayerMapReserve((ent.Owner, sprite), CreamPiedVisualLayer.Key);
+
+        _appearance.TryGetData<bool>(ent.Owner, CreamPiedVisuals.Creamed, out var isCreamPied, appearance);
+        _sprite.LayerSetSprite((ent.Owner, sprite), index, creamPied.Sprite);
+        _sprite.LayerSetVisible((ent.Owner, sprite), index, isCreamPied);
     }
 }

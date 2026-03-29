@@ -10,7 +10,7 @@ namespace Content.Shared.Nutrition.Components;
 /// See <see cref="CreamPieComponent"/>.
 /// </summary>
 [Access(typeof(SharedCreamPieSystem))]
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class CreamPiedComponent : Component
 {
     /// <summary>
