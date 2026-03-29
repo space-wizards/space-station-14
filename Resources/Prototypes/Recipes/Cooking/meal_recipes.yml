@@ -1733,9 +1733,9 @@
   group: Savory
   reagents:
     Water: 10
-    UncookedAnimalProteins: 6
+    UncookedAnimalProteins: 2
   solids:
-    FoodDoughSlice: 3
+    FoodDoughSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeBrownies
@@ -1748,7 +1748,7 @@
     Sugar: 30
     Egg: 18
   solids:
-    FoodButter: 2
+    FoodButter: 1
     FoodSnackChocolateBar: 2
 
 #Donks i guess
@@ -2209,7 +2209,7 @@
     Sugar: 30
     Egg: 18
   solids:
-    FoodCannabisButter: 2
+    FoodCannabisButter: 1
     FoodSnackChocolateBar: 2
 
 - type: microwaveMealRecipe

@@ -785,7 +785,7 @@
   - type: Sprite
     state: chevrelog
   - type: SliceableFood
-    count: 3
+    count: 6
     slice: FoodChevreSlice
   - type: Solution
     solution:
@@ -811,11 +811,12 @@
     state: chevredisk
   - type: Solution
     solution:
+      maxVol: 10
       reagents:
       - ReagentId: Nutriment
-        Quantity: 8
+        Quantity: 4
       - ReagentId: Vitamin
-        Quantity: 2
+        Quantity: 1
   - type: Tag
     tags:
     - Slice
