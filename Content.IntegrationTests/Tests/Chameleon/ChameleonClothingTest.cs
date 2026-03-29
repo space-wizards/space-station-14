@@ -14,19 +14,23 @@ public sealed class ChameleonClothingTest : GameTest
 {
     private static readonly string[] ChameleonClothingEntities = GameDataScrounger.EntitiesWithComponent("ChameleonClothing");
 
-    private static readonly EntProtoId PlayerMob = "MobHuman"; // We need a mob with inventory slots
-
     [SidedDependency(Side.Server)] private readonly SharedChameleonClothingSystem _chameleonClothingSys = null!;
     [SidedDependency(Side.Server)] private readonly InventorySystem _inventorySys = null!;
 
     // A dummy clothing entity that we can use to fill slots that other slots depend on (i.e. jumpsuit)
     private const string SlotFillerId = "ClothingDummySlotFiller";
+    private const string TestDummyId = "TestDummy";
 
     [TestPrototypes]
     private const string Prototypes = $@"
 - type: entity
-  name: {SlotFillerId}
+  id: {TestDummyId}
+  name: {TestDummyId}
+  parent: BaseSpeciesAppearance
+
+- type: entity
   id: {SlotFillerId}
+  name: {SlotFillerId}
   parent: Clothing
   components:
   - type: Clothing
@@ -40,7 +44,7 @@ public sealed class ChameleonClothingTest : GameTest
     public async Task ActivateAllOptions(string protoId)
     {
         // Spawn a test dummy who will equip the item.
-        var player = await Spawn(PlayerMob);
+        var player = await Spawn(TestDummyId);
         // Spawn the item to test.
         var ent = await Spawn(protoId);
 
