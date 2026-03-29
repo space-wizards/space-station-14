@@ -1,5 +1,8 @@
 using System.Linq;
+using Content.Server.FeedbackSystem;
 using Content.Server.Store.Systems;
+using Content.Shared.FeedbackSystem;
+using Content.Shared.GameTicking;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
@@ -15,12 +18,14 @@ namespace Content.Server.StoreDiscount.Systems;
 public sealed class SecondHandSystem : EntitySystem
 {
     private static readonly ProtoId<StoreCategoryPrototype> SecondHandStoreCategoryKey = "SecondHandItems";
+    private static readonly ProtoId<FeedbackPopupPrototype> SecondHandFeedbackPopupId = "SecondHandFeedback";
     // Number of second-hand items shown per uplink per round.
     private const int MinSecondHandItems = 8;
     private const int MaxSecondHandItems = 14;
 
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ServerFeedbackManager _feedbackManager = default!;
 
     public override void Initialize()
     {
@@ -28,6 +33,7 @@ public sealed class SecondHandSystem : EntitySystem
 
         SubscribeLocalEvent<StoreInitializedEvent>(OnStoreInitialized);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
+        SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
     }
 
     /// <summary>
@@ -49,6 +55,14 @@ public sealed class SecondHandSystem : EntitySystem
 
         // Remove the SecondHandItems category from this listing so it disappears from the tab.
         purchasedItem.Categories.Remove(SecondHandStoreCategoryKey);
+    }
+
+    /// <summary>
+    /// Sends a feedback popup to all players at round end if the second-hand feature was active this round.
+    /// </summary>
+    private void OnRoundEnd(RoundEndMessageEvent args)
+    {
+        _feedbackManager.SendToAllSessions([SecondHandFeedbackPopupId]);
     }
 
     /// <summary>

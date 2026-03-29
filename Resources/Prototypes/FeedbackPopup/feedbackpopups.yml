@@ -9,6 +9,16 @@
   responseLink: "https://forum.spacestation14.com/t/feedback-popup-feedback/22858"
 
 - type: feedbackPopup
+  id: SecondHandFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Feedback on the Second Hand uplink tab[/bold]"
+  description: |-
+    We are testing a new feature: a Second Hand tab in the syndicate uplink that offers worn and damaged equipment at reduced prices.
+    If you played this round, please leave your feedback on the forums! Log in with your Space Station 14 account.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/second-hand-traitor-items-feedback/27014"
+
+- type: feedbackPopup
   id: GeneralFeedback
   popupOrigin: wizden_master
   title: "[bold]General feedback for the game[/bold]"
