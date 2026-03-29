@@ -3,6 +3,7 @@ using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -16,6 +17,7 @@ public abstract partial class SharedGunSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedStackSystem _stack = null!;
 
     [MustCallBase]
     protected virtual void InitializeBallistic()
@@ -327,8 +329,8 @@ public abstract partial class SharedGunSystem
     )
     {
         var ammoEv = new BeforeAmmoLoadedEvent();
-        RaiseLocalEvent(inserted, ref ammoEv);
-
+        RaiseLocalEvent(_stack.GetOne(inserted), ref ammoEv); // maybe inserted is a stack,
+                                                                    // in that case, only insert one
         if (!ammoEv.CanLoad)
             return false;
 
