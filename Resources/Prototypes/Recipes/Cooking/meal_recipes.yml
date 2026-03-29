@@ -799,8 +799,8 @@
   time: 15
   group: Savory
   reagents:
-    Oats: 15
-    Water: 10
+    Oats: 20
+    Water: 20
   solids:
     FoodBowlBig: 1
 
@@ -811,8 +811,8 @@
   time: 15
   group: Savory
   reagents:
-    Rice: 15
-    Water: 10
+    Rice: 20
+    Water: 20
   solids:
     FoodBowlBig: 1
 
@@ -823,8 +823,9 @@
   time: 15
   group: Dessert
   reagents:
-    Rice: 15
-    Milk: 10
+    Rice: 10
+    Milk: 30
+    Egg: 6
     Sugar: 5
   solids:
     FoodBowlBig: 1
@@ -847,7 +848,7 @@
   group: Savory
   solids:
     FoodRiceBoiled: 1
-    FoodMeatCutlet: 3
+    FoodMeatCutlet: 2
     FoodChiliPepper: 2
 
 - type: microwaveMealRecipe
@@ -894,7 +895,7 @@
   time: 10
   group: Soup
   reagents:
-    Water: 10
+    Water: 20
   solids:
     FoodBowlBig: 1
     FoodMeatMeatball: 1
@@ -913,6 +914,7 @@
   solids:
     FoodBowlBig: 1
     Nettle: 1
+    FoodAmbrosiaDeus: 1
     FoodPotato: 1
 
 - type: microwaveMealRecipe
@@ -1015,10 +1017,10 @@
   time: 10
   group: Soup
   reagents:
-    Soysauce: 5
+    Soysauce: 10
   solids:
     FoodBowlBig: 1
-    FoodMeatXenoCutlet: 2
+    FoodMeatXenoCutlet: 5
 
 - type: microwaveMealRecipe
   id: RecipeWingFangChuSoupSpider
@@ -1058,6 +1060,7 @@
   solids:
     FoodBowlBig: 1
     FoodBanana: 1
+    MaterialBananium: 1
     ShardGlass: 1
     #idk probably replace shard with someting bananium when #14663 merged
 
@@ -1111,7 +1114,8 @@
   solids:
     FoodBowlBig: 1
     FoodOnionSlice: 1
-    FoodButter: 1
+    FoodGarlic: 1
+    FoodButterSlice: 2
     FoodMeatSnailCooked: 1
 
 #Pies
@@ -1861,7 +1865,7 @@
   time: 5
   group: Soup
   reagents:
-    Nitrogen: 5
+    FrostOil: 10
   solids:
     FoodSoupChiliHot: 1
 
@@ -1947,7 +1951,7 @@
   group: Salad
   solids:
     FoodBowlBig: 1
-    FoodAmbrosiaVulgaris: 3
+    FoodAmbrosiaVulgaris: 2
     FoodPotato: 1
     FoodMeatMeatball: 1
 
@@ -1961,8 +1965,8 @@
     Vinaigrette: 5
   solids:
     FoodBowlBig: 1
-    FoodOnionRed: 1
-    FoodCabbage: 1
+    FoodOnionRed: 2
+    FoodCabbage: 2
 
 - type: microwaveMealRecipe
   id: RecipeCaesarSalad
@@ -2002,7 +2006,7 @@
   solids:
     FoodBowlBig: 1
     FoodCarrot: 1
-    FoodCabbage: 1
+    FoodCabbage: 2
     FoodGarlic: 1
 
 - type: microwaveMealRecipe
@@ -2016,7 +2020,7 @@
     FoodOrange: 1
     FoodApple: 1
     FoodGrape: 1
-    FoodWatermelonSlice: 2
+    FoodWatermelonSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeJungleSalad
@@ -2029,7 +2033,7 @@
     FoodBanana: 1
     FoodApple: 1
     FoodGrape: 1
-    FoodWatermelonSlice: 2
+    FoodWatermelonSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeWatermelonFruitBowlSalad
@@ -2230,10 +2234,10 @@
   time: 10
   group: Soup
   solids:
-    FoodPeaPod: 2
+    FoodPeaPod: 3
     FoodBowlBig: 1
   reagents:
-    Water: 10
+    Water: 20
 
 - type: microwaveMealRecipe
   id: RecipeTacoShell

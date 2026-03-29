@@ -1725,7 +1725,7 @@
         Quantity: 2
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatCutletCooked
   name: cutlet
   description: A cooked meat cutlet. Needs some seasoning.
@@ -1750,7 +1750,7 @@
         color: "#5B3614"
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatBearCutletCooked
   name: bear cutlet
   description: A very manly cutlet of cooked bear meat.
@@ -1778,7 +1778,7 @@
         color: "#5B3614"
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatPenguinCutletCooked
   name: penguin cutlet
   description: A cutlet of cooked penguin meat.
@@ -1804,7 +1804,7 @@
         color: "#5B3614"
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatChickenCutletCooked
   name: chicken cutlet
   description: A cutlet of cooked chicken. Remember to wash your hands!
@@ -1830,7 +1830,7 @@
         color: "#5B3614"
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatDuckCutletCooked
   name: duck cutlet
   description: A cutlet of cooked duck. Remember to wash your hands!
@@ -1856,7 +1856,7 @@
         color: "#5B3614"
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatLizardCutletCooked
   name: lizard cutlet
   description: Delicious cooked dino cutlet.
@@ -1883,7 +1883,7 @@
         color: "#153F06"
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatSpiderCutletCooked
   name: spider cutlet
   description: A cutlet of cooked spider meat. Finally edible.
@@ -1908,7 +1908,7 @@
         color: "#153F06"
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatXenoCutletCooked
   name: xeno cutlet
   description: A cutlet of cooked xeno, dripping with... tastiness?
@@ -1933,7 +1933,7 @@
         color: "#153F06"
 
 - type: entity
-  parent: FoodMeatCutletBase
+  parent: FoodMeatCutletCookedBase
   id: FoodMeatDragonCutletCooked
   name: dragon cutlet
   description: It's a meal for kings!

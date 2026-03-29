@@ -716,6 +716,15 @@
   - type: FlavorProfile
     flavors:
       - sour
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: JuiceLime
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lime.rsi
   - type: Item
@@ -745,6 +754,15 @@
   - type: FlavorProfile
     flavors:
       - orange
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: JuiceOrange
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/orange.rsi
   - type: Item
@@ -876,13 +894,13 @@
       - tomato
   - type: Solution
     solution:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 3
-        - ReagentId: Water
-          Quantity: 4
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 7
+      - ReagentId: Vitamin
+        Quantity: 3
+      - ReagentId: Water
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
   - type: Item
@@ -1051,6 +1069,15 @@
   - type: FlavorProfile
     flavors:
       - apple
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: JuiceApple
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Item
@@ -1411,11 +1438,11 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 4
+        Quantity: 2
       - ReagentId: CapsaicinOil
         Quantity: 10
       - ReagentId: Vitamin
-        Quantity: 4
+        Quantity: 3
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chili.rsi
   - type: Item
@@ -2030,8 +2057,10 @@
         Quantity: 4
       - ReagentId: Sugar
         Quantity: 4
+      - ReagentId: JuiceWatermelon
+        Quantity: 8
       - ReagentId: Water
-        Quantity: 48
+        Quantity: 40
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/watermelon.rsi
   - type: Produce
@@ -2040,7 +2069,7 @@
     juiceSolution:
       reagents:
       - ReagentId: JuiceWatermelon
-        Quantity: 20
+        Quantity: 40
   - type: Damageable
     damageContainer: Biological
   - type: DamageOnHighSpeedImpact
@@ -2094,13 +2123,15 @@
         Quantity: 1
       - ReagentId: Sugar
         Quantity: 1
+      - ReagentId: JuiceWatermelon
+        Quantity: 2
       - ReagentId: Water
-        Quantity: 12
+        Quantity: 10
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: JuiceWatermelon
-        Quantity: 5
+        Quantity: 10
   - type: Tag
     tags:
     - Fruit
