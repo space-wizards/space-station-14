@@ -766,7 +766,7 @@
   group: Pasta
   solids:
     FoodNoodlesBoiled: 1
-    FoodMeatMeatball: 2
+    FoodMeatMeatball: 1
 
 - type: microwaveMealRecipe
   id: RecipeButterNoodles
@@ -776,7 +776,7 @@
   group: Pasta
   solids:
     FoodNoodlesBoiled: 1
-    FoodButter: 1
+    FoodButterSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeChowMein
