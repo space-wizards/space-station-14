@@ -1093,12 +1093,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionAdded(Entity<SolutionManagerComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
-        // Container networking jank
+        // Container networking boilerplate
         if (args.Container.ID != entity.Comp.Container || !_solutionQuery.TryComp(args.Entity, out var solution))
             return;
 
         // Don't add a solution entity with the same id as this entity's solution if it exists!
-        DebugTools.Assert(!TryComp<SolutionComponent>(entity, out var sol) || sol.Id != solution.Id);
+        DebugTools.Assert(!TryComp<SolutionComponent>(entity, out var sol) || sol.Id != solution.Id, $"Tried to add a solution {MetaData(args.Entity).EntityPrototype} {solution.Id} to {ToPrettyString(entity)} but it itself was a solution with a matching id!");
 
         EnsureComp<ContainedSolutionComponent>(args.Entity, out var contained);
         contained.Container = entity.Owner;

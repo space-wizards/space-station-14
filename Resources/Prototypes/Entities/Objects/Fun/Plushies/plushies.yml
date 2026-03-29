@@ -4,7 +4,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseItem, BaseStash]
+  parent: [SolutionFood, SolutionSmall, BaseItem, BaseStash]
   id: BasePlushie
   components:
   - type: EmitSoundOnUse
@@ -67,7 +67,6 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: ThronglerPlushie
-
 
 - type: entity
   parent: BasePlushie
@@ -150,6 +149,8 @@
   - type: Solution
     solution:
       reagents:
+      - ReagentId: Fiber
+        Quantity: 25
       - ReagentId: GroundBee
         Quantity: 5
   - type: Clothing
