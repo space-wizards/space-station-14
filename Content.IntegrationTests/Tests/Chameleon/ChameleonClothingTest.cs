@@ -74,9 +74,10 @@ public sealed class ChameleonClothingTest : GameTest
 
         // Get all available appearance options.
         IEnumerable<EntProtoId> options = default!;
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             options = _chameleonClothingSys.GetValidTargets(comp.Slot, comp.RequireTag);
+            Assert.That(options, Is.Not.Empty, $"{protoId} does not have any possible target appearances!");
         });
 
         using (Assert.EnterMultipleScope())
