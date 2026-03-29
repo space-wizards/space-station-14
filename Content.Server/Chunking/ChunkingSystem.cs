@@ -1,5 +1,3 @@
-using System.Linq;
-using Content.Shared.Decals;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared;
 using Robust.Shared.Configuration;

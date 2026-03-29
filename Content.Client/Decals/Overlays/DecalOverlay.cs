@@ -64,6 +64,17 @@ namespace Content.Client.Decals.Overlays
                     if (!gridAABB.Contains(decal.Coordinates))
                         continue;
 
+                    if (chunk.PredictedDecalDeletions.Contains(decal))
+                        continue;
+
+                    _decals.Add((id, decal));
+                }
+
+                foreach (var (decal, id) in chunk.PredictedDecals)
+                {
+                    if (!gridAABB.Contains(decal.Coordinates))
+                        continue;
+
                     _decals.Add((id, decal));
                 }
             }
