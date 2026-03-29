@@ -5,10 +5,11 @@ using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.Storage;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -27,6 +28,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
     [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     private const string ChangelingBuiXmlGeneratedName = "ChangelingTransformBoundUserInterface";
     public override void Initialize()
@@ -38,6 +40,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformDoAfterEvent>(OnSuccessfulTransform);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
         SubscribeLocalEvent<ChangelingTransformComponent, ComponentShutdown>(OnShutdown);
+
+        // Components that need special handling outside of cloning.
+        SubscribeLocalEvent<StorageComponent, BeforeChangelingTransformEvent>(StorageBeforeTransform);
     }
 
     private void OnMapInit(Entity<ChangelingTransformComponent> ent, ref MapInitEvent init)
@@ -153,6 +158,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (args.Target is not { } targetIdentity)
             return;
 
+        var beforeTransformEvent = new BeforeChangelingTransformEvent(targetIdentity);
+        RaiseLocalEvent(args.User, beforeTransformEvent);
+
         _visualBody.CopyAppearanceFrom(targetIdentity, args.User);
         _cloningSystem.CloneComponents(targetIdentity, args.User, settings);
 
@@ -169,5 +177,17 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             identity.CurrentIdentity = targetIdentity;
             Dirty(ent.Owner, identity);
         }
+
+        var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity);
+        RaiseLocalEvent(args.User, afterTransformEvent);
+    }
+
+    private void StorageBeforeTransform(Entity<StorageComponent> ent, ref BeforeChangelingTransformEvent args)
+    {
+        if (HasComp<StorageComponent>(args.StoredIdentity))
+            return; // If we have a storage component and the target has one as well, then do nothing.
+
+        // If the target identity does not have a storage anymore, drop all items inside our storage so that they don't become unreachable.
+        _container.EmptyContainer(ent.Comp.Container);
     }
 }
