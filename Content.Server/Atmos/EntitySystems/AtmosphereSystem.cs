@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Fluids.EntitySystems;
@@ -7,7 +6,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Decals;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -16,7 +14,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Threading;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -51,8 +48,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private EntityQuery<FirelockComponent> _firelockQuery;
     private HashSet<EntityUid> _entSet = new();
 
-    private string[] _burntDecals = [];
-
     public override void Initialize()
     {
         base.Initialize();
@@ -71,9 +66,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         _firelockQuery = GetEntityQuery<FirelockComponent>();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-
-        CacheDecals();
     }
 
     public override void Shutdown()
@@ -89,12 +81,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         {
             InvalidateTile(ev.Entity.Owner, change.GridIndices);
         }
-    }
-
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
-    {
-        if (ev.WasModified<DecalPrototype>())
-            CacheDecals();
     }
 
     public override void Update(float frameTime)
@@ -122,10 +108,5 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         }
 
         _exposedTimer -= ExposedUpdateDelay;
-    }
-
-    private void CacheDecals()
-    {
-        _burntDecals = ProtoMan.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID).ToArray();
     }
 }

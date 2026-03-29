@@ -547,6 +547,19 @@ public sealed partial class ExplosionSystem
         damagedTiles.Add((tileRef.GridIndices, new Tile(tileDef.TileId)));
     }
 
+    internal void PlaceBurntDecals(EntityUid gridId, Vector2i tile, float intensity, ExplosionPrototype type)
+    {
+        if (!type.BurntDecals || intensity < type.BurntDecalMinIntensity)
+            return;
+
+        var count = Math.Clamp((int)(intensity / type.BurntDecalIntensityPerDecal), 1, type.BurntDecalMaxPerExplosion);
+
+        for (var i = 0; i < count; i++)
+        {
+            _decalSystem.TryAddBurntDecal(gridId, tile);
+        }
+    }
+
     private ProtoId<ContentTileDefinition>? GetNextTile((ContentTileDefinition tileDef, Vector2i gridIndices) tile,
         TileHistoryComponent? history,
         ref (TileHistoryChunk? Chunk, Vector2i Indices)? chunk)
@@ -681,6 +694,7 @@ sealed class Explosion
     ///     the explosion trigger chunk regeneration & shuttle-system processing every tick.
     /// </summary>
     private readonly Dictionary<Entity<MapGridComponent>, List<(Vector2i, Tile)>> _tileUpdateDict = new();
+    private readonly List<(EntityUid GridId, Vector2i Tile, float Intensity, ExplosionPrototype Type)> _pendingDecals = [];
 
     // Entity Queries
     private readonly EntityQuery<TransformComponent> _xformQuery;
@@ -934,6 +948,8 @@ sealed class Explosion
                         ExplosionType,
                         currentGrid.Comp2,
                         ref _currentChunk);
+
+                    _pendingDecals.Add((currentGrid.Owner, _currentEnumerator.Current, _currentIntensity, ExplosionType));
                 }
             }
             else
@@ -979,6 +995,12 @@ sealed class Explosion
             }
         }
         _tileUpdateDict.Clear();
+
+        foreach (var (gridId, tile, intensity, type) in _pendingDecals)
+        {
+            _system.PlaceBurntDecals(gridId, tile, intensity, type);
+        }
+        _pendingDecals.Clear();
     }
 }
 
