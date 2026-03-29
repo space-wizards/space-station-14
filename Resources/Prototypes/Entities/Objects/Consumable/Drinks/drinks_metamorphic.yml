@@ -2601,7 +2601,7 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: pearonade
+        - ReagentId: Pearonade
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/pearonade.rsi
