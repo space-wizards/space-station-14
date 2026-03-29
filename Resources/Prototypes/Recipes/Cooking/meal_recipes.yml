@@ -2246,7 +2246,7 @@
   time: 5
   group: Breads
   solids:
-    FoodDoughTortillaFlat: 1 # one third of a standard bread dough recipe
+    FoodDoughTortillaFlat: 1 # one eighth a standard bread dough recipe
 
 - type: microwaveMealRecipe
   id: RecipeTacoBeef
