@@ -135,7 +135,7 @@
       amount: 10
     Water:
       amount: 5
-    TableSalt:
+    Sugar:
       amount: 5
   effects:
     - !type:SpawnEntity

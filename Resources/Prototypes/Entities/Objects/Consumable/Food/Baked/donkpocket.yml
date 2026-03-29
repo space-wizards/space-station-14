@@ -49,9 +49,9 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 11
+        Quantity: 12
       - ReagentId: Omnizine
-        Quantity: 4 # Halve this again when eating reagents isn't half as effective :tm:
+        Quantity: 3
 
 - type: entity
   name: warm donk-pocket
