@@ -43,14 +43,14 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
 
         component.ConsiderNextGiftsAt = _timing.CurTime + TimeSpan.FromSeconds(30.0f);
 
-        if (!TryGetRandomStation(out var station, HasComp<StationCargoOrderDatabaseComponent>) ||
-                !TryComp<StationDataComponent>(station, out var stationData))
+        StationCargoOrderDatabaseComponent? cargoDb = null;
+
+        if (!TryGetRandomStation(out var station, stationUid => TryComp(stationUid, out cargoDb))
+            || !TryComp<StationDataComponent>(station, out var stationData))
             return;
 
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoDb))
-        {
+        if (cargoDb == null)
             return;
-        }
 
         // Add some presents
         var outstanding = _cargoSystem.GetOutstandingOrderCount((station.Value, cargoDb), component.Account);
