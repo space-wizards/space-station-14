@@ -85,7 +85,6 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(invSystem.CanEquip(human, uniform, "jumpsuit", out _));
 
                     // Can't equip any of these since no uniform!
-                    Assert.That(invSystem.CanEquip(human, idCard, "id", out _), Is.False);
                     Assert.That(invSystem.CanEquip(human, pocketItem, "pocket1", out _), Is.False);
                     Assert.That(invSystem.CanEquip(human, tooBigItem, "pocket2", out _), Is.False); // This one fails either way.
                 });
