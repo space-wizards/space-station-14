@@ -103,7 +103,11 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
         };
 
-        return new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new());
+        // TODO: When we get random markings we won't need to ensure valid anymore.
+        return EnsureValid(
+            new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new()),
+            species,
+            sex);
     }
 
     public static Color ClampColor(Color color)
