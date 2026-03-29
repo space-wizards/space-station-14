@@ -1550,7 +1550,7 @@
   group: Cake
   solids:
     FoodCakePlain: 1
-    FoodCarrot: 3
+    FoodCarrot: 2
 
 - type: microwaveMealRecipe
   id: RecipeLemonCake
@@ -1570,7 +1570,7 @@
   group: Cake
   solids:
     FoodCakePlain: 1
-    FoodLemoon: 2
+    FoodLemoon: 1
     FoodBerries: 1 #dark colouring
 
 - type: microwaveMealRecipe
