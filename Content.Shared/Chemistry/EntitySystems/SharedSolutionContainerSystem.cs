@@ -25,7 +25,8 @@ namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
 /// The event raised whenever a solution entity is modified.
-/// Raised on the solution entity itself then relayed to the <see cref="SolutionContainerManagerComponent"/> if it exists.
+/// This event is raised on the owner of the solution.
+/// If the changed solution is contained in a <see cref="SolutionManagerComponent"/>, it will be raised on the owner of that component.
 /// </summary>
 /// <remarks>
 /// Raised after chemcial reactions and <see cref="SolutionOverflowEvent"/> are handled.
@@ -77,8 +78,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
 
-    private EntityQuery<SolutionComponent> _solutionQuery;
-    private EntityQuery<SolutionManagerComponent> _solutionManagerQuery;
+    protected EntityQuery<SolutionComponent> SolutionQuery;
+    protected EntityQuery<SolutionManagerComponent> SolutionManagerQuery;
 
     public override void Initialize()
     {
@@ -100,8 +101,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
 
-        _solutionQuery = GetEntityQuery<SolutionComponent>();
-        _solutionManagerQuery = GetEntityQuery<SolutionManagerComponent>();
+        SolutionQuery = GetEntityQuery<SolutionComponent>();
+        SolutionManagerQuery = GetEntityQuery<SolutionManagerComponent>();
     }
 
     /// <summary>
@@ -185,13 +186,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (ev.ContainerEntity.HasValue)
             entity = ev.ContainerEntity.Value;
 
-        if (_solutionQuery.TryComp(entity, out var comp) && comp.Id == name)
+        if (SolutionQuery.TryComp(entity, out var comp) && comp.Id == name)
         {
             solutionEnt = (entity.Owner, comp);
             return true;
         }
 
-        if (!_solutionManagerQuery.Resolve(entity, ref entity.Comp, false)) // TODO: LOGMISSING: TRUE, ONLY HERE SO I CAN DEBUG YAML CHANGES
+        if (!SolutionManagerQuery.Resolve(entity, ref entity.Comp, errorOnMissing))
             return false;
 
         if (entity.Comp.Solutions.TryGetValue(name, out var solution))
@@ -265,10 +266,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionManagerComponent?> entity, bool includeSelf = true)
     {
-        if (includeSelf && _solutionQuery.TryComp(entity, out var solutionComp))
+        if (includeSelf && SolutionQuery.TryComp(entity, out var solutionComp))
             yield return (solutionComp.Id, (entity.Owner, solutionComp));
 
-        if (!_solutionManagerQuery.Resolve(entity, ref entity.Comp, logMissing: false))
+        if (!SolutionManagerQuery.Resolve(entity, ref entity.Comp, logMissing: false))
             yield break;
 
         foreach (var (id, solution) in entity.Comp.Solutions)
@@ -306,7 +307,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     private bool TryGetSolutionFill(Entity<SolutionManagerComponent?> entity, [NotNullWhen(true)] out List<EntProtoId>? fill)
     {
         fill = null;
-        if (!_solutionManagerQuery.Resolve(entity, ref entity.Comp))
+        if (!SolutionManagerQuery.Resolve(entity, ref entity.Comp))
             return false;
 
         fill = entity.Comp.SolutionEnts;
@@ -356,7 +357,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return reagentQuantity;
     }
 
-
     /// <summary>
     /// Dirties a solution entity that has been modified and prompts updates to chemical reactions and overflow state.
     /// Should be invoked whenever a solution entity is modified.
@@ -364,45 +364,37 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <remarks>
     /// 90% of this system is ensuring that this proc is invoked whenever a solution entity is changed. The other 10% <i>is</i> this proc.
     /// </remarks>
-    /// <param name="soln"></param>
+    /// <param name="solution"></param>
     /// <param name="needsReactionsProcessing"></param>
     /// <param name="mixerComponent"></param>
-    public void UpdateChemicals(Entity<SolutionComponent> soln, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
+    public void UpdateChemicals(Entity<SolutionComponent> solution, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
         // Process reactions
-        if (needsReactionsProcessing && solution.CanReact)
-            ChemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
+        if (needsReactionsProcessing && solution.Comp.Solution.CanReact)
+            ChemicalReactionSystem.FullyReactSolution(solution, mixerComponent);
 
-        var overflow = solution.Volume - solution.MaxVolume;
+        var overflow = solution.Comp.Solution.Volume - solution.Comp.Solution.MaxVolume;
         if (overflow > FixedPoint2.Zero)
         {
-            var overflowEv = new SolutionOverflowEvent(soln, overflow);
-            RaiseLocalEvent(uid, ref overflowEv);
+            var overflowEv = new SolutionOverflowEvent(solution, overflow);
+            RaiseLocalEvent(solution, ref overflowEv);
         }
 
-        UpdateAppearance((uid, comp, null));
+        var owner = GetSolutionOwner(solution);
 
-        var changedEv = new SolutionChangedEvent(soln);
-        RaiseLocalEvent(uid, ref changedEv);
-        Dirty(soln);
-    }
+        var changedEv = new SolutionChangedEvent(solution);
+        RaiseLocalEvent(owner, ref changedEv);
+        Dirty(solution);
 
-    public void UpdateAppearance(Entity<SolutionComponent, AppearanceComponent?> soln)
-    {
-        var (uid, comp, appearanceComponent) = soln;
-        var solution = comp.Solution;
-
-        if (!Exists(uid) || !Resolve(uid, ref appearanceComponent, false))
+        if (Timing.ApplyingState)
             return;
 
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(PrototypeManager), appearanceComponent);
+        UpdateAppearance(owner, solution);
+    }
 
-        if (solution.GetPrimaryReagentId() is { } reagent)
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
+    public EntityUid GetSolutionOwner(Entity<SolutionComponent> entity)
+    {
+        return CompOrNull<ContainedSolutionComponent>(entity)?.Container ?? entity.Owner;
     }
 
     /// <summary>
@@ -874,7 +866,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             RemoveAllSolution(entity);
     }
 
-    private void OnHandleState(Entity<SolutionComponent> entity, ref AfterAutoHandleStateEvent args)
+    protected virtual void OnHandleState(Entity<SolutionComponent> entity, ref AfterAutoHandleStateEvent args)
     {
         UpdateChemicals(entity, false);
     }
@@ -1097,7 +1089,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     private void OnSolutionAdded(Entity<SolutionManagerComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
         // Container networking boilerplate
-        if (args.Container.ID != entity.Comp.Container || !_solutionQuery.TryComp(args.Entity, out var solution))
+        if (args.Container.ID != entity.Comp.Container || !SolutionQuery.TryComp(args.Entity, out var solution))
             return;
 
         // Don't add a solution entity with the same id as this entity's solution if it exists!
@@ -1107,14 +1099,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         contained.Container = entity.Owner;
 
         // Throw if we already have a solution with the same ID. Only throw on server to avoid prediction causing issues.
-        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)))
+        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)) && Net.IsServer)
             Log.Error($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
     }
 
     private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)
     {
         // Container networking jank
-        if (args.Container.ID != entity.Comp.Container || !_solutionQuery.TryComp(args.Entity, out var solution))
+        if (args.Container.ID != entity.Comp.Container || !SolutionQuery.TryComp(args.Entity, out var solution))
             return;
 
         RemComp<ContainedSolutionComponent>(args.Entity);
@@ -1140,7 +1132,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         string name,
         out Entity<SolutionComponent> solutionEntity)
     {
-        if (_solutionQuery.TryComp(entity, out var comp) && comp.Id == name)
+        if (SolutionQuery.TryComp(entity, out var comp) && comp.Id == name)
         {
             solutionEntity = (entity.Owner, comp);
             return true;
@@ -1199,7 +1191,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var uid = EntityManager.CreateEntityUninitialized(solution);
 
         // If you pass in a ProtoId without a SolutionComponent that's your own damn fault!
-        var comp = _solutionQuery.Comp(uid);
+        var comp = SolutionQuery.Comp(uid);
         return (uid, comp);
     }
 

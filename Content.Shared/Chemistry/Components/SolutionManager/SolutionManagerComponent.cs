@@ -22,7 +22,6 @@ public sealed partial class SolutionManagerComponent : Component
     [DataField, AutoNetworkedField]
     public string Container = DefaultContainerId;
 
-    // TODO: Just kill this tbqh
     /// <summary>
     /// A cache of solutions currently attached to this entity.
     /// </summary>

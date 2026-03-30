@@ -59,25 +59,11 @@ public abstract partial class SharedSolutionContainerSystem
 {
     protected void InitializeRelays()
     {
-        SubscribeLocalEvent<ContainedSolutionComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<ContainedSolutionComponent, SolutionOverflowEvent>(OnSolutionOverflow);
         SubscribeLocalEvent<ContainedSolutionComponent, ReactionAttemptEvent>(RelaySolutionRefEvent);
     }
 
     #region Event Handlers
-
-    protected virtual void OnSolutionChanged(Entity<ContainedSolutionComponent> entity, ref SolutionChangedEvent args)
-    {
-        if (Terminating(entity.Comp.Container))
-            return;
-
-        RaiseLocalEvent(entity.Comp.Container, ref args);
-
-        if (Timing.ApplyingState)
-            return;
-
-        UpdateAppearance(entity.Comp.Container, args.Solution);
-    }
 
     protected virtual void OnSolutionOverflow(Entity<ContainedSolutionComponent> entity, ref SolutionOverflowEvent args)
     {

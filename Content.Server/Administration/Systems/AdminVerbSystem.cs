@@ -74,7 +74,10 @@ namespace Content.Server.Administration.Systems
         {
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SolutionManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
+
+            // TODO: This is genuinely terrible, solutions are already networked and we shouldn't need to update the BUI like this.
+            SubscribeLocalEvent<SolutionComponent, SolutionChangedEvent>((x, ref _) => OnSolutionChanged(x.Owner));
+            SubscribeLocalEvent<SolutionManagerComponent, SolutionChangedEvent>((x, ref _) => OnSolutionChanged(x.Owner));
         }
 
         private void GetVerbs(GetVerbsEvent<Verb> ev)
@@ -589,13 +592,13 @@ namespace Content.Server.Administration.Systems
         }
 
         #region SolutionsEui
-        private void OnSolutionChanged(Entity<SolutionManagerComponent> entity, ref SolutionChangedEvent args)
+        private void OnSolutionChanged(EntityUid uid)
         {
             foreach (var list in _openSolutionUis.Values)
             {
                 foreach (var eui in list)
                 {
-                    if (eui.Target == entity.Owner)
+                    if (eui.Target == uid)
                         eui.StateDirty();
                 }
             }

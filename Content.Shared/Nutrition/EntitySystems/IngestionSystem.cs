@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration.Logs;
+﻿using System.Diagnostics;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -23,6 +24,7 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -43,6 +45,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class IngestionSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -333,6 +336,11 @@ public sealed partial class IngestionSystem : EntitySystem
             stomachToUse = ent;
             highestAvailable = stomachSol.AvailableVolume;
         }
+
+        if (_net.IsClient)
+            Log.Debug($"Client reports at {_timing.CurTime} stomach has {highestAvailable} units left");
+        else
+            Log.Debug($"Server reports at {_timing.CurTime} stomach has {highestAvailable} units left");
 
         // All stomachs are full or we have no stomachs
         if (stomachToUse == null)
