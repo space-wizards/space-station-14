@@ -663,6 +663,13 @@
             - !type:ReagentCondition
               reagent: Ambuzol
               min: 10
+    Digestion:
+      effects:
+        - !type:CureZombieInfection
+          conditions:
+            - !type:ReagentCondition
+              reagent: Ambuzol
+              min: 10
 
 - type: reagent
   id: AmbuzolPlus
@@ -681,6 +688,14 @@
             - !type:ReagentCondition
               reagent: AmbuzolPlus
               min: 5
+    Digestion:
+      effects:
+      - !type:CureZombieInfection
+        innoculate: true
+        conditions:
+        - !type:ReagentCondition
+          reagent: AmbuzolPlus
+          min: 5
 
 - type: reagent
   id: PulpedBananaPeel
@@ -817,10 +832,19 @@
     Bloodstream:
       effects:
       - !type:EvenHealthChange
+        conditions:
+        - !type:MobStateCondition # no healing in crit so that dedicated single damage type meds can still have a niche.
+          mobstate: Alive
         damage:
           Brute: -1
           Burn: -1
-          Toxin: -0.5
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Alive
+        damage:
+          types:
+            Poison: -0.5 # Same as what it was before the second coming of offmed
 
 - type: reagent
   id: Lipozine

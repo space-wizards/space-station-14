@@ -16,10 +16,10 @@ public abstract partial class SharedAtmosphereSystem
      */
 
     /// <summary>
-    /// Cached array of gas specific heats.
+    /// Cached array of molar heat capacities of the gases.
     /// </summary>
-    public float[] GasSpecificHeats => _gasSpecificHeats;
-    private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+    public float[] GasMolarHeatCapacities => _gasMolarHeatCapacities;
+    private float[] _gasMolarHeatCapacities = new float[Atmospherics.TotalNumberOfGases];
 
     /// <summary>
     /// Mask used to determine if a gas is flammable or not.
@@ -69,7 +69,7 @@ public abstract partial class SharedAtmosphereSystem
             GasReagents[idx] = gasPrototype.Reagent;
         }
 
-        Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
+        Array.Resize(ref _gasMolarHeatCapacities, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
         for (var i = 0; i < GasPrototypes.Length; i++)
         {
@@ -81,7 +81,7 @@ public abstract partial class SharedAtmosphereSystem
              If you would like the unscaled specific heat, you'd need to multiply by HeatScale again.
              TODO ATMOS: please just make this 2 separate arrays instead of invoking multiplication every time.
              */
-            _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
+            _gasMolarHeatCapacities[i] = GasPrototypes[i].MolarHeatCapacity / HeatScale;
 
             // """Mask""" built here. Used to determine if a gas is fuel/oxidizer or not decently quickly and clearly.
             GasFuelMask[i] = GasPrototypes[i].IsFuel ? 1 : 0;

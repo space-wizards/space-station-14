@@ -340,7 +340,7 @@ public sealed partial class ServerApi : IPostInjectInit
             var bans = await _db.GetBansAsync(userId: located.UserId,
                 address: null,
                 hwId: null,
-                modernHWIds: located.LastModernHWIds,
+                modernHWIds: null,
                 includeUnbanned: false);
             if (bans.Count > 0)
             {
@@ -369,6 +369,11 @@ public sealed partial class ServerApi : IPostInjectInit
             if (_playerManager.TryGetSessionById(new NetUserId(body.Guid), out var player))
             {
                 info.AddAddress(player.Channel.RemoteEndPoint.Address);
+            }
+            else
+            {
+                // We fallback into using the located player ip.
+                info.AddAddress(located.LastAddress);
             }
 
             _bans.CreateServerBan(info);

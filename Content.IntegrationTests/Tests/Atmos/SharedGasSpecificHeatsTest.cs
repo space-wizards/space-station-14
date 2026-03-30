@@ -62,12 +62,12 @@ public sealed class SharedGasSpecificHeatsTest
         var clientSpecificHeats = Array.Empty<float>();
         await Server.WaitPost(delegate
         {
-            serverSpecificHeats = _sAtmos.GasSpecificHeats;
+            serverSpecificHeats = _sAtmos.GasMolarHeatCapacities;
         });
 
         await Client.WaitPost(delegate
         {
-            clientSpecificHeats = _cAtmos.GasSpecificHeats;
+            clientSpecificHeats = _cAtmos.GasMolarHeatCapacities;
         });
 
         Assert.That(serverSpecificHeats,

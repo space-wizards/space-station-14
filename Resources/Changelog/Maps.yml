@@ -1067,4 +1067,15 @@
   id: 131
   time: '2026-03-19T07:44:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43278
+- author: ProPeperos
+  changes:
+  - message: On Reach, added protective grill around the station.
+    type: Add
+  - message: On Reach, you can now dock cargo shuttle to cargo dock
+    type: Tweak
+  - message: On Reach, added a bunch of needed improvements
+    type: Tweak
+  id: 132
+  time: '2026-03-24T21:43:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43046
 Order: 2

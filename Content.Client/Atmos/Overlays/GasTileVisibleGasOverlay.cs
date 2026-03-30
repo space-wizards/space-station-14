@@ -72,17 +72,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
         {
             var gasPrototype = _atmosphereSystem.GetGas(_gasTileOverlaySystem.VisibleGasId[i]);
 
-            SpriteSpecifier overlay;
-
-            if (!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) &&
-                !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
-                overlay = new SpriteSpecifier.Rsi(new(gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
-            else if (!string.IsNullOrEmpty(gasPrototype.GasOverlayTexture))
-                overlay = new SpriteSpecifier.Texture(new(gasPrototype.GasOverlayTexture));
-            else
-                continue;
-
-            switch (overlay)
+            switch (gasPrototype.GasOverlaySprite)
             {
                 case SpriteSpecifier.Rsi animated:
                     var rsi = _resourceCache.GetResource<RSIResource>(animated.RsiPath).RSI;

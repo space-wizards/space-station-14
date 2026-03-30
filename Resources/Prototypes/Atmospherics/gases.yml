@@ -1,105 +1,119 @@
 ﻿- type: gas
   id: Oxygen
-  name: gases-oxygen
-  specificHeat: 20
+  name: gas-oxygen
+  abbreviation: gas-oxygen-abbreviation
+  molarHeatCapacity: 20
   heatCapacityRatio: 1.4
   molarMass: 32
-  color: 2887E8
+  color: '#2887E8'
   reagent: Oxygen
   pricePerMole: 0
   isOxidizer: true
 
 - type: gas
   id: Nitrogen
-  name: gases-nitrogen
-  specificHeat: 30
+  name: gas-nitrogen
+  abbreviation: gas-nitrogen-abbreviation
+  molarHeatCapacity: 30
   heatCapacityRatio: 1.4
   molarMass: 28
-  color: DA1010
+  color: '#DA1010'
   reagent: Nitrogen
   pricePerMole: 0
 
 - type: gas
   id: CarbonDioxide
-  name: gases-co2
-  specificHeat: 30
+  name: gas-carbon-dioxide
+  abbreviation: gas-carbon-dioxide-abbreviation
+  molarHeatCapacity: 30
   heatCapacityRatio: 1.3
   molarMass: 44
-  color: 4e4e4e
+  color: '#4e4e4e'
   reagent: CarbonDioxide
   pricePerMole: 0
 
 - type: gas
   id: Plasma
-  name: gases-plasma
-  specificHeat: 200
+  name: gas-plasma
+  abbreviation: gas-plasma-abbreviation
+  molarHeatCapacity: 200
   heatCapacityRatio: 1.7
   molarMass: 120
-  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: plasma
-  color: FF3300
+  gasOverlaySprite:
+    sprite: /Textures/Effects/atmospherics.rsi
+    state: plasma
+  color: '#FF3300'
   reagent: Plasma
   pricePerMole: 0
   isFuel: true
 
 - type: gas
   id: Tritium
-  name: gases-tritium
-  specificHeat: 10
+  name: gas-tritium
+  abbreviation: gas-tritium-abbreviation
+  molarHeatCapacity: 10
   heatCapacityRatio: 1.3
   molarMass: 6
-  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: tritium
-  color: 13FF4B
+  gasOverlaySprite:
+    sprite: /Textures/Effects/atmospherics.rsi
+    state: tritium
+  color: '#13FF4B'
   reagent: Tritium
   pricePerMole: 2.5
   isFuel: true
 
 - type: gas
   id: WaterVapor
-  name: gases-water-vapor
-  specificHeat: 40
+  name: gas-water-vapor
+  abbreviation: gas-water-vapor-abbreviation
+  molarHeatCapacity: 40
   heatCapacityRatio: 1.33
   molarMass: 18
-  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: water_vapor
-  color: bffffd
+  gasOverlaySprite:
+    sprite: /Textures/Effects/atmospherics.rsi
+    state: water_vapor
+  color: '#bffffd'
   reagent: Water
   pricePerMole: 0
 
 - type: gas
   id: Ammonia
-  name: gases-ammonia
-  specificHeat: 20
+  name: gas-ammonia
+  abbreviation: gas-ammonia-abbreviation
+  molarHeatCapacity: 20
   heatCapacityRatio: 1.4
   molarMass: 44
-  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: miasma
+  gasOverlaySprite:
+    sprite: /Textures/Effects/atmospherics.rsi
+    state: miasma
   gasMolesVisible: 2
-  gasVisbilityFactor: 3.5
-  color: 56941E
+  gasVisibilityFactor: 3.5
+  color: '#56941E'
   reagent: Ammonia
   pricePerMole: 0.15
 
 - type: gas
   id: NitrousOxide
-  name: gases-n2o
-  specificHeat: 40
+  name: gas-nitrous-oxide
+  abbreviation: gas-nitrous-oxide-abbreviation
+  molarHeatCapacity: 40
   heatCapacityRatio: 1.3
   molarMass: 44
-  color: 8F00FF
+  color: '#8F00FF'
   reagent: NitrousOxide
   pricePerMole: 0.1
 
 - type: gas
   id: Frezon
-  name: gases-frezon
-  specificHeat: 600 # Strongest by far
+  name: gas-frezon
+  abbreviation: gas-frezon-abbreviation
+  molarHeatCapacity: 600 # Strongest by far
   heatCapacityRatio: 1.33
   molarMass: 50
-  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: frezon
+  gasOverlaySprite:
+    sprite: /Textures/Effects/atmospherics.rsi
+    state: frezon
   gasMolesVisible: 0.6
-  color: 3a758c
+  color: '#3a758c'
   reagent: Frezon
   pricePerMole: 1

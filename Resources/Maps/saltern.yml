@@ -51418,7 +51418,6 @@ entities:
       parent: 31
     - type: ApcPowerReceiver
       powerLoad: 0
-    - type: Timer
   - uid: 1324
     components:
     - type: Transform
