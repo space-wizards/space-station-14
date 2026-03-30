@@ -1,0 +1,41 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'seed-extractor-menu-title'}"
+    MinSize="620 350"
+    SetSize="620 450">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" Margin="4">
+
+        <!-- Search bar -->
+        <LineEdit
+            Name="SearchBar"
+            PlaceHolder="{Loc 'seed-extractor-menu-search'}"
+            HorizontalExpand="True" />
+
+        <!-- Column headers -->
+        <BoxContainer Orientation="Horizontal" Margin="4 0 4 0">
+            <Label
+                HorizontalExpand="True"
+                Text="{Loc 'seed-extractor-menu-header-name'}" />
+            <Label MinWidth="50" HorizontalAlignment="Center" Text="PTN" />
+            <Label MinWidth="50" HorizontalAlignment="Center" Text="YLD" />
+            <Label MinWidth="50" HorizontalAlignment="Center" Text="MTR" />
+            <Label MinWidth="50" HorizontalAlignment="Center" Text="PRD" />
+            <Label MinWidth="50" HorizontalAlignment="Center" Text="LFS" />
+            <Label MinWidth="50" HorizontalAlignment="Center" Text="END" />
+            <Label MinWidth="65" Text="" />
+        </BoxContainer>
+
+        <PanelContainer StyleClasses="LowDivider" />
+
+        <!-- Seed list -->
+        <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+            <BoxContainer
+                Name="SeedList"
+                Orientation="Vertical"
+                HorizontalExpand="True"
+                VerticalExpand="True" />
+        </ScrollContainer>
+
+    </BoxContainer>
+</controls:FancyWindow>

@@ -35,3 +35,20 @@
   - type: SeedExtractor
   - type: Machine
     board: SeedExtractorMachineCircuitboard
+
+  # HONK START
+  - type: SeedExtractorStorage
+    whitelist:
+      components:
+      - Seed
+  - type: ActivatableUI
+    key: enum.SeedExtractorStorageUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.SeedExtractorStorageUiKey.Key:
+        type: SeedExtractorStorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      seed_extractor_seeds: !type:Container {}
+  # HONK END
