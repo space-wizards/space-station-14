@@ -1,24 +1,31 @@
-﻿- type: entity
+﻿- type: entityTable
+  id: RandomArtifactTable
+  table: !type:GroupSelector
+    children:
+    - id: ComplexXenoArtifact
+      weight: 2
+    - id: ComplexXenoArtifactItem
+
+- type: entity
+  parent: MarkerBase
   id: RandomArtifactSpawner
   name: random artifact spawner
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-          state: ano01
-    - type: RandomSpawner
-      prototypes:
-        - ComplexXenoArtifact
-        - ComplexXenoArtifact
-        - ComplexXenoArtifactItem
-      chance: 1
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+      state: ano01
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomArtifactTable
 
 - type: entity
   id: RandomArtifactSpawner20
   name: random artifact spawner [20]
   parent: RandomArtifactSpawner
   components:
-    - type: RandomSpawner
-      chance: 0.2
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomArtifactTable
+      prob: 0.2

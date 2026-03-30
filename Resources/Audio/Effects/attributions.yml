@@ -261,3 +261,8 @@
   copyright: 'created by Tao7891; perryprog (GitHub) downmixed to mono'
   license: CC0-1.0
   source: https://github.com/space-wizards/space-station-14/pull/37363
+
+- files: ["balloon_hits.ogg"]
+  copyright: "by brokendot(github)"
+  license: "CC0-1.0"
+  source: https://github.com/space-wizards/space-station-14/pull/41102

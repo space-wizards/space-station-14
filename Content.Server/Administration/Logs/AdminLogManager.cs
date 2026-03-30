@@ -12,13 +12,16 @@ using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Players.PlayTimeTracking;
 using Prometheus;
+using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Logs;
 
@@ -338,7 +341,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Players = players,
         };
 
-        DoAdminAlerts(players, message, impact);
+        DoAdminAlerts(players, message, impact, handler);
 
         if (preRound)
         {
@@ -380,6 +383,34 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         return players;
     }
 
+    /// <summary>
+    /// Get a list of coordinates from the <see cref="LogStringHandler"/>s values. Will transform all coordinate types
+    /// to map coordinates!
+    /// </summary>
+    /// <returns>A list of map coordinates that were found in the value input, can return an empty list.</returns>
+    private List<MapCoordinates> GetCoordinates(Dictionary<string, object?> values)
+    {
+        List<MapCoordinates> coordList = new();
+        EntityManager.TrySystem(out TransformSystem? transform);
+
+        foreach (var value in values.Values)
+        {
+            switch (value)
+            {
+                case EntityCoordinates entCords:
+                    if (transform != null)
+                        coordList.Add(transform.ToMapCoordinates(entCords));
+                    continue;
+
+                case MapCoordinates mapCord:
+                    coordList.Add(mapCord);
+                    continue;
+            }
+        }
+
+        return coordList;
+    }
+
     private void AddPlayer(List<AdminLogPlayer> players, Guid user, int logId)
     {
         // The majority of logs have a single player, or maybe two. Instead of allocating a List<AdminLogPlayer> and
@@ -397,10 +428,11 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         });
     }
 
-    private void DoAdminAlerts(List<AdminLogPlayer> players, string message, LogImpact impact)
+    private void DoAdminAlerts(List<AdminLogPlayer> players, string message, LogImpact impact, LogStringHandler handler)
     {
         var adminLog = false;
         var logMessage = message;
+        var playerNetEnts = new List<(NetEntity, string)>();
 
         foreach (var player in players)
         {
@@ -419,6 +451,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                         ("name", cachedInfo.CharacterName),
                         ("subtype", subtype));
                 }
+                if (cachedInfo != null && cachedInfo.NetEntity != null)
+                    playerNetEnts.Add((cachedInfo.NetEntity.Value, cachedInfo.CharacterName));
             }
 
             if (adminLog)
@@ -442,7 +476,73 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         if (adminLog)
+        {
             _chat.SendAdminAlert(logMessage);
+
+            if (CreateTpLinks(playerNetEnts, out var tpLinks))
+                _chat.SendAdminAlertNoFormatOrEscape(tpLinks);
+
+            var coords = GetCoordinates(handler.Values);
+
+            if (CreateCordLinks(coords, out var cordLinks))
+                _chat.SendAdminAlertNoFormatOrEscape(cordLinks);
+        }
+    }
+
+    /// <summary>
+    /// Creates a list of tpto command links of the given players
+    /// </summary>
+    private bool CreateTpLinks(List<(NetEntity NetEnt, string CharacterName)> players, out string outString)
+    {
+        outString = string.Empty;
+
+        if (players.Count == 0)
+            return false;
+
+        outString = Loc.GetString("admin-alert-tp-to-players-header");
+
+        for (var i = 0; i < players.Count; i++)
+        {
+            var player = players[i];
+            outString += $"[cmdlink=\"{EscapeText(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
+
+            if (i < players.Count - 1)
+                outString += ", ";
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Creates a list of toto command links for the given map coordinates.
+    /// </summary>
+    private bool CreateCordLinks(List<MapCoordinates> cords, out string outString)
+    {
+        outString = string.Empty;
+
+        if (cords.Count == 0)
+            return false;
+
+        outString = Loc.GetString("admin-alert-tp-to-coords-header");
+
+        for (var i = 0; i < cords.Count; i++)
+        {
+            var cord = cords[i];
+            outString += $"[cmdlink=\"{cord.ToString()}\" command=\"tp {cord.X} {cord.Y} {cord.MapId}\"/]";
+
+            if (i < cords.Count - 1)
+                outString += ", ";
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Escape the given text to not allow breakouts of the cmdlink tags.
+    /// </summary>
+    private string EscapeText(string text)
+    {
+        return FormattedMessage.EscapeText(text).Replace("\"", "\\\"").Replace("'", "\\'");
     }
 
     public async Task<List<SharedAdminLog>> All(LogFilter? filter = null, Func<List<SharedAdminLog>>? listProvider = null)
