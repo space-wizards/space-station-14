@@ -1,6 +1,5 @@
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Stacks;
