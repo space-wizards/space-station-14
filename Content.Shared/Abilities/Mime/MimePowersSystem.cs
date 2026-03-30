@@ -1,6 +1,7 @@
 using Content.Shared.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Events;
+using Content.Shared.Administration.Components;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.IdentityManagement;
@@ -11,6 +12,7 @@ using Content.Shared.Speech.Muting;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Abilities.Mime;
 
@@ -148,6 +150,10 @@ public sealed class MimePowersSystem : EntitySystem
         RemComp<MutedComponent>(uid);
         if (mimePowers.PreventWriting)
             RemComp<BlockWritingComponent>(uid);
+
+        var killSign = EnsureComp<KillSignComponent>(uid);
+        killSign.Sprite = new SpriteSpecifier.Rsi(new ResPath("Objects/Misc/killsign.rsi"), "cringe");
+        Dirty(uid, killSign);
 
         _alertsSystem.ClearAlert(uid, mimePowers.VowAlert);
         _alertsSystem.ShowAlert(uid, mimePowers.VowBrokenAlert);
