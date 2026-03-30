@@ -45,7 +45,7 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
         {
             var path = SpriteSpecifierSerializer.TextureRoot / "Mobs/Silicon/Chassis/" + prototype.SpriteBodyState + ".rsi";
             if (_rescache.TryGetResource(path, out RSIResource? rsi))
-                _sprite.SetBaseRsi((entity, sprite), rsi.RSI);
+                _sprite.SetBaseRsi((entity, sprite), rsi.RSI, false);
 
             _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Body, prototype.SpriteBodyState);
             _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.LightStatus, prototype.SpriteToggleLightState);
