@@ -44,6 +44,12 @@ public sealed partial class GhostComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? BooActionEntity;
 
+    [DataField]
+    public EntProtoId ToggleGhostAiOverlayAction = "ActionToggleGhostAiOverlay";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? ToggleGhostAiOverlayActionEntity;
+
     // End actions
 
     /// <summary>
@@ -117,3 +123,5 @@ public sealed partial class ToggleGhostHearingActionEvent : InstantActionEvent {
 public sealed partial class ToggleGhostVisibilityToAllEvent : InstantActionEvent { }
 
 public sealed partial class BooActionEvent : InstantActionEvent { }
+
+public sealed partial class ToggleGhostAiOverlayActionEvent : InstantActionEvent { }

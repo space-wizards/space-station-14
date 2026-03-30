@@ -66,6 +66,20 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         _overlay = null;
     }
 
+    public void ToggleOverlay()
+    {
+        if (_overlay == null)
+            AddOverlay();
+        else
+            RemoveOverlay();
+    }
+
+    public void DisableOverlay()
+    {
+        RemoveOverlay();
+    }
+
+
     private void OnAiAttached(Entity<StationAiOverlayComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         AddOverlay();

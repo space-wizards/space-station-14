@@ -180,3 +180,17 @@
     iconOn: Interface/Actions/ghostHearingToggled.png
   - type: InstantAction
     event: !type:ToggleGhostHearingActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionToggleGhostAiOverlay
+  name: Toggle AI Overlay
+  description: Toggle the station AI overlay while observing.
+  components:
+  - type: Action
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: ai_core
+    clientExclusive: true
+  - type: InstantAction
+    event: !type:ToggleGhostAiOverlayActionEvent
