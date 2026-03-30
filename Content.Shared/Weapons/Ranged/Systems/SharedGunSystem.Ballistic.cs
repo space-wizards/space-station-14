@@ -328,8 +328,9 @@ public abstract partial class SharedGunSystem
         bool suppressInsertionSound = false
     )
     {
+        inserted = _stack.GetOne(inserted);
         var ammoEv = new BeforeAmmoLoadedEvent();
-        RaiseLocalEvent(_stack.GetOne(inserted), ref ammoEv); // maybe inserted is a stack,
+        RaiseLocalEvent(inserted, ref ammoEv);
                                                                     // in that case, only insert one
         if (!ammoEv.CanLoad)
             return false;
