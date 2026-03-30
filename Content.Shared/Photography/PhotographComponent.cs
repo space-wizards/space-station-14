@@ -21,10 +21,4 @@ public sealed partial class PhotographComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? NameText;
-
-    /// <summary>
-    ///  Indicates wether this is a photograph of a photograph or not
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Recursive = false;
 }
