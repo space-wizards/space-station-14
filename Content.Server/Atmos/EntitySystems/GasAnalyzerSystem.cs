@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -101,6 +100,7 @@ public sealed class GasAnalyzerSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), user.Value, user.Value);
 
         entity.Comp.Enabled = false;
+        entity.Comp.User = null;
         Dirty(entity);
         _appearance.SetData(entity.Owner, GasAnalyzerVisuals.Enabled, entity.Comp.Enabled);
         RemCompDeferred<ActiveGasAnalyzerComponent>(entity.Owner);
@@ -139,15 +139,15 @@ public sealed class GasAnalyzerSystem : EntitySystem
             return false;
 
         // check if the user has walked away from what they scanned
-        if (component.Target.HasValue)
+        if (component.Target.HasValue && component.User.HasValue)
         {
             // Listen! Even if you don't want the Gas Analyzer to work on moving targets, you should use
             // this code to determine if the object is still generally in range so that the check is consistent with the code
             // in OnAfterInteract() and also consistent with interaction code in general.
-            if (!_interactionSystem.InRangeUnobstructed((component.User, null), (component.Target.Value, null)))
+            if (!_interactionSystem.InRangeUnobstructed((component.User.Value, null), (component.Target.Value, null)))
             {
-                if (component.User is { } userId && component.Enabled)
-                    _popup.PopupEntity(Loc.GetString("gas-analyzer-object-out-of-range"), userId, userId);
+                if (component.Enabled)
+                    _popup.PopupEntity(Loc.GetString("gas-analyzer-object-out-of-range"), component.User.Value, component.User.Value);
 
                 component.Target = null;
             }
@@ -256,18 +256,17 @@ public sealed class GasAnalyzerSystem : EntitySystem
     {
         var gases = new List<GasEntry>();
 
+        if (mixture == null)
+            return [];
+
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
-            var gas = _atmo.GetGas(i);
+            var gas = (Gas)i;
 
-            if (mixture?[i] <= UIMinMoles)
+            if (mixture[i] <= UIMinMoles)
                 continue;
 
-            if (mixture != null)
-            {
-                var gasName = Loc.GetString(gas.Name);
-                gases.Add(new GasEntry(gasName, mixture[i], gas.Color));
-            }
+            gases.Add(new GasEntry(gas, mixture[i]));
         }
 
         var gasesOrdered = gases.OrderByDescending(gas => gas.Amount);
