@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityEffects.Effects;
+namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SpawnEntityListEffect : EntityEffectBase<SpawnEntityListEffect>

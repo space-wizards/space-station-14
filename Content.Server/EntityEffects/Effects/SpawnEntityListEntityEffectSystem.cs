@@ -1,5 +1,5 @@
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects;
+using Content.Shared.EntityEffects.Effects.EntitySpawning;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
