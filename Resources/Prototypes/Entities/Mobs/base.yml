@@ -54,6 +54,7 @@
   - type: MobMover
   - type: MovementSpeedModifier
   - type: LagCompensation
+  - type: FlipAnimation # yes, it is vital that every mob has this!
 
 - type: entity
   save: false
