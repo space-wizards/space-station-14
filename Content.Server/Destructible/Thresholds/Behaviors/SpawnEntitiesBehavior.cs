@@ -1,7 +1,5 @@
 using System.Numerics;
 using Content.Server.Forensics;
-using Content.Server.Spawners.Components;
-using Content.Server.Spawners.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Prototypes;
@@ -9,7 +7,6 @@ using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Spawners;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -53,68 +50,35 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 executions = stack.Count;
             }
 
-            // Different behaviors for delayed spawning and immediate spawning
-            if (SpawnAfter != 0)
+            foreach (var (entityId, minMax) in Spawn)
             {
-                // if it fails to get the spawner, this won't ever work so just return
-                if (!system.PrototypeManager.Resolve(TempEntityProtoId, out var tempSpawnerProto))
-                    return;
-
-                foreach (var (entityId, minMax) in Spawn)
+                for (var execution = 0; execution < executions; execution++)
                 {
-                    for (var execution = 0; execution < executions; execution++)
+                    var count = minMax.Min >= minMax.Max
+                        ? minMax.Min
+                        : system.Random.Next(minMax.Min, minMax.Max + 1);
+
+                    if (count == 0)
+                        continue;
+
+                    if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
                     {
-                        var count = minMax.Min >= minMax.Max
-                            ? minMax.Min
-                            : system.Random.Next(minMax.Min, minMax.Max + 1);
+                        var spawned = SpawnInContainer
+                            ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
+                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                        system.StackSystem.SetCount(spawned, count);
 
-                        if (count == 0)
-                            continue;
-
-                        for (var i = 0; i < count; i++)
-                        {
-                            var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, position.Offset(getRandomVector()));
-                            system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
-                            timedDespawnComponent.Lifetime = SpawnAfter;
-                            system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
-                            system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), entityId);
-                        }
+                        TransferForensics(spawned, system, owner);
                     }
-                }
-            }
-            else
-            {
-                // Immediate spawning
-                foreach (var (entityId, minMax) in Spawn)
-                {
-                    for (var execution = 0; execution < executions; execution++)
+                    else
                     {
-                        var count = minMax.Min >= minMax.Max
-                            ? minMax.Min
-                            : system.Random.Next(minMax.Min, minMax.Max + 1);
-
-                        if (count == 0)
-                            continue;
-
-                        if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
+                        for (var i = 0; i < count; i++)
                         {
                             var spawned = SpawnInContainer
                                 ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
                                 : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-                            system.StackSystem.SetCount((spawned, null), count);
 
                             TransferForensics(spawned, system, owner);
-                        }
-                        else
-                        {
-                            for (var i = 0; i < count; i++)
-                            {
-                                var spawned = SpawnInContainer
-                                    ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                    : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-
-                                TransferForensics(spawned, system, owner);
-                            }
                         }
                     }
                 }
