@@ -3,6 +3,13 @@
   parent: [SolutionWelder, BaseItem]
   id: BaseWelder
   components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: welder_flame
+      visible: false
+      shader: unshaded
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/welder_drop.ogg
@@ -98,16 +105,11 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
-    layers:
-    - state: icon
-    - state: welder_flame
-      visible: false
-      shader: unshaded
-      map: [ "enum.ToggleableVisuals.Layer" ]
 
 - type: entity
   parent: [SolutionWelder, SolutionSmall]
   id: SolutionToolWelder
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -130,6 +132,7 @@
 - type: entity
   parent: [SolutionWelder, SolutionToolNormal]
   id: SolutionToolWelderIndsutrial
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -177,6 +180,7 @@
 - type: entity
   parent: [SolutionWelder, SolutionToolGinormous] # Bluespace technology
   id: SolutionToolWelderExperimental
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -207,6 +211,7 @@
 - type: entity
   parent: [SolutionWelder, SolutionTiny]
   id: SolutionToolWelderMiniEmergency # TODO, replace with below :(
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -218,6 +223,7 @@
 - type: entity
   parent: [SolutionWelder, SolutionToolTiny]
   id: SolutionToolWelderMini
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:

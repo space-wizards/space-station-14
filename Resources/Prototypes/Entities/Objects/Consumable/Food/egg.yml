@@ -80,12 +80,6 @@
     state: eggshells
   - type: Item
     size: Tiny
-  - type: Solution
-    solution:
-      maxVol: 2
-      reagents:
-      - ReagentId: Calcium
-        Quantity: 2
   - type: Tag
     tags:
     - Egg

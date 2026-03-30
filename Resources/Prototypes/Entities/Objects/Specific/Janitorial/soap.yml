@@ -63,6 +63,7 @@
     residueAdjective: residue-slippery
 
 - type: entity
+  abstract: true
   parent: [SolutionFood, SolutionSmall]
   id: SolutionSoapBase
   components:

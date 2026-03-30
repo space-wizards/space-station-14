@@ -68,14 +68,15 @@ public abstract partial class SharedSolutionContainerSystem
 
     protected virtual void OnSolutionChanged(Entity<ContainedSolutionComponent> entity, ref SolutionChangedEvent args)
     {
-        var (solutionId, solutionComp) = args.Solution;
+        if (Terminating(entity.Comp.Container))
+            return;
 
         RaiseLocalEvent(entity.Comp.Container, ref args);
 
         if (Timing.ApplyingState)
             return;
 
-        UpdateAppearance(entity.Comp.Container, (solutionId, solutionComp));
+        UpdateAppearance(entity.Comp.Container, args.Solution);
     }
 
     protected virtual void OnSolutionOverflow(Entity<ContainedSolutionComponent> entity, ref SolutionOverflowEvent args)

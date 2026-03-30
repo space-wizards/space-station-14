@@ -377,7 +377,7 @@
       shader: unshaded
   - type: Solution
     solution:
-      reagent:
+      reagents:
       - ReagentId: Protein
         Quantity: 20
       - ReagentId: Ichor
@@ -1686,7 +1686,7 @@
       shader: unshaded
   - type: Solution
     solution:
-      reagent:
+      reagents:
       - ReagentId: Protein
         Quantity: 4
       - ReagentId: Ichor

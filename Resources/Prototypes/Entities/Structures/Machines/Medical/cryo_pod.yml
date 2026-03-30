@@ -121,6 +121,7 @@
 - type: entity
   parent: SolutionSmall
   id: SolutionCryoBuffer
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: injectionBuffer

@@ -43,6 +43,7 @@
   id: SolutionCube # This will be deleted at a later date. Using solutions for this is really dumb.
   name: cube
   description: if you're reading this, nuh uh! file a bug report.
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: cube

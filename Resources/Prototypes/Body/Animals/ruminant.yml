@@ -16,6 +16,7 @@
 - type: entity
   parent: SolutionStomach
   id: SolutionStomachRuminant
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:

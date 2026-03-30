@@ -53,7 +53,7 @@
   - type: Sprite
     state: pestspray
   - type: Solution
-    solutions:
+    solution:
       reagents:
       - ReagentId: PestKiller
         Quantity: 60

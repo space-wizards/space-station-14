@@ -947,6 +947,7 @@
 - type: entity
   parent: Solution
   id: SolutionUdder
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: food # TODO This should really use a different id...
@@ -1123,6 +1124,7 @@
 - type: entity
   parent: SolutionUdder
   id: SolutionUdderGoat
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: food
@@ -1135,6 +1137,7 @@
 - type: entity
   parent: Solution
   id: SolutionWool
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: wool
@@ -1925,6 +1928,7 @@
         recursive: false
 
 - type: entity
+  abstract: true
   parent: [SolutionFood, SolutionTiny]
   id: SolutionVermin
   components:

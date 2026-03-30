@@ -269,7 +269,7 @@
     graph: Glass
     node: SheetRPGlass
   - type: Solution
-    solutions:
+    solution:
       maxVol: 25
       reagents:
       - ReagentId: Silicon

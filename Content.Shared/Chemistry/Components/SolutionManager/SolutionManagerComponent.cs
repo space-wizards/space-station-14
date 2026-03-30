@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Chemistry.EntitySystems;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -23,6 +22,7 @@ public sealed partial class SolutionManagerComponent : Component
     [DataField, AutoNetworkedField]
     public string Container = DefaultContainerId;
 
+    // TODO: Just kill this tbqh
     /// <summary>
     /// A cache of solutions currently attached to this entity.
     /// </summary>

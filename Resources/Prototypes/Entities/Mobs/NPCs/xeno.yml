@@ -430,6 +430,7 @@
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
   id: SolutionVenomPurpleSnake
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -583,6 +584,7 @@
 - type: entity
   parent: [SolutionWeapon, SolutionNormal]
   id: SolutionVenomDale
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:

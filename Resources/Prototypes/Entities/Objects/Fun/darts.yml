@@ -85,6 +85,7 @@
 - type: entity
   parent: Solution
   id: SolutionDart
+  categories: [ HideSpawnMenu ] # Not abstract so weapons with multiple solutions can exist
   components:
   - type: Solution
     id: melee

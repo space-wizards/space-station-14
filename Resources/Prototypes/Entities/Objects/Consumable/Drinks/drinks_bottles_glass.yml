@@ -188,7 +188,7 @@
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
+  parent: DrinkBottleCognac
   id: DrinkCognacBottleFull
   suffix: Full
   components:

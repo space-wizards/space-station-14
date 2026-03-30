@@ -18,6 +18,7 @@
   - type: Appearance
 
 - type: entity
+  abstract: true
   parent: [SolutionHypospray, SolutionToolSmall]
   id: SolutionHypospraySmall
   components:
@@ -26,6 +27,7 @@
       maxVol: 20
 
 - type: entity
+  abstract: true
   parent: [SolutionHypospray, SolutionToolTiny]
   id: SolutionHyposprayTiny
   components:
@@ -182,7 +184,7 @@
     delay: 0.0
 
 - type: entity
-  parent: [BaseHypospray] # I plan to resize medipens to 1x2 eventually:tm:
+  parent: BaseHypospray # I plan to resize medipens to 1x2 eventually:tm:
   id: ChemicalMedipen
   name: chemical medipen
   description: A single-dose, non-refillable medipen.
@@ -215,6 +217,7 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: firstaid_empty
+    solutionName: hypospray
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
@@ -530,6 +533,7 @@
         Quantity: 10
 
 - type: entity
+  abstract: true
   parent: [SolutionToolSmall, ChemicalMedipen, BaseSyndicateContraband]
   id: SyndicateMedipen # Interdyne gets more capacity
 
@@ -645,7 +649,7 @@
     price: 1500
 
 - type: entity
-  parent: [SolutionHyposprayTiny, Pen] # It is just like normal pen, isn't it?
+  parent: [Pen, SolutionHyposprayTiny] # It is just like normal pen, isn't it?
   id: Hypopen
   suffix: Hypopen
   components:

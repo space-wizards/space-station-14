@@ -1111,7 +1111,7 @@
     count: 8
     slice: FoodCakeSuppermatterSlice
   - type: Solution
-    solutions:
+    solution:
       reagents:
       - ReagentId: Nutriment
         Quantity: 120
@@ -1140,7 +1140,7 @@
   - type: Sprite
     state: suppermatter-shard
   - type: Solution
-    solutions:
+    solution:
       reagents:
       - ReagentId: Nutriment
         Quantity: 15

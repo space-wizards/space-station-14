@@ -43,6 +43,7 @@
 - type: entity
   parent: Solution
   id: SolutionRiggable
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: battery
@@ -290,7 +291,9 @@
     solutions:
     - SolutionRiggableLarge
   - type: Riggable
-    requiredQuantity: 15
+    reagent:
+      ReagentId: Plasma
+      Quantity: 15
   - type: Extractable
     juiceSolution:
       reagents:
@@ -303,10 +306,11 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-    
+
 - type: entity
   parent: SolutionRiggable
   id: SolutionRiggableLarge
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: battery

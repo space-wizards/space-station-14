@@ -41,6 +41,7 @@
 - type: entity
   parent: SolutionCompositeSmallStackable
   id: SolutionCanComposite
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:

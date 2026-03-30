@@ -674,9 +674,7 @@
     solution:
       reagents:
       - ReagentId: Vitamin
-        Quantity: 3
-      - ReagentId: Calcium
-        Quantity: 7 # Pulled out of my ass. Feel free to redo these reagents
+        Quantity: 10
   - type: Item
     heldPrefix: bones
 

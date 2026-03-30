@@ -79,6 +79,7 @@
 - type: entity
   parent: [SolutionLube, SolutionLarge]
   id: SolutionLatheLube # Its own prototype since some lathes might interface with solutions in other ways
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   abstract: true

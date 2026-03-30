@@ -276,6 +276,7 @@
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
   id: SolutionVenomSpiderSpace
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
@@ -382,6 +383,7 @@
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
   id: SolutionVenomCobraSpace
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:

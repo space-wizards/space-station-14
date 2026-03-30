@@ -42,6 +42,7 @@
 - type: entity
   parent: [SolutionFood, SolutionTiny]
   id: SolutionFoodDonkpocketWarm
+  categories: [ HideSpawnMenu ] # Needed for a very specific lighter so can't be abstract
   components:
   - type: Solution
     solution:

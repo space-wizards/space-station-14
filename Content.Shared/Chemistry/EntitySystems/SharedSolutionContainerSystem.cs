@@ -85,6 +85,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         base.Initialize();
 
         InitializeRelays();
+        InitializeContainerManager();
 
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnSolutionStartup);
@@ -106,25 +107,25 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     /// Attempts to resolve a solution associated with an entity.
     /// </summary>
-    /// <param name="container">The entity that holdes the container the solution entity is in.</param>
+    /// <param name="entity">The entity that holdes the container the solution entity is in.</param>
     /// <param name="name">The name of the solution entities container.</param>
-    /// <param name="entity">A reference to a solution entity to load the associated solution entity into. Will be unchanged if not null.</param>
+    /// <param name="solutionEnt">A reference to a solution entity to load the associated solution entity into. Will be unchanged if not null.</param>
     /// <param name="solution">Returns the solution state of the solution entity.</param>
     /// <returns>Whether the solution was successfully resolved.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool ResolveSolution(Entity<SolutionManagerComponent?> container, string name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity, [NotNullWhen(true)] out Solution? solution)
+    public bool ResolveSolution(Entity<SolutionManagerComponent?> entity, string name, [NotNullWhen(true)] ref Entity<SolutionComponent>? solutionEnt, [NotNullWhen(true)] out Solution? solution)
     {
-        if (!ResolveSolution(container, name, ref entity))
+        if (!ResolveSolution(entity, name, ref solutionEnt))
         {
             solution = null;
             return false;
         }
 
-        solution = entity.Value.Comp.Solution;
+        solution = solutionEnt.Value.Comp.Solution;
         return true;
     }
 
-    /// <inheritdoc cref="ResolveSolution"/>
+    /// <inheritdoc cref="ResolveSolution(Entity{SolutionManagerComponent?}, string, ref Entity{SolutionComponent}?, out Solution?)"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool ResolveSolution(Entity<SolutionManagerComponent?> container, string name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity)
     {
@@ -142,69 +143,71 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// Attempts to fetch a solution entity associated with an entity.
     /// </summary>
     /// <remarks>
-    /// If the solution entity will be frequently accessed please use the equivalent <see cref="ResolveSolution"/> method and cache the result.
+    /// If the solution entity will be frequently accessed please use the equivalent
+    /// <see cref="ResolveSolution(Entity{SolutionManagerComponent?}, string, ref Entity{SolutionComponent}?, out Solution?)"/>
+    /// method and cache the result.
     /// </remarks>
-    /// <param name="container">The entity the solution entity should be associated with.</param>
+    /// <param name="entity">The entity the solution entity should be associated with.</param>
     /// <param name="name">The name of the solution entity to fetch.</param>
-    /// <param name="entity">Returns the solution entity that was fetched.</param>
+    /// <param name="solutionEnt">Returns the solution entity that was fetched.</param>
     /// <param name="solution">Returns the solution state of the solution entity that was fetched.</param>
     /// /// <param name="errorOnMissing">Should we print an error if the solution specified by name is missing</param>
     /// <returns></returns>
     public bool TryGetSolution(
-        Entity<SolutionManagerComponent?> container,
+        Entity<SolutionManagerComponent?> entity,
         string name,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEnt,
         [NotNullWhen(true)] out Solution? solution,
         bool errorOnMissing = false)
     {
-        if (!TryGetSolution(container, name, out entity, errorOnMissing: errorOnMissing))
+        if (!TryGetSolution(entity, name, out solutionEnt, errorOnMissing: errorOnMissing))
         {
             solution = null;
             return false;
         }
 
-        solution = entity.Value.Comp.Solution;
+        solution = solutionEnt.Value.Comp.Solution;
         return true;
     }
 
-    /// <inheritdoc cref="TryGetSolution"/>
+    /// <inheritdoc cref="TryGetSolution(Entity{SolutionManagerComponent?},string,out Entity{SolutionComponent}?, out Solution?, bool)"/>
     public bool TryGetSolution(
-        Entity<SolutionManagerComponent?> container,
+        Entity<SolutionManagerComponent?> entity,
         string name,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEnt,
         bool errorOnMissing = false)
     {
         // use connected container instead of entity from arguments, if it exists.
-        entity = null;
+        solutionEnt = null;
 
         var ev = new GetConnectedContainerEvent();
-        RaiseLocalEvent(container, ref ev);
+        RaiseLocalEvent(entity, ref ev);
         if (ev.ContainerEntity.HasValue)
-            container = ev.ContainerEntity.Value;
+            entity = ev.ContainerEntity.Value;
 
-        if (_solutionQuery.TryComp(container, out var comp) && comp.Id == name)
+        if (_solutionQuery.TryComp(entity, out var comp) && comp.Id == name)
         {
-            entity = (container.Owner, comp);
+            solutionEnt = (entity.Owner, comp);
             return true;
         }
 
-        if (!_solutionManagerQuery.Resolve(container, ref container.Comp, false)) // TODO: LOGMISSING: TRUE, ONLY HERE SO I CAN DEBUG YAML CHANGES
+        if (!_solutionManagerQuery.Resolve(entity, ref entity.Comp, false)) // TODO: LOGMISSING: TRUE, ONLY HERE SO I CAN DEBUG YAML CHANGES
             return false;
 
-        if (container.Comp.Solutions.TryGetValue(name, out var solution))
+        if (entity.Comp.Solutions.TryGetValue(name, out var solution))
         {
             var attemptEv = new SolutionAccessAttemptEvent(name);
-            RaiseLocalEvent(container, ref attemptEv);
+            RaiseLocalEvent(entity, ref attemptEv);
 
             if (attemptEv.Cancelled)
                 return false;
 
-            entity = solution;
+            solutionEnt = solution;
             return true;
         }
 
         if (errorOnMissing)
-            Log.Error($"{ToPrettyString(container)} does not have a solution with ID: {name}");
+            Log.Error($"{ToPrettyString(entity)} does not have a solution with ID: {name}");
 
         return false;
     }
@@ -366,8 +369,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="mixerComponent"></param>
     public void UpdateChemicals(Entity<SolutionComponent> soln, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
     {
-        Dirty(soln);
-
         var (uid, comp) = soln;
         var solution = comp.Solution;
 
@@ -386,6 +387,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var changedEv = new SolutionChangedEvent(soln);
         RaiseLocalEvent(uid, ref changedEv);
+        Dirty(soln);
     }
 
     public void UpdateAppearance(Entity<SolutionComponent, AppearanceComponent?> soln)
@@ -867,13 +869,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionShutdown(Entity<SolutionComponent> entity, ref ComponentShutdown args)
     {
-        RemoveAllSolution(entity);
+        // If we are contained within another entity, update that entity. Otherwise, don't update if we're being deleted.
+        if (HasComp<ContainedSolutionComponent>(entity) || !Terminating(entity))
+            RemoveAllSolution(entity);
     }
 
     private void OnHandleState(Entity<SolutionComponent> entity, ref AfterAutoHandleStateEvent args)
     {
-        var ev = new SolutionChangedEvent(entity);
-        RaiseLocalEvent(entity, ref ev);
+        UpdateChemicals(entity, false);
     }
 
     /// <summary>
@@ -1104,7 +1107,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         contained.Container = entity.Owner;
 
         // Throw if we already have a solution with the same ID. Only throw on server to avoid prediction causing issues.
-        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)) && Net.IsServer)
+        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)))
             Log.Error($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
     }
 

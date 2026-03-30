@@ -347,6 +347,7 @@
 - type: entity
   parent: Solution
   id: SolutionLungGas # TODO: Metabolize directly from gasses :(
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: Lung
@@ -395,6 +396,7 @@
 - type: entity
   parent: Solution
   id: SolutionStomach
+  categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: stomach

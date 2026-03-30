@@ -43,6 +43,7 @@
   - type: PhysicalComposition
 
 - type: entity
+  abstract: true
   parent: [SolutionWelder, SolutionToolVeryTiny]
   id: SolutionLighter
   components:
