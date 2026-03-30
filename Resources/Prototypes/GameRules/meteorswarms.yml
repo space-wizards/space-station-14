@@ -37,8 +37,8 @@
     - id: GameRuleCowSwarm
     - id: GameRulePotatoSwarm
     - id: GameRuleFunSwarm
-    - id: GameRuleMeteorFleshSwarm
-    - id: GameRuleMeteorKudzuSwarm
+    - id: MeteorFleshSwarm
+    - id: MeteorKudzuSwarm
     - id: ImmovableRodSpawn
 
 - type: weightedRandomEntity
@@ -344,7 +344,7 @@
 
 - type: entity
   parent: GameRuleMeteorSwarm
-  id: GameRuleMeteorFleshSwarm
+  id: MeteorFleshSwarm
   components:
   - type: StationEvent
     weight: 4
@@ -362,7 +362,7 @@
 
 - type: entity
   parent: GameRuleMeteorSwarm
-  id: GameRuleMeteorKudzuSwarm
+  id: MeteorKudzuSwarm
   components:
   - type: StationEvent
     weight: 5
