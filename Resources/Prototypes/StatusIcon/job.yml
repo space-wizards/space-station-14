@@ -358,6 +358,7 @@
     sprite: *icon-rsi
     state: Passenger
   jobName: job-name-passenger
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -366,6 +367,7 @@
     sprite: *icon-rsi
     state: Visitor
   jobName: job-name-visitor
+  isCrewJob: false
 
 # Silicon
 
