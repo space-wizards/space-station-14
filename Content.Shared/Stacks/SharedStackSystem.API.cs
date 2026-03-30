@@ -13,6 +13,7 @@ public abstract partial class SharedStackSystem
     /// Gets or spawns an entity with a stack count of 1.
     /// Useful when you don't know if something is a stack, and want to make sure you just have a single entity.
     /// </summary>
+    /// <remarks>This uses predicted spawn, so it might be dangerous</remarks>
     /// <param name="stackEnt">An entity to pop one count off the stack.</param>
     /// <returns>An entity with a stack count of 1, or a non-stack.</returns>
     [PublicAPI]
@@ -23,7 +24,8 @@ public abstract partial class SharedStackSystem
             return stackEnt.Owner;
 
         TryUse(stackEnt, 1);
-        return SpawnNextToOrDrop(stackEnt.Comp.StackTypeId, stackEnt.Owner);
+        var stackId = _prototype.Index(stackEnt.Comp.StackTypeId);
+        return PredictedSpawnNextToOrDrop(stackId.Spawn, stackEnt.Owner);
     }
 
     #endregion
