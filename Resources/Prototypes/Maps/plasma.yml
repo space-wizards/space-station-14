@@ -60,9 +60,9 @@
             CargoTechnician: [ 4, 6 ]
             #civilian (3 - 4+)
             Passenger: [ -1, -1 ]  #infinite, the tiders yearn for the mines
-            Clown: [ 1, 2 ] # this might be fun!
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            Clown: [ 3, 3 ] # this might be fun!
+            Mime: [ 2, 2 ]
+            Musician: [ 2, 2 ]
             #silicon (3 - 5)
             Borg: [ 2, 4 ]
             StationAi: [ 1, 1 ]

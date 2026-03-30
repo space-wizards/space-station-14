@@ -57,9 +57,9 @@
             CargoTechnician: [ 4, 4 ]
             #civilian
             Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            Clown: [ 3, 3 ]
+            Mime: [ 2, 2 ]
+            Musician: [ 2, 2 ]
             Reporter: [ 2, 2 ]
             #silicon
             StationAi: [ 1, 1 ]

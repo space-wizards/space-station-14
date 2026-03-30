@@ -57,7 +57,7 @@
           CargoTechnician: [ 2, 2 ]
           #civilian (3+)
           Passenger: [ -1, -1 ] #infinite, not counted
-          Clown: [ 1, 1 ]
+          Clown: [ 2, 2 ]
           Mime: [ 1, 1 ]
           Musician: [ 1, 1 ]
           #silicon (3)
