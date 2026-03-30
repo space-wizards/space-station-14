@@ -146,6 +146,7 @@ public sealed partial class StationAiOverlay : Overlay
 
     protected override void DisposeBehavior()
     {
+        _cfg.UnsubValueChanged(CCVars.DisableAiStatic, OnAiStaticChanged);
         _resources.Dispose();
 
         base.DisposeBehavior();
