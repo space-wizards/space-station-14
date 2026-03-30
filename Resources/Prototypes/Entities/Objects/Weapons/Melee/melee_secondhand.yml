@@ -1,0 +1,36 @@
+# Second-hand (worn/damaged) melee weapon variants for the Second Hand uplink tab.
+
+# Worn energy sword: loose power connector, missing handle, weak power cell.
+- type: entity
+  parent: EnergySword
+  id: EnergySwordWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: LoosePowerConnectorDefect
+    prob: 0.75
+  - type: ReducedDamageDefect
+    prob: 0.70
+  - type: DamageUserDefect
+    prob: 0.15
+    damage:
+      types:
+        Heat: 5
+
+# Worn energy dagger: same defect pool as energy sword.
+- type: entity
+  parent: EnergyDagger
+  id: EnergyDaggerWorn
+  suffix: Second Hand, E-Dagger
+  components:
+  - type: RandomDefects
+  - type: LoosePowerConnectorDefect
+    prob: 0.75
+  - type: ReducedDamageDefect
+    prob: 0.70
+  - type: DamageUserDefect
+    prob: 0.15
+    damage:
+      types:
+        Heat: 5
+

@@ -1,0 +1,33 @@
+# Second-hand (defective) tool variants for the Second Hand uplink tab.
+
+# Worn emag: only 1 charge at a time instead of the normal 3.
+# The contacts are corroded and the power circuit is failing.
+- type: entity
+  parent: Emag
+  id: EmagWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: SimpleDefect
+    defectLabel: "corroded contacts"
+  - type: StaticShockDefect
+    prob: 0.80
+    shockChance: 1.0
+  - type: LimitedCharges
+    maxCharges: 1
+
+# Worn access breaker: degraded authentication chip, shocks the user on each use.
+# Retains only 1 charge at a time (recharges slowly via AutoRecharge, same as the base).
+- type: entity
+  parent: AccessBreaker
+  id: AccessBreakerWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: SimpleDefect
+    defectLabel: "degraded authentication chip"
+  - type: StaticShockDefect
+    prob: 0.80
+    shockChance: 1.0
+  - type: LimitedCharges
+    maxCharges: 1

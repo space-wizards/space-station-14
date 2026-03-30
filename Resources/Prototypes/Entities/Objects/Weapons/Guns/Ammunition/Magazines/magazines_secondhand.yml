@@ -1,0 +1,141 @@
+# Second-hand (mixed-ammo) magazine variants for the Second Hand uplink tab.
+# Each spawns with a random round count and a weighted mix of compatible ammo types
+# (excluding armor-piercing), in shuffled order. Free in the uplink.
+
+- type: entity
+  parent: MagazinePistolHighCapacity
+  id: MagazinePistolHighCapacityWorn
+  suffix: Second Hand
+  components:
+  - type: MixedAmmoFill
+    minFillFraction: 0.7
+    maxFillFraction: 1.0
+    entries:
+      - proto: CartridgePistol
+        weight: 5
+      - proto: CartridgePistolIncendiary
+        weight: 2
+      - proto: CartridgePistolUranium
+        weight: 1
+      - proto: CartridgePistolPractice
+        weight: 3
+      - proto: CartridgePistolFoam
+        weight: 2
+
+- type: entity
+  parent: MagazinePistolSubMachineGun
+  id: MagazinePistolSubMachineGunWorn
+  suffix: Second Hand
+  components:
+  - type: MixedAmmoFill
+    minFillFraction: 0.65
+    maxFillFraction: 1.0
+    entries:
+      - proto: CartridgePistol
+        weight: 5
+      - proto: CartridgePistolIncendiary
+        weight: 2
+      - proto: CartridgePistolUranium
+        weight: 1
+      - proto: CartridgePistolPractice
+        weight: 3
+      - proto: CartridgePistolFoam
+        weight: 2
+
+- type: entity
+  parent: MagazinePistolCaselessRifle
+  id: MagazinePistolCaselessRifleWorn
+  suffix: Second Hand
+  components:
+  - type: MixedAmmoFill
+    minFillFraction: 0.6
+    maxFillFraction: 1.0
+    entries:
+      - proto: CartridgeCaselessRifle
+        weight: 5
+      - proto: CartridgeCaselessRiflePractice
+        weight: 2
+      - proto: CartridgeCaselessRifleFoam
+        weight: 2
+
+- type: entity
+  parent: MagazineShotgun
+  id: MagazineShotgunWorn
+  suffix: Second Hand
+  components:
+  - type: MixedAmmoFill
+    minFillFraction: 0.5
+    maxFillFraction: 1.0
+    entries:
+      - proto: ShellShotgun
+        weight: 5
+      - proto: ShellShotgunSlug
+        weight: 2
+      - proto: ShellShotgunIncendiary
+        weight: 2
+      - proto: ShellShotgunBeanbag
+        weight: 2
+      - proto: ShellShotgunUranium
+        weight: 1
+      - proto: ShellShotgunPractice
+        weight: 2
+
+- type: entity
+  parent: MagazineShotgunSlug
+  id: MagazineShotgunSlugWorn
+  suffix: Second Hand
+  components:
+  - type: MixedAmmoFill
+    minFillFraction: 0.5
+    maxFillFraction: 1.0
+    entries:
+      - proto: ShellShotgunSlug
+        weight: 5
+      - proto: ShellShotgun
+        weight: 2
+      - proto: ShellShotgunIncendiary
+        weight: 1
+      - proto: ShellShotgunBeanbag
+        weight: 2
+      - proto: ShellShotgunPractice
+        weight: 2
+
+- type: entity
+  parent: MagazineRifle
+  id: MagazineRifleWorn
+  suffix: Second Hand
+  components:
+  - type: MixedAmmoFill
+    minFillFraction: 0.6
+    maxFillFraction: 1.0
+    entries:
+      - proto: CartridgeRifle
+        weight: 5
+      - proto: CartridgeRifleIncendiary
+        weight: 2
+      - proto: CartridgeRifleUranium
+        weight: 1
+      - proto: CartridgeRiflePractice
+        weight: 2
+      - proto: CartridgeRifleFoam
+        weight: 2
+
+- type: entity
+  parent: MagazineBoxLightRifle
+  id: MagazineBoxLightRifleWorn
+  suffix: Second Hand
+  components:
+  - type: MixedAmmoFill
+    minFillFraction: 0.5
+    maxFillFraction: 1.0
+    entries:
+      - proto: CartridgeLightRifle
+        weight: 5
+      - proto: CartridgeLightRifleIncendiary
+        weight: 2
+      - proto: CartridgeLightRifleUranium
+        weight: 1
+      - proto: CartridgeLightRiflePractice
+        weight: 2
+      - proto: CartridgeLightRifleFoam
+        weight: 2

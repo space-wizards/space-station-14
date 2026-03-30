@@ -76,4 +76,14 @@ public abstract class SharedExplosionSystem : EntitySystem
     public virtual void ReloadMap()
     {
     }
+
+    /// <summary>
+    /// Directly sets the yield parameters of an <see cref="ExplosiveComponent"/>. Used by defect systems
+    /// that need to randomize explosive intensity without having direct write access to the component.
+    /// </summary>
+    public void SetExplosiveYield(Entity<ExplosiveComponent> explosive, float totalIntensity, float maxIntensity)
+    {
+        explosive.Comp.TotalIntensity = totalIntensity;
+        explosive.Comp.MaxIntensity = maxIntensity;
+    }
 }

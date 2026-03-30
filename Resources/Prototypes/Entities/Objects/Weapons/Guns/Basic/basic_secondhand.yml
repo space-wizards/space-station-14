@@ -1,0 +1,13 @@
+# Second-hand (defective) basic energy weapon variants for the Second Hand uplink tab.
+
+# Worn energy crossbow: 3x longer recharge cooldown (15s instead of 5s).
+- type: entity
+  parent: WeaponEnergyCrossbow
+  id: WeaponEnergyCrossbowWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: SimpleDefect
+    defectLabel: "failing charge coil"
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 15

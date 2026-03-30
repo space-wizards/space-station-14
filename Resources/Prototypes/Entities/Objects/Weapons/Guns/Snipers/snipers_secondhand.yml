@@ -1,0 +1,55 @@
+# Second-hand (worn/damaged) sniper rifle variants for the Second Hand uplink tab.
+
+# Worn Hristov: stress fractures, bent bipod, drifted sights.
+- type: entity
+  parent: WeaponSniperHristov
+  id: WeaponSniperHristovWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: Gun
+    fireRate: 0.3
+  - type: GunWieldBonus
+    minAngle: -2
+    maxAngle: -4
+  - type: GunJamDefect
+    prob: 0.70
+    jamChance: 0.15
+  - type: GunSpreadDefect
+    prob: 0.70
+    minAngleMin: 1
+    minAngleMax: 6
+    maxAngleMin: 6
+    maxAngleMax: 14
+  - type: BackfireDefect
+    prob: 0.10
+    backfireChance: 0.06
+    totalIntensity: 0.6
+    maxIntensity: 0.5
+
+# Worn Mosin: cosmoline-gummed action, cracked stock, sticky bolt.
+- type: entity
+  parent: WeaponSniperMosin
+  id: WeaponSniperMosinWorn
+  suffix: Second Hand
+  components:
+  - type: RandomDefects
+  - type: Gun
+    fireRate: 0.5
+  - type: GunWieldBonus
+    minAngle: -1
+    maxAngle: -2
+  - type: GunJamDefect
+    prob: 0.70
+    jamChance: 0.22
+  - type: GunSpreadDefect
+    prob: 0.70
+    minAngleMin: 0.5
+    minAngleMax: 4
+    maxAngleMin: 4
+    maxAngleMax: 9
+  - type: BackfireDefect
+    prob: 0.10
+    backfireChance: 0.06
+    totalIntensity: 0.75
+    maxIntensity: 0.6

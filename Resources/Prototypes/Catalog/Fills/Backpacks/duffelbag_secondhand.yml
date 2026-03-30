@@ -1,0 +1,31 @@
+# Second-hand (incomplete) kit variants for the Second Hand uplink tab.
+
+- type: entity
+  parent: ClothingBackpackChameleon
+  id: ClothingBackpackChameleonFillAgentWorn
+  suffix: Fill, Second Hand
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitChameleon   # always
+        - id: ClothingOuterChameleon             # always
+        - id: ClothingNeckChameleon
+          prob: 0.65
+        - id: ClothingMaskGasChameleon
+          prob: 0.65
+        - id: ClothingHeadHatChameleon
+          prob: 0.65
+        - id: ClothingHandsChameleon
+          prob: 0.65
+        - id: ClothingEyesChameleon
+          prob: 0.65
+        - id: ClothingHeadsetChameleon
+          prob: 0.65
+        - id: ClothingShoesChameleon
+          prob: 0.65
+        - id: ChameleonAgentPDA
+          prob: 0.5
+        - id: ChameleonControllerImplanter
+          prob: 0.35

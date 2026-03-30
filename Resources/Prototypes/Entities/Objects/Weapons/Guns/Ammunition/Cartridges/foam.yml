@@ -1,0 +1,64 @@
+# Foam dart cartridges — standard-caliber casings with a foam dart projectile.
+# Used in second-hand (worn) magazines to create mixed ammo loads.
+# These are categorized as HideSpawnMenu so they don't clutter the spawn menu.
+
+- type: entity
+  parent: BaseCartridgePistol
+  id: CartridgePistolFoam
+  categories: [ HideSpawnMenu ]
+  name: cartridge (.35 auto foam)
+  description: A .35 auto casing with a foam dart wedged in. Whoever loaded this has a very particular sense of humor.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletFoam
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#f7931e"
+
+- type: entity
+  parent: BaseCartridgeRifle
+  id: CartridgeRifleFoam
+  categories: [ HideSpawnMenu ]
+  name: cartridge (.20 rifle foam)
+  description: A rifle cartridge casing with a foam dart inside it. Someone had very specific ideas about ammo economy.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletFoam
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#f7931e"
+
+- type: entity
+  parent: BaseCartridgeLightRifle
+  id: CartridgeLightRifleFoam
+  categories: [ HideSpawnMenu ]
+  name: cartridge (.30 light rifle foam)
+  description: A light rifle cartridge with a foam dart tip. At these velocities it's still going to leave a bruise.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletFoam
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#f7931e"
+
+- type: entity
+  parent: BaseCartridgeCaselessRifle
+  id: CartridgeCaselessRifleFoam
+  categories: [ HideSpawnMenu ]
+  name: cartridge (.25 caseless foam)
+  description: A caseless propellant block with a foam dart fused into the tip. The engineering is questionable but it's technically a projectile.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletFoam
