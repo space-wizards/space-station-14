@@ -1092,6 +1092,16 @@
   categories:
   - UplinkDisruption
 
+- type: listing
+  id: UplinkTravelCamera
+  name: uplink-travel-camera-name
+  description: uplink-travel-camera-desc
+  productEntity: TravelCamera
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkDeception
+
 # Note: Removed for the time being until surgery/newmed is added. Considered bloat until then.
 # - type: listing
 #   id: UplinkDuffelSurgery
@@ -2268,13 +2278,3 @@
   - !type:BuyerJobCondition
     whitelist:
     - Lawyer
-
-- type: listing
-  id: UplinkTravelCamera
-  name: uplink-travel-camera-name
-  description: uplink-travel-camera-desc
-  productEntity: TravelCamera
-  cost:
-    Telecrystal: 2
-  categories:
-  - UplinkDisruption

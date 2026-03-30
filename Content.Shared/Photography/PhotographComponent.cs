@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Photography;
 
 /// <summary>
-/// Represents the photograph data on an picture.
+/// Represents the photograph data on a picture.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PhotographComponent : Component
@@ -21,4 +21,10 @@ public sealed partial class PhotographComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? NameText;
+
+    /// <summary>
+    ///  Indicates wether this is a photograph of a photograph or not
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Recursive = false;
 }
