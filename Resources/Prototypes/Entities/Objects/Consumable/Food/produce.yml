@@ -413,7 +413,7 @@
       Taco: Mimana
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionFood, SolutionVeryTiny, BaseItem]
   id: TrashBananaPeel
   name: banana peel
   components:

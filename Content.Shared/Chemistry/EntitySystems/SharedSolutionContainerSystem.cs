@@ -89,14 +89,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         InitializeContainerManager();
 
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnSolutionStartup);
+        SubscribeLocalEvent<SolutionComponent, MapInitEvent>(OnSolutionInit);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
         SubscribeLocalEvent<SolutionComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
 
-        SubscribeLocalEvent<SolutionManagerComponent, ComponentStartup>(OnManagerStartup);
+        SubscribeLocalEvent<SolutionManagerComponent, MapInitEvent>(OnManagerInit);
         SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
@@ -341,16 +341,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
 
-    public FixedPoint2 GetTotalPrototypeQuantity(EntityUid owner, string reagentId)
+    public FixedPoint2 GetTotalPrototypeQuantity(Entity<SolutionManagerComponent?> owner, string reagentId)
     {
         var reagentQuantity = FixedPoint2.New(0);
-        if (Exists(owner)
-            && TryComp(owner, out SolutionManagerComponent? managerComponent))
+        if (Exists(owner))
         {
-            foreach (var (_, soln) in EnumerateSolutions((owner, managerComponent)))
+            foreach (var (_, solution) in EnumerateSolutions(owner))
             {
-                var solution = soln.Comp.Solution;
-                reagentQuantity += solution.GetTotalPrototypeQuantity(reagentId);
+                reagentQuantity += solution.Comp.Solution.GetTotalPrototypeQuantity(reagentId);
             }
         }
 
@@ -854,7 +852,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         entity.Comp.Solution.ValidateSolution();
     }
 
-    private void OnSolutionStartup(Entity<SolutionComponent> entity, ref ComponentStartup args)
+    private void OnSolutionInit(Entity<SolutionComponent> entity, ref MapInitEvent args)
     {
         UpdateChemicals(entity);
     }
@@ -1071,7 +1069,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// We want all our solutions spawned before MapInit.
     /// They should only ever be attached to this entity so spawning them before MapInit should be fine.
     /// </remarks>
-    private void OnManagerStartup(Entity<SolutionManagerComponent> entity, ref ComponentStartup args)
+    private void OnManagerInit(Entity<SolutionManagerComponent> entity, ref MapInitEvent args)
     {
         var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
         foreach (var solution in entity.Comp.SolutionEnts)

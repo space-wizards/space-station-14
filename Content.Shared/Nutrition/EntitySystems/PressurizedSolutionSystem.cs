@@ -30,7 +30,6 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PressurizedSolutionComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PressurizedSolutionComponent, ShakeEvent>(OnShake);
         SubscribeLocalEvent<PressurizedSolutionComponent, OpenableOpenedEvent>(OnOpened);
         SubscribeLocalEvent<PressurizedSolutionComponent, LandEvent>(OnLand);
@@ -242,10 +241,6 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     #endregion
 
     #region Event Handlers
-    private void OnMapInit(Entity<PressurizedSolutionComponent> entity, ref MapInitEvent args)
-    {
-        RollSprayThreshold(entity);
-    }
 
     private void OnOpened(Entity<PressurizedSolutionComponent> entity, ref OpenableOpenedEvent args)
     {

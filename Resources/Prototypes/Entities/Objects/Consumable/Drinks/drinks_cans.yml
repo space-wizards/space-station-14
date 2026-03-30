@@ -39,12 +39,13 @@
   suffix: Full # :)
 
 - type: entity
-  parent: SolutionCompositeSmallStackable
+  parent: SolutionComposite
   id: SolutionCanComposite
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
+      maxVol: 5
       reagents: # 5u -> 1/2 steel sheet (10u)
       - ReagentId: Aluminium # Fun fact: soda can makeup is approx. 75% aluminium and 25% tin/iron.
         Quantity: 4

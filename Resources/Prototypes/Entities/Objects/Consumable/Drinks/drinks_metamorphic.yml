@@ -19,7 +19,6 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
-  - type: TransformableContainer
 
 - type: entity
   parent: DrinkGlass
@@ -340,7 +339,7 @@
   - type: Solution
     solution:
       reagents:
-      - ReagentId: BloodyMary
+      - ReagentId: BlueHawaiian
         Quantity: 60
   - type: Icon
     sprite: Objects/Consumable/Drinks/bluehawaiian.rsi

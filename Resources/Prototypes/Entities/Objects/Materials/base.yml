@@ -10,6 +10,7 @@
   - type: Item
     sprite: Objects/Materials/materials.rsi
     size: Normal
+  - type: Material
   - type: Tag
     tags:
     - RawMaterial

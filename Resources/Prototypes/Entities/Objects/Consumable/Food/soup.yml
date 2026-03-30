@@ -765,15 +765,13 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 10
+        Quantity: 12
       - ReagentId: Vitamin
         Quantity: 5
       - ReagentId: Omnizine
         Quantity: 3
       - ReagentId: SpaceDrugs
         Quantity: 10
-      - ReagentId: Nutriment
-        Quantity: 2
       - ReagentId: Histamine
         Quantity: 3
 

@@ -86,7 +86,7 @@
         Quantity: 120
 
 - type: entity
-  parent: [SolutionFireExtinguisherLarge, BaseFireExtinguisher]
+  parent: [SolutionFireExtinguisherLarge, FireExtinguisher]
   id: BorgFireExtinguisher
   name: maneuvering jet
   description: Based on fire extinguisher technology, the maneuvering jet is... well yes, its just a bigger fire extinguisher.

@@ -137,7 +137,7 @@
     solution:
       reagents:
       - ReagentId: Mopwata
-        Quantity: 60
+        Quantity: 50 # Extra space for the random fill
   - type: RandomFillSolution
     solution: drink
     weightedRandomId: RandomFillMopwata

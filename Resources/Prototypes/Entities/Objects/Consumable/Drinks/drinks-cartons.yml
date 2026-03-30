@@ -81,6 +81,8 @@
       reagents:
       - ReagentId: JuiceLime
         Quantity: 60
+  - type: Tag
+    tags: [ ]
 
 - type: entity
   parent: DrinkCartonSmallBase
@@ -101,6 +103,8 @@
       reagents:
       - ReagentId: JuiceOrange
         Quantity: 60
+  - type: Tag
+    tags: [ ]
 
 - type: entity
   parent: DrinkCartonSmallBase
@@ -121,6 +125,8 @@
       reagents:
       - ReagentId: JuiceTomato
         Quantity: 60
+  - type: Tag
+    tags: []
 
 - type: entity
   parent: DrinkCartonSmallBaseFull
@@ -155,6 +161,8 @@
       reagents:
       - ReagentId: Cream
         Quantity: 60
+  - type: Tag
+    tags: [ ]
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonSmallBaseFull]
@@ -205,6 +213,8 @@
       reagents:
       - ReagentId: Milk
         Quantity: 120
+  - type: Tag
+    tags: [ ]
 
 - type: entity
   parent: DrinkCartonBase
@@ -225,6 +235,8 @@
       reagents:
       - ReagentId: MilkSoy
         Quantity: 120
+  - type: Tag
+    tags: [ ]
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonBase]
@@ -246,6 +258,8 @@
       reagents:
       - ReagentId: MilkOat
         Quantity: 120
+  - type: Tag
+    tags: [ ]
 
 # Large cartons
 
