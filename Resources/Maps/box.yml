@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 267.3.0
+  engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/07/2025 10:31:27
-  entityCount: 28792
+  time: 12/07/2025 22:21:20
+  entityCount: 28813
 maps:
 - 780
 grids:
@@ -10948,6 +10948,7 @@ entities:
     - type: SpreaderGrid
     - type: GridPathfinding
     - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
   - uid: 11906
     components:
     - type: MetaData
@@ -11002,6 +11003,7 @@ entities:
     - type: SpreaderGrid
     - type: GridPathfinding
     - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 19976
@@ -18095,6 +18097,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 23.5,-22.5
       parent: 8364
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
     - type: Fixtures
       fixtures: {}
   - uid: 14432
@@ -18164,13 +18169,26 @@ entities:
   - uid: 16461
     components:
     - type: MetaData
-      name: Telecomms APC
+      name: Telecoms Viewing APC
     - type: Transform
       pos: -8.5,-54.5
       parent: 8364
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
     - type: PowerNetworkBattery
       loadingNetworkDemand: 10
       supplyRampPosition: 1.347667
+    - type: Fixtures
+      fixtures: {}
+  - uid: 16487
+    components:
+    - type: MetaData
+      name: Telecoms APC
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -13.5,-58.5
+      parent: 8364
     - type: Fixtures
       fixtures: {}
   - uid: 17070
@@ -18191,6 +18209,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 23.5,-33.5
       parent: 8364
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
     - type: Fixtures
       fixtures: {}
   - uid: 17390
@@ -18222,6 +18243,9 @@ entities:
     - type: Transform
       pos: 30.5,-26.5
       parent: 8364
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
     - type: PowerNetworkBattery
       loadingNetworkDemand: 55
       currentReceiving: 55.01975
@@ -18260,6 +18284,15 @@ entities:
       currentReceiving: 19.980549
       currentSupply: 20
       supplyRampPosition: 0.019451141
+    - type: Fixtures
+      fixtures: {}
+  - uid: 19109
+    components:
+    - type: MetaData
+      name: Medbay Cryo APC
+    - type: Transform
+      pos: 29.5,-31.5
+      parent: 8364
     - type: Fixtures
       fixtures: {}
   - uid: 19164
@@ -36409,7 +36442,7 @@ entities:
   - uid: 16462
     components:
     - type: Transform
-      pos: -7.5,-54.5
+      pos: -10.5,-55.5
       parent: 8364
   - uid: 16463
     components:
@@ -36469,7 +36502,7 @@ entities:
   - uid: 16474
     components:
     - type: Transform
-      pos: -9.5,-53.5
+      pos: -10.5,-51.5
       parent: 8364
   - uid: 16475
     components:
@@ -36531,11 +36564,6 @@ entities:
     - type: Transform
       pos: -15.5,-53.5
       parent: 8364
-  - uid: 16487
-    components:
-    - type: Transform
-      pos: -9.5,-52.5
-      parent: 8364
   - uid: 16488
     components:
     - type: Transform
@@ -36550,11 +36578,6 @@ entities:
     components:
     - type: Transform
       pos: -9.5,-49.5
-      parent: 8364
-  - uid: 16491
-    components:
-    - type: Transform
-      pos: -9.5,-54.5
       parent: 8364
   - uid: 16492
     components:
@@ -40174,12 +40197,7 @@ entities:
   - uid: 19108
     components:
     - type: Transform
-      pos: 36.5,-33.5
-      parent: 8364
-  - uid: 19109
-    components:
-    - type: Transform
-      pos: 35.5,-33.5
+      pos: -7.5,-54.5
       parent: 8364
   - uid: 19110
     components:
@@ -41385,6 +41403,11 @@ entities:
     components:
     - type: Transform
       pos: 89.5,-30.5
+      parent: 8364
+  - uid: 19853
+    components:
+    - type: Transform
+      pos: 29.5,-32.5
       parent: 8364
   - uid: 19893
     components:
@@ -45410,6 +45433,21 @@ entities:
     components:
     - type: Transform
       pos: -15.5,46.5
+      parent: 8364
+  - uid: 28794
+    components:
+    - type: Transform
+      pos: 29.5,-31.5
+      parent: 8364
+  - uid: 28812
+    components:
+    - type: Transform
+      pos: -13.5,-57.5
+      parent: 8364
+  - uid: 28813
+    components:
+    - type: Transform
+      pos: -13.5,-58.5
       parent: 8364
 - proto: CableApcStack
   entities:
@@ -53757,6 +53795,11 @@ entities:
     - type: Transform
       pos: -14.5,25.5
       parent: 8364
+  - uid: 9144
+    components:
+    - type: Transform
+      pos: -7.5,-54.5
+      parent: 8364
   - uid: 9323
     components:
     - type: Transform
@@ -58082,6 +58125,11 @@ entities:
     - type: Transform
       pos: 0.5,-56.5
       parent: 8364
+  - uid: 16491
+    components:
+    - type: Transform
+      pos: -7.5,-53.5
+      parent: 8364
   - uid: 16513
     components:
     - type: Transform
@@ -59616,11 +59664,6 @@ entities:
     components:
     - type: Transform
       pos: -8.5,-54.5
-      parent: 8364
-  - uid: 19853
-    components:
-    - type: Transform
-      pos: -7.5,-54.5
       parent: 8364
   - uid: 19927
     components:
@@ -62036,6 +62079,91 @@ entities:
     components:
     - type: Transform
       pos: -10.5,40.5
+      parent: 8364
+  - uid: 28795
+    components:
+    - type: Transform
+      pos: 26.5,-33.5
+      parent: 8364
+  - uid: 28796
+    components:
+    - type: Transform
+      pos: 27.5,-33.5
+      parent: 8364
+  - uid: 28797
+    components:
+    - type: Transform
+      pos: 28.5,-33.5
+      parent: 8364
+  - uid: 28798
+    components:
+    - type: Transform
+      pos: 29.5,-33.5
+      parent: 8364
+  - uid: 28799
+    components:
+    - type: Transform
+      pos: 29.5,-32.5
+      parent: 8364
+  - uid: 28800
+    components:
+    - type: Transform
+      pos: 29.5,-31.5
+      parent: 8364
+  - uid: 28801
+    components:
+    - type: Transform
+      pos: -8.5,-53.5
+      parent: 8364
+  - uid: 28802
+    components:
+    - type: Transform
+      pos: -9.5,-53.5
+      parent: 8364
+  - uid: 28803
+    components:
+    - type: Transform
+      pos: -10.5,-53.5
+      parent: 8364
+  - uid: 28804
+    components:
+    - type: Transform
+      pos: -11.5,-53.5
+      parent: 8364
+  - uid: 28805
+    components:
+    - type: Transform
+      pos: -12.5,-53.5
+      parent: 8364
+  - uid: 28806
+    components:
+    - type: Transform
+      pos: -13.5,-53.5
+      parent: 8364
+  - uid: 28807
+    components:
+    - type: Transform
+      pos: -13.5,-54.5
+      parent: 8364
+  - uid: 28808
+    components:
+    - type: Transform
+      pos: -13.5,-55.5
+      parent: 8364
+  - uid: 28809
+    components:
+    - type: Transform
+      pos: -13.5,-56.5
+      parent: 8364
+  - uid: 28810
+    components:
+    - type: Transform
+      pos: -13.5,-57.5
+      parent: 8364
+  - uid: 28811
+    components:
+    - type: Transform
+      pos: -13.5,-58.5
       parent: 8364
 - proto: CableMVStack
   entities:
@@ -136189,8 +136317,6 @@ entities:
     - type: Transform
       pos: -40.5,5.5
       parent: 8364
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 13472
     components:
     - type: Transform
@@ -136206,15 +136332,11 @@ entities:
     - type: Transform
       pos: -8.5,-34.5
       parent: 8364
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 16293
     components:
     - type: Transform
       pos: -8.5,-38.5
       parent: 8364
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 16912
     components:
     - type: Transform
@@ -180669,8 +180791,6 @@ entities:
     - type: Transform
       pos: -57.5,3.5
       parent: 8364
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 15389
     components:
     - type: Transform

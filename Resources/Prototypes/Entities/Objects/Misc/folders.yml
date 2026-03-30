@@ -76,28 +76,31 @@
   id: BoxFolderFill # Include this as a parent prototype to add 0-5 random papers to a folder's inventory when spawned.
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-    - id: Paper
-      prob: 0.5
-    - id: PaperOffice
-      prob: 0.4
-    - id: Paper
-      prob: 0.3
-    - id: PaperOffice
-      prob: 0.2
-    - id: Paper
-      prob: 0.2
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Paper
+          prob: 0.5
+        - id: PaperOffice
+          prob: 0.4
+        - id: Paper
+          prob: 0.3
+        - id: PaperOffice
+          prob: 0.2
+        - id: Paper
+          prob: 0.2
 
 - type: entity
   abstract: true
   id: BoxFolderFillThreePapers # Like BoxFolderFill, but always has exactly three sheets of standard paper; use for things that should always be consistent, e.g roundstart items
   suffix: 3 papers
   components:
-  - type: StorageFill
-    contents:
-    - id: Paper
-      amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Paper
+        amount: 3
 
 - type: entity
   parent: [BoxFolderBaseEmpty, BoxFolderFill]

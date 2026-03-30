@@ -19,7 +19,7 @@ public sealed partial class CleanBloodstreamEntityEffectSystem : EntityEffectSys
     {
         var scale = args.Scale * args.Effect.CleanseRate;
 
-        _bloodstream.FlushChemicals((entity, entity), args.Effect.Excluded, scale);
+        _bloodstream.FlushChemicals((entity, entity), scale, args.Effect.Excluded);
     }
 }
 

@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using Content.Server.Destructible;
-using Content.Server.PowerCell;
 using Content.Shared.Speech.Components;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.PowerCell;
 using Content.Shared.Speech;
 using Robust.Shared.Random;
 
@@ -12,8 +14,10 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class DamagedSiliconAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -34,7 +38,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             }
             else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
-                currentChargeLevel = battery.CurrentCharge / battery.MaxCharge;
+                currentChargeLevel = _battery.GetChargeLevel(battery.Value.AsNullable());
             }
             currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
             // Corrupt due to low power (drops characters on longer messages)
@@ -50,7 +54,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             }
             else if (TryComp<DamageableComponent>(uid, out var damageable))
             {
-                damage = damageable.TotalDamage;
+                damage = _damageable.GetTotalDamage((uid, damageable));
             }
             // Corrupt due to damage (drop, repeat, replace with symbols)
             args.Message = CorruptDamage(args.Message, damage, ent);
