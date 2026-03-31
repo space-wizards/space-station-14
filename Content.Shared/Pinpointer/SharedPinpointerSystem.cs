@@ -33,10 +33,10 @@ public abstract partial class SharedPinpointerSystem : EntitySystem
 
         // TODO add doafter once the freeze is lifted
         args.Handled = true;
-        component.Target = args.Target;
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{args.User:player} set target of {uid:pinpointer} to {component.Target.Value:target}");
-        if (component.UpdateTargetName)
-            component.TargetName = component.Target == null ? null : Identity.Name(component.Target.Value, EntityManager);
+        ent.Comp.Target = args.Target;
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{args.User:player} set target of {ent.Owner:entity} to {ent.Comp.Target.Value:target}");
+        if (ent.Comp.UpdateTargetName)
+            ent.Comp.TargetName = ent.Comp.Target == null ? null : Identity.Name(ent.Comp.Target.Value, EntityManager);
     }
 
     /// <summary>
