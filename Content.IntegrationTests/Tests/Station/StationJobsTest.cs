@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Preferences.Managers;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Maps;
@@ -89,6 +90,7 @@ public sealed class StationJobsTest
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var preferencesManager = server.ResolveDependency<IServerPreferencesManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
@@ -104,21 +106,32 @@ public sealed class StationJobsTest
             }
         });
 
+        var jobPrioritiesA = new Dictionary<ProtoId<JobPrototype>, JobPriority>()
+        {
+            { "TAssistant", JobPriority.Medium },
+            { "TClown", JobPriority.Low },
+            { "TMime", JobPriority.High },
+        };
+        var jobPrioritiesB = new Dictionary<ProtoId<JobPrototype>, JobPriority>()
+        {
+            { "TCaptain", JobPriority.High },
+        };
+
+        var tideSessions = await pair.AddDummyPlayers(jobPrioritiesA, PlayerCount);
+        var capSessions = await pair.AddDummyPlayers(jobPrioritiesB, CaptainCount);
+        var allSessions = tideSessions.Concat(capSessions).ToList();
+        var allProfiles = allSessions.ToDictionary(
+            s => s.UserId,
+            s => (HumanoidCharacterProfile)preferencesManager.GetPreferences(s.UserId).SelectedCharacter
+        );
+
         await server.WaitAssertion(() =>
         {
-            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
-                .AddJob("TAssistant", JobPriority.Medium, PlayerCount)
-                .AddPreference("TClown", JobPriority.Low)
-                .AddPreference("TMime", JobPriority.High)
-                .WithPlayers(
-                    new Dictionary<NetUserId, HumanoidCharacterProfile>()
-                    .AddJob("TCaptain", JobPriority.High, CaptainCount)
-                );
-            Assert.That(fakePlayers, Is.Not.Empty);
+            Assert.That(allSessions, Is.Not.Empty);
 
             var start = new Stopwatch();
             start.Start();
-            var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+            var assigned = stationJobs.AssignJobs(allProfiles, stations);
             Assert.That(assigned, Is.Not.Empty);
             var time = start.Elapsed.TotalMilliseconds;
             logmill.Info($"Took {time} ms to distribute {TotalPlayers} players.");
