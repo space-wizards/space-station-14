@@ -31,6 +31,7 @@ namespace Content.Client.Lobby.UI
 
         public event Action<int>? SelectCharacter;
         public event Action<int>? DeleteCharacter;
+        public event Action? CreateCharacter;
 
         public CharacterSetupGui(HumanoidProfileEditor profileEditor)
         {
@@ -56,6 +57,7 @@ namespace Content.Client.Lobby.UI
             {
                 _preferencesManager.CreateCharacter(HumanoidCharacterProfile.Random());
                 ReloadCharacterPickers();
+                CreateCharacter?.Invoke();
                 args.Event.Handle();
             };
 

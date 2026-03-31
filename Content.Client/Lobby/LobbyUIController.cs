@@ -46,6 +46,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     private HumanoidCharacterProfile? EditedProfile => _profileEditor?.Profile;
 
+    /// <summary>
+    /// This is for things that need to update when character setup is changed but that are not
+    /// updated directly by ReloadCharacterSetup(). Currently this is just the late join window.
+    /// </summary>
+    public event Action? CharacterSetupChanged;
+
     private int? EditedSlot => _profileEditor?.CharacterSlot;
 
     public override void Initialize()
@@ -156,6 +162,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         profileEditor.SetProfile(
             _preferencesManager.Preferences?.SelectedCharacter,
             _preferencesManager.Preferences?.SelectedCharacterIndex);
+        CharacterSetupChanged?.Invoke();
     }
 
     /// <summary>
@@ -301,9 +308,17 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             }
             else
             {
-                // Only need to reload character pickers
+                // Only need to reload character pickers and things we don't handle directly
                 _characterSetup?.ReloadCharacterPickers();
+                CharacterSetupChanged?.Invoke();
             }
+        };
+
+        _characterSetup.CreateCharacter += () =>
+        {
+            // Don't need to reload the character setup itself, only other things which
+            // might be displaying characters, such as late join windows.
+            CharacterSetupChanged?.Invoke();
         };
 
         if (_stateManager.CurrentState is LobbyState lobby)
