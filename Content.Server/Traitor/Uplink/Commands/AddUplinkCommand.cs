@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -9,6 +10,7 @@ namespace Content.Server.Traitor.Uplink.Commands;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class AddUplinkCommand : LocalizedEntityCommands
 {
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -74,7 +76,22 @@ public sealed class AddUplinkCommand : LocalizedEntityCommands
 
         // Finally add uplink
         if (!_uplinkSystem.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))
+        {
             shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
+            return;
+        }
+
+        uplinkEntity ??= _uplinkSystem.FindUplinkTarget(user);
+        var generatedCode = uplinkEntity is { } uplink
+            ? _uplinkSystem.GenerateUplinkCode(uplink)
+            : null;
+
+        if (generatedCode != null)
+        {
+            _chatManager.DispatchServerMessage(session,
+                Loc.GetString("add-uplink-command-uplink-code",
+                    ("code", string.Join("-", generatedCode).Replace("sharp", "#"))));
+        }
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Server.StoreDiscount.Systems;
+using Content.Server.PDA.Ringer;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants;
@@ -9,6 +10,7 @@ using Content.Shared.Mind;
 using Content.Shared.PDA;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.PDA.Ringer;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Uplink;
@@ -21,7 +23,7 @@ public sealed class UplinkSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-
+    
     public static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
     private static readonly EntProtoId FallbackUplinkImplant = "UplinkImplant";
     private static readonly ProtoId<ListingPrototype> FallbackUplinkCatalog = "UplinkUplinkImplanter";
@@ -81,6 +83,18 @@ public sealed class UplinkSystem : EntitySystem
             Listings: _store.GetAvailableListings(mind, uplink, store)
                 .ToArray());
         RaiseLocalEvent(ref uplinkInitializedEvent);
+    }
+
+    public Note[]? GenerateUplinkCode(EntityUid uplink)
+    {
+        if (!HasComp<PdaComponent>(uplink))
+            return null;
+
+        EnsureComp<RingerUplinkComponent>(uplink);
+
+        var ev = new GenerateUplinkCodeEvent();
+        RaiseLocalEvent(uplink, ref ev);
+        return ev.Code;
     }
 
     /// <summary>
