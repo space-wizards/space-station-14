@@ -35,15 +35,7 @@ public sealed class AdminLogLabel : BoxContainer
     private static readonly Color RoleSubjectColor = new(170, 150, 200);
     private static readonly Color RoleOtherColor = new(130, 130, 145);
 
-    /// <summary>
-    /// LogTypes that represent condensed/burst events.
-    /// </summary>
-    private static readonly HashSet<LogType> BurstTypes = new()
-    {
-        LogType.CombatModeToggleBurst,
-        LogType.InteractionRepeatBurst,
-        LogType.MeleeMissBurst,
-    };
+
 
     private readonly RichTextLabel _messageLabel;
     private readonly RichTextLabel? _sampleLabel;
@@ -86,7 +78,7 @@ public sealed class AdminLogLabel : BoxContainer
     /// <summary>
     /// Returns true if this log entry represents a condensed/burst event.
     /// </summary>
-    public bool IsCondensed => BurstTypes.Contains(Log.Type) || Log.Message.StartsWith("[×");
+    public bool IsCondensed => Log.IsCondensed;
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
@@ -148,7 +140,7 @@ public sealed class AdminLogLabel : BoxContainer
     private static FormattedMessage BuildMessage(SharedAdminLog log, bool showMetadata)
     {
         var message = new FormattedMessage();
-        var isCondensed = BurstTypes.Contains(log.Type) || log.Message.StartsWith("[×");
+        var isCondensed = log.IsCondensed;
 
         //Impact indicator
         var impactColor = GetImpactColor(log.Impact);

@@ -1279,7 +1279,9 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     entities[i] = new SharedAdminLogEntity(row.EntityUid!.Value, row.Role, dim?.PrototypeId, dim?.EntityName);
                 }
 
-                // Extract sample messages from condensed log JSON payloads.
+                // Extract condensation metadata from JSON payloads.
+                var isCondensed = false;
+                int? condensedCount = null;
                 string[]? sampleMessages = null;
                 if (log.Json != null)
                 {
@@ -1287,21 +1289,31 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     {
                         var root = log.Json.RootElement;
                         if (root.TryGetProperty("condensed", out var condensedProp)
-                            && condensedProp.GetBoolean()
-                            && root.TryGetProperty("sample_messages", out var samplesElement))
+                            && condensedProp.GetBoolean())
                         {
-                            sampleMessages = samplesElement.EnumerateArray()
-                                .Select(e => e.GetString() ?? "")
-                                .ToArray();
+                            isCondensed = true;
+
+                            if (root.TryGetProperty("count", out var countProp)
+                                && countProp.TryGetInt32(out var count))
+                            {
+                                condensedCount = count;
+                            }
+
+                            if (root.TryGetProperty("sample_messages", out var samplesElement))
+                            {
+                                sampleMessages = samplesElement.EnumerateArray()
+                                    .Select(e => e.GetString() ?? "")
+                                    .ToArray();
+                            }
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // Ignore malformed JSON.
+                        _opsLog.Warning($"Malformed condensation JSON in admin log {log.Id}: {ex.Message}");
                     }
                 }
 
-                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities, sampleMessages);
+                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities, isCondensed, condensedCount, sampleMessages);
             }
         }
 

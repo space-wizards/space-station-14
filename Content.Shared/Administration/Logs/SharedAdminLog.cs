@@ -17,4 +17,6 @@ public readonly record struct SharedAdminLog(
     string Message,
     Guid[] Players,
     SharedAdminLogEntity[] Entities,
+    bool IsCondensed = false,
+    int? CondensedCount = null,
     string[]? SampleMessages = null);
